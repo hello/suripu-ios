@@ -14,8 +14,6 @@
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 
-static CGFloat const HEMSupportZDKUIHeightDiff = 46.0f;
-
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     HEMSupportRowIndexUserGuide = 0,
     HEMSupportRowIndexContactUs = 1,
@@ -50,7 +48,6 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self stopListeningToKeyboardChanges];
     
     if ([self origNavDelegate]) {
         [[self navigationController] setDelegate:[self origNavDelegate]];
@@ -77,30 +74,6 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     
     __weak typeof(self) weakSelf = self;
     [[self navigationController] setDelegate:weakSelf];
-}
-
-#pragma mark - Keyboard
-
-- (void)listenForKeyboardChanges {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(keyboardWillShow:)
-                   name:UIKeyboardWillShowNotification
-                 object:nil];
-}
-
-- (void)stopListeningToKeyboardChanges {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-}
-
-- (void)keyboardWillShow:(NSNotification*)note {
-    UIViewController* zdkController = [ZDKUIViewController activeController];
-    if ([zdkController isKindOfClass:[ZDKCommentsViewController class]]) {
-        CGRect viewFrame = [[zdkController view] frame];
-        viewFrame.size.height += HEMSupportZDKUIHeightDiff;
-        [[zdkController view] setFrame:viewFrame];
-    }
 }
 
 #pragma mark - UITableViewDataSource / Delegate
@@ -163,7 +136,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
         case HEMSupportRowIndexTickets: {
             [self overrideNavigationDelegate];
-            [self listenForKeyboardChanges];
             [ZDKRequests showRequestListWithNavController:[self navigationController]];
             break;
         }
@@ -184,9 +156,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)navigationController:(UINavigationController *)navigationController
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
-    CGRect viewFrame = [[viewController view] frame];
-    viewFrame.size.height -= HEMSupportZDKUIHeightDiff;
-    [[viewController view] setFrame:viewFrame];
     [[navigationController interactivePopGestureRecognizer] setEnabled:YES];
 }
 

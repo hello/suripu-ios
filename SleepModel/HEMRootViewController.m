@@ -45,7 +45,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 @property (strong, nonatomic) HEMSystemAlertController* alertController;
 @property (strong, nonatomic) MSDynamicsDrawerViewController* drawerViewController;
 @property (assign, nonatomic, getter=isMainControllerLoaded) BOOL mainControllerLoaded;
-
+@property (nonatomic, getter=isAnimatingPaneState) BOOL animatingPaneState;
 @end
 
 @implementation HEMRootViewController
@@ -407,6 +407,21 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
 - (HEMSnazzBarController*)barController
 {
     return (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
+}
+
+- (void)setPaneVisible:(BOOL)visible animated:(BOOL)animated {
+    MSDynamicsDrawerPaneState state = visible
+        ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateOpenWide;
+    if (state == self.drawerViewController.paneState || [self isAnimatingPaneState])
+        return;
+    self.animatingPaneState = YES;
+    __weak typeof(self) weakSelf = self;
+    [self.drawerViewController setPaneState:state
+                                   animated:animated
+                      allowUserInterruption:NO
+                                 completion:^{
+                                     weakSelf.animatingPaneState = NO;
+                                 }];
 }
 
 - (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated

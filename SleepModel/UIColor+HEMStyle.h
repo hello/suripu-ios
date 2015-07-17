@@ -91,17 +91,12 @@
 
 #pragma mark - UI Elements
 
-+ (UIColor *)currentConditionsBackgroundColor;
-+ (UIColor *)sleepQuestionBgColor;
 + (UIColor *)onboardingGrayColor;
 + (UIColor *)backViewBackgroundColor;
 + (UIColor *)backViewNavTitleColor;
 + (UIColor *)backViewTextColor;
 + (UIColor *)senseBlueColor;
 + (UIColor *)backViewTintColor;
-+ (UIColor *)timelineSectionBorderColor;
-+ (UIColor *)timelineGradientDarkColor;
-+ (UIColor *)backViewDetailTextColor;
 + (UIColor *)barButtonDisabledColor;
 + (UIColor *)actionViewTitleTextColor;
 + (UIColor *)actionViewCancelButtonTextColor;
@@ -109,10 +104,7 @@
 + (UIColor *)questionAnswerSelectedBgColor;
 + (UIColor *)questionAnswerSelectedTextColor;
 + (UIColor *)sleepScoreOvalColor;
-+ (UIColor *)tabBarUnselectedColor;
 + (UIColor *)deviceAlertMessageColor;
-+ (UIColor *)timelineLineColor;
-+ (UIColor *)timelineInsightTintColor;
 + (UIColor *)separatorColor;
 + (UIColor *)onboardingDescriptionColor;
 + (UIColor *)onboardingTitleColor;
@@ -126,24 +118,18 @@
 + (UIColor *)alarmSelectionRowColor;
 + (UIColor *)pageControlTintColor;
 + (UIColor *)actionButtonDisabledColor;
-+ (UIColor *)backViewCardShadowColor;
 + (UIColor *)lightTintColor;
 + (UIColor *)trendTextColor;
 + (UIColor *)cardBorderColor;
 + (UIColor *)trendGraphBottomColor;
 + (UIColor *)trendGraphTopColor;
 + (UIColor *)switchOffBackgroundColor;
-+ (UIColor *)buttonContainerShadowColor;
 + (UIColor *)timelineGradientColor;
-+ (UIColor *)timelineGradientColor2;
 + (UIColor *)tutorialBackgroundColor;
 + (UIColor *)handholdingGestureHintColor;
 + (UIColor *)handholdingGestureHintBorderColor;
 + (UIColor *)handholdingMessageBackgroundColor;
 + (UIColor *)actionSheetSeparatorColor;
 + (UIColor *)actionSheetSelectedColor;
-+ (UIColor *)timelineBarGradientColor;
-+ (UIColor *)timelineBarGradientColor2;
-+ (UIColor *)timelineEventShadowColor;
 
 @end

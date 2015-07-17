@@ -110,167 +110,125 @@ static UIColor *_tintColor = nil;
 + (UIColor *)awakeSleepColor {
     return _awakeSleepColor;
 }
-+ (UIColor *)currentConditionsBackgroundColor {
-    return [UIColor colorWithRed:0.902 green:0.91 blue:0.906 alpha:1];
-}
-+ (UIColor *)sleepQuestionBgColor {
-    return [UIColor colorWithRed:1 green:1 blue:1 alpha:0.9];
-}
 + (UIColor *)onboardingGrayColor {
-    return [UIColor colorWithRed:0.286 green:0.286 blue:0.286 alpha:1];
+    return [UIColor colorWithHex:0x494949 alpha:1.f];
 }
 + (UIColor *)backViewBackgroundColor {
-    return [UIColor colorWithRed:0.949 green:0.949 blue:0.949 alpha:1];
+    return [UIColor colorWithHex:0xF2F2F2 alpha:1.f];
 }
 + (UIColor *)backViewNavTitleColor {
-    return [UIColor colorWithRed:0.286 green:0.286 blue:0.286 alpha:1];
+    return [UIColor colorWithHex:0x494949 alpha:1.f];
 }
 + (UIColor *)backViewTextColor {
-    return [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
+    return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
 }
 + (UIColor *)senseBlueColor {
-    return [UIColor colorWithRed:0 green:0.604 blue:1 alpha:1];
+    return [UIColor colorWithHex:0x009AFF alpha:1.f];
 }
 + (UIColor *)backViewTintColor {
-    return [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
-}
-+ (UIColor *)timelineSectionBorderColor {
-    return [UIColor colorWithRed:0.9 green:0.91 blue:0.91 alpha:1];
-}
-+ (UIColor *)timelineGradientDarkColor {
-    return [UIColor colorWithRed:0.976 green:0.976 blue:0.976 alpha:1];
-}
-+ (UIColor *)backViewDetailTextColor {
-    return [UIColor colorWithRed:0.631 green:0.631 blue:0.631 alpha:1];
+    return [UIColor whiteColor];
 }
 + (UIColor *)barButtonDisabledColor {
-    return [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1];
+    return [UIColor colorWithHex:0x999999 alpha:1.f];
 }
 + (UIColor *)actionViewTitleTextColor {
-    return [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1];
+    return [UIColor colorWithHex:0x999999 alpha:1.f];
 }
 + (UIColor *)actionViewCancelButtonTextColor {
-    return [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1];
+    return [UIColor colorWithHex:0x999999 alpha:1.f];
 }
 + (UIColor *)buttonDividerColor {
-    return [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.2];
+    return [UIColor colorWithHex:0x999999 alpha:0.2];
 }
 + (UIColor *)questionAnswerSelectedBgColor {
-    return [UIColor colorWithRed:0.961 green:0.984 blue:1 alpha:1];
+    return [UIColor colorWithHex:0xF5FBFF alpha:1.f];
 }
 + (UIColor *)questionAnswerSelectedTextColor {
-    return [UIColor colorWithRed:0.804 green:0.91 blue:1 alpha:1];
+    return [UIColor colorWithHex:0xCDE8FF alpha:1.f];
 }
 + (UIColor *)sleepScoreOvalColor {
-    return [UIColor colorWithRed:0.898 green:0.898 blue:0.898 alpha:1];
-}
-+ (UIColor *)tabBarUnselectedColor {
-    return [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1];
+    return [UIColor colorWithHex:0xE5E5E5 alpha:1.f];
 }
 + (UIColor *)deviceAlertMessageColor {
-    return [UIColor colorWithRed:0.302 green:0.302 blue:0.302 alpha:1];
-}
-+ (UIColor *)timelineLineColor {
-    return [UIColor colorWithRed:0 green:0.617 blue:1 alpha:0.25];
-}
-+ (UIColor *)timelineInsightTintColor {
-    return [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1];
+    return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
 }
 + (UIColor *)separatorColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.039];
+    return [UIColor colorWithHex:0x000000 alpha:0.039];
 }
 + (UIColor *)onboardingDescriptionColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    return [UIColor colorWithHex:0x000000 alpha:0.4];
 }
 + (UIColor *)onboardingTitleColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+    return [UIColor colorWithHex:0x000000 alpha:1.f];
 }
 + (UIColor *)textfieldPlaceholderFocusedColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.25];
+    return [UIColor colorWithHex:0x000000 alpha:0.25];
 }
 + (UIColor *)textfieldPlaceholderColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    return [UIColor colorWithHex:0x000000 alpha:0.4];
 }
 + (UIColor *)rulerSegmentDarkColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
+    return [UIColor colorWithHex:0x000000 alpha:0.2];
 }
 + (UIColor *)rulerSegmentLightColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
+    return [UIColor colorWithHex:0x000000 alpha:0.1];
 }
 + (UIColor *)settingsValueTextColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    return [UIColor colorWithHex:0x000000 alpha:0.4];
 }
 + (UIColor *)textfieldTextColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
+    return [UIColor colorWithHex:0x000000 alpha:0.7];
 }
 + (UIColor *)actionButtonTextColor {
-    return [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+    return [UIColor whiteColor];
 }
 + (UIColor *)alarmSelectionRowColor {
-    return [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1];
+    return [UIColor colorWithHex:0xBFBFBF alpha:1.f];
 }
 + (UIColor *)pageControlTintColor {
-    return [UIColor colorWithRed:0.922 green:0.922 blue:0.922 alpha:1];
+    return [UIColor colorWithHex:0xEBEBEB alpha:1.f];
 }
 + (UIColor *)actionButtonDisabledColor {
-    return [UIColor colorWithRed:0.788 green:0.788 blue:0.788 alpha:1];
-}
-+ (UIColor *)backViewCardShadowColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+    return [UIColor colorWithHex:0xC9C9C9 alpha:1.f];
 }
 + (UIColor *)lightTintColor {
-    return [UIColor colorWithRed:0.298 green:0.757 blue:0.988 alpha:1];
+    return [UIColor colorWithHex:0x4CC1FC alpha:1.f];
 }
 + (UIColor *)trendTextColor {
-    return [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1];
+    return [UIColor colorWithHex:0x999999 alpha:1.f];
 }
 + (UIColor *)cardBorderColor {
-    return [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
+    return [UIColor colorWithHex:0xE5E5E5 alpha:1.f];
 }
 + (UIColor *)trendGraphBottomColor {
-    return [UIColor colorWithRed:0.95 green:0.97 blue:0.982 alpha:1];
+    return [UIColor colorWithHex:0xF2F7FA alpha:1.f];
 }
 + (UIColor *)trendGraphTopColor {
-    return [UIColor colorWithRed:0.913 green:0.966 blue:1 alpha:1];
+    return [UIColor colorWithHex:0xE9F6FF alpha:1.f];
 }
 + (UIColor *)switchOffBackgroundColor {
-    return [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
-}
-+ (UIColor *)buttonContainerShadowColor {
-    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
+    return [UIColor colorWithHex:0xF2F2F2 alpha:1.f];
 }
 + (UIColor *)timelineGradientColor {
-    return [UIColor colorWithRed:0.82 green:0.929 blue:1 alpha:1];
-}
-+ (UIColor *)timelineGradientColor2 {
-    return [UIColor colorWithRed:0.886 green:0.953 blue:0.996 alpha:1];
+    return [UIColor colorWithHex:0xD1EDFF alpha:1.f];
 }
 + (UIColor *)tutorialBackgroundColor {
-    return [UIColor colorWithRed:0.239 green:0.322 blue:0.4 alpha:0.6];
+    return [UIColor colorWithHex:0x3D5266 alpha:0.6];
 }
 + (UIColor *)handholdingGestureHintColor {
-    return [UIColor colorWithRed:0.004 green:0.612 blue:1 alpha:0.3];
+    return [UIColor colorWithHex:0x019CFF alpha:0.3];
 }
 + (UIColor *)handholdingGestureHintBorderColor {
-    return [UIColor colorWithRed:0.004 green:0.612 blue:1 alpha:0.8];
+    return [UIColor colorWithHex:0x019CFF alpha:0.8];
 }
 + (UIColor *)handholdingMessageBackgroundColor {
-    return [UIColor colorWithRed:0.004 green:0.612 blue:1 alpha:1];
+    return [UIColor colorWithHex:0x019CFF alpha:1.f];
 }
 + (UIColor *)actionSheetSeparatorColor {
-    return [UIColor colorWithRed:0.882 green:0.882 blue:0.882 alpha:1];
+    return [UIColor colorWithHex:0xE1E1E1 alpha:1.f];
 }
 + (UIColor *)actionSheetSelectedColor {
-    return [UIColor colorWithRed:0.969 green:0.969 blue:0.969 alpha:1];
-}
-+ (UIColor *)timelineBarGradientColor {
-    return [UIColor colorWithRed:1 green:1 blue:1 alpha:0.12];
-}
-+ (UIColor *)timelineBarGradientColor2 {
-    return [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
-}
-+ (UIColor *)timelineEventShadowColor {
-    return [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];
+    return [UIColor colorWithHex:0xF7F7F7 alpha:1.f];
 }
 
 @end

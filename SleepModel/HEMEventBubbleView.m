@@ -36,7 +36,7 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
 
 - (void)awakeFromNib {
     self.layer.shadowRadius = 2.f;
-    self.layer.shadowColor = [[UIColor timelineEventShadowColor] CGColor];
+    self.layer.shadowColor = [[UIColor tintColor] CGColor];
     self.layer.shadowOpacity = 0.25f;
     self.layer.shadowOffset = CGSizeZero;
     self.cornerView.layer.cornerRadius = 3.f;

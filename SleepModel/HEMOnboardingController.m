@@ -6,18 +6,18 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
 
 #import "HEMOnboardingController.h"
-#import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMSupportUtil.h"
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingCache.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMScreenUtils.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMOnboardingController()
 
@@ -59,14 +59,14 @@
         [[self titleHeightConstraint] setConstant:0.0f];
         [[self titleLabel] setHidden:YES];
     } else {
-        [[self titleLabel] setTextColor:[HelloStyleKit onboardingTitleColor]];
+        [[self titleLabel] setTextColor:[UIColor onboardingTitleColor]];
         [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     }
 }
 
 - (void)configureDescription {
     if ([self descriptionLabel] != nil) {
-        UIColor* color = [HelloStyleKit onboardingDescriptionColor];
+        UIColor* color = [UIColor onboardingDescriptionColor];
         UIFont* font = [UIFont onboardingDescriptionFont];
         NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
         
@@ -157,7 +157,7 @@
                                     action:@selector(help:)];
     [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
                        forBarMetrics:UIBarMetricsDefault];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor],
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor tintColor],
                                    NSFontAttributeName : [UIFont helpButtonTitleFont]
                                    }
                         forState:UIControlStateNormal];
@@ -254,7 +254,7 @@
               withDelegate:(BOOL)hasDelegate {
     
     [[secondaryButton titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [secondaryButton setTitleColor:[HelloStyleKit senseBlueColor]
+    [secondaryButton setTitleColor:[UIColor tintColor]
                           forState:UIControlStateNormal];
 
     if (hasDelegate) {

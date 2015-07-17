@@ -3,10 +3,9 @@
 #import <SenseKit/SENServiceHealthKit.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMOnboardingCache.h"
-#import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
@@ -51,7 +50,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     [[self scrollView] addSubview:[self ruler]];
     [[self scrollView] setBackgroundColor:[UIColor clearColor]];
     
-    [[self currentWeightMarker] setBackgroundColor:[HelloStyleKit senseBlueColor]];
+    [[self currentWeightMarker] setBackgroundColor:[UIColor tintColor]];
     
     if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {
         [[self scrollView] setContentInset:UIEdgeInsetsMake(0.0f, 8.0f, 0.0f, 8.0f)];

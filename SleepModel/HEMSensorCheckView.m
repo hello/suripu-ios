@@ -8,7 +8,7 @@
 //
 
 #import "HEMSensorCheckView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAnimationUtils.h"
@@ -110,7 +110,7 @@ static CGFloat const HEMSensorCheckDigitDisplayDelay = 0.3f;
     };
     
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
-    [label setTextColor:[HelloStyleKit senseBlueColor]];
+    [label setTextColor:[UIColor tintColor]];
     [label setText:[title uppercaseString]];
     [label setNumberOfLines:1];
     [label setAlpha:0.0f];

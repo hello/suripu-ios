@@ -2,7 +2,6 @@
 #import <SenseKit/SENSensor.h>
 
 #import "HEMLineGraphDataSource.h"
-#import "HelloStyleKit.h"
 
 @interface HEMLineGraphDataSource ()
 

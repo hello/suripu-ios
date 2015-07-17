@@ -9,7 +9,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMGenderPickerViewController ()
 
@@ -33,8 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setSelectedColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.05f]];
-    [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
+    [self setSelectedColor:[[UIColor tintColor] colorWithAlphaComponent:0.05f]];
+    [self setSelectedBorderColor:[[UIColor tintColor] colorWithAlphaComponent:0.4f]];
     [self configureButtons];
     [self configureGenderSelectors];
     [self trackAnalyticsEvent:HEMAnalyticsEventGender];
@@ -54,9 +54,9 @@
 }
 
 - (void)configureGenderSelectors {
-    [[self selectorDivider] setBackgroundColor:[HelloStyleKit separatorColor]];
+    [[self selectorDivider] setBackgroundColor:[UIColor separatorColor]];
     [[[self selectorContainer] layer] setBorderWidth:1.0f];
-    [[[self selectorContainer] layer] setBorderColor:[[HelloStyleKit separatorColor] CGColor]];
+    [[[self selectorContainer] layer] setBorderColor:[[UIColor separatorColor] CGColor]];
     
     [[[self femaleSelectorButton] layer] setBorderWidth:0.0f];
     [[[self femaleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];

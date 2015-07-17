@@ -18,7 +18,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMTutorial.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>

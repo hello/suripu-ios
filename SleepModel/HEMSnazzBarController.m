@@ -8,7 +8,7 @@
 
 #import "HEMSnazzBarController.h"
 #import "HEMSnazzBar.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 CGFloat const HEMSnazzBarHeight = 65.f;
 
@@ -51,8 +51,8 @@ CGFloat const HEMSnazzBarHeight = 65.f;
     self.buttonsBar.delegate = self;
     [self.view addSubview:self.buttonsBar];
     self.buttonsBar.backgroundColor = [UIColor whiteColor];
-    self.buttonsBar.selectionColor = [HelloStyleKit tintColor];
-    self.contentView.backgroundColor = [HelloStyleKit backViewBackgroundColor];
+    self.buttonsBar.selectionColor = [UIColor tintColor];
+    self.contentView.backgroundColor = [UIColor backViewBackgroundColor];
 }
 
 - (void)configureGestureRecognizers

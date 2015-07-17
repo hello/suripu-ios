@@ -5,7 +5,7 @@
 
 #import "HEMBirthdatePickerViewController.h"
 #import "HEMOnboardingCache.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerView.h"
 #import "HEMBaseController+Protected.h"

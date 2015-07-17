@@ -1,10 +1,11 @@
+#import "HEMAlarmListViewController.h"
 
 #import <SenseKit/SenseKit.h>
 #import <SpinKit/RTSpinKitView.h>
 #import <AttributedMarkdown/markdown_peg.h>
 
 #import "UIFont+HEMStyle.h"
-#import "HEMAlarmListViewController.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmListCell.h"

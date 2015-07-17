@@ -12,13 +12,12 @@
 
 #import "UIImage+HEMBlurTint.h"
 #import "NSDate+HEMRelative.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMTutorial.h"
 #import "HEMTutorialContent.h"
 #import "HEMTutorialViewController.h"
 #import "HEMMainStoryboard.h"
 #import "UIView+HEMSnapshot.h"
-#import "HelloStyleKit.h"
 #import "HEMHandholdingView.h"
 
 @implementation HEMTutorial
@@ -145,7 +144,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (void)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
     UIImage* snapshot = [[controller view] snapshot];
-    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[HelloStyleKit tutorialBackgroundColor]];
+    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor tutorialBackgroundColor]];
     
     HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
     [tutorialVC setTutorials:content];

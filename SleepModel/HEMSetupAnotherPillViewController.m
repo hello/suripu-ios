@@ -11,13 +11,12 @@
 #import "NSMutableAttributedString+HEMFormat.h"
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMSetupAnotherPillViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HelloStyleKit.h"
 
 @interface HEMSetupAnotherPillViewController ()
 
@@ -38,7 +37,7 @@
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.pill-setup-another", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropPillAnother];
     [[[self setupButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self setupButton] setTitleColor:[HelloStyleKit senseBlueColor]
+    [[self setupButton] setTitleColor:[UIColor tintColor]
                              forState:UIControlStateNormal];
 }
 

@@ -9,7 +9,6 @@
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
-#import "HelloStyleKit.h"
 #import "HEMAlarmUtils.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"

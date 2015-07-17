@@ -7,7 +7,7 @@
 //
 
 #import "HEMHintGestureView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMGestureHintBorderWidth = 2.0f;
 static CGFloat const HEMGestureAnimationDuration = 0.75f;
@@ -43,12 +43,12 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
     
     // draw inner circle
     CGRect circleFrame = CGRectInset(rect, HEMGestureHintBorderWidth, HEMGestureHintBorderWidth);
-    CGColorRef innerColorRef = [[HelloStyleKit handholdingGestureHintColor] CGColor];
+    CGColorRef innerColorRef = [[UIColor handholdingGestureHintColor] CGColor];
     CGContextSetFillColorWithColor(ctx, innerColorRef);
     CGContextFillEllipseInRect(ctx, circleFrame);
     
     // draw the circle's border
-    CGColorRef borderColorRef = [[HelloStyleKit handholdingGestureHintBorderColor] CGColor];
+    CGColorRef borderColorRef = [[UIColor handholdingGestureHintBorderColor] CGColor];
     CGContextSetStrokeColorWithColor(ctx, borderColorRef);
     CGContextSetLineWidth(ctx, HEMGestureHintBorderWidth);
     CGContextStrokeEllipseInRect(ctx, circleFrame);

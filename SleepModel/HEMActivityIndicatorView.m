@@ -8,6 +8,7 @@
 
 #import "HEMActivityIndicatorView.h"
 #import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMMathUtil.h"
 
 static NSString* const HEMActivityIndicatorRotateKey = @"rotate";

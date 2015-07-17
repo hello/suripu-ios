@@ -8,7 +8,7 @@
 
 #import "HEMResponseCell.h"
 #import "UIFont+HEMStyle.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMResponseCell
 
@@ -16,11 +16,11 @@
     [self setBackgroundColor:[UIColor clearColor]];
     
     [[self answerLabel] setBackgroundColor:[UIColor clearColor]];
-    [[self answerLabel] setTextColor:[HelloStyleKit senseBlueColor]];
+    [[self answerLabel] setTextColor:[UIColor tintColor]];
     [[self answerLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self answerLabel] setFont:[UIFont questionAnswerFont]];
     
-    [[self separator] setBackgroundColor:[[HelloStyleKit senseBlueColor]
+    [[self separator] setBackgroundColor:[[UIColor tintColor]
                                           colorWithAlphaComponent:0.5f]];
 }
 
@@ -34,8 +34,8 @@
     
     UIColor* color
         = selected
-        ? [HelloStyleKit questionAnswerSelectedTextColor]
-        : [HelloStyleKit senseBlueColor];
+        ? [UIColor questionAnswerSelectedTextColor]
+        : [UIColor tintColor];
     [[self answerLabel] setTextColor:color];
 }
 

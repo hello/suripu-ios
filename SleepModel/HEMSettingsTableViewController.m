@@ -2,6 +2,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMSettingsTableViewController.h"
@@ -79,7 +80,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
     UILabel *versionLabel = [[UILabel alloc] init];
     [versionLabel setText:versionText];
     [versionLabel setFont:[UIFont settingsHelpFont]];
-    [versionLabel setTextColor:[HelloStyleKit backViewTextColor]];
+    [versionLabel setTextColor:[UIColor backViewTextColor]];
     [versionLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
     [versionLabel sizeToFit];
 

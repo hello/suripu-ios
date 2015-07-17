@@ -11,6 +11,7 @@
 #import <SenseKit/SENAPIAccount.h>
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMAccountViewController.h"
 #import "HEMAlertViewController.h"
@@ -26,7 +27,6 @@
 #import "HEMSettingsTableViewCell.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMWeightPickerViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMFormViewController.h"
 
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
@@ -131,7 +131,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
     } else if ([cell isKindOfClass:[HEMHelpFooterTableViewCell class]]) {
         HEMHelpFooterTableViewCell* helpCell = (id)cell;
-        helpCell.contentLabel.textColor = [HelloStyleKit backViewTextColor];
+        helpCell.contentLabel.textColor = [UIColor backViewTextColor];
         helpCell.contentLabel.text = title;
         helpCell.contentLabel.font = [UIFont settingsHelpFont];
     }
@@ -235,7 +235,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     if ([[segue destinationViewController] isKindOfClass:[UINavigationController class]]) {
         UINavigationController *nav = (UINavigationController *)[segue destinationViewController];
         [[nav navigationBar] setTitleTextAttributes:@{
-            NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
+            NSForegroundColorAttributeName : [UIColor backViewNavTitleColor],
             NSFontAttributeName : [UIFont settingsTitleFont]
         }];
     } else if ([[segue destinationViewController] isKindOfClass:[HEMFormViewController class]]) {

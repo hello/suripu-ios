@@ -9,7 +9,7 @@
 #import "UIView+HEMMotionEffects.h"
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMWelcomeViewController.h"
 #import "HEMActionButton.h"
 #import "HEMAnimationUtils.h"
@@ -17,7 +17,6 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
-#import "HelloStyleKit.h"
 
 static CGFloat const kHEMWelcomeMotionEffectBorder = 10.0f;
 static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;

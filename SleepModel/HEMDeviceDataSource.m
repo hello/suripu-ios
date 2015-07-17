@@ -10,6 +10,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -294,7 +295,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (void)updateMissingDeviceForCell:(HEMNoDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    UIColor* actionButtonColor = [HelloStyleKit senseBlueColor];
+    UIColor* actionButtonColor = [UIColor tintColor];
     
     switch ([indexPath row]) {
         case HEMDeviceRowSense:
@@ -303,7 +304,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         case HEMDeviceRowPill:
             [cell configureForPill];
             if ([self isLoadingSense] || ![self attemptedDataLoad]) {
-                actionButtonColor = [HelloStyleKit actionButtonDisabledColor];
+                actionButtonColor = [UIColor actionButtonDisabledColor];
             }
             break;
         default:
@@ -398,7 +399,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
         NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
         NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
-        UIColor* color = [HelloStyleKit backViewTextColor];
+        UIColor* color = [UIColor backViewTextColor];
         UIFont* font = [UIFont settingsHelpFont];
         
         NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];

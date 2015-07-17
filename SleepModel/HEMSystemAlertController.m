@@ -10,10 +10,9 @@
 #import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMSystemAlertController.h"
 #import "HEMActionView.h"
-#import "HelloStyleKit.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
@@ -78,7 +77,7 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
     [messageStyle setAlignment:NSTextAlignmentCenter];
     NSDictionary* messageAttributes = @{
                                         NSFontAttributeName : [UIFont systemAlertMessageFont],
-                                        NSForegroundColorAttributeName : [HelloStyleKit deviceAlertMessageColor],
+                                        NSForegroundColorAttributeName : [UIColor deviceAlertMessageColor],
                                         NSParagraphStyleAttributeName : messageStyle};
     
     NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message

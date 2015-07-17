@@ -138,8 +138,8 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     mask.frame = self.graphView.bounds;
     mask.colors = @[(id)[UIColor whiteColor].CGColor,
                     (id)[UIColor whiteColor].CGColor,
-                    (id)[HelloStyleKit backViewBackgroundColor].CGColor,
-                    (id)[HelloStyleKit backViewBackgroundColor].CGColor];
+                    (id)[UIColor backViewBackgroundColor].CGColor,
+                    (id)[UIColor backViewBackgroundColor].CGColor];
     mask.startPoint = CGPointMake(0, 0.5);
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];

@@ -14,7 +14,6 @@
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMDeviceActionCollectionViewCell.h"
 #import "HEMActivityCoverView.h"

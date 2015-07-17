@@ -8,7 +8,6 @@
 
 #import "HEMSnazzBar.h"
 #import "HEMSnazzBarButton.h"
-#import "HelloStyleKit.h"
 
 CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 

@@ -5,10 +5,9 @@
 //  Created by Jimmy Lu on 10/14/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
-#import "UIFont+HEMStyle.h"
-
 #import "HEMActivityCoverView.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 #import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAnimationUtils.h"
@@ -60,7 +59,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 - (void)addLabel {
     [self setActivityLabel:[[UILabel alloc] init]];
     [[self activityLabel] setFont:[UIFont onboardingActivityFontLarge]];
-    [[self activityLabel] setTextColor:[HelloStyleKit onboardingGrayColor]];
+    [[self activityLabel] setTextColor:[UIColor onboardingGrayColor]];
     [[self activityLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self activityLabel] setNumberOfLines:0];
     

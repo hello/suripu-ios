@@ -3,7 +3,7 @@
 #import <SenseKit/SENAccount.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMLocationFinderViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingCache.h"
@@ -12,7 +12,6 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
 
 @interface HEMLocationFinderViewController ()

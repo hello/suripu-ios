@@ -8,6 +8,7 @@
 
 #import "HEMCardCollectionViewCell.h"
 #import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMCardCollectionViewCell
 
@@ -25,7 +26,7 @@
 
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 3.f;
-    self.layer.borderColor = [[HelloStyleKit cardBorderColor] CGColor];
+    self.layer.borderColor = [[UIColor cardBorderColor] CGColor];
     self.layer.borderWidth = 1.f;
     self.layer.shadowOffset = [shadow shadowOffset];
     self.layer.shadowColor = [[shadow shadowColor] CGColor];

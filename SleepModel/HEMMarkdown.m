@@ -8,7 +8,7 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMMarkdown.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 
 @implementation HEMMarkdown
@@ -181,7 +181,7 @@
 }
 
 + (NSDictionary *)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn {
-    UIColor *color = isOn ? [HelloStyleKit tintColor] : [UIColor colorWithWhite:0.6 alpha:1.f];
+    UIColor *color = isOn ? [UIColor tintColor] : [UIColor colorWithWhite:0.6 alpha:1.f];
     return @{
         @(PARA) : @{
             NSFontAttributeName : [UIFont sensorRangeSelectionFont],

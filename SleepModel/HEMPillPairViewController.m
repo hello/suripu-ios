@@ -11,7 +11,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMPillPairViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
@@ -20,7 +20,6 @@
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
-#import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
@@ -58,7 +57,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureActivity {
-    [[self activityLabel] setTextColor:[HelloStyleKit senseBlueColor]];
+    [[self activityLabel] setTextColor:[UIColor tintColor]];
     [[self activityLabel] setText:nil];
     
     NSString* text = NSLocalizedString(@"pairing.activity.waiting-for-sense", nil);
@@ -66,7 +65,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureButtons {
-    [[self skipButton] setTitleColor:[HelloStyleKit senseBlueColor]
+    [[self skipButton] setTitleColor:[UIColor tintColor]
                             forState:UIControlStateNormal];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     
@@ -85,12 +84,12 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 - (void)showRetryButtonAsRetrying:(BOOL)retrying {
     if (retrying) {
         [[self retryButton] setBackgroundColor:[UIColor clearColor]];
-        [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor]
+        [[self retryButton] setTitleColor:[UIColor tintColor]
                                  forState:UIControlStateNormal];
         [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
     } else {
-        [[self retryButton] setBackgroundColor:[HelloStyleKit senseBlueColor]];
-        [[self retryButton] setTitleColor:[HelloStyleKit actionButtonTextColor]
+        [[self retryButton] setBackgroundColor:[UIColor tintColor]];
+        [[self retryButton] setTitleColor:[UIColor actionButtonTextColor]
                                  forState:UIControlStateNormal];
         [[self retryButton] stopActivity];
     }

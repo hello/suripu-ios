@@ -8,7 +8,7 @@
 
 #import <SenseKit/SENTrend.h>
 #import "HEMBarGraphView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMBarGraphView
 
@@ -47,11 +47,11 @@
         layer.startPoint = CGPointZero;
         layer.endPoint = CGPointMake(0, 1);
         layer.frame = CGRectMake(0, barHeight - fullHeight, barWidth, fullHeight);
-        layer.colors = @[ (id)[HelloStyleKit trendGraphTopColor].CGColor,
-            (id)[HelloStyleKit trendGraphBottomColor].CGColor ];
+        layer.colors = @[ (id)[UIColor trendGraphTopColor].CGColor,
+            (id)[UIColor trendGraphBottomColor].CGColor ];
         [barView.layer insertSublayer:layer atIndex:0];
         barView.layer.masksToBounds = YES;
-        lineBarView.backgroundColor = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.4f];
+        lineBarView.backgroundColor = [[UIColor tintColor] colorWithAlphaComponent:0.4f];
         [self addSubview:barView];
         [self insertSubview:lineBarView atIndex:0];
     }

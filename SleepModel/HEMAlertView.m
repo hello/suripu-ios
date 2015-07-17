@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-
 #import "HEMAlertView.h"
-#import "HelloStyleKit.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const kHEMDialogHorzMargins = 17.0f;
 static CGFloat const kHEMDialogCornerRadius = 4.0f;
@@ -266,7 +265,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [button setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [button setTranslatesAutoresizingMaskIntoConstraints:YES];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
     [button setFrame:buttonFrame];
     

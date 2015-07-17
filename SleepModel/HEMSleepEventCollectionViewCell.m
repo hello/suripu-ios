@@ -3,7 +3,6 @@
 #import "HEMSleepEventCollectionViewCell.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HEMTimelineLayoutAttributes.h"
-#import "HelloStyleKit.h"
 #import "HEMMarkdown.h"
 #import "HEMEventBubbleView.h"
 

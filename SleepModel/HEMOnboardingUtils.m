@@ -5,16 +5,11 @@
 //  Created by Jimmy Lu on 10/14/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENAPIAccount.h>
-#import <SenseKit/SENSenseManager.h>
-#import <SenseKit/SENLocalPreferences.h>
-#import <SenseKit/SENAPIAccount.h>
-#import <SenseKit/SENAuthorizationService.h>
-
+#import <SenseKit/SenseKit.h>
 #import <AFNetworking/AFURLResponseSerialization.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMOnboardingCache.h"
@@ -39,7 +34,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 
 + (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
     UIFont* font = [UIFont onboardingDescriptionFont];
-    UIColor* color = [HelloStyleKit onboardingDescriptionColor];
+    UIColor* color = [UIColor onboardingDescriptionColor];
     
     // avoid overriding any substrings that may already have attributes set
     [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])

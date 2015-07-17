@@ -8,7 +8,7 @@
 
 #import <SpinKit/RTSpinKitView.h>
 #import "HEMAlarmPropertyTableViewCell.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMAlarmPropertyTableViewCell
 
@@ -16,7 +16,7 @@
 {
     self.disclosureImageView.hidden = YES;
     self.loadingIndicatorView.hidesWhenStopped = YES;
-    self.loadingIndicatorView.color = [HelloStyleKit tintColor];
+    self.loadingIndicatorView.color = [UIColor tintColor];
     self.loadingIndicatorView.spinnerSize = CGRectGetHeight(self.loadingIndicatorView.bounds);
     self.loadingIndicatorView.style = RTSpinKitViewStyleArc;
     self.loadingIndicatorView.hidesWhenStopped = YES;

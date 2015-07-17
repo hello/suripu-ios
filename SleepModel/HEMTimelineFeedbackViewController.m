@@ -13,8 +13,8 @@
 #import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMBounceModalTransition.h"
-#import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
+#import "HelloStyleKit.h"
 
 NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSuccessNotification";
 

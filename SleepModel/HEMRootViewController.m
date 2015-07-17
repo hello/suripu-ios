@@ -50,6 +50,8 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 
 @implementation HEMRootViewController
 
+CGFloat const HEMRootDrawerDefaultGravityMagnitude = 2.5;
+CGFloat const HEMRootDrawerAnimationGravityMagnitude = 0.5;
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
@@ -187,7 +189,7 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     self.drawerViewController = [MSDynamicsDrawerViewController new];
     self.drawerViewController.paneViewController = [self instantiatePaneViewControllerWithDate:nil];
     self.drawerViewController.delegate = self;
-    self.drawerViewController.gravityMagnitude = 2.5;
+    self.drawerViewController.gravityMagnitude = HEMRootDrawerDefaultGravityMagnitude;
     [self hideStatusBar];
     MSDynamicsDrawerShadowStyler* shadowStyler = [MSDynamicsDrawerShadowStyler styler];
     shadowStyler.shadowRadius = 3.f;
@@ -418,12 +420,15 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
         return;
     self.animatingPaneState = YES;
     __weak typeof(self) weakSelf = self;
+    self.drawerViewController.gravityMagnitude = HEMRootDrawerAnimationGravityMagnitude;
     [self.drawerViewController setPaneState:state
                                    animated:animated
                       allowUserInterruption:NO
                                  completion:^{
-                                     weakSelf.animatingPaneState = NO;
-                                 }];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.drawerViewController.gravityMagnitude = HEMRootDrawerDefaultGravityMagnitude;
+        strongSelf.animatingPaneState = NO;
+    }];
 }
 
 - (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated

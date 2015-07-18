@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1.0
+
+New:
+
+* Hide the timeline top bar when back view pushes a new view on to the stack
+* Code clean code of app colors.  Require a quick sanity check
+
 ## 1.1.0.6
 
 New:

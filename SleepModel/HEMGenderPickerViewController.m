@@ -8,7 +8,6 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
-#import "HEMOnboardingUtils.h"
 #import "UIColor+HEMStyle.h"
 
 @interface HEMGenderPickerViewController ()

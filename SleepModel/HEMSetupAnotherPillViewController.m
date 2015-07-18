@@ -14,7 +14,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMSetupAnotherPillViewController.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 
@@ -61,7 +60,7 @@
 
 - (IBAction)skip:(id)sender {
     [[HEMOnboardingService sharedService] disconnectCurrentSense];
-    [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+    [self completeOnboarding];
 }
 
 - (void)getApp {

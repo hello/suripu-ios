@@ -14,7 +14,6 @@
 
 #import "HEMOnboardAlarmViewController.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmViewController.h"
 #import "HEMOnboardingStoryboard.h"
@@ -43,7 +42,7 @@
                                   sender:self];
     } else {
         [[HEMOnboardingService sharedService] disconnectCurrentSense];
-        [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+        [self completeOnboarding];
     }
 }
 

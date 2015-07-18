@@ -13,7 +13,6 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
@@ -81,7 +80,8 @@
             [HEMAnalytics trackSignUpWithName:[account name]];
             // checkpoint must be made here so that upon completion, user is not
             // pushed in to the app
-            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountCreated];
+            HEMOnboardingService* service = [HEMOnboardingService sharedService];
+            [service saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountCreated];
         };
         
         __weak typeof(self) weakSelf = self;
@@ -91,9 +91,7 @@
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                 [strongSelf stopActivity:^{
                     NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
-                    [HEMOnboardingUtils showAlertForHTTPError:error
-                                                    withTitle:title
-                                                         from:strongSelf];
+                    [strongSelf showMessageDialog:[error localizedDescription] title:title];
                 } enableControls:YES];
                 return;
             }

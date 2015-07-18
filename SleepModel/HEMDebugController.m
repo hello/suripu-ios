@@ -13,13 +13,13 @@
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMSupportUtil.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMMainStoryboard.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMTutorial.h"
+#import "HEMOnboardingController.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -99,8 +99,8 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if ([[strongSelf presentingController] isKindOfClass:[UINavigationController class]]) {
             UINavigationController* onboardingVC = (UINavigationController*)[strongSelf presentingController];
-            UIViewController* startController =
-            [HEMOnboardingUtils onboardingControllerForCheckpoint:HEMOnboardingCheckpointStart force:YES];
+            HEMOnboardingCheckpoint checkpoint = HEMOnboardingCheckpointStart;
+            UIViewController* startController = [HEMOnboardingController controllerForCheckpoint:checkpoint force:YES];
             if (![[onboardingVC topViewController] isKindOfClass:[startController class]]) {
                 [onboardingVC setViewControllers:@[startController] animated:YES];
             }

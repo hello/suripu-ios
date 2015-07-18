@@ -10,7 +10,6 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMathUtil.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMRulerView.h"
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
@@ -134,7 +133,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 }
 
 - (void)next {
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+    [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
     
     NSString* segueId = nil;
     if ([[SENServiceHealthKit sharedService] isSupported]) {

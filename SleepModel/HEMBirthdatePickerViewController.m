@@ -10,7 +10,6 @@
 #import "HEMBirthdatePickerView.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
-#import "HEMOnboardingUtils.h"
 
 static NSInteger const kHEMBirthdatePickerDefaultMonth = 7;
 static NSInteger const kHEMBirthdatePickerDefaultDay = 15;

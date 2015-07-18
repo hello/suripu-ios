@@ -17,7 +17,6 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSettingsTableViewController.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMAlertViewController.h"
@@ -285,7 +284,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
             }];
             
             [[self manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
-            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+            [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
             NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
             [self performSegueWithIdentifier:segueId sender:self];
         }];
@@ -299,10 +298,10 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 #pragma mark - Next
 
 - (void)proceed {
-    [HEMOnboardingUtils notifyOfPillPairingChange];
+    [[HEMOnboardingService sharedService] notifyOfSensePairingChange];
     
     if ([self delegate] == nil) {
-        [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
         
         NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];

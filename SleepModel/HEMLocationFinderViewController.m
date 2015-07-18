@@ -11,7 +11,6 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
 
 @interface HEMLocationFinderViewController ()

@@ -5,22 +5,31 @@
 //  Created by Jimmy Lu on 7/16/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
+#import <AFNetworking/AFURLResponseSerialization.h>
 
 #import <SenseKit/BLE.h>
 #import <SenseKit/API.h>
-#import <SenseKit/SENAccount.h>
-#import <SenseKit/SENSensor.h>
+#import <SenseKit/Model.h>
 #import <SenseKit/SENServiceDevice.h>
 
 #import "HEMOnboardingService.h"
+
+// notifications
+NSString* const HEMOnboardingNotificationDidChangeSensePairing = @"HEMOnboardingNotificationDidChangeSensePairing";
+NSString* const HEMOnboardingNotificationUserInfoSenseManager = @"HEMOnboardingNotificationUserInfoSenseManager";
+NSString* const HEMOnboardingNotificationDidChangePillPairing = @"HEMOnboardingNotificationDidChangePillPairing";
+NSString* const HEMOnboardingNotificationComplete = @"HEMOnboardingNotificationComplete";
+
+static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
 
 // polling of data
 static NSUInteger const HEMOnboardingMaxSensorPollAttempts = 10;
 static NSUInteger const HEMOnboardingSensorPollIntervals = 5.0f;
 // pre-scanning for senses
 static NSInteger const HEMOnboardingMaxSenseScanAttempts = 10;
-
-static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
+// settings / preferences
+static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
+static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 
 @interface HEMOnboardingService()
 
@@ -95,12 +104,7 @@ static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
 }
 
 - (void)replaceCurrentSenseManagerWith:(SENSenseManager*)manager {
-    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
-    if ([deviceService senseManager]) {
-        [deviceService replaceWithNewlyPairedSenseManager:manager completion:nil];
-    } else {
-        _currentSenseManager = manager;
-    }
+    [self setCurrentSenseManager:manager];
 }
 
 - (void)stopPreScanning {
@@ -221,6 +225,10 @@ static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
 
 #pragma mark - Accounts
 
+- (BOOL)isAuthorizedUser {
+    return [SENAuthorizationService isAuthorized];
+}
+
 - (void)checkNumberOfPairedAccounts {
     NSString* deviceId = [[[self currentSenseManager] sense] deviceId];
     if ([deviceId length] > 0) {
@@ -295,8 +303,9 @@ static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
                                   }
                                   
                                   if (completion) {
+                                      NSString* localizedMessage = [self localizedMessageFromAccountError:error];
                                       completion (nil, [strongSelf errorWithCode:HEMOnboardingErrorAccountCreationFailed
-                                                                          reason:[error localizedDescription]]);
+                                                                          reason:localizedMessage]);
                                   }
                               }];
 }
@@ -307,22 +316,168 @@ static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
               completion:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:email password:password callback:^(NSError *signInError) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         NSError* error = nil;
         if (signInError) {
             if (retry) {
                 DDLogVerbose(@"authentication failed, retrying once");
-                [weakSelf authenticateUser:email pass:password retry:NO completion:completion];
+                [strongSelf authenticateUser:email pass:password retry:NO completion:completion];
                 return;
             }
             
-            error = [weakSelf errorWithCode:HEMOnboardingErrorAuthenticationFailed
-                                     reason:[signInError localizedDescription]];
+            error = [strongSelf errorWithCode:HEMOnboardingErrorAuthenticationFailed
+                                       reason:[self localizedMessageFromAccountError:signInError]];
         }
         
         if (completion) {
             completion (error);
         }
     }];
+}
+
+- (NSString*)localizedMessageFromAccountError:(NSError*)error {
+    NSString* alertMessage = nil;
+    SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
+    
+    if (errorType == SENAPIAccountErrorUnknown) {
+        NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        alertMessage = [self httpErrorMessageForStatusCode:[response statusCode]];
+    } else {
+        alertMessage = [self accountErrorMessageForType:errorType];
+    }
+    
+    return alertMessage;
+}
+
+- (NSString*)httpErrorMessageForStatusCode:(NSInteger)statusCode {
+    NSString* message = nil;
+    // note that we will not attempt to create a message for every error code
+    // that exists, but rather only for those that are commonly encountered.
+    // We should never return the localizedDescription here as that provides
+    // the user a unfriendly message that only iOS developers can actually understand
+    switch (statusCode) {
+        case 401:
+            message = NSLocalizedString(@"authorization.sign-in.failed.message", nil);
+            break;
+        case 409:
+            message = NSLocalizedString(@"sign-up.error.conflict", nil);
+            break;
+        case NSURLErrorNotConnectedToInternet:
+            message = NSLocalizedString(@"network.error.not-connected", nil);
+            break;
+        case NSURLErrorNetworkConnectionLost:
+            message = NSLocalizedString(@"network.error.connection-lost", nil);
+            break;
+        case NSURLErrorCannotConnectToHost:
+            message = NSLocalizedString(@"network.error.cannot-connect-to-host", nil);
+            break;
+        case NSURLErrorTimedOut:
+            message = NSLocalizedString(@"network.error.timed-out", nil);
+            break;
+        default:
+            message = NSLocalizedString(@"sign-up.error.generic", nil);
+            break;
+    }
+    return message;
+}
+
+- (NSString*)accountErrorMessageForType:(SENAPIAccountError)errorType {
+    NSString* message = nil;
+    switch (errorType) {
+        case SENAPIAccountErrorPasswordTooShort:
+            message = NSLocalizedString(@"sign-up.error.password-too-short", nil);
+            break;
+        case SENAPIAccountErrorPasswordInsecure:
+            message = NSLocalizedString(@"sign-up.error.password-insecure", nil);
+            break;
+        case SENAPIAccountErrorNameTooShort:
+            message = NSLocalizedString(@"sign-up.error.name-too-short", nil);
+            break;
+        case SENAPIAccountErrorNameTooLong:
+            message = NSLocalizedString(@"sign-up.error.password-too-long", nil);
+            break;
+        case SENAPIAccountErrorEmailInvalid:
+            message = NSLocalizedString(@"sign-up.error.email-invalid", nil);
+            break;
+        default:
+            message = NSLocalizedString(@"sign-up.error.generic", nil);
+            break;
+    }
+    return message;
+}
+
+#pragma mark - WiFi
+
+- (void)saveConfiguredSSID:(NSString*)ssid {
+    if ([ssid length] == 0) return;
+    
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setUserPreference:ssid forKey:HEMOnboardingSettingSSID];
+}
+
+- (NSString*)lastConfiguredSSID {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return [preferences userPreferenceForKey:HEMOnboardingSettingSSID];
+}
+
+#pragma mark - Checkpoints
+
+- (BOOL)hasFinishedOnboarding {
+    HEMOnboardingCheckpoint checkpoint = [self onboardingCheckpoint];
+    return [SENAuthorizationService isAuthorized]
+        && (checkpoint == HEMOnboardingCheckpointStart // start and authorized = signed in
+        || checkpoint == HEMOnboardingCheckpointPillDone);
+}
+
+- (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setPersistentPreference:@(checkpoint) forKey:HEMOnboardingSettingCheckpoint];
+}
+
+- (HEMOnboardingCheckpoint)onboardingCheckpoint {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return [[preferences persistentPreferenceForKey:HEMOnboardingSettingCheckpoint] integerValue];
+}
+
+- (void)resetOnboardingCheckpoint {
+    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointStart];
+}
+
+- (void)markOnboardingAsComplete {
+    // if you call this method, you want to leave onboarding so make sure it's set
+    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+    [self clear];
+    [self disconnectCurrentSense];
+    [self setCurrentSenseManager:nil];
+}
+
+#pragma mark - Notifications
+
+- (void)notify:(NSString*)notificationName {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:notificationName object:nil];
+}
+
+- (void)notifyOfSensePairingChange {
+    NSString* name = HEMOnboardingNotificationDidChangeSensePairing;
+    NSDictionary* userInfo = nil;
+    SENSenseManager* manager = [self currentSenseManager];
+    if (manager) {
+        userInfo = @{HEMOnboardingNotificationUserInfoSenseManager : manager};
+    }
+    NSNotification* notification = [NSNotification notificationWithName:name
+                                                                 object:nil
+                                                               userInfo:userInfo];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotification:notification];
+}
+
+- (void)notifyOfPillPairingChange {
+    [self notify:HEMOnboardingNotificationDidChangePillPairing];
+}
+
+- (void)notifyOfOnboardingCompletion {
+    [self notify:HEMOnboardingNotificationComplete];
 }
 
 @end

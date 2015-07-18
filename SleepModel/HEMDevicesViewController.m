@@ -28,7 +28,6 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMSupportUtil.h"
-#import "HEMOnboardingUtils.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;

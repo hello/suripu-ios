@@ -22,7 +22,6 @@
 #import "HEMSinkModalTransition.h"
 #import "HEMBounceModalTransition.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMOnboardingUtils.h"
 
 @interface HEMInsightFeedViewController () <
     UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>

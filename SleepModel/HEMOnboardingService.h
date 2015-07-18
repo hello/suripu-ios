@@ -8,10 +8,29 @@
 
 #import "SENService.h"
 
+extern NSString* const HEMOnboardingNotificationComplete;
+extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
+extern NSString* const HEMOnboardingNotificationUserInfoSenseManager;
+extern NSString* const HEMOnboardingNotificationDidChangePillPairing;
+
 typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorNoAccount = -1,
     HEMOnboardingErrorAccountCreationFailed = -2,
     HEMOnboardingErrorAuthenticationFailed = -3
+};
+
+/**
+ * Checkpoints to be saved when progressing through the onboarding flow so that
+ * user can resume from where user left off.  It is important that '...Start'
+ * start at 0 as it is the default value returned when grabbing it from storage
+ * if a checkpoint has not yet been saved
+ */
+typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
+    HEMOnboardingCheckpointStart = 0,
+    HEMOnboardingCheckpointAccountCreated = 1,
+    HEMOnboardingCheckpointAccountDone = 2,
+    HEMOnboardingCheckpointSenseDone = 3,
+    HEMOnboardingCheckpointPillDone = 4
 };
 
 @class SENSense;
@@ -58,9 +77,20 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
 
 #pragma mark - Accounts
 
+- (BOOL)isAuthorizedUser;
 - (void)loadCurrentAccount:(void(^)(SENAccount* account, NSError* error))completion;
 - (void)refreshCurrentAccount:(void(^)(SENAccount* account, NSError* error))completion;
 - (void)updateCurrentAccount:(void(^)(NSError* error))completion;
+- (void)createAccountWithName:(NSString*)name
+                        email:(NSString*)email
+                         pass:(NSString*)password
+            onAccountCreation:(void(^)(SENAccount* account))accountCreatedBlock
+                   completion:(void(^)(SENAccount* account, NSError* error))completion;
+- (void)authenticateUser:(NSString*)email
+                    pass:(NSString*)password
+                   retry:(BOOL)retry
+              completion:(void(^)(NSError* error))completion;
+- (NSString*)localizedMessageFromAccountError:(NSError*)error;
 
 /**
  * Check the number of paired accounts currently attached to the Sense that
@@ -69,12 +99,77 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
  */
 - (void)checkNumberOfPairedAccounts;
 
-- (void)createAccountWithName:(NSString*)name
-                        email:(NSString*)email
-                         pass:(NSString*)password
-            onAccountCreation:(void(^)(SENAccount* account))accountCreatedBlock
-                   completion:(void(^)(SENAccount* account, NSError* error))completion;
+#pragma mark - WiFi
+
+/**
+ * @method saveConfiguredSSID:
+ *
+ * @discussion
+ * TEMPORARY solution to handle cases of displaying the user's SSID.  This should
+ * probably be stored and saved on the server as this is duplicated logic and can
+ * be very error prone
+ *
+ * In the mean time, we will store the ssid and allow caller to retrieve it
+ */
+- (void)saveConfiguredSSID:(NSString*)ssid;
+
+/**
+ * @method lastConfiguredSSID
+ *
+ * @discussion
+ * Retrieve the last known SSID saved, if any
+ */
+- (NSString*)lastConfiguredSSID;
+
+
+#pragma mark - Checkpoints
+
+/**
+ * @return YES if onboarding has finished, NO otherwise
+ */
+- (BOOL)hasFinishedOnboarding;
+
+/**
+ * Save the onboarding checkpoint so that when user comes back, user can resume
+ * from where user left off.
+ *
+ * @param checkpoint: the checkpoint from which the user has hit
+ */
+- (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint;
+
+/**
+ * Determine the current checkpoint at which the user last left off in the onboarding
+ * flow, based on when it was saved.
+ *
+ * @return last checkpoint saved
+ */
+- (HEMOnboardingCheckpoint)onboardingCheckpoint;
+
+/**
+ * Clear checkpoints by resetting it to the beginning
+ */
+- (void)resetOnboardingCheckpoint;
 
 - (void)clear;
+
+- (void)markOnboardingAsComplete;
+
+/**
+ * @method notifyOfSensePairingChange
+ *
+ * @discussion
+ * Convenience method to post a notification about a Sense pairing change
+ */
+- (void)notifyOfSensePairingChange;
+
+/**
+ * @method notifyOfSensePairingChange
+ *
+ * @discussion
+ * Convenience method to post a notification about a Sleep Pill pairing change
+ */
+- (void)notifyOfPillPairingChange;
+
+- (void)notifyOfOnboardingCompletion;
 
 @end

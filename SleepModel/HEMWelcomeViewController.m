@@ -15,7 +15,6 @@
 #import "HEMAnimationUtils.h"
 #import "HEMSignUpViewController.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
 
 static CGFloat const kHEMWelcomeMotionEffectBorder = 10.0f;

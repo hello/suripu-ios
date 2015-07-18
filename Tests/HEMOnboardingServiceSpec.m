@@ -1,8 +1,8 @@
 //
-//  HEMOnboardingUtilsSpec.m
+//  HEMOnboardingServiceSpec.m
 //  Sense
 //
-//  Created by Jimmy Lu on 6/17/15.
+//  Created by Jimmy Lu on 7/17/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
@@ -10,47 +10,60 @@
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/BLE.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import "HEMOnboardingUtils.h"
+#import "HEMOnboardingService.h"
+#import "HEMOnboardingController.h"
 
-SPEC_BEGIN(HEMOnboardingUtilsSpec)
+SPEC_BEGIN(HEMOnboardingServiceSpec)
 
-describe(@"HEMOnboardingUtils", ^{
+describe(@"HEMOnboardingService", ^{
     
-    describe(@"+hasFinishedOnboarding", ^{
+    __block HEMOnboardingService* service;
+    
+    beforeAll(^{
+        service = [HEMOnboardingService sharedService];
+    });
+    
+    describe(@"-hasFinishedOnboarding", ^{
         
         context(@"authorized user", ^{
             
-            beforeAll(^{
+            beforeEach(^{
                 [SENAuthorizationService stub:@selector(isAuthorized)
                                     andReturn:[KWValue valueWithBool:YES]];
+                [service stub:@selector(isAuthorizedUser)
+                    andReturn:[KWValue valueWithBool:YES]];
             });
-
+            
+            afterEach(^{
+                [service clearStubs];
+            });
+            
             it(@"should return YES if checkpoint is reset, but authorized", ^{
                 
-                [HEMOnboardingUtils stub:@selector(onboardingCheckpoint)
-                               andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointStart]];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointStart]];
                 
-                BOOL finished = [HEMOnboardingUtils hasFinishedOnboarding];
+                BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(YES)];
                 
             });
             
             it(@"should return YES if checkpoint is post pill pairing", ^{
                 
-                [HEMOnboardingUtils stub:@selector(onboardingCheckpoint)
-                               andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
                 
-                BOOL finished = [HEMOnboardingUtils hasFinishedOnboarding];
+                BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(YES)];
                 
             });
             
             it(@"should return NO if checkpoint is post sense pairing", ^{
                 
-                [HEMOnboardingUtils stub:@selector(onboardingCheckpoint)
-                               andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseDone]];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseDone]];
                 
-                BOOL finished = [HEMOnboardingUtils hasFinishedOnboarding];
+                BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(NO)];
                 
             });
@@ -66,10 +79,10 @@ describe(@"HEMOnboardingUtils", ^{
             
             it(@"should return NO even if somehow checkpoint shows pill pairing is done", ^{
                 
-                [HEMOnboardingUtils stub:@selector(onboardingCheckpoint)
-                               andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
                 
-                BOOL finished = [HEMOnboardingUtils hasFinishedOnboarding];
+                BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(NO)];
                 
             });
@@ -82,15 +95,19 @@ describe(@"HEMOnboardingUtils", ^{
         
         context(@"unauthorized user", ^{
             
-            beforeAll(^{
-                [SENAuthorizationService stub:@selector(isAuthorized)
-                                    andReturn:[KWValue valueWithBool:NO]];
+            beforeEach(^{
+                [service stub:@selector(isAuthorizedUser)
+                    andReturn:[KWValue valueWithBool:NO]];
             });
-           
+            
+            afterEach(^{
+                [service clearStubs];
+            });
+            
             it(@"should return the initial view controller in the flow", ^{
                 
                 HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillDone;
-                UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:check force:NO];
+                UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
                 
                 UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
                                                                                bundle:[NSBundle mainBundle]];
@@ -104,15 +121,19 @@ describe(@"HEMOnboardingUtils", ^{
         
         context(@"authorized user", ^{
             
-            beforeAll(^{
-                [SENAuthorizationService stub:@selector(isAuthorized)
-                                    andReturn:[KWValue valueWithBool:YES]];
+            beforeEach(^{
+                [service stub:@selector(isAuthorizedUser)
+                    andReturn:[KWValue valueWithBool:YES]];
+            });
+            
+            afterEach(^{
+                [service clearStubs];
             });
             
             it(@"should force user back out when flag is set", ^{
                 
                 HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillDone;
-                UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:check force:YES];
+                UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:YES];
                 
                 UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
                                                                                bundle:[NSBundle mainBundle]];
@@ -125,7 +146,7 @@ describe(@"HEMOnboardingUtils", ^{
             it(@"should return nil if onboarding is done", ^{
                 
                 HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillDone;
-                UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:check force:NO];
+                UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
                 [[controller should] beNil];
                 
             });
@@ -133,7 +154,7 @@ describe(@"HEMOnboardingUtils", ^{
             it(@"should return an onboarding controller after account created", ^{
                 
                 HEMOnboardingCheckpoint check = HEMOnboardingCheckpointAccountCreated;
-                UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:check force:NO];
+                UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
                 [[controller shouldNot] beNil];
                 
             });
@@ -141,7 +162,7 @@ describe(@"HEMOnboardingUtils", ^{
             it(@"should return an onboarding controller after demographics set", ^{
                 
                 HEMOnboardingCheckpoint check = HEMOnboardingCheckpointAccountDone;
-                UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:check force:NO];
+                UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
                 [[controller shouldNot] beNil];
                 
             });
@@ -149,7 +170,7 @@ describe(@"HEMOnboardingUtils", ^{
             it(@"should return an onboarding controller after sense paired", ^{
                 
                 HEMOnboardingCheckpoint check = HEMOnboardingCheckpointSenseDone;
-                UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:check force:NO];
+                UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
                 [[controller shouldNot] beNil];
                 
             });

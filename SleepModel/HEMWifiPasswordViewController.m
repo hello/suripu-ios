@@ -20,7 +20,6 @@
 #import "HEMOnboardingService.h"
 #import "HEMWifiUtils.h"
 #import "HEMSimpleLineTextField.h"
-#import "HEMOnboardingUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepNone = 0,
@@ -398,7 +397,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     SENSenseManager* manager = [self manager];
     [manager setWiFi:ssid password:password securityType:type success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [HEMOnboardingUtils saveConfiguredSSID:ssid];
+        [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
         [strongSelf setSsidConfigured:ssid];
         [strongSelf setStepFinished:HEMWiFiSetupStepConfigureWiFi];
         [strongSelf executeNextStep];
@@ -482,7 +481,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        [HEMOnboardingUtils notifyOfSensePairingChange:[strongSelf manager]];
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        [service notifyOfSensePairingChange];
         
         if ([strongSelf delegate] != nil) {
             [[HEMOnboardingService sharedService] clear];
@@ -490,7 +490,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         } else if ([strongSelf sensePairDelegate] != nil) {
             [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:strongSelf];
         } else {
-            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+            [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
                                             sender:nil];
         }

@@ -17,7 +17,6 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingService.h"
 #import "HEMSettingsTableViewController.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMAlertViewController.h"
@@ -252,8 +251,9 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         }
         case HEMSensePairStateForceDataUpload: {
             if ([self delegate] == nil) {
-                [[HEMOnboardingService sharedService] startPollingSensorData];
-                [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+                HEMOnboardingService* service = [HEMOnboardingService sharedService];
+                [service startPollingSensorData];
+                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             }
             [self finish];
             break;
@@ -347,7 +347,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
                 [strongSelf setDetectedSSID:ssid];
             }
             if ([ssid length] > 0) {
-                [HEMOnboardingUtils saveConfiguredSSID:ssid];
+                [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
             }
             DDLogVerbose(@"wifi %@ is in state detected %ld", ssid, (long)state);
             [strongSelf setCurrentState:pairState];
@@ -513,7 +513,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)next {
-    [HEMOnboardingUtils notifyOfSensePairingChange:[self senseManager]];
+    [[HEMOnboardingService sharedService] notifyOfSensePairingChange];
     
     if ([self delegate] == nil) {
         NSString* segueId = nil;

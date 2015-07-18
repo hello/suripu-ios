@@ -51,7 +51,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 @implementation HEMRootViewController
 
 CGFloat const HEMRootDrawerDefaultGravityMagnitude = 2.5;
-CGFloat const HEMRootDrawerAnimationGravityMagnitude = 0.5;
+CGFloat const HEMRootDrawerAnimationGravityMagnitude = 1.f;
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
@@ -220,18 +220,21 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     }
 }
 
-- (void)adjustRevealHeight
-{
+- (CGFloat)drawerPaneRevealHeight {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
     CGFloat screenHeight = MAX(CGRectGetHeight(screenFrame), CGRectGetWidth(screenFrame));
-    CGFloat revealHeight = screenHeight - (HEMRootDrawerRevealHeight + statusBarHeight - HEMRootDrawerStatusBarOffset);
+    return screenHeight - (HEMRootDrawerRevealHeight + statusBarHeight - HEMRootDrawerStatusBarOffset);
+}
+
+- (void)adjustRevealHeight
+{
     MSDynamicsDrawerPaneState state = self.drawerViewController.paneState;
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
-    [self.drawerViewController setRevealWidth:revealHeight forDirection:MSDynamicsDrawerDirectionTop];
+    [self.drawerViewController setRevealWidth:[self drawerPaneRevealHeight] forDirection:MSDynamicsDrawerDirectionTop];
     self.drawerViewController.paneState = state;
-    self.drawerViewController.view.frame = screenFrame;
+    self.drawerViewController.view.frame = [[UIScreen mainScreen] bounds];
 }
 
 - (void)registerForNotifications
@@ -418,16 +421,39 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
         || self.drawerViewController.paneState == MSDynamicsDrawerPaneStateClosed
         || [self isAnimatingPaneState])
         return;
+
+    if (animated) {
+        [self animatePaneVisible:visible];
+    } else {
+        [self.drawerViewController setPaneState:state];
+    }
+}
+
+- (void)animatePaneVisible:(BOOL)visible {
+    UIView* paneView = self.drawerViewController.paneView;
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect targetFrame = paneView.frame;
+    targetFrame.origin.y = CGRectGetMaxY(screenBounds) + self.drawerViewController.paneStateOpenWideEdgeOffset;
+    CGRect startFrame = CGRectMake(0,
+                                   [self drawerPaneRevealHeight],
+                                   CGRectGetWidth(paneView.bounds),
+                                   CGRectGetHeight(paneView.bounds));
+    if (visible) {
+        [self animatePaneFrom:targetFrame to:startFrame state:MSDynamicsDrawerPaneStateOpen];
+    } else {
+        [self animatePaneFrom:startFrame to:targetFrame state:MSDynamicsDrawerPaneStateOpenWide];
+    }
+}
+
+- (void)animatePaneFrom:(CGRect)startFrame to:(CGRect)targetFrame state:(MSDynamicsDrawerPaneState)state {
     self.animatingPaneState = YES;
-    __weak typeof(self) weakSelf = self;
-    self.drawerViewController.gravityMagnitude = HEMRootDrawerAnimationGravityMagnitude;
-    [self.drawerViewController setPaneState:state
-                                   animated:animated
-                      allowUserInterruption:NO
-                                 completion:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.drawerViewController.gravityMagnitude = HEMRootDrawerDefaultGravityMagnitude;
-        strongSelf.animatingPaneState = NO;
+    UIView* paneView = self.drawerViewController.paneView;
+    paneView.frame = startFrame;
+    [UIView animateWithDuration:0.18f animations:^{
+        paneView.frame = targetFrame;
+    } completion:^(BOOL finished) {
+        [self.drawerViewController setPaneState:state];
+        self.animatingPaneState = NO;
     }];
 }
 

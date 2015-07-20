@@ -177,6 +177,27 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     [self setNearbySensesFound:nil];
 }
 
+#pragma mark - Pairing Mode for next user
+
+- (void)enablePairingMode:(void(^)(NSError* error))completion {
+    SENSenseManager* manager = [self currentSenseManager];
+    if (!manager) {
+        if (completion) {
+            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
+                                     reason:@"cannot enable pairing mode without a sense"]);
+        }
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [manager enablePairingMode:YES success:^(id response) {
+        [weakSelf disconnectCurrentSense];
+        if (completion) {
+            completion (nil);
+        }
+    } failure:completion];
+}
+
 #pragma mark - Room conditions / sensor data
 
 - (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion {

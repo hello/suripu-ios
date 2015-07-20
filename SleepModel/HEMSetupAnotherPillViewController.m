@@ -41,19 +41,15 @@
 }
 
 - (IBAction)setupAnother:(UIButton *)sender {
-    __weak typeof(self) weakSelf = self;
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
     
-    SENSenseManager* manager = [[HEMOnboardingService sharedService] currentSenseManager];
-    [manager enablePairingMode:YES success:^(id response) {
+    __weak typeof(self) weakSelf = self;
+    [service enablePairingMode:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [manager disconnectFromSense]; // must disconnect to allow other app to connect
-            [strongSelf getApp];
-        }
-    } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+        if (error) {
             [strongSelf showError:error];
+        } else {
+            [strongSelf getApp];
         }
     }];
 }

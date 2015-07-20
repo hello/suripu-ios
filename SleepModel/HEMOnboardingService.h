@@ -106,6 +106,16 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 - (void)stopPreScanning;
 
 /**
+ * @method enablePairingMode:
+ *
+ * @discussion
+ * Enable pairing mode on the currently managed sense
+ *
+ * @param completion: the block to invoke upon completion
+ */
+- (void)enablePairingMode:(void(^)(NSError* error))completion;
+
+/**
  * @method forceSensorDataUploadFromSense:
  *
  * @discussion

@@ -16,7 +16,8 @@ extern NSString* const HEMOnboardingNotificationDidChangePillPairing;
 typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorNoAccount = -1,
     HEMOnboardingErrorAccountCreationFailed = -2,
-    HEMOnboardingErrorAuthenticationFailed = -3
+    HEMOnboardingErrorAuthenticationFailed = -3,
+    HEMOnboardingErrorSenseNotInitialized = -4
 };
 
 /**
@@ -105,10 +106,16 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 - (void)stopPreScanning;
 
 /**
- *  Starts to poll sensor data until values are returned, at which point the
- *  polling will stop.  Clearing user data cache will also stop the polling.
+ * @method forceSensorDataUploadFromSense:
+ *
+ * @discussion
+ * Force Sense to start uploading sensor data immediately, rather than waiting
+ * for the internal clock to fire the upload.  This requires that senseManager
+ * has been initialized
+ * 
+ * @param completion: the block to invoke upon completion
  */
-- (void)startPollingSensorData;
+- (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion;
 
 #pragma mark - Accounts
 

@@ -177,7 +177,28 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     [self setNearbySensesFound:nil];
 }
 
-#pragma mark - Room Conditions
+#pragma mark - Room conditions / sensor data
+
+- (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion {
+    SENSenseManager* manager = [self currentSenseManager];
+    if (manager) {
+        __weak typeof(self) weakSelf = self;
+        [manager forceDataUpload:^(id response, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (!error && ![strongSelf hasFinishedOnboarding]) {
+                [strongSelf startPollingSensorData];
+            }
+            if (completion) {
+                completion (error);
+            }
+        }];
+    } else {
+        if (completion) {
+            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
+                                     reason:@"cannot force sensor data upload without a sense"]);
+        }
+    }
+}
 
 - (void)startPollingSensorData {
     if (![self isPollingSensorData]

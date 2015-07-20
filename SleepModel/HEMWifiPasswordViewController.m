@@ -459,10 +459,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)forceSensorDataUpload {
     __weak typeof(self) weakSelf = self;
-    [[self manager] forceDataUpload:^(id response, NSError *error) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service forceSensorDataUploadFromSense:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
             DDLogVerbose(@"failed to upload data %@", error);
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
         }
         [strongSelf setStepFinished:HEMWiFiSetupStepForceDataUpload];
         [strongSelf executeNextStep];
@@ -470,13 +472,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)finish {
-    // need to start querying for sensor data so that 1, user will see
-    // it as soon as onboarding is done and 2, later step will check
-    // sensor data
-    if (![self haveDelegates]) {
-        [[HEMOnboardingService sharedService] startPollingSensorData];
-    }
-    
     __weak typeof(self) weakSelf = self;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;

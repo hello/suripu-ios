@@ -252,7 +252,6 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         case HEMSensePairStateForceDataUpload: {
             if ([self delegate] == nil) {
                 HEMOnboardingService* service = [HEMOnboardingService sharedService];
-                [service startPollingSensorData];
                 [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             }
             [self finish];
@@ -422,11 +421,13 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 - (void)forceSensorDataUpload {
     DDLogVerbose(@"forcing data upload from ui");
     __weak typeof(self) weakSelf = self;
-    [[self senseManager] forceDataUpload:^(id response, NSError *error) {
-        DDLogVerbose(@"data upload response returned with error? %@", error);
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service forceSensorDataUploadFromSense:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        // whether there was an error or not, simply proceed b/c it's not
-        // required that the data is uploaded
+        DDLogVerbose(@"data upload response returned with error? %@", error);
+        if (error != nil) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+        }
         [strongSelf setCurrentState:HEMSensePairStateForceDataUpload];
         [strongSelf executeNextStep];
     }];

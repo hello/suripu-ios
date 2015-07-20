@@ -13,6 +13,12 @@
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingController.h"
 
+@interface HEMOnboardingService()
+
+- (void)startPollingSensorData;
+
+@end
+
 SPEC_BEGIN(HEMOnboardingServiceSpec)
 
 describe(@"HEMOnboardingService", ^{
@@ -107,6 +113,78 @@ describe(@"HEMOnboardingService", ^{
                 BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(NO)];
                 
+            });
+            
+        });
+        
+    });
+    
+    describe(@"-forceSensorDataUploadFromSense:", ^{
+        
+        beforeEach(^{
+            SENSenseManager* fakeManager = [[SENSenseManager alloc] init];
+            [service stub:@selector(currentSenseManager) andReturn:fakeManager];
+            [fakeManager stub:@selector(forceDataUpload:) withBlock:^id(NSArray *params) {
+                SENSenseCompletionBlock block = [params lastObject];
+                block (nil, nil);
+                return nil;
+            }];
+        });
+        
+        afterEach(^{
+            [service clear];
+            [service clearStubs];
+        });
+        
+        context(@"user has not finished onboarding", ^{
+            
+            beforeEach(^{
+                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+            });
+            
+            afterEach(^{
+                [service resetOnboardingCheckpoint];
+            });
+            
+            it(@"should start polling for sensor data", ^{
+                [[service should] receive:@selector(startPollingSensorData)];
+                [service forceSensorDataUploadFromSense:nil];
+            });
+            
+            it(@"should callback", ^{
+                __block BOOL calledBack = NO;
+                [service stub:@selector(startPollingSensorData)];
+                [service forceSensorDataUploadFromSense:^(NSError *error) {
+                    calledBack = YES;
+                }];
+                [[@(calledBack) should] equal:@(YES)];
+            });
+            
+        });
+        
+        context(@"user has finished onboarding", ^{
+            
+            beforeEach(^{
+                [service stub:@selector(isAuthorizedUser) andReturn:[KWValue valueWithBool:YES]];
+                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+            });
+            
+            afterEach(^{
+                [service resetOnboardingCheckpoint];
+            });
+            
+            it(@"should not poll for sensor data", ^{
+                [[service shouldNot] receive:@selector(startPollingSensorData)];
+                [service forceSensorDataUploadFromSense:nil];
+            });
+            
+            it(@"should callback", ^{
+                __block BOOL calledBack = NO;
+                [service stub:@selector(startPollingSensorData)];
+                [service forceSensorDataUploadFromSense:^(NSError *error) {
+                    calledBack = YES;
+                }];
+                [[@(calledBack) should] equal:@(YES)];
             });
             
         });

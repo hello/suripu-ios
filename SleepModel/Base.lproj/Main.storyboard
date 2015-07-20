@@ -3993,11 +3993,11 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ro9-mr-414">
-                                <rect key="frame" x="0.0" y="320" width="375" height="300"/>
+                                <rect key="frame" x="0.0" y="320" width="375" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="375" id="2bH-Su-LF8"/>
-                                    <constraint firstAttribute="height" constant="300" id="nPm-Jp-39N"/>
+                                    <constraint firstAttribute="height" id="nPm-Jp-39N"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Adg-I7-pVg">
                                     <size key="itemSize" width="370" height="86"/>
@@ -4052,7 +4052,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xy9-b3-hMj">
                                                     <rect key="frame" x="20" y="39" width="45" height="33"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="140" id="9Sp-3J-RtH"/>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="136" id="9Sp-3J-RtH"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -4067,7 +4067,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6.8h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-S5-gJr">
                                                     <rect key="frame" x="206" y="39" width="45" height="33"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="140" id="K5s-DR-xRC"/>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="136" id="K5s-DR-xRC"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

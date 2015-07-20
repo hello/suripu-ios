@@ -424,7 +424,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 
 - (BOOL)hasFinishedOnboarding {
     HEMOnboardingCheckpoint checkpoint = [self onboardingCheckpoint];
-    return [SENAuthorizationService isAuthorized]
+    return [self isAuthorizedUser]
         && (checkpoint == HEMOnboardingCheckpointStart // start and authorized = signed in
         || checkpoint == HEMOnboardingCheckpointPillDone);
 }

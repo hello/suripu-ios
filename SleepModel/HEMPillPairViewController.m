@@ -298,7 +298,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 #pragma mark - Next
 
 - (void)proceed {
-    [[HEMOnboardingService sharedService] notifyOfSensePairingChange];
+    [[HEMOnboardingService sharedService] notifyOfPillPairingChange];
     
     if ([self delegate] == nil) {
         [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];

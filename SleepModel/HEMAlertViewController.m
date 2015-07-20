@@ -35,6 +35,23 @@
     }];
 }
 
++ (void)showBooleanChoiceDialogWithTitle:(NSString *)title
+                                 message:(NSString *)message
+                              controller:(UIViewController *)controller
+                                  action:(void (^)())action {
+    HEMAlertViewController *dialogVC = [HEMAlertViewController new];
+    dialogVC.title = title;
+    dialogVC.message = message;
+    dialogVC.defaultButtonTitle = NSLocalizedString(@"actions.yes", nil);
+    dialogVC.viewToShowThrough = controller.view;
+    [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
+                primary:NO
+            actionBlock:^{
+                [controller dismissViewControllerAnimated:YES completion:NULL];
+            }];
+    [dialogVC showFrom:controller onDefaultActionSelected:action];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addBackgroundView];

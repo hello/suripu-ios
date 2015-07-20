@@ -45,6 +45,21 @@
 + (void)showInfoDialogWithTitle:(NSString*)title message:(NSString*)message controller:(UIViewController*)controller;
 
 /**
+ *  Present a dialog with "yes" and "no" as possible options, where answering
+ *  "yes" (default) performs an action, and no dismisses the dialog without
+ *  further interaction.
+ *
+ *  @param title      title of the dialog
+ *  @param message    dialog message content
+ *  @param controller presenting controller
+ *  @param action     block executed when answer is "yes"
+ */
++ (void)showBooleanChoiceDialogWithTitle:(NSString *)title
+                                 message:(NSString *)message
+                              controller:(UIViewController *)controller
+                                  action:(void (^)())action;
+
+/**
  * Add additional action buttons to the dialog
  * @param title:   title of the action button
  * @param primary: YES if primary action, NO otherwise

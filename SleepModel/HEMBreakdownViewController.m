@@ -36,7 +36,7 @@
 
 @implementation HEMBreakdownViewController
 
-const CGFloat BreakdownCellItemHeight = 116.f;
+const CGFloat BreakdownCellItemHeight = 86.f;
 const CGFloat BreakdownCellSummaryBaseHeight = 80.f; // 40 top + bottom margins + 30 title +  10 spacing
 const CGFloat BreakdownDismissButtonBottom = 18.f;
 const CGFloat BreakdownDismissButtonHide = -40.f;

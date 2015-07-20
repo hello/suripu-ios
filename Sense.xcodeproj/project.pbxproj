@@ -167,6 +167,7 @@
 		8A8288D81A7800820043B1D1 /* trendsBarIconActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C61A7800820043B1D1 /* trendsBarIconActive.png */; };
 		8A8288D91A7800820043B1D1 /* trendsBarIconActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C71A7800820043B1D1 /* trendsBarIconActive@2x.png */; };
 		8A8288DA1A7800820043B1D1 /* trendsBarIconActive@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C81A7800820043B1D1 /* trendsBarIconActive@3x.png */; };
+		8A8621671B5D5DC20033F44C /* HEMAppReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8621661B5D5DC20033F44C /* HEMAppReview.m */; };
 		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
 		8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
 		8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9AB196350D200AFD110 /* HelloStyleKit.m */; };
@@ -952,6 +953,8 @@
 		8A8288C61A7800820043B1D1 /* trendsBarIconActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trendsBarIconActive.png; path = images/trendsBarIconActive.png; sourceTree = "<group>"; };
 		8A8288C71A7800820043B1D1 /* trendsBarIconActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "trendsBarIconActive@2x.png"; path = "images/trendsBarIconActive@2x.png"; sourceTree = "<group>"; };
 		8A8288C81A7800820043B1D1 /* trendsBarIconActive@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "trendsBarIconActive@3x.png"; path = "images/trendsBarIconActive@3x.png"; sourceTree = "<group>"; };
+		8A8621651B5D5DC20033F44C /* HEMAppReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppReview.h; sourceTree = "<group>"; };
+		8A8621661B5D5DC20033F44C /* HEMAppReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReview.m; sourceTree = "<group>"; };
 		8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmSoundTableViewController.h; sourceTree = "<group>"; };
 		8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMAlarmSoundTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8A90F9A719630C3800AFD110 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1744,6 +1747,7 @@
 				BF1E2E5A1A0068AA00DDD0D0 /* Insights */,
 				8A28CAF919CB85030044A27D /* Notifications */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
+				8A8621641B5D5D860033F44C /* Review */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
 				BFC3AA0319C2650F0055D308 /* Sleep Questions */,
@@ -2527,6 +2531,15 @@
 				BF5AE04C1B4DD31900646B6E /* timeline_right_caret@3x.png */,
 			);
 			name = "summary buttons";
+			sourceTree = "<group>";
+		};
+		8A8621641B5D5D860033F44C /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				8A8621651B5D5DC20033F44C /* HEMAppReview.h */,
+				8A8621661B5D5DC20033F44C /* HEMAppReview.m */,
+			);
+			name = Review;
 			sourceTree = "<group>";
 		};
 		8A90F9B019635C7900AFD110 /* View Controllers */ = {
@@ -4111,6 +4124,7 @@
 				BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,
 				BF257EEA1A1D269300DAF923 /* HEMAlertView.m in Sources */,
+				8A8621671B5D5DC20033F44C /* HEMAppReview.m in Sources */,
 				BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */,
 				BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */,
 				BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */,

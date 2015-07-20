@@ -7,7 +7,7 @@
 //
 
 #import "HEMPillDescriptionViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 
 @implementation HEMPillDescriptionViewController
 
@@ -17,7 +17,7 @@
     
     // start checking for paired accounts to the previously paired Sense so
     // that future steps in the flow can use the cached data
-    [[HEMOnboardingCache sharedCache] checkNumberOfPairedAccounts];
+    [[HEMOnboardingService sharedService] checkNumberOfPairedAccounts];
     [self trackAnalyticsEvent:HEMAnalyticsEventSleepPill];
 }
 

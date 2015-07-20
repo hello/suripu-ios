@@ -21,9 +21,9 @@
 #import "HelloStyleKit.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMCardFlowLayout.h"
+#import "HEMOnboardingService.h"
 
 static NSInteger const HEMDeviceRowSense = 0;
 static NSInteger const HEMDeviceRowPill = 1;
@@ -175,8 +175,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
             [strongSelf setConfiguredSSID:wifiSSID];
             [strongSelf setWifiState:state];
-            
-            [HEMOnboardingUtils saveConfiguredSSID:wifiSSID];
+            [[HEMOnboardingService sharedService] saveConfiguredSSID:wifiSSID];
             
             if (completion) completion (error);
         }];
@@ -250,7 +249,8 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (NSString*)wifiValue {
-    NSString* value = [self configuredSSID] ?: [HEMOnboardingUtils lastConfiguredSSID];
+    NSString* lastConfiguredSSID = [[HEMOnboardingService sharedService] lastConfiguredSSID];
+    NSString* value = [self configuredSSID] ?: lastConfiguredSSID;
     if ([value length] == 0 && [self wifiState] == SENWifiConnectionStateDisconnected) {
         value = NSLocalizedString(@"settings.device.network.disconnected", nil);
     } else if ([value length] == 0) {

@@ -6,12 +6,11 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMLocationFinderViewController.h"
 #import "HEMSettingsTableViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMLocationCenter.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
 
 @interface HEMLocationFinderViewController ()
@@ -62,7 +61,7 @@
     self.locationTxId =
         [[HEMLocationCenter sharedCenter] locate:&error success:^BOOL(double lat, double lon, double accuracy) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            SENAccount* account = [[HEMOnboardingCache sharedCache] account];
+            SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
             [account setLatitude:@(lat)];
             [account setLongitude:@(lon)];
             
@@ -141,17 +140,16 @@
 
 - (void)uploadCollectedData:(BOOL)retry {    
     __weak typeof(self) weakSelf = self;
-    [SENAPIAccount updateAccount:[[HEMOnboardingCache sharedCache] account]
-                 completionBlock:^(id data, NSError *error) {
-                     if (error)
-                         DDLogVerbose(@"update completed with error %@", error);
-                     __strong typeof(weakSelf) strongSelf = weakSelf;
-                     if (!strongSelf) return;
-                     if (error != nil && retry) {
-                         DDLogVerbose(@"failed to update account with user information");
-                         [strongSelf uploadCollectedData:NO];
-                     } // TODO (jimmy): else if error, no retry, what should we do?
-                 }];
+    [[HEMOnboardingService sharedService] updateCurrentAccount:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            DDLogVerbose(@"update completed with error %@", error);
+            if (retry) {
+                DDLogVerbose(@"failed to update account with user information");
+                [strongSelf uploadCollectedData:NO];
+            }
+        }
+    }];
 }
 
 - (void)next {

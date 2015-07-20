@@ -3,10 +3,9 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMHeightPickerViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMRulerView.h"
 #import "UIColor+HEMStyle.h"
@@ -149,7 +148,8 @@ static NSInteger const HEMHeightDefaultInch = 8;
     [self setSelectedHeightInCm:cm];
     
     if ([self delegate] == nil) {
-        [[[HEMOnboardingCache sharedCache] account] setHeight:@(cm)];
+        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
+        [account setHeight:@(cm)];
     }
     
 }

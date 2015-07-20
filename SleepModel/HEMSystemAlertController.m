@@ -13,7 +13,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMSystemAlertController.h"
 #import "HEMActionView.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"

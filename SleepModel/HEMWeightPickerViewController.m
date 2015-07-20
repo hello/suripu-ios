@@ -5,12 +5,11 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMWeightPickerViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMathUtil.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMRulerView.h"
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
@@ -89,7 +88,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 }
 
 - (void)scrollToSetWeight {
-    SENAccountGender gender = [[[HEMOnboardingCache sharedCache] account] gender];
+    SENAccountGender gender = [[[HEMOnboardingService sharedService] currentAccount] gender];
     CGFloat genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
     CGFloat initialWeight = [self defaultWeightLbs] > 0 ? [self defaultWeightLbs] : genderWeight;
     CGFloat initialOffset = (initialWeight*(HEMRulerSegmentSpacing+HEMRulerSegmentWidth))-[[self scrollView] contentInset].left;
@@ -119,7 +118,8 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     if ([self delegate] != nil) {
         [[self delegate] didSelectWeightInKgs:[self weightInKgs] from:self];
     } else {
-        [[[HEMOnboardingCache sharedCache] account] setWeight:@(ceilf([self weightInKgs] * 1000))];
+        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
+        [account setWeight:@(ceilf([self weightInKgs] * 1000))];
         [self next];
     }
 }
@@ -133,7 +133,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 }
 
 - (void)next {
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+    [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
     
     NSString* segueId = nil;
     if ([[SENServiceHealthKit sharedService] isSupported]) {

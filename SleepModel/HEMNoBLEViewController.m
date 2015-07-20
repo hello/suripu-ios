@@ -11,7 +11,6 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMNoBLEViewController.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"

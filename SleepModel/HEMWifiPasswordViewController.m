@@ -17,10 +17,9 @@
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMWifiUtils.h"
 #import "HEMSimpleLineTextField.h"
-#import "HEMOnboardingUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepNone = 0,
@@ -395,18 +394,18 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                          properties:properties];
     
     __weak typeof(self) weakSelf = self;
-    SENSenseManager* manager = [self manager];
-    [manager setWiFi:ssid password:password securityType:type success:^(id response) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service setWiFi:ssid password:password securityType:type completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [HEMOnboardingUtils saveConfiguredSSID:ssid];
+        if (error) {
+            [strongSelf showSetWiFiError:error];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            return;
+        }
         [strongSelf setSsidConfigured:ssid];
         [strongSelf setStepFinished:HEMWiFiSetupStepConfigureWiFi];
         [strongSelf executeNextStep];
-    } failure:^(NSError *error) {
-        [weakSelf showSetWiFiError:error];
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
-
 }
 
 - (void)linkAccount {
@@ -460,10 +459,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)forceSensorDataUpload {
     __weak typeof(self) weakSelf = self;
-    [[self manager] forceDataUpload:^(id response, NSError *error) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service forceSensorDataUploadFromSense:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
             DDLogVerbose(@"failed to upload data %@", error);
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
         }
         [strongSelf setStepFinished:HEMWiFiSetupStepForceDataUpload];
         [strongSelf executeNextStep];
@@ -471,26 +472,20 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)finish {
-    // need to start querying for sensor data so that 1, user will see
-    // it as soon as onboarding is done and 2, later step will check
-    // sensor data
-    if (![self haveDelegates]) {
-        [[HEMOnboardingCache sharedCache] startPollingSensorData];
-    }
-    
     __weak typeof(self) weakSelf = self;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        [HEMOnboardingUtils notifyOfSensePairingChange:[strongSelf manager]];
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        [service notifyOfSensePairingChange];
         
         if ([strongSelf delegate] != nil) {
-            [HEMOnboardingCache clearCache];
+            [[HEMOnboardingService sharedService] clear];
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
         } else if ([strongSelf sensePairDelegate] != nil) {
             [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:strongSelf];
         } else {
-            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+            [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
                                             sender:nil];
         }

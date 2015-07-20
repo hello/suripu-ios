@@ -11,7 +11,6 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMGetAppViewController.h"
-#import "HEMOnboardingUtils.h"
 
 @interface HEMGetAppViewController ()
 
@@ -31,20 +30,17 @@
     NSString* format = NSLocalizedString(@"setup.get-app.subtitle.format", nil);
     NSString* url = NSLocalizedString(@"setup.get-app.url", nil);
     
-    NSArray* args = @[
-        [HEMOnboardingUtils boldAttributedText:url withColor:[UIColor blackColor]]
-    ];
+    NSArray* args = @[[self boldAttributedText:url]];
     
     NSMutableAttributedString* attrSubtitle
         = [[NSMutableAttributedString alloc] initWithFormat:format args:args];
     
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    
+    [self applyCommonDescriptionAttributesTo:attrSubtitle];
     [[self descriptionLabel] setAttributedText:attrSubtitle];
 }
 
 - (IBAction)finish:(id)sender {
-    [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+    [self completeOnboarding];
 }
 
 @end

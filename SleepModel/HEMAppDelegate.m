@@ -9,7 +9,6 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSnazzBarController.h"
 #import "HEMAudioCache.h"
@@ -251,7 +250,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     SENClearModel();
     [HEMAudioCache clearCache];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
-    [HEMOnboardingUtils resetOnboardingCheckpoint];
+    [[HEMOnboardingService sharedService] resetOnboardingCheckpoint];
 }
 
 @end

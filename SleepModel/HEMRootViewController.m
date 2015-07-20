@@ -24,7 +24,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMDebugController.h"
 #import "HEMActionView.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMSystemAlertController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
@@ -33,6 +32,8 @@
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
 #import "HEMTimelineContainerViewController.h"
+#import "HEMOnboardingService.h"
+#import "HEMOnboardingController.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -116,7 +117,8 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
     [self registerForNotifications];
 
-    if ([HEMOnboardingUtils hasFinishedOnboarding]) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    if ([service hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:NO];
         [self setMainControllerLoaded:YES];
     }
@@ -130,7 +132,8 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     // need to launch the onboarding controller.  Onboarding currently is presented
     // modally, which can't be loaded in viewDidLoad.
     if (![self isMainControllerLoaded]) {
-        if (![HEMOnboardingUtils hasFinishedOnboarding]) {
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        if (![service hasFinishedOnboarding]) {
             [self showArea:HEMRootAreaOnboarding animated:NO];
             [self setMainControllerLoaded:YES];
         }
@@ -260,7 +263,8 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
 
 - (BOOL)shouldMonitorSystem
 {
-    HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    HEMOnboardingCheckpoint checkpoint = [service onboardingCheckpoint];
     return [SENAuthorizationService isAuthorized]
         && [self presentedViewController] == nil
         && (checkpoint == HEMOnboardingCheckpointStart
@@ -312,8 +316,9 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     if ([self presentedViewController] != nil)
         return;
 
-    HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
-    UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint force:NO];
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    HEMOnboardingCheckpoint checkpoint = [service onboardingCheckpoint];
+    UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:checkpoint force:NO];
 
     if (controller != nil) {
         UINavigationController* onboardingNav
@@ -335,7 +340,8 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
 
 - (void)didAuthorize
 {
-    if ([HEMOnboardingUtils hasFinishedOnboarding]) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    if ([service hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:YES];
     }
     [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];

@@ -22,7 +22,6 @@
 #import "HEMHelpFooterTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMStyledNavigationViewController.h"
@@ -458,8 +457,10 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     switch ([error code]) {
         case SENServiceAccountErrorInvalidArg:
             return NSLocalizedString(@"settings.account.update.failure", nil);
-        default:
-            return [HEMOnboardingUtils accountErrorMessageFromError:error];
+        default: {
+            HEMOnboardingService* service = [HEMOnboardingService sharedService];
+            return [service localizedMessageFromAccountError:error];
+        }
     }
 }
 

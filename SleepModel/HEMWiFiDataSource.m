@@ -11,7 +11,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "HEMWiFiDataSource.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 
 NSString* const kHEMWifiOtherCellId = @"other";
 NSString* const kHEMWifiNetworkCellId = @"network";
@@ -81,11 +81,7 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
 }
 
 - (SENSenseManager*)manager {
-    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
-    if (manager == nil) {
-        manager = [[HEMOnboardingCache sharedCache] senseManager];
-    }
-    return manager;
+    return [[HEMOnboardingService sharedService] currentSenseManager];
 }
 
 - (void)clearDetectedWifis {

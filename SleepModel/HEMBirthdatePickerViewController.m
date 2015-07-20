@@ -4,13 +4,12 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMBirthdatePickerViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerView.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
-#import "HEMOnboardingUtils.h"
 
 static NSInteger const kHEMBirthdatePickerDefaultMonth = 7;
 static NSInteger const kHEMBirthdatePickerDefaultDay = 15;
@@ -30,10 +29,9 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString* msg = NSLocalizedString(@"user.info.accessibility.birthdate-title", nil);
-    [[self titleLabel] setAccessibilityLabel:msg];
+    [self configureTitleAccessibility];
 
-    [self loadAccount:nil]; // if does not yet exist, in case user returns to here
+    [self preLoadAccount]; // if does not yet exist, in case user returns to here
     [self configureButtons];
 
     if ([self delegate] == nil) {
@@ -41,10 +39,19 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         // this is one of the checkpoints and if user lands back here, this optimizatin
         // will also apply.  If there is a delegate, we do not want to pre scan
         // as it should already be set up.
-        [[HEMOnboardingCache sharedCache] preScanForSenses];
+        [[HEMOnboardingService sharedService] preScanForSenses];
     }
     
     [self trackAnalyticsEvent:HEMAnalyticsEventBirthday];
+}
+
+- (void)preLoadAccount {
+    [[HEMOnboardingService sharedService] loadCurrentAccount:nil];
+}
+
+- (void)configureTitleAccessibility {
+    NSString* msg = NSLocalizedString(@"user.info.accessibility.birthdate-title", nil);
+    [[self titleLabel] setAccessibilityLabel:msg];
 }
 
 - (void)configureButtons {
@@ -69,17 +76,6 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     }
 }
 
-- (void)loadAccount:(void(^)(NSError* error))completion {
-    if ([[HEMOnboardingCache sharedCache] account] == nil) {
-        [SENAPIAccount getAccount:^(SENAccount* account, NSError *error) {
-            if (account != nil) {
-                [[HEMOnboardingCache sharedCache] setAccount:account];
-            }
-            if (completion) completion (error);
-        }];
-    }
-}
-
 #pragma mark - Errors
 
 - (void)showIssueLoadingAccountAlert {
@@ -95,12 +91,12 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     NSInteger year = [[self dobPicker] selectedYear];
     
     if ([self delegate] == nil) {
-        HEMOnboardingCache* cache = [HEMOnboardingCache sharedCache];
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
         
-        if ([cache account] == nil) {
+        if ([service currentAccount] == nil) {
             [self loadAccountThenProceedWithMonth:month day:day year:year];
         } else {
-            [[cache account] setBirthMonth:month day:day andYear:year];
+            [[service currentAccount] setBirthMonth:month day:day andYear:year];
             [self proceedToNextScreen];
         }
 
@@ -119,13 +115,13 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 - (void)loadAccountThenProceedWithMonth:(NSInteger)month day:(NSInteger)day year:(NSInteger)year {
     __weak typeof(self) weakSelf = self;
-    [self loadAccount:^(NSError *error) {
+    [[HEMOnboardingService sharedService] loadCurrentAccount:^(SENAccount *account, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             if (error != nil) {
                 [strongSelf showIssueLoadingAccountAlert];
             } else {
-                [[[HEMOnboardingCache sharedCache] account] setBirthMonth:month day:day andYear:year];
+                [account setBirthMonth:month day:day andYear:year];
                 [strongSelf proceedToNextScreen];
             }
         }

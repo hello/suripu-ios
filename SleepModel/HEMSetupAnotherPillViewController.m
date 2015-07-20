@@ -14,8 +14,7 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMSetupAnotherPillViewController.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingUtils.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 
 @interface HEMSetupAnotherPillViewController ()
@@ -42,30 +41,26 @@
 }
 
 - (IBAction)setupAnother:(UIButton *)sender {
-    __weak typeof(self) weakSelf = self;
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
     
-    SENSenseManager* manager = [[HEMOnboardingCache sharedCache] senseManager];
-    [manager enablePairingMode:YES success:^(id response) {
+    __weak typeof(self) weakSelf = self;
+    [service enablePairingMode:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [manager disconnectFromSense]; // must disconnect to allow other app to connect
-            [strongSelf getApp];
-        }
-    } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+        if (error) {
             [strongSelf showError:error];
+        } else {
+            [strongSelf getApp];
         }
     }];
 }
 
 - (IBAction)skip:(id)sender {
-    [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
-    [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+    [[HEMOnboardingService sharedService] disconnectCurrentSense];
+    [self completeOnboarding];
 }
 
 - (void)getApp {
-    [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
+    [[HEMOnboardingService sharedService] disconnectCurrentSense];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard getAppSegueIdentifier]
                               sender:self];
 }

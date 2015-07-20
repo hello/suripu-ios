@@ -1,13 +1,10 @@
 
-#import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENAPIClient.h>
 #import <CocoaLumberjack/DDLog.h>
 
 #import "UIFont+HEMStyle.h"
 
 #import "HEMAuthenticationViewController.h"
 #import "HEMActionButton.h"
-#import "HEMOnboardingUtils.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActivityCoverView.h"
@@ -110,8 +107,12 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
     [self showActivity:^{
         [self setSigningIn:YES];
         
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        NSString* username = [[self usernameField] text];
+        NSString* password = [[self passwordField] text];
+        
         __weak typeof(self) weakSelf = self;
-        [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
+        [service authenticateUser:username pass:password retry:YES completion:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             [strongSelf setSigningIn:NO];
@@ -119,16 +120,14 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
             if (error) {
                 [strongSelf stopActivity:^{
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                    [HEMOnboardingUtils showAlertForHTTPError:error
-                                                    withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
-                                                         from:strongSelf];
-                    return;
+                    
+                    NSString* title = NSLocalizedString(@"authorization.sign-in.failed.title", nil);
+                    [strongSelf showMessageDialog:[error localizedDescription] title:title];
                 }];
             } else {
                 [strongSelf letUserIntoApp];
                 [strongSelf stopActivity:nil];
             }
-            
         }];
     }];
 }

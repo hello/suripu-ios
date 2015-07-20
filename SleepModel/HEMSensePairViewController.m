@@ -15,9 +15,8 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMSettingsTableViewController.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMAlertViewController.h"
@@ -132,10 +131,6 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 
 #pragma mark - Scanning
 
-- (BOOL)preScannedSensesFound {
-    return [[[HEMOnboardingCache sharedCache] nearbySensesFound] count] > 0;
-}
-
 - (void)scanTimeout {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scanTimeout) object:nil];
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
@@ -153,10 +148,10 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)scanWithActivity {
-    
     [self setTimedOut:NO];
     
-    BOOL preScanned = [self preScannedSensesFound];
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    BOOL preScanned = [service foundNearbySenses];
     
     NSString* activityMessage
         = preScanned
@@ -165,8 +160,8 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     
     [self showActivityWithMessage:activityMessage completion:^{
         if (preScanned) {
-            [self useSense:[[[HEMOnboardingCache sharedCache] nearbySensesFound] firstObject]];
-            [[HEMOnboardingCache sharedCache] clearPreScannedSenses];
+            [self useSense:[service nearestSense]];
+            [service clearNearbySensesCache];
         } else {
             [self startScan];
         }
@@ -256,8 +251,8 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         }
         case HEMSensePairStateForceDataUpload: {
             if ([self delegate] == nil) {
-                [[HEMOnboardingCache sharedCache] startPollingSensorData];
-                [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+                HEMOnboardingService* service = [HEMOnboardingService sharedService];
+                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             }
             [self finish];
             break;
@@ -306,7 +301,8 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         [[strongSelf senseManager] pair:^(id response) {
             DDLogVerbose(@"paired!");
             if (![strongSelf isTimedOut]) {
-                [[HEMOnboardingCache sharedCache] setSenseManager:[strongSelf senseManager]];
+                HEMOnboardingService* service = [HEMOnboardingService sharedService];
+                [service replaceCurrentSenseManagerWith:[strongSelf senseManager]];
                 [strongSelf setPairing:NO];
                 [strongSelf setCurrentState:HEMSensePairStateSensePaired];
                 [strongSelf executeNextStep];
@@ -350,7 +346,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
                 [strongSelf setDetectedSSID:ssid];
             }
             if ([ssid length] > 0) {
-                [HEMOnboardingUtils saveConfiguredSSID:ssid];
+                [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
             }
             DDLogVerbose(@"wifi %@ is in state detected %ld", ssid, (long)state);
             [strongSelf setCurrentState:pairState];
@@ -425,11 +421,13 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 - (void)forceSensorDataUpload {
     DDLogVerbose(@"forcing data upload from ui");
     __weak typeof(self) weakSelf = self;
-    [[self senseManager] forceDataUpload:^(id response, NSError *error) {
-        DDLogVerbose(@"data upload response returned with error? %@", error);
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service forceSensorDataUploadFromSense:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        // whether there was an error or not, simply proceed b/c it's not
-        // required that the data is uploaded
+        DDLogVerbose(@"data upload response returned with error? %@", error);
+        if (error != nil) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+        }
         [strongSelf setCurrentState:HEMSensePairStateForceDataUpload];
         [strongSelf executeNextStep];
     }];
@@ -516,7 +514,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)next {
-    [HEMOnboardingUtils notifyOfSensePairingChange:[self senseManager]];
+    [[HEMOnboardingService sharedService] notifyOfSensePairingChange];
     
     if ([self delegate] == nil) {
         NSString* segueId = nil;
@@ -529,7 +527,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         [self performSegueWithIdentifier:segueId sender:self];
     } else {
         if ([self detectedSSID] != nil) {
-            [HEMOnboardingCache clearCache];
+            [[HEMOnboardingService sharedService] clear];
             [[self delegate] didPairSenseUsing:[self senseManager] from:self];
         } else {
             [self performSegueWithIdentifier:[HEMOnboardingStoryboard wifiSegueIdentifier]

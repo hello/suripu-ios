@@ -7,7 +7,6 @@
 //
 #import <sys/utsname.h>
 #import <SenseKit/SENAPIClient.h>
-#import <CocoaLumberjack/DDLog.h>
 #import <CocoaLumberjack/DDFileLogger.h>
 #import <CocoaLumberjack/DDTTYLogger.h>
 #import "HEMLogUtils.h"

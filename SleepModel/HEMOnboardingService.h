@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * @property nearbySensesFound is filled.
  *
  */
-- (BOOL)foundNearyBySenses;
+- (BOOL)foundNearbySenses;
 
 /**
  * @method clearNearBySensesCache
@@ -86,7 +86,7 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * unused memory.  Calling @method clear or @method markOnboardingAsComplete will
  * also clear the cache
  */
-- (void)clearNearBySensesCache;
+- (void)clearNearbySensesCache;
 
 /**
  * @method nearestSense

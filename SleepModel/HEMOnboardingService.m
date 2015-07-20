@@ -59,14 +59,6 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     return [self sharedService];
 }
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (void)clear {
     [self stopPreScanning];
     [SENSenseManager stopScan]; // if one is still scanning for some reason
@@ -165,7 +157,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     return [[self nearbySensesFound] firstObject];
 }
 
-- (BOOL)foundNearyBySenses {
+- (BOOL)foundNearbySenses {
     return [[self nearbySensesFound] count] > 0;
 }
 
@@ -173,7 +165,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     [[self currentSenseManager] disconnectFromSense];
 }
 
-- (void)clearNearBySensesCache {
+- (void)clearNearbySensesCache {
     [self setNearbySensesFound:nil];
 }
 

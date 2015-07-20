@@ -151,7 +151,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [self setTimedOut:NO];
     
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    BOOL preScanned = [service foundNearyBySenses];
+    BOOL preScanned = [service foundNearbySenses];
     
     NSString* activityMessage
         = preScanned
@@ -161,7 +161,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [self showActivityWithMessage:activityMessage completion:^{
         if (preScanned) {
             [self useSense:[service nearestSense]];
-            [service clearNearBySensesCache];
+            [service clearNearbySensesCache];
         } else {
             [self startScan];
         }

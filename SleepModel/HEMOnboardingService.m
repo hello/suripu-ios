@@ -429,6 +429,30 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 
 #pragma mark - WiFi
 
+- (void)setWiFi:(NSString*)ssid
+       password:(NSString*)password
+   securityType:(SENWifiEndpointSecurityType)type
+     completion:(void(^)(NSError* error))completion {
+    
+    SENSenseManager* manager = [self currentSenseManager];
+    if (!manager) {
+        if (completion) {
+            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
+                                     reason:@"unable to set wifi without a sense manager initialized"]);
+        }
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [manager setWiFi:ssid password:password securityType:type success:^(id response) {
+        [weakSelf saveConfiguredSSID:ssid];
+        if (completion) {
+            completion (nil);
+        }
+    } failure:completion];
+    
+}
+
 - (void)saveConfiguredSSID:(NSString*)ssid {
     if ([ssid length] == 0) return;
     

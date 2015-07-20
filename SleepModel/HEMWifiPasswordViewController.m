@@ -394,18 +394,18 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                          properties:properties];
     
     __weak typeof(self) weakSelf = self;
-    SENSenseManager* manager = [self manager];
-    [manager setWiFi:ssid password:password securityType:type success:^(id response) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service setWiFi:ssid password:password securityType:type completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
+        if (error) {
+            [strongSelf showSetWiFiError:error];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            return;
+        }
         [strongSelf setSsidConfigured:ssid];
         [strongSelf setStepFinished:HEMWiFiSetupStepConfigureWiFi];
         [strongSelf executeNextStep];
-    } failure:^(NSError *error) {
-        [weakSelf showSetWiFiError:error];
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
-
 }
 
 - (void)linkAccount {

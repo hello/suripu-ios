@@ -5,8 +5,8 @@
 //  Created by Jimmy Lu on 7/16/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-
-#import "SENService.h"
+#import <SenseKit/SENService.h>
+#import <SenseKit/SENSenseMessage.pb.h>
 
 extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
@@ -215,6 +215,24 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 - (void)checkNumberOfPairedAccounts;
 
 #pragma mark - WiFi
+
+/**
+ * @method setWiFi:password:securityType:completion
+ *
+ * @discussion
+ * Sets the WiFi credentials on Sense, if a sense manager has been initialized.
+ * Upon setting the WiFi credentials successfully, the ssid will be saved for later
+ * use.
+ *
+ * @param ssid:       the ssid of the WiFi to set
+ * @param password:   the password of the WiFi
+ * @param type:       the security type of the WiFi
+ * @param completion: block to invoke when done
+ */
+- (void)setWiFi:(NSString*)ssid
+       password:(NSString*)password
+   securityType:(SENWifiEndpointSecurityType)type
+     completion:(void(^)(NSError* error))completion;
 
 /**
  * @method saveConfiguredSSID:

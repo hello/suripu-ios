@@ -395,12 +395,6 @@ static BOOL hasLoadedBefore = NO;
     [root presentViewController:sheet animated:NO completion:nil];
 }
 
-- (BOOL)canAdjustEventWithType:(NSString *)eventType {
-    NSArray *adjustableTypes =
-        @[ HEMSleepEventTypeWakeUp, HEMSleepEventTypeFallAsleep, HEMSleepEventTypeInBed, HEMSleepEventTypeOutOfBed ];
-    return [adjustableTypes containsObject:eventType];
-}
-
 - (void)feedbackFailedToSend:(NSNotification *)note {
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

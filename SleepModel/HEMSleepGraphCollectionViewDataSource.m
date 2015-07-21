@@ -25,21 +25,6 @@
 #import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
 
-NSString *const HEMSleepEventTypeWakeUp = @"WAKE_UP";
-NSString *const HEMSleepEventTypeLight = @"LIGHT";
-NSString *const HEMSleepEventTypeMotion = @"MOTION";
-NSString *const HEMSleepEventTypeNoise = @"NOISE";
-NSString *const HEMSleepEventTypeSunrise = @"SUNRISE";
-NSString *const HEMSleepEventTypeSunset = @"SUNSET";
-NSString *const HEMSleepEventTypeFallAsleep = @"SLEEP";
-NSString *const HEMSleepEventTypePartnerMotion = @"PARTNER_MOTION";
-NSString *const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
-NSString *const HEMSleepEventTypeInBed = @"IN_BED";
-NSString *const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
-NSString *const HEMSleepEventTypeAlarm = @"ALARM";
-NSString *const HEMSleepEventTypeSmartAlarm = @"SMART_ALARM";
-NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
-
 @interface HEMSleepGraphCollectionViewDataSource ()
 
 @property (nonatomic, weak) UICollectionView *collectionView;

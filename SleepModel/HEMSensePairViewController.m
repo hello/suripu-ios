@@ -466,21 +466,15 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         if (allowWiFiEdit) {
             [dialogVC setMessage:NSLocalizedString(@"pairing.error.link-account-failed-edit-wifi", nil)];
             [dialogVC addAction:NSLocalizedString(@"actions.edit.wifi", nil) primary:NO actionBlock:^{
-                [strongSelf dismissViewControllerAnimated:YES completion:^{
-                    [strongSelf setCurrentState:HEMSensePairStateNeedWiFiChange];
-                    [strongSelf executeNextStep];
-                }];
+                [strongSelf setCurrentState:HEMSensePairStateNeedWiFiChange];
+                [strongSelf executeNextStep];
             }];
         } else {
             [dialogVC setMessage:NSLocalizedString(@"pairing.error.link-account-failed", nil)];
             [dialogVC setHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
         }
         
-        [dialogVC showFrom:strongSelf onDefaultActionSelected:^{
-            // don't weak reference this since controller must remain until it has
-            // been dismissed
-            [strongSelf dismissViewControllerAnimated:YES completion:nil];
-        }];
+        [dialogVC showFrom:strongSelf onDefaultActionSelected:nil];
     }];
 }
 

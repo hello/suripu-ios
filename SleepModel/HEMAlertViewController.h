@@ -17,7 +17,6 @@
  */
 @property (nonatomic, weak)   UIView* viewToShowThrough;
 @property (nonatomic, strong) UIImage* dialogImage;
-@property (nonatomic, copy)   NSString* title;
 @property (nonatomic, copy)   NSString* message;
 @property (nonatomic, copy)   NSAttributedString* attributedMessage;
 
@@ -78,7 +77,8 @@
 
 /**
  * Call this method to show the actual dialog, which will present itself.  Do not
- * present this view controller yourself if calling this method
+ * present this view controller yourself if calling this method.  This controller 
+ * will dismiss itself when the default action has been selected.
  *
  * @param controller: the controller that is presenting this dialog
  * @param doneBlock:  the block to invoke when user taps on the default button

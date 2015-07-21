@@ -201,18 +201,12 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
     [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
                 primary:NO
-            actionBlock:^{
-              [self dismissViewControllerAnimated:YES completion:nil];
-            }];
+            actionBlock:nil];
 
-    [dialogVC showFrom:self
-        onDefaultActionSelected:^{
-          [self dismissViewControllerAnimated:YES
-                                   completion:^{
-                                     [SENAuthorizationService deauthorize];
-                                     [SENAnalytics track:kHEMAnalyticsEventSignOut];
-                                   }];
-        }];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [SENAuthorizationService deauthorize];
+        [SENAnalytics track:kHEMAnalyticsEventSignOut];
+    }];
 }
 
 - (void)togglePreferenceSwitch:(UISwitch *)preferenceSwitch {

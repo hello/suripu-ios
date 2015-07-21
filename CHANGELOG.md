@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.1.1
+
+New:
+
+* Hide sleep timeline UI when views more than 1 level deep is pushed in the back view
+
+Fixes:
+
+* Fix time formatting for time displays to always include two digits for hours
+* Tight up vertical padding of timeline breakdown metric cells
+
+Misc:
+
+* Refactored onboarding code to be more maintainable
+* Added a Rate the app hook in to the app
+* Moved app color definitions from PaintCode to a category
+
 ## 1.1.1.0
 
 New:

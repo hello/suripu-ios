@@ -10,12 +10,15 @@ Fixes:
 
 * Fix time formatting for time displays to always include two digits for hours
 * Tight up vertical padding of timeline breakdown metric cells
+* Fix issue where tapping on Sign Out after pulling down the timeline should no longer cause the alert to not be dismissed
+* Fix issue with factoy reset error messages not be able to be dismissed sometimes
 
 Misc:
 
 * Refactored onboarding code to be more maintainable
 * Added a Rate the app hook in to the app
 * Moved app color definitions from PaintCode to a category
+* Alerts now dismiss itself rather than depending on caller
 
 ## 1.1.1.0
 

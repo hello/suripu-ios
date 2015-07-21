@@ -52,7 +52,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @implementation HEMSleepGraphViewController
 
 static NSString* const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
-static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
+static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 0.5f;
 static CGFloat const HEMSleepSummaryCellHeight = 298.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
@@ -395,12 +395,6 @@ static BOOL hasLoadedBefore = NO;
     [root presentViewController:sheet animated:NO completion:nil];
 }
 
-- (BOOL)canAdjustEventWithType:(NSString *)eventType {
-    NSArray *adjustableTypes =
-        @[ HEMSleepEventTypeWakeUp, HEMSleepEventTypeFallAsleep, HEMSleepEventTypeInBed, HEMSleepEventTypeOutOfBed ];
-    return [adjustableTypes containsObject:eventType];
-}
-
 - (void)feedbackFailedToSend:(NSNotification *)note {
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -419,6 +413,8 @@ static BOOL hasLoadedBefore = NO;
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMPopupDismissDelay = 1.75f;
     CGFloat const HEMPopupAnimationDistance = 8.f;
+    if ([self.collectionView isDecelerating])
+        return;
     SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
@@ -629,6 +625,9 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
     self.collectionView.bounces = yOffset > 0;
+    if (![self.popupView isHidden]) {
+        self.popupView.hidden = YES;
+    }
 }
 
 #pragma mark - UICollectionViewDelegate

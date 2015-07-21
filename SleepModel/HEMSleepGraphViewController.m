@@ -413,6 +413,8 @@ static BOOL hasLoadedBefore = NO;
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMPopupDismissDelay = 1.75f;
     CGFloat const HEMPopupAnimationDistance = 8.f;
+    if ([self.collectionView isDecelerating])
+        return;
     SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
@@ -623,6 +625,9 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
     self.collectionView.bounces = yOffset > 0;
+    if (![self.popupView isHidden]) {
+        self.popupView.hidden = YES;
+    }
 }
 
 #pragma mark - UICollectionViewDelegate

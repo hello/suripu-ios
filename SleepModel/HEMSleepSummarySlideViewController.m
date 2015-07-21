@@ -16,7 +16,7 @@
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMRootViewController.h"
 
-@interface HEMSleepSummarySlideViewController ()
+@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
@@ -61,8 +61,7 @@
 }
 
 - (UIViewController*)timelineControllerForDate:(NSDate*)date {
-    HEMSleepGraphViewController* controller
-    = (HEMSleepGraphViewController*)[HEMMainStoryboard instantiateSleepGraphController];
+    HEMSleepGraphViewController* controller = (id)[HEMMainStoryboard instantiateSleepGraphController];
     [controller setDateForNightOfSleep:date];
     return controller;
 }
@@ -73,6 +72,10 @@
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                              action:@selector(didPan)];
+    recognizer.delegate = self;
+    [self.view addGestureRecognizer:recognizer];
 }
 
 - (void)reloadData {
@@ -103,6 +106,28 @@
 
 - (void)setSwipingEnabled:(BOOL)enabled {
     self.dataSource = enabled ? self.data : nil;
+}
+
+#pragma mark - Gesture Recognizers
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    CGPoint velocity = [gestureRecognizer velocityInView:self.view];
+    if (velocity.x < 0 && fabs(velocity.x) > fabs(velocity.y)) {
+        CGFloat const sliceWidth = 1;
+        HEMSleepGraphViewController* controller = [self.viewControllers lastObject];
+        CGFloat width = CGRectGetWidth(controller.view.bounds);
+        CGRect slice = CGRectMake(width - sliceWidth, 0, sliceWidth, CGRectGetHeight(controller.view.bounds));
+        UIImage* pattern = [controller.view snapshotOfRect:slice];
+        self.view.backgroundColor = [UIColor colorWithPatternImage:pattern];
+    }
+    return YES;
+}
+
+- (void)didPan {
 }
 
 #pragma mark - Drawer Events

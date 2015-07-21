@@ -180,24 +180,20 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
                 primary:NO
-            actionBlock:^{ [self dismissViewControllerAnimated:YES completion:NULL]; }];
+            actionBlock:nil];
 
     __weak typeof(self) weakSelf = self;
-    [dialogVC showFrom:self
-        onDefaultActionSelected:^{
-          __strong typeof(weakSelf) strongSelf = weakSelf;
-          [strongSelf.alarm delete];
-          [HEMAlarmUtils
-              updateAlarmsFromPresentingController:strongSelf
-                                        completion:^(NSError *error) {
-                                          if (error) {
-                                              [strongSelf.alarm save];
-                                          } else {
-                                              [strongSelf dismissViewControllerAnimated:YES
-                                                                             completion:^{ [strongSelf dismiss:NO]; }];
-                                          }
-                                        }];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf.alarm delete];
+        [HEMAlarmUtils updateAlarmsFromPresentingController:strongSelf completion:^(NSError *error) {
+            if (error) {
+                [strongSelf.alarm save];
+            } else {
+                [strongSelf dismiss:NO];
+            }
         }];
+    }];
 }
 
 - (IBAction)updateAlarmState:(UISwitch *)sender {

@@ -273,21 +273,18 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [dialogVC setDefaultButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     
-    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:nil];
     
+    __weak typeof(self) weakSelf = self;
     [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self trackAnalyticsEvent:HEMAnalyticsEventSkip properties:@{
-                kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
-            }];
-            
-            [[self manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
-            [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
-            NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
-            [self performSegueWithIdentifier:segueId sender:self];
-        }];
+        __strong typeof(weakSelf) strongSelf = self;
+        NSDictionary* props = @{kHEMAnalyticsEventPropOnBScreen :kHEMAnalyticsEventPropScreenPillPairing};
+        [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
+        
+        [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
+        [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
 }
 

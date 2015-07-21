@@ -282,18 +282,17 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            if (action) action();
-        }];
+        if (action) {
+            action();
+        }
     }];
+    
+    __weak typeof(self) weakSelf = self;
     [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support", nil) takeAction:^(NSURL *link) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [HEMSupportUtil openHelpFrom:self];
-        }];
+        [HEMSupportUtil openHelpFrom:weakSelf];
     }];
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+    
+    [dialogVC showFrom:self onDefaultActionSelected:nil];
 }
 
 - (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {
@@ -440,16 +439,13 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [dialogVC setAttributedMessage:message];
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
     [dialogVC setViewToShowThrough:self.view];
+    
+    __weak typeof(self) weakSelf = self;
     [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
-        }];
-
+        [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
     }];
     [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self updateToLocalTimeZone];
-        }];
+        [weakSelf updateToLocalTimeZone];
     }];
 }
 

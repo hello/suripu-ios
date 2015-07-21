@@ -132,12 +132,7 @@
     [dialogVC setTitle:[self title]];
     [dialogVC setMessage:message];
     [dialogVC setViewToShowThrough:[rootVC view]];
-    
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        // don't weak reference this since controller must remain until it has
-        // been dismissed
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+    [dialogVC showFrom:self onDefaultActionSelected:nil];
 }
 
 #pragma mark - Actions

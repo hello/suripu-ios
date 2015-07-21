@@ -52,7 +52,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @implementation HEMSleepGraphViewController
 
 static NSString* const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
-static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
+static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 0.5f;
 static CGFloat const HEMSleepSummaryCellHeight = 298.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;

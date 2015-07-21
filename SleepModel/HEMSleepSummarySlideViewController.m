@@ -72,8 +72,8 @@
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
-    UISwipeGestureRecognizer* recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe)];
-    recognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                              action:@selector(didPan)];
     recognizer.delegate = self;
     [self.view addGestureRecognizer:recognizer];
 }
@@ -114,17 +114,20 @@
     return YES;
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    CGFloat const sliceWidth = 1;
-    HEMSleepGraphViewController* controller = [self.viewControllers lastObject];
-    CGFloat width = CGRectGetWidth(controller.view.bounds);
-    CGRect slice = CGRectMake(width - sliceWidth, 0, sliceWidth, CGRectGetHeight(controller.view.bounds));
-    UIImage* pattern = [controller.view snapshotOfRect:slice];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:pattern];
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    CGPoint velocity = [gestureRecognizer velocityInView:self.view];
+    if (velocity.x < 0 && fabs(velocity.x) > fabs(velocity.y)) {
+        CGFloat const sliceWidth = 1;
+        HEMSleepGraphViewController* controller = [self.viewControllers lastObject];
+        CGFloat width = CGRectGetWidth(controller.view.bounds);
+        CGRect slice = CGRectMake(width - sliceWidth, 0, sliceWidth, CGRectGetHeight(controller.view.bounds));
+        UIImage* pattern = [controller.view snapshotOfRect:slice];
+        self.view.backgroundColor = [UIColor colorWithPatternImage:pattern];
+    }
     return YES;
 }
 
-- (void)didSwipe {
+- (void)didPan {
 }
 
 #pragma mark - Drawer Events

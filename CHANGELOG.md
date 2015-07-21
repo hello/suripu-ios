@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1.2
+
+New:
+
+* Extend side of timeline when rubber banding the scrollview
+
 ## 1.1.1.1
 
 New:

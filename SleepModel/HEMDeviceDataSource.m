@@ -253,7 +253,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 - (NSString*)wifiValue {
     NSString* lastConfiguredSSID = [[HEMOnboardingService sharedService] lastConfiguredSSID];
     NSString* value = [self configuredSSID] ?: lastConfiguredSSID;
-    if ([value length] == 0 && ![[self wiFiStatus] isConnected]) {
+    if ([value length] == 0 && [self wiFiStatus] && ![[self wiFiStatus] isConnected]) {
         value = NSLocalizedString(@"settings.device.network.disconnected", nil);
     } else if ([value length] == 0) {
         value = NSLocalizedString(@"empty-data", nil);
@@ -263,7 +263,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (UIColor*)wifiValueColor {
     UIColor* color = [UIColor blackColor];
-    if (![[self wiFiStatus] isConnected]) {
+    if ([self wiFiStatus] && ![[self wiFiStatus] isConnected]) {
         color = [UIColor redColor];
     }
     return color;

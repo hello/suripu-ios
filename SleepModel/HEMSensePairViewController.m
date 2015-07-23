@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 #import <SenseKit/BLE.h>
-#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
@@ -369,23 +368,22 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"linking account");
     
-    NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [self senseManager];
-    
     __weak typeof(self) weakSelf = self;
-    [manager linkAccount:accessToken success:^(id response) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service linkCurrentAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setCurrentState:HEMSensePairStateAccountLinked];
-        [strongSelf executeNextStep];
-    } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSUInteger attempts = [strongSelf linkAccountAttempts];
-        [strongSelf setLinkAccountAttempts:attempts + 1];
-        
-        BOOL allowWiFiEdit = attempts + 1 >= HEMSensePairAttemptsBeforeWiFiChangeOption;
-        [strongSelf showLinkAccountError:allowWiFiEdit];
-        
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        if (!error) {
+            [strongSelf setCurrentState:HEMSensePairStateAccountLinked];
+            [strongSelf executeNextStep];
+        } else {
+            NSUInteger attempts = [strongSelf linkAccountAttempts];
+            [strongSelf setLinkAccountAttempts:attempts + 1];
+            
+            BOOL allowWiFiEdit = attempts + 1 >= HEMSensePairAttemptsBeforeWiFiChangeOption;
+            [strongSelf showLinkAccountError:allowWiFiEdit];
+            
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
     }];
 }
 

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 #import <SenseKit/SENSenseManager.h>
-#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPITimeZone.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 #import <SenseKit/SENServiceDevice.h>
@@ -425,17 +424,17 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
     [self updateActivityText:message completion:nil];
     
-    NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [self manager];
-    
     __weak typeof(self) weakSelf = self;
-    [manager linkAccount:accessToken success:^(id response) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service linkCurrentAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setStepFinished:HEMWiFiSetupStepLinkAccount];
-        [strongSelf executeNextStep];
-    } failure:^(NSError *error) {
-        [weakSelf showLinkAccountError:error];
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        if (!error) {
+            [strongSelf setStepFinished:HEMWiFiSetupStepLinkAccount];
+            [strongSelf executeNextStep];
+        } else {
+            [weakSelf showLinkAccountError:error];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
     }];
 }
 

@@ -8,6 +8,8 @@
 #import <SenseKit/SENService.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 
+@class SENSenseWiFiStatus;
+
 extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
 extern NSString* const HEMOnboardingNotificationUserInfoSenseManager;
@@ -17,7 +19,8 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorNoAccount = -1,
     HEMOnboardingErrorAccountCreationFailed = -2,
     HEMOnboardingErrorAuthenticationFailed = -3,
-    HEMOnboardingErrorSenseNotInitialized = -4
+    HEMOnboardingErrorSenseNotInitialized = -4,
+    HEMOnboardingErrorMissingAuthToken = -5
 };
 
 /**
@@ -130,6 +133,16 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 #pragma mark - Accounts
 
 - (BOOL)isAuthorizedUser;
+
+/**
+ * @method linkCurrentAccount:
+ *
+ * @discussion
+ * Link the currently signed in user's account with Sense
+ *
+ * @param completion: the block to invoke upon completion
+ */
+- (void)linkCurrentAccount:(void(^)(NSError* error))completion;
 
 /**
  * @method loadCurrentAccount:

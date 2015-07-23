@@ -479,6 +479,35 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     return [preferences userPreferenceForKey:HEMOnboardingSettingSSID];
 }
 
+#pragma mark - Link Account
+
+- (void)linkCurrentAccount:(void(^)(NSError* error))completion {
+    NSString* accessToken = [SENAuthorizationService accessToken];
+    SENSenseManager* manager = [self currentSenseManager];
+    
+    if (!accessToken) {
+        if (completion) {
+            completion ([self errorWithCode:HEMOnboardingErrorMissingAuthToken
+                                     reason:@"cannot link account without token"]);
+        }
+        return;
+    }
+    
+    if (!manager) {
+        if (completion) {
+            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
+                                     reason:@"cannot link account without a sense manager initialized"]);
+        }
+        return;
+    }
+
+    [manager linkAccount:accessToken success:^(id response) {
+        if (completion) {
+            completion (nil);
+        }
+    } failure:completion];
+}
+
 #pragma mark - Checkpoints
 
 - (BOOL)hasFinishedOnboarding {

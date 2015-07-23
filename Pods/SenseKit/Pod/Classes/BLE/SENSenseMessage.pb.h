@@ -40,6 +40,7 @@ typedef enum {
   ErrorTypeForceDataPushFailed = 12,
   ErrorTypeProtobufEncodeFailed = 13,
   ErrorTypeProtobufDecodeFailed = 14,
+  ErrorTypeServerConnectionTimeout = 15,
 } ErrorType;
 
 BOOL ErrorTypeIsValidValue(ErrorType value);
@@ -49,6 +50,14 @@ typedef enum {
   WiFiStateWlanConnecting = 1,
   WiFiStateWlanConnected = 2,
   WiFiStateIpObtained = 3,
+  WiFiStateDnsResolved = 4,
+  WiFiStateSocketConnected = 5,
+  WiFiStateRequestSent = 6,
+  WiFiStateConnected = 7,
+  WiFiStateSslFail = 8,
+  WiFiStateHelloKeyFail = 9,
+  WiFiStateDnsFailed = 10,
+  WiFiStateConnectFailed = 11,
 } WiFiState;
 
 BOOL WiFiStateIsValidValue(WiFiState value);
@@ -91,6 +100,9 @@ typedef enum {
   SENSenseMessageTypeGetNextWifiAp = 29,
   SENSenseMessageTypeLedSuccess = 30,
   SENSenseMessageTypePushData = 31,
+  SENSenseMessageTypeSetCountryCode = 32,
+  SENSenseMessageTypeSetServerIp = 33,
+  SENSenseMessageTypeConnectionState = 34,
 } SENSenseMessageType;
 
 BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
@@ -329,13 +341,21 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
   BOOL hasUptime_:1;
   BOOL hasMotionData_:1;
   BOOL hasFirmwareVersion_:1;
+  BOOL hasBondCount_:1;
+  BOOL hasAppVersion_:1;
   BOOL hasDeviceId_:1;
   BOOL hasAccountId_:1;
   BOOL hasWifiName_:1;
   BOOL hasWifiSsid_:1;
+  BOOL hasCountryCode_:1;
+  BOOL hasTopVersion_:1;
+  BOOL hasHttpResponseCode_:1;
   BOOL hasPillData_:1;
   BOOL hasWifiPassword_:1;
   BOOL hasMotionDataEncrypted_:1;
+  BOOL hasAesKey_:1;
+  BOOL hasServerIp_:1;
+  BOOL hasSocketErrorCode_:1;
   BOOL hasType_:1;
   BOOL hasError_:1;
   BOOL hasSecurityType_:1;
@@ -345,13 +365,21 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
   long uptime;
   long motionData;
   long firmwareVersion;
+  long bondCount;
+  long appVersion;
   NSString* deviceId;
   NSString* accountId;
   NSString* wifiName;
   NSString* wifiSsid;
+  NSString* countryCode;
+  NSString* topVersion;
+  NSString* httpResponseCode;
   PillData* pillData;
   NSData* wifiPassword;
   NSData* motionDataEncrypted;
+  NSData* aesKey;
+  unsigned long serverIp;
+  unsigned long socketErrorCode;
   SENSenseMessageType type;
   ErrorType error;
   SENWifiEndpointSecurityType securityType;
@@ -374,6 +402,14 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (BOOL) hasSecurityType;
 - (BOOL) hasPillData;
 - (BOOL) hasWifiState;
+- (BOOL) hasBondCount;
+- (BOOL) hasCountryCode;
+- (BOOL) hasAesKey;
+- (BOOL) hasTopVersion;
+- (BOOL) hasServerIp;
+- (BOOL) hasSocketErrorCode;
+- (BOOL) hasHttpResponseCode;
+- (BOOL) hasAppVersion;
 @property (readonly) long version;
 @property (readonly) SENSenseMessageType type;
 @property (readonly, strong) NSString* deviceId;
@@ -391,6 +427,14 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 @property (readonly) SENWifiEndpointSecurityType securityType;
 @property (readonly, strong) PillData* pillData;
 @property (readonly) WiFiState wifiState;
+@property (readonly) long bondCount;
+@property (readonly, strong) NSString* countryCode;
+@property (readonly, strong) NSData* aesKey;
+@property (readonly, strong) NSString* topVersion;
+@property (readonly) unsigned long serverIp;
+@property (readonly) unsigned long socketErrorCode;
+@property (readonly, strong) NSString* httpResponseCode;
+@property (readonly) long appVersion;
 - (SENWifiEndpoint*)wifisDetectedAtIndex:(NSUInteger)index;
 
 + (SENSenseMessage*) defaultInstance;
@@ -516,6 +560,46 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (WiFiState) wifiState;
 - (SENSenseMessageBuilder*) setWifiState:(WiFiState) value;
 - (SENSenseMessageBuilder*) clearWifiState;
+
+- (BOOL) hasBondCount;
+- (long) bondCount;
+- (SENSenseMessageBuilder*) setBondCount:(long) value;
+- (SENSenseMessageBuilder*) clearBondCount;
+
+- (BOOL) hasCountryCode;
+- (NSString*) countryCode;
+- (SENSenseMessageBuilder*) setCountryCode:(NSString*) value;
+- (SENSenseMessageBuilder*) clearCountryCode;
+
+- (BOOL) hasAesKey;
+- (NSData*) aesKey;
+- (SENSenseMessageBuilder*) setAesKey:(NSData*) value;
+- (SENSenseMessageBuilder*) clearAesKey;
+
+- (BOOL) hasTopVersion;
+- (NSString*) topVersion;
+- (SENSenseMessageBuilder*) setTopVersion:(NSString*) value;
+- (SENSenseMessageBuilder*) clearTopVersion;
+
+- (BOOL) hasServerIp;
+- (unsigned long) serverIp;
+- (SENSenseMessageBuilder*) setServerIp:(unsigned long) value;
+- (SENSenseMessageBuilder*) clearServerIp;
+
+- (BOOL) hasSocketErrorCode;
+- (unsigned long) socketErrorCode;
+- (SENSenseMessageBuilder*) setSocketErrorCode:(unsigned long) value;
+- (SENSenseMessageBuilder*) clearSocketErrorCode;
+
+- (BOOL) hasHttpResponseCode;
+- (NSString*) httpResponseCode;
+- (SENSenseMessageBuilder*) setHttpResponseCode:(NSString*) value;
+- (SENSenseMessageBuilder*) clearHttpResponseCode;
+
+- (BOOL) hasAppVersion;
+- (long) appVersion;
+- (SENSenseMessageBuilder*) setAppVersion:(long) value;
+- (SENSenseMessageBuilder*) clearAppVersion;
 @end
 
 

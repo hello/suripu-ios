@@ -11,6 +11,7 @@
 
 @class SENSense;
 @class LGCentralManager;
+@class SENSenseWiFiStatus;
 
 typedef NS_ENUM(NSUInteger, SENSenseLEDState) {
     SENSenseLEDStateOff,
@@ -21,6 +22,7 @@ typedef NS_ENUM(NSUInteger, SENSenseLEDState) {
 
 typedef void(^SENSenseCompletionBlock)(id response, NSError* error);
 typedef void(^SENSenseSuccessBlock)(id response);
+typedef void(^SENSenseWiFiStateUpdateBlock)(SENSenseWiFiStatus* status);
 typedef void(^SENSenseFailureBlock)(NSError* error);
 
 typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
@@ -101,14 +103,6 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      * Sense failed to decode the protobuf, usually from server responses
      */
     SENSenseManagerErrorCodeProtobufDecodingFailed = -22
-};
-
-typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
-    SENWiFiConnectionStateUnknown = -1,
-    SENWiFiConnectionStateConnected = 0,
-    SENWiFiConnectionStateConnecting = 1,
-    SENWifiConnectionStateDisconnected = 2,
-    SENWiFiConnectionStateNoInternet = 3
 };
 
 @interface SENSenseManager : NSObject
@@ -298,12 +292,14 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
  * @param ssid:         the SSID of the WiFi
  * @param password:     the password to the WiFI
  * @param securityType: the supported WiFi security type
+ * @param update:       the block to call upon receiving a state change in the operation
  * @param success:      the block to call when the command succeeded
  * @param failure:      the block to call if the command encountered an error
  */
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)securityType
+         update:(SENSenseWiFiStateUpdateBlock)update
         success:(SENSenseSuccessBlock)success
         failure:(SENSenseFailureBlock)failure;
 
@@ -316,7 +312,7 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
  * @param success: the block to invoke when it successfully retrieved the information
  * @param failure: the block to invoke when it failed to retrieve the info
  */
-- (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENWiFiConnectionState state))success
+- (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENSenseWiFiStatus* status))success
                   failure:(SENSenseFailureBlock)failure;
 
 /**

@@ -10,6 +10,7 @@
 #import <SenseKit/SENAPITimeZone.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENSenseWiFiStatus.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -395,7 +396,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     __weak typeof(self) weakSelf = self;
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    [service setWiFi:ssid password:password securityType:type completion:^(NSError *error) {
+    [service setWiFi:ssid password:password securityType:type update:^(SENSenseWiFiStatus *status) {
+        NSDictionary* properties = @{HEMAnalyticsEventPropWiFiStatus : @([status state]),
+                                     HEMAnalyticsEventPropHttpCode : [status httpStatusCode] ?: @"",
+                                     HEMAnalyticsEventPropSocketCode : @([status socketErrorCode])};
+        [weakSelf trackAnalyticsEvent:HEMAnalyticsEventWiFiConnectionUpdate properties:properties];
+    } completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [strongSelf showSetWiFiError:error];

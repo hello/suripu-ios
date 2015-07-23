@@ -8,6 +8,7 @@
 
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENSenseWiFiStatus.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -35,7 +36,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 @property (nonatomic, weak)   UICollectionView* collectionView;
 @property (nonatomic, copy)   NSAttributedString* attributedFooterText;
 @property (nonatomic, copy)   NSString* configuredSSID;
-@property (nonatomic, assign) SENWiFiConnectionState wifiState;
+@property (nonatomic, strong) SENSenseWiFiStatus* wiFiStatus;
 @property (nonatomic, assign, getter=isLoadingSense) BOOL loadingSense;
 @property (nonatomic, assign, getter=isLoadingPill)  BOOL loadingPill;
 @property (nonatomic, assign) BOOL attemptedDataLoad;
@@ -72,7 +73,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 #pragma mark - Loading Data
 
 - (void)refreshWithUpdate:(void(^)(void))update completion:(void(^)(NSError* error))completion {
-    [self setWifiState:SENWiFiConnectionStateUnknown];
+    [self setWiFiStatus:nil];
     [self setConfiguredSSID:nil];
     [self setLoadingSense:YES];
     [self setLoadingPill:YES];
@@ -164,7 +165,10 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             return;
         }
         
-        [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state, NSError *error) {
+        [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid,
+                                                              SENSenseWiFiStatus* status,
+                                                              NSError *error) {
+            
             if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]
                 && [error code] == SENServiceDeviceErrorInProgress) {
                 [strongSelf performSelector:@selector(refreshSenseData:)
@@ -174,7 +178,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             }
             NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
             [strongSelf setConfiguredSSID:wifiSSID];
-            [strongSelf setWifiState:state];
+            [strongSelf setWiFiStatus:status];
             [[HEMOnboardingService sharedService] saveConfiguredSSID:wifiSSID];
             
             if (completion) completion (error);
@@ -185,9 +189,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 #pragma mark - Warnings
 
 - (BOOL)lostInternetConnection:(SENDevice*)device {
-    return [device type] == SENDeviceTypeSense
-            && ([self wifiState] == SENWiFiConnectionStateNoInternet
-                || [self wifiState] == SENWifiConnectionStateDisconnected);
+    return [device type] == SENDeviceTypeSense && ![[self wiFiStatus] isConnected];
 }
 
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device {
@@ -251,7 +253,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 - (NSString*)wifiValue {
     NSString* lastConfiguredSSID = [[HEMOnboardingService sharedService] lastConfiguredSSID];
     NSString* value = [self configuredSSID] ?: lastConfiguredSSID;
-    if ([value length] == 0 && [self wifiState] == SENWifiConnectionStateDisconnected) {
+    if ([value length] == 0 && ![[self wiFiStatus] isConnected]) {
         value = NSLocalizedString(@"settings.device.network.disconnected", nil);
     } else if ([value length] == 0) {
         value = NSLocalizedString(@"empty-data", nil);
@@ -261,8 +263,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (UIColor*)wifiValueColor {
     UIColor* color = [UIColor blackColor];
-    if ([self wifiState] == SENWifiConnectionStateDisconnected
-        || [self wifiState] == SENWiFiConnectionStateNoInternet) {
+    if (![[self wiFiStatus] isConnected]) {
         color = [UIColor redColor];
     }
     return color;

@@ -237,11 +237,13 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * @param ssid:       the ssid of the WiFi to set
  * @param password:   the password of the WiFi
  * @param type:       the security type of the WiFi
+ * @param update:     block to invoke when Sense reports connection status
  * @param completion: block to invoke when done
  */
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)type
+         update:(void(^)(SENSenseWiFiStatus* status))update
      completion:(void(^)(NSError* error))completion;
 
 /**

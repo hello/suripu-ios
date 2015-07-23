@@ -445,6 +445,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)type
+         update:(void(^)(SENSenseWiFiStatus* status))update
      completion:(void(^)(NSError* error))completion {
     
     SENSenseManager* manager = [self currentSenseManager];
@@ -457,7 +458,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     }
     
     __weak typeof(self) weakSelf = self;
-    [manager setWiFi:ssid password:password securityType:type success:^(id response) {
+    [manager setWiFi:ssid password:password securityType:type update:update success:^(id response) {
         [weakSelf saveConfiguredSSID:ssid];
         if (completion) {
             completion (nil);

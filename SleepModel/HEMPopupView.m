@@ -55,7 +55,7 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
     fill.size.height -= HEMPopupPointerHeight;
     UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:fill cornerRadius:3.f];
     [rectanglePath closePath];
-    [UIColor.whiteColor setFill];
+    [[UIColor tintColor] setFill];
     [rectanglePath fill];
 
     UIBezierPath *pointerPath = [UIBezierPath bezierPath];
@@ -66,7 +66,7 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
         addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight, pointerTopEdge + HEMPopupPointerHeight)];
     [pointerPath addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight * 2, pointerTopEdge)];
     [pointerPath closePath];
-    [[UIColor whiteColor] setFill];
+    [[UIColor tintColor] setFill];
     [pointerPath fill];
 
     CGContextEndTransparencyLayer(ctx);

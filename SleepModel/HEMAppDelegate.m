@@ -107,6 +107,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
  * for the day, this will have no effect.
  */
 - (void)syncHealthKit {
+    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
+        DDLogVerbose(@"onboarding not complete, skipping healthkit");
+        return;
+    }
     [[SENServiceHealthKit sharedService] sync:^(NSError *error) {
         if (error != nil) {
             switch ([error code]) {

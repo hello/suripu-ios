@@ -169,7 +169,6 @@ NSString* const HEMAnalyticsEventSwitchSmartAlarmOn = @"on";
 NSString* const HEMAnalyticsEventSaveAlarm = @"Save alarm";
 NSString* const HEMAnalyticsEventSaveAlarmHour = @"hour";
 NSString* const HEMAnalyticsEventSaveAlarmMinute = @"minute";
-NSString* const HEMAnalyticsEventSaveAlarmError = @"error";
 
 // system alerts
 NSString* const HEMAnalyticsEventSystemAlert = @"System Alert";

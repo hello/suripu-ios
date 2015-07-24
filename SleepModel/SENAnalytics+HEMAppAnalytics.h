@@ -161,7 +161,6 @@ extern NSString* const HEMAnalyticsEventSwitchSmartAlarmOn;
 extern NSString* const HEMAnalyticsEventSaveAlarm;
 extern NSString* const HEMAnalyticsEventSaveAlarmHour;
 extern NSString* const HEMAnalyticsEventSaveAlarmMinute;
-extern NSString* const HEMAnalyticsEventSaveAlarmError;
 
 // system alerts
 extern NSString* const HEMAnalyticsEventSystemAlert;

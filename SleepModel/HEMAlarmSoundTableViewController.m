@@ -53,7 +53,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
                                            error:&audioSessionError];
     
     if (audioSessionError) {
-        [SENAnalytics trackError:audioSessionError withEventName:kHEMAnalyticsEventError];
+        [SENAnalytics trackError:audioSessionError];
     }
 }
 
@@ -242,7 +242,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
                                              error:&error];
         if (error) {
             DDLogWarn(@"failed to change audio session state");
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         }
         
         if (completion) {

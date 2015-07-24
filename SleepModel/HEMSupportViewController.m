@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     [[HEMZendeskService sharedService] configure:^(NSError *error) {
         if (error) {
             DDLogWarn(@"failed to configure zendesk with error %@", error);
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         }
     }];
 }

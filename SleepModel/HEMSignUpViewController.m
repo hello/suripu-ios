@@ -77,7 +77,7 @@
         NSString* name = [self.nameField.text trim];
         
         void(^creationBlock)(SENAccount* account) = ^(SENAccount* account) {
-            [HEMAnalytics trackSignUpWithName:[account name]];
+            [SENAnalytics trackSignUpWithName:[account name]];
             // checkpoint must be made here so that upon completion, user is not
             // pushed in to the app
             HEMOnboardingService* service = [HEMOnboardingService sharedService];
@@ -88,7 +88,7 @@
         void(^doneBlock)(SENAccount* account, NSError* error) = ^(SENAccount* account, NSError* error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [SENAnalytics trackError:error];
                 [strongSelf stopActivity:^{
                     NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
                     [strongSelf showMessageDialog:[error localizedDescription] title:title];

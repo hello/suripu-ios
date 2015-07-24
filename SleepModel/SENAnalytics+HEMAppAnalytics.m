@@ -1,23 +1,20 @@
 //
-//  HEMAnalytics.m
+//  SENAnalytics+HEMAppAnalytics.m
 //  Sense
 //
-//  Created by Jimmy Lu on 10/21/14.
-//  Copyright (c) 2014 Hello, Inc. All rights reserved.
+//  Created by Jimmy Lu on 7/23/15.
+//  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceAccount.h>
-#import <SenseKit/SENAnalytics.h>
 
-#import "HEMAnalytics.h"
+#import "SENAnalytics+HEMAppAnalytics.h"
 
 // general
-NSString* const kHEMAnalyticsEventError = @"Error";
 NSString* const kHEMAnalyticsEventWarning = @"Warning";
 NSString* const kHEMAnalyticsEventHelp = @"Help";
 NSString* const kHEMAnalyticsEventVideo = @"Play Video";
-NSString* const kHEMAnalyticsEventPropMessage = @"Message";
+NSString* const kHEMAnalyticsEventPropMessage = @"message";
 NSString* const kHEMAnalyticsEventPropAction = @"Action";
 NSString* const kHEMAnalyticsEventPropDate = @"Date";
 NSString* const kHEMAnalyticsEventPropType = @"Type";
@@ -180,7 +177,10 @@ NSString* const HEMAnalyticsEventSystemAlertAction = @"System Alert Action";
 NSString* const HEMAnalyticsEventSysAlertActionLater = @"later";
 NSString* const HEMAnalyticsEventSysAlertActionNow = @"now";
 
-@implementation HEMAnalytics
+// internal use only
+static NSString* const kHEMAnalyticsEventError = @"Error";
+
+@implementation SENAnalytics (HEMAppAnalytics)
 
 + (void)trackSignUpWithName:(NSString*)userName {
     NSString* name = userName ?: @"";
@@ -230,6 +230,32 @@ NSString* const HEMAnalyticsEventSysAlertActionNow = @"now";
     }
     [SENAnalytics setGlobalEventProperties:gProperties];
     
+}
+
++ (void)trackErrorWithMessage:(NSString*)message {
+    NSDictionary* props = @{kHEMAnalyticsEventPropMessage : message};
+    [self track:kHEMAnalyticsEventError properties:props];
+}
+
++ (void)trackWarningWithMessage:(NSString*)message {
+    NSDictionary* props = @{kHEMAnalyticsEventPropMessage : message};
+    [self track:kHEMAnalyticsEventWarning properties:props];
+}
+
++ (void)trackError:(NSError*)error {
+    NSString* eventName = kHEMAnalyticsEventError;
+    if ([error domain] == NSURLErrorDomain) {
+        switch ([error code]) {
+            case NSURLErrorTimedOut:
+            case NSURLErrorNetworkConnectionLost:
+            case NSURLErrorNotConnectedToInternet:
+                eventName = kHEMAnalyticsEventWarning;
+                break;
+            default:
+                break;
+        }
+    }
+    [self trackError:error withEventName:eventName];
 }
 
 + (void)updateGender:(SENAccountGender)gender {

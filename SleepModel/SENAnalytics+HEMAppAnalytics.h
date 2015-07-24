@@ -1,15 +1,15 @@
 //
-//  HEMAnalytics.h
+//  SENAnalytics+HEMAppAnalytics.h
 //  Sense
 //
-//  Created by Jimmy Lu on 10/20/14.
-//  Copyright (c) 2014 Hello, Inc. All rights reserved.
+//  Created by Jimmy Lu on 7/23/15.
+//  Copyright (c) 2015 Hello. All rights reserved.
 //
+
 #import <SenseKit/SENAnalytics.h>
 #import <SenseKit/SENAccount.h>
 
 // general
-extern NSString* const kHEMAnalyticsEventError;
 extern NSString* const kHEMAnalyticsEventWarning;
 extern NSString* const kHEMAnalyticsEventHelp;
 extern NSString* const kHEMAnalyticsEventVideo;
@@ -169,10 +169,13 @@ extern NSString* const HEMAnalyticsEventSystemAlertAction;
 extern NSString* const HEMAnalyticsEventSysAlertActionLater;
 extern NSString* const HEMAnalyticsEventSysAlertActionNow;
 
-@interface HEMAnalytics : NSObject
+@interface SENAnalytics (HEMAppAnalytics)
 
 + (void)trackSignUpWithName:(NSString*)userName;
 + (void)trackUserSession;
++ (void)trackErrorWithMessage:(NSString*)message;
++ (void)trackWarningWithMessage:(NSString*)message;
++ (void)trackError:(NSError*)error;
 + (void)updateGender:(SENAccountGender)gender;
 
 @end

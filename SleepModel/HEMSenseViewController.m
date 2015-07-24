@@ -385,7 +385,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [[SENServiceDevice sharedService] unlinkSenseFromAccount:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error != nil) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [SENAnalytics trackError:error];
                 [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                     [strongSelf showUnpairError];
                 }];
@@ -463,7 +463,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 
                 [strongSelf dismissActivityWithSuccess:nil];
             } else {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [SENAnalytics trackError:error];
                 [strongSelf dismissActivity:^{
                     [strongSelf showMessageDialog:NSLocalizedString(@"timezone.error.message", nil)
                                             title:NSLocalizedString(@"timezone.error.title", nil)];
@@ -503,7 +503,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [[SENServiceDevice sharedService] putSenseIntoPairingMode:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error != nil) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [SENAnalytics trackError:error];
                 [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                     [strongSelf showFailureToEnablePairingModeAlert];
                 }];
@@ -550,7 +550,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }
     
     [self showMessageDialog:message title:title];
-    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+    [SENAnalytics trackError:error];
 }
 
 - (void)listenForDisconnects {
@@ -567,7 +567,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
                         NSString* title = NSLocalizedString(@"settings.sense.operation-failed.title", nil);
                         NSString* message = NSLocalizedString(@"settings.sense.operation-failed.unexpected-disconnect", nil);
                         [strongSelf showMessageDialog:message title:title];
-                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                        [SENAnalytics trackError:error];
                     }];
                 }
             }
@@ -593,7 +593,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [deviceService restoreFactorySettings:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error != nil) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [SENAnalytics trackError:error];
                 // if there's no error, notification of factory restore will fire,
                 // which will trigger app to be put back at checkpoint
                 [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{

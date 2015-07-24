@@ -144,7 +144,7 @@
 
 - (void)next {
     // update analytics property for gender
-    [HEMAnalytics updateGender:[self selectedGender]];
+    [SENAnalytics updateGender:[self selectedGender]];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard heightSegueIdentifier]
                               sender:self];
 }

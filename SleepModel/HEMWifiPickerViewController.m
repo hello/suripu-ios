@@ -254,7 +254,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                       title:title
                       image:nil
                withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];
-    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+    [SENAnalytics trackError:error];
 }
 
 #pragma mark - Actions

@@ -75,7 +75,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [[self notGlowingButton] setTitleColor:[UIColor tintColor]
                                   forState:UIControlStateNormal];
     [[[self notGlowingButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    
+
     if ([self delegate] != nil) {
         [self showCancelButtonWithSelector:@selector(cancel:)];
     }
@@ -134,29 +134,28 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scanTimeout) object:nil];
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
-    
+
     [SENSenseManager stopScan];
     [[self senseManager] disconnectFromSense];
     [self setSenseManager:nil];
-    
+
     NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
     [self showErrorMessage:msg];
-    
-    [SENAnalytics track:kHEMAnalyticsEventError
-             properties:@{kHEMAnalyticsEventPropMessage : @"scanning timed out"}];
+
+    [SENAnalytics trackErrorWithMessage:@"scanning timed out"];
 }
 
 - (void)scanWithActivity {
     [self setTimedOut:NO];
-    
+
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     BOOL preScanned = [service foundNearbySenses];
-    
+
     NSString* activityMessage
         = preScanned
         ? NSLocalizedString(@"pairing.activity.connecting-sense", nil)
         : NSLocalizedString(@"pairing.activity.scanning-sense", nil);
-    
+
     [self showActivityWithMessage:activityMessage completion:^{
         if (preScanned) {
             [self useSense:[service nearestSense]];
@@ -171,13 +170,13 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     // if a Sense has been found and the peripheral connected, disconnect from it
     // first to avoid causing issues when atttempting the process
     [self disconnectSense];
-    
+
     [SENSenseManager stopScan]; // stop scanning in case one is already on it's way
-    
+
     [self performSelector:@selector(scanTimeout)
                withObject:nil
                afterDelay:kHEMSensePairScanTimeout];
-    
+
     __weak typeof(self) weakSelf = self;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -185,16 +184,15 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
                                                      selector:@selector(scanTimeout)
                                                        object:nil];
-            
+
             if ([senses count] > 0) {
                 // per team consensus, it is expected that the app pairs with the
                 // first sense with the highest average RSSI value that is found.
                 // In our case, the first object matches that spec.
                 [strongSelf useSense:[senses firstObject]];
             } else {
-                [SENAnalytics track:kHEMAnalyticsEventError
-                         properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
-                
+                [SENAnalytics trackErrorWithMessage:@"no sense found"];
+
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     [strongSelf showCouldNotPairErrorMessage];
                 }];
@@ -278,25 +276,25 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     if (deviceId) {
         [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : deviceId}];
     }
-    
+
     [self setPairing:YES];
     [self observeUnexpectedDisconnects];
-    
+
     __weak typeof(self) weakSelf = self;
     // led will be turned off when everything is finished, failed or not
     [[self senseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
             DDLogVerbose(@"showing led activity failed, stopping");
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
             [strongSelf failPairing];
             return;
         }
-        
+
         NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
         [strongSelf updateActivityText:activityMessage completion:nil];
         DDLogVerbose(@"pairing with sense %@", [[[strongSelf senseManager] sense] name]);
-        
+
         [[strongSelf senseManager] pair:^(id response) {
             DDLogVerbose(@"paired!");
             if (![strongSelf isTimedOut]) {
@@ -308,7 +306,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             }
         } failure:^(NSError *error) {
             DDLogVerbose(@"failed to pair %@", error);
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
             [strongSelf failPairing];
         }];
     }];
@@ -332,9 +330,9 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.checking-wifi", nil);
     [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"checking if Sense has already been configured with wifi");
-    
+
     [self setDetectedSSID:nil]; // nil it out in case this was detected in a previous run
-    
+
     __weak typeof(self) weakSelf = self;
     [[self senseManager] getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus* status) {
         __block typeof(weakSelf) strongSelf = weakSelf;
@@ -352,7 +350,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     } failure:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"could not determine configured wifi ssid + state");
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        [SENAnalytics trackError:error];
         // if there's an error just act like wifi was not set up, rather than
         // telling user that wifi could not be checked and making user do
         // something that makes no sense
@@ -367,7 +365,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.linking-account", nil);
     [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"linking account");
-    
+
     __weak typeof(self) weakSelf = self;
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     [service linkCurrentAccount:^(NSError *error) {
@@ -378,11 +376,11 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         } else {
             NSUInteger attempts = [strongSelf linkAccountAttempts];
             [strongSelf setLinkAccountAttempts:attempts + 1];
-            
+
             BOOL allowWiFiEdit = attempts + 1 >= HEMSensePairAttemptsBeforeWiFiChangeOption;
             [strongSelf showLinkAccountError:allowWiFiEdit];
-            
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+
+            [SENAnalytics trackError:error];
         }
     }];
 }
@@ -393,7 +391,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.setting-timezone", nil);
     [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"setting timezone");
-    
+
     __weak typeof(self) weakSelf = self;
     [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -404,7 +402,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             DDLogVerbose(@"failed to set time zone");
             NSString* msg = NSLocalizedString(@"pairing.error.set-timezone-failed", nil);
             [weakSelf showErrorMessage:msg];
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         }
     }];
 }
@@ -434,7 +432,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf stopActivityWithMessage:nil success:NO completion:action];
     };
-    
+
     if ([self senseManager] == nil) {
         show(nil, nil);
     } else {
@@ -451,7 +449,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             = [strongSelf parentViewController]
             ? [[strongSelf parentViewController] view]
             : [strongSelf view];
-        
+
         HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
         [dialogVC setTitle:NSLocalizedString(@"pairing.failed.title", nil)];
         [dialogVC setViewToShowThrough:seeThroughView];
@@ -466,7 +464,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             [dialogVC setMessage:NSLocalizedString(@"pairing.error.link-account-failed", nil)];
             [dialogVC setHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
         }
-        
+
         [dialogVC showFrom:strongSelf onDefaultActionSelected:nil];
     }];
 }
@@ -495,14 +493,14 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [[self senseManager] setLED:led completion:^(id response, NSError *error) {
         [weakSelf next]; // once ble operation is done, proceed.  activity should hide after
     }];
-    
+
     NSString* msg = NSLocalizedString(@"pairing.done", nil);
     [self stopActivityWithMessage:msg success:YES completion:nil];
 }
 
 - (void)next {
     [[HEMOnboardingService sharedService] notifyOfSensePairingChange];
-    
+
     if ([self delegate] == nil) {
         NSString* segueId = nil;
         if ([self detectedSSID] != nil) {
@@ -520,7 +518,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             [self performSegueWithIdentifier:[HEMOnboardingStoryboard wifiSegueIdentifier]
                                       sender:self];
         }
-        
+
     }
 }
 

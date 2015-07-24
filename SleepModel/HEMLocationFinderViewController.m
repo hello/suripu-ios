@@ -77,14 +77,14 @@
             [strongSelf showLocationError:error];
             [strongSelf setLocationTxId:nil];
             [strongSelf trackPermission:NO error:error];
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
             return NO;
         }];
     
     if (error != nil) {
         [[self locationButton] setEnabled:YES];
         [self showLocationError:error];
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        [SENAnalytics trackError:error];
     }
 }
 

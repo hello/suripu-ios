@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 #import <SenseKit/BLE.h>
-#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
@@ -337,33 +336,28 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [self setDetectedSSID:nil]; // nil it out in case this was detected in a previous run
     
     __weak typeof(self) weakSelf = self;
-    [[self senseManager] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state) {
+    [[self senseManager] getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus* status) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            HEMSensePairState pairState = HEMSensePairStateWiFiNotDetected;
-            if (state == SENWiFiConnectionStateConnected) {
-                pairState = HEMSensePairStateWiFiDetected;
-                [strongSelf setDetectedSSID:ssid];
-            }
-            if ([ssid length] > 0) {
-                [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
-            }
-            DDLogVerbose(@"wifi %@ is in state detected %ld", ssid, (long)state);
-            [strongSelf setCurrentState:pairState];
-            [strongSelf executeNextStep];
+        HEMSensePairState pairState = HEMSensePairStateWiFiNotDetected;
+        if ([status isConnected]) {
+            pairState = HEMSensePairStateWiFiDetected;
+            [strongSelf setDetectedSSID:ssid];
         }
+        if ([ssid length] > 0) {
+            [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
+        }
+        DDLogVerbose(@"wifi %@ with status %@", ssid, status);
+        [strongSelf setCurrentState:pairState];
+        [strongSelf executeNextStep];
     } failure:^(NSError *error) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"could not determine configured wifi ssid + state");
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-        
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            // if there's an error just act like wifi was not set up, rather than
-            // telling user that wifi could not be checked and making user do
-            // something that makes no sense
-            [strongSelf setCurrentState:HEMSensePairStateWiFiNotDetected];
-            [strongSelf executeNextStep];
-        }
+        // if there's an error just act like wifi was not set up, rather than
+        // telling user that wifi could not be checked and making user do
+        // something that makes no sense
+        [strongSelf setCurrentState:HEMSensePairStateWiFiNotDetected];
+        [strongSelf executeNextStep];
     }];
 }
 
@@ -374,23 +368,22 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"linking account");
     
-    NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [self senseManager];
-    
     __weak typeof(self) weakSelf = self;
-    [manager linkAccount:accessToken success:^(id response) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service linkCurrentAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setCurrentState:HEMSensePairStateAccountLinked];
-        [strongSelf executeNextStep];
-    } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSUInteger attempts = [strongSelf linkAccountAttempts];
-        [strongSelf setLinkAccountAttempts:attempts + 1];
-        
-        BOOL allowWiFiEdit = attempts + 1 >= HEMSensePairAttemptsBeforeWiFiChangeOption;
-        [strongSelf showLinkAccountError:allowWiFiEdit];
-        
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        if (!error) {
+            [strongSelf setCurrentState:HEMSensePairStateAccountLinked];
+            [strongSelf executeNextStep];
+        } else {
+            NSUInteger attempts = [strongSelf linkAccountAttempts];
+            [strongSelf setLinkAccountAttempts:attempts + 1];
+            
+            BOOL allowWiFiEdit = attempts + 1 >= HEMSensePairAttemptsBeforeWiFiChangeOption;
+            [strongSelf showLinkAccountError:allowWiFiEdit];
+            
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
     }];
 }
 

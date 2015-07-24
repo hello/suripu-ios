@@ -11,6 +11,7 @@
 
 @class SENDevice;
 @class SENSenseManager;
+@class SENSenseWiFiStatus;
 
 extern NSString* const SENServiceDeviceNotificationFactorySettingsRestored;
 extern NSString* const SENServiceDeviceNotificationWarning;
@@ -282,7 +283,7 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  * but will ensure a paired sense is detected before proceeding
  */
 - (void)getConfiguredWiFi:(void(^)(NSString* ssid,
-                                   SENWiFiConnectionState state,
+                                   SENSenseWiFiStatus* status,
                                    NSError* error))completion;
 
 /**

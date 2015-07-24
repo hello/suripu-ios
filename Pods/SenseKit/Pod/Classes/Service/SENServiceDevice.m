@@ -13,6 +13,7 @@
 #import "SENSense.h"
 #import "SENAPIDevice.h"
 #import "SENService+Protected.h"
+#import "SENSenseWiFiStatus.h"
 
 NSString* const SENServiceDeviceNotificationFactorySettingsRestored = @"sense.restored";
 NSString* const SENServiceDeviceNotificationWarning = @"sense.warning";
@@ -271,7 +272,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     }
 }
 
-- (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENWiFiConnectionState state,  NSError* error))completion {
+- (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENSenseWiFiStatus* status,  NSError* error))completion {
     if (!completion) return;
     
     __weak typeof(self) weakSelf = self;
@@ -279,14 +280,14 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             if (error != nil) {
-                completion (nil, SENWiFiConnectionStateUnknown, error);
+                completion (nil, nil, error);
                 return;
             }
             
-            [[strongSelf senseManager] getConfiguredWiFi:^(NSString* ssid, SENWiFiConnectionState state) {
-                completion (ssid, state, nil);
+            [[strongSelf senseManager] getConfiguredWiFi:^(NSString* ssid, SENSenseWiFiStatus* status) {
+                completion (ssid, status, nil);
             } failure:^(NSError *error) {
-                completion (nil, SENWiFiConnectionStateUnknown, error);
+                completion (nil, nil, error);
             }];
         }
     }];

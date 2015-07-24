@@ -8,6 +8,8 @@
 #import <SenseKit/SENService.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 
+@class SENSenseWiFiStatus;
+
 extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
 extern NSString* const HEMOnboardingNotificationUserInfoSenseManager;
@@ -17,7 +19,8 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorNoAccount = -1,
     HEMOnboardingErrorAccountCreationFailed = -2,
     HEMOnboardingErrorAuthenticationFailed = -3,
-    HEMOnboardingErrorSenseNotInitialized = -4
+    HEMOnboardingErrorSenseNotInitialized = -4,
+    HEMOnboardingErrorMissingAuthToken = -5
 };
 
 /**
@@ -132,6 +135,16 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 - (BOOL)isAuthorizedUser;
 
 /**
+ * @method linkCurrentAccount:
+ *
+ * @discussion
+ * Link the currently signed in user's account with Sense
+ *
+ * @param completion: the block to invoke upon completion
+ */
+- (void)linkCurrentAccount:(void(^)(NSError* error))completion;
+
+/**
  * @method loadCurrentAccount:
  *
  * @discussion
@@ -237,11 +250,13 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * @param ssid:       the ssid of the WiFi to set
  * @param password:   the password of the WiFi
  * @param type:       the security type of the WiFi
+ * @param update:     block to invoke when Sense reports connection status
  * @param completion: block to invoke when done
  */
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)type
+         update:(void(^)(SENSenseWiFiStatus* status))update
      completion:(void(^)(NSError* error))completion;
 
 /**

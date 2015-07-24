@@ -445,6 +445,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)type
+         update:(void(^)(SENSenseWiFiStatus* status))update
      completion:(void(^)(NSError* error))completion {
     
     SENSenseManager* manager = [self currentSenseManager];
@@ -457,7 +458,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     }
     
     __weak typeof(self) weakSelf = self;
-    [manager setWiFi:ssid password:password securityType:type success:^(id response) {
+    [manager setWiFi:ssid password:password securityType:type update:update success:^(id response) {
         [weakSelf saveConfiguredSSID:ssid];
         if (completion) {
             completion (nil);
@@ -476,6 +477,35 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 - (NSString*)lastConfiguredSSID {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
     return [preferences userPreferenceForKey:HEMOnboardingSettingSSID];
+}
+
+#pragma mark - Link Account
+
+- (void)linkCurrentAccount:(void(^)(NSError* error))completion {
+    NSString* accessToken = [SENAuthorizationService accessToken];
+    SENSenseManager* manager = [self currentSenseManager];
+    
+    if (!accessToken) {
+        if (completion) {
+            completion ([self errorWithCode:HEMOnboardingErrorMissingAuthToken
+                                     reason:@"cannot link account without token"]);
+        }
+        return;
+    }
+    
+    if (!manager) {
+        if (completion) {
+            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
+                                     reason:@"cannot link account without a sense manager initialized"]);
+        }
+        return;
+    }
+
+    [manager linkAccount:accessToken success:^(id response) {
+        if (completion) {
+            completion (nil);
+        }
+    } failure:completion];
 }
 
 #pragma mark - Checkpoints

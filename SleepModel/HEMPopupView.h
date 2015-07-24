@@ -11,4 +11,5 @@
 @interface HEMPopupView : UIView
 
 - (void)setText:(NSString*)text;
+- (void)showPointer:(BOOL)pointerVisible;
 @end

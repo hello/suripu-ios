@@ -415,13 +415,14 @@ static BOOL hasLoadedBefore = NO;
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMPopupDismissDelay = 1.75f;
     CGFloat const HEMPopupAnimationDistance = 8.f;
+    CGFloat const HEMPopupSpacingDistance = 8.f;
     if ([self.collectionView isDecelerating])
         return;
     SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height));
+    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height) - HEMPopupSpacingDistance);
     self.popupViewTop.constant = top - HEMPopupAnimationDistance;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];

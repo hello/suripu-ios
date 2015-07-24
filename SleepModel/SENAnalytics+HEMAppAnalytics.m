@@ -243,7 +243,7 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
 
 + (void)trackError:(NSError*)error {
     NSString* eventName = kHEMAnalyticsEventError;
-    if ([error domain] == NSURLErrorDomain) {
+    if ([[error domain] isEqualToString:NSURLErrorDomain]) {
         switch ([error code]) {
             case NSURLErrorTimedOut:
             case NSURLErrorNetworkConnectionLost:

@@ -236,8 +236,7 @@ static BOOL hasLoadedBefore = NO;
                 analyticsAction:(NSString*)analyticsAction {
     
     if (error) {
-        [SENAnalytics trackError:error
-                   withEventName:kHEMAnalyticsEventError];
+        [SENAnalytics trackError:error];
     } else {
         NSString* segmentType = SENTimelineSegmentTypeNameFromType(segment.type);
         NSDictionary* props = @{kHEMAnalyticsEventPropType : segmentType ?: @"undefined"};

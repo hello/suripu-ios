@@ -16,7 +16,6 @@
 #import "HEMAlarmTableViewCell.h"
 #import "HEMClockPickerView.h"
 #import "HEMTutorial.h"
-#import "HEMAnalytics.h"
 
 typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
     HEMAlarmTableIndexSmart = 0,
@@ -159,7 +158,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
                                                  HEMAnalyticsEventSaveAlarmMinute : @(self.alarmCache.minute)
                                              }];
                                     if (error) {
-                                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                                        [SENAnalytics trackError:error];
                                     }
                                     if (!error)
                                         [strongSelf dismiss:YES];

@@ -82,7 +82,7 @@ static NSString* const HEMTimeZonesResourceName = @"TimeZones";
     __weak typeof(self) weakSelf = self;
     [SENAPITimeZone getConfiguredTimeZone:^(NSTimeZone* tz, NSError *error) {
         if (error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         } else {
             [weakSelf setConfiguredTimeZoneName:[tz name]];
         }
@@ -145,7 +145,7 @@ static NSString* const HEMTimeZonesResourceName = @"TimeZones";
                 [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                     [strongSelf showMessageDialog:NSLocalizedString(@"timezone.error.message", nil)
                                             title:NSLocalizedString(@"timezone.error.title", nil)];
-                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                    [SENAnalytics trackError:error];
                 }];
             }
             

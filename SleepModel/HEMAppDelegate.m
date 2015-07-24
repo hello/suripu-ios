@@ -95,7 +95,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     if ([SENAuthorizationService isAuthorized]) {
         
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-            [HEMAnalytics trackUserSession]; // update user session data
+            [SENAnalytics trackUserSession]; // update user session data
         }];
         
         [self syncHealthKit];
@@ -107,6 +107,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
  * for the day, this will have no effect.
  */
 - (void)syncHealthKit {
+    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
+        DDLogVerbose(@"onboarding not complete, skipping healthkit");
+        return;
+    }
     [[SENServiceHealthKit sharedService] sync:^(NSError *error) {
         if (error != nil) {
             switch ([error code]) {
@@ -163,7 +167,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         DDLogVerbose(@"analytics enabled");
         [SENAnalytics configure:SENAnalyticsProviderNameMixpanel
                            with:@{kSENAnalyticsProviderToken : analyticsToken}];
-        [HEMAnalytics trackUserSession];
+        [SENAnalytics trackUserSession];
     }
     
     [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];

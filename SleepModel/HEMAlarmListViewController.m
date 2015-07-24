@@ -14,7 +14,6 @@
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
 #import "HEMMarkdown.h"
-#import "HEMAnalytics.h"
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"

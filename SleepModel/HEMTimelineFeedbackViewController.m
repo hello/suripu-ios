@@ -97,8 +97,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
                 NSDictionary* userInfo = @{NSLocalizedDescriptionKey : HEMAnalyticsEventTimelineAdjustTimeFailed};
                 [SENAnalytics trackError:[NSError errorWithDomain:[error domain]
                                                              code:[error code]
-                                                         userInfo:userInfo]
-                           withEventName:kHEMAnalyticsEventError];
+                                                         userInfo:userInfo]];
             }];
 
         } else {

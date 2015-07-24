@@ -69,7 +69,7 @@
         [[weakSelf tableView] reloadData];
         [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
         if (error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         }
     }];
 }

@@ -26,9 +26,10 @@
 #import "HEMCardFlowLayout.h"
 #import "HEMOnboardingService.h"
 
+NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
+
 static NSInteger const HEMDeviceRowSense = 0;
 static NSInteger const HEMDeviceRowPill = 1;
-static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 @interface HEMDeviceDataSource()

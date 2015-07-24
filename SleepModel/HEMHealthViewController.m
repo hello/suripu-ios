@@ -45,7 +45,7 @@
         
         if (error) {
             if ([error code] != SENServiceHealthKitErrorCancelledAuthorization) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [SENAnalytics trackError:error];
                 [strongSelf showMessageDialog:NSLocalizedString(@"onboarding.health.enable.failure.generic", @"")
                                         title:NSLocalizedString(@"onboarding.health.enable.failure.title", @"")];
             }

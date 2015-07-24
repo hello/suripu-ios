@@ -119,7 +119,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
             
             if (error) {
                 [strongSelf stopActivity:^{
-                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                    [SENAnalytics trackError:error];
                     
                     NSString* title = NSLocalizedString(@"authorization.sign-in.failed.title", nil);
                     [strongSelf showMessageDialog:[error localizedDescription] title:title];
@@ -133,7 +133,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 }
 
 - (void)letUserIntoApp {
-    [HEMAnalytics trackUserSession]; // update user session, since it maybe a different user now
+    [SENAnalytics trackUserSession]; // update user session, since it maybe a different user now
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     [[self view] endEditing:NO];

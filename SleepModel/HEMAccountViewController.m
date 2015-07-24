@@ -362,7 +362,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
                          completion:^(NSError *error) {
                            [weakSelf showErrorIfAny:error];
                            if (error == nil) {
-                               [HEMAnalytics updateGender:gender];
+                               [SENAnalytics updateGender:gender];
                            }
                          }];
 
@@ -466,7 +466,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     void(^done)(NSError* error) = ^(NSError* error) {
         NSString* errorMessage = nil;
         if (error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
             errorMessage = [weakSelf errorMessageFromAccountUpdateError:error];
         }
         if (completion) {

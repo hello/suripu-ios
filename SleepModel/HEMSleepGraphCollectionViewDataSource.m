@@ -146,7 +146,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [SENAPITimeline timelineForDate:date
                          completion:^(SENTimeline *timeline, NSError *error) {
                            if (error) {
-                               [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                               [SENAnalytics trackError:error];
                                DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
                            }
                            if (completion)

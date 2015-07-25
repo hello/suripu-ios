@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1.4
+
+New:
+
+* Updated icons
+
 ## 1.1.1.3
 
 New:

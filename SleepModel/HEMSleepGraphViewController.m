@@ -12,6 +12,7 @@
 #import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
 #import "HEMPopupView.h"
+#import "HEMPopupMaskView.h"
 #import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -41,6 +42,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
+@property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
 @property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 
@@ -412,13 +414,16 @@ static BOOL hasLoadedBefore = NO;
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMPopupDismissDelay = 1.75f;
     CGFloat const HEMPopupAnimationDistance = 8.f;
+    CGFloat const HEMPopupSpacingDistance = 8.f;
     if ([self.collectionView isDecelerating])
         return;
     SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height));
+    CGFloat popupHeight = floorf([self.popupView intrinsicContentSize].height);
+    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - popupHeight - HEMPopupSpacingDistance);
+    [self.popupView showPointer:top > 0];
     self.popupViewTop.constant = top - HEMPopupAnimationDistance;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];
@@ -428,6 +433,7 @@ static BOOL hasLoadedBefore = NO;
     self.popupView.hidden = NO;
     [UIView animateWithDuration:0.3f
                      animations:^{
+                       [self emphasizeCellAtIndexPath:indexPath];
                        [self.popupView layoutIfNeeded];
                        self.popupView.alpha = 1;
                        [UIView animateWithDuration:0.15f
@@ -435,9 +441,27 @@ static BOOL hasLoadedBefore = NO;
                                            options:0
                                         animations:^{
                                           self.popupView.alpha = 0;
+                                          self.popupMaskView.alpha = 0;
                                         }
                                         completion:NULL];
                      }];
+}
+
+- (void)emphasizeCellAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
+        return;
+    CGRect maskArea = CGRectZero;
+    HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+    maskArea = [cell convertRect:[cell fillArea] toView:self.view];
+    if (indexPath.item < [self.dataSource numberOfSleepSegments] - 1) {
+        NSIndexPath *prefillPath = [NSIndexPath indexPathForItem:indexPath.item + 1 inSection:indexPath.section];
+        HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:prefillPath];
+        CGRect preFillArea = [cell convertRect:[cell preFillArea] toView:self.view];
+        maskArea.size.height += CGRectGetHeight(preFillArea);
+    }
+    [self.popupMaskView showUnderlyingViewRect:maskArea];
+    self.popupMaskView.alpha = 0.7f;
+    self.popupMaskView.hidden = NO;
 }
 
 - (NSString *)summaryPopupTextForSegment:(SENTimelineSegment *)segment {
@@ -598,6 +622,7 @@ static BOOL hasLoadedBefore = NO;
     [self.containerViewController showAlarmButton:NO];
     if (![self.popupView isHidden]) {
         self.popupView.hidden = YES;
+        self.popupMaskView.hidden = YES;
     }
 }
 
@@ -704,6 +729,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+        self.popupMaskView.hidden = YES;
         [self activateActionSheetAtIndexPath:indexPath];
     }
 }

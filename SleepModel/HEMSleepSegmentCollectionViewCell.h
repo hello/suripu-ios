@@ -36,13 +36,22 @@ extern CGFloat const HEMSegmentPrefillTimeInset;
 - (void)cancelEntryAnimation;
 
 /**
+ *  Rect to fill with fill color
+ */
+- (CGRect)fillArea;
+
+/**
+ *  Rect to fill with color of previous cell
+ */
+- (CGRect)preFillArea;
+
+/**
  *  Animate the appearance of the segment bar
  *
  *  @param duration   duration of the animation
  *  @param delay      time to wait before beginning the animation
  */
-- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
-                                    delay:(NSTimeInterval)delay;
+- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay;
 
 @property (nonatomic, getter=isFirstSegment) BOOL firstSegment;
 @property (nonatomic, getter=isLastSegment) BOOL lastSegment;

@@ -15,6 +15,7 @@
 @interface HEMPopupView ()
 
 @property (nonatomic, strong) IBOutlet UILabel *label;
+@property (nonatomic, getter=isPointerVisible) BOOL pointerVisible;
 @end
 
 @implementation HEMPopupView
@@ -24,6 +25,7 @@ static CGFloat const HEMPopupMargin = 30.f;
 static CGFloat const HEMPopupShadowBlur = 2.f;
 
 - (void)awakeFromNib {
+    self.pointerVisible = YES;
     self.backgroundColor = [UIColor clearColor];
     self.clipsToBounds = NO;
 }
@@ -44,6 +46,11 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
     [self setNeedsDisplay];
 }
 
+- (void)showPointer:(BOOL)pointerVisible {
+    self.pointerVisible = pointerVisible;
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
@@ -55,19 +62,21 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
     fill.size.height -= HEMPopupPointerHeight;
     UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:fill cornerRadius:3.f];
     [rectanglePath closePath];
-    [UIColor.whiteColor setFill];
+    [[UIColor tintColor] setFill];
     [rectanglePath fill];
 
-    UIBezierPath *pointerPath = [UIBezierPath bezierPath];
-    CGFloat pointerLeftEdge = HEMPopupPointerHeight * 2;
-    CGFloat pointerTopEdge = CGRectGetMaxY(fill);
-    [pointerPath moveToPoint:CGPointMake(pointerLeftEdge, pointerTopEdge)];
-    [pointerPath
-        addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight, pointerTopEdge + HEMPopupPointerHeight)];
-    [pointerPath addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight * 2, pointerTopEdge)];
-    [pointerPath closePath];
-    [[UIColor whiteColor] setFill];
-    [pointerPath fill];
+    if ([self isPointerVisible]) {
+        UIBezierPath *pointerPath = [UIBezierPath bezierPath];
+        CGFloat pointerLeftEdge = HEMPopupPointerHeight * 2;
+        CGFloat pointerTopEdge = CGRectGetMaxY(fill);
+        [pointerPath moveToPoint:CGPointMake(pointerLeftEdge, pointerTopEdge)];
+        [pointerPath addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight,
+                                                pointerTopEdge + HEMPopupPointerHeight)];
+        [pointerPath addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight * 2, pointerTopEdge)];
+        [pointerPath closePath];
+        [[UIColor tintColor] setFill];
+        [pointerPath fill];
+    }
 
     CGContextEndTransparencyLayer(ctx);
     CGContextRestoreGState(ctx);

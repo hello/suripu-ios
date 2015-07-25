@@ -147,8 +147,11 @@
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentLeft;
     return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont], NSParagraphStyleAttributeName : style },
-        @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName : style }
+        @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont],
+                       NSParagraphStyleAttributeName : style,
+                       NSForegroundColorAttributeName: [UIColor whiteColor]},
+        @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName : style,
+                     NSForegroundColorAttributeName: [UIColor whiteColor]}
     };
 }
 

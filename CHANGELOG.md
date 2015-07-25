@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.1.3
+
+New:
+
+* Improved visual feedback when tapping on sleep bars on timeline
+* WiFi connection statuses now processed and sent to mixpanel (req new fw)
+* Cleaned up error analytics to reduce noise in mixpanel / geckoboard
+
 ## 1.1.1.2
 
 New:

@@ -50,7 +50,6 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     [[self urlImageView] cancelImageDownload];
-    [[self urlImageView] setImage:nil];
 }
 
 @end

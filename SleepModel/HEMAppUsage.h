@@ -18,5 +18,6 @@
 - (instancetype)initWithIdentifier:(NSString*)identifier;
 + (HEMAppUsage *)appUsageForIdentifier:(NSString *)identifier;
 - (void)increment;
+- (void)resetCount;
 
 @end

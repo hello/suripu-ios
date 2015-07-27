@@ -83,11 +83,6 @@ static NSString* const HEMAppUsageKeyCount = @"count";
     return self;
 }
 
-- (void)increment {
-    [self setCount:[self count] + 1];
-    [self setUpdated:[NSDate date]];
-}
-
 - (NSUInteger)hash {
     return [self.identifier hash];
 }
@@ -104,11 +99,32 @@ static NSString* const HEMAppUsageKeyCount = @"count";
     && [self count] == [other count];
 }
 
+- (void)increment {
+    [self setCount:[self count] + 1];
+}
+
+- (void)setCount:(NSUInteger)count {
+    _count = count;
+    [self setUpdated:[NSDate date]];
+}
+
+- (void)resetCount {
+    [self setCount:0];
+}
+
 - (void)save {
     if ([self identifier]) {
         [SENKeyedArchiver setObject:self
                              forKey:[self identifier]
                        inCollection:NSStringFromClass([self class])];
+    }
+}
+
+- (void)clear {
+    if ([self identifier]) {
+        NSString* key = [self identifier];
+        NSString* collection = NSStringFromClass([self class]);
+        [SENKeyedArchiver removeAllObjectsForKey:key inCollection:collection];
     }
 }
 

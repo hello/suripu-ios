@@ -130,5 +130,6 @@
 + (UIColor *)handholdingMessageBackgroundColor;
 + (UIColor *)actionSheetSeparatorColor;
 + (UIColor *)actionSheetSelectedColor;
++ (UIColor *)timelineEventSelectedBackgroundColor;
 
 @end

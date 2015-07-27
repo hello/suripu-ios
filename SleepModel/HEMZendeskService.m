@@ -79,7 +79,9 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
 - (void)setZendeskIdentity {
     void(^setIdentity)(NSString* email, NSString* name) = ^(NSString* email, NSString* name) {
         ZDKAnonymousIdentity* identity = [ZDKAnonymousIdentity new];
-        [identity setExternalId:[SENAuthorizationService accountIdOfAuthorizedUser]];
+        // do not set the external id using our account id.  Setting external id
+        // somehow prevents user from using two different devices for the same
+        // Sense account to submit tickets ...
         if (email) {
             [identity setEmail:email];
         }

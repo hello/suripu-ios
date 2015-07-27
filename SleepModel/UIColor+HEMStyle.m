@@ -227,5 +227,8 @@ static UIColor *_tintColor = nil;
 + (UIColor *)actionSheetSelectedColor {
     return [UIColor colorWithHex:0xF7F7F7 alpha:1.f];
 }
++ (UIColor *)timelineEventSelectedBackgroundColor {
+    return [UIColor colorWithHex:0xEBF7FF alpha:1.f];
+}
 
 @end

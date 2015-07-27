@@ -1,5 +1,8 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
+
+#import "UIColor+HEMStyle.h"
+
 #import "HEMSleepEventCollectionViewCell.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HEMTimelineLayoutAttributes.h"
@@ -124,6 +127,16 @@
     CGFloat const containerViewLeft = 8.f;
     CGSize size = [self.contentContainerView intrinsicContentSize];
     return CGRectMake(containerViewLeft, 0, size.width, size.height);
+}
+
+- (void)setSelected:(BOOL)selected {
+    [[self contentContainerView] setHighlighted:selected];
+    [super setSelected:selected];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    [[self contentContainerView] setHighlighted:highlighted];
+    [super setHighlighted:highlighted];
 }
 
 @end

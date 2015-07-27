@@ -13,4 +13,5 @@
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text timeText:(NSAttributedString *)time;
 
 - (void)setMessageText:(NSAttributedString *)message timeText:(NSAttributedString *)time;
+- (void)setHighlighted:(BOOL)highlighted;
 @end

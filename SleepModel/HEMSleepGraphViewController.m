@@ -731,6 +731,7 @@ static BOOL hasLoadedBefore = NO;
     if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
         self.popupMaskView.hidden = YES;
         [self activateActionSheetAtIndexPath:indexPath];
+        [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     }
 }
 

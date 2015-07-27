@@ -23,6 +23,7 @@ CGFloat const HEMEventBubbleWidthOffset = 50.f;
 CGFloat const HEMEventBubbleTextHeightOffset = 28.f;
 CGFloat const HEMEventBubbleMinimumHeight = 48.f;
 CGFloat const HEMEventTimeLabelWidth = 40.f;
+CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text timeText:(NSAttributedString *)time {
     CGRect screenSize = [[UIScreen mainScreen] bounds];
@@ -37,7 +38,7 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
 - (void)awakeFromNib {
     self.layer.shadowRadius = 2.f;
     self.layer.shadowColor = [[UIColor tintColor] CGColor];
-    self.layer.shadowOpacity = 0.25f;
+    self.layer.shadowOpacity = HEMEventBubbleShadowOpacity;
     self.layer.shadowOffset = CGSizeZero;
     self.cornerView.layer.cornerRadius = 3.f;
     self.cornerView.layer.masksToBounds = YES;
@@ -61,6 +62,16 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
     self.timeLabel.attributedText = time;
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    if (highlighted) {
+        self.cornerView.backgroundColor = [UIColor timelineEventSelectedBackgroundColor];
+        self.layer.shadowOpacity = 0.0f;
+    } else {
+        self.layer.shadowOpacity = HEMEventBubbleShadowOpacity;
+        self.cornerView.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 @end

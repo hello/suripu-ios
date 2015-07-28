@@ -19,33 +19,38 @@ static NSString* const HEMAppUsageKeyCount = @"count";
 @property (nonatomic, copy)   NSString* identifier;
 @property (nonatomic, strong) NSDate* created;
 @property (nonatomic, strong) NSDate* updated;
-@property (nonatomic, assign) NSUInteger count;
+@property (nonatomic, assign) long count;
 
 @end
 
 @implementation HEMAppUsage
 
-+ (HEMAppUsage *)appUsageForIdentifier:(NSString *)identifier {
++ (void)appUsageForIdentifier:(NSString *)identifier
+                   completion:(void(^)(HEMAppUsage* usage))completion {
+    
+    if (!completion) {
+        return;
+    }
+    
     if (!identifier) {
-        return nil;
+        return;
     }
     
-    NSString *collection = NSStringFromClass([HEMAppUsage class]);
-    NSSet *usages = [SENKeyedArchiver objectsForKey:identifier
-                                       inCollection:collection];
-    
-    // only expect 1 app usage per identifier
-    HEMAppUsage *appUsage = [[usages objectEnumerator] nextObject];
-    if (!appUsage) {
-        appUsage = [[HEMAppUsage alloc] initWithIdentifier:identifier];
-    }
-    
-    return appUsage;
-}
-
-+ (void)reset {
-    NSString* collection = NSStringFromClass([HEMAppUsage class]);
-    [SENKeyedArchiver removeAllObjectsInCollection:collection];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *collection = NSStringFromClass([HEMAppUsage class]);
+        NSSet *usages = [SENKeyedArchiver objectsForKey:identifier
+                                           inCollection:collection];
+        
+        // only expect 1 app usage per identifier
+        HEMAppUsage *appUsage = [[usages objectEnumerator] nextObject];
+        if (!appUsage) {
+            appUsage = [[HEMAppUsage alloc] initWithIdentifier:identifier];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion (appUsage);
+        });
+    });
 }
 
 #pragma mark - NSCoding
@@ -56,7 +61,7 @@ static NSString* const HEMAppUsageKeyCount = @"count";
         _identifier = [[aDecoder decodeObjectForKey:HEMAppUsageKeyIdentifier] copy];
         _created = [aDecoder decodeObjectForKey:HEMAppUsageKeyCreated];
         _updated = [aDecoder decodeObjectForKey:HEMAppUsageKeyUpdated];
-        _count = [[aDecoder decodeObjectForKey:HEMAppUsageKeyCount] integerValue];
+        _count = [[aDecoder decodeObjectForKey:HEMAppUsageKeyCount] longValue];
     }
     return self;
 }
@@ -87,6 +92,14 @@ static NSString* const HEMAppUsageKeyCount = @"count";
     return [self.identifier hash];
 }
 
+- (NSDate*)today {
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDate* now = [NSDate date];
+    NSCalendarUnit flags = NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSDateComponents* components = [calendar components:flags fromDate:now];
+    return [calendar dateFromComponents:components];
+}
+
 - (BOOL)isEqual:(id)other {
     if (![other isKindOfClass:[self class]]) {
         return NO;
@@ -94,16 +107,16 @@ static NSString* const HEMAppUsageKeyCount = @"count";
     
     HEMAppUsage* usage = other;
     return [[self identifier] isEqualToString:[usage identifier]]
-    && [[self created] isEqual:[usage created]]
-    && [[self updated] isEqual:[usage updated]]
-    && [self count] == [other count];
+        && [[self created] isEqual:[usage created]]
+        && [[self updated] isEqual:[usage updated]]
+        && [self count] == [other count];
 }
 
 - (void)increment {
     [self setCount:[self count] + 1];
 }
 
-- (void)setCount:(NSUInteger)count {
+- (void)setCount:(long)count {
     _count = count;
     [self setUpdated:[NSDate date]];
 }
@@ -114,17 +127,13 @@ static NSString* const HEMAppUsageKeyCount = @"count";
 
 - (void)save {
     if ([self identifier]) {
-        [SENKeyedArchiver setObject:self
-                             forKey:[self identifier]
-                       inCollection:NSStringFromClass([self class])];
-    }
-}
-
-- (void)clear {
-    if ([self identifier]) {
-        NSString* key = [self identifier];
-        NSString* collection = NSStringFromClass([self class]);
-        [SENKeyedArchiver removeAllObjectsForKey:key inCollection:collection];
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [SENKeyedArchiver setObject:strongSelf
+                                 forKey:[strongSelf identifier]
+                           inCollection:NSStringFromClass([strongSelf class])];
+        });
     }
 }
 

@@ -13,10 +13,11 @@
 @property (nonatomic, copy,   readonly) NSString* identifier;
 @property (nonatomic, strong, readonly) NSDate* created;
 @property (nonatomic, strong, readonly) NSDate* updated;
-@property (nonatomic, assign, readonly) NSUInteger count;
+@property (nonatomic, assign, readonly) long count;
 
 - (instancetype)initWithIdentifier:(NSString*)identifier;
-+ (HEMAppUsage *)appUsageForIdentifier:(NSString *)identifier;
++ (void)appUsageForIdentifier:(NSString *)identifier
+                   completion:(void(^)(HEMAppUsage* usage))completion;
 - (void)increment;
 - (void)resetCount;
 

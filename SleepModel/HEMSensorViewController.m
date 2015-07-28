@@ -200,6 +200,8 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.graphView.widthLine = 1.f;
     self.graphView.userInteractionEnabled = NO;
     self.graphView.labelFont = [UIFont sensorGraphNumberFont];
+    self.graphView.colorTouchInputLine = [UIColor colorForCondition:self.sensor.condition];
+    self.graphView.alphaTouchInputLine = 1.f;
 }
 
 - (void)configureSensorValueViews

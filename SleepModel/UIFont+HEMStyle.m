@@ -125,6 +125,11 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:16.f];
 }
 
++ (UIFont*)sensorTimestampFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
+}
+
 + (UIFont*)sensorMessageFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];

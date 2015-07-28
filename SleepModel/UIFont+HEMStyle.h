@@ -85,6 +85,8 @@
 
 + (UIFont*)backViewTitleFont;
 
++ (UIFont*)sensorTimestampFont;
+
 + (UIFont*)sensorMessageFont;
 
 + (UIFont*)sensorMessageBoldFont;

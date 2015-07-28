@@ -479,6 +479,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
     self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
+    self.statusMessageLabel.font = [UIFont sensorTimestampFont];
     [self updateValueLabelWithValue:dataPoint.value];
     [UIView animateWithDuration:0.2f animations:^{
         self.overlayView.alpha = 0;

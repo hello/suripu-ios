@@ -47,7 +47,6 @@ static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
 static CGFloat const HEMAlarmListPairCellHeight = 205.f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
-static NSString *const HEMAlarmTimeFormat = @"%ld:%@";
 static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSUInteger const HEMAlarmListLimit = 8;
 
@@ -130,7 +129,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.hour12Formatter = [NSDateFormatter new];
     self.hour12Formatter.dateFormat = @"hh:mm";
     self.hour24Formatter = [NSDateFormatter new];
-    self.hour24Formatter.dateFormat = @"H:mm";
+    self.hour24Formatter.dateFormat = @"HH:mm";
     self.meridiemFormatter = [NSDateFormatter new];
     self.meridiemFormatter.dateFormat = @"a";
 }
@@ -438,15 +437,18 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (NSString *)localizedTimeForAlarm:(SENAlarm *)alarm {
+    NSString *const HEMAlarm12HourFormat = @"%ld:%@";
+    NSString *const HEMAlarm24HourFormat = @"%02ld:%@";
     struct SENAlarmTime time = (struct SENAlarmTime){.hour = alarm.hour, .minute = alarm.minute };
-    NSString *minuteText = time.minute < 10 ? [NSString stringWithFormat:@"0%ld", (long)time.minute]
-                                            : [NSString stringWithFormat:@"%ld", (long)time.minute];
+    NSString *minuteText = [NSString stringWithFormat:@"%02ld", (long)time.minute];
+    NSString* format = HEMAlarm24HourFormat;
     if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
+        format = HEMAlarm12HourFormat;
         if (time.hour > 12) {
             time.hour = (long)(time.hour - 12);
         } else if (time.hour == 0) { time.hour = 12; }
     }
-    return [NSString stringWithFormat:HEMAlarmTimeFormat, time.hour, minuteText];
+    return [NSString stringWithFormat:format, time.hour, minuteText];
 }
 
 #pragma mark UICollectionViewDelegate

@@ -183,8 +183,8 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
         self.hourlyFormatter.dateFormat = @"h:mma";
         self.dailyFormatter.dateFormat = @"EEEE — h:mma";
     } else {
-        self.hourlyFormatter.dateFormat = @"H:mm";
-        self.dailyFormatter.dateFormat = @"EEEE — H:mm";
+        self.hourlyFormatter.dateFormat = @"HH:mm";
+        self.dailyFormatter.dateFormat = @"EEEE — HH:mm";
     }
 }
 

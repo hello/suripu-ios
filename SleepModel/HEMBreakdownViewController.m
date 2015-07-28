@@ -55,7 +55,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     [super viewDidLoad];
     self.timestampFormatter = [NSDateFormatter new];
     self.timestampFormatter.dateFormat = [SENPreference timeFormat] == SENTimeFormat12Hour
-        ? @"h:mm" : @"H:mm";
+        ? @"h:mm" : @"HH:mm";
     self.meridiemFormatter = [NSDateFormatter new];
     self.meridiemFormatter.dateFormat = @"a";
     self.valueFormatter = [HEMSplitTextFormatter new];

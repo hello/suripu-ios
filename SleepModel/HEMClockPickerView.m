@@ -78,8 +78,9 @@ static NSUInteger const HEMClock24HourCount = 24;
     NSInteger hourCount = _use12Hour ? 12 : 24;
     NSMutableArray *hourItems = [[NSMutableArray alloc] initWithCapacity:hourCount];
     for (int i = 0; i < hourCount; i++) {
+        NSString* format = _use12Hour ? @"%ld" : @"%02ld";
         NSInteger hour = [self shouldUse12Hour] ? i + 1 : i;
-        [hourItems addObject:[NSString stringWithFormat:@"%ld", hour]];
+        [hourItems addObject:[NSString stringWithFormat:format, hour]];
     }
     _hourPickerView =
         [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, HEMClockPickerHourWidth, CGRectGetHeight(self.bounds))

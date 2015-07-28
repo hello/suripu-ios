@@ -166,6 +166,7 @@
 		8A8288D81A7800820043B1D1 /* trendsBarIconActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C61A7800820043B1D1 /* trendsBarIconActive.png */; };
 		8A8288D91A7800820043B1D1 /* trendsBarIconActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C71A7800820043B1D1 /* trendsBarIconActive@2x.png */; };
 		8A8288DA1A7800820043B1D1 /* trendsBarIconActive@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C81A7800820043B1D1 /* trendsBarIconActive@3x.png */; };
+		8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8397A31B683A200079AC24 /* HEMWaveform.m */; };
 		8A8621671B5D5DC20033F44C /* HEMAppReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8621661B5D5DC20033F44C /* HEMAppReview.m */; };
 		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
 		8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
@@ -952,6 +953,8 @@
 		8A8288C61A7800820043B1D1 /* trendsBarIconActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trendsBarIconActive.png; path = images/trendsBarIconActive.png; sourceTree = "<group>"; };
 		8A8288C71A7800820043B1D1 /* trendsBarIconActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "trendsBarIconActive@2x.png"; path = "images/trendsBarIconActive@2x.png"; sourceTree = "<group>"; };
 		8A8288C81A7800820043B1D1 /* trendsBarIconActive@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "trendsBarIconActive@3x.png"; path = "images/trendsBarIconActive@3x.png"; sourceTree = "<group>"; };
+		8A8397A21B683A200079AC24 /* HEMWaveform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWaveform.h; sourceTree = "<group>"; };
+		8A8397A31B683A200079AC24 /* HEMWaveform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWaveform.m; sourceTree = "<group>"; };
 		8A8621651B5D5DC20033F44C /* HEMAppReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppReview.h; sourceTree = "<group>"; };
 		8A8621661B5D5DC20033F44C /* HEMAppReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReview.m; sourceTree = "<group>"; };
 		8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmSoundTableViewController.h; sourceTree = "<group>"; };
@@ -1891,6 +1894,8 @@
 				8ADE06381B2F521B00976654 /* HEMSplitTextFormatter.m */,
 				8A391FC81A39352F0090992A /* HEMZoomAnimationTransitionDelegate.h */,
 				8A391FC91A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m */,
+				8A8397A21B683A200079AC24 /* HEMWaveform.h */,
+				8A8397A31B683A200079AC24 /* HEMWaveform.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -4204,6 +4209,7 @@
 				8A4B669E19F6CE4400445883 /* HEMActionSheetViewController.m in Sources */,
 				BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */,
 				BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */,
+				8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */,
 				8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,

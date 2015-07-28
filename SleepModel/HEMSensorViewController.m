@@ -196,10 +196,13 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.graphView.enableTouchReport = YES;
     self.graphView.colorBottom = [UIColor clearColor];
     self.graphView.colorTop = [UIColor clearColor];
-    self.graphView.colorPoint = [UIColor clearColor];
     self.graphView.widthLine = 1.f;
     self.graphView.userInteractionEnabled = NO;
     self.graphView.labelFont = [UIFont sensorGraphNumberFont];
+    self.graphView.alphaTouchInputLine = 1.f;
+    self.graphView.animationGraphEntranceTime = 0;
+    self.graphView.sizePoint = 5.f;
+    self.graphView.alwaysDisplayDots = NO;
 }
 
 - (void)configureSensorValueViews
@@ -224,8 +227,10 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     }
     self.statusMessageLabel.attributedText = statusMessage;
     [self adjustValueViewHeights];
+    self.graphView.colorTouchInputLine = color;
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.7;
+    self.graphView.colorPoint = color;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
 }
 
@@ -474,6 +479,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
     self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
+    self.statusMessageLabel.font = [UIFont sensorTimestampFont];
     [self updateValueLabelWithValue:dataPoint.value];
     [UIView animateWithDuration:0.2f animations:^{
         self.overlayView.alpha = 0;
@@ -492,7 +498,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
     [self.overlayView setSectionFooters:self.graphDataSource.valuesForSectionIndexes headers:nil];
     [self.graphView setUserInteractionEnabled:self.graphDataSource.dataSeries.count > 0];
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.75f animations:^{
         self.graphView.alpha = 1;
         self.overlayView.alpha = 1;
     }];

@@ -99,8 +99,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         _timeDateFormatter.dateFormat = @"h:mm";
         _hourDateFormatter.dateFormat = @"h";
     } else {
-        _timeDateFormatter.dateFormat = @"H:mm";
-        _hourDateFormatter.dateFormat = @"H";
+        _timeDateFormatter.dateFormat = @"HH:mm";
+        _hourDateFormatter.dateFormat = @"HH";
     }
     _calendar = [NSCalendar currentCalendar];
 }

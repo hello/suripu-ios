@@ -133,14 +133,14 @@ static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
         && [[self rollingCountPerDay] isEqual:[other rollingCountPerDay]];
 }
 
-- (NSUInteger)rollingCountIndex {
+- (NSUInteger)todaysRollingIndex {
     NSUInteger daysSinceCreation = [[self created] daysElapsed];
     return daysSinceCreation % HEMAppUsageRollingDays;
 }
 
 - (void)increment:(BOOL)autosave {
     NSUInteger daysSinceLastUpdate = [[self updated] daysElapsed];
-    NSUInteger rollingIndex = [self rollingCountIndex];
+    NSUInteger rollingIndex = [self todaysRollingIndex];
     
     NSNumber* countForDay = nil;
     if (daysSinceLastUpdate == 0) {
@@ -151,6 +151,8 @@ static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
     
     [self rollingCountPerDay][rollingIndex] = @([countForDay integerValue] + 1);
     
+    DDLogVerbose(@"incrementing usage for %@", [self identifier]);
+    
     if (autosave) {
         [self save];
     }
@@ -159,7 +161,7 @@ static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
 - (NSUInteger)usageWithin:(HEMAppUsageInterval)interval {
     [self clearCountBetweenLastUpdateAndNow];
     
-    NSUInteger countIndex = [self rollingCountIndex];
+    NSUInteger countIndex = [self todaysRollingIndex];
     
     NSUInteger daysToInclude = 0;
     if (interval == HEMAppUsageIntervalLast7Days) {
@@ -184,7 +186,7 @@ static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
 
 - (void)clearCountBetweenLastUpdateAndNow {
     NSUInteger daysFromLastUpdatedToStartClearing = [[self updated] daysElapsed] - 1;
-    NSUInteger currentRollingIndex = [self rollingCountIndex];
+    NSUInteger currentRollingIndex = [self todaysRollingIndex];
     NSUInteger rollingIndex = daysFromLastUpdatedToStartClearing % HEMAppUsageRollingDays;
     
     while (daysFromLastUpdatedToStartClearing > 1 && rollingIndex != currentRollingIndex) {

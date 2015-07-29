@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSMutableArray* rollingCountPerDay;
 @property (nonatomic, strong) NSDate* created;
 
-- (NSUInteger)rollingCountIndex;
+- (NSUInteger)todaysRollingIndex;
 
 @end
 
@@ -57,7 +57,7 @@ describe(@"HEMAppUsage", ^{
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
                 [appUsage increment:YES];
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                currentRollingIndex = [appUsage rollingCountIndex];
+                currentRollingIndex = [appUsage todaysRollingIndex];
             });
             
             afterEach(^{
@@ -83,7 +83,7 @@ describe(@"HEMAppUsage", ^{
             beforeEach(^{
                 NSString* identifier = @"app launch";
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                currentRollingIndex = [appUsage rollingCountIndex];
+                currentRollingIndex = [appUsage todaysRollingIndex];
                 [appUsage increment:NO];
                 [appUsage increment:NO];
                 [appUsage increment:NO];

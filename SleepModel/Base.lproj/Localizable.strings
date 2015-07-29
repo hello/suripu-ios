@@ -615,9 +615,3 @@
 
 // handholding
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days";
-
-// review
-"review.like-app.title" = "Hello!";
-"review.like-app.message" = "Are you enjoying Sense?";
-"review.rate-app.title" = "Great!";
-"review.rate-app.message" = "Would you like to rate the app?";

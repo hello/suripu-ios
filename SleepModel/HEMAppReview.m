@@ -6,10 +6,13 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENLocalPreferences.h>
+#import <SenseKit/SENServiceDevice.h>
+
 #import "HEMAppReview.h"
 #import "HEMAppUsage.h"
 #import "HEMAlertViewController.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMConfig.h"
 
 @implementation HEMAppReview
 
@@ -18,15 +21,42 @@ NSUInteger const HEMMinimumAppLaunches = 4;
 NSUInteger const HEMSystemAlertShownThreshold = 30;
 NSUInteger const HEMMinimumTimelineViews = 10;
 
-NSString *const HEMReviewPrompted = @"HEMReviewPrompted";
-
 #pragma mark - Conditions for app review
 
-+ (BOOL)shouldAskUserToRateTheApp {
-    return [self isWithinAppReviewThreshold]
-        && [self meetsMinimumRequiredAppLaunches]
-        && [self meetsMinimumRequiredTimelineViews]
-        && [self isWithinSystemAlertThreshold];
++ (void)shouldAskUserToRateTheApp:(void(^)(BOOL ask))completion {
+    if (!completion) {
+        return;
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        BOOL meetsInitialRequirements
+             = [self hasAppReviewURL]
+            && [self isWithinAppReviewThreshold]
+            && [self meetsMinimumRequiredAppLaunches]
+            && [self meetsMinimumRequiredTimelineViews]
+            && [self isWithinSystemAlertThreshold];
+        
+        if (meetsInitialRequirements) {
+            [self hasSenseAndPaired:completion];
+        } else {
+            completion (NO);
+        }
+    });
+}
+
+/**
+ * @discussion
+ */
++ (void)hasSenseAndPaired:(void(^)(BOOL hasPairedDevices))completion {
+    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+    [deviceService loadDeviceInfo:^(NSError *error) {
+        completion (error == nil && [deviceService senseInfo] && [deviceService pillInfo]);
+    }];
+}
+
++ (BOOL)hasAppReviewURL {
+    NSString* url = [HEMConfig stringForConfig:HEMConfAppReviewURL];
+    return url != nil;
 }
 
 + (BOOL)isWithinAppReviewThreshold {
@@ -55,43 +85,15 @@ NSString *const HEMReviewPrompted = @"HEMReviewPrompted";
 
 #pragma mark -
 
-+ (void)askToRateAppFrom:(UIViewController *)controller {
-    [self setDidAskToRateApp];
-    [HEMAlertViewController
-        showBooleanChoiceDialogWithTitle:NSLocalizedString(@"review.like-app.title", nil)
-                                 message:NSLocalizedString(@"review.like-app.message", nil)
-                              controller:controller
-                                  action:^{
-                                    [controller dismissViewControllerAnimated:YES
-                                                                   completion:^{
-                                                                     [self presentAppRatingDialogFrom:controller];
-                                                                   }];
-                                  }];
-}
-
-+ (BOOL)didAskToRateApp {
++ (void)markAppReviewPromptCompleted {
     [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppReviewPromptCompleted];
-    return [[[SENLocalPreferences sharedPreferences] userPreferenceForKey:HEMReviewPrompted] boolValue];
 }
 
 + (void)rateApp {
-    NSString *const HEMReviewURI = @"http://itunes.apple.com/WebObjects/MZStore.woa/wa/"
-        @"viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:HEMReviewURI]];
+    NSString* url = [HEMConfig stringForConfig:HEMConfAppReviewURL];
+    if (url) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    }
 }
 
-+ (void)presentAppRatingDialogFrom:(UIViewController *)controller {
-    [HEMAlertViewController showBooleanChoiceDialogWithTitle:NSLocalizedString(@"review.rate-app.title", nil)
-                                                     message:NSLocalizedString(@"review.rate-app.message", nil)
-                                                  controller:controller
-                                                      action:^{
-                                                        [controller dismissViewControllerAnimated:YES completion:NULL];
-                                                        [self rateApp];
-                                                      }];
-}
-
-+ (void)setDidAskToRateApp {
-    SENLocalPreferences *preferences = [SENLocalPreferences sharedPreferences];
-    [preferences setUserPreference:@(YES) forKey:HEMReviewPrompted];
-}
 @end

@@ -11,25 +11,17 @@
 @interface HEMAppReview : NSObject
 
 /**
- *  @return YES if app should ask usr to rate it.  NO otherwise
+ *  @discussion
+ *  This is an asynchronous call as much of the work happens on a separate thread
+ *  and makes asynchronous calls to check state of the system.
+ * 
+ *  @param completion: block to invoke when decision to ask is determined
  */
-+ (BOOL)shouldAskUserToRateTheApp;
-
-/**
- *  Present a dialog to ask the user to rate the app
- *
- *  @param controller presenting controller for dialog
- *  @param completion YES if the user selects to rate the app
- */
-+ (void)askToRateAppFrom:(UIViewController *)controller;
-
-/**
- *  @return YES if the user has been asked to rate the app
- */
-+ (BOOL)didAskToRateApp;
++ (void)shouldAskUserToRateTheApp:(void(^)(BOOL ask))completion;
 
 /**
  *  Send the user to the App Store review page
  */
 + (void)rateApp;
+
 @end

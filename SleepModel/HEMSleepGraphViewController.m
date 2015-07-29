@@ -28,6 +28,7 @@
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
+#import "HEMAppUsage.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -689,6 +690,12 @@ static BOOL hasLoadedBefore = NO;
     [self.dataSource reloadData:^{
       __strong typeof(weakSelf) strongSelf = weakSelf;
       strongSelf.loadingData = NO;
+        
+        if ([strongSelf.dataSource dateIsLastNight]
+            && [strongSelf.dataSource.sleepResult.score integerValue] > 0) {
+            [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        }
+        
       if ([strongSelf isVisible]) {
           [strongSelf checkIfInitialAnimationNeeded];
       }

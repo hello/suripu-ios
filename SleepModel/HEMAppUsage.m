@@ -14,6 +14,7 @@
 // types of app usage
 NSString* const HEMAppUsageSystemAlertShown = @"system.alert";
 NSString* const HEMAppUsageAppLaunched = @"app.launched";
+NSString* const HEMAppUsageTimelineShownWithData = @"timeline.with.data";
 
 // days to keep counts of usage for
 static NSUInteger const HEMAppUsageRollingDays = 31;

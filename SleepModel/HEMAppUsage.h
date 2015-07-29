@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-NSString* const HEMAppUsageSystemAlertShown;
-NSString* const HEMAppUsageAppLaunched;
-NSString* const HEMAppUsageTimelineShownWithData;
+extern NSString* const HEMAppUsageSystemAlertShown;
+extern NSString* const HEMAppUsageAppLaunched;
+extern NSString* const HEMAppUsageTimelineShownWithData;
+extern NSString* const HEMAppUsageAppReviewPromptCompleted;
 
 typedef NS_ENUM(NSUInteger, HEMAppUsageInterval) {
     HEMAppUsageIntervalLast7Days,

@@ -11,6 +11,11 @@
 @interface HEMAppReview : NSObject
 
 /**
+ *  @return YES if app should ask usr to rate it.  NO otherwise
+ */
++ (BOOL)shouldAskUserToRateTheApp;
+
+/**
  *  Present a dialog to ask the user to rate the app
  *
  *  @param controller presenting controller for dialog

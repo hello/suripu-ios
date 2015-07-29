@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "HEMSleepSegmentCollectionViewCell.h"
 
-@class FDWaveformView, HEMEventBubbleView;
+@class HEMWaveform, HEMEventBubbleView;
 
 @interface HEMSleepEventCollectionViewCell : HEMSleepSegmentCollectionViewCell
 
@@ -14,4 +14,5 @@
 + (NSAttributedString *)attributedMessageFromText:(NSString *)text;
 
 - (void)layoutWithImage:(UIImage *)image message:(NSString *)text time:(NSAttributedString *)timeText;
+- (void)displayAudioViewsWithWaveform:(HEMWaveform *)waveform;
 @end

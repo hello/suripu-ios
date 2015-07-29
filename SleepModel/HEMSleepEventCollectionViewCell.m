@@ -8,9 +8,14 @@
 #import "HEMTimelineLayoutAttributes.h"
 #import "HEMMarkdown.h"
 #import "HEMEventBubbleView.h"
+#import "HEMWaveform.h"
 
 @interface HEMSleepEventCollectionViewCell ()
 @property (nonatomic) CGFloat cachedRatioFromCenter;
+@property (nonatomic, weak) IBOutlet UIButton *playButton;
+@property (nonatomic, weak) IBOutlet UIView *waveformStoppedView;
+@property (nonatomic, weak) IBOutlet UIView *waveformPlayingView;
+@property (nonatomic, getter=isDisplayingAudioViews) BOOL displayAudioViews;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
@@ -27,14 +32,28 @@
     [self adjustContentsWithRatio:self.cachedRatioFromCenter];
 }
 
+- (void)displayAudioViewsWithWaveform:(HEMWaveform *)waveform {
+    BOOL display = waveform != nil;
+    self.displayAudioViews = display;
+    self.playButton.hidden = !display;
+    self.waveformStoppedView.hidden = !display;
+    self.waveformPlayingView.hidden = !display;
+}
+
 - (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {
     CGFloat ratio = layoutAttributes.ratioFromCenter;
     self.cachedRatioFromCenter = ratio;
     [self adjustContentsWithRatio:ratio];
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self displayAudioViewsWithWaveform:nil];
+}
+
 - (void)prepareForReuse {
     [super prepareForReuse];
+    [self displayAudioViewsWithWaveform:nil];
     self.transform = CGAffineTransformIdentity;
     self.contentContainerView.alpha = 1;
     [self.contentContainerView setMessageText:nil timeText:nil];
@@ -57,8 +76,8 @@
                           delay:delay
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         [self adjustContentsWithRatio:self.cachedRatioFromCenter];
-                         self.contentContainerView.alpha = alpha;
+                       [self adjustContentsWithRatio:self.cachedRatioFromCenter];
+                       self.contentContainerView.alpha = alpha;
                      }
                      completion:NULL];
 }
@@ -67,13 +86,15 @@
     CGFloat const minContainerViewScale = 0.9;
     CGFloat const maxContainerViewTop = 10.f;
     CGFloat const minContainerViewTop = 0;
+    CGFloat const playButtonDiameter = 48.f;
+    CGFloat const playButtonMargin = 8.f;
     CGFloat base = maxContainerViewTop * ratioFromCenter * -1;
     CGFloat parallaxVerticalOffset = MAX(MIN(maxContainerViewTop, base), minContainerViewTop);
     CGFloat width = CGRectGetWidth([self containerFrame]);
     CGFloat scaleDiff = 1 - minContainerViewScale;
     CGFloat ratio = 1 - fabs(ratioFromCenter);
     CGFloat scale = ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
-    
+
     CGFloat scaleOffset = nearbyintf(-(width - (width * scale)) / 2);
     CGAffineTransform scaling = CGAffineTransformIdentity;
     CGFloat alpha = 1.0f;
@@ -81,12 +102,18 @@
         scaling = CGAffineTransformMakeScale(scale, scale);
         alpha = [self alphaWithRatioFromCenter:ratioFromCenter];
     }
-
+    alpha = [self isWaitingForAnimation] ? 0 : alpha;
     CGAffineTransform transform = CGAffineTransformTranslate(scaling, scaleOffset / 2, 0);
     transform = CGAffineTransformTranslate(transform, 0, parallaxVerticalOffset);
-    self.contentContainerView.alpha = [self isWaitingForAnimation] ? 0 : alpha;
+    self.contentContainerView.alpha = alpha;
     self.contentContainerView.transform = scaling;
     self.contentContainerView.frame = CGRectApplyAffineTransform([self containerFrame], transform);
+    CGFloat playDiameter = playButtonDiameter * scale;
+    CGFloat playMargin = playButtonMargin * scale;
+    self.playButton.alpha = alpha;
+    self.playButton.frame
+        = CGRectMake(CGRectGetMaxX(self.contentContainerView.frame) - playDiameter - playMargin,
+                     CGRectGetMaxY(self.contentContainerView.frame) - playDiameter / 2, playDiameter, playDiameter);
 }
 
 - (CGFloat)alphaWithRatioFromCenter:(CGFloat)ratioFromCenter {
@@ -117,7 +144,8 @@
     self.eventTimeLabel.frame = eventTimeLabelFrame;
 
     CGFloat containerWidth = CGRectGetWidth(containerFrame);
-    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight - timeLabelRight;
+    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight
+                           - timeLabelRight;
     CGRect eventMesageLabelFrame = CGRectMake(messageLabelLeft, messageLabelTop, messageWidth,
                                               CGRectGetHeight(containerFrame) - messageLabelHeightOffset);
     self.eventMessageLabel.frame = eventMesageLabelFrame;
@@ -125,7 +153,11 @@
 
 - (CGRect)containerFrame {
     CGFloat const containerViewLeft = 8.f;
+    CGFloat const containerViewSoundOffset = 24.f;
     CGSize size = [self.contentContainerView intrinsicContentSize];
+    if ([self isDisplayingAudioViews]) {
+        size.height+= containerViewSoundOffset;
+    }
     return CGRectMake(containerViewLeft, 0, size.width, size.height);
 }
 

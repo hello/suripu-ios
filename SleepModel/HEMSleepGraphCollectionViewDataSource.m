@@ -4,7 +4,6 @@
 #import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <FDWaveformView/FDWaveformView.h>
 #import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"

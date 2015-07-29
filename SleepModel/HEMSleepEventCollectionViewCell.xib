@@ -49,6 +49,14 @@
                             <outlet property="timeLabel" destination="JFc-fa-7rh" id="YhR-bf-sFS"/>
                         </connections>
                     </view>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Vwd-mm-qW7" customClass="HEMPlayButton">
+                        <rect key="frame" x="257" y="5" width="48" height="48"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal" image="playSound.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -59,10 +67,14 @@
                 <outlet property="eventMessageLabel" destination="7kh-Q1-akT" id="jcu-S5-esD"/>
                 <outlet property="eventTimeLabel" destination="JFc-fa-7rh" id="T6n-yv-ZhQ"/>
                 <outlet property="eventTypeImageView" destination="UZO-fd-oeR" id="2XT-te-cZd"/>
+                <outlet property="playButton" destination="Vwd-mm-qW7" id="qfx-vo-ZzL"/>
             </connections>
             <point key="canvasLocation" x="260" y="174"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="playSound.png" width="12" height="16"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

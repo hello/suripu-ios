@@ -34,6 +34,7 @@
 #import "HEMTimelineContainerViewController.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingController.h"
+#import "HEMAppUsage.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -107,6 +108,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     [super viewDidBecomeActive];
     [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
+    
+    [HEMAppUsage appUsageForIdentifier:HEMAppUsageAppLaunched];
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
 }
 

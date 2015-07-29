@@ -454,6 +454,7 @@
 		BF7F1BEB19E313940028F799 /* particleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE519E313940028F799 /* particleIcon@2x.png */; };
 		BF7F1BEC19E313940028F799 /* temperatureIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE619E313940028F799 /* temperatureIcon.png */; };
 		BF7F1BED19E313940028F799 /* temperatureIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */; };
+		BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
 		BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */; };
@@ -1344,6 +1345,7 @@
 		BF7F1BE519E313940028F799 /* particleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particleIcon@2x.png"; sourceTree = "<group>"; };
 		BF7F1BE619E313940028F799 /* temperatureIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = temperatureIcon.png; sourceTree = "<group>"; };
 		BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "temperatureIcon@2x.png"; sourceTree = "<group>"; };
+		BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppUsageSpec.m; sourceTree = "<group>"; };
 		BF84C1FE1A0C111E009471D5 /* HEMSupportUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportUtil.h; sourceTree = "<group>"; };
 		BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportUtil.m; sourceTree = "<group>"; };
 		BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRootViewController.h; sourceTree = "<group>"; };
@@ -1784,6 +1786,7 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BF812A981B6827BB00BF672F /* Analytics */,
 				BF78E98D1B20D1660015949F /* Common */,
 				BF2EAD221B31F85E00C3A6E3 /* Onboarding */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
@@ -3199,6 +3202,14 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		BF812A981B6827BB00BF672F /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */,
+			);
+			name = Analytics;
+			sourceTree = "<group>";
+		};
 		BFABE74E19A2E6C900AB2F0F /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -4268,6 +4279,7 @@
 				BF664A971ACC61AF003355D2 /* HEMSystemAlertControllerSpec.m in Sources */,
 				BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */,
 				BF7454B11B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m in Sources */,
+				BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

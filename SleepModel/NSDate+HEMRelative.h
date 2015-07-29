@@ -39,6 +39,8 @@
 
 - (NSDate*)dateAtMidnight;
 
+- (NSDate*)daysFromNow:(NSInteger)days;
+
 - (NSDate*)nextDay;
 
 - (NSDate*)previousDay;

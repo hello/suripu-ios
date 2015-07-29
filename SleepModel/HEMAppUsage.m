@@ -7,50 +7,50 @@
 //
 #import <SenseKit/SENKeyedArchiver.h>
 
+#import "NSDate+HEMRelative.h"
+
 #import "HEMAppUsage.h"
 
+// days to keep counts of usage for
+static NSUInteger const HEMAppUsageRollingDays = 31;
 static NSString* const HEMAppUsageKeyIdentifier = @"identifier";
 static NSString* const HEMAppUsageKeyCreated = @"created";
 static NSString* const HEMAppUsageKeyUpdated = @"updated";
-static NSString* const HEMAppUsageKeyCount = @"count";
+static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
 
 @interface HEMAppUsage()
 
 @property (nonatomic, copy)   NSString* identifier;
 @property (nonatomic, strong) NSDate* created;
 @property (nonatomic, strong) NSDate* updated;
-@property (nonatomic, assign) long count;
+@property (nonatomic, strong) NSMutableArray* rollingCountPerDay;
 
 @end
 
 @implementation HEMAppUsage
 
-+ (void)appUsageForIdentifier:(NSString *)identifier
-                   completion:(void(^)(HEMAppUsage* usage))completion {
-    
-    if (!completion) {
-        return;
-    }
-    
++ (HEMAppUsage*)appUsageForIdentifier:(NSString *)identifier {
     if (!identifier) {
-        return;
+        return nil;
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *collection = NSStringFromClass([HEMAppUsage class]);
-        NSSet *usages = [SENKeyedArchiver objectsForKey:identifier
-                                           inCollection:collection];
-        
-        // only expect 1 app usage per identifier
-        HEMAppUsage *appUsage = [[usages objectEnumerator] nextObject];
-        if (!appUsage) {
-            appUsage = [[HEMAppUsage alloc] initWithIdentifier:identifier];
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion (appUsage);
-        });
-    });
+    NSString *collection = NSStringFromClass([HEMAppUsage class]);
+    id usages = [SENKeyedArchiver objectsForKey:identifier
+                                  inCollection:collection];
+    
+    // only expect 1 app usage per identifier
+    HEMAppUsage* appUsage = nil;
+    if ([usages isKindOfClass:[NSSet class]]) {
+        appUsage = [[usages objectEnumerator] nextObject];
+    } else if ([usages isKindOfClass:[self class]]) {
+        appUsage = usages;
+    }
+    
+    if (!appUsage) {
+        appUsage = [[HEMAppUsage alloc] initWithIdentifier:identifier];
+    }
+    
+    return appUsage;
 }
 
 #pragma mark - NSCoding
@@ -61,7 +61,8 @@ static NSString* const HEMAppUsageKeyCount = @"count";
         _identifier = [[aDecoder decodeObjectForKey:HEMAppUsageKeyIdentifier] copy];
         _created = [aDecoder decodeObjectForKey:HEMAppUsageKeyCreated];
         _updated = [aDecoder decodeObjectForKey:HEMAppUsageKeyUpdated];
-        _count = [[aDecoder decodeObjectForKey:HEMAppUsageKeyCount] longValue];
+        _rollingCountPerDay = [aDecoder decodeObjectForKey:HEMAppUsageKeyRollingCount];
+        [self initializeRollingCounts];
     }
     return self;
 }
@@ -70,7 +71,7 @@ static NSString* const HEMAppUsageKeyCount = @"count";
     [aCoder encodeObject:[self identifier] ?: @"" forKey:HEMAppUsageKeyIdentifier];
     [aCoder encodeObject:[self created] ?: [NSDate date] forKey:HEMAppUsageKeyCreated];
     [aCoder encodeObject:[self updated] ?: [NSDate date] forKey:HEMAppUsageKeyUpdated];
-    [aCoder encodeObject:@([self count]) forKey:HEMAppUsageKeyCount];
+    [aCoder encodeObject:[self rollingCountPerDay] forKey:HEMAppUsageKeyRollingCount];
 }
 
 #pragma mark -
@@ -84,20 +85,28 @@ static NSString* const HEMAppUsageKeyCount = @"count";
     if (self) {
         _identifier = [identifier copy];
         _created = [NSDate date];
+        [self initializeRollingCounts];
     }
     return self;
 }
 
-- (NSUInteger)hash {
-    return [self.identifier hash];
+- (void)initializeRollingCounts {
+    if (![self rollingCountPerDay]) {
+        [self setRollingCountPerDay:[NSMutableArray arrayWithCapacity:HEMAppUsageRollingDays]];
+        for (NSUInteger day = 0; day < HEMAppUsageRollingDays; day++) {
+            [[self rollingCountPerDay] addObject:@0];
+        }
+    } else if ([[self rollingCountPerDay] count] < HEMAppUsageRollingDays) {
+        // increase days if rolling days have changed
+        NSUInteger daysNeeded = HEMAppUsageRollingDays - [[self rollingCountPerDay] count];
+        for (NSUInteger i = 0; i < daysNeeded; i++) {
+            [[self rollingCountPerDay] addObject:@0];
+        }
+    }
 }
 
-- (NSDate*)today {
-    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSDate* now = [NSDate date];
-    NSCalendarUnit flags = NSCalendarUnitMonth | NSCalendarUnitDay;
-    NSDateComponents* components = [calendar components:flags fromDate:now];
-    return [calendar dateFromComponents:components];
+- (NSUInteger)hash {
+    return [self.identifier hash];
 }
 
 - (BOOL)isEqual:(id)other {
@@ -109,31 +118,76 @@ static NSString* const HEMAppUsageKeyCount = @"count";
     return [[self identifier] isEqualToString:[usage identifier]]
         && [[self created] isEqual:[usage created]]
         && [[self updated] isEqual:[usage updated]]
-        && [self count] == [other count];
+        && [[self rollingCountPerDay] isEqual:[other rollingCountPerDay]];
 }
 
-- (void)increment {
-    [self setCount:[self count] + 1];
+- (NSUInteger)rollingCountIndex {
+    NSUInteger daysSinceCreation = [[self created] daysElapsed];
+    return daysSinceCreation % HEMAppUsageRollingDays;
 }
 
-- (void)setCount:(long)count {
-    _count = count;
-    [self setUpdated:[NSDate date]];
+- (void)increment:(BOOL)autosave {
+    NSUInteger daysSinceLastUpdate = [[self updated] daysElapsed];
+    NSUInteger rollingIndex = [self rollingCountIndex];
+    
+    NSNumber* countForDay = nil;
+    if (daysSinceLastUpdate == 0) {
+        countForDay = [self rollingCountPerDay][rollingIndex];
+    } else {
+        countForDay = @0;
+    }
+    
+    [self rollingCountPerDay][rollingIndex] = @([countForDay integerValue] + 1);
+    
+    if (autosave) {
+        [self save];
+    }
 }
 
-- (void)resetCount {
-    [self setCount:0];
+- (NSUInteger)usageWithin:(HEMAppUsageInterval)interval {
+    [self clearCountBetweenLastUpdateAndNow];
+    
+    NSUInteger countIndex = [self rollingCountIndex];
+    
+    NSUInteger daysToInclude = 0;
+    if (interval == HEMAppUsageIntervalLast7Days) {
+        daysToInclude = 7;
+    } else if (interval == HEMAppUsageIntervalLast31Days) {
+        daysToInclude = 31;
+    }
+    
+    NSUInteger totalCount = 0;
+    NSInteger nextIndex = countIndex;
+    for (NSUInteger i = 0; i < daysToInclude; i++) {
+        totalCount += [[self rollingCountPerDay][countIndex] integerValue];
+        nextIndex = countIndex - 1;
+        if (nextIndex < 0) {
+            nextIndex = HEMAppUsageRollingDays + nextIndex;
+        }
+        countIndex = nextIndex % HEMAppUsageRollingDays;
+    }
+    
+    return totalCount;
+}
+
+- (void)clearCountBetweenLastUpdateAndNow {
+    NSUInteger daysFromLastUpdatedToStartClearing = [[self updated] daysElapsed] - 1;
+    NSUInteger currentRollingIndex = [self rollingCountIndex];
+    NSUInteger rollingIndex = daysFromLastUpdatedToStartClearing % HEMAppUsageRollingDays;
+    
+    while (daysFromLastUpdatedToStartClearing > 1 && rollingIndex != currentRollingIndex) {
+        [self rollingCountPerDay][rollingIndex] = @0;
+        rollingIndex = --daysFromLastUpdatedToStartClearing % HEMAppUsageRollingDays;
+    }
 }
 
 - (void)save {
     if ([self identifier]) {
-        __weak typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [SENKeyedArchiver setObject:strongSelf
-                                 forKey:[strongSelf identifier]
-                           inCollection:NSStringFromClass([strongSelf class])];
-        });
+        [self clearCountBetweenLastUpdateAndNow];
+        [self setUpdated:[NSDate date]];
+        [SENKeyedArchiver setObject:self
+                             forKey:[self identifier]
+                       inCollection:NSStringFromClass([self class])];
     }
 }
 

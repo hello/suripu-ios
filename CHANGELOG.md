@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.1.5
+
+New:
+
+* Added visual feedback when tapping on / selecting event cards in timeline
+* Improved sensor detail scrubbing
+
+Fixes:
+
+* 24 hour clock will now display with leading zero when appropriate
+* insights with images no longer will reload when scrolling
+
 ## 1.1.1.4
 
 New:

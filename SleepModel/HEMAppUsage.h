@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NSString* const HEMAppUsageSystemAlertShown;
+
 typedef NS_ENUM(NSUInteger, HEMAppUsageInterval) {
     HEMAppUsageIntervalLast7Days,
     HEMAppUsageIntervalLast31Days
@@ -20,6 +22,7 @@ typedef NS_ENUM(NSUInteger, HEMAppUsageInterval) {
 @property (nonatomic, strong, readonly) NSDate* updated;
 
 + (HEMAppUsage*)appUsageForIdentifier:(NSString *)identifier;
++ (void)incrementUsageForIdentifier:(NSString *)identifier;
 
 - (void)increment:(BOOL)autosave;
 - (void)save;

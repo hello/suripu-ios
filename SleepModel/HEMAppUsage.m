@@ -11,6 +11,9 @@
 
 #import "HEMAppUsage.h"
 
+// types of app usage
+NSString* const HEMAppUsageSystemAlertShown = @"system.alert";
+
 // days to keep counts of usage for
 static NSUInteger const HEMAppUsageRollingDays = 31;
 static NSString* const HEMAppUsageKeyIdentifier = @"identifier";
@@ -51,6 +54,13 @@ static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
     }
     
     return appUsage;
+}
+
++ (void)incrementUsageForIdentifier:(NSString *)identifier {
+    HEMAppUsage* appUsage = [self appUsageForIdentifier:identifier];
+    if (appUsage) {
+        [appUsage increment:YES];
+    }
 }
 
 #pragma mark - NSCoding

@@ -23,6 +23,7 @@
 #import "HEMDevicesViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMBounceModalTransition.h"
+#import "HEMAppUsage.h"
 
 typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeUnknown = 0,
@@ -190,6 +191,8 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
                           forControlEvents:UIControlEventTouchUpInside];
     [[self alertView] showInView:[[self viewController] view] animated:YES completion:nil];
     
+    [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
+    
     [SENAnalytics track:HEMAnalyticsEventSystemAlert
              properties:@{kHEMAnalyticsEventPropType : @"time zone"}];
 }
@@ -288,6 +291,9 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
                                  forType:alertType];
         
         NSString* analyticsType = [self analyticsPropertyTypeValueForDeviceState:[service deviceState]];
+        
+        [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
+        
         [SENAnalytics track:HEMAnalyticsEventSystemAlert
                  properties:@{kHEMAnalyticsEventPropType : analyticsType}];
     }

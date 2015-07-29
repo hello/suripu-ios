@@ -23,6 +23,7 @@
 #import "HEMSplitTextFormatter.h"
 #import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
+#import "HEMWaveform.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -49,18 +50,13 @@ static NSString *const timelineTopBarReuseIdentifier = @"timelineTopBarCell";
 static NSString *const timelineFooterReuseIdentifier = @"timelineFooterCell";
 static NSString *const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString *const sleepEventReuseIdentifier = @"sleepEventCell";
-static NSString *const sensorTypeTemperature = @"temperature";
-static NSString *const sensorTypeHumidity = @"humidity";
-static NSString *const sensorTypeParticulates = @"particulates";
-static NSString *const sensorTypeLight = @"light";
-static NSString *const sensorTypeSound = @"sound";
-static NSString *const sleepEventNameFindCharacter = @"_";
-static NSString *const sleepEventNameReplaceCharacter = @" ";
-static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 + (NSString *)localizedNameForSleepEventType:(NSString *)eventType {
+    NSString *const sleepEventNameFindCharacter = @"_";
+    NSString *const sleepEventNameReplaceCharacter = @" ";
+    NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSString *localizedFormat = [NSString stringWithFormat:sleepEventNameFormat, [eventType lowercaseString]];
     NSString *eventName = NSLocalizedString(localizedFormat, nil);
     if ([eventName isEqualToString:localizedFormat]) {
@@ -447,6 +443,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
             withFillColor:[UIColor colorForSleepState:segment.sleepState]
             previousRatio:previousRatio
             previousColor:previousColor];
+    if ([self segmentForSoundExistsAtIndexPath:indexPath]) {
+        [cell displayAudioViewsWithWaveform:[[HEMWaveform alloc] initWithDictionary:@{}]];
+    }
     return cell;
 }
 
@@ -561,6 +560,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath {
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     return segment.type != SENTimelineSegmentTypeUnknown && segment.type != SENTimelineSegmentTypeInBed;
+}
+
+- (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath {
+    SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
+    return segment.type == SENTimelineSegmentTypeGenericSound || segment.type == SENTimelineSegmentTypeSnored;
 }
 
 @end

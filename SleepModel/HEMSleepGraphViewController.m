@@ -741,6 +741,7 @@ static BOOL hasLoadedBefore = NO;
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMMinimumEventSpacing = 6.f;
+    CGFloat const HEMSoundHeightOffset = 48.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
@@ -757,6 +758,9 @@ static BOOL hasLoadedBefore = NO;
                 CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time];
                 CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
                                      minSize.height + HEMMinimumEventSpacing);
+                if ([self.dataSource segmentForSoundExistsAtIndexPath:indexPath]) {
+                    height += HEMSoundHeightOffset;
+                }
                 return CGSizeMake(width, height);
             } else {
                 return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));

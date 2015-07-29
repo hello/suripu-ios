@@ -59,6 +59,15 @@
  */
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ *  Detect if an event segment has an associated audio snippet
+ *
+ *  @param indexPath index path of the segment to check
+ *
+ *  @return YES if there is a sound present on the computed segment
+ */
+- (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath;
+
 - (NSUInteger)numberOfSleepSegments;
 
 - (BOOL)dateIsLastNight;

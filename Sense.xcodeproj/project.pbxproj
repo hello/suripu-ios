@@ -167,6 +167,12 @@
 		8A8288D91A7800820043B1D1 /* trendsBarIconActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C71A7800820043B1D1 /* trendsBarIconActive@2x.png */; };
 		8A8288DA1A7800820043B1D1 /* trendsBarIconActive@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288C81A7800820043B1D1 /* trendsBarIconActive@3x.png */; };
 		8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8397A31B683A200079AC24 /* HEMWaveform.m */; };
+		8A8397AE1B68529D0079AC24 /* pauseSound.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397A81B68529D0079AC24 /* pauseSound.png */; };
+		8A8397AF1B68529D0079AC24 /* pauseSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397A91B68529D0079AC24 /* pauseSound@2x.png */; };
+		8A8397B01B68529D0079AC24 /* pauseSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397AA1B68529D0079AC24 /* pauseSound@3x.png */; };
+		8A8397B11B68529D0079AC24 /* playSound.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397AB1B68529D0079AC24 /* playSound.png */; };
+		8A8397B21B68529D0079AC24 /* playSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397AC1B68529D0079AC24 /* playSound@2x.png */; };
+		8A8397B31B68529D0079AC24 /* playSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397AD1B68529D0079AC24 /* playSound@3x.png */; };
 		8A8621671B5D5DC20033F44C /* HEMAppReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8621661B5D5DC20033F44C /* HEMAppReview.m */; };
 		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
 		8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
@@ -949,6 +955,12 @@
 		8A8288C81A7800820043B1D1 /* trendsBarIconActive@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "trendsBarIconActive@3x.png"; path = "images/trendsBarIconActive@3x.png"; sourceTree = "<group>"; };
 		8A8397A21B683A200079AC24 /* HEMWaveform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWaveform.h; sourceTree = "<group>"; };
 		8A8397A31B683A200079AC24 /* HEMWaveform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWaveform.m; sourceTree = "<group>"; };
+		8A8397A81B68529D0079AC24 /* pauseSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pauseSound.png; path = images/pauseSound.png; sourceTree = "<group>"; };
+		8A8397A91B68529D0079AC24 /* pauseSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pauseSound@2x.png"; path = "images/pauseSound@2x.png"; sourceTree = "<group>"; };
+		8A8397AA1B68529D0079AC24 /* pauseSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pauseSound@3x.png"; path = "images/pauseSound@3x.png"; sourceTree = "<group>"; };
+		8A8397AB1B68529D0079AC24 /* playSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playSound.png; path = images/playSound.png; sourceTree = "<group>"; };
+		8A8397AC1B68529D0079AC24 /* playSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@2x.png"; path = "images/playSound@2x.png"; sourceTree = "<group>"; };
+		8A8397AD1B68529D0079AC24 /* playSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@3x.png"; path = "images/playSound@3x.png"; sourceTree = "<group>"; };
 		8A8621651B5D5DC20033F44C /* HEMAppReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppReview.h; sourceTree = "<group>"; };
 		8A8621661B5D5DC20033F44C /* HEMAppReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReview.m; sourceTree = "<group>"; };
 		8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmSoundTableViewController.h; sourceTree = "<group>"; };
@@ -2458,6 +2470,12 @@
 		8A82887A1A76BB8A0043B1D1 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				8A8397A81B68529D0079AC24 /* pauseSound.png */,
+				8A8397A91B68529D0079AC24 /* pauseSound@2x.png */,
+				8A8397AA1B68529D0079AC24 /* pauseSound@3x.png */,
+				8A8397AB1B68529D0079AC24 /* playSound.png */,
+				8A8397AC1B68529D0079AC24 /* playSound@2x.png */,
+				8A8397AD1B68529D0079AC24 /* playSound@3x.png */,
 			);
 			name = audio;
 			sourceTree = "<group>";
@@ -3565,12 +3583,14 @@
 				8A1E723519D62C26007475D3 /* alarmRepeatIcon@2x.png in Resources */,
 				8A8288B11A76CF1E0043B1D1 /* presleepInsightTemperature.png in Resources */,
 				BFC3BE971A7202700022C6C2 /* settingsCheck.png in Resources */,
+				8A8397B21B68529D0079AC24 /* playSound@2x.png in Resources */,
 				BFC3FE5B1AE7321D0061D6A1 /* particulatesIconNoBorderGreen@3x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
 				8A8288CC1A7800820043B1D1 /* presleepInsightUnknown.png in Resources */,
 				8A1E723619D62C26007475D3 /* alarmSmartIcon.png in Resources */,
 				8A0351061B2CACFD0077E6E6 /* Down Caret@3x.png in Resources */,
 				BFAB230A1AD4B0B200CCBF8A /* humidityIconGray.png in Resources */,
+				8A8397B11B68529D0079AC24 /* playSound.png in Resources */,
 				BFAB238A1AD5D2AA00CCBF8A /* soundIconYellow@3x.png in Resources */,
 				BFC3FE551AE7321D0061D6A1 /* lightIconNoBorderRed@3x.png in Resources */,
 				BFC3FE491AE7321D0061D6A1 /* humidityIconNoBorderGreen@3x.png in Resources */,
@@ -3609,6 +3629,7 @@
 				BFAB23461AD5D15E00CCBF8A /* humidityIconYellow.png in Resources */,
 				BF05C8E91A3A6AD6002A1307 /* questions_check@2x.png in Resources */,
 				8A7D803F1A41094300B0BFD7 /* sensorsBarIcon@2x.png in Resources */,
+				8A8397B31B68529D0079AC24 /* playSound@3x.png in Resources */,
 				BFBEDB711A8BF9B6006C4546 /* senseColors1@3x.png in Resources */,
 				BFBA2B741A647E7C00C3AB80 /* settingsAppIcon.png in Resources */,
 				8AA158031A5EFD6B00BF1D4A /* sunriseEventIcon@2x.png in Resources */,
@@ -3626,6 +3647,7 @@
 				8AA157F71A5EFD6B00BF1D4A /* motionEventIcon@2x.png in Resources */,
 				8A4579811A805603009A7863 /* welcome_dialog_humidity@3x.png in Resources */,
 				BFE2774D1AF44E2F00C1FB4A /* wifiIconLow.png in Resources */,
+				8A8397B01B68529D0079AC24 /* pauseSound@3x.png in Resources */,
 				BFBEDB791A8BF9B6006C4546 /* senseColors4@2x.png in Resources */,
 				8AA157F41A5EFD6B00BF1D4A /* lightEventIcon@2x.png in Resources */,
 				8AA158011A5EFD6B00BF1D4A /* sleepEventIcon@3x.png in Resources */,
@@ -3666,6 +3688,7 @@
 				8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */,
 				BFBEDB771A8BF9B6006C4546 /* senseColors3@3x.png in Resources */,
 				BFC3FE6E1AE7321D0061D6A1 /* temperatureIconNoBorderRed.png in Resources */,
+				8A8397AE1B68529D0079AC24 /* pauseSound.png in Resources */,
 				BF770F261A155455008611E9 /* sensePlacement@3x.png in Resources */,
 				BFAB22F81AD3675300CCBF8A /* roomcheckSenseYellow.png in Resources */,
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
@@ -3706,6 +3729,7 @@
 				BFBA2B7B1A6482DA00C3AB80 /* senseAppIcon@2x.png in Resources */,
 				8A7D80401A41094300B0BFD7 /* sensorsBarIcon@3x.png in Resources */,
 				8A93AFCE1A09BF0300F70A8B /* caret up@2x.png in Resources */,
+				8A8397AF1B68529D0079AC24 /* pauseSound@2x.png in Resources */,
 				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,
 				BFAB23171AD4B0B200CCBF8A /* temperatureIconGray@2x.png in Resources */,
 				BFF3B4421A5CBF6800B11643 /* accessory.png in Resources */,

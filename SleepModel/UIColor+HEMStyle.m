@@ -230,5 +230,11 @@ static UIColor *_tintColor = nil;
 + (UIColor *)timelineEventSelectedBackgroundColor {
     return [UIColor colorWithHex:0xEBF7FF alpha:1.f];
 }
++ (UIColor *)timelineAccentColor {
+    return [UIColor colorWithHex:0xFF9922 alpha:1.f];
+}
++ (UIColor *)timelineWaveformColor {
+    return [UIColor colorWithHex:0xCCD3DB alpha:1.f];
+}
 
 @end

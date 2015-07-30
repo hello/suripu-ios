@@ -23,5 +23,5 @@
  *
  *  @return an image
  */
-- (UIImage*)waveformImageWithColor:(UIColor*)barColor height:(CGFloat)height;
+- (UIImage *)waveformImageWithColor:(UIColor *)barColor;
 @end

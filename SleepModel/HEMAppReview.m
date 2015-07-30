@@ -13,6 +13,8 @@
 #import "HEMAlertViewController.h"
 #import "NSDate+HEMRelative.h"
 #import "HEMConfig.h"
+#import "HEMAppReviewQuestion.h"
+#import "HEMAppReviewAnswer.h"
 
 @implementation HEMAppReview
 
@@ -20,34 +22,39 @@ NSUInteger const HEMAppPromptReviewThreshold = 60;
 NSUInteger const HEMMinimumAppLaunches = 4;
 NSUInteger const HEMSystemAlertShownThreshold = 30;
 NSUInteger const HEMMinimumTimelineViews = 10;
+NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 
 #pragma mark - Conditions for app review
 
-+ (void)shouldAskUserToRateTheApp:(void(^)(BOOL ask))completion {
++ (void)shouldAskUserToRateTheApp:(void(^)(HEMAppReviewQuestion* question))completion {
     if (!completion) {
         return;
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         BOOL meetsInitialRequirements
-             = [self hasAppReviewURL]
+             = [self hasStatedToStopAsking]
+            && [self hasAppReviewURL]
             && [self isWithinAppReviewThreshold]
             && [self meetsMinimumRequiredAppLaunches]
             && [self meetsMinimumRequiredTimelineViews]
             && [self isWithinSystemAlertThreshold];
         
         if (meetsInitialRequirements) {
-            [self hasSenseAndPaired:completion];
+            [self hasSenseAndPillPaired:^(BOOL hasPairedDevices) {
+                HEMAppReviewQuestion* question = nil;
+                if (hasPairedDevices) {
+                    question = [self appReviewQuestion];
+                }
+                completion (question);
+            }];
         } else {
-            completion (NO);
+            completion (nil);
         }
     });
 }
 
-/**
- * @discussion
- */
-+ (void)hasSenseAndPaired:(void(^)(BOOL hasPairedDevices))completion {
++ (void)hasSenseAndPillPaired:(void(^)(BOOL hasPairedDevices))completion {
     SENServiceDevice* deviceService = [SENServiceDevice sharedService];
     [deviceService loadDeviceInfo:^(NSError *error) {
         completion (error == nil && [deviceService senseInfo] && [deviceService pillInfo]);
@@ -83,10 +90,134 @@ NSUInteger const HEMMinimumTimelineViews = 10;
     return !lastUpdated || [lastUpdated daysElapsed] > HEMSystemAlertShownThreshold;
 }
 
++ (BOOL)hasStatedToStopAsking {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    return [[localPrefs persistentPreferenceForKey:HEMNoMoreAsking] boolValue];
+}
+
+#pragma mark - Questions
+
++ (HEMAppReviewQuestion*)appReviewQuestion {
+    NSString* firstQuestionText = NSLocalizedString(@"app.review.question.enjoying-sense", nil);
+    NSArray* firstQuestionAnswers = [self answersForQuestion:firstQuestionText];
+    
+    HEMAppReviewQuestion* conditionalQuestion = nil;
+    NSMutableDictionary* conditionalQuestions = [NSMutableDictionary dictionary];
+    for (HEMAppReviewAnswer* answer in firstQuestionAnswers) {
+        conditionalQuestion = [self nextQuestionForAnswer:answer];
+        if (conditionalQuestion) {
+            conditionalQuestions[[answer answerId]] = conditionalQuestion;
+        }
+    }
+    
+    return [[HEMAppReviewQuestion alloc] initQuestion:firstQuestionText
+                                              choices:firstQuestionAnswers
+                                 conditionalQuestions:conditionalQuestions];
+}
+
++ (HEMAppReviewQuestion*)nextQuestionForAnswer:(HEMAppReviewAnswer*)answer {
+    if ([answer action] != HEMAppReviewAnswerActionNextQuestion) {
+        return nil;
+    }
+    
+    NSString* enjoyingSenseQuestion = NSLocalizedString(@"app.review.question.enjoying-sense", nil);
+    NSNumber* enjoyingSenseQuestionId = [HEMAppReviewQuestion questionIdForText:enjoyingSenseQuestion];
+    
+    HEMAppReviewQuestion* question = nil;
+    
+    if ([[answer questionId] isEqualToNumber:enjoyingSenseQuestionId]) {
+        NSString* answer1 = NSLocalizedString(@"app.review.question.answer.love-it", nil);
+        NSString* answer2 = NSLocalizedString(@"app.review.question.answer.not-really", nil);
+        
+        NSString* nextQuestion = nil;
+        
+        if ([[answer answer] isEqualToString:answer1]) {
+            nextQuestion = NSLocalizedString(@"app.review.question.leave-a-rating", nil);
+        } else if ([[answer answer] isEqualToString:answer2]) {
+            nextQuestion = NSLocalizedString(@"app.review.question.send-feedback", nil);
+        }
+
+        NSArray* nextAnswers = [self answersForQuestion:nextQuestion];
+        question = [[HEMAppReviewQuestion alloc] initQuestion:nextQuestion
+                                                      choices:nextAnswers
+                                         conditionalQuestions:nil];
+        
+    }
+    
+    return question;
+}
+
+#pragma mark - Answers
+
++ (NSArray*)answersForQuestion:(NSString*)question {
+    NSArray* answers = nil;
+    NSNumber* questionId = [HEMAppReviewQuestion questionIdForText:question];
+    if ([question isEqualToString:NSLocalizedString(@"app.review.question.enjoying-sense", nil)]) {
+        answers = [self answersForEnjoyingSenseQuestionWithId:questionId];
+    } else if ([question isEqualToString:NSLocalizedString(@"app.review.question.leave-a-rating", nil)]) {
+        answers = [self answersForRateUsQuestionWithId:questionId];
+    } else  if ([question isEqualToString:NSLocalizedString(@"app.review.question.send-feedback", nil)]) {
+        answers = [self answersForFeedbackQuestionWithId:questionId];
+    }
+    return answers;
+}
+
++ (NSArray*)answersForEnjoyingSenseQuestionWithId:(NSNumber*)questionId {
+    NSString* answer1 = NSLocalizedString(@"app.review.question.answer.love-it", nil);
+    NSString* answer2 = NSLocalizedString(@"app.review.question.answer.not-really", nil);
+    NSString* answer3 = NSLocalizedString(@"app.review.question.answer.help", nil);
+    
+    HEMAppReviewAnswer* loveItAnswer = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
+                                                                       questionId:questionId
+                                                                           action:HEMAppReviewAnswerActionNextQuestion];
+    HEMAppReviewAnswer* notReallyAnswer = [[HEMAppReviewAnswer alloc] initWithAnswer:answer2
+                                                                          questionId:questionId
+                                                                              action:HEMAppReviewAnswerActionNextQuestion];
+    HEMAppReviewAnswer* needHelp = [[HEMAppReviewAnswer alloc] initWithAnswer:answer3
+                                                                   questionId:questionId
+                                                                       action:HEMAppReviewAnswerActionOpenSupport];
+    return @[loveItAnswer, notReallyAnswer, needHelp];
+}
+
++ (NSArray*)answersForRateUsQuestionWithId:(NSNumber*)questionId {
+    NSString* answer1 = NSLocalizedString(@"app.review.question.answer.sure", nil);
+    NSString* answer2 = NSLocalizedString(@"app.review.question.answer.not-now", nil);
+    NSString* answer3 = NSLocalizedString(@"app.review.question.answer.dont-ask-again", nil);
+    
+    HEMAppReviewAnswer* sure = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
+                                                               questionId:questionId
+                                                                   action:HEMAppReviewAnswerActionRateTheApp];
+    HEMAppReviewAnswer* notNow = [[HEMAppReviewAnswer alloc] initWithAnswer:answer2
+                                                                 questionId:questionId
+                                                                     action:HEMAppReviewAnswerActionDone];
+    HEMAppReviewAnswer* doNotAsk = [[HEMAppReviewAnswer alloc] initWithAnswer:answer3
+                                                                   questionId:questionId
+                                                                       action:HEMAppReviewAnswerActionStopAsking];
+    return @[sure, notNow, doNotAsk];
+}
+
++ (NSArray*)answersForFeedbackQuestionWithId:(NSNumber*)questionId {
+    NSString* answer1 = NSLocalizedString(@"app.review.question.answer.sure", nil);
+    NSString* answer2 = NSLocalizedString(@"app.review.question.answer.no-thanks", nil);
+    
+    HEMAppReviewAnswer* sure = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
+                                                               questionId:questionId
+                                                                   action:HEMAppReviewAnswerActionSendFeedback];
+    HEMAppReviewAnswer* noThanks = [[HEMAppReviewAnswer alloc] initWithAnswer:answer2
+                                                                   questionId:questionId
+                                                                       action:HEMAppReviewAnswerActionDone];
+    return @[sure, noThanks];
+}
+
 #pragma mark -
 
 + (void)markAppReviewPromptCompleted {
     [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppReviewPromptCompleted];
+}
+
++ (void)stopAskingToRateTheApp {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    [localPrefs setPersistentPreference:@(YES) forKey:HEMNoMoreAsking];
 }
 
 + (void)rateApp {

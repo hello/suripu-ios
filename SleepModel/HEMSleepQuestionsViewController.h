@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
+#import "HEMQuestionsDataSource.h"
 
 @class HEMSleepQuestionsDataSource;
 
 @interface HEMSleepQuestionsViewController : HEMBaseController
 
 @property (nonatomic, strong) UIImage* bgImage;
-@property (nonatomic, strong) HEMSleepQuestionsDataSource* dataSource;
+@property (nonatomic, strong) id<HEMQuestionsDataSource> dataSource;
 
 @end

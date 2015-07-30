@@ -14,6 +14,8 @@
 @property (nonatomic, readonly) CGFloat maxValue;
 @property (nonatomic, readonly) NSArray *values;
 
++ (HEMWaveform *)faketrogram;
+
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 /**

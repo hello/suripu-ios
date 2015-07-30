@@ -444,7 +444,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
             previousRatio:previousRatio
             previousColor:previousColor];
     if ([self segmentForSoundExistsAtIndexPath:indexPath]) {
-        [cell displayAudioViewsWithWaveform:[[HEMWaveform alloc] initWithDictionary:@{}]];
+        [cell displayAudioViewsWithWaveform:[HEMWaveform faketrogram]];
+        [cell updateAudioDisplayProgressWithRatio:0.3f];
     }
     return cell;
 }

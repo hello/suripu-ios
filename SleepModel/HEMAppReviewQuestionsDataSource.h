@@ -10,7 +10,7 @@
 
 @class HEMAppReviewQuestion;
 
-@interface HEMAppReviewQuestionsDataSource : NSObject <HEMQuestionsDataSource, UITableViewDataSource>
+@interface HEMAppReviewQuestionsDataSource : NSObject <HEMQuestionsDataSource>
 
 - (instancetype)initWithAppReviewQuestion:(HEMAppReviewQuestion*)appReviewQuestion;
 

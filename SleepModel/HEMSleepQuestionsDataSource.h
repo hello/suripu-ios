@@ -12,7 +12,7 @@
 #import <Foundation/Foundation.h>
 #import "HEMQuestionsDataSource.h"
 
-@interface HEMSleepQuestionsDataSource : NSObject <UITableViewDataSource, HEMQuestionsDataSource>
+@interface HEMSleepQuestionsDataSource : NSObject <HEMQuestionsDataSource>
 
 @property (nonatomic, assign) NSInteger selectedQuestionIndex;
 

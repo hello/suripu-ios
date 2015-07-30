@@ -33,7 +33,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         BOOL meetsInitialRequirements
-             = [self hasStatedToStopAsking]
+             = ![self hasStatedToStopAsking]
             && [self hasAppReviewURL]
             && [self isWithinAppReviewThreshold]
             && [self meetsMinimumRequiredAppLaunches]

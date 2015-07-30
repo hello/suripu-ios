@@ -83,6 +83,7 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
  */
 - (BOOL)skipQuestion {
     [HEMAppReview markAppReviewPromptCompleted];
+    [self setSelectedAnswer:nil];
     return NO;
 }
 

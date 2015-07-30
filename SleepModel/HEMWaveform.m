@@ -44,7 +44,7 @@ NSArray *validatedWaveformValues(NSArray *values) {
 - (UIImage *)waveformImageWithColor:(UIColor *)barColor {
     CGFloat const HEMWaveformBarSpace = 1.f;
     CGFloat const HEMWaveformBarWidth = 1.f;
-    CGFloat x = 2;
+    CGFloat x = 0;
     CGFloat width = HEMWaveformBarWidth * self.values.count + ((self.values.count - 1) * HEMWaveformBarSpace);
     CGFloat height = HEMEventBubbleWaveformHeight;
     UIGraphicsBeginImageContext(CGSizeMake(width, height));

@@ -39,10 +39,8 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     self.playButton.hidden = !display;
     [self.contentContainerView showWaveformViews:display];
     if (display) {
-        self.waveformStoppedView.image =
-            [waveform waveformImageWithColor:[UIColor timelineWaveformColor]];
-        self.waveformPlayingView.image =
-            [waveform waveformImageWithColor:[UIColor timelineAccentColor]];
+        self.waveformStoppedView.image = [waveform waveformImageWithColor:[UIColor timelineWaveformColor]];
+        self.waveformPlayingView.image = [waveform waveformImageWithColor:[UIColor timelineAccentColor]];
     }
     [self layoutContainerViews];
 }
@@ -144,6 +142,7 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     CGFloat const messageLabelHeightOffset = 26.f;
     CGFloat const timeLabelMaxWidth = 40.f;
     CGFloat const timeLabelMaxHeight = 24.f;
+    CGFloat const waveformEdgeInset = 4.f;
 
     CGRect containerFrame = [self containerFrame];
     CGFloat containerWidth = CGRectGetWidth(containerFrame);
@@ -161,9 +160,10 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
                             - ([self.contentContainerView isShowingWaveforms] ? HEMEventBubbleWaveformHeight : 0);
     CGRect eventMesageLabelFrame = CGRectMake(messageLabelLeft, messageLabelTop, messageWidth, messageHeight);
     self.eventMessageLabel.frame = eventMesageLabelFrame;
-    CGRect waveformFrame = CGRectMake(0, CGRectGetHeight(containerFrame) - HEMEventBubbleWaveformHeight,
-                                      containerWidth - HEMEventPlayButtonMargin - HEMEventPlayButtonDiameter,
-                                      HEMEventBubbleWaveformHeight);
+    CGRect waveformFrame
+        = CGRectMake(waveformEdgeInset, CGRectGetHeight(containerFrame) - HEMEventBubbleWaveformHeight,
+                     containerWidth - HEMEventPlayButtonMargin - HEMEventPlayButtonDiameter - waveformEdgeInset * 2,
+                     HEMEventBubbleWaveformHeight);
     self.waveformStoppedView.frame = waveformFrame;
     self.waveformPlayingView.frame
         = (CGRect){.origin = waveformFrame.origin, .size = CGSizeMake(0, CGRectGetHeight(waveformFrame)) };

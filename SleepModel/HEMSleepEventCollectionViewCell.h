@@ -13,8 +13,10 @@
 
 + (NSAttributedString *)attributedMessageFromText:(NSString *)text;
 
-- (void)layoutWithImage:(UIImage *)image message:(NSString *)text time:(NSAttributedString *)timeText;
-- (void)displayAudioViewsWithWaveform:(HEMWaveform *)waveform;
+- (void)layoutWithImage:(UIImage *)image
+                message:(NSString *)text
+                   time:(NSAttributedString *)timeText
+               waveform:(HEMWaveform *)waveform;
 
 - (void)updateAudioDisplayProgressWithRatio:(CGFloat)ratio;
 @end

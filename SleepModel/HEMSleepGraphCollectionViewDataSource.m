@@ -414,6 +414,10 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     if (!segment)
         return cell;
+    BOOL hasSound = [self segmentForSoundExistsAtIndexPath:indexPath];
+    HEMWaveform *waveform = nil;
+    if (hasSound)
+        waveform = [HEMWaveform faketrogram];
     NSUInteger sleepDepth = segment.sleepDepth;
     if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
         id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
@@ -425,7 +429,10 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
         timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
     }
-    [cell layoutWithImage:[self imageForEventType:segment.type] message:segment.message time:timeText];
+    [cell layoutWithImage:[self imageForEventType:segment.type]
+                  message:segment.message
+                     time:timeText
+                 waveform:waveform];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     UIColor *previousColor = nil;
@@ -443,8 +450,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
             withFillColor:[UIColor colorForSleepState:segment.sleepState]
             previousRatio:previousRatio
             previousColor:previousColor];
-    if ([self segmentForSoundExistsAtIndexPath:indexPath]) {
-        [cell displayAudioViewsWithWaveform:[HEMWaveform faketrogram]];
+    if (hasSound) {
         [cell updateAudioDisplayProgressWithRatio:0.3f];
     }
     return cell;

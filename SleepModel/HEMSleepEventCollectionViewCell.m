@@ -26,8 +26,12 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     return [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForEventMessageText]) trim];
 }
 
-- (void)layoutWithImage:(UIImage *)image message:(NSString *)text time:(NSAttributedString *)timeText {
+- (void)layoutWithImage:(UIImage *)image
+                message:(NSString *)text
+                   time:(NSAttributedString *)timeText
+               waveform:(HEMWaveform *)waveform {
     self.eventTypeImageView.image = image;
+    [self displayAudioViewsWithWaveform:waveform];
     [self.contentContainerView setMessageText:[[self class] attributedMessageFromText:text] timeText:timeText];
     self.contentContainerView.frame = [self containerFrame];
     [self layoutContainerViews];
@@ -116,13 +120,14 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     transform = CGAffineTransformTranslate(transform, 0, parallaxVerticalOffset);
     self.contentContainerView.alpha = alpha;
     self.contentContainerView.transform = scaling;
-    self.contentContainerView.frame = CGRectApplyAffineTransform([self containerFrame], transform);
+    CGRect containerFrame = [self containerFrame];
+    self.contentContainerView.frame = CGRectApplyAffineTransform(containerFrame, transform);
     CGFloat playDiameter = HEMEventPlayButtonDiameter * scale;
     CGFloat playMargin = HEMEventPlayButtonMargin * scale;
     self.playButton.alpha = alpha;
     self.playButton.frame
-        = CGRectMake(CGRectGetMaxX(self.contentContainerView.frame) - playDiameter - playMargin,
-                     CGRectGetMaxY(self.contentContainerView.frame) - playDiameter * 2 / 3, playDiameter, playDiameter);
+        = CGRectMake(CGRectGetMaxX(containerFrame) - playDiameter - playMargin,
+                     CGRectGetMaxY(containerFrame) - playDiameter * 2 / 3, playDiameter, playDiameter);
 }
 
 - (CGFloat)alphaWithRatioFromCenter:(CGFloat)ratioFromCenter {

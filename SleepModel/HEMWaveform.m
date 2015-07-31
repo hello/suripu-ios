@@ -17,7 +17,7 @@
 
 NSArray *validatedWaveformValues(NSArray *values) {
     if (![values isKindOfClass:[NSArray class]])
-        return 0;
+        return nil;
     NSMutableArray *numbers = [[NSMutableArray alloc] initWithCapacity:values.count];
     for (id value in values) {
         if ([value isKindOfClass:[NSNumber class]]) {

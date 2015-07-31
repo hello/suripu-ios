@@ -9,6 +9,7 @@
 #import "HEMMarkdown.h"
 #import "HEMEventBubbleView.h"
 #import "HEMWaveform.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSleepEventCollectionViewCell ()
 @property (nonatomic) CGFloat cachedRatioFromCenter;
@@ -71,6 +72,7 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     self.transform = CGAffineTransformIdentity;
     self.contentContainerView.alpha = 1;
     [self.contentContainerView setMessageText:nil timeText:nil];
+    [self.playButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
 }
 
 - (void)prepareForEntryAnimation {

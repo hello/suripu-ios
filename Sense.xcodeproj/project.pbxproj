@@ -662,6 +662,7 @@
 		BFC99BBA1B69A4C4008F7F0D /* HEMAppReviewQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BB91B69A4C4008F7F0D /* HEMAppReviewQuestion.m */; };
 		BFC99BBD1B69AC04008F7F0D /* HEMAppReviewAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BBC1B69AC04008F7F0D /* HEMAppReviewAnswer.m */; };
 		BFC99BC01B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BBF1B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m */; };
+		BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */; };
 		BFCCF53C1A69F37C00D842F9 /* lightIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5391A69F37C00D842F9 /* lightIcon.png */; };
 		BFCCF53D1A69F37C00D842F9 /* lightIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */; };
 		BFCCF53E1A69F37C00D842F9 /* lightIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */; };
@@ -1596,6 +1597,7 @@
 		BFC99BBE1B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppReviewQuestionsDataSource.h; sourceTree = "<group>"; };
 		BFC99BBF1B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReviewQuestionsDataSource.m; sourceTree = "<group>"; };
 		BFC99BC11B6A9986008F7F0D /* HEMQuestionsDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMQuestionsDataSource.h; sourceTree = "<group>"; };
+		BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReviewSpec.m; sourceTree = "<group>"; };
 		BFCCF5391A69F37C00D842F9 /* lightIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightIcon.png; sourceTree = "<group>"; };
 		BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@2x.png"; sourceTree = "<group>"; };
 		BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@3x.png"; sourceTree = "<group>"; };
@@ -1807,6 +1809,7 @@
 				BF812A981B6827BB00BF672F /* Analytics */,
 				BF78E98D1B20D1660015949F /* Common */,
 				BF2EAD221B31F85E00C3A6E3 /* Onboarding */,
+				BFC99BC21B6BED28008F7F0D /* Review */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				8AC3C2E71A3CB8130074A87F /* Back Attic */,
 				BF664A951ACC60FD003355D2 /* System Alerts */,
@@ -3349,6 +3352,14 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		BFC99BC21B6BED28008F7F0D /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */,
+			);
+			name = Review;
+			sourceTree = "<group>";
+		};
 		BFE3B8F919F5F1D40055B3B6 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -4310,6 +4321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
 				8AC3C2E61A3CB7F40074A87F /* HEMSnazzBarControllerSpec.m in Sources */,
 				BF664A971ACC61AF003355D2 /* HEMSystemAlertControllerSpec.m in Sources */,

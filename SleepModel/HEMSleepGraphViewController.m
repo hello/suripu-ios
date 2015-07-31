@@ -691,9 +691,12 @@ static BOOL hasLoadedBefore = NO;
       __strong typeof(weakSelf) strongSelf = weakSelf;
       strongSelf.loadingData = NO;
         
-        if ([strongSelf.dataSource dateIsLastNight]
-            && [strongSelf.dataSource.sleepResult.score integerValue] > 0) {
-            [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        if ([strongSelf.dataSource.sleepResult.score integerValue] > 0) {
+            HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+            NSDate* updatedAtMidnight = [[appUsage updated] dateAtMidnight];
+            if (!updatedAtMidnight || [updatedAtMidnight compare:strongSelf.dateForNightOfSleep] == NSOrderedAscending) {
+                [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+            }
         }
         
       if ([strongSelf isVisible]) {

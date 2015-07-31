@@ -797,18 +797,23 @@ static BOOL hasLoadedBefore = NO;
       __strong typeof(weakSelf) strongSelf = weakSelf;
       strongSelf.loadingData = NO;
         
-        if ([strongSelf.dataSource.sleepResult.score integerValue] > 0) {
-            HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
-            NSDate* updatedAtMidnight = [[appUsage updated] dateAtMidnight];
-            if (!updatedAtMidnight || [updatedAtMidnight compare:strongSelf.dateForNightOfSleep] == NSOrderedAscending) {
-                [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
-            }
-        }
+      [strongSelf updateAppUsageIfNeeded];
         
       if ([strongSelf isVisible]) {
           [strongSelf checkIfInitialAnimationNeeded];
       }
     }];
+}
+
+- (void)updateAppUsageIfNeeded {
+    if ([self.dataSource.sleepResult.score integerValue] > 0) {
+        HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        NSDate* updatedAtMidnight = [[appUsage updated] dateAtMidnight];
+        if (!updatedAtMidnight
+            || [updatedAtMidnight compare:self.dateForNightOfSleep] == NSOrderedAscending) {
+            [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        }
+    }
 }
 
 - (void)checkIfInitialAnimationNeeded {

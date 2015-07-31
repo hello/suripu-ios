@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSUInteger, HEMAppReviewAnswerAction) {
     HEMAppReviewAnswerActionDone,
-    HEMAppReviewAnswerActionNextQuestion,
+    HEMAppReviewAnswerActionEnjoySense,
+    HEMAppReviewAnswerActionDoNotEnjoySense,
     HEMAppReviewAnswerActionOpenSupport,
     HEMAppReviewAnswerActionSendFeedback,
     HEMAppReviewAnswerActionRateTheApp,

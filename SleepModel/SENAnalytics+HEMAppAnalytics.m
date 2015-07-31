@@ -176,6 +176,18 @@ NSString* const HEMAnalyticsEventSystemAlertAction = @"System Alert Action";
 NSString* const HEMAnalyticsEventSysAlertActionLater = @"later";
 NSString* const HEMAnalyticsEventSysAlertActionNow = @"now";
 
+// app review
+NSString* const HEMAnalyticsEventAppReviewShown = @"App review shown";
+NSString* const HEMAnalyticsEventAppReviewStart = @"App review start";
+NSString* const HEMAnalyticsEventAppReviewEnjoySense = @"Enjoy Sense";
+NSString* const HEMAnalyticsEventAppReviewDoNotEnjoySense = @"Do not enjoy Sense";
+NSString* const HEMAnalyticsEventAppReviewHelp = @"Help from app review";
+NSString* const HEMAnalyticsEventAppReviewRate = @"Rate app";
+NSString* const HEMAnalyticsEventAppReviewRateNoAsk = @"Do not ask to rate app again";
+NSString* const HEMAnalyticsEventAppReviewFeedback = @"Feedback from app review";
+NSString* const HEMAnalyticsEventAppReviewDone = @"App review completed with no action";
+NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 

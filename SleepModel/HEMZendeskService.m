@@ -166,6 +166,9 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
         ZDKCustomField* topicField = [[ZDKCustomField alloc] initWithFieldId:topicId andValue:topic];
         [[ZDKConfig instance] setCustomTicketFields:@[topicField]];
         
+        // always use the default ticket subject
+        [requestCreationConfig setSubject:[self defaultTicketSubject]];
+        
         if (completion) {
             completion ();
         }

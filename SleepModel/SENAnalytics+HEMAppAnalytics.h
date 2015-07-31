@@ -168,6 +168,18 @@ extern NSString* const HEMAnalyticsEventSystemAlertAction;
 extern NSString* const HEMAnalyticsEventSysAlertActionLater;
 extern NSString* const HEMAnalyticsEventSysAlertActionNow;
 
+// app review
+extern NSString* const HEMAnalyticsEventAppReviewShown;
+extern NSString* const HEMAnalyticsEventAppReviewStart;
+extern NSString* const HEMAnalyticsEventAppReviewEnjoySense;
+extern NSString* const HEMAnalyticsEventAppReviewDoNotEnjoySense;
+extern NSString* const HEMAnalyticsEventAppReviewHelp;
+extern NSString* const HEMAnalyticsEventAppReviewRate;
+extern NSString* const HEMAnalyticsEventAppReviewRateNoAsk;
+extern NSString* const HEMAnalyticsEventAppReviewFeedback;
+extern NSString* const HEMAnalyticsEventAppReviewDone;
+extern NSString* const HEMAnalyticsEventAppReviewSkip;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)trackSignUpWithName:(NSString*)userName;

@@ -41,7 +41,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
             && [self meetsMinimumRequiredTimelineViews]
             && [self isWithinSystemAlertThreshold];
         
-        if (meetsInitialRequirements) {
+        if (!meetsInitialRequirements) {
             [self hasSenseAndPillPaired:^(BOOL hasPairedDevices) {
                 HEMAppReviewQuestion* question = nil;
                 if (hasPairedDevices) {
@@ -109,7 +109,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 #pragma mark - Questions
 
 + (HEMAppReviewQuestion*)appReviewQuestion {
-    NSString* firstQuestionText = NSLocalizedString(@"app.review.question.enjoying-sense", nil);
+    NSString* firstQuestionText = NSLocalizedString(@"app-review.question.1", nil);
     NSArray* firstQuestionAnswers = [self answersForQuestion:firstQuestionText];
     
     HEMAppReviewQuestion* conditionalQuestion = nil;
@@ -131,21 +131,21 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
         return nil;
     }
     
-    NSString* enjoyingSenseQuestion = NSLocalizedString(@"app.review.question.enjoying-sense", nil);
-    NSNumber* enjoyingSenseQuestionId = [HEMAppReviewQuestion questionIdForText:enjoyingSenseQuestion];
+    NSString* firstQuestion = NSLocalizedString(@"app-review.question.1", nil);
+    NSNumber* firtQuestionId = [HEMAppReviewQuestion questionIdForText:firstQuestion];
     
     HEMAppReviewQuestion* question = nil;
     
-    if ([[answer questionId] isEqualToNumber:enjoyingSenseQuestionId]) {
-        NSString* answer1 = NSLocalizedString(@"app.review.question.answer.love-it", nil);
-        NSString* answer2 = NSLocalizedString(@"app.review.question.answer.not-really", nil);
+    if ([[answer questionId] isEqualToNumber:firtQuestionId]) {
+        NSString* answer1 = NSLocalizedString(@"app-review.question.answer.love-it", nil);
+        NSString* answer2 = NSLocalizedString(@"app-review.question.answer.not-really", nil);
         
         NSString* nextQuestion = nil;
         
         if ([[answer answer] isEqualToString:answer1]) {
-            nextQuestion = NSLocalizedString(@"app.review.question.leave-a-rating", nil);
+            nextQuestion = NSLocalizedString(@"app-review.question.2", nil);
         } else if ([[answer answer] isEqualToString:answer2]) {
-            nextQuestion = NSLocalizedString(@"app.review.question.send-feedback", nil);
+            nextQuestion = NSLocalizedString(@"app-review.question.3", nil);
         }
 
         NSArray* nextAnswers = [self answersForQuestion:nextQuestion];
@@ -163,20 +163,20 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 + (NSArray*)answersForQuestion:(NSString*)question {
     NSArray* answers = nil;
     NSNumber* questionId = [HEMAppReviewQuestion questionIdForText:question];
-    if ([question isEqualToString:NSLocalizedString(@"app.review.question.enjoying-sense", nil)]) {
-        answers = [self answersForEnjoyingSenseQuestionWithId:questionId];
-    } else if ([question isEqualToString:NSLocalizedString(@"app.review.question.leave-a-rating", nil)]) {
-        answers = [self answersForRateUsQuestionWithId:questionId];
-    } else  if ([question isEqualToString:NSLocalizedString(@"app.review.question.send-feedback", nil)]) {
-        answers = [self answersForFeedbackQuestionWithId:questionId];
+    if ([question isEqualToString:NSLocalizedString(@"app-review.question.1", nil)]) {
+        answers = [self answersForFirstQuestionWithId:questionId];
+    } else if ([question isEqualToString:NSLocalizedString(@"app-review.question.2", nil)]) {
+        answers = [self answersForSecondQuestionWithId:questionId];
+    } else  if ([question isEqualToString:NSLocalizedString(@"app-review.question.3", nil)]) {
+        answers = [self answersForThirdQuestionWithId:questionId];
     }
     return answers;
 }
 
-+ (NSArray*)answersForEnjoyingSenseQuestionWithId:(NSNumber*)questionId {
-    NSString* answer1 = NSLocalizedString(@"app.review.question.answer.love-it", nil);
-    NSString* answer2 = NSLocalizedString(@"app.review.question.answer.not-really", nil);
-    NSString* answer3 = NSLocalizedString(@"app.review.question.answer.help", nil);
++ (NSArray*)answersForFirstQuestionWithId:(NSNumber*)questionId {
+    NSString* answer1 = NSLocalizedString(@"app-review.question.answer.love-it", nil);
+    NSString* answer2 = NSLocalizedString(@"app-review.question.answer.not-really", nil);
+    NSString* answer3 = NSLocalizedString(@"app-review.question.answer.help", nil);
     
     HEMAppReviewAnswer* loveItAnswer = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
                                                                        questionId:questionId
@@ -190,10 +190,10 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
     return @[loveItAnswer, notReallyAnswer, needHelp];
 }
 
-+ (NSArray*)answersForRateUsQuestionWithId:(NSNumber*)questionId {
-    NSString* answer1 = NSLocalizedString(@"app.review.question.answer.sure", nil);
-    NSString* answer2 = NSLocalizedString(@"app.review.question.answer.not-now", nil);
-    NSString* answer3 = NSLocalizedString(@"app.review.question.answer.dont-ask-again", nil);
++ (NSArray*)answersForSecondQuestionWithId:(NSNumber*)questionId {
+    NSString* answer1 = NSLocalizedString(@"app-review.question.answer.sure", nil);
+    NSString* answer2 = NSLocalizedString(@"app-review.question.answer.not-now", nil);
+    NSString* answer3 = NSLocalizedString(@"app-review.question.answer.dont-ask-again", nil);
     
     HEMAppReviewAnswer* sure = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
                                                                questionId:questionId
@@ -207,9 +207,9 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
     return @[sure, notNow, doNotAsk];
 }
 
-+ (NSArray*)answersForFeedbackQuestionWithId:(NSNumber*)questionId {
-    NSString* answer1 = NSLocalizedString(@"app.review.question.answer.sure", nil);
-    NSString* answer2 = NSLocalizedString(@"app.review.question.answer.no-thanks", nil);
++ (NSArray*)answersForThirdQuestionWithId:(NSNumber*)questionId {
+    NSString* answer1 = NSLocalizedString(@"app-review.question.answer.sure", nil);
+    NSString* answer2 = NSLocalizedString(@"app-review.question.answer.no-thanks", nil);
     
     HEMAppReviewAnswer* sure = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
                                                                questionId:questionId

@@ -10,6 +10,9 @@ bootstrap:
 build:
 	$(BUILD_TOOL) $(DEFAULT_BUILD_ARGS) | xcpretty -c
 
+clean:
+	$(BUILD_TOOL) $(DEFAULT_BUILD_ARGS) clean | xcpretty -c
+
 deploy: ipa upload
 
 test: test_ios8
@@ -18,7 +21,10 @@ test_ios7:
 	$(BUILD_TOOL) $(DEFAULT_BUILD_ARGS) -sdk iphonesimulator7.1 test | xcpretty -c
 
 test_ios8:
-	$(BUILD_TOOL) $(DEFAULT_BUILD_ARGS) -sdk iphonesimulator8.2 test | xcpretty -c
+	$(BUILD_TOOL) $(DEFAULT_BUILD_ARGS) -sdk iphonesimulator8.4 test | xcpretty -c
+
+ci:
+	set -o pipefail && $(BUILD_TOOL) $(DEFAULT_BUILD_ARGS) -sdk iphonesimulator8.4 test | tee $CIRCLE_ARTIFACTS/xcodebuild.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
 
 ipa:
 	ipa build

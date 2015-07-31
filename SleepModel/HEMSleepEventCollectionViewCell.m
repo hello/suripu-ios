@@ -12,7 +12,6 @@
 
 @interface HEMSleepEventCollectionViewCell ()
 @property (nonatomic) CGFloat cachedRatioFromCenter;
-@property (nonatomic, weak) IBOutlet UIButton *playButton;
 @property (nonatomic, weak) IBOutlet UIImageView *waveformStoppedView;
 @property (nonatomic, weak) IBOutlet UIImageView *waveformPlayingView;
 @end

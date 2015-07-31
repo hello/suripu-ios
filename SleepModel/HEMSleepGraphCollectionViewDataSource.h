@@ -14,6 +14,7 @@
 - (void)didTapDateButton:(UIButton *)button;
 - (BOOL)shouldHideSegmentCellContents;
 
+- (void)toggleAudio:(UIButton*)button;
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
@@ -67,6 +68,15 @@
  *  @return YES if there is a sound present on the computed segment
  */
 - (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Load the sound for a given index path into NSData
+ *
+ *  @param indexPath index path of the sound event
+ *
+ *  @return sound data or nil if none or error
+ */
+- (NSData *)audioDataForIndexPath:(NSIndexPath *)indexPath;
 
 - (NSUInteger)numberOfSleepSegments;
 

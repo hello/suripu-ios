@@ -414,10 +414,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     if (!segment)
         return cell;
-    BOOL hasSound = [self segmentForSoundExistsAtIndexPath:indexPath];
-    HEMWaveform *waveform = nil;
-    if (hasSound)
-        waveform = [HEMWaveform faketrogram];
     NSUInteger sleepDepth = segment.sleepDepth;
     if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
         id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
@@ -432,7 +428,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [cell layoutWithImage:[self imageForEventType:segment.type]
                   message:segment.message
                      time:timeText
-                 waveform:waveform];
+                 waveform:[self waveformForIndexPath:indexPath]];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     UIColor *previousColor = nil;
@@ -450,9 +446,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
             withFillColor:[UIColor colorForSleepState:segment.sleepState]
             previousRatio:previousRatio
             previousColor:previousColor];
-    if (hasSound) {
-        [cell updateAudioDisplayProgressWithRatio:0.3f];
-    }
+    [cell.playButton addTarget:collectionView.delegate
+                        action:@selector(toggleAudio:)
+              forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -570,8 +566,32 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath {
+#if defined(BETA) || defined(DEBUG)
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     return segment.type == SENTimelineSegmentTypeGenericSound || segment.type == SENTimelineSegmentTypeSnored;
+#endif
+    return NO;
+}
+
+- (HEMWaveform *)waveformForIndexPath:(NSIndexPath *)indexPath {
+    if (![self segmentForSoundExistsAtIndexPath:indexPath])
+        return nil;
+#if defined(BETA) || defined(DEBUG)
+    return [HEMWaveform faketrogram];
+#endif
+    return nil;
+}
+
+- (NSData *)audioDataForIndexPath:(NSIndexPath *)indexPath {
+    if (![self segmentForSoundExistsAtIndexPath:indexPath])
+        return nil;
+#if defined(BETA) || defined(DEBUG)
+    NSString *testAudioPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"test.mp3"];
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:testAudioPath options:0 error:&error];
+    return error == nil ? data : nil;
+#endif
+    return nil;
 }
 
 @end

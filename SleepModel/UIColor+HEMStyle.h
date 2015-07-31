@@ -131,5 +131,7 @@
 + (UIColor *)actionSheetSeparatorColor;
 + (UIColor *)actionSheetSelectedColor;
 + (UIColor *)timelineEventSelectedBackgroundColor;
++ (UIColor *)timelineAccentColor;
++ (UIColor *)timelineWaveformColor;
 
 @end

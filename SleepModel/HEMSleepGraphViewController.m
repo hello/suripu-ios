@@ -1,5 +1,6 @@
 
 #import <SenseKit/SenseKit.h>
+#import <AVFoundation/AVAudioPlayer.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
 #import "HEMActionSheetViewController.h"
@@ -28,13 +29,14 @@
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
+#import "HelloStyleKit.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
 CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
-                                           HEMSleepGraphActionDelegate>
+                                           HEMSleepGraphActionDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
@@ -48,7 +50,10 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
-
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic, weak) UIButton *playingButton;
+@property (nonatomic, strong) NSIndexPath *playingIndexPath;
+@property (nonatomic, strong) NSTimer *playbackProgressTimer;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -90,6 +95,11 @@ static BOOL hasLoadedBefore = NO;
     [self setVisible:YES];
     [self showTutorial];
     [self checkIfInitialAnimationNeeded];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self clearPlayerState];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -183,6 +193,8 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)dealloc {
     _dataSource = nil;
+    [_audioPlayer stop];
+    [_playbackProgressTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -228,6 +240,100 @@ static BOOL hasLoadedBefore = NO;
 
 - (BOOL)shouldHideSegmentCellContents {
     return !hasLoadedBefore;
+}
+
+- (void)toggleAudio:(UIButton *)button {
+    if (button == self.playingButton) {
+        if ([self.audioPlayer isPlaying]) {
+            [self.playbackProgressTimer invalidate];
+            [self.audioPlayer pause];
+            [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
+        } else {
+            [self.audioPlayer play];
+            [self monitorPlaybackProgress];
+            [self.playingButton setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+        }
+    } else {
+        [self clearPlayerState];
+        [self playAudioWithButton:button];
+    }
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    [self clearPlayerState];
+}
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
+    [self clearPlayerState];
+}
+
+- (void)playAudioWithButton:(UIButton *)button {
+    NSIndexPath *indexPath = [self indexPathForView:button];
+    if (!indexPath)
+        return;
+    if (![self loadAudioForIndexPath:indexPath])
+        return;
+    [self.audioPlayer play];
+    [self monitorPlaybackProgress];
+    [button setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+    self.playingButton = button;
+}
+
+- (BOOL)loadAudioForIndexPath:(NSIndexPath *)indexPath {
+    NSError *error = nil;
+    NSData *data = [self.dataSource audioDataForIndexPath:indexPath];
+    if (!data)
+        return NO;
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithData:data error:&error];
+    if (error != nil)
+        return NO;
+
+    self.playingIndexPath = indexPath;
+    return YES;
+}
+
+- (void)monitorPlaybackProgress {
+    [self.playbackProgressTimer invalidate];
+    self.playbackProgressTimer = [NSTimer timerWithTimeInterval:1
+                                                         target:self
+                                                       selector:@selector(updatePlaybackProgress)
+                                                       userInfo:nil
+                                                        repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.playbackProgressTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)clearPlayerState {
+    [self.audioPlayer stop];
+    [self updatePlaybackProgress];
+    self.playingIndexPath = nil;
+    [self.playbackProgressTimer invalidate];
+    self.playbackProgressTimer = nil;
+    [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
+    self.playingButton = nil;
+    self.audioPlayer = nil;
+}
+
+- (void)updatePlaybackProgress {
+    if (!self.playingIndexPath)
+        return;
+    CGFloat progress = 0;
+    if ([self.audioPlayer isPlaying])
+        progress = self.audioPlayer.currentTime / self.audioPlayer.duration;
+
+    HEMSleepEventCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:self.playingIndexPath];
+    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]])
+        [cell updateAudioDisplayProgressWithRatio:progress];
+}
+
+- (NSIndexPath *)indexPathForView:(UIView *)view {
+    UIView *superview = view;
+    while (superview != nil) {
+        if ([superview isKindOfClass:[UICollectionViewCell class]]) {
+            return [self.collectionView indexPathForCell:(id)superview];
+        }
+        superview = [superview superview];
+    }
+    return nil;
 }
 
 #pragma mark Event Info
@@ -741,6 +847,7 @@ static BOOL hasLoadedBefore = NO;
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMMinimumEventSpacing = 6.f;
+    CGFloat const HEMSoundHeightOffset = 26.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
@@ -754,9 +861,13 @@ static BOOL hasLoadedBefore = NO;
                 NSAttributedString *message =
                     [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
                 NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
-                CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time];
+                BOOL hasSound = [self.dataSource segmentForSoundExistsAtIndexPath:indexPath];
+                CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:hasSound];
                 CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
                                      minSize.height + HEMMinimumEventSpacing);
+                if (hasSound) {
+                    height += HEMSoundHeightOffset;
+                }
                 return CGSizeMake(width, height);
             } else {
                 return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));

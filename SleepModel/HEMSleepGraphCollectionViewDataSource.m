@@ -4,7 +4,6 @@
 #import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <FDWaveformView/FDWaveformView.h>
 #import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -24,6 +23,7 @@
 #import "HEMSplitTextFormatter.h"
 #import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
+#import "HEMWaveform.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -50,18 +50,13 @@ static NSString *const timelineTopBarReuseIdentifier = @"timelineTopBarCell";
 static NSString *const timelineFooterReuseIdentifier = @"timelineFooterCell";
 static NSString *const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString *const sleepEventReuseIdentifier = @"sleepEventCell";
-static NSString *const sensorTypeTemperature = @"temperature";
-static NSString *const sensorTypeHumidity = @"humidity";
-static NSString *const sensorTypeParticulates = @"particulates";
-static NSString *const sensorTypeLight = @"light";
-static NSString *const sensorTypeSound = @"sound";
-static NSString *const sleepEventNameFindCharacter = @"_";
-static NSString *const sleepEventNameReplaceCharacter = @" ";
-static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 + (NSString *)localizedNameForSleepEventType:(NSString *)eventType {
+    NSString *const sleepEventNameFindCharacter = @"_";
+    NSString *const sleepEventNameReplaceCharacter = @" ";
+    NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSString *localizedFormat = [NSString stringWithFormat:sleepEventNameFormat, [eventType lowercaseString]];
     NSString *eventName = NSLocalizedString(localizedFormat, nil);
     if ([eventName isEqualToString:localizedFormat]) {
@@ -430,7 +425,10 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
         timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter];
     }
-    [cell layoutWithImage:[self imageForEventType:segment.type] message:segment.message time:timeText];
+    [cell layoutWithImage:[self imageForEventType:segment.type]
+                  message:segment.message
+                     time:timeText
+                 waveform:[self waveformForIndexPath:indexPath]];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     UIColor *previousColor = nil;
@@ -448,6 +446,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
             withFillColor:[UIColor colorForSleepState:segment.sleepState]
             previousRatio:previousRatio
             previousColor:previousColor];
+    [cell.playButton addTarget:collectionView.delegate
+                        action:@selector(toggleAudio:)
+              forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -558,6 +559,35 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath {
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     return segment.type != SENTimelineSegmentTypeUnknown && segment.type != SENTimelineSegmentTypeInBed;
+}
+
+- (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath {
+#if defined(BETA) || defined(DEBUG)
+    SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
+    return segment.type == SENTimelineSegmentTypeGenericSound || segment.type == SENTimelineSegmentTypeSnored;
+#endif
+    return NO;
+}
+
+- (HEMWaveform *)waveformForIndexPath:(NSIndexPath *)indexPath {
+    if (![self segmentForSoundExistsAtIndexPath:indexPath])
+        return nil;
+#if defined(BETA) || defined(DEBUG)
+    return [HEMWaveform faketrogram];
+#endif
+    return nil;
+}
+
+- (NSData *)audioDataForIndexPath:(NSIndexPath *)indexPath {
+    if (![self segmentForSoundExistsAtIndexPath:indexPath])
+        return nil;
+#if defined(BETA) || defined(DEBUG)
+    NSString *testAudioPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"test.mp3"];
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:testAudioPath options:0 error:&error];
+    return error == nil ? data : nil;
+#endif
+    return nil;
 }
 
 @end

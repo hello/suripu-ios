@@ -33,8 +33,9 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         BOOL meetsInitialRequirements
-             = ![self hasStatedToStopAsking]
+            = ![self hasStatedToStopAsking]
             && [self hasAppReviewURL]
+            && [self hasNotYetReviewedThisVersion]
             && [self isWithinAppReviewThreshold]
             && [self meetsMinimumRequiredAppLaunches]
             && [self meetsMinimumRequiredTimelineViews]
@@ -93,6 +94,16 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 + (BOOL)hasStatedToStopAsking {
     SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
     return [[localPrefs persistentPreferenceForKey:HEMNoMoreAsking] boolValue];
+}
+
++ (BOOL)hasNotYetReviewedThisVersion {
+    HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:[self appVersion]];
+    return [appUsage updated] == nil;
+}
+
++ (NSString*)appVersion {
+    NSBundle* bundle = [NSBundle mainBundle];
+    return [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 }
 
 #pragma mark - Questions
@@ -223,6 +234,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 + (void)rateApp {
     NSString* url = [HEMConfig stringForConfig:HEMConfAppReviewURL];
     if (url) {
+        [HEMAppUsage incrementUsageForIdentifier:[self appVersion]];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     }
 }

@@ -10,8 +10,6 @@
 #import "HEMAppReview.h"
 #import "HEMZendeskService.h"
 #import "HEMSettingsNavigationController.h"
-#import "HEMSupportTopicsViewController.h"
-#import "HEMMainStoryboard.h"
 
 static NSString* const HEMQuestionCellIdSingle = @"single";
 static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
@@ -114,10 +112,14 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
     [self setController:controller];
     
     switch ([[self selectedAnswer] action]) {
-        case HEMAppReviewAnswerActionOpenSupport:
+        case HEMAppReviewAnswerActionOpenSupport: {
             [self listenToTicketCreationEvents];
-            [self launchSupportTopicPickerFrom:controller];
+            static NSString* const internalSubject = @"iOS App Review Help";
+            [[HEMZendeskService sharedService] configureRequestWithSubject:internalSubject completion:^{
+                [ZDKRequests showRequestCreationWithNavController:[controller navigationController]];
+            }];
             return YES;
+        }
         case HEMAppReviewAnswerActionRateTheApp:
             [self listenToForAppComingBackToForeground];
             [HEMAppReview rateApp];
@@ -135,14 +137,6 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
         default:
             return NO;
     }
-}
-
-- (void)launchSupportTopicPickerFrom:(UIViewController*)viewController {
-    HEMSupportTopicsViewController* topics = [HEMMainStoryboard instantiateSupportTopicsViewController];
-    [topics setModal:YES];
-    
-    HEMSettingsNavigationController* nav = [[HEMSettingsNavigationController alloc] initWithRootViewController:topics];
-    [viewController presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)listenToForAppComingBackToForeground {

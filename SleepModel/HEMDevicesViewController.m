@@ -28,6 +28,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMSupportUtil.h"
+#import "HEMTutorial.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
@@ -88,9 +89,9 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 
     if (![self loaded]) {
         [self refreshDataSource:NO];
+        [HEMTutorial showTutorialForPillColorIfNeeded];
         [self setLoaded:YES];
     }
-    
 }
 
 - (void)reloadData {

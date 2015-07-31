@@ -174,6 +174,7 @@
 		8A8397B11B68529D0079AC24 /* playSound.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397AB1B68529D0079AC24 /* playSound.png */; };
 		8A8397B21B68529D0079AC24 /* playSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397AC1B68529D0079AC24 /* playSound@2x.png */; };
 		8A8397B31B68529D0079AC24 /* playSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397AD1B68529D0079AC24 /* playSound@3x.png */; };
+		8A8397B51B6AE5270079AC24 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8A8397B41B6AE5270079AC24 /* test.mp3 */; };
 		8A8621671B5D5DC20033F44C /* HEMAppReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8621661B5D5DC20033F44C /* HEMAppReview.m */; };
 		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
 		8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
@@ -964,6 +965,7 @@
 		8A8397AB1B68529D0079AC24 /* playSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playSound.png; path = images/playSound.png; sourceTree = "<group>"; };
 		8A8397AC1B68529D0079AC24 /* playSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@2x.png"; path = "images/playSound@2x.png"; sourceTree = "<group>"; };
 		8A8397AD1B68529D0079AC24 /* playSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@3x.png"; path = "images/playSound@3x.png"; sourceTree = "<group>"; };
+		8A8397B41B6AE5270079AC24 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		8A8621651B5D5DC20033F44C /* HEMAppReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppReview.h; sourceTree = "<group>"; };
 		8A8621661B5D5DC20033F44C /* HEMAppReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReview.m; sourceTree = "<group>"; };
 		8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmSoundTableViewController.h; sourceTree = "<group>"; };
@@ -2475,6 +2477,7 @@
 		8A82887A1A76BB8A0043B1D1 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				8A8397B41B6AE5270079AC24 /* test.mp3 */,
 				8A8397A81B68529D0079AC24 /* pauseSound.png */,
 				8A8397A91B68529D0079AC24 /* pauseSound@2x.png */,
 				8A8397AA1B68529D0079AC24 /* pauseSound@3x.png */,
@@ -3842,6 +3845,7 @@
 				8A7D803E1A41094300B0BFD7 /* sensorsBarIcon.png in Resources */,
 				BFC3FE111AE7283A0061D6A1 /* sensorLoaderGreen.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
+				8A8397B51B6AE5270079AC24 /* test.mp3 in Resources */,
 				BFC3FE731AE7321D0061D6A1 /* temperatureIconNoBorderYellow@3x.png in Resources */,
 				8A63D5621A6058DA00F5307D /* lightsOutEventIcon@2x.png in Resources */,
 				BFAB23581AD5D15E00CCBF8A /* particulatesIconGreen.png in Resources */,

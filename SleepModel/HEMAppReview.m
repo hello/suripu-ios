@@ -41,7 +41,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
             && [self meetsMinimumRequiredTimelineViews]
             && [self isWithinSystemAlertThreshold];
         
-        if (!meetsInitialRequirements) {
+        if (meetsInitialRequirements) {
             [self hasSenseAndPillPaired:^(BOOL hasPairedDevices) {
                 HEMAppReviewQuestion* question = nil;
                 if (hasPairedDevices) {

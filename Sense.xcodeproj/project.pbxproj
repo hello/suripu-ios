@@ -663,6 +663,9 @@
 		BFC99BBD1B69AC04008F7F0D /* HEMAppReviewAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BBC1B69AC04008F7F0D /* HEMAppReviewAnswer.m */; };
 		BFC99BC01B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BBF1B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m */; };
 		BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */; };
+		BFC99BC91B6C1218008F7F0D /* pill_color_dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC99BC61B6C1218008F7F0D /* pill_color_dialog.png */; };
+		BFC99BCA1B6C1218008F7F0D /* pill_color_dialog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC99BC71B6C1218008F7F0D /* pill_color_dialog@2x.png */; };
+		BFC99BCB1B6C1218008F7F0D /* pill_color_dialog@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC99BC81B6C1218008F7F0D /* pill_color_dialog@3x.png */; };
 		BFCCF53C1A69F37C00D842F9 /* lightIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5391A69F37C00D842F9 /* lightIcon.png */; };
 		BFCCF53D1A69F37C00D842F9 /* lightIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */; };
 		BFCCF53E1A69F37C00D842F9 /* lightIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */; };
@@ -1598,6 +1601,9 @@
 		BFC99BBF1B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReviewQuestionsDataSource.m; sourceTree = "<group>"; };
 		BFC99BC11B6A9986008F7F0D /* HEMQuestionsDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMQuestionsDataSource.h; sourceTree = "<group>"; };
 		BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReviewSpec.m; sourceTree = "<group>"; };
+		BFC99BC61B6C1218008F7F0D /* pill_color_dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pill_color_dialog.png; path = images/pill_color_dialog.png; sourceTree = "<group>"; };
+		BFC99BC71B6C1218008F7F0D /* pill_color_dialog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pill_color_dialog@2x.png"; path = "images/pill_color_dialog@2x.png"; sourceTree = "<group>"; };
+		BFC99BC81B6C1218008F7F0D /* pill_color_dialog@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pill_color_dialog@3x.png"; path = "images/pill_color_dialog@3x.png"; sourceTree = "<group>"; };
 		BFCCF5391A69F37C00D842F9 /* lightIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightIcon.png; sourceTree = "<group>"; };
 		BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@2x.png"; sourceTree = "<group>"; };
 		BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@3x.png"; sourceTree = "<group>"; };
@@ -1864,6 +1870,7 @@
 			children = (
 				8A1207721A80A57000758DC2 /* Alarm */,
 				BFF6A5BE1B33A59E00A30429 /* Handholding */,
+				BFC99BC51B6C11F2008F7F0D /* PillColor */,
 				8A45796C1A8052E5009A7863 /* Sensors */,
 				8AD142561A78675F00A83AD8 /* Timeline */,
 				8A1207711A80A56B00758DC2 /* Trends */,
@@ -3360,6 +3367,16 @@
 			name = Review;
 			sourceTree = "<group>";
 		};
+		BFC99BC51B6C11F2008F7F0D /* PillColor */ = {
+			isa = PBXGroup;
+			children = (
+				BFC99BC61B6C1218008F7F0D /* pill_color_dialog.png */,
+				BFC99BC71B6C1218008F7F0D /* pill_color_dialog@2x.png */,
+				BFC99BC81B6C1218008F7F0D /* pill_color_dialog@3x.png */,
+			);
+			name = PillColor;
+			sourceTree = "<group>";
+		};
 		BFE3B8F919F5F1D40055B3B6 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -3564,6 +3581,7 @@
 				BFBA2B761A647E7C00C3AB80 /* settingsAppIcon@3x.png in Resources */,
 				8A93AFC31A09BED100F70A8B /* Share@2x.png in Resources */,
 				BF5AE04F1B4DD31900646B6E /* timeline_right_caret@3x.png in Resources */,
+				BFC99BCB1B6C1218008F7F0D /* pill_color_dialog@3x.png in Resources */,
 				BF05C8E81A3A6AD6002A1307 /* questions_check.png in Resources */,
 				8A1207791A80A58E00758DC2 /* welcome_dialog_alarm.png in Resources */,
 				8A7D80461A41094300B0BFD7 /* trendsBarIcon@3x.png in Resources */,
@@ -3624,6 +3642,7 @@
 				BFAB23831AD5D2AA00CCBF8A /* soundIconGreen@2x.png in Resources */,
 				BFF6A5C31B33A5AF00A30429 /* closeX@2x.png in Resources */,
 				BF7105D01ADF2D650066885B /* sensorLoaderGray@3x.png in Resources */,
+				BFC99BCA1B6C1218008F7F0D /* pill_color_dialog@2x.png in Resources */,
 				BFC3FE621AE7321D0061D6A1 /* soundIconNoBorderGreen.png in Resources */,
 				8ADE064A1B2FA0BB00976654 /* timeline_action_delete.png in Resources */,
 				BFF3B4441A5CBF6800B11643 /* accessory@3x.png in Resources */,
@@ -3908,6 +3927,7 @@
 				8ADE064C1B2FA0BB00976654 /* timeline_action_delete@3x.png in Resources */,
 				8AA1580F1A5EFD9500BF1D4A /* alarmSmartIcon@3x.png in Resources */,
 				BFAB234F1AD5D15E00CCBF8A /* lightIconRed.png in Resources */,
+				BFC99BC91B6C1218008F7F0D /* pill_color_dialog.png in Resources */,
 				BFC3FE4B1AE7321D0061D6A1 /* humidityIconNoBorderRed@2x.png in Resources */,
 				BFAB234E1AD5D15E00CCBF8A /* lightIconGreen@3x.png in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,

@@ -33,6 +33,7 @@ static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialTrendsKey = @"HEMTutorialTrends";
+static NSString* const HEMTutorialPillColorKey = @"HEMTutorialPillColor";
 static CGFloat const HEMTutorialDelay = 0.5f;
 
 #pragma mark - Handholding
@@ -142,6 +143,16 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     }
 }
 
++ (void)showTutorialForPillColorIfNeeded
+{
+    if ([self shouldShowTutorialForKey:HEMTutorialPillColorKey]) {
+        [self delayBlock:^{
+            [self showTutorialForPillColor];
+            [self markTutorialViewed:HEMTutorialPillColorKey];
+        }];
+    }
+}
+
 + (void)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
     UIImage* snapshot = [[controller view] snapshot];
     UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor tutorialBackgroundColor]];
@@ -237,6 +248,15 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.trends.title", nil)
                                          text:NSLocalizedString(@"tutorial.trends.message", nil)
                                         image:[UIImage imageNamed:@"welcome_dialog_trends"]];
+    [self showTutorialWithContent:@[tutorial]];
+}
+
++ (void)showTutorialForPillColor
+{
+    HEMTutorialContent* tutorial =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.pill-color.title", nil)
+                                         text:NSLocalizedString(@"tutorial.pill-color.message", nil)
+                                        image:[UIImage imageNamed:@"pill_color_dialog"]];
     [self showTutorialWithContent:@[tutorial]];
 }
 

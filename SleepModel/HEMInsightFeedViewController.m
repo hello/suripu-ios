@@ -22,6 +22,8 @@
 #import "HEMSinkModalTransition.h"
 #import "HEMBounceModalTransition.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMAppReview.h"
+#import "HEMSleepQuestionsDataSource.h"
 
 @interface HEMInsightFeedViewController () <
     UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -147,10 +149,19 @@
 #pragma mark - Questions
 
 - (void)answerQuestions:(UIButton*)sender {
-    NSIndexPath* path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-    
     HEMSleepQuestionsViewController* qVC
         = (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
+    
+    NSIndexPath* path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+    SENQuestion* question = [[self dataSource] questionAtIndexPath:path];
+    
+    id<HEMQuestionsDataSource> dataSource = nil;
+    if ([question isKindOfClass:[HEMAppReviewQuestion class]]) {
+        dataSource = [[HEMAppReviewQuestionsDataSource alloc] initWithAppReviewQuestion:(id)question];
+    } else {
+        dataSource = [[HEMSleepQuestionsDataSource alloc] init];
+    }
+    [qVC setDataSource:dataSource];
     
     if ([self questionsTransition] == nil) {
         HEMBounceModalTransition* transition = [[HEMBounceModalTransition alloc] init];
@@ -171,11 +182,17 @@
     [sender setEnabled:NO];
     NSIndexPath* path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
     SENQuestion* question = [[self dataSource] questionAtIndexPath:path];
-    __weak typeof(self) weakSelf = self;
-    [[SENServiceQuestions sharedService] skipQuestion:question completion:^(NSError *error) {
-        [weakSelf removeCellAtIndexPath:path];
+    if ([question isKindOfClass:[HEMAppReviewQuestion class]]) {
+        [HEMAppReview markAppReviewPromptCompleted];
+        [self removeCellAtIndexPath:path];
         [sender setEnabled:YES];
-    }];
+    } else {
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceQuestions sharedService] skipQuestion:question completion:^(NSError *error) {
+            [weakSelf removeCellAtIndexPath:path];
+            [sender setEnabled:YES];
+        }];
+    }
 }
 
 #pragma mark - Clean Up

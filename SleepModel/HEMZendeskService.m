@@ -173,4 +173,21 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
     }];
 }
 
+- (void)configureRequestWithSubject:(NSString*)subject completion:(void(^)(void))completion {
+    if (!subject) {
+        if (completion) {
+            completion ();
+        }
+        return;
+    }
+    
+    [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
+        [requestCreationConfig setSubject:subject];
+        if (completion) {
+            completion ();
+        }
+        
+    }];
+}
+
 @end

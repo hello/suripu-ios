@@ -202,14 +202,19 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     if ([[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]) {
         [set addObject:@(HEMDeviceWarningLongLastSeen)];
     }
-    if ([self lostInternetConnection:device]) {
-        [set addObject:@(HEMSenseWarningNoInternet)];
-    }
+    
+    BOOL connectedToSense = YES;
     if ([device type] == SENDeviceTypeSense
         && (![[SENServiceDevice sharedService] pairedSenseAvailable]
-         || ![[[SENServiceDevice sharedService] senseManager] isConnected])) {
-        [set addObject:@(HEMSenseWarningNotConnectedToSense)];
+            || ![[[SENServiceDevice sharedService] senseManager] isConnected])) {
+            [set addObject:@(HEMSenseWarningNotConnectedToSense)];
+            connectedToSense = NO;
+        }
+    
+    if (connectedToSense && [self lostInternetConnection:device]) {
+        [set addObject:@(HEMSenseWarningNoInternet)];
     }
+    
     return set;
 }
 

@@ -141,6 +141,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     
     [HEMAppReview shouldAskUserToRateTheApp:^(HEMAppReviewQuestion* question) {
         if (question) {
+            [SENAnalytics track:HEMAnalyticsEventAppReviewShown];
             done(@[question]);
         } else {
             [[SENServiceQuestions sharedService] updateQuestions:^(NSArray *questions, NSError *error) {

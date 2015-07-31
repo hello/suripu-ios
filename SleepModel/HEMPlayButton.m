@@ -7,8 +7,11 @@
 //
 
 #import "HEMPlayButton.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMPlayButton
+
+CGFloat const HEMPlayButtonShadowOpacity = 0.15f;
 
 - (void)awakeFromNib {
     self.layer.cornerRadius = CGRectGetWidth(self.bounds) / 2;
@@ -21,6 +24,17 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.layer.cornerRadius = CGRectGetWidth(self.bounds) / 2;
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+    if (highlighted) {
+        self.backgroundColor = [UIColor timelineEventSelectedBackgroundColor];
+        self.layer.shadowOpacity = 0.0f;
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+        self.layer.shadowOpacity = HEMPlayButtonShadowOpacity;
+    }
 }
 
 @end

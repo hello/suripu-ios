@@ -23,6 +23,15 @@ NSUInteger const HEMMinimumAppLaunches = 4;
 NSUInteger const HEMSystemAlertShownThreshold = 30;
 NSUInteger const HEMMinimumTimelineViews = 10;
 NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
+NSString* const HEMLocalizedKeyQuestion1 = @"app-review.question.1";
+NSString* const HEMLocalizedKeyQuestion2 = @"app-review.question.2";
+NSString* const HEMLocalizedKeyQuestion3 = @"app-review.question.3";
+NSString* const HEMLocalizedKeyAnswerLoveIt = @"app-review.question.answer.love-it";
+NSString* const HEMLocalizedKeyAnswerNotReally = @"app-review.question.answer.not-really";
+NSString* const HEMLocalizedKeyAnswerSure = @"app-review.question.answer.sure";
+NSString* const HEMLocalizedKeyAnswerNotNow = @"app-review.question.answer.not-now";
+NSString* const HEMLocalizedKeyAnswerDoNotAsk = @"app-review.question.answer.dont-ask-again";
+NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-thanks";
 
 #pragma mark - Conditions for app review
 
@@ -109,7 +118,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 #pragma mark - Questions
 
 + (HEMAppReviewQuestion*)appReviewQuestion {
-    NSString* firstQuestionText = NSLocalizedString(@"app-review.question.1", nil);
+    NSString* firstQuestionText = NSLocalizedString(HEMLocalizedKeyQuestion1, nil);
     NSArray* firstQuestionAnswers = [self answersForQuestion:firstQuestionText];
     
     HEMAppReviewQuestion* conditionalQuestion = nil;
@@ -131,21 +140,21 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
         return nil;
     }
     
-    NSString* firstQuestion = NSLocalizedString(@"app-review.question.1", nil);
+    NSString* firstQuestion = NSLocalizedString(HEMLocalizedKeyQuestion1, nil);
     NSNumber* firtQuestionId = [HEMAppReviewQuestion questionIdForText:firstQuestion];
     
     HEMAppReviewQuestion* question = nil;
     
     if ([[answer questionId] isEqualToNumber:firtQuestionId]) {
-        NSString* answer1 = NSLocalizedString(@"app-review.question.answer.love-it", nil);
-        NSString* answer2 = NSLocalizedString(@"app-review.question.answer.not-really", nil);
+        NSString* answer1 = NSLocalizedString(HEMLocalizedKeyAnswerLoveIt, nil);
+        NSString* answer2 = NSLocalizedString(HEMLocalizedKeyAnswerNotReally, nil);
         
         NSString* nextQuestion = nil;
         
         if ([[answer answer] isEqualToString:answer1]) {
-            nextQuestion = NSLocalizedString(@"app-review.question.2", nil);
+            nextQuestion = NSLocalizedString(HEMLocalizedKeyQuestion2, nil);
         } else if ([[answer answer] isEqualToString:answer2]) {
-            nextQuestion = NSLocalizedString(@"app-review.question.3", nil);
+            nextQuestion = NSLocalizedString(HEMLocalizedKeyQuestion3, nil);
         }
 
         NSArray* nextAnswers = [self answersForQuestion:nextQuestion];
@@ -163,20 +172,20 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 + (NSArray*)answersForQuestion:(NSString*)question {
     NSArray* answers = nil;
     NSNumber* questionId = [HEMAppReviewQuestion questionIdForText:question];
-    if ([question isEqualToString:NSLocalizedString(@"app-review.question.1", nil)]) {
+    if ([question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion1, nil)]) {
         answers = [self answersForFirstQuestionWithId:questionId];
-    } else if ([question isEqualToString:NSLocalizedString(@"app-review.question.2", nil)]) {
+    } else if ([question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion2, nil)]) {
         answers = [self answersForSecondQuestionWithId:questionId];
-    } else  if ([question isEqualToString:NSLocalizedString(@"app-review.question.3", nil)]) {
+    } else  if ([question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion3, nil)]) {
         answers = [self answersForThirdQuestionWithId:questionId];
     }
     return answers;
 }
 
 + (NSArray*)answersForFirstQuestionWithId:(NSNumber*)questionId {
-    NSString* answer1 = NSLocalizedString(@"app-review.question.answer.love-it", nil);
-    NSString* answer2 = NSLocalizedString(@"app-review.question.answer.not-really", nil);
-    NSString* answer3 = NSLocalizedString(@"app-review.question.answer.help", nil);
+    NSString* answer1 = NSLocalizedString(HEMLocalizedKeyAnswerLoveIt, nil);
+    NSString* answer2 = NSLocalizedString(HEMLocalizedKeyAnswerNotReally, nil);
+    NSString* answer3 = NSLocalizedString(HEMLocalizedKeyAnswerHelp, nil);
     
     HEMAppReviewAnswer* loveItAnswer = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
                                                                        questionId:questionId
@@ -191,9 +200,9 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 }
 
 + (NSArray*)answersForSecondQuestionWithId:(NSNumber*)questionId {
-    NSString* answer1 = NSLocalizedString(@"app-review.question.answer.sure", nil);
-    NSString* answer2 = NSLocalizedString(@"app-review.question.answer.not-now", nil);
-    NSString* answer3 = NSLocalizedString(@"app-review.question.answer.dont-ask-again", nil);
+    NSString* answer1 = NSLocalizedString(HEMLocalizedKeyAnswerSure, nil);
+    NSString* answer2 = NSLocalizedString(HEMLocalizedKeyAnswerNotNow, nil);
+    NSString* answer3 = NSLocalizedString(HEMLocalizedKeyAnswerDoNotAsk, nil);
     
     HEMAppReviewAnswer* sure = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
                                                                questionId:questionId
@@ -208,8 +217,8 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 }
 
 + (NSArray*)answersForThirdQuestionWithId:(NSNumber*)questionId {
-    NSString* answer1 = NSLocalizedString(@"app-review.question.answer.sure", nil);
-    NSString* answer2 = NSLocalizedString(@"app-review.question.answer.no-thanks", nil);
+    NSString* answer1 = NSLocalizedString(HEMLocalizedKeyAnswerSure, nil);
+    NSString* answer2 = NSLocalizedString(HEMLocalizedKeyAnswerNoThanks, nil);
     
     HEMAppReviewAnswer* sure = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
                                                                questionId:questionId

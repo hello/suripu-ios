@@ -113,6 +113,8 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
     
     switch ([[self selectedAnswer] action]) {
         case HEMAppReviewAnswerActionOpenSupport: {
+            [SENAnalytics track:HEMAnalyticsEventAppReviewHelp];
+            
             [self listenToTicketCreationEvents];
             static NSString* const internalSubject = @"iOS App Review Help";
             [[HEMZendeskService sharedService] configureRequestWithSubject:internalSubject completion:^{
@@ -120,20 +122,28 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
             }];
             return YES;
         }
-        case HEMAppReviewAnswerActionRateTheApp:
+        case HEMAppReviewAnswerActionRateTheApp: {
             [self listenToForAppComingBackToForeground];
+            [SENAnalytics track:HEMAnalyticsEventAppReviewRateYes];
             [HEMAppReview rateApp];
             return YES;
+        }
         case HEMAppReviewAnswerActionSendFeedback: {
+            [SENAnalytics track:HEMAnalyticsEventAppReviewFeedbackYes];
             [self listenToTicketCreationEvents];
             [[HEMZendeskService sharedService] configureRequestWithTopic:HEMAppReviewFeedbackTopic completion:^{
                 [ZDKRequests showRequestCreationWithNavController:[controller navigationController]];
             }];
             return YES;
         }
-        case HEMAppReviewAnswerActionStopAsking:
+        case HEMAppReviewAnswerActionStopAsking: {
+            [SENAnalytics track:HEMAnalyticsEventAppReviewRateNoAsk];
             [HEMAppReview stopAskingToRateTheApp];
-        case HEMAppReviewAnswerActionDone:
+            return NO;
+        }
+        case HEMAppReviewAnswerActionDone: {
+            return NO;
+        }
         default:
             return NO;
     }

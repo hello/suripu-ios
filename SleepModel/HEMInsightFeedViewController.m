@@ -158,6 +158,7 @@
     id<HEMQuestionsDataSource> dataSource = nil;
     if ([question isKindOfClass:[HEMAppReviewQuestion class]]) {
         dataSource = [[HEMAppReviewQuestionsDataSource alloc] initWithAppReviewQuestion:(id)question];
+        [SENAnalytics track:HEMAnalyticsEventAppReviewStart];
     } else {
         dataSource = [[HEMSleepQuestionsDataSource alloc] init];
     }
@@ -184,6 +185,7 @@
     SENQuestion* question = [[self dataSource] questionAtIndexPath:path];
     if ([question isKindOfClass:[HEMAppReviewQuestion class]]) {
         [HEMAppReview markAppReviewPromptCompleted];
+        [SENAnalytics track:HEMAnalyticsEventAppReviewSkip];
         [self removeCellAtIndexPath:path];
         [sender setEnabled:YES];
     } else {

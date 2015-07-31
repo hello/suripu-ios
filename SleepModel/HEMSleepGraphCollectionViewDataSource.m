@@ -100,7 +100,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         _hourDateFormatter.dateFormat = @"h";
     } else {
         _timeDateFormatter.dateFormat = @"HH:mm";
-        _hourDateFormatter.dateFormat = @"HH";
+        _hourDateFormatter.dateFormat = @"HH:00";
     }
     _calendar = [NSCalendar currentCalendar];
 }
@@ -428,7 +428,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.type]];
     NSAttributedString *timeText = nil;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
-        timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
+        timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter];
     }
     [cell layoutWithImage:[self imageForEventType:segment.type] message:segment.message time:timeText];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
@@ -463,7 +463,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0 && components.second == 0) {
         NSAttributedString *text =
-            [self formattedTextForInlineTimestamp:segment.date withFormatter:self.hourDateFormatter useUnit:YES];
+            [self formattedTextForInlineTimestamp:segment.date withFormatter:self.hourDateFormatter];
         [cell addTimeLabelWithText:text atHeightRatio:0];
     }
     NSTimeInterval segmentInterval = [segment.date timeIntervalSince1970];
@@ -481,7 +481,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         if (hourInterval < endInterval) {
             CGFloat ratio = ([hourDate timeIntervalSince1970] - segmentInterval) / (endInterval - segmentInterval);
             NSAttributedString *text =
-                [self formattedTextForInlineTimestamp:hourDate withFormatter:self.hourDateFormatter useUnit:YES];
+                [self formattedTextForInlineTimestamp:hourDate withFormatter:self.hourDateFormatter];
             [cell addTimeLabelWithText:text atHeightRatio:ratio];
         }
         i++;
@@ -489,19 +489,15 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date {
-    return [self formattedTextForInlineTimestamp:date withFormatter:self.timeDateFormatter useUnit:NO];
+    return [self formattedTextForInlineTimestamp:date withFormatter:self.timeDateFormatter];
 }
 
-- (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date
-                                          withFormatter:(NSDateFormatter *)formatter
-                                                useUnit:(BOOL)shouldUseUnit {
+- (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date withFormatter:(NSDateFormatter *)formatter {
     NSString *timeText = [formatter stringFromDate:date];
     NSString *unit = nil;
     if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         self.meridiemFormatter.timeZone = formatter.timeZone;
         unit = [self.meridiemFormatter stringFromDate:date];
-    } else if (shouldUseUnit) {
-        unit = NSLocalizedString(@"sleep-event.time.24-hour.suffix", nil);
     }
     HEMSplitTextObject *obj = [[HEMSplitTextObject alloc] initWithValue:timeText unit:unit];
     NSDictionary *attrs = [HEMMarkdown attributesForTimelineTimeLabelsText][@(PARA)];

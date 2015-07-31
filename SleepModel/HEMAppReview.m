@@ -41,7 +41,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
             && [self meetsMinimumRequiredTimelineViews]
             && [self isWithinSystemAlertThreshold];
         
-        if (meetsInitialRequirements) {
+        if (!meetsInitialRequirements) {
             [self hasSenseAndPillPaired:^(BOOL hasPairedDevices) {
                 HEMAppReviewQuestion* question = nil;
                 if (hasPairedDevices) {
@@ -128,7 +128,7 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 
 + (HEMAppReviewQuestion*)nextQuestionForAnswer:(HEMAppReviewAnswer*)answer {
     if ([answer action] != HEMAppReviewAnswerActionEnjoySense
-        || [answer action] != HEMAppReviewAnswerActionDoNotEnjoySense) {
+        && [answer action] != HEMAppReviewAnswerActionDoNotEnjoySense) {
         return nil;
     }
     

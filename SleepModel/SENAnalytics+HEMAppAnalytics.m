@@ -179,14 +179,13 @@ NSString* const HEMAnalyticsEventSysAlertActionNow = @"now";
 // app review
 NSString* const HEMAnalyticsEventAppReviewShown = @"App review shown";
 NSString* const HEMAnalyticsEventAppReviewStart = @"App review start";
-NSString* const HEMAnalyticsEventAppReviewGood = @"Enjoying Sense yes";
-NSString* const HEMAnalyticsEventAppReviewBad = @"Enjoying Sense no";
-NSString* const HEMAnalyticsEventAppReviewHelp = @"Enjoying Sense help";
-NSString* const HEMAnalyticsEventAppReviewRateYes = @"Rate app yes";
-NSString* const HEMAnalyticsEventAppReviewRateNo = @"Rate app no";
-NSString* const HEMAnalyticsEventAppReviewRateNoAsk = @"Rate app don't ask";
-NSString* const HEMAnalyticsEventAppReviewFeedbackYes = @"App feedback yes";
-NSString* const HEMAnalyticsEventAppReviewFeedbackNo = @"App feedback no";
+NSString* const HEMAnalyticsEventAppReviewEnjoySense = @"Enjoy Sense";
+NSString* const HEMAnalyticsEventAppReviewDoNotEnjoySense = @"Do not enjoy Sense";
+NSString* const HEMAnalyticsEventAppReviewHelp = @"Help from app review";
+NSString* const HEMAnalyticsEventAppReviewRate = @"Rate app";
+NSString* const HEMAnalyticsEventAppReviewRateNoAsk = @"Do not ask to rate app again";
+NSString* const HEMAnalyticsEventAppReviewFeedback = @"Feedback from app review";
+NSString* const HEMAnalyticsEventAppReviewDone = @"App review completed with no action";
 NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
 
 // internal use only

@@ -69,6 +69,17 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
 }
 
 - (void)nextQuestion {
+    switch ([[self selectedAnswer] action]) {
+        case HEMAppReviewAnswerActionEnjoySense:
+            [SENAnalytics track:HEMAnalyticsEventAppReviewEnjoySense];
+            break;
+        case HEMAppReviewAnswerActionDoNotEnjoySense:
+            [SENAnalytics track:HEMAnalyticsEventAppReviewDoNotEnjoySense];
+            break;
+        default:
+            break;
+    }
+    
     HEMAppReviewQuestion* next = [[self currentReviewQuestion] nextQuestionForAnswer:[self selectedAnswer]];
     [self setCurrentReviewQuestion:next];
 }
@@ -81,6 +92,7 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
  */
 - (BOOL)skipQuestion {
     [HEMAppReview markAppReviewPromptCompleted];
+    [SENAnalytics track:HEMAnalyticsEventAppReviewSkip];
     [self setSelectedAnswer:nil];
     return NO;
 }
@@ -88,7 +100,8 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
 - (BOOL)selectAnswerAtIndexPath:(NSIndexPath*)indexPath {
     HEMAppReviewAnswer* answer = [self answerAtIndexPath:indexPath];
     [self setSelectedAnswer:answer];
-    return [answer action] == HEMAppReviewAnswerActionNextQuestion;
+    return [answer action] == HEMAppReviewAnswerActionEnjoySense ||
+           [answer action] == HEMAppReviewAnswerActionDoNotEnjoySense;
 }
 
 /**
@@ -124,12 +137,12 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
         }
         case HEMAppReviewAnswerActionRateTheApp: {
             [self listenToForAppComingBackToForeground];
-            [SENAnalytics track:HEMAnalyticsEventAppReviewRateYes];
+            [SENAnalytics track:HEMAnalyticsEventAppReviewRate];
             [HEMAppReview rateApp];
             return YES;
         }
         case HEMAppReviewAnswerActionSendFeedback: {
-            [SENAnalytics track:HEMAnalyticsEventAppReviewFeedbackYes];
+            [SENAnalytics track:HEMAnalyticsEventAppReviewFeedback];
             [self listenToTicketCreationEvents];
             [[HEMZendeskService sharedService] configureRequestWithTopic:HEMAppReviewFeedbackTopic completion:^{
                 [ZDKRequests showRequestCreationWithNavController:[controller navigationController]];
@@ -142,6 +155,7 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
             return NO;
         }
         case HEMAppReviewAnswerActionDone: {
+            [SENAnalytics track:HEMAnalyticsEventAppReviewDone];
             return NO;
         }
         default:

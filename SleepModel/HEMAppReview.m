@@ -127,33 +127,23 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 }
 
 + (HEMAppReviewQuestion*)nextQuestionForAnswer:(HEMAppReviewAnswer*)answer {
-    if ([answer action] != HEMAppReviewAnswerActionNextQuestion) {
+    if ([answer action] != HEMAppReviewAnswerActionEnjoySense
+        || [answer action] != HEMAppReviewAnswerActionDoNotEnjoySense) {
         return nil;
     }
     
-    NSString* firstQuestion = NSLocalizedString(@"app-review.question.1", nil);
-    NSNumber* firtQuestionId = [HEMAppReviewQuestion questionIdForText:firstQuestion];
+    NSString* nextQuestion = nil;
     
-    HEMAppReviewQuestion* question = nil;
-    
-    if ([[answer questionId] isEqualToNumber:firtQuestionId]) {
-        NSString* answer1 = NSLocalizedString(@"app-review.question.answer.love-it", nil);
-        NSString* answer2 = NSLocalizedString(@"app-review.question.answer.not-really", nil);
-        
-        NSString* nextQuestion = nil;
-        
-        if ([[answer answer] isEqualToString:answer1]) {
-            nextQuestion = NSLocalizedString(@"app-review.question.2", nil);
-        } else if ([[answer answer] isEqualToString:answer2]) {
-            nextQuestion = NSLocalizedString(@"app-review.question.3", nil);
-        }
-
-        NSArray* nextAnswers = [self answersForQuestion:nextQuestion];
-        question = [[HEMAppReviewQuestion alloc] initQuestion:nextQuestion
-                                                      choices:nextAnswers
-                                         conditionalQuestions:nil];
-        
+    if ([answer action] == HEMAppReviewAnswerActionEnjoySense) {
+        nextQuestion = NSLocalizedString(@"app-review.question.2", nil);
+    } else {
+        nextQuestion = NSLocalizedString(@"app-review.question.3", nil);
     }
+    
+    NSArray* nextAnswers = [self answersForQuestion:nextQuestion];
+    HEMAppReviewQuestion* question = [[HEMAppReviewQuestion alloc] initQuestion:nextQuestion
+                                                                        choices:nextAnswers
+                                                           conditionalQuestions:nil];
     
     return question;
 }
@@ -180,10 +170,10 @@ NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
     
     HEMAppReviewAnswer* loveItAnswer = [[HEMAppReviewAnswer alloc] initWithAnswer:answer1
                                                                        questionId:questionId
-                                                                           action:HEMAppReviewAnswerActionNextQuestion];
+                                                                           action:HEMAppReviewAnswerActionEnjoySense];
     HEMAppReviewAnswer* notReallyAnswer = [[HEMAppReviewAnswer alloc] initWithAnswer:answer2
                                                                           questionId:questionId
-                                                                              action:HEMAppReviewAnswerActionNextQuestion];
+                                                                              action:HEMAppReviewAnswerActionDoNotEnjoySense];
     HEMAppReviewAnswer* needHelp = [[HEMAppReviewAnswer alloc] initWithAnswer:answer3
                                                                    questionId:questionId
                                                                        action:HEMAppReviewAnswerActionOpenSupport];

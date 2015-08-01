@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.16
+
+New:
+
+* Added Pill Color explanation card in device settings
+* App review prompt and app usage instrumentation
+* Audio playback UI in timeline
+
+Fixes:
+
+* device warning about sense not connected to internet will no longer show if app was never able to connect to Sense over BLE to begin with
+* timeline timestamps font change
+
 ## 1.1.1.5
 
 New:

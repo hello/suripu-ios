@@ -54,6 +54,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic, weak) UIButton *playingButton;
 @property (nonatomic, strong) NSIndexPath *playingIndexPath;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) NSTimer *playbackProgressTimer;
 @end
 
@@ -65,6 +66,8 @@ static CGFloat const HEMSleepSummaryCellHeight = 298.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
+static CGFloat const HEMSleepSegmentPopupAnimationDuration = 0.5f;
+static CGFloat const HEMPopupAnimationDistance = 8.0f;
 static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
@@ -519,39 +522,79 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
-    CGFloat const HEMPopupDismissDelay = 1.75f;
-    CGFloat const HEMPopupAnimationDistance = 8.f;
-    CGFloat const HEMPopupSpacingDistance = 8.f;
     if ([self.collectionView isDecelerating])
         return;
-    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
-    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-    CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat popupHeight = floorf([self.popupView intrinsicContentSize].height);
-    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - popupHeight - HEMPopupSpacingDistance);
+
+    [self setSelectedIndexPath:indexPath];
+    
+    CGFloat top = [self topOfSelectedTimelineSleepSegment];
     [self.popupView showPointer:top > 0];
-    self.popupViewTop.constant = top - HEMPopupAnimationDistance;
+    self.popupViewTop.constant = top + HEMPopupAnimationDistance;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];
     self.popupViewTop.constant = top;
     [self.popupView setNeedsUpdateConstraints];
     self.popupView.alpha = 0;
     self.popupView.hidden = NO;
-    [UIView animateWithDuration:0.3f
+    self.popupMaskView.alpha = 0;
+    self.popupMaskView.hidden = NO;
+    [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
                      animations:^{
                        [self emphasizeCellAtIndexPath:indexPath];
                        [self.popupView layoutIfNeeded];
                        self.popupView.alpha = 1;
-                       [UIView animateWithDuration:0.15f
-                                             delay:HEMPopupDismissDelay
-                                           options:0
-                                        animations:^{
-                                          self.popupView.alpha = 0;
-                                          self.popupMaskView.alpha = 0;
-                                        }
-                                        completion:NULL];
+                     }
+                     completion:^(BOOL finished) {
+                         [self dismissTimelineSegmentPopup:YES];
                      }];
+}
+
+- (CGFloat)topOfSelectedTimelineSleepSegment {
+    CGFloat const HEMPopupSpacingDistance = 8.f;
+    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:[self selectedIndexPath]];
+    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:[self selectedIndexPath]];
+    CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
+    CGFloat popupHeight = floorf([self.popupView intrinsicContentSize].height);
+    return MAX(0, CGRectGetMinY(cellLocation) - popupHeight - HEMPopupSpacingDistance);
+}
+
+- (void)dismissTimelineSegmentPopup:(BOOL)animated {
+    if (![self selectedIndexPath]) {
+        return;
+    }
+    
+    self.popupViewTop.constant = [self topOfSelectedTimelineSleepSegment] + HEMPopupAnimationDistance;
+    void(^animations)(void) = ^{
+        if ([self selectedIndexPath]) {
+            self.popupView.alpha = 0;
+            self.popupMaskView.alpha = 0;
+            [self.popupView layoutIfNeeded];
+        }
+    };
+    
+    void(^completion)(BOOL finish) = ^(BOOL finished) {
+        [self setSelectedIndexPath:nil];
+        // remove all animations in case the animation is running already, with
+        // a delay, which would cause problems if dimissing the timeline without
+        // animation was reqeusted before
+        [self.popupView.layer removeAllAnimations];
+        [self.popupMaskView.layer removeAllAnimations];
+        self.popupView.hidden = YES;
+        self.popupMaskView.hidden = YES;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
+                              delay:2.0f
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:animations
+                         completion:completion];
+    } else {
+        animations();
+        completion(YES);
+    }
+
 }
 
 - (void)emphasizeCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -655,6 +698,11 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)didTap {
+    if ([self selectedIndexPath]) {
+        [self dismissTimelineSegmentPopup:NO];
+        return;
+    }
+    
     CGPoint location = [self.tapGestureRecognizer locationInView:self.view];
     CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
     NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
@@ -727,10 +775,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.containerViewController showAlarmButton:NO];
-    if (![self.popupView isHidden]) {
-        self.popupView.hidden = YES;
-        self.popupMaskView.hidden = YES;
-    }
+    [self dismissTimelineSegmentPopup:NO];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -756,9 +801,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
     self.collectionView.bounces = yOffset > 0;
-    if (![self.popupView isHidden]) {
-        self.popupView.hidden = YES;
-    }
+    [self dismissTimelineSegmentPopup:NO];
 }
 
 #pragma mark - UICollectionViewDelegate

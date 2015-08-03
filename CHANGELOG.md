@@ -1,6 +1,16 @@
 # Changelog
 
-## 1.1.16
+## 1.1.1.7
+
+New:
+
+* Updated animation for timeline sleep depth popup
+
+Fixes:
+
+* Fixed bug where sleep depth popup mask remains while scrolling
+
+## 1.1.1.6
 
 New:
 

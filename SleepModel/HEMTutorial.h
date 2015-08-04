@@ -39,6 +39,8 @@
 
 + (void)showTutorialForSensors;
 
++ (void)showTutorialForPillColorIfNeeded;
+
 /**
  *  Present the tutorial for a particular sensor if not previously viewed
  *

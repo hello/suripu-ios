@@ -7,7 +7,7 @@
 //
 
 #import "HEMSingleResponseCell.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 
 @implementation HEMSingleResponseCell
@@ -17,7 +17,7 @@
     
     UIView* selectedView = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
     [selectedView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [selectedView setBackgroundColor:[HelloStyleKit questionAnswerSelectedBgColor]];
+    [selectedView setBackgroundColor:[UIColor questionAnswerSelectedBgColor]];
     [self setSelectedBackgroundView:selectedView];
 }
 

@@ -79,7 +79,9 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
 - (void)setZendeskIdentity {
     void(^setIdentity)(NSString* email, NSString* name) = ^(NSString* email, NSString* name) {
         ZDKAnonymousIdentity* identity = [ZDKAnonymousIdentity new];
-        [identity setExternalId:[SENAuthorizationService accountIdOfAuthorizedUser]];
+        // do not set the external id using our account id.  Setting external id
+        // somehow prevents user from using two different devices for the same
+        // Sense account to submit tickets ...
         if (email) {
             [identity setEmail:email];
         }
@@ -164,6 +166,26 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
         ZDKCustomField* topicField = [[ZDKCustomField alloc] initWithFieldId:topicId andValue:topic];
         [[ZDKConfig instance] setCustomTicketFields:@[topicField]];
         
+        // always use the default ticket subject
+        [requestCreationConfig setSubject:[self defaultTicketSubject]];
+        
+        if (completion) {
+            completion ();
+        }
+        
+    }];
+}
+
+- (void)configureRequestWithSubject:(NSString*)subject completion:(void(^)(void))completion {
+    if (!subject) {
+        if (completion) {
+            completion ();
+        }
+        return;
+    }
+    
+    [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
+        [requestCreationConfig setSubject:subject];
         if (completion) {
             completion ();
         }

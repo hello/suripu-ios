@@ -13,6 +13,7 @@ static NSTimeInterval const HEMURLImageRequestDefaultTimeout = 30.0f;
 @interface HEMURLImageView()
 
 @property (nonatomic, strong) AFHTTPRequestOperation* urlOperation;
+@property (nonatomic, copy)   NSString* currentImageURL;
 
 @end
 
@@ -30,9 +31,24 @@ static NSTimeInterval const HEMURLImageRequestDefaultTimeout = 30.0f;
     [self setImageWithURL:url withTimeout:HEMURLImageRequestDefaultTimeout];
 }
 
+- (void)setImage:(UIImage *)image {
+    // if caller is setting an image directly, without a url, then clear it
+    [self setCurrentImageURL:nil];
+    [super setImage:image];
+}
+
 - (void)setImageWithURL:(NSString *)url withTimeout:(NSTimeInterval)timeout {
     if ([url length] == 0) return;
     
+    if ([[self currentImageURL] isEqualToString:url] && [self image]) {
+        DDLogVerbose(@"image shown matches that of the current image url, skipping download");
+        return;
+    }
+    
+    // clear it, in case something is lingering and download takes a little bit
+    // of time.  This will prevent it from showing a previous image if one was
+    // set previously
+    [self setImage:nil];
     [self cancelImageDownload];
     
     NSURL* imageURL = [NSURL URLWithString:url];
@@ -45,7 +61,9 @@ static NSTimeInterval const HEMURLImageRequestDefaultTimeout = 30.0f;
     
     __weak typeof(self) weakSelf = self;
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, UIImage* image) {
-        [weakSelf setImage:image];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setImage:image];
+        [strongSelf setCurrentImageURL:url];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // not sure what design wants to show in this case, but i have asked
         // and they said not to worry about it for now and just don't show

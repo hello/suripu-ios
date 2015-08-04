@@ -1,8 +1,8 @@
 
 #import <SenseKit/SenseKit.h>
+#import <AVFoundation/AVAudioPlayer.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
-#import "HelloStyleKit.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMAudioCache.h"
@@ -13,6 +13,7 @@
 #import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
 #import "HEMPopupView.h"
+#import "HEMPopupMaskView.h"
 #import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -28,13 +29,15 @@
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
+#import "HEMAppUsage.h"
+#import "HelloStyleKit.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
 CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
-                                           HEMSleepGraphActionDelegate>
+                                           HEMSleepGraphActionDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
@@ -42,22 +45,29 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
+@property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
 @property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
-
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic, weak) UIButton *playingButton;
+@property (nonatomic, strong) NSIndexPath *playingIndexPath;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, strong) NSTimer *playbackProgressTimer;
 @end
 
 @implementation HEMSleepGraphViewController
 
 static NSString* const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
-static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
+static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 0.5f;
 static CGFloat const HEMSleepSummaryCellHeight = 298.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
+static CGFloat const HEMSleepSegmentPopupAnimationDuration = 0.5f;
+static CGFloat const HEMPopupAnimationDistance = 8.0f;
 static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
@@ -89,6 +99,11 @@ static BOOL hasLoadedBefore = NO;
     [self setVisible:YES];
     [self showTutorial];
     [self checkIfInitialAnimationNeeded];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self clearPlayerState];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -182,6 +197,8 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)dealloc {
     _dataSource = nil;
+    [_audioPlayer stop];
+    [_playbackProgressTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -229,6 +246,100 @@ static BOOL hasLoadedBefore = NO;
     return !hasLoadedBefore;
 }
 
+- (void)toggleAudio:(UIButton *)button {
+    if (button == self.playingButton) {
+        if ([self.audioPlayer isPlaying]) {
+            [self.playbackProgressTimer invalidate];
+            [self.audioPlayer pause];
+            [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
+        } else {
+            [self.audioPlayer play];
+            [self monitorPlaybackProgress];
+            [self.playingButton setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+        }
+    } else {
+        [self clearPlayerState];
+        [self playAudioWithButton:button];
+    }
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    [self clearPlayerState];
+}
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
+    [self clearPlayerState];
+}
+
+- (void)playAudioWithButton:(UIButton *)button {
+    NSIndexPath *indexPath = [self indexPathForView:button];
+    if (!indexPath)
+        return;
+    if (![self loadAudioForIndexPath:indexPath])
+        return;
+    [self.audioPlayer play];
+    [self monitorPlaybackProgress];
+    [button setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+    self.playingButton = button;
+}
+
+- (BOOL)loadAudioForIndexPath:(NSIndexPath *)indexPath {
+    NSError *error = nil;
+    NSData *data = [self.dataSource audioDataForIndexPath:indexPath];
+    if (!data)
+        return NO;
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithData:data error:&error];
+    if (error != nil)
+        return NO;
+
+    self.playingIndexPath = indexPath;
+    return YES;
+}
+
+- (void)monitorPlaybackProgress {
+    [self.playbackProgressTimer invalidate];
+    self.playbackProgressTimer = [NSTimer timerWithTimeInterval:1
+                                                         target:self
+                                                       selector:@selector(updatePlaybackProgress)
+                                                       userInfo:nil
+                                                        repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.playbackProgressTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)clearPlayerState {
+    [self.audioPlayer stop];
+    [self updatePlaybackProgress];
+    self.playingIndexPath = nil;
+    [self.playbackProgressTimer invalidate];
+    self.playbackProgressTimer = nil;
+    [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
+    self.playingButton = nil;
+    self.audioPlayer = nil;
+}
+
+- (void)updatePlaybackProgress {
+    if (!self.playingIndexPath)
+        return;
+    CGFloat progress = 0;
+    if ([self.audioPlayer isPlaying])
+        progress = self.audioPlayer.currentTime / self.audioPlayer.duration;
+
+    HEMSleepEventCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:self.playingIndexPath];
+    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]])
+        [cell updateAudioDisplayProgressWithRatio:progress];
+}
+
+- (NSIndexPath *)indexPathForView:(UIView *)view {
+    UIView *superview = view;
+    while (superview != nil) {
+        if ([superview isKindOfClass:[UICollectionViewCell class]]) {
+            return [self.collectionView indexPathForCell:(id)superview];
+        }
+        superview = [superview superview];
+    }
+    return nil;
+}
+
 #pragma mark Event Info
 
 - (void)processFeedbackResponse:(id)updatedTimeline
@@ -237,8 +348,7 @@ static BOOL hasLoadedBefore = NO;
                 analyticsAction:(NSString*)analyticsAction {
     
     if (error) {
-        [SENAnalytics trackError:error
-                   withEventName:kHEMAnalyticsEventError];
+        [SENAnalytics trackError:error];
     } else {
         NSString* segmentType = SENTimelineSegmentTypeNameFromType(segment.type);
         NSDictionary* props = @{kHEMAnalyticsEventPropType : segmentType ?: @"undefined"};
@@ -396,12 +506,6 @@ static BOOL hasLoadedBefore = NO;
     [root presentViewController:sheet animated:NO completion:nil];
 }
 
-- (BOOL)canAdjustEventWithType:(NSString *)eventType {
-    NSArray *adjustableTypes =
-        @[ HEMSleepEventTypeWakeUp, HEMSleepEventTypeFallAsleep, HEMSleepEventTypeInBed, HEMSleepEventTypeOutOfBed ];
-    return [adjustableTypes containsObject:eventType];
-}
-
 - (void)feedbackFailedToSend:(NSNotification *)note {
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -418,32 +522,96 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
-    CGFloat const HEMPopupDismissDelay = 1.75f;
-    CGFloat const HEMPopupAnimationDistance = 8.f;
-    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
-    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-    CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height));
-    self.popupViewTop.constant = top - HEMPopupAnimationDistance;
+    if ([self.collectionView isDecelerating])
+        return;
+
+    [self setSelectedIndexPath:indexPath];
+    
+    CGFloat top = [self topOfSelectedTimelineSleepSegment];
+    [self.popupView showPointer:top > 0];
+    self.popupViewTop.constant = top + HEMPopupAnimationDistance;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];
     self.popupViewTop.constant = top;
     [self.popupView setNeedsUpdateConstraints];
     self.popupView.alpha = 0;
     self.popupView.hidden = NO;
-    [UIView animateWithDuration:0.3f
+    self.popupMaskView.alpha = 0;
+    self.popupMaskView.hidden = NO;
+    [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
                      animations:^{
+                       [self emphasizeCellAtIndexPath:indexPath];
                        [self.popupView layoutIfNeeded];
                        self.popupView.alpha = 1;
-                       [UIView animateWithDuration:0.15f
-                                             delay:HEMPopupDismissDelay
-                                           options:0
-                                        animations:^{
-                                          self.popupView.alpha = 0;
-                                        }
-                                        completion:NULL];
+                     }
+                     completion:^(BOOL finished) {
+                         [self dismissTimelineSegmentPopup:YES];
                      }];
+}
+
+- (CGFloat)topOfSelectedTimelineSleepSegment {
+    CGFloat const HEMPopupSpacingDistance = 8.f;
+    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:[self selectedIndexPath]];
+    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:[self selectedIndexPath]];
+    CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
+    CGFloat popupHeight = floorf([self.popupView intrinsicContentSize].height);
+    return MAX(0, CGRectGetMinY(cellLocation) - popupHeight - HEMPopupSpacingDistance);
+}
+
+- (void)dismissTimelineSegmentPopup:(BOOL)animated {
+    if (![self selectedIndexPath]) {
+        return;
+    }
+    
+    self.popupViewTop.constant = [self topOfSelectedTimelineSleepSegment] + HEMPopupAnimationDistance;
+    void(^animations)(void) = ^{
+        if ([self selectedIndexPath]) {
+            self.popupView.alpha = 0;
+            self.popupMaskView.alpha = 0;
+            [self.popupView layoutIfNeeded];
+        }
+    };
+    
+    void(^completion)(BOOL finish) = ^(BOOL finished) {
+        [self setSelectedIndexPath:nil];
+        // remove all animations in case the animation is running already, with
+        // a delay, which would cause problems if dimissing the timeline without
+        // animation was reqeusted before
+        [self.popupView.layer removeAllAnimations];
+        [self.popupMaskView.layer removeAllAnimations];
+        self.popupView.hidden = YES;
+        self.popupMaskView.hidden = YES;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
+                              delay:2.0f
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:animations
+                         completion:completion];
+    } else {
+        animations();
+        completion(YES);
+    }
+
+}
+
+- (void)emphasizeCellAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
+        return;
+    CGRect maskArea = CGRectZero;
+    HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+    maskArea = [cell convertRect:[cell fillArea] toView:self.view];
+    if (indexPath.item < [self.dataSource numberOfSleepSegments] - 1) {
+        NSIndexPath *prefillPath = [NSIndexPath indexPathForItem:indexPath.item + 1 inSection:indexPath.section];
+        HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:prefillPath];
+        CGRect preFillArea = [cell convertRect:[cell preFillArea] toView:self.view];
+        maskArea.size.height += CGRectGetHeight(preFillArea);
+    }
+    [self.popupMaskView showUnderlyingViewRect:maskArea];
+    self.popupMaskView.alpha = 0.7f;
+    self.popupMaskView.hidden = NO;
 }
 
 - (NSString *)summaryPopupTextForSegment:(SENTimelineSegment *)segment {
@@ -530,6 +698,11 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)didTap {
+    if ([self selectedIndexPath]) {
+        [self dismissTimelineSegmentPopup:NO];
+        return;
+    }
+    
     CGPoint location = [self.tapGestureRecognizer locationInView:self.view];
     CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
     NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
@@ -602,9 +775,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.containerViewController showAlarmButton:NO];
-    if (![self.popupView isHidden]) {
-        self.popupView.hidden = YES;
-    }
+    [self dismissTimelineSegmentPopup:NO];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -630,6 +801,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
     self.collectionView.bounces = yOffset > 0;
+    [self dismissTimelineSegmentPopup:NO];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -667,10 +839,24 @@ static BOOL hasLoadedBefore = NO;
     [self.dataSource reloadData:^{
       __strong typeof(weakSelf) strongSelf = weakSelf;
       strongSelf.loadingData = NO;
+        
+      [strongSelf updateAppUsageIfNeeded];
+        
       if ([strongSelf isVisible]) {
           [strongSelf checkIfInitialAnimationNeeded];
       }
     }];
+}
+
+- (void)updateAppUsageIfNeeded {
+    if ([self.dataSource.sleepResult.score integerValue] > 0) {
+        HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        NSDate* updatedAtMidnight = [[appUsage updated] dateAtMidnight];
+        if (!updatedAtMidnight
+            || [updatedAtMidnight compare:self.dateForNightOfSleep] == NSOrderedAscending) {
+            [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        }
+    }
 }
 
 - (void)checkIfInitialAnimationNeeded {
@@ -707,7 +893,9 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+        self.popupMaskView.hidden = YES;
         [self activateActionSheetAtIndexPath:indexPath];
+        [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     }
 }
 
@@ -717,6 +905,7 @@ static BOOL hasLoadedBefore = NO;
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMMinimumEventSpacing = 6.f;
+    CGFloat const HEMSoundHeightOffset = 26.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
@@ -730,9 +919,13 @@ static BOOL hasLoadedBefore = NO;
                 NSAttributedString *message =
                     [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
                 NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
-                CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time];
+                BOOL hasSound = [self.dataSource segmentForSoundExistsAtIndexPath:indexPath];
+                CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:hasSound];
                 CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
                                      minSize.height + HEMMinimumEventSpacing);
+                if (hasSound) {
+                    height += HEMSoundHeightOffset;
+                }
                 return CGSizeMake(width, height);
             } else {
                 return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));

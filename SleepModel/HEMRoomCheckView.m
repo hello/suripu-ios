@@ -12,7 +12,7 @@
 
 #import "HEMRoomCheckView.h"
 #import "HEMActivityIndicatorView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMAnimationUtils.h"
 #import "HEMSpinnerView.h"
 #import "HEMMarkdown.h"

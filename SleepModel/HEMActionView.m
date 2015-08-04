@@ -9,6 +9,7 @@
 #import "HEMActionView.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMActionViewHorzPadding = 30.0f;
 static CGFloat const HEMActionViewTopPadding = 14.0f;
@@ -121,7 +122,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 - (void)addTitleLabelWithText:(NSString*)title {
     UILabel* label = [[UILabel alloc] initWithFrame:[self titleFrame]];
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextColor:[HelloStyleKit actionViewTitleTextColor]];
+    [label setTextColor:[UIColor actionViewTitleTextColor]];
     [label setFont:[UIFont actionViewTitleFont]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
@@ -171,12 +172,12 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     [container setTranslatesAutoresizingMaskIntoConstraints:YES];
     
     NSString* cancelText = [NSLocalizedString(@"actions.skip", nil) uppercaseString];
-    UIColor * cancelColor = [HelloStyleKit actionViewCancelButtonTextColor];
+    UIColor * cancelColor = [UIColor actionViewCancelButtonTextColor];
     UIButton* cancelButton = [self actionButtonWithText:cancelText color:cancelColor andXOrigin:0.0f];
     [container addSubview:cancelButton];
     
     NSString* okText = [NSLocalizedString(@"actions.ok", nil) uppercaseString];
-    UIColor* okColor = [HelloStyleKit senseBlueColor];
+    UIColor* okColor = [UIColor tintColor];
     CGFloat x = CGRectGetMaxX([cancelButton frame])+HEMActionButtonDividerWidth;
     UIButton* okButton = [self actionButtonWithText:okText color:okColor andXOrigin:x];
     [container addSubview:okButton];
@@ -208,7 +209,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     if (![[self okButton] isHidden]) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
-        CGContextSetStrokeColorWithColor(context, [[HelloStyleKit buttonDividerColor] CGColor]);
+        CGContextSetStrokeColorWithColor(context, [[UIColor buttonDividerColor] CGColor]);
         CGContextSetLineWidth(context, HEMActionButtonDividerWidth);
         
         // add a line at the middle of the view, at the bottom where the button container is
@@ -229,7 +230,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     cancelFrame.size.width += okWidth;
     [[self cancelButton] setFrame:cancelFrame];
     
-    [[self cancelButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    [[self cancelButton] setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     
     [[self okButton] setHidden:YES];
     

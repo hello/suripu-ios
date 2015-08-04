@@ -86,12 +86,7 @@
     [dialogVC setHelpPage:helpPage];
     [dialogVC setDialogImage:image];
     [dialogVC setViewToShowThrough:seeThroughView];
-    
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        // don't weak reference this since controller must remain until it has
-        // been dismissed
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+    [dialogVC showFrom:self onDefaultActionSelected:nil];
 }
 
 - (void)dealloc {

@@ -1,6 +1,4 @@
 
-#import <UIKit/UIKit.h>
-
 #import "HEMAppDelegate.h"
 
 int main(int argc, char * argv[])

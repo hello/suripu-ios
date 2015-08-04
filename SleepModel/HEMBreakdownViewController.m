@@ -8,7 +8,7 @@
 #import <SenseKit/SenseKit.h>
 #import <AttributedMarkdown/markdown_peg.h>
 
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMBreakdownViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMMarkdown.h"
@@ -36,7 +36,7 @@
 
 @implementation HEMBreakdownViewController
 
-const CGFloat BreakdownCellItemHeight = 116.f;
+const CGFloat BreakdownCellItemHeight = 86.f;
 const CGFloat BreakdownCellSummaryBaseHeight = 80.f; // 40 top + bottom margins + 30 title +  10 spacing
 const CGFloat BreakdownDismissButtonBottom = 18.f;
 const CGFloat BreakdownDismissButtonHide = -40.f;
@@ -46,7 +46,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     if (self = [super initWithCoder:aDecoder]) {
         // use same tint as the tutorial dialogs
         _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow]
-                                .view blurredSnapshotWithTint:[HelloStyleKit tutorialBackgroundColor]];
+                                .view blurredSnapshotWithTint:[UIColor tutorialBackgroundColor]];
     }
     return self;
 }
@@ -55,7 +55,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     [super viewDidLoad];
     self.timestampFormatter = [NSDateFormatter new];
     self.timestampFormatter.dateFormat = [SENPreference timeFormat] == SENTimeFormat12Hour
-        ? @"h:mm" : @"H:mm";
+        ? @"h:mm" : @"HH:mm";
     self.meridiemFormatter = [NSDateFormatter new];
     self.meridiemFormatter.dateFormat = @"a";
     self.valueFormatter = [HEMSplitTextFormatter new];

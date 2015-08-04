@@ -78,12 +78,6 @@
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 6
 #define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 3
 
-// FDWaveformView
-#define COCOAPODS_POD_AVAILABLE_FDWaveformView
-#define COCOAPODS_VERSION_MAJOR_FDWaveformView 0
-#define COCOAPODS_VERSION_MINOR_FDWaveformView 2
-#define COCOAPODS_VERSION_PATCH_FDWaveformView 2
-
 // FXKeychain
 #define COCOAPODS_POD_AVAILABLE_FXKeychain
 #define COCOAPODS_VERSION_MAJOR_FXKeychain 1

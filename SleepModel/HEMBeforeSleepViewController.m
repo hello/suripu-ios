@@ -9,12 +9,10 @@
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
-#import "UIFont+HEMStyle.h"
-
 #import "HEMBeforeSleepViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "UIFont+HEMStyle.h"
 
@@ -94,7 +92,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     NSString* description = NSLocalizedString(localizedKey, nil);
     return [[NSAttributedString alloc] initWithString:description
                                            attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
-                                                        NSForegroundColorAttributeName : [HelloStyleKit onboardingDescriptionColor]}];
+                                                        NSForegroundColorAttributeName : [UIColor onboardingDescriptionColor]}];
 }
 
 
@@ -108,8 +106,8 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     [[self nextImageView] setImage:[self imageNameForScreen:2]];
     [[self nextImageView] setAlpha:0.0f];
     [[self dots] setNumberOfPages:HEMBeforeSleepNumberOfScreens];
-    [[self dots] setCurrentPageIndicatorTintColor:[HelloStyleKit senseBlueColor]];
-    [[self dots] setPageIndicatorTintColor:[HelloStyleKit pageControlTintColor]];
+    [[self dots] setCurrentPageIndicatorTintColor:[UIColor tintColor]];
+    [[self dots] setPageIndicatorTintColor:[UIColor pageControlTintColor]];
     [[self dots] setUserInteractionEnabled:NO];
     [[self dots] setCurrentPage:0];
 }
@@ -123,7 +121,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     [label setBackgroundColor:[scrollView backgroundColor]];
     [label setText:text];
     [label setFont:[UIFont onboardingTitleFont]];
-    [label setTextColor:[HelloStyleKit onboardingTitleColor]];
+    [label setTextColor:[UIColor onboardingTitleColor]];
     [label setNumberOfLines:0];
     
     CGRect labelFrame = [self frameForLabel:label withMaxWidth:maxWidth];

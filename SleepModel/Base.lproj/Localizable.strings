@@ -405,7 +405,6 @@
 "sleep-event.action.none.title" = "No actions available";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
-"sleep-event.time.24-hour.suffix" = ":00";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";
@@ -604,6 +603,9 @@
 "tutorial.sensor.particulates.title" = "Air quality";
 "tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";
 
+"tutorial.pill-color.title" = "Sleep Pill Color";
+"tutorial.pill-color.message" = "Each Sleep Pill paired with Sense is assigned a unique color — you can see which color yours is on this page. If you shake your Sleep Pill for a few seconds, Sense will glow the color assigned to your Sleep Pill. If you’re sharing Sense with a partner, this is also a great way to tell your Sleep Pills apart if they get mixed up.";
+
 // timezone
 "timezone.alert.message.use-local.format" = "Sense's time zone should be set based on the physical location of your Sense. Usually, that's the same as your phone's time zone. Your phone's current time zone is:  %@.";
 "timezone.suggestion.message" = "Your current time zone based on location of your iOS device.  Select the time zone that corresponds with Sense's location.";
@@ -615,3 +617,15 @@
 
 // handholding
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days";
+
+// app review questions
+"app-review.question.1" = "Are you enjoying the Sense app?";
+"app-review.question.2" = "Great. Would you mind leaving us a rating on the App Store?";
+"app-review.question.3" = "Sorry to hear that. Mind giving us some feedback?";
+"app-review.question.answer.love-it" = "Yes, I love it";
+"app-review.question.answer.not-really" = "Not really";
+"app-review.question.answer.help" = "I need help";
+"app-review.question.answer.sure" = "Sure";
+"app-review.question.answer.not-now" = "Not now";
+"app-review.question.answer.dont-ask-again" = "Don't ask again";
+"app-review.question.answer.no-thanks" = "No thanks";

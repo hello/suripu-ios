@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 #import "HEMTextCollectionViewCell.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 
@@ -67,7 +67,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
     [[self textLabel] setNumberOfLines:0];
     [[self textLabel] setBackgroundColor:[UIColor clearColor]];
     
-    [[self separator] setBackgroundColor:[HelloStyleKit separatorColor]];
+    [[self separator] setBackgroundColor:[UIColor separatorColor]];
 }
 
 - (void)prepareForReuse {

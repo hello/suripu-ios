@@ -18,7 +18,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMAlertViewController.h"
 #import "HEMLogUtils.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 static NSString* const HEMSupportContactEmail = @"beta-logs@hello.is";
 static NSString* const HEMSupportContactSubject = @"App Support Request";
@@ -122,14 +122,14 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
         [[SVModalWebViewController alloc] initWithAddress:urlString];
 
     UINavigationBar* navBar = [webViewController navigationBar];
-    [navBar setBarTintColor:[HelloStyleKit backViewTintColor]];
+    [navBar setBarTintColor:[UIColor backViewTintColor]];
     [navBar setTranslucent:NO];
     // show default shadow / divider
     [navBar setClipsToBounds:NO];
     [navBar setShadowImage:nil];
     
     UIToolbar* toolBar = [webViewController toolbar];
-    [toolBar setTintColor:[HelloStyleKit senseBlueColor]];
+    [toolBar setTintColor:[UIColor tintColor]];
     [toolBar setTranslucent:NO];
     
     [controller presentViewController:webViewController animated:YES completion:nil];

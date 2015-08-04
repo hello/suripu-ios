@@ -2,6 +2,7 @@
 #import "HEMAlarmAddButton.h"
 #import "HelloStyleKit.h"
 #import "UIView+HEMMotionEffects.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMAlarmAddButton
 
@@ -24,7 +25,7 @@ static CGFloat const HEMAlarmAddParallaxDepth = 3.f;
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[HelloStyleKit tintColor] setFill];
+    [[UIColor tintColor] setFill];
     CGContextFillEllipseInRect(ctx, rect);
     UIColor* color = [self colorForState];
     UIFont* font = [UIFont systemFontOfSize:24.f];

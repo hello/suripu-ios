@@ -3,7 +3,6 @@
 
 #import "HEMMiniSleepHistoryView.h"
 #import "UIColor+HEMStyle.h"
-#import "HelloStyleKit.h"
 
 @interface HEMMiniSleepHistoryView ()
 @property (nonatomic) NSTimeInterval secondsPerPoint;

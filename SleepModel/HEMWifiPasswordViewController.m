@@ -6,22 +6,20 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 #import <SenseKit/SENSenseManager.h>
-#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPITimeZone.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENSenseWiFiStatus.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMWifiUtils.h"
 #import "HEMSimpleLineTextField.h"
-#import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 
 typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepNone = 0,
@@ -68,7 +66,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         other = @"false";
         rssi = [[self endpoint] rssi];
     }
-    
+
     [self trackAnalyticsEvent:HEMAnalyticsEventWiFiPass
                          properties:@{kHEMAnalyticsEventPropWiFiOther :other,
                                       kHEMAnalyticsEventPropWiFiRSSI : @(rssi)}];
@@ -83,7 +81,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     } else { // default to WPA2
         [self setSecurityType:SENWifiEndpointSecurityTypeWpa2];
     }
-    
+
     [self setupSecurityPickerView];
     [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
 }
@@ -108,7 +106,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    
+
     CGRect pickerBounds = [[self securityPickerView] bounds];
     pickerBounds.size.width = CGRectGetWidth([[self view] bounds]);
     [[self securityPickerView] setBounds:pickerBounds];
@@ -127,12 +125,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     if (!enable) {
         [[self view] endEditing:NO];
     }
-    
+
     [[self ssidField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
     [[self continueButton] setEnabled:enable];
     [[self navigationItem] setHidesBackButton:!enable animated:YES];
-    
+
     if (enable) {
         [[self passwordField] becomeFirstResponder];
     }
@@ -150,7 +148,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && error != nil) {
             DDLogWarn(@"failed to set timezone on the server");
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         }
     }];
 }
@@ -189,17 +187,17 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     CGRect pickerFrame = CGRectZero;
     pickerFrame.size.width = CGRectGetWidth([[self view] bounds]);
     pickerFrame.size.height = kHEMWifiSecurityPickerDefaultHeight;
-    
+
     UIPickerView* securityPicker = [[UIPickerView alloc] initWithFrame:pickerFrame];
     [securityPicker setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [securityPicker setTranslatesAutoresizingMaskIntoConstraints:YES];
     [securityPicker setBackgroundColor:[UIColor whiteColor]];
     [securityPicker setDelegate:self];
     [securityPicker setDataSource:self];
-    
+
     [self setSecurityPickerView:securityPicker];
     [[self securityField] setInputView:securityPicker];
-    
+
     [self matchPickerToKeyboardHeight];
 }
 
@@ -215,7 +213,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                     usingBlock:^(NSNotification *note) {
                         __strong typeof(weakSelf) strongSelf = weakSelf;
                         [[NSNotificationCenter defaultCenter] removeObserver:observer];
-                        
+
                         if (strongSelf) {
                             NSDictionary* info  =[note userInfo];
                             CGRect keyboardFrame = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
@@ -299,7 +297,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [[self securityField] setRightView:selectedTypeLabel];
         [[self securityField] setRightViewMode:UITextFieldViewModeAlways];
     }
-    
+
     [selectedTypeLabel setText:[self securityTypeTextForPickerRow:row]];
     [selectedTypeLabel sizeToFit];
     [self setSecurityType:[self securityTypeForPickerRow:row]];
@@ -344,7 +342,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 renableControls:(BOOL)enable
                         success:(BOOL)success
                      completion:(void(^)(void))completion {
-    
+
     __weak typeof(self) weakSelf = self;
     void(^stopActivity)(void) = ^{
         [weakSelf stopActivityWithMessage:message success:success completion:^{
@@ -386,7 +384,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (void)setupWiFi:(NSString*)ssid
          password:(NSString*)password
      securityType:(SENWifiEndpointSecurityType)type {
-    
+
     NSDictionary* properties = @{
         kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type],
         kHEMAnalyticsEventPropSSID : ssid ?: @"undefined",
@@ -394,20 +392,25 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     };
     [self trackAnalyticsEvent:HEMAnalyticsEventWiFiSubmit
                          properties:properties];
-    
+
     __weak typeof(self) weakSelf = self;
-    SENSenseManager* manager = [self manager];
-    [manager setWiFi:ssid password:password securityType:type success:^(id response) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service setWiFi:ssid password:password securityType:type update:^(SENSenseWiFiStatus *status) {
+        NSDictionary* properties = @{HEMAnalyticsEventPropWiFiStatus : @([status state]),
+                                     HEMAnalyticsEventPropHttpCode : [status httpStatusCode] ?: @"",
+                                     HEMAnalyticsEventPropSocketCode : @([status socketErrorCode])};
+        [weakSelf trackAnalyticsEvent:HEMAnalyticsEventWiFiConnectionUpdate properties:properties];
+    } completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [HEMOnboardingUtils saveConfiguredSSID:ssid];
+        if (error) {
+            [strongSelf showSetWiFiError:error];
+            [SENAnalytics trackError:error];
+            return;
+        }
         [strongSelf setSsidConfigured:ssid];
         [strongSelf setStepFinished:HEMWiFiSetupStepConfigureWiFi];
         [strongSelf executeNextStep];
-    } failure:^(NSError *error) {
-        [weakSelf showSetWiFiError:error];
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
-
 }
 
 - (void)linkAccount {
@@ -416,22 +419,22 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [self executeNextStep];
         return;
     }
-    
+
     [self enableControls:NO];
     NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
     [self updateActivityText:message completion:nil];
-    
-    NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [self manager];
-    
+
     __weak typeof(self) weakSelf = self;
-    [manager linkAccount:accessToken success:^(id response) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service linkCurrentAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setStepFinished:HEMWiFiSetupStepLinkAccount];
-        [strongSelf executeNextStep];
-    } failure:^(NSError *error) {
-        [weakSelf showLinkAccountError:error];
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        if (!error) {
+            [strongSelf setStepFinished:HEMWiFiSetupStepLinkAccount];
+            [strongSelf executeNextStep];
+        } else {
+            [weakSelf showLinkAccountError:error];
+            [SENAnalytics trackError:error];
+        }
     }];
 }
 
@@ -439,7 +442,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self enableControls:NO];
     NSString* message = NSLocalizedString(@"wifi.activity.setting-timezone", nil);
     [self updateActivityText:message completion:nil];
-    
+
     __weak typeof(self) weakSelf = self;
     [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -452,7 +455,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 NSString* msg = NSLocalizedString(@"wifi.error.time-zone-failed", nil);
                 NSString* title = NSLocalizedString(@"wifi.error.timezone-title", nil);
                 [strongSelf showErrorMessage:msg withTitle:title];
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [SENAnalytics trackError:error];
             }
 
         }
@@ -461,10 +464,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)forceSensorDataUpload {
     __weak typeof(self) weakSelf = self;
-    [[self manager] forceDataUpload:^(id response, NSError *error) {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service forceSensorDataUploadFromSense:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
             DDLogVerbose(@"failed to upload data %@", error);
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
         }
         [strongSelf setStepFinished:HEMWiFiSetupStepForceDataUpload];
         [strongSelf executeNextStep];
@@ -472,31 +477,25 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)finish {
-    // need to start querying for sensor data so that 1, user will see
-    // it as soon as onboarding is done and 2, later step will check
-    // sensor data
-    if (![self haveDelegates]) {
-        [[HEMOnboardingCache sharedCache] startPollingSensorData];
-    }
-    
     __weak typeof(self) weakSelf = self;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        [HEMOnboardingUtils notifyOfSensePairingChange:[strongSelf manager]];
-        
+
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        [service notifyOfSensePairingChange];
+
         if ([strongSelf delegate] != nil) {
-            [HEMOnboardingCache clearCache];
+            [[HEMOnboardingService sharedService] clear];
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
         } else if ([strongSelf sensePairDelegate] != nil) {
             [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:strongSelf];
         } else {
-            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+            [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
                                             sender:nil];
         }
     };
-    
+
     NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
     [self stopActivityWithMessage:msg renableControls:NO success:YES completion:proceed];
 }
@@ -538,7 +537,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             break;
         }
     }
-    
+
 }
 
 #pragma mark - UITextFieldDelegate
@@ -586,7 +585,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (void)showSetWiFiError:(NSError*)error {
     NSString* title = NSLocalizedString(@"wifi.error.title", nil);
     NSString* message = nil;
-    
+
     switch ([error code]) {
         case SENSenseManagerErrorCodeWifiNotInRange:
             if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
@@ -610,14 +609,14 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             message = NSLocalizedString(@"wifi.error.set-sense-general", nil);
             break;
     }
-    
+
     [self showErrorMessage:message withTitle:title];
 }
 
 - (void)showLinkAccountError:(NSError*)error {
     NSString* title = NSLocalizedString(@"wifi.error.link-account-title", nil);
     NSString* message = nil;
-    
+
     switch ([error code]) {
         case SENSenseManagerErrorCodeSenseNetworkError:
             message = NSLocalizedString(@"wifi.error.account-link-network-failed", nil);
@@ -629,7 +628,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             message = NSLocalizedString(@"wifi.error.account-link-message", nil);
             break;
     }
-    
+
     [self showErrorMessage:message withTitle:title];
 }
 

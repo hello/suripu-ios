@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "HEMTextFooterCollectionReusableView.h"
 
+extern NSString* const HEMDeviceErrorDomain;
+
 typedef NS_ENUM(NSUInteger, HEMDeviceWarning) {
     HEMDeviceWarningLongLastSeen = 1,
     HEMSenseWarningNoInternet = 2,

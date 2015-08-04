@@ -1,14 +1,11 @@
 
-#import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENAPIClient.h>
 #import <CocoaLumberjack/DDLog.h>
 
 #import "UIFont+HEMStyle.h"
 
 #import "HEMAuthenticationViewController.h"
 #import "HEMActionButton.h"
-#import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActivityCoverView.h"
 #import "HEMNotificationHandler.h"
@@ -42,7 +39,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 }
 
 - (void)configureForgotPassword {
-    [[self forgotPassButton] setTitleColor:[HelloStyleKit senseBlueColor]
+    [[self forgotPassButton] setTitleColor:[UIColor tintColor]
                                   forState:UIControlStateNormal];
     [[[self forgotPassButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self forgotPassButton] setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)
@@ -110,31 +107,33 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
     [self showActivity:^{
         [self setSigningIn:YES];
         
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        NSString* username = [[self usernameField] text];
+        NSString* password = [[self passwordField] text];
+        
         __weak typeof(self) weakSelf = self;
-        [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
+        [service authenticateUser:username pass:password retry:YES completion:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             [strongSelf setSigningIn:NO];
             
             if (error) {
                 [strongSelf stopActivity:^{
-                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                    [HEMOnboardingUtils showAlertForHTTPError:error
-                                                    withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
-                                                         from:strongSelf];
-                    return;
+                    [SENAnalytics trackError:error];
+                    
+                    NSString* title = NSLocalizedString(@"authorization.sign-in.failed.title", nil);
+                    [strongSelf showMessageDialog:[error localizedDescription] title:title];
                 }];
             } else {
                 [strongSelf letUserIntoApp];
                 [strongSelf stopActivity:nil];
             }
-            
         }];
     }];
 }
 
 - (void)letUserIntoApp {
-    [HEMAnalytics trackUserSession]; // update user session, since it maybe a different user now
+    [SENAnalytics trackUserSession]; // update user session, since it maybe a different user now
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     [[self view] endEditing:NO];

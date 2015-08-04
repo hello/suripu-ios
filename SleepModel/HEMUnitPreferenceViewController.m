@@ -12,7 +12,6 @@
 
 #import "HEMUnitPreferenceViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMChoiceViewController.h"
 

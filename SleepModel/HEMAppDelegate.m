@@ -9,7 +9,6 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSnazzBarController.h"
 #import "HEMAudioCache.h"
@@ -96,7 +95,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     if ([SENAuthorizationService isAuthorized]) {
         
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-            [HEMAnalytics trackUserSession]; // update user session data
+            [SENAnalytics trackUserSession]; // update user session data
         }];
         
         [self syncHealthKit];
@@ -108,6 +107,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
  * for the day, this will have no effect.
  */
 - (void)syncHealthKit {
+    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
+        DDLogVerbose(@"onboarding not complete, skipping healthkit");
+        return;
+    }
     [[SENServiceHealthKit sharedService] sync:^(NSError *error) {
         if (error != nil) {
             switch ([error code]) {
@@ -164,7 +167,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         DDLogVerbose(@"analytics enabled");
         [SENAnalytics configure:SENAnalyticsProviderNameMixpanel
                            with:@{kSENAnalyticsProviderToken : analyticsToken}];
-        [HEMAnalytics trackUserSession];
+        [SENAnalytics trackUserSession];
     }
     
     [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
@@ -251,7 +254,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     SENClearModel();
     [HEMAudioCache clearCache];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
-    [HEMOnboardingUtils resetOnboardingCheckpoint];
+    [[HEMOnboardingService sharedService] resetOnboardingCheckpoint];
 }
 
 @end

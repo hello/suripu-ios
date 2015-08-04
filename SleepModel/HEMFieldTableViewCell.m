@@ -8,7 +8,7 @@
 
 #import "HEMFieldTableViewCell.h"
 #import "UIFont+HEMStyle.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMFieldTableViewCell() <UITextFieldDelegate>
 
@@ -42,7 +42,7 @@
     if ([text length] == 0) return;
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont textfieldPlaceholderFont],
-                                 NSForegroundColorAttributeName : [HelloStyleKit textfieldPlaceholderColor]};
+                                 NSForegroundColorAttributeName : [UIColor textfieldPlaceholderColor]};
     NSAttributedString* attributedPlaceHolder =
         [[NSAttributedString alloc] initWithString:text attributes:attributes];
     

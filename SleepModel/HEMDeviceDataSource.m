@@ -8,8 +8,10 @@
 
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENSenseWiFiStatus.h>
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -20,13 +22,14 @@
 #import "HelloStyleKit.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMCardFlowLayout.h"
+#import "HEMOnboardingService.h"
+
+NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 
 static NSInteger const HEMDeviceRowSense = 0;
 static NSInteger const HEMDeviceRowPill = 1;
-static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 @interface HEMDeviceDataSource()
@@ -34,7 +37,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 @property (nonatomic, weak)   UICollectionView* collectionView;
 @property (nonatomic, copy)   NSAttributedString* attributedFooterText;
 @property (nonatomic, copy)   NSString* configuredSSID;
-@property (nonatomic, assign) SENWiFiConnectionState wifiState;
+@property (nonatomic, strong) SENSenseWiFiStatus* wiFiStatus;
 @property (nonatomic, assign, getter=isLoadingSense) BOOL loadingSense;
 @property (nonatomic, assign, getter=isLoadingPill)  BOOL loadingPill;
 @property (nonatomic, assign) BOOL attemptedDataLoad;
@@ -71,7 +74,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 #pragma mark - Loading Data
 
 - (void)refreshWithUpdate:(void(^)(void))update completion:(void(^)(NSError* error))completion {
-    [self setWifiState:SENWiFiConnectionStateUnknown];
+    [self setWiFiStatus:nil];
     [self setConfiguredSSID:nil];
     [self setLoadingSense:YES];
     [self setLoadingPill:YES];
@@ -163,7 +166,10 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             return;
         }
         
-        [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state, NSError *error) {
+        [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid,
+                                                              SENSenseWiFiStatus* status,
+                                                              NSError *error) {
+            
             if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]
                 && [error code] == SENServiceDeviceErrorInProgress) {
                 [strongSelf performSelector:@selector(refreshSenseData:)
@@ -173,9 +179,8 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             }
             NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
             [strongSelf setConfiguredSSID:wifiSSID];
-            [strongSelf setWifiState:state];
-            
-            [HEMOnboardingUtils saveConfiguredSSID:wifiSSID];
+            [strongSelf setWiFiStatus:status];
+            [[HEMOnboardingService sharedService] saveConfiguredSSID:wifiSSID];
             
             if (completion) completion (error);
         }];
@@ -185,9 +190,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 #pragma mark - Warnings
 
 - (BOOL)lostInternetConnection:(SENDevice*)device {
-    return [device type] == SENDeviceTypeSense
-            && ([self wifiState] == SENWiFiConnectionStateNoInternet
-                || [self wifiState] == SENWifiConnectionStateDisconnected);
+    return [device type] == SENDeviceTypeSense && ![[self wiFiStatus] isConnected];
 }
 
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device {
@@ -199,14 +202,19 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     if ([[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]) {
         [set addObject:@(HEMDeviceWarningLongLastSeen)];
     }
-    if ([self lostInternetConnection:device]) {
-        [set addObject:@(HEMSenseWarningNoInternet)];
-    }
+    
+    BOOL connectedToSense = YES;
     if ([device type] == SENDeviceTypeSense
         && (![[SENServiceDevice sharedService] pairedSenseAvailable]
-         || ![[[SENServiceDevice sharedService] senseManager] isConnected])) {
-        [set addObject:@(HEMSenseWarningNotConnectedToSense)];
+            || ![[[SENServiceDevice sharedService] senseManager] isConnected])) {
+            [set addObject:@(HEMSenseWarningNotConnectedToSense)];
+            connectedToSense = NO;
+        }
+    
+    if (connectedToSense && [self lostInternetConnection:device]) {
+        [set addObject:@(HEMSenseWarningNoInternet)];
     }
+    
     return set;
 }
 
@@ -249,8 +257,9 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (NSString*)wifiValue {
-    NSString* value = [self configuredSSID] ?: [HEMOnboardingUtils lastConfiguredSSID];
-    if ([value length] == 0 && [self wifiState] == SENWifiConnectionStateDisconnected) {
+    NSString* lastConfiguredSSID = [[HEMOnboardingService sharedService] lastConfiguredSSID];
+    NSString* value = [self configuredSSID] ?: lastConfiguredSSID;
+    if ([value length] == 0 && [self wiFiStatus] && ![[self wiFiStatus] isConnected]) {
         value = NSLocalizedString(@"settings.device.network.disconnected", nil);
     } else if ([value length] == 0) {
         value = NSLocalizedString(@"empty-data", nil);
@@ -260,8 +269,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (UIColor*)wifiValueColor {
     UIColor* color = [UIColor blackColor];
-    if ([self wifiState] == SENWifiConnectionStateDisconnected
-        || [self wifiState] == SENWiFiConnectionStateNoInternet) {
+    if ([self wiFiStatus] && ![[self wiFiStatus] isConnected]) {
         color = [UIColor redColor];
     }
     return color;
@@ -294,7 +302,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (void)updateMissingDeviceForCell:(HEMNoDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    UIColor* actionButtonColor = [HelloStyleKit senseBlueColor];
+    UIColor* actionButtonColor = [UIColor tintColor];
     
     switch ([indexPath row]) {
         case HEMDeviceRowSense:
@@ -303,7 +311,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         case HEMDeviceRowPill:
             [cell configureForPill];
             if ([self isLoadingSense] || ![self attemptedDataLoad]) {
-                actionButtonColor = [HelloStyleKit actionButtonDisabledColor];
+                actionButtonColor = [UIColor actionButtonDisabledColor];
             }
             break;
         default:
@@ -398,7 +406,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
         NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
         NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
-        UIColor* color = [HelloStyleKit backViewTextColor];
+        UIColor* color = [UIColor backViewTextColor];
         UIFont* font = [UIFont settingsHelpFont];
         
         NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];

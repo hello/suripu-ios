@@ -9,7 +9,6 @@
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
-#import "HelloStyleKit.h"
 #import "HEMAlarmUtils.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
@@ -17,7 +16,6 @@
 #import "HEMAlarmTableViewCell.h"
 #import "HEMClockPickerView.h"
 #import "HEMTutorial.h"
-#import "HEMAnalytics.h"
 
 typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
     HEMAlarmTableIndexSmart = 0,
@@ -160,7 +158,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
                                                  HEMAnalyticsEventSaveAlarmMinute : @(self.alarmCache.minute)
                                              }];
                                     if (error) {
-                                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                                        [SENAnalytics trackError:error];
                                     }
                                     if (!error)
                                         [strongSelf dismiss:YES];
@@ -181,24 +179,20 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
                 primary:NO
-            actionBlock:^{ [self dismissViewControllerAnimated:YES completion:NULL]; }];
+            actionBlock:nil];
 
     __weak typeof(self) weakSelf = self;
-    [dialogVC showFrom:self
-        onDefaultActionSelected:^{
-          __strong typeof(weakSelf) strongSelf = weakSelf;
-          [strongSelf.alarm delete];
-          [HEMAlarmUtils
-              updateAlarmsFromPresentingController:strongSelf
-                                        completion:^(NSError *error) {
-                                          if (error) {
-                                              [strongSelf.alarm save];
-                                          } else {
-                                              [strongSelf dismissViewControllerAnimated:YES
-                                                                             completion:^{ [strongSelf dismiss:NO]; }];
-                                          }
-                                        }];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf.alarm delete];
+        [HEMAlarmUtils updateAlarmsFromPresentingController:strongSelf completion:^(NSError *error) {
+            if (error) {
+                [strongSelf.alarm save];
+            } else {
+                [strongSelf dismiss:NO];
+            }
         }];
+    }];
 }
 
 - (IBAction)updateAlarmState:(UISwitch *)sender {

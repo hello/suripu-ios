@@ -5,8 +5,9 @@
 #import <SenseKit/SENSound.h>
 #import <SpinKit/RTSpinKitView.h>
 
-#import "UIFont+HEMStyle.h"
 #import "HEMAlarmSoundTableViewController.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMAlarmPropertyTableViewCell.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
@@ -52,7 +53,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
                                            error:&audioSessionError];
     
     if (audioSessionError) {
-        [SENAnalytics trackError:audioSessionError withEventName:kHEMAnalyticsEventError];
+        [SENAnalytics trackError:audioSessionError];
     }
 }
 
@@ -108,7 +109,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
     UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                  target:self
                                                                                  action:@selector(loadAlarmSounds)];
-    refreshItem.tintColor = [HelloStyleKit tintColor];
+    refreshItem.tintColor = [UIColor tintColor];
     self.customNavItem.rightBarButtonItem = refreshItem;
 }
 
@@ -128,8 +129,8 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
     BOOL isLoading = [self.loadingIndexPath isEqual:indexPath];
     cell.titleLabel.text = sound.displayName;
     cell.disclosureImageView.hidden = !isSelected;
-    cell.titleLabel.textColor = isSelected ? [HelloStyleKit alarmSelectionRowColor]
-                                           : [HelloStyleKit backViewNavTitleColor];
+    cell.titleLabel.textColor = isSelected ? [UIColor alarmSelectionRowColor]
+                                           : [UIColor backViewNavTitleColor];
     if (isLoading) {
         [cell.loadingIndicatorView startAnimating];
     } else { [cell.loadingIndicatorView stopAnimating]; }
@@ -241,7 +242,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
                                              error:&error];
         if (error) {
             DDLogWarn(@"failed to change audio session state");
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         }
         
         if (completion) {

@@ -13,8 +13,8 @@
 #import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMBounceModalTransition.h"
-#import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
+#import "HelloStyleKit.h"
 
 NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSuccessNotification";
 
@@ -97,8 +97,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
                 NSDictionary* userInfo = @{NSLocalizedDescriptionKey : HEMAnalyticsEventTimelineAdjustTimeFailed};
                 [SENAnalytics trackError:[NSError errorWithDomain:[error domain]
                                                              code:[error code]
-                                                         userInfo:userInfo]
-                           withEventName:kHEMAnalyticsEventError];
+                                                         userInfo:userInfo]];
             }];
 
         } else {

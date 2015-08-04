@@ -21,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) HEMSupportTopicDataSource* dataSource;
+@property (weak, nonatomic) UIBarButtonItem* cancelItem;
 
 @end
 
@@ -52,6 +53,27 @@
     [[self tableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self configureNavItem];
+}
+
+- (void)configureNavItem {
+    if ([self isModal] && ![self cancelItem]) {
+        NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+        UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:cancelText
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:self
+                                                                      action:@selector(cancel)];
+        [[self navigationItem] setLeftBarButtonItem:cancelItem];
+        [self setCancelItem:cancelItem];
+    }
+}
+
+- (void)cancel {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (![[self dataSource] isLoaded]) {
@@ -69,7 +91,7 @@
         [[weakSelf tableView] reloadData];
         [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
         if (error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [SENAnalytics trackError:error];
         }
     }];
 }

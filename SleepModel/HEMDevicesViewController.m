@@ -9,12 +9,12 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMDevicesViewController.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMDeviceCollectionViewCell.h"
 #import "HEMNoDeviceCollectionViewCell.h"
@@ -28,7 +28,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMSupportUtil.h"
-#import "HEMOnboardingUtils.h"
+#import "HEMTutorial.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
@@ -89,9 +89,9 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 
     if (![self loaded]) {
         [self refreshDataSource:NO];
+        [HEMTutorial showTutorialForPillColorIfNeeded];
         [self setLoaded:YES];
     }
-    
 }
 
 - (void)reloadData {
@@ -162,8 +162,13 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     
     if (msg) { // title is optional
         [self showMessageDialog:msg title:title];
-        // only log an error if an error is displayed to the user
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        // only log an error / warning if an error is displayed to the user
+        if ([[error domain] isEqualToString:HEMDeviceErrorDomain] && [error code] == HEMDeviceErrorNoBle) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+        } else {
+            [SENAnalytics trackError:error];
+        }
+
     }
 }
 

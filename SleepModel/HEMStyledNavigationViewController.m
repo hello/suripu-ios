@@ -10,6 +10,7 @@
 #import "HelloStyleKit.h"
 #import "HEMScreenUtils.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMStyledNavigationViewController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
@@ -19,12 +20,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
+    [[self navigationBar] setTintColor:[UIColor backViewTintColor]];
     UIFont* titleFont = HEMIsIPhone4Family()
         ? [UIFont iPhone4SSettingsTitleFont]
         : [UIFont settingsTitleFont];
     [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
+        NSForegroundColorAttributeName : [UIColor backViewNavTitleColor],
         NSFontAttributeName : titleFont
     }];
     
@@ -42,7 +43,7 @@
 - (void)setBackButtonOnViewController:(UIViewController*)viewController {
     UIImage* defaultBackImage = [HelloStyleKit backIcon];
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:defaultBackImage style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-    [item setTintColor:[HelloStyleKit tintColor]];
+    [item setTintColor:[UIColor tintColor]];
     [item setAccessibilityLabel:self.topViewController.title];
     viewController.navigationItem.leftBarButtonItem = item;
 }

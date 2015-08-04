@@ -10,7 +10,6 @@
 
 #import "HEMSensePairingModeViewController.h"
 #import "HEMActionButton.h"
-#import "HEMOnboardingUtils.h"
 
 @interface HEMSensePairingModeViewController()
 
@@ -31,13 +30,12 @@
 - (void)configureAttributedSubtitle {
     NSString* format = NSLocalizedString(@"onboarding.sense.pairing-mode.format", nil);
     NSString* onTop = NSLocalizedString(@"onboarding.sense.pairing-mode.directly-on-top", nil);
-    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:onTop withColor:[UIColor blackColor]]];
+    NSArray* args = @[[self boldAttributedText:onTop]];
     
     NSMutableAttributedString* attrSubtitle
         = [[NSMutableAttributedString alloc] initWithFormat:format args:args];
     
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    
+    [self applyCommonDescriptionAttributesTo:attrSubtitle];
     [[self descriptionLabel] setAttributedText:attrSubtitle];
 }
 

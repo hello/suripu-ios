@@ -14,7 +14,6 @@
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMDeviceActionCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
@@ -241,19 +240,16 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     [dialogVC setAttributedMessage:confirmation];
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
+    
+    __weak typeof(self) weakSelf = self;
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self unpair];
-        }];
+        [weakSelf unpair];
     }];
     [dialogVC onLinkTapOf:helpLink takeAction:^(NSURL *link) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [HEMSupportUtil openHelpFrom:self];
-        }];
+        [HEMSupportUtil openHelpFrom:weakSelf];
     }];
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }];
+    
+    [dialogVC showFrom:self onDefaultActionSelected:nil];
 }
 
 - (void)showUnpairMessageForError:(NSError*)error {

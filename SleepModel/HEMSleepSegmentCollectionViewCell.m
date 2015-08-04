@@ -1,6 +1,7 @@
 
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HelloStyleKit.h"
 
@@ -21,13 +22,15 @@ CGFloat const HEMSegmentPrefillTimeInset = 12.f;
 
 @implementation HEMSleepSegmentCollectionViewCell
 
-static CGFloat const HEMSegmentTimeLabelHeight = 16.f;
-static CGFloat const HEMSegmentBorderWidth = 1.f;
+CGFloat const HEMSegmentTimeLabelHeight = 16.f;
+CGFloat const HEMSegmentBorderWidth = 1.f;
+CGFloat const HEMSegmentMinimumWidth = 32.f;
+CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
 
 - (void)awakeFromNib {
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
-    self.backgroundColor = [HelloStyleKit timelineGradientColor];
+    self.backgroundColor = [UIColor timelineGradientColor];
 }
 
 - (void)prepareForReuse {
@@ -76,12 +79,12 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
                                   size.width, HEMSegmentTimeLabelHeight);
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
-    timeLabel.textColor = [HelloStyleKit tintColor];
+    timeLabel.textColor = [UIColor tintColor];
     [[self contentView] addSubview:timeLabel];
-    CGRect lineRect = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset,
-                                 HEMSegmentBorderWidth);
+    CGRect lineRect
+        = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset, HEMSegmentBorderWidth);
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:lineRect];
-    lineView.image = [self lineBorderImageWithColor:[[HelloStyleKit tintColor] colorWithAlphaComponent:0.25f]];
+    lineView.image = [self lineBorderImageWithColor:[[UIColor tintColor] colorWithAlphaComponent:0.25f]];
     [[self contentView] insertSubview:lineView atIndex:0];
     [self.timeViews addObject:lineView];
     [self.timeViews addObject:timeLabel];
@@ -93,7 +96,7 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(ctx, color.CGColor);
     CGContextSetLineWidth(ctx, HEMSegmentBorderWidth);
-    CGFloat y = size.height - (HEMSegmentBorderWidth/2);
+    CGFloat y = size.height - (HEMSegmentBorderWidth / 2);
     CGContextMoveToPoint(ctx, 0, y);
     CGContextAddLineToPoint(ctx, size.width, y);
     CGContextStrokePath(ctx);
@@ -113,14 +116,21 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     [self setNeedsDisplay];
 }
 
-- (void)drawRect:(CGRect)rect {
-    CGFloat const HEMSegmentMinimumWidth = 32.f;
-    CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
-    CGFloat maximumFillWidth = CGRectGetWidth(rect) * HEMSegmentMaximumWidthRatio;
+- (CGRect)preFillArea {
+    CGFloat maximumFillWidth = CGRectGetWidth(self.bounds) * HEMSegmentMaximumWidthRatio;
     CGFloat preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
+    return CGRectMake(0, 0, preWidth, HEMSegmentPrefillTimeInset);
+}
+
+- (CGRect)fillArea {
+    CGFloat maximumFillWidth = CGRectGetWidth(self.bounds) * HEMSegmentMaximumWidthRatio;
     CGFloat width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
-    CGRect preRect = CGRectMake(0, 0, preWidth, HEMSegmentPrefillTimeInset);
-    CGRect fillRect = CGRectMake(0, HEMSegmentPrefillTimeInset, width, CGRectGetHeight(rect) - HEMSegmentPrefillTimeInset);
+    return CGRectMake(0, HEMSegmentPrefillTimeInset, width, CGRectGetHeight(self.bounds) - HEMSegmentPrefillTimeInset);
+}
+
+- (void)drawRect:(CGRect)rect {
+    CGRect preRect = [self preFillArea];
+    CGRect fillRect = [self fillArea];
     [self.fillColor setFill];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextFillRect(ctx, fillRect);

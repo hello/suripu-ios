@@ -8,18 +8,18 @@
 #import <MessageUI/MessageUI.h>
 
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENSenseManager.h>
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMSupportUtil.h"
-#import "HEMOnboardingUtils.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMTutorial.h"
+#import "HEMOnboardingController.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -99,8 +99,8 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if ([[strongSelf presentingController] isKindOfClass:[UINavigationController class]]) {
             UINavigationController* onboardingVC = (UINavigationController*)[strongSelf presentingController];
-            UIViewController* startController =
-            [HEMOnboardingUtils onboardingControllerForCheckpoint:HEMOnboardingCheckpointStart force:YES];
+            HEMOnboardingCheckpoint checkpoint = HEMOnboardingCheckpointStart;
+            UIViewController* startController = [HEMOnboardingController controllerForCheckpoint:checkpoint force:YES];
             if (![[onboardingVC topViewController] isKindOfClass:[startController class]]) {
                 [onboardingVC setViewControllers:@[startController] animated:YES];
             }
@@ -168,12 +168,7 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLedOptionController:nil];
         [strongSelf setSupportOptionController:nil];
-        
-        if ([[HEMOnboardingCache sharedCache] senseManager] != nil) {
-            [[[HEMOnboardingCache sharedCache] senseManager] setLED:ledState completion:nil];
-        } else {
-            [[SENServiceDevice sharedService] setLEDState:ledState completion:nil];
-        }
+        [[[HEMOnboardingService sharedService] currentSenseManager] setLED:ledState completion:nil];
     }];
 }
 

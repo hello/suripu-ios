@@ -14,7 +14,6 @@
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
-#import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAnimationUtils.h"
 #import "HEMSleepQuestionsDataSource.h"
@@ -55,10 +54,6 @@
 - (void)configure {
     [[self questionLabel] setFont:[UIFont questionFont]];
     [[[self skipButton] titleLabel] setFont:[UIFont questionAnswerFont]];
-    
-    if ([self dataSource] == nil) {
-        [self setDataSource:[[HEMSleepQuestionsDataSource alloc] init]];
-    }
     
     [[self questionLabel] setText:[[self dataSource] selectedQuestionText]];
     
@@ -121,6 +116,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (![tableView allowsMultipleSelection]) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         if (![[self dataSource] selectAnswerAtIndexPath:indexPath]) {
             [self dismiss];
         } else {
@@ -167,7 +163,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Navigation
 
 - (void)dismiss {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    BOOL implementsAction = [[self dataSource] respondsToSelector:@selector(takeActionBeforeDismissingFrom:)];
+    if (!implementsAction || ![[self dataSource] takeActionBeforeDismissingFrom:self]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)toNextQuestion {

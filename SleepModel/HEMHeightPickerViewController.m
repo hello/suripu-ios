@@ -3,13 +3,12 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMHeightPickerViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMRulerView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMMathUtil.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
@@ -70,7 +69,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
     [[self scrollView] addSubview:[self ruler]];
     [[self scrollView] setBackgroundColor:[UIColor clearColor]];
     
-    [[self currentMarkerView] setBackgroundColor:[HelloStyleKit senseBlueColor]];
+    [[self currentMarkerView] setBackgroundColor:[UIColor tintColor]];
     
     // pre iOS 8, there are mystery default insets so this needs to be adjusted
     if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {
@@ -149,7 +148,8 @@ static NSInteger const HEMHeightDefaultInch = 8;
     [self setSelectedHeightInCm:cm];
     
     if ([self delegate] == nil) {
-        [[[HEMOnboardingCache sharedCache] account] setHeight:@(cm)];
+        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
+        [account setHeight:@(cm)];
     }
     
 }

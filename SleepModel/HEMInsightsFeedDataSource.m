@@ -16,6 +16,7 @@
 #import "HEMInsightsFeedDataSource.h"
 #import "HEMQuestionCell.h"
 #import "HEMInsightCollectionViewCell.h"
+#import "HEMAppReview.h"
 
 static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
 static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
@@ -132,11 +133,28 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (void)refreshQuestions:(void(^)(NSArray* questions))completion {
-        [[SENServiceQuestions sharedService] updateQuestions:^(NSArray *questions, NSError *error) {
-            if (error) DDLogVerbose(@"error updating questions %@", error);
-            NSArray* updatedQuestions = error != nil ? nil : [[SENServiceQuestions sharedService] todaysQuestions];
-            if (completion) completion (updatedQuestions);
-        }];
+    void(^done)(NSArray* questions) = ^(NSArray* questions){
+        if (completion) {
+            completion (questions);
+        }
+    };
+    
+    [HEMAppReview shouldAskUserToRateTheApp:^(HEMAppReviewQuestion* question) {
+        if (question) {
+            [SENAnalytics track:HEMAnalyticsEventAppReviewShown];
+            done(@[question]);
+        } else {
+            [[SENServiceQuestions sharedService] updateQuestions:^(NSArray *questions, NSError *error) {
+                NSArray* updatedQuestions = nil;
+                if (error) {
+                    DDLogVerbose(@"error updating questions %@", error);
+                } else {
+                    updatedQuestions = [[SENServiceQuestions sharedService] todaysQuestions];
+                }
+                done(updatedQuestions);
+            }];
+        }
+    }];
 }
 
 #pragma mark - CollectionView

@@ -4,7 +4,6 @@
 #import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <FDWaveformView/FDWaveformView.h>
 #import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -24,21 +23,7 @@
 #import "HEMSplitTextFormatter.h"
 #import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
-
-NSString *const HEMSleepEventTypeWakeUp = @"WAKE_UP";
-NSString *const HEMSleepEventTypeLight = @"LIGHT";
-NSString *const HEMSleepEventTypeMotion = @"MOTION";
-NSString *const HEMSleepEventTypeNoise = @"NOISE";
-NSString *const HEMSleepEventTypeSunrise = @"SUNRISE";
-NSString *const HEMSleepEventTypeSunset = @"SUNSET";
-NSString *const HEMSleepEventTypeFallAsleep = @"SLEEP";
-NSString *const HEMSleepEventTypePartnerMotion = @"PARTNER_MOTION";
-NSString *const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
-NSString *const HEMSleepEventTypeInBed = @"IN_BED";
-NSString *const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
-NSString *const HEMSleepEventTypeAlarm = @"ALARM";
-NSString *const HEMSleepEventTypeSmartAlarm = @"SMART_ALARM";
-NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
+#import "HEMWaveform.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -52,7 +37,7 @@ NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
-@property (nonatomic, weak) HEMTimelineTopBarCollectionReusableView* topBarView;
+@property (nonatomic, weak) HEMTimelineTopBarCollectionReusableView *topBarView;
 
 @end
 
@@ -65,18 +50,13 @@ static NSString *const timelineTopBarReuseIdentifier = @"timelineTopBarCell";
 static NSString *const timelineFooterReuseIdentifier = @"timelineFooterCell";
 static NSString *const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString *const sleepEventReuseIdentifier = @"sleepEventCell";
-static NSString *const sensorTypeTemperature = @"temperature";
-static NSString *const sensorTypeHumidity = @"humidity";
-static NSString *const sensorTypeParticulates = @"particulates";
-static NSString *const sensorTypeLight = @"light";
-static NSString *const sensorTypeSound = @"sound";
-static NSString *const sleepEventNameFindCharacter = @"_";
-static NSString *const sleepEventNameReplaceCharacter = @" ";
-static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 + (NSString *)localizedNameForSleepEventType:(NSString *)eventType {
+    NSString *const sleepEventNameFindCharacter = @"_";
+    NSString *const sleepEventNameReplaceCharacter = @" ";
+    NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSString *localizedFormat = [NSString stringWithFormat:sleepEventNameFormat, [eventType lowercaseString]];
     NSString *eventName = NSLocalizedString(localizedFormat, nil);
     if ([eventName isEqualToString:localizedFormat]) {
@@ -104,8 +84,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (void)reloadDateFormatters {
-    NSString* localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
-    NSLocale* standardLocale = [NSLocale localeWithLocaleIdentifier:localeIdentifier];
+    NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
+    NSLocale *standardLocale = [NSLocale localeWithLocaleIdentifier:localeIdentifier];
     _meridiemFormatter.locale = standardLocale;
     _timeDateFormatter.locale = standardLocale;
     _hourDateFormatter.locale = standardLocale;
@@ -114,18 +94,19 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         _timeDateFormatter.dateFormat = @"h:mm";
         _hourDateFormatter.dateFormat = @"h";
     } else {
-        _timeDateFormatter.dateFormat = @"H:mm";
-        _hourDateFormatter.dateFormat = @"H";
+        _timeDateFormatter.dateFormat = @"HH:mm";
+        _hourDateFormatter.dateFormat = @"HH:00";
     }
     _calendar = [NSCalendar currentCalendar];
 }
 
 - (void)refreshData {
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
+    [self reloadDateFormatters];
     [self.collectionView reloadData];
 }
 
-- (void)reloadData:(void(^)(void))completion {
+- (void)reloadData:(void (^)(void))completion {
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
     if ([self shouldShowLoadingView]) {
@@ -142,23 +123,47 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     }
 
     __weak typeof(self) weakSelf = self;
-    [SENAPITimeline timelineForDate:self.dateForNightOfSleep
+    [self fetchTimelineForDate:self.dateForNightOfSleep
+                    completion:^(SENTimeline *timeline, NSError *error) {
+                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                      if (error) {
+                          [strongSelf hideLoadingViewAnimated:YES];
+                      } else {
+                          [strongSelf refreshWithTimeline:timeline];
+                          [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
+                      }
+                      if (completion)
+                          completion();
+                    }];
+}
+
+- (void)fetchTimelineForDate:(NSDate *)date completion:(void (^)(SENTimeline *, NSError *))completion {
+    [SENAPITimeline timelineForDate:date
                          completion:^(SENTimeline *timeline, NSError *error) {
-                             __strong HEMSleepGraphCollectionViewDataSource *strongSelf = weakSelf;
-                             if (error) {
-                                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                                DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
-                                [strongSelf hideLoadingViewAnimated:YES];
-                                 if (completion) {
-                                     completion();
-                                 }
-                                return;
-                            }
-                             [strongSelf refreshWithTimeline:timeline];
-                             if (completion) {
-                                 completion();
-                             }
+                           if (error) {
+                               [SENAnalytics trackError:error];
+                               DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
+                           }
+                           if (completion)
+                               completion(timeline, error);
                          }];
+}
+
+- (void)prefetchAdjacentTimelinesForDate:(NSDate *)date {
+    [self prefetchTimelineForDate:[date previousDay]];
+    if (![self dateIsLastNight])
+        [self prefetchTimelineForDate:[date nextDay]];
+}
+
+- (void)prefetchTimelineForDate:(NSDate *)date {
+    SENTimeline *timeline = [SENTimeline timelineForDate:date];
+    if ([timeline.score integerValue] == 0) {
+        [self fetchTimelineForDate:date
+                        completion:^(SENTimeline *timeline, NSError *error) {
+                          if (!error)
+                              [timeline save];
+                        }];
+    }
 }
 
 - (void)refreshWithTimeline:(SENTimeline *)timeline {
@@ -194,7 +199,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                                                     bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:timelineFooterReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMTimelineTopBarCollectionReusableView class])
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass(
+                                                               [HEMTimelineTopBarCollectionReusableView class])
                                                     bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:timelineTopBarReuseIdentifier];
@@ -212,26 +218,24 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 #pragma mark - Top Bar
 
-- (NSString*)dateTitle {
+- (NSString *)dateTitle {
     return [[self topBarView] dateTitle];
 }
 
 - (void)updateTimelineState:(BOOL)isOpen {
     [[self topBarView] setOpened:isOpen];
-    [[self topBarView] setShareEnabled:self.sleepResult.score > 0 && !isOpen
-                              animated:YES];
+    [[self topBarView] setShareEnabled:self.sleepResult.score > 0 && !isOpen animated:YES];
     if (isOpen)
         [self scrollToTop];
 }
 
 - (void)scrollToTop {
     if (!CGPointEqualToPoint(CGPointZero, self.collectionView.contentOffset)
-        && [self.collectionView numberOfSections] > 0
-        && [self.collectionView numberOfItemsInSection:0] > 0) {
-        NSIndexPath* indexPath = [NSIndexPath indexPathWithIndex:0];
-        UICollectionViewLayoutAttributes* attrs = [self.collectionView
-                                                   layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader
-                                                   atIndexPath:indexPath];
+        && [self.collectionView numberOfSections] > 0 && [self.collectionView numberOfItemsInSection:0] > 0) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:0];
+        UICollectionViewLayoutAttributes *attrs =
+            [self.collectionView layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader
+                                                                   atIndexPath:indexPath];
         if (!attrs)
             return;
         [self.collectionView scrollRectToVisible:attrs.frame animated:YES];
@@ -267,41 +271,41 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     }
 }
 
-- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
-               topBarHeaderViewForIndexPath:(NSIndexPath*)indexPath {
-    
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+                topBarHeaderViewForIndexPath:(NSIndexPath *)indexPath {
+
     HEMTimelineTopBarCollectionReusableView *view = nil;
     view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                                               withReuseIdentifier:timelineTopBarReuseIdentifier
                                                      forIndexPath:indexPath];
     id delegate = [collectionView delegate];
-    
+
     if ([delegate respondsToSelector:@selector(didTapDrawerButton:)]) {
         [[view drawerButton] addTarget:delegate
                                 action:@selector(didTapDrawerButton:)
                       forControlEvents:UIControlEventTouchUpInside];
     }
-    
+
     if ([delegate respondsToSelector:@selector(didTapShareButton:)]) {
         [[view shareButton] addTarget:delegate
                                action:@selector(didTapShareButton:)
                      forControlEvents:UIControlEventTouchUpInside];
     }
-    
+
     if ([delegate respondsToSelector:@selector(didTapDateButton:)]) {
         [[view dateButton] addTarget:delegate
                               action:@selector(didTapDateButton:)
                     forControlEvents:UIControlEventTouchUpInside];
     }
-    
+
     NSInteger score = [[[self sleepResult] score] integerValue];
     BOOL drawerClosed = ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
     [view setShareEnabled:score > 0 && drawerClosed animated:YES];
-    
+
     [view setDate:[self dateForNightOfSleep]];
-    
+
     [self setTopBarView:view];
-    
+
     return view;
 }
 
@@ -309,20 +313,19 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *view = nil;
-    
+
     if (indexPath.section == HEMSleepGraphCollectionViewSummarySection) {
 
         if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
             view = [self collectionView:collectionView topBarHeaderViewForIndexPath:indexPath];
         }
-        
+
     } else if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
-        
+
         view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                   withReuseIdentifier:timelineFooterReuseIdentifier
                                                          forIndexPath:indexPath];
         view.hidden = [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] == 0;
-        
     }
 
     return view;
@@ -420,11 +423,12 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.type]];
     NSAttributedString *timeText = nil;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
-        timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
+        timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter];
     }
     [cell layoutWithImage:[self imageForEventType:segment.type]
                   message:segment.message
-                     time:timeText];
+                     time:timeText
+                 waveform:[self waveformForIndexPath:indexPath]];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     UIColor *previousColor = nil;
@@ -442,6 +446,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
             withFillColor:[UIColor colorForSleepState:segment.sleepState]
             previousRatio:previousRatio
             previousColor:previousColor];
+    [cell.playButton addTarget:collectionView.delegate
+                        action:@selector(toggleAudio:)
+              forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -457,7 +464,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0 && components.second == 0) {
         NSAttributedString *text =
-            [self formattedTextForInlineTimestamp:segment.date withFormatter:self.hourDateFormatter useUnit:YES];
+            [self formattedTextForInlineTimestamp:segment.date withFormatter:self.hourDateFormatter];
         [cell addTimeLabelWithText:text atHeightRatio:0];
     }
     NSTimeInterval segmentInterval = [segment.date timeIntervalSince1970];
@@ -475,7 +482,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         if (hourInterval < endInterval) {
             CGFloat ratio = ([hourDate timeIntervalSince1970] - segmentInterval) / (endInterval - segmentInterval);
             NSAttributedString *text =
-                [self formattedTextForInlineTimestamp:hourDate withFormatter:self.hourDateFormatter useUnit:YES];
+                [self formattedTextForInlineTimestamp:hourDate withFormatter:self.hourDateFormatter];
             [cell addTimeLabelWithText:text atHeightRatio:ratio];
         }
         i++;
@@ -483,19 +490,15 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date {
-    return [self formattedTextForInlineTimestamp:date withFormatter:self.timeDateFormatter useUnit:NO];
+    return [self formattedTextForInlineTimestamp:date withFormatter:self.timeDateFormatter];
 }
 
-- (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date
-                                          withFormatter:(NSDateFormatter *)formatter
-                                                useUnit:(BOOL)shouldUseUnit {
+- (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date withFormatter:(NSDateFormatter *)formatter {
     NSString *timeText = [formatter stringFromDate:date];
     NSString *unit = nil;
     if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         self.meridiemFormatter.timeZone = formatter.timeZone;
         unit = [self.meridiemFormatter stringFromDate:date];
-    } else if (shouldUseUnit) {
-        unit = NSLocalizedString(@"sleep-event.time.24-hour.suffix", nil);
     }
     HEMSplitTextObject *obj = [[HEMSplitTextObject alloc] initWithValue:timeText unit:unit];
     NSDictionary *attrs = [HEMMarkdown attributesForTimelineTimeLabelsText][@(PARA)];
@@ -555,8 +558,36 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath {
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
-    return segment.type != SENTimelineSegmentTypeUnknown
-        && segment.type != SENTimelineSegmentTypeInBed;
+    return segment.type != SENTimelineSegmentTypeUnknown && segment.type != SENTimelineSegmentTypeInBed;
+}
+
+- (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath {
+#if defined(BETA) || defined(DEBUG)
+    SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
+    return segment.type == SENTimelineSegmentTypeGenericSound || segment.type == SENTimelineSegmentTypeSnored;
+#endif
+    return NO;
+}
+
+- (HEMWaveform *)waveformForIndexPath:(NSIndexPath *)indexPath {
+    if (![self segmentForSoundExistsAtIndexPath:indexPath])
+        return nil;
+#if defined(BETA) || defined(DEBUG)
+    return [HEMWaveform faketrogram];
+#endif
+    return nil;
+}
+
+- (NSData *)audioDataForIndexPath:(NSIndexPath *)indexPath {
+    if (![self segmentForSoundExistsAtIndexPath:indexPath])
+        return nil;
+#if defined(BETA) || defined(DEBUG)
+    NSString *testAudioPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"test.mp3"];
+    NSError *error = nil;
+    NSData *data = [NSData dataWithContentsOfFile:testAudioPath options:0 error:&error];
+    return error == nil ? data : nil;
+#endif
+    return nil;
 }
 
 @end

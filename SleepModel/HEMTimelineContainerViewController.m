@@ -12,7 +12,6 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
 #import "NSDate+HEMRelative.h"
 
 @interface HEMTimelineContainerViewController ()
@@ -51,9 +50,5 @@ CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
             completion:NULL];
     }
 }
-
-#pragma mark Top bar actions
-
-
 
 @end

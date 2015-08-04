@@ -8,7 +8,6 @@
 #import "HEMAlarmCache.h"
 #import "HEMAlarmUtils.h"
 #import "HEMAlarmPropertyTableViewCell.h"
-#import "HelloStyleKit.h"
 
 @interface HEMAlarmRepeatTableViewController ()
 

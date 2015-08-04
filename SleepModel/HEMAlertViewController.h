@@ -17,7 +17,6 @@
  */
 @property (nonatomic, weak)   UIView* viewToShowThrough;
 @property (nonatomic, strong) UIImage* dialogImage;
-@property (nonatomic, copy)   NSString* title;
 @property (nonatomic, copy)   NSString* message;
 @property (nonatomic, copy)   NSAttributedString* attributedMessage;
 
@@ -45,6 +44,21 @@
 + (void)showInfoDialogWithTitle:(NSString*)title message:(NSString*)message controller:(UIViewController*)controller;
 
 /**
+ *  Present a dialog with "yes" and "no" as possible options, where answering
+ *  "yes" (default) performs an action, and no dismisses the dialog without
+ *  further interaction.
+ *
+ *  @param title      title of the dialog
+ *  @param message    dialog message content
+ *  @param controller presenting controller
+ *  @param action     block executed when answer is "yes"
+ */
++ (void)showBooleanChoiceDialogWithTitle:(NSString *)title
+                                 message:(NSString *)message
+                              controller:(UIViewController *)controller
+                                  action:(void (^)())action;
+
+/**
  * Add additional action buttons to the dialog
  * @param title:   title of the action button
  * @param primary: YES if primary action, NO otherwise
@@ -63,7 +77,8 @@
 
 /**
  * Call this method to show the actual dialog, which will present itself.  Do not
- * present this view controller yourself if calling this method
+ * present this view controller yourself if calling this method.  This controller 
+ * will dismiss itself when the default action has been selected.
  *
  * @param controller: the controller that is presenting this dialog
  * @param doneBlock:  the block to invoke when user taps on the default button

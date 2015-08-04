@@ -11,4 +11,6 @@
 
 @interface HEMSupportTopicsViewController : HEMBaseController
 
+@property (nonatomic, assign, getter=isModal) BOOL modal;
+
 @end

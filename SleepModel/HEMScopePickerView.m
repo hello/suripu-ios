@@ -7,7 +7,7 @@
 //
 
 #import "HEMScopePickerView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 
 @interface HEMScopePickerView ()
@@ -26,7 +26,7 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
 - (void)awakeFromNib
 {
     self.selectionView = [UIView new];
-    self.selectionView.backgroundColor = [HelloStyleKit tintColor];
+    self.selectionView.backgroundColor = [UIColor tintColor];
     [self addSubview:self.selectionView];
 }
 
@@ -82,9 +82,9 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
         UIButton* button = [UIButton new];
         button.tag = i + HEMScopePickerButtonOffset;
         [button setTitle:title forState:UIControlStateNormal];
-        [button setTitleColor:[HelloStyleKit barButtonDisabledColor]
+        [button setTitleColor:[UIColor barButtonDisabledColor]
                      forState:UIControlStateNormal];
-        [button setTitleColor:[HelloStyleKit tintColor]
+        [button setTitleColor:[UIColor tintColor]
                      forState:UIControlStateSelected];
         button.titleLabel.font = [UIFont trendOptionFont];
         [button addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchUpInside];

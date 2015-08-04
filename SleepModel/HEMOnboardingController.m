@@ -6,18 +6,20 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
 
 #import "HEMOnboardingController.h"
-#import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMSupportUtil.h"
 #import "HEMActivityCoverView.h"
-#import "HEMOnboardingCache.h"
-#import "HEMOnboardingUtils.h"
+#import "HEMOnboardingService.h"
 #import "HEMScreenUtils.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMAlertViewController.h"
+#import "HelloStyleKit.h"
 
 @interface HEMOnboardingController()
 
@@ -34,6 +36,34 @@
 @end
 
 @implementation HEMOnboardingController
+
++ (UIViewController*)onboardingRootViewController {
+    UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                                   bundle:[NSBundle mainBundle]];
+    return [onboardingStoryboard instantiateInitialViewController];
+}
+
++ (UIViewController*)controllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint force:(BOOL)force {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    if (![service isAuthorizedUser] || force) {
+        [service resetOnboardingCheckpoint];
+        return [self onboardingRootViewController];
+    }
+    
+    switch (checkpoint) {
+        case HEMOnboardingCheckpointStart:
+            return [self onboardingRootViewController];
+        case HEMOnboardingCheckpointAccountCreated:
+            return [HEMOnboardingStoryboard instantiateDobViewController];
+        case HEMOnboardingCheckpointAccountDone:
+            return [HEMOnboardingStoryboard instantiateSenseSetupViewController];
+        case HEMOnboardingCheckpointSenseDone:
+            return [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
+        case HEMOnboardingCheckpointPillDone:
+        default:
+            return nil;
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,14 +89,14 @@
         [[self titleHeightConstraint] setConstant:0.0f];
         [[self titleLabel] setHidden:YES];
     } else {
-        [[self titleLabel] setTextColor:[HelloStyleKit onboardingTitleColor]];
+        [[self titleLabel] setTextColor:[UIColor onboardingTitleColor]];
         [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     }
 }
 
 - (void)configureDescription {
     if ([self descriptionLabel] != nil) {
-        UIColor* color = [HelloStyleKit onboardingDescriptionColor];
+        UIColor* color = [UIColor onboardingDescriptionColor];
         UIFont* font = [UIFont onboardingDescriptionFont];
         NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
         
@@ -109,6 +139,50 @@
     [super adjustConstraintsForIPhone4];
 }
 
+#pragma mark - Attributes
+
+- (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
+    UIFont* font = [UIFont onboardingDescriptionFont];
+    UIColor* color = [UIColor onboardingDescriptionColor];
+    
+    // avoid overriding any substrings that may already have attributes set
+    [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])
+                                 options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                              usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+                                  if ([attrs valueForKey:NSFontAttributeName] == nil) {
+                                      [attrText addAttribute:NSFontAttributeName
+                                                       value:font
+                                                       range:range];
+                                  }
+                                  
+                                  if ([attrs valueForKey:NSForegroundColorAttributeName] == nil) {
+                                      [attrText addAttribute:NSForegroundColorAttributeName
+                                                       value:color
+                                                       range:range];
+                                  }
+                                  
+                              }];
+}
+
+- (NSAttributedString*)boldAttributedText:(NSString*)text {
+    return [self boldAttributedText:text withColor:nil];
+}
+
+- (NSAttributedString*)boldAttributedText:(NSString *)text withColor:(UIColor*)color {
+    UIFont* font = [UIFont onboardingDescriptionBoldFont];
+    
+    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithCapacity:2];
+    [attributes setValue:font forKey:NSFontAttributeName];
+    
+    if (color != nil) {
+        [attributes setValue:color forKey:NSForegroundColorAttributeName];
+    }
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+#pragma mark - Alerts
+
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
     [self showMessageDialog:message title:title image:nil withHelpPage:nil];
 }
@@ -131,7 +205,7 @@
 
 - (NSString*)onboardingAnalyticsEventNameFor:(NSString*)event {
     NSString* reusedEvent = event;
-    if (![HEMOnboardingUtils hasFinishedOnboarding]
+    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]
         && ![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
         reusedEvent = [NSString stringWithFormat:@"%@ %@", HEMAnalyticsEventOnboardingPrefix, event];
     }
@@ -157,7 +231,7 @@
                                     action:@selector(help:)];
     [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
                        forBarMetrics:UIBarMetricsDefault];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor],
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor tintColor],
                                    NSFontAttributeName : [UIFont helpButtonTitleFont]
                                    }
                         forState:UIControlStateNormal];
@@ -207,8 +281,7 @@
 }
 
 - (SENSenseManager*)manager {
-    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
-    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
+    return [[HEMOnboardingService sharedService] currentSenseManager];
 }
 
 #pragma mark - Activity
@@ -254,7 +327,7 @@
               withDelegate:(BOOL)hasDelegate {
     
     [[secondaryButton titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [secondaryButton setTitleColor:[HelloStyleKit senseBlueColor]
+    [secondaryButton setTitleColor:[UIColor tintColor]
                           forState:UIControlStateNormal];
 
     if (hasDelegate) {
@@ -263,6 +336,37 @@
         [button setTitle:done forState:UIControlStateNormal];
         [secondaryButton setTitle:cancel forState:UIControlStateNormal];
     }
+    
+}
+
+- (void)completeOnboarding {
+    [SENAnalytics track:HEMAnalyticsEventOnbEnd];
+    
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service markOnboardingAsComplete];
+    
+    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    
+    void (^activityShownCompletion)(void) = ^{
+        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1.0f*NSEC_PER_SEC);
+        dispatch_after(time, dispatch_get_main_queue(), ^{
+            [activityView updateText:NSLocalizedString(@"onboarding.end-message.sleep", nil)
+                         successIcon:[HelloStyleKit moon]
+                        hideActivity:YES
+                          completion:^(BOOL finished) {
+                              dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2.0f*NSEC_PER_SEC);
+                              dispatch_after(time, dispatch_get_main_queue(), ^{
+                                  [service notifyOfOnboardingCompletion];
+                              });
+                          }];
+        });
+    };
+    
+    NSString* doneMessage = NSLocalizedString(@"onboarding.end-message.well-done", nil);
+    [activityView showInView:[[self navigationController] view]
+                    withText:doneMessage
+                 successMark:YES
+                  completion:activityShownCompletion];
     
 }
 

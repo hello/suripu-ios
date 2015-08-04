@@ -10,11 +10,9 @@
 #import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMSystemAlertController.h"
 #import "HEMActionView.h"
-#import "HelloStyleKit.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"
@@ -25,6 +23,7 @@
 #import "HEMDevicesViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMBounceModalTransition.h"
+#import "HEMAppUsage.h"
 
 typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeUnknown = 0,
@@ -78,7 +77,7 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
     [messageStyle setAlignment:NSTextAlignmentCenter];
     NSDictionary* messageAttributes = @{
                                         NSFontAttributeName : [UIFont systemAlertMessageFont],
-                                        NSForegroundColorAttributeName : [HelloStyleKit deviceAlertMessageColor],
+                                        NSForegroundColorAttributeName : [UIColor deviceAlertMessageColor],
                                         NSParagraphStyleAttributeName : messageStyle};
     
     NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message
@@ -192,6 +191,8 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
                           forControlEvents:UIControlEventTouchUpInside];
     [[self alertView] showInView:[[self viewController] view] animated:YES completion:nil];
     
+    [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
+    
     [SENAnalytics track:HEMAnalyticsEventSystemAlert
              properties:@{kHEMAnalyticsEventPropType : @"time zone"}];
 }
@@ -290,6 +291,9 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
                                  forType:alertType];
         
         NSString* analyticsType = [self analyticsPropertyTypeValueForDeviceState:[service deviceState]];
+        
+        [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
+        
         [SENAnalytics track:HEMAnalyticsEventSystemAlert
                  properties:@{kHEMAnalyticsEventPropType : analyticsType}];
     }

@@ -4,20 +4,6 @@
 @class SENTimelineSegment;
 @class HEMSleepSummaryCollectionViewCell;
 
-extern NSString *const HEMSleepEventTypeWakeUp;
-extern NSString *const HEMSleepEventTypeLight;
-extern NSString *const HEMSleepEventTypeMotion;
-extern NSString *const HEMSleepEventTypeNoise;
-extern NSString *const HEMSleepEventTypeSunrise;
-extern NSString *const HEMSleepEventTypeSunset;
-extern NSString *const HEMSleepEventTypeFallAsleep;
-extern NSString *const HEMSleepEventTypePartnerMotion;
-extern NSString *const HEMSleepEventTypeLightsOut;
-extern NSString *const HEMSleepEventTypeInBed;
-extern NSString *const HEMSleepEventTypeOutOfBed;
-extern NSString *const HEMSleepEventTypeAlarm;
-extern NSString *const HEMSleepEventTypeSleeping;
-
 @protocol HEMSleepGraphActionDelegate <NSObject>
 
 @required
@@ -28,6 +14,7 @@ extern NSString *const HEMSleepEventTypeSleeping;
 - (void)didTapDateButton:(UIButton *)button;
 - (BOOL)shouldHideSegmentCellContents;
 
+- (void)toggleAudio:(UIButton*)button;
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
@@ -44,7 +31,7 @@ extern NSString *const HEMSleepEventTypeSleeping;
 /**
  *  Updates and reloads data
  */
-- (void)reloadData:(void(^)(void))completion;
+- (void)reloadData:(void (^)(void))completion;
 
 /**
  *  Fetch the sleep data corresponding to a given index path
@@ -73,6 +60,24 @@ extern NSString *const HEMSleepEventTypeSleeping;
  */
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ *  Detect if an event segment has an associated audio snippet
+ *
+ *  @param indexPath index path of the segment to check
+ *
+ *  @return YES if there is a sound present on the computed segment
+ */
+- (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Load the sound for a given index path into NSData
+ *
+ *  @param indexPath index path of the sound event
+ *
+ *  @return sound data or nil if none or error
+ */
+- (NSData *)audioDataForIndexPath:(NSIndexPath *)indexPath;
+
 - (NSUInteger)numberOfSleepSegments;
 
 - (BOOL)dateIsLastNight;
@@ -89,7 +94,7 @@ extern NSString *const HEMSleepEventTypeSleeping;
 /**
  *  @return the currently displayed text in the top bar for the date of sleep
  */
-- (NSString*)dateTitle;
+- (NSString *)dateTitle;
 
 /**
  *  Set the top bar's state

@@ -8,7 +8,7 @@
 
 #import "NSString+HEMUtils.h"
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMEventAdjustConfirmationView.h"
 #import "HelloStyleKit.h"
 

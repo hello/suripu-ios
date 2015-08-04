@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const HEMEventBubbleWaveformHeight;
+
 @interface HEMEventBubbleView : UIView
 
-+ (CGSize)sizeWithAttributedText:(NSAttributedString *)text timeText:(NSAttributedString *)time;
++ (CGSize)sizeWithAttributedText:(NSAttributedString *)text timeText:(NSAttributedString *)time showWaveform:(BOOL)visible;
 
 - (void)setMessageText:(NSAttributedString *)message timeText:(NSAttributedString *)time;
+- (void)setHighlighted:(BOOL)highlighted;
+- (void)showWaveformViews:(BOOL)visible;
+
+@property (nonatomic, getter=isShowingWaveforms, readonly) BOOL showingWaveforms;
 @end

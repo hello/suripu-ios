@@ -9,7 +9,7 @@
 #import "NSDate+HEMRelative.h"
 
 #import "HEMTimelineTopBarCollectionReusableView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMCenterTitleDrawerClosedTop = 20.f;
 static CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
@@ -78,7 +78,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
     
     UIColor* titleTextColor
         = isOpen
-        ? [HelloStyleKit barButtonDisabledColor]
+        ? [UIColor barButtonDisabledColor]
         : [UIColor colorWithWhite:0 alpha:0.7f];
     
     [UIView animateWithDuration:0.2f

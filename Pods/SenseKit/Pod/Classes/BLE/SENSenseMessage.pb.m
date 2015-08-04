@@ -37,6 +37,7 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
     case ErrorTypeForceDataPushFailed:
     case ErrorTypeProtobufEncodeFailed:
     case ErrorTypeProtobufDecodeFailed:
+    case ErrorTypeServerConnectionTimeout:
       return YES;
     default:
       return NO;
@@ -48,6 +49,14 @@ BOOL WiFiStateIsValidValue(WiFiState value) {
     case WiFiStateWlanConnecting:
     case WiFiStateWlanConnected:
     case WiFiStateIpObtained:
+    case WiFiStateDnsResolved:
+    case WiFiStateSocketConnected:
+    case WiFiStateRequestSent:
+    case WiFiStateConnected:
+    case WiFiStateSslFail:
+    case WiFiStateHelloKeyFail:
+    case WiFiStateDnsFailed:
+    case WiFiStateConnectFailed:
       return YES;
     default:
       return NO;
@@ -1105,6 +1114,14 @@ static BatchedPillData* defaultBatchedPillDataInstance = nil;
 @property SENWifiEndpointSecurityType securityType;
 @property (strong) PillData* pillData;
 @property WiFiState wifiState;
+@property long bondCount;
+@property (strong) NSString* countryCode;
+@property (strong) NSData* aesKey;
+@property (strong) NSString* topVersion;
+@property unsigned long serverIp;
+@property unsigned long socketErrorCode;
+@property (strong) NSString* httpResponseCode;
+@property long appVersion;
 @end
 
 @implementation SENSenseMessage
@@ -1223,6 +1240,62 @@ static BatchedPillData* defaultBatchedPillDataInstance = nil;
   hasWifiState_ = !!value_;
 }
 @synthesize wifiState;
+- (BOOL) hasBondCount {
+  return !!hasBondCount_;
+}
+- (void) setHasBondCount:(BOOL) value_ {
+  hasBondCount_ = !!value_;
+}
+@synthesize bondCount;
+- (BOOL) hasCountryCode {
+  return !!hasCountryCode_;
+}
+- (void) setHasCountryCode:(BOOL) value_ {
+  hasCountryCode_ = !!value_;
+}
+@synthesize countryCode;
+- (BOOL) hasAesKey {
+  return !!hasAesKey_;
+}
+- (void) setHasAesKey:(BOOL) value_ {
+  hasAesKey_ = !!value_;
+}
+@synthesize aesKey;
+- (BOOL) hasTopVersion {
+  return !!hasTopVersion_;
+}
+- (void) setHasTopVersion:(BOOL) value_ {
+  hasTopVersion_ = !!value_;
+}
+@synthesize topVersion;
+- (BOOL) hasServerIp {
+  return !!hasServerIp_;
+}
+- (void) setHasServerIp:(BOOL) value_ {
+  hasServerIp_ = !!value_;
+}
+@synthesize serverIp;
+- (BOOL) hasSocketErrorCode {
+  return !!hasSocketErrorCode_;
+}
+- (void) setHasSocketErrorCode:(BOOL) value_ {
+  hasSocketErrorCode_ = !!value_;
+}
+@synthesize socketErrorCode;
+- (BOOL) hasHttpResponseCode {
+  return !!hasHttpResponseCode_;
+}
+- (void) setHasHttpResponseCode:(BOOL) value_ {
+  hasHttpResponseCode_ = !!value_;
+}
+@synthesize httpResponseCode;
+- (BOOL) hasAppVersion {
+  return !!hasAppVersion_;
+}
+- (void) setHasAppVersion:(BOOL) value_ {
+  hasAppVersion_ = !!value_;
+}
+@synthesize appVersion;
 - (void) dealloc {
   self.deviceId = nil;
   self.accountId = nil;
@@ -1232,6 +1305,10 @@ static BatchedPillData* defaultBatchedPillDataInstance = nil;
   self.motionDataEncrypted = nil;
   self.wifisDetectedArray = nil;
   self.pillData = nil;
+  self.countryCode = nil;
+  self.aesKey = nil;
+  self.topVersion = nil;
+  self.httpResponseCode = nil;
 }
 - (id) init {
   if ((self = [super init])) {
@@ -1251,6 +1328,14 @@ static BatchedPillData* defaultBatchedPillDataInstance = nil;
     self.securityType = SENWifiEndpointSecurityTypeOpen;
     self.pillData = [PillData defaultInstance];
     self.wifiState = WiFiStateNoWlanConnected;
+    self.bondCount = 0;
+    self.countryCode = @"";
+    self.aesKey = [NSData data];
+    self.topVersion = @"";
+    self.serverIp = 0;
+    self.socketErrorCode = 0;
+    self.httpResponseCode = @"";
+    self.appVersion = 0;
   }
   return self;
 }
@@ -1338,6 +1423,30 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   if (self.hasWifiState) {
     [output writeEnum:17 value:self.wifiState];
   }
+  if (self.hasBondCount) {
+    [output writeInt32:18 value:self.bondCount];
+  }
+  if (self.hasCountryCode) {
+    [output writeString:19 value:self.countryCode];
+  }
+  if (self.hasAesKey) {
+    [output writeData:20 value:self.aesKey];
+  }
+  if (self.hasTopVersion) {
+    [output writeString:21 value:self.topVersion];
+  }
+  if (self.hasServerIp) {
+    [output writeUInt32:22 value:self.serverIp];
+  }
+  if (self.hasSocketErrorCode) {
+    [output writeUInt32:23 value:self.socketErrorCode];
+  }
+  if (self.hasHttpResponseCode) {
+    [output writeString:24 value:self.httpResponseCode];
+  }
+  if (self.hasAppVersion) {
+    [output writeInt32:25 value:self.appVersion];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (long) serializedSize {
@@ -1397,6 +1506,30 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   }
   if (self.hasWifiState) {
     size_ += computeEnumSize(17, self.wifiState);
+  }
+  if (self.hasBondCount) {
+    size_ += computeInt32Size(18, self.bondCount);
+  }
+  if (self.hasCountryCode) {
+    size_ += computeStringSize(19, self.countryCode);
+  }
+  if (self.hasAesKey) {
+    size_ += computeDataSize(20, self.aesKey);
+  }
+  if (self.hasTopVersion) {
+    size_ += computeStringSize(21, self.topVersion);
+  }
+  if (self.hasServerIp) {
+    size_ += computeUInt32Size(22, self.serverIp);
+  }
+  if (self.hasSocketErrorCode) {
+    size_ += computeUInt32Size(23, self.socketErrorCode);
+  }
+  if (self.hasHttpResponseCode) {
+    size_ += computeStringSize(24, self.httpResponseCode);
+  }
+  if (self.hasAppVersion) {
+    size_ += computeInt32Size(25, self.appVersion);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -1490,6 +1623,30 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   if (self.hasWifiState) {
     [output appendFormat:@"%@%@: %d\n", indent, @"wifiState", self.wifiState];
   }
+  if (self.hasBondCount) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"bondCount", [NSNumber numberWithInteger:self.bondCount]];
+  }
+  if (self.hasCountryCode) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"countryCode", self.countryCode];
+  }
+  if (self.hasAesKey) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"aesKey", self.aesKey];
+  }
+  if (self.hasTopVersion) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"topVersion", self.topVersion];
+  }
+  if (self.hasServerIp) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"serverIp", [NSNumber numberWithInteger:self.serverIp]];
+  }
+  if (self.hasSocketErrorCode) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"socketErrorCode", [NSNumber numberWithInteger:self.socketErrorCode]];
+  }
+  if (self.hasHttpResponseCode) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"httpResponseCode", self.httpResponseCode];
+  }
+  if (self.hasAppVersion) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"appVersion", [NSNumber numberWithInteger:self.appVersion]];
+  }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
 - (BOOL) isEqual:(id)other {
@@ -1534,6 +1691,22 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
       (!self.hasPillData || [self.pillData isEqual:otherMessage.pillData]) &&
       self.hasWifiState == otherMessage.hasWifiState &&
       (!self.hasWifiState || self.wifiState == otherMessage.wifiState) &&
+      self.hasBondCount == otherMessage.hasBondCount &&
+      (!self.hasBondCount || self.bondCount == otherMessage.bondCount) &&
+      self.hasCountryCode == otherMessage.hasCountryCode &&
+      (!self.hasCountryCode || [self.countryCode isEqual:otherMessage.countryCode]) &&
+      self.hasAesKey == otherMessage.hasAesKey &&
+      (!self.hasAesKey || [self.aesKey isEqual:otherMessage.aesKey]) &&
+      self.hasTopVersion == otherMessage.hasTopVersion &&
+      (!self.hasTopVersion || [self.topVersion isEqual:otherMessage.topVersion]) &&
+      self.hasServerIp == otherMessage.hasServerIp &&
+      (!self.hasServerIp || self.serverIp == otherMessage.serverIp) &&
+      self.hasSocketErrorCode == otherMessage.hasSocketErrorCode &&
+      (!self.hasSocketErrorCode || self.socketErrorCode == otherMessage.socketErrorCode) &&
+      self.hasHttpResponseCode == otherMessage.hasHttpResponseCode &&
+      (!self.hasHttpResponseCode || [self.httpResponseCode isEqual:otherMessage.httpResponseCode]) &&
+      self.hasAppVersion == otherMessage.hasAppVersion &&
+      (!self.hasAppVersion || self.appVersion == otherMessage.appVersion) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -1589,6 +1762,30 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   if (self.hasWifiState) {
     hashCode = hashCode * 31 + self.wifiState;
   }
+  if (self.hasBondCount) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.bondCount] hash];
+  }
+  if (self.hasCountryCode) {
+    hashCode = hashCode * 31 + [self.countryCode hash];
+  }
+  if (self.hasAesKey) {
+    hashCode = hashCode * 31 + [self.aesKey hash];
+  }
+  if (self.hasTopVersion) {
+    hashCode = hashCode * 31 + [self.topVersion hash];
+  }
+  if (self.hasServerIp) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.serverIp] hash];
+  }
+  if (self.hasSocketErrorCode) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.socketErrorCode] hash];
+  }
+  if (self.hasHttpResponseCode) {
+    hashCode = hashCode * 31 + [self.httpResponseCode hash];
+  }
+  if (self.hasAppVersion) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.appVersion] hash];
+  }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
 }
@@ -1624,6 +1821,9 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
     case SENSenseMessageTypeGetNextWifiAp:
     case SENSenseMessageTypeLedSuccess:
     case SENSenseMessageTypePushData:
+    case SENSenseMessageTypeSetCountryCode:
+    case SENSenseMessageTypeSetServerIp:
+    case SENSenseMessageTypeConnectionState:
       return YES;
     default:
       return NO;
@@ -1724,6 +1924,30 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
   }
   if (other.hasWifiState) {
     [self setWifiState:other.wifiState];
+  }
+  if (other.hasBondCount) {
+    [self setBondCount:other.bondCount];
+  }
+  if (other.hasCountryCode) {
+    [self setCountryCode:other.countryCode];
+  }
+  if (other.hasAesKey) {
+    [self setAesKey:other.aesKey];
+  }
+  if (other.hasTopVersion) {
+    [self setTopVersion:other.topVersion];
+  }
+  if (other.hasServerIp) {
+    [self setServerIp:other.serverIp];
+  }
+  if (other.hasSocketErrorCode) {
+    [self setSocketErrorCode:other.socketErrorCode];
+  }
+  if (other.hasHttpResponseCode) {
+    [self setHttpResponseCode:other.httpResponseCode];
+  }
+  if (other.hasAppVersion) {
+    [self setAppVersion:other.appVersion];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -1839,6 +2063,38 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
         } else {
           [unknownFields mergeVarintField:17 value:value];
         }
+        break;
+      }
+      case 144: {
+        [self setBondCount:[input readInt32]];
+        break;
+      }
+      case 154: {
+        [self setCountryCode:[input readString]];
+        break;
+      }
+      case 162: {
+        [self setAesKey:[input readData]];
+        break;
+      }
+      case 170: {
+        [self setTopVersion:[input readString]];
+        break;
+      }
+      case 176: {
+        [self setServerIp:[input readUInt32]];
+        break;
+      }
+      case 184: {
+        [self setSocketErrorCode:[input readUInt32]];
+        break;
+      }
+      case 194: {
+        [self setHttpResponseCode:[input readString]];
+        break;
+      }
+      case 200: {
+        [self setAppVersion:[input readInt32]];
         break;
       }
     }
@@ -2137,6 +2393,134 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
 - (SENSenseMessageBuilder*) clearWifiState {
   result.hasWifiState = NO;
   result.wifiState = WiFiStateNoWlanConnected;
+  return self;
+}
+- (BOOL) hasBondCount {
+  return result.hasBondCount;
+}
+- (long) bondCount {
+  return result.bondCount;
+}
+- (SENSenseMessageBuilder*) setBondCount:(long) value {
+  result.hasBondCount = YES;
+  result.bondCount = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearBondCount {
+  result.hasBondCount = NO;
+  result.bondCount = 0;
+  return self;
+}
+- (BOOL) hasCountryCode {
+  return result.hasCountryCode;
+}
+- (NSString*) countryCode {
+  return result.countryCode;
+}
+- (SENSenseMessageBuilder*) setCountryCode:(NSString*) value {
+  result.hasCountryCode = YES;
+  result.countryCode = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearCountryCode {
+  result.hasCountryCode = NO;
+  result.countryCode = @"";
+  return self;
+}
+- (BOOL) hasAesKey {
+  return result.hasAesKey;
+}
+- (NSData*) aesKey {
+  return result.aesKey;
+}
+- (SENSenseMessageBuilder*) setAesKey:(NSData*) value {
+  result.hasAesKey = YES;
+  result.aesKey = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearAesKey {
+  result.hasAesKey = NO;
+  result.aesKey = [NSData data];
+  return self;
+}
+- (BOOL) hasTopVersion {
+  return result.hasTopVersion;
+}
+- (NSString*) topVersion {
+  return result.topVersion;
+}
+- (SENSenseMessageBuilder*) setTopVersion:(NSString*) value {
+  result.hasTopVersion = YES;
+  result.topVersion = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearTopVersion {
+  result.hasTopVersion = NO;
+  result.topVersion = @"";
+  return self;
+}
+- (BOOL) hasServerIp {
+  return result.hasServerIp;
+}
+- (unsigned long) serverIp {
+  return result.serverIp;
+}
+- (SENSenseMessageBuilder*) setServerIp:(unsigned long) value {
+  result.hasServerIp = YES;
+  result.serverIp = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearServerIp {
+  result.hasServerIp = NO;
+  result.serverIp = 0;
+  return self;
+}
+- (BOOL) hasSocketErrorCode {
+  return result.hasSocketErrorCode;
+}
+- (unsigned long) socketErrorCode {
+  return result.socketErrorCode;
+}
+- (SENSenseMessageBuilder*) setSocketErrorCode:(unsigned long) value {
+  result.hasSocketErrorCode = YES;
+  result.socketErrorCode = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearSocketErrorCode {
+  result.hasSocketErrorCode = NO;
+  result.socketErrorCode = 0;
+  return self;
+}
+- (BOOL) hasHttpResponseCode {
+  return result.hasHttpResponseCode;
+}
+- (NSString*) httpResponseCode {
+  return result.httpResponseCode;
+}
+- (SENSenseMessageBuilder*) setHttpResponseCode:(NSString*) value {
+  result.hasHttpResponseCode = YES;
+  result.httpResponseCode = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearHttpResponseCode {
+  result.hasHttpResponseCode = NO;
+  result.httpResponseCode = @"";
+  return self;
+}
+- (BOOL) hasAppVersion {
+  return result.hasAppVersion;
+}
+- (long) appVersion {
+  return result.appVersion;
+}
+- (SENSenseMessageBuilder*) setAppVersion:(long) value {
+  result.hasAppVersion = YES;
+  result.appVersion = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearAppVersion {
+  result.hasAppVersion = NO;
+  result.appVersion = 0;
   return self;
 }
 @end

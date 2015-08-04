@@ -11,16 +11,13 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMPillPairViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingCache.h"
 #import "HEMSettingsTableViewController.h"
-#import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
-#import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
@@ -58,7 +55,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureActivity {
-    [[self activityLabel] setTextColor:[HelloStyleKit senseBlueColor]];
+    [[self activityLabel] setTextColor:[UIColor tintColor]];
     [[self activityLabel] setText:nil];
     
     NSString* text = NSLocalizedString(@"pairing.activity.waiting-for-sense", nil);
@@ -66,7 +63,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureButtons {
-    [[self skipButton] setTitleColor:[HelloStyleKit senseBlueColor]
+    [[self skipButton] setTitleColor:[UIColor tintColor]
                             forState:UIControlStateNormal];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     
@@ -85,12 +82,12 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 - (void)showRetryButtonAsRetrying:(BOOL)retrying {
     if (retrying) {
         [[self retryButton] setBackgroundColor:[UIColor clearColor]];
-        [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor]
+        [[self retryButton] setTitleColor:[UIColor tintColor]
                                  forState:UIControlStateNormal];
         [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
     } else {
-        [[self retryButton] setBackgroundColor:[HelloStyleKit senseBlueColor]];
-        [[self retryButton] setTitleColor:[HelloStyleKit actionButtonTextColor]
+        [[self retryButton] setBackgroundColor:[UIColor tintColor]];
+        [[self retryButton] setTitleColor:[UIColor actionButtonTextColor]
                                  forState:UIControlStateNormal];
         [[self retryButton] stopActivity];
     }
@@ -254,8 +251,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         __weak typeof(self) weakSelf = self;
         [[self manager] setLED:ledState completion:^(id response, NSError *error) {
             if (error != nil) {
-                [SENAnalytics track:kHEMAnalyticsEventWarning
-                         properties:@{kHEMAnalyticsEventPropMessage : @"failed to set LED on Sense"}];
+                [SENAnalytics trackWarningWithMessage:@"failed to set LED on Sense"];
             }
             [weakSelf proceed];
         }];
@@ -276,21 +272,18 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [dialogVC setDefaultButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     
-    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:nil];
     
+    __weak typeof(self) weakSelf = self;
     [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self trackAnalyticsEvent:HEMAnalyticsEventSkip properties:@{
-                kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
-            }];
-            
-            [[self manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
-            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
-            NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
-            [self performSegueWithIdentifier:segueId sender:self];
-        }];
+        __strong typeof(weakSelf) strongSelf = self;
+        NSDictionary* props = @{kHEMAnalyticsEventPropOnBScreen :kHEMAnalyticsEventPropScreenPillPairing};
+        [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
+        
+        [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
+        [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
 }
 
@@ -301,10 +294,10 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 #pragma mark - Next
 
 - (void)proceed {
-    [HEMOnboardingUtils notifyOfPillPairingChange];
+    [[HEMOnboardingService sharedService] notifyOfPillPairingChange];
     
     if ([self delegate] == nil) {
-        [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
         
         NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];
@@ -343,7 +336,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     }];
     
     if (error) {
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        [SENAnalytics trackError:error];
     }
 }
 

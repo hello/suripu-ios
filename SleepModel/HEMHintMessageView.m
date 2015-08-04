@@ -9,7 +9,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMHintMessageView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMHintMessagePadding = 18.0f;
 
@@ -59,7 +59,7 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     frame.size.height = viewHeight;
     
     [self setFrame:frame];
-    [self setBackgroundColor:[HelloStyleKit handholdingMessageBackgroundColor]];
+    [self setBackgroundColor:[UIColor handholdingMessageBackgroundColor]];
     [self addSubview:messageLabel];
     [self addSubview:dismissButton];
     [self setDismissButton:dismissButton];
@@ -70,7 +70,7 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     [button setImage:image forState:UIControlStateNormal];
     [button setFrame:frame];
     [button setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
-    [button setBackgroundColor:[HelloStyleKit handholdingMessageBackgroundColor]];
+    [button setBackgroundColor:[UIColor handholdingMessageBackgroundColor]];
     
     return button;
 }
@@ -86,7 +86,7 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     [label setFont:[UIFont handholdingMessageFont]];
     [label setTextColor:[UIColor whiteColor]];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-    [label setBackgroundColor:[HelloStyleKit handholdingMessageBackgroundColor]];
+    [label setBackgroundColor:[UIColor handholdingMessageBackgroundColor]];
     
     return label;
 }

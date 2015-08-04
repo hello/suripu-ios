@@ -1,5 +1,87 @@
 # Changelog
 
+## 1.1.1.7
+
+New:
+
+* Updated animation for timeline sleep depth popup
+
+Fixes:
+
+* Fixed bug where sleep depth popup mask remains while scrolling
+
+## 1.1.1.6
+
+New:
+
+* Added Pill Color explanation card in device settings
+* App review prompt and app usage instrumentation
+* Audio playback UI in timeline
+
+Fixes:
+
+* device warning about sense not connected to internet will no longer show if app was never able to connect to Sense over BLE to begin with
+* timeline timestamps font change
+
+## 1.1.1.5
+
+New:
+
+* Added visual feedback when tapping on / selecting event cards in timeline
+* Improved sensor detail scrubbing
+
+Fixes:
+
+* 24 hour clock will now display with leading zero when appropriate
+* insights with images no longer will reload when scrolling
+
+## 1.1.1.4
+
+New:
+
+* Updated icons
+
+## 1.1.1.3
+
+New:
+
+* Improved visual feedback when tapping on sleep bars on timeline
+* WiFi connection statuses now processed and sent to mixpanel (req new fw)
+* Cleaned up error analytics to reduce noise in mixpanel / geckoboard
+
+## 1.1.1.2
+
+New:
+
+* Extend side of timeline when rubber banding the scrollview
+
+## 1.1.1.1
+
+New:
+
+* Hide sleep timeline UI when views more than 1 level deep is pushed in the back view
+
+Fixes:
+
+* Fix time formatting for time displays to always include two digits for hours
+* Tight up vertical padding of timeline breakdown metric cells
+* Fix issue where tapping on Sign Out after pulling down the timeline should no longer cause the alert to not be dismissed
+* Fix issue with factoy reset error messages not be able to be dismissed sometimes
+
+Misc:
+
+* Refactored onboarding code to be more maintainable
+* Added a Rate the app hook in to the app
+* Moved app color definitions from PaintCode to a category
+* Alerts now dismiss itself rather than depending on caller
+
+## 1.1.1.0
+
+New:
+
+* Hide the timeline top bar when back view pushes a new view on to the stack
+* Code clean code of app colors.  Require a quick sanity check
+
 ## 1.1.0.6
 
 New:

@@ -4,16 +4,14 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMGenderPickerViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
-#import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMGenderPickerViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *selectorContainer;
 @property (weak, nonatomic) IBOutlet UIView *selectorDivider;
 @property (weak, nonatomic) IBOutlet UIButton *femaleSelectorButton;
@@ -33,8 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setSelectedColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.05f]];
-    [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
+    [self setSelectedColor:[[UIColor tintColor] colorWithAlphaComponent:0.05f]];
+    [self setSelectedBorderColor:[[UIColor tintColor] colorWithAlphaComponent:0.4f]];
     [self configureButtons];
     [self configureGenderSelectors];
     [self trackAnalyticsEvent:HEMAnalyticsEventGender];
@@ -54,9 +52,9 @@
 }
 
 - (void)configureGenderSelectors {
-    [[self selectorDivider] setBackgroundColor:[HelloStyleKit separatorColor]];
+    [[self selectorDivider] setBackgroundColor:[UIColor separatorColor]];
     [[[self selectorContainer] layer] setBorderWidth:1.0f];
-    [[[self selectorContainer] layer] setBorderColor:[[HelloStyleKit separatorColor] CGColor]];
+    [[[self selectorContainer] layer] setBorderColor:[[UIColor separatorColor] CGColor]];
     
     [[[self femaleSelectorButton] layer] setBorderWidth:0.0f];
     [[[self femaleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];
@@ -130,7 +128,8 @@
     if ([self delegate] != nil) {
         [[self delegate] didSelectGender:[self selectedGender] from:self];
     } else {
-        [[[HEMOnboardingCache sharedCache] account] setGender:[self selectedGender]];
+        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
+        [account setGender:[self selectedGender]];
         [self next];
     }
 }
@@ -145,7 +144,7 @@
 
 - (void)next {
     // update analytics property for gender
-    [HEMAnalytics updateGender:[self selectedGender]];
+    [SENAnalytics updateGender:[self selectedGender]];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard heightSegueIdentifier]
                               sender:self];
 }

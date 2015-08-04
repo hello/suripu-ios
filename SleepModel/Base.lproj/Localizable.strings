@@ -402,7 +402,6 @@
 "sleep-event.title.format" = "%@ – %@";
 "sleep-event.action.approve.title" = "Mark as correct";
 "sleep-event.action.adjust.title" = "Adjust time";
-"sleep-event.action.none.title" = "No actions available";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
 

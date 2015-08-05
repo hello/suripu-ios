@@ -200,6 +200,14 @@
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
+// changing server
+"debug.option.change-api-address" = "Change API Address";
+"authorization.set-url.title" = "Update API URL";
+"authorization.set-url.message" = "Set the location of the sleep tracking API";
+"authorization.set-url.action.reset" = "Reset to Default";
+"authorization.failed-url.title" = "URL Not Recognized";
+"authorization.failed-url.message" = "The system could not understand the provided URL. Please try again.";
+
 // colors
 "color.blue" = "Blue";
 "color.red" = "Red";
@@ -508,6 +516,7 @@
 "actions.next" = "Next";
 "actions.done" = "Done";
 "actions.saved" = "Saved";
+"actions.save" = "Save";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";
 "status.success" = "Done";

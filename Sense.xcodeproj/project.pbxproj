@@ -4516,7 +4516,7 @@
 				SENSE_API_URL = "https://api.hello.is/v1";
 				SENSE_APP_ID = is.hello.Sense;
 				SENSE_APP_NAME = Sense;
-				SENSE_APP_REVIEW_URL = "";
+				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_SUPPORT_OPTIONS = NO;

@@ -191,4 +191,9 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     [super setHighlighted:highlighted];
 }
 
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
+    [super setUserInteractionEnabled:userInteractionEnabled];
+    [[self contentContainerView] setShadowVisible:userInteractionEnabled];
+}
+
 @end

@@ -681,6 +681,8 @@
 		BFDCC7BA19D9C741007A922B /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B819D9C741007A922B /* sense.png */; };
 		BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B919D9C741007A922B /* sense@2x.png */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
+		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
+		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
 		BFE2774D1AF44E2F00C1FB4A /* wifiIconLow.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE277441AF44E2F00C1FB4A /* wifiIconLow.png */; };
 		BFE2774E1AF44E2F00C1FB4A /* wifiIconLow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE277451AF44E2F00C1FB4A /* wifiIconLow@2x.png */; };
 		BFE2774F1AF44E2F00C1FB4A /* wifiIconLow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE277461AF44E2F00C1FB4A /* wifiIconLow@3x.png */; };
@@ -1623,6 +1625,9 @@
 		BFDCC7B919D9C741007A922B /* sense@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sense@2x.png"; path = "images/sense@2x.png"; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
+		BFDFCE9D1B72884B000DA303 /* HEMSensorValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorValueFormatter.h; sourceTree = "<group>"; };
+		BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatter.m; sourceTree = "<group>"; };
+		BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatterSpec.m; sourceTree = "<group>"; };
 		BFE277441AF44E2F00C1FB4A /* wifiIconLow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wifiIconLow.png; path = images/wifiIconLow.png; sourceTree = "<group>"; };
 		BFE277451AF44E2F00C1FB4A /* wifiIconLow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wifiIconLow@2x.png"; path = "images/wifiIconLow@2x.png"; sourceTree = "<group>"; };
 		BFE277461AF44E2F00C1FB4A /* wifiIconLow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wifiIconLow@3x.png"; path = "images/wifiIconLow@3x.png"; sourceTree = "<group>"; };
@@ -1816,6 +1821,7 @@
 				BF78E98D1B20D1660015949F /* Common */,
 				BF2EAD221B31F85E00C3A6E3 /* Onboarding */,
 				BFC99BC21B6BED28008F7F0D /* Review */,
+				BFDFCEA01B729F96000DA303 /* Sensors */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				8AC3C2E71A3CB8130074A87F /* Back Attic */,
 				BF664A951ACC60FD003355D2 /* System Alerts */,
@@ -2447,6 +2453,8 @@
 		8A7214351A1C12E1008B59C4 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				BFDFCE9D1B72884B000DA303 /* HEMSensorValueFormatter.h */,
+				BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -3377,6 +3385,14 @@
 			name = PillColor;
 			sourceTree = "<group>";
 		};
+		BFDFCEA01B729F96000DA303 /* Sensors */ = {
+			isa = PBXGroup;
+			children = (
+				BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */,
+			);
+			name = Sensors;
+			sourceTree = "<group>";
+		};
 		BFE3B8F919F5F1D40055B3B6 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -4229,6 +4245,7 @@
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,
 				BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
+				BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */,
 				BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */,
@@ -4341,6 +4358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
 				8AC3C2E61A3CB7F40074A87F /* HEMSnazzBarControllerSpec.m in Sources */,

@@ -421,6 +421,10 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
     SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    if (segment.possibleActions == SENTimelineSegmentActionNone) {
+        return;
+    }
+    
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
@@ -468,14 +472,6 @@ static BOOL hasLoadedBefore = NO;
                                [self removeSegment:segment];
                                [self markSenseLearnsAsShown];
                            }];
-    }
-
-    if (segment.possibleActions == SENTimelineSegmentActionNone) {
-        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.none.title", nil)
-                       titleColor:[UIColor grayColor]
-                      description:nil
-                        imageName:nil
-                           action:^{}];
     }
 
     // add title, if needed

@@ -80,11 +80,15 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 - (void)setHighlighted:(BOOL)highlighted {
     if (highlighted) {
         self.cornerView.backgroundColor = [UIColor timelineEventSelectedBackgroundColor];
-        self.layer.shadowOpacity = 0.0f;
+        [self setShadowVisible:NO];
     } else {
-        self.layer.shadowOpacity = HEMEventBubbleShadowOpacity;
+        [self setShadowVisible:YES];
         self.cornerView.backgroundColor = [UIColor whiteColor];
     }
+}
+
+- (void)setShadowVisible:(BOOL)visible {
+    self.layer.shadowOpacity = visible ? HEMEventBubbleShadowOpacity : 0.0f;
 }
 
 - (void)showWaveformViews:(BOOL)visible {

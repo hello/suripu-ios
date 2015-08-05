@@ -16,6 +16,7 @@ extern CGFloat const HEMEventBubbleWaveformHeight;
 
 - (void)setMessageText:(NSAttributedString *)message timeText:(NSAttributedString *)time;
 - (void)setHighlighted:(BOOL)highlighted;
+- (void)setShadowVisible:(BOOL)visible;
 - (void)showWaveformViews:(BOOL)visible;
 
 @property (nonatomic, getter=isShowingWaveforms, readonly) BOOL showingWaveforms;

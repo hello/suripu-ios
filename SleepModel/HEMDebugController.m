@@ -7,7 +7,7 @@
 //
 #import <MessageUI/MessageUI.h>
 
-#import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/API.h>
 #import <SenseKit/SENSenseManager.h>
 
 #import "HEMDebugController.h"
@@ -72,6 +72,7 @@
     [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
+    [self addChangeServerOptionToSheet:sheet];
     [self addCancelOptionTo:sheet];
     
     [self setSupportOptionController:sheet];
@@ -93,6 +94,15 @@
     }];
 }
 
+- (void)addChangeServerOptionToSheet:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.change-api-address", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showURLUpdateAlertView];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
 - (void)addResetCheckpointOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset", nil) action:^{
@@ -108,6 +118,41 @@
         [strongSelf setSupportOptionController:nil];
         [SENAuthorizationService deauthorize];
     }];
+}
+
+#pragma mark API Address
+
+- (void)showURLUpdateAlertView {
+    UIAlertView* URLAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.set-url.title", nil)
+                                                           message:NSLocalizedString(@"authorization.set-url.message", nil)
+                                                          delegate:self
+                                                 cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
+                                                 otherButtonTitles:NSLocalizedString(@"actions.save", nil), NSLocalizedString(@"authorization.set-url.action.reset", nil), nil];
+    URLAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField* URLField = [URLAlertView textFieldAtIndex:0];
+    URLField.text = [SENAPIClient baseURL].absoluteString;
+    URLField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [URLAlertView show];
+}
+
+- (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 2: {
+            [SENAPIClient resetToDefaultBaseURL];
+            break;
+        }
+        case 1: {
+            UITextField* URLField = [alertView textFieldAtIndex:0];
+            if (![SENAPIClient setBaseURLFromPath:URLField.text]) {
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.failed-url.title", nil)
+                                            message:NSLocalizedString(@"authorization.failed-url.message", nil)
+                                           delegate:self
+                                  cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
+                                  otherButtonTitles:nil] show];
+            }
+            break;
+        }
+    }
 }
 
 #pragma mark LED Support

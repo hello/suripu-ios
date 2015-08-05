@@ -485,14 +485,6 @@
 "trends.not-enough-data.message" = "Not enough data yet, check back later";
 "trends.not-enough-data.title" = "Sleep trends";
 
-"trends.days.monday.short" = "M";
-"trends.days.tuesday.short" = "T";
-"trends.days.wednesday.short" = "W";
-"trends.days.thursday.short" = "T";
-"trends.days.friday.short" = "F";
-"trends.days.saturday.short" = "S";
-"trends.days.sunday.short" = "S";
-
 // actions
 "actions.cancel" = "Cancel";
 "actions.ok" = "Okay";

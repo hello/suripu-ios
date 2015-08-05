@@ -199,24 +199,12 @@
 
 - (NSString*)dayOfWeekForIndex:(int)index
 {
-    switch (index) {
-    case 0:
-        return NSLocalizedString(@"trends.days.sunday.short", nil);
-    case 1:
-        return NSLocalizedString(@"trends.days.monday.short", nil);
-    case 2:
-        return NSLocalizedString(@"trends.days.tuesday.short", nil);
-    case 3:
-        return NSLocalizedString(@"trends.days.wednesday.short", nil);
-    case 4:
-        return NSLocalizedString(@"trends.days.thursday.short", nil);
-    case 5:
-        return NSLocalizedString(@"trends.days.friday.short", nil);
-    case 6:
-        return NSLocalizedString(@"trends.days.saturday.short", nil);
-    default:
-        return nil;
+    NSArray* weekDaySymbols = self.dayOfWeekFormatter.shortWeekdaySymbols;
+    NSString* firstLetter = nil;
+    if (index < [weekDaySymbols count]) {
+        firstLetter = [[weekDaySymbols[index] substringToIndex:1] uppercaseString];
     }
+    return firstLetter;
 }
 
 #pragma mark HEMScopePickerViewDelegate

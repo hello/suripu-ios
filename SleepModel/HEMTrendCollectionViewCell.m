@@ -199,12 +199,8 @@
 
 - (NSString*)dayOfWeekForIndex:(int)index
 {
-    NSArray* weekDaySymbols = self.dayOfWeekFormatter.shortWeekdaySymbols;
-    NSString* firstLetter = nil;
-    if (index < [weekDaySymbols count]) {
-        firstLetter = [[weekDaySymbols[index] substringToIndex:1] uppercaseString];
-    }
-    return firstLetter;
+    NSArray* weekDaySymbols = self.dayOfWeekFormatter.veryShortWeekdaySymbols;
+    return index < [weekDaySymbols count] ? [weekDaySymbols[index] uppercaseString] : nil;
 }
 
 #pragma mark HEMScopePickerViewDelegate

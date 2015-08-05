@@ -158,6 +158,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     buttonView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
     [buttonView setImage:image forState:UIControlStateNormal];
     [buttonView addTarget:self action:@selector(showTutorial) forControlEvents:UIControlEventTouchUpInside];
+    [buttonView setAdjustsImageWhenHighlighted:NO];
     UIBarButtonItem* rightItem = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
 
     UIBarButtonItem *rightFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace

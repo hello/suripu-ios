@@ -168,7 +168,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 - (NSString*)sensorNameAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView *)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [sensor name];
+    return [sensor localizedName];
 }
 
 - (NSString*)sensorMessageAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {

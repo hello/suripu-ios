@@ -28,7 +28,7 @@
 "onboarding.before-sleep.3.title" = "Something's not right";
 "onboarding.before-sleep.4.title" = "We've got a problem";
 "onboarding.before-sleep.5.title" = "Just wave";
-"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, AQI, light, and sound. Sense has three different colors.";
+"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, AQI, light, and noise. Sense has three different colors.";
 "onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
 "onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
@@ -342,7 +342,7 @@
 "sensor.temperature" = "Temperature";
 "sensor.humidity" = "Humidity";
 "sensor.particulates" = "Air quality";
-"sensor.sound" = "Sound";
+"sensor.sound" = "Noise";
 "sensor.light" = "Light";
 "sensor.data-unavailable" = "Sensor data is unavailable.";
 "sensor.value.none" = "No data";
@@ -415,7 +415,7 @@
 "sleep-stat.temperature" = "Temperature";
 "sleep-stat.humidity" = "Humidity";
 "sleep-stat.light" = "Light";
-"sleep-stat.sound" = "Sound";
+"sleep-stat.sound" = "Noise";
 "sleep-stat.particulates" = "Air quality";
 "sleep-stat.minute.format" = "%.0f";
 "sleep-stat.minute.unit" = "m";
@@ -590,7 +590,7 @@
 "tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";
 
 "tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you'll see the current conditions in your bedroom: temperature, humidity, air quality, light, and sound.\n\nThese values update as Sense uploads new data. So as the conditions in your room change, it may take a few moments for them to be reflected here.\n\nTap a card to see more details.";
+"tutorial.sensors.message" = "Here you'll see the current conditions in your bedroom: temperature, humidity, air quality, light, and noise.\n\nThese values update as Sense uploads new data. So as the conditions in your room change, it may take a few moments for them to be reflected here.\n\nTap a card to see more details.";
 
 "tutorial.sensor.temperature.title" = "Temperature";
 "tutorial.sensor.temperature.message" = "A proper temperature is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";
@@ -598,8 +598,8 @@
 "tutorial.sensor.humidity.message" = "Humidity is a measure of the amount of moisture in the air. Here you’ll see detailed information on the humidity levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.light.title" = "Light";
 "tutorial.sensor.light.message" = "Sense measures light in lux (lx), which is the standard unit of illuminance. Here you’ll see detailed information on the light levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.sound.title" = "Sound";
-"tutorial.sensor.sound.message" = "Sense measures sound in decibels (dB). Here you’ll see detailed information on the sound levels in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.sound.title" = "Noise";
+"tutorial.sensor.sound.message" = "Sense measures noise in decibels (dB). Here you’ll see detailed information on the noise levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.particulates.title" = "Air quality";
 "tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";
 

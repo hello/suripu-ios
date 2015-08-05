@@ -16,6 +16,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMActionButton.h"
+#import "HEMSensorValueFormatter.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                                   UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate>
@@ -28,6 +29,7 @@
 @property (nonatomic) BOOL shouldReload;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @property (nonatomic, strong) NSDate *lastRefreshDate;
+@property (nonatomic, strong) HEMSensorValueFormatter* sensorValueFormatter;
 @end
 
 @implementation HEMCurrentConditionsViewController
@@ -51,8 +53,13 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [self setDefaultProperties];
+}
+
+- (void)setDefaultProperties {
     self.loading = YES;
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
+    self.sensorValueFormatter = [[HEMSensorValueFormatter alloc] init];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -391,21 +398,19 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (NSAttributedString *)valueTextForSensor:(SENSensor *)sensor {
     static NSInteger HEMSensorUnitVerticalOffset = 14;
     NSDictionary *baseAttributes = @{ NSFontAttributeName : [UIFont sensorListValueFont] };
-    if (!sensor.value) {
-        return
-            [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil) attributes:baseAttributes];
-    }
-    NSNumber *value = sensor.valueInPreferredUnit;
-    NSString *valueText = [NSString stringWithFormat:@"%ld", [value longValue]];
+    NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
     NSMutableAttributedString *composite =
         [[NSMutableAttributedString alloc] initWithString:valueText attributes:baseAttributes];
-    NSDictionary *unitAttributes = @{
-        NSFontAttributeName : [UIFont sensorListUnitFont],
-        NSBaselineOffsetAttributeName : @(HEMSensorUnitVerticalOffset)
-    };
-    NSAttributedString *unit =
-        [[NSAttributedString alloc] initWithString:sensor.localizedUnit attributes:unitAttributes];
-    [composite appendAttributedString:unit];
+    
+    if (sensor.value) {
+        NSDictionary *unitAttributes = @{NSFontAttributeName : [UIFont sensorListUnitFont],
+                                         NSBaselineOffsetAttributeName : @(HEMSensorUnitVerticalOffset)};
+        NSAttributedString *unit =
+            [[NSAttributedString alloc] initWithString:sensor.localizedUnit
+                                            attributes:unitAttributes];
+        [composite appendAttributedString:unit];
+    }
+
     return composite;
 }
 

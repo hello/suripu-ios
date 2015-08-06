@@ -47,6 +47,11 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
+@property (nonatomic, weak) IBOutlet UIImageView *errorImageView;
+@property (nonatomic, weak) IBOutlet UILabel *errorTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *errorMessageLabel;
+@property (nonatomic, weak) IBOutlet UIButton *errorSupportButton;
+@property (nonatomic, weak) IBOutlet UIView *errorViewsContainerView;
 @property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 
@@ -211,7 +216,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)finishInitialAnimation {
-    self.collectionView.scrollEnabled = YES;
+    if ([self.dataSource hasTimelineData])
+        self.collectionView.scrollEnabled = YES;
 }
 
 - (void)performInitialAnimation {
@@ -838,18 +844,41 @@ static BOOL hasLoadedBefore = NO;
     self.dataSource =
         [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
+    [self updateLayoutWithError:nil];
 
     __weak typeof(self) weakSelf = self;
     [self.dataSource reloadData:^(NSError *error) {
       __strong typeof(weakSelf) strongSelf = weakSelf;
       strongSelf.loadingData = NO;
-
       [strongSelf updateAppUsageIfNeeded];
-
-      if ([strongSelf isVisible]) {
-          [strongSelf checkIfInitialAnimationNeeded];
-      }
+      [strongSelf updateLayoutWithError:error];
     }];
+}
+
+- (void)updateLayoutWithError:(NSError *)error {
+    BOOL hasTimelineData = [self.dataSource hasTimelineData];
+    if (error && !hasTimelineData) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
+        [self setErrorViewsVisible:YES];
+    } else if (hasTimelineData) {
+        [self setErrorViewsVisible:NO];
+        if ([self isVisible])
+            [self checkIfInitialAnimationNeeded];
+    } else {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
+        NSString *message = self.dataSource.sleepResult.message;
+        self.errorMessageLabel.text = message.length > 0 ? message
+                                                         : NSLocalizedString(@"sleep-data.not-enough.message", nil);
+        [self setErrorViewsVisible:YES];
+    }
+}
+
+- (void)setErrorViewsVisible:(BOOL)isVisible {
+    self.errorViewsContainerView.hidden = !isVisible;
+    self.collectionView.scrollEnabled = !isVisible;
+    if (isVisible && self.collectionView.contentOffset.y > 0)
+        self.collectionView.contentOffset = CGPointZero;
 }
 
 - (void)updateAppUsageIfNeeded {

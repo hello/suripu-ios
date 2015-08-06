@@ -382,6 +382,12 @@
 "measurement.db.format" = "%lddb";
 "measurement.lx.format" = "%ldlx";
 
+// missing data
+"sleep-data.not-enough.title" = "Not enough data";
+"sleep-data.not-enough.message" = "There was not enough sleep data recorded to display a Sleep Timeline for this night.";
+"sleep-data.error.title" = "There was an error";
+"sleep-data.error.message" = "An error occurred while displaying your timeline. Please try again later.";
+
 // feedback
 "sleep-event.feedback.title.generic" = "What time did this event occur?";
 "sleep-event.feedback.title.got_in_bed" = "What time did you get into bed?";

@@ -74,6 +74,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         _hourDateFormatter = [NSDateFormatter new];
         _meridiemFormatter = [NSDateFormatter new];
         _inlineNumberFormatter = [HEMSplitTextFormatter new];
+        _sleepResult = [SENTimeline timelineForDate:date];
         [self configureCollectionView];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reloadData)
@@ -110,7 +111,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self reloadData:nil];
 }
 
-- (void)reloadData:(void (^)(void))completion {
+- (void)reloadData:(void (^)(NSError*))completion {
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
     if ([self shouldShowLoadingView]) {
@@ -137,7 +138,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                           [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
                       }
                       if (completion)
-                          completion();
+                          completion(error);
                     }];
 }
 
@@ -220,6 +221,10 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     return self.sleepResult.segments.count;
 }
 
+- (BOOL)hasTimelineData {
+    return self.sleepResult.scoreCondition != SENConditionUnknown && [self numberOfSleepSegments] > 0;
+}
+
 #pragma mark - Top Bar
 
 - (NSString *)dateTitle {
@@ -228,7 +233,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 - (void)updateTimelineState:(BOOL)isOpen {
     [[self topBarView] setOpened:isOpen];
-    [[self topBarView] setShareEnabled:self.sleepResult.score > 0 && !isOpen animated:YES];
+    [[self topBarView] setShareEnabled:self.sleepResult.scoreCondition != SENConditionUnknown && !isOpen animated:YES];
     if (isOpen)
         [self scrollToTop];
 }

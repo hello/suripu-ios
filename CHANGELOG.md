@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.1.2.0
+
+New:
+
+* Removed interaction with timeline events with no actions
+* Removed scrolling dynamics in the backview
+* Light sensor values now show 3 numbers max, including values below 1
+* Debug option to change API URL, used together with Nonsense.app!
+* Updated copy for 2nd pill / get app screen in onboarding
+* Removed pressed state in tutorial icon in sensor detail screen
+* Updated copy where the word sound is now noise
+* App rating prompt enabled for release builds
+
+Fixes:
+
+* Trends graph now will display the localized day of week consistently
+* Room check final color / image now reflects updated logic
+* The info button in sensor detail screen will no longer be darkened
+* Skipping a question directly from the feed will not cause odd text overlap
+* Insights no longer will be shifted to the left upon coming to fg when the full insights detail screen is shown and brought to the bg
+* Cards in the backview screens will no longer randomly animate without interaction, due to auto refresh of data
+
 ## 1.1.1.7
 
 New:

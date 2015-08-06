@@ -6,7 +6,6 @@
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
-#import "HEMCardFlowLayout.h"
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmListCell.h"
 #import "HelloStyleKit.h"
@@ -168,8 +167,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
         self.noSense = YES;
         self.loading = NO;
         self.loadingFailed = NO;
-        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-        [layout clearCache];
         self.alarms = nil;
         self.noAlarmLabel.hidden = YES;
         self.addButton.enabled = NO;
@@ -191,9 +188,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
                                                     }
                                                 } else {
                                                     self.loadingFailed = NO;
-                                                    HEMCardFlowLayout *layout
-                                                        = (id)self.collectionView.collectionViewLayout;
-                                                    [layout clearCache];
                                                     [self reloadData];
                                                 }
                                                 self.addButton.enabled = YES;
@@ -339,7 +333,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)configureCollectionView {
     CGRect bounds = [[UIScreen mainScreen] bounds];
-    HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = HEMAlarmListItemSpacing;
     layout.minimumLineSpacing = HEMAlarmListItemSpacing;
     UIEdgeInsets sectionInsets = layout.sectionInset;

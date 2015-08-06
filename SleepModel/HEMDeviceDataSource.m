@@ -23,7 +23,6 @@
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTextFooterCollectionReusableView.h"
-#import "HEMCardFlowLayout.h"
 #import "HEMOnboardingService.h"
 
 NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
@@ -66,9 +65,11 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
               forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                      withReuseIdentifier:HEMDevicesFooterReuseIdentifier];
     
-    HEMCardFlowLayout* layout
-        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
-    [layout setFooterReferenceSizeFromText:[self attributedFooterText]];
+    UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
+    UIEdgeInsets insets = [layout sectionInset];
+    CGSize size = [[self attributedFooterText] sizeWithWidth:layout.itemSize.width];
+    size.height += insets.top + insets.bottom;
+    layout.footerReferenceSize = size;
 }
 
 #pragma mark - Loading Data

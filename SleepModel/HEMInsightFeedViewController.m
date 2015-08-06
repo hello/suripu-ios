@@ -12,7 +12,6 @@
 #import "HEMInsightFeedViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMInsightsFeedDataSource.h"
-#import "HEMCardFlowLayout.h"
 #import "HEMQuestionCell.h"
 #import "HelloStyleKit.h"
 #import "HEMInsightCollectionViewCell.h"
@@ -90,8 +89,6 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!didUpdate)
             return;
-        HEMCardFlowLayout* layout = (id)[[strongSelf collectionView] collectionViewLayout];
-        [layout clearCache];
         [[strongSelf collectionView] reloadData];
     }];
 }
@@ -99,14 +96,10 @@
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
+                  layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HEMCardFlowLayout* cardLayout = (HEMCardFlowLayout*)collectionViewLayout;
-    CGSize itemSize = [cardLayout itemSize];
-    
+    CGSize itemSize = [layout itemSize];
     CGFloat textPadding = [[self dataSource] bodyTextPaddingForCellAtIndexPath:indexPath];
-    
     itemSize.height = [[self dataSource] heightForCellAtIndexPath:indexPath
                                                         withWidth:itemSize.width - (textPadding*2)];
     return itemSize;

@@ -814,7 +814,12 @@ static BOOL hasLoadedBefore = NO;
     [self dismissTimelineSegmentPopup:NO];
 }
 
-#pragma mark - UICollectionViewDelegate
+#pragma mark - UICollectionView
+
+- (void)configureCollectionView {
+    self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
+    self.collectionView.delegate = self;
+}
 
 - (void)loadData {
     if (![SENAuthorizationService isAuthorized])
@@ -828,9 +833,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)reloadData {
-    if (![self isLoadingData]) {
+    if (![self isLoadingData])
         [self loadData];
-    }
 }
 
 - (BOOL)isLastNight {
@@ -912,10 +916,7 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
-- (void)configureCollectionView {
-    self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
-    self.collectionView.delegate = self;
-}
+#pragma mark UICollectionViewDelegate
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     if  ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {

@@ -56,7 +56,10 @@
 
 - (void)setGraphData:(NSArray *)graphData sensor:(SENSensor *)sensor
 {
-    if ([graphData isEqual:self.graphDataSource.dataSeries] && self.graphView.alpha == 1)
+    UIColor* conditionColor = [UIColor colorForCondition:sensor.condition];
+    if ([graphData isEqual:self.graphDataSource.dataSeries]
+        && self.graphView.alpha == 1
+        && CGColorEqualToColor(conditionColor.CGColor, self.graphView.colorLine.CGColor))
         return;
     [self setGraphValueBoundsWithData:graphData forSensor:sensor];
     [UIView animateWithDuration:0.15 animations:^{
@@ -70,7 +73,6 @@
     }
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:graphData unit:sensor.unit];
     self.graphView.dataSource = self.graphDataSource;
-    UIColor* conditionColor = [UIColor colorForCondition:sensor.condition];
     self.graphView.colorLine = conditionColor;
     self.graphView.gradientBottom = [self newGradientForColor:conditionColor];
     [self.graphView reloadGraph];

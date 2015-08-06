@@ -105,6 +105,10 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self.collectionView reloadData];
 }
 
+- (void)reloadData {
+    [self reloadData:nil];
+}
+
 - (void)reloadData:(void (^)(void))completion {
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];

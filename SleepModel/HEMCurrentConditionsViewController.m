@@ -38,7 +38,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 static CGFloat const HEMCurrentConditionsPairViewHeight = 205.0f;
 static CGFloat const HEMCurrentConditionsItemSpacing = 8.f;
-static NSUInteger const HEMConditionGraphPointLimit = 30;
+static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {

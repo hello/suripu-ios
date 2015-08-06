@@ -35,7 +35,7 @@
 - (void)configureGraphView
 {
     self.graphView.userInteractionEnabled = NO;
-    self.graphView.enableBezierCurve = YES;
+    self.graphView.enableBezierCurve = NO;
     self.graphView.enableReferenceXAxisLines = NO;
     self.graphView.enableReferenceYAxisLines = NO;
     self.graphView.enableXAxisLabel = NO;

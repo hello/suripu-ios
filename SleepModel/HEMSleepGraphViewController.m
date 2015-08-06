@@ -860,6 +860,7 @@ static BOOL hasLoadedBefore = NO;
     if (error && !hasTimelineData) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineErrorIcon];
         [self setErrorViewsVisible:YES];
     } else if (hasTimelineData) {
         [self setErrorViewsVisible:NO];
@@ -870,6 +871,7 @@ static BOOL hasLoadedBefore = NO;
         NSString *message = self.dataSource.sleepResult.message;
         self.errorMessageLabel.text = message.length > 0 ? message
                                                          : NSLocalizedString(@"sleep-data.not-enough.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
         [self setErrorViewsVisible:YES];
     }
 }

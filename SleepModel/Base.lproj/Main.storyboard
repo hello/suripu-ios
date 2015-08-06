@@ -2992,7 +2992,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_no_data.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qqc-Yh-nIP">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timelineNoDataIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qqc-Yh-nIP">
                                         <rect key="frame" x="200" y="18" width="200" height="228"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uzh-83-Z8g">
@@ -4313,8 +4313,8 @@
         <image name="questions_circle.png" width="21" height="21"/>
         <image name="senseIcon.png" width="40" height="40"/>
         <image name="settingsCheck.png" width="16" height="13"/>
+        <image name="timelineNoDataIcon.png" width="200" height="228"/>
         <image name="timeline_action_adjust.png" width="32" height="32"/>
-        <image name="timeline_no_data.png" width="200" height="228"/>
         <image name="warning.png" width="24" height="22"/>
     </resources>
 </document>

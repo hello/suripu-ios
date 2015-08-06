@@ -1213,7 +1213,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X4b-Va-8rq">
-                                <rect key="frame" x="0.0" y="4" width="600" height="488"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1263,7 +1263,7 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="X4b-Va-8rq" secondAttribute="trailing" constant="-16" id="7Pb-xp-twX"/>
                             <constraint firstItem="X4b-Va-8rq" firstAttribute="leading" secondItem="taC-qD-DrH" secondAttribute="leadingMargin" constant="-16" id="JjI-pn-Qbn"/>
-                            <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="bottom" constant="4" id="W3R-0G-rZo"/>
+                            <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="bottom" id="W3R-0G-rZo"/>
                             <constraint firstItem="Fgn-Cc-FTR" firstAttribute="top" secondItem="X4b-Va-8rq" secondAttribute="bottom" constant="44" id="vec-qT-xZJ"/>
                         </constraints>
                     </view>
@@ -3023,7 +3023,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2SF-Wz-APV">
-                                <rect key="frame" x="0.0" y="8" width="600" height="482"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="490"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kxy-bs-n5o" customClass="HEMCardFlowLayout">
                                     <size key="itemSize" width="560" height="95"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -3174,7 +3174,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="i2H-c6-eq3" firstAttribute="top" secondItem="2SF-Wz-APV" secondAttribute="bottom" constant="46" id="4RJ-ll-K4i"/>
-                            <constraint firstItem="2SF-Wz-APV" firstAttribute="top" secondItem="fd7-5i-ar9" secondAttribute="top" constant="8" id="Jtc-8H-0Zc"/>
+                            <constraint firstItem="2SF-Wz-APV" firstAttribute="top" secondItem="fd7-5i-ar9" secondAttribute="top" id="Jtc-8H-0Zc"/>
                             <constraint firstItem="2SF-Wz-APV" firstAttribute="leading" secondItem="REg-4p-5tB" secondAttribute="leading" id="N2Q-YD-ECI"/>
                             <constraint firstAttribute="trailing" secondItem="2SF-Wz-APV" secondAttribute="trailing" id="yrU-0Q-sIG"/>
                         </constraints>

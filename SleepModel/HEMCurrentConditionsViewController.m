@@ -7,7 +7,6 @@
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 #import "HEMSensorGraphCollectionViewCell.h"
-#import "HEMCardFlowLayout.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMTutorial.h"
@@ -169,8 +168,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     if ([self hasNoSense]) {
         self.loading = NO;
         self.sensors = nil;
-        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-        [layout clearCache];
         [self.collectionView reloadData];
     } else { [self updateSensorsFromCache]; }
 }
@@ -180,8 +177,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     NSArray *cachedSensors = [self sortedCachedSensors];
     if (![self.sensors isEqualToArray:cachedSensors]) {
         self.sensors = cachedSensors;
-        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-        [layout clearCache];
         [self.collectionView reloadData];
         if ([self isViewLoaded] && self.view.window)
             [HEMTutorial showTutorialForSensorsIfNeeded];
@@ -324,10 +319,12 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 - (void)configureCollectionView {
     self.collectionView.backgroundColor = [UIColor clearColor];
-    HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = HEMCurrentConditionsItemSpacing;
     layout.minimumLineSpacing = HEMCurrentConditionsItemSpacing;
-    [layout setItemHeight:HEMCurrentConditionsSensorViewHeight];
+    CGSize size = layout.itemSize;
+    size.height = HEMCurrentConditionsSensorViewHeight;
+    layout.itemSize = size;
 }
 
 - (void)updateCellAtIndex:(NSUInteger)index {

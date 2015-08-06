@@ -24,7 +24,6 @@
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMDeviceActionCollectionViewCell.h"
-#import "HEMCardFlowLayout.h"
 #import "HEMActivityCoverView.h"
 #import "HEMWarningCollectionViewCell.h"
 #import "HEMDeviceDataSource.h"
@@ -230,10 +229,8 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
+                  layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HEMCardFlowLayout* layout = (HEMCardFlowLayout*)collectionViewLayout;
     CGSize size = [layout itemSize];
     
     if ([self isWarningCellRow:[indexPath row]]) {

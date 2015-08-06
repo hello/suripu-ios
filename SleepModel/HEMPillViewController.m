@@ -14,7 +14,6 @@
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMCardFlowLayout.h"
 #import "HEMDeviceActionCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
@@ -151,10 +150,8 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
+                  layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HEMCardFlowLayout* layout = (HEMCardFlowLayout*)collectionViewLayout;
     CGSize size = [layout itemSize];
     if ([indexPath row] < [[self warnings] count]) {
         HEMDeviceWarning warning = [[self warnings][[indexPath row]] integerValue];

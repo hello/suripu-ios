@@ -66,6 +66,9 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
 /// The gesture recognizer picking up the pan in the graph view
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
 
+/// The gesture recognizer picking up the long press in the graph view
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGesture;
+
 /// The label displayed when enablePopUpReport is set to YES
 @property (strong, nonatomic) UILabel *popUpLabel;
 
@@ -273,10 +276,14 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         self.panView.backgroundColor = [UIColor clearColor];
         [self.viewForBaselineLayout addSubview:self.panView];
         
-        self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTouch:)];
         self.panGesture.delegate = self;
         [self.panGesture setMaximumNumberOfTouches:1];
         [self.panView addGestureRecognizer:self.panGesture];
+        self.longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleTouch:)];
+        self.longPressGesture.delegate = self;
+        self.longPressGesture.minimumPressDuration = 0.2f;
+        [self.panView addGestureRecognizer:self.longPressGesture];
         
         if (self.enablePopUpReport == YES && self.alwaysDisplayPopUpLabels == NO) {
             NSDictionary *labelAttributes = @{NSFontAttributeName: self.labelFont};
@@ -947,10 +954,11 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
             return fabs(translation.y) < fabs(translation.x);
         } else return NO;
         return YES;
-    } else return NO;
+    }
+    return [gestureRecognizer isEqual:self.longPressGesture];
 }
 
-- (void)handlePan:(UIPanGestureRecognizer *)recognizer {
+- (void)handleTouch:(UIGestureRecognizer *)recognizer {
     CGPoint translation = [recognizer locationInView:self.viewForBaselineLayout];
     
     if (!((translation.x + self.frame.origin.x) <= self.frame.origin.x) && !((translation.x + self.frame.origin.x) >= self.frame.origin.x + self.frame.size.width)) { // To make sure the vertical line doesn't go beyond the frame of the graph.

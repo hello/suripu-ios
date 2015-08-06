@@ -76,7 +76,7 @@ DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`,
     commit `6bf420df77117f519af32a6393520ead4e7848c6`)
   - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`, commit
-    `0571b7c5e4701b71d3955a6564679875f793fdc4`)
+    `201b13c35d4a4bebafd0ca8493387b9dddc717e5`)
   - Kiwi
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
   - MSDynamicsDrawerViewController (= 1.5.1)
@@ -95,7 +95,7 @@ EXTERNAL SOURCES:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   BEMSimpleLineGraph:
-    :commit: 0571b7c5e4701b71d3955a6564679875f793fdc4
+    :commit: 201b13c35d4a4bebafd0ca8493387b9dddc717e5
     :git: git@github.com:hello/BEMSimpleLineGraph.git
   LGBluetooth:
     :git: git@github.com:hello/LGBluetooth.git
@@ -116,7 +116,7 @@ CHECKOUT OPTIONS:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   BEMSimpleLineGraph:
-    :commit: 0571b7c5e4701b71d3955a6564679875f793fdc4
+    :commit: 201b13c35d4a4bebafd0ca8493387b9dddc717e5
     :git: git@github.com:hello/BEMSimpleLineGraph.git
   LGBluetooth:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad

@@ -675,6 +675,7 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark Drawer
 
 - (void)drawerDidOpen {
+    [self clearPlayerState];
     [UIView animateWithDuration:0.5f
                      animations:^{
                          [[self dataSource] updateTimelineState:YES];

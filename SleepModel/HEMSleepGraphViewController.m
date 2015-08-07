@@ -53,7 +53,6 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, weak) IBOutlet UILabel *errorMessageLabel;
 @property (nonatomic, weak) IBOutlet UIButton *errorSupportButton;
 @property (nonatomic, weak) IBOutlet UIView *errorViewsContainerView;
-@property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
@@ -834,7 +833,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)reloadData {
-    if (![self isLoadingData])
+    if (![self.dataSource isLoading])
         [self loadData];
 }
 
@@ -843,21 +842,18 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {
-    self.loadingData = YES;
-
     self.dateForNightOfSleep = date;
     self.dataSource =
         [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
-    [self updateLayoutWithError:nil];
 
     __weak typeof(self) weakSelf = self;
     [self.dataSource reloadData:^(NSError *error) {
       __strong typeof(weakSelf) strongSelf = weakSelf;
-      strongSelf.loadingData = NO;
       [strongSelf updateAppUsageIfNeeded];
       [strongSelf updateLayoutWithError:error];
     }];
+    [self updateLayoutWithError:nil];
 }
 
 - (void)updateLayoutWithError:(NSError *)error {
@@ -865,7 +861,7 @@ static BOOL hasLoadedBefore = NO;
     NSDate *accountCreationDate = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
     BOOL justOnboarded = accountCreationDate
                          && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
-    if (hasTimelineData) {
+    if (hasTimelineData || [self.dataSource isLoading]) {
         [self setErrorViewsVisible:NO];
         if ([self isVisible])
             [self checkIfInitialAnimationNeeded];
@@ -892,9 +888,10 @@ static BOOL hasLoadedBefore = NO;
     self.collectionView.scrollEnabled = !isVisible;
     if (isVisible && self.collectionView.contentOffset.y > 0)
         self.collectionView.contentOffset = CGPointZero;
-    [UIView animateWithDuration:0.2f animations:^{
-        self.errorViewsContainerView.alpha = isVisible;
-    }];
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                       self.errorViewsContainerView.alpha = isVisible;
+                     }];
 }
 
 - (void)updateAppUsageIfNeeded {

@@ -106,4 +106,5 @@
 - (void)updateTimelineState:(BOOL)isOpen;
 
 @property (nonatomic, strong, readonly) SENTimeline *sleepResult;
+@property (nonatomic, getter=isLoading, readonly) BOOL loading;
 @end

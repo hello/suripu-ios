@@ -35,6 +35,7 @@
 @property (nonatomic, strong, readwrite) SENTimeline *sleepResult;
 @property (nonatomic, strong) NSArray *aggregateDataSources;
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
+@property (nonatomic, getter=isLoading, readwrite) BOOL loading;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
 @property (nonatomic, weak) HEMTimelineTopBarCollectionReusableView *topBarView;
@@ -112,6 +113,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (void)reloadData:(void (^)(NSError*))completion {
+    self.loading = YES;
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
     if ([self shouldShowLoadingView]) {
@@ -137,6 +139,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                           [strongSelf refreshWithTimeline:timeline];
                           [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
                       }
+                      weakSelf.loading = NO;
                       if (completion)
                           completion(error);
                     }];

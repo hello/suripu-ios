@@ -2987,7 +2987,7 @@
                                 <rect key="frame" x="0.0" y="80" width="600" height="520"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was not enough data to display a sleep timeline for this night." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6F-92-HAb">
-                                        <rect key="frame" x="25" y="316" width="550" height="20"/>
+                                        <rect key="frame" x="25" y="294" width="550" height="20"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -2996,7 +2996,7 @@
                                         <rect key="frame" x="200" y="18" width="200" height="228"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uzh-83-Z8g">
-                                        <rect key="frame" x="249" y="354" width="102" height="44"/>
+                                        <rect key="frame" x="249" y="332" width="102" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="DxL-GB-gVJ"/>
                                         </constraints>
@@ -3007,7 +3007,7 @@
                                         </state>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7mO-NU-EFs">
-                                        <rect key="frame" x="236" y="276" width="129" height="22"/>
+                                        <rect key="frame" x="236" y="254" width="129" height="22"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -3020,7 +3020,7 @@
                                     <constraint firstItem="S6F-92-HAb" firstAttribute="leading" secondItem="e3l-C7-h86" secondAttribute="leading" constant="25" id="Ab9-hh-9ax"/>
                                     <constraint firstItem="S6F-92-HAb" firstAttribute="top" secondItem="7mO-NU-EFs" secondAttribute="bottom" constant="18" id="G5F-q5-5c1"/>
                                     <constraint firstAttribute="centerX" secondItem="Qqc-Yh-nIP" secondAttribute="centerX" id="X8T-dH-NGr"/>
-                                    <constraint firstItem="7mO-NU-EFs" firstAttribute="top" secondItem="Qqc-Yh-nIP" secondAttribute="bottom" constant="30" id="Y2e-I4-lWq"/>
+                                    <constraint firstItem="7mO-NU-EFs" firstAttribute="top" secondItem="Qqc-Yh-nIP" secondAttribute="bottom" constant="8" id="Y2e-I4-lWq"/>
                                     <constraint firstAttribute="centerX" secondItem="7mO-NU-EFs" secondAttribute="centerX" constant="-0.5" id="qfm-sE-5ef"/>
                                     <constraint firstItem="Qqc-Yh-nIP" firstAttribute="top" secondItem="e3l-C7-h86" secondAttribute="top" constant="18" id="sgQ-gR-mov"/>
                                     <constraint firstAttribute="centerX" secondItem="Uzh-83-Z8g" secondAttribute="centerX" id="wV0-Dq-08n"/>

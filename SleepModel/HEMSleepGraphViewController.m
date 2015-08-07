@@ -30,6 +30,7 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMAppUsage.h"
+#import "HEMOnboardingService.h"
 #import "HelloStyleKit.h"
 #import "HEMAudioSession.h"
 
@@ -861,23 +862,30 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)updateLayoutWithError:(NSError *)error {
     BOOL hasTimelineData = [self.dataSource hasTimelineData];
-    if (error && !hasTimelineData) {
-        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
-        self.errorImageView.image = [HelloStyleKit timelineErrorIcon];
-        [self setErrorViewsVisible:YES];
-    } else if (hasTimelineData) {
+    NSDate *accountCreationDate = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
+    BOOL justOnboarded = accountCreationDate
+                         && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
+    if (hasTimelineData) {
         [self setErrorViewsVisible:NO];
         if ([self isVisible])
             [self checkIfInitialAnimationNeeded];
+        return;
+    } else if (justOnboarded) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineJustSleepIcon];
+    } else if (error) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineErrorIcon];
     } else {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
         NSString *message = self.dataSource.sleepResult.message;
         self.errorMessageLabel.text = message.length > 0 ? message
                                                          : NSLocalizedString(@"sleep-data.not-enough.message", nil);
         self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
-        [self setErrorViewsVisible:YES];
     }
+    [self setErrorViewsVisible:YES];
 }
 
 - (void)setErrorViewsVisible:(BOOL)isVisible {

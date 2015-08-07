@@ -383,6 +383,8 @@
 "measurement.lx.format" = "%ldlx";
 
 // missing data
+"sleep-data.first-night.title" = "All you have to do is sleep";
+"sleep-data.first-night.message" = "Sense has begun monitoring your environment and will have an update for you in the morning.";
 "sleep-data.not-enough.title" = "Not enough data";
 "sleep-data.not-enough.message" = "There was not enough sleep data recorded to display a Sleep Timeline for this night.";
 "sleep-data.error.title" = "There was an error";

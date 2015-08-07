@@ -31,6 +31,7 @@
 #import "HEMActionSheetTitleView.h"
 #import "HEMAppUsage.h"
 #import "HelloStyleKit.h"
+#import "HEMAudioSession.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -87,6 +88,7 @@ static BOOL hasLoadedBefore = NO;
     if (!hasLoadedBefore) {
         [self prepareForInitialAnimation];
     }
+    HEMInitializeAudioSession();
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -277,10 +279,16 @@ static BOOL hasLoadedBefore = NO;
         return;
     if (![self loadAudioForIndexPath:indexPath])
         return;
-    [self.audioPlayer play];
-    [self monitorPlaybackProgress];
-    [button setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
-    self.playingButton = button;
+    __weak typeof(self) weakSelf = self;
+    HEMActivateAudioSession(YES, ^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error)
+            return;
+        [strongSelf.audioPlayer play];
+        [strongSelf monitorPlaybackProgress];
+        [button setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+        strongSelf.playingButton = button;
+    });
 }
 
 - (BOOL)loadAudioForIndexPath:(NSIndexPath *)indexPath {
@@ -315,6 +323,7 @@ static BOOL hasLoadedBefore = NO;
     [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
     self.playingButton = nil;
     self.audioPlayer = nil;
+    HEMActivateAudioSession(NO, nil);
 }
 
 - (void)updatePlaybackProgress {

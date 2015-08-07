@@ -13,6 +13,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 #import "HEMAlertViewController.h"
+#import "HEMAudioSession.h"
 
 @interface HEMAlarmSoundTableViewController () <AVAudioPlayerDelegate>
 @property (nonatomic, strong) NSArray *possibleSleepSounds;
@@ -33,7 +34,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
     self.lineViewHeightConstraint.constant = 0.5;
-    [self configureAudioSession];
+    HEMInitializeAudioSession();
     [self loadAlarmSounds];
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
 }
@@ -45,16 +46,6 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
 
 - (IBAction)goBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)configureAudioSession {
-    NSError* audioSessionError = nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
-                                           error:&audioSessionError];
-    
-    if (audioSessionError) {
-        [SENAnalytics trackError:audioSessionError];
-    }
 }
 
 - (void)loadAlarmSounds {
@@ -213,51 +204,11 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
     }]];
 }
 
-/**
- * Activate / deactivate audio session.  This needs to happen on a background
- * thread because setActivate:withOptions:error is a blocking call that can
- * potentially take a little bit of time.
- *
- * @param activate: YES to activate, NO otherwise
- */
-- (void)activateAudioSession:(BOOL)activate completion:(void(^)(NSError* error))completion {
-    __weak typeof(self) weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        NSError *error = nil;
-        AVAudioSessionSetActiveOptions options
-            = activate
-            ? 0
-            : AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation;
-        
-        // need to make sure player is stopped when deactivating or else it can
-        // cause an exception to be raised
-        if (!activate && [[strongSelf player] isPlaying]) {
-            [[strongSelf player] stop];
-        }
-        
-        [[AVAudioSession sharedInstance] setActive:activate
-                                       withOptions:options
-                                             error:&error];
-        if (error) {
-            DDLogWarn(@"failed to change audio session state");
-            [SENAnalytics trackError:error];
-        }
-        
-        if (completion) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion (error);
-            });
-        }
-    });
-}
-
 - (void)playAudio {
     __weak typeof(self) weakSelf = self;
-    [self activateAudioSession:YES completion:^(NSError *error) {
+    HEMActivateAudioSession(YES, ^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        
+
         if (strongSelf.player) {
             strongSelf.player.volume = 1.0f;
             [strongSelf.player play];
@@ -268,14 +219,14 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
             [strongSelf.tableView reloadData];
             [strongSelf playAudioForSelectedSound];
         }
-    }];
+    });
 }
 
 - (void)stopAudio {
     [self.player stop];
     self.player.currentTime = 0;
     [self updatePlayButtonWithImage:[HelloStyleKit miniPlayButton]];
-    [self activateAudioSession:NO completion:nil];
+    HEMActivateAudioSession(NO, nil);
 }
 
 - (void)updatePlayButtonWithImage:(UIImage *)image {

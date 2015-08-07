@@ -880,11 +880,11 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
+    if  ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+        SENTimelineSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+        return segment.possibleActions != SENTimelineSegmentActionNone;
+    }
+    return NO;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

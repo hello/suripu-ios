@@ -518,7 +518,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
-    if ([self.collectionView isDecelerating])
+    if ([self.collectionView isDecelerating] || [self.dataSource segmentForEventExistsAtIndexPath:indexPath])
         return;
 
     [self setSelectedIndexPath:indexPath];

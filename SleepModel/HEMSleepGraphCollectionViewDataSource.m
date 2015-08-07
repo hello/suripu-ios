@@ -388,6 +388,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                      forControlEvents:UIControlEventTouchUpInside];
     }
     cell.messageChevronView.hidden = score == 0 && self.sleepResult.segments.count == 0;
+    cell.messageContainerView.hidden = [self.sleepResult scoreCondition] == SENConditionUnknown;
     return cell;
 }
 

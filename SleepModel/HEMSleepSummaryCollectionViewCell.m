@@ -6,7 +6,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
-@property (weak, nonatomic) IBOutlet UIView *messageContainerView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @end

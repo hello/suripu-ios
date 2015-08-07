@@ -889,10 +889,12 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)setErrorViewsVisible:(BOOL)isVisible {
-    self.errorViewsContainerView.hidden = !isVisible;
     self.collectionView.scrollEnabled = !isVisible;
     if (isVisible && self.collectionView.contentOffset.y > 0)
         self.collectionView.contentOffset = CGPointZero;
+    [UIView animateWithDuration:0.2f animations:^{
+        self.errorViewsContainerView.alpha = isVisible;
+    }];
 }
 
 - (void)updateAppUsageIfNeeded {

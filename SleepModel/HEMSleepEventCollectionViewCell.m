@@ -123,12 +123,12 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     self.contentContainerView.transform = scaling;
     CGRect containerFrame = [self containerFrame];
     self.contentContainerView.frame = CGRectApplyAffineTransform(containerFrame, transform);
-    CGFloat playDiameter = HEMEventPlayButtonDiameter * scale;
-    CGFloat playMargin = HEMEventPlayButtonMargin * scale;
-    self.playButton.alpha = alpha;
-    self.playButton.frame
-        = CGRectMake(CGRectGetMaxX(containerFrame) - playDiameter - playMargin,
+    CGFloat playDiameter = HEMEventPlayButtonDiameter;
+    CGRect buttonFrame
+        = CGRectMake((CGRectGetMaxX(containerFrame) - HEMEventPlayButtonMargin - playDiameter),
                      CGRectGetMaxY(containerFrame) - playDiameter * 2 / 3, playDiameter, playDiameter);
+    self.playButton.alpha = alpha;
+    self.playButton.frame = CGRectApplyAffineTransform(buttonFrame, transform);
 }
 
 - (CGFloat)alphaWithRatioFromCenter:(CGFloat)ratioFromCenter {

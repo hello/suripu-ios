@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.2.1
+
+New:
+
+* Timeline audio playback will now play even if phone is on silent
+* Audio playback stops when view is dismissed
+
+Fixes:
+
+* Audio playback button properly scales away when scrolling
+* Prevent sleep depth popup from appearing on top of event card
+* Fix spike in sensor graph when data points are missing
+
 ## 1.1.2.0
 
 New:

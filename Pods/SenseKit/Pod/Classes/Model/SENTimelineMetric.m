@@ -7,6 +7,7 @@
 //
 
 #import "SENTimelineMetric.h"
+#import "Model.h"
 
 SENTimelineMetricType SENTimelineMetricTypeFromString(NSString* metricType) {
     if ([metricType isKindOfClass:[NSString class]]) {
@@ -59,10 +60,8 @@ static NSString* const SENTimelineMetricConditionKey = @"condition";
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
     if (self = [super init]) {
-        if ([data[SENTimelineMetricNameKey] isKindOfClass:[NSString class]])
-            _name = data[SENTimelineMetricNameKey];
-        if ([data[SENTimelineMetricValueKey] isKindOfClass:[NSNumber class]])
-            _value = data[SENTimelineMetricValueKey];
+        _name = SENObjectOfClass(data[SENTimelineMetricNameKey], [NSString class]);
+        _value = SENObjectOfClass(data[SENTimelineMetricValueKey], [NSNumber class]);
         _unit = SENTimelineMetricUnitFromString(data[SENTimelineMetricUnitKey]);
         _condition = SENConditionFromString(data[SENTimelineMetricConditionKey]);
         _type = SENTimelineMetricTypeFromString(data[SENTimelineMetricNameKey]);

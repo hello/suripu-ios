@@ -7,7 +7,7 @@
 
 extern NSInteger const SENTimelineSentinelValue;
 
-@interface SENTimeline : NSObject <NSCoding, SENSerializable>
+@interface SENTimeline : NSObject <NSCoding, SENSerializable, SENUpdatable>
 
 + (instancetype)timelineForDate:(NSDate*)date;
 

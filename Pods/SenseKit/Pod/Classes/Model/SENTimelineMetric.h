@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, SENTimelineMetricUnit) {
 SENTimelineMetricType SENTimelineMetricTypeFromString(NSString* metricType);
 SENTimelineMetricUnit SENTimelineMetricUnitFromString(NSString* metricUnit);
 
-@interface SENTimelineMetric : NSObject <NSCoding, SENSerializable>
+@interface SENTimelineMetric : NSObject <NSCoding, SENSerializable, SENUpdatable>
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic) SENTimelineMetricType type;

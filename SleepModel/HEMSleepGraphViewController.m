@@ -30,6 +30,7 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMAppUsage.h"
+#import "HEMOnboardingService.h"
 #import "HelloStyleKit.h"
 #import "HEMAudioSession.h"
 
@@ -47,7 +48,11 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
-@property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
+@property (nonatomic, weak) IBOutlet UIImageView *errorImageView;
+@property (nonatomic, weak) IBOutlet UILabel *errorTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *errorMessageLabel;
+@property (nonatomic, weak) IBOutlet UIButton *errorSupportButton;
+@property (nonatomic, weak) IBOutlet UIView *errorViewsContainerView;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
@@ -61,7 +66,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @implementation HEMSleepGraphViewController
 
-static NSString* const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
+static NSString *const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
 static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 0.5f;
 static CGFloat const HEMSleepSummaryCellHeight = 298.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
@@ -211,7 +216,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)finishInitialAnimation {
-    self.collectionView.scrollEnabled = YES;
+    if ([self.dataSource hasTimelineData])
+        self.collectionView.scrollEnabled = YES;
 }
 
 - (void)performInitialAnimation {
@@ -352,40 +358,40 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark Event Info
 
 - (void)processFeedbackResponse:(id)updatedTimeline
-                          error:(NSError*)error
-                     forSegment:(SENTimelineSegment*)segment
-                analyticsAction:(NSString*)analyticsAction {
-    
+                          error:(NSError *)error
+                     forSegment:(SENTimelineSegment *)segment
+                analyticsAction:(NSString *)analyticsAction {
+
     if (error) {
         [SENAnalytics trackError:error];
     } else {
-        NSString* segmentType = SENTimelineSegmentTypeNameFromType(segment.type);
-        NSDictionary* props = @{kHEMAnalyticsEventPropType : segmentType ?: @"undefined"};
+        NSString *segmentType = SENTimelineSegmentTypeNameFromType(segment.type);
+        NSDictionary *props = @{ kHEMAnalyticsEventPropType : segmentType ?: @"undefined" };
         [SENAnalytics track:analyticsAction properties:props];
     }
 }
 
-- (void)verifySegment:(SENTimelineSegment*)segment {
+- (void)verifySegment:(SENTimelineSegment *)segment {
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline verifySleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
                           completion:^(id updatedTimeline, NSError *error) {
-                              [weakSelf processFeedbackResponse:updatedTimeline
-                                                          error:error
-                                                     forSegment:segment
-                                                analyticsAction:HEMAnalyticsEventTimelineEventCorrect];
+                            [weakSelf processFeedbackResponse:updatedTimeline
+                                                        error:error
+                                                   forSegment:segment
+                                              analyticsAction:HEMAnalyticsEventTimelineEventCorrect];
                           }];
 }
 
-- (void)removeSegment:(SENTimelineSegment*)segment {
+- (void)removeSegment:(SENTimelineSegment *)segment {
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline removeSleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
                           completion:^(id updatedTimeline, NSError *error) {
-                              [weakSelf processFeedbackResponse:updatedTimeline
-                                                          error:error
-                                                     forSegment:segment
-                                                analyticsAction:HEMAnalyticsEventTimelineEventIncorrect];
+                            [weakSelf processFeedbackResponse:updatedTimeline
+                                                        error:error
+                                                   forSegment:segment
+                                              analyticsAction:HEMAnalyticsEventTimelineEventIncorrect];
                           }];
 }
 
@@ -398,12 +404,12 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (BOOL)shouldShowSenseLearnsInActionSheet {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    SENLocalPreferences *preferences = [SENLocalPreferences sharedPreferences];
     return ![[preferences sessionPreferenceForKey:HEMSleepGraphSenseLearnsPref] boolValue];
 }
 
 - (void)markSenseLearnsAsShown {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    SENLocalPreferences *preferences = [SENLocalPreferences sharedPreferences];
     [preferences setSessionPreference:@(YES) forKey:HEMSleepGraphSenseLearnsPref];
 }
 
@@ -415,16 +421,14 @@ static BOOL hasLoadedBefore = NO;
     confirmFrame.size.height = numberOfOptions * HEMActionSheetDefaultCellHeight;
     confirmFrame.size.width = CGRectGetWidth([[self view] bounds]);
 
-    HEMEventAdjustConfirmationView* confirmView
-        = [[HEMEventAdjustConfirmationView alloc] initWithTitle:title
-                                                       subtitle:nil
-                                                          frame:confirmFrame];
+    HEMEventAdjustConfirmationView *confirmView =
+        [[HEMEventAdjustConfirmationView alloc] initWithTitle:title subtitle:nil frame:confirmFrame];
     return confirmView;
 }
 
-- (UIView*)senseLearnsTitleView {
-    NSString* title = NSLocalizedString(@"sleep-event.feedback.action-sheet.title", nil);
-    NSString* desc = NSLocalizedString(@"sleep-event.feedback.action-sheet.description", nil);
+- (UIView *)senseLearnsTitleView {
+    NSString *title = NSLocalizedString(@"sleep-event.feedback.action-sheet.title", nil);
+    NSString *desc = NSLocalizedString(@"sleep-event.feedback.action-sheet.description", nil);
     return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:desc];
 }
 
@@ -433,12 +437,12 @@ static BOOL hasLoadedBefore = NO;
     if (segment.possibleActions == SENTimelineSegmentActionNone) {
         return;
     }
-    
+
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
-    UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
-    NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
-    NSString* negativeTitle = nil;
-    
+    UIColor *optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
+    NSString *approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
+    NSString *negativeTitle = nil;
+
     if ([segment canPerformAction:SENTimelineSegmentActionRemove]) {
         negativeTitle = NSLocalizedString(@"sleep-event.action.remove.title", nil);
     } else if ([segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
@@ -451,8 +455,8 @@ static BOOL hasLoadedBefore = NO;
                       description:nil
                         imageName:@"timeline_action_approve"
                            action:^{
-                               [self verifySegment:segment];
-                               [self markSenseLearnsAsShown];
+                             [self verifySegment:segment];
+                             [self markSenseLearnsAsShown];
                            }];
     }
 
@@ -471,15 +475,15 @@ static BOOL hasLoadedBefore = NO;
     // go away once server implements the code to do so.  Once the server returns the
     // remove capability, only the 'negativeTitle' will be changed to signify the more
     // destructive action
-    if ([segment canPerformAction:SENTimelineSegmentActionRemove] ||
-        [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]
+        || [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
         [sheet addOptionWithTitle:negativeTitle
                        titleColor:optionTitleColor
                       description:nil
                         imageName:@"timeline_action_delete"
                            action:^{
-                               [self removeSegment:segment];
-                               [self markSenseLearnsAsShown];
+                             [self removeSegment:segment];
+                             [self markSenseLearnsAsShown];
                            }];
     }
 
@@ -490,8 +494,8 @@ static BOOL hasLoadedBefore = NO;
     // confirmations
     CGFloat confirmDuration = HEMSleepGraphActionSheetConfirmDuration;
     UIView *confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];
-    if ([segment canPerformAction:SENTimelineSegmentActionRemove]||
-        [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]
+        || [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
         [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:negativeTitle];
     }
 
@@ -531,7 +535,7 @@ static BOOL hasLoadedBefore = NO;
         return;
 
     [self setSelectedIndexPath:indexPath];
-    
+
     CGFloat top = [self topOfSelectedTimelineSleepSegment];
     [self.popupView showPointer:top > 0];
     self.popupViewTop.constant = top + HEMPopupAnimationDistance;
@@ -544,21 +548,22 @@ static BOOL hasLoadedBefore = NO;
     self.popupMaskView.alpha = 0;
     self.popupMaskView.hidden = NO;
     [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
-                     animations:^{
-                       [self emphasizeCellAtIndexPath:indexPath];
-                       [self.popupView layoutIfNeeded];
-                       self.popupView.alpha = 1;
-                     }
-                     completion:^(BOOL finished) {
-                         [self dismissTimelineSegmentPopup:YES];
-                     }];
+        animations:^{
+          [self emphasizeCellAtIndexPath:indexPath];
+          [self.popupView layoutIfNeeded];
+          self.popupView.alpha = 1;
+        }
+        completion:^(BOOL finished) {
+          [self dismissTimelineSegmentPopup:YES];
+        }];
 }
 
 - (CGFloat)topOfSelectedTimelineSleepSegment {
     CGFloat const HEMPopupSpacingDistance = 8.f;
     SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:[self selectedIndexPath]];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
-    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:[self selectedIndexPath]];
+    UICollectionViewLayoutAttributes *attributes =
+        [self.collectionView layoutAttributesForItemAtIndexPath:[self selectedIndexPath]];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
     CGFloat popupHeight = floorf([self.popupView intrinsicContentSize].height);
     return MAX(0, CGRectGetMinY(cellLocation) - popupHeight - HEMPopupSpacingDistance);
@@ -568,27 +573,27 @@ static BOOL hasLoadedBefore = NO;
     if (![self selectedIndexPath]) {
         return;
     }
-    
+
     self.popupViewTop.constant = [self topOfSelectedTimelineSleepSegment] + HEMPopupAnimationDistance;
-    void(^animations)(void) = ^{
-        if ([self selectedIndexPath]) {
-            self.popupView.alpha = 0;
-            self.popupMaskView.alpha = 0;
-            [self.popupView layoutIfNeeded];
-        }
+    void (^animations)(void) = ^{
+      if ([self selectedIndexPath]) {
+          self.popupView.alpha = 0;
+          self.popupMaskView.alpha = 0;
+          [self.popupView layoutIfNeeded];
+      }
     };
-    
-    void(^completion)(BOOL finish) = ^(BOOL finished) {
-        [self setSelectedIndexPath:nil];
-        // remove all animations in case the animation is running already, with
-        // a delay, which would cause problems if dimissing the timeline without
-        // animation was reqeusted before
-        [self.popupView.layer removeAllAnimations];
-        [self.popupMaskView.layer removeAllAnimations];
-        self.popupView.hidden = YES;
-        self.popupMaskView.hidden = YES;
+
+    void (^completion)(BOOL finish) = ^(BOOL finished) {
+      [self setSelectedIndexPath:nil];
+      // remove all animations in case the animation is running already, with
+      // a delay, which would cause problems if dimissing the timeline without
+      // animation was reqeusted before
+      [self.popupView.layer removeAllAnimations];
+      [self.popupMaskView.layer removeAllAnimations];
+      self.popupView.hidden = YES;
+      self.popupMaskView.hidden = YES;
     };
-    
+
     if (animated) {
         [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
                               delay:2.0f
@@ -599,7 +604,6 @@ static BOOL hasLoadedBefore = NO;
         animations();
         completion(YES);
     }
-
 }
 
 - (void)emphasizeCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -687,14 +691,14 @@ static BOOL hasLoadedBefore = NO;
     [self clearPlayerState];
     [UIView animateWithDuration:0.5f
                      animations:^{
-                         [[self dataSource] updateTimelineState:YES];
+                       [[self dataSource] updateTimelineState:YES];
                      }];
 }
 
 - (void)drawerDidClose {
     [UIView animateWithDuration:0.5f
                      animations:^{
-                         [[self dataSource] updateTimelineState:NO];
+                       [[self dataSource] updateTimelineState:NO];
                      }];
 }
 
@@ -708,15 +712,15 @@ static BOOL hasLoadedBefore = NO;
         [self dismissTimelineSegmentPopup:NO];
         return;
     }
-    
+
     CGPoint location = [self.tapGestureRecognizer locationInView:self.view];
     CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
-    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
     if ([self shouldAcceptTapAtLocation:location]) {
         UICollectionViewLayoutAttributes *attrs = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
         if (locationInCell.y - CGRectGetMinY(attrs.frame) <= HEMSegmentPrefillTimeInset && indexPath.item > 0) {
-            NSIndexPath* previousItem = [NSIndexPath indexPathForItem:indexPath.item - 1
-                                                            inSection:HEMSleepGraphCollectionViewSegmentSection];
+            NSIndexPath *previousItem =
+                [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:HEMSleepGraphCollectionViewSegmentSection];
             [self showSleepDepthPopupForIndexPath:previousItem];
         } else {
             [self showSleepDepthPopupForIndexPath:indexPath];
@@ -726,9 +730,9 @@ static BOOL hasLoadedBefore = NO;
 
 - (BOOL)shouldAcceptTapAtLocation:(CGPoint)location {
     CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
-    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
     return indexPath.section == HEMSleepGraphCollectionViewSegmentSection
-        && ![self.dataSource segmentForEventExistsAtIndexPath:indexPath];
+           && ![self.dataSource segmentForEventExistsAtIndexPath:indexPath];
 }
 
 - (BOOL)isViewFullyVisible {
@@ -810,7 +814,12 @@ static BOOL hasLoadedBefore = NO;
     [self dismissTimelineSegmentPopup:NO];
 }
 
-#pragma mark - UICollectionViewDelegate
+#pragma mark - UICollectionView
+
+- (void)configureCollectionView {
+    self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
+    self.collectionView.delegate = self;
+}
 
 - (void)loadData {
     if (![SENAuthorizationService isAuthorized])
@@ -824,9 +833,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)reloadData {
-    if (![self isLoadingData]) {
+    if (![self.dataSource isLoading])
         [self loadData];
-    }
 }
 
 - (BOOL)isLastNight {
@@ -834,32 +842,63 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {
-    self.loadingData = YES;
-
     self.dateForNightOfSleep = date;
     self.dataSource =
         [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
 
     __weak typeof(self) weakSelf = self;
-    [self.dataSource reloadData:^{
+    [self.dataSource reloadData:^(NSError *error) {
       __strong typeof(weakSelf) strongSelf = weakSelf;
-      strongSelf.loadingData = NO;
-        
       [strongSelf updateAppUsageIfNeeded];
-        
-      if ([strongSelf isVisible]) {
-          [strongSelf checkIfInitialAnimationNeeded];
-      }
+      [strongSelf updateLayoutWithError:error];
     }];
+    [self updateLayoutWithError:nil];
+}
+
+- (void)updateLayoutWithError:(NSError *)error {
+    BOOL hasTimelineData = [self.dataSource hasTimelineData];
+    NSDate *accountCreationDate = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
+    BOOL justOnboarded = accountCreationDate
+                         && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
+    if (hasTimelineData || [self.dataSource isLoading]) {
+        [self setErrorViewsVisible:NO];
+        if ([self isVisible])
+            [self checkIfInitialAnimationNeeded];
+        return;
+    } else if (justOnboarded) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineJustSleepIcon];
+    } else if (error) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineErrorIcon];
+    } else {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
+        NSString *message = self.dataSource.sleepResult.message;
+        self.errorMessageLabel.text = message.length > 0 ? message
+                                                         : NSLocalizedString(@"sleep-data.not-enough.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
+    }
+    [self setErrorViewsVisible:YES];
+}
+
+- (void)setErrorViewsVisible:(BOOL)isVisible {
+    self.collectionView.scrollEnabled = !isVisible;
+    if (isVisible && self.collectionView.contentOffset.y > 0)
+        self.collectionView.contentOffset = CGPointZero;
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                       self.errorViewsContainerView.alpha = isVisible;
+                     }];
 }
 
 - (void)updateAppUsageIfNeeded {
     if ([self.dataSource.sleepResult.score integerValue] > 0) {
-        HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
-        NSDate* updatedAtMidnight = [[appUsage updated] dateAtMidnight];
-        if (!updatedAtMidnight
-            || [updatedAtMidnight compare:self.dateForNightOfSleep] == NSOrderedAscending) {
+        HEMAppUsage *appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        NSDate *updatedAtMidnight = [[appUsage updated] dateAtMidnight];
+        if (!updatedAtMidnight || [updatedAtMidnight compare:self.dateForNightOfSleep] == NSOrderedAscending) {
             [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
         }
     }
@@ -884,10 +923,7 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
-- (void)configureCollectionView {
-    self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
-    self.collectionView.delegate = self;
-}
+#pragma mark UICollectionViewDelegate
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     if  ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
@@ -926,7 +962,8 @@ static BOOL hasLoadedBefore = NO;
                     [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
                 NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
                 BOOL hasSound = [self.dataSource segmentForSoundExistsAtIndexPath:indexPath];
-                CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:hasSound];
+                CGSize minSize =
+                    [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:hasSound];
                 CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
                                      minSize.height + HEMMinimumEventSpacing);
                 if (hasSound) {

@@ -2983,16 +2983,63 @@
                                     <outlet property="label" destination="rBx-ft-eT4" id="pKY-5A-6eX"/>
                                 </connections>
                             </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3l-C7-h86">
+                                <rect key="frame" x="0.0" y="80" width="600" height="520"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was not enough data to display a sleep timeline for this night." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6F-92-HAb">
+                                        <rect key="frame" x="25" y="294" width="550" height="20"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timelineNoDataIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qqc-Yh-nIP">
+                                        <rect key="frame" x="200" y="18" width="200" height="228"/>
+                                    </imageView>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uzh-83-Z8g">
+                                        <rect key="frame" x="249" y="332" width="102" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="DxL-GB-gVJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                        <state key="normal" title="Contact support">
+                                            <color key="titleColor" red="0.063956059515476227" green="0.53325003385543823" blue="0.99848216772079468" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7mO-NU-EFs">
+                                        <rect key="frame" x="236" y="254" width="129" height="22"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="S6F-92-HAb" secondAttribute="trailing" constant="25" id="72X-rO-MOr"/>
+                                    <constraint firstItem="Uzh-83-Z8g" firstAttribute="top" secondItem="S6F-92-HAb" secondAttribute="bottom" constant="18" id="8RW-d3-xeK"/>
+                                    <constraint firstItem="S6F-92-HAb" firstAttribute="leading" secondItem="e3l-C7-h86" secondAttribute="leading" constant="25" id="Ab9-hh-9ax"/>
+                                    <constraint firstItem="S6F-92-HAb" firstAttribute="top" secondItem="7mO-NU-EFs" secondAttribute="bottom" constant="18" id="G5F-q5-5c1"/>
+                                    <constraint firstAttribute="centerX" secondItem="Qqc-Yh-nIP" secondAttribute="centerX" id="X8T-dH-NGr"/>
+                                    <constraint firstItem="7mO-NU-EFs" firstAttribute="top" secondItem="Qqc-Yh-nIP" secondAttribute="bottom" constant="8" id="Y2e-I4-lWq"/>
+                                    <constraint firstAttribute="centerX" secondItem="7mO-NU-EFs" secondAttribute="centerX" constant="-0.5" id="qfm-sE-5ef"/>
+                                    <constraint firstItem="Qqc-Yh-nIP" firstAttribute="top" secondItem="e3l-C7-h86" secondAttribute="top" constant="18" id="sgQ-gR-mov"/>
+                                    <constraint firstAttribute="centerX" secondItem="Uzh-83-Z8g" secondAttribute="centerX" id="wV0-Dq-08n"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="e3l-C7-h86" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" constant="60" id="5am-Zp-i2e"/>
+                            <constraint firstItem="e3l-C7-h86" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="66M-WO-U2N"/>
                             <constraint firstItem="NKd-k3-vSA" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" constant="10" id="K43-iI-K7h"/>
+                            <constraint firstItem="8aV-gM-TJw" firstAttribute="top" secondItem="e3l-C7-h86" secondAttribute="bottom" id="S7O-ML-L7C"/>
                             <constraint firstAttribute="trailing" secondItem="F5X-iN-TNU" secondAttribute="trailing" id="UIu-hX-yxk"/>
                             <constraint firstAttribute="trailing" secondItem="4A5-3K-je3" secondAttribute="trailing" id="XKu-ga-DFL"/>
                             <constraint firstItem="4A5-3K-je3" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="ZoJ-pq-gPJ"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="bjl-nO-FCi"/>
                             <constraint firstItem="NKd-k3-vSA" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="bottom" constant="130" id="j8o-9s-BY7"/>
+                            <constraint firstAttribute="trailing" secondItem="e3l-C7-h86" secondAttribute="trailing" id="kA9-1f-wE6"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="p0T-F4-LPw"/>
                             <constraint firstItem="8aV-gM-TJw" firstAttribute="top" secondItem="F5X-iN-TNU" secondAttribute="bottom" priority="250" id="pSj-xK-Vd1"/>
                             <constraint firstItem="8aV-gM-TJw" firstAttribute="top" secondItem="4A5-3K-je3" secondAttribute="bottom" id="vdW-cF-pzc"/>
@@ -3001,6 +3048,11 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="F5X-iN-TNU" id="GKv-qY-j6y"/>
+                        <outlet property="errorImageView" destination="Qqc-Yh-nIP" id="El4-ko-oHg"/>
+                        <outlet property="errorMessageLabel" destination="S6F-92-HAb" id="sV3-tn-XDe"/>
+                        <outlet property="errorSupportButton" destination="Uzh-83-Z8g" id="SpF-6a-vQt"/>
+                        <outlet property="errorTitleLabel" destination="7mO-NU-EFs" id="zw2-TG-MqV"/>
+                        <outlet property="errorViewsContainerView" destination="e3l-C7-h86" id="6db-1d-xLU"/>
                         <outlet property="popupMaskView" destination="4A5-3K-je3" id="y9U-xZ-hWo"/>
                         <outlet property="popupView" destination="NKd-k3-vSA" id="3So-DM-FOy"/>
                         <outlet property="popupViewTop" destination="j8o-9s-BY7" id="znO-3Y-ewC"/>
@@ -4261,6 +4313,7 @@
         <image name="questions_circle.png" width="21" height="21"/>
         <image name="senseIcon.png" width="40" height="40"/>
         <image name="settingsCheck.png" width="16" height="13"/>
+        <image name="timelineNoDataIcon.png" width="200" height="228"/>
         <image name="timeline_action_adjust.png" width="32" height="32"/>
         <image name="warning.png" width="24" height="22"/>
     </resources>

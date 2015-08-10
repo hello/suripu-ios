@@ -31,7 +31,7 @@
 /**
  *  Updates and reloads data
  */
-- (void)reloadData:(void (^)(void))completion;
+- (void)reloadData:(void (^)(NSError*))completion;
 
 /**
  *  Fetch the sleep data corresponding to a given index path
@@ -82,6 +82,8 @@
 
 - (BOOL)dateIsLastNight;
 
+- (BOOL)hasTimelineData;
+
 /**
  *  Tiny text for timestamps
  *
@@ -104,4 +106,5 @@
 - (void)updateTimelineState:(BOOL)isOpen;
 
 @property (nonatomic, strong, readonly) SENTimeline *sleepResult;
+@property (nonatomic, getter=isLoading, readonly) BOOL loading;
 @end

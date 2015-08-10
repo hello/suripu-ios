@@ -4,7 +4,8 @@ platform :ios, '7.0'
 
 # UI
 pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git',
-                          :commit => '6bf420df77117f519af32a6393520ead4e7848c6'
+                          :commit => '6bf420df77117f519af32a6393520ead4e7848c6',
+                          :inhibit_warnings => true
 pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'

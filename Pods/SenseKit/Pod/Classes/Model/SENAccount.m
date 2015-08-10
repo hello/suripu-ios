@@ -7,9 +7,30 @@
 //
 
 #import "SENAccount.h"
+#import "Model.h"
 
-static NSString* kSENAccountDoBFormat = @"yyyy-MM-dd";
-static NSString* kSENAccountDateTimeZone = @"GMT";
+NSString* const SENAccountPropertyValueGenderOther = @"OTHER";
+NSString* const SENAccountPropertyValueGenderMale = @"MALE";
+NSString* const SENAccountPropertyValueGenderFemale = @"FEMALE";
+
+SENAccountGender SENAccountGenderFromString(NSString* gender) {
+    if ([[gender uppercaseString] isEqualToString:SENAccountPropertyValueGenderFemale])
+        return SENAccountGenderFemale;
+    else if ([[gender uppercaseString] isEqualToString:SENAccountPropertyValueGenderMale])
+        return SENAccountGenderMale;
+    return SENAccountGenderOther;
+}
+
+NSString* SENAccountGenderToString(SENAccountGender gender) {
+    switch (gender) {
+        case SENAccountGenderFemale:
+            return SENAccountPropertyValueGenderFemale;
+        case SENAccountGenderMale:
+            return SENAccountPropertyValueGenderMale;
+        default:
+            return SENAccountPropertyValueGenderOther;
+    }
+}
 
 @interface SENAccount()
 
@@ -20,6 +41,42 @@ static NSString* kSENAccountDateTimeZone = @"GMT";
 @end
 
 @implementation SENAccount
+
+NSString* const SENAccountPropertyName = @"name";
+NSString* const SENAccountPropertyEmailAddress = @"email";
+NSString* const SENAccountPropertyPassword = @"password";
+NSString* const SENAccountPropertyHeight = @"height";
+NSString* const SENAccountPropertyWeight = @"weight";
+NSString* const SENAccountPropertyId = @"id";
+NSString* const SENAccountPropertyLastModified = @"last_modified";
+NSString* const SENAccountPropertyBirthdate = @"dob";
+NSString* const SENAccountPropertyGender = @"gender";
+NSString* const SENAccountPropertyValueLatitude = @"lat";
+NSString* const SENAccountPropertyValueLongitude = @"lon";
+NSString* const SENAccountPropertyCreated = @"created";
+
+- (instancetype)initWithDictionary:(NSDictionary *)data {
+    if (![data isKindOfClass:[NSDictionary class]])
+        return nil;
+    if (self = [super init]) {
+        _accountId = SENObjectOfClass(data[SENAccountPropertyId], [NSString class]);
+        _lastModified = SENObjectOfClass(data[SENAccountPropertyLastModified], [NSNumber class]);
+        _name = SENObjectOfClass(data[SENAccountPropertyName], [NSString class]);
+        _gender = SENAccountGenderFromString(SENObjectOfClass(data[SENAccountPropertyGender], [NSString class]));
+        _weight = SENObjectOfClass(data[SENAccountPropertyWeight], [NSNumber class]);
+        _height = SENObjectOfClass(data[SENAccountPropertyHeight], [NSNumber class]);
+        _email = SENObjectOfClass(data[SENAccountPropertyEmailAddress], [NSString class]);
+        _birthdate = SENObjectOfClass(data[SENAccountPropertyBirthdate], [NSString class]);
+        _latitude = SENObjectOfClass(data[SENAccountPropertyValueLatitude], [NSNumber class]);
+        _longitude = SENObjectOfClass(data[SENAccountPropertyValueLongitude], [NSNumber class]);
+
+        NSNumber *createdAt = SENObjectOfClass(data[SENAccountPropertyCreated], [NSNumber class]);
+        if (createdAt) {
+            _createdAt = [NSDate dateWithTimeIntervalSince1970:[createdAt unsignedIntegerValue]];
+        }
+    }
+    return self;
+}
 
 - (instancetype)initWithAccountId:(NSString*)accountId
                      lastModified:(NSNumber*)isoLastModDate {
@@ -36,6 +93,21 @@ static NSString* kSENAccountDateTimeZone = @"GMT";
     [self setDobDate:nil];
 }
 
+- (NSDictionary *)dictionaryValue {
+    NSMutableDictionary* params = [NSMutableDictionary dictionary];
+    [params setValue:self.name forKey:SENAccountPropertyName];
+    [params setValue:self.email forKey:SENAccountPropertyEmailAddress];
+    [params setValue:self.weight forKey:SENAccountPropertyWeight];
+    [params setValue:self.height forKey:SENAccountPropertyHeight];
+    [params setValue:SENAccountGenderToString(self.gender) forKey:SENAccountPropertyGender];
+    [params setValue:self.birthdate forKey:SENAccountPropertyBirthdate];
+    [params setValue:self.lastModified forKey:SENAccountPropertyLastModified];
+    [params setValue:self.latitude forKey:SENAccountPropertyValueLatitude];
+    [params setValue:self.longitude forKey:SENAccountPropertyValueLongitude];
+    [params setValue:@([self.createdAt timeIntervalSince1970]) forKey:SENAccountPropertyCreated];
+    return params;
+}
+
 - (void)setBirthMonth:(NSInteger)month day:(NSInteger)day andYear:(NSInteger)year {
     NSDateComponents* components = [[NSDateComponents alloc] init];
     [components setDay:day];
@@ -49,19 +121,21 @@ static NSString* kSENAccountDateTimeZone = @"GMT";
 
 - (void)setBirthdateInMillis:(NSNumber*)birthdateInMillis {
     if (birthdateInMillis == nil) return;
+    NSString* const SENAccountDateTimeZone = @"GMT";
 
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:[birthdateInMillis longLongValue]/1000];
     NSDateFormatter* formatter = [self isoDateFormatter];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithName:kSENAccountDateTimeZone]];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:SENAccountDateTimeZone]];
     [self setBirthdate:[formatter stringFromDate:date]];
 }
 
 - (NSDateFormatter*)isoDateFormatter {
+    NSString* const SENAccountDoBFormat = @"yyyy-MM-dd";
     static NSDateFormatter* formatter = nil;
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:kSENAccountDoBFormat];
+        [formatter setDateFormat:SENAccountDoBFormat];
     });
     return formatter;
 }

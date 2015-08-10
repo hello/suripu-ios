@@ -8,6 +8,7 @@
 
 #import "SENTimelineSegment.h"
 #import "SENTimeline.h"
+#import "Model.h"
 
 SENTimelineSegmentSleepState SENTimelineSegmentSleepStateFromString(NSString *segmentType) {
     if ([segmentType isKindOfClass:[NSString class]]) {
@@ -122,9 +123,9 @@ static NSString* const SENTimelineSegmentKeyType = @"event_type";
     if (self = [super init]) {
         _date = SENTimelineDateFromTimestamp(segmentData[SENTimelineSegmentTimestamp]);
         _duration = SENTimelineIntervalFromNumber(segmentData[SENTimelineSegmentDuration]);
-        _message = segmentData[SENTimelineSegmentMessage];
+        _message = SENObjectOfClass(segmentData[SENTimelineSegmentMessage], [NSString class]);
         _type = SENTimelineSegmentTypeFromString(segmentData[SENTimelineSegmentEventType]);
-        _sleepDepth = [segmentData[SENTimelineSegmentSleepDepth] integerValue];
+        _sleepDepth = [SENObjectOfClass(segmentData[SENTimelineSegmentSleepDepth], [NSNumber class]) integerValue];
         _sleepState = SENTimelineSegmentSleepStateFromString(segmentData[SENTimelineSegmentSleepStateKey]);
         _timezone = SENTimelineTimezoneFromOffset(segmentData[SENTimelineSegmentTimezoneOffset]);
         _possibleActions = SENTimelineSegmentActionFromStrings(segmentData[SENTimelineSegmentActions]);

@@ -39,29 +39,6 @@
     [self setNilSymbol:NSLocalizedString(@"empty-data", nil)];
 }
 
-- (void)setSensorUnit:(SENSensorUnit)unit {
-    if (unit == _sensorUnit) {
-        return;
-    }
-    
-    _sensorUnit = unit;
-    
-    switch (unit) {
-        case SENSensorUnitLux: {
-            [self setNumberOfFractionDigits:2];
-            break;
-        }
-        case SENSensorUnitAQI:
-        case SENSensorUnitDecibel:
-        case SENSensorUnitDegreeCentigrade:
-        case SENSensorUnitPercent:
-        case SENSensorUnitUnknown:
-        default:
-            [self setNumberOfFractionDigits:0];
-            break;
-    }
-}
-
 - (void)setNumberOfFractionDigits:(NSUInteger)digits {
     [self setMinimumFractionDigits:digits];
     [self setMaximumFractionDigits:digits];
@@ -75,19 +52,29 @@
         // return the nilSymbol if value is nil.  bug in iOS?
         return [self nilSymbol];
     }
-    // calculate the powers of 10 of the value and subtract that number from the
-    // min fraction digits to ensure a 3 digit display, which is not the same as
-    // 3 significant digits
-    CGFloat defaultMinFraction = [self minimumFractionDigits];
-    NSUInteger powers = MAX(log10f([value floatValue]), 0);
-    NSUInteger minFraction = MIN(defaultMinFraction - powers, defaultMinFraction);
-    [self setMaximumFractionDigits:minFraction];
-    return [self stringFromNumber:value];
+    
+    NSNumber* preferredValue = [SENSensor value:value inPreferredUnit:[self sensorUnit]];
+    switch ([self sensorUnit]) {
+        case SENSensorUnitLux: {
+            BOOL showFraction = [preferredValue floatValue] < 10;
+            [self setNumberOfFractionDigits:showFraction ? 1 : 0];
+            break;
+        }
+        case SENSensorUnitAQI:
+        case SENSensorUnitDecibel:
+        case SENSensorUnitDegreeCentigrade:
+        case SENSensorUnitPercent:
+        case SENSensorUnitUnknown:
+        default:
+            [self setNumberOfFractionDigits:0];
+            break;
+    }
+    
+    return [self stringFromNumber:preferredValue];
 }
 
 - (NSString *)stringFromSensor:(SENSensor *)sensor {
-    return [self stringFromNumber:[sensor valueInPreferredUnit]
-                    forSensorUnit:[sensor unit]];
+    return [self stringFromNumber:[sensor value] forSensorUnit:[sensor unit]];
 }
 
 - (NSString *)stringFromNumber:(NSNumber *)number forSensorUnit:(SENSensorUnit)unit {

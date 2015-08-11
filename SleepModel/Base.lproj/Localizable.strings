@@ -383,12 +383,12 @@
 "measurement.lx.format" = "%ldlx";
 
 // missing data
-"sleep-data.first-night.title" = "All you have to do is sleep";
-"sleep-data.first-night.message" = "Sense has begun monitoring your environment and will have an update for you in the morning.";
-"sleep-data.not-enough.title" = "Not enough data";
-"sleep-data.not-enough.message" = "There was not enough sleep data recorded to display a Sleep Timeline for this night.";
+"sleep-data.first-night.title" = "See you in the morning";
+"sleep-data.first-night.message" = "In the morning, you'll see your first Sleep Timeline here. There are no modes to set — Sense will automatically know when you go to bed. All you need to do is sleep.";
+"sleep-data.not-enough.title" = "Not enough motion data";
+"sleep-data.not-enough.message" = "Some sleep data was recorded, but not enough to generate a Sleep Timeline for this night.";
 "sleep-data.error.title" = "There was an error";
-"sleep-data.error.message" = "An error occurred while displaying your timeline. Please try again later.";
+"sleep-data.error.message" = "There was a problem retrieving your Sleep Timeline. Please try again in a few moments.";
 
 // feedback
 "sleep-event.feedback.title.generic" = "What time did this event occur?";

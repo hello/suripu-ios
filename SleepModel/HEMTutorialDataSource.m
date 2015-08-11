@@ -19,7 +19,6 @@ static NSString* const HEMTutorialCellReuseIdDesc = @"description";
 
 static CGFloat const HEMTutorialTextVerticalInset = 24.0f;
 static CGFloat const HEMTutorialTextSpacing = 16.0f;
-static CGFloat const HEMTutorialImageHeight = 160.0f;
 
 typedef NS_ENUM(NSUInteger, HEMTutorialCellSection) {
     HEMTutorialCellSectionImage = 0,

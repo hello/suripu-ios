@@ -393,22 +393,38 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 }
 
 - (NSAttributedString *)valueTextForSensor:(SENSensor *)sensor {
-    static NSInteger HEMSensorUnitVerticalOffset = 14;
-    NSDictionary *baseAttributes = @{ NSFontAttributeName : [UIFont sensorListValueFont] };
+    NSDictionary *baseAttributes = @{ NSFontAttributeName : [UIFont sensorListValueFontForUnit:sensor.unit] };
     NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
     NSMutableAttributedString *composite =
         [[NSMutableAttributedString alloc] initWithString:valueText attributes:baseAttributes];
     
     if (sensor.value) {
-        NSDictionary *unitAttributes = @{NSFontAttributeName : [UIFont sensorListUnitFont],
-                                         NSBaselineOffsetAttributeName : @(HEMSensorUnitVerticalOffset)};
-        NSAttributedString *unit =
-            [[NSAttributedString alloc] initWithString:sensor.localizedUnit
-                                            attributes:unitAttributes];
-        [composite appendAttributedString:unit];
+        NSAttributedString* unitText = [self unitTextForSensor:sensor];
+        if (unitText) {
+            [composite appendAttributedString:unitText];
+        }
     }
 
     return composite;
+}
+
+- (NSAttributedString*)unitTextForSensor:(SENSensor *)sensor {
+    // the particulates unit is too large to fit so it has been decided to not
+    // show the unit here.  The solution, for later, is to redesign the view to
+    // accommodate for this
+    if (sensor.unit == SENSensorUnitAQI) {
+        return nil;
+    }
+    
+    NSInteger unitVerticalOffset = 14;
+    if (sensor.unit == SENSensorUnitDegreeCentigrade) {
+        unitVerticalOffset = 12;
+    }
+    NSDictionary *unitAttributes = @{NSFontAttributeName : [UIFont sensorListUnitFontForUnit:sensor.unit],
+                                     NSBaselineOffsetAttributeName : @(unitVerticalOffset)};
+    NSAttributedString *unit = [[NSAttributedString alloc] initWithString:sensor.localizedUnit
+                                                               attributes:unitAttributes];
+    return unit;
 }
 
 - (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell {

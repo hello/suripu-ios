@@ -5,7 +5,7 @@
 //  Created by Delisa Mason on 11/3/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
+#import <SenseKit/SENSensor.h>
 #import <UIKit/UIKit.h>
 
 @interface UIFont (HEMStyle)
@@ -75,9 +75,13 @@
  */
 + (UIFont*)preferenceControlFont;
 
-+ (UIFont*)sensorListValueFont;
++ (UIFont*)sensorValueFontForUnit:(SENSensorUnit)unit;
 
-+ (UIFont*)sensorListUnitFont;
++ (UIFont*)sensorListValueFontForUnit:(SENSensorUnit)unit;
+
++ (UIFont*)sensorUnitFontForUnit:(SENSensorUnit)unit;
+
++ (UIFont*)sensorListUnitFontForUnit:(SENSensorUnit)unit;
 
 + (UIFont*)backViewTextFont;
 

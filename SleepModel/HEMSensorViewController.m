@@ -217,6 +217,10 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
+
+    self.valueLabel.font = [UIFont sensorValueFontForUnit:self.sensor.unit];
+    self.unitLabel.font = [UIFont sensorUnitFontForUnit:self.sensor.unit];
+    
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
     self.unitLabel.text = [self.sensor localizedUnit];

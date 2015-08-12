@@ -5,6 +5,7 @@
 //  Created by Delisa Mason on 11/3/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <SenseKit/SENSensor.h>
 #import "UIFont+HEMStyle.h"
 
 @implementation UIFont (HEMStyle)
@@ -115,14 +116,34 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:10.f];
 }
 
-+ (UIFont*)sensorListValueFont
++ (UIFont*)sensorValueFontForUnit:(SENSensorUnit)unit
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:72.f];
+}
+
++ (UIFont*)sensorUnitFontForUnit:(SENSensorUnit)unit
+{
+    switch (unit) {
+        case SENSensorUnitAQI:
+            return [UIFont fontWithName:HEMFontFamilyNameLight size:22.0f];
+        default:
+            return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:32.f];
+    }
+}
+
++ (UIFont*)sensorListValueFontForUnit:(SENSensorUnit)unit
 {
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:36.f];
 }
 
-+ (UIFont*)sensorListUnitFont
++ (UIFont*)sensorListUnitFontForUnit:(SENSensorUnit)unit
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:16.f];
+    switch (unit) {
+        case SENSensorUnitDegreeCentigrade:
+            return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
+        default:
+            return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
+    }
 }
 
 + (UIFont*)sensorTimestampFont

@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.1.2.2
+
+New:
+
+* Timeline now shows a custom state directly after onboarding completion
+* Timeline now shows a custom state when not enough data has been recorded
+* Timeline now shows a custom state when an error was encountered when pulling data for the Timeline
+* HealthKit backfills a maximum of 3 days
+* Light sensor value formatted to show fractional digit when less than 10
+
+Fixes:
+
+* Fixed issue where HealthKit would fail to sync if no data exists locally
+* Timeline no longer shows the loading indicator indefinitely when no data
+* Temperature value in sensor detail properly obeys unit preferences
+
 ## 1.1.2.1
 
 New:

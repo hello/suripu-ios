@@ -79,7 +79,7 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 
 - (void)setHighlighted:(BOOL)highlighted {
     if (highlighted) {
-        self.cornerView.backgroundColor = [UIColor timelineEventSelectedBackgroundColor];
+        self.cornerView.backgroundColor = [UIColor timelineSelectedBackgroundColor];
         [self setShadowVisible:NO];
     } else {
         [self setShadowVisible:YES];

@@ -227,7 +227,7 @@ static UIColor *_tintColor = nil;
 + (UIColor *)actionSheetSelectedColor {
     return [UIColor colorWithHex:0xF7F7F7 alpha:1.f];
 }
-+ (UIColor *)timelineEventSelectedBackgroundColor {
++ (UIColor *)timelineSelectedBackgroundColor {
     return [UIColor colorWithHex:0xEBF7FF alpha:1.f];
 }
 + (UIColor *)timelineAccentColor {
@@ -235,6 +235,10 @@ static UIColor *_tintColor = nil;
 }
 + (UIColor *)timelineWaveformColor {
     return [UIColor colorWithHex:0xCCD3DB alpha:1.f];
+}
++ (NSArray *)timelineSelectedGradientColorRefs {
+    return @[(id)[UIColor colorWithHex:0xF5F7FA alpha:1.f].CGColor,
+             (id)[UIColor colorWithHex:0xF5F7FA alpha:0.f].CGColor];
 }
 
 @end

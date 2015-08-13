@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMTappableView.h"
 
-@interface HEMTimelineMessageContainerView : UIView
+@interface HEMTimelineMessageContainerView : HEMTappableView
 
 @end

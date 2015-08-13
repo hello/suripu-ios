@@ -24,6 +24,7 @@
 #import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
 #import "HEMWaveform.h"
+#import "HEMTimelineMessageContainerView.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -383,9 +384,10 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [cell setLoading:self.sleepResult.message.length == 0];
     [cell setScore:score condition:self.sleepResult.scoreCondition animated:YES];
     if (score > 0 && [collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
-        [cell.summaryButton addTarget:collectionView.delegate
-                               action:@selector(didTapSummaryButton:)
-                     forControlEvents:UIControlEventTouchUpInside];
+        [cell.messageContainerView addTapTarget:collectionView.delegate
+                                         action:@selector(didTapSummaryButton:)];
+        [cell.sleepScoreGraphView addTapTarget:collectionView.delegate
+                                        action:@selector(didTapSummaryButton:)];
     }
     cell.messageChevronView.hidden = score == 0 && self.sleepResult.segments.count == 0;
     cell.messageContainerView.hidden = [self.sleepResult scoreCondition] == SENConditionUnknown;

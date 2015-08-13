@@ -10,6 +10,7 @@
 @property (nonatomic, strong) CAShapeLayer *scoreLayer;
 @property (nonatomic, strong) CAShapeLayer *backgroundLayer;
 @property (nonatomic, strong) CAShapeLayer *loadingLayer;
+@property (nonatomic, strong) CAGradientLayer* highlightedLayer;
 @property (nonatomic, weak) IBOutlet UICountingLabel *scoreValueLabel;
 @end
 
@@ -54,6 +55,15 @@ CGFloat const arcOffsetY = 80.f;
     self.loadingLayer.lineWidth = 1.f;
     self.loadingLayer.frame = self.bounds;
     self.backgroundLayer.opacity = 1;
+    
+    CAShapeLayer* mask = [CAShapeLayer layer];
+    mask.frame = self.backgroundLayer.bounds;
+    mask.path = self.backgroundLayer.path;
+    
+    CAGradientLayer* gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = self.backgroundLayer.bounds;
+    gradientLayer.colors = [UIColor timelineSelectedGradientColorRefs];
+    gradientLayer.mask = mask;
 }
 
 - (void)configureScoreValueLabel {
@@ -61,6 +71,27 @@ CGFloat const arcOffsetY = 80.f;
     self.scoreValueLabel.formatBlock = ^NSString *(float value) { return [NSString stringWithFormat:@"%0.f", value]; };
     self.scoreValueLabel.alpha = 0;
     self.scoreValueLabel.method = UILabelCountingMethodEaseInOut;
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    if (highlighted) {
+        if (!self.highlightedLayer) {
+            CAShapeLayer* mask = [CAShapeLayer layer];
+            mask.frame = self.backgroundLayer.bounds;
+            mask.path = self.backgroundLayer.path;
+            
+            CAGradientLayer* gradientLayer = [CAGradientLayer layer];
+            gradientLayer.frame = self.backgroundLayer.bounds;
+            gradientLayer.colors = [UIColor timelineSelectedGradientColorRefs];
+            gradientLayer.mask = mask;
+            
+            self.highlightedLayer = gradientLayer;
+        }
+        [self.layer insertSublayer:self.highlightedLayer atIndex:0];
+    } else {
+        [self.highlightedLayer removeFromSuperlayer];
+    }
+    [super setHighlighted:highlighted];
 }
 
 #pragma mark - Score Animation

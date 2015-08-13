@@ -55,15 +55,6 @@ CGFloat const arcOffsetY = 80.f;
     self.loadingLayer.lineWidth = 1.f;
     self.loadingLayer.frame = self.bounds;
     self.backgroundLayer.opacity = 1;
-    
-    CAShapeLayer* mask = [CAShapeLayer layer];
-    mask.frame = self.backgroundLayer.bounds;
-    mask.path = self.backgroundLayer.path;
-    
-    CAGradientLayer* gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = self.backgroundLayer.bounds;
-    gradientLayer.colors = [UIColor timelineSelectedGradientColorRefs];
-    gradientLayer.mask = mask;
 }
 
 - (void)configureScoreValueLabel {
@@ -74,6 +65,7 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
     if (highlighted) {
         if (!self.highlightedLayer) {
             CAShapeLayer* mask = [CAShapeLayer layer];
@@ -91,7 +83,6 @@ CGFloat const arcOffsetY = 80.f;
     } else {
         [self.highlightedLayer removeFromSuperlayer];
     }
-    [super setHighlighted:highlighted];
 }
 
 #pragma mark - Score Animation

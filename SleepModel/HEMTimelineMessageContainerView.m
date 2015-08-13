@@ -28,6 +28,7 @@ static CGFloat const HEMTimelineMessageShadowOpacity = 0.08f;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
     if (highlighted) {
         self.layer.shadowOpacity = 0.0f;
         self.backgroundColor = [UIColor timelineSelectedBackgroundColor];
@@ -35,7 +36,6 @@ static CGFloat const HEMTimelineMessageShadowOpacity = 0.08f;
         self.layer.shadowOpacity = HEMTimelineMessageShadowOpacity;
         self.backgroundColor = [UIColor whiteColor];
     }
-    [super setHighlighted:highlighted];
 }
 
 @end

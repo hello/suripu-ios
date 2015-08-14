@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.2.3
+
+New:
+
+* Visual feedback when tapping on sleep summary card and sleep score
+* Updated sensor welcome dialog images
+* Various copy, unit, and asset changes in preparation for dust sensor
+
+Fixes:
+
+* Fixed crasher that occurs if you hold on one of the button on a question card in the insight feed view, then using a different finger, tapping on second button
+* Fixed crasher that occurs if you scroll down on a timeline, put the app in to the background, bring it back up, then open the timeline
+
 ## 1.1.2.2
 
 New:

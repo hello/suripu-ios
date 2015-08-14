@@ -52,7 +52,8 @@
 - (IBAction)enable:(id)sender {
     // per design, this will be a non-blocking activity so we will fire and proceed
     SENPreference* preference = [[SENPreference alloc] initWithType:SENPreferenceTypeEnhancedAudio enable:YES];
-    [SENAPIPreferences updatePreference:preference completion:nil];
+    [preference saveLocally];
+    [SENAPIPreferences updatePreferencesWithCompletion:nil];
     [self next];
 }
 

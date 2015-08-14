@@ -219,7 +219,7 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     [preference saveLocally];
     
     __weak typeof(self) weakSelf = self;
-    [SENAPIPreferences updatePreference:preference completion:^(id data, NSError *error) {
+    [SENAPIPreferences updatePreferencesWithCompletion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error == nil) {
             NSMutableDictionary* updatedPref = [[strongSelf preferences] mutableCopy];

@@ -52,10 +52,11 @@
 - (void)enableNotificationsInPreferences {
     SENPreference* conditionsPref = [[SENPreference alloc] initWithName:SENPreferenceNamePushConditions
                                                                   value:@(YES)];
+    [conditionsPref saveLocally];
     SENPreference* scorePref = [[SENPreference alloc] initWithName:SENPreferenceNamePushScore
                                                              value:@(YES)];
-    [SENAPIPreferences updatePreference:conditionsPref completion:NULL];
-    [SENAPIPreferences updatePreference:scorePref completion:NULL];
+    [scorePref saveLocally];
+    [SENAPIPreferences updatePreferencesWithCompletion:NULL];
 }
 
 #pragma mark -

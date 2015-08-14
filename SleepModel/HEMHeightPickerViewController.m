@@ -1,4 +1,5 @@
 #import <SenseKit/SENAccount.h>
+#import <SenseKit/SENPreference.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -134,24 +135,34 @@ static NSInteger const HEMHeightDefaultInch = 8;
     CGFloat totalInches = MAX(0.0f, (offY + [scrollView contentInset].top) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
     CGFloat maxInches = HEMMaxHeightInFeet * HEMInchesPerFeet;
     CGFloat actualInches = maxInches - totalInches; // values are reversed
-    
-    NSInteger inches = (int)actualInches % HEMInchesPerFeet;
-    NSInteger feet = actualInches / HEMInchesPerFeet;
     CGFloat cm = actualInches * HEMHeightPickerCentimetersPerInch;
-    
-    NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
-    NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
-    NSString* cmFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
-    [[self mainHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat]];
-    [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@", cmFormat]];
-
+    [self updateTextLabelsWithInches:actualInches];
     [self setSelectedHeightInCm:cm];
-    
     if ([self delegate] == nil) {
         SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
         [account setHeight:@(cm)];
     }
     
+}
+
+- (void)updateTextLabelsWithInches:(CGFloat)actualInches {
+    NSInteger inches = (int)actualInches % HEMInchesPerFeet;
+    NSInteger feet = actualInches / HEMInchesPerFeet;
+    CGFloat cm = actualInches * HEMHeightPickerCentimetersPerInch;
+
+    NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
+    NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
+    NSString* cmFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
+    NSString *imperialMeasure = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];
+    NSString *metricMeasure = [NSString stringWithFormat:@"%@", cmFormat];
+    BOOL useMetric = [SENPreference useMetricUnitForHeight];
+    if (useMetric) {
+        [[self mainHeightLabel] setText:metricMeasure];
+        [[self otherHeightLabel] setText:imperialMeasure];
+    } else {
+        [[self mainHeightLabel] setText:imperialMeasure];
+        [[self otherHeightLabel] setText:metricMeasure];
+    }
 }
 
 #pragma mark - Actions

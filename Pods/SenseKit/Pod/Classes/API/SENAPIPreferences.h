@@ -14,11 +14,11 @@
 @interface SENAPIPreferences : NSObject
 
 /**
- * Update a particular preference for the currently signed in account
- * @param preference: preference to be updated
- * @param completion: block to invoke when update is complete (optional)
+ *  Update preferences remotely, invoking a callback at completion
+ *
+ *  @param completion block invoked when asynchronous call completes
  */
-+ (void)updatePreference:(SENPreference*)preference completion:(SENAPIDataBlock)completion;
++ (void)updatePreferencesWithCompletion:(SENAPIDataBlock)completion;
 
 /**
  * Retrieve the preferences from the API in the form of a dictionary such that

@@ -238,20 +238,18 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 - (void)updateTimelineState:(BOOL)isOpen {
     [[self topBarView] setOpened:isOpen];
     [[self topBarView] setShareEnabled:self.sleepResult.scoreCondition != SENConditionUnknown && !isOpen animated:YES];
-    if (isOpen)
+    if (isOpen) {
+        // this is needed if view is not at the top and user taps on the menu button
+        // to open up the timeline
         [self scrollToTop];
+    }
 }
 
 - (void)scrollToTop {
     if (!CGPointEqualToPoint(CGPointZero, self.collectionView.contentOffset)
-        && [self.collectionView numberOfSections] > 0 && [self.collectionView numberOfItemsInSection:0] > 0) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:0];
-        UICollectionViewLayoutAttributes *attrs =
-            [self.collectionView layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader
-                                                                   atIndexPath:indexPath];
-        if (!attrs)
-            return;
-        [self.collectionView scrollRectToVisible:attrs.frame animated:YES];
+        && [self.collectionView numberOfSections] > 0
+        && [self.collectionView numberOfItemsInSection:0] > 0) {
+        [self.collectionView setContentOffset:CGPointZero animated:YES];
     }
 }
 

@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 
 /**
- * Determines whether the current device is using the metric system or not
- * @return YES if metric system, NO otherwise
- */
-BOOL HEMIsMetricSystem (void);
-
-/**
  * Converts centimeters to inches
  * @param centimeters: centimeters to convert to inches
  * @param inches

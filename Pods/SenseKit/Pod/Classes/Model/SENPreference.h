@@ -30,6 +30,14 @@ typedef NS_ENUM(NSUInteger, SENPreferenceType) {
      *  Receive push notifications for poor sleep environment in the evening
      */
     SENPreferenceTypePushConditions = 5,
+    /**
+     *  Represent height in centimeters
+     */
+    SENPreferenceTypeHeightMetric = 6,
+    /**
+     *  Represent weight in kilograms
+     */
+    SENPreferenceTypeWeightMetric = 7,
 };
 
 /**
@@ -92,6 +100,22 @@ extern NSString* const SENPreferenceNamePushConditions;
  *  @return the temperature format to use
  */
 + (SENTemperatureFormat)temperatureFormat;
+
+/**
+ *  The preferred height format. If none specified, defaults to
+ *  the user's locale setting
+ *
+ *  @return YES if meters, NO if MURICA
+ */
++ (BOOL)useMetricUnitForHeight;
+
+/**
+ *  The preferred height format. If none specified, defaults to
+ *  the user's locale setting
+ *
+ *  @return YES if kilograms, NO if MURICA
+ */
++ (BOOL)useMetricUnitForWeight;
 
 /**
  *  Convenience method for obtaining the temperature format.

@@ -14,6 +14,8 @@ NSString* const SENPreferenceNameTemp = @"TEMP_CELSIUS";
 NSString* const SENPreferenceNameTime = @"TIME_TWENTY_FOUR_HOUR";
 NSString* const SENPreferenceNamePushScore = @"PUSH_SCORE";
 NSString* const SENPreferenceNamePushConditions = @"PUSH_ALERT_CONDITIONS";
+NSString* const SENPreferenceNameHeightMetric = @"HEIGHT_METRIC";
+NSString* const SENPreferenceNameWeightMetric = @"WEIGHT_METRIC";
 
 @interface SENPreference()
 
@@ -42,6 +44,10 @@ static NSString* const SENPreferenceEnable = @"enabled";
         type = SENPreferenceTypePushConditions;
     } else if ([uppercaseName isEqualToString:SENPreferenceNamePushScore]) {
         type = SENPreferenceTypePushScore;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNameHeightMetric]) {
+        type = SENPreferenceTypeHeightMetric;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNameWeightMetric]) {
+        type = SENPreferenceTypeWeightMetric;
     }
     return type;
 }
@@ -99,6 +105,28 @@ static NSString* const SENPreferenceEnable = @"enabled";
         tempFormat = [enabled boolValue] ? SENTemperatureFormatCentigrade : SENTemperatureFormatFahrenheit;
     }
     return tempFormat;
+}
+
++ (BOOL)useMetricUnitForHeight {
+    SENLocalPreferences* pref = [SENLocalPreferences sharedPreferences];
+    NSNumber* enabled = [pref userPreferenceForKey:SENPreferenceNameHeightMetric];
+    if (enabled == nil) {
+        BOOL usesMetric = [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
+        [pref setUserPreference:@(usesMetric) forKey:SENPreferenceNameHeightMetric];
+        return usesMetric;
+    }
+    return [enabled boolValue];
+}
+
++ (BOOL)useMetricUnitForWeight {
+    SENLocalPreferences* pref = [SENLocalPreferences sharedPreferences];
+    NSNumber* enabled = [pref userPreferenceForKey:SENPreferenceNameWeightMetric];
+    if (enabled == nil) {
+        BOOL usesMetric = [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
+        [pref setUserPreference:@(usesMetric) forKey:SENPreferenceNameWeightMetric];
+        return usesMetric;
+    }
+    return [enabled boolValue];
 }
 
 + (BOOL)useCentigrade {

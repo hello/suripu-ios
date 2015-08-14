@@ -12,7 +12,7 @@ extern NSString* const SENLocalPrefDidChangeNotification;
 @interface SENLocalPreferences : NSObject
 
 /**
- * @return a shared instance of SENLocalPrefeference
+ * @return a shared instance of SENLocalPreference
  */
 + (instancetype)sharedPreferences;
 

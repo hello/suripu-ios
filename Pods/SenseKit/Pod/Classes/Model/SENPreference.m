@@ -64,6 +64,10 @@ static NSString* const SENPreferenceEnable = @"enabled";
             return SENPreferenceNamePushScore;
         case SENPreferenceTypePushConditions:
             return SENPreferenceNamePushConditions;
+        case SENPreferenceTypeHeightMetric:
+            return SENPreferenceNameHeightMetric;
+        case SENPreferenceTypeWeightMetric:
+            return SENPreferenceNameWeightMetric;
         default:
             return @"";
     }

@@ -73,6 +73,8 @@ extern NSString* const SENPreferenceNameTemp;
 extern NSString* const SENPreferenceNameTime;
 extern NSString* const SENPreferenceNamePushScore;
 extern NSString* const SENPreferenceNamePushConditions;
+extern NSString* const SENPreferenceNameHeightMetric;
+extern NSString* const SENPreferenceNameWeightMetric;
 
 @interface SENPreference : NSObject
 

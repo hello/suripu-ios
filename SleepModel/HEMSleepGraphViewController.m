@@ -329,7 +329,6 @@ static BOOL hasLoadedBefore = NO;
     [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
     self.playingButton = nil;
     self.audioPlayer = nil;
-    HEMActivateAudioSession(NO, nil);
 }
 
 - (void)updatePlaybackProgress {

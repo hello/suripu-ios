@@ -226,7 +226,6 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
     [self.player stop];
     self.player.currentTime = 0;
     [self updatePlayButtonWithImage:[HelloStyleKit miniPlayButton]];
-    HEMActivateAudioSession(NO, nil);
 }
 
 - (void)updatePlayButtonWithImage:(UIImage *)image {

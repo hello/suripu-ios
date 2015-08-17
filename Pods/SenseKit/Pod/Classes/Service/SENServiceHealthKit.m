@@ -202,7 +202,7 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     }
     
     __weak typeof(self) weakSelf = self;
-    [self syncTimelineDataAfter:syncStartDate until:lastNight withCalendar:calendar completion:^(NSError *error) {
+    [self syncTimelineDataAfter:syncStartDate until:lastNight withCalendar:calendar completion:^(NSArray* timelines, NSError *error) {
         if (!error) {
             [weakSelf saveLastWrittenDate:lastNight];
         }
@@ -213,18 +213,21 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
 - (void)syncTimelineDataAfter:(NSDate*)startDate
                         until:(NSDate*)endDate
                  withCalendar:(NSCalendar*)calendar
-                   completion:(void(^)(NSError* error))completion {
+                   completion:(void(^)(NSArray* timelines, NSError* error))completion {
     NSCalendarUnit unitsWeCareAbout = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
     NSDate* nextStartDate = startDate;
     NSUInteger daysFromStartDate = 0;
     NSDateComponents* components = nil;
     
+    BOOL haveTimelines = NO;
     NSMutableArray* timelines = [NSMutableArray array];
     dispatch_group_t getTimelineGroup = dispatch_group_create();
     
     __weak typeof(self) weakSelf = self;
     while ([calendar compareDate:nextStartDate toDate:endDate toUnitGranularity:unitsWeCareAbout] != NSOrderedDescending) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        haveTimelines = YES;
         
         dispatch_group_enter(getTimelineGroup);
         [strongSelf timelineForDate:nextStartDate completion:^(SENTimeline *timeline, NSError *error) {
@@ -234,10 +237,17 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
             dispatch_group_leave(getTimelineGroup);
         }];
         
-        components = [calendar components:unitsWeCareAbout fromDate:nextStartDate];
+        daysFromStartDate++;
+        components = [[NSDateComponents alloc] init];
         [components setDay:daysFromStartDate];
         nextStartDate = [calendar dateByAddingComponents:components toDate:nextStartDate options:0];
-        daysFromStartDate++;
+    }
+    
+    if (!haveTimelines) {
+        completion (nil, [NSError errorWithDomain:SENServiceHKErrorDomain
+                                             code:SENServiceHealthKitErrorNoDataToWrite
+                                         userInfo:@{NSLocalizedDescriptionKey : @"start and end date did not evaluate to timelines"}]);
+        return;
     }
     
     long queuePriority = DISPATCH_QUEUE_PRIORITY_DEFAULT;
@@ -245,7 +255,7 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     dispatch_group_notify(getTimelineGroup, queue, ^{
         [weakSelf syncTimelinesToHealthKit:timelines completion:^(NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                completion (error);
+                completion (timelines, error);
             });
         }];
     });
@@ -293,11 +303,9 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     }
     
     if ([samples count] == 0) {
-        if (completion) {
-            completion ([NSError errorWithDomain:SENServiceHKErrorDomain
-                                            code:SENServiceHealthKitErrorNoDataToWrite
-                                        userInfo:nil]);
-        }
+        completion ([NSError errorWithDomain:SENServiceHKErrorDomain
+                                        code:SENServiceHealthKitErrorNoDataToWrite
+                                    userInfo:nil]);
         return;
     }
     

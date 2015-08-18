@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.2.4
+
+New:
+
+* UI handholding for timeline zoom feature
+* App review copy changes
+* Height and weight unit preferences added.  App uses v2 preferences api
+
+Fixes:
+
+* HK backfilling includes last night
+* Stopping audio from timeline no longer blocks UI when opening the timeline
+
 ## 1.1.2.3
 
 New:

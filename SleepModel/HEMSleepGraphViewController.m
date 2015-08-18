@@ -120,7 +120,9 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)showTutorial {
     if (![HEMTutorial shouldShowTutorialForTimeline]) {
-        [self showHandholding];
+        if (![self showHandholdingForSwitchingDays]) {
+            [self showHandholdingForZoom];
+        }
         return;
     }
 
@@ -132,11 +134,23 @@ static BOOL hasLoadedBefore = NO;
     });
 }
 
-- (void)showHandholding {
+- (BOOL)showHandholdingForSwitchingDays {
+    if ([self isViewFullyVisible] && [[self collectionView] contentOffset].y == 0.0f) {
+        UIView *view = [[self containerViewController] view];
+        return [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
+    }
+    return NO;
+}
+
+- (BOOL)showHandholdingForZoom {
     if ([self isViewFullyVisible]) {
         UIView *view = [[self containerViewController] view];
-        [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
+        CGPoint target = CGPointZero;
+        target.x = CGRectGetWidth([[self view] bounds]) / 2;
+        target.y = HEMTimelineTopBarCellHeight / 2;
+        return [HEMTutorial showHandholdingForTimelineZoomIfNeededIn:view atTarget:target];
     }
+    return NO;
 }
 
 - (void)registerForNotifications {
@@ -779,7 +793,9 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark - UIScrollViewDelegate
 
 - (HEMTimelineContainerViewController *)containerViewController {
-    return (id)self.parentViewController.parentViewController;
+    UIViewController* parent = self.parentViewController;
+    UIViewController* grandParent = parent.parentViewController;
+    return (id)grandParent;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

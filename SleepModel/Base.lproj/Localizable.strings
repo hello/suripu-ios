@@ -628,7 +628,8 @@
 "timezone.action.select-manually" = "Select from a list";
 
 // handholding
-"handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days";
+"handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days.";
+"handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 
 // app review questions
 "app-review.question.1" = "Are you enjoying the Sense app?";

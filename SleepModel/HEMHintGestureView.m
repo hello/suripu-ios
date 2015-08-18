@@ -27,6 +27,7 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
     if (self) {
         _endingCenter = endCenter;
         _startingCenter = [self center];
+
         [self configureView];
     }
     return self;
@@ -82,18 +83,24 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
     } completion:completion];
 }
 
+- (void)scale:(CGFloat)scale then:(void(^)(BOOL finished))completion {
+    [self animate:^{
+        [self setTransform:CGAffineTransformMakeScale(scale, scale)];
+    } completion:completion];
+}
+
 - (void)startAnimation {
-    [self setCenter:[self startingCenter]];
-    [self setStopAnimation:NO];
-    [self setHidden:NO];
-    
-    [self fade:1.0f then:^(BOOL finished) {
-        [self move:[self endingCenter] then:^(BOOL finished) {
-            [self fade:0.0f then:^(BOOL finished) {
-                [self startAnimation];
-            }];
-        }];
-    }];
+    switch ([self animation]) {
+        case HEMHintGestureAnimationStatic:
+            [self justShowIt];
+            break;
+        case HEMHintGestureAnimationPulsate:
+            [self pulsate];
+            break;
+        default:
+            [self translate];
+            break;
+    }
 }
 
 - (void)endAnimation {
@@ -101,6 +108,43 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
         [self setStopAnimation:YES];
         [self setHidden:YES];
     }];
+}
+
+#pragma mark - Animation Types
+
+- (void)translate {
+    [self setCenter:[self startingCenter]];
+    [self setStopAnimation:NO];
+    [self setHidden:NO];
+    
+    [self fade:1.0f then:^(BOOL finished) {
+        [self move:[self endingCenter] then:^(BOOL finished) {
+            [self fade:0.0f then:^(BOOL finished) {
+                [self translate];
+            }];
+        }];
+    }];
+}
+
+- (void)justShowIt {
+    [self setCenter:[self startingCenter]];
+    [self setStopAnimation:NO];
+    [self setHidden:NO];
+    [self fade:1.0f then:nil];
+}
+
+- (void)pulsate {
+    [self setCenter:[self startingCenter]];
+    [self setStopAnimation:NO];
+    [self setHidden:NO];
+    [self fade:1.0f then:^(BOOL finished) {
+        [self scale:0.6f then:^(BOOL finished) {
+            [self scale:1.1f then:^(BOOL finished) {
+                [self pulsate];
+            }];
+        }];
+    }];
+
 }
 
 @end

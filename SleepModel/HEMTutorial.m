@@ -18,15 +18,18 @@
 #import "HEMTutorialViewController.h"
 #import "HEMMainStoryboard.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMAppUsage.h"
 #import "HEMHandholdingView.h"
 
 @implementation HEMTutorial
 
 static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTimelineDaySwitchCounter";
 static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
+static NSString* const HEMTutorialHHTimelineZoom = @"HandholdingTimelineZoom";
 static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
 static CGFloat const HEMTutorialHHTimelineDaysGestureXStart = 45.0f;
 static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 2;
+static NSUInteger const HEMTutorialHHTimelineZoomMinTimelinesViewed = 5;
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
@@ -78,6 +81,35 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     if (!date) {
         [preferences setSessionPreference:[NSDate date] forKey:key];
     }
+}
+
++ (BOOL)showHandholdingForTimelineZoomIfNeededIn:(UIView*)view atTarget:(CGPoint)target {
+    if ([self shouldShowHandholdingForTimelineZoom]) {
+        [self showHandholdingForTimelineZoomIn:view atTarget:target];
+        [self markTutorialViewed:HEMTutorialHHTimelineZoom];
+        return YES;
+    }
+    return NO;
+}
+
++ (BOOL)shouldShowHandholdingForTimelineZoom {
+    if (![self shouldShowTutorialForKey:HEMTutorialHHTimelineZoom]) {
+        return NO;
+    }
+    
+    HEMAppUsage* timelineUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+    return [timelineUsage usageWithin:HEMAppUsageIntervalLast31Days] >= HEMTutorialHHTimelineZoomMinTimelinesViewed;
+}
+
++ (void)showHandholdingForTimelineZoomIn:(UIView*)view atTarget:(CGPoint)target {
+    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
+    [handholdingView setGestureStartCenter:target];
+    [handholdingView setGestureEndCenter:target];
+    
+    [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-zoom", nil)];
+    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
+    
+    [handholdingView showInView:view];
 }
 
 #pragma mark - Dialogs

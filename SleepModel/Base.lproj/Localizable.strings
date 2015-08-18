@@ -632,13 +632,14 @@
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 
 // app review questions
-"app-review.question.1" = "Are you enjoying the Sense app?";
+"app-review.question.1" = "Are you enjoying the Sense?";
 "app-review.question.2" = "Great. Would you mind leaving us a rating on the App Store?";
-"app-review.question.3" = "Sorry to hear that. Mind giving us some feedback?";
+"app-review.question.3" = "Would you like to let us know how we can improve your experience?";
 "app-review.question.answer.love-it" = "Yes, I love it";
 "app-review.question.answer.not-really" = "Not really";
 "app-review.question.answer.help" = "I need help";
 "app-review.question.answer.sure" = "Sure";
-"app-review.question.answer.not-now" = "Not now";
+"app-review.question.answer.rate-it" = "Sure, i'll rate";
+"app-review.question.answer.not-now" = "No, not now";
 "app-review.question.answer.dont-ask-again" = "Don't ask again";
 "app-review.question.answer.no-thanks" = "No thanks";

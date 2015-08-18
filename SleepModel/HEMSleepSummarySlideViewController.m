@@ -9,6 +9,7 @@
 #import "UIImage+ImageEffects.h"
 #import "UIView+HEMSnapshot.h"
 #import "NSDate+HEMRelative.h"
+#import "UIView+HEMMotionEffects.h"
 
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMSleepGraphViewController.h"
@@ -76,6 +77,9 @@
                                                                               action:@selector(didPan)];
     recognizer.delegate = self;
     [self.view addGestureRecognizer:recognizer];
+    
+    static CGFloat parallaxDepth = 4.0f;
+    [self.view add3DEffectWithBorder:parallaxDepth direction:HEMMotionEffectsDirectionVertical];
 }
 
 - (void)reloadData {

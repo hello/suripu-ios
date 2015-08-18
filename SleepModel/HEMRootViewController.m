@@ -54,7 +54,6 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 
 CGFloat const HEMRootDrawerDefaultGravityMagnitude = 2.5;
 CGFloat const HEMRootDrawerAnimationGravityMagnitude = 1.f;
-static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
@@ -90,17 +89,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     if (!startDate)
         startDate = [[NSDate date] previousDay];
+    
     HEMSleepSummarySlideViewController* slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
-
     [slideController setDelegate:self];
-    [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
-                                      direction:HEMMotionEffectsDirectionVertical];
+
     HEMTimelineContainerViewController* container = [HEMMainStoryboard instantiateTimelineContainerController];
-    [slideController willMoveToParentViewController:nil];
-    [slideController removeFromParentViewController];
-    [container.view insertSubview:slideController.view atIndex:0];
-    [container addChildViewController:slideController];
-    [slideController didMoveToParentViewController:container];
+    [container setTimelineController:slideController];
+
     return container;
 }
 

@@ -53,6 +53,10 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     [self setGestureView:[[HEMHintGestureView alloc] initWithFrame:gestureFrame
                                                      withEndCenter:[self gestureEndCenter]]];
     
+    if (CGPointEqualToPoint([self gestureStartCenter], [self gestureEndCenter])) {
+        [[self gestureView] setAnimation:HEMHintGestureAnimationPulsate];
+    }
+    
     [self setFrame:[view bounds]];
     [self addSubview:[self gestureView]];
     

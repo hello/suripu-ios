@@ -17,6 +17,7 @@
 @interface HEMTimelineContainerViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *alarmButton;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *alarmButtonTrailing;
+@property (nonatomic, assign, getter=isLoaded) BOOL loaded;
 @end
 
 @implementation HEMTimelineContainerViewController
@@ -24,6 +25,22 @@
 CGFloat const HEMAlarmShortcutDefaultTrailing = -16.f;
 CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self displayTimelineController];
+}
+
+- (void)displayTimelineController {
+    if (self.timelineController) {
+        [self.timelineController willMoveToParentViewController:nil];
+        [self.timelineController removeFromParentViewController];
+        [self addChildViewController:self.timelineController];
+        [self.view insertSubview:self.timelineController.view atIndex:0];
+        [self.timelineController didMoveToParentViewController:self];
+    }
+}
+
+#pragma mark - Alarm
 
 - (IBAction)alarmButtonTapped:(id)sender {
     HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];

@@ -8,7 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, HEMHintGestureAnimation) {
+    HEMHintGestureAnimationTranslate = 1,
+    HEMHintGestureAnimationStatic = 2,
+    HEMHintGestureAnimationPulsate = 3
+};
+
 @interface HEMHintGestureView : UIView
+
+/**
+ * @property animation
+ *
+ * @discussion
+ * Set the animation style.  Defaults to translation
+ */
+@property (nonatomic, assign) HEMHintGestureAnimation animation;
 
 /**
  * Initialize an instance of the gesture hint.  This is intended to be used with

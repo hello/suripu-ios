@@ -54,6 +54,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, weak) IBOutlet UIButton *errorSupportButton;
 @property (nonatomic, weak) IBOutlet UIView *errorViewsContainerView;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
+@property (nonatomic, assign, getter=isDismissing) BOOL dismissing;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
@@ -74,6 +75,7 @@ static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMSleepSegmentPopupAnimationDuration = 0.5f;
 static CGFloat const HEMPopupAnimationDistance = 8.0f;
+static CGFloat const HEMPopupAnimationDisplayInterval = 2.0f;
 static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
@@ -562,12 +564,20 @@ static BOOL hasLoadedBefore = NO;
     self.popupMaskView.hidden = NO;
     [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
         animations:^{
-          [self emphasizeCellAtIndexPath:indexPath];
-          [self.popupView layoutIfNeeded];
-          self.popupView.alpha = 1;
+            [self emphasizeCellAtIndexPath:indexPath];
+            [self.popupView layoutIfNeeded];
+            self.popupView.alpha = 1;
         }
         completion:^(BOOL finished) {
-          [self dismissTimelineSegmentPopup:YES];
+            __weak typeof(self) weakSelf = self;
+            int64_t delayInSec = (int64_t)(HEMPopupAnimationDisplayInterval * NSEC_PER_SEC);
+            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
+            dispatch_after(delay, dispatch_get_main_queue(), ^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if ([[strongSelf selectedIndexPath] isEqual:indexPath]) {
+                    [strongSelf dismissTimelineSegmentPopup:YES];
+                }
+            });
         }];
 }
 
@@ -587,6 +597,11 @@ static BOOL hasLoadedBefore = NO;
         return;
     }
 
+    if ([self isDismissing]) {
+        [self.popupMaskView.layer removeAllAnimations];
+        [self.popupView.layer removeAllAnimations];
+    }
+
     self.popupViewTop.constant = [self topOfSelectedTimelineSleepSegment] + HEMPopupAnimationDistance;
     void (^animations)(void) = ^{
       if ([self selectedIndexPath]) {
@@ -597,19 +612,22 @@ static BOOL hasLoadedBefore = NO;
     };
 
     void (^completion)(BOOL finish) = ^(BOOL finished) {
-      [self setSelectedIndexPath:nil];
-      // remove all animations in case the animation is running already, with
-      // a delay, which would cause problems if dimissing the timeline without
-      // animation was reqeusted before
-      [self.popupView.layer removeAllAnimations];
-      [self.popupMaskView.layer removeAllAnimations];
-      self.popupView.hidden = YES;
-      self.popupMaskView.hidden = YES;
+        [self setSelectedIndexPath:nil];
+        // remove all animations in case the animation is running already, with
+        // a delay, which would cause problems if dimissing the timeline without
+        // animation was reqeusted before
+        [self.popupView.layer removeAllAnimations];
+        [self.popupMaskView.layer removeAllAnimations];
+        self.popupView.hidden = YES;
+        self.popupMaskView.hidden = YES;
+        [self setDismissing:NO];
     };
-
+    
+    [self setDismissing:YES];
+    
     if (animated) {
         [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
-                              delay:2.0f
+                              delay:0.0f
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:animations
                          completion:completion];
@@ -722,7 +740,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)didTap {
     if ([self selectedIndexPath]) {
-        [self dismissTimelineSegmentPopup:NO];
+        [self dismissTimelineSegmentPopup:YES];
         return;
     }
 

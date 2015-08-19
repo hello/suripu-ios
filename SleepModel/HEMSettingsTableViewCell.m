@@ -91,8 +91,10 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 - (void)layoutSubviews {
     [super layoutSubviews];
 
+    CGFloat x = [self separatorIndentation];
     CGRect separatorFrame = [[self separator] frame];
-    separatorFrame.origin.x = [self separatorIndentation];
+    separatorFrame.origin.x = x;
+    separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
     [[self separator] setFrame:separatorFrame];
 }
 

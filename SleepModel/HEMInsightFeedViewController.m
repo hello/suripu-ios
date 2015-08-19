@@ -59,8 +59,6 @@
     [[self collectionView] setDataSource:[self dataSource]];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setAlwaysBounceVertical:YES];
-    
-    [SENAnalytics track:kHEMAnalyticsEventFeed];
 }
 
 - (void)viewDidBecomeActive {
@@ -74,6 +72,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reload)
                                                  name:SENAPIReachableNotification object:nil];
+    
+    [SENAnalytics track:kHEMAnalyticsEventFeed];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

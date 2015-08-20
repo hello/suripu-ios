@@ -137,6 +137,15 @@ static NSString* const SENPreferenceEnable = @"enabled";
     return [self temperatureFormat] == SENTemperatureFormatCentigrade;
 }
 
+- (instancetype)initWithType:(SENPreferenceType)type {
+    self = [super init];
+    if (self) {
+        _type = type;
+        [self setDefaultValue];
+    }
+    return self;
+}
+
 - (instancetype)initWithType:(SENPreferenceType)type enable:(BOOL)enable {
     self = [super init];
     if (self) {
@@ -161,6 +170,32 @@ static NSString* const SENPreferenceEnable = @"enabled";
         ? [dictionary[SENPreferenceEnable] boolValue]
         : NO;
     return [self initWithType:type enable:enabled];
+}
+
+- (void)setDefaultValue {
+    switch ([self type]) {
+        case SENPreferenceTypeHeightMetric:
+            [self setEnabled:[[self class] useMetricUnitForHeight]];
+            break;
+        case SENPreferenceTypeWeightMetric:
+            [self setEnabled:[[self class] useMetricUnitForWeight]];
+            break;
+        case SENPreferenceTypeTime24:
+            [self setEnabled:[[self class] timeFormat] == SENTimeFormat24Hour];
+            break;
+        case SENPreferenceTypeTempCelcius:
+            [self setEnabled:[[self class] useCentigrade]];
+            break;
+        case SENPreferenceTypePushScore:
+        case SENPreferenceTypePushConditions:
+            [self setEnabled:YES];
+            break;
+        case SENPreferenceTypeEnhancedAudio:
+        case SENPreferenceTypeUnknown:
+        default:
+            [self setEnabled:NO];
+            break;
+    }
 }
 
 - (void)saveLocally {

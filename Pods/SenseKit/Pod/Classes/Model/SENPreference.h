@@ -127,9 +127,19 @@ extern NSString* const SENPreferenceNameWeightMetric;
 + (BOOL)useCentigrade;
 
 /**
+ * @method initWithType:
+ *
+ * @discussion
+ * Initialize the preference using the default value based on locale
+ *
+ * @param type: the type of the preference
+ */
+- (instancetype)initWithType:(SENPreferenceType)type;
+
+/**
  * @method initWithType:enable
  *
- * @param type: the type of the prefence
+ * @param type: the type of the preference
  * @param enable: YES to enable, NO otherwise
  * @return initialized instance with the given type and enable flag
  */

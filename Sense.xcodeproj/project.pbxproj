@@ -4658,6 +4658,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "";
 				SENSE_API_URL = "https://api.hello.is";
+				SENSE_APP_REVIEW_URL = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

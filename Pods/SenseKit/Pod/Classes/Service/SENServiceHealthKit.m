@@ -322,16 +322,20 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     NSArray* metrics = [sleepResult metrics];
 
     for (SENTimelineMetric* metric in metrics) {
+        CGFloat metricValue = [metric.value doubleValue];
+        
         if (!sleepDate
             && metric.type == SENTimelineMetricTypeFellAsleep
-            && metric.unit == SENTimelineMetricUnitTimestamp) {
-            sleepDate = [NSDate dateWithTimeIntervalSince1970:[metric.value doubleValue] / 1000];
+            && metric.unit == SENTimelineMetricUnitTimestamp
+            && metricValue > 0) {
+            sleepDate = [NSDate dateWithTimeIntervalSince1970:metricValue / 1000];
         }
 
         if (sleepDate != nil
             && metric.type == SENTimelineMetricTypeWokeUp
-            && metric.unit == SENTimelineMetricUnitTimestamp) {
-            wakeUpDate = [NSDate dateWithTimeIntervalSince1970:[metric.value doubleValue] / 1000];
+            && metric.unit == SENTimelineMetricUnitTimestamp
+            && metricValue > 0) {
+            wakeUpDate = [NSDate dateWithTimeIntervalSince1970:metricValue / 1000];
         }
     }
     

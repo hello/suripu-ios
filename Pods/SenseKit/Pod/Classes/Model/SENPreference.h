@@ -30,6 +30,14 @@ typedef NS_ENUM(NSUInteger, SENPreferenceType) {
      *  Receive push notifications for poor sleep environment in the evening
      */
     SENPreferenceTypePushConditions = 5,
+    /**
+     *  Represent height in centimeters
+     */
+    SENPreferenceTypeHeightMetric = 6,
+    /**
+     *  Represent weight in kilograms
+     */
+    SENPreferenceTypeWeightMetric = 7,
 };
 
 /**
@@ -65,6 +73,8 @@ extern NSString* const SENPreferenceNameTemp;
 extern NSString* const SENPreferenceNameTime;
 extern NSString* const SENPreferenceNamePushScore;
 extern NSString* const SENPreferenceNamePushConditions;
+extern NSString* const SENPreferenceNameHeightMetric;
+extern NSString* const SENPreferenceNameWeightMetric;
 
 @interface SENPreference : NSObject
 
@@ -94,6 +104,22 @@ extern NSString* const SENPreferenceNamePushConditions;
 + (SENTemperatureFormat)temperatureFormat;
 
 /**
+ *  The preferred height format. If none specified, defaults to
+ *  the user's locale setting
+ *
+ *  @return YES if meters, NO if MURICA
+ */
++ (BOOL)useMetricUnitForHeight;
+
+/**
+ *  The preferred height format. If none specified, defaults to
+ *  the user's locale setting
+ *
+ *  @return YES if kilograms, NO if MURICA
+ */
++ (BOOL)useMetricUnitForWeight;
+
+/**
  *  Convenience method for obtaining the temperature format.
  *
  *  @return YES if the temperature format represents centigrade
@@ -101,9 +127,19 @@ extern NSString* const SENPreferenceNamePushConditions;
 + (BOOL)useCentigrade;
 
 /**
+ * @method initWithType:
+ *
+ * @discussion
+ * Initialize the preference using the default value based on locale
+ *
+ * @param type: the type of the preference
+ */
+- (instancetype)initWithType:(SENPreferenceType)type;
+
+/**
  * @method initWithType:enable
  *
- * @param type: the type of the prefence
+ * @param type: the type of the preference
  * @param enable: YES to enable, NO otherwise
  * @return initialized instance with the given type and enable flag
  */

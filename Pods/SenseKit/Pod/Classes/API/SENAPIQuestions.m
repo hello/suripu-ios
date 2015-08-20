@@ -7,8 +7,7 @@
 //
 #import "AFHTTPSessionManager.h"
 #import "SENAPIQuestions.h"
-#import "SENQuestion.h"
-#import "SENAnswer.h"
+#import "Model.h"
 
 static NSDateFormatter* dateFormatter;
 
@@ -34,10 +33,6 @@ static NSString* const kSENAPIQuestionTypeCheckbox = @"CHECKBOX";
 
 #pragma mark - GET QUESTIONS
 
-+ (id)object:(id)object mustBe:(Class)class {
-    return [object isKindOfClass:class]?object:nil;
-}
-
 + (SENQuestionType)typeFromString:(NSString*)typeString {
     SENQuestionType type = SENQuestionTypeChoice;
     NSString* upperType = [typeString uppercaseString];
@@ -52,10 +47,10 @@ static NSString* const kSENAPIQuestionTypeCheckbox = @"CHECKBOX";
 + (NSArray*)answersFromReponseArray:(NSArray*)responesArray {
     NSMutableArray* answers = [NSMutableArray arrayWithCapacity:[responesArray count]];
     for (id answerObject in responesArray) {
-        NSDictionary* answerDict = [self object:answerObject mustBe:[NSDictionary class]];
-        NSNumber* ansId = [self object:[answerDict objectForKey:kSENAPIQuestionPropId] mustBe:[NSNumber class]];
-        NSNumber* queId = [self object:[answerDict objectForKey:kSENAPIQuestionPropQuestionId] mustBe:[NSNumber class]];
-        NSString* text = [self object:[answerDict objectForKey:kSENAPIQuestionPropText] mustBe:[NSString class]];
+        NSDictionary* answerDict = SENObjectOfClass(answerObject, [NSDictionary class]);
+        NSNumber* ansId = SENObjectOfClass([answerDict objectForKey:kSENAPIQuestionPropId], [NSNumber class]);
+        NSNumber* queId = SENObjectOfClass([answerDict objectForKey:kSENAPIQuestionPropQuestionId], [NSNumber class]);
+        NSString* text = SENObjectOfClass([answerDict objectForKey:kSENAPIQuestionPropText], [NSString class]);
         if (ansId != nil && queId != nil && text != nil) {
             [answers addObject:[[SENAnswer alloc] initWithId:ansId answer:text questionId:queId]];
         }
@@ -65,11 +60,11 @@ static NSString* const kSENAPIQuestionTypeCheckbox = @"CHECKBOX";
 
 
 + (SENQuestion*)questionFromDict:(NSDictionary*)questionDict {
-    NSNumber* qId = [self object:[questionDict objectForKey:kSENAPIQuestionPropId] mustBe:[NSNumber class]];
-    NSNumber* qAId = [self object:[questionDict objectForKey:kSENAPIQuestionPropQuestionAccountId] mustBe:[NSNumber class]];
-    NSString* text = [self object:[questionDict objectForKey:kSENAPIQuestionPropText] mustBe:[NSString class]];
-    NSString* type = [self object:[questionDict objectForKey:kSENAPIQuestionPropType] mustBe:[NSString class]];
-    NSArray* choiceObjs = [self object:[questionDict objectForKey:kSENAPIQuestionPropChoices] mustBe:[NSArray class]];
+    NSNumber* qId = SENObjectOfClass([questionDict objectForKey:kSENAPIQuestionPropId], [NSNumber class]);
+    NSNumber* qAId = SENObjectOfClass([questionDict objectForKey:kSENAPIQuestionPropQuestionAccountId], [NSNumber class]);
+    NSString* text = SENObjectOfClass([questionDict objectForKey:kSENAPIQuestionPropText], [NSString class]);
+    NSString* type = SENObjectOfClass([questionDict objectForKey:kSENAPIQuestionPropType], [NSString class]);
+    NSArray* choiceObjs = SENObjectOfClass([questionDict objectForKey:kSENAPIQuestionPropChoices], [NSArray class]);
     
     if (qId == nil || [text length] == 0) {
         return nil;

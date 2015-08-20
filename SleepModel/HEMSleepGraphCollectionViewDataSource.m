@@ -24,6 +24,7 @@
 #import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
 #import "HEMWaveform.h"
+#import "HEMTimelineMessageContainerView.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -35,6 +36,7 @@
 @property (nonatomic, strong, readwrite) SENTimeline *sleepResult;
 @property (nonatomic, strong) NSArray *aggregateDataSources;
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
+@property (nonatomic, getter=isLoading, readwrite) BOOL loading;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
 @property (nonatomic, weak) HEMTimelineTopBarCollectionReusableView *topBarView;
@@ -74,6 +76,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         _hourDateFormatter = [NSDateFormatter new];
         _meridiemFormatter = [NSDateFormatter new];
         _inlineNumberFormatter = [HEMSplitTextFormatter new];
+        _sleepResult = [SENTimeline timelineForDate:date];
         [self configureCollectionView];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reloadData)
@@ -106,7 +109,12 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self.collectionView reloadData];
 }
 
-- (void)reloadData:(void (^)(void))completion {
+- (void)reloadData {
+    [self reloadData:nil];
+}
+
+- (void)reloadData:(void (^)(NSError*))completion {
+    self.loading = YES;
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
     if ([self shouldShowLoadingView]) {
@@ -132,8 +140,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                           [strongSelf refreshWithTimeline:timeline];
                           [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
                       }
+                      weakSelf.loading = NO;
                       if (completion)
-                          completion();
+                          completion(error);
                     }];
 }
 
@@ -216,6 +225,10 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     return self.sleepResult.segments.count;
 }
 
+- (BOOL)hasTimelineData {
+    return self.sleepResult.scoreCondition != SENConditionUnknown && [self numberOfSleepSegments] > 0;
+}
+
 #pragma mark - Top Bar
 
 - (NSString *)dateTitle {
@@ -224,21 +237,19 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 - (void)updateTimelineState:(BOOL)isOpen {
     [[self topBarView] setOpened:isOpen];
-    [[self topBarView] setShareEnabled:self.sleepResult.score > 0 && !isOpen animated:YES];
-    if (isOpen)
+    [[self topBarView] setShareEnabled:self.sleepResult.scoreCondition != SENConditionUnknown && !isOpen animated:YES];
+    if (isOpen) {
+        // this is needed if view is not at the top and user taps on the menu button
+        // to open up the timeline
         [self scrollToTop];
+    }
 }
 
 - (void)scrollToTop {
     if (!CGPointEqualToPoint(CGPointZero, self.collectionView.contentOffset)
-        && [self.collectionView numberOfSections] > 0 && [self.collectionView numberOfItemsInSection:0] > 0) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:0];
-        UICollectionViewLayoutAttributes *attrs =
-            [self.collectionView layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader
-                                                                   atIndexPath:indexPath];
-        if (!attrs)
-            return;
-        [self.collectionView scrollRectToVisible:attrs.frame animated:YES];
+        && [self.collectionView numberOfSections] > 0
+        && [self.collectionView numberOfItemsInSection:0] > 0) {
+        [self.collectionView setContentOffset:CGPointZero animated:YES];
     }
 }
 
@@ -371,11 +382,13 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [cell setLoading:self.sleepResult.message.length == 0];
     [cell setScore:score condition:self.sleepResult.scoreCondition animated:YES];
     if (score > 0 && [collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
-        [cell.summaryButton addTarget:collectionView.delegate
-                               action:@selector(didTapSummaryButton:)
-                     forControlEvents:UIControlEventTouchUpInside];
+        [cell.messageContainerView addTapTarget:collectionView.delegate
+                                         action:@selector(didTapSummaryButton:)];
+        [cell.sleepScoreGraphView addTapTarget:collectionView.delegate
+                                        action:@selector(didTapSummaryButton:)];
     }
     cell.messageChevronView.hidden = score == 0 && self.sleepResult.segments.count == 0;
+    cell.messageContainerView.hidden = [self.sleepResult scoreCondition] == SENConditionUnknown;
     return cell;
 }
 
@@ -425,6 +438,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
         timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter];
     }
+
+    [cell.contentContainerView setShadowVisible:segment.possibleActions != SENTimelineSegmentActionNone];
     [cell layoutWithImage:[self imageForEventType:segment.type]
                   message:segment.message
                      time:timeText

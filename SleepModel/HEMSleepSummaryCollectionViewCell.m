@@ -1,14 +1,15 @@
 
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
+#import "HEMTimelineMessageContainerView.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
-@property (weak, nonatomic) IBOutlet UIView *messageContainerView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
+@property (assign, nonatomic) CGFloat ogMessageContainerShadowOpacity;
 @end
 
 @implementation HEMSleepSummaryCollectionViewCell
@@ -28,7 +29,6 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     [self configureGradientViews];
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
 }
-
 - (void)prepareForReuse {
     [super prepareForReuse];
     [self.sleepScoreGraphView setLoading:NO];

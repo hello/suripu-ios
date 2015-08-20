@@ -329,6 +329,9 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
                                                                  retry:YES
                                                             completion:^(NSError *error) {
                                                                 if (completion) {
+                                                                    if (!error) {
+                                                                        [strongSelf pushDefaultPreferences];
+                                                                    }
                                                                     completion (account, error);
                                                                 }
                                                             }];
@@ -365,6 +368,35 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
         
         if (completion) {
             completion (error);
+        }
+    }];
+}
+
+- (void)pushDefaultPreferences {
+    SENPreference* audio = [[SENPreference alloc] initWithType:SENPreferenceTypeEnhancedAudio];
+    [audio saveLocally];
+    
+    SENPreference* height = [[SENPreference alloc] initWithType:SENPreferenceTypeHeightMetric];
+    [height saveLocally];
+    
+    SENPreference* pushCond = [[SENPreference alloc] initWithType:SENPreferenceTypePushConditions];
+    [pushCond saveLocally];
+    
+    SENPreference* pushScore = [[SENPreference alloc] initWithType:SENPreferenceTypePushScore];
+    [pushScore saveLocally];
+    
+    SENPreference* temp = [[SENPreference alloc] initWithType:SENPreferenceTypeTempCelcius];
+    [temp saveLocally];
+    
+    SENPreference* time = [[SENPreference alloc] initWithType:SENPreferenceTypeTime24];
+    [time saveLocally];
+    
+    SENPreference* weight = [[SENPreference alloc] initWithType:SENPreferenceTypeWeightMetric];
+    [weight saveLocally];
+    
+    [SENAPIPreferences updatePreferencesWithCompletion:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
         }
     }];
 }

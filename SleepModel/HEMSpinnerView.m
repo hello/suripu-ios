@@ -33,8 +33,8 @@ static CGFloat const HEMSpinnerNextDuration = 0.15f;
     
     for (NSString* item in items) {
         CGSize size = [item sizeWithAttributes:@{NSFontAttributeName : font}];
-        frame.size.width = MAX(CGRectGetWidth(frame), ceilf(size.width));
-        frame.size.height = MAX(CGRectGetHeight(frame), ceilf(size.height));
+        frame.size.width = MAX(CGRectGetWidth(frame), floorf(size.width));
+        frame.size.height = MAX(CGRectGetHeight(frame), floorf(size.height));
     }
     
     return frame;

@@ -120,6 +120,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
     if ([[self settingsTableView] tableFooterView] == nil) {
         [self configureTableView];
     }
+    [[self settingsTableView] reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

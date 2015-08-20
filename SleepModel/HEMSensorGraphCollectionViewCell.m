@@ -35,7 +35,7 @@
 - (void)configureGraphView
 {
     self.graphView.userInteractionEnabled = NO;
-    self.graphView.enableBezierCurve = YES;
+    self.graphView.enableBezierCurve = NO;
     self.graphView.enableReferenceXAxisLines = NO;
     self.graphView.enableReferenceYAxisLines = NO;
     self.graphView.enableXAxisLabel = NO;
@@ -56,24 +56,32 @@
 
 - (void)setGraphData:(NSArray *)graphData sensor:(SENSensor *)sensor
 {
-    if ([graphData isEqual:self.graphDataSource.dataSeries] && self.graphView.alpha == 1)
+    UIColor* conditionColor = [UIColor colorForCondition:sensor.condition];
+    graphData = [self padGraphDataIfNeeded:graphData];
+    if (self.graphDataSource != nil
+        && [graphData isEqual:self.graphDataSource.dataSeries]
+        && self.graphView.alpha == 1
+        && CGColorEqualToColor(conditionColor.CGColor, self.graphView.colorLine.CGColor))
         return;
     [self setGraphValueBoundsWithData:graphData forSensor:sensor];
     [UIView animateWithDuration:0.15 animations:^{
         self.graphView.alpha = 0;
     }];
-    if (graphData.count == 0) {
-        self.graphDataSource = nil;
-        self.graphView.dataSource = nil;
-        [self.graphView reloadGraph];
-        return;
-    }
+
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:graphData unit:sensor.unit];
     self.graphView.dataSource = self.graphDataSource;
-    UIColor* conditionColor = [UIColor colorForCondition:sensor.condition];
     self.graphView.colorLine = conditionColor;
     self.graphView.gradientBottom = [self newGradientForColor:conditionColor];
     [self.graphView reloadGraph];
+}
+
+- (NSArray *)padGraphDataIfNeeded:(NSArray *)graphData {
+    if (graphData != nil && graphData.count == 0) {
+        return  @[
+            [[SENSensorDataPoint alloc] initWithDictionary:@{@"value":@0}],
+            [[SENSensorDataPoint alloc] initWithDictionary:@{@"value":@0}]];
+    }
+    return graphData;
 }
 
 - (void)setGraphValueBoundsWithData:(NSArray*)dataSeries forSensor:(SENSensor*)sensor {

@@ -4,12 +4,13 @@ platform :ios, '7.0'
 
 # UI
 pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git',
-                          :commit => '6bf420df77117f519af32a6393520ead4e7848c6'
+                          :commit => '6bf420df77117f519af32a6393520ead4e7848c6',
+                          :inhibit_warnings => true
 pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'
 pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git',
-                          :commit => '0571b7c5e4701b71d3955a6564679875f793fdc4'
+                          :commit => '201b13c35d4a4bebafd0ca8493387b9dddc717e5'
 pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 pod 'MSDynamicsDrawerViewController', '1.5.1'

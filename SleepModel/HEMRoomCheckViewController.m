@@ -118,13 +118,14 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
         return SENConditionUnknown;
     }
     
-    NSUInteger averageConditionValue = 0;
+    SENCondition condition = SENConditionIdeal;
     for (SENSensor* sensor in [self sensors]) {
-        averageConditionValue += [sensor condition];
-    }
+        if ([sensor condition] < condition) {
+            condition = [sensor condition];
+        }
+     }
     
-    float average = ceilf((averageConditionValue / (float)[[self sensors] count]));
-    return MIN(SENConditionWarning, (int)average);
+    return condition;
 }
 
 - (void)adjustConstraintsForIphone5 {
@@ -168,7 +169,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 - (NSString*)sensorNameAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView *)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [sensor name];
+    return [sensor localizedName];
 }
 
 - (NSString*)sensorMessageAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {

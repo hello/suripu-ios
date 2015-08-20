@@ -14,6 +14,8 @@ NSString* const SENPreferenceNameTemp = @"TEMP_CELSIUS";
 NSString* const SENPreferenceNameTime = @"TIME_TWENTY_FOUR_HOUR";
 NSString* const SENPreferenceNamePushScore = @"PUSH_SCORE";
 NSString* const SENPreferenceNamePushConditions = @"PUSH_ALERT_CONDITIONS";
+NSString* const SENPreferenceNameHeightMetric = @"HEIGHT_METRIC";
+NSString* const SENPreferenceNameWeightMetric = @"WEIGHT_METRIC";
 
 @interface SENPreference()
 
@@ -42,6 +44,10 @@ static NSString* const SENPreferenceEnable = @"enabled";
         type = SENPreferenceTypePushConditions;
     } else if ([uppercaseName isEqualToString:SENPreferenceNamePushScore]) {
         type = SENPreferenceTypePushScore;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNameHeightMetric]) {
+        type = SENPreferenceTypeHeightMetric;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNameWeightMetric]) {
+        type = SENPreferenceTypeWeightMetric;
     }
     return type;
 }
@@ -58,6 +64,10 @@ static NSString* const SENPreferenceEnable = @"enabled";
             return SENPreferenceNamePushScore;
         case SENPreferenceTypePushConditions:
             return SENPreferenceNamePushConditions;
+        case SENPreferenceTypeHeightMetric:
+            return SENPreferenceNameHeightMetric;
+        case SENPreferenceTypeWeightMetric:
+            return SENPreferenceNameWeightMetric;
         default:
             return @"";
     }
@@ -101,8 +111,39 @@ static NSString* const SENPreferenceEnable = @"enabled";
     return tempFormat;
 }
 
++ (BOOL)useMetricUnitForHeight {
+    SENLocalPreferences* pref = [SENLocalPreferences sharedPreferences];
+    NSNumber* enabled = [pref userPreferenceForKey:SENPreferenceNameHeightMetric];
+    if (enabled == nil) {
+        BOOL usesMetric = [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
+        [pref setUserPreference:@(usesMetric) forKey:SENPreferenceNameHeightMetric];
+        return usesMetric;
+    }
+    return [enabled boolValue];
+}
+
++ (BOOL)useMetricUnitForWeight {
+    SENLocalPreferences* pref = [SENLocalPreferences sharedPreferences];
+    NSNumber* enabled = [pref userPreferenceForKey:SENPreferenceNameWeightMetric];
+    if (enabled == nil) {
+        BOOL usesMetric = [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
+        [pref setUserPreference:@(usesMetric) forKey:SENPreferenceNameWeightMetric];
+        return usesMetric;
+    }
+    return [enabled boolValue];
+}
+
 + (BOOL)useCentigrade {
     return [self temperatureFormat] == SENTemperatureFormatCentigrade;
+}
+
+- (instancetype)initWithType:(SENPreferenceType)type {
+    self = [super init];
+    if (self) {
+        _type = type;
+        [self setDefaultValue];
+    }
+    return self;
 }
 
 - (instancetype)initWithType:(SENPreferenceType)type enable:(BOOL)enable {
@@ -129,6 +170,32 @@ static NSString* const SENPreferenceEnable = @"enabled";
         ? [dictionary[SENPreferenceEnable] boolValue]
         : NO;
     return [self initWithType:type enable:enabled];
+}
+
+- (void)setDefaultValue {
+    switch ([self type]) {
+        case SENPreferenceTypeHeightMetric:
+            [self setEnabled:[[self class] useMetricUnitForHeight]];
+            break;
+        case SENPreferenceTypeWeightMetric:
+            [self setEnabled:[[self class] useMetricUnitForWeight]];
+            break;
+        case SENPreferenceTypeTime24:
+            [self setEnabled:[[self class] timeFormat] == SENTimeFormat24Hour];
+            break;
+        case SENPreferenceTypeTempCelcius:
+            [self setEnabled:[[self class] useCentigrade]];
+            break;
+        case SENPreferenceTypePushScore:
+        case SENPreferenceTypePushConditions:
+            [self setEnabled:YES];
+            break;
+        case SENPreferenceTypeEnhancedAudio:
+        case SENPreferenceTypeUnknown:
+        default:
+            [self setEnabled:NO];
+            break;
+    }
 }
 
 - (void)saveLocally {

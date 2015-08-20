@@ -49,7 +49,7 @@ SENTimelineSegmentType SENTimelineSegmentTypeFromString(NSString *segmentType);
 NSString* SENTimelineSegmentTypeNameFromType(SENTimelineSegmentType type);
 SENTimelineSegmentAction SENTimelineSegmentActionFromStrings(NSArray* actions);
 
-@interface SENTimelineSegment : NSObject <NSCoding, SENSerializable>
+@interface SENTimelineSegment : NSObject <NSCoding, SENSerializable, SENUpdatable>
 
 @property (nonatomic, strong) NSDate* date;
 @property (nonatomic, strong) NSTimeZone* timezone;

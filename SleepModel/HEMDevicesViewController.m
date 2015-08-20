@@ -15,7 +15,6 @@
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMCardFlowLayout.h"
 #import "HEMDeviceCollectionViewCell.h"
 #import "HEMNoDeviceCollectionViewCell.h"
 #import "HEMActionButton.h"
@@ -95,9 +94,6 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 }
 
 - (void)reloadData {
-    HEMCardFlowLayout* layout
-        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
-    [layout clearCache];
     [[self collectionView] reloadData];
 }
 
@@ -175,10 +171,8 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
+                  layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HEMCardFlowLayout* layout = (HEMCardFlowLayout*)collectionViewLayout;
     SENDevice* device = [[self dataSource] deviceAtIndexPath:indexPath];
     CGSize size = [layout itemSize];
     size.height = device != nil ? HEMDeviceInfoHeight : HEMNoDeviceHeight;

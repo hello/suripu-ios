@@ -29,7 +29,7 @@ CGFloat const HEMPlayButtonShadowOpacity = 0.15f;
 - (void)setHighlighted:(BOOL)highlighted {
     [super setHighlighted:highlighted];
     if (highlighted) {
-        self.backgroundColor = [UIColor timelineEventSelectedBackgroundColor];
+        self.backgroundColor = [UIColor timelineSelectedBackgroundColor];
         self.layer.shadowOpacity = 0.0f;
     } else {
         self.backgroundColor = [UIColor whiteColor];

@@ -269,7 +269,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     long cmValue = [cm longValue];
     NSString* height = nil;
     
-    if (HEMIsMetricSystem()) {
+    if ([SENPreference useMetricUnitForHeight]) {
         height = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cmValue];
     } else {
         long inValue = HEMToInches(cm);
@@ -293,7 +293,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     
     NSString* weight = nil;
     
-    if (HEMIsMetricSystem()) {
+    if ([SENPreference useMetricUnitForWeight]) {
         CGFloat kg = [grams floatValue] / 1000;
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kg];
     } else {

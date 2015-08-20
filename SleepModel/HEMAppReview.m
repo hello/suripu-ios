@@ -30,6 +30,7 @@ NSString* const HEMLocalizedKeyAnswerHelp = @"app-review.question.answer.help";
 NSString* const HEMLocalizedKeyAnswerLoveIt = @"app-review.question.answer.love-it";
 NSString* const HEMLocalizedKeyAnswerNotReally = @"app-review.question.answer.not-really";
 NSString* const HEMLocalizedKeyAnswerSure = @"app-review.question.answer.sure";
+NSString* const HEMLocalizedKeyAnswerRate = @"app-review.question.answer.rate-it";
 NSString* const HEMLocalizedKeyAnswerNotNow = @"app-review.question.answer.not-now";
 NSString* const HEMLocalizedKeyAnswerDoNotAsk = @"app-review.question.answer.dont-ask-again";
 NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-thanks";
@@ -191,7 +192,7 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
 }
 
 + (NSArray*)answersForSecondQuestionWithId:(NSNumber*)questionId {
-    NSString* answer1 = NSLocalizedString(HEMLocalizedKeyAnswerSure, nil);
+    NSString* answer1 = NSLocalizedString(HEMLocalizedKeyAnswerRate, nil);
     NSString* answer2 = NSLocalizedString(HEMLocalizedKeyAnswerNotNow, nil);
     NSString* answer3 = NSLocalizedString(HEMLocalizedKeyAnswerDoNotAsk, nil);
     

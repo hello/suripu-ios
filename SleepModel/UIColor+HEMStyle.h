@@ -130,8 +130,9 @@
 + (UIColor *)handholdingMessageBackgroundColor;
 + (UIColor *)actionSheetSeparatorColor;
 + (UIColor *)actionSheetSelectedColor;
-+ (UIColor *)timelineEventSelectedBackgroundColor;
++ (UIColor *)timelineSelectedBackgroundColor;
 + (UIColor *)timelineAccentColor;
 + (UIColor *)timelineWaveformColor;
++ (NSArray *)timelineSelectedGradientColorRefs;
 
 @end

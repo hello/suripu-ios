@@ -7,6 +7,7 @@
 //
 
 #import "SENTrend.h"
+#import "Model.h"
 
 @implementation SENTrend
 
@@ -64,11 +65,11 @@ static NSString* const SENTrendGraphTypeTimeSeriesLineKey = @"TIME_SERIES_LINE";
 {
     if (self = [super init]) {
         _dataPoints = [SENTrend dataPointsFromValue:dict[SENTrendDataPointsKey]];
-        _dataType = dict[SENTrendDataTypeKey];
+        _dataType = SENObjectOfClass(dict[SENTrendDataTypeKey], [NSString class]);
         _graphType = [SENTrend graphTypeFromValue:dict[SENTrendGraphTypeKey]];
         _options = [SENTrend optionsFromValue:dict[SENTrendOptionsKey]];
-        _timePeriod = dict[SENTrendTimePeriodKey];
-        _title = dict[SENTrendTitleKey];
+        _timePeriod = SENObjectOfClass(dict[SENTrendTimePeriodKey], [NSString class]);
+        _title = SENObjectOfClass(dict[SENTrendTitleKey], [NSString class]);
     }
     return self;
 }

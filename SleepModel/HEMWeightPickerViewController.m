@@ -1,6 +1,7 @@
 
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceHealthKit.h>
+#import <SenseKit/SENPreference.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -104,10 +105,14 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     CGFloat kgs = HEMToKilograms(@(lbs));
 
     NSString* lbsText = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
-    [[self topWeightLabel] setText:lbsText];
-    
     NSString* kgsText = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kgs];
-    [[self botWeightLabel] setText:kgsText];
+    if ([SENPreference useMetricUnitForWeight]) {
+        [[self topWeightLabel] setText:kgsText];
+        [[self botWeightLabel] setText:lbsText];
+    } else {
+        [[self topWeightLabel] setText:lbsText];
+        [[self botWeightLabel] setText:kgsText];
+    }
     
     [self setWeightInKgs:kgs];
 }

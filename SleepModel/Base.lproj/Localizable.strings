@@ -28,7 +28,7 @@
 "onboarding.before-sleep.3.title" = "Something's not right";
 "onboarding.before-sleep.4.title" = "We've got a problem";
 "onboarding.before-sleep.5.title" = "Just wave";
-"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, AQI, light, and sound. Sense has three different colors.";
+"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, air quality, light, and noise. Sense has three different colors.";
 "onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
 "onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
@@ -140,7 +140,7 @@
 "setup.second-pill.error.title" = "Failed to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
 "setup.second-pill.error.sense-full" = "Sense cannot pair with any more devices.";
-"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account. They will be given instructions to set up their Sleep Pill.";
+"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode. Have your partner visit %@ on their mobile device to download the Sense app, and create a new account.\n\nThey will be given instructions to set up their Sleep Pill.";
 "setup.get-app.url" = "senseapp.com";
 
 // settings
@@ -156,8 +156,14 @@
 "settings.units.12-hour" = "12 hour";
 "settings.units.celsius" = "Celsius";
 "settings.units.fahrenheit" = "Fahrenheit";
+"settings.units.centimeters" = "Centimeters";
+"settings.units.feet" = "Feet";
+"settings.units.pounds" = "Pounds";
+"settings.units.kilograms" = "Kilograms";
 "settings.units.clock" = "Time";
 "settings.units.temp" = "Temperature units";
+"settings.units.weight" = "Weight";
+"settings.units.height" = "Height";
 "settings.devices" = "Sense and Sleep Pill";
 "settings.personal.info.birthday" = "Birthday";
 "settings.personal.info.gender" = "Gender";
@@ -199,6 +205,14 @@
 "debug.option.reset-tutorials" = "Reset tutorials";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
+
+// changing server
+"debug.option.change-api-address" = "Change API Address";
+"authorization.set-url.title" = "Update API URL";
+"authorization.set-url.message" = "Set the location of the sleep tracking API";
+"authorization.set-url.action.reset" = "Reset to Default";
+"authorization.failed-url.title" = "URL Not Recognized";
+"authorization.failed-url.message" = "The system could not understand the provided URL. Please try again.";
 
 // colors
 "color.blue" = "Blue";
@@ -342,7 +356,7 @@
 "sensor.temperature" = "Temperature";
 "sensor.humidity" = "Humidity";
 "sensor.particulates" = "Air quality";
-"sensor.sound" = "Sound";
+"sensor.sound" = "Noise";
 "sensor.light" = "Light";
 "sensor.data-unavailable" = "Sensor data is unavailable.";
 "sensor.value.none" = "No data";
@@ -353,7 +367,7 @@
 // measurements
 "measurement.temperature.unit" = "°";
 "measurement.percentage.unit" = "%";
-"measurement.particle.unit" = "";
+"measurement.particle.unit" = "mg/m³";
 "measurement.light.unit" = "lx";
 "measurement.sound.unit" = "dB";
 "measurement.cm.unit" = "cm";
@@ -373,6 +387,14 @@
 "measurement.lb.format" = "%.0f lbs";
 "measurement.db.format" = "%lddb";
 "measurement.lx.format" = "%ldlx";
+
+// missing data
+"sleep-data.first-night.title" = "See you in the morning";
+"sleep-data.first-night.message" = "In the morning, you'll see your first Sleep Timeline here. There are no modes to set — Sense will automatically know when you go to bed. All you need to do is sleep.";
+"sleep-data.not-enough.title" = "No Sleep Timeline";
+"sleep-data.not-enough.message" = "Some sleep data was recorded, but not enough to generate a Sleep Timeline for this night.";
+"sleep-data.error.title" = "There was an error";
+"sleep-data.error.message" = "There was a problem retrieving your Sleep Timeline. Please try again in a few moments.";
 
 // feedback
 "sleep-event.feedback.title.generic" = "What time did this event occur?";
@@ -402,7 +424,6 @@
 "sleep-event.title.format" = "%@ – %@";
 "sleep-event.action.approve.title" = "Mark as correct";
 "sleep-event.action.adjust.title" = "Adjust time";
-"sleep-event.action.none.title" = "No actions available";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
 
@@ -415,7 +436,7 @@
 "sleep-stat.temperature" = "Temperature";
 "sleep-stat.humidity" = "Humidity";
 "sleep-stat.light" = "Light";
-"sleep-stat.sound" = "Sound";
+"sleep-stat.sound" = "Noise";
 "sleep-stat.particulates" = "Air quality";
 "sleep-stat.minute.format" = "%.0f";
 "sleep-stat.minute.unit" = "m";
@@ -486,14 +507,6 @@
 "trends.not-enough-data.message" = "Not enough data yet, check back later";
 "trends.not-enough-data.title" = "Sleep trends";
 
-"trends.days.monday.short" = "M";
-"trends.days.tuesday.short" = "T";
-"trends.days.wednesday.short" = "W";
-"trends.days.thursday.short" = "T";
-"trends.days.friday.short" = "F";
-"trends.days.saturday.short" = "S";
-"trends.days.sunday.short" = "S";
-
 // actions
 "actions.cancel" = "Cancel";
 "actions.ok" = "Okay";
@@ -508,6 +521,7 @@
 "actions.next" = "Next";
 "actions.done" = "Done";
 "actions.saved" = "Saved";
+"actions.save" = "Save";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";
 "status.success" = "Done";
@@ -590,7 +604,7 @@
 "tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";
 
 "tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you'll see the current conditions in your bedroom: temperature, humidity, air quality, light, and sound.\n\nThese values update as Sense uploads new data. So as the conditions in your room change, it may take a few moments for them to be reflected here.\n\nTap a card to see more details.";
+"tutorial.sensors.message" = "Here you'll see the current conditions in your bedroom: temperature, humidity, air quality, light, and noise.\n\nThese values update as Sense uploads new data. So as the conditions in your room change, it may take a few moments for them to be reflected here.\n\nTap a card to see more details.";
 
 "tutorial.sensor.temperature.title" = "Temperature";
 "tutorial.sensor.temperature.message" = "A proper temperature is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";
@@ -598,10 +612,10 @@
 "tutorial.sensor.humidity.message" = "Humidity is a measure of the amount of moisture in the air. Here you’ll see detailed information on the humidity levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.light.title" = "Light";
 "tutorial.sensor.light.message" = "Sense measures light in lux (lx), which is the standard unit of illuminance. Here you’ll see detailed information on the light levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.sound.title" = "Sound";
-"tutorial.sensor.sound.message" = "Sense measures sound in decibels (dB). Here you’ll see detailed information on the sound levels in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.sound.title" = "Noise";
+"tutorial.sensor.sound.message" = "Sense measures noise in decibels (dB). Here you’ll see detailed information on the noise levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.particulates.title" = "Air quality";
-"tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.particulates.message" = "Sense measures air quality in [mg/m^3], which is a measure of the amount of particulates in the air by volume. Here you'll see detailed information on the air quality in your bedroom. The graphs will fill in as Sense collects more data.";
 
 "tutorial.pill-color.title" = "Sleep Pill Color";
 "tutorial.pill-color.message" = "Each Sleep Pill paired with Sense is assigned a unique color — you can see which color yours is on this page. If you shake your Sleep Pill for a few seconds, Sense will glow the color assigned to your Sleep Pill. If you’re sharing Sense with a partner, this is also a great way to tell your Sleep Pills apart if they get mixed up.";
@@ -616,16 +630,18 @@
 "timezone.action.select-manually" = "Select from a list";
 
 // handholding
-"handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days";
+"handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days.";
+"handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 
 // app review questions
-"app-review.question.1" = "Are you enjoying the Sense app?";
+"app-review.question.1" = "Are you enjoying the Sense?";
 "app-review.question.2" = "Great. Would you mind leaving us a rating on the App Store?";
-"app-review.question.3" = "Sorry to hear that. Mind giving us some feedback?";
+"app-review.question.3" = "Would you like to let us know how we can improve your experience?";
 "app-review.question.answer.love-it" = "Yes, I love it";
 "app-review.question.answer.not-really" = "Not really";
 "app-review.question.answer.help" = "I need help";
 "app-review.question.answer.sure" = "Sure";
-"app-review.question.answer.not-now" = "Not now";
+"app-review.question.answer.rate-it" = "Sure, i'll rate";
+"app-review.question.answer.not-now" = "No, not now";
 "app-review.question.answer.dont-ask-again" = "Don't ask again";
 "app-review.question.answer.no-thanks" = "No thanks";

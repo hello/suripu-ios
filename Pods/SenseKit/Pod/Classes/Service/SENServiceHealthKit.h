@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, SENServiceHealthKitError) {
     SENServiceHealthKitErrorNotSupported = -3,
     SENServiceHealthKitErrorNoDataToWrite = -4,
     SENServiceHealthKitErrorAlreadySynced = -5,
-    SENServiceHealthKitErrorNotEnabled = -6
+    SENServiceHealthKitErrorNotEnabled = -6,
+    SENServiceHealthKitErrorUnexpectedAPIResponse = -7,
 };
 
 @interface SENServiceHealthKit : SENService

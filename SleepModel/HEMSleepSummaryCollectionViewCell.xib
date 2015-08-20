@@ -27,7 +27,7 @@
                                 <rect key="frame" x="82" y="16" width="157" height="127"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eK-rK-hbH" customClass="UICountingLabel">
-                                        <rect key="frame" x="42" y="34" width="72" height="87.5"/>
+                                        <rect key="frame" x="42" y="34" width="72" height="88"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="64"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -67,7 +67,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="SLEEP SUMMARY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zN-gk-dwk" customClass="HEMTimelineSummaryTitleLabel">
-                                        <rect key="frame" x="15" y="15" width="81.5" height="14"/>
+                                        <rect key="frame" x="15" y="15" width="82" height="14"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
                                         <color key="textColor" red="0.0" green="0.61176470588235299" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -92,23 +92,13 @@
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" constant="16" id="zyI-7R-HHa"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oNi-GL-i0h">
-                                <rect key="frame" x="8" y="0.0" width="304" height="374"/>
-                                <state key="normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="oNi-GL-i0h" secondAttribute="trailing" constant="8" id="4jf-aC-mtD"/>
                             <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="1cj-i9-Ywi" secondAttribute="top" constant="16" id="9DR-Gv-ZhK"/>
                             <constraint firstAttribute="trailing" secondItem="XD9-Mv-4Jf" secondAttribute="trailing" constant="8" id="DgO-Em-V2T"/>
-                            <constraint firstAttribute="bottom" secondItem="oNi-GL-i0h" secondAttribute="bottom" constant="8" id="Jnl-6V-dqW"/>
                             <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" id="KOh-Fc-vJ8"/>
                             <constraint firstAttribute="centerX" secondItem="FN0-1v-Tup" secondAttribute="centerX" constant="0.5" id="V8J-MZ-6qm"/>
-                            <constraint firstItem="oNi-GL-i0h" firstAttribute="top" secondItem="1cj-i9-Ywi" secondAttribute="top" id="ZSM-1b-JXF"/>
-                            <constraint firstItem="oNi-GL-i0h" firstAttribute="leading" secondItem="1cj-i9-Ywi" secondAttribute="leading" constant="8" id="ggp-Ph-UY2"/>
                             <constraint firstItem="FN0-1v-Tup" firstAttribute="bottom" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="10" id="nhZ-cg-khh"/>
                             <constraint firstItem="XD9-Mv-4Jf" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="38" id="taB-6D-UjW"/>
                             <constraint firstItem="XD9-Mv-4Jf" firstAttribute="leading" secondItem="1cj-i9-Ywi" secondAttribute="leading" constant="8" id="xpo-dy-oFO"/>
@@ -134,7 +124,6 @@
                 <outlet property="messageLabel" destination="buK-Of-ZfH" id="wIT-cG-avW"/>
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>
                 <outlet property="sleepScoreTextLabel" destination="FN0-1v-Tup" id="Q0G-ar-mOf"/>
-                <outlet property="summaryButton" destination="oNi-GL-i0h" id="Whp-Gu-7oO"/>
                 <outlet property="summaryContainerView" destination="1cj-i9-Ywi" id="CId-WX-VYi"/>
             </connections>
             <point key="canvasLocation" x="231" y="292"/>

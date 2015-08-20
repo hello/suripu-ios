@@ -7,7 +7,6 @@
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 #import "HEMSensorGraphCollectionViewCell.h"
-#import "HEMCardFlowLayout.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMTutorial.h"
@@ -16,6 +15,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMActionButton.h"
+#import "HEMSensorValueFormatter.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                                   UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate>
@@ -28,6 +28,7 @@
 @property (nonatomic) BOOL shouldReload;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @property (nonatomic, strong) NSDate *lastRefreshDate;
+@property (nonatomic, strong) HEMSensorValueFormatter* sensorValueFormatter;
 @end
 
 @implementation HEMCurrentConditionsViewController
@@ -37,7 +38,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 static CGFloat const HEMCurrentConditionsPairViewHeight = 205.0f;
 static CGFloat const HEMCurrentConditionsItemSpacing = 8.f;
-static NSUInteger const HEMConditionGraphPointLimit = 30;
+static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -51,8 +52,13 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [self setDefaultProperties];
+}
+
+- (void)setDefaultProperties {
     self.loading = YES;
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
+    self.sensorValueFormatter = [[HEMSensorValueFormatter alloc] init];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -162,8 +168,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     if ([self hasNoSense]) {
         self.loading = NO;
         self.sensors = nil;
-        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-        [layout clearCache];
         [self.collectionView reloadData];
     } else { [self updateSensorsFromCache]; }
 }
@@ -173,8 +177,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     NSArray *cachedSensors = [self sortedCachedSensors];
     if (![self.sensors isEqualToArray:cachedSensors]) {
         self.sensors = cachedSensors;
-        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-        [layout clearCache];
         [self.collectionView reloadData];
         if ([self isViewLoaded] && self.view.window)
             [HEMTutorial showTutorialForSensorsIfNeeded];
@@ -317,10 +319,12 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 - (void)configureCollectionView {
     self.collectionView.backgroundColor = [UIColor clearColor];
-    HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = HEMCurrentConditionsItemSpacing;
     layout.minimumLineSpacing = HEMCurrentConditionsItemSpacing;
-    [layout setItemHeight:HEMCurrentConditionsSensorViewHeight];
+    CGSize size = layout.itemSize;
+    size.height = HEMCurrentConditionsSensorViewHeight;
+    layout.itemSize = size;
 }
 
 - (void)updateCellAtIndex:(NSUInteger)index {
@@ -389,24 +393,38 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 }
 
 - (NSAttributedString *)valueTextForSensor:(SENSensor *)sensor {
-    static NSInteger HEMSensorUnitVerticalOffset = 14;
-    NSDictionary *baseAttributes = @{ NSFontAttributeName : [UIFont sensorListValueFont] };
-    if (!sensor.value) {
-        return
-            [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil) attributes:baseAttributes];
-    }
-    NSNumber *value = sensor.valueInPreferredUnit;
-    NSString *valueText = [NSString stringWithFormat:@"%ld", [value longValue]];
+    NSDictionary *baseAttributes = @{ NSFontAttributeName : [UIFont sensorListValueFontForUnit:sensor.unit] };
+    NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
     NSMutableAttributedString *composite =
         [[NSMutableAttributedString alloc] initWithString:valueText attributes:baseAttributes];
-    NSDictionary *unitAttributes = @{
-        NSFontAttributeName : [UIFont sensorListUnitFont],
-        NSBaselineOffsetAttributeName : @(HEMSensorUnitVerticalOffset)
-    };
-    NSAttributedString *unit =
-        [[NSAttributedString alloc] initWithString:sensor.localizedUnit attributes:unitAttributes];
-    [composite appendAttributedString:unit];
+    
+    if (sensor.value) {
+        NSAttributedString* unitText = [self unitTextForSensor:sensor];
+        if (unitText) {
+            [composite appendAttributedString:unitText];
+        }
+    }
+
     return composite;
+}
+
+- (NSAttributedString*)unitTextForSensor:(SENSensor *)sensor {
+    // the particulates unit is too large to fit so it has been decided to not
+    // show the unit here.  The solution, for later, is to redesign the view to
+    // accommodate for this
+    if (sensor.unit == SENSensorUnitAQI) {
+        return nil;
+    }
+    
+    NSInteger unitVerticalOffset = 14;
+    if (sensor.unit == SENSensorUnitDegreeCentigrade) {
+        unitVerticalOffset = 12;
+    }
+    NSDictionary *unitAttributes = @{NSFontAttributeName : [UIFont sensorListUnitFontForUnit:sensor.unit],
+                                     NSBaselineOffsetAttributeName : @(unitVerticalOffset)};
+    NSAttributedString *unit = [[NSAttributedString alloc] initWithString:sensor.localizedUnit
+                                                               attributes:unitAttributes];
+    return unit;
 }
 
 - (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell {

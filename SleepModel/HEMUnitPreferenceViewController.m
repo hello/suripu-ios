@@ -17,6 +17,8 @@
 
 static NSUInteger const HEMUnitPreferenceTime = 0;
 static NSUInteger const HEMUnitPreferenceTemp = 1;
+static NSUInteger const HEMUnitPreferenceWeight = 2;
+static NSUInteger const HEMUnitPreferenceHeight = 3;
 
 @interface HEMUnitPreferenceViewController () <
     UITableViewDataSource,
@@ -52,7 +54,7 @@ static NSUInteger const HEMUnitPreferenceTemp = 1;
 #pragma mark - UITableViewDelegate / DataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 4;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
@@ -62,47 +64,65 @@ static NSUInteger const HEMUnitPreferenceTemp = 1;
 }
 
 - (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
+  willDisplayCell:(HEMSettingsTableViewCell*)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
-    NSString* title = nil;
-    NSString* value = nil;
-    NSInteger row = [indexPath row];
-    BOOL showTopCorners = NO;
-    BOOL showBotCorners = NO;
-    
-    if (row == HEMUnitPreferenceTime) {
-        showTopCorners = YES;
-        title = NSLocalizedString(@"settings.units.clock", nil);
-        
-        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
-            value = NSLocalizedString(@"settings.units.24-hour", nil);
-        } else {
-            value = NSLocalizedString(@"settings.units.12-hour", nil);
-        }
-    } else if (row == HEMUnitPreferenceTemp) {
-        showBotCorners = YES;
-        title = NSLocalizedString(@"settings.units.temp", nil);
-        
-        if ([SENPreference temperatureFormat] == SENTemperatureFormatCentigrade) {
-            value = NSLocalizedString(@"settings.units.celsius", nil);
-        } else {
-            value = NSLocalizedString(@"settings.units.fahrenheit", nil);
-        }
+    [self configureCornersForCell:cell atIndexPath:indexPath];
+    switch (indexPath.row) {
+        case HEMUnitPreferenceTime:
+            [self configureTimeSettingCell:cell];
+            break;
+        case HEMUnitPreferenceTemp:
+            [self configureTemperatureSettingCell:cell];
+            break;
+        case HEMUnitPreferenceHeight:
+            [self configureForHeightSettingCell:cell];
+            break;
+        case HEMUnitPreferenceWeight:
+            [self configureWeightSettingCell:cell];
+            break;
     }
-    
-    [[settingsCell titleLabel] setText:title];
-    [[settingsCell valueLabel] setText:value];
-    
-    if (showTopCorners) {
-        [settingsCell showTopCorners];
-    } else if (showBotCorners) {
-        [settingsCell showBottomCorners];
+}
+
+- (void)configureCornersForCell:(HEMSettingsTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
+    if (indexPath.row == 0) {
+        [cell showTopCorners];
+    } if (indexPath.row == [self tableView:nil numberOfRowsInSection:indexPath.section] - 1) {
+        [cell showBottomCorners];
     } else {
-        [settingsCell showNoCorners];
+        [cell showNoCorners];
     }
-    
+}
+
+- (void)configureTimeSettingCell:(HEMSettingsTableViewCell*)cell {
+    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.clock", nil)];
+    if ([SENPreference timeFormat] == SENTimeFormat24Hour)
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.24-hour", nil);
+    else
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.12-hour", nil);
+}
+
+- (void)configureWeightSettingCell:(HEMSettingsTableViewCell*)cell {
+    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.weight", nil)];
+    if ([SENPreference useMetricUnitForWeight])
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.kilograms", nil);
+    else
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.pounds", nil);
+}
+
+- (void)configureForHeightSettingCell:(HEMSettingsTableViewCell*)cell {
+    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.height", nil)];
+    if ([SENPreference useMetricUnitForHeight])
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.centimeters", nil);
+    else
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.feet", nil);
+}
+
+- (void)configureTemperatureSettingCell:(HEMSettingsTableViewCell*)cell {
+    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.temp", nil)];
+    if ([SENPreference temperatureFormat] == SENTemperatureFormatCentigrade)
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.celsius", nil);
+    else
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.fahrenheit", nil);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -114,44 +134,63 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue destinationViewController] isKindOfClass:[HEMChoiceViewController class]]) {
         HEMChoiceViewController* choiceVC = [segue destinationViewController];
-        NSInteger row = [[self selectedPath] row];
-        NSArray* choices = nil;
-        NSInteger selectedIndex = 0;
-        NSString* title = nil;
-        
-        if (row == HEMUnitPreferenceTime) {
-            title = NSLocalizedString(@"settings.units.clock", nil);
-            choices = @[NSLocalizedString(@"settings.units.12-hour", nil),
-                        NSLocalizedString(@"settings.units.24-hour", nil)];
-            selectedIndex = [SENPreference timeFormat] == SENTimeFormat12Hour ? 0 : 1;
-        } else if (row == HEMUnitPreferenceTemp) {
-            title = NSLocalizedString(@"settings.units.temp", nil);
-            choices = @[NSLocalizedString(@"settings.units.celsius", nil),
-                        NSLocalizedString(@"settings.units.fahrenheit", nil)];
-            selectedIndex = [SENPreference temperatureFormat] == SENTemperatureFormatCentigrade ? 0 : 1;
-        }
-        
+        [self configureChoiceViewController:choiceVC withRow:[[self selectedPath] row]];
         [choiceVC setDelegate:self];
-        [choiceVC setChoices:choices];
-        [choiceVC setSelectedIndex:selectedIndex];
-        [choiceVC setTitle:title];
+    }
+}
+
+- (void)configureChoiceViewController:(HEMChoiceViewController*)controller withRow:(NSUInteger)row {
+    switch (row) {
+        case HEMUnitPreferenceTime: {
+            controller.title = NSLocalizedString(@"settings.units.clock", nil);
+            controller.choices = @[NSLocalizedString(@"settings.units.12-hour", nil),
+                                   NSLocalizedString(@"settings.units.24-hour", nil)];
+            controller.selectedIndex = [SENPreference timeFormat] == SENTimeFormat12Hour ? 0 : 1;
+        } break;
+        case HEMUnitPreferenceTemp: {
+            controller.title = NSLocalizedString(@"settings.units.temp", nil);
+            controller.choices = @[NSLocalizedString(@"settings.units.celsius", nil),
+                        NSLocalizedString(@"settings.units.fahrenheit", nil)];
+            controller.selectedIndex = [SENPreference temperatureFormat] == SENTemperatureFormatCentigrade ? 0 : 1;
+        } break;
+        case HEMUnitPreferenceHeight: {
+            controller.title = NSLocalizedString(@"settings.units.height", nil);
+            controller.choices = @[NSLocalizedString(@"settings.units.feet", nil),
+                                   NSLocalizedString(@"settings.units.centimeters", nil)];
+            controller.selectedIndex = [SENPreference useMetricUnitForHeight] ? 1 : 0;
+        } break;
+        case HEMUnitPreferenceWeight: {
+            controller.title = NSLocalizedString(@"settings.units.weight", nil);
+            controller.choices = @[NSLocalizedString(@"settings.units.pounds", nil),
+                                   NSLocalizedString(@"settings.units.kilograms", nil)];
+            controller.selectedIndex = [SENPreference useMetricUnitForWeight] ? 1 : 0;
+        } break;
     }
 }
 
 #pragma mark - HEMChoiceDelegate
 
 - (void)didSelectChoiceAtIndex:(NSUInteger)index from:(HEMChoiceViewController *)controller {
-    NSInteger row = [[self selectedPath] row];
-    if (row == HEMUnitPreferenceTime) {
-        SENPreference* preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTime24
-                                                                 enable:index != 0];
-        [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
-    } else if (row == HEMUnitPreferenceTemp) {
-        SENPreference* preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTempCelcius
-                                                                 enable:index == 0];
-        [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
+    switch ([[self selectedPath] row]) {
+        case HEMUnitPreferenceTime:
+            [self updatePreference:SENPreferenceTypeTime24 withValue:index != 0];
+            break;
+        case HEMUnitPreferenceTemp:
+            [self updatePreference:SENPreferenceTypeTempCelcius withValue:index == 0];
+            break;
+        case HEMUnitPreferenceHeight:
+            [self updatePreference:SENPreferenceTypeHeightMetric withValue:index != 0];
+            break;
+        case HEMUnitPreferenceWeight:
+            [self updatePreference:SENPreferenceTypeWeightMetric withValue:index != 0];
+            break;
     }
     [[self unitTableView] reloadData];
+}
+
+- (void)updatePreference:(SENPreferenceType)type withValue:(BOOL)isEnabled {
+    SENPreference* preference = [[SENPreference alloc] initWithType:type enable:isEnabled];
+    [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
 }
 
 @end

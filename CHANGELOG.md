@@ -1,5 +1,101 @@
 # Changelog
 
+## 1.1.2.6
+
+New:
+
+* Show baseline in current conditions graphs when no data
+* Units and Time preferences show the actual unit names
+* Default preferences, based on phone locale, is pushed upon account creation
+
+## 1.1.2.5
+
+New:
+
+* Backview now swipes smoothly between tabs
+* Tapping on the view when the timeline segment popup is shown dismisses with animation rather than abruptly
+
+Fixes:
+
+* HK does not attempt to sync data when timeline metric value is 0, indicating no wake or sleep event
+
+## 1.1.2.4
+
+New:
+
+* UI handholding for timeline zoom feature
+* App review copy changes
+* Height and weight unit preferences added.  App uses v2 preferences api
+
+Fixes:
+
+* HK backfilling includes last night
+* Stopping audio from timeline no longer blocks UI when opening the timeline
+
+## 1.1.2.3
+
+New:
+
+* Visual feedback when tapping on sleep summary card and sleep score
+* Updated sensor welcome dialog images
+* Various copy, unit, and asset changes in preparation for dust sensor
+
+Fixes:
+
+* Fixed crasher that occurs if you hold on one of the button on a question card in the insight feed view, then using a different finger, tapping on second button
+* Fixed crasher that occurs if you scroll down on a timeline, put the app in to the background, bring it back up, then open the timeline
+
+## 1.1.2.2
+
+New:
+
+* Timeline now shows a custom state directly after onboarding completion
+* Timeline now shows a custom state when not enough data has been recorded
+* Timeline now shows a custom state when an error was encountered when pulling data for the Timeline
+* HealthKit backfills a maximum of 3 days
+* Light sensor value formatted to show fractional digit when less than 10
+
+Fixes:
+
+* Fixed issue where HealthKit would fail to sync if no data exists locally
+* Timeline no longer shows the loading indicator indefinitely when no data
+* Temperature value in sensor detail properly obeys unit preferences
+
+## 1.1.2.1
+
+New:
+
+* Timeline audio playback will now play even if phone is on silent
+* Audio playback stops when view is dismissed
+
+Fixes:
+
+* Audio playback button properly scales away when scrolling
+* Prevent sleep depth popup from appearing on top of event card
+* Fix spike in sensor graph when data points are missing
+
+## 1.1.2.0
+
+New:
+
+* Removed interaction with timeline events with no actions
+* Removed scrolling dynamics in the backview
+* Light sensor values now show 3 numbers max, including values below 1
+* Debug option to change API URL, used together with Nonsense.app!
+* Updated copy for 2nd pill / get app screen in onboarding
+* Removed pressed state in tutorial icon in sensor detail screen
+* Updated copy where the word sound is now noise
+* App rating prompt enabled for release builds
+
+Fixes:
+
+* Trends graph now will display the localized day of week consistently
+* Room check final color / image now reflects updated logic
+* The info button in sensor detail screen will no longer be darkened
+* Skipping a question directly from the feed will not cause odd text overlap
+* Insights no longer will be shifted to the left upon coming to fg when the full insights detail screen is shown and brought to the bg
+* Cards in the backview screens will no longer randomly animate without interaction, due to auto refresh of data
+
 ## 1.1.1.7
 
 New:

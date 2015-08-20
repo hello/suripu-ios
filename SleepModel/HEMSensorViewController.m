@@ -14,6 +14,7 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
+#import "HEMSensorValueFormatter.h"
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
 
@@ -39,6 +40,7 @@
 @property (nonatomic, getter=isShowingHourlyData) BOOL showHourlyData;
 @property (nonatomic, strong) NSDateFormatter* hourlyFormatter;
 @property (nonatomic, strong) NSDateFormatter* dailyFormatter;
+@property (nonatomic, strong) HEMSensorValueFormatter* sensorValueFormatter;
 @property (nonatomic, strong) NSTimer* refreshTimer;
 @property (nonatomic) CGFloat maxGraphValue;
 @property (nonatomic) CGFloat minGraphValue;
@@ -53,7 +55,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self configureDateFormatters];
+    [self configureFormatters];
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     [self initializeGraphDataSource];
@@ -158,6 +160,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     buttonView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
     [buttonView setImage:image forState:UIControlStateNormal];
     [buttonView addTarget:self action:@selector(showTutorial) forControlEvents:UIControlEventTouchUpInside];
+    [buttonView setAdjustsImageWhenHighlighted:NO];
     UIBarButtonItem* rightItem = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
 
     UIBarButtonItem *rightFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
@@ -175,7 +178,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.navigationItem.rightBarButtonItems = @[rightFixedSpace, rightItem];
 }
 
-- (void)configureDateFormatters
+- (void)configureFormatters
 {
     self.hourlyFormatter = [NSDateFormatter new];
     self.dailyFormatter = [NSDateFormatter new];
@@ -186,6 +189,8 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
         self.hourlyFormatter.dateFormat = @"HH:mm";
         self.dailyFormatter.dateFormat = @"EEEE — HH:mm";
     }
+    
+    self.sensorValueFormatter = [[HEMSensorValueFormatter alloc] initWithSensorUnit:self.sensor.unit];
 }
 
 - (void)configureGraphView
@@ -201,7 +206,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.graphView.labelFont = [UIFont sensorGraphNumberFont];
     self.graphView.alphaTouchInputLine = 1.f;
     self.graphView.animationGraphEntranceTime = 0;
-    self.graphView.sizePoint = 5.f;
+    self.graphView.sizePoint = 8.f;
     self.graphView.alwaysDisplayDots = NO;
 }
 
@@ -212,6 +217,10 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
+
+    self.valueLabel.font = [UIFont sensorValueFontForUnit:self.sensor.unit];
+    self.unitLabel.font = [UIFont sensorUnitFontForUnit:self.sensor.unit];
+    
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
     self.unitLabel.text = [self.sensor localizedUnit];
@@ -244,12 +253,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
 {
-    if (value) {
-        CGFloat formattedValue = [[SENSensor value:value inPreferredUnit:self.sensor.unit] floatValue];
-        self.valueLabel.text = [NSString stringWithFormat:@"%.0f", formattedValue];
-    } else {
-        self.valueLabel.text = NSLocalizedString(@"empty-data", nil);
-    }
+    self.valueLabel.text = [self.sensorValueFormatter stringFromSensorValue:value];
 }
 
 #pragma mark - Update Graph

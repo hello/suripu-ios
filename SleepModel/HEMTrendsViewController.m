@@ -12,7 +12,6 @@
 #import "HEMTrendsViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
-#import "HEMCardFlowLayout.h"
 #import "HEMTrendCollectionViewCell.h"
 #import "HEMEmptyTrendCollectionViewCell.h"
 #import "HEMGraphSectionOverlayView.h"
@@ -52,8 +51,10 @@ static NSString* const HEMAllScopeType = @"ALL";
 {
     [super viewDidLoad];
     [self.collectionView setAlwaysBounceVertical:YES];
-    HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
-    [layout setItemHeight:HEMTrendsViewCellHeight];
+    UICollectionViewFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
+    CGSize size = layout.itemSize;
+    size.height = HEMTrendsViewCellHeight;
+    layout.itemSize = size;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -100,8 +101,6 @@ static NSString* const HEMAllScopeType = @"ALL";
         NSMutableArray* trends = [data mutableCopy];
         if (![trends isEqualToArray:self.defaultTrends]) {
             self.defaultTrends = trends;
-            HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
-            [layout clearCache];
             [self.collectionView reloadData];
         }
         self.loading = NO;
@@ -156,7 +155,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    HEMCardFlowLayout* layout = (id)collectionViewLayout;
+    UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
     if (self.defaultTrends.count == 0) {
         return CGSizeMake(width, layout.itemSize.height);

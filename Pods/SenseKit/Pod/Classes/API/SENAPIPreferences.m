@@ -7,52 +7,61 @@
 //
 
 #import "SENAPIPreferences.h"
+#import "SENLocalPreferences.h"
 #import "SENPreference.h"
 #import "SENAPIClient.h"
 
-static NSString* const SENAPIPreferenceResourceName = @"v1/preferences";
-
 @implementation SENAPIPreferences
 
-+ (void)updatePreference:(SENPreference*)preference completion:(SENAPIDataBlock)completion {
-    [SENAPIClient PUT:SENAPIPreferenceResourceName
-           parameters:[preference dictionaryValue]
+NSString* const SENAPIPreferenceV2ResourceName = @"v2/account/preferences";
+
++ (void)updatePreferencesWithCompletion:(SENAPIDataBlock)completion {
+    [SENAPIClient PUT:SENAPIPreferenceV2ResourceName
+           parameters:[self preferencesToDict]
            completion:^(id data, NSError *error) {
                if (!completion) return;
-               
-               SENPreference* updatedPreference = nil;
-               if (error == nil && [data isKindOfClass:[NSDictionary class]]) {
-                   updatedPreference = [[SENPreference alloc] initWithDictionary:data];
-               }
-               completion (updatedPreference, error);
+               NSDictionary* preferences = nil;
+               if (!error)
+                   preferences = [self preferencesFromDict:data];
+               completion (preferences, error);
            }];
 }
 
 + (void)getPreferences:(SENAPIDataBlock)completion {
     if (!completion) return;
     
-    [SENAPIClient GET:SENAPIPreferenceResourceName parameters:nil completion:^(id data, NSError *error) {
-        NSMutableDictionary* preferences = nil;
-        
-        if (error == nil && [data isKindOfClass:[NSDictionary class]]) {
-            SENPreference* pref = nil;
-            preferences = [NSMutableDictionary dictionary];
-            
-            for (id keyObj in data) {
-                if ([keyObj isKindOfClass:[NSString class]]) {
-                    id valueObj = data[keyObj];
-                    if ([valueObj isKindOfClass:[NSNumber class]]) {
-                        pref = [[SENPreference alloc] initWithName:keyObj value:valueObj];
-                        if (pref) {
-                            preferences[@([pref type])] = pref;
-                        }
-                    }
-                }
-            }
-        }
-        
+    [SENAPIClient GET:SENAPIPreferenceV2ResourceName
+           parameters:nil
+           completion:^(NSDictionary* data, NSError *error) {
+        NSDictionary* preferences = nil;
+        if (!error)
+            preferences = [self preferencesFromDict:data];
         completion (preferences, error);
     }];
+}
+
++ (NSDictionary*)preferencesFromDict:(NSDictionary*)data {
+    if (![data isKindOfClass:[NSDictionary class]])
+        return nil;
+    __block NSMutableDictionary* preferences = [NSMutableDictionary dictionary];
+    [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSNumber *obj, BOOL *stop) {
+        if ([key isKindOfClass:[NSString class]] && [obj isKindOfClass:[NSNumber class]]) {
+            SENPreference* pref = [[SENPreference alloc] initWithName:key value:obj];
+            if (pref)
+                preferences[@([pref type])] = pref;
+        }
+    }];
+    return preferences;
+}
+
++ (NSDictionary*)preferencesToDict {
+    SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+    NSArray* keys = @[SENPreferenceNameTime, SENPreferenceNameTemp, SENPreferenceNameWeightMetric, SENPreferenceNameHeightMetric, SENPreferenceNamePushScore, SENPreferenceNameEnhancedAudio, SENPreferenceNamePushConditions];
+    NSMutableDictionary* values = [[NSMutableDictionary alloc] initWithCapacity:[keys count]];
+    for (NSString* key in keys) {
+        [values setValue:[prefs userPreferenceForKey:key] forKey:key];
+    }
+    return values;
 }
 
 @end

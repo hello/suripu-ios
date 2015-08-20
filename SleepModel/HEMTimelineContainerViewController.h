@@ -10,5 +10,7 @@
 
 @interface HEMTimelineContainerViewController : UIViewController
 
+@property (nonatomic, strong) UIViewController* timelineController;
+
 - (void)showAlarmButton:(BOOL)isVisible;
 @end

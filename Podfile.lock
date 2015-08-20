@@ -29,7 +29,7 @@ PODS:
   - CocoaLumberjack/Extensions (1.6.3):
     - CocoaLumberjack/Core
   - FXKeychain (1.5.3)
-  - Kiwi (2.3.1)
+  - Kiwi (2.4.0)
   - LGBluetooth (1.1.4)
   - Mixpanel (2.7.2):
     - Mixpanel/MPCategoryHelpers (= 2.7.2)
@@ -76,7 +76,7 @@ DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`,
     commit `6bf420df77117f519af32a6393520ead4e7848c6`)
   - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`, commit
-    `0571b7c5e4701b71d3955a6564679875f793fdc4`)
+    `201b13c35d4a4bebafd0ca8493387b9dddc717e5`)
   - Kiwi
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
   - MSDynamicsDrawerViewController (= 1.5.1)
@@ -95,7 +95,7 @@ EXTERNAL SOURCES:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   BEMSimpleLineGraph:
-    :commit: 0571b7c5e4701b71d3955a6564679875f793fdc4
+    :commit: 201b13c35d4a4bebafd0ca8493387b9dddc717e5
     :git: git@github.com:hello/BEMSimpleLineGraph.git
   LGBluetooth:
     :git: git@github.com:hello/LGBluetooth.git
@@ -116,7 +116,7 @@ CHECKOUT OPTIONS:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   BEMSimpleLineGraph:
-    :commit: 0571b7c5e4701b71d3955a6564679875f793fdc4
+    :commit: 201b13c35d4a4bebafd0ca8493387b9dddc717e5
     :git: git@github.com:hello/BEMSimpleLineGraph.git
   LGBluetooth:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
@@ -125,7 +125,7 @@ CHECKOUT OPTIONS:
     :commit: 4155277fe96e5b7f32d6365d0adfa24c1ab037a6
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: cb2565df3eb599019a3023ef574b9fbc6efe0844
+    :commit: 59a900d6d81ab617569bdaa7a84241f034c9888e
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: e44003540c7b52b8fa29a05a059e43751e25d0d4
@@ -143,7 +143,7 @@ SPEC CHECKSUMS:
   BEMSimpleLineGraph: 5999b2da02b6e935121608cfc58f6c369e06bde8
   CocoaLumberjack: 79086d1841c6c61383afa50cafc8883b7f44f63c
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
-  Kiwi: f038a6c61f7a9e4d7766bff5717aa3b3fdb75f55
+  Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
   Mixpanel: e9bcb16eb0e2a98fc330ceeb0d8b7f4aec4182ab
   MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7

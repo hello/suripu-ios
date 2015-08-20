@@ -156,8 +156,10 @@
 "settings.units.12-hour" = "12 hour";
 "settings.units.celsius" = "Celsius";
 "settings.units.fahrenheit" = "Fahrenheit";
-"settings.units.metric" = "Metric";
-"settings.units.imperial" = "Imperial";
+"settings.units.centimeters" = "Centimeters";
+"settings.units.feet" = "Feet";
+"settings.units.pounds" = "Pounds";
+"settings.units.kilograms" = "Kilograms";
 "settings.units.clock" = "Time";
 "settings.units.temp" = "Temperature units";
 "settings.units.weight" = "Weight";

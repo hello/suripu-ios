@@ -104,17 +104,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)configureWeightSettingCell:(HEMSettingsTableViewCell*)cell {
     [[cell titleLabel] setText:NSLocalizedString(@"settings.units.weight", nil)];
     if ([SENPreference useMetricUnitForWeight])
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.metric", nil);
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.kilograms", nil);
     else
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.imperial", nil);
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.pounds", nil);
 }
 
 - (void)configureForHeightSettingCell:(HEMSettingsTableViewCell*)cell {
     [[cell titleLabel] setText:NSLocalizedString(@"settings.units.height", nil)];
     if ([SENPreference useMetricUnitForHeight])
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.metric", nil);
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.centimeters", nil);
     else
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.imperial", nil);
+        cell.valueLabel.text = NSLocalizedString(@"settings.units.feet", nil);
 }
 
 - (void)configureTemperatureSettingCell:(HEMSettingsTableViewCell*)cell {
@@ -155,14 +155,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         } break;
         case HEMUnitPreferenceHeight: {
             controller.title = NSLocalizedString(@"settings.units.height", nil);
-            controller.choices = @[NSLocalizedString(@"settings.units.imperial", nil),
-                                   NSLocalizedString(@"settings.units.metric", nil)];
+            controller.choices = @[NSLocalizedString(@"settings.units.feet", nil),
+                                   NSLocalizedString(@"settings.units.centimeters", nil)];
             controller.selectedIndex = [SENPreference useMetricUnitForHeight] ? 1 : 0;
         } break;
         case HEMUnitPreferenceWeight: {
             controller.title = NSLocalizedString(@"settings.units.weight", nil);
-            controller.choices = @[NSLocalizedString(@"settings.units.imperial", nil),
-                                   NSLocalizedString(@"settings.units.metric", nil)];
+            controller.choices = @[NSLocalizedString(@"settings.units.pounds", nil),
+                                   NSLocalizedString(@"settings.units.kilograms", nil)];
             controller.selectedIndex = [SENPreference useMetricUnitForWeight] ? 1 : 0;
         } break;
     }

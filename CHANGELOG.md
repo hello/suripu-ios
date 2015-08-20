@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2.6
+
+New:
+
+* Show baseline in current conditions graphs when no data
+* Units and Time preferences show the actual unit names
+* Default preferences, based on phone locale, is pushed upon account creation
+
 ## 1.1.2.5
 
 New:

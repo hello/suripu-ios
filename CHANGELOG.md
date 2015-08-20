@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.2.5
+
+New:
+
+* Backview now swipes smoothly between tabs
+* Tapping on the view when the timeline segment popup is shown dismisses with animation rather than abruptly
+
+Fixes:
+
+* HK does not attempt to sync data when timeline metric value is 0, indicating no wake or sleep event
+
 ## 1.1.2.4
 
 New:

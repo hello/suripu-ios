@@ -280,7 +280,7 @@
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
-"settings.device.dialog.factory-restore-message" = "Are you sure you want to restore Sense to factory settings? This will disconnect your account from Sense, as well as any Sleep Pills you've paired. You will need to have a Sense paired to continue using the application.";
+"settings.device.dialog.factory-restore-message" = "This will disconnect your account from this Sense, as well as any Sleep Pills you have paired. You will need to pair with another Sense to continue using the application. You should only perform a factory reset if instructed to do so by Support. This operation cannot be undone.";
 "settings.factory-restore.error.title" = "Factory restore failed";
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";

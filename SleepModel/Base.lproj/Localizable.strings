@@ -31,7 +31,7 @@
 "onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, air quality, light, and noise. Sense has three different colors.";
 "onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
-"onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
+"onboarding.before-sleep.4.description" = "Sense glows red when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
 "onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom. Go ahead, give it a try now.";
 "onboarding.end-message.well-done" = "You're all set up";
 "onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
@@ -52,7 +52,6 @@
 // help links
 "help.email.address" = "support@hello.is";
 "help.email.subject" = "Sense Help Request";
-"help.forgot-password" = "https://account.hello.is/reset";
 "help.url.support.hyperlink-text" = "https://support.hello.is";
 "help.url.order-form" = "https://order.hello.is/";
 "help.url.support" = "http://support.hello.is/hc/en-us/";
@@ -62,11 +61,11 @@
 "help.url.slug.enhanced-audio" = "articles/204812619";
 "help.url.slug.sense-pairing-mode" = "articles/204797179";
 "help.url.slug.sense-pairing" = "articles/204797189";
-"help.url.slug.sense-about" = "articles/204797299-Setting-Up-Sense";
+"help.url.slug.sense-about" = "articles/204797299";
 "help.url.slug.wifi-scan" = "articles/205493095";
 "help.url.slug.pill-setup-another" = "articles/204797289";
 "help.url.slug.pill-not-seen" = "articles/204797159";
-"help.url.slug.pill-battery" = "articles/204496999-Battery-Change";
+"help.url.slug.pill-battery" = "articles/204496999";
 "help.url.slug.sense-not-seen" = "articles/204797259";
 "help.url.slug.sense-not-connected" = "articles/205493075";
 "help.url.slug.sense-no-internet" = "articles/205493285";
@@ -280,7 +279,7 @@
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
-"settings.device.dialog.factory-restore-message" = "Are you sure you want to restore Sense to factory settings? This will disconnect your account from Sense, as well as any Sleep Pills you've paired. You will need to have a Sense paired to continue using the application.";
+"settings.device.dialog.factory-restore-message" = "This will disconnect your account from this Sense, as well as any Sleep Pills you have paired. You will need to pair with another Sense to continue using the application. You should only perform a factory reset if instructed to do so by Support. This operation cannot be undone.";
 "settings.factory-restore.error.title" = "Factory restore failed";
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";

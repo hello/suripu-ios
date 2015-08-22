@@ -57,6 +57,8 @@
 	<string>${SENSE_ZENDESK_URL}</string>
 	<key>SenseAppReviewURL</key>
 	<string>${SENSE_APP_REVIEW_URL}</string>
+	<key>SensePasswordResetURL</key>
+	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

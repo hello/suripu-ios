@@ -52,7 +52,6 @@
 // help links
 "help.email.address" = "support@hello.is";
 "help.email.subject" = "Sense Help Request";
-"help.forgot-password" = "https://account.hello.is/reset";
 "help.url.support.hyperlink-text" = "https://support.hello.is";
 "help.url.order-form" = "https://order.hello.is/";
 "help.url.support" = "http://support.hello.is/hc/en-us/";

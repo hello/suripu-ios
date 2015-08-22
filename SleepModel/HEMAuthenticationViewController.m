@@ -10,6 +10,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSupportUtil.h"
+#import "HEMConfig.h"
 
 NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNotificationDidSignIn";
 
@@ -149,7 +150,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 }
 
 - (IBAction)didTapForgotPasswordButton:(UIButton*)sender {
-    [HEMSupportUtil openURL:NSLocalizedString(@"help.forgot-password", nil) from:self];
+    [HEMSupportUtil openURL:[HEMConfig stringForConfig:HEMConfPassResetURL] from:self];
 }
 
 #pragma mark - UITextFieldDelegate

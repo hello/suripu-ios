@@ -24,7 +24,7 @@
 @implementation HEMSleepHistoryViewController
 
 static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
-static NSUInteger const HEMSleepDataCapacity = 200;
+static NSUInteger const HEMSleepDataCapacity = 400;
 
 - (void)viewDidLoad
 {

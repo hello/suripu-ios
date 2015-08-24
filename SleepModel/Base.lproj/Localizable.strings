@@ -160,7 +160,7 @@
 "settings.units.pounds" = "Pounds";
 "settings.units.kilograms" = "Kilograms";
 "settings.units.clock" = "Time";
-"settings.units.temp" = "Temperature units";
+"settings.units.temp" = "Temperature";
 "settings.units.weight" = "Weight";
 "settings.units.height" = "Height";
 "settings.devices" = "Sense and Sleep Pill";

@@ -21,8 +21,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
 
 @interface HEMHeightPickerViewController () <UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *mainHeightLabel;
-@property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
+@property (weak, nonatomic) IBOutlet UILabel *heightLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *currentMarkerView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
@@ -146,22 +145,16 @@ static NSInteger const HEMHeightDefaultInch = 8;
 }
 
 - (void)updateTextLabelsWithInches:(CGFloat)actualInches {
-    NSInteger inches = (int)actualInches % HEMInchesPerFeet;
-    NSInteger feet = actualInches / HEMInchesPerFeet;
     CGFloat cm = actualInches * HEMHeightPickerCentimetersPerInch;
-
-    NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
-    NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
-    NSString* cmFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
-    NSString *imperialMeasure = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];
-    NSString *metricMeasure = [NSString stringWithFormat:@"%@", cmFormat];
     BOOL useMetric = [SENPreference useMetricUnitForHeight];
     if (useMetric) {
-        [[self mainHeightLabel] setText:metricMeasure];
-        [[self otherHeightLabel] setText:imperialMeasure];
+        self.heightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
     } else {
-        [[self mainHeightLabel] setText:imperialMeasure];
-        [[self otherHeightLabel] setText:metricMeasure];
+        NSInteger inches = (int)actualInches % HEMInchesPerFeet;
+        NSInteger feet = actualInches / HEMInchesPerFeet;
+        NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
+        NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
+        self.heightLabel.text = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];
     }
 }
 

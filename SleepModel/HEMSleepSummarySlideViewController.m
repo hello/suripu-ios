@@ -120,7 +120,7 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     CGPoint velocity = [gestureRecognizer velocityInView:self.view];
-    if (velocity.x < 0 && fabs(velocity.x) > fabs(velocity.y)) {
+    if (fabs(velocity.x) > 0 && fabs(velocity.x) > fabs(velocity.y)) {
         CGFloat const sliceWidth = 1;
         HEMSleepGraphViewController* controller = [self.viewControllers lastObject];
         CGFloat width = CGRectGetWidth(controller.view.bounds);

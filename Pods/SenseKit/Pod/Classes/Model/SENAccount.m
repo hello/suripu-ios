@@ -72,7 +72,7 @@ NSString* const SENAccountPropertyCreated = @"created";
 
         NSNumber *createdAt = SENObjectOfClass(data[SENAccountPropertyCreated], [NSNumber class]);
         if (createdAt) {
-            _createdAt = [NSDate dateWithTimeIntervalSince1970:[createdAt unsignedIntegerValue]];
+            _createdAt = SENDateFromNumber(createdAt);
         }
     }
     return self;
@@ -122,11 +122,9 @@ NSString* const SENAccountPropertyCreated = @"created";
 - (void)setBirthdateInMillis:(NSNumber*)birthdateInMillis {
     if (birthdateInMillis == nil) return;
     NSString* const SENAccountDateTimeZone = @"GMT";
-
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[birthdateInMillis longLongValue]/1000];
     NSDateFormatter* formatter = [self isoDateFormatter];
     [formatter setTimeZone:[NSTimeZone timeZoneWithName:SENAccountDateTimeZone]];
-    [self setBirthdate:[formatter stringFromDate:date]];
+    [self setBirthdate:[formatter stringFromDate:SENDateFromNumber(birthdateInMillis)]];
 }
 
 - (NSDateFormatter*)isoDateFormatter {

@@ -8,6 +8,7 @@
 
 #import "SENAPIDevice.h"
 #import "SENDevice.h"
+#import "Model.h"
 
 NSString* const SENAPIDeviceErrorDomain = @"is.hello.api.device";
 
@@ -35,8 +36,8 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
 
 + (SENDeviceType)typeFromString:(id)stringObj {
     SENDeviceType type = SENDeviceTypeSense;
-    if ([stringObj isKindOfClass:[NSString class]]
-        && [stringObj isEqualToString:SENAPIDevicePropertyTypeValuePill]) {
+    NSString* value = SENObjectOfClass(stringObj, [NSString class]);
+    if ([value isEqualToString:SENAPIDevicePropertyTypeValuePill]) {
         type = SENDeviceTypePill;
     }
     return type;
@@ -44,59 +45,39 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
 
 + (SENDeviceColor)colorFromString:(id)stringObj {
     SENDeviceColor color = SENDeviceColorUnknown;
-    if ([stringObj isKindOfClass:[NSString class]]) {
-        if ([stringObj isEqualToString:SENAPIDevicePropertyColorBlack]) {
-            color = SENDeviceColorBlack;
-        } else if ([stringObj isEqualToString:SENAPIDevicePropertyColorWhite]) {
-            color = SENDeviceColorWhite;
-        } else if ([stringObj isEqualToString:SENAPIDevicePropertyColorBlue]) {
-            color = SENDeviceColorBlue;
-        } else if ([stringObj isEqualToString:SENAPIDevicePropertyColorRed]) {
-            color = SENDeviceColorRed;
-        }
+    NSString* value = SENObjectOfClass(stringObj, [NSString class]);
+    if ([value isEqualToString:SENAPIDevicePropertyColorBlack]) {
+        color = SENDeviceColorBlack;
+    } else if ([value isEqualToString:SENAPIDevicePropertyColorWhite]) {
+        color = SENDeviceColorWhite;
+    } else if ([value isEqualToString:SENAPIDevicePropertyColorBlue]) {
+        color = SENDeviceColorBlue;
+    } else if ([value isEqualToString:SENAPIDevicePropertyColorRed]) {
+        color = SENDeviceColorRed;
     }
     return color;
 }
 
 + (SENDeviceState)stateFromString:(id)stringObj {
     SENDeviceState state = SENDeviceStateUnknown;
-    if ([stringObj isKindOfClass:[NSString class]]) {
-        if ([stringObj isEqualToString:SENAPIDevicePropertyStateValueLowBattery]) {
-            state = SENDeviceStateLowBattery;
-        } else if ([stringObj isEqualToString:SENAPIDevicePropertyStateValueNormal]) {
-            state = SENDeviceStateNormal;
-        }
+    NSString* value = SENObjectOfClass(stringObj, [NSString class]);
+    if ([value isEqualToString:SENAPIDevicePropertyStateValueLowBattery]) {
+        state = SENDeviceStateLowBattery;
+    } else if ([value isEqualToString:SENAPIDevicePropertyStateValueNormal]) {
+        state = SENDeviceStateNormal;
     }
     return state;
-}
-
-+ (NSDate*)dateFromObject:(id)dateObject {
-    NSDate* lastSeen = nil;
-    if ([dateObject respondsToSelector:@selector(doubleValue)]) {
-        double timeInMs = [dateObject doubleValue];
-        if (timeInMs > 0) {
-            lastSeen = [NSDate dateWithTimeIntervalSince1970:timeInMs / 1000];
-        }
-    }
-    return lastSeen;
 }
 
 + (SENDevice*)deviceFromRawResponse:(id)rawResponse {
     SENDevice* device = nil;
     if ([rawResponse isKindOfClass:[NSDictionary class]]) {
-        id deviceIdObj = [rawResponse valueForKey:SENAPIDevicePropertyDeviceId];
-        id typeObj = [rawResponse valueForKey:SENAPIDevicePropertyType];
-        id stateObj = [rawResponse valueForKey:SENAPIDevicePropertyState];
-        id firmwareVerObj = [rawResponse valueForKey:SENAPIDevicePropertyFirmwareVersion];
-        id lastSeenObj = [rawResponse valueForKey:SENAPIDevicePropertyLastSeen];
-        id colorObj = [rawResponse valueForKey:SENAPIDevicePropertyColor];
-        
-        NSString* deviceId = [deviceIdObj isKindOfClass:[NSString class]] ? deviceIdObj : nil;
-        NSString* version = [firmwareVerObj isKindOfClass:[NSString class]] ? firmwareVerObj : nil;
-        SENDeviceType type  = [self typeFromString:typeObj];
-        SENDeviceState state = [self stateFromString:stateObj];
-        SENDeviceColor color = [self colorFromString:colorObj];
-        NSDate* lastSeen = [self dateFromObject:lastSeenObj];
+        NSString* deviceId = SENObjectOfClass(rawResponse[SENAPIDevicePropertyDeviceId], [NSString class]);
+        NSString* version = SENObjectOfClass(rawResponse[SENAPIDevicePropertyFirmwareVersion], [NSString class]);
+        SENDeviceType type  = [self typeFromString:rawResponse[SENAPIDevicePropertyType]];
+        SENDeviceState state = [self stateFromString:rawResponse[SENAPIDevicePropertyState]];
+        SENDeviceColor color = [self colorFromString:rawResponse[SENAPIDevicePropertyColor]];
+        NSDate* lastSeen = SENDateFromNumber(rawResponse[SENAPIDevicePropertyLastSeen]);
         
         device = [[SENDevice alloc] initWithDeviceId:deviceId
                                                 type:type

@@ -24,12 +24,6 @@ SENTimelineSegmentSleepState SENTimelineSegmentSleepStateFromString(NSString *se
     return SENTimelineSegmentSleepStateUnknown;
 }
 
-NSDate* SENTimelineDateFromTimestamp(NSNumber* timestampMillis) {
-    if (![timestampMillis isKindOfClass:[NSNumber class]])
-        return nil;
-    return [NSDate dateWithTimeIntervalSince1970:[timestampMillis doubleValue] / 1000];
-}
-
 NSTimeZone* SENTimelineTimezoneFromOffset(NSNumber* offsetMillis) {
     if (![offsetMillis isKindOfClass:[NSNumber class]])
         return nil;
@@ -121,7 +115,7 @@ static NSString* const SENTimelineSegmentKeyType = @"event_type";
 - (instancetype)initWithDictionary:(NSDictionary*)segmentData
 {
     if (self = [super init]) {
-        _date = SENTimelineDateFromTimestamp(segmentData[SENTimelineSegmentTimestamp]);
+        _date = SENDateFromNumber(segmentData[SENTimelineSegmentTimestamp]);
         _duration = SENTimelineIntervalFromNumber(segmentData[SENTimelineSegmentDuration]);
         _message = SENObjectOfClass(segmentData[SENTimelineSegmentMessage], [NSString class]);
         _type = SENTimelineSegmentTypeFromString(segmentData[SENTimelineSegmentEventType]);
@@ -189,7 +183,7 @@ static NSString* const SENTimelineSegmentKeyType = @"event_type";
 {
     BOOL changed = NO;
     if (data[SENTimelineSegmentTimestamp]) {
-        NSDate* date = SENTimelineDateFromTimestamp(data[SENTimelineSegmentTimestamp]);
+        NSDate* date = SENDateFromNumber(data[SENTimelineSegmentTimestamp]);
         if (![self.date isEqual:date]) {
             self.date = date;
             changed = YES;

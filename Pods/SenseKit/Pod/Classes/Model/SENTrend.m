@@ -108,18 +108,6 @@ static NSString* const SENTrendDataPointQualityRawBad = @"BAD";
 static NSString* const SENTrendDataPointQualityRawGood = @"GOOD";
 static NSString* const SENTrendDataPointQualityRawOk = @"OK";
 
-+ (NSDate*)dateForValue:(id)value
-{
-    if ([value isKindOfClass:[NSNumber class]]) {
-        NSNumber* timestamp = value;
-        if ([timestamp doubleValue] <= 0)
-            return nil;
-        else
-            return [NSDate dateWithTimeIntervalSince1970:[timestamp doubleValue] / 1000];
-    }
-    return nil;
-}
-
 + (SENTrendDataPointQuality)qualityForValue:(id)value
 {
     if ([value isEqual:SENTrendDataPointQualityRawBad])
@@ -134,7 +122,7 @@ static NSString* const SENTrendDataPointQualityRawOk = @"OK";
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        _date = [SENTrendDataPoint dateForValue:dict[SENTrendDataPointDateKey]];
+        _date = SENDateFromNumber(dict[SENTrendDataPointDateKey]);
         _millisecondsOffset = [dict[SENTrendDataPointOffsetMillisKey] doubleValue];
         _quality = [SENTrendDataPoint qualityForValue:dict[SENTrendDataPointQualityKey]];
         _xValue = [dict[SENTrendDataPointXValueKey] doubleValue];

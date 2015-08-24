@@ -11,7 +11,7 @@
 
 #import "SENServiceHealthKit.h"
 #import "SENService+Protected.h"
-#import "SENTimeline.h"
+#import "Model.h"
 #import "SENAPITimeline.h"
 #import "SENLocalPreferences.h"
 
@@ -328,14 +328,14 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
             && metric.type == SENTimelineMetricTypeFellAsleep
             && metric.unit == SENTimelineMetricUnitTimestamp
             && metricValue > 0) {
-            sleepDate = [NSDate dateWithTimeIntervalSince1970:metricValue / 1000];
+            sleepDate = SENDateFromNumber(metric.value);
         }
 
         if (sleepDate != nil
             && metric.type == SENTimelineMetricTypeWokeUp
             && metric.unit == SENTimelineMetricUnitTimestamp
             && metricValue > 0) {
-            wakeUpDate = [NSDate dateWithTimeIntervalSince1970:metricValue / 1000];
+            wakeUpDate = SENDateFromNumber(metric.value);
         }
     }
     

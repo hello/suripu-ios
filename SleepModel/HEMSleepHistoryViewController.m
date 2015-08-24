@@ -1,6 +1,5 @@
 
-#import <SenseKit/SENTimeline.h>
-#import <SenseKit/SENAPITimeline.h>
+#import <SenseKit/SenseKit.h>
 #import "HEMSleepHistoryViewController.h"
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
@@ -94,10 +93,16 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 
 - (void)loadData
 {
-    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:HEMSleepDataCapacity];
-    NSDateComponents* components = [NSDateComponents new];
+    NSUInteger capacity = HEMSleepDataCapacity;
     NSDate* today = [[NSDate date] dateAtMidnight];
-    for (int i = HEMSleepDataCapacity; i > 0; i--) {
+    NSDate* creationDate = [[[SENServiceAccount sharedService] account] createdAt];
+    if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
+        NSDateComponents *difference = [self.calendar components:NSDayCalendarUnit fromDate:creationDate  toDate:today options:0];
+        capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
+    }
+    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
+    NSDateComponents* components = [NSDateComponents new];
+    for (int i = capacity; i > 0; i--) {
         components.day = -i;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today

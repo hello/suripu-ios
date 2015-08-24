@@ -251,7 +251,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
             break;
         }
         case SENTimelineMetricUnitTimestamp: {
-            NSDate* date = [NSDate dateWithTimeIntervalSince1970:[metric.value doubleValue] / 1000];
+            NSDate* date = SENDateFromNumber(metric.value);
             value = [self.timestampFormatter stringFromDate:date];
             if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
                 unit = [[self.meridiemFormatter stringFromDate:date] lowercaseString];

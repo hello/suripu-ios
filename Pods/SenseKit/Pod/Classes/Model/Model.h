@@ -18,6 +18,15 @@
 void SENClearModel();
 
 /**
+ *  Returns a date for the number value in milliseconds
+ *
+ *  @param value number of milliseconds since the epoch
+ *
+ *  @return a Date representing value
+ */
+NSDate* SENDateFromNumber(id value);
+
+/**
  *  Checks the type of an object, returning the object if it
  *  matches the intended class
  *

@@ -1,5 +1,6 @@
 
 #import "SENInsight.h"
+#import "Model.h"
 
 // insight constants
 static NSString* const SENInsightDateCreatedKey = @"timestamp";
@@ -20,16 +21,13 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
     if (self = [super init]) {
         _title = [dict[SENInsightTitleKey] copy];
         _message = [dict[SENInsightMessageKey] copy];
-        _dateCreated = [self dateFromNumber:dict[SENInsightDateCreatedKey]];
+        NSNumber* dateMillis = SENObjectOfClass(dict[SENInsightDateCreatedKey], [NSNumber class]);
+        if (dateMillis)
+            _dateCreated = SENDateFromNumber(dateMillis);
         _category = [dict[SENInsightCategory] copy];
         _infoPreview = [dict[SENInsightInfoPreviewKey] copy];
     }
     return self;
-}
-
-- (NSDate*)dateFromNumber:(id)number {
-    if (number == nil || ![number isKindOfClass:[NSNumber class]]) return nil;
-    return [NSDate dateWithTimeIntervalSince1970:[number longLongValue] / 1000];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder

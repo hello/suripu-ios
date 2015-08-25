@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.3.0
+
+New:
+
+* Prevent viewing of Timelines older than when account was created, if account info is available
+* Height and Weight secondary label removed
+* Units and time no longer show the word unit for temperature
+* Support URL slugs no longer reference titles
+* Dev builds will point to a dev password reset URL
+* Factory reset confirmation dialog copy updated
+* Onboarding Sense colors copy changed from orange to red
+
 ## 1.1.2.6
 
 New:

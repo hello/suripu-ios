@@ -104,7 +104,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [super viewDidBecomeActive];
     [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
     
-    [HEMAppUsage appUsageForIdentifier:HEMAppUsageAppLaunched];
+    [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppLaunched];
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
 }
 

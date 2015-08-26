@@ -154,7 +154,13 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 - (void)show {
     [[self optionTableView] reloadData];
     
-    CGFloat height = [[self optionTableView] contentSize].height;
+    UIScreen* mainScreen = [UIScreen mainScreen];
+    CGFloat screenHeight = CGRectGetHeight([mainScreen bounds]);
+    CGFloat contentHeight = [[self optionTableView] contentSize].height;
+    
+    [[self optionTableView] setScrollEnabled:contentHeight > screenHeight];
+    
+    CGFloat height = MIN(contentHeight, screenHeight);
     BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
         || self.oTVHeightConstraint.constant != height;
     BOOL needsUpdateAlpha = self.shadedOverlayView.alpha != 1.f;

@@ -39,6 +39,17 @@ typedef NS_ENUM(NSInteger, SENServiceHealthKitError) {
 - (void)sync:(void(^)(NSError* error))completion;
 
 /**
+ * @method lastSyncDate
+ *
+ * @discussion
+ * Return the date in which the system last successfully sync'ed to the health
+ * app.
+ *
+ * @return date of last successful sync
+ */
+- (NSDate*)lastSyncDate;
+
+/**
  * Request authorization from the user to read/write from/in to HealthKit
  * @param completion: block to invoke when user completes denying/authorizing
  */

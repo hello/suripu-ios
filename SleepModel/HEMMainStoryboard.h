@@ -14,13 +14,13 @@
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
 +(NSString *)alarmDeleteCellReuseIdentifier;
-+(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)preferenceReuseIdentifier;
 +(NSString *)imageReuseIdentifier;
 +(NSString *)textReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
++(NSString *)infoCellReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;
 +(NSString *)signoutReuseIdentifier;
@@ -39,12 +39,13 @@
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)sensorGraphCellReuseIdentifier;
-+(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)overTimeReuseIdentifier;
 +(NSString *)trendGraphReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
++(NSString *)summaryViewCellReuseIdentifier;
++(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)fieldCellReuseIdentifier;
 
 /** Segue Identifiers */
@@ -70,8 +71,10 @@
 +(id)instantiateAlarmNavController;
 +(id)instantiateAlarmRepeatTableViewController;
 +(id)instantiateAlarmViewController;
-+(id)instantiateBreakdownViewController;
++(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
++(id)instantiateInfoNavigationController;
++(id)instantiateInfoViewController;
 +(id)instantiateInsightFeedViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;

@@ -39,4 +39,14 @@
  */
 + (void)stopAskingToRateTheApp;
 
+/**
+ * @return YES if user has already reviewed this version. NO otherwise
+ */
++ (BOOL)hasNotYetReviewedThisVersion;
+
+/**
+ * @return YES if user has stated to stop asking.  NO otherwise
+ */
++ (BOOL)hasStatedToStopAsking;
+
 @end

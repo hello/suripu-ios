@@ -540,7 +540,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)didTapSummaryButton:(UIButton *)sender {
-    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownViewController];
+    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownController];
     controller.result = self.dataSource.sleepResult;
     [self presentViewController:controller animated:YES completion:NULL];
 }

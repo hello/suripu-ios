@@ -196,6 +196,7 @@
 "debug.option.reset" = "Start Over";
 "debug.option.led" = "LED";
 "debug.option.led.title" = "LED options";
+"debug.option.debug.info" = "Debug info";
 "debug.led.option.pair" = "Pair";
 "debug.led.option.off" = "Off";
 "debug.led.option.success" = "Success";

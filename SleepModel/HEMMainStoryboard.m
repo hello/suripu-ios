@@ -26,8 +26,8 @@ static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableVi
 static NSString *const _HEMalarmSoundCell = @"alarmSoundCell";
 static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
+static NSString *const _HEMbreakdownController = @"breakdownController";
 static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
-static NSString *const _HEMbreakdownViewController = @"breakdownController";
 static NSString *const _HEMchoice = @"choice";
 static NSString *const _HEMchoiceCell = @"choiceCell";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
@@ -37,6 +37,9 @@ static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfieldCell = @"fieldCell";
 static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfo = @"info";
+static NSString *const _HEMinfoCell = @"infoCell";
+static NSString *const _HEMinfoNavigationController = @"infoNavigationController";
+static NSString *const _HEMinfoViewController = @"infoViewController";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
 static NSString *const _HEMmultiple = @"multiple";
@@ -102,6 +105,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)fieldCellReuseIdentifier { return _HEMfieldCell; }
 +(NSString *)imageReuseIdentifier { return _HEMimage; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
++(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)optionReuseIdentifier { return _HEMoption; }
@@ -146,8 +150,10 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateAlarmNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmNavController]; }
 +(id)instantiateAlarmRepeatTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmRepeatTableViewController]; }
 +(id)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
-+(id)instantiateBreakdownViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownViewController]; }
++(id)instantiateBreakdownController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
++(id)instantiateInfoNavigationController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoNavigationController]; }
++(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
 +(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
 +(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }

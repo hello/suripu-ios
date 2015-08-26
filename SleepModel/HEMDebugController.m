@@ -20,6 +20,8 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMTutorial.h"
 #import "HEMOnboardingController.h"
+#import "HEMInfoViewController.h"
+#import "HEMDebugInfoDataSource.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -72,6 +74,7 @@
     [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
+    [self addDebugInfoOptionTo:sheet];
     [self addChangeServerOptionToSheet:sheet];
     [self addCancelOptionTo:sheet];
     
@@ -90,6 +93,15 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [HEMSupportUtil contactSupportFrom:[strongSelf presentingController]
                               mailDelegate:strongSelf];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)addDebugInfoOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.debug.info", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showDebugInfo];
         [strongSelf setSupportOptionController:nil];
     }];
 }
@@ -118,6 +130,19 @@
         [strongSelf setSupportOptionController:nil];
         [SENAuthorizationService deauthorize];
     }];
+}
+
+#pragma mark Debug Info
+
+- (void)showDebugInfo {
+    UINavigationController* navVC = [HEMMainStoryboard instantiateInfoNavigationController];
+    HEMInfoViewController* infoVC = (id)[navVC topViewController];
+    [infoVC setTitle:NSLocalizedString(@"debug.option.debug.info", nil)];
+    
+    HEMDebugInfoDataSource* source = [[HEMDebugInfoDataSource alloc] init];
+    [infoVC setInfoSource:source];
+    
+    [[self presentingController] presentViewController:navVC animated:YES completion:nil];
 }
 
 #pragma mark API Address

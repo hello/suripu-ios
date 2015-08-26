@@ -4672,7 +4672,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "";
 				SENSE_API_URL = "https://api.hello.is";
-				SENSE_APP_REVIEW_URL = "";
+				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

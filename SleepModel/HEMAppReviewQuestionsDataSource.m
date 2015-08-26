@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import <SenseKit/SENAPIAppFeedback.h>
+
 #import "HEMAppReviewQuestionsDataSource.h"
 #import "HEMAppReview.h"
 #import "HEMZendeskService.h"
@@ -19,6 +21,10 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
 @property (nonatomic, strong) HEMAppReviewQuestion* currentReviewQuestion;
 @property (nonatomic, strong) HEMAppReviewAnswer* selectedAnswer;
 @property (nonatomic, weak)   UIViewController* controller;
+
+// for app feedback
+@property (nonatomic, assign) SENAppReviewFeedback feedback;
+@property (nonatomic, assign) BOOL attemptedToReview;
 
 @end
 
@@ -100,8 +106,22 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
 - (BOOL)selectAnswerAtIndexPath:(NSIndexPath*)indexPath {
     HEMAppReviewAnswer* answer = [self answerAtIndexPath:indexPath];
     [self setSelectedAnswer:answer];
-    return [answer action] == HEMAppReviewAnswerActionEnjoySense ||
-           [answer action] == HEMAppReviewAnswerActionDoNotEnjoySense;
+    
+    BOOL hasAnotherQuestion = NO;
+    
+    if ([answer action] == HEMAppReviewAnswerActionEnjoySense) {
+        [self setFeedback:SENAppReviewFeedbackLikeIt];
+        hasAnotherQuestion = YES;
+    } else if ([answer action] == HEMAppReviewAnswerActionDoNotEnjoySense) {
+        [self setFeedback:SENAppReviewFeedbackDoNotLikeIt];
+        hasAnotherQuestion = YES;
+    } else if ([answer action] == HEMAppReviewAnswerActionOpenSupport) {
+        [self setFeedback:SENAppReviewFeedbackNeedHelp];
+    } else if ([answer action] == HEMAppReviewAnswerActionRateTheApp) {
+        [self setAttemptedToReview:YES];
+    }
+    
+    return hasAnotherQuestion;
 }
 
 /**
@@ -126,6 +146,8 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
     
     switch ([[self selectedAnswer] action]) {
         case HEMAppReviewAnswerActionOpenSupport: {
+            // wait for ticket to be created before sending feedback since user
+            // can change their mind
             [self listenToTicketCreationEvents];
             static NSString* const internalSubject = @"iOS App Review Help";
             [[HEMZendeskService sharedService] configureRequestWithSubject:internalSubject completion:^{
@@ -135,11 +157,14 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
         }
         case HEMAppReviewAnswerActionRateTheApp: {
             [self listenToForAppComingBackToForeground];
+            [self sendAppFeedback];
             [SENAnalytics track:HEMAnalyticsEventAppReviewRate];
             [HEMAppReview rateApp];
             return YES;
         }
         case HEMAppReviewAnswerActionSendFeedback: {
+            // wait for ticket to be created before sending feedback since user
+            // can change their mind
             [self listenToTicketCreationEvents];
             [[HEMZendeskService sharedService] configureRequestWithTopic:HEMAppReviewFeedbackTopic completion:^{
                 [ZDKRequests showRequestCreationWithNavController:[controller navigationController]];
@@ -147,15 +172,18 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
             return YES;
         }
         case HEMAppReviewAnswerActionStopAsking: {
+            [self sendAppFeedback];
             [SENAnalytics track:HEMAnalyticsEventAppReviewRateNoAsk];
             [HEMAppReview stopAskingToRateTheApp];
             return NO;
         }
         case HEMAppReviewAnswerActionDone: {
+            [self sendAppFeedback];
             [SENAnalytics track:HEMAnalyticsEventAppReviewDone];
             return NO;
         }
         default:
+            [self sendAppFeedback];
             return NO;
     }
 }
@@ -191,7 +219,17 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
         default:
             break;
     }
+    
+    [self sendAppFeedback];
     [[self controller] dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendAppFeedback {
+    DDLogVerbose(@"sending feedback %ld, review %@",
+                 (long)[self feedback], [self attemptedToReview]?@"y":@"n");
+    [SENAPIAppFeedback sendAppFeedback:[self feedback]
+                           reviewedApp:[self attemptedToReview]
+                            completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

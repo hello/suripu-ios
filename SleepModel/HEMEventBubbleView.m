@@ -57,8 +57,11 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
     self.backgroundColor = [UIColor clearColor];
     self.cornerView.backgroundColor = [UIColor whiteColor];
     self.showingWaveforms = NO;
+
+    self.accessibilityLabel = NSLocalizedString(@"sleep-event.accessibility-label", nil);
+    self.accessibilityHint = NSLocalizedString(@"sleep-event.accessibility-hint", nil);
+    self.accessibilityTraits = UIAccessibilityTraitButton;
     self.isAccessibilityElement = YES;
-    self.accessibilityLabel = NSLocalizedString(@"sleep-event.label", nil);
 }
 
 - (void)layoutSubviews {
@@ -75,9 +78,9 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 - (void)setMessageText:(NSAttributedString *)message timeText:(NSAttributedString *)time {
     self.textLabel.attributedText = message;
     self.timeLabel.attributedText = time;
-    self.accessibilityValue = [@[[message string]?:@"",[time string]?:@""] componentsJoinedByString:@","];
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
+    self.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-event.accessibility-value.format", nil), [time string], [message string]];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {

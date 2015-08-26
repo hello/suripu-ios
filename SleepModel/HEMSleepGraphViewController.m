@@ -550,7 +550,7 @@ static BOOL hasLoadedBefore = NO;
         return;
 
     [self setSelectedIndexPath:indexPath];
-
+    self.popupView.attributedText = [self.dataSource summaryForSegmentAtIndexPath:indexPath];
     CGFloat top = [self topOfSelectedTimelineSleepSegment];
     [self.popupView showPointer:top > 0];
     self.popupViewTop.constant = top + HEMPopupAnimationDistance;
@@ -583,8 +583,6 @@ static BOOL hasLoadedBefore = NO;
 
 - (CGFloat)topOfSelectedTimelineSleepSegment {
     CGFloat const HEMPopupSpacingDistance = 8.f;
-    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:[self selectedIndexPath]];
-    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes =
         [self.collectionView layoutAttributesForItemAtIndexPath:[self selectedIndexPath]];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
@@ -652,29 +650,6 @@ static BOOL hasLoadedBefore = NO;
     [self.popupMaskView showUnderlyingViewRect:maskArea];
     self.popupMaskView.alpha = 0.7f;
     self.popupMaskView.hidden = NO;
-}
-
-- (NSString *)summaryPopupTextForSegment:(SENTimelineSegment *)segment {
-    static NSString *const HEMPopupTextFormat = @"sleep-stat.sleep-duration.%@";
-    NSString *depth;
-    switch (segment.sleepState) {
-        case SENTimelineSegmentSleepStateSound:
-            depth = @"deep";
-            break;
-        case SENTimelineSegmentSleepStateMedium:
-            depth = @"medium";
-            break;
-        case SENTimelineSegmentSleepStateLight:
-            depth = @"light";
-            break;
-        case SENTimelineSegmentSleepStateAwake:
-        default:
-            depth = @"awake";
-            break;
-    }
-
-    NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, depth];
-    return NSLocalizedString(format, nil);
 }
 
 #pragma mark - Top Bar

@@ -425,7 +425,11 @@
 "sleep-event.action.adjust.title" = "Adjust time";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
-"sleep-event.label" = "Sleep event";
+"sleep-event.accessibility-label" = "Event";
+"sleep-event.accessibility-value.format" = "%@, %@";
+"sleep-event.accessibility-hint" = "Double tap to open event options";
+
+"sleep-segment.accessibility-label" = "State";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";
@@ -471,6 +475,11 @@
 "sleep-stat.sleep-duration.deep.single.format" = "You were in **Deep Sleep** for one minute.";
 "sleep-stat.sleep-duration.awake.plural.format" = "You were awake for %ld minutes.";
 "sleep-stat.sleep-duration.awake.single.format" = "You were awake for one minute.";
+
+"sleep-stat.accessibility.sleep-state.light.format" = "Light sleep, %ld minutes, sleep depth %ld";
+"sleep-stat.accessibility.sleep-state.medium.format" = "Medium sleep, %ld minutes, sleep depth %ld";
+"sleep-stat.accessibility.sleep-state.deep.format" = "Sound sleep, %ld minutes, sleep depth %ld";
+"sleep-stat.accessibility.sleep-state.awake.format" = "Awake, %ld minutes";
 
 // remove below once we want to display the duration again.
 "sleep-stat.sleep-duration.medium" = "You were in **Medium Sleep**.";

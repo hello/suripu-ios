@@ -417,6 +417,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     }
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     [cell setSegmentRatio:fillRatio withFillColor:color previousRatio:previousFillRatio previousColor:previousColor];
+    cell.accessibilityValue = [self accessibleSummaryForSegmentAtIndexPath:indexPath];
+    cell.accessibilityLabel = NSLocalizedString(@"sleep-segment.accessibility-label", nil);
+    cell.isAccessibilityElement = YES;
     return cell;
 }
 
@@ -521,6 +524,39 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 #pragma mark - Data Parsing
+
+- (NSString *)localizationKeyForSleepState:(SENTimelineSegmentSleepState)state {
+    switch (state) {
+        case SENTimelineSegmentSleepStateSound:
+            return @"deep";
+        case SENTimelineSegmentSleepStateMedium:
+            return @"medium";
+        case SENTimelineSegmentSleepStateLight:
+            return @"light";
+        case SENTimelineSegmentSleepStateAwake:
+        default:
+            return @"awake";
+    }
+}
+
+- (NSString *)accessibleSummaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *const HEMAccessibleSegmentSummaryFormat = @"sleep-stat.accessibility.sleep-state.%@.format";
+    SENTimelineSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    NSString* depthKey = [self localizationKeyForSleepState:segment.sleepState];
+    NSString* localizedKey = [NSString stringWithFormat:HEMAccessibleSegmentSummaryFormat, depthKey];
+    return [NSString stringWithFormat:NSLocalizedString(localizedKey, nil), (long)segment.duration / 60, (long)segment.sleepDepth];
+}
+
+- (NSAttributedString *)summaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {
+    if (!indexPath)
+        return nil;
+    static NSString *const HEMPopupTextFormat = @"sleep-stat.sleep-duration.%@";
+    SENTimelineSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    NSString *depthKey = [self localizationKeyForSleepState:segment.sleepState];
+    NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, depthKey];
+    NSString *text = [NSString stringWithFormat:NSLocalizedString(format, nil)];
+    return [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForTimelineSegmentPopup]) trim];
+}
 
 - (SENTimelineSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath {
     NSArray *segments = self.sleepResult.segments;

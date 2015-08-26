@@ -80,6 +80,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
     timeLabel.textColor = [UIColor tintColor];
+    timeLabel.isAccessibilityElement = NO;
     [[self contentView] addSubview:timeLabel];
     CGRect lineRect
         = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset, HEMSegmentBorderWidth);

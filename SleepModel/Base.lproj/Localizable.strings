@@ -425,6 +425,7 @@
 "sleep-event.action.adjust.title" = "Adjust time";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
+"sleep-event.label" = "Sleep event";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";

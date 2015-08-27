@@ -377,10 +377,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     HEMSleepSummaryCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
     NSInteger score = [self.sleepResult.score integerValue];
-    NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
-    cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
     [cell setLoading:self.sleepResult.message.length == 0];
-    [cell setScore:score condition:self.sleepResult.scoreCondition animated:YES];
+    [cell setScore:score message:self.sleepResult.message condition:self.sleepResult.scoreCondition animated:YES];
     if (score > 0 && [collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
         [cell.messageContainerView addTapTarget:collectionView.delegate
                                          action:@selector(didTapSummaryButton:)];

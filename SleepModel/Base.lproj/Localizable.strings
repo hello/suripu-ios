@@ -362,6 +362,10 @@
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";
 "graph-data.unavailable" = "No data available";
+"sensor.accessibility-value.condition-alert" = "poor";
+"sensor.accessibility-value.condition-warning" = "acceptable";
+"sensor.accessibility-value.condition-ideal" = "ideal";
+"sensor.accessibility-value.condition-unknown" = "unknown";
 
 // measurements
 "measurement.temperature.unit" = "°";
@@ -396,6 +400,10 @@
 "timeline.accessibility-hint.menu-close" = "Double tap to close";
 "timeline.accessibility-hint.history-open" = "Double tap to view timeline history";
 "timeline.accessibility-label.menu" = "Drawer";
+"timeline.accessibility-label.breakdown" = "Score breakdown";
+"timeline.accessibility-hint.breakdown" = "Double tap to open a breakdown of score components";
+"timeline.accessibility-label.summary-score" = "Sleep score";
+"timeline.accessibility-value.summary-score.format" = "%ld, condition %@";
 
 // missing data
 "sleep-data.first-night.title" = "See you in the morning";

@@ -1,6 +1,7 @@
 
 #import <UICountingLabel/UICountingLabel.h>
 #import "HEMSleepScoreGraphView.h"
+#import "SENSensorAccessibility.h"
 #import "UIColor+HEMStyle.h"
 
 @interface HEMSleepScoreGraphView ()
@@ -27,6 +28,8 @@ CGFloat const arcOffsetY = 80.f;
 - (void)awakeFromNib {
     [self configureLayers];
     [self configureScoreValueLabel];
+    self.accessibilityLabel = NSLocalizedString(@"timeline.accessibility-label.summary-score", nil);
+    self.isAccessibilityElement = YES;
 }
 
 - (void)configureLayers {
@@ -182,6 +185,7 @@ CGFloat const arcOffsetY = 80.f;
     _sleepScore = sleepScore;
     if (animated)
         [self animateScoreTo:sleepScore];
+    self.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"timeline.accessibility-value.summary-score.format", nil), (long)self.sleepScore, SENConditionReadableValue(self.condition)];
 }
 
 #pragma mark - Loading

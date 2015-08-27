@@ -528,6 +528,7 @@
 "sleep-history.depth.medium" = "Medium sleep";
 "sleep-history.depth.deep" = "Deep sleep";
 "sleep-history.no-data" = "There is no information available about the selected date.";
+"sleep-history.accessibility-value.timeline.format" = "%@, Sleep score %ld, condition %@";
 
 // trends
 "trends.title" = "Trends";

@@ -24,8 +24,17 @@
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral {
     self = [super init];
     if (self) {
-        [self setPeripheral:peripheral];
+        _peripheral = peripheral;
         [self processAdvertisementData:[peripheral advertisingData]];
+    }
+    return self;
+}
+
+- (instancetype)initWithPeripheral:(LGPeripheral*)peripheral andDeviceId:(NSString*)deviceId {
+    self = [super init];
+    if (self) {
+        _peripheral = peripheral;
+        _deviceId = [deviceId copy];
     }
     return self;
 }

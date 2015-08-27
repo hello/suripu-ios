@@ -59,7 +59,6 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
     self.showingWaveforms = NO;
 
     self.accessibilityLabel = NSLocalizedString(@"sleep-event.accessibility-label", nil);
-    self.accessibilityHint = NSLocalizedString(@"sleep-event.accessibility-hint", nil);
     self.accessibilityTraits = UIAccessibilityTraitButton;
     self.isAccessibilityElement = YES;
 }
@@ -95,6 +94,13 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 
 - (void)setShadowVisible:(BOOL)visible {
     self.layer.shadowOpacity = visible ? HEMEventBubbleShadowOpacity : 0.0f;
+}
+
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
+    [super setUserInteractionEnabled:userInteractionEnabled];
+    self.accessibilityHint = userInteractionEnabled ? NSLocalizedString(@"sleep-event.accessibility-hint", nil) : nil;
+    self.accessibilityTraits = userInteractionEnabled ? UIAccessibilityTraitButton : UIAccessibilityTraitNone;
+    [self setShadowVisible:userInteractionEnabled];
 }
 
 - (void)showWaveformViews:(BOOL)visible {

@@ -439,8 +439,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
         timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter];
     }
-
-    [cell.contentContainerView setShadowVisible:segment.possibleActions != SENTimelineSegmentActionNone];
+    cell.contentContainerView.userInteractionEnabled = segment.possibleActions != SENTimelineSegmentActionNone;
     [cell layoutWithImage:[self imageForEventType:segment.type]
                   message:segment.message
                      time:timeText

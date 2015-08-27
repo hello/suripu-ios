@@ -102,12 +102,47 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     /**
      * Sense failed to decode the protobuf, usually from server responses
      */
-    SENSenseManagerErrorCodeProtobufDecodingFailed = -22
+    SENSenseManagerErrorCodeProtobufDecodingFailed = -22,
+    /**
+     * BLE is either not supported or not currently on
+     */
+    SENSenseManagerErrorCodeNoBLE = -23,
+    /**
+     * If this device has never connected to a Sense (or connected to one before
+     * the feature to save last connected Sense was released)
+     */
+    SENSenseManagerErrorCodeNeverConnectedToASense = -24,
+    /**
+     * If this device has connected to a Sense before (and remembered so), but
+     * the device has forgotten Sense from Settings or other means
+     */
+    SENSenseManagerErrorCodeForgottenSense = -25
 };
 
 @interface SENSenseManager : NSObject
 
 @property (nonatomic, strong, readonly) SENSense* sense;
+
+/**
+ * Retrieve the last SENSense object that this device connected to, if any.  
+ *
+ * If BLE is not supported or not currently turned on, an error is returned with
+ * the code SENSenseManagerErrorCodeNoBLE.
+ *
+ * If the current device never connected to a Sense or has not yet remembered a
+ * connected Sense, an error with code SENSenseManagerErrorCodeNeverConnectedToASense
+ * is returned.
+ *
+ * If the current device has remembered a connected Sense, but the device has some
+ * how lost the pairing information, an error with the code SENSenseManagerErrorCodeForgottenSense
+ * will be returned.
+ *
+ * If no errors, a SENSense object is returned
+ *
+ * @param completion: the callback to call upon completion of the method.  If BLE
+ *                    is available, the calback should be made almost immediately
+ */
++ (void)lastConnectedSense:(void(^)(SENSense* sense, NSError* error))completion;
 
 /**
  * Scan for any senses that may be nearby with a default timemout

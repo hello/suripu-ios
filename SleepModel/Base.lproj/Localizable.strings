@@ -387,6 +387,16 @@
 "measurement.db.format" = "%lddb";
 "measurement.lx.format" = "%ldlx";
 
+// drawer
+"drawer.action.open" = "Drawer opened";
+"drawer.action.close" = "Drawer closed";
+
+// timeline
+"timeline.accessibility-hint.menu-open" = "Double tap to open";
+"timeline.accessibility-hint.menu-close" = "Double tap to close";
+"timeline.accessibility-hint.history-open" = "Double tap to view timeline history";
+"timeline.accessibility-label.menu" = "Drawer";
+
 // missing data
 "sleep-data.first-night.title" = "See you in the morning";
 "sleep-data.first-night.message" = "In the morning, you'll see your first Sleep Timeline here. There are no modes to set — Sense will automatically know when you go to bed. All you need to do is sleep.";

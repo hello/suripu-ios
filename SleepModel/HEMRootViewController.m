@@ -363,10 +363,12 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     switch (paneState) {
     case MSDynamicsDrawerPaneStateClosed:
+        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.close", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayCloseNotification
                                                             object:nil];
         break;
     case MSDynamicsDrawerPaneStateOpen:
+        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.open", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayOpenNotification
                                                             object:nil];
         break;

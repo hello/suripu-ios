@@ -137,6 +137,11 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     }
 }
 
+- (BOOL)accessibilityPerformMagicTap {
+    [self toggleSettingsDrawer];
+    return YES;
+}
+
 - (void)viewDidEnterBackground
 {
     [super viewDidEnterBackground];
@@ -363,12 +368,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     switch (paneState) {
     case MSDynamicsDrawerPaneStateClosed:
-        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.close", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayCloseNotification
                                                             object:nil];
         break;
     case MSDynamicsDrawerPaneStateOpen:
-        UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.open", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayOpenNotification
                                                             object:nil];
         break;
@@ -383,11 +386,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     switch (paneState) {
     case MSDynamicsDrawerPaneStateClosed:
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.close", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
                                                             object:nil];
         [SENAnalytics track:kHEMAnalyticsEventTimelineClose];
         break;
     case MSDynamicsDrawerPaneStateOpen:
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.open", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
                                                             object:nil];
         [SENAnalytics track:kHEMAnalyticsEventTimelineOpen];

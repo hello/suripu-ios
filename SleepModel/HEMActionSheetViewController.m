@@ -144,6 +144,9 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [super viewDidLoad];
     [self configureTableViewHeader];
     [[self view] setBackgroundColor:[UIColor clearColor]];
+    self.shadedOverlayView.isAccessibilityElement = YES;
+    self.shadedOverlayView.accessibilityTraits = UIAccessibilityTraitButton;
+    self.shadedOverlayView.accessibilityValue = NSLocalizedString(@"actions.cancel", nil);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -158,6 +161,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
         || self.oTVHeightConstraint.constant != height;
     BOOL needsUpdateAlpha = self.shadedOverlayView.alpha != 1.f;
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    self.shadedOverlayView.accessibilityFrame = CGRectMake(0, 0, CGRectGetWidth(screenBounds), CGRectGetHeight(screenBounds) - height);
     if (needsUpdateConstraints) {
         [[self oTVHeightConstraint] setConstant:height];
         [[self oTVBottomConstraint] setConstant:height];
@@ -171,7 +176,9 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                          if (needsUpdateConstraints)
                              [[self view] layoutIfNeeded];
                      }
-                     completion:nil];
+                     completion:^(BOOL finished) {
+                         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.shadedOverlayView);
+                     }];
 }
 
 - (void)hide:(void(^)(BOOL finished))completion {
@@ -184,7 +191,11 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                          [[self shadedOverlayView] setAlpha:0.0f];
                          [[self view] layoutIfNeeded];
                      }
-                     completion:completion];
+                     completion:^(BOOL finished) {
+                         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, NSLocalizedString(@"action-sheet.accessibility.did-disappear", nil));
+                         if (completion)
+                             completion(finished);
+                     }];
 }
 
 #pragma mark - Title

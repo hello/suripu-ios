@@ -553,6 +553,10 @@
 "actions.edit.wifi" = "Edit WiFi";
 "status.success" = "Done";
 
+// action sheet
+"action-sheet.accessibility.did-appear" = "Open options";
+"action-sheet.accessibility.did-disappear" = "Dismissed options";
+
 // actitivity messages
 "activity.loading" = "Loading...";
 "activity.share.last-night.format" = "Last night #mysleepscore was %.0ld — http://hello.is";

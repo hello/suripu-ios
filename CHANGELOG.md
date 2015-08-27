@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.3.1
+
+New:
+
+* App review feedback is also sent to the server
+* App review re-enabled for release builds
+* Added a debug info screen to show config, api host, and usage stats stored
+* Device settings will connect to the last sense connected, when nearby sense, without scanning
+
 ## 1.1.3.0
 
 New:

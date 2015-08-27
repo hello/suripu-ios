@@ -25,6 +25,7 @@ extern CGFloat const HEMSnazzBarAnimationDuration;
 - (void)addButtonWithTitle:(NSString*)title image:(UIImage*)image selectedImage:(UIImage*)selectedImage;
 - (void)selectButtonAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)removeButtonAtIndex:(NSUInteger)index;
+- (void)setSelectionRatio:(CGFloat)ratio;
 
 @property (nonatomic, weak) id<HEMSnazzBarDelegate> delegate;
 @property (nonatomic, strong) UIColor* selectionColor;

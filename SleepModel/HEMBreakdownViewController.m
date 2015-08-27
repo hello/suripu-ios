@@ -169,19 +169,44 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
                                                   forIndexPath:indexPath];
     NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
     cell.detailLabel.attributedText = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
+    cell.isAccessibilityElement = YES;
+    cell.accessibilityLabel = cell.titleLabel.text;
+    cell.accessibilityValue = cell.detailLabel.text;
     return cell;
 }
 
 - (UICollectionViewCell *)metricCellInCollectionView:(UICollectionView *)collectionView
-                                      forIndexPath:(NSIndexPath *)indexPath {
+                                        forIndexPath:(NSIndexPath *)indexPath {
     HEMBreakdownLineCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
                                                   forIndexPath:indexPath];
-    cell.itemTitle1.attributedText = [self titleForItemAtIndexPath:indexPath position:0];
-    cell.itemTitle2.attributedText = [self titleForItemAtIndexPath:indexPath position:1];
-    cell.itemValue1.attributedText = [self valueForItemAtIndexPath:indexPath position:0];
-    cell.itemValue2.attributedText = [self valueForItemAtIndexPath:indexPath position:1];
+    cell.isAccessibilityElement = NO;
+    cell.accessibilityElements = @[];
+    [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:0];
+    [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:1];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+    updateMetricInCell:(HEMBreakdownLineCell*)cell
+           atIndexPath:(NSIndexPath*)indexPath
+            inPosition:(NSUInteger)position {
+    UILabel* titleLabel = position == 0 ? cell.itemTitle1 : cell.itemTitle2;
+    UILabel* valueLabel = position == 0 ? cell.itemValue1 : cell.itemValue2;
+    titleLabel.attributedText = [self titleForItemAtIndexPath:indexPath position:position];
+    valueLabel.attributedText = [self valueForItemAtIndexPath:indexPath position:position];
+    if (![self metricForIndexPath:indexPath position:position])
+        return;
+    UIAccessibilityElement* element = [[UIAccessibilityElement alloc] initWithAccessibilityContainer:self];
+    element.accessibilityValue = valueLabel.text;
+    element.accessibilityLabel = [titleLabel.text capitalizedString];
+    UICollectionViewLayoutAttributes *attrs = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    CGRect frame = [collectionView convertRect:attrs.frame toView:collectionView.window];
+    CGFloat width = CGRectGetWidth(frame)/2;
+    frame.origin.x = position * width;
+    frame.size.width = width;
+    element.accessibilityFrame = frame;
+    cell.accessibilityElements = [cell.accessibilityElements arrayByAddingObject:element];
 }
 
 - (NSAttributedString *)titleForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {

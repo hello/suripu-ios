@@ -4047,6 +4047,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcQ-nQ-aXf">
                                 <rect key="frame" x="278" y="596" width="44" height="44"/>
+                                <accessibility key="accessibilityConfiguration" hint="Double tap to return to the timeline" label="Close"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="HoG-2B-eM5"/>
                                     <constraint firstAttribute="height" constant="44" id="eHM-4D-B2e"/>

@@ -59,6 +59,8 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     
     if (![self firstFrameView]) {
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:[self bounds]];
+        [imageView setContentMode:UIViewContentModeCenter];
+        [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         [self addSubview:imageView];
         [self setFirstFrameView:imageView];
     }

@@ -461,9 +461,9 @@
 "sleep-stat.sound" = "Noise";
 "sleep-stat.particulates" = "Air quality";
 "sleep-stat.minute.format" = "%.0f";
-"sleep-stat.minute.unit" = "m";
+"sleep-stat.minute.unit" = "min";
 "sleep-stat.hour.format" = "%.1f";
-"sleep-stat.hour.unit" = "h";
+"sleep-stat.hour.unit" = "hrs";
 "sleep-stat.sound.condition.ideal" = "just right";
 "sleep-stat.sound.condition.warning" = "a little loud";
 "sleep-stat.sound.condition.alert" = "way too loud";

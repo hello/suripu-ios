@@ -70,4 +70,12 @@
  */
 - (void)pause;
 
+/**
+ * @method stop
+ *
+ * @discussion
+ * Stop the video if playing
+ */
+- (void)stop;
+
 @end

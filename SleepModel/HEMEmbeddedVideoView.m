@@ -18,6 +18,8 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 @interface HEMEmbeddedVideoView()
 
 @property (nonatomic, weak) IBOutlet UIImageView* firstFrameView;
+
+@property (nonatomic, copy) NSString* videoPath;
 @property (nonatomic, weak) AVPlayer* videoPlayer;
 @property (nonatomic, weak) AVPlayerLayer* videoPlayerLayer;
 @property (nonatomic, assign, getter=isSubscribedToPlaybackEvents) BOOL subscribedToPlaybackEvents;
@@ -29,7 +31,8 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 - (id)init {
     self = [super init];
     if (self) {
-        [self setDefaults];
+        [self setLoop:YES];
+        [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     }
     return self;
 }
@@ -37,7 +40,8 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setDefaults];
+        [self setLoop:YES];
+        [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     }
     return self;
 }
@@ -45,13 +49,9 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self setDefaults];
+        [self setLoop:YES];
     }
     return self;
-}
-
-- (void)setDefaults {
-    [self setLoop:YES];
 }
 
 - (void)setFirstFrame:(UIImage*)image videoPath:(NSString*)videoPath {
@@ -70,6 +70,9 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 }
 
 - (void)setVideoPath:(NSString*)videoPath {
+    if ([_videoPath isEqualToString:videoPath]) {
+        return;
+    }
     DDLogVerbose(@"setting video path to %@", videoPath);
     
     if ([self videoPlayer]) {
@@ -95,15 +98,18 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
         [self subcribeToVideoNotificationsFrom:player];
     }
     
+    _videoPath = [videoPath copy];
     [self setVideoPlayer:player];
     [self setVideoPlayerLayer:layer];
 }
 
 - (void)playVideoWhenReady {
-    if ([self isReady] && [[self videoPlayer] status] == AVPlayerStatusReadyToPlay) {
+    if ([self isReady]
+        && [[self videoPlayer] rate] == 0
+        && [[self videoPlayer] status] == AVPlayerStatusReadyToPlay) {
         DDLogVerbose(@"playing video");
-        [[self firstFrameView] setHidden:YES];
         [[self videoPlayer] play];
+        [[self firstFrameView] setHidden:YES];
     }
 }
 
@@ -112,6 +118,11 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
         DDLogVerbose(@"pausing video");
         [[self videoPlayer] pause];
     }
+}
+
+- (void)stop {
+    [self pause];
+    [[[self videoPlayer] currentItem] seekToTime:kCMTimeZero];
 }
 
 - (void)setReady:(BOOL)ready {
@@ -173,7 +184,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
         if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerStatusKeyPath]) {
             switch ([[self videoPlayer] status]) {
                 case AVPlayerStatusReadyToPlay:
-                    DDLogVerbose(@"read to play");
+                    DDLogVerbose(@"ready to play");
                     [self playVideoWhenReady];
                     break;
                 case AVPlayerStatusFailed:

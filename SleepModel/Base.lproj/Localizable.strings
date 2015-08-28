@@ -647,4 +647,5 @@
 "app-review.question.answer.no-thanks" = "No thanks";
 
 // videos
-"video.url.pill-pair" = "http://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
+"video.url.onboarding.pill-pair" = "http://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
+"video.url.alarm" = "http://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";

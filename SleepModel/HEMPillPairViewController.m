@@ -58,7 +58,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureVideo {
-    NSString* videoPath = NSLocalizedString(@"video.url.pill-pair", nil);
+    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-pair", nil);
     [[self videoView] setVideoPath:videoPath];
 }
 

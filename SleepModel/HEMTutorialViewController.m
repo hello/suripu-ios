@@ -136,15 +136,21 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
     [self updateContentSize];
     
     [self animateContentAtIndex:0 fromOffset:animationOffset completion:^{
-        if ([[self tutorials] count] <= 1) {
+        if ([[self tutorials] count] == 1) {
             [UIView animateWithDuration:HEMTutorialContentAnimDuration animations:^{
                 [self swapPageControlAndCloseButtonWithPercentage:1.0f];
                 [[self closeButton] layoutIfNeeded];
             } completion:^(BOOL finished) {
                 [self flashContentScrollBarOfFirstScreen];
+                
+                HEMTutorialDataSource* dataSource = [[self tutorialDataSources] firstObject];
+                [dataSource setVisible:YES];
             }];
-        } else {
+        } else if ([[self tutorials] count] > 1) {
             [self flashContentScrollBarOfFirstScreen];
+            
+            HEMTutorialDataSource* dataSource = [[self tutorialDataSources] firstObject];
+            [dataSource setVisible:YES];
         }
     }];
 }
@@ -252,9 +258,12 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
     for (UICollectionView* screen in [self tutorialScreens]) {
         CGFloat screenX = CGRectGetMinX([screen frame]);
         CGFloat diff = screenX - offsetX;
+        BOOL visible = NO;
         
         if (CGRectIntersectsRect([scrollView bounds], [screen frame])) { // onscreen tutorials
 
+            visible = YES;
+            
             if (diff < fullTutorialScreenWidth && diff > padding) {
                 CGFloat distanceToFull = MIN(diff - padding, fullTutorialScreenWidth);
                 CGFloat fullnessPercentage = fabs(1 - (distanceToFull / fullTutorialScreenWidth));
@@ -288,6 +297,10 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
         previousMaxX = CGRectGetMaxX([screen frame]);
         
         [[screen collectionViewLayout] invalidateLayout];
+        
+        HEMTutorialDataSource* dataSource = [self tutorialDataSources][[screen tag]];
+        [dataSource setVisible:visible];
+        
     }
 
 }

@@ -13,9 +13,17 @@
 @property (nonatomic, copy, readonly)   NSString* title;
 @property (nonatomic, copy, readonly)   NSString* text;
 @property (nonatomic, strong, readonly) UIImage* image;
+@property (nonatomic, copy, readonly)   NSString* videoPath;
 
 - (instancetype)initWithTitle:(NSString*)title
                          text:(NSString*)text
                         image:(UIImage*)image;
+
+- (instancetype)initWithTitle:(NSString *)title
+                         text:(NSString *)text
+                        image:(UIImage *)image
+                    videoPath:(NSString*)videoPath;
+
+- (BOOL)hasVideoContent;
 
 @end

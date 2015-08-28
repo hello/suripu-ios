@@ -121,7 +121,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[self videoView] stop];
+    [[self videoView] pause];
 }
 
 - (void)setControlsEnabled:(BOOL)enable {

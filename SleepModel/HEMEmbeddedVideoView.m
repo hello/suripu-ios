@@ -20,10 +20,39 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 @property (nonatomic, weak) IBOutlet UIImageView* firstFrameView;
 @property (nonatomic, weak) AVPlayer* videoPlayer;
 @property (nonatomic, weak) AVPlayerLayer* videoPlayerLayer;
+@property (nonatomic, assign, getter=isSubscribedToPlaybackEvents) BOOL subscribedToPlaybackEvents;
 
 @end
 
 @implementation HEMEmbeddedVideoView
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self setDefaults];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setDefaults];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setDefaults];
+    }
+    return self;
+}
+
+- (void)setDefaults {
+    [self setLoop:YES];
+}
 
 - (void)setFirstFrame:(UIImage*)image videoPath:(NSString*)videoPath {
     [self setReady:NO];
@@ -60,7 +89,10 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 
     [[self layer] insertSublayer:layer atIndex:0];
     
-    [self subcribeToVideoNotificationsFrom:player];
+    if ([self loop]) {
+        [self subcribeToVideoNotificationsFrom:player];
+    }
+    
     [self setVideoPlayer:player];
     [self setVideoPlayerLayer:layer];
 }
@@ -73,7 +105,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     }
 }
 
-- (void)stop {
+- (void)pause {
     if ([[self videoPlayer] rate] > 0 && ![[self videoPlayer] error]) {
         DDLogVerbose(@"pausing video");
         [[self videoPlayer] pause];
@@ -85,6 +117,16 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     [self playVideoWhenReady];
 }
 
+- (void)setLoop:(BOOL)loop {
+    _loop = loop;
+    
+    if (loop) {
+        [self subcribeToVideoNotificationsFrom:[self videoPlayer]];
+    } else {
+        [self unsubscribeToVideoNotificationFrom:[self videoPlayer]];
+    }
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     [[self videoPlayerLayer] setFrame:[self bounds]];
@@ -93,13 +135,24 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 #pragma mark - Video Player Notifications
 
 - (void)unsubscribeToVideoNotificationFrom:(AVPlayer*)player {
+    if (!player || ![self isSubscribedToPlaybackEvents]) {
+        return;
+    }
+    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self
                       name:AVPlayerItemDidPlayToEndTimeNotification
                     object:[player currentItem]];
+    
+    [self setSubscribedToPlaybackEvents:NO];
 }
 
 - (void)subcribeToVideoNotificationsFrom:(AVPlayer*)player {
+    if (!player) {
+        return;
+    }
+    
+    [self setSubscribedToPlaybackEvents:YES];
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(videoDidEnd:)
                         name:AVPlayerItemDidPlayToEndTimeNotification

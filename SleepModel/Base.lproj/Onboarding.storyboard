@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -1389,14 +1389,29 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="shakePill.png" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-3E-Q6s">
+                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AAA-qc-JNR" customClass="HEMEmbeddedVideoView">
                                 <rect key="frame" x="0.0" y="111" width="600" height="374"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairing_your_sleep_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="ykd-DD-LE6">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ykd-DD-LE6" firstAttribute="leading" secondItem="AAA-qc-JNR" secondAttribute="leading" id="0iP-VU-YgD"/>
+                                    <constraint firstAttribute="bottom" secondItem="ykd-DD-LE6" secondAttribute="bottom" id="AK8-6k-1Sm"/>
+                                    <constraint firstAttribute="trailing" secondItem="ykd-DD-LE6" secondAttribute="trailing" id="atp-3i-NoR"/>
+                                    <constraint firstItem="ykd-DD-LE6" firstAttribute="top" secondItem="AAA-qc-JNR" secondAttribute="top" id="t0H-BD-esx"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="ykd-DD-LE6" id="xkN-mi-jwJ"/>
+                                </connections>
+                            </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOR-FD-XcA">
                                 <rect key="frame" x="20" y="485" width="560" height="30"/>
                                 <constraints>
@@ -1449,47 +1464,41 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="beC-YD-29R" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="0ki-Ra-wWl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AAA-qc-JNR" secondAttribute="trailing" constant="-16" id="4rg-qn-eGz"/>
+                            <constraint firstItem="beC-YD-29R" firstAttribute="bottom" secondItem="kFD-e4-hma" secondAttribute="top" constant="-10" id="6ks-5f-Nvx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="beC-YD-29R" secondAttribute="trailing" constant="4" id="9M9-wm-En8"/>
-                            <constraint firstItem="beC-YD-29R" firstAttribute="bottom" secondItem="kFD-e4-hma" secondAttribute="top" constant="-10" id="Dso-Ut-wpa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Myj-pb-yY5" secondAttribute="trailing" constant="4" id="FzP-yU-3Pc"/>
-                            <constraint firstItem="UCq-3E-Q6s" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="H7t-bc-SJC"/>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="Igs-Hk-yba"/>
                             <constraint firstAttribute="trailingMargin" secondItem="SET-g8-gMj" secondAttribute="trailing" constant="-16" id="Lj5-3o-Ol6"/>
+                            <constraint firstItem="AAA-qc-JNR" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="Lqb-n7-HlX"/>
                             <constraint firstItem="lGd-9N-cHV" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="PB1-8b-HGa"/>
                             <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="SET-g8-gMj" secondAttribute="bottom" id="PCn-wh-VPT"/>
                             <constraint firstItem="SET-g8-gMj" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="-20" id="TbY-re-bXb"/>
                             <constraint firstItem="Myj-pb-yY5" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="UZX-G0-k1Y"/>
+                            <constraint firstItem="YOR-FD-XcA" firstAttribute="top" secondItem="AAA-qc-JNR" secondAttribute="bottom" id="Wln-Q6-V85"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kFD-e4-hma" secondAttribute="trailing" constant="4" id="aQM-KZ-S3n"/>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="azZ-ld-TlC"/>
                             <constraint firstItem="Myj-pb-yY5" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="bbb-je-XMs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lGd-9N-cHV" secondAttribute="trailing" constant="4" id="cBM-V2-ce4"/>
-                            <constraint firstItem="UCq-3E-Q6s" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="bottom" id="ggj-XA-6ka"/>
-                            <constraint firstItem="SET-g8-gMj" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="-20" id="hzt-B7-YzZ"/>
-                            <constraint firstItem="YOR-FD-XcA" firstAttribute="top" secondItem="UCq-3E-Q6s" secondAttribute="bottom" id="i8S-aB-YmX"/>
                             <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="lGd-9N-cHV" secondAttribute="bottom" constant="20" id="kV7-jL-vUR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YOR-FD-XcA" secondAttribute="trailing" constant="4" id="ozv-5f-t24"/>
                             <constraint firstItem="beC-YD-29R" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="4" id="pgv-a2-fy7"/>
                             <constraint firstItem="kFD-e4-hma" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="pl3-kM-4pU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="UCq-3E-Q6s" secondAttribute="trailing" constant="-16" id="sKi-dZ-4sL"/>
                             <constraint firstItem="SET-g8-gMj" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="sjs-2p-QGq"/>
+                            <constraint firstItem="AAA-qc-JNR" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="top" constant="43" id="x81-ZR-UBK"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="hzt-B7-YzZ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="AaY-kA-63k"/>
                     <connections>
                         <outlet property="activityLabel" destination="Myj-pb-yY5" id="R4H-DY-yAp"/>
                         <outlet property="descriptionLabel" destination="kFD-e4-hma" id="lSP-ut-FA4"/>
-                        <outlet property="descriptionTopConstraint" destination="Dso-Ut-wpa" id="cJz-C7-kxU"/>
                         <outlet property="overlayActivityView" destination="SET-g8-gMj" id="aMJ-Ty-jst"/>
                         <outlet property="retryButton" destination="lGd-9N-cHV" id="q88-hx-YrG"/>
                         <outlet property="retryButtonWidthConstraint" destination="eTO-Et-PGf" id="CnM-8K-AtF"/>
                         <outlet property="skipButton" destination="YOR-FD-XcA" id="eFQ-tb-zyk"/>
                         <outlet property="titleHeightConstraint" destination="jPj-6g-PN4" id="0kL-tC-IyC"/>
                         <outlet property="titleLabel" destination="beC-YD-29R" id="YuT-R4-1d3"/>
+                        <outlet property="videoView" destination="AAA-qc-JNR" id="ks3-nr-QWR"/>
                         <segue destination="4s2-Gt-ovZ" kind="push" identifier="done" id="QBf-6a-MaN"/>
                         <segue destination="DIj-70-bYO" kind="push" identifier="skipPillPairSegue" id="7LA-fg-2Jb"/>
                     </connections>
@@ -2953,6 +2962,7 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
         <image name="pairingMode.png" width="320" height="93"/>
+        <image name="pairing_your_sleep_pill.png" width="375" height="225"/>
         <image name="pillSetup.png" width="320" height="245"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
@@ -2961,7 +2971,6 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="sensePlacement.png" width="320" height="235"/>
         <image name="senseWhite.png" width="320" height="270"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
-        <image name="shakePill.png" width="320" height="224"/>
         <image name="sleepPill.png" width="320" height="130"/>
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>

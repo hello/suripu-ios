@@ -645,3 +645,6 @@
 "app-review.question.answer.not-now" = "No, not now";
 "app-review.question.answer.dont-ask-again" = "Don't ask again";
 "app-review.question.answer.no-thanks" = "No thanks";
+
+// videos
+"video.url.pill-pair" = "http://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";

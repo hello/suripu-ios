@@ -90,9 +90,10 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     [player addObserver:self forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath options:0 context:nil];
     
     AVPlayerLayer* layer = [AVPlayerLayer playerLayerWithPlayer:player];
+    [layer setBackgroundColor:[[UIColor clearColor] CGColor]];
     [layer setFrame:[self bounds]];
 
-    [[self layer] insertSublayer:layer atIndex:0];
+    [[self layer] addSublayer:layer];
     
     if ([self loop]) {
         [self subcribeToVideoNotificationsFrom:player];
@@ -109,7 +110,6 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
         && [[self videoPlayer] status] == AVPlayerStatusReadyToPlay) {
         DDLogVerbose(@"playing video");
         [[self videoPlayer] play];
-        [[self firstFrameView] setHidden:YES];
     }
 }
 

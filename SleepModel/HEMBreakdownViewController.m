@@ -53,11 +53,15 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
+    NSLocale *standardLocale = [NSLocale localeWithLocaleIdentifier:localeIdentifier];
     self.timestampFormatter = [NSDateFormatter new];
     self.timestampFormatter.dateFormat = [SENPreference timeFormat] == SENTimeFormat12Hour
         ? @"h:mm" : @"HH:mm";
+    self.timestampFormatter.locale = standardLocale;
     self.meridiemFormatter = [NSDateFormatter new];
     self.meridiemFormatter.dateFormat = @"a";
+    self.meridiemFormatter.locale = standardLocale;
     self.valueFormatter = [HEMSplitTextFormatter new];
     self.backgroundImageView.image = self.backgroundImage;
     self.contentViewTop.constant = floorf(CGRectGetHeight([[UIScreen mainScreen] bounds])/2);

@@ -78,6 +78,17 @@
  */
 - (NSData *)audioDataForIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ *  Text summarizing a sleep segment
+ *
+ *  @param indexPath index path of the segment
+ *
+ *  @return summary text
+ */
+- (NSAttributedString *)summaryForSegmentAtIndexPath:(NSIndexPath *)indexPath;
+
+- (NSString *)accessibleSummaryForSegmentAtIndexPath:(NSIndexPath *)indexPath;
+
 - (NSUInteger)numberOfSleepSegments;
 
 - (BOOL)dateIsLastNight;

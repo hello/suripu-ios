@@ -38,10 +38,8 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
     return size;
 }
 
-- (void)setText:(NSString *)text {
-    NSAttributedString *labelText =
-        [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForTimelineSegmentPopup]) trim];
-    self.label.attributedText = labelText;
+- (void)setAttributedText:(NSAttributedString *)text {
+    self.label.attributedText = text;
     [self invalidateIntrinsicContentSize];
     [self setNeedsDisplay];
 }

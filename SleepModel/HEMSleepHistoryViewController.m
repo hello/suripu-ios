@@ -4,6 +4,7 @@
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMMiniSleepScoreGraphView.h"
+#import "SENSensorAccessibility.h"
 #import "NSDate+HEMRelative.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -12,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
 @property (strong, nonatomic) NSDateFormatter* dayOfWeekFormatter;
 @property (strong, nonatomic) NSDateFormatter* dayFormatter;
+@property (strong, nonatomic) NSDateFormatter* readerDateFormatter;
 @property (strong, nonatomic) NSDateFormatter* monthFormatter;
 @property (strong, nonatomic) NSDateFormatter* monthYearFormatter;
 @property (strong, nonatomic) NSMutableArray* sleepDataSummaries;
@@ -80,6 +82,8 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     self.monthFormatter.dateFormat = @"MMMM";
     self.monthYearFormatter = [NSDateFormatter new];
     self.monthYearFormatter.dateFormat = @"MMMM yyyy";
+    self.readerDateFormatter = [NSDateFormatter new];
+    self.readerDateFormatter.dateFormat = @"EEEE, d MMMM";
 }
 
 - (void)configureBackgroundColors
@@ -102,7 +106,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     }
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
     NSDateComponents* components = [NSDateComponents new];
-    for (int i = capacity; i > 0; i--) {
+    for (NSUInteger i = capacity; i > 0; i--) {
         components.day = -i;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today
@@ -124,6 +128,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath
                                        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                                animated:animated];
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, [self.historyCollectionView cellForItemAtIndexPath:indexPath]);
 }
 
 - (void)updateForSelectedDate
@@ -184,12 +189,15 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
     if (indexPath.row > 0) {
         SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
-        [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
+        NSInteger score = [sleepResult.score integerValue];
+        [cell.sleepScoreView setSleepScore:score];
         [cell.graphView setSleepDataSegments:sleepResult.segments];
         cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
         cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
         cell.rightBorderView.hidden = indexPath.row == HEMSleepDataCapacity;
         cell.leftBorderView.hidden = indexPath.row == 1;
+        cell.isAccessibilityElement = YES;
+        cell.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-history.accessibility-value.timeline.format", nil), [self.readerDateFormatter stringFromDate:sleepResult.date], (long)score, SENConditionReadableValue(sleepResult.scoreCondition)];
     }
     cell.hidden = indexPath.row == 0;
     return cell;

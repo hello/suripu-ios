@@ -2994,6 +2994,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YU-EY-ydB" userLabel="alarm button">
                                 <rect key="frame" x="530" y="530" width="54" height="54"/>
+                                <accessibility key="accessibilityConfiguration" hint="Double tap to open alarm list" label="Shortcut to alarms"/>
                                 <state key="normal" image="alarmShortcut.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -3348,6 +3349,9 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="December" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBu-FT-ARo">
                                 <rect key="frame" x="224" y="40" width="152" height="44"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="32"/>
                                 <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -3448,6 +3452,7 @@
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0T-w5-tJv">
                                 <rect key="frame" x="477" y="547" width="87" height="33"/>
+                                <accessibility key="accessibilityConfiguration" hint="Double tap to scroll to last night's timeline" label=""/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                 <state key="normal" title="LAST NIGHT">
                                     <color key="titleColor" red="0.11764706671237946" green="0.68235296010971069" blue="0.98823535442352295" alpha="1" colorSpace="deviceRGB"/>
@@ -4135,6 +4140,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcQ-nQ-aXf">
                                 <rect key="frame" x="278" y="596" width="44" height="44"/>
+                                <accessibility key="accessibilityConfiguration" hint="Double tap to return to the timeline" label="Close"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="HoG-2B-eM5"/>
                                     <constraint firstAttribute="height" constant="44" id="eHM-4D-B2e"/>

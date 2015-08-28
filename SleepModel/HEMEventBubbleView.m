@@ -57,6 +57,10 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
     self.backgroundColor = [UIColor clearColor];
     self.cornerView.backgroundColor = [UIColor whiteColor];
     self.showingWaveforms = NO;
+
+    self.accessibilityLabel = NSLocalizedString(@"sleep-event.accessibility-label", nil);
+    self.accessibilityTraits = UIAccessibilityTraitButton;
+    self.isAccessibilityElement = YES;
 }
 
 - (void)layoutSubviews {
@@ -75,6 +79,7 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
     self.timeLabel.attributedText = time;
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
+    self.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-event.accessibility-value.format", nil), [time string], [message string]];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -89,6 +94,13 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 
 - (void)setShadowVisible:(BOOL)visible {
     self.layer.shadowOpacity = visible ? HEMEventBubbleShadowOpacity : 0.0f;
+}
+
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
+    [super setUserInteractionEnabled:userInteractionEnabled];
+    self.accessibilityHint = userInteractionEnabled ? NSLocalizedString(@"sleep-event.accessibility-hint", nil) : nil;
+    self.accessibilityTraits = userInteractionEnabled ? UIAccessibilityTraitButton : UIAccessibilityTraitNone;
+    [self setShadowVisible:userInteractionEnabled];
 }
 
 - (void)showWaveformViews:(BOOL)visible {

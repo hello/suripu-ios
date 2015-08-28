@@ -10,6 +10,6 @@
 
 @interface HEMPopupView : UIView
 
-- (void)setText:(NSString*)text;
+- (void)setAttributedText:(NSAttributedString*)text;
 - (void)showPointer:(BOOL)pointerVisible;
 @end

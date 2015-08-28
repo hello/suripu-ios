@@ -198,6 +198,17 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                      }];
 }
 
+- (void)hide {
+    [self hide:^(BOOL finished) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
+}
+
+- (BOOL)accessibilityPerformEscape {
+    [self hide];
+    return YES;
+}
+
 #pragma mark - Title
 
 - (UIView*)titleViewWithText:(NSString*)text {

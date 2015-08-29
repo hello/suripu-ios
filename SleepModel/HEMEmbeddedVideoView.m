@@ -14,6 +14,8 @@
 #import "HEMEmbeddedVideoView.h"
 
 static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
+static NSString* const HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath = @"playbackLikelyToKeepUp";
+static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBufferFull";
 
 @interface HEMEmbeddedVideoView()
 
@@ -32,6 +34,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     self = [super init];
     if (self) {
         [self setLoop:YES];
+        [self listenToAppEvents];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     }
     return self;
@@ -41,6 +44,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     self = [super initWithFrame:frame];
     if (self) {
         [self setLoop:YES];
+        [self listenToAppEvents];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     }
     return self;
@@ -50,8 +54,29 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self setLoop:YES];
+        [self listenToAppEvents];
     }
     return self;
+}
+
+- (void)listenToAppEvents {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didBecomeActive)
+                   name:UIApplicationDidBecomeActiveNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(didEnterBackground)
+                   name:UIApplicationDidEnterBackgroundNotification
+                 object:nil];
+}
+
+- (void)didBecomeActive {
+    [self playVideoWhenReady];
+}
+
+- (void)didEnterBackground {
+    [self pause];
 }
 
 - (void)setFirstFrame:(UIImage*)image videoPath:(NSString*)videoPath {
@@ -76,7 +101,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     DDLogVerbose(@"setting video path to %@", videoPath);
     
     if ([self videoPlayer]) {
-        [self unsubscribeToVideoNotificationFrom:[self videoPlayer]];
+        [self unsubscribeToNotificationFor:[self videoPlayer]];
         [[self videoPlayer] removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath];
     }
     
@@ -86,8 +111,11 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     
     NSURL* url = [NSURL URLWithString:videoPath];
     AVPlayer* player = [AVPlayer playerWithURL:url];
+    AVPlayerItem* item = [player currentItem];
     [player setActionAtItemEnd:AVPlayerActionAtItemEndNone];
     [player addObserver:self forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath options:0 context:nil];
+    [item addObserver:self forKeyPath:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath options:0 context:nil];
+    [item addObserver:self forKeyPath:HEMEmbeddedVideoPlayerBufferFullKeyPath options:0 context:nil];
     
     AVPlayerLayer* layer = [AVPlayerLayer playerLayerWithPlayer:player];
     [layer setBackgroundColor:[[UIColor clearColor] CGColor]];
@@ -96,7 +124,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     [[self layer] addSublayer:layer];
     
     if ([self loop]) {
-        [self subcribeToVideoNotificationsFrom:player];
+        [self subcribeToNotificationsFor:player];
     }
     
     _videoPath = [videoPath copy];
@@ -107,7 +135,9 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 - (void)playVideoWhenReady {
     if ([self isReady]
         && [[self videoPlayer] rate] == 0
-        && [[self videoPlayer] status] == AVPlayerStatusReadyToPlay) {
+        && [[self videoPlayer] status] == AVPlayerStatusReadyToPlay
+        && ([[[self videoPlayer] currentItem] isPlaybackBufferFull]
+            || [[[self videoPlayer] currentItem] isPlaybackLikelyToKeepUp])) {
         DDLogVerbose(@"playing video");
         [[self videoPlayer] play];
     }
@@ -134,9 +164,9 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     _loop = loop;
     
     if (loop) {
-        [self subcribeToVideoNotificationsFrom:[self videoPlayer]];
+        [self subcribeToNotificationsFor:[self videoPlayer]];
     } else {
-        [self unsubscribeToVideoNotificationFrom:[self videoPlayer]];
+        [self unsubscribeToNotificationFor:[self videoPlayer]];
     }
 }
 
@@ -147,7 +177,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 
 #pragma mark - Video Player Notifications
 
-- (void)unsubscribeToVideoNotificationFrom:(AVPlayer*)player {
+- (void)unsubscribeToNotificationFor:(AVPlayer*)player {
     if (!player || ![self isSubscribedToPlaybackEvents]) {
         return;
     }
@@ -160,7 +190,7 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     [self setSubscribedToPlaybackEvents:NO];
 }
 
-- (void)subcribeToVideoNotificationsFrom:(AVPlayer*)player {
+- (void)subcribeToNotificationsFor:(AVPlayer*)player {
     if (!player) {
         return;
     }
@@ -195,6 +225,12 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
                     break;
             }
         }
+    } else if (object == [[self videoPlayer] currentItem]) {
+        if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerBufferFullKeyPath]) {
+            [self playVideoWhenReady];
+        } else if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath]) {
+            [self playVideoWhenReady];
+        }
     }
 }
 
@@ -204,6 +240,8 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     if (_videoPlayer) {
+        [[_videoPlayer currentItem] removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath];
+        [[_videoPlayer currentItem] removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerBufferFullKeyPath ];
         [_videoPlayer removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath];
     }
 }

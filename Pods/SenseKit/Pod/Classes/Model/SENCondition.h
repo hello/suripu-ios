@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, SENCondition) {
-    SENConditionUnknown = 0,
-    SENConditionAlert   = 1,
-    SENConditionWarning = 2,
-    SENConditionIdeal   = 3
+    SENConditionUnknown    = 0,
+    SENConditionAlert      = 1,
+    SENConditionWarning    = 2,
+    SENConditionIdeal      = 3,
+    SENConditionIncomplete = 4,
 };
 
 /**

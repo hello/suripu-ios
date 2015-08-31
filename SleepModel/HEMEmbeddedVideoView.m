@@ -231,12 +231,10 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
         }
     } else if (object == [self videoPlayerItem]) {
         if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerBufferFullKeyPath]) {
-            DDLogVerbose(@"buffer status changed");
             if (![self isStoppedByCaller] && [[self videoPlayerItem] isPlaybackBufferFull]) {
                 [self playVideoWhenReady];
             }
         } else if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath]) {
-            DDLogVerbose(@"buffer keep up status changed");
             if (![self isStoppedByCaller] && [[self videoPlayerItem] isPlaybackLikelyToKeepUp]) {
                 [self playVideoWhenReady];
             }

@@ -139,8 +139,8 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     if ([self isReady]
         && [[self videoPlayer] rate] == 0
         && [[self videoPlayer] status] == AVPlayerStatusReadyToPlay
-        && ([[[self videoPlayer] currentItem] isPlaybackBufferFull]
-            || [[[self videoPlayer] currentItem] isPlaybackLikelyToKeepUp])) {
+        && ([[self videoPlayerItem] isPlaybackBufferFull]
+            || [[self videoPlayerItem] isPlaybackLikelyToKeepUp])) {
         DDLogVerbose(@"playing video");
         [[self videoPlayer] play];
         [self setStoppedByCaller:NO];
@@ -157,7 +157,7 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
 
 - (void)stop {
     [self pause];
-    [[[self videoPlayer] currentItem] seekToTime:kCMTimeZero];
+    [[self videoPlayerItem] seekToTime:kCMTimeZero];
     [self setStoppedByCaller:YES];
 }
 
@@ -234,12 +234,12 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     } else if (object == [self videoPlayerItem]) {
         if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerBufferFullKeyPath]) {
             DDLogVerbose(@"buffer status changed");
-            if (![self isStoppedByCaller]) {
+            if (![self isStoppedByCaller] && [[self videoPlayerItem] isPlaybackBufferFull]) {
                 [self playVideoWhenReady];
             }
         } else if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath]) {
             DDLogVerbose(@"buffer keep up status changed");
-            if (![self isStoppedByCaller]) {
+            if (![self isStoppedByCaller] && [[self videoPlayerItem] isPlaybackLikelyToKeepUp]) {
                 [self playVideoWhenReady];
             }
         }

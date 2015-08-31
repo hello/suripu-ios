@@ -882,12 +882,14 @@ static BOOL hasLoadedBefore = NO;
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
         self.errorImageView.image = [HelloStyleKit timelineErrorIcon];
+    } else if (self.dataSource.sleepResult.scoreCondition == SENConditionUnknown) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.none.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
     } else {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
-        NSString *message = self.dataSource.sleepResult.message;
-        self.errorMessageLabel.text = message.length > 0 ? message
-                                                         : NSLocalizedString(@"sleep-data.not-enough.message", nil);
-        self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.not-enough.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineNotEnoughDataIcon];
     }
     [self setErrorViewsVisible:YES];
 }

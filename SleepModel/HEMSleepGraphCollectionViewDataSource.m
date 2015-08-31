@@ -35,7 +35,6 @@
 @property (nonatomic, strong) NSDate *dateForNightOfSleep;
 @property (nonatomic, strong, readwrite) SENTimeline *sleepResult;
 @property (nonatomic, strong) NSArray *aggregateDataSources;
-@property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @property (nonatomic, getter=isLoading, readwrite) BOOL loading;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
@@ -117,14 +116,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     self.loading = YES;
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
-    if ([self shouldShowLoadingView]) {
-        self.beLoading = YES;
-        [self showLoadingView];
-    } else {
-        self.beLoading = NO;
-        [self hideLoadingViewAnimated:NO];
-    }
-
     if (self.dateForNightOfSleep) {
         [SENAnalytics track:HEMAnalyticsEventTimelineDataRequest
                  properties:@{ kHEMAnalyticsEventPropDate : self.dateForNightOfSleep }];
@@ -134,13 +125,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self fetchTimelineForDate:self.dateForNightOfSleep
                     completion:^(SENTimeline *timeline, NSError *error) {
                       __strong typeof(weakSelf) strongSelf = weakSelf;
-                      if (error) {
-                          [strongSelf hideLoadingViewAnimated:YES];
-                      } else {
+                      if (!error) {
                           [strongSelf refreshWithTimeline:timeline];
                           [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
                       }
-                      weakSelf.loading = NO;
+                      strongSelf.loading = NO;
                       if (completion)
                           completion(error);
                     }];
@@ -179,7 +168,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (![timeline isKindOfClass:[SENTimeline class]])
         return;
     BOOL didChange = ![self.sleepResult isEqual:timeline];
-    [self hideLoadingViewAnimated:YES];
     if (didChange) {
         self.sleepResult = timeline;
         [self.sleepResult save];
@@ -226,7 +214,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (BOOL)hasTimelineData {
-    return self.sleepResult.scoreCondition != SENConditionUnknown && [self numberOfSleepSegments] > 0;
+    return self.sleepResult.scoreCondition != SENConditionUnknown
+        && self.sleepResult.scoreCondition != SENConditionIncomplete
+        && [self numberOfSleepSegments] > 0;
 }
 
 #pragma mark - Top Bar
@@ -235,14 +225,19 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     return [[self topBarView] dateTitle];
 }
 
+/**
+ *  Move the elements of the top of the timeline to reflect the state of the drawer.
+ *  The top bar view moves the icons/labels vertically to align with the drawer state,
+ *  and the timeline is scrolled to the top if the drawer is opened while scrolled
+ *  down into the timline
+ *
+ *  @param isOpen the state of the drawer
+ */
 - (void)updateTimelineState:(BOOL)isOpen {
     [[self topBarView] setOpened:isOpen];
-    [[self topBarView] setShareEnabled:self.sleepResult.scoreCondition != SENConditionUnknown && !isOpen animated:YES];
-    if (isOpen) {
-        // this is needed if view is not at the top and user taps on the menu button
-        // to open up the timeline
+    [[self topBarView] setShareEnabled:[self hasTimelineData] && !isOpen animated:YES];
+    if (isOpen)
         [self scrollToTop];
-    }
 }
 
 - (void)scrollToTop {
@@ -251,18 +246,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         && [self.collectionView numberOfItemsInSection:0] > 0) {
         [self.collectionView setContentOffset:CGPointZero animated:YES];
     }
-}
-
-#pragma mark - Loading
-
-- (BOOL)shouldShowLoadingView {
-    return [self numberOfSleepSegments] == 0;
-}
-
-- (void)showLoadingView {
-}
-
-- (void)hideLoadingViewAnimated:(BOOL)animated {
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -385,8 +368,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         [cell.sleepScoreGraphView addTapTarget:collectionView.delegate
                                         action:@selector(didTapSummaryButton:)];
     }
-    cell.messageChevronView.hidden = score == 0 && self.sleepResult.segments.count == 0;
-    cell.messageContainerView.hidden = [self.sleepResult scoreCondition] == SENConditionUnknown;
+    cell.messageChevronView.hidden = ![self hasTimelineData];
+    cell.messageContainerView.hidden = ![self hasTimelineData];
     return cell;
 }
 

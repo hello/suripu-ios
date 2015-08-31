@@ -409,6 +409,8 @@
 // missing data
 "sleep-data.first-night.title" = "See you in the morning";
 "sleep-data.first-night.message" = "In the morning, you'll see your first Sleep Timeline here. There are no modes to set — Sense will automatically know when you go to bed. All you need to do is sleep.";
+"sleep-data.none.title" = "No Sleep Timeline";
+"sleep-data.none.message" = "There was no sleep data recorded for this night.";
 "sleep-data.not-enough.title" = "No Sleep Timeline";
 "sleep-data.not-enough.message" = "Some sleep data was recorded, but not enough to generate a Sleep Timeline for this night.";
 "sleep-data.error.title" = "There was an error";

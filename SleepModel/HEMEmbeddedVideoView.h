@@ -2,15 +2,16 @@
 //  HEMEmbeddedVideoView.h
 //  Sense
 //
-//  View to display the an image, representing the first frame of an embedded
-//  video while the actual is video is being downloaded and being prepared.
-//
 //  Created by Jimmy Lu on 8/28/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
+/**
+ * View to display the an image, representing the first frame of an embedded
+ * video while the actual video is being downloaded and being prepared.
+ */
 @interface HEMEmbeddedVideoView : UIView
 
 /**

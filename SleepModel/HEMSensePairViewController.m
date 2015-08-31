@@ -19,6 +19,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMAlertViewController.h"
+#import "HEMEmbeddedVideoView.h"
 
 typedef NS_ENUM(NSUInteger, HEMSensePairState) {
     HEMSensePairStateNotStarted = 0,
@@ -41,11 +42,10 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 
 @interface HEMSensePairViewController()
 
-@property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
+@property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView *videoView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *notGlowingButton;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
@@ -64,9 +64,16 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureButtons];
+    [self configureVideoView];
     [self setCurrentState:HEMSensePairStateNotStarted];
     [self setLinkAccountAttempts:0];
     [self trackAnalyticsEvent:HEMAnalyticsEventPairSense];
+}
+
+- (void)configureVideoView {
+    UIImage* image = [UIImage imageNamed:@"pairingMode"];
+    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pairing-mode", nil);
+    [[self videoView] setFirstFrame:image videoPath:videoPath];
 }
 
 - (void)configureButtons {
@@ -82,7 +89,6 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self imageHeightConstraint] withDiff:-66];
     [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
 }
 
@@ -114,6 +120,20 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             }
         }];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![[self videoView] isReady]) {
+        [[self videoView] setReady:YES];
+    } else {
+        [[self videoView] playVideoWhenReady];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[self videoView] pause];
 }
 
 #pragma mark - Actions

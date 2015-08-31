@@ -2558,9 +2558,24 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
-                                <rect key="frame" x="0.0" y="102" width="600" height="373"/>
-                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beh-hK-5El" customClass="HEMEmbeddedVideoView">
+                                <rect key="frame" x="0.0" y="102" width="600" height="374"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pBo-Pl-1g3">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="pBo-Pl-1g3" firstAttribute="top" secondItem="Beh-hK-5El" secondAttribute="top" id="2CD-Lg-6rR"/>
+                                    <constraint firstAttribute="trailing" secondItem="pBo-Pl-1g3" secondAttribute="trailing" id="XQZ-3c-ooh"/>
+                                    <constraint firstItem="pBo-Pl-1g3" firstAttribute="leading" secondItem="Beh-hK-5El" secondAttribute="leading" id="nAH-hc-xsy"/>
+                                    <constraint firstAttribute="bottom" secondItem="pBo-Pl-1g3" secondAttribute="bottom" id="pnN-FK-pgz"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="pBo-Pl-1g3" id="z6m-WB-e7n"/>
+                                </connections>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
                                 <constraints>
@@ -2592,21 +2607,21 @@ Otherwise, Sense only looks at background noise levels.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="mFI-cr-rhB" firstAttribute="bottom" secondItem="Beh-hK-5El" secondAttribute="top" id="0dN-yN-GyF"/>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="0fo-8k-s7Q"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="4" id="D61-4A-EJJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" constant="4" id="KNC-U4-JbD"/>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="bottom" constant="77" id="KzW-NL-AkV"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="M3V-dV-0vf"/>
-                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="top" secondItem="mFI-cr-rhB" secondAttribute="bottom" id="N9e-PJ-aHY"/>
-                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-16" id="Sds-Og-OLc"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="2TQ-o7-Rs6" secondAttribute="bottom" constant="20" id="VKI-gd-baI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Beh-hK-5El" secondAttribute="trailing" constant="-16" id="WH8-x0-24K"/>
                             <constraint firstItem="mFI-cr-rhB" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="YpL-lA-O3e"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="top" constant="-10" id="cUY-fa-DEC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Awm-Mz-tO7" secondAttribute="trailing" constant="-16" id="daL-Nx-fkm"/>
-                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="top" id="daa-Jq-hkd"/>
+                            <constraint firstItem="Beh-hK-5El" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-16" id="gH9-R9-Ht1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" constant="4" id="jFT-SI-kIS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="4" id="kx2-M4-RDe"/>
                             <constraint firstItem="bX7-3Z-6yh" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="q6q-ws-CKy"/>
+                            <constraint firstItem="bX7-3Z-6yh" firstAttribute="top" secondItem="Beh-hK-5El" secondAttribute="bottom" id="smA-9X-pSj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bX7-3Z-6yh" secondAttribute="trailing" constant="4" id="w0J-7J-bbG"/>
                         </constraints>
                     </view>
@@ -2617,9 +2632,9 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="descriptionTopConstraint" destination="cUY-fa-DEC" id="6wz-Dm-eoT"/>
                         <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Dcn-nY-xAS"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
-                        <outlet property="senseImageView" destination="Awm-Mz-tO7" id="cqK-F9-ETs"/>
                         <outlet property="titleHeightConstraint" destination="mde-7P-QTN" id="yBx-7W-leE"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
+                        <outlet property="videoView" destination="Beh-hK-5El" id="776-Zh-KIO"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
                         <segue destination="H2i-xS-f14" kind="push" identifier="wifi" id="IQX-WG-nAB"/>
                         <segue destination="58j-vj-AB8" kind="push" identifier="sensePairToPill" id="JsS-bV-f7k"/>
@@ -2954,11 +2969,10 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="map.png" width="320" height="229"/>
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
-        <image name="pairingMode.png" width="320" height="93"/>
+        <image name="pairingMode.png" width="375" height="225"/>
         <image name="pairing_your_sleep_pill.png" width="375" height="225"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
-        <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
         <image name="sensePlacement.png" width="320" height="235"/>
         <image name="senseWhite.png" width="320" height="270"/>
@@ -2968,7 +2982,7 @@ Have your partner visit senseapp.com on their device to download the Sense app a
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="gUR-KW-V2G"/>
-        <segue reference="u9Q-g4-qbd"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="3DQ-Vg-FaT"/>
         <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="tkT-Pb-lgk"/>

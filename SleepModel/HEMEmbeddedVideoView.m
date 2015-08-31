@@ -25,6 +25,7 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
 @property (nonatomic, weak) AVPlayer* videoPlayer;
 @property (nonatomic, strong) AVPlayerItem* videoPlayerItem;
 @property (nonatomic, weak) AVPlayerLayer* videoPlayerLayer;
+@property (nonatomic, assign, getter=isStoppedByCaller) BOOL stoppedByCaller;
 @property (nonatomic, assign, getter=isSubscribedToPlaybackEvents) BOOL subscribedToPlaybackEvents;
 
 @end
@@ -142,6 +143,7 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
             || [[[self videoPlayer] currentItem] isPlaybackLikelyToKeepUp])) {
         DDLogVerbose(@"playing video");
         [[self videoPlayer] play];
+        [self setStoppedByCaller:NO];
     }
 }
 
@@ -149,12 +151,14 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     if ([[self videoPlayer] rate] > 0 && ![[self videoPlayer] error]) {
         DDLogVerbose(@"pausing video");
         [[self videoPlayer] pause];
+        [self setStoppedByCaller:YES];
     }
 }
 
 - (void)stop {
     [self pause];
     [[[self videoPlayer] currentItem] seekToTime:kCMTimeZero];
+    [self setStoppedByCaller:YES];
 }
 
 - (void)setReady:(BOOL)ready {
@@ -227,11 +231,17 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
                     break;
             }
         }
-    } else if (object == [[self videoPlayer] currentItem]) {
+    } else if (object == [self videoPlayerItem]) {
         if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerBufferFullKeyPath]) {
-            [self playVideoWhenReady];
+            DDLogVerbose(@"buffer status changed");
+            if (![self isStoppedByCaller]) {
+                [self playVideoWhenReady];
+            }
         } else if ([keyPath isEqualToString:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath]) {
-            [self playVideoWhenReady];
+            DDLogVerbose(@"buffer keep up status changed");
+            if (![self isStoppedByCaller]) {
+                [self playVideoWhenReady];
+            }
         }
     }
 }
@@ -240,10 +250,10 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
 
 - (void)removeKVOObservers {
     if ([self videoPlayer]) {
-        [[[self videoPlayer] currentItem] removeObserver:self
-                                              forKeyPath:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath];
-        [[[self videoPlayer] currentItem] removeObserver:self
-                                              forKeyPath:HEMEmbeddedVideoPlayerBufferFullKeyPath];
+        [[self videoPlayerItem] removeObserver:self
+                                    forKeyPath:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath];
+        [[self videoPlayerItem] removeObserver:self
+                                    forKeyPath:HEMEmbeddedVideoPlayerBufferFullKeyPath];
         [[self videoPlayer] removeObserver:self
                                 forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath];
     }

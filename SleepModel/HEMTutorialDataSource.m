@@ -178,8 +178,11 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 - (void)setVisible:(BOOL)visible {
     if ([self videoCell]) {
         if (visible) {
-            [[[self videoCell] videoView] setReady:YES];
-            [[[self videoCell] videoView] playVideoWhenReady];
+            if (![[[self videoCell] videoView] isReady]) {
+                [[[self videoCell] videoView] setReady:YES];
+            } else {
+                [[[self videoCell] videoView] playVideoWhenReady];
+            }
         } else {
             [[[self videoCell] videoView] pause];
         }

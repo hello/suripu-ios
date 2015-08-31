@@ -142,9 +142,11 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (![[[self videoCell] videoView] isReady]) {
-        [[[self videoCell] videoView] setReady:YES];
-        [[[self videoCell] videoView] playVideoWhenReady];
+    HEMEmbeddedVideoView* videoView = [[self videoCell] videoView];
+    if (![videoView isReady]) {
+        [videoView setReady:YES];
+    } else {
+        [videoView playVideoWhenReady];
     }
 }
 

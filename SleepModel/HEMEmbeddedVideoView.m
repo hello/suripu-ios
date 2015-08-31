@@ -157,7 +157,6 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
 - (void)stop {
     [self pause];
     [[self videoPlayerItem] seekToTime:kCMTimeZero];
-    [self setStoppedByCaller:YES];
 }
 
 - (void)setReady:(BOOL)ready {

@@ -311,7 +311,7 @@
 "alarms.no-data" = "There was a problem displaying your alarms. Please try again.";
 
 // alarm settings
-"alarm.sound.title" = "Sound";
+"alarm.sound.title" = "Tone";
 "alarm.repeat.title" = "Repeat";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";

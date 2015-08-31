@@ -15,10 +15,12 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMEmbeddedVideoView.h"
 
 static NSInteger const HEMBeforeSleepNumberOfScreens = 5;
 static CGFloat const HEMBeforeSleepTextPadding = 20.0f;
 static CGFloat const HEMBeforeSleepDescriptionMargin = 10.0f;
+static CGFloat const HEMBeforeSleepVideoAlphaPlayThreshold = 0.9f;
 static NSString* const HEMBeforeSleepImageNameFormat = @"senseColors%ld.png";
 static NSString* const HEMBeforeSleepTitleKeyFormat = @"onboarding.before-sleep.%ld.title";
 static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%ld.description";
@@ -31,6 +33,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *currentImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *nextImageView;
+@property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView* videoView;
 
 @property (assign, nonatomic) CGFloat origContinueButtonBottomConstant;
 
@@ -40,10 +43,36 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureVideoView];
     [self configureButtons];
     [self configureScrollView];
     [self configureInitialScreen];
     [self trackAnalyticsEvent:HEMAnalyticsEventSenseColors];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([self canPlayVideo]) {
+        [[self videoView] playVideoWhenReady];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[self videoView] pause];
+}
+
+- (BOOL)canPlayVideo {
+    return [[self videoView] alpha] > HEMBeforeSleepVideoAlphaPlayThreshold
+        && [[self videoView] isReady];
+}
+
+- (void)configureVideoView {
+    UIImage* image = [UIImage imageNamed:@"bedroom_condition"];
+    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.bedroom-condition", nil);
+
+    [[self videoView] setFirstFrame:image videoPath:videoPath];
+    [[self videoView] setAlpha:0.0f];
 }
 
 - (void)configureButtons {
@@ -174,9 +203,9 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
         || [scrollView contentOffset].x <= prevContentOffset - fullWidth) {
         [self advanceToPage:nextPage];
     } else if ([scrollView contentOffset].x > prevContentOffset) {
-        [self swapToNextImageForPage:nextPage withPercentage:percentage];
+        [self swapToNextIllustrationForPage:nextPage withPercentage:percentage];
     } else {
-        [self swapToPreviousImageForPage:nextPage withPercentage:percentage];
+        [self swapToPreviousIllustrationForPage:nextPage withPercentage:percentage];
     }
     
     if (nextPage >= HEMBeforeSleepNumberOfScreens - 2 && nextPage < HEMBeforeSleepNumberOfScreens - 1) {
@@ -194,22 +223,59 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     [[self dots] setCurrentPage:currentPage];
 }
 
-- (void)swapToNextImageForPage:(CGFloat)nextPage withPercentage:(CGFloat)percentage {
-    UIImage* nextImage = [self imageNameForScreen:MIN(HEMBeforeSleepNumberOfScreens, ceilf(nextPage) + 1)];
-    if (![[[self nextImageView] image] isEqual:nextImage]) {
-        [[self nextImageView] setImage:nextImage];
+- (void)swapToNextIllustrationForPage:(CGFloat)nextPage withPercentage:(CGFloat)percentage {
+    UIView* currentView = [self currentImageView];
+    UIView* nextView = nil;
+    NSInteger nextPageNumber = ceilf(nextPage) + 1;
+    
+    if (nextPageNumber == HEMBeforeSleepNumberOfScreens) {
+        [self prepareVideoWithVisibilityPercentage:percentage];
+        nextView = [self videoView];
+    } else {
+        UIImage* nextImage = [self imageNameForScreen:MIN(HEMBeforeSleepNumberOfScreens, nextPageNumber)];
+        if (![[[self nextImageView] image] isEqual:nextImage]) {
+            [[self nextImageView] setImage:nextImage];
+        }
+        nextView = [self nextImageView];
     }
-    [[self currentImageView] setAlpha:1-percentage];
-    [[self nextImageView] setAlpha:percentage];
+
+    [currentView setAlpha:1-percentage];
+    [nextView setAlpha:percentage];
+    
 }
 
-- (void)swapToPreviousImageForPage:(CGFloat)previousPage withPercentage:(CGFloat)percentage {
-    UIImage* nextImage = [self imageNameForScreen:MAX(1, floorf(previousPage) + 1)];
-    if (![[[self nextImageView] image] isEqual:nextImage]) {
-        [[self nextImageView] setImage:nextImage];
+- (void)swapToPreviousIllustrationForPage:(CGFloat)previousPage withPercentage:(CGFloat)percentage {
+    UIView* currentView = nil;
+    UIView* nextView = [self nextImageView];
+    NSInteger prevPageNumber = floorf(previousPage) + 1;
+    
+    if (prevPageNumber == HEMBeforeSleepNumberOfScreens - 1) {
+        [self prepareVideoWithVisibilityPercentage:percentage];
+        currentView = [self videoView];
+    } else {
+        UIImage* nextImage = [self imageNameForScreen:MAX(1, prevPageNumber)];
+        if (![[[self nextImageView] image] isEqual:nextImage]) {
+            [[self nextImageView] setImage:nextImage];
+        }
+        currentView = [self currentImageView];
     }
-    [[self currentImageView] setAlpha:percentage];
-    [[self nextImageView] setAlpha:1-percentage];
+
+    [currentView setAlpha:percentage];
+    [nextView setAlpha:1-percentage];
+}
+
+- (void)prepareVideoWithVisibilityPercentage:(CGFloat)percentage {
+    if (percentage > HEMBeforeSleepVideoAlphaPlayThreshold) {
+        if (![[self videoView] isReady]) {
+            [[self videoView] setReady:YES];
+        } else {
+            [[self videoView] playVideoWhenReady];
+        }
+    } else if (percentage > 0.0f) {
+        [[self videoView] pause];
+    } else {
+        [[self videoView] stop];
+    }
 }
 
 - (void)moveContinueButtonWithPercentage:(CGFloat)percentage {

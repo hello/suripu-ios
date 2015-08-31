@@ -683,3 +683,11 @@
 "app-review.question.answer.not-now" = "No, not now";
 "app-review.question.answer.dont-ask-again" = "Don't ask again";
 "app-review.question.answer.no-thanks" = "No thanks";
+
+// videos
+"video.url.onboarding.pill-pair" = "http://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
+"video.url.alarm" = "http://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
+"video.url.onboarding.pill-setup" = "http://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
+"video.url.onboarding.pairing-mode" = "http://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
+"video.url.onboarding.alarm" = "http://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
+"video.url.onboarding.bedroom-condition" = "http://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";

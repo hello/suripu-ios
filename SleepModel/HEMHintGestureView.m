@@ -120,7 +120,9 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
     [self fade:1.0f then:^(BOOL finished) {
         [self move:[self endingCenter] then:^(BOOL finished) {
             [self fade:0.0f then:^(BOOL finished) {
-                [self translate];
+                if (![self shouldStopAnimation]) {
+                    [self translate];
+                }
             }];
         }];
     }];
@@ -140,7 +142,9 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
     [self fade:1.0f then:^(BOOL finished) {
         [self scale:0.6f then:^(BOOL finished) {
             [self scale:1.1f then:^(BOOL finished) {
-                [self pulsate];
+                if (![self shouldStopAnimation]) {
+                    [self pulsate];
+                }
             }];
         }];
     }];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -1087,36 +1087,29 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                             <outlet property="textLabel" destination="UY8-cb-5so" id="0J6-Ke-PAz"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pillSetupImageCell" id="G0v-rz-O5i" customClass="HEMImageCollectionViewCell">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pillSetupVideoCell" id="G0v-rz-O5i" customClass="HEMVideoCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="313"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pillSetup.png" translatesAutoresizingMaskIntoConstraints="NO" id="37l-V6-nno" customClass="HEMURLImageView">
-                                                    <rect key="frame" x="0.0" y="68" width="600" height="245"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="245" id="FrF-LZ-2DF"/>
-                                                    </constraints>
-                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sz8-pa-OC9" customClass="HEMEmbeddedVideoView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="313"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottomMargin" secondItem="37l-V6-nno" secondAttribute="bottom" constant="-8" id="1wT-ly-Yiw"/>
-                                            <constraint firstItem="37l-V6-nno" firstAttribute="top" secondItem="G0v-rz-O5i" secondAttribute="topMargin" constant="19" id="dgU-AP-G5A"/>
-                                            <constraint firstItem="37l-V6-nno" firstAttribute="leading" secondItem="G0v-rz-O5i" secondAttribute="leadingMargin" constant="-8" id="qpt-hP-gbX"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="37l-V6-nno" secondAttribute="trailing" constant="-8" id="wIR-aL-98u"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="sz8-pa-OC9" secondAttribute="trailing" constant="-8" id="LZM-ar-mJ3"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="sz8-pa-OC9" secondAttribute="bottom" constant="-8" id="Xde-3M-bOb"/>
+                                            <constraint firstItem="sz8-pa-OC9" firstAttribute="top" secondItem="G0v-rz-O5i" secondAttribute="topMargin" constant="-8" id="Xng-0t-PAv"/>
+                                            <constraint firstItem="sz8-pa-OC9" firstAttribute="leading" secondItem="G0v-rz-O5i" secondAttribute="leadingMargin" constant="-8" id="kqu-JU-JH4"/>
                                         </constraints>
                                         <size key="customSize" width="600" height="313"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="dgU-AP-G5A"/>
-                                            </mask>
-                                        </variation>
                                         <connections>
-                                            <outlet property="urlImageView" destination="37l-V6-nno" id="CGf-QK-7z3"/>
+                                            <outlet property="videoView" destination="sz8-pa-OC9" id="vnW-S6-8ro"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -1389,14 +1382,29 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="shakePill.png" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-3E-Q6s">
+                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="AAA-qc-JNR" customClass="HEMEmbeddedVideoView">
                                 <rect key="frame" x="0.0" y="111" width="600" height="374"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairing_your_sleep_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="ykd-DD-LE6">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ykd-DD-LE6" firstAttribute="leading" secondItem="AAA-qc-JNR" secondAttribute="leading" id="0iP-VU-YgD"/>
+                                    <constraint firstAttribute="bottom" secondItem="ykd-DD-LE6" secondAttribute="bottom" id="AK8-6k-1Sm"/>
+                                    <constraint firstAttribute="trailing" secondItem="ykd-DD-LE6" secondAttribute="trailing" id="atp-3i-NoR"/>
+                                    <constraint firstItem="ykd-DD-LE6" firstAttribute="top" secondItem="AAA-qc-JNR" secondAttribute="top" id="t0H-BD-esx"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="ykd-DD-LE6" id="xkN-mi-jwJ"/>
+                                </connections>
+                            </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOR-FD-XcA">
                                 <rect key="frame" x="20" y="485" width="560" height="30"/>
                                 <constraints>
@@ -1449,47 +1457,41 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="beC-YD-29R" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="0ki-Ra-wWl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AAA-qc-JNR" secondAttribute="trailing" constant="-16" id="4rg-qn-eGz"/>
+                            <constraint firstItem="beC-YD-29R" firstAttribute="bottom" secondItem="kFD-e4-hma" secondAttribute="top" constant="-10" id="6ks-5f-Nvx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="beC-YD-29R" secondAttribute="trailing" constant="4" id="9M9-wm-En8"/>
-                            <constraint firstItem="beC-YD-29R" firstAttribute="bottom" secondItem="kFD-e4-hma" secondAttribute="top" constant="-10" id="Dso-Ut-wpa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Myj-pb-yY5" secondAttribute="trailing" constant="4" id="FzP-yU-3Pc"/>
-                            <constraint firstItem="UCq-3E-Q6s" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="H7t-bc-SJC"/>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="Igs-Hk-yba"/>
                             <constraint firstAttribute="trailingMargin" secondItem="SET-g8-gMj" secondAttribute="trailing" constant="-16" id="Lj5-3o-Ol6"/>
+                            <constraint firstItem="AAA-qc-JNR" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="Lqb-n7-HlX"/>
                             <constraint firstItem="lGd-9N-cHV" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="PB1-8b-HGa"/>
                             <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="SET-g8-gMj" secondAttribute="bottom" id="PCn-wh-VPT"/>
                             <constraint firstItem="SET-g8-gMj" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="-20" id="TbY-re-bXb"/>
                             <constraint firstItem="Myj-pb-yY5" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="UZX-G0-k1Y"/>
+                            <constraint firstItem="YOR-FD-XcA" firstAttribute="top" secondItem="AAA-qc-JNR" secondAttribute="bottom" id="Wln-Q6-V85"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kFD-e4-hma" secondAttribute="trailing" constant="4" id="aQM-KZ-S3n"/>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="azZ-ld-TlC"/>
                             <constraint firstItem="Myj-pb-yY5" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="bbb-je-XMs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lGd-9N-cHV" secondAttribute="trailing" constant="4" id="cBM-V2-ce4"/>
-                            <constraint firstItem="UCq-3E-Q6s" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="bottom" id="ggj-XA-6ka"/>
-                            <constraint firstItem="SET-g8-gMj" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="-20" id="hzt-B7-YzZ"/>
-                            <constraint firstItem="YOR-FD-XcA" firstAttribute="top" secondItem="UCq-3E-Q6s" secondAttribute="bottom" id="i8S-aB-YmX"/>
                             <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="lGd-9N-cHV" secondAttribute="bottom" constant="20" id="kV7-jL-vUR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YOR-FD-XcA" secondAttribute="trailing" constant="4" id="ozv-5f-t24"/>
                             <constraint firstItem="beC-YD-29R" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="4" id="pgv-a2-fy7"/>
                             <constraint firstItem="kFD-e4-hma" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="pl3-kM-4pU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="UCq-3E-Q6s" secondAttribute="trailing" constant="-16" id="sKi-dZ-4sL"/>
                             <constraint firstItem="SET-g8-gMj" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="sjs-2p-QGq"/>
+                            <constraint firstItem="AAA-qc-JNR" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="top" constant="43" id="x81-ZR-UBK"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="hzt-B7-YzZ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="AaY-kA-63k"/>
                     <connections>
                         <outlet property="activityLabel" destination="Myj-pb-yY5" id="R4H-DY-yAp"/>
                         <outlet property="descriptionLabel" destination="kFD-e4-hma" id="lSP-ut-FA4"/>
-                        <outlet property="descriptionTopConstraint" destination="Dso-Ut-wpa" id="cJz-C7-kxU"/>
                         <outlet property="overlayActivityView" destination="SET-g8-gMj" id="aMJ-Ty-jst"/>
                         <outlet property="retryButton" destination="lGd-9N-cHV" id="q88-hx-YrG"/>
                         <outlet property="retryButtonWidthConstraint" destination="eTO-Et-PGf" id="CnM-8K-AtF"/>
                         <outlet property="skipButton" destination="YOR-FD-XcA" id="eFQ-tb-zyk"/>
                         <outlet property="titleHeightConstraint" destination="jPj-6g-PN4" id="0kL-tC-IyC"/>
                         <outlet property="titleLabel" destination="beC-YD-29R" id="YuT-R4-1d3"/>
+                        <outlet property="videoView" destination="AAA-qc-JNR" id="ks3-nr-QWR"/>
                         <segue destination="4s2-Gt-ovZ" kind="push" identifier="done" id="QBf-6a-MaN"/>
                         <segue destination="DIj-70-bYO" kind="push" identifier="skipPillPairSegue" id="7LA-fg-2Jb"/>
                     </connections>
@@ -1516,6 +1518,24 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oad-re-JII">
                                 <rect key="frame" x="0.0" y="129" width="600" height="401"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0F-Wt-wPJ" customClass="HEMEmbeddedVideoView">
+                                <rect key="frame" x="0.0" y="129" width="600" height="401"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VJL-PP-702">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="401"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="VJL-PP-702" secondAttribute="trailing" id="9QN-zn-S9U"/>
+                                    <constraint firstItem="VJL-PP-702" firstAttribute="top" secondItem="h0F-Wt-wPJ" secondAttribute="top" id="Ak9-0k-j4q"/>
+                                    <constraint firstItem="VJL-PP-702" firstAttribute="leading" secondItem="h0F-Wt-wPJ" secondAttribute="leading" id="pCG-Od-iFT"/>
+                                    <constraint firstAttribute="bottom" secondItem="VJL-PP-702" secondAttribute="bottom" id="s9g-VP-WHw"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="VJL-PP-702" id="dsN-jK-HlK"/>
+                                </connections>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyy-3T-4gK">
                                 <rect key="frame" x="0.0" y="24" width="600" height="506"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1545,30 +1565,34 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="oad-re-JII" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="top" constant="105" id="A74-Km-06U"/>
-                            <constraint firstItem="gyy-3T-4gK" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="FKo-eW-TqZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gyy-3T-4gK" secondAttribute="trailing" constant="-16" id="HlI-f9-pIE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h0F-Wt-wPJ" secondAttribute="trailing" constant="-16" id="JDE-13-Wr8"/>
                             <constraint firstItem="MMQ-Qm-jOb" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="bottom" id="LL9-Yt-at6"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="MMQ-Qm-jOb" secondAttribute="bottom" constant="20" id="NbT-o3-LFI"/>
+                            <constraint firstItem="h0F-Wt-wPJ" firstAttribute="bottom" secondItem="MMQ-Qm-jOb" secondAttribute="bottom" constant="-50" id="Sm7-MH-ucn"/>
                             <constraint firstAttribute="width" secondItem="gyy-3T-4gK" secondAttribute="width" id="U4o-5N-kuk"/>
+                            <constraint firstItem="h0F-Wt-wPJ" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="top" constant="105" id="V6B-FX-iYd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oad-re-JII" secondAttribute="trailing" constant="-16" id="VZY-9O-UjE"/>
                             <constraint firstItem="mBM-ym-hmu" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="WOH-pt-OBZ"/>
                             <constraint firstItem="I7g-Id-dOn" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="XKg-WU-cld"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="I7g-Id-dOn" secondAttribute="bottom" constant="70" id="XXD-Cd-jrd"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="oad-re-JII" secondAttribute="bottom" constant="70" id="XXH-Yv-2Nl"/>
+                            <constraint firstItem="h0F-Wt-wPJ" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="bWa-Y8-15D"/>
                             <constraint firstItem="gyy-3T-4gK" firstAttribute="top" secondItem="I7g-Id-dOn" secondAttribute="top" constant="-105" id="dbe-uC-08T"/>
                             <constraint firstItem="gyy-3T-4gK" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="4" id="efv-UB-AkF"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="mBM-ym-hmu" secondAttribute="bottom" constant="23" id="gmn-yn-caP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mBM-ym-hmu" secondAttribute="trailing" constant="4" id="iDG-X0-Y1h"/>
+                            <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="h0F-Wt-wPJ" secondAttribute="bottom" constant="70" id="iOb-qO-X3J"/>
                             <constraint firstItem="oad-re-JII" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="iiY-UE-9bD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MMQ-Qm-jOb" secondAttribute="trailing" constant="4" id="mQQ-5w-Ova"/>
                             <constraint firstItem="gyy-3T-4gK" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="o4r-9s-SVS"/>
                             <constraint firstItem="MMQ-Qm-jOb" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="rFk-vL-JOc"/>
+                            <constraint firstItem="h0F-Wt-wPJ" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="109" id="tNZ-Tr-yfj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="I7g-Id-dOn" secondAttribute="trailing" constant="-16" id="wUD-gc-82d"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="FKo-eW-TqZ"/>
-                                <exclude reference="HlI-f9-pIE"/>
+                                <exclude reference="Sm7-MH-ucn"/>
+                                <exclude reference="tNZ-Tr-yfj"/>
                             </mask>
                         </variation>
                     </view>
@@ -1580,6 +1604,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="currentImageView" destination="I7g-Id-dOn" id="m2g-s3-E4K"/>
                         <outlet property="dots" destination="mBM-ym-hmu" id="RRS-dO-LCU"/>
                         <outlet property="nextImageView" destination="oad-re-JII" id="TXS-db-DCU"/>
+                        <outlet property="videoView" destination="h0F-Wt-wPJ" id="o71-ui-lfK"/>
                         <outlet property="view" destination="WvV-c5-RHy" id="kFz-r6-vwP"/>
                         <segue destination="cpr-oG-Go7" kind="push" identifier="beforeSleeptoRoomCheck" id="M7J-nW-DOf"/>
                         <segue destination="0qJ-qR-xla" kind="push" identifier="beforeSleepToSmartAlarm" id="zxE-Zn-Swl"/>
@@ -1617,9 +1642,24 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="smartAlarm.png" translatesAutoresizingMaskIntoConstraints="NO" id="LmL-w7-BTd">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVL-7j-gjt" customClass="HEMEmbeddedVideoView">
                                 <rect key="frame" x="0.0" y="129" width="600" height="346"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LmL-w7-BTd">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="346"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="LmL-w7-BTd" secondAttribute="trailing" id="7JA-nV-jOV"/>
+                                    <constraint firstItem="LmL-w7-BTd" firstAttribute="top" secondItem="XVL-7j-gjt" secondAttribute="top" id="9Hj-ry-QuA"/>
+                                    <constraint firstAttribute="bottom" secondItem="LmL-w7-BTd" secondAttribute="bottom" id="PYT-Xy-A00"/>
+                                    <constraint firstItem="LmL-w7-BTd" firstAttribute="leading" secondItem="XVL-7j-gjt" secondAttribute="leading" id="wud-8T-UfR"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="LmL-w7-BTd" id="JFD-VF-V7g"/>
+                                </connections>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FP-vw-B5B">
                                 <rect key="frame" x="190" y="475" width="220" height="40"/>
                                 <constraints>
@@ -1657,19 +1697,19 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Hw2-eQ-BhX" firstAttribute="bottom" secondItem="XVL-7j-gjt" secondAttribute="top" id="BPi-Kh-w5b"/>
                             <constraint firstItem="H5s-t3-orP" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="CCG-P5-zIt"/>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="G0n-60-GNn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="H5s-t3-orP" secondAttribute="trailing" constant="4" id="JE2-W7-Rq3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JeP-LV-puG" secondAttribute="trailing" constant="4" id="Q97-10-NmW"/>
+                            <constraint firstItem="XVL-7j-gjt" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-16" id="Vgs-uN-K1a"/>
                             <constraint firstAttribute="centerX" secondItem="6FP-vw-B5B" secondAttribute="centerX" id="e4n-j8-07l"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="top" secondItem="Hw2-eQ-BhX" secondAttribute="bottom" id="eDu-go-Y9o"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="top" secondItem="JeP-LV-puG" secondAttribute="bottom" constant="10" id="fQT-XM-WlO"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="gZg-dm-NTE"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LmL-w7-BTd" secondAttribute="trailing" constant="-16" id="gs0-Mg-fnh"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" id="j1P-Uz-it0"/>
                             <constraint firstItem="H5s-t3-orP" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="bottom" constant="65" id="jeY-fW-hoO"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-16" id="pue-S3-u8M"/>
+                            <constraint firstItem="XVL-7j-gjt" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" id="ngk-8I-Jgb"/>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="top" secondItem="3cs-y7-KCY" secondAttribute="bottom" constant="4" id="qeJ-5T-zXA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XVL-7j-gjt" secondAttribute="trailing" constant="-16" id="raB-Gk-rx2"/>
                             <constraint firstItem="PUK-Ia-HH5" firstAttribute="top" secondItem="H5s-t3-orP" secondAttribute="bottom" constant="20" id="tdc-EJ-Rvc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hw2-eQ-BhX" secondAttribute="trailing" constant="4" id="yOi-bv-YLQ"/>
                         </constraints>
@@ -1681,6 +1721,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="skipButton" destination="6FP-vw-B5B" id="idD-Ax-pfV"/>
                         <outlet property="titleHeightConstraint" destination="Nqw-Gt-yvj" id="tJr-gN-Hfl"/>
                         <outlet property="titleLabel" destination="JeP-LV-puG" id="q2S-e0-zoS"/>
+                        <outlet property="videoView" destination="XVL-7j-gjt" id="tbS-Vb-YuS"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
                         <segue destination="fc9-7S-Ult" kind="push" identifier="alarmToAnotherPill" id="eyP-2h-xaH"/>
                     </connections>
@@ -2556,9 +2597,24 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
-                                <rect key="frame" x="0.0" y="102" width="600" height="373"/>
-                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beh-hK-5El" customClass="HEMEmbeddedVideoView">
+                                <rect key="frame" x="0.0" y="102" width="600" height="374"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pBo-Pl-1g3">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="pBo-Pl-1g3" firstAttribute="top" secondItem="Beh-hK-5El" secondAttribute="top" id="2CD-Lg-6rR"/>
+                                    <constraint firstAttribute="trailing" secondItem="pBo-Pl-1g3" secondAttribute="trailing" id="XQZ-3c-ooh"/>
+                                    <constraint firstItem="pBo-Pl-1g3" firstAttribute="leading" secondItem="Beh-hK-5El" secondAttribute="leading" id="nAH-hc-xsy"/>
+                                    <constraint firstAttribute="bottom" secondItem="pBo-Pl-1g3" secondAttribute="bottom" id="pnN-FK-pgz"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="pBo-Pl-1g3" id="z6m-WB-e7n"/>
+                                </connections>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
                                 <constraints>
@@ -2590,21 +2646,21 @@ Otherwise, Sense only looks at background noise levels.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="mFI-cr-rhB" firstAttribute="bottom" secondItem="Beh-hK-5El" secondAttribute="top" id="0dN-yN-GyF"/>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="0fo-8k-s7Q"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="4" id="D61-4A-EJJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" constant="4" id="KNC-U4-JbD"/>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="bottom" constant="77" id="KzW-NL-AkV"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="M3V-dV-0vf"/>
-                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="top" secondItem="mFI-cr-rhB" secondAttribute="bottom" id="N9e-PJ-aHY"/>
-                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-16" id="Sds-Og-OLc"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="2TQ-o7-Rs6" secondAttribute="bottom" constant="20" id="VKI-gd-baI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Beh-hK-5El" secondAttribute="trailing" constant="-16" id="WH8-x0-24K"/>
                             <constraint firstItem="mFI-cr-rhB" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="YpL-lA-O3e"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="top" constant="-10" id="cUY-fa-DEC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Awm-Mz-tO7" secondAttribute="trailing" constant="-16" id="daL-Nx-fkm"/>
-                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="top" id="daa-Jq-hkd"/>
+                            <constraint firstItem="Beh-hK-5El" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-16" id="gH9-R9-Ht1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" constant="4" id="jFT-SI-kIS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="4" id="kx2-M4-RDe"/>
                             <constraint firstItem="bX7-3Z-6yh" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="q6q-ws-CKy"/>
+                            <constraint firstItem="bX7-3Z-6yh" firstAttribute="top" secondItem="Beh-hK-5El" secondAttribute="bottom" id="smA-9X-pSj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bX7-3Z-6yh" secondAttribute="trailing" constant="4" id="w0J-7J-bbG"/>
                         </constraints>
                     </view>
@@ -2615,9 +2671,9 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="descriptionTopConstraint" destination="cUY-fa-DEC" id="6wz-Dm-eoT"/>
                         <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Dcn-nY-xAS"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
-                        <outlet property="senseImageView" destination="Awm-Mz-tO7" id="cqK-F9-ETs"/>
                         <outlet property="titleHeightConstraint" destination="mde-7P-QTN" id="yBx-7W-leE"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
+                        <outlet property="videoView" destination="Beh-hK-5El" id="776-Zh-KIO"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
                         <segue destination="H2i-xS-f14" kind="push" identifier="wifi" id="IQX-WG-nAB"/>
                         <segue destination="58j-vj-AB8" kind="push" identifier="sensePairToPill" id="JsS-bV-f7k"/>
@@ -2952,25 +3008,22 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="map.png" width="320" height="229"/>
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
-        <image name="pairingMode.png" width="320" height="93"/>
-        <image name="pillSetup.png" width="320" height="245"/>
+        <image name="pairingMode.png" width="375" height="225"/>
+        <image name="pairing_your_sleep_pill.png" width="375" height="225"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
-        <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
         <image name="sensePlacement.png" width="320" height="235"/>
         <image name="senseWhite.png" width="320" height="270"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
-        <image name="shakePill.png" width="320" height="224"/>
         <image name="sleepPill.png" width="320" height="130"/>
-        <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="gUR-KW-V2G"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="3DQ-Vg-FaT"/>
         <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="u9Q-g4-qbd"/>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="tkT-Pb-lgk"/>
+        <segue reference="zxE-Zn-Swl"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

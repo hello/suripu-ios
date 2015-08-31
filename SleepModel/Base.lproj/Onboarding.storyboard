@@ -1619,9 +1619,24 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="smartAlarm.png" translatesAutoresizingMaskIntoConstraints="NO" id="LmL-w7-BTd">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVL-7j-gjt" customClass="HEMEmbeddedVideoView">
                                 <rect key="frame" x="0.0" y="129" width="600" height="346"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LmL-w7-BTd">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="346"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="LmL-w7-BTd" secondAttribute="trailing" id="7JA-nV-jOV"/>
+                                    <constraint firstItem="LmL-w7-BTd" firstAttribute="top" secondItem="XVL-7j-gjt" secondAttribute="top" id="9Hj-ry-QuA"/>
+                                    <constraint firstAttribute="bottom" secondItem="LmL-w7-BTd" secondAttribute="bottom" id="PYT-Xy-A00"/>
+                                    <constraint firstItem="LmL-w7-BTd" firstAttribute="leading" secondItem="XVL-7j-gjt" secondAttribute="leading" id="wud-8T-UfR"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="LmL-w7-BTd" id="JFD-VF-V7g"/>
+                                </connections>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FP-vw-B5B">
                                 <rect key="frame" x="190" y="475" width="220" height="40"/>
                                 <constraints>
@@ -1659,19 +1674,19 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Hw2-eQ-BhX" firstAttribute="bottom" secondItem="XVL-7j-gjt" secondAttribute="top" id="BPi-Kh-w5b"/>
                             <constraint firstItem="H5s-t3-orP" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="CCG-P5-zIt"/>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="G0n-60-GNn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="H5s-t3-orP" secondAttribute="trailing" constant="4" id="JE2-W7-Rq3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JeP-LV-puG" secondAttribute="trailing" constant="4" id="Q97-10-NmW"/>
+                            <constraint firstItem="XVL-7j-gjt" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-16" id="Vgs-uN-K1a"/>
                             <constraint firstAttribute="centerX" secondItem="6FP-vw-B5B" secondAttribute="centerX" id="e4n-j8-07l"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="top" secondItem="Hw2-eQ-BhX" secondAttribute="bottom" id="eDu-go-Y9o"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="top" secondItem="JeP-LV-puG" secondAttribute="bottom" constant="10" id="fQT-XM-WlO"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="gZg-dm-NTE"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LmL-w7-BTd" secondAttribute="trailing" constant="-16" id="gs0-Mg-fnh"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" id="j1P-Uz-it0"/>
                             <constraint firstItem="H5s-t3-orP" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="bottom" constant="65" id="jeY-fW-hoO"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-16" id="pue-S3-u8M"/>
+                            <constraint firstItem="XVL-7j-gjt" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" id="ngk-8I-Jgb"/>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="top" secondItem="3cs-y7-KCY" secondAttribute="bottom" constant="4" id="qeJ-5T-zXA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XVL-7j-gjt" secondAttribute="trailing" constant="-16" id="raB-Gk-rx2"/>
                             <constraint firstItem="PUK-Ia-HH5" firstAttribute="top" secondItem="H5s-t3-orP" secondAttribute="bottom" constant="20" id="tdc-EJ-Rvc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hw2-eQ-BhX" secondAttribute="trailing" constant="4" id="yOi-bv-YLQ"/>
                         </constraints>
@@ -1683,6 +1698,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="skipButton" destination="6FP-vw-B5B" id="idD-Ax-pfV"/>
                         <outlet property="titleHeightConstraint" destination="Nqw-Gt-yvj" id="tJr-gN-Hfl"/>
                         <outlet property="titleLabel" destination="JeP-LV-puG" id="q2S-e0-zoS"/>
+                        <outlet property="videoView" destination="XVL-7j-gjt" id="tbS-Vb-YuS"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
                         <segue destination="fc9-7S-Ult" kind="push" identifier="alarmToAnotherPill" id="eyP-2h-xaH"/>
                     </connections>
@@ -2978,7 +2994,6 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="senseWhite.png" width="320" height="270"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="sleepPill.png" width="320" height="130"/>
-        <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="gUR-KW-V2G"/>

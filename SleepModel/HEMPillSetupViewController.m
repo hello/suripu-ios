@@ -17,14 +17,14 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HelloStyleKit.h"
-#import "HEMURLImageView.h"
-#import "HEMImageCollectionViewCell.h"
+#import "HEMEmbeddedVideoView.h"
+#import "HEMVideoCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
 
 typedef NS_ENUM(NSUInteger, HEMPillSetupRow) {
     HEMPillSetupRowTitle = 0,
     HEMPillSetupRowDescription = 1,
-    HEMPillSetupRowImage = 2,
+    HEMPillSetupRowIllustration = 2,
     HEMPillSetupRows = 3
 };
 
@@ -39,9 +39,10 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 
 @property (strong, nonatomic) NSAttributedString* attributedTitle;
 @property (strong, nonatomic) NSAttributedString* attributedDescription;
+@property (weak,   nonatomic) HEMVideoCollectionViewCell* videoCell;
 @property (assign, nonatomic) CGFloat titleHeight;
 @property (assign, nonatomic) CGFloat descriptionHeight;
-@property (assign, nonatomic) CGFloat imageHeight;
+@property (assign, nonatomic) CGFloat videoHeight;
 @property (assign, nonatomic, getter=isWaitingForLED) BOOL waitingForLED;
 
 @end
@@ -87,7 +88,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     
     UIImage* image = [HelloStyleKit pillSetup];
     CGFloat imageHeight = CGRectGetHeight([[self collectionView] bounds]) - contentHeight;
-    [self setImageHeight:MAX(image.size.height, imageHeight)];
+    [self setVideoHeight:MAX(image.size.height, imageHeight)];
 }
 
 - (CGFloat)heightForAttributedText:(NSAttributedString*)attributedText {
@@ -139,6 +140,19 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     [self calculateHeights];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![[[self videoCell] videoView] isReady]) {
+        [[[self videoCell] videoView] setReady:YES];
+        [[[self videoCell] videoView] playVideoWhenReady];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[[self videoCell] videoView] pause];
+}
+
 #pragma mark - UICollectionViewDataSource / Delegate
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -173,13 +187,18 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
             cell = textCell;
             break;
         }
-        case HEMPillSetupRowImage: {
-            reuseId = [HEMOnboardingStoryboard pillSetupImageCellReuseIdentifier];
-            HEMImageCollectionViewCell* imageCell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                                              forIndexPath:indexPath];
-            [[imageCell contentView] setBackgroundColor:[UIColor whiteColor]];
-            [[imageCell urlImageView] setImage:[HelloStyleKit pillSetup]];
-            cell = imageCell;
+        case HEMPillSetupRowIllustration: {
+            reuseId = [HEMOnboardingStoryboard pillSetupVideoCellReuseIdentifier];
+            HEMVideoCollectionViewCell* videoCell
+                = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                            forIndexPath:indexPath];
+            
+            UIImage* firstFrame = [HelloStyleKit pillSetup];
+            NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-setup", nil);
+            [[videoCell videoView] setFirstFrame:firstFrame videoPath:videoPath];
+            
+            [self setVideoCell:videoCell];
+            cell = videoCell;
             break;
         }
         default:
@@ -206,8 +225,8 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         case HEMPillSetupRowDescription:
             itemSize.height = [self descriptionHeight];
             break;
-        case HEMPillSetupRowImage:
-            itemSize.height = [self imageHeight];
+        case HEMPillSetupRowIllustration:
+            itemSize.height = [self videoHeight];
             break;
         default:
             break;

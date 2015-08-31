@@ -484,9 +484,6 @@
 		BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */; };
 		BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC381A9BB29D00AEC04C /* HEMConfig.m */; };
 		BF9C87D819B6A199003188D4 /* HEMPillPairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */; };
-		BFAB22D51ACE055300CCBF8A /* pillSetup.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D21ACE055300CCBF8A /* pillSetup.png */; };
-		BFAB22D61ACE055300CCBF8A /* pillSetup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D31ACE055300CCBF8A /* pillSetup@2x.png */; };
-		BFAB22D71ACE055300CCBF8A /* pillSetup@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D41ACE055300CCBF8A /* pillSetup@3x.png */; };
 		BFAB22D91AD35F9C00CCBF8A /* HEMRoomCheckView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D81AD35F9C00CCBF8A /* HEMRoomCheckView.xib */; };
 		BFAB22DC1AD3613800CCBF8A /* HEMRoomCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAB22DB1AD3613800CCBF8A /* HEMRoomCheckView.m */; };
 		BFAB22EC1AD3675300CCBF8A /* roomcheckSenseBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22DD1AD3675300CCBF8A /* roomcheckSenseBackground.png */; };
@@ -674,6 +671,9 @@
 		BFC4C2101B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC4C20D1B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png */; };
 		BFC4C2111B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC4C20E1B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png */; };
 		BFC7D32B1B91118600D40D58 /* HEMVideoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC7D32A1B91118600D40D58 /* HEMVideoCollectionViewCell.m */; };
+		BFC7D32F1B94D47500D40D58 /* pillSetup.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC7D32C1B94D47500D40D58 /* pillSetup.png */; };
+		BFC7D3301B94D47500D40D58 /* pillSetup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC7D32D1B94D47500D40D58 /* pillSetup@2x.png */; };
+		BFC7D3311B94D47500D40D58 /* pillSetup@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC7D32E1B94D47500D40D58 /* pillSetup@3x.png */; };
 		BFC8215319E7441200E09D5D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215019E7441200E09D5D /* play.png */; };
 		BFC8215419E7441200E09D5D /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215119E7441200E09D5D /* play@2x.png */; };
 		BFC8215519E7441200E09D5D /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215219E7441200E09D5D /* play@3x.png */; };
@@ -1420,9 +1420,6 @@
 		BF98FC381A9BB29D00AEC04C /* HEMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfig.m; sourceTree = "<group>"; };
 		BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillPairViewController.h; sourceTree = "<group>"; };
 		BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillPairViewController.m; sourceTree = "<group>"; };
-		BFAB22D21ACE055300CCBF8A /* pillSetup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pillSetup.png; path = images/pillSetup.png; sourceTree = "<group>"; };
-		BFAB22D31ACE055300CCBF8A /* pillSetup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@2x.png"; path = "images/pillSetup@2x.png"; sourceTree = "<group>"; };
-		BFAB22D41ACE055300CCBF8A /* pillSetup@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@3x.png"; path = "images/pillSetup@3x.png"; sourceTree = "<group>"; };
 		BFAB22D81AD35F9C00CCBF8A /* HEMRoomCheckView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMRoomCheckView.xib; sourceTree = "<group>"; };
 		BFAB22DA1AD3613800CCBF8A /* HEMRoomCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoomCheckView.h; sourceTree = "<group>"; };
 		BFAB22DB1AD3613800CCBF8A /* HEMRoomCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoomCheckView.m; sourceTree = "<group>"; };
@@ -1633,6 +1630,9 @@
 		BFC4C20E1B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairing_your_sleep_pill@3x.png"; path = "images/pairing_your_sleep_pill@3x.png"; sourceTree = "<group>"; };
 		BFC7D3291B91118600D40D58 /* HEMVideoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVideoCollectionViewCell.h; sourceTree = "<group>"; };
 		BFC7D32A1B91118600D40D58 /* HEMVideoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVideoCollectionViewCell.m; sourceTree = "<group>"; };
+		BFC7D32C1B94D47500D40D58 /* pillSetup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pillSetup.png; path = images/pillSetup.png; sourceTree = "<group>"; };
+		BFC7D32D1B94D47500D40D58 /* pillSetup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@2x.png"; path = "images/pillSetup@2x.png"; sourceTree = "<group>"; };
+		BFC7D32E1B94D47500D40D58 /* pillSetup@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@3x.png"; path = "images/pillSetup@3x.png"; sourceTree = "<group>"; };
 		BFC8215019E7441200E09D5D /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
 		BFC8215119E7441200E09D5D /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "images/play@2x.png"; sourceTree = "<group>"; };
 		BFC8215219E7441200E09D5D /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@3x.png"; path = "images/play@3x.png"; sourceTree = "<group>"; };
@@ -2025,6 +2025,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFC7D32C1B94D47500D40D58 /* pillSetup.png */,
+				BFC7D32D1B94D47500D40D58 /* pillSetup@2x.png */,
+				BFC7D32E1B94D47500D40D58 /* pillSetup@3x.png */,
 				BFC4C20C1B90F8C700BB7761 /* pairing_your_sleep_pill.png */,
 				BFC4C20D1B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png */,
 				BFC4C20E1B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png */,
@@ -2175,9 +2178,6 @@
 				BFAB22E91AD3675300CCBF8A /* roomcheckSenseYellow.png */,
 				BFAB22EA1AD3675300CCBF8A /* roomcheckSenseYellow@2x.png */,
 				BFAB22EB1AD3675300CCBF8A /* roomcheckSenseYellow@3x.png */,
-				BFAB22D21ACE055300CCBF8A /* pillSetup.png */,
-				BFAB22D31ACE055300CCBF8A /* pillSetup@2x.png */,
-				BFAB22D41ACE055300CCBF8A /* pillSetup@3x.png */,
 				BFCE1D2A1AA657760076E855 /* senseWhite.png */,
 				BFCE1D2B1AA657760076E855 /* senseWhite@2x.png */,
 				BFCE1D2C1AA657760076E855 /* senseWhite@3x.png */,
@@ -3732,7 +3732,6 @@
 				BFC8215419E7441200E09D5D /* play@2x.png in Resources */,
 				8A0351041B2CACFD0077E6E6 /* Down Caret.png in Resources */,
 				8AA157F31A5EFD6B00BF1D4A /* lightEventIcon.png in Resources */,
-				BFAB22D71ACE055300CCBF8A /* pillSetup@3x.png in Resources */,
 				BF770F1E1A1550E0008611E9 /* bluetooth.png in Resources */,
 				BF05C8EA1A3A6AD6002A1307 /* questions_check@3x.png in Resources */,
 				BF05C8ED1A3A6AD6002A1307 /* questions_circle@3x.png in Resources */,
@@ -3852,6 +3851,7 @@
 				8A93AFCD1A09BF0300F70A8B /* caret up.png in Resources */,
 				BFE277551AF44E2F00C1FB4A /* wifiIconNone@3x.png in Resources */,
 				BFAB23481AD5D15E00CCBF8A /* humidityIconYellow@3x.png in Resources */,
+				BFC7D3301B94D47500D40D58 /* pillSetup@2x.png in Resources */,
 				BFF3B4591A5F008A00B11643 /* warning@3x.png in Resources */,
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
 				8ACAF40A1A69B7980054885A /* inBedEventIcon.png in Resources */,
@@ -3896,6 +3896,7 @@
 				BF5D53261A266C6B0090DD6A /* check.png in Resources */,
 				BFC4C2111B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png in Resources */,
 				8AC4A03B1989C36200C2BD63 /* temperatureIcon.png in Resources */,
+				BFC7D32F1B94D47500D40D58 /* pillSetup.png in Resources */,
 				8ACAF40B1A69B7980054885A /* inBedEventIcon@2x.png in Resources */,
 				BF628E961A8306A800C0CD2E /* pairingMode@3x.png in Resources */,
 				BFBA2B7B1A6482DA00C3AB80 /* senseAppIcon@2x.png in Resources */,
@@ -4051,17 +4052,16 @@
 				BF005C7C19FED57E00E68E87 /* lockIcon@3x.png in Resources */,
 				8ADE06471B2FA0BB00976654 /* timeline_action_approve.png in Resources */,
 				BFAB235D1AD5D15E00CCBF8A /* particulatesIconRed@3x.png in Resources */,
-				BFAB22D61ACE055300CCBF8A /* pillSetup@2x.png in Resources */,
 				8A8288CD1A7800820043B1D1 /* presleepInsightUnknown@2x.png in Resources */,
 				8A4579801A805603009A7863 /* welcome_dialog_humidity@2x.png in Resources */,
 				BFAB22F21AD3675300CCBF8A /* roomcheckSenseGreen.png in Resources */,
 				BFC3FE631AE7321D0061D6A1 /* soundIconNoBorderGreen@2x.png in Resources */,
 				8A8288AA1A76CF1E0043B1D1 /* presleepInsightLight@3x.png in Resources */,
 				BF0F63641A250A050084E6B4 /* smartAlarm.png in Resources */,
-				BFAB22D51ACE055300CCBF8A /* pillSetup.png in Resources */,
 				BFAB22EF1AD3675300CCBF8A /* roomcheckSenseGray.png in Resources */,
 				8A7D803C1A41094300B0BFD7 /* senseBarIcon@2x.png in Resources */,
 				8A7D803B1A41094300B0BFD7 /* senseBarIcon.png in Resources */,
+				BFC7D3311B94D47500D40D58 /* pillSetup@3x.png in Resources */,
 				8AD142671A78679800A83AD8 /* timeline_explain_graph@2x.png in Resources */,
 				BFAB23431AD5D15E00CCBF8A /* humidityIconRed.png in Resources */,
 				BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */,

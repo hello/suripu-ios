@@ -12,7 +12,7 @@
 /** Cell Reuse Identifiers */
 +(NSString *)networkReuseIdentifier;
 +(NSString *)pillSetupTextCellReuseIdentifier;
-+(NSString *)pillSetupImageCellReuseIdentifier;
++(NSString *)pillSetupVideoCellReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)alarmToAnotherPillSegueIdentifier;

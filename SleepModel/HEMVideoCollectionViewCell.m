@@ -36,6 +36,7 @@
         CGRect imageFrame = [[self contentView] bounds];
         
         HEMEmbeddedVideoView* videoView = [[HEMEmbeddedVideoView alloc] initWithFrame:imageFrame];
+        [videoView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
         [videoView setClipsToBounds:YES];
         [[self contentView] addSubview:videoView];
         [self setVideoView:videoView];

@@ -23,6 +23,7 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
 
 @property (nonatomic, copy) NSString* videoPath;
 @property (nonatomic, weak) AVPlayer* videoPlayer;
+@property (nonatomic, strong) AVPlayerItem* videoPlayerItem;
 @property (nonatomic, weak) AVPlayerLayer* videoPlayerLayer;
 @property (nonatomic, assign, getter=isSubscribedToPlaybackEvents) BOOL subscribedToPlaybackEvents;
 
@@ -102,7 +103,7 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     
     if ([self videoPlayer]) {
         [self unsubscribeToNotificationFor:[self videoPlayer]];
-        [[self videoPlayer] removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath];
+        [self removeKVOObservers];
     }
     
     if ([self videoPlayerLayer]) {
@@ -129,6 +130,7 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     
     _videoPath = [videoPath copy];
     [self setVideoPlayer:player];
+    [self setVideoPlayerItem:item];
     [self setVideoPlayerLayer:layer];
 }
 
@@ -236,13 +238,22 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
 
 #pragma mark - Clean UP
 
+- (void)removeKVOObservers {
+    if ([self videoPlayer]) {
+        [[[self videoPlayer] currentItem] removeObserver:self
+                                              forKeyPath:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath];
+        [[[self videoPlayer] currentItem] removeObserver:self
+                                              forKeyPath:HEMEmbeddedVideoPlayerBufferFullKeyPath];
+        [[self videoPlayer] removeObserver:self
+                                forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath];
+    }
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     if (_videoPlayer) {
-        [[_videoPlayer currentItem] removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath];
-        [[_videoPlayer currentItem] removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerBufferFullKeyPath ];
-        [_videoPlayer removeObserver:self forKeyPath:HEMEmbeddedVideoPlayerStatusKeyPath];
+        [self removeKVOObservers];
     }
 }
 

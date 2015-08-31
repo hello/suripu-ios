@@ -1087,36 +1087,29 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                             <outlet property="textLabel" destination="UY8-cb-5so" id="0J6-Ke-PAz"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pillSetupImageCell" id="G0v-rz-O5i" customClass="HEMImageCollectionViewCell">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pillSetupVideoCell" id="G0v-rz-O5i" customClass="HEMVideoCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="313"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pillSetup.png" translatesAutoresizingMaskIntoConstraints="NO" id="37l-V6-nno" customClass="HEMURLImageView">
-                                                    <rect key="frame" x="0.0" y="68" width="600" height="245"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="245" id="FrF-LZ-2DF"/>
-                                                    </constraints>
-                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sz8-pa-OC9" customClass="HEMEmbeddedVideoView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="313"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottomMargin" secondItem="37l-V6-nno" secondAttribute="bottom" constant="-8" id="1wT-ly-Yiw"/>
-                                            <constraint firstItem="37l-V6-nno" firstAttribute="top" secondItem="G0v-rz-O5i" secondAttribute="topMargin" constant="19" id="dgU-AP-G5A"/>
-                                            <constraint firstItem="37l-V6-nno" firstAttribute="leading" secondItem="G0v-rz-O5i" secondAttribute="leadingMargin" constant="-8" id="qpt-hP-gbX"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="37l-V6-nno" secondAttribute="trailing" constant="-8" id="wIR-aL-98u"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="sz8-pa-OC9" secondAttribute="trailing" constant="-8" id="LZM-ar-mJ3"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="sz8-pa-OC9" secondAttribute="bottom" constant="-8" id="Xde-3M-bOb"/>
+                                            <constraint firstItem="sz8-pa-OC9" firstAttribute="top" secondItem="G0v-rz-O5i" secondAttribute="topMargin" constant="-8" id="Xng-0t-PAv"/>
+                                            <constraint firstItem="sz8-pa-OC9" firstAttribute="leading" secondItem="G0v-rz-O5i" secondAttribute="leadingMargin" constant="-8" id="kqu-JU-JH4"/>
                                         </constraints>
                                         <size key="customSize" width="600" height="313"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="dgU-AP-G5A"/>
-                                            </mask>
-                                        </variation>
                                         <connections>
-                                            <outlet property="urlImageView" destination="37l-V6-nno" id="CGf-QK-7z3"/>
+                                            <outlet property="videoView" destination="sz8-pa-OC9" id="vnW-S6-8ro"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -2963,7 +2956,6 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="pairOfPills.png" width="180" height="117"/>
         <image name="pairingMode.png" width="320" height="93"/>
         <image name="pairing_your_sleep_pill.png" width="375" height="225"/>
-        <image name="pillSetup.png" width="320" height="245"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
         <image name="sense.png" width="162" height="172"/>
@@ -2975,10 +2967,10 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="gUR-KW-V2G"/>
+        <segue reference="u9Q-g4-qbd"/>
         <segue reference="3DQ-Vg-FaT"/>
         <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="u9Q-g4-qbd"/>
-        <segue reference="7LA-fg-2Jb"/>
         <segue reference="tkT-Pb-lgk"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

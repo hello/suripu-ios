@@ -10,6 +10,7 @@
 #import "SENCondition.h"
 
 NSString* const SENConditionRawUnavailable = @"UNAVAILABLE";
+NSString* const SENConditionRawIncomplete = @"INCOMPLETE";
 NSString* const SENConditionRawIdeal = @"IDEAL";
 NSString* const SENConditionRawWarning = @"WARNING";
 NSString* const SENConditionRawAlert = @"ALERT";
@@ -22,6 +23,8 @@ SENCondition SENConditionFromString(NSString *condition) {
             return SENConditionAlert;
         else if ([condition isEqualToString:SENConditionRawWarning])
             return SENConditionWarning;
+        else if ([condition isEqualToString:SENConditionRawIncomplete])
+            return SENConditionIncomplete;
     }
     return SENConditionUnknown;
 }

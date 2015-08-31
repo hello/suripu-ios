@@ -314,6 +314,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
             condition = @"ideal";
             break;
         case SENConditionUnknown:
+        case SENConditionIncomplete:
         default:
             condition = @"unknown";
     }

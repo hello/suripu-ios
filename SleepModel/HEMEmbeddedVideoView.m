@@ -82,8 +82,6 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
 }
 
 - (void)setFirstFrame:(UIImage*)image videoPath:(NSString*)videoPath {
-    [self setReady:NO];
-    
     if (![self firstFrameView]) {
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:[self bounds]];
         [imageView setContentMode:UIViewContentModeCenter];
@@ -101,6 +99,7 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
         return;
     }
     DDLogVerbose(@"setting video path to %@", videoPath);
+    [self setReady:NO];
     
     if ([self videoPlayer]) {
         [self unsubscribeToNotificationFor:[self videoPlayer]];

@@ -281,9 +281,13 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         }
         case SENTimelineMetricUnitTimestamp: {
             NSDate* date = SENDateFromNumber(metric.value);
-            value = [self.timestampFormatter stringFromDate:date];
-            if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
-                unit = [[self.meridiemFormatter stringFromDate:date] lowercaseString];
+            if (date) {
+                value = [self.timestampFormatter stringFromDate:date];
+                if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
+                    unit = [[self.meridiemFormatter stringFromDate:date] lowercaseString];
+                }
+            } else {
+                value = NSLocalizedString(@"empty-data", nil);
             }
             break;
         }
@@ -295,6 +299,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
             value = NSLocalizedString(@"empty-data", nil);
             break;
     }
+    
     return [[HEMSplitTextObject alloc] initWithValue:value unit:unit];
 }
 

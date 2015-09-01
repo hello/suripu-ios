@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.3.3
+
+Fixes:
+
+* Changed copy of the app review initial question to exclude the
+* Moved the pairing mode animation (video) to the pairing mode screen and revert the change to the sense pairing screen
+
 ## 1.1.3.2
 
 New:

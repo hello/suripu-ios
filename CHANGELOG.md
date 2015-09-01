@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.1.3.2
+
+New:
+
+* Alarm tutorial dialog (not the smart alarm one) now plays video when connection is available
+* Onboarding pill setup screen plays video
+* Onboarding sense pairing mode screen plays video
+* Onboarding pill pairing screen plays video
+* Onboarding sense colors / before sleep screen plays video
+* Onboarding alarm screen plays video
+* Alarm copy changed from Sound to Tone
+* Accessibility improvements to Timelien
+* Air quality unit copy changes
+* Improved scrolling experience between tabs in the back view
+* Timeline differentiates between not enough data and no data, rending a support link to further explain
+
 ## 1.1.3.1
 
 New:

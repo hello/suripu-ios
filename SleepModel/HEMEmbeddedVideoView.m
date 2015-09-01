@@ -91,6 +91,8 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     }
     
     [[self firstFrameView] setImage:image];
+    [[self firstFrameView] setContentMode:UIViewContentModeScaleAspectFit];
+    
     [self setVideoPath:videoPath];
 }
 

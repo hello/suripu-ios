@@ -20,6 +20,7 @@
 #import "HEMBounceModalTransition.h"
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
+#import "NSString+HEMUtils.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate,
@@ -471,13 +472,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
         return CGSizeMake(width, HEMAlarmListPairCellHeight);
     CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;
     NSString *text = NSLocalizedString(@"alarms.no-alarm.message", nil);
-    CGSize textSize =
-        [text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
-                           options:(NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin)
-                        attributes:@{
-                            NSFontAttributeName : [UIFont backViewTextFont]
-                        } context:nil].size;
-    return CGSizeMake(width, ceilf(textSize.height) + HEMAlarmListEmptyCellBaseHeight);
+    CGFloat textHeight = [text heightBoundedByWidth:textWidth usingFont:[UIFont backViewTextFont]];
+    return CGSizeMake(width, textHeight + HEMAlarmListEmptyCellBaseHeight);
 }
 
 #pragma mark - Clean Up

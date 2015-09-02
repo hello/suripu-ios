@@ -30,16 +30,18 @@ static NSPredicate* emailPredicate;
     return [self stringByTrimmingCharactersInSet:spaces];
 }
 
-- (CGFloat)heightBoundedByWidth:(CGFloat)width usingFont:(UIFont*)font
-{
-    CGSize constraint = CGSizeMake(width, MAXFLOAT);
+- (CGFloat)heightBoundedByWidth:(CGFloat)width usingFont:(UIFont*)font {
+    return [self heightBoundedByWidth:width attributes:@{NSFontAttributeName : font}];
+}
+
+- (CGFloat)heightBoundedByWidth:(CGFloat)width attributes:(NSDictionary *)attributes {
     NSStringDrawingOptions options
         = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin;
-    CGSize textSize = [self boundingRectWithSize:constraint
+    CGSize textSize = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                          options:options
-                                      attributes:@{NSFontAttributeName : font}
+                                      attributes:attributes
                                          context:nil].size;
-    return textSize.height;
+    return ceilf(textSize.height);
 }
 
 @end

@@ -10,6 +10,7 @@
 
 #import "HEMHintMessageView.h"
 #import "UIColor+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 static CGFloat const HEMHintMessagePadding = 18.0f;
 
@@ -34,19 +35,12 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
 - (void)configureViewWithWidth:(CGFloat)width {
     [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 
-    UIImage* closeImage = [UIImage imageNamed:@"closeX.png"];
-    NSDictionary* textAttributes = @{NSFontAttributeName : [UIFont handholdingMessageFont]};
+    UIImage* closeImage = [UIImage imageNamed:@"closeX"];
     CGFloat buttonWidth = (2*HEMHintMessagePadding) + closeImage.size.width;
     CGFloat labelWidth = width - buttonWidth - (2 * HEMHintMessagePadding);
-    
-    CGSize constraint = CGSizeMake(labelWidth, MAXFLOAT);
-    CGSize textSize = [[self message] boundingRectWithSize:constraint
-                                                   options:NSStringDrawingUsesFontLeading |
-                                                           NSStringDrawingUsesLineFragmentOrigin
-                                                attributes:textAttributes context:nil].size;
-    
-    CGFloat viewHeight = textSize.height + (2 * HEMHintMessagePadding);
-    
+    CGFloat textHeight = [self.message heightBoundedByWidth:labelWidth usingFont:[UIFont handholdingMessageFont]];
+    CGFloat viewHeight = textHeight + (2 * HEMHintMessagePadding);
+
     CGSize labelSize = CGSizeMake(labelWidth, viewHeight);
     UILabel* messageLabel = [self messageLabelWithText:[self message] size:labelSize];
     

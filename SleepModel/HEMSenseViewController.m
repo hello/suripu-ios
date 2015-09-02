@@ -13,6 +13,7 @@
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
 #import "NSTimeZone+HEMMapping.h"
 
@@ -130,15 +131,6 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     return message;
 }
 
-- (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
-    NSAttributedString* message = [self attributedMessageForWarning:warning];
-    CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
-                                          options:NSStringDrawingUsesFontLeading
-                                                 |NSStringDrawingUsesLineFragmentOrigin
-                                          context:nil];
-    return CGRectGetHeight(bounds);
-}
-
 - (NSString*)actionButtonTitleForWarning:(HEMDeviceWarning)warning {
     NSString* title = nil;
     switch (warning) {
@@ -234,8 +226,9 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     CGSize size = [layout itemSize];
     
     if ([self isWarningCellRow:[indexPath row]]) {
-        size.height = [self heightForWarning:[[self warnings][[indexPath row]] integerValue]
-                         withDefaultItemSize:size] + HEMWarningCellBaseHeight;
+        HEMDeviceWarning warning = [self.warnings[indexPath.item] integerValue];
+        NSAttributedString* message = [self attributedMessageForWarning:warning];
+        size.height = [message sizeWithWidth:size.width].height + HEMWarningCellBaseHeight;
     } else {
         size.height = HEMSenseActionHeight * 4;
     }

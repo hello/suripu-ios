@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3.4
+
+Fixes:
+
+* Fixed a crasher that can occur if metric value for a timestamp is 0
+
 ## 1.1.3.3
 
 Fixes:

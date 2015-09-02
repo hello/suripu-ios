@@ -11,8 +11,6 @@
 #import "UIColor+HEMStyle.h"
 
 CGFloat const HEMSnazzBarHeight = 65.f;
-NSString* const HEMSnazzBarNotificationWillChangeSelection = @"HEMSnazzBarNotificationWillChangeSelection";
-NSString* const HEMSnazzBarNotificationDidChangeSelection = @"HEMSnazzBarNotificationDidUpdateSelection";
 
 @interface HEMSnazzBarController ()<HEMSnazzBarDelegate, UIScrollViewDelegate>
 
@@ -116,7 +114,7 @@ NSString* const HEMSnazzBarNotificationDidChangeSelection = @"HEMSnazzBarNotific
 
 - (void)bar:(HEMSnazzBar *)bar didReceiveTouchUpInsideAtIndex:(NSUInteger)index {
     [self setSelectedIndex:index animated:YES];
-    [self notify:HEMSnazzBarNotificationWillChangeSelection];
+    [self notifySelectedControllerOfSelectionChangeIfSupported];
 }
 
 #pragma mark - Controller Management
@@ -151,10 +149,6 @@ NSString* const HEMSnazzBarNotificationDidChangeSelection = @"HEMSnazzBarNotific
         [controller endAppearanceTransition];
         self.controllerVisibility[index] = @(visibleNow);
     }
-}
-
-- (void)notify:(NSString*)notificationName {
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
 }
 
 - (UIViewController *)selectedViewController {
@@ -232,7 +226,7 @@ NSString* const HEMSnazzBarNotificationDidChangeSelection = @"HEMSnazzBarNotific
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self setUserScrolling:YES];
-    [self notify:HEMSnazzBarNotificationWillChangeSelection];
+    [self notifySelectedControllerOfSelectionChangeIfSupported];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -260,12 +254,41 @@ NSString* const HEMSnazzBarNotificationDidChangeSelection = @"HEMSnazzBarNotific
     [self notifyControllerAppearanceAtIndexIfNeeded:self.selectedIndex];
     [self setUserScrolling:NO];
     [self setSelectedIndex:targetIndex];
-    [self notify:HEMSnazzBarNotificationDidChangeSelection];
+    [self notifySelectedControllerOfSelectionIfSupported];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self notifyControllerAppearanceAtIndexIfNeeded:self.previousSelectedIndex];
-    [self notify:HEMSnazzBarNotificationDidChangeSelection];
+    [self notifySelectedControllerOfSelectionIfSupported];
+}
+
+#pragma mark - Snazz Child Handling
+
+- (id<HEMSnazzBarControllerChild>)selectedSnazzChild {
+    UIViewController* selectedVC = [self selectedViewController];
+    if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+        selectedVC = [[(UINavigationController*)selectedVC viewControllers] firstObject];
+    }
+    
+    if ([selectedVC conformsToProtocol:@protocol(HEMSnazzBarControllerChild)]) {
+        return (id<HEMSnazzBarControllerChild>)selectedVC;
+    }
+    
+    return nil;
+}
+
+- (void)notifySelectedControllerOfSelectionIfSupported {
+    id<HEMSnazzBarControllerChild> snazzChild = [self selectedSnazzChild];
+    if ([snazzChild respondsToSelector:@selector(snazzViewDidAppear)]) {
+        [snazzChild snazzViewDidAppear];
+    }
+}
+
+- (void)notifySelectedControllerOfSelectionChangeIfSupported {
+    id<HEMSnazzBarControllerChild> snazzChild = [self selectedSnazzChild];
+    if ([snazzChild respondsToSelector:@selector(snazzViewDidAppear)]) {
+        [snazzChild snazzViewDidAppear];
+    }
 }
 
 @end

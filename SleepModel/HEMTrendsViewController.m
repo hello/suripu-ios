@@ -19,12 +19,12 @@
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
 #import "HEMSnazzBarController.h"
+#import "HEMRootViewController.h"
 
-@interface HEMTrendsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate>
+@interface HEMTrendsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate, HEMSnazzBarControllerChild>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, strong) NSMutableArray* defaultTrends;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
-@property (nonatomic, assign, getter=isSelectedController) BOOL selectedController;
 @end
 
 @implementation HEMTrendsViewController
@@ -52,7 +52,6 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self registerForSnazzbarNotifications];
     [self.collectionView setAlwaysBounceVertical:YES];
     UICollectionViewFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
     CGSize size = layout.itemSize;
@@ -118,33 +117,23 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 #pragma mark - Snazz Events
 
-- (void)registerForSnazzbarNotifications {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(didChangeSnazzSelection:)
-                   name:HEMSnazzBarNotificationDidChangeSelection
-                 object:nil];
-    [center addObserver:self
-               selector:@selector(willChangeSnazzSelection:)
-                   name:HEMSnazzBarNotificationWillChangeSelection
-                 object:nil];
-}
-
-- (void)willChangeSnazzSelection:(NSNotification*)note {
-    [self setSelectedController:NO];
-}
-
-- (void)didChangeSnazzSelection:(NSNotification*)note {
-    HEMSnazzBarController* controller = note.object;
-    [self setSelectedController:[controller.selectedViewController isEqual:self.parentViewController]];
+- (void)snazzViewDidAppear {
     [self showTutorialIfSelectedWithData];
 }
 
 #pragma mark - Tutorial
 
 - (void)showTutorialIfSelectedWithData {
-    if (self.isSelectedController && self.defaultTrends.count > 0) {
-        [HEMTutorial showTutorialForTrendsIfNeeded];
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    UIViewController* backVC = [rootVC backController];
+    if ([backVC isKindOfClass:[HEMSnazzBarController class]]) {
+        HEMSnazzBarController* snazzVC = (id)backVC;
+        if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
+            && self.defaultTrends.count > 0
+            && self.isViewLoaded
+            && self.view.window) {
+            [HEMTutorial showTutorialForTrendsIfNeeded];
+        }
     }
 }
 

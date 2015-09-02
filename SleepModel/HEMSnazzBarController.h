@@ -9,10 +9,16 @@
 #import <UIKit/UIKit.h>
 
 extern CGFloat const HEMSnazzBarHeight;
-extern NSString* const HEMSnazzBarNotificationWillChangeSelection;
-extern NSString* const HEMSnazzBarNotificationDidChangeSelection;
 
 @class HEMSnazzBarController;
+
+@protocol HEMSnazzBarControllerChild <NSObject>
+
+@optional
+- (void)snazzViewDidAppear;
+- (void)snazzViewWillDisappear;
+
+@end
 
 @protocol HEMSnazzBarControllerDelegate <NSObject>
 

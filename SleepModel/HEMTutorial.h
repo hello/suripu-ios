@@ -40,14 +40,11 @@
 
 + (BOOL)shouldShowTutorialForTimeline;
 
-+ (void)showTutorialForTimeline;
-
 /**
- *  Present the tutorial for the sensor overview screen if not previously viewed
+ *  Present the tutorial for the sensor overview screen i
+ f not previously viewed
  */
 + (void)showTutorialForSensorsIfNeeded;
-
-+ (void)showTutorialForSensors;
 
 + (void)showTutorialForPillColorIfNeeded;
 
@@ -64,8 +61,6 @@
  *  Present the tutorial for trends if not previously viewed
  */
 + (void)showTutorialForTrendsIfNeeded;
-
-+ (void)showTutorialForTrends;
 
 /**
  * Present the tutorial for alarms if not previously viewed

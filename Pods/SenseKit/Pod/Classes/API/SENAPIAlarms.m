@@ -1,8 +1,7 @@
 
 #import <AFNetworking/AFURLResponseSerialization.h>
 #import "SENAPIAlarms.h"
-#import "SENAlarm.h"
-#import "SENSound.h"
+#import "Model.h"
 
 @implementation SENAPIAlarms
 
@@ -33,7 +32,7 @@ static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
 
 + (void)updateAlarms:(NSArray*)alarms completion:(SENAPIDataBlock)completion
 {
-    NSTimeInterval clientTimeUTC = [[NSDate date] timeIntervalSince1970] * 1000;
+    NSTimeInterval clientTimeUTC = [SENDateMillisecondsSince1970([NSDate date]) doubleValue];
     NSArray* alarmData = [self parameterArrayForAlarms:alarms];
     [SENAPIClient POST:[NSString stringWithFormat:SENAPIAlarmsUpdateEndpointFormat, clientTimeUTC]
             parameters:alarmData

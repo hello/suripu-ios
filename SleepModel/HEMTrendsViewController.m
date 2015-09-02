@@ -18,11 +18,13 @@
 #import "UIFont+HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
+#import "HEMSnazzBarController.h"
 
 @interface HEMTrendsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, strong) NSMutableArray* defaultTrends;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
+@property (nonatomic, assign, getter=isSelectedController) BOOL selectedController;
 @end
 
 @implementation HEMTrendsViewController
@@ -50,6 +52,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self registerForSnazzbarNotifications];
     [self.collectionView setAlwaysBounceVertical:YES];
     UICollectionViewFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
     CGSize size = layout.itemSize;
@@ -70,7 +73,9 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:SENAPIReachableNotification
+                                                  object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,20 +97,55 @@ static NSString* const HEMAllScopeType = @"ALL";
     if ([self isLoading])
         return;
     self.loading = YES;
+    
+    __weak typeof(self) weakSelf = self;
     [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError* error) {
+        __strong typeof(weakSelf) strongSelf = self;
         if (error) {
-            [self.collectionView reloadData];
-            self.loading = NO;
+            [strongSelf.collectionView reloadData];
+            strongSelf.loading = NO;
             return;
         }
         NSMutableArray* trends = [data mutableCopy];
-        if (![trends isEqualToArray:self.defaultTrends]) {
-            self.defaultTrends = trends;
-            [self.collectionView reloadData];
+        if (![trends isEqualToArray:strongSelf.defaultTrends]) {
+            strongSelf.defaultTrends = trends;
+            [strongSelf.collectionView reloadData];
         }
-        self.loading = NO;
-        [HEMTutorial showTutorialForTrendsIfNeeded];
+        strongSelf.loading = NO;
+        [strongSelf showTutorialIfSelectedWithData];
     }];
+}
+
+#pragma mark - Snazz Events
+
+- (void)registerForSnazzbarNotifications {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didChangeSnazzSelection:)
+                   name:HEMSnazzBarNotificationDidChangeSelection
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(willChangeSnazzSelection:)
+                   name:HEMSnazzBarNotificationWillChangeSelection
+                 object:nil];
+}
+
+- (void)willChangeSnazzSelection:(NSNotification*)note {
+    [self setSelectedController:NO];
+}
+
+- (void)didChangeSnazzSelection:(NSNotification*)note {
+    HEMSnazzBarController* controller = note.object;
+    [self setSelectedController:[controller.selectedViewController isEqual:self.parentViewController]];
+    [self showTutorialIfSelectedWithData];
+}
+
+#pragma mark - Tutorial
+
+- (void)showTutorialIfSelectedWithData {
+    if (self.isSelectedController && self.defaultTrends.count > 0) {
+        [HEMTutorial showTutorialForTrendsIfNeeded];
+    }
 }
 
 #pragma mark HEMTrendCollectionViewCellDelegate
@@ -266,6 +306,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
 }

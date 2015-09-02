@@ -11,6 +11,8 @@
 #import "UIColor+HEMStyle.h"
 
 CGFloat const HEMSnazzBarHeight = 65.f;
+NSString* const HEMSnazzBarNotificationWillChangeSelection = @"HEMSnazzBarNotificationWillChangeSelection";
+NSString* const HEMSnazzBarNotificationDidChangeSelection = @"HEMSnazzBarNotificationDidUpdateSelection";
 
 @interface HEMSnazzBarController ()<HEMSnazzBarDelegate, UIScrollViewDelegate>
 
@@ -114,6 +116,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 
 - (void)bar:(HEMSnazzBar *)bar didReceiveTouchUpInsideAtIndex:(NSUInteger)index {
     [self setSelectedIndex:index animated:YES];
+    [self notify:HEMSnazzBarNotificationWillChangeSelection];
 }
 
 #pragma mark - Controller Management
@@ -148,6 +151,10 @@ CGFloat const HEMSnazzBarHeight = 65.f;
         [controller endAppearanceTransition];
         self.controllerVisibility[index] = @(visibleNow);
     }
+}
+
+- (void)notify:(NSString*)notificationName {
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
 }
 
 - (UIViewController *)selectedViewController {
@@ -225,6 +232,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self setUserScrolling:YES];
+    [self notify:HEMSnazzBarNotificationWillChangeSelection];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -252,10 +260,12 @@ CGFloat const HEMSnazzBarHeight = 65.f;
     [self notifyControllerAppearanceAtIndexIfNeeded:self.selectedIndex];
     [self setUserScrolling:NO];
     [self setSelectedIndex:targetIndex];
+    [self notify:HEMSnazzBarNotificationDidChangeSelection];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self notifyControllerAppearanceAtIndexIfNeeded:self.previousSelectedIndex];
+    [self notify:HEMSnazzBarNotificationDidChangeSelection];
 }
 
 @end

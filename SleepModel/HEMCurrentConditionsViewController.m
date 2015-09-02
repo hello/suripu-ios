@@ -16,6 +16,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMActionButton.h"
 #import "HEMSensorValueFormatter.h"
+#import "HEMSnazzBarController.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                                   UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate>
@@ -29,6 +30,7 @@
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @property (nonatomic, strong) NSDate *lastRefreshDate;
 @property (nonatomic, strong) HEMSensorValueFormatter* sensorValueFormatter;
+@property (nonatomic, assign, getter=isSelectedController) BOOL selectedController;
 @end
 
 @implementation HEMCurrentConditionsViewController
@@ -51,6 +53,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerForSnazzbarNotifications];
     [self configureCollectionView];
     [self setDefaultProperties];
 }
@@ -135,6 +138,38 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     [_collectionView setDataSource:nil];
 }
 
+#pragma mark - Snazz Notifications 
+
+- (void)registerForSnazzbarNotifications {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didChangeSnazzSelection:)
+                   name:HEMSnazzBarNotificationDidChangeSelection
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(willChangeSnazzSelection:)
+                   name:HEMSnazzBarNotificationWillChangeSelection
+                 object:nil];
+}
+
+- (void)willChangeSnazzSelection:(NSNotification*)note {
+    [self setSelectedController:NO];
+}
+
+- (void)didChangeSnazzSelection:(NSNotification*)note {
+    HEMSnazzBarController* controller = note.object;
+    [self setSelectedController:[controller.selectedViewController isEqual:self.parentViewController]];
+    [self showTutorialIfSelectedWithData];
+}
+
+#pragma mark - Tutorial
+
+- (void)showTutorialIfSelectedWithData {
+    if (self.isSelectedController && self.sensors.count > 0) {
+        [HEMTutorial showTutorialForSensorsIfNeeded];
+    }
+}
+
 #pragma mark - Data Loading
 
 - (void)refreshCachedSensors {
@@ -178,8 +213,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     if (![self.sensors isEqualToArray:cachedSensors]) {
         self.sensors = cachedSensors;
         [self.collectionView reloadData];
-        if ([self isViewLoaded] && self.view.window)
-            [HEMTutorial showTutorialForSensorsIfNeeded];
+        [self showTutorialIfSelectedWithData];
     }
     self.lastRefreshDate = [NSDate date];
     [self updateSensorRefreshInterval];

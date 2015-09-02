@@ -114,6 +114,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 
 - (void)bar:(HEMSnazzBar *)bar didReceiveTouchUpInsideAtIndex:(NSUInteger)index {
     [self setSelectedIndex:index animated:YES];
+    [self notifySelectedControllerOfSelectionChangeIfSupported];
 }
 
 #pragma mark - Controller Management
@@ -225,6 +226,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self setUserScrolling:YES];
+    [self notifySelectedControllerOfSelectionChangeIfSupported];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -252,10 +254,41 @@ CGFloat const HEMSnazzBarHeight = 65.f;
     [self notifyControllerAppearanceAtIndexIfNeeded:self.selectedIndex];
     [self setUserScrolling:NO];
     [self setSelectedIndex:targetIndex];
+    [self notifySelectedControllerOfSelectionIfSupported];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self notifyControllerAppearanceAtIndexIfNeeded:self.previousSelectedIndex];
+    [self notifySelectedControllerOfSelectionIfSupported];
+}
+
+#pragma mark - Snazz Child Handling
+
+- (id<HEMSnazzBarControllerChild>)selectedSnazzChild {
+    UIViewController* selectedVC = [self selectedViewController];
+    if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+        selectedVC = [[(UINavigationController*)selectedVC viewControllers] firstObject];
+    }
+    
+    if ([selectedVC conformsToProtocol:@protocol(HEMSnazzBarControllerChild)]) {
+        return (id<HEMSnazzBarControllerChild>)selectedVC;
+    }
+    
+    return nil;
+}
+
+- (void)notifySelectedControllerOfSelectionIfSupported {
+    id<HEMSnazzBarControllerChild> snazzChild = [self selectedSnazzChild];
+    if ([snazzChild respondsToSelector:@selector(snazzViewDidAppear)]) {
+        [snazzChild snazzViewDidAppear];
+    }
+}
+
+- (void)notifySelectedControllerOfSelectionChangeIfSupported {
+    id<HEMSnazzBarControllerChild> snazzChild = [self selectedSnazzChild];
+    if ([snazzChild respondsToSelector:@selector(snazzViewDidAppear)]) {
+        [snazzChild snazzViewDidAppear];
+    }
 }
 
 @end

@@ -12,6 +12,14 @@ extern CGFloat const HEMSnazzBarHeight;
 
 @class HEMSnazzBarController;
 
+@protocol HEMSnazzBarControllerChild <NSObject>
+
+@optional
+- (void)snazzViewDidAppear;
+- (void)snazzViewWillDisappear;
+
+@end
+
 @protocol HEMSnazzBarControllerDelegate <NSObject>
 
 @optional

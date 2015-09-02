@@ -7,6 +7,8 @@
 //
 #import "HEMBaseController.h"
 
+@class HEMSnazzBarController;
+
 typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
     HEMRootDrawerTabConditions = 0,
     HEMRootDrawerTabTrends = 1,
@@ -66,5 +68,10 @@ extern NSString* const HEMRootDrawerDidCloseNotification;
  *  @return a view controller or nil
  */
 - (UIViewController*)frontController;
+
+/**
+ *  @return the snazz bar controller
+ */
+- (HEMSnazzBarController*)barController;
 
 @end

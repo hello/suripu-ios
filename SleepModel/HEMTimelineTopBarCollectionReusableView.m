@@ -35,6 +35,10 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
     self.weekdayDateFormatter = [NSDateFormatter new];
     self.weekdayDateFormatter.dateFormat = @"EEEE";
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
+    self.drawerButton.accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.menu-open", nil);
+    self.drawerButton.accessibilityLabel = NSLocalizedString(@"timeline.accessibility-label.menu", nil);
+    self.dateLabel.isAccessibilityElement = NO;
+    self.dateButton.accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.history-open", nil);
 }
 
 - (void)setDate:(NSDate*)date {
@@ -54,6 +58,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
         title = [self.rangeDateFormatter stringFromDate:date];
     
     [[self dateLabel] setText:title];
+    self.dateButton.accessibilityValue = title;
 }
 
 - (NSString*)dateTitle {
@@ -66,21 +71,23 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 
     CGFloat titleConstant = HEMCenterTitleDrawerClosedTop;
     CGFloat drawerConstant = HEMDrawerButtonClosedTop;
-    
+    UIColor* titleTextColor;
+    NSString* accessibilityHint;
     if (isOpen) {
         titleConstant = HEMCenterTitleDrawerOpenTop;
         drawerConstant = HEMDrawerButtonOpenTop;
+        titleTextColor = [UIColor barButtonDisabledColor];
+        accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.menu-close", nil);
+        self.dateButton.isAccessibilityElement = NO;
+    } else {
+        titleTextColor = [UIColor colorWithWhite:0 alpha:0.7f];
+        accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.menu-open", nil);
+        self.dateButton.isAccessibilityElement = YES;
     }
-
+    self.drawerButton.accessibilityHint = accessibilityHint;
     [[self centerTitleTopConstraint] setConstant:titleConstant];
     [[self drawerTopConstraint] setConstant:drawerConstant];
     [self setNeedsUpdateConstraints];
-    
-    UIColor* titleTextColor
-        = isOpen
-        ? [UIColor barButtonDisabledColor]
-        : [UIColor colorWithWhite:0 alpha:0.7f];
-    
     [UIView animateWithDuration:0.2f
                      animations:^{
                          [[self dateLabel] setTextColor:titleTextColor];
@@ -93,7 +100,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
         [[self shareButton] setAlpha:enabled];
     };
     
-    void(^completion)(BOOL finished) = ^(BOOL finished){
+    void(^completion)(BOOL) = ^(BOOL finished){
         [[self shareButton] setEnabled:enabled];
     };
     

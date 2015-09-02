@@ -1,4 +1,4 @@
-
+#import <SenseKit/SenseKit.h>
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepGraphViewController.h"
@@ -19,7 +19,11 @@
 
 - (UIViewController*)controllerBefore:(UIViewController*)viewController {
     NSDate* currentDate = [(HEMSleepGraphViewController*)viewController dateForNightOfSleep];
-    return [self sleepSummaryControllerWithDate:[currentDate previousDay]];
+    NSDate* createdAt = [[[SENServiceAccount sharedService] account] createdAt];
+    NSDate* previousDay = [currentDate previousDay];
+    if (!createdAt || [createdAt compare:previousDay] == NSOrderedAscending)
+        return [self sleepSummaryControllerWithDate:previousDay];
+    return nil;
 } 
 
 #pragma mark - UIPageViewController

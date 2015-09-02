@@ -19,6 +19,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 @property (nonatomic, strong) UIScrollView* contentView;
 @property (nonatomic, assign) CGFloat previousScrollOffsetX;
 @property (nonatomic, assign) NSInteger previousSelectedIndex;
+@property (nonatomic, assign, getter=isUserScrolling) BOOL userScrolling;
 @end
 
 @implementation HEMSnazzBarController
@@ -191,13 +192,12 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 - (void)showControllerAtIndex:(NSUInteger)index animated:(BOOL)animated {
     [self hideBar:NO animated:animated];
     [self loadControllerViewAtIndexIfNeeded:index];
+    [self.buttonsBar selectButtonAtIndex:index animated:animated];
     
     CGFloat offsetX = index * CGRectGetWidth(self.contentView.bounds);
     if (offsetX != self.contentView.contentOffset.x) {
-        [self.contentView setContentOffset:CGPointMake(offsetX, 0.0f) animated:YES];
+        [self.contentView setContentOffset:CGPointMake(offsetX, 0.0f) animated:animated];
     }
-    
-    [self.buttonsBar selectButtonAtIndex:index animated:animated];
 }
 
 - (void)setViewControllers:(NSArray *)viewControllers {
@@ -223,11 +223,22 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 
 #pragma mark - ScrollView Delegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self setUserScrolling:YES];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat scrollOffsetX = scrollView.contentOffset.x;
     CGFloat contentWidth = CGRectGetWidth(self.contentView.bounds);
     NSInteger targetIndex = scrollOffsetX / contentWidth;
     NSInteger previousIndex = self.previousScrollOffsetX / contentWidth;
+    CGFloat percentageScrolled = scrollOffsetX / (contentWidth * [[self viewControllers] count]);
+    
+    if ([self isUserScrolling]) {
+        // only animate the snazzbar separately on scroll if it was user actively
+        // scrolling and not from a button press
+        [[self buttonsBar] setSelectionRatio:percentageScrolled];
+    }
     
     [self loadControllerViewAtIndexIfNeeded:targetIndex];
     [self notifyControllerAppearanceAtIndexIfNeeded:targetIndex];
@@ -239,6 +250,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSUInteger targetIndex = scrollView.contentOffset.x / CGRectGetWidth(scrollView.bounds);
     [self notifyControllerAppearanceAtIndexIfNeeded:self.selectedIndex];
+    [self setUserScrolling:NO];
     [self setSelectedIndex:targetIndex];
 }
 

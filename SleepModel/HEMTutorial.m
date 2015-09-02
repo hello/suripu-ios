@@ -259,7 +259,8 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.alarms.title", nil)
                                          text:NSLocalizedString(@"tutorial.alarms.message", nil)
-                                        image:[UIImage imageNamed:@"welcome_dialog_alarm"]];
+                                        image:[UIImage imageNamed:@"welcome_dialog_alarm"]
+                                    videoPath:NSLocalizedString(@"video.url.alarm", nil)];
     
     [self showTutorialWithContent:@[tutorial] from:controller];
 }

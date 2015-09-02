@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.2</string>
+	<string>1.1.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.1.2.6</string>
+	<string>1.1.3.4</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -57,6 +57,8 @@
 	<string>${SENSE_ZENDESK_URL}</string>
 	<key>SenseAppReviewURL</key>
 	<string>${SENSE_APP_REVIEW_URL}</string>
+	<key>SensePasswordResetURL</key>
+	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

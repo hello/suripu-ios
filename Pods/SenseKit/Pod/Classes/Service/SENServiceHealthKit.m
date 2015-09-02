@@ -11,7 +11,7 @@
 
 #import "SENServiceHealthKit.h"
 #import "SENService+Protected.h"
-#import "SENTimeline.h"
+#import "Model.h"
 #import "SENAPITimeline.h"
 #import "SENLocalPreferences.h"
 
@@ -71,7 +71,7 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     return [[preferences userPreferenceForKey:SENServiceHKEnable] boolValue];
 }
 
-- (void)saveLastWrittenDate:(NSDate*)date {
+- (void)saveLastSyncDate:(NSDate*)date {
     if (date == nil) {
         return;
     }
@@ -79,7 +79,7 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     [preferences setUserPreference:date forKey:SENServiceHKLastDateWritten];
 }
 
-- (NSDate*)lastWrittenDate {
+- (NSDate*)lastSyncDate {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
     return [preferences userPreferenceForKey:SENServiceHKLastDateWritten];
 }
@@ -180,7 +180,7 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     NSDate* lastNight = [calendar dateByAddingComponents:lastNightComponents toDate:today options:0];
     
     // last time it was sync'ed
-    NSDate* syncStartDate = [self lastWrittenDate];
+    NSDate* syncStartDate = [self lastSyncDate];
     
     if (syncStartDate) {
         NSDateComponents *difference = [calendar components:NSCalendarUnitDay
@@ -204,7 +204,7 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     __weak typeof(self) weakSelf = self;
     [self syncTimelineDataAfter:syncStartDate until:lastNight withCalendar:calendar completion:^(NSArray* timelines, NSError *error) {
         if (!error) {
-            [weakSelf saveLastWrittenDate:lastNight];
+            [weakSelf saveLastSyncDate:lastNight];
         }
         completion (error);
     }];
@@ -328,14 +328,14 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
             && metric.type == SENTimelineMetricTypeFellAsleep
             && metric.unit == SENTimelineMetricUnitTimestamp
             && metricValue > 0) {
-            sleepDate = [NSDate dateWithTimeIntervalSince1970:metricValue / 1000];
+            sleepDate = SENDateFromNumber(metric.value);
         }
 
         if (sleepDate != nil
             && metric.type == SENTimelineMetricTypeWokeUp
             && metric.unit == SENTimelineMetricUnitTimestamp
             && metricValue > 0) {
-            wakeUpDate = [NSDate dateWithTimeIntervalSince1970:metricValue / 1000];
+            wakeUpDate = SENDateFromNumber(metric.value);
         }
     }
     

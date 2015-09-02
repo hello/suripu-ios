@@ -18,5 +18,6 @@
 - (CGSize)sizeForContentAtIndexPath:(NSIndexPath*)indexPath;
 - (CGFloat)contentSpacingAtSection:(NSInteger)section;
 - (UIEdgeInsets)contentInsetAtSection:(NSInteger)section;
+- (void)setVisible:(BOOL)visible;
 
 @end

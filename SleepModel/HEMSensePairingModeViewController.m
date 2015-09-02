@@ -10,10 +10,12 @@
 
 #import "HEMSensePairingModeViewController.h"
 #import "HEMActionButton.h"
+#import "HEMEmbeddedVideoView.h"
 
 @interface HEMSensePairingModeViewController()
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
+@property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView *videoView;
 
 @end
 
@@ -21,10 +23,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureVideoView];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
     [self configureAttributedSubtitle];
     [self trackAnalyticsEvent:HEMAnalyticsEventPairingMode];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![[self videoView] isReady]) {
+        [[self videoView] setReady:YES];
+    } else {
+        [[self videoView] playVideoWhenReady];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[self videoView] pause];
+}
+
+- (void)configureVideoView {
+    UIImage* image = [UIImage imageNamed:@"pairingMode"];
+    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pairing-mode", nil);
+    [[self videoView] setFirstFrame:image videoPath:videoPath];
 }
 
 - (void)configureAttributedSubtitle {

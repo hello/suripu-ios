@@ -21,8 +21,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 @interface HEMWeightPickerViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UILabel* topWeightLabel;
-@property (weak, nonatomic) IBOutlet UILabel* botWeightLabel;
+@property (weak, nonatomic) IBOutlet UILabel* weightLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UIView *currentWeightMarker;
@@ -103,15 +102,10 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     CGFloat markX = ((offX + [scrollView contentInset].left) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
     CGFloat lbs = MAX(0.0f, markX);
     CGFloat kgs = HEMToKilograms(@(lbs));
-
-    NSString* lbsText = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
-    NSString* kgsText = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kgs];
     if ([SENPreference useMetricUnitForWeight]) {
-        [[self topWeightLabel] setText:kgsText];
-        [[self botWeightLabel] setText:lbsText];
+        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kgs];
     } else {
-        [[self topWeightLabel] setText:lbsText];
-        [[self botWeightLabel] setText:kgsText];
+        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
     }
     
     [self setWeightInKgs:kgs];

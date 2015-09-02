@@ -1,5 +1,55 @@
 # Changelog
 
+## 1.1.3.4
+
+Fixes:
+
+* Fixed a crasher that can occur if metric value for a timestamp is 0
+
+## 1.1.3.3
+
+Fixes:
+
+* Changed copy of the app review initial question to exclude the
+* Moved the pairing mode animation (video) to the pairing mode screen and revert the change to the sense pairing screen
+
+## 1.1.3.2
+
+New:
+
+* Alarm tutorial dialog (not the smart alarm one) now plays video when connection is available
+* Onboarding pill setup screen plays video
+* Onboarding sense pairing mode screen plays video
+* Onboarding pill pairing screen plays video
+* Onboarding sense colors / before sleep screen plays video
+* Onboarding alarm screen plays video
+* Alarm copy changed from Sound to Tone
+* Accessibility improvements to Timelien
+* Air quality unit copy changes
+* Improved scrolling experience between tabs in the back view
+* Timeline differentiates between not enough data and no data, rending a support link to further explain
+
+## 1.1.3.1
+
+New:
+
+* App review feedback is also sent to the server
+* App review re-enabled for release builds
+* Added a debug info screen to show config, api host, and usage stats stored
+* Device settings will connect to the last sense connected, when nearby sense, without scanning
+
+## 1.1.3.0
+
+New:
+
+* Prevent viewing of Timelines older than when account was created, if account info is available
+* Height and Weight secondary label removed
+* Units and time no longer show the word unit for temperature
+* Support URL slugs no longer reference titles
+* Dev builds will point to a dev password reset URL
+* Factory reset confirmation dialog copy updated
+* Onboarding Sense colors copy changed from orange to red
+
 ## 1.1.2.6
 
 New:

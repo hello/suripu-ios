@@ -494,6 +494,8 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionPairingMode}];
     
+    [self listenForDisconnects];
+    
     NSString* message = NSLocalizedString(@"settings.sense.enabling-pairing-mode", nil);
     [self showActivityText:message completion:^{
         __weak typeof(self) weakSelf = self;

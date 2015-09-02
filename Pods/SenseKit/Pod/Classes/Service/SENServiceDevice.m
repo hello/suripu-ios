@@ -312,26 +312,28 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     return [self shouldWarnAboutLastSeenForDevice:[self senseInfo]];
 }
 
+#pragma mark - Last Connected Sense
+
 #pragma mark - Scanning
 
 - (void)scanForPairedSense:(void(^)(NSError* error))completion {
+    void(^done)(NSError* error) = ^(NSError* error){
+        if (completion) {
+            completion (error);
+        }
+    };
+    
     if ([self senseManager] != nil) { // already loaded?  just complete
         
-        if (completion) completion (nil);
+        done (nil);
         
-    } else if (![SENSenseManager canScan]) { // has info?  find Sense nearby
+    } else if (![SENSenseManager canScan]) {
         
-        if (completion) completion ([self errorWithType:SENServiceDeviceErrorBLEUnavailable]);
+        done ([self errorWithType:SENServiceDeviceErrorBLEUnavailable]);
         
-    } else if (![SENSenseManager isReady]) { // has info?  find Sense nearby
-        // if it's not ready for scanning, try again in a bit
-        return [self performSelector:@selector(scanForPairedSense:)
-                          withObject:completion
-                          afterDelay:0.1f];
+    } else if ([self senseInfo] != nil) {
         
-    } else if ([self senseInfo] != nil) { // has info?  find Sense nearby
-        
-        [self findAndManageSense:completion];
+        [self findAndManageSense:done];
         
     } else if (![self isInfoLoaded]) { // no info yet?  load the info, then find sense
         
@@ -340,22 +342,34 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             if (error != nil) {
-                if (completion) completion (error);
+                done (error);
                 return;
             }
             
-            if (strongSelf && [strongSelf senseInfo] != nil) {
-                [strongSelf findAndManageSense:completion];
+            if ([strongSelf senseInfo] != nil) {
+                [strongSelf findAndManageSense:done];
+            } else {
+                done ([strongSelf errorWithType:SENServiceDeviceErrorSenseNotPaired]);
             }
         }];
         
     } else if ([self senseInfo] == nil) { // loaded, but still no info?
         
-        if (completion) completion ([self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
+        done ([self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
         
     } else { // what else can actually happen?
-        if (completion) completion( nil );
+        done( nil );
     }
+}
+
+- (BOOL)senseIsTheOnePairedToAccount:(SENSense*)sense {
+    if (!sense || ![self senseInfo]) {
+        return NO;
+    }
+    
+    NSString* pairedDeviceId = [[[self senseInfo] deviceId] lowercaseString];
+    NSString* senseDeviceId = [[sense deviceId] lowercaseString];
+    return [pairedDeviceId isEqualToString:senseDeviceId];
 }
 
 - (void)findAndManageSense:(void(^)(NSError* error))completion {
@@ -367,20 +381,31 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     }
     
     if ([SENSenseManager isScanning]) {
-        [SENSenseManager stopScan]; // stop it, then go again
+        [SENSenseManager stopScan];
     }
     
     __weak typeof(self) weakSelf = self;
+    [SENSenseManager lastConnectedSense:^(SENSense *sense, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!error && [strongSelf senseIsTheOnePairedToAccount:sense]) {
+            [strongSelf setSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
+            completion (nil);
+        } else if ([error code] == SENSenseManagerErrorCodeNoBLE) {
+            completion (error);
+        } else { // if any other error or sense not the one paired, scan for it
+            [strongSelf scan:completion];
+        }
+    }];
+}
+
+- (void)scan:(void(^)(NSError* error))completion {
+    __weak typeof(self) weakSelf = self;
     [SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
         
         if ([senses count] > 0) {
-            NSString* lowerDeviceId = nil;
-            NSString* lowerInfoDeviceId = [[[strongSelf senseInfo] deviceId] lowercaseString];
             for (SENSense* sense in senses) {
-                lowerDeviceId = [[sense deviceId] lowercaseString];
-                if ([lowerInfoDeviceId isEqualToString:lowerDeviceId]) {
+                if ([strongSelf senseIsTheOnePairedToAccount:sense]) {
                     [strongSelf setSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
                     break;
                 }
@@ -391,13 +416,11 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             [strongSelf setSenseManager:nil];
         }
         
-        if (completion) {
-            NSError* error = nil;
-            if ([strongSelf senseManager] == nil) {
-                error = [strongSelf errorWithType:SENServiceDeviceErrorSenseUnavailable];
-            }
-            completion( error );
+        NSError* error = nil;
+        if ([strongSelf senseManager] == nil) {
+            error = [strongSelf errorWithType:SENServiceDeviceErrorSenseUnavailable];
         }
+        completion( error );
         
     }];
 }

@@ -31,7 +31,7 @@
 "onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, air quality, light, and noise. Sense has three different colors.";
 "onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
-"onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
+"onboarding.before-sleep.4.description" = "Sense glows red when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
 "onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom. Go ahead, give it a try now.";
 "onboarding.end-message.well-done" = "You're all set up";
 "onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
@@ -52,7 +52,6 @@
 // help links
 "help.email.address" = "support@hello.is";
 "help.email.subject" = "Sense Help Request";
-"help.forgot-password" = "https://account.hello.is/reset";
 "help.url.support.hyperlink-text" = "https://support.hello.is";
 "help.url.order-form" = "https://order.hello.is/";
 "help.url.support" = "http://support.hello.is/hc/en-us/";
@@ -62,14 +61,16 @@
 "help.url.slug.enhanced-audio" = "articles/204812619";
 "help.url.slug.sense-pairing-mode" = "articles/204797179";
 "help.url.slug.sense-pairing" = "articles/204797189";
-"help.url.slug.sense-about" = "articles/204797299-Setting-Up-Sense";
+"help.url.slug.sense-about" = "articles/204797299";
 "help.url.slug.wifi-scan" = "articles/205493095";
 "help.url.slug.pill-setup-another" = "articles/204797289";
 "help.url.slug.pill-not-seen" = "articles/204797159";
-"help.url.slug.pill-battery" = "articles/204496999-Battery-Change";
+"help.url.slug.pill-battery" = "articles/204496999";
 "help.url.slug.sense-not-seen" = "articles/204797259";
 "help.url.slug.sense-not-connected" = "articles/205493075";
 "help.url.slug.sense-no-internet" = "articles/205493285";
+"help.url.slug.no-data-recorded" = "articles/205706435";
+"help.url.slug.not-enough-data-recorded" = "articles/204994629";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -161,7 +162,7 @@
 "settings.units.pounds" = "Pounds";
 "settings.units.kilograms" = "Kilograms";
 "settings.units.clock" = "Time";
-"settings.units.temp" = "Temperature units";
+"settings.units.temp" = "Temperature";
 "settings.units.weight" = "Weight";
 "settings.units.height" = "Height";
 "settings.devices" = "Sense and Sleep Pill";
@@ -197,6 +198,7 @@
 "debug.option.reset" = "Start Over";
 "debug.option.led" = "LED";
 "debug.option.led.title" = "LED options";
+"debug.option.debug.info" = "Debug info";
 "debug.led.option.pair" = "Pair";
 "debug.led.option.off" = "Off";
 "debug.led.option.success" = "Success";
@@ -280,7 +282,7 @@
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
-"settings.device.dialog.factory-restore-message" = "Are you sure you want to restore Sense to factory settings? This will disconnect your account from Sense, as well as any Sleep Pills you've paired. You will need to have a Sense paired to continue using the application.";
+"settings.device.dialog.factory-restore-message" = "This will disconnect your account from this Sense, as well as any Sleep Pills you have paired. You will need to pair with another Sense to continue using the application. You should only perform a factory reset if instructed to do so by Support. This operation cannot be undone.";
 "settings.factory-restore.error.title" = "Factory restore failed";
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
@@ -311,7 +313,7 @@
 "alarms.no-data" = "There was a problem displaying your alarms. Please try again.";
 
 // alarm settings
-"alarm.sound.title" = "Sound";
+"alarm.sound.title" = "Tone";
 "alarm.repeat.title" = "Repeat";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
@@ -363,11 +365,15 @@
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";
 "graph-data.unavailable" = "No data available";
+"sensor.accessibility-value.condition-alert" = "poor";
+"sensor.accessibility-value.condition-warning" = "acceptable";
+"sensor.accessibility-value.condition-ideal" = "ideal";
+"sensor.accessibility-value.condition-unknown" = "unknown";
 
 // measurements
 "measurement.temperature.unit" = "°";
 "measurement.percentage.unit" = "%";
-"measurement.particle.unit" = "mg/m³";
+"measurement.particle.unit" = "µg/m³";
 "measurement.light.unit" = "lx";
 "measurement.sound.unit" = "dB";
 "measurement.cm.unit" = "cm";
@@ -388,13 +394,30 @@
 "measurement.db.format" = "%lddb";
 "measurement.lx.format" = "%ldlx";
 
+// drawer
+"drawer.action.open" = "Drawer opened";
+"drawer.action.close" = "Drawer closed";
+
+// timeline
+"timeline.accessibility-hint.menu-open" = "Double tap to open";
+"timeline.accessibility-hint.menu-close" = "Double tap to close";
+"timeline.accessibility-hint.history-open" = "Double tap to view timeline history";
+"timeline.accessibility-label.menu" = "Drawer";
+"timeline.accessibility-label.breakdown" = "Score breakdown";
+"timeline.accessibility-hint.breakdown" = "Double tap to open a breakdown of score components";
+"timeline.accessibility-label.summary-score" = "Sleep score";
+"timeline.accessibility-value.summary-score.format" = "%ld, condition %@";
+
 // missing data
 "sleep-data.first-night.title" = "See you in the morning";
 "sleep-data.first-night.message" = "In the morning, you'll see your first Sleep Timeline here. There are no modes to set — Sense will automatically know when you go to bed. All you need to do is sleep.";
+"sleep-data.none.title" = "No Sleep Timeline";
+"sleep-data.none.message" = "There was no sleep data recorded for this night.";
 "sleep-data.not-enough.title" = "No Sleep Timeline";
 "sleep-data.not-enough.message" = "Some sleep data was recorded, but not enough to generate a Sleep Timeline for this night.";
 "sleep-data.error.title" = "There was an error";
 "sleep-data.error.message" = "There was a problem retrieving your Sleep Timeline. Please try again in a few moments.";
+"sleep-data.not-enough.contact-support" = "Learn more";
 
 // feedback
 "sleep-event.feedback.title.generic" = "What time did this event occur?";
@@ -426,6 +449,11 @@
 "sleep-event.action.adjust.title" = "Adjust time";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
+"sleep-event.accessibility-label" = "Event";
+"sleep-event.accessibility-value.format" = "%@, %@";
+"sleep-event.accessibility-hint" = "Double tap to open event options";
+
+"sleep-segment.accessibility-label" = "State";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";
@@ -439,15 +467,15 @@
 "sleep-stat.sound" = "Noise";
 "sleep-stat.particulates" = "Air quality";
 "sleep-stat.minute.format" = "%.0f";
-"sleep-stat.minute.unit" = "m";
+"sleep-stat.minute.unit" = "min";
 "sleep-stat.hour.format" = "%.1f";
-"sleep-stat.hour.unit" = "h";
+"sleep-stat.hour.unit" = "hrs";
 "sleep-stat.sound.condition.ideal" = "just right";
 "sleep-stat.sound.condition.warning" = "a little loud";
 "sleep-stat.sound.condition.alert" = "way too loud";
 "sleep-stat.sound.condition.unknown" = "--";
 "sleep-stat.particulates.condition.ideal" = "just right";
-"sleep-stat.particulates.condition.warning" = "okay";
+"sleep-stat.particulates.condition.warning" = "not ideal";
 "sleep-stat.particulates.condition.alert" = "poor";
 "sleep-stat.particulates.condition.unknown" = "--";
 "sleep-stat.light.condition.ideal" = "just right";
@@ -471,6 +499,11 @@
 "sleep-stat.sleep-duration.deep.single.format" = "You were in **Deep Sleep** for one minute.";
 "sleep-stat.sleep-duration.awake.plural.format" = "You were awake for %ld minutes.";
 "sleep-stat.sleep-duration.awake.single.format" = "You were awake for one minute.";
+
+"sleep-stat.accessibility.sleep-state.light.format" = "Light sleep, %ld minutes, sleep depth %ld";
+"sleep-stat.accessibility.sleep-state.medium.format" = "Medium sleep, %ld minutes, sleep depth %ld";
+"sleep-stat.accessibility.sleep-state.deep.format" = "Sound sleep, %ld minutes, sleep depth %ld";
+"sleep-stat.accessibility.sleep-state.awake.format" = "Awake, %ld minutes";
 
 // remove below once we want to display the duration again.
 "sleep-stat.sleep-duration.medium" = "You were in **Medium Sleep**.";
@@ -501,6 +534,7 @@
 "sleep-history.depth.medium" = "Medium sleep";
 "sleep-history.depth.deep" = "Deep sleep";
 "sleep-history.no-data" = "There is no information available about the selected date.";
+"sleep-history.accessibility-value.timeline.format" = "%@, Sleep score %ld, condition %@";
 
 // trends
 "trends.title" = "Trends";
@@ -525,6 +559,10 @@
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";
 "status.success" = "Done";
+
+// action sheet
+"action-sheet.accessibility.did-appear" = "Open options";
+"action-sheet.accessibility.did-disappear" = "Dismissed options";
 
 // actitivity messages
 "activity.loading" = "Loading...";
@@ -615,7 +653,7 @@
 "tutorial.sensor.sound.title" = "Noise";
 "tutorial.sensor.sound.message" = "Sense measures noise in decibels (dB). Here you’ll see detailed information on the noise levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.particulates.title" = "Air quality";
-"tutorial.sensor.particulates.message" = "Sense measures air quality in [mg/m^3], which is a measure of the amount of particulates in the air by volume. Here you'll see detailed information on the air quality in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.particulates.message" = "Sense measures air quality in micrograms per cubic meter (µg/m³), which is a measure of the amount of particulates in the air by volume. Here you'll see detailed information on the air quality in your bedroom. The graphs will fill in as Sense collects more data.";
 
 "tutorial.pill-color.title" = "Sleep Pill Color";
 "tutorial.pill-color.message" = "Each Sleep Pill paired with Sense is assigned a unique color — you can see which color yours is on this page. If you shake your Sleep Pill for a few seconds, Sense will glow the color assigned to your Sleep Pill. If you’re sharing Sense with a partner, this is also a great way to tell your Sleep Pills apart if they get mixed up.";
@@ -634,7 +672,7 @@
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 
 // app review questions
-"app-review.question.1" = "Are you enjoying the Sense?";
+"app-review.question.1" = "Are you enjoying Sense?";
 "app-review.question.2" = "Great. Would you mind leaving us a rating on the App Store?";
 "app-review.question.3" = "Would you like to let us know how we can improve your experience?";
 "app-review.question.answer.love-it" = "Yes, I love it";
@@ -645,3 +683,11 @@
 "app-review.question.answer.not-now" = "No, not now";
 "app-review.question.answer.dont-ask-again" = "Don't ask again";
 "app-review.question.answer.no-thanks" = "No thanks";
+
+// videos
+"video.url.onboarding.pill-pair" = "http://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
+"video.url.alarm" = "http://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
+"video.url.onboarding.pill-setup" = "http://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
+"video.url.onboarding.pairing-mode" = "http://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
+"video.url.onboarding.alarm" = "http://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
+"video.url.onboarding.bedroom-condition" = "http://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";

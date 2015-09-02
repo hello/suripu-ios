@@ -18,9 +18,11 @@
 #import "HEMAlarmViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingService.h"
+#import "HEMEmbeddedVideoView.h"
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView *videoView;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @end
@@ -29,9 +31,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureVideoView];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
     [self trackAnalyticsEvent:HEMAnalyticsEventFirstAlarm];
+}
+
+- (void)configureVideoView {
+    UIImage* image = [UIImage imageNamed:@"smartAlarm"];
+    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.alarm", nil);
+    [[self videoView] setFirstFrame:image videoPath:videoPath];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![[self videoView] isReady]) {
+        [[self videoView] setReady:YES];
+    } else {
+        [[self videoView] playVideoWhenReady];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[self videoView] pause];
 }
 
 - (void)next {

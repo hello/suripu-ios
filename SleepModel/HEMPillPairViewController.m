@@ -21,6 +21,7 @@
 #import "HEMBluetoothUtils.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
+#import "HEMEmbeddedVideoView.h"
 
 static CGFloat const kHEMPillPairAnimDuration = 0.5f;
 static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
@@ -33,6 +34,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 @property (weak, nonatomic) IBOutlet UILabel *activityLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView *videoView;
 
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
@@ -50,8 +52,14 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [super viewDidLoad];
     
     [self configureButtons];
+    [self configureVideo];
     [self configureActivity];
     [self trackAnalyticsEvent:HEMAnalyticsEventPairPill];
+}
+
+- (void)configureVideo {
+    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-pair", nil);
+    [[self videoView] setVideoPath:videoPath];
 }
 
 - (void)configureActivity {
@@ -103,6 +111,17 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         [self pairPill:self];
         [self setLoaded:YES];
     }
+    
+    if (![[self videoView] isReady]) {
+        [[self videoView] setReady:YES];
+    } else {
+        [[self videoView] playVideoWhenReady];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[self videoView] pause];
 }
 
 - (void)setControlsEnabled:(BOOL)enable {

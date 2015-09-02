@@ -104,7 +104,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [super viewDidBecomeActive];
     [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
     
-    [HEMAppUsage appUsageForIdentifier:HEMAppUsageAppLaunched];
+    [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppLaunched];
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
 }
 
@@ -135,6 +135,11 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
             [self setMainControllerLoaded:YES];
         }
     }
+}
+
+- (BOOL)accessibilityPerformMagicTap {
+    [self toggleSettingsDrawer];
+    return YES;
 }
 
 - (void)viewDidEnterBackground
@@ -381,11 +386,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     switch (paneState) {
     case MSDynamicsDrawerPaneStateClosed:
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.close", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
                                                             object:nil];
         [SENAnalytics track:kHEMAnalyticsEventTimelineClose];
         break;
     case MSDynamicsDrawerPaneStateOpen:
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.open", nil));
         [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
                                                             object:nil];
         [SENAnalytics track:kHEMAnalyticsEventTimelineOpen];

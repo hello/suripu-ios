@@ -33,6 +33,7 @@
 #import "HEMOnboardingService.h"
 #import "HelloStyleKit.h"
 #import "HEMAudioSession.h"
+#import "HEMSupportUtil.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -303,13 +304,13 @@ static BOOL hasLoadedBefore = NO;
         return;
     __weak typeof(self) weakSelf = self;
     HEMActivateAudioSession(YES, ^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error)
-            return;
-        [strongSelf.audioPlayer play];
-        [strongSelf monitorPlaybackProgress];
-        [button setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
-        strongSelf.playingButton = button;
+      __strong typeof(weakSelf) strongSelf = weakSelf;
+      if (error)
+          return;
+      [strongSelf.audioPlayer play];
+      [strongSelf monitorPlaybackProgress];
+      [button setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+      strongSelf.playingButton = button;
     });
 }
 
@@ -540,7 +541,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)didTapSummaryButton:(UIButton *)sender {
-    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownViewController];
+    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownController];
     controller.result = self.dataSource.sleepResult;
     [self presentViewController:controller animated:YES completion:NULL];
 }
@@ -550,7 +551,7 @@ static BOOL hasLoadedBefore = NO;
         return;
 
     [self setSelectedIndexPath:indexPath];
-
+    self.popupView.attributedText = [self.dataSource summaryForSegmentAtIndexPath:indexPath];
     CGFloat top = [self topOfSelectedTimelineSleepSegment];
     [self.popupView showPointer:top > 0];
     self.popupViewTop.constant = top + HEMPopupAnimationDistance;
@@ -564,27 +565,25 @@ static BOOL hasLoadedBefore = NO;
     self.popupMaskView.hidden = NO;
     [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
         animations:^{
-            [self emphasizeCellAtIndexPath:indexPath];
-            [self.popupView layoutIfNeeded];
-            self.popupView.alpha = 1;
+          [self emphasizeCellAtIndexPath:indexPath];
+          [self.popupView layoutIfNeeded];
+          self.popupView.alpha = 1;
         }
         completion:^(BOOL finished) {
-            __weak typeof(self) weakSelf = self;
-            int64_t delayInSec = (int64_t)(HEMPopupAnimationDisplayInterval * NSEC_PER_SEC);
-            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
-            dispatch_after(delay, dispatch_get_main_queue(), ^{
-                __strong typeof(weakSelf) strongSelf = weakSelf;
-                if ([[strongSelf selectedIndexPath] isEqual:indexPath]) {
-                    [strongSelf dismissTimelineSegmentPopup:YES];
-                }
-            });
+          __weak typeof(self) weakSelf = self;
+          int64_t delayInSec = (int64_t)(HEMPopupAnimationDisplayInterval * NSEC_PER_SEC);
+          dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
+          dispatch_after(delay, dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([[strongSelf selectedIndexPath] isEqual:indexPath]) {
+                [strongSelf dismissTimelineSegmentPopup:YES];
+            }
+          });
         }];
 }
 
 - (CGFloat)topOfSelectedTimelineSleepSegment {
     CGFloat const HEMPopupSpacingDistance = 8.f;
-    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:[self selectedIndexPath]];
-    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes =
         [self.collectionView layoutAttributesForItemAtIndexPath:[self selectedIndexPath]];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
@@ -612,19 +611,19 @@ static BOOL hasLoadedBefore = NO;
     };
 
     void (^completion)(BOOL finish) = ^(BOOL finished) {
-        [self setSelectedIndexPath:nil];
-        // remove all animations in case the animation is running already, with
-        // a delay, which would cause problems if dimissing the timeline without
-        // animation was reqeusted before
-        [self.popupView.layer removeAllAnimations];
-        [self.popupMaskView.layer removeAllAnimations];
-        self.popupView.hidden = YES;
-        self.popupMaskView.hidden = YES;
-        [self setDismissing:NO];
+      [self setSelectedIndexPath:nil];
+      // remove all animations in case the animation is running already, with
+      // a delay, which would cause problems if dimissing the timeline without
+      // animation was reqeusted before
+      [self.popupView.layer removeAllAnimations];
+      [self.popupMaskView.layer removeAllAnimations];
+      self.popupView.hidden = YES;
+      self.popupMaskView.hidden = YES;
+      [self setDismissing:NO];
     };
-    
+
     [self setDismissing:YES];
-    
+
     if (animated) {
         [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
                               delay:0.0f
@@ -652,29 +651,6 @@ static BOOL hasLoadedBefore = NO;
     [self.popupMaskView showUnderlyingViewRect:maskArea];
     self.popupMaskView.alpha = 0.7f;
     self.popupMaskView.hidden = NO;
-}
-
-- (NSString *)summaryPopupTextForSegment:(SENTimelineSegment *)segment {
-    static NSString *const HEMPopupTextFormat = @"sleep-stat.sleep-duration.%@";
-    NSString *depth;
-    switch (segment.sleepState) {
-        case SENTimelineSegmentSleepStateSound:
-            depth = @"deep";
-            break;
-        case SENTimelineSegmentSleepStateMedium:
-            depth = @"medium";
-            break;
-        case SENTimelineSegmentSleepStateLight:
-            depth = @"light";
-            break;
-        case SENTimelineSegmentSleepStateAwake:
-        default:
-            depth = @"awake";
-            break;
-    }
-
-    NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, depth];
-    return NSLocalizedString(format, nil);
 }
 
 #pragma mark - Top Bar
@@ -811,8 +787,8 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark - UIScrollViewDelegate
 
 - (HEMTimelineContainerViewController *)containerViewController {
-    UIViewController* parent = self.parentViewController;
-    UIViewController* grandParent = parent.parentViewController;
+    UIViewController *parent = self.parentViewController;
+    UIViewController *grandParent = parent.parentViewController;
     return (id)grandParent;
 }
 
@@ -894,6 +870,7 @@ static BOOL hasLoadedBefore = NO;
     NSDate *accountCreationDate = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
     BOOL justOnboarded = accountCreationDate
                          && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
+    self.errorSupportButton.hidden = YES;
     if (hasTimelineData || [self.dataSource isLoading]) {
         [self setErrorViewsVisible:NO];
         if ([self isVisible])
@@ -907,14 +884,31 @@ static BOOL hasLoadedBefore = NO;
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
         self.errorImageView.image = [HelloStyleKit timelineErrorIcon];
+    } else if (self.dataSource.sleepResult.scoreCondition == SENConditionUnknown) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.none.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
+        [self.errorSupportButton setTitle:NSLocalizedString(@"sleep-data.not-enough.contact-support", nil)
+                                 forState:UIControlStateNormal];
+        self.errorSupportButton.hidden = NO;
     } else {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
-        NSString *message = self.dataSource.sleepResult.message;
-        self.errorMessageLabel.text = message.length > 0 ? message
-                                                         : NSLocalizedString(@"sleep-data.not-enough.message", nil);
-        self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.not-enough.message", nil);
+        self.errorImageView.image = [HelloStyleKit timelineNotEnoughDataIcon];
+        [self.errorSupportButton setTitle:NSLocalizedString(@"sleep-data.not-enough.contact-support", nil)
+                                 forState:UIControlStateNormal];
+        self.errorSupportButton.hidden = NO;
     }
     [self setErrorViewsVisible:YES];
+}
+
+- (IBAction)handleErrorSupportTap:(id)sender {
+    if (self.dataSource.sleepResult.scoreCondition == SENConditionIncomplete) {
+        [HEMSupportUtil openHelpToPage:NSLocalizedString(@"help.url.slug.not-enough-data-recorded", nil)
+                        fromController:self];
+    } else {
+        [HEMSupportUtil openHelpToPage:NSLocalizedString(@"help.url.slug.no-data-recorded", nil) fromController:self];
+    }
 }
 
 - (void)setErrorViewsVisible:(BOOL)isVisible {
@@ -959,8 +953,8 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark UICollectionViewDelegate
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    if  ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
-        SENTimelineSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+        SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
         return segment.possibleActions != SENTimelineSegmentActionNone;
     }
     return NO;

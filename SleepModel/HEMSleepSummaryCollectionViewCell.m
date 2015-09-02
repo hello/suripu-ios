@@ -1,7 +1,10 @@
 
+#import <AttributedMarkdown/markdown_peg.h>
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMTimelineMessageContainerView.h"
+#import "NSAttributedString+HEMUtils.h"
+#import "HEMMarkdown.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
@@ -28,6 +31,13 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 - (void)awakeFromNib {
     [self configureGradientViews];
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
+    self.sleepScoreTextLabel.isAccessibilityElement = NO;
+    self.messageLabel.isAccessibilityElement = NO;
+    self.messageContainerView.isAccessibilityElement = YES;
+    self.messageContainerView.accessibilityLabel = NSLocalizedString(@"timeline.accessibility-label.breakdown", nil);
+    self.messageContainerView.accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.breakdown", nil);
+    self.messageContainerView.accessibilityTraits = UIAccessibilityTraitButton;
+    self.accessibilityElements = @[ self.sleepScoreGraphView, self.messageContainerView ];
 }
 - (void)prepareForReuse {
     [super prepareForReuse];
@@ -38,9 +48,15 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     [self.sleepScoreGraphView setLoading:loading];
 }
 
-- (void)setScore:(NSInteger)sleepScore condition:(SENCondition)condition animated:(BOOL)animated {
+- (void)setScore:(NSInteger)sleepScore
+         message:(NSString *)message
+       condition:(SENCondition)condition
+        animated:(BOOL)animated {
     CGFloat const fullScoreDelay = 0.05f;
     BOOL scoreIsEmpty = sleepScore == 0;
+    NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
+    NSAttributedString *attributedMessage = [markdown_to_attr_string(message, 0, attributes) trim];
+    self.messageLabel.attributedText = attributedMessage;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
     [self.sleepScoreGraphView setScore:sleepScore condition:condition animated:animated];
     if (self.messageContainerView.alpha != 1 && ![self.sleepScoreGraphView isLoading]) {
@@ -52,6 +68,7 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
                          }
                          completion:NULL];
     }
+   self.messageContainerView.accessibilityValue = [attributedMessage string];
 }
 
 - (void)setSummaryViewsVisible:(BOOL)visible {

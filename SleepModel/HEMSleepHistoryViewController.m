@@ -1,10 +1,10 @@
 
-#import <SenseKit/SENTimeline.h>
-#import <SenseKit/SENAPITimeline.h>
+#import <SenseKit/SenseKit.h>
 #import "HEMSleepHistoryViewController.h"
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMMiniSleepScoreGraphView.h"
+#import "SENSensorAccessibility.h"
 #import "NSDate+HEMRelative.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
 @property (strong, nonatomic) NSDateFormatter* dayOfWeekFormatter;
 @property (strong, nonatomic) NSDateFormatter* dayFormatter;
+@property (strong, nonatomic) NSDateFormatter* readerDateFormatter;
 @property (strong, nonatomic) NSDateFormatter* monthFormatter;
 @property (strong, nonatomic) NSDateFormatter* monthYearFormatter;
 @property (strong, nonatomic) NSMutableArray* sleepDataSummaries;
@@ -25,7 +26,7 @@
 @implementation HEMSleepHistoryViewController
 
 static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
-static NSUInteger const HEMSleepDataCapacity = 200;
+static NSUInteger const HEMSleepDataCapacity = 400;
 
 - (void)viewDidLoad
 {
@@ -81,6 +82,8 @@ static NSUInteger const HEMSleepDataCapacity = 200;
     self.monthFormatter.dateFormat = @"MMMM";
     self.monthYearFormatter = [NSDateFormatter new];
     self.monthYearFormatter.dateFormat = @"MMMM yyyy";
+    self.readerDateFormatter = [NSDateFormatter new];
+    self.readerDateFormatter.dateFormat = @"EEEE, d MMMM";
 }
 
 - (void)configureBackgroundColors
@@ -94,10 +97,16 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 
 - (void)loadData
 {
-    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:HEMSleepDataCapacity];
-    NSDateComponents* components = [NSDateComponents new];
+    NSUInteger capacity = HEMSleepDataCapacity;
     NSDate* today = [[NSDate date] dateAtMidnight];
-    for (int i = HEMSleepDataCapacity; i > 0; i--) {
+    NSDate* creationDate = [[[SENServiceAccount sharedService] account] createdAt];
+    if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
+        NSDateComponents *difference = [self.calendar components:NSDayCalendarUnit fromDate:creationDate  toDate:today options:0];
+        capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
+    }
+    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
+    NSDateComponents* components = [NSDateComponents new];
+    for (NSUInteger i = capacity; i > 0; i--) {
         components.day = -i;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today
@@ -119,6 +128,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath
                                        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                                animated:animated];
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, [self.historyCollectionView cellForItemAtIndexPath:indexPath]);
 }
 
 - (void)updateForSelectedDate
@@ -179,12 +189,15 @@ static NSUInteger const HEMSleepDataCapacity = 200;
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
     if (indexPath.row > 0) {
         SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
-        [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
+        NSInteger score = [sleepResult.score integerValue];
+        [cell.sleepScoreView setSleepScore:score];
         [cell.graphView setSleepDataSegments:sleepResult.segments];
         cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
         cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
         cell.rightBorderView.hidden = indexPath.row == HEMSleepDataCapacity;
         cell.leftBorderView.hidden = indexPath.row == 1;
+        cell.isAccessibilityElement = YES;
+        cell.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-history.accessibility-value.timeline.format", nil), [self.readerDateFormatter stringFromDate:sleepResult.date], (long)score, SENConditionReadableValue(sleepResult.scoreCondition)];
     }
     cell.hidden = indexPath.row == 0;
     return cell;

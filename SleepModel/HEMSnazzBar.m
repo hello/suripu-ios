@@ -166,4 +166,51 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
     [self setNeedsLayout];
 }
 
+- (void)animateSelectedButtonState:(BOOL)selected {
+    NSArray* buttons = [self buttons];
+    UIButton* button = buttons[self.selectionIndex];
+    if (button.selected == selected) {
+        return;
+    }
+    
+    // selected state of a UIButton is not a property that can be animated and thus
+    // using transitionWithView
+    [UIView transitionWithView:button
+                      duration:HEMSnazzBarAnimationDuration
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                               | UIViewAnimationOptionBeginFromCurrentState
+                    animations:^{
+                        button.selected = selected;
+                    }
+                    completion:nil];
+}
+
+- (void)setSelectionRatio:(CGFloat)ratio
+{
+    CGFloat indicatorWidth = CGRectGetWidth(self.indicatorView.bounds);
+    if (indicatorWidth == 0.0f) {
+        return;
+    }
+    
+    CGFloat totalWidth = CGRectGetWidth(self.bounds);
+    CGFloat ratioOfOneSelection = indicatorWidth / totalWidth;
+    CGFloat partialIndex = ratio / ratioOfOneSelection;
+    CGFloat remainder = fabs(floorf(partialIndex) - partialIndex);
+    
+    CGFloat const epsilon = 0.000000001f;
+    BOOL partialSelection = remainder > epsilon;
+
+    if (partialSelection && self.selectionIndex != NSNotFound) {
+        [self animateSelectedButtonState:NO];
+        [self setSelectionIndex:NSNotFound];
+    } else if (!partialSelection) {
+        [self setSelectionIndex:ceilf(partialIndex)];
+        [self animateSelectedButtonState:YES];
+    }
+
+    CGRect frame = self.indicatorView.frame;
+    frame.origin.x = ratio * totalWidth;
+    self.indicatorView.frame = frame;
+}
+
 @end

@@ -35,7 +35,6 @@
 @property (nonatomic, strong) NSDate *dateForNightOfSleep;
 @property (nonatomic, strong, readwrite) SENTimeline *sleepResult;
 @property (nonatomic, strong) NSArray *aggregateDataSources;
-@property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @property (nonatomic, getter=isLoading, readwrite) BOOL loading;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
@@ -117,14 +116,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     self.loading = YES;
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
-    if ([self shouldShowLoadingView]) {
-        self.beLoading = YES;
-        [self showLoadingView];
-    } else {
-        self.beLoading = NO;
-        [self hideLoadingViewAnimated:NO];
-    }
-
     if (self.dateForNightOfSleep) {
         [SENAnalytics track:HEMAnalyticsEventTimelineDataRequest
                  properties:@{ kHEMAnalyticsEventPropDate : self.dateForNightOfSleep }];
@@ -134,13 +125,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self fetchTimelineForDate:self.dateForNightOfSleep
                     completion:^(SENTimeline *timeline, NSError *error) {
                       __strong typeof(weakSelf) strongSelf = weakSelf;
-                      if (error) {
-                          [strongSelf hideLoadingViewAnimated:YES];
-                      } else {
+                      if (!error) {
                           [strongSelf refreshWithTimeline:timeline];
                           [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
                       }
-                      weakSelf.loading = NO;
+                      strongSelf.loading = NO;
                       if (completion)
                           completion(error);
                     }];
@@ -179,7 +168,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (![timeline isKindOfClass:[SENTimeline class]])
         return;
     BOOL didChange = ![self.sleepResult isEqual:timeline];
-    [self hideLoadingViewAnimated:YES];
     if (didChange) {
         self.sleepResult = timeline;
         [self.sleepResult save];
@@ -226,7 +214,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (BOOL)hasTimelineData {
-    return self.sleepResult.scoreCondition != SENConditionUnknown && [self numberOfSleepSegments] > 0;
+    return self.sleepResult.scoreCondition != SENConditionUnknown
+        && self.sleepResult.scoreCondition != SENConditionIncomplete
+        && [self numberOfSleepSegments] > 0;
 }
 
 #pragma mark - Top Bar
@@ -235,14 +225,19 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     return [[self topBarView] dateTitle];
 }
 
+/**
+ *  Move the elements of the top of the timeline to reflect the state of the drawer.
+ *  The top bar view moves the icons/labels vertically to align with the drawer state,
+ *  and the timeline is scrolled to the top if the drawer is opened while scrolled
+ *  down into the timline
+ *
+ *  @param isOpen the state of the drawer
+ */
 - (void)updateTimelineState:(BOOL)isOpen {
     [[self topBarView] setOpened:isOpen];
-    [[self topBarView] setShareEnabled:self.sleepResult.scoreCondition != SENConditionUnknown && !isOpen animated:YES];
-    if (isOpen) {
-        // this is needed if view is not at the top and user taps on the menu button
-        // to open up the timeline
+    [[self topBarView] setShareEnabled:[self hasTimelineData] && !isOpen animated:YES];
+    if (isOpen)
         [self scrollToTop];
-    }
 }
 
 - (void)scrollToTop {
@@ -251,18 +246,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         && [self.collectionView numberOfItemsInSection:0] > 0) {
         [self.collectionView setContentOffset:CGPointZero animated:YES];
     }
-}
-
-#pragma mark - Loading
-
-- (BOOL)shouldShowLoadingView {
-    return [self numberOfSleepSegments] == 0;
-}
-
-- (void)showLoadingView {
-}
-
-- (void)hideLoadingViewAnimated:(BOOL)animated {
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -377,18 +360,16 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     HEMSleepSummaryCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
     NSInteger score = [self.sleepResult.score integerValue];
-    NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
-    cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
     [cell setLoading:self.sleepResult.message.length == 0];
-    [cell setScore:score condition:self.sleepResult.scoreCondition animated:YES];
+    [cell setScore:score message:self.sleepResult.message condition:self.sleepResult.scoreCondition animated:YES];
     if (score > 0 && [collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
         [cell.messageContainerView addTapTarget:collectionView.delegate
                                          action:@selector(didTapSummaryButton:)];
         [cell.sleepScoreGraphView addTapTarget:collectionView.delegate
                                         action:@selector(didTapSummaryButton:)];
     }
-    cell.messageChevronView.hidden = score == 0 && self.sleepResult.segments.count == 0;
-    cell.messageContainerView.hidden = [self.sleepResult scoreCondition] == SENConditionUnknown;
+    cell.messageChevronView.hidden = ![self hasTimelineData];
+    cell.messageContainerView.hidden = ![self hasTimelineData];
     return cell;
 }
 
@@ -417,6 +398,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     }
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     [cell setSegmentRatio:fillRatio withFillColor:color previousRatio:previousFillRatio previousColor:previousColor];
+    cell.accessibilityValue = [self accessibleSummaryForSegmentAtIndexPath:indexPath];
+    cell.accessibilityLabel = NSLocalizedString(@"sleep-segment.accessibility-label", nil);
+    cell.isAccessibilityElement = YES;
     return cell;
 }
 
@@ -438,8 +422,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
         timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter];
     }
-
-    [cell.contentContainerView setShadowVisible:segment.possibleActions != SENTimelineSegmentActionNone];
+    cell.contentContainerView.userInteractionEnabled = segment.possibleActions != SENTimelineSegmentActionNone;
     [cell layoutWithImage:[self imageForEventType:segment.type]
                   message:segment.message
                      time:timeText
@@ -521,6 +504,39 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 #pragma mark - Data Parsing
+
+- (NSString *)localizationKeyForSleepState:(SENTimelineSegmentSleepState)state {
+    switch (state) {
+        case SENTimelineSegmentSleepStateSound:
+            return @"deep";
+        case SENTimelineSegmentSleepStateMedium:
+            return @"medium";
+        case SENTimelineSegmentSleepStateLight:
+            return @"light";
+        case SENTimelineSegmentSleepStateAwake:
+        default:
+            return @"awake";
+    }
+}
+
+- (NSString *)accessibleSummaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *const HEMAccessibleSegmentSummaryFormat = @"sleep-stat.accessibility.sleep-state.%@.format";
+    SENTimelineSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    NSString* depthKey = [self localizationKeyForSleepState:segment.sleepState];
+    NSString* localizedKey = [NSString stringWithFormat:HEMAccessibleSegmentSummaryFormat, depthKey];
+    return [NSString stringWithFormat:NSLocalizedString(localizedKey, nil), (long)segment.duration / 60, (long)segment.sleepDepth];
+}
+
+- (NSAttributedString *)summaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {
+    if (!indexPath)
+        return nil;
+    static NSString *const HEMPopupTextFormat = @"sleep-stat.sleep-duration.%@";
+    SENTimelineSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    NSString *depthKey = [self localizationKeyForSleepState:segment.sleepState];
+    NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, depthKey];
+    NSString *text = [NSString stringWithFormat:NSLocalizedString(format, nil)];
+    return [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForTimelineSegmentPopup]) trim];
+}
 
 - (SENTimelineSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath {
     NSArray *segments = self.sleepResult.segments;

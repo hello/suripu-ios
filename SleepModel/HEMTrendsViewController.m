@@ -125,15 +125,12 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (void)showTutorialIfSelectedWithData {
     HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    UIViewController* backVC = [rootVC backController];
-    if ([backVC isKindOfClass:[HEMSnazzBarController class]]) {
-        HEMSnazzBarController* snazzVC = (id)backVC;
-        if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
-            && self.defaultTrends.count > 0
-            && self.isViewLoaded
-            && self.view.window) {
-            [HEMTutorial showTutorialForTrendsIfNeeded];
-        }
+    HEMSnazzBarController* snazzVC = [rootVC barController];
+    if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
+        && self.defaultTrends.count > 0
+        && self.isViewLoaded
+        && self.view.window) {
+        [HEMTutorial showTutorialForTrendsIfNeeded];
     }
 }
 

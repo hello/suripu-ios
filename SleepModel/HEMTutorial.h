@@ -41,8 +41,7 @@
 + (BOOL)shouldShowTutorialForTimeline;
 
 /**
- *  Present the tutorial for the sensor overview screen i
- f not previously viewed
+ *  Present the tutorial for the sensor overview screen if not previously viewed
  */
 + (void)showTutorialForSensorsIfNeeded;
 

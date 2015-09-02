@@ -147,15 +147,12 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (void)showTutorialIfSelectedWithData {
     HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    UIViewController* backVC = [rootVC backController];
-    if ([backVC isKindOfClass:[HEMSnazzBarController class]]) {
-        HEMSnazzBarController* snazzVC = (id)backVC;
-        if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
-            && self.sensors.count > 0
-            && self.isViewLoaded
-            && self.view.window) {
+    HEMSnazzBarController* snazzVC = [rootVC barController];
+    if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
+        && self.sensors.count > 0
+        && self.isViewLoaded
+        && self.view.window) {
             [HEMTutorial showTutorialForSensorsIfNeeded];
-        }
     }
 }
 

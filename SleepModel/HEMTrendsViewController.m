@@ -18,8 +18,10 @@
 #import "UIFont+HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
+#import "HEMSnazzBarController.h"
+#import "HEMRootViewController.h"
 
-@interface HEMTrendsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate>
+@interface HEMTrendsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate, HEMSnazzBarControllerChild>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, strong) NSMutableArray* defaultTrends;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
@@ -70,7 +72,9 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:SENAPIReachableNotification
+                                                  object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,20 +96,42 @@ static NSString* const HEMAllScopeType = @"ALL";
     if ([self isLoading])
         return;
     self.loading = YES;
+    
+    __weak typeof(self) weakSelf = self;
     [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError* error) {
+        __strong typeof(weakSelf) strongSelf = self;
         if (error) {
-            [self.collectionView reloadData];
-            self.loading = NO;
+            [strongSelf.collectionView reloadData];
+            strongSelf.loading = NO;
             return;
         }
         NSMutableArray* trends = [data mutableCopy];
-        if (![trends isEqualToArray:self.defaultTrends]) {
-            self.defaultTrends = trends;
-            [self.collectionView reloadData];
+        if (![trends isEqualToArray:strongSelf.defaultTrends]) {
+            strongSelf.defaultTrends = trends;
+            [strongSelf.collectionView reloadData];
         }
-        self.loading = NO;
-        [HEMTutorial showTutorialForTrendsIfNeeded];
+        strongSelf.loading = NO;
+        [strongSelf showTutorialIfSelectedWithData];
     }];
+}
+
+#pragma mark - Snazz Events
+
+- (void)snazzViewDidAppear {
+    [self showTutorialIfSelectedWithData];
+}
+
+#pragma mark - Tutorial
+
+- (void)showTutorialIfSelectedWithData {
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    HEMSnazzBarController* snazzVC = [rootVC barController];
+    if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
+        && self.defaultTrends.count > 0
+        && self.isViewLoaded
+        && self.view.window) {
+        [HEMTutorial showTutorialForTrendsIfNeeded];
+    }
 }
 
 #pragma mark HEMTrendCollectionViewCellDelegate
@@ -266,6 +292,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
 }

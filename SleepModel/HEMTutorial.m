@@ -117,8 +117,9 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 + (void)showTutorialForTimelineIfNeeded
 {
     if ([self shouldShowTutorialForTimeline]) {
-        [self showTutorialForTimeline];
-        [self markTutorialViewed:HEMTutorialTimelineKey];
+        if ([self showTutorialForTimeline]) {
+            [self markTutorialViewed:HEMTutorialTimelineKey];
+        }
     }
 }
 
@@ -131,8 +132,9 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 {
     if ([self shouldShowTutorialForKey:HEMTutorialSensorsKey]) {
         [self delayBlock:^{
-            [self showTutorialForSensors];
-            [self markTutorialViewed:HEMTutorialSensorsKey];
+            if ([self showTutorialForSensors]) {
+                [self markTutorialViewed:HEMTutorialSensorsKey];
+            }
         }];
     }
 }
@@ -169,8 +171,10 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 {
     if ([self shouldShowTutorialForKey:HEMTutorialTrendsKey]) {
         [self delayBlock:^{
-            [self showTutorialForTrends];
-            [self markTutorialViewed:HEMTutorialTrendsKey];
+            if ([self showTutorialForTrends]) {
+                [self markTutorialViewed:HEMTutorialTrendsKey];
+            }
+            
         }];
     }
 }
@@ -179,13 +183,14 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 {
     if ([self shouldShowTutorialForKey:HEMTutorialPillColorKey]) {
         [self delayBlock:^{
-            [self showTutorialForPillColor];
-            [self markTutorialViewed:HEMTutorialPillColorKey];
+            if ([self showTutorialForPillColor]) {
+                [self markTutorialViewed:HEMTutorialPillColorKey];
+            }
         }];
     }
 }
 
-+ (void)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
++ (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
     UIImage* snapshot = [[controller view] snapshot];
     UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor tutorialBackgroundColor]];
     
@@ -194,15 +199,20 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [tutorialVC setBackgroundImage:blurredSnapshot];
     [tutorialVC setUnblurredBackgroundImage:snapshot];
 
-    [controller presentViewController:tutorialVC animated:NO completion:nil];
+    BOOL presented = NO;
+    if (![controller presentedViewController]) {
+        [controller presentViewController:tutorialVC animated:NO completion:nil];
+        presented = YES;
+    }
+    return presented;
 }
 
-+ (void)showTutorialWithContent:(NSArray*)content {
++ (BOOL)showTutorialWithContent:(NSArray*)content {
     UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [self showTutorialWithContent:content from:rootVC];
+    return [self showTutorialWithContent:content from:rootVC];
 }
 
-+ (void)showTutorialForTimeline
++ (BOOL)showTutorialForTimeline
 {
     HEMTutorialContent* tutorial1 =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title1", nil)
@@ -221,17 +231,17 @@ static CGFloat const HEMTutorialDelay = 0.5f;
                                          text:NSLocalizedString(@"tutorial.timeline.message4", nil)
                                         image:[UIImage imageNamed:@"timeline_explain_graph"]];
     
-    [self showTutorialWithContent:@[tutorial1, tutorial2, tutorial3, tutorial4]];
+    return [self showTutorialWithContent:@[tutorial1, tutorial2, tutorial3, tutorial4]];
 }
 
-+ (void)showTutorialForSensors
++ (BOOL)showTutorialForSensors
 {
     HEMTutorialContent* tutorial =
         [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.sensors.title", nil)
                                              text:NSLocalizedString(@"tutorial.sensors.message", nil)
                                             image:[UIImage imageNamed:@"welcome_dialog_sensors"]];
     
-    [self showTutorialWithContent:@[tutorial]];
+    return [self showTutorialWithContent:@[tutorial]];
 }
 
 + (void)showTutorialForSensorNamed:(NSString*)sensorName
@@ -275,22 +285,22 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
-+ (void)showTutorialForTrends
++ (BOOL)showTutorialForTrends
 {
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.trends.title", nil)
                                          text:NSLocalizedString(@"tutorial.trends.message", nil)
                                         image:[UIImage imageNamed:@"welcome_dialog_trends"]];
-    [self showTutorialWithContent:@[tutorial]];
+    return [self showTutorialWithContent:@[tutorial]];
 }
 
-+ (void)showTutorialForPillColor
++ (BOOL)showTutorialForPillColor
 {
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.pill-color.title", nil)
                                          text:NSLocalizedString(@"tutorial.pill-color.message", nil)
                                         image:[UIImage imageNamed:@"pill_color_dialog"]];
-    [self showTutorialWithContent:@[tutorial]];
+    return [self showTutorialWithContent:@[tutorial]];
 }
 
 #pragma mark - Session Preferences
@@ -311,6 +321,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialPillColorKey];
 }
 
 @end

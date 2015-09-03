@@ -16,9 +16,11 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMActionButton.h"
 #import "HEMSensorValueFormatter.h"
+#import "HEMSnazzBarController.h"
+#import "HEMRootViewController.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
-                                                  UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate>
+                                                  UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate, HEMSnazzBarControllerChild>
 @property (nonatomic, strong) NSArray *sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer *refreshTimer;
@@ -135,6 +137,25 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     [_collectionView setDataSource:nil];
 }
 
+#pragma mark - Snazz Events
+
+- (void)snazzViewDidAppear {
+    [self showTutorialIfSelectedWithData];
+}
+
+#pragma mark - Tutorial
+
+- (void)showTutorialIfSelectedWithData {
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    HEMSnazzBarController* snazzVC = [rootVC barController];
+    if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
+        && self.sensors.count > 0
+        && self.isViewLoaded
+        && self.view.window) {
+            [HEMTutorial showTutorialForSensorsIfNeeded];
+    }
+}
+
 #pragma mark - Data Loading
 
 - (void)refreshCachedSensors {
@@ -178,8 +199,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     if (![self.sensors isEqualToArray:cachedSensors]) {
         self.sensors = cachedSensors;
         [self.collectionView reloadData];
-        if ([self isViewLoaded] && self.view.window)
-            [HEMTutorial showTutorialForSensorsIfNeeded];
+        [self showTutorialIfSelectedWithData];
     }
     self.lastRefreshDate = [NSDate date];
     [self updateSensorRefreshInterval];

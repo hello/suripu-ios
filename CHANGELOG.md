@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3.5
+
+Fixes:
+
+* Fixed issue where tutorial dialogs were incorrectly being displayed between trends and current conditions screen
+
 ## 1.1.3.4
 
 Fixes:

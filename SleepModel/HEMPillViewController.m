@@ -11,7 +11,7 @@
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
-
+#import "NSAttributedString+HEMUtils.h"
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceActionCollectionViewCell.h"
@@ -97,15 +97,6 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
              NSForegroundColorAttributeName : [UIColor blackColor]};
 }
 
-- (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
-    NSAttributedString* message = [self attributedMessageForWarning:warning];
-    CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
-                                          options:NSStringDrawingUsesFontLeading
-                     |NSStringDrawingUsesLineFragmentOrigin
-                                          context:nil];
-    return CGRectGetHeight(bounds);
-}
-
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -156,11 +147,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     if ([indexPath row] < [[self warnings] count]) {
         HEMDeviceWarning warning = [[self warnings][[indexPath row]] integerValue];
         NSAttributedString* message = [self attributedMessageForWarning:warning];
-        CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
-                                              options:NSStringDrawingUsesFontLeading
-                                                     |NSStringDrawingUsesLineFragmentOrigin
-                                              context:nil];
-        size.height = CGRectGetHeight(bounds) + HEMWarningCellBaseHeight;
+        size.height = [message sizeWithWidth:size.width].height + HEMWarningCellBaseHeight;
     } else if ([indexPath row] == [[self warnings] count]) {
         size.height = HEMPillActionsCellHeight;
     }

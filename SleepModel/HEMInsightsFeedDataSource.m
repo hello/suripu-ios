@@ -12,7 +12,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
-
+#import "NSString+HEMUtils.h"
 #import "HEMInsightsFeedDataSource.h"
 #import "HEMQuestionCell.h"
 #import "HEMInsightCollectionViewCell.h"
@@ -252,12 +252,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     id dataObj = [self data][[indexPath row]];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
-        NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading;
-        CGRect rect = [body boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
-                                         options:options
-                                      attributes:[HEMQuestionCell questionTextAttributes]
-                                         context:nil];
-        calculatedHeight = ceilf(CGRectGetHeight(rect)) + HEMQuestionCellBaseHeight;
+        CGFloat textHeight = [body heightBoundedByWidth:width attributes:[HEMQuestionCell questionTextAttributes]];
+        calculatedHeight = textHeight + HEMQuestionCellBaseHeight;
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
         NSString* preview = [self infoPreviewTextForCellAtIndexPath:indexPath];
         calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:body

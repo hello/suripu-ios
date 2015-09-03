@@ -104,7 +104,7 @@ NSString* const SENAccountPropertyCreated = @"created";
     [params setValue:self.lastModified forKey:SENAccountPropertyLastModified];
     [params setValue:self.latitude forKey:SENAccountPropertyValueLatitude];
     [params setValue:self.longitude forKey:SENAccountPropertyValueLongitude];
-    [params setValue:@([self.createdAt timeIntervalSince1970]) forKey:SENAccountPropertyCreated];
+    [params setValue:SENDateMillisecondsSince1970(self.createdAt) forKey:SENAccountPropertyCreated];
     return params;
 }
 

@@ -20,6 +20,7 @@
 #import "HEMEmbeddedVideoView.h"
 #import "HEMVideoCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
+#import "NSAttributedString+HEMUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMPillSetupRow) {
     HEMPillSetupRowTitle = 0,
@@ -94,13 +95,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 - (CGFloat)heightForAttributedText:(NSAttributedString*)attributedText {
     UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
     CGFloat itemWidth = [layout itemSize].width;
-    
-    CGSize constraint = CGSizeZero;
-    constraint.width = itemWidth - (HEMPillSetupTextHorzPadding*2);
-    constraint.height = MAXFLOAT;
-    NSStringDrawingOptions options = NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin;
-    CGRect textFrame = [attributedText boundingRectWithSize:constraint options:options context:nil];
-    return ceilf(CGRectGetHeight(textFrame));
+    return [attributedText sizeWithWidth:itemWidth - (HEMPillSetupTextHorzPadding * 2)].height;
 }
 
 - (NSAttributedString*)attributedTitle {

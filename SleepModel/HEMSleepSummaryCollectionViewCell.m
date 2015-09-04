@@ -37,11 +37,29 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     self.messageContainerView.accessibilityLabel = NSLocalizedString(@"timeline.accessibility-label.breakdown", nil);
     self.messageContainerView.accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.breakdown", nil);
     self.messageContainerView.accessibilityTraits = UIAccessibilityTraitButton;
-    self.accessibilityElements = @[ self.sleepScoreGraphView, self.messageContainerView ];
 }
+
 - (void)prepareForReuse {
     [super prepareForReuse];
     [self.sleepScoreGraphView setLoading:NO];
+}
+
+- (NSInteger)accessibilityElementCount {
+    return 2;
+}
+
+- (id)accessibilityElementAtIndex:(NSInteger)index {
+    if (index == 0)
+        return self.sleepScoreGraphView;
+    return self.messageContainerView;
+}
+
+- (NSInteger)indexOfAccessibilityElement:(id)element {
+    if ([element isEqual:self.sleepScoreGraphView])
+        return 0;
+    else if ([element isEqual:self.messageContainerView])
+        return 1;
+    return NSNotFound;
 }
 
 - (void)setLoading:(BOOL)loading {

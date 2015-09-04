@@ -31,4 +31,5 @@ end
 
 target 'Tests', :exclusive => true do
   pod 'Kiwi'
+  pod 'Nocilla'
 end

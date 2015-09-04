@@ -153,6 +153,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 }
 
 - (void)configureAnalytics {
+#if defined(DEBUG)
+    return;
+#endif
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
     NSString* crashylyticsToken = [HEMConfig stringForConfig:HEMConfCrashlyticsToken];
     

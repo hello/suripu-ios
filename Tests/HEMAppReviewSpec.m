@@ -7,12 +7,17 @@
 //
 #import <UIKit/UIKit.h>
 #import <Kiwi/Kiwi.h>
+#import <YapDatabase/YapDatabase.h>
 #import <SenseKit/SENKeyedArchiver.h>
 #import <SenseKit/SENLocalPreferences.h>
 #import "NSDate+HEMRelative.h"
 #import "HEMAppReview.h"
 #import "HEMConfig.h"
 #import "HEMAppUsage.h"
+
+@interface SENKeyedArchiver()
++ (YapDatabaseConnection*)mainConnection;
+@end
 
 @interface HEMAppReview()
 
@@ -22,8 +27,6 @@
 + (BOOL)meetsMinimumRequiredTimelineViews;
 + (BOOL)meetsMinimumRequiredAppLaunches;
 + (BOOL)isWithinSystemAlertThreshold;
-+ (BOOL)hasStatedToStopAsking;
-+ (BOOL)hasNotYetReviewedThisVersion;
 + (NSString*)appVersion;
 
 @end
@@ -31,7 +34,33 @@
 SPEC_BEGIN(HEMAppReviewSpec)
 
 describe(@"HEMAppReview", ^{
-    
+
+    __block YapDatabaseConnection* conn;
+
+    void (^incrementUsage)(NSString*, int) = ^(NSString *identifier, int times) {
+        HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
+        for(int i = 0; i < times; i++) {
+            [appUsage increment:NO];
+        }
+        [appUsage save];
+    };
+
+    beforeAll(^{
+        NSString *databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppReviewSpec.sqlite"];
+        YapDatabase* db = [[YapDatabase alloc] initWithPath:databasePath];
+        conn = [db newConnection];
+    });
+
+    beforeEach(^{
+        [SENKeyedArchiver stub:@selector(mainConnection) andReturn:conn];
+    });
+
+    afterEach(^{
+        [conn readWriteWithBlock:^(YapDatabaseReadWriteTransaction * __nonnull transaction) {
+            [transaction removeAllObjectsInAllCollections];
+        }];
+    });
+
     describe(@"+hasAppReviewURL", ^{
         
         it(@"should return YES if url in config", ^{
@@ -49,35 +78,32 @@ describe(@"HEMAppReview", ^{
     });
     
     describe(@"+isWithinAppReviewThreshold", ^{
-        
+
+        __block HEMAppUsage* usage = nil;
+
+        beforeEach(^{
+            usage = [HEMAppUsage new];
+            [HEMAppUsage stub:@selector(appUsageForIdentifier:) andReturn:usage];
+        });
+
+        afterEach(^{
+            usage = nil;
+        });
+
         context(@"app prompt was never been completed", ^{
-            
-            beforeEach(^{
-                HEMAppUsage* usage = [[HEMAppUsage alloc] init];
-                [HEMAppUsage stub:@selector(appUsageForIdentifier:) andReturn:usage];
-            });
-            
-            afterEach(^{
-                [HEMAppUsage clearStubs];
-            });
 
             it(@"should return yes", ^{
                 BOOL yes = [HEMAppReview isWithinAppReviewThreshold];
                 [[@(yes) should] beYes];
             });
-            
+
         });
-        
+
         context(@"app prompt was completed 30 days ago", ^{
             
             beforeEach(^{
                 NSDate* daysAgo = [[NSDate date] daysFromNow:-30];
-                [NSDate stub:@selector(date) andReturn:daysAgo];
-                [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppReviewPromptCompleted];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                [usage stub:@selector(updated) andReturn:daysAgo];
             });
             
             it(@"should return NO", ^{
@@ -91,12 +117,7 @@ describe(@"HEMAppReview", ^{
             
             beforeEach(^{
                 NSDate* daysAgo = [[NSDate date] daysFromNow:-60];
-                [NSDate stub:@selector(date) andReturn:daysAgo];
-                [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppReviewPromptCompleted];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                [usage stub:@selector(updated) andReturn:daysAgo];
             });
             
             it(@"should return NO", ^{
@@ -110,13 +131,7 @@ describe(@"HEMAppReview", ^{
             
             beforeEach(^{
                 NSDate* daysAgo = [[NSDate date] daysFromNow:-61];
-                [NSDate stub:@selector(date) andReturn:daysAgo];
-                [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppReviewPromptCompleted];
-                [NSDate clearStubs];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                [usage stub:@selector(updated) andReturn:daysAgo];
             });
             
             it(@"should return YES", ^{
@@ -130,11 +145,7 @@ describe(@"HEMAppReview", ^{
     
     describe(@"+meetsMinimumRequiredTimelineViews", ^{
         
-        __block NSString* identifier = nil;
-        
-        beforeEach(^{
-            identifier = HEMAppUsageTimelineShownWithData;
-        });
+        NSString* identifier = HEMAppUsageTimelineShownWithData;
         
         it(@"should return no if usage indicate no timeline with data seen before", ^{
             BOOL no = [HEMAppReview meetsMinimumRequiredTimelineViews];
@@ -144,16 +155,7 @@ describe(@"HEMAppReview", ^{
         context(@"has seen 4 timelines with data", ^{
             
             beforeEach(^{
-                HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage save];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                incrementUsage(identifier, 4);
             });
             
             it(@"should return NO", ^{
@@ -166,22 +168,7 @@ describe(@"HEMAppReview", ^{
         context(@"has seen 10 timelines with data", ^{
             
             beforeEach(^{
-                HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage save];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                incrementUsage(identifier, 10);
             });
             
             it(@"should return YES", ^{
@@ -195,11 +182,7 @@ describe(@"HEMAppReview", ^{
     
     describe(@"+meetsMinimumRequiredAppLaunches", ^{
         
-        __block NSString* identifier = nil;
-        
-        beforeEach(^{
-            identifier = HEMAppUsageAppLaunched;
-        });
+        NSString* identifier = HEMAppUsageAppLaunched;
         
         it(@"should return no if usage indicate no app launches", ^{
             BOOL no = [HEMAppReview meetsMinimumRequiredAppLaunches];
@@ -209,14 +192,7 @@ describe(@"HEMAppReview", ^{
         context(@"has launched 2 times", ^{
             
             beforeEach(^{
-                HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage save];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                incrementUsage(identifier, 2);
             });
             
             it(@"should return NO", ^{
@@ -229,34 +205,31 @@ describe(@"HEMAppReview", ^{
         context(@"has launched 4 times in last 7 days", ^{
             
             beforeEach(^{
-                HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage increment:NO];
-                [appUsage save];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                incrementUsage(identifier, 4);
             });
             
             it(@"should return YES", ^{
-                BOOL yes = [HEMAppReview meetsMinimumRequiredAppLaunches];
-                [[@(yes) should] beYes];
+                [[@([HEMAppReview meetsMinimumRequiredAppLaunches]) should] beYes];
             });
             
         });
         
     });
+
+    describe(@"+incrementAppUsageForIdentifier:", ^{
+
+        NSString* identifier = @"stuff done";
+
+        it(@"increases usage by 1", ^{
+            [HEMAppUsage incrementUsageForIdentifier:identifier];
+            HEMAppUsage* usage = [HEMAppUsage appUsageForIdentifier:identifier];
+            [[@([usage usageWithin:HEMAppUsageIntervalLast7Days]) should] equal:@1];
+        });
+    });
     
     describe(@"+isWithinSystemAlertThreshold", ^{
         
-        __block NSString* identifier = nil;
-        
-        beforeEach(^{
-            identifier = HEMAppUsageSystemAlertShown;
-        });
+        NSString* identifier = HEMAppUsageSystemAlertShown;
         
         it(@"should return yes if usage indicate no system alert ever seen", ^{
             BOOL yes = [HEMAppReview isWithinSystemAlertThreshold];
@@ -269,28 +242,19 @@ describe(@"HEMAppReview", ^{
                 [HEMAppUsage incrementUsageForIdentifier:identifier];
             });
             
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
-            });
-            
             it(@"should return no", ^{
-                BOOL no = [HEMAppReview isWithinSystemAlertThreshold];
-                [[@(no) should] beNo];
+                [[@([HEMAppReview isWithinSystemAlertThreshold]) should] beNo];
             });
             
         });
         
         context(@"saw a system alert 31 days ago", ^{
-            
+
             beforeEach(^{
+                HEMAppUsage* usage = [HEMAppUsage new];
+                [HEMAppUsage stub:@selector(appUsageForIdentifier:) andReturn:usage];
                 NSDate* daysAgo = [[NSDate date] daysFromNow:-31];
-                [NSDate stub:@selector(date) andReturn:daysAgo];
-                [HEMAppUsage incrementUsageForIdentifier:identifier];
-                [NSDate clearStubs];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
+                [usage stub:@selector(updated) andReturn:daysAgo];
             });
             
             it(@"should return YES", ^{
@@ -304,28 +268,33 @@ describe(@"HEMAppReview", ^{
     
     describe(@"+hasStatedToStopAsking", ^{
         
-        __block NSString* key = nil;
-        
-        beforeEach(^{
-            key = @"stop.asking.to.rate.app";
+        NSString* key = @"stop.asking.to.rate.app";
+
+        context(@"never stated", ^{
+
+            beforeEach(^{
+                SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                [localPrefs setPersistentPreference:nil forKey:key];
+            });
+
+            it(@"returns no", ^{
+                BOOL no = [HEMAppReview hasStatedToStopAsking];
+                [[@(no) should] beNo];
+            });
         });
-        
-        it(@"should return no if never stated that", ^{
-            SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
-            [localPrefs setPersistentPreference:nil forKey:key];
-            
-            BOOL no = [HEMAppReview hasStatedToStopAsking];
-            [[@(no) should] beNo];
+
+        context(@"stated", ^{
+
+            beforeEach(^{
+                SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                [localPrefs setPersistentPreference:@(YES) forKey:key];
+            });
+
+            it(@"returns yes", ^{
+                BOOL yes = [HEMAppReview hasStatedToStopAsking];
+                [[@(yes) should] beYes];
+            });
         });
-        
-        it(@"should return yes if stated to stop asking", ^{
-            SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
-            [localPrefs setPersistentPreference:@(YES) forKey:key];
-            
-            BOOL yes = [HEMAppReview hasStatedToStopAsking];
-            [[@(yes) should] beYes];
-        });
-        
     });
     
     describe(@"+hasNotYetReviewedThisVersion", ^{
@@ -337,17 +306,10 @@ describe(@"HEMAppReview", ^{
         
         context(@"has rated the app before for this version", ^{
             
-            __block NSString* appVersion = nil;
-            
             beforeEach(^{
-                appVersion = @"1.1.1";
+                NSString* appVersion = @"1.1.1";
                 [HEMAppUsage incrementUsageForIdentifier:appVersion];
                 [HEMAppReview stub:@selector(appVersion) andReturn:appVersion];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
-                [HEMAppReview clearStubs];
             });
 
             it(@"should return no", ^{
@@ -364,11 +326,6 @@ describe(@"HEMAppReview", ^{
                 [HEMAppReview stub:@selector(appVersion) andReturn:@"1.1.2"];
             });
             
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
-                [HEMAppReview clearStubs];
-            });
-            
             it(@"should return yes", ^{
                 BOOL yes = [HEMAppReview hasNotYetReviewedThisVersion];
                 [[@(yes) should] beYes];
@@ -378,7 +335,6 @@ describe(@"HEMAppReview", ^{
         
     });
 
-    
 });
 
 SPEC_END

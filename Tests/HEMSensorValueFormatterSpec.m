@@ -7,6 +7,7 @@
 //
 
 #import <Kiwi/Kiwi.h>
+#import <SenseKit/SenseKit.h>
 #import "HEMSensorValueFormatter.h"
 
 @interface HEMSensorValueFormatter()
@@ -52,6 +53,7 @@ describe(@"HEMSensorValueFormatter", ^{
             
             beforeEach(^{
                 [formatter setSensorUnit:SENSensorUnitDegreeCentigrade];
+                [SENPreference stub:@selector(temperatureFormat) andReturn:@(SENTemperatureFormatCentigrade)];
                 sensorValue = [formatter stringFromSensorValue:@89.6];
             });
             

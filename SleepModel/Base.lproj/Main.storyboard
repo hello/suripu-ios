@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -1512,7 +1512,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cha-Va-k2a">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="just now" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cha-Va-k2a" userLabel="lastSeenValueLabel">
+                                                    <rect key="frame" x="26" y="78" width="518" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1527,7 +1528,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUz-7x-VsH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="low" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUz-7x-VsH" userLabel="property1ValueLabel">
+                                                    <rect key="frame" x="101" y="114" width="443" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1542,7 +1544,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNf-vA-z3g">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ffffff" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNf-vA-z3g">
+                                                    <rect key="frame" x="121" y="150" width="423" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1555,19 +1558,22 @@
                                             <constraint firstItem="bGX-Q0-AZD" firstAttribute="leading" secondItem="Wga-H9-AwA" secondAttribute="leadingMargin" constant="8" id="07f-Be-AMT"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="Cha-Va-k2a" secondAttribute="trailing" constant="8" id="40C-oM-Fgh"/>
                                             <constraint firstItem="7Y7-hu-e7n" firstAttribute="bottom" secondItem="Cha-Va-k2a" secondAttribute="bottom" id="4dn-Sc-uIX"/>
+                                            <constraint firstItem="bGX-Q0-AZD" firstAttribute="trailing" secondItem="EUz-7x-VsH" secondAttribute="leading" priority="750" constant="10" id="5hD-DX-btS"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="qNf-vA-z3g" secondAttribute="trailing" constant="8" id="7cL-3b-GaZ"/>
                                             <constraint firstItem="5bQ-To-vmd" firstAttribute="top" secondItem="qNf-vA-z3g" secondAttribute="top" id="DuE-Ec-Ux8"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="yFe-NR-82V" secondAttribute="trailing" constant="8" id="EVd-St-iDF"/>
                                             <constraint firstItem="XFJ-c9-tx6" firstAttribute="trailing" secondItem="yFe-NR-82V" secondAttribute="leading" constant="-30" id="Id9-3V-1RY"/>
-                                            <constraint firstItem="EUz-7x-VsH" firstAttribute="trailing" secondItem="qNf-vA-z3g" secondAttribute="trailing" id="Ioh-FY-Ln3"/>
                                             <constraint firstItem="Kcw-E2-PCP" firstAttribute="bottom" secondItem="7Y7-hu-e7n" secondAttribute="bottom" constant="-47" id="LMq-Oc-QKO"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="EUz-7x-VsH" secondAttribute="trailing" constant="8" id="Lv2-mu-weI"/>
                                             <constraint firstItem="7Y7-hu-e7n" firstAttribute="top" secondItem="Cha-Va-k2a" secondAttribute="top" id="PoT-1F-dKV"/>
                                             <constraint firstItem="XFJ-c9-tx6" firstAttribute="leading" secondItem="Kcw-E2-PCP" secondAttribute="trailing" constant="16" id="R6c-jq-vps"/>
                                             <constraint firstItem="Kcw-E2-PCP" firstAttribute="top" secondItem="Wga-H9-AwA" secondAttribute="topMargin" constant="8" id="Rli-jD-QOs"/>
+                                            <constraint firstItem="Cha-Va-k2a" firstAttribute="leading" secondItem="7Y7-hu-e7n" secondAttribute="leading" priority="750" constant="10" id="Upe-xr-eej"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="5va-Mg-Rbn" secondAttribute="trailing" constant="8" id="arN-KU-e90"/>
-                                            <constraint firstItem="EUz-7x-VsH" firstAttribute="trailing" secondItem="Cha-Va-k2a" secondAttribute="trailing" id="d9D-f1-ZI6"/>
                                             <constraint firstItem="7Y7-hu-e7n" firstAttribute="bottom" secondItem="bGX-Q0-AZD" secondAttribute="top" constant="-15" id="eAW-la-pD7"/>
                                             <constraint firstItem="EUz-7x-VsH" firstAttribute="bottom" secondItem="bGX-Q0-AZD" secondAttribute="bottom" id="ecG-la-h4c"/>
                                             <constraint firstItem="Kcw-E2-PCP" firstAttribute="centerY" secondItem="5va-Mg-Rbn" secondAttribute="centerY" id="g6a-f6-tb7"/>
+                                            <constraint firstItem="qNf-vA-z3g" firstAttribute="leading" secondItem="5bQ-To-vmd" secondAttribute="trailing" constant="10" id="gzg-8B-V2g"/>
                                             <constraint firstItem="EUz-7x-VsH" firstAttribute="top" secondItem="bGX-Q0-AZD" secondAttribute="top" id="ihd-Zs-W9F"/>
                                             <constraint firstItem="XFJ-c9-tx6" firstAttribute="top" secondItem="Wga-H9-AwA" secondAttribute="topMargin" constant="8" id="jct-e6-xQK"/>
                                             <constraint firstItem="Kcw-E2-PCP" firstAttribute="leading" secondItem="Wga-H9-AwA" secondAttribute="leadingMargin" constant="8" id="lLH-x5-YHL"/>

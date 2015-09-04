@@ -267,15 +267,17 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
             value = [self conditionTextForMetric:metric];
             break;
         case SENTimelineMetricUnitMinute: {
-            CGFloat minutes = [metric.value floatValue];
-            if (minutes < 60) {
-                NSString *format = NSLocalizedString(@"sleep-stat.minute.format", nil);
-                value = [NSString stringWithFormat:format, minutes];
-                unit = NSLocalizedString(@"sleep-stat.minute.unit", nil);
-            } else {
-                NSString *format = NSLocalizedString(@"sleep-stat.hour.format", nil);
-                value = [NSString stringWithFormat:format, minutes / 60];
-                unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
+            if (metric.value) {
+                CGFloat minutes = [metric.value floatValue];
+                if (minutes < 60) {
+                    NSString *format = NSLocalizedString(@"sleep-stat.minute.format", nil);
+                    value = [NSString stringWithFormat:format, minutes];
+                    unit = NSLocalizedString(@"sleep-stat.minute.unit", nil);
+                } else {
+                    NSString *format = NSLocalizedString(@"sleep-stat.hour.format", nil);
+                    value = [NSString stringWithFormat:format, minutes / 60];
+                    unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
+                }
             }
             break;
         }
@@ -286,21 +288,21 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
                 if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
                     unit = [[self.meridiemFormatter stringFromDate:date] lowercaseString];
                 }
-            } else {
-                value = NSLocalizedString(@"empty-data", nil);
             }
             break;
         }
         case SENTimelineMetricUnitQuantity:
         case SENTimelineMetricUnitUnknown:
-            value = [NSString stringWithFormat:@"%d", [metric.value integerValue]];
+            if (metric.value) {
+                value = [NSString stringWithFormat:@"%d", [metric.value integerValue]];
+            }
             break;
         default:
             value = NSLocalizedString(@"empty-data", nil);
             break;
     }
     
-    return [[HEMSplitTextObject alloc] initWithValue:value unit:unit];
+    return value ? [[HEMSplitTextObject alloc] initWithValue:value unit:unit] : nil;
 }
 
 - (NSString *)conditionTextForMetric:(SENTimelineMetric *)metric {

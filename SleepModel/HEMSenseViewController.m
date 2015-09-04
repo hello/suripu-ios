@@ -278,7 +278,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support", nil) takeAction:^(NSURL *link) {
+    [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support.hyperlink-text", nil) takeAction:^(NSURL *link) {
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
@@ -394,7 +394,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     
     NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
     NSString* questionFormat = NSLocalizedString(@"settings.sense.unpair.confirmation.format", nil);
-    NSString* guideLink = NSLocalizedString(@"help.url.support", nil);
+    NSString* guideLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
     NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
                                                       attributes:[self dialogMessageAttributes:YES]]];

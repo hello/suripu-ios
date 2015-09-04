@@ -52,7 +52,7 @@
 // help links
 "help.email.address" = "support@hello.is";
 "help.email.subject" = "Sense Help Request";
-"help.url.support.hyperlink-text" = "https://support.hello.is";
+"help.url.support.hyperlink-text" = "https://support.hello.is/";
 "help.url.order-form" = "https://order.hello.is/";
 "help.url.support" = "http://support.hello.is/hc/";
 "help.url.slug.turn-on-ble" = "articles/205493335";

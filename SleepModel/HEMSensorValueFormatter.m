@@ -56,8 +56,12 @@
     NSNumber* preferredValue = [SENSensor value:value inPreferredUnit:[self sensorUnit]];
     switch ([self sensorUnit]) {
         case SENSensorUnitLux: {
-            BOOL showFraction = [preferredValue floatValue] < 10;
-            [self setNumberOfFractionDigits:showFraction ? 1 : 0];
+            if ([preferredValue floatValue] < 10)
+                [self setNumberOfFractionDigits:2];
+            else if ([preferredValue floatValue] < 100)
+                [self setNumberOfFractionDigits:1];
+            else
+                [self setNumberOfFractionDigits:0];
             break;
         }
         case SENSensorUnitAQI:

@@ -8,38 +8,44 @@
 
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/SENKeyedArchiver.h>
+#import <YapDatabase/YapDatabase.h>
 #import "HEMAppUsage.h"
 #import "NSDate+HEMRelative.h"
 
-@interface HEMAppUsage()
-
-@property (nonatomic, strong) NSMutableArray* rollingCountPerDay;
-@property (nonatomic, strong) NSDate* created;
-
-- (NSUInteger)todaysRollingIndex;
-
+@interface SENKeyedArchiver()
++ (YapDatabaseConnection*)mainConnection;
 @end
 
 SPEC_BEGIN(HEMAppUsageSpec)
 
 describe(@"HEMAppUsage", ^{
-    
+
+    __block HEMAppUsage* appUsage;
+    __block YapDatabaseConnection* conn;
+
+    beforeAll(^{
+        NSString *databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppUsageSpec.sqlite"];
+        YapDatabase* db = [[YapDatabase alloc] initWithPath:databasePath];
+        conn = [db newConnection];
+    });
+
+    beforeEach(^{
+        [SENKeyedArchiver stub:@selector(mainConnection) andReturn:conn];
+    });
+
+    afterEach(^{
+        appUsage = nil;
+        [conn readWriteWithBlock:^(YapDatabaseReadWriteTransaction * __nonnull transaction) {
+            [transaction removeAllObjectsInAllCollections];
+        }];
+    });
+
     describe(@"+appUsageForIdentifier:completion", ^{
-        
-        __block HEMAppUsage* appUsage;
         
         context(@"first time retrieving app usage", ^{
             
             beforeEach(^{
                 appUsage = [HEMAppUsage appUsageForIdentifier:@"firstTime"];
-            });
-            
-            it(@"should eventually return with a newly constructed object", ^{
-                [[@([[appUsage created] isOnSameDay:[NSDate date]]) should] equal:@(YES)];
-            });
-            
-            it(@"should have initialized array of rolling counts", ^{
-                [[@([[appUsage rollingCountPerDay] count]) should] beGreaterThan:@(0)];
             });
             
             it(@"should not have any usage", ^{
@@ -49,24 +55,16 @@ describe(@"HEMAppUsage", ^{
         });
         
         context(@"retrieving an already saved app usage", ^{
-
-            __block NSUInteger currentRollingIndex;
             
             beforeEach(^{
                 NSString* identifier = @"secondTime";
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
                 [appUsage increment:YES];
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                currentRollingIndex = [appUsage todaysRollingIndex];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
             });
             
             it(@"should have usage of 1 for today", ^{
-                NSNumber* count = [appUsage rollingCountPerDay][currentRollingIndex];
-                [[count should] equal:@(1)];
+                [[@([appUsage usageWithin:HEMAppUsageIntervalLast7Days]) should] equal:@(1)];
             });
             
         });
@@ -77,26 +75,16 @@ describe(@"HEMAppUsage", ^{
         
         context(@"increments the usage multiple times in 1 day", ^{
             
-            __block HEMAppUsage* appUsage;
-            __block NSUInteger currentRollingIndex;
-            
             beforeEach(^{
-                NSString* identifier = @"app launch";
-                appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
-                currentRollingIndex = [appUsage todaysRollingIndex];
+                appUsage = [HEMAppUsage appUsageForIdentifier:@"app launch"];
                 [appUsage increment:NO];
                 [appUsage increment:NO];
                 [appUsage increment:NO];
                 [appUsage save];
             });
             
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
-            });
-            
             it(@"should have usage of 3 for today", ^{
-                NSNumber* count = [appUsage rollingCountPerDay][currentRollingIndex];
-                [[count should] equal:@(3)];
+                [[@([appUsage usageWithin:HEMAppUsageIntervalLast7Days]) should] equal:@(3)];
             });
             
         });
@@ -105,21 +93,14 @@ describe(@"HEMAppUsage", ^{
     
     describe(@"-usageWithin:", ^{
         
-        __block HEMAppUsage* appUsage;
-        
         context(@"incremented 3 times on same day", ^{
             
             beforeEach(^{
-                NSString* identifier = @"app launch";
-                appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
+                appUsage = [HEMAppUsage appUsageForIdentifier:@"app launch"];
                 [appUsage increment:NO];
                 [appUsage increment:NO];
                 [appUsage increment:NO];
                 [appUsage save];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
             });
             
             it(@"should return 3 in last 7 days", ^{
@@ -144,10 +125,6 @@ describe(@"HEMAppUsage", ^{
                 [appUsage increment:YES];
             });
             
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
-            });
-            
             it(@"should return 0 in last 7 days", ^{
                 [NSDate clearStubs];
                 NSUInteger count = [appUsage usageWithin:HEMAppUsageIntervalLast7Days];
@@ -170,10 +147,6 @@ describe(@"HEMAppUsage", ^{
                 [NSDate stub:@selector(date) andReturn:longTimeAgo];
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
                 [appUsage increment:YES];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
             });
             
             it(@"should return 0 in last 7 days", ^{
@@ -202,10 +175,6 @@ describe(@"HEMAppUsage", ^{
                 [NSDate clearStubs];
                 
                 [appUsage increment:YES];
-            });
-            
-            afterEach(^{
-                [SENKeyedArchiver removeAllObjects];
             });
             
             it(@"should return 1 in last 7 days", ^{

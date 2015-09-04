@@ -36,6 +36,7 @@ PODS:
   - Mixpanel/MPCategoryHelpers (2.7.2)
   - MSDynamicsDrawerViewController (1.5.1)
   - NAPickerView (0.0.1)
+  - Nocilla (0.10.0)
   - NSJSONSerialization-NSNullRemoval (1.0.1)
   - SenseKit (0.1.0):
     - SenseKit/Analytics (= 0.1.0)
@@ -81,6 +82,7 @@ DEPENDENCIES:
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
   - MSDynamicsDrawerViewController (= 1.5.1)
   - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
+  - Nocilla
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
@@ -148,6 +150,7 @@ SPEC CHECKSUMS:
   Mixpanel: e9bcb16eb0e2a98fc330ceeb0d8b7f4aec4182ab
   MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
+  Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
   SenseKit: 80ec61d63f9281ba0ce0c1168b379388e967726c
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3

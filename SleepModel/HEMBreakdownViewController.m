@@ -298,7 +298,6 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
             }
             break;
         default:
-            value = NSLocalizedString(@"empty-data", nil);
             break;
     }
     

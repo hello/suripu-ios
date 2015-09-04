@@ -1,4 +1,4 @@
-# Sense iOS App
+# Sense iOS App [![Circle CI](https://circleci.com/gh/hello/suripu-ios/tree/develop.svg?style=svg&circle-token=976651c2b892bd2d9c8265e2efc060fa1904dbc5)](https://circleci.com/gh/hello/suripu-ios/tree/develop)
 
 ## Development
 
@@ -9,7 +9,7 @@ development tools are installed via `xcode-select --install`
 
 * [Activity/Bug Tracker](https://trello.com/b/5zO3TPUz/sense-ios)
 
-* [Build Release Checklist](https://hello.hackpad.com/iOS-Release-Checklist-6xtI96xm7kx)
+* [Continuous Integration](https://circleci.com/gh/hello/suripu-ios)
 
 ### Branching
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3.6
+
+Fixes:
+
+* fix crasher that occurs in iOS 7 devices due to a selector used that is only available to iOS 8 devices
+
 ## 1.1.3.5
 
 Fixes:

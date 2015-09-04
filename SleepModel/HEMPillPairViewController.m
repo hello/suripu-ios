@@ -336,6 +336,9 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
             case SENSenseManagerErrorCodeSenseAlreadyPaired:
                 message = NSLocalizedString(@"pairing.error.pill-already-paired", nil);
                 break;
+            case SENSenseManagerErrorCodeSenseNetworkError:
+                message = NSLocalizedString(@"pairing.error.pill-pairing-no-network", nil);
+                break;
             case SENSenseManagerErrorCodeTimeout:
             default:
                 message = NSLocalizedString(@"pairing.error.pill-pairing-failed", nil);

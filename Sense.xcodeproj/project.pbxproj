@@ -335,6 +335,7 @@
 		8AFD8A1A1A649F3900124CCE /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD8A171A649F3900124CCE /* checkmark@2x.png */; };
 		8AFD8A1B1A649F3900124CCE /* checkmark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD8A181A649F3900124CCE /* checkmark@3x.png */; };
 		8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */; };
+		8AFE909A1B9A20C0000D638E /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFE90991B9A20C0000D638E /* Config.m */; };
 		BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */; };
 		BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C7219FED17800E68E87 /* HEMWiFiDataSource.m */; };
 		BF005C7A19FED57E00E68E87 /* lockIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF005C7419FED57E00E68E87 /* lockIcon.png */; };
@@ -1200,6 +1201,7 @@
 		8AFD8A181A649F3900124CCE /* checkmark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkmark@3x.png"; path = "images/checkmark@3x.png"; sourceTree = "<group>"; };
 		8AFD8A1C1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmPropertyTableViewCell.h; sourceTree = "<group>"; };
 		8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMAlarmPropertyTableViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		8AFE90991B9A20C0000D638E /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		BF005C6E19FECACC00E68E87 /* HEMWifiPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiPickerViewController.h; sourceTree = "<group>"; };
 		BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiPickerViewController.m; sourceTree = "<group>"; };
 		BF005C7119FED17800E68E87 /* HEMWiFiDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWiFiDataSource.h; sourceTree = "<group>"; };
@@ -1862,6 +1864,7 @@
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				8AC3C2E71A3CB8130074A87F /* Back Attic */,
 				BF664A951ACC60FD003355D2 /* System Alerts */,
+				8AFE90991B9A20C0000D638E /* Config.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -4447,6 +4450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
+				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
 				8AC3C2E61A3CB7F40074A87F /* HEMSnazzBarControllerSpec.m in Sources */,

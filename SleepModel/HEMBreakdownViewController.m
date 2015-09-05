@@ -185,7 +185,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
                                                   forIndexPath:indexPath];
     cell.isAccessibilityElement = NO;
-    cell.accessibilityElements = @[];
+    cell.computedAccessibilityElements = @[];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:0];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:1];
     return cell;
@@ -210,7 +210,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     frame.origin.x = position * width;
     frame.size.width = width;
     element.accessibilityFrame = frame;
-    cell.accessibilityElements = [cell.accessibilityElements arrayByAddingObject:element];
+    cell.computedAccessibilityElements = [cell.computedAccessibilityElements arrayByAddingObject:element];
 }
 
 - (NSAttributedString *)titleForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
@@ -352,4 +352,19 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 @end
 
 @implementation HEMBreakdownLineCell
+
+- (id)accessibilityElementAtIndex:(NSInteger)index {
+    if (self.computedAccessibilityElements.count > index)
+        return self.computedAccessibilityElements[index];
+    return nil;
+}
+
+- (NSInteger)accessibilityElementCount {
+    return self.computedAccessibilityElements.count;
+}
+
+- (NSInteger)indexOfAccessibilityElement:(id)element {
+    return [self.computedAccessibilityElements indexOfObject:element];
+}
+
 @end

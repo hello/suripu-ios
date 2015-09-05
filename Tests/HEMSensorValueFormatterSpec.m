@@ -7,6 +7,7 @@
 //
 
 #import <Kiwi/Kiwi.h>
+#import <SenseKit/SenseKit.h>
 #import "HEMSensorValueFormatter.h"
 
 @interface HEMSensorValueFormatter()
@@ -48,15 +49,21 @@ describe(@"HEMSensorValueFormatter", ^{
             
         });
         
-        context(@"temperature value is not a whole number", ^{
+        context(@"temperature value is not a whole number and locale in US", ^{
             
             beforeEach(^{
+                NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
+                [NSLocale stub:@selector(currentLocale) andReturn:locale];
                 [formatter setSensorUnit:SENSensorUnitDegreeCentigrade];
-                sensorValue = [formatter stringFromSensorValue:@89.6];
+                sensorValue = [formatter stringFromSensorValue:@31.6];
             });
             
-            it(@"should not contain fractions and rounded up", ^{
-                [[sensorValue should] equal:@"90"];
+            afterEach(^{
+                [NSLocale clearStubs];
+            });
+            
+            it(@"should not contain fractions, rounded up and converted to Fahrenheit ", ^{
+                [[sensorValue should] equal:@"89"];
             });
             
         });
@@ -68,10 +75,10 @@ describe(@"HEMSensorValueFormatter", ^{
                 sensorValue = [formatter stringFromSensorValue:@0.40365];
             });
             
-            it(@"should be rounded up with 2 max fraction digits", ^{
-                [[sensorValue should] equal:@"0.41"];
+            it(@"should be rounded up with 1 max fraction digits", ^{
+                [[sensorValue should] equal:@"0.5"];
             });
-            
+
         });
         
         context(@"light value is less than 10, but greater than 1", ^{
@@ -81,8 +88,8 @@ describe(@"HEMSensorValueFormatter", ^{
                 sensorValue = [formatter stringFromSensorValue:@9.8];
             });
             
-            it(@"should show 3 digits, with 2 of those fractional digits", ^{
-                [[sensorValue should] equal:@"9.80"];
+            it(@"should show 2 digits, with 1 of those fractional digits", ^{
+                [[sensorValue should] equal:@"9.8"];
             });
             
         });
@@ -94,8 +101,8 @@ describe(@"HEMSensorValueFormatter", ^{
                 sensorValue = [formatter stringFromSensorValue:@25];
             });
             
-            it(@"should show 3 digits, with 1 of those fractional digits", ^{
-                [[sensorValue should] equal:@"25.0"];
+            it(@"should show 2 digits, with zero fractional digits", ^{
+                [[sensorValue should] equal:@"25"];
             });
             
         });

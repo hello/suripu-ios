@@ -316,12 +316,14 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 }
 
 + (void)resetTutorials {
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTimelineKey];
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialSensorsKey];
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialPillColorKey];
+    SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+    [prefs setSessionPreference:@NO forKey:HEMTutorialTimelineKey];
+    [prefs setSessionPreference:@NO forKey:HEMTutorialSensorsKey];
+    [prefs setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
+    [prefs setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
+    [prefs setSessionPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
+    [prefs setSessionPreference:@NO forKey:HEMTutorialPillColorKey];
+    [prefs setSessionPreference:@NO forKey:HEMTutorialHHTimelineZoom];
 }
 
 @end

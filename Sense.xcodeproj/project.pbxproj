@@ -694,6 +694,7 @@
 		BFCE1D2E1AA657760076E855 /* senseWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCE1D2B1AA657760076E855 /* senseWhite@2x.png */; };
 		BFCE1D2F1AA657760076E855 /* senseWhite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCE1D2C1AA657760076E855 /* senseWhite@3x.png */; };
 		BFCE1D321AA65A570076E855 /* HEMHaveSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCE1D311AA65A570076E855 /* HEMHaveSenseViewController.m */; };
+		BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD3CCF01B9F7F8D00643987 /* NSShadow+HEMStyle.m */; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
 		BFDCC7BA19D9C741007A922B /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B819D9C741007A922B /* sense.png */; };
 		BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B919D9C741007A922B /* sense@2x.png */; };
@@ -1659,6 +1660,8 @@
 		BFCE1D2C1AA657760076E855 /* senseWhite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseWhite@3x.png"; path = "images/senseWhite@3x.png"; sourceTree = "<group>"; };
 		BFCE1D301AA65A570076E855 /* HEMHaveSenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHaveSenseViewController.h; sourceTree = "<group>"; };
 		BFCE1D311AA65A570076E855 /* HEMHaveSenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHaveSenseViewController.m; sourceTree = "<group>"; };
+		BFD3CCEF1B9F7F8D00643987 /* NSShadow+HEMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSShadow+HEMStyle.h"; sourceTree = "<group>"; };
+		BFD3CCF01B9F7F8D00643987 /* NSShadow+HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSShadow+HEMStyle.m"; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
 		BFDCC7B819D9C741007A922B /* sense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sense.png; path = images/sense.png; sourceTree = "<group>"; };
@@ -3375,6 +3378,8 @@
 				BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */,
 				8A9D7EA61B753273000959C5 /* HEMAudioSession.h */,
 				8A9D7EA71B753273000959C5 /* HEMAudioSession.m */,
+				BFD3CCEF1B9F7F8D00643987 /* NSShadow+HEMStyle.h */,
+				BFD3CCF01B9F7F8D00643987 /* NSShadow+HEMStyle.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -4328,6 +4333,7 @@
 				8A6FCDE41B0E52AE004EB7ED /* HEMEventBubbleView.m in Sources */,
 				8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */,
 				BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */,
+				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsViewController.m in Sources */,

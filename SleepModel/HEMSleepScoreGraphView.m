@@ -69,6 +69,7 @@ CGFloat const arcOffsetY = 80.f;
 
 - (void)setHighlighted:(BOOL)highlighted {
     [super setHighlighted:highlighted];
+    DDLogVerbose(@"highlighted %@", highlighted ? @"y" : @"n");
     if (highlighted) {
         if (!self.highlightedLayer) {
             CAShapeLayer* mask = [CAShapeLayer layer];

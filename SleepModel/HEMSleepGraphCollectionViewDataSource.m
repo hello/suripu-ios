@@ -362,11 +362,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     NSInteger score = [self.sleepResult.score integerValue];
     [cell setLoading:self.sleepResult.message.length == 0];
     [cell setScore:score message:self.sleepResult.message condition:self.sleepResult.scoreCondition animated:YES];
-    if (score > 0 && [collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
-        [cell.messageContainerView addTapTarget:collectionView.delegate
-                                         action:@selector(didTapSummaryButton:)];
-        [cell.sleepScoreGraphView addTapTarget:collectionView.delegate
-                                        action:@selector(didTapSummaryButton:)];
+    if (score > 0 && [collectionView.delegate conformsToProtocol:@protocol(HEMTapDelegate)]) {
+        [cell.messageContainerView setTapDelegate:(id)collectionView.delegate];
+        [cell.sleepScoreGraphView setTapDelegate:(id)collectionView.delegate];
     }
     cell.messageChevronView.hidden = ![self hasTimelineData];
     cell.messageContainerView.hidden = ![self hasTimelineData];

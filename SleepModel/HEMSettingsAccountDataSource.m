@@ -287,10 +287,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     return [[[SENServiceAccount sharedService] account] weight];
 }
 
-- (long)weightInPounds {
-    return round(HEMGramsToPounds([[[SENServiceAccount sharedService] account] weight]));
-}
-
 - (NSString*)weight {
     NSNumber* grams = [[[SENServiceAccount sharedService] account] weight];
     if (grams == nil) return nil;

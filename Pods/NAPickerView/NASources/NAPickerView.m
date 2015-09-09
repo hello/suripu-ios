@@ -127,6 +127,11 @@
 
 - (void)setIndex:(NSInteger)index
 {
+    [self setIndex:index animated:NO];
+}
+
+- (void)setIndex:(NSInteger)index animated:(BOOL)animated
+{
     if (self.items.count == 0) {
         return;
     }
@@ -142,7 +147,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [weakSelf.tableView scrollToRowAtIndexPath:weakSelf.currentIndex
                                   atScrollPosition:UITableViewScrollPositionMiddle
-                                          animated:NO];
+                                          animated:animated];
     });
 }
 

@@ -124,7 +124,7 @@ CHECKOUT OPTIONS:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
     :git: git@github.com:hello/LGBluetooth.git
   NAPickerView:
-    :commit: 4155277fe96e5b7f32d6365d0adfa24c1ab037a6
+    :commit: 70221a714a9f00f990c6bab7815fbabe81781197
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
     :commit: b4534bdc559dd8e14fb0c1c4d7ccf40a942a2d99

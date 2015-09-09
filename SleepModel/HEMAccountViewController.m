@@ -269,7 +269,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 - (HEMWeightPickerViewController *)weightController {
     HEMWeightPickerViewController *weightPicker
         = (HEMWeightPickerViewController *)[HEMOnboardingStoryboard instantiateWeightPickerViewController];
-    [weightPicker setDefaultWeightLbs:[[self dataSource] weightInPounds]];
+    [weightPicker setDefaultWeightInGrams:[[self dataSource] weightInGrams]];
     [weightPicker setDelegate:self];
     return weightPicker;
 }
@@ -323,7 +323,8 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
 #pragma mark Height Delegate
 
-- (void)didSelectHeightInCentimeters:(int)centimeters from:(HEMHeightPickerViewController *)controller {
+- (void)didSelectHeightInCentimeters:(int)centimeters
+                                from:(HEMHeightPickerViewController *)controller {
 
     __weak typeof(self) weakSelf = self;
     [[self dataSource] updateHeight:centimeters
@@ -339,10 +340,11 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
 #pragma mark Weight Delegate
 
-- (void)didSelectWeightInKgs:(CGFloat)weightKgs from:(HEMWeightPickerViewController *)controller {
+- (void)didSelectWeightInGrams:(double)grams
+                          from:(HEMWeightPickerViewController *)controller {
 
     __weak typeof(self) weakSelf = self;
-    [[self dataSource] updateWeight:weightKgs
+    [[self dataSource] updateWeight:grams
                          completion:^(NSError *error) {
                            [weakSelf showErrorIfAny:error];
                          }];

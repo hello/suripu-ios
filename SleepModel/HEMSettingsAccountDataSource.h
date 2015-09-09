@@ -44,7 +44,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountError) {
 - (NSDateComponents*)birthdateComponents;
 - (NSUInteger)genderEnumValue;
 - (float)heightInInches;
-- (float)weightInPounds;
+- (NSNumber*)weightInGrams;
 
 #pragma mark - Updates
 
@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountError) {
 - (void)updateHeight:(int)heightInCentimeters
           completion:(void(^)(NSError* error))completion;
 
-- (void)updateWeight:(float)weightInKgs
+- (void)updateWeight:(double)grams
           completion:(void(^)(NSError* error))completion;
 
 - (void)updateGender:(SENAccountGender)gender

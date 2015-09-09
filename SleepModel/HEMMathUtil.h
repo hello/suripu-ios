@@ -18,16 +18,30 @@ float HEMToInches (NSNumber* centimeters);
 /**
  * Converts grams to pounds
  * @param grams: NSNumber representing the grams to convert
- * @return pounds as a float value
+ * @return pounds
  */
-float HEMToPounds (NSNumber* grams);
+double HEMGramsToPounds (NSNumber* grams);
+
+/**
+ * Converts grams to Kilograms
+ * @param grams: NSNumber representing the grams to convert
+ * @return Kilograms
+ */
+double HEMGramsToKilograms (NSNumber *grams);
 
 /**
  * Converts pounds to kilograms
  * @param pounds: NSNumber representing the pounds to convert
- * @return kilograms as a float
+ * @return kilograms
  */
-float HEMToKilograms (NSNumber* pounds);
+double HEMPoundsToKilograms (NSNumber* pounds);
+
+/**
+ * Converts pounds to grams
+ * @param pounds: NSNumber representing the pounds to convert
+ * @return grams
+ */
+double HEMPoundsToGrams (NSNumber* pounds);
 
 /**
  * Convert degrees to radians

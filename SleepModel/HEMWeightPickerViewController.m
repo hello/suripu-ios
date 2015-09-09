@@ -28,7 +28,7 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollBottomConstraint;
 
 @property (strong, nonatomic) HEMRulerView* ruler;
-@property (assign, nonatomic) double weightInGrams;
+@property (assign, nonatomic) CGFloat weightInGrams;
 
 @end
 

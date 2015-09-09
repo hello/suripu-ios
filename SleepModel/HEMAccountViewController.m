@@ -340,7 +340,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
 #pragma mark Weight Delegate
 
-- (void)didSelectWeightInGrams:(double)grams
+- (void)didSelectWeightInGrams:(float)grams
                           from:(HEMWeightPickerViewController *)controller {
 
     __weak typeof(self) weakSelf = self;

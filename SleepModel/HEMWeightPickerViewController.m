@@ -15,8 +15,8 @@
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
 
-static double const HEMWeightDefaultFemale = 49895.2f;
-static double const HEMWeightDefaultMale = 74842.7f;
+static CGFloat const HEMWeightDefaultFemale = 49895.2f;
+static CGFloat const HEMWeightDefaultMale = 74842.7f;
 
 @interface HEMWeightPickerViewController () <UIScrollViewDelegate>
 

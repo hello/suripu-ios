@@ -104,7 +104,7 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
     CGFloat lbs = MAX(0.0f, markX);
     
     if ([SENPreference useMetricUnitForWeight]) {
-        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), round(HEMPoundsToKilograms(@(lbs)))];
+        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), roundCGFloat(HEMPoundsToKilograms(@(lbs)))];
     } else {
         self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
     }

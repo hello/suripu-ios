@@ -2,7 +2,6 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceHealthKit.h>
 #import <SenseKit/SENPreference.h>
-#import <tgmath.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"

@@ -293,9 +293,14 @@ static NSUInteger const HEMClock24HourCount = 24;
 }
 
 - (void)adjustMeridiemWithHour:(NSUInteger)hour {
-    if (hour == 12 || (self.hour == 12 && hour == 11)) {
+    if (hour == self.hour)
+        return;
+    BOOL counterclockwise = (self.hour == 12 || self.hour == 0) && (hour == 11 || hour == 23);
+    BOOL clockwise = (hour == 0 || hour == 12) && (self.hour == 23 || self.hour == 11);
+    if (clockwise || counterclockwise) {
         int index = [self isPMSelected] ? 0 : 1;
-        [self.meridiemPickerView setIndex:index];
+        [self.meridiemPickerView.layer removeAllAnimations];
+        [self.meridiemPickerView setIndex:index animated:YES];
         NSString* key = [NSString stringWithFormat:@"alarms.alarm.meridiem.%@", index == 0 ? @"am" : @"pm"];
         self.selectedMeridiemText = [NSLocalizedString(key, nil) uppercaseString];
     }

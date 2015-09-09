@@ -60,6 +60,12 @@
 #define COCOAPODS_VERSION_MINOR_BEMSimpleLineGraph 3
 #define COCOAPODS_VERSION_PATCH_BEMSimpleLineGraph 0
 
+// CGFloatType
+#define COCOAPODS_POD_AVAILABLE_CGFloatType
+#define COCOAPODS_VERSION_MAJOR_CGFloatType 1
+#define COCOAPODS_VERSION_MINOR_CGFloatType 3
+#define COCOAPODS_VERSION_PATCH_CGFloatType 1
+
 // CocoaLumberjack
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 1

@@ -13,38 +13,38 @@
  * @param centimeters: centimeters to convert to inches
  * @param inches
  */
-float HEMToInches (NSNumber* centimeters);
+CGFloat HEMToInches (NSNumber* centimeters);
 
 /**
  * Converts grams to pounds
  * @param grams: NSNumber representing the grams to convert
  * @return pounds
  */
-float HEMGramsToPounds (NSNumber* grams);
+CGFloat HEMGramsToPounds (NSNumber* grams);
 
 /**
  * Converts grams to Kilograms
  * @param grams: NSNumber representing the grams to convert
  * @return Kilograms
  */
-float HEMGramsToKilograms (NSNumber *grams);
+CGFloat HEMGramsToKilograms (NSNumber *grams);
 
 /**
  * Converts pounds to kilograms
  * @param pounds: NSNumber representing the pounds to convert
  * @return kilograms
  */
-float HEMPoundsToKilograms (NSNumber* pounds);
+CGFloat HEMPoundsToKilograms (NSNumber* pounds);
 
 /**
  * Converts pounds to grams
  * @param pounds: NSNumber representing the pounds to convert
  * @return grams
  */
-float HEMPoundsToGrams (NSNumber* pounds);
+CGFloat HEMPoundsToGrams (NSNumber* pounds);
 
 /**
  * Convert degrees to radians
  @ return radian value for degrees
  */
-float HEMDegreesToRadians(float degrees);
+CGFloat HEMDegreesToRadians(CGFloat degrees);

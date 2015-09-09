@@ -2,6 +2,7 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceHealthKit.h>
 #import <SenseKit/SENPreference.h>
+#import <tgmath.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -91,7 +92,7 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
     SENAccountGender gender = [[[HEMOnboardingService sharedService] currentAccount] gender];
     CGFloat genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
     NSNumber* initWeightInGrams = [self defaultWeightInGrams] ?: @(genderWeight);
-    CGFloat initialWeightInLbs = roundf(HEMGramsToPounds(initWeightInGrams));
+    CGFloat initialWeightInLbs = roundCGFloat(HEMGramsToPounds(initWeightInGrams));
     CGFloat initialOffset = (initialWeightInLbs*(HEMRulerSegmentSpacing+HEMRulerSegmentWidth))-[[self scrollView] contentInset].left;
     [[self scrollView] setContentOffset:CGPointMake(initialOffset, 0.0f) animated:YES];
 }
@@ -104,7 +105,7 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
     CGFloat lbs = MAX(0.0f, markX);
     
     if ([SENPreference useMetricUnitForWeight]) {
-        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), roundf(HEMPoundsToKilograms(@(lbs)))];
+        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), round(HEMPoundsToKilograms(@(lbs)))];
     } else {
         self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
     }

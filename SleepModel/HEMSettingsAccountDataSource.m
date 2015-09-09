@@ -258,7 +258,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     return gender;
 }
 
-- (float)heightInInches {
+- (CGFloat)heightInInches {
     return HEMToInches([[[SENServiceAccount sharedService] account] height]);
 }
 
@@ -294,10 +294,10 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     NSString* weight = nil;
     
     if ([SENPreference useMetricUnitForWeight]) {
-        float kg = roundf(HEMGramsToKilograms(grams));
+        CGFloat kg = roundCGFloat(HEMGramsToKilograms(grams));
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kg];
     } else {
-        float pounds = roundf(HEMGramsToPounds(grams));
+        CGFloat pounds = roundCGFloat(HEMGramsToPounds(grams));
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), pounds];
     }
     
@@ -477,7 +477,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     }];
 }
 
-- (void)updateWeight:(double)grams completion:(void(^)(NSError* error))completion {
+- (void)updateWeight:(CGFloat)grams completion:(void(^)(NSError* error))completion {
     __block SENAccount* account = [[SENServiceAccount sharedService] account];
     
     NSNumber* oldWeight = [account weight];

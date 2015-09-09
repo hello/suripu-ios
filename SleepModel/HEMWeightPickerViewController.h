@@ -6,7 +6,7 @@
 
 @protocol HEMWeightPickerDelegate <NSObject>
 
-- (void)didSelectWeightInGrams:(float)grams
+- (void)didSelectWeightInGrams:(CGFloat)grams
                           from:(HEMWeightPickerViewController*)controller;
 - (void)didCancelWeightFrom:(HEMWeightPickerViewController*)controller;
 

@@ -8,31 +8,31 @@
 
 #import "HEMMathUtil.h"
 
-double const HEMMathCentimetersPerInch = 2.54f;
-double const HEMMathKilogramsPerPound = 0.453592f;
-double const HEMMathPoundsPerGram = 0.0022046f;
-double const HEMMathGramsPerPound = 453.592f;
+CGFloat const HEMMathCentimetersPerInch = 2.54f;
+CGFloat const HEMMathKilogramsPerPound = 0.453592f;
+CGFloat const HEMMathPoundsPerGram = 0.0022046f;
+CGFloat const HEMMathGramsPerPound = 453.592f;
 
-float HEMToInches (NSNumber* centimeters) {
-    return round([centimeters floatValue] / HEMMathCentimetersPerInch);
+CGFloat HEMToInches (NSNumber* centimeters) {
+    return round([centimeters doubleValue] / HEMMathCentimetersPerInch);
 }
 
-float HEMGramsToKilograms (NSNumber *grams) {
-    return [grams floatValue] / 1000.0f;
+CGFloat HEMGramsToKilograms (NSNumber *grams) {
+    return [grams doubleValue] / 1000.0f;
 }
 
-float HEMGramsToPounds (NSNumber* grams) {
-    return [grams floatValue] * HEMMathPoundsPerGram;
+CGFloat HEMGramsToPounds (NSNumber* grams) {
+    return [grams doubleValue] * HEMMathPoundsPerGram;
 }
 
-float HEMPoundsToKilograms (NSNumber* pounds) {
-    return [pounds floatValue] * HEMMathKilogramsPerPound;
+CGFloat HEMPoundsToKilograms (NSNumber* pounds) {
+    return [pounds doubleValue] * HEMMathKilogramsPerPound;
 }
 
-float HEMPoundsToGrams (NSNumber* pounds) {
-    return [pounds floatValue] * HEMMathGramsPerPound;
+CGFloat HEMPoundsToGrams (NSNumber* pounds) {
+    return [pounds doubleValue] * HEMMathGramsPerPound;
 }
 
-float HEMDegreesToRadians(float degrees) {
+CGFloat HEMDegreesToRadians(CGFloat degrees) {
     return  (degrees / 180.0) * M_PI;
 }

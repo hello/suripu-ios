@@ -17,20 +17,20 @@ float HEMToInches (NSNumber* centimeters) {
     return round([centimeters floatValue] / HEMMathCentimetersPerInch);
 }
 
-double HEMGramsToKilograms (NSNumber *grams) {
-    return [grams longValue] / 1000.0f;
+float HEMGramsToKilograms (NSNumber *grams) {
+    return [grams floatValue] / 1000.0f;
 }
 
-double HEMGramsToPounds (NSNumber* grams) {
-    return [grams longValue] * HEMMathPoundsPerGram;
+float HEMGramsToPounds (NSNumber* grams) {
+    return [grams floatValue] * HEMMathPoundsPerGram;
 }
 
-double HEMPoundsToKilograms (NSNumber* pounds) {
-    return [pounds longValue] * HEMMathKilogramsPerPound;
+float HEMPoundsToKilograms (NSNumber* pounds) {
+    return [pounds floatValue] * HEMMathKilogramsPerPound;
 }
 
-double HEMPoundsToGrams (NSNumber* pounds) {
-    return [pounds doubleValue] * HEMMathGramsPerPound;
+float HEMPoundsToGrams (NSNumber* pounds) {
+    return [pounds floatValue] * HEMMathGramsPerPound;
 }
 
 float HEMDegreesToRadians(float degrees) {

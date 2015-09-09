@@ -91,7 +91,7 @@ static double const HEMWeightDefaultMale = 74842.7f;
     SENAccountGender gender = [[[HEMOnboardingService sharedService] currentAccount] gender];
     double genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
     NSNumber* initWeightInGrams = [self defaultWeightInGrams] ?: @(genderWeight);
-    long initialWeightInLbs = round(HEMGramsToPounds(initWeightInGrams));
+    float initialWeightInLbs = roundf(HEMGramsToPounds(initWeightInGrams));
     CGFloat initialOffset = (initialWeightInLbs*(HEMRulerSegmentSpacing+HEMRulerSegmentWidth))-[[self scrollView] contentInset].left;
     [[self scrollView] setContentOffset:CGPointMake(initialOffset, 0.0f) animated:YES];
 }
@@ -101,10 +101,10 @@ static double const HEMWeightDefaultMale = 74842.7f;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offX = [scrollView contentOffset].x;
     CGFloat markX = ((offX + [scrollView contentInset].left) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
-    long lbs = MAX(0.0f, markX);
+    CGFloat lbs = MAX(0.0f, markX);
     
     if ([SENPreference useMetricUnitForWeight]) {
-        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), (long)round(HEMPoundsToKilograms(@(lbs)))];
+        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), roundf(HEMPoundsToKilograms(@(lbs)))];
     } else {
         self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
     }

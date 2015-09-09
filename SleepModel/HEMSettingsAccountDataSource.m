@@ -294,10 +294,10 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     NSString* weight = nil;
     
     if ([SENPreference useMetricUnitForWeight]) {
-        long kg = round(HEMGramsToKilograms(grams));
+        float kg = roundf(HEMGramsToKilograms(grams));
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kg];
     } else {
-        long pounds = round(HEMGramsToPounds(grams));
+        float pounds = roundf(HEMGramsToPounds(grams));
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), pounds];
     }
     

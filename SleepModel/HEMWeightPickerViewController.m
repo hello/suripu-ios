@@ -89,9 +89,9 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 
 - (void)scrollToSetWeight {
     SENAccountGender gender = [[[HEMOnboardingService sharedService] currentAccount] gender];
-    double genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
+    CGFloat genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
     NSNumber* initWeightInGrams = [self defaultWeightInGrams] ?: @(genderWeight);
-    float initialWeightInLbs = roundf(HEMGramsToPounds(initWeightInGrams));
+    CGFloat initialWeightInLbs = roundf(HEMGramsToPounds(initWeightInGrams));
     CGFloat initialOffset = (initialWeightInLbs*(HEMRulerSegmentSpacing+HEMRulerSegmentWidth))-[[self scrollView] contentInset].left;
     [[self scrollView] setContentOffset:CGPointMake(initialOffset, 0.0f) animated:YES];
 }

@@ -15,8 +15,8 @@
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
 
-static CGFloat const HEMWeightDefaultFemale = 110.0f;
-static CGFloat const HEMWeightDefaultMale = 175.0f;
+static CGFloat const HEMWeightDefaultFemale = 49895.2f;
+static CGFloat const HEMWeightDefaultMale = 74842.7f;
 
 @interface HEMWeightPickerViewController () <UIScrollViewDelegate>
 
@@ -28,7 +28,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollBottomConstraint;
 
 @property (strong, nonatomic) HEMRulerView* ruler;
-@property (assign, nonatomic) CGFloat weightInKgs;
+@property (assign, nonatomic) CGFloat weightInGrams;
 
 @end
 
@@ -90,8 +90,9 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 - (void)scrollToSetWeight {
     SENAccountGender gender = [[[HEMOnboardingService sharedService] currentAccount] gender];
     CGFloat genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
-    CGFloat initialWeight = [self defaultWeightLbs] > 0 ? [self defaultWeightLbs] : genderWeight;
-    CGFloat initialOffset = (initialWeight*(HEMRulerSegmentSpacing+HEMRulerSegmentWidth))-[[self scrollView] contentInset].left;
+    NSNumber* initWeightInGrams = [self defaultWeightInGrams] ?: @(genderWeight);
+    CGFloat initialWeightInLbs = roundCGFloat(HEMGramsToPounds(initWeightInGrams));
+    CGFloat initialOffset = (initialWeightInLbs*(HEMRulerSegmentSpacing+HEMRulerSegmentWidth))-[[self scrollView] contentInset].left;
     [[self scrollView] setContentOffset:CGPointMake(initialOffset, 0.0f) animated:YES];
 }
 
@@ -101,24 +102,24 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     CGFloat offX = [scrollView contentOffset].x;
     CGFloat markX = ((offX + [scrollView contentInset].left) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
     CGFloat lbs = MAX(0.0f, markX);
-    CGFloat kgs = HEMToKilograms(@(lbs));
+    
     if ([SENPreference useMetricUnitForWeight]) {
-        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kgs];
+        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), roundCGFloat(HEMPoundsToKilograms(@(lbs)))];
     } else {
         self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
     }
     
-    [self setWeightInKgs:kgs];
+    [self setWeightInGrams:HEMPoundsToGrams(@(lbs))];
 }
 
 #pragma mark - Actions
 
 - (IBAction)done:(id)sender {
     if ([self delegate] != nil) {
-        [[self delegate] didSelectWeightInKgs:[self weightInKgs] from:self];
+        [[self delegate] didSelectWeightInGrams:[self weightInGrams] from:self];
     } else {
         SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
-        [account setWeight:@(ceilf([self weightInKgs] * 1000))];
+        [account setWeight:@([self weightInGrams])];
         [self next];
     }
 }

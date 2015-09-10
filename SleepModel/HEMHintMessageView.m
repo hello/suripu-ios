@@ -10,6 +10,7 @@
 
 #import "HEMHintMessageView.h"
 #import "UIColor+HEMStyle.h"
+#import "NSShadow+HEMStyle.h"
 #import "NSString+HEMUtils.h"
 
 static CGFloat const HEMHintMessagePadding = 18.0f;
@@ -28,8 +29,18 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     if (self) {
         _message = [message copy];
         [self configureViewWithWidth:width];
+        [self configureShadow];
     }
     return self;
+}
+
+- (void)configureShadow {
+    NSShadow* shadow = [NSShadow shadowForHandholdingMessage];
+    CALayer* layer = [self layer];
+    [layer setShadowOpacity:1.0f];
+    [layer setShadowOffset:[shadow shadowOffset]];
+    [layer setShadowRadius:[shadow shadowBlurRadius]];
+    [layer setShadowColor:[[shadow shadowColor] CGColor]];
 }
 
 - (void)configureViewWithWidth:(CGFloat)width {

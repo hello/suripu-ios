@@ -34,13 +34,14 @@
 #import "HelloStyleKit.h"
 #import "HEMAudioSession.h"
 #import "HEMSupportUtil.h"
+#import "HEMTappableView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
 CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
-                                           HEMSleepGraphActionDelegate, AVAudioPlayerDelegate>
+                                           HEMSleepGraphActionDelegate, AVAudioPlayerDelegate, HEMTapDelegate>
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
@@ -540,12 +541,6 @@ static BOOL hasLoadedBefore = NO;
     });
 }
 
-- (void)didTapSummaryButton:(UIButton *)sender {
-    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownController];
-    controller.result = self.dataSource.sleepResult;
-    [self presentViewController:controller animated:YES completion:NULL];
-}
-
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
     if ([self.collectionView isDecelerating] || [self.dataSource segmentForEventExistsAtIndexPath:indexPath])
         return;
@@ -651,6 +646,14 @@ static BOOL hasLoadedBefore = NO;
     [self.popupMaskView showUnderlyingViewRect:maskArea];
     self.popupMaskView.alpha = 0.7f;
     self.popupMaskView.hidden = NO;
+}
+
+#pragma mark - HEMTapDelegate
+
+- (void)didTapOnView:(HEMTappableView *)tappableView {
+    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownController];
+    controller.result = self.dataSource.sleepResult;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 #pragma mark - Top Bar

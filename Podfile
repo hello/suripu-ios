@@ -17,6 +17,7 @@ pod 'MSDynamicsDrawerViewController', '1.5.1'
 pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
                   :tag => '1.3.0.1'
 pod 'UICountingLabel', '~> 1.2.0'
+pod 'CGFloatType', '~> 1.3.1'
 
 # Private
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'

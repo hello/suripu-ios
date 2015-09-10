@@ -8,7 +8,6 @@
 
 @required
 
-- (void)didTapSummaryButton:(UIButton *)button;
 - (void)didTapDrawerButton:(UIButton *)button;
 - (void)didTapShareButton:(UIButton *)button;
 - (void)didTapDateButton:(UIButton *)button;

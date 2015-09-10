@@ -387,7 +387,7 @@
 "measurement.light.format" = "%.flx";
 "measurement.sound.format" = "%.fdB";
 "measurement.particle.format" = "%.0f";
-"measurement.cm.format" = "%ldcm";
+"measurement.cm.format" = "%ld cm";
 "measurement.ft.format" = "%ld'";
 "measurement.in.format" = "%ld\"";
 "measurement.kg.format" = "%.0f kg";

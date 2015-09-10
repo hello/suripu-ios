@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.4.0
+
+New:
+
+* handholding message displays with a shadow to better separate from content underneath
+* Time picker will automatically rollover AM/PM when switching hours
+* Sleep breakdown displays -- when no data is available for that metric
+* support URL displayed in message dialog is truncated to just https://support.hello.is
+* A network specific error message is displayed when pill pairing fails due to a network error from within Sense
+
+Fixes:
+
+* Fixed rounding issue with selecting weight through settings / onboarding
+* Sleep score summary / message no longer remains highlighted when dragged
+* Copy on troubleshooting / warning cards in device settings properly wraps
+* Sense card in Device settings no longer display values (wifi ssid) that overlap with the label
+
 ## 1.1.3.6
 
 Fixes:

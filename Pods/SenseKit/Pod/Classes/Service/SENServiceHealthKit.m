@@ -180,11 +180,12 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     NSDate* lastNight = [calendar dateByAddingComponents:lastNightComponents toDate:today options:0];
     
     // last time it was sync'ed
-    NSDate* syncStartDate = [self lastSyncDate];
+    NSDate* lastSyncDate = [self lastSyncDate];
+    NSDate* syncFromDate = nil;
     
-    if (syncStartDate) {
+    if (lastSyncDate) {
         NSDateComponents *difference = [calendar components:NSCalendarUnitDay
-                                                   fromDate:syncStartDate
+                                                   fromDate:lastSyncDate
                                                      toDate:lastNight
                                                     options:0];
         if ([difference day] == 0) {
@@ -192,17 +193,24 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
                                             code:SENServiceHealthKitErrorAlreadySynced
                                         userInfo:nil]);
             return;
-        } else if ([difference day] > SENServiceHKBackFillLimit) { // make sure we don't backfill too much
+        } else if ([difference day] == 1) {
+            // special case for when user is consistently syncing everyday.  This
+            // can be handled by the else case, but this just avoids having to do
+            // the arithmetic
+            syncFromDate = lastNight;
+        } else {
             NSDateComponents* backFillComps = [[NSDateComponents alloc] init];
-            [backFillComps setDay:-SENServiceHKBackFillLimit];
-            syncStartDate = [calendar dateByAddingComponents:backFillComps toDate:lastNight options:0];
+            [backFillComps setDay:-(MIN([difference day], SENServiceHKBackFillLimit) - 1)];
+            syncFromDate = [calendar dateByAddingComponents:backFillComps
+                                                     toDate:lastNight
+                                                    options:0];
         }
     } else { // if never been sync'ed before, just sync last night's data
-        syncStartDate = lastNight;
+        syncFromDate = lastNight;
     }
     
     __weak typeof(self) weakSelf = self;
-    [self syncTimelineDataAfter:syncStartDate until:lastNight withCalendar:calendar completion:^(NSArray* timelines, NSError *error) {
+    [self syncTimelineDataFrom:syncFromDate until:lastNight withCalendar:calendar completion:^(NSArray* timelines, NSError *error) {
         if (!error) {
             [weakSelf saveLastSyncDate:lastNight];
         }
@@ -210,13 +218,12 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     }];
 }
 
-- (void)syncTimelineDataAfter:(NSDate*)startDate
-                        until:(NSDate*)endDate
-                 withCalendar:(NSCalendar*)calendar
-                   completion:(void(^)(NSArray* timelines, NSError* error))completion {
+- (void)syncTimelineDataFrom:(NSDate*)startDate
+                       until:(NSDate*)endDate
+                withCalendar:(NSCalendar*)calendar
+                  completion:(void(^)(NSArray* timelines, NSError* error))completion {
     NSCalendarUnit unitsWeCareAbout = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
     NSDate* nextStartDate = startDate;
-    NSUInteger daysFromStartDate = 0;
     NSDateComponents* components = nil;
     
     BOOL haveTimelines = NO;
@@ -226,6 +233,8 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     __weak typeof(self) weakSelf = self;
     while ([calendar compareDate:nextStartDate toDate:endDate toUnitGranularity:unitsWeCareAbout] != NSOrderedDescending) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        DDLogVerbose(@"retrieving timeline for date %@ to sync to healthkit", nextStartDate);
         
         haveTimelines = YES;
         
@@ -237,9 +246,8 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
             dispatch_group_leave(getTimelineGroup);
         }];
         
-        daysFromStartDate++;
         components = [[NSDateComponents alloc] init];
-        [components setDay:daysFromStartDate];
+        [components setDay:1];
         nextStartDate = [calendar dateByAddingComponents:components toDate:nextStartDate options:0];
     }
     
@@ -262,9 +270,16 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
 
 }
 
+- (BOOL)timelineHasSufficientData:(SENTimeline*)timeline {
+    return [timeline scoreCondition] != SENConditionUnknown
+        && [timeline scoreCondition] != SENConditionIncomplete
+        && [[timeline metrics] count] > 0;
+}
+
 - (void)timelineForDate:(NSDate*)date completion:(void(^)(SENTimeline* timeline, NSError* error))completion {
     SENTimeline* timeline = [SENTimeline timelineForDate:date];
-    if ([[timeline metrics] count] > 0 && [timeline scoreCondition] != SENConditionUnknown) {
+    // if cached timeline does not have sufficient data, grab an update, if any
+    if ([self timelineHasSufficientData:timeline]) {
         completion (timeline, nil);
     } else {
         [SENAPITimeline timelineForDate:date completion:^(id data, NSError *error) {
@@ -314,12 +329,16 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
     }];
 }
 
-- (HKSample*)sleepSampleFromTimeline:(SENTimeline*)sleepResult {
+- (HKSample*)sleepSampleFromTimeline:(SENTimeline*)timeline {
+    if (![self timelineHasSufficientData:timeline]) {
+        return nil;
+    }
+    
     HKSample* sample = nil;
     HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
     NSDate* wakeUpDate = nil;
     NSDate* sleepDate = nil;
-    NSArray* metrics = [sleepResult metrics];
+    NSArray* metrics = [timeline metrics];
 
     for (SENTimelineMetric* metric in metrics) {
         CGFloat metricValue = [metric.value doubleValue];

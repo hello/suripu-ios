@@ -102,7 +102,7 @@
 "pairing.error.pill-already-paired" = "This Sleep Pill is already paired with another account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
 "pairing.error.pill-pairing-failed" = "Sense could not pair your Sleep Pill. Please try again.";
-"pairing.error.pill-pairing-no-network" = "Sense could not pair your Sleep Pill. Please ensure the network Sense is connected can reach the internet then try again.";
+"pairing.error.pill-pairing-no-network" = "Sense could not pair your Sleep Pill. Please ensure the network Sense is connected to can reach the internet then try again.";
 "pairing.pill.skip-confirmation-title" = "Are you sure?";
 "pairing.pill.skip-confirmation-message" = "Sense is not designed to work without a Sleep Pill. You will not be able to track your sleep, or set Smart Alarms. If you're having trouble, you can skip for now, and pair a Sleep Pill later.";
 

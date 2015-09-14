@@ -193,16 +193,21 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
 
 @implementation SENAnalytics (HEMAppAnalytics)
 
-+ (void)trackSignUpWithName:(NSString*)userName {
-    NSString* name = userName ?: @"";
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
++ (void)trackSignUpOfNewAccount:(SENAccount*)account {
+    if (!account) {
+        DDLogWarn(@"attempted to track account sign up without an account object, skipping");
+        return;
+    }
+    
+    NSString* name = [account name] ?: @"";
+    NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
     if ([accountId length] == 0) {
         // checking this case as it seemed to have happened before
         DDLogInfo(@"account id not found after sign up!");
         accountId = @"";
     }
     
-    [SENAnalytics userWithId:[SENAuthorizationService accountIdOfAuthorizedUser]
+    [SENAnalytics userWithId:accountId
      didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : name,
                                kHEMAnalyticsEventMpPropCreated : [NSDate date],
                                kHEMAnalyticsEventPropAccount : accountId,

@@ -194,6 +194,11 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
 @implementation SENAnalytics (HEMAppAnalytics)
 
 + (void)trackSignUpOfNewAccount:(SENAccount*)account {
+    if (!account) {
+        DDLogWarn(@"attempted to track account sign up without an account object, skipping");
+        return;
+    }
+    
     NSString* name = [account name] ?: @"";
     NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
     if ([accountId length] == 0) {

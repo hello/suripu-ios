@@ -669,6 +669,7 @@
 		BFC4C20F1B90F8C700BB7761 /* pairing_your_sleep_pill.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC4C20C1B90F8C700BB7761 /* pairing_your_sleep_pill.png */; };
 		BFC4C2101B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC4C20D1B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png */; };
 		BFC4C2111B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC4C20E1B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png */; };
+		BFC5E6791BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC5E6781BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m */; };
 		BFC7D32B1B91118600D40D58 /* HEMVideoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC7D32A1B91118600D40D58 /* HEMVideoCollectionViewCell.m */; };
 		BFC7D32F1B94D47500D40D58 /* pillSetup.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC7D32C1B94D47500D40D58 /* pillSetup.png */; };
 		BFC7D3301B94D47500D40D58 /* pillSetup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC7D32D1B94D47500D40D58 /* pillSetup@2x.png */; };
@@ -1628,6 +1629,7 @@
 		BFC4C20C1B90F8C700BB7761 /* pairing_your_sleep_pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pairing_your_sleep_pill.png; path = images/pairing_your_sleep_pill.png; sourceTree = "<group>"; };
 		BFC4C20D1B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairing_your_sleep_pill@2x.png"; path = "images/pairing_your_sleep_pill@2x.png"; sourceTree = "<group>"; };
 		BFC4C20E1B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairing_your_sleep_pill@3x.png"; path = "images/pairing_your_sleep_pill@3x.png"; sourceTree = "<group>"; };
+		BFC5E6781BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SENAnalyticsHEMAppAnalyticsSpec.m; sourceTree = "<group>"; };
 		BFC7D3291B91118600D40D58 /* HEMVideoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVideoCollectionViewCell.h; sourceTree = "<group>"; };
 		BFC7D32A1B91118600D40D58 /* HEMVideoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVideoCollectionViewCell.m; sourceTree = "<group>"; };
 		BFC7D32C1B94D47500D40D58 /* pillSetup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pillSetup.png; path = images/pillSetup.png; sourceTree = "<group>"; };
@@ -3319,6 +3321,7 @@
 			isa = PBXGroup;
 			children = (
 				BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */,
+				BFC5E6781BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m */,
 			);
 			name = Analytics;
 			sourceTree = "<group>";
@@ -4455,6 +4458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFC5E6791BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m in Sources */,
 				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,

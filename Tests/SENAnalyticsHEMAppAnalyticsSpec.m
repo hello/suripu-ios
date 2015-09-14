@@ -49,7 +49,7 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
                 [[name should] equal:[account name]];
             });
             
-            it(@"should track with an empty account id", ^{
+            it(@"should track with the account id", ^{
                 [[accountIdCreated should] equal:[account accountId]];
                 NSString* accountIdProp = propertiesOnCreation[@"Account Id"];
                 [[accountIdProp should] equal:[account accountId]];

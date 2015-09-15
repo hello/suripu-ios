@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.4.1
+
+Fixes:
+
+* fixed issue where 2  mixpanel profiles were being created for every new account
+* fixed typo in pill pairing, network error message
+* prevent duplicate records from being synced to HK when syncing last night
+* ensure HK backfilling syncs consecutive days
+
 ## 1.1.4.0
 
 New:

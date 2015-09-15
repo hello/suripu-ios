@@ -70,6 +70,7 @@
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.allowsSelection = NO;
+    self.tableView.opaque = NO;
     self.tableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.tableView];
     
@@ -102,6 +103,8 @@
     CGRect tableFrame = self.tableView.frame;
     tableFrame.size.height = CGRectGetHeight(self.bounds);
     self.tableView.frame = tableFrame;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (CGFloat)headerHeight

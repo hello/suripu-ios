@@ -70,6 +70,7 @@
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.allowsSelection = NO;
+    self.tableView.opaque = NO;
     self.tableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.tableView];
     
@@ -102,6 +103,8 @@
     CGRect tableFrame = self.tableView.frame;
     tableFrame.size.height = CGRectGetHeight(self.bounds);
     self.tableView.frame = tableFrame;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (CGFloat)headerHeight
@@ -136,8 +139,7 @@
         return;
     }
     
-    NSInteger multiple  = floorf(self.currentIndex.row / self.items.count);
-    NSInteger adjustedIndex = index + (multiple * self.items.count);
+    NSInteger adjustedIndex = self.infiniteScrolling ? index + (self.items.count * 100) : index;
     if (adjustedIndex == self.currentIndex.row)
         return;
     
@@ -264,8 +266,8 @@
     NSArray *visibleIndexSorted = [visibleIndex sortedArrayUsingComparator:^NSComparisonResult(id a, id b){
         CGRect r1 = [self.tableView rectForRowAtIndexPath:(NSIndexPath *)a];
         CGRect r2 = [self.tableView rectForRowAtIndexPath:(NSIndexPath *)b];
-        CGFloat y1 = fabsf(r1.origin.y + r1.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
-        CGFloat y2 = fabsf(r2.origin.y + r2.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
+        CGFloat y1 = fabs(r1.origin.y + r1.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
+        CGFloat y2 = fabs(r2.origin.y + r2.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
         if (y1 > y2) {
             return NSOrderedDescending;
         }

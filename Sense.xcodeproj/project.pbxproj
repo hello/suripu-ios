@@ -670,6 +670,9 @@
 		BFC4C2101B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC4C20D1B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png */; };
 		BFC4C2111B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC4C20E1B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png */; };
 		BFC5E6791BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC5E6781BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m */; };
+		BFC5E67D1BA8A8BF00D7C606 /* bedroom_condition.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC5E67A1BA8A8BF00D7C606 /* bedroom_condition.png */; };
+		BFC5E67E1BA8A8BF00D7C606 /* bedroom_condition@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC5E67B1BA8A8BF00D7C606 /* bedroom_condition@2x.png */; };
+		BFC5E67F1BA8A8BF00D7C606 /* bedroom_condition@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC5E67C1BA8A8BF00D7C606 /* bedroom_condition@3x.png */; };
 		BFC7D32B1B91118600D40D58 /* HEMVideoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC7D32A1B91118600D40D58 /* HEMVideoCollectionViewCell.m */; };
 		BFC7D32F1B94D47500D40D58 /* pillSetup.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC7D32C1B94D47500D40D58 /* pillSetup.png */; };
 		BFC7D3301B94D47500D40D58 /* pillSetup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC7D32D1B94D47500D40D58 /* pillSetup@2x.png */; };
@@ -1630,6 +1633,9 @@
 		BFC4C20D1B90F8C700BB7761 /* pairing_your_sleep_pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairing_your_sleep_pill@2x.png"; path = "images/pairing_your_sleep_pill@2x.png"; sourceTree = "<group>"; };
 		BFC4C20E1B90F8C700BB7761 /* pairing_your_sleep_pill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairing_your_sleep_pill@3x.png"; path = "images/pairing_your_sleep_pill@3x.png"; sourceTree = "<group>"; };
 		BFC5E6781BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SENAnalyticsHEMAppAnalyticsSpec.m; sourceTree = "<group>"; };
+		BFC5E67A1BA8A8BF00D7C606 /* bedroom_condition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bedroom_condition.png; path = images/bedroom_condition.png; sourceTree = "<group>"; };
+		BFC5E67B1BA8A8BF00D7C606 /* bedroom_condition@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bedroom_condition@2x.png"; path = "images/bedroom_condition@2x.png"; sourceTree = "<group>"; };
+		BFC5E67C1BA8A8BF00D7C606 /* bedroom_condition@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bedroom_condition@3x.png"; path = "images/bedroom_condition@3x.png"; sourceTree = "<group>"; };
 		BFC7D3291B91118600D40D58 /* HEMVideoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVideoCollectionViewCell.h; sourceTree = "<group>"; };
 		BFC7D32A1B91118600D40D58 /* HEMVideoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVideoCollectionViewCell.m; sourceTree = "<group>"; };
 		BFC7D32C1B94D47500D40D58 /* pillSetup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pillSetup.png; path = images/pillSetup.png; sourceTree = "<group>"; };
@@ -2030,6 +2036,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFC5E67A1BA8A8BF00D7C606 /* bedroom_condition.png */,
+				BFC5E67B1BA8A8BF00D7C606 /* bedroom_condition@2x.png */,
+				BFC5E67C1BA8A8BF00D7C606 /* bedroom_condition@3x.png */,
 				BFC7D32C1B94D47500D40D58 /* pillSetup.png */,
 				BFC7D32D1B94D47500D40D58 /* pillSetup@2x.png */,
 				BFC7D32E1B94D47500D40D58 /* pillSetup@3x.png */,
@@ -3716,6 +3725,8 @@
 				BFAB23511AD5D15E00CCBF8A /* lightIconRed@3x.png in Resources */,
 				BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */,
 				BF1C46AD1B15586300AFCB7B /* healthApp@3x.png in Resources */,
+				BFC5E67E1BA8A8BF00D7C606 /* bedroom_condition@2x.png in Resources */,
+				BFC5E67F1BA8A8BF00D7C606 /* bedroom_condition@3x.png in Resources */,
 				BFE2774E1AF44E2F00C1FB4A /* wifiIconLow@2x.png in Resources */,
 				BF5703D61A817D2A00B613F0 /* sampleNotification@3x.png in Resources */,
 				BFAB23941AD5D2AA00CCBF8A /* temperatureIconYellow.png in Resources */,
@@ -4107,6 +4118,7 @@
 				BFCE1D2D1AA657760076E855 /* senseWhite.png in Resources */,
 				BFAB23151AD4B0B200CCBF8A /* soundIconGray@3x.png in Resources */,
 				8ADE06481B2FA0BB00976654 /* timeline_action_approve@2x.png in Resources */,
+				BFC5E67D1BA8A8BF00D7C606 /* bedroom_condition.png in Resources */,
 				8AA157E21A5EFD6B00BF1D4A /* alarmEventIcon@2x.png in Resources */,
 				8AC8009C1A7B029300895ED3 /* senseBarIconActive@2x@2x.png in Resources */,
 				8AD1426A1A78679800A83AD8 /* timeline_explain_score@2x.png in Resources */,

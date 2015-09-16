@@ -60,9 +60,9 @@
 #import <ZendeskSDK/ZDKETag.h>
 #import <ZendeskSDK/ZDKHelpCenter.h>
 #import <ZendeskSDK/ZDKHelpCenterArticle.h>
+#import <ZendeskSDK/ZDKHelpCenterArticleVote.h>
 #import <ZendeskSDK/ZDKHelpCenterArticlesByLabelDataSource.h>
 #import <ZendeskSDK/ZDKHelpCenterArticlesDataSource.h>
-#import <ZendeskSDK/ZDKHelpCenterArticleVote.h>
 #import <ZendeskSDK/ZDKHelpCenterAttachment.h>
 #import <ZendeskSDK/ZDKHelpCenterAttachmentsDataSource.h>
 #import <ZendeskSDK/ZDKHelpCenterCategoriesDataSource.h>
@@ -70,12 +70,15 @@
 #import <ZendeskSDK/ZDKHelpCenterConversationsUIDelegate.h>
 #import <ZendeskSDK/ZDKHelpCenterDataSource.h>
 #import <ZendeskSDK/ZDKHelpCenterDeflection.h>
+#import <ZendeskSDK/ZDKHelpCenterFlatArticle.h>
 #import <ZendeskSDK/ZDKHelpCenterLastSearch.h>
+#import <ZendeskSDK/ZDKHelpCenterParser.h>
 #import <ZendeskSDK/ZDKHelpCenterProvider.h>
 #import <ZendeskSDK/ZDKHelpCenterSearch.h>
 #import <ZendeskSDK/ZDKHelpCenterSearchDataSource.h>
 #import <ZendeskSDK/ZDKHelpCenterSection.h>
 #import <ZendeskSDK/ZDKHelpCenterSectionsDataSource.h>
+#import <ZendeskSDK/ZDKHelpCenterSessionCache.h>
 #import <ZendeskSDK/ZDKHelpCenterSettings.h>
 #import <ZendeskSDK/ZDKHelpCenterSimpleArticle.h>
 #import <ZendeskSDK/ZDKHelpCenterTableDelegate.h>
@@ -135,5 +138,6 @@
 #import <ZendeskSDK/ZDKUploadProvider.h>
 #import <ZendeskSDK/ZDKUploadResponse.h>
 #import <ZendeskSDK/ZDKUser.h>
-#import <ZendeskSDK/ZendeskSDK.h>
+#import <ZendeskSDK/ZDKUserField.h>
+#import <ZendeskSDK/ZDKUserProvider.h>
 #import <ZendeskSDK/ZendeskSDKConstants.h>

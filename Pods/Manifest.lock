@@ -72,7 +72,12 @@ PODS:
     - YapDatabase/standard (= 2.6.5)
   - YapDatabase/standard (2.6.5):
     - CocoaLumberjack (~> 1)
-  - ZendeskSDK (1.3.0.1)
+  - ZendeskSDK (1.4.0.2):
+    - ZendeskSDK/Core (= 1.4.0.2)
+    - ZendeskSDK/Localization (= 1.4.0.2)
+  - ZendeskSDK/Core (1.4.0.2)
+  - ZendeskSDK/Localization (1.4.0.2):
+    - ZendeskSDK/Core
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`,
@@ -92,7 +97,7 @@ DEPENDENCIES:
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
   - UICountingLabel (~> 1.2.0)
   - UIImageEffects (~> 0.0.1)
-  - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.3.0.1`)
+  - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.4.0.2`)
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
@@ -113,7 +118,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/TransitApp/SVWebViewController.git
   ZendeskSDK:
     :git: https://github.com/zendesk/zendesk_sdk_ios.git
-    :tag: 1.3.0.1
+    :tag: 1.4.0.2
 
 CHECKOUT OPTIONS:
   AttributedMarkdown:
@@ -126,7 +131,7 @@ CHECKOUT OPTIONS:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
     :git: git@github.com:hello/LGBluetooth.git
   NAPickerView:
-    :commit: 70221a714a9f00f990c6bab7815fbabe81781197
+    :commit: 78b35ccd98cafcba11a551b2e47d49d51ac766f4
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
     :commit: f378cfdd7eac7d7402da8b2e19793a24145f01a8
@@ -139,7 +144,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/TransitApp/SVWebViewController.git
   ZendeskSDK:
     :git: https://github.com/zendesk/zendesk_sdk_ios.git
-    :tag: 1.3.0.1
+    :tag: 1.4.0.2
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
@@ -163,6 +168,6 @@ SPEC CHECKSUMS:
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
   YapDatabase: 814f9ff862a95c1e581d93335a4020482b69155b
-  ZendeskSDK: c527fd6d474701b6241e92c0b9b7726071a84f22
+  ZendeskSDK: c97e29286726c6eaf4f6fe97867dba354cbbd199
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.2

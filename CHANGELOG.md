@@ -5,7 +5,7 @@
 Fixes:
 
 * update ZDK to 1.4.0.2
-* turned off bitcode for extension due to conflicts with YapDatabase linker flags
+* turned off bitcode due to conflicts with YapDatabase linker flags
 
 ## 1.1.4.2
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.4.2
+
+New:
+
+* updated various assets for the onboarding flow
+* now building with iOS 9
+
+Fixes:
+
+* time picker in iOS 9 no lnoger renders with different colors
+* time picker will roll backwards from the start
+* current condition sensor values will no longer be clipped if value exceeds space needed to render
+
 ## 1.1.4.1
 
 Fixes:

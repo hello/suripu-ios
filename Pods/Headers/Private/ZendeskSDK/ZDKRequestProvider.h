@@ -1,1 +1,0 @@
-../../../ZendeskSDK/ZendeskSDK.framework/Headers/ZDKRequestProvider.h

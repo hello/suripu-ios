@@ -816,11 +816,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 
 ZendeskSDK
-   
-Created by Zendesk on 25/02/2014.  
-   
+
+Created by Zendesk on 25/02/2014.
+
 Copyright (c) 2014 Zendesk. All rights reserved.
-   
+
 By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Terms
 of Service https://www.zendesk.com/company/terms and Application Developer and API License
 Agreement https://www.zendesk.com/company/application-developer-and-api-license-agreement and

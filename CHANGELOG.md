@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.4.4
+
+Fixes:
+
+* disable bitcode for all pod dependencies
+
 ## 1.1.4.3
 
 Fixes:

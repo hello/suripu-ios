@@ -465,7 +465,7 @@
 		BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BC919E304050028F799 /* NotificationCenter.framework */; };
 		BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7F1BCF19E304050028F799 /* HEMTodayViewController.m */; };
 		BF7F1BD219E304050028F799 /* Widget.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BD119E304050028F799 /* Widget.storyboard */; };
-		BF7F1BD519E304050028F799 /* Sense.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BF7F1BC819E304050028F799 /* Sense.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BF7F1BD519E304050028F799 /* SenseToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BF7F1BC819E304050028F799 /* SenseToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BDF19E30DCC0028F799 /* libPods.a */; };
 		BF7F1BE819E313940028F799 /* humidityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE219E313940028F799 /* humidityIcon.png */; };
 		BF7F1BE919E313940028F799 /* humidityIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE319E313940028F799 /* humidityIcon@2x.png */; };
@@ -776,7 +776,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BF7F1BD519E304050028F799 /* Sense.appex in Embed App Extensions */,
+				BF7F1BD519E304050028F799 /* SenseToday.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1390,7 +1390,7 @@
 		BF78E9A71B2763CA0015949F /* HEMTutorialDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTutorialDataSource.h; sourceTree = "<group>"; };
 		BF78E9A81B2763CA0015949F /* HEMTutorialDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTutorialDataSource.m; sourceTree = "<group>"; };
 		BF79185A099B572C06592929 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		BF7F1BC819E304050028F799 /* Sense.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Sense.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF7F1BC819E304050028F799 /* SenseToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SenseToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7F1BC919E304050028F799 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		BF7F1BCD19E304050028F799 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF7F1BCE19E304050028F799 /* HEMTodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMTodayViewController.h; sourceTree = "<group>"; };
@@ -1796,7 +1796,7 @@
 			children = (
 				6003F58A195388D20070C39A /* Sense.app */,
 				6003F5AE195388D20070C39A /* Tests.xctest */,
-				BF7F1BC819E304050028F799 /* Sense.appex */,
+				BF7F1BC819E304050028F799 /* SenseToday.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3598,7 +3598,7 @@
 			);
 			name = SenseWidget;
 			productName = SenseWidget;
-			productReference = BF7F1BC819E304050028F799 /* Sense.appex */;
+			productReference = BF7F1BC819E304050028F799 /* SenseToday.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -4799,6 +4799,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SenseToday;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
@@ -4822,6 +4823,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SenseToday;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
@@ -4943,6 +4945,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SenseToday;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
@@ -5065,6 +5068,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SenseToday;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};

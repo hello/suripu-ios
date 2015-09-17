@@ -22,7 +22,7 @@
 #import "HEMWifiUtils.h"
 
 static CGFloat const kHEMWifiCellHeight = 44.0f;
-static CGFloat const kHEMWifiPickerIconPadding = 5.0f;
+static CGFloat const kHEMWifiPickerIconPadding = 12.0f;
 static NSUInteger const kHEMWifiPickerTagLock = 1;
 static NSUInteger const kHEMWifiPickerTagWifi = 2;
 // 10/29/2014 jimmy:
@@ -38,6 +38,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (weak, nonatomic) IBOutlet UITableView *wifiPickerTableView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *scanButton;
 @property (weak, nonatomic) IBOutlet HEMActivityCoverView *activityView;
+@property (weak, nonatomic) IBOutlet UIImageView *topPickerShadow;
+@property (weak, nonatomic) IBOutlet UIImageView *botPickerShadow;
 
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
@@ -80,6 +82,9 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [[self wifiDataSource] setKeepSenseLEDOn:![self haveDelegates]];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
     [[self wifiPickerTableView] setDelegate:self];
+
+    // shares the same shadow image as the topPickerShadow, which requires a flip
+    [[self botPickerShadow] setTransform:CGAffineTransformMakeRotation(M_PI)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -96,6 +101,13 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [[self activityView] setNeedsLayout];
+}
+
+- (void)updateContentBottomShadowVisibility {
+    CGFloat pickerHeight = CGRectGetHeight([[self wifiPickerTableView] bounds]);
+    CGFloat contentHeight = [[self wifiPickerTableView] contentSize].height;
+    CGFloat bottomShadowAlpha = contentHeight > pickerHeight ? 1.0f : 0.0f;
+    [[self botPickerShadow] setAlpha:bottomShadowAlpha];
 }
 
 #pragma mark - Disconnects
@@ -190,6 +202,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self next];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat yOffset = [scrollView contentOffset].y;
+    
+    CGFloat topShadowAlpha = yOffset > 0.0f ? 1.0f : 0.0f;
+    [[self topPickerShadow] setAlpha:topShadowAlpha];
+    
+    CGFloat contentHeight = [scrollView contentSize].height;
+    CGFloat scrollHeight = CGRectGetHeight([scrollView bounds]);
+    CGFloat botShadowAlpha = yOffset < (contentHeight - scrollHeight) ? 1.0f : 0.0f;
+    [[self botPickerShadow] setAlpha:botShadowAlpha];
+}
+
 - (void)scanWithActivity {
     DDLogVerbose(@"wifi scan started");
     
@@ -206,6 +230,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         
         [[strongSelf wifiPickerTableView] reloadData];
         [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+            [strongSelf updateContentBottomShadowVisibility];
             [[strongSelf wifiPickerTableView] flashScrollIndicators];
             [[strongSelf cancelItem] setEnabled:YES];
         }];

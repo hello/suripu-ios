@@ -376,6 +376,9 @@
 		BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3CE19EF3C3D0006EFEA /* HEMPillSetupViewController.m */; };
 		BF14E3DB19EF3C3D0006EFEA /* HEMSenseSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */; };
 		BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */; };
+		BF17B3D21BAA3BF100B57B77 /* listShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = BF17B3CF1BAA3BF100B57B77 /* listShadow.png */; settings = {ASSET_TAGS = (); }; };
+		BF17B3D31BAA3BF100B57B77 /* listShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF17B3D01BAA3BF100B57B77 /* listShadow@2x.png */; settings = {ASSET_TAGS = (); }; };
+		BF17B3D41BAA3BF100B57B77 /* listShadow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF17B3D11BAA3BF100B57B77 /* listShadow@3x.png */; settings = {ASSET_TAGS = (); }; };
 		BF1C46AB1B15586300AFCB7B /* healthApp.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C46A81B15586300AFCB7B /* healthApp.png */; };
 		BF1C46AC1B15586300AFCB7B /* healthApp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C46A91B15586300AFCB7B /* healthApp@2x.png */; };
 		BF1C46AD1B15586300AFCB7B /* healthApp@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C46AA1B15586300AFCB7B /* healthApp@3x.png */; };
@@ -1263,6 +1266,9 @@
 		BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseSetupViewController.m; sourceTree = "<group>"; };
 		BF14E3E419EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+HEMFormat.h"; sourceTree = "<group>"; };
 		BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+HEMFormat.m"; sourceTree = "<group>"; };
+		BF17B3CF1BAA3BF100B57B77 /* listShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listShadow.png; path = images/listShadow.png; sourceTree = "<group>"; };
+		BF17B3D01BAA3BF100B57B77 /* listShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listShadow@2x.png"; path = "images/listShadow@2x.png"; sourceTree = "<group>"; };
+		BF17B3D11BAA3BF100B57B77 /* listShadow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listShadow@3x.png"; path = "images/listShadow@3x.png"; sourceTree = "<group>"; };
 		BF1C46A81B15586300AFCB7B /* healthApp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = healthApp.png; path = images/healthApp.png; sourceTree = "<group>"; };
 		BF1C46A91B15586300AFCB7B /* healthApp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "healthApp@2x.png"; path = "images/healthApp@2x.png"; sourceTree = "<group>"; };
 		BF1C46AA1B15586300AFCB7B /* healthApp@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "healthApp@3x.png"; path = "images/healthApp@3x.png"; sourceTree = "<group>"; };
@@ -2036,6 +2042,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF17B3CF1BAA3BF100B57B77 /* listShadow.png */,
+				BF17B3D01BAA3BF100B57B77 /* listShadow@2x.png */,
+				BF17B3D11BAA3BF100B57B77 /* listShadow@3x.png */,
 				BFC5E67A1BA8A8BF00D7C606 /* bedroom_condition.png */,
 				BFC5E67B1BA8A8BF00D7C606 /* bedroom_condition@2x.png */,
 				BFC5E67C1BA8A8BF00D7C606 /* bedroom_condition@3x.png */,
@@ -3737,6 +3746,7 @@
 				8ADE06451B2FA0BB00976654 /* timeline_action_adjust@2x.png in Resources */,
 				8A45798F1A805603009A7863 /* welcome_dialog_temperature@2x.png in Resources */,
 				BF7417B21A7B005200399C0E /* loading.png in Resources */,
+				BF17B3D21BAA3BF100B57B77 /* listShadow.png in Resources */,
 				8A1C7B6B1B2F261B000268B2 /* escape button@3x.png in Resources */,
 				8AC800961A7B029300895ED3 /* miniPlayButton.png in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
@@ -3773,6 +3783,7 @@
 				BFC3FE5B1AE7321D0061D6A1 /* particulatesIconNoBorderGreen@3x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
 				8A8288CC1A7800820043B1D1 /* presleepInsightUnknown.png in Resources */,
+				BF17B3D31BAA3BF100B57B77 /* listShadow@2x.png in Resources */,
 				8A1E723619D62C26007475D3 /* alarmSmartIcon.png in Resources */,
 				8A0351061B2CACFD0077E6E6 /* Down Caret@3x.png in Resources */,
 				8A9D7EA11B741F61000959C5 /* timelineNoDataIcon@2x.png in Resources */,
@@ -4098,6 +4109,7 @@
 				8AD88C3B1A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib in Resources */,
 				8AC800971A7B029300895ED3 /* miniPlayButton@2x.png in Resources */,
 				BFC8215319E7441200E09D5D /* play.png in Resources */,
+				BF17B3D41BAA3BF100B57B77 /* listShadow@3x.png in Resources */,
 				BFAB22D91AD35F9C00CCBF8A /* HEMRoomCheckView.xib in Resources */,
 				8AA1E61E1A89785000590EB6 /* infoButtonIconSmall.png in Resources */,
 				8A93AFCF1A09BF0300F70A8B /* pillIcon@3x.png in Resources */,

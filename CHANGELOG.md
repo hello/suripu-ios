@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.4.5
+
+New:
+
+* visual tweaks to wifi ssid selection screen
+* visual tweaks to wifi credential submission screen, for 4s, 5, and 5s
+
 ## 1.1.4.4
 
 Fixes:

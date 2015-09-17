@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.4.6
+
+Fixes:
+
+* udpate extension executable name per apple suggestion
+
 ## 1.1.4.5
 
 New:

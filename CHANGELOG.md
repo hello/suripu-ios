@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.4.4
+
+Fixes:
+
+* disable bitcode for all pod dependencies
+
+## 1.1.4.3
+
+Fixes:
+
+* update ZDK to 1.4.0.2
+* turned off bitcode due to conflicts with YapDatabase linker flags
+
 ## 1.1.4.2
 
 New:

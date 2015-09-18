@@ -121,6 +121,10 @@ NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
 NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
 
+// back view
+NSString* const HEMAnalyticsEventBackViewSwipe = @"Top view tab swiped"; // name required to match Android
+NSString* const HEMAnalyticsEventBackViewTapped = @"Top view tab tapped"; // name required to match Android
+
 // support
 NSString* const HEMAnalyticsEventSupport = @"Support";
 NSString* const HEMAnalyticsEventSupportContactUs = @"Contact us";

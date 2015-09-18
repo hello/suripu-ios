@@ -115,6 +115,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 - (void)bar:(HEMSnazzBar *)bar didReceiveTouchUpInsideAtIndex:(NSUInteger)index {
     [self setSelectedIndex:index animated:YES];
     [self notifySelectedControllerOfSelectionChangeIfSupported];
+    [SENAnalytics track:HEMAnalyticsEventBackViewTapped];
 }
 
 #pragma mark - Controller Management
@@ -227,6 +228,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self setUserScrolling:YES];
     [self notifySelectedControllerOfSelectionChangeIfSupported];
+    [SENAnalytics track:HEMAnalyticsEventBackViewSwipe];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

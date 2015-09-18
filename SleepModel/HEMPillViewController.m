@@ -145,9 +145,10 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize size = [layout itemSize];
     if ([indexPath row] < [[self warnings] count]) {
+        CGFloat maxWidth = size.width - (2*HEMWarningCellMessageHorzPadding);
         HEMDeviceWarning warning = [[self warnings][[indexPath row]] integerValue];
         NSAttributedString* message = [self attributedMessageForWarning:warning];
-        size.height = [message sizeWithWidth:size.width].height + HEMWarningCellBaseHeight;
+        size.height = [message sizeWithWidth:maxWidth].height + HEMWarningCellBaseHeight;
     } else if ([indexPath row] == [[self warnings] count]) {
         size.height = HEMPillActionsCellHeight;
     }

@@ -10,6 +10,7 @@
 #import "HEMActionButton.h"
 
 CGFloat const HEMWarningCellBaseHeight = 140.0f;
+CGFloat const HEMWarningCellMessageHorzPadding = 16.0f;
 
 @implementation HEMWarningCollectionViewCell
 

@@ -21,8 +21,9 @@
 #import "HEMSupportUtil.h"
 #import "HEMWifiUtils.h"
 
+static CGFloat const HEMWiFiPickerLockLeftPadding = 24.0f;
+static CGFloat const HEMWifiPickerLockRightPadding = 16.0f;
 static CGFloat const kHEMWifiCellHeight = 44.0f;
-static CGFloat const kHEMWifiPickerIconPadding = 12.0f;
 static NSUInteger const kHEMWifiPickerTagLock = 1;
 static NSUInteger const kHEMWifiPickerTagWifi = 2;
 // 10/29/2014 jimmy:
@@ -136,6 +137,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     CGRect lockFrame = CGRectZero;
     lockFrame.size = lockIcon.size;
+    lockFrame.origin.x = HEMWiFiPickerLockLeftPadding;
     UIImageView* lockView = [[UIImageView alloc] initWithImage:lockIcon];
     [lockView setFrame:lockFrame];
     [lockView setBackgroundColor:[UIColor clearColor]];
@@ -143,7 +145,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     CGRect wifiFrame = CGRectZero;
     wifiFrame.size = wifiIcon.size;
-    wifiFrame.origin.x = kHEMWifiPickerIconPadding + CGRectGetMaxX(lockFrame);
+    wifiFrame.origin.x = HEMWifiPickerLockRightPadding + CGRectGetMaxX(lockFrame);
     UIImageView* wifiView = [[UIImageView alloc] initWithImage:wifiIcon];
     [wifiView setFrame:wifiFrame];
     [wifiView setBackgroundColor:[UIColor clearColor]];

@@ -9,6 +9,7 @@
 #import "HEMCardCollectionViewCell.h"
 
 extern CGFloat const HEMWarningCellBaseHeight;
+extern CGFloat const HEMWarningCellMessageHorzPadding;
 
 @class HEMActionButton;
 

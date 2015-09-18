@@ -226,9 +226,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     CGSize size = [layout itemSize];
     
     if ([self isWarningCellRow:[indexPath row]]) {
+        CGFloat widthConstraint = size.width - (2*HEMWarningCellMessageHorzPadding);
         HEMDeviceWarning warning = [self.warnings[indexPath.item] integerValue];
         NSAttributedString* message = [self attributedMessageForWarning:warning];
-        size.height = [message sizeWithWidth:size.width].height + HEMWarningCellBaseHeight;
+        size.height = [message sizeWithWidth:widthConstraint].height + HEMWarningCellBaseHeight;
     } else {
         size.height = HEMSenseActionHeight * 4;
     }

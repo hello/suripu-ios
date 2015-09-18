@@ -205,9 +205,8 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
         case SENDeviceTypePill:
             if (![[self dataSource] isLoadingPill]) {
                 if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
-                    if (![[self dataSource] isLoadingSense]) { // sense is required for pill pairing
-                        [self showPillPairingController];
-                    }
+                    // cell interaction will be disabled if not ready to pair
+                    [self showPillPairingController];
                 } else {
                     [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
                     [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]

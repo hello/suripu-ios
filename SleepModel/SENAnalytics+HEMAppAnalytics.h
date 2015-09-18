@@ -113,6 +113,10 @@ extern NSString* const kHEMAnalyticsEventSense;
 extern NSString* const kHEMAnalyticsEventPill;
 extern NSString* const HEMAnalyticsEventHealthSync;
 
+// back view
+NSString* const HEMAnalyticsEventBackViewSwipe;
+NSString* const HEMAnalyticsEventBackViewTapped;
+
 // support
 extern NSString* const HEMAnalyticsEventSupport;
 extern NSString* const HEMAnalyticsEventSupportContactUs;

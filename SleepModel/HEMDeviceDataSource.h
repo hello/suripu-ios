@@ -41,5 +41,6 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
 - (SENDeviceType)deviceTypeAtIndexPath:(NSIndexPath*)indexPath;
 - (void)updateCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
 - (NSAttributedString*)attributedFooterText;
+- (BOOL)canPairPill;
 
 @end

@@ -106,22 +106,19 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [super viewDidAppear:animated];
     
     if (![self isLoaded]) {
+        if (![[self videoView] isReady]) {
+            [[self videoView] setReady:YES];
+        }
         [[self overlayActivityView] showActivity];
         [self setControlsEnabled:NO];
         [self pairPill:self];
         [self setLoaded:YES];
     }
-    
-    if (![[self videoView] isReady]) {
-        [[self videoView] setReady:YES];
-    } else {
-        [[self videoView] playVideoWhenReady];
-    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[self videoView] pause];
+    [[self videoView] stop];
 }
 
 - (void)setControlsEnabled:(BOOL)enable {
@@ -203,6 +200,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 - (IBAction)pairPill:(id)sender {
     [self setControlsEnabled:NO];
     [self setPairAttempts:[self pairAttempts] + 1];
+    [[self videoView] playVideoWhenReady];
     
     if ([self pairAttempts] > 1) {
         [self trackAnalyticsEvent:HEMAnalyticsEventPairPillRetry];

@@ -50,10 +50,6 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
     [[self scrollView] setBackgroundColor:[UIColor clearColor]];
     
     [[self currentWeightMarker] setBackgroundColor:[UIColor tintColor]];
-    
-    if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {
-        [[self scrollView] setContentInset:UIEdgeInsetsMake(0.0f, 8.0f, 0.0f, 8.0f)];
-    }
 }
 
 - (void)configureButtons {

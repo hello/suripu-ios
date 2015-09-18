@@ -17,6 +17,7 @@
 #import "NSAttributedString+HEMUtils.h"
 #import "UIColor+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMBreakdownViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout>
@@ -64,8 +65,9 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     self.meridiemFormatter.locale = standardLocale;
     self.valueFormatter = [HEMSplitTextFormatter new];
     self.backgroundImageView.image = self.backgroundImage;
-    self.contentViewTop.constant = floorf(CGRectGetHeight([[UIScreen mainScreen] bounds])/2);
-    self.contentViewWidth.constant = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGRect windowBounds = HEMKeyWindowBounds();
+    self.contentViewTop.constant = floorf(CGRectGetHeight(windowBounds)/2);
+    self.contentViewWidth.constant = CGRectGetWidth(windowBounds);
     self.collectionView.alpha = 0;
     self.collectionView.scrollEnabled = NO;
 }
@@ -87,7 +89,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 }
 
 - (void)animateExpandContent {
-    CGFloat height = CGRectGetHeight([[UIScreen mainScreen] bounds]) - BreakdownButtonAreaHeight;
+    CGFloat height = CGRectGetHeight(HEMKeyWindowBounds()) - BreakdownButtonAreaHeight;
     if (self.contentViewHeight.constant != height || self.collectionView.alpha < 1) {
         [self.dismissButton layoutIfNeeded];
         self.contentViewHeight.constant = height;
@@ -124,7 +126,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         }
     } completion:^(BOOL done) {
         self.contentViewHeight.constant = 0;
-        self.contentViewTop.constant = floorf(CGRectGetHeight([[UIScreen mainScreen] bounds])/2);
+        self.contentViewTop.constant = floorf(CGRectGetHeight(HEMKeyWindowBounds())/2);
         self.buttonBottom.constant = BreakdownDismissButtonHide;
         [self.view setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.3f animations:^{
@@ -185,7 +187,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
                                                   forIndexPath:indexPath];
     cell.isAccessibilityElement = NO;
-    cell.computedAccessibilityElements = @[];
+    cell.accessibilityElements = @[];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:0];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:1];
     return cell;
@@ -210,7 +212,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     frame.origin.x = position * width;
     frame.size.width = width;
     element.accessibilityFrame = frame;
-    cell.computedAccessibilityElements = [cell.computedAccessibilityElements arrayByAddingObject:element];
+    cell.accessibilityElements = [cell.accessibilityElements arrayByAddingObject:element];
 }
 
 - (NSAttributedString *)titleForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
@@ -335,10 +337,10 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     CGFloat height = 0;
     if (indexPath.section == 0) {
         CGFloat const BreakdownSummaryHInset = 40.f;
-        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        CGRect windowBounds = HEMKeyWindowBounds();
         NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
         NSAttributedString *text = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
-        height = [text sizeWithWidth:CGRectGetWidth(screenBounds) - BreakdownSummaryHInset].height
+        height = [text sizeWithWidth:CGRectGetWidth(windowBounds) - BreakdownSummaryHInset].height
                  + BreakdownCellSummaryBaseHeight;
     } else {
         height = BreakdownCellItemHeight;
@@ -353,19 +355,5 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 @end
 
 @implementation HEMBreakdownLineCell
-
-- (id)accessibilityElementAtIndex:(NSInteger)index {
-    if (self.computedAccessibilityElements.count > index)
-        return self.computedAccessibilityElements[index];
-    return nil;
-}
-
-- (NSInteger)accessibilityElementCount {
-    return self.computedAccessibilityElements.count;
-}
-
-- (NSInteger)indexOfAccessibilityElement:(id)element {
-    return [self.computedAccessibilityElements indexOfObject:element];
-}
 
 @end

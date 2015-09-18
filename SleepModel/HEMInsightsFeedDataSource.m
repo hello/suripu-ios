@@ -283,18 +283,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
         reuseId = HEMInsightsFeedReuseIdInsight;
     }
     
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                           forIndexPath:indexPath];
-    
-    
-    // if the cell does not respond to this selector, then that means the collection view
-    // also will never call the delegate's willDisplayCell:atIndexPath, which means we
-    // need to do it here.
-    if (![cell respondsToSelector:@selector(preferredLayoutAttributesFittingAttributes:)]) {
-        [self displayCell:cell atIndexPath:indexPath];
-    }
-    
-    return cell;
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+
 }
 
 - (void)displayCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {

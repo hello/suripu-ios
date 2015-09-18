@@ -35,6 +35,7 @@
 #import "HEMAudioSession.h"
 #import "HEMSupportUtil.h"
 #import "HEMTappableView.h"
+#import "HEMScreenUtils.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -521,13 +522,11 @@ static BOOL hasLoadedBefore = NO;
     }
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    if (![root respondsToSelector:@selector(presentationController)]) {
-        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
-        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
-        [sheet addDismissAction:^{
-          [root setModalPresentationStyle:origStyle];
-        }];
-    }
+    UIModalPresentationStyle origStyle = [root modalPresentationStyle];
+    [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+    [sheet addDismissAction:^{
+      [root setModalPresentationStyle:origStyle];
+    }];
 
     [root presentViewController:sheet animated:NO completion:nil];
 }
@@ -1012,7 +1011,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (CGFloat)heightForCellWithSegment:(SENTimelineSegment *)segment {
     return (segment.duration / 3600)
-           * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+           * (CGRectGetHeight(HEMKeyWindowBounds()) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

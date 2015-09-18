@@ -16,6 +16,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMSupportTopicDataSource.h"
 #import "HEMActivityCoverView.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMSupportTopicsViewController () <UITableViewDelegate>
 
@@ -41,7 +42,7 @@
     [self setDataSource:[[HEMSupportTopicDataSource alloc] init]];
     [[self tableView] setDataSource:[self dataSource]];
     
-    CGFloat width = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds());
     
     // header
     CGRect frame = CGRectZero;

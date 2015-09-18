@@ -55,10 +55,7 @@ static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
             break;
         }
         case kCLAuthorizationStatusNotDetermined:
-            // iOS8 only call so must check if available
-            if ([[self manager] respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-                [[self manager] requestWhenInUseAuthorization];
-            }
+            [[self manager] requestWhenInUseAuthorization];
             break;
         default:
             break;

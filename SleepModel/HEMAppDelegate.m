@@ -240,7 +240,11 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
 - (void)createAndShowWindow
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIWindow* window = [UIWindow new];
+    if (CGSizeEqualToSize(window.bounds.size, CGSizeZero))
+        window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = window;
+    [self.window makeKeyWindow];
     self.window.rootViewController = [HEMMainStoryboard instantiateRootViewController];
     [self.window makeKeyAndVisible];
 }

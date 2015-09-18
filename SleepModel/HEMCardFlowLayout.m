@@ -7,6 +7,7 @@
 //
 
 #import "HEMCardFlowLayout.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMCardFlowLayout ()
 
@@ -34,7 +35,7 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
 }
 
 - (void)configureDefaultAttributes {
-    CGRect bounds = [[UIScreen mainScreen] bounds];
+    CGRect bounds = HEMKeyWindowBounds();
     self.itemSize = CGSizeMake(CGRectGetWidth(bounds) - HEMCardOutsideMargin * 2, HEMCardDefaultItemHeight);
     self.sectionInset = UIEdgeInsetsMake(HEMCardOutsideMargin, 0, HEMCardOutsideMargin, 0);
     self.minimumInteritemSpacing = HEMCardInsideMargin;

@@ -10,6 +10,7 @@
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMScreenUtils.h"
 
 static CGFloat const HEMActionViewHorzPadding = 30.0f;
 static CGFloat const HEMActionViewTopPadding = 14.0f;
@@ -39,13 +40,12 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 @implementation HEMActionView
 
 + (CGRect)defaultFrame {
-    CGRect frame = {
+    return (CGRect){
         0.0f,
         0.0f,
-        CGRectGetWidth([[UIScreen mainScreen] bounds]),
+        CGRectGetWidth(HEMKeyWindowBounds()),
         0.0f // will be updated based on content size
     };
-    return frame;
 }
 
 - (instancetype)initWithTitle:(NSString*)title message:(NSAttributedString*)attributedMessage {

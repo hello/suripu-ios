@@ -37,6 +37,30 @@
 	<string>1.1.4.6</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>hello.is</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
+			<key>hellocdn.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is needed for Sense to better understand your sleep environment.</string>
 	<key>SenseAllowSupportOptions</key>
@@ -45,24 +69,26 @@
 	<string>${SENSE_ANALYTICS_TOKEN}</string>
 	<key>SenseApiUrl</key>
 	<string>${SENSE_API_URL}</string>
+	<key>SenseAppReviewURL</key>
+	<string>${SENSE_APP_REVIEW_URL}</string>
 	<key>SenseClientId</key>
 	<string>${SENSE_CLIENT_ID}</string>
 	<key>SenseCrashReportsToken</key>
 	<string>${SENSE_CRASH_REPORTS_TOKEN}</string>
+	<key>SensePasswordResetURL</key>
+	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>SenseZendeskClientId</key>
 	<string>${SENSE_ZENDESK_CLIENT_ID}</string>
 	<key>SenseZendeskToken</key>
 	<string>${SENSE_ZENDESK_TOKEN}</string>
 	<key>SenseZendeskURL</key>
 	<string>${SENSE_ZENDESK_URL}</string>
-	<key>SenseAppReviewURL</key>
-	<string>${SENSE_APP_REVIEW_URL}</string>
-	<key>SensePasswordResetURL</key>
-	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -78,30 +104,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>hellocdn.net</key>
-			<dict>
-				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.1</string>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-			<key>hello.is</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.1</string>
-			</dict>
-		</dict>
-	</dict>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

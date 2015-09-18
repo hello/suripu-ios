@@ -18,3 +18,8 @@ BOOL HEMIsIPhone4Family();
  * @return YES if device resolution matches iPhone 5
  */
 BOOL HEMIsIPhone5Family();
+
+/**
+ *  @return The bounds of the application key window
+ */
+CGRect HEMKeyWindowBounds();

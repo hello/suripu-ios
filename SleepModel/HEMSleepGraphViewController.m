@@ -521,13 +521,11 @@ static BOOL hasLoadedBefore = NO;
     }
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    if (![root respondsToSelector:@selector(presentationController)]) {
-        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
-        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
-        [sheet addDismissAction:^{
-          [root setModalPresentationStyle:origStyle];
-        }];
-    }
+    UIModalPresentationStyle origStyle = [root modalPresentationStyle];
+    [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+    [sheet addDismissAction:^{
+      [root setModalPresentationStyle:origStyle];
+    }];
 
     [root presentViewController:sheet animated:NO completion:nil];
 }

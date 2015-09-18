@@ -56,9 +56,6 @@
 }
 
 - (void)presentOptions:(HEMActionSheetViewController*)optionsVC {
-    if (![[self presentingController] respondsToSelector:@selector(presentationController)]) {
-        [[self presentingController] setModalPresentationStyle:UIModalPresentationCurrentContext];
-    }
     [[self presentingController] presentViewController:optionsVC animated:NO completion:nil];
 }
 

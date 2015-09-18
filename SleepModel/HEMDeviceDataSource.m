@@ -448,17 +448,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         ? [HEMMainStoryboard pairReuseIdentifier]
         : [HEMMainStoryboard deviceReuseIdentifier];
     
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                           forIndexPath:indexPath];
-    
-    // if the cell does not respond to this selector, then that means the collection view
-    // also will never call the delegate's willDisplayCell:atIndexPath, which means we
-    // need to do it here.
-    if (![cell respondsToSelector:@selector(preferredLayoutAttributesFittingAttributes:)]) {
-        [self updateCell:cell atIndexPath:indexPath];
-    }
-    
-    return cell;
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
 }
 
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView

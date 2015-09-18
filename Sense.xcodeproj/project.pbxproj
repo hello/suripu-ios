@@ -302,6 +302,7 @@
 		8ACAF40D1A69B7980054885A /* outOfBedEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACAF4071A69B7980054885A /* outOfBedEventIcon.png */; };
 		8ACAF40E1A69B7980054885A /* outOfBedEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACAF4081A69B7980054885A /* outOfBedEventIcon@2x.png */; };
 		8ACAF40F1A69B7980054885A /* outOfBedEventIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACAF4091A69B7980054885A /* outOfBedEventIcon@3x.png */; };
+		8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ACD40441BACAF7400BB2815 /* Launch.xib */; settings = {ASSET_TAGS = (); }; };
 		8AD142631A78679800A83AD8 /* timeline_explain_before.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD142571A78679800A83AD8 /* timeline_explain_before.png */; };
 		8AD142641A78679800A83AD8 /* timeline_explain_before@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD142581A78679800A83AD8 /* timeline_explain_before@2x.png */; };
 		8AD142651A78679800A83AD8 /* timeline_explain_before@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD142591A78679800A83AD8 /* timeline_explain_before@3x.png */; };
@@ -1152,6 +1153,7 @@
 		8ACAF4071A69B7980054885A /* outOfBedEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = outOfBedEventIcon.png; path = images/outOfBedEventIcon.png; sourceTree = "<group>"; };
 		8ACAF4081A69B7980054885A /* outOfBedEventIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "outOfBedEventIcon@2x.png"; path = "images/outOfBedEventIcon@2x.png"; sourceTree = "<group>"; };
 		8ACAF4091A69B7980054885A /* outOfBedEventIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "outOfBedEventIcon@3x.png"; path = "images/outOfBedEventIcon@3x.png"; sourceTree = "<group>"; };
+		8ACD40441BACAF7400BB2815 /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		8AD142571A78679800A83AD8 /* timeline_explain_before.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = timeline_explain_before.png; path = images/timeline_explain_before.png; sourceTree = "<group>"; };
 		8AD142581A78679800A83AD8 /* timeline_explain_before@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "timeline_explain_before@2x.png"; path = "images/timeline_explain_before@2x.png"; sourceTree = "<group>"; };
@@ -1806,6 +1808,7 @@
 				BF71AFCC1A48F5F200D1208B /* Debug */,
 				8A4B3D56199534DB00856BDE /* Generated Files */,
 				BF1E2E5A1A0068AA00DDD0D0 /* Insights */,
+				8ACD40421BAC987400BB2815 /* Launch */,
 				8A28CAF919CB85030044A27D /* Notifications */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
 				8A8621641B5D5D860033F44C /* Review */,
@@ -2878,6 +2881,14 @@
 				8A660136199EBED2007E6167 /* Views */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		8ACD40421BAC987400BB2815 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				8ACD40441BACAF7400BB2815 /* Launch.xib */,
+			);
+			name = Launch;
 			sourceTree = "<group>";
 		};
 		8AD142561A78675F00A83AD8 /* Timeline */ = {
@@ -3973,6 +3984,7 @@
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
 				8AFD8A1B1A649F3900124CCE /* checkmark@3x.png in Resources */,
 				BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */,
+				8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */,
 				8A7D803D1A41094300B0BFD7 /* senseBarIcon@3x.png in Resources */,
 				8AA158101A5EFD9500BF1D4A /* alarmSoundIcon@3x.png in Resources */,
 				8A63D5571A5F38FE00F5307D /* HEMTimelineFooterCollectionReusableView.xib in Resources */,
@@ -4615,7 +4627,6 @@
 			baseConfigurationReference = ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -4646,7 +4657,6 @@
 			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -4820,7 +4830,6 @@
 			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -4943,7 +4952,6 @@
 			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

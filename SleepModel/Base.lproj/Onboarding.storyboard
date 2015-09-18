@@ -1679,8 +1679,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Set a Smart Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-LV-puG">
-                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set a Smart Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-LV-puG">
+                                <rect key="frame" x="24" y="24" width="552" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="Nqw-Gt-yvj"/>
                                 </constraints>
@@ -1688,17 +1688,17 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hw2-eQ-BhX">
-                                <rect key="frame" x="20" y="68" width="560" height="61"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hw2-eQ-BhX">
+                                <rect key="frame" x="24" y="68" width="552" height="61"/>
                                 <string key="text">Sense's Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you. To dismiss the alarm, just wave your hand over Sense.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XVL-7j-gjt" customClass="HEMEmbeddedVideoView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVL-7j-gjt" customClass="HEMEmbeddedVideoView">
                                 <rect key="frame" x="0.0" y="129" width="600" height="346"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LmL-w7-BTd">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LmL-w7-BTd">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="346"/>
                                     </imageView>
                                 </subviews>
@@ -1732,8 +1732,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <action selector="setAlarmLater:" destination="0qJ-qR-xla" eventType="touchUpInside" id="662-Kh-mZj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5s-t3-orP" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5s-t3-orP" customClass="HEMActionButton">
+                                <rect key="frame" x="24" y="530" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bBF-QE-aBI"/>
                                 </constraints>
@@ -1755,14 +1755,14 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="G0n-60-GNn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="H5s-t3-orP" secondAttribute="trailing" constant="4" id="JE2-W7-Rq3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JeP-LV-puG" secondAttribute="trailing" constant="4" id="Q97-10-NmW"/>
-                            <constraint firstItem="XVL-7j-gjt" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-16" id="Vgs-uN-K1a"/>
+                            <constraint firstItem="XVL-7j-gjt" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-20" id="Vgs-uN-K1a"/>
                             <constraint firstAttribute="centerX" secondItem="6FP-vw-B5B" secondAttribute="centerX" id="e4n-j8-07l"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="top" secondItem="JeP-LV-puG" secondAttribute="bottom" constant="10" id="fQT-XM-WlO"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="gZg-dm-NTE"/>
                             <constraint firstItem="H5s-t3-orP" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="bottom" constant="65" id="jeY-fW-hoO"/>
                             <constraint firstItem="XVL-7j-gjt" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" id="ngk-8I-Jgb"/>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="top" secondItem="3cs-y7-KCY" secondAttribute="bottom" constant="4" id="qeJ-5T-zXA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="XVL-7j-gjt" secondAttribute="trailing" constant="-16" id="raB-Gk-rx2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XVL-7j-gjt" secondAttribute="trailing" constant="-20" id="raB-Gk-rx2"/>
                             <constraint firstItem="PUK-Ia-HH5" firstAttribute="top" secondItem="H5s-t3-orP" secondAttribute="bottom" constant="20" id="tdc-EJ-Rvc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hw2-eQ-BhX" secondAttribute="trailing" constant="4" id="yOi-bv-YLQ"/>
                         </constraints>
@@ -3059,10 +3059,9 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="sleepPill.png" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="u9Q-g4-qbd"/>
         <segue reference="3DQ-Vg-FaT"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="u9Q-g4-qbd"/>
         <segue reference="gUR-KW-V2G"/>
         <segue reference="tkT-Pb-lgk"/>
     </inferredMetricsTieBreakers>

@@ -1543,10 +1543,27 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I7g-Id-dOn">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZEJ-i1-Uuw">
+                                <rect key="frame" x="0.0" y="232" width="600" height="210"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseYellow.png" translatesAutoresizingMaskIntoConstraints="NO" id="cCJ-1v-EWp">
+                                <rect key="frame" x="126" y="238" width="186" height="183"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="183" id="i7t-w3-RaJ"/>
+                                    <constraint firstAttribute="width" constant="186" id="uvl-km-66c"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseRed.png" translatesAutoresizingMaskIntoConstraints="NO" id="iix-8Y-XZQ">
+                                <rect key="frame" x="288" y="238" width="186" height="183"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="183" id="iRx-Rx-s5Z"/>
+                                    <constraint firstAttribute="width" constant="186" id="ttq-oH-YsL"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mNf-gA-NAw">
                                 <rect key="frame" x="0.0" y="129" width="600" height="401"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oad-re-JII">
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="senseGreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="I7g-Id-dOn">
                                 <rect key="frame" x="0.0" y="129" width="600" height="401"/>
                             </imageView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h0F-Wt-wPJ" customClass="HEMEmbeddedVideoView">
@@ -1595,46 +1612,51 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oad-re-JII" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="top" constant="105" id="A74-Km-06U"/>
+                            <constraint firstItem="ZEJ-i1-Uuw" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="212" id="2hT-ci-vmZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZEJ-i1-Uuw" secondAttribute="trailing" constant="-20" id="2nV-X3-nBf"/>
+                            <constraint firstItem="mNf-gA-NAw" firstAttribute="bottom" secondItem="I7g-Id-dOn" secondAttribute="bottom" id="Ift-cA-3DA"/>
+                            <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="ZEJ-i1-Uuw" secondAttribute="bottom" constant="158" id="JCs-FI-u7F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h0F-Wt-wPJ" secondAttribute="trailing" constant="-16" id="JDE-13-Wr8"/>
                             <constraint firstItem="MMQ-Qm-jOb" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="bottom" id="LL9-Yt-at6"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="MMQ-Qm-jOb" secondAttribute="bottom" constant="20" id="NbT-o3-LFI"/>
-                            <constraint firstItem="h0F-Wt-wPJ" firstAttribute="bottom" secondItem="MMQ-Qm-jOb" secondAttribute="bottom" constant="-50" id="Sm7-MH-ucn"/>
+                            <constraint firstItem="cCJ-1v-EWp" firstAttribute="centerY" secondItem="I7g-Id-dOn" secondAttribute="centerY" id="Nzu-nS-Ilr"/>
+                            <constraint firstItem="cCJ-1v-EWp" firstAttribute="trailing" secondItem="I7g-Id-dOn" secondAttribute="centerX" constant="12" id="RFP-pI-WTy"/>
                             <constraint firstAttribute="width" secondItem="gyy-3T-4gK" secondAttribute="width" id="U4o-5N-kuk"/>
                             <constraint firstItem="h0F-Wt-wPJ" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="top" constant="105" id="V6B-FX-iYd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="oad-re-JII" secondAttribute="trailing" constant="-16" id="VZY-9O-UjE"/>
                             <constraint firstItem="mBM-ym-hmu" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="WOH-pt-OBZ"/>
-                            <constraint firstItem="I7g-Id-dOn" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="XKg-WU-cld"/>
+                            <constraint firstItem="I7g-Id-dOn" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-20" id="XKg-WU-cld"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="I7g-Id-dOn" secondAttribute="bottom" constant="70" id="XXD-Cd-jrd"/>
-                            <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="oad-re-JII" secondAttribute="bottom" constant="70" id="XXH-Yv-2Nl"/>
+                            <constraint firstItem="ZEJ-i1-Uuw" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-20" id="Y1N-Zu-W3l"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mNf-gA-NAw" secondAttribute="trailing" constant="-20" id="aZl-5e-z9A"/>
                             <constraint firstItem="h0F-Wt-wPJ" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="bWa-Y8-15D"/>
                             <constraint firstItem="gyy-3T-4gK" firstAttribute="top" secondItem="I7g-Id-dOn" secondAttribute="top" constant="-105" id="dbe-uC-08T"/>
                             <constraint firstItem="gyy-3T-4gK" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="4" id="efv-UB-AkF"/>
+                            <constraint firstItem="mNf-gA-NAw" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-20" id="fyH-qw-dtc"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="mBM-ym-hmu" secondAttribute="bottom" constant="23" id="gmn-yn-caP"/>
+                            <constraint firstItem="iix-8Y-XZQ" firstAttribute="leading" secondItem="I7g-Id-dOn" secondAttribute="centerX" constant="-12" id="hds-Ai-pPH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mBM-ym-hmu" secondAttribute="trailing" constant="4" id="iDG-X0-Y1h"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="h0F-Wt-wPJ" secondAttribute="bottom" constant="70" id="iOb-qO-X3J"/>
-                            <constraint firstItem="oad-re-JII" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="iiY-UE-9bD"/>
+                            <constraint firstItem="mNf-gA-NAw" firstAttribute="top" secondItem="I7g-Id-dOn" secondAttribute="top" id="lro-9z-eBL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MMQ-Qm-jOb" secondAttribute="trailing" constant="4" id="mQQ-5w-Ova"/>
                             <constraint firstItem="gyy-3T-4gK" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="o4r-9s-SVS"/>
+                            <constraint firstItem="iix-8Y-XZQ" firstAttribute="centerY" secondItem="I7g-Id-dOn" secondAttribute="centerY" id="oGm-ra-gOw"/>
                             <constraint firstItem="MMQ-Qm-jOb" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="rFk-vL-JOc"/>
-                            <constraint firstItem="h0F-Wt-wPJ" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="109" id="tNZ-Tr-yfj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="I7g-Id-dOn" secondAttribute="trailing" constant="-16" id="wUD-gc-82d"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="I7g-Id-dOn" secondAttribute="trailing" constant="-20" id="wUD-gc-82d"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Sm7-MH-ucn"/>
-                                <exclude reference="tNZ-Tr-yfj"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="beb-ap-Ff3"/>
                     <connections>
+                        <outlet property="backgroundImageView" destination="ZEJ-i1-Uuw" id="9Tc-2j-58S"/>
+                        <outlet property="centerImageView" destination="I7g-Id-dOn" id="dMU-Of-mhM"/>
                         <outlet property="contentScrollView" destination="gyy-3T-4gK" id="JYG-Ca-joL"/>
                         <outlet property="continueButton" destination="MMQ-Qm-jOb" id="5XH-vp-jBI"/>
                         <outlet property="continueButtonBottomConstraint" destination="NbT-o3-LFI" id="qT4-ll-hjC"/>
-                        <outlet property="currentImageView" destination="I7g-Id-dOn" id="m2g-s3-E4K"/>
                         <outlet property="dots" destination="mBM-ym-hmu" id="RRS-dO-LCU"/>
-                        <outlet property="nextImageView" destination="oad-re-JII" id="TXS-db-DCU"/>
+                        <outlet property="initialLeftImageView" destination="cCJ-1v-EWp" id="hP6-cV-Ro8"/>
+                        <outlet property="initialRightImageView" destination="iix-8Y-XZQ" id="7Bv-WK-cvw"/>
+                        <outlet property="nextLeadingToCenterConstraint" destination="hds-Ai-pPH" id="z6Q-LK-BRt"/>
+                        <outlet property="prevTrailingToCenterConstraint" destination="RFP-pI-WTy" id="x86-0C-Foc"/>
+                        <outlet property="tempImageView" destination="mNf-gA-NAw" id="y2h-81-Dpr"/>
                         <outlet property="videoView" destination="h0F-Wt-wPJ" id="o71-ui-lfK"/>
                         <outlet property="view" destination="WvV-c5-RHy" id="kFz-r6-vwP"/>
                         <segue destination="cpr-oG-Go7" kind="push" identifier="beforeSleeptoRoomCheck" id="M7J-nW-DOf"/>
@@ -3028,8 +3050,12 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="sampleNotification.png" width="320" height="186"/>
         <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
+        <image name="senseBackground.png" width="320" height="210"/>
+        <image name="senseGreen.png" width="186" height="183"/>
         <image name="sensePlacement.png" width="320" height="198"/>
-        <image name="senseWhite.png" width="320" height="270"/>
+        <image name="senseRed.png" width="186" height="183"/>
+        <image name="senseWhite.png" width="186" height="183"/>
+        <image name="senseYellow.png" width="186" height="183"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="sleepPill.png" width="320" height="130"/>
     </resources>
@@ -3038,6 +3064,7 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <segue reference="3DQ-Vg-FaT"/>
         <segue reference="u9Q-g4-qbd"/>
         <segue reference="7LA-fg-2Jb"/>
+        <segue reference="gUR-KW-V2G"/>
         <segue reference="zxE-Zn-Swl"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

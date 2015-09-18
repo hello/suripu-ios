@@ -7,6 +7,7 @@
 //
 
 #import "HEMDynamicsStatusStyler.h"
+#import "HEMScreenUtils.h"
 
 @implementation HEMDynamicsStatusStyler
 
@@ -21,7 +22,7 @@ static CGFloat const HEMStatusStylerFadeMaxRatio = 0.7f;
          didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction
                         forDirection:(MSDynamicsDrawerDirection)direction
 {
-    CGRect windowFrame = [[UIScreen mainScreen] bounds];
+    CGRect windowFrame = HEMKeyWindowBounds();
     CGRect frame = [[UIApplication sharedApplication] statusBarFrame];
     CGFloat windowHeight = CGRectGetHeight(windowFrame);
     CGFloat statusBarHeight = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame));

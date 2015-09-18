@@ -9,6 +9,7 @@
 #import "HEMEventBubbleView.h"
 #import "UIColor+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
+#import "HEMScreenUtils.h"
 
 CGFloat const HEMEventBubbleWaveformHeight = 26.f;
 
@@ -33,8 +34,8 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text
                         timeText:(NSAttributedString *)time
                     showWaveform:(BOOL)visible {
-    CGRect screenSize = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = CGRectGetWidth(screenSize);
+    CGRect windowBounds = HEMKeyWindowBounds();
+    CGFloat screenWidth = CGRectGetWidth(windowBounds);
     CGFloat textWidth = screenWidth - HEMEventBubbleTextWidthOffset - [time sizeWithWidth:HEMEventTimeLabelWidth].width;
     CGSize textSize = [text sizeWithWidth:textWidth];
     CGFloat width = screenWidth - HEMEventBubbleWidthOffset;

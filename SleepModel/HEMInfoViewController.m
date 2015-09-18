@@ -9,6 +9,7 @@
 #import "HEMInfoViewController.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMInfoViewController() <UITableViewDelegate, UITableViewDataSource>
 
@@ -24,7 +25,7 @@
 }
 
 - (void)configureTableView {
-    CGFloat width = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds());
     
     // header
     CGRect frame = CGRectZero;

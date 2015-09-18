@@ -10,6 +10,7 @@
 #import "HEMClockPickerView.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMScreenUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMClockIndex) {
     HEMClockIndexHour = 0,
@@ -221,7 +222,7 @@ static NSUInteger const HEMClock24HourCount = 24;
 
 - (void)applyStyling {
     CGRect gradientFrame = self.gradientView.bounds;
-    gradientFrame.size.width = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    gradientFrame.size.width = CGRectGetWidth(HEMKeyWindowBounds());
     CAGradientLayer *vLayer = [CAGradientLayer layer];
     UIColor *topColor = [UIColor colorWithWhite:0.98f alpha:0.9f];
     UIColor *middleColor = [[UIColor whiteColor] colorWithAlphaComponent:0];

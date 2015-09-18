@@ -21,6 +21,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 #import "NSString+HEMUtils.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate,
@@ -333,7 +334,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 #pragma mark - Collection View
 
 - (void)configureCollectionView {
-    CGRect bounds = [[UIScreen mainScreen] bounds];
+    CGRect bounds = HEMKeyWindowBounds();
     UICollectionViewFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = HEMAlarmListItemSpacing;
     layout.minimumLineSpacing = HEMAlarmListItemSpacing;

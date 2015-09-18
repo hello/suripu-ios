@@ -35,6 +35,7 @@
 #import "HEMAudioSession.h"
 #import "HEMSupportUtil.h"
 #import "HEMTappableView.h"
+#import "HEMScreenUtils.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -1010,7 +1011,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (CGFloat)heightForCellWithSegment:(SENTimelineSegment *)segment {
     return (segment.duration / 3600)
-           * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+           * (CGRectGetHeight(HEMKeyWindowBounds()) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

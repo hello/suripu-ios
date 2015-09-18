@@ -16,6 +16,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMEmbeddedVideoView.h"
+#import "HEMScreenUtils.h"
 
 static NSInteger const HEMBeforeSleepNumberOfScreens = 5;
 static CGFloat const HEMBeforeSleepSideImageInitialScale = 0.65f;
@@ -101,7 +102,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
 
 - (void)configureScrollView {
     CGFloat x = HEMBeforeSleepTextPadding;
-    CGFloat contentWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat contentWidth = CGRectGetWidth(HEMKeyWindowBounds());
     
     CGFloat maxLabelWidth = contentWidth - (2 * x);
     NSString* titleKey = nil;

@@ -134,5 +134,6 @@
 + (UIColor *)timelineAccentColor;
 + (UIColor *)timelineWaveformColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
++ (NSArray*)roomCheckValueGradientColorRefs;
 
 @end

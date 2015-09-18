@@ -107,7 +107,7 @@
                     <navigationItem key="navigationItem" id="5yB-oo-XsC">
                         <barButtonItem key="rightBarButtonItem" id="hAV-Y9-8LN">
                             <view key="customView" contentMode="scaleToFill" id="nRe-BU-1Xf">
-                                <rect key="frame" x="474" y="2" width="120" height="39"/>
+                                <rect key="frame" x="460" y="2" width="120" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBf-Bp-BiO">
@@ -359,7 +359,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="senseWhite.png" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
                                 <rect key="frame" x="0.0" y="109" width="600" height="421"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
@@ -1839,10 +1839,10 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <constraint firstItem="PMR-Df-HyE" firstAttribute="leading" secondItem="AIh-GX-j1H" secondAttribute="leading" constant="20" id="zCE-HK-ll0"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ybq-zx-dgL" userLabel="buttonContainer">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybq-zx-dgL" userLabel="buttonContainer">
                                 <rect key="frame" x="0.0" y="505" width="600" height="95"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkw-WQ-h6F" customClass="HEMActionButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkw-WQ-h6F" customClass="HEMActionButton">
                                         <rect key="frame" x="20" y="23" width="560" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="21U-DL-0b4"/>
@@ -1863,7 +1863,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <constraint firstAttribute="trailing" secondItem="tkw-WQ-h6F" secondAttribute="trailing" constant="20" id="Lpr-Sc-NB1"/>
                                     <constraint firstAttribute="height" constant="95" id="R2G-cY-7o6"/>
                                     <constraint firstAttribute="centerX" secondItem="tkw-WQ-h6F" secondAttribute="centerX" id="c2D-u5-deZ"/>
-                                    <constraint firstAttribute="centerY" secondItem="tkw-WQ-h6F" secondAttribute="centerY" constant="-0.5" id="cd9-Pc-K5y"/>
+                                    <constraint firstAttribute="centerY" secondItem="tkw-WQ-h6F" secondAttribute="centerY" id="cd9-Pc-K5y"/>
                                     <constraint firstItem="tkw-WQ-h6F" firstAttribute="leading" secondItem="Ybq-zx-dgL" secondAttribute="leading" constant="20" id="wKf-Ab-4VN"/>
                                 </constraints>
                                 <variation key="default">
@@ -1872,17 +1872,17 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MyL-An-EOd">
-                                <rect key="frame" x="0.0" y="600" width="600" height="277"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MyL-An-EOd">
+                                <rect key="frame" x="0.0" y="600" width="600" height="350"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Success!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmC-AT-a0e">
-                                        <rect key="frame" x="20" y="0.0" width="560" height="44"/>
+                                        <rect key="frame" x="20" y="26" width="560" height="44"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="32"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOT-kZ-3fG">
-                                        <rect key="frame" x="20" y="52" width="560" height="41"/>
+                                        <rect key="frame" x="20" y="82" width="560" height="41"/>
                                         <string key="text">Everything looks great.
 Now let’s set your first Smart Alarm</string>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
@@ -1908,15 +1908,15 @@ Now let’s set your first Smart Alarm</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="x7L-Mj-BCr" secondAttribute="bottom" constant="22" id="1ag-b1-RqU"/>
-                                    <constraint firstItem="MmC-AT-a0e" firstAttribute="bottom" secondItem="wOT-kZ-3fG" secondAttribute="top" constant="-8" id="Aha-0a-DwS"/>
+                                    <constraint firstItem="MmC-AT-a0e" firstAttribute="bottom" secondItem="wOT-kZ-3fG" secondAttribute="top" constant="-12" id="Aha-0a-DwS"/>
                                     <constraint firstItem="wOT-kZ-3fG" firstAttribute="leading" secondItem="MyL-An-EOd" secondAttribute="leading" constant="20" id="BHj-kn-jr1"/>
                                     <constraint firstAttribute="trailing" secondItem="MmC-AT-a0e" secondAttribute="trailing" constant="20" id="EWU-HQ-nxY"/>
                                     <constraint firstAttribute="trailing" secondItem="wOT-kZ-3fG" secondAttribute="trailing" constant="20" id="Njd-A5-s0a"/>
-                                    <constraint firstItem="MmC-AT-a0e" firstAttribute="top" secondItem="MyL-An-EOd" secondAttribute="top" id="Oo5-oa-ZaI"/>
                                     <constraint firstAttribute="trailing" secondItem="x7L-Mj-BCr" secondAttribute="trailing" constant="20" id="Pnk-3u-oBf"/>
                                     <constraint firstItem="x7L-Mj-BCr" firstAttribute="leading" secondItem="MyL-An-EOd" secondAttribute="leading" constant="20" id="XC3-Li-Tch"/>
+                                    <constraint firstItem="MmC-AT-a0e" firstAttribute="centerY" secondItem="MyL-An-EOd" secondAttribute="centerY" constant="-90" id="ewv-Ef-aox"/>
                                     <constraint firstItem="MmC-AT-a0e" firstAttribute="leading" secondItem="MyL-An-EOd" secondAttribute="leading" constant="20" id="p1N-Mg-uJk"/>
-                                    <constraint firstAttribute="height" constant="277" id="tmm-Vg-MSZ"/>
+                                    <constraint firstAttribute="height" constant="350" id="tmm-Vg-MSZ"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1927,11 +1927,11 @@ Now let’s set your first Smart Alarm</string>
                             <constraint firstItem="AIh-GX-j1H" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="2Xz-5S-pQd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AIh-GX-j1H" secondAttribute="trailing" constant="-16" id="L2R-YJ-Dz7"/>
                             <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="Ybq-zx-dgL" secondAttribute="bottom" id="aAW-D0-WY4"/>
-                            <constraint firstItem="MyL-An-EOd" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="dL7-xO-M1Y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ybq-zx-dgL" secondAttribute="trailing" constant="-16" id="haO-de-0xt"/>
-                            <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="MyL-An-EOd" secondAttribute="bottom" constant="-277" id="oW3-Qq-VoT"/>
-                            <constraint firstItem="Ybq-zx-dgL" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="vmF-qH-dlr"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="MyL-An-EOd" secondAttribute="trailing" constant="-16" id="yJM-VB-S8q"/>
+                            <constraint firstItem="MyL-An-EOd" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-20" id="dL7-xO-M1Y"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ybq-zx-dgL" secondAttribute="trailing" constant="-20" id="haO-de-0xt"/>
+                            <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="MyL-An-EOd" secondAttribute="bottom" constant="-350" id="oW3-Qq-VoT"/>
+                            <constraint firstItem="Ybq-zx-dgL" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-20" id="vmF-qH-dlr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MyL-An-EOd" secondAttribute="trailing" constant="-20" id="yJM-VB-S8q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xFV-9x-N8l"/>
@@ -1950,7 +1950,6 @@ Now let’s set your first Smart Alarm</string>
                         <outlet property="startButton" destination="tkw-WQ-h6F" id="XAR-Gw-KRZ"/>
                         <outlet property="titleHeightConstraint" destination="sBh-3g-dOO" id="kYi-P6-K9b"/>
                         <outlet property="titleLabel" destination="PMR-Df-HyE" id="xt1-m9-8WQ"/>
-                        <outlet property="titleTopConstraint" destination="Oo5-oa-ZaI" id="6xN-wu-iWM"/>
                         <outlet property="view" destination="DTD-zX-IEN" id="koj-lQ-qim"/>
                     </connections>
                 </viewController>
@@ -2650,7 +2649,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" misplaced="YES" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="ahI-Ri-OCe">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" misplaced="YES" image="sensePurple.png" translatesAutoresizingMaskIntoConstraints="NO" id="ahI-Ri-OCe">
                                 <rect key="frame" x="0.0" y="101" width="600" height="374"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
@@ -3048,24 +3047,24 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="pairOfPills.png" width="180" height="117"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="186"/>
-        <image name="sense.png" width="162" height="172"/>
+        <image name="sense.png" width="186" height="183"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
         <image name="senseBackground.png" width="320" height="210"/>
         <image name="senseGreen.png" width="186" height="183"/>
         <image name="sensePlacement.png" width="320" height="198"/>
+        <image name="sensePurple.png" width="162" height="172"/>
         <image name="senseRed.png" width="186" height="183"/>
-        <image name="senseWhite.png" width="186" height="183"/>
         <image name="senseYellow.png" width="186" height="183"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="sleepPill.png" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="3DQ-Vg-FaT"/>
-        <segue reference="u9Q-g4-qbd"/>
         <segue reference="7LA-fg-2Jb"/>
+        <segue reference="u9Q-g4-qbd"/>
+        <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="gUR-KW-V2G"/>
-        <segue reference="zxE-Zn-Swl"/>
+        <segue reference="tkT-Pb-lgk"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

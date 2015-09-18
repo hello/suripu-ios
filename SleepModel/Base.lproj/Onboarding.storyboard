@@ -3060,10 +3060,10 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="sleepPill.png" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="3DQ-Vg-FaT"/>
-        <segue reference="u9Q-g4-qbd"/>
         <segue reference="7LA-fg-2Jb"/>
+        <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="u9Q-g4-qbd"/>
         <segue reference="gUR-KW-V2G"/>
         <segue reference="zxE-Zn-Swl"/>
     </inferredMetricsTieBreakers>

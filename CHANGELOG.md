@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.1.4.7
+
+New:
+
+* Updated visual and interaction design for sense colors / before sleep screen
+* Updated visual design for room check
+* added support for iOS 9 while removing support for iOS 7
+
+Fixes:
+
+* increased tap target for close button in sleep breakdown UI
+* tapping between email / name / password edit screens no longer stack
+* fixed missing description for smart alarm onboarding screen for 4s
+* support pages properly load assets and css in iOS 9
+* device warning copy in Device settings properly wrap
+* shake the pill video will pause when not waiting for Sense
+* fixed clipped copy for pill pairing screen
+* first night timeline state properly displays for accounts created day of
+* reduce press duration required to trigger breakdown ui on the timeline
+* tutorial videos properly play on iOS 9
+* alarm tones now play properly with iOS 9
+
 ## 1.1.4.6
 
 Fixes:

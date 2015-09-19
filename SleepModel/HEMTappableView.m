@@ -8,7 +8,7 @@
 
 #import "HEMTappableView.h"
 
-static CGFloat const HEMTappableMinimumPressDuration = 0.1f;
+static CGFloat const HEMTappableMinimumPressDuration = 0.05f;
 static CGFloat const HEMTappableAllowablePressMovement = 5.0f;
 
 @interface HEMTappableView()

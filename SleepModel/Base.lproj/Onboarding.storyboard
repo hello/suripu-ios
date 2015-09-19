@@ -359,7 +359,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
+                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
                                 <rect key="frame" x="0.0" y="109" width="600" height="421"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
@@ -2348,7 +2348,7 @@ Now let’s set your first Smart Alarm</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="healthApp.png" translatesAutoresizingMaskIntoConstraints="NO" id="ecN-29-cDA">
+                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" image="healthApp.png" translatesAutoresizingMaskIntoConstraints="NO" id="ecN-29-cDA">
                                 <rect key="frame" x="0.0" y="109" width="600" height="366"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vxw-dz-vOU">
@@ -3059,11 +3059,11 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="sleepPill.png" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3DQ-Vg-FaT"/>
-        <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="u9Q-g4-qbd"/>
-        <segue reference="gUR-KW-V2G"/>
         <segue reference="tkT-Pb-lgk"/>
+        <segue reference="gUR-KW-V2G"/>
+        <segue reference="u9Q-g4-qbd"/>
+        <segue reference="zvu-eW-603"/>
+        <segue reference="ZOJ-Sh-Dzx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

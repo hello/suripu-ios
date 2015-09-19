@@ -1,5 +1,6 @@
 
 #import <SenseKit/SenseKit.h>
+#import <SenseKit/SENServiceAccount.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
@@ -30,7 +31,6 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMAppUsage.h"
-#import "HEMOnboardingService.h"
 #import "HelloStyleKit.h"
 #import "HEMAudioSession.h"
 #import "HEMSupportUtil.h"
@@ -869,7 +869,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)updateLayoutWithError:(NSError *)error {
     BOOL hasTimelineData = [self.dataSource hasTimelineData];
-    NSDate *accountCreationDate = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
+    NSDate *accountCreationDate = [[[SENServiceAccount sharedService] account] createdAt];
     BOOL justOnboarded = accountCreationDate
                          && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
     self.errorSupportButton.hidden = YES;

@@ -182,9 +182,6 @@
 		BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3AA21A2EA4CF0019C110 /* HEMAccountViewController.m */; };
 		BF7105CA1ADC6DAE0066885B /* HEMSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7105C91ADC6DAE0066885B /* HEMSpinnerView.m */; };
 		BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */; };
-		BF7417B21A7B005200399C0E /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7417AF1A7B005200399C0E /* loading.png */; };
-		BF7417B31A7B005200399C0E /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7417B01A7B005200399C0E /* loading@2x.png */; };
-		BF7417B41A7B005200399C0E /* loading@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7417B11A7B005200399C0E /* loading@3x.png */; };
 		BF7454AF1B5887BF00E6AE85 /* HEMOnboardingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */; };
 		BF7454B11B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B01B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m */; };
 		BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B21B5D764200E6AE85 /* HEMOnboardingControllerSpec.m */; };
@@ -625,9 +622,6 @@
 		BF7105C91ADC6DAE0066885B /* HEMSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSpinnerView.m; sourceTree = "<group>"; };
 		BF71AFCD1A48F6E700D1208B /* HEMDebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDebugController.h; sourceTree = "<group>"; };
 		BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDebugController.m; sourceTree = "<group>"; };
-		BF7417AF1A7B005200399C0E /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = loading.png; path = images/loading.png; sourceTree = "<group>"; };
-		BF7417B01A7B005200399C0E /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "loading@2x.png"; path = "images/loading@2x.png"; sourceTree = "<group>"; };
-		BF7417B11A7B005200399C0E /* loading@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "loading@3x.png"; path = "images/loading@3x.png"; sourceTree = "<group>"; };
 		BF7454AD1B5887BF00E6AE85 /* HEMOnboardingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingService.h; sourceTree = "<group>"; };
 		BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingService.m; sourceTree = "<group>"; };
 		BF7454B01B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingServiceSpec.m; sourceTree = "<group>"; };
@@ -1630,16 +1624,6 @@
 			name = Debug;
 			sourceTree = "<group>";
 		};
-		BF7417AE1A7B004300399C0E /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				BF7417AF1A7B005200399C0E /* loading.png */,
-				BF7417B01A7B005200399C0E /* loading@2x.png */,
-				BF7417B11A7B005200399C0E /* loading@3x.png */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
 		BF781E3219DC84EC00B68EBC /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1777,7 +1761,6 @@
 		BFABE74E19A2E6C900AB2F0F /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				BF7417AE1A7B004300399C0E /* Assets */,
 				BF645D911A9FAE880051C120 /* Transitions */,
 				BFABE74F19A2E6D900AB2F0F /* Utilities */,
 				BF80F6DD19BF99E800A4D779 /* Views */,
@@ -2078,10 +2061,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
-				BF7417B31A7B005200399C0E /* loading@2x.png in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
 				8AF7BCD01B3880F9000793D7 /* HEMSleepSegmentCollectionViewCell.xib in Resources */,
-				BF7417B21A7B005200399C0E /* loading.png in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				8AD331281BB08C4300DFF95A /* Drawer.xcassets in Resources */,
 				8A1743BC19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib in Resources */,
@@ -2090,7 +2071,6 @@
 				8AD331261BB0836700DFF95A /* Alarm.xcassets in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				8AD3312A1BB08D5300DFF95A /* Sensors.xcassets in Resources */,
-				BF7417B41A7B005200399C0E /* loading@3x.png in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
 				BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */,
 				8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */,

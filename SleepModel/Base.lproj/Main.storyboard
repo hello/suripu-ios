@@ -198,7 +198,7 @@
                                         <connections>
                                             <outlet property="detailLabel" destination="7vq-dr-gEC" id="rAX-o8-h9R"/>
                                             <outlet property="titleLabel" destination="ycu-Zi-bjJ" id="Dt6-1k-wB3"/>
-                                            <segue destination="jZp-61-2lX" kind="push" identifier="pickSound" id="bpm-xV-x5h"/>
+                                            <segue destination="jZp-61-2lX" kind="show" identifier="pickSound" id="bpm-xV-x5h"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmRepeatCell" id="XvR-xj-Zpd" customClass="HEMAlarmTableViewCell">
@@ -246,7 +246,7 @@
                                         <connections>
                                             <outlet property="detailLabel" destination="wIf-FK-vch" id="ynF-75-ejU"/>
                                             <outlet property="titleLabel" destination="VeZ-HT-TUJ" id="7bu-mb-oWk"/>
-                                            <segue destination="8jA-eI-sZN" kind="push" identifier="alarmRepeat" id="Kk3-sm-r3e"/>
+                                            <segue destination="8jA-eI-sZN" kind="show" identifier="alarmRepeat" id="Kk3-sm-r3e"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="alarmDeleteCell" id="uiU-Di-5k5" customClass="HEMAlarmTableViewCell">
@@ -1195,7 +1195,7 @@
                     <navigationItem key="navigationItem" title="My account" id="4ab-2L-Omr"/>
                     <connections>
                         <outlet property="infoTableView" destination="siy-bj-GCk" id="3SF-fY-OMA"/>
-                        <segue destination="Zbn-wT-cB8" kind="push" identifier="updateAccountInfo" id="qH1-Ij-3b1"/>
+                        <segue destination="Zbn-wT-cB8" kind="show" identifier="updateAccountInfo" id="qH1-Ij-3b1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7MN-lT-xwN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1296,7 +1296,7 @@
                     <connections>
                         <outlet property="unitTableView" destination="4nR-Z8-UZV" id="ooJ-cf-ueS"/>
                         <outlet property="view" destination="tIo-Tw-mI0" id="qzS-ep-UQq"/>
-                        <segue destination="63V-Yh-P8Y" kind="push" identifier="choice" id="BTE-Aw-btu"/>
+                        <segue destination="63V-Yh-P8Y" kind="show" identifier="choice" id="BTE-Aw-btu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xTo-cF-RjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1376,11 +1376,11 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="settingsTableView" destination="X4b-Va-8rq" id="zf9-GA-mKg"/>
-                        <segue destination="mDw-uo-PDk" kind="push" identifier="devicesSettings" id="iUu-8C-Pgj"/>
-                        <segue destination="vA6-d5-31W" kind="push" identifier="unitsSettings" id="FWQ-VC-M1c"/>
-                        <segue destination="idz-L4-hpw" kind="push" identifier="accountSettings" id="Bkx-fs-oZz"/>
-                        <segue destination="KKS-QC-rMW" kind="push" identifier="notificationSettings" id="Ogb-e2-EmZ"/>
-                        <segue destination="3mQ-zN-H0E" kind="push" identifier="settingsToSupport" id="WJe-XJ-9PQ"/>
+                        <segue destination="mDw-uo-PDk" kind="show" identifier="devicesSettings" id="iUu-8C-Pgj"/>
+                        <segue destination="vA6-d5-31W" kind="show" identifier="unitsSettings" id="FWQ-VC-M1c"/>
+                        <segue destination="idz-L4-hpw" kind="show" identifier="accountSettings" id="Bkx-fs-oZz"/>
+                        <segue destination="KKS-QC-rMW" kind="show" identifier="notificationSettings" id="Ogb-e2-EmZ"/>
+                        <segue destination="3mQ-zN-H0E" kind="show" identifier="settingsToSupport" id="WJe-XJ-9PQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MDd-3F-Lt8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1626,8 +1626,8 @@
                     <connections>
                         <outlet property="collectionView" destination="p6A-zV-ehg" id="ovQ-xy-TfL"/>
                         <outlet property="view" destination="mJD-g5-7aT" id="Hzq-KT-VyS"/>
-                        <segue destination="S23-X6-9pb" kind="push" identifier="pill" id="Mxb-Pq-ETB"/>
-                        <segue destination="0ke-gs-abm" kind="push" identifier="sense" id="z9F-Wb-l3V"/>
+                        <segue destination="S23-X6-9pb" kind="show" identifier="pill" id="Mxb-Pq-ETB"/>
+                        <segue destination="0ke-gs-abm" kind="show" identifier="sense" id="z9F-Wb-l3V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cW-Cr-Bbn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1713,7 +1713,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableView" destination="kOS-ID-RUw" id="hDq-L0-vvW"/>
-                        <segue destination="QUF-LK-JnK" kind="push" identifier="topics" id="wxy-PA-hue"/>
+                        <segue destination="QUF-LK-JnK" kind="show" identifier="topics" id="wxy-PA-hue"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fy-NF-yiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1965,7 +1965,7 @@
                     <connections>
                         <outlet property="collectionView" destination="Qgk-DZ-cLY" id="0cs-Bl-BoN"/>
                         <outlet property="view" destination="1Ml-OR-V9I" id="LYw-rK-OTi"/>
-                        <segue destination="3tP-4b-YaJ" kind="modal" identifier="timezone" id="vxg-TS-gLD"/>
+                        <segue destination="3tP-4b-YaJ" kind="presentation" identifier="timezone" id="vxg-TS-gLD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9h-4l-Pe7" userLabel="First Responder" sceneMemberID="firstResponder"/>

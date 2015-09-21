@@ -1,1 +1,0 @@
-FXKEYCHAIN_OTHER_LDFLAGS = -framework "Security"

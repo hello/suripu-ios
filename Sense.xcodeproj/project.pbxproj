@@ -123,6 +123,7 @@
 		8AD3312E1BB08DCB00DFF95A /* Questions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3312D1BB08DCB00DFF95A /* Questions.xcassets */; settings = {ASSET_TAGS = (); }; };
 		8AD331301BB08DFF00DFF95A /* Timeline.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */; settings = {ASSET_TAGS = (); }; };
 		8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD331391BB090DA00DFF95A /* Tutorial.xcassets */; settings = {ASSET_TAGS = (); }; };
+		8AD3313C1BB091AF00DFF95A /* Widget.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3313B1BB091AF00DFF95A /* Widget.xcassets */; settings = {ASSET_TAGS = (); }; };
 		8AD88C3A1A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD88C381A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m */; };
 		8AD88C3B1A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C391A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib */; };
 		8ADE06071B2A4DE100976654 /* HEMTimelineContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */; };
@@ -253,12 +254,6 @@
 		BF7F1BD219E304050028F799 /* Widget.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BD119E304050028F799 /* Widget.storyboard */; };
 		BF7F1BD519E304050028F799 /* SenseToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BF7F1BC819E304050028F799 /* SenseToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BDF19E30DCC0028F799 /* libPods.a */; };
-		BF7F1BE819E313940028F799 /* humidityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE219E313940028F799 /* humidityIcon.png */; };
-		BF7F1BE919E313940028F799 /* humidityIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE319E313940028F799 /* humidityIcon@2x.png */; };
-		BF7F1BEA19E313940028F799 /* particleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE419E313940028F799 /* particleIcon.png */; };
-		BF7F1BEB19E313940028F799 /* particleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE519E313940028F799 /* particleIcon@2x.png */; };
-		BF7F1BEC19E313940028F799 /* temperatureIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE619E313940028F799 /* temperatureIcon.png */; };
-		BF7F1BED19E313940028F799 /* temperatureIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */; };
 		BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
@@ -450,12 +445,6 @@
 		BFC99BBD1B69AC04008F7F0D /* HEMAppReviewAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BBC1B69AC04008F7F0D /* HEMAppReviewAnswer.m */; };
 		BFC99BC01B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BBF1B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m */; };
 		BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */; };
-		BFCCF53C1A69F37C00D842F9 /* lightIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5391A69F37C00D842F9 /* lightIcon.png */; };
-		BFCCF53D1A69F37C00D842F9 /* lightIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */; };
-		BFCCF53E1A69F37C00D842F9 /* lightIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */; };
-		BFCCF5421A69F3D400D842F9 /* soundIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53F1A69F3D400D842F9 /* soundIcon.png */; };
-		BFCCF5431A69F3D400D842F9 /* soundIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */; };
-		BFCCF5441A69F3D400D842F9 /* soundIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */; };
 		BFCCF54B1A6F1F6C00D842F9 /* HEMRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */; };
 		BFCE1D2D1AA657760076E855 /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCE1D2A1AA657760076E855 /* sense.png */; };
 		BFCE1D2E1AA657760076E855 /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCE1D2B1AA657760076E855 /* sense@2x.png */; };
@@ -740,6 +729,7 @@
 		8AD3312D1BB08DCB00DFF95A /* Questions.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Questions.xcassets; sourceTree = "<group>"; };
 		8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Timeline.xcassets; sourceTree = "<group>"; };
 		8AD331391BB090DA00DFF95A /* Tutorial.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tutorial.xcassets; sourceTree = "<group>"; };
+		8AD3313B1BB091AF00DFF95A /* Widget.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Widget.xcassets; sourceTree = "<group>"; };
 		8AD88C371A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineTopBarCollectionReusableView.h; sourceTree = "<group>"; };
 		8AD88C381A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineTopBarCollectionReusableView.m; sourceTree = "<group>"; };
 		8AD88C391A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMTimelineTopBarCollectionReusableView.xib; sourceTree = "<group>"; };
@@ -935,12 +925,6 @@
 		BF7F1BDC19E309920028F799 /* Sense.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Sense.entitlements; sourceTree = "<group>"; };
 		BF7F1BDD19E30D9A0028F799 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		BF7F1BDF19E30DCC0028F799 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		BF7F1BE219E313940028F799 /* humidityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = humidityIcon.png; sourceTree = "<group>"; };
-		BF7F1BE319E313940028F799 /* humidityIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "humidityIcon@2x.png"; sourceTree = "<group>"; };
-		BF7F1BE419E313940028F799 /* particleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particleIcon.png; sourceTree = "<group>"; };
-		BF7F1BE519E313940028F799 /* particleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particleIcon@2x.png"; sourceTree = "<group>"; };
-		BF7F1BE619E313940028F799 /* temperatureIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = temperatureIcon.png; sourceTree = "<group>"; };
-		BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "temperatureIcon@2x.png"; sourceTree = "<group>"; };
 		BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppUsageSpec.m; sourceTree = "<group>"; };
 		BF84C1FE1A0C111E009471D5 /* HEMSupportUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportUtil.h; sourceTree = "<group>"; };
 		BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportUtil.m; sourceTree = "<group>"; };
@@ -1171,12 +1155,6 @@
 		BFC99BBF1B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReviewQuestionsDataSource.m; sourceTree = "<group>"; };
 		BFC99BC11B6A9986008F7F0D /* HEMQuestionsDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMQuestionsDataSource.h; sourceTree = "<group>"; };
 		BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReviewSpec.m; sourceTree = "<group>"; };
-		BFCCF5391A69F37C00D842F9 /* lightIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightIcon.png; sourceTree = "<group>"; };
-		BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@2x.png"; sourceTree = "<group>"; };
-		BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@3x.png"; sourceTree = "<group>"; };
-		BFCCF53F1A69F3D400D842F9 /* soundIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soundIcon.png; sourceTree = "<group>"; };
-		BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundIcon@2x.png"; sourceTree = "<group>"; };
-		BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundIcon@3x.png"; sourceTree = "<group>"; };
 		BFCCF5491A6F1F6C00D842F9 /* HEMRulerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRulerView.h; sourceTree = "<group>"; };
 		BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRulerView.m; sourceTree = "<group>"; };
 		BFCE1D2A1AA657760076E855 /* sense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sense.png; path = images/sense.png; sourceTree = "<group>"; };
@@ -2393,9 +2371,9 @@
 				8A7214431A1EC710008B59C4 /* HEMTodayTableViewCell.m */,
 				BF7F1BCE19E304050028F799 /* HEMTodayViewController.h */,
 				BF7F1BCF19E304050028F799 /* HEMTodayViewController.m */,
-				BF7F1BE119E3132B0028F799 /* images */,
 				BF7F1BCC19E304050028F799 /* Supporting Files */,
 				BF7F1BD119E304050028F799 /* Widget.storyboard */,
+				8AD3313B1BB091AF00DFF95A /* Widget.xcassets */,
 			);
 			path = SenseWidget;
 			sourceTree = "<group>";
@@ -2407,25 +2385,6 @@
 				BF7F1BCD19E304050028F799 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		BF7F1BE119E3132B0028F799 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				BFCCF53F1A69F3D400D842F9 /* soundIcon.png */,
-				BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */,
-				BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */,
-				BFCCF5391A69F37C00D842F9 /* lightIcon.png */,
-				BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */,
-				BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */,
-				BF7F1BE219E313940028F799 /* humidityIcon.png */,
-				BF7F1BE319E313940028F799 /* humidityIcon@2x.png */,
-				BF7F1BE419E313940028F799 /* particleIcon.png */,
-				BF7F1BE519E313940028F799 /* particleIcon@2x.png */,
-				BF7F1BE619E313940028F799 /* temperatureIcon.png */,
-				BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */,
-			);
-			path = images;
 			sourceTree = "<group>";
 		};
 		BF80F6DD19BF99E800A4D779 /* Views */ = {
@@ -3028,20 +2987,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF7F1BED19E313940028F799 /* temperatureIcon@2x.png in Resources */,
+				8AD3313C1BB091AF00DFF95A /* Widget.xcassets in Resources */,
 				BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */,
-				BFCCF53D1A69F37C00D842F9 /* lightIcon@2x.png in Resources */,
-				BFCCF5441A69F3D400D842F9 /* soundIcon@3x.png in Resources */,
-				BF7F1BEB19E313940028F799 /* particleIcon@2x.png in Resources */,
-				BFCCF53C1A69F37C00D842F9 /* lightIcon.png in Resources */,
-				BF7F1BEA19E313940028F799 /* particleIcon.png in Resources */,
-				BFCCF5431A69F3D400D842F9 /* soundIcon@2x.png in Resources */,
 				BF7F1BD219E304050028F799 /* Widget.storyboard in Resources */,
-				BF7F1BE819E313940028F799 /* humidityIcon.png in Resources */,
-				BFCCF53E1A69F37C00D842F9 /* lightIcon@3x.png in Resources */,
-				BF7F1BE919E313940028F799 /* humidityIcon@2x.png in Resources */,
-				BF7F1BEC19E313940028F799 /* temperatureIcon.png in Resources */,
-				BFCCF5421A69F3D400D842F9 /* soundIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

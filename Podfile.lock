@@ -56,8 +56,7 @@ PODS:
     - CocoaLumberjack (= 1.6.3)
     - LGBluetooth
     - SHSProtoBuf
-  - SenseKit/Model (0.1.0):
-    - YapDatabase (~> 2.6.4)
+  - SenseKit/Model (0.1.0)
   - SenseKit/Service (0.1.0):
     - CocoaLumberjack (= 1.6.3)
   - SHSProtoBuf (0.9):
@@ -68,10 +67,6 @@ PODS:
   - SVWebViewController (1.0)
   - UICountingLabel (1.2.0)
   - UIImageEffects (0.0.1)
-  - YapDatabase (2.6.5):
-    - YapDatabase/standard (= 2.6.5)
-  - YapDatabase/standard (2.6.5):
-    - CocoaLumberjack (~> 1)
   - ZendeskSDK (1.4.0.2):
     - ZendeskSDK/Core (= 1.4.0.2)
     - ZendeskSDK/Localization (= 1.4.0.2)
@@ -134,7 +129,7 @@ CHECKOUT OPTIONS:
     :commit: 78b35ccd98cafcba11a551b2e47d49d51ac766f4
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 3efdfda0b9b0101a02ceddd33f93c0b99e74652e
+    :commit: 81b79d564509738c9d3bef8f0e6367e5767b70e4
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: e44003540c7b52b8fa29a05a059e43751e25d0d4
@@ -160,14 +155,13 @@ SPEC CHECKSUMS:
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
-  SenseKit: 80ec61d63f9281ba0ce0c1168b379388e967726c
+  SenseKit: 6bf7bdd77e072752523cd16328fb9dd54e7a61f7
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
-  YapDatabase: 814f9ff862a95c1e581d93335a4020482b69155b
   ZendeskSDK: c97e29286726c6eaf4f6fe97867dba354cbbd199
 
 COCOAPODS: 0.38.2

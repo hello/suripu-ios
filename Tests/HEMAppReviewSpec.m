@@ -7,17 +7,12 @@
 //
 #import <UIKit/UIKit.h>
 #import <Kiwi/Kiwi.h>
-#import <YapDatabase/YapDatabase.h>
 #import <SenseKit/SENKeyedArchiver.h>
 #import <SenseKit/SENLocalPreferences.h>
 #import "NSDate+HEMRelative.h"
 #import "HEMAppReview.h"
 #import "HEMConfig.h"
 #import "HEMAppUsage.h"
-
-@interface SENKeyedArchiver()
-+ (YapDatabaseConnection*)mainConnection;
-@end
 
 @interface HEMAppReview()
 
@@ -35,7 +30,7 @@ SPEC_BEGIN(HEMAppReviewSpec)
 
 describe(@"HEMAppReview", ^{
 
-    __block YapDatabaseConnection* conn;
+    __block NSString* databasePath = nil;
 
     void (^incrementUsage)(NSString*, int) = ^(NSString *identifier, int times) {
         HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
@@ -45,20 +40,13 @@ describe(@"HEMAppReview", ^{
         [appUsage save];
     };
 
-    beforeAll(^{
-        NSString *databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppReviewSpec.sqlite"];
-        YapDatabase* db = [[YapDatabase alloc] initWithPath:databasePath];
-        conn = [db newConnection];
-    });
-
     beforeEach(^{
-        [SENKeyedArchiver stub:@selector(mainConnection) andReturn:conn];
+        databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppReviewSpec"];
+        [SENKeyedArchiver stub:@selector(datastorePath) andReturn:databasePath];
     });
 
     afterEach(^{
-        [conn readWriteWithBlock:^(YapDatabaseReadWriteTransaction * __nonnull transaction) {
-            [transaction removeAllObjectsInAllCollections];
-        }];
+        [[NSFileManager defaultManager] removeItemAtPath:databasePath error:nil];
     });
 
     describe(@"+hasAppReviewURL", ^{

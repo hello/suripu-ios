@@ -348,7 +348,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (BOOL)dateIsLastNight {
-    NSDateComponents *diff = [self.calendar components:NSDayCalendarUnit
+    NSDateComponents *diff = [self.calendar components:NSCalendarUnitDay
                                               fromDate:self.dateForNightOfSleep
                                                 toDate:[[NSDate date] previousDay]
                                                options:0];

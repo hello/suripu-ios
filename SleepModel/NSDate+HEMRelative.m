@@ -13,7 +13,7 @@
 - (NSInteger)daysElapsed {
     NSDate *now = [NSDate date];
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSDateComponents* components = [calendar components:NSDayCalendarUnit
+    NSDateComponents* components = [calendar components:NSCalendarUnitDay
                                                fromDate:self
                                                  toDate:now
                                                 options:NSCalendarMatchStrictly];
@@ -63,7 +63,7 @@
 - (NSDate*)dateAtMidnight
 {
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+    NSUInteger preservedComponents = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay);
     return [calendar dateFromComponents:[calendar components:preservedComponents fromDate:self]];
 }
 
@@ -87,7 +87,7 @@
 - (BOOL)isOnSameDay:(NSDate*)otherDate
 {
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSCalendarUnit flags = (NSMonthCalendarUnit| NSYearCalendarUnit | NSDayCalendarUnit);
+    NSCalendarUnit flags = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay);
     NSDateComponents *components = [calendar components:flags fromDate:self];
     NSDateComponents *otherComponents = [calendar components:flags fromDate:otherDate];
 

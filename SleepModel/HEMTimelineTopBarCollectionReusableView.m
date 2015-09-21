@@ -43,7 +43,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 
 - (void)setDate:(NSDate*)date {
     NSDate* previousDay = [[NSDate date] previousDay];
-    NSDateComponents *diff = [self.calendar components:NSDayCalendarUnit
+    NSDateComponents *diff = [self.calendar components:NSCalendarUnitDay
                                               fromDate:date
                                                 toDate:previousDay
                                                options:0];

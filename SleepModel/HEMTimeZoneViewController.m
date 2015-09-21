@@ -44,7 +44,7 @@ static NSString* const HEMTimeZonesResourceName = @"TimeZones";
 - (void)configureNavigationBar {
     NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
     UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:cancelText
-                                                                   style:UIBarButtonItemStyleBordered
+                                                                   style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:@selector(cancel:)];
     [[self navigationItem] setLeftBarButtonItem:cancelItem];

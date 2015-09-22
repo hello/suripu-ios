@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.4.8
+
+New
+
+* Updated layout constraint to add spacing between image and text for the first night of sleep state on the Timeline
+
 ## 1.1.4.7
 
 New:

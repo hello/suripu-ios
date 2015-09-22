@@ -3108,8 +3108,11 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timelineNoDataIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qqc-Yh-nIP">
+                                    <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timelineNoDataIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qqc-Yh-nIP">
                                         <rect key="frame" x="200" y="18" width="200" height="228"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="228" id="DDK-6w-ScP"/>
+                                        </constraints>
                                     </imageView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uzh-83-Z8g">
                                         <rect key="frame" x="249" y="332" width="102" height="44"/>

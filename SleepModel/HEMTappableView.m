@@ -8,9 +8,14 @@
 
 #import "HEMTappableView.h"
 
-@interface HEMTappableView() <UIGestureRecognizerDelegate>
+static CGFloat const HEMTappableMinimumPressDuration = 0.05f;
+static CGFloat const HEMTappableAllowablePressMovement = 5.0f;
 
-@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
+@interface HEMTappableView()
+
+@property (nonatomic, strong) UIGestureRecognizer *tapGesture;
+@property (nonatomic, weak)   id target;
+@property (nonatomic, assign) SEL action;
 
 @end
 
@@ -43,34 +48,54 @@
 #pragma mark - Gestures
 
 - (void)configureTapGesture {
-    [self setUserInteractionEnabled:YES];
-    [self setTapGesture:[[UITapGestureRecognizer alloc] init]];
-    [[self tapGesture] addTarget:self action:@selector(didTap:)];
-    [[self tapGesture] setDelegate:self];
+    UILongPressGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] init];
+    [longPress setMinimumPressDuration:HEMTappableMinimumPressDuration];
+    [longPress setAllowableMovement:HEMTappableAllowablePressMovement];
+    [longPress addTarget:self action:@selector(didPress:)];
+    [self setTapGesture:longPress];
     [self addGestureRecognizer:[self tapGesture]];
-}
-
-- (void)didTap:(UITapGestureRecognizer*)tap {
-    [self setHighlighted:NO];
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-       shouldReceiveTouch:(UITouch *)touch {
-    [self setHighlighted:YES];
-    return YES;
+    
+    [self setUserInteractionEnabled:YES];
 }
 
 /**
- * UITapGestureRecognizer, for whatever reason, does not send the cancelled
- * state to the target, which pushes the handling of that to the view as such
+ * @discussion
+ * Handle various states to highlight or unhighlight the view and call the delegate
+ * if one is set when the gesture is officially triggered.  This can be handled by
+ * having a UIButton on top of the view or inheriting from UIControl, but strangely
+ * adding a view on top of itself, from a subclass, might cause problems and will
+ * add to the view hierachy that we want to avoid.  UIControl seems like overkill
+ * as well and thus we are using a long press gesture that provides better control
+ * (at least over a UITapGesture) when being dragged.
  */
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesCancelled:touches withEvent:event];
-    [self setHighlighted:NO];
-}
-
-- (void)addTapTarget:(id)target action:(SEL)action {
-    [[self tapGesture] addTarget:target action:action];
+- (void)didPress:(UIGestureRecognizer*)gesture {
+    switch ([gesture state]) {
+        case UIGestureRecognizerStateBegan:
+            [self setHighlighted:YES];
+            break;
+        case UIGestureRecognizerStateEnded: {
+            [self setHighlighted:NO];
+            CGPoint location = [gesture locationInView:self];
+            if (CGRectContainsPoint([self bounds], location)) {
+                [[self tapDelegate] didTapOnView:self];
+            }
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            CGPoint location = [gesture locationInView:self];
+            if ([self isHighlighted]
+                && !CGRectContainsPoint([self bounds], location)) {
+                [self setHighlighted:NO];
+            }
+            break;
+        }
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateFailed:
+            [self setHighlighted:NO];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

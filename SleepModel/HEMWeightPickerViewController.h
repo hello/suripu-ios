@@ -6,15 +6,15 @@
 
 @protocol HEMWeightPickerDelegate <NSObject>
 
-- (void)didSelectWeightInKgs:(CGFloat)weightKgs
-                        from:(HEMWeightPickerViewController*)controller;
+- (void)didSelectWeightInGrams:(CGFloat)grams
+                          from:(HEMWeightPickerViewController*)controller;
 - (void)didCancelWeightFrom:(HEMWeightPickerViewController*)controller;
 
 @end
 
 @interface HEMWeightPickerViewController : HEMOnboardingController
 
-@property (nonatomic, assign) NSInteger defaultWeightLbs;
+@property (nonatomic, assign) NSNumber* defaultWeightInGrams;
 @property (nonatomic, weak) id<HEMWeightPickerDelegate> delegate;
 
 @end

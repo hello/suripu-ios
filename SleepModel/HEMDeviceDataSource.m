@@ -188,6 +188,11 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     }];
 }
 
+- (BOOL)canPairPill {
+    BOOL hasSense = [[SENServiceDevice sharedService] pairedSenseAvailable];
+    return ![self isLoadingSense] && [self attemptedDataLoad] && hasSense;
+}
+
 #pragma mark - Warnings
 
 - (BOOL)lostInternetConnection:(SENDevice*)device {
@@ -303,23 +308,17 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (void)updateMissingDeviceForCell:(HEMNoDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    UIColor* actionButtonColor = [UIColor tintColor];
-    
     switch ([indexPath row]) {
         case HEMDeviceRowSense:
             [cell configureForSense];
             break;
-        case HEMDeviceRowPill:
-            [cell configureForPill];
-            if ([self isLoadingSense] || ![self attemptedDataLoad]) {
-                actionButtonColor = [UIColor actionButtonDisabledColor];
-            }
+        case HEMDeviceRowPill: {
+            [cell configureForPill:[self canPairPill]];
             break;
+        }
         default:
             break;
     }
-    [[cell actionButton] setUserInteractionEnabled:NO]; // let the entire cell be actionable
-    [[cell actionButton] setBackgroundColor:actionButtonColor];
 }
 
 - (void)updateSenseInfo:(SENDevice*)senseInfo forCell:(HEMDeviceCollectionViewCell*)cell {
@@ -449,17 +448,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         ? [HEMMainStoryboard pairReuseIdentifier]
         : [HEMMainStoryboard deviceReuseIdentifier];
     
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                           forIndexPath:indexPath];
-    
-    // if the cell does not respond to this selector, then that means the collection view
-    // also will never call the delegate's willDisplayCell:atIndexPath, which means we
-    // need to do it here.
-    if (![cell respondsToSelector:@selector(preferredLayoutAttributesFittingAttributes:)]) {
-        [self updateCell:cell atIndexPath:indexPath];
-    }
-    
-    return cell;
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
 }
 
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView

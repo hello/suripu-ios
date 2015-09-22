@@ -9,6 +9,7 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "HEMSleepHistoryViewController.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMScreenUtils.h"
 
 @implementation HEMZoomAnimationTransitionDelegate
 
@@ -33,14 +34,14 @@
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect windowBounds = HEMKeyWindowBounds();
     UIView *containerView = [transitionContext containerView];
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
 
     CGRect finalFrame = [transitionContext finalFrameForViewController:toViewController];
 
-    toViewController.view.frame = CGRectOffset(finalFrame, 0, screenBounds.size.height);
+    toViewController.view.frame = CGRectOffset(finalFrame, 0, windowBounds.size.height);
     toViewController.view.layer.zPosition = 0;
     fromViewController.view.layer.zPosition = 1;
     [containerView addSubview:toViewController.view];

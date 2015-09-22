@@ -25,8 +25,4 @@
 @property (nonatomic, weak) IBOutlet UILabel* itemValue1;
 @property (nonatomic, weak) IBOutlet UILabel* itemValue2;
 
-/**
- *  Convenience container for accessibility elements
- */
-@property (nonatomic, strong) NSArray* computedAccessibilityElements;
 @end

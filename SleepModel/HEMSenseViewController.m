@@ -13,6 +13,7 @@
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
 #import "NSTimeZone+HEMMapping.h"
 
@@ -130,15 +131,6 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     return message;
 }
 
-- (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
-    NSAttributedString* message = [self attributedMessageForWarning:warning];
-    CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
-                                          options:NSStringDrawingUsesFontLeading
-                                                 |NSStringDrawingUsesLineFragmentOrigin
-                                          context:nil];
-    return CGRectGetHeight(bounds);
-}
-
 - (NSString*)actionButtonTitleForWarning:(HEMDeviceWarning)warning {
     NSString* title = nil;
     switch (warning) {
@@ -234,8 +226,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     CGSize size = [layout itemSize];
     
     if ([self isWarningCellRow:[indexPath row]]) {
-        size.height = [self heightForWarning:[[self warnings][[indexPath row]] integerValue]
-                         withDefaultItemSize:size] + HEMWarningCellBaseHeight;
+        CGFloat widthConstraint = size.width - (2*HEMWarningCellMessageHorzPadding);
+        HEMDeviceWarning warning = [self.warnings[indexPath.item] integerValue];
+        NSAttributedString* message = [self attributedMessageForWarning:warning];
+        size.height = [message sizeWithWidth:widthConstraint].height + HEMWarningCellBaseHeight;
     } else {
         size.height = HEMSenseActionHeight * 4;
     }
@@ -285,7 +279,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support", nil) takeAction:^(NSURL *link) {
+    [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support.hyperlink-text", nil) takeAction:^(NSURL *link) {
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
@@ -347,14 +341,6 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }
     
     UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    if (![root respondsToSelector:@selector(presentationController)]) {
-        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
-        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
-        [sheet addDismissAction:^{
-            [root setModalPresentationStyle:origStyle];
-        }];
-    }
-    
     [root presentViewController:sheet animated:NO completion:nil];
 }
 
@@ -401,7 +387,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     
     NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
     NSString* questionFormat = NSLocalizedString(@"settings.sense.unpair.confirmation.format", nil);
-    NSString* guideLink = NSLocalizedString(@"help.url.support", nil);
+    NSString* guideLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
     NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
                                                       attributes:[self dialogMessageAttributes:YES]]];

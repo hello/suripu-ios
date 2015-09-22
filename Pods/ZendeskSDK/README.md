@@ -1,6 +1,6 @@
 :warning: *Use of this software is subject to important terms and conditions as set forth in the License file* :warning:
 
-# Zendesk Mobile SDK for iOS 1.3.0.1
+# Zendesk Mobile SDK for iOS 1.4.0.2
 
 Zendesk SDK for mobile is a quick, convenient way to get customer support into your mobile apps. With just a few lines of code, you can provide your end users with an easy way to get in touch from any mobile app.
 
@@ -15,10 +15,18 @@ You can also reference this repository as a cocoapod:
 
 
 ````
-pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git'
+source 'https://github.com/zendesk/Specs.git'
 
+pod 'ZendeskSDK'
 ````
 
+To choose a specific version: 
+
+```
+source 'https://github.com/zendesk/Specs.git'
+
+pod 'ZendeskSDK', '~> RELEASE_VERSION_TAG'
+```
 
 ## Copyright and license
 

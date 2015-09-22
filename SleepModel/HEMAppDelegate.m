@@ -22,6 +22,7 @@
 
 static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
+static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
@@ -147,7 +148,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 - (void)configureAPI {
     NSString* path = [HEMConfig stringForConfig:HEMConfAPIURL];
     NSString* clientID = [HEMConfig stringForConfig:HEMConfClientId];
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     [SENAPIClient setBaseURLFromPath:path];
+    [SENAPIClient setValue:version forHTTPHeaderField:HEMApiXVersionHeader];
     [SENAuthorizationService setClientAppID:clientID];
     [SENAuthorizationService authorizeRequestsFromKeychain];
 }
@@ -237,7 +240,11 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)createAndShowWindow
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIWindow* window = [UIWindow new];
+    if (CGSizeEqualToSize(window.bounds.size, CGSizeZero))
+        window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = window;
+    [self.window makeKeyWindow];
     self.window.rootViewController = [HEMMainStoryboard instantiateRootViewController];
     [self.window makeKeyAndVisible];
 }

@@ -48,5 +48,6 @@ typedef void (^NACellUnHighlightConfigureBlock)(id);
         andDelegate:(id)delegate;
 
 - (void)setIndex:(NSInteger)index;
+- (void)setIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end

@@ -237,8 +237,16 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0xCCD3DB alpha:1.f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
+    // if you change the values, you should check the references to ensure the
+    // locations matches the colors
     return @[(id)[UIColor colorWithHex:0xF5F7FA alpha:1.f].CGColor,
              (id)[UIColor colorWithHex:0xF5F7FA alpha:0.f].CGColor];
+}
++ (NSArray*)roomCheckValueGradientColorRefs {
+    // if you change the values, you should check the references to ensure the
+    // locations matches the colors
+    return @[(id)[UIColor whiteColor].CGColor,
+             (id)[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
 }
 
 @end

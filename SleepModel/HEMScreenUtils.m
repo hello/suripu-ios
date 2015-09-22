@@ -20,3 +20,7 @@ BOOL HEMIsIPhone5Family() {
     CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     return screenHeight == HEMIPhone5Height;
 }
+
+CGRect HEMKeyWindowBounds() {
+    return [[[UIApplication sharedApplication] keyWindow] bounds];
+}

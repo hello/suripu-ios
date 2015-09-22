@@ -12,7 +12,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
-
+#import "NSAttributedString+HEMUtils.h"
 #import "HEMInsightViewController.h"
 #import "HEMMarkdown.h"
 #import "HEMActivityCoverView.h"
@@ -219,20 +219,10 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
     if (row == [self imageRow]) {
         itemSize.height = HEMInsightImageHeight;
     } else {
-        NSAttributedString* attributedText = nil;
-        
-        if (row == [self titleRow]) {
-            attributedText = [self attributedTitle];
-        } else {
-            attributedText = [self attributedMessage];
-        }
-        
-        CGSize constraint = CGSizeZero;
-        constraint.width = itemSize.width - (HEMInsightTextHorzPadding*2);
-        constraint.height = MAXFLOAT;
-        NSStringDrawingOptions options = NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin;
-        CGRect textFrame = [attributedText boundingRectWithSize:constraint options:options context:nil];
-        itemSize.height = ceilf(CGRectGetHeight(textFrame) + (HEMInsightTextVertPadding*2));
+        NSAttributedString* attributedText = (row == self.titleRow) ? self.attributedTitle : self.attributedMessage;
+        CGFloat maxWidth = itemSize.width - (HEMInsightTextHorzPadding*2);
+        CGFloat textHeight = [attributedText sizeWithWidth:maxWidth].height;
+        itemSize.height = textHeight + (HEMInsightTextVertPadding * 2);
     }
     
     return itemSize;

@@ -12,7 +12,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
-
+#import "NSString+HEMUtils.h"
 #import "HEMInsightsFeedDataSource.h"
 #import "HEMQuestionCell.h"
 #import "HEMInsightCollectionViewCell.h"
@@ -252,12 +252,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     id dataObj = [self data][[indexPath row]];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
-        NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading;
-        CGRect rect = [body boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
-                                         options:options
-                                      attributes:[HEMQuestionCell questionTextAttributes]
-                                         context:nil];
-        calculatedHeight = ceilf(CGRectGetHeight(rect)) + HEMQuestionCellBaseHeight;
+        CGFloat textHeight = [body heightBoundedByWidth:width attributes:[HEMQuestionCell questionTextAttributes]];
+        calculatedHeight = textHeight + HEMQuestionCellBaseHeight;
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
         NSString* preview = [self infoPreviewTextForCellAtIndexPath:indexPath];
         calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:body
@@ -287,18 +283,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
         reuseId = HEMInsightsFeedReuseIdInsight;
     }
     
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                           forIndexPath:indexPath];
-    
-    
-    // if the cell does not respond to this selector, then that means the collection view
-    // also will never call the delegate's willDisplayCell:atIndexPath, which means we
-    // need to do it here.
-    if (![cell respondsToSelector:@selector(preferredLayoutAttributesFittingAttributes:)]) {
-        [self displayCell:cell atIndexPath:indexPath];
-    }
-    
-    return cell;
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+
 }
 
 - (void)displayCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {

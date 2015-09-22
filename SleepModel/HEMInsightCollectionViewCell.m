@@ -32,20 +32,14 @@ static CGFloat const HEMInsightCellPreviewHeight = 51.0f;
 + (CGFloat)contentHeightWithMessage:(NSString*)message
                         infoPreview:(NSString*)infoPreview
                             inWidth:(CGFloat)contentWidth {
-    
     NSAttributedString* text = [self attributedTextForMessage:message];
-    
-    CGSize constraint = CGSizeMake(contentWidth, MAXFLOAT);
-    NSStringDrawingOptions options =
-        NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin;
-    CGSize contentSize = [text boundingRectWithSize:constraint options:options context:nil].size;
-    
+    CGFloat textHeight = [text sizeWithWidth:contentWidth].height;
     CGFloat baseHeight = HEMInsightCellBaseHeight;
     if ([infoPreview length] == 0) {
         baseHeight -= HEMInsightCellPreviewHeight;
     }
 
-    return contentSize.height + baseHeight;
+    return textHeight + baseHeight;
 }
 
 - (void)prepareForReuse {

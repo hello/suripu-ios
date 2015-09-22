@@ -7,6 +7,7 @@
 //
 
 #import "HEMActionSheetOptionCell.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "NSString+HEMUtils.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
@@ -35,30 +36,20 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
                   maxWidth:(CGFloat)width {
     
     CGFloat height = HEMActionSheetOptionVertMargin;
-    
+    CGFloat textWidth = width - (2 * HEMActionSheetOptionHorzMargin);
     UIFont* titleFont = [UIFont actionSheetOptionTitleFont];
-    height += [self heightForText:title usingFont:titleFont constrainedToWidth:width];
+    height += [title heightBoundedByWidth:textWidth usingFont:titleFont];
     
     if ([description length] > 0) {
         height += HEMActionSheetOptionLabelSpacing;
         
         UIFont* descFont = [UIFont actionSheetOptionDescriptionFont];
-        height += [self heightForText:description usingFont:descFont constrainedToWidth:width];
+        height += [description heightBoundedByWidth:textWidth usingFont:descFont];
     }
     
     height += HEMActionSheetOptionVertMargin;
     
     return MAX(HEMActionSheetOptionMinHeight, ceilf(height));
-}
-
-+ (CGFloat)heightForText:(NSString*)text usingFont:(UIFont*)font constrainedToWidth:(CGFloat)width {
-    NSDictionary* attributes = @{NSFontAttributeName : font};
-    CGSize constraint = CGSizeMake(width-(2*HEMActionSheetOptionHorzMargin), MAXFLOAT);
-    return [text boundingRectWithSize:constraint
-                              options:NSStringDrawingUsesFontLeading
-                                      |NSStringDrawingUsesLineFragmentOrigin
-                           attributes:attributes
-                              context:nil].size.height;
 }
 
 - (void)awakeFromNib {

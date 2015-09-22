@@ -16,14 +16,23 @@
 #import "HEMOnboardingStoryboard.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMEmbeddedVideoView.h"
+#import "HEMScreenUtils.h"
 
 static NSInteger const HEMBeforeSleepNumberOfScreens = 5;
+static CGFloat const HEMBeforeSleepSideImageInitialScale = 0.65f;
 static CGFloat const HEMBeforeSleepTextPadding = 20.0f;
 static CGFloat const HEMBeforeSleepDescriptionMargin = 10.0f;
 static CGFloat const HEMBeforeSleepVideoAlphaPlayThreshold = 0.9f;
-static NSString* const HEMBeforeSleepImageNameFormat = @"senseColors%ld.png";
 static NSString* const HEMBeforeSleepTitleKeyFormat = @"onboarding.before-sleep.%ld.title";
 static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%ld.description";
+
+typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
+    HEMBeforeSleepScreenInitial = 0,
+    HEMBeforeSleepScreenIdeal = 1,
+    HEMBeforeSleepScreenWarning = 2,
+    HEMBeforeSleepScreenAlert = 3,
+    HEMBeforeSleepScreenVideo = 4
+};
 
 @interface HEMBeforeSleepViewController() <UIScrollViewDelegate>
 
@@ -31,11 +40,18 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *dots;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonBottomConstraint;
-@property (weak, nonatomic) IBOutlet UIImageView *currentImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *nextImageView;
 @property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView* videoView;
+@property (weak, nonatomic) IBOutlet UIImageView *centerImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *initialRightImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *initialLeftImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *tempImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nextLeadingToCenterConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *prevTrailingToCenterConstraint;
 
 @property (assign, nonatomic) CGFloat origContinueButtonBottomConstant;
+@property (assign, nonatomic) CGFloat origNextLeadingConstant;
+@property (assign, nonatomic) CGFloat origPrevTrailingConstant;
 
 @end
 
@@ -86,7 +102,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 
 - (void)configureScrollView {
     CGFloat x = HEMBeforeSleepTextPadding;
-    CGFloat contentWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat contentWidth = CGRectGetWidth(HEMKeyWindowBounds());
     
     CGFloat maxLabelWidth = contentWidth - (2 * x);
     NSString* titleKey = nil;
@@ -125,15 +141,33 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 }
 
 
-- (UIImage*)imageNameForScreen:(NSUInteger)screen {
-    NSString* imageName = [NSString stringWithFormat:HEMBeforeSleepImageNameFormat, screen];
-    return [UIImage imageNamed:imageName];
+- (UIImage*)centerImageForPageIndex:(NSUInteger)index {
+    switch (index) {
+        case HEMBeforeSleepScreenInitial:
+        case HEMBeforeSleepScreenIdeal:
+            return [UIImage imageNamed:@"senseGreen"];
+        case HEMBeforeSleepScreenWarning:
+            return [UIImage imageNamed:@"senseYellow"];
+        case HEMBeforeSleepScreenAlert:
+            return [UIImage imageNamed:@"senseRed"];
+        default:
+            return nil;
+    }
 }
 
 - (void)configureInitialScreen {
-    [[self currentImageView] setImage:[self imageNameForScreen:1]];
-    [[self nextImageView] setImage:[self imageNameForScreen:2]];
-    [[self nextImageView] setAlpha:0.0f];
+    [[self initialRightImageView] setImage:[self centerImageForPageIndex:HEMBeforeSleepScreenAlert]];
+    [[self centerImageView] setImage:[self centerImageForPageIndex:HEMBeforeSleepScreenIdeal]];
+    [[self initialLeftImageView] setImage:[self centerImageForPageIndex:HEMBeforeSleepScreenWarning]];
+    
+    CGFloat initialScale = HEMBeforeSleepSideImageInitialScale;
+    CGAffineTransform xform = CGAffineTransformMakeScale(initialScale, initialScale);
+    [[self initialRightImageView] setTransform:xform];
+    [[self initialLeftImageView] setTransform:xform];
+    
+    [self setOrigNextLeadingConstant:[[self nextLeadingToCenterConstraint] constant]];
+    [self setOrigPrevTrailingConstant:[[self prevTrailingToCenterConstraint] constant]];
+
     [[self dots] setNumberOfPages:HEMBeforeSleepNumberOfScreens];
     [[self dots] setCurrentPageIndicatorTintColor:[UIColor tintColor]];
     [[self dots] setPageIndicatorTintColor:[UIColor pageControlTintColor]];
@@ -216,52 +250,111 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 
 #pragma mark -
 
-- (void)advanceToPage:(NSInteger)currentPage {
-    UIImageView* tempView = [self nextImageView];
-    [self setNextImageView:[self currentImageView]];
-    [self setCurrentImageView:tempView];
-    [[self dots] setCurrentPage:currentPage];
+- (void)updateInitialSideImageStateWithPercentage:(CGFloat)percentage {
+    [[self initialRightImageView] setAlpha:1.0f];
+    [[self initialLeftImageView] setAlpha:1.0f];
+    [[self centerImageView] setImage:[self centerImageForPageIndex:HEMBeforeSleepScreenIdeal]];
+    
+    CGFloat prevImageWidth = CGRectGetWidth([[self initialRightImageView] bounds]);
+    CGFloat fullyHiddenPrevConstant = -prevImageWidth / 2.0f;
+    CGFloat nextConstant = [self origPrevTrailingConstant] - (fullyHiddenPrevConstant * percentage);
+    [[self prevTrailingToCenterConstraint] setConstant:nextConstant];
+    
+    CGFloat nextImageWidth = CGRectGetWidth([[self initialLeftImageView] bounds]);
+    CGFloat fullyHiddenNextConstant = -nextImageWidth / 2.0f;
+    nextConstant = [self origNextLeadingConstant] + (fullyHiddenNextConstant * percentage);
+    [[self nextLeadingToCenterConstraint] setConstant:nextConstant];
+}
+
+- (void)advanceToPage:(NSInteger)currentPageIndex {
+    switch (currentPageIndex) {
+        case HEMBeforeSleepScreenVideo:
+        case HEMBeforeSleepScreenIdeal:
+        case HEMBeforeSleepScreenWarning:
+        case HEMBeforeSleepScreenAlert: {
+            if ([[self centerImageView] alpha] != 1.0f) {
+                UIImageView* tempView = [self tempImageView];
+                [self setTempImageView:[self centerImageView]];
+                [self setCenterImageView:tempView];
+            }
+            break;
+        }
+        case HEMBeforeSleepScreenInitial:
+        default:
+            break;
+    }
+    [[self dots] setCurrentPage:currentPageIndex];
 }
 
 - (void)swapToNextIllustrationForPage:(CGFloat)nextPage withPercentage:(CGFloat)percentage {
-    UIView* currentView = [self currentImageView];
-    UIView* nextView = nil;
-    NSInteger nextPageNumber = ceilf(nextPage) + 1;
-    
-    if (nextPageNumber == HEMBeforeSleepNumberOfScreens) {
-        [self prepareVideoWithVisibilityPercentage:percentage];
-        nextView = [self videoView];
-    } else {
-        UIImage* nextImage = [self imageNameForScreen:MIN(HEMBeforeSleepNumberOfScreens, nextPageNumber)];
-        if (![[[self nextImageView] image] isEqual:nextImage]) {
-            [[self nextImageView] setImage:nextImage];
-        }
-        nextView = [self nextImageView];
-    }
+    NSInteger nextPageIndex = ceilf(nextPage);
 
-    [currentView setAlpha:1-percentage];
-    [nextView setAlpha:percentage];
+    switch (nextPageIndex) {
+        case HEMBeforeSleepScreenIdeal: {
+            [self updateInitialSideImageStateWithPercentage:percentage];
+            break;
+        }
+        case HEMBeforeSleepScreenVideo:
+            [self prepareVideoWithVisibilityPercentage:percentage];
+            [[self centerImageView] setAlpha:1-percentage];
+            break;
+        case HEMBeforeSleepScreenWarning:
+        case HEMBeforeSleepScreenAlert: {
+            UIImage* nextImage = [self centerImageForPageIndex:MIN(HEMBeforeSleepScreenVideo,
+                                                                   nextPageIndex)];
+            
+            [self crossFadeCenterImageWithAlpha:1 - percentage
+                                 tempImageAlpha:percentage
+                                      nextImage:nextImage];
+            break;
+        }
+        case HEMBeforeSleepScreenInitial:
+        default:
+            break;
+    }
     
 }
 
 - (void)swapToPreviousIllustrationForPage:(CGFloat)previousPage withPercentage:(CGFloat)percentage {
-    UIView* currentView = nil;
-    UIView* nextView = [self nextImageView];
-    NSInteger prevPageNumber = floorf(previousPage) + 1;
+    NSInteger prevPageIndex = floorf(previousPage);
     
-    if (prevPageNumber == HEMBeforeSleepNumberOfScreens - 1) {
-        [self prepareVideoWithVisibilityPercentage:percentage];
-        currentView = [self videoView];
-    } else {
-        UIImage* nextImage = [self imageNameForScreen:MAX(1, prevPageNumber)];
-        if (![[[self nextImageView] image] isEqual:nextImage]) {
-            [[self nextImageView] setImage:nextImage];
+    switch (prevPageIndex + 1) {
+        case HEMBeforeSleepScreenIdeal: {
+            [self updateInitialSideImageStateWithPercentage:percentage];
+            break;
         }
-        currentView = [self currentImageView];
+        case HEMBeforeSleepScreenVideo:
+            [self prepareVideoWithVisibilityPercentage:percentage];
+            [[self tempImageView] setAlpha:1 - percentage];
+            break;
+        case HEMBeforeSleepScreenWarning:
+        case HEMBeforeSleepScreenAlert: {
+            UIImage* nextImage = [self centerImageForPageIndex:MAX(0, prevPageIndex)];
+            [self crossFadeCenterImageWithAlpha:percentage
+                                 tempImageAlpha:1 - percentage
+                                      nextImage:nextImage];
+            break;
+        }
+        case HEMBeforeSleepScreenInitial:
+        default:
+            break;
     }
+}
 
-    [currentView setAlpha:percentage];
-    [nextView setAlpha:1-percentage];
+- (void)crossFadeCenterImageWithAlpha:(CGFloat)centerAlpha
+                       tempImageAlpha:(CGFloat)tempAlpha
+                            nextImage:(UIImage*)nextImage {
+    
+    [[self initialRightImageView] setAlpha:0.0f];
+    [[self initialLeftImageView] setAlpha:0.0f];
+
+    if (![[[self tempImageView] image] isEqual:nextImage]) {
+        [[self tempImageView] setImage:nextImage];
+    }
+    
+    [[self centerImageView] setAlpha:centerAlpha];
+    [[self tempImageView] setAlpha:tempAlpha];
+    
 }
 
 - (void)prepareVideoWithVisibilityPercentage:(CGFloat)percentage {
@@ -276,6 +369,8 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     } else {
         [[self videoView] stop];
     }
+    
+    [[self videoView] setAlpha:percentage];
 }
 
 - (void)moveContinueButtonWithPercentage:(CGFloat)percentage {

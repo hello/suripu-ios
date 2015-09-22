@@ -80,8 +80,8 @@
 /* Class = "UILabel"; text = "Sense's Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you. To dismiss the alarm, just wave your hand over Sense."; ObjectID = "Hw2-eQ-BhX"; */
 "Hw2-eQ-BhX.text" = "Sense's Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you. To dismiss the alarm, just wave your hand over Sense.";
 
-/* Class = "UIButton"; normalTitle = "Scan"; ObjectID = "IJB-u8-jcX"; */
-"IJB-u8-jcX.normalTitle" = "Scan";
+/* Class = "UIButton"; normalTitle = "SCAN"; ObjectID = "IJB-u8-jcX"; */
+"IJB-u8-jcX.normalTitle" = "SCAN";
 
 /* Class = "UILabel"; text = "1."; ObjectID = "IN1-JN-WIg"; */
 "IN1-JN-WIg.text" = "1.";

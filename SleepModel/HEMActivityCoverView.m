@@ -12,6 +12,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMAnimationUtils.h"
 #import "HEMMathUtil.h"
+#import "HEMScreenUtils.h"
 
 static CGFloat kHEMActivityMargins = 30.0f;
 static CGFloat kHEMActivityViewSeparation = 20.0f;
@@ -30,8 +31,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 @implementation HEMActivityCoverView
 
 - (id)init {
-    UIScreen* mainScreen = [UIScreen mainScreen];
-    return [self initWithFrame:[mainScreen bounds]];
+    return [self initWithFrame:HEMKeyWindowBounds()];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {

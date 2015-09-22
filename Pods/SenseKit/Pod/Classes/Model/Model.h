@@ -27,6 +27,16 @@ void SENClearModel();
 NSDate* SENDateFromNumber(id value);
 
 /**
+ *  Creates a number from an NSDate object suitable for passing
+ *  to the API
+ *
+ *  @param date a date
+ *
+ *  @return a number or nil
+ */
+NSNumber* SENDateMillisecondsSince1970(NSDate* date);
+
+/**
  *  Checks the type of an object, returning the object if it
  *  matches the intended class
  *

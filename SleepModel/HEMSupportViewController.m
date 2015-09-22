@@ -13,6 +13,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
+#import "HEMScreenUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     HEMSupportRowIndexUserGuide = 0,
@@ -57,7 +58,7 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 }
 
 - (void)configureTableView {
-    CGFloat width = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds());
     
     // header
     CGRect frame = CGRectZero;

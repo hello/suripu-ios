@@ -19,6 +19,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingService.h"
 #import "HEMWifiUtils.h"
+#import "HEMScreenUtils.h"
 #import "HEMSimpleLineTextField.h"
 
 typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
@@ -95,13 +96,24 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self updateConstraint:[self ssidTopConstraint] withDiff:50.0f];
     [self updateConstraint:[self passTopConstraint] withDiff:paddingDiff];
     [self updateConstraint:[self securityTopConstraint] withDiff:paddingDiff];
-    [self updateConstraint:[self continueTopConstraint] withDiff:paddingDiff];
+    
+    [self adjustContinueButtonConstraint];
     [super adjustConstraintsForIPhone4];
 }
 
 - (void)adjustConstraintsForIphone5 {
-    [self updateConstraint:[self continueTopConstraint] withDiff:10.0];
+    [self adjustContinueButtonConstraint];
     [super adjustConstraintsForIphone5];
+}
+
+- (void)adjustContinueButtonConstraint {
+    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
+        CGFloat continueButtonDiff = 10.0f;
+        if ([[self securityField] isHidden]) {
+            continueButtonDiff += 20.0f;
+        }
+        [self updateConstraint:[self continueTopConstraint] withDiff:continueButtonDiff];
+    }
 }
 
 - (void)viewWillLayoutSubviews {

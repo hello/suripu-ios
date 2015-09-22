@@ -11,6 +11,7 @@
 #import "HEMSupportUtil.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMScreenUtils.h"
 
 static CGFloat const kHEMDialogHorzMargins = 17.0f;
 static CGFloat const kHEMDialogCornerRadius = 4.0f;
@@ -39,7 +40,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 @implementation HEMAlertView
 
 + (CGRect)defaultFrame {
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect screenBounds = HEMKeyWindowBounds();
     CGRect frame = CGRectZero;
     frame.size.width = CGRectGetWidth(screenBounds)-(2*kHEMDialogHorzMargins);
     frame.size.height = kHEMDialogContentTopPadding + kHEMDialogContentBotPadding;

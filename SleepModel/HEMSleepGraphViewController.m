@@ -1,5 +1,6 @@
 
 #import <SenseKit/SenseKit.h>
+#import <SenseKit/SENServiceAccount.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
@@ -30,17 +31,18 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMAppUsage.h"
-#import "HEMOnboardingService.h"
 #import "HelloStyleKit.h"
 #import "HEMAudioSession.h"
 #import "HEMSupportUtil.h"
+#import "HEMTappableView.h"
+#import "HEMScreenUtils.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
 CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
-                                           HEMSleepGraphActionDelegate, AVAudioPlayerDelegate>
+                                           HEMSleepGraphActionDelegate, AVAudioPlayerDelegate, HEMTapDelegate>
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
@@ -520,13 +522,11 @@ static BOOL hasLoadedBefore = NO;
     }
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    if (![root respondsToSelector:@selector(presentationController)]) {
-        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
-        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
-        [sheet addDismissAction:^{
-          [root setModalPresentationStyle:origStyle];
-        }];
-    }
+    UIModalPresentationStyle origStyle = [root modalPresentationStyle];
+    [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+    [sheet addDismissAction:^{
+      [root setModalPresentationStyle:origStyle];
+    }];
 
     [root presentViewController:sheet animated:NO completion:nil];
 }
@@ -538,12 +538,6 @@ static BOOL hasLoadedBefore = NO;
                                               message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
                                            controller:weakSelf];
     });
-}
-
-- (void)didTapSummaryButton:(UIButton *)sender {
-    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownController];
-    controller.result = self.dataSource.sleepResult;
-    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
@@ -651,6 +645,14 @@ static BOOL hasLoadedBefore = NO;
     [self.popupMaskView showUnderlyingViewRect:maskArea];
     self.popupMaskView.alpha = 0.7f;
     self.popupMaskView.hidden = NO;
+}
+
+#pragma mark - HEMTapDelegate
+
+- (void)didTapOnView:(HEMTappableView *)tappableView {
+    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownController];
+    controller.result = self.dataSource.sleepResult;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 #pragma mark - Top Bar
@@ -867,7 +869,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)updateLayoutWithError:(NSError *)error {
     BOOL hasTimelineData = [self.dataSource hasTimelineData];
-    NSDate *accountCreationDate = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
+    NSDate *accountCreationDate = [[[SENServiceAccount sharedService] account] createdAt];
     BOOL justOnboarded = accountCreationDate
                          && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
     self.errorSupportButton.hidden = YES;
@@ -1009,7 +1011,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (CGFloat)heightForCellWithSegment:(SENTimelineSegment *)segment {
     return (segment.duration / 3600)
-           * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+           * (CGRectGetHeight(HEMKeyWindowBounds()) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

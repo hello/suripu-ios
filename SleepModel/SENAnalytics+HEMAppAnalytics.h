@@ -113,6 +113,10 @@ extern NSString* const kHEMAnalyticsEventSense;
 extern NSString* const kHEMAnalyticsEventPill;
 extern NSString* const HEMAnalyticsEventHealthSync;
 
+// back view
+NSString* const HEMAnalyticsEventBackViewSwipe;
+NSString* const HEMAnalyticsEventBackViewTapped;
+
 // support
 extern NSString* const HEMAnalyticsEventSupport;
 extern NSString* const HEMAnalyticsEventSupportContactUs;
@@ -182,7 +186,7 @@ extern NSString* const HEMAnalyticsEventAppReviewSkip;
 
 @interface SENAnalytics (HEMAppAnalytics)
 
-+ (void)trackSignUpWithName:(NSString*)userName;
++ (void)trackSignUpOfNewAccount:(SENAccount*)account;
 + (void)trackUserSession;
 + (void)trackErrorWithMessage:(NSString*)message;
 + (void)trackWarningWithMessage:(NSString*)message;

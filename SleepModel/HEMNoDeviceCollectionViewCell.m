@@ -9,8 +9,14 @@
 #import "HEMNoDeviceCollectionViewCell.h"
 #import "HelloStyleKit.h"
 #import "HEMActionButton.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMNoDeviceCollectionViewCell
+
+- (void)awakeFromNib {
+    [[self actionButton] setUserInteractionEnabled:NO]; // let entire cell be tappable
+    [[self actionButton] setBackgroundColor:[UIColor tintColor]];
+}
 
 - (void)configureForSense {
     self.iconImageView.image = [HelloStyleKit senseIcon];
@@ -20,12 +26,20 @@
                        forState:UIControlStateNormal];
 }
 
-- (void)configureForPill {
+- (void)configureForPill:(BOOL)canPair {
     self.iconImageView.image = [HelloStyleKit pillIcon];
     self.nameLabel.text = NSLocalizedString(@"settings.device.pill", nil);
     self.messageLabel.text = NSLocalizedString(@"settings.device.no-pill", nil);
     [self.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-pill", nil)
                        forState:UIControlStateNormal];
+    
+    if (canPair) {
+        [[self actionButton] setBackgroundColor:[UIColor tintColor]];
+    } else {
+        [[self actionButton] setBackgroundColor:[UIColor actionButtonDisabledColor]];
+    }
+    
+    [self setUserInteractionEnabled:canPair];
 }
 
 @end

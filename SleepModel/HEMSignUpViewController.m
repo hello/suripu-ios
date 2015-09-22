@@ -77,7 +77,7 @@
         NSString* name = [self.nameField.text trim];
         
         void(^creationBlock)(SENAccount* account) = ^(SENAccount* account) {
-            [SENAnalytics trackSignUpWithName:[account name]];
+            [SENAnalytics trackSignUpOfNewAccount:account];
             // checkpoint must be made here so that upon completion, user is not
             // pushed in to the app
             HEMOnboardingService* service = [HEMOnboardingService sharedService];

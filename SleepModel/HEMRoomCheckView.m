@@ -33,7 +33,6 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 @property (weak, nonatomic) IBOutlet UIImageView *senseBgImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet UIView *sensorContainerView;
-@property (weak, nonatomic) IBOutlet UILabel *sensorMessageLabel;
 @property (weak, nonatomic) IBOutlet UIView *sensorValueContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorContainerTopConstraint;
@@ -48,6 +47,9 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 @property (strong, nonatomic) NSMutableArray* sensorValueRotaries;
 @property (weak,   nonatomic) HEMActivityIndicatorView* currentSensorActivity;
 @property (assign, nonatomic) NSUInteger currentSensorIndex;
+@property (weak,   nonatomic) CAGradientLayer* topGradientLayer;
+@property (weak,   nonatomic) CAGradientLayer* botGradientLayer;
+@property (assign, nonatomic) CGFloat gradientHeight;
 
 @end
 
@@ -69,9 +71,55 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     [self setSensorValueRotaries:[NSMutableArray array]];
 }
 
+- (CAGradientLayer*)gradientLayerWithWidth:(CGFloat)width
+                           containerHeight:(CGFloat)containerHeight
+                                    colors:(NSArray*)colors
+                                 locations:(NSArray*)locations {
+    
+    CAGradientLayer* gradientLayer = [CAGradientLayer layer];
+    CGRect gradientFrame = CGRectZero;
+    gradientFrame.size.width = width;
+    gradientFrame.size.height = ((containerHeight - HEMRoomCheckViewSensorDigitHeight) / 2.0f);
+    [gradientLayer setFrame:gradientFrame];
+    [gradientLayer setColors:colors];
+    [gradientLayer setLocations:locations];
+    return gradientLayer;
+}
+
+- (void)addTopGradientTo:(UIView*)view {
+    NSArray* colors = [UIColor roomCheckValueGradientColorRefs];
+    CGFloat topWidth = CGRectGetWidth([[self sensorValueContainer] bounds]);
+    CGFloat containerHeight = CGRectGetHeight([[self sensorValueContainer] bounds]);
+    CAGradientLayer* layer = [self gradientLayerWithWidth:topWidth
+                                          containerHeight:containerHeight
+                                                   colors:colors
+                                                locations:@[@(0.75f), @1]];
+    [[view layer] addSublayer:layer];
+    [self setTopGradientLayer:layer];
+}
+
+- (void)addBotGradientTo:(UIView*)view {
+    NSArray* colors = [[[UIColor roomCheckValueGradientColorRefs] reverseObjectEnumerator] allObjects];
+    CGFloat topWidth = CGRectGetWidth([[self sensorValueContainer] bounds]);
+    CGFloat containerHeight = CGRectGetHeight([[self sensorValueContainer] bounds]);
+    
+    CAGradientLayer* layer = [self gradientLayerWithWidth:topWidth
+                                          containerHeight:containerHeight
+                                                   colors:colors
+                                                locations:@[@0, @(0.25f)]];
+    CGRect layerFrame = [layer frame];
+    layerFrame.origin.y = containerHeight - CGRectGetHeight(layerFrame);
+    [layer setFrame:layerFrame];
+    
+    [[view layer] addSublayer:layer];
+    [self setBotGradientLayer:layer];
+}
+
 - (void)adjustForiPhone4 {
-    CGFloat bgImageTopConstant = [[self bgImageTopConstraint] constant] * 0.8f;
-    [[self bgImageTopConstraint] setConstant:bgImageTopConstant];
+    [[self bgImageTopConstraint] setConstant:0];
+    
+    CGFloat sensorTopConstant = [[self sensorTopConstraint] constant] * 0.4f;
+    [[self sensorTopConstraint] setConstant:sensorTopConstant];
     
     CGFloat sensorContainerTopConstrant = [[self sensorContainerTopConstraint] constant] * 0.075f;
     [[self sensorContainerTopConstraint] setConstant:sensorContainerTopConstrant];
@@ -79,7 +127,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     CGFloat sensorMessageTopConstant = [[self sensorMessageTopConstraint] constant] * 0.5f;
     [[self sensorMessageTopConstraint] setConstant:sensorMessageTopConstant];
     
-    CGFloat sensorValueBottomConstraint = [[self sensorValueContainerBottomConstraint] constant] * 0.34f;
+    CGFloat sensorValueBottomConstraint = [[self sensorValueContainerBottomConstraint] constant] * 0.7f;
     [[self sensorValueContainerBottomConstraint] setConstant:sensorValueBottomConstraint];
 }
 
@@ -96,15 +144,21 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     
     if (![self isLoaded]) {
         [self reload];
+        
+        [self addTopGradientTo:[self sensorValueContainer]];
+        [self addBotGradientTo:[self sensorValueContainer]];
+        
         [self setLoaded:YES];
     }
 }
 
-- (NSAttributedString*)attributedSensorUnitFrom:(NSString*)value color:(UIColor*)color {
+- (NSAttributedString*)attributedSensorUnitFrom:(NSString*)value
+                                          color:(UIColor*)color
+                                           font:(UIFont*)font {
     if (value == nil) {
         return nil;
     }
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont onboardingRoomCheckSensorUnitFont],
+    NSDictionary* attributes = @{NSFontAttributeName : font,
                                  NSForegroundColorAttributeName : color};
     return [[NSAttributedString alloc] initWithString:value attributes:attributes];
 }
@@ -180,7 +234,8 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     
     NSString* unit = [[self delegate] sensorValueUnitAtIndex:index inRoomCheckView:self];
     UIColor* color = [[self delegate] sensorValueColorAtIndex:index inRoomCheckView:self];
-    NSAttributedString* attrUnit = [self attributedSensorUnitFrom:unit color:color];
+    UIFont* unitFont = [[self delegate] sensorValueUnitFontAtIndex:index inRoomCheckView:self];
+    NSAttributedString* attrUnit = [self attributedSensorUnitFrom:unit color:color font:unitFont];
     CGSize unitSize = [self sizeOfAttributedSensorValueUnit:attrUnit];
     CGFloat requiredWidth
         = (digits * HEMRoomCheckViewSensorDigitWidth)
@@ -198,6 +253,10 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     }
     
     [self appendSensorUnit:attrUnit withSize:unitSize];
+    
+    // make sure it always sits above the digits
+    [[[self sensorValueContainer] layer] addSublayer:[self topGradientLayer]];
+    [[[self sensorValueContainer] layer] addSublayer:[self botGradientLayer]];
 }
 
 - (void)addDigitRotaryWithFrame:(CGRect)frame color:(UIColor*)color atIndex:(NSInteger)index {
@@ -240,6 +299,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     NSString* message = [NSString stringWithFormat:messageFormat, sensorName];
     [[self sensorMessageLabel] setText:[message uppercaseString]];
     [[self sensorMessageLabel] setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
+    [[self sensorMessageLabel] setFont:[UIFont onboardingRoomCheckSensorFont]];
     [self resizeSensorMessageLabel];
 }
 

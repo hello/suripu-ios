@@ -10,6 +10,7 @@
 #import "HEMClockPickerView.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMScreenUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMClockIndex) {
     HEMClockIndexHour = 0,
@@ -221,7 +222,7 @@ static NSUInteger const HEMClock24HourCount = 24;
 
 - (void)applyStyling {
     CGRect gradientFrame = self.gradientView.bounds;
-    gradientFrame.size.width = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    gradientFrame.size.width = CGRectGetWidth(HEMKeyWindowBounds());
     CAGradientLayer *vLayer = [CAGradientLayer layer];
     UIColor *topColor = [UIColor colorWithWhite:0.98f alpha:0.9f];
     UIColor *middleColor = [[UIColor whiteColor] colorWithAlphaComponent:0];
@@ -287,11 +288,30 @@ static NSUInteger const HEMClock24HourCount = 24;
     }
 }
 
+- (BOOL)isPMSelected {
+    NSString *pmText = [NSLocalizedString(@"alarms.alarm.meridiem.pm", nil) uppercaseString];
+    return [self.selectedMeridiemText isEqualToString:pmText];
+}
+
+- (void)adjustMeridiemWithHour:(NSUInteger)hour {
+    if (hour == self.hour)
+        return;
+    BOOL counterclockwise = (self.hour == 12 || self.hour == 0) && (hour == 11 || hour == 23);
+    BOOL clockwise = (hour == 0 || hour == 12) && (self.hour == 23 || self.hour == 11);
+    if (clockwise || counterclockwise) {
+        int index = [self isPMSelected] ? 0 : 1;
+        [self.meridiemPickerView.layer removeAllAnimations];
+        [self.meridiemPickerView setIndex:index animated:YES];
+        NSString* key = [NSString stringWithFormat:@"alarms.alarm.meridiem.%@", index == 0 ? @"am" : @"pm"];
+        self.selectedMeridiemText = [NSLocalizedString(key, nil) uppercaseString];
+    }
+}
+
 - (void)updateHour:(NSUInteger)hour {
     NSUInteger adjustedHour = hour;
     if ([self shouldUse12Hour]) {
-        NSString *pmText = [NSLocalizedString(@"alarms.alarm.meridiem.pm", nil) uppercaseString];
-        if ([self.selectedMeridiemText isEqualToString:pmText]) {
+        [self adjustMeridiemWithHour:hour];
+        if ([self isPMSelected]) {
             if (adjustedHour < HEMClock12HourCount)
                 adjustedHour = hour + 12;
         } else {

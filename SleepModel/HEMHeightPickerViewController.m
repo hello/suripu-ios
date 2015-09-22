@@ -70,11 +70,6 @@ static NSInteger const HEMHeightDefaultInch = 8;
     [[self scrollView] setBackgroundColor:[UIColor clearColor]];
     
     [[self currentMarkerView] setBackgroundColor:[UIColor tintColor]];
-    
-    // pre iOS 8, there are mystery default insets so this needs to be adjusted
-    if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {
-        [[self scrollView] setContentInset:UIEdgeInsetsMake(8.0f, 0.0f, 8.0f, 0.0f)];
-    }
 }
 
 - (void)viewDidLayoutSubviews {

@@ -1,5 +1,98 @@
 # Changelog
 
+## 1.1.4.8
+
+New
+
+* Updated layout constraint to add spacing between image and text for the first night of sleep state on the Timeline
+
+## 1.1.4.7
+
+New:
+
+* Updated visual and interaction design for sense colors / before sleep screen
+* Updated visual design for room check
+* added support for iOS 9 while removing support for iOS 7
+
+Fixes:
+
+* increased tap target for close button in sleep breakdown UI
+* tapping between email / name / password edit screens no longer stack
+* fixed missing description for smart alarm onboarding screen for 4s
+* support pages properly load assets and css in iOS 9
+* device warning copy in Device settings properly wrap
+* shake the pill video will pause when not waiting for Sense
+* fixed clipped copy for pill pairing screen
+* first night timeline state properly displays for accounts created day of
+* reduce press duration required to trigger breakdown ui on the timeline
+* tutorial videos properly play on iOS 9
+* alarm tones now play properly with iOS 9
+
+## 1.1.4.6
+
+Fixes:
+
+* udpate extension executable name per apple suggestion
+
+## 1.1.4.5
+
+New:
+
+* visual tweaks to wifi ssid selection screen
+* visual tweaks to wifi credential submission screen, for 4s, 5, and 5s
+
+## 1.1.4.4
+
+Fixes:
+
+* disable bitcode for all pod dependencies
+
+## 1.1.4.3
+
+Fixes:
+
+* update ZDK to 1.4.0.2
+* turned off bitcode due to conflicts with YapDatabase linker flags
+
+## 1.1.4.2
+
+New:
+
+* updated various assets for the onboarding flow
+* now building with iOS 9
+
+Fixes:
+
+* time picker in iOS 9 no lnoger renders with different colors
+* time picker will roll backwards from the start
+* current condition sensor values will no longer be clipped if value exceeds space needed to render
+
+## 1.1.4.1
+
+Fixes:
+
+* fixed issue where 2  mixpanel profiles were being created for every new account
+* fixed typo in pill pairing, network error message
+* prevent duplicate records from being synced to HK when syncing last night
+* ensure HK backfilling syncs consecutive days
+
+## 1.1.4.0
+
+New:
+
+* handholding message displays with a shadow to better separate from content underneath
+* Time picker will automatically rollover AM/PM when switching hours
+* Sleep breakdown displays -- when no data is available for that metric
+* support URL displayed in message dialog is truncated to just https://support.hello.is
+* A network specific error message is displayed when pill pairing fails due to a network error from within Sense
+
+Fixes:
+
+* Fixed rounding issue with selecting weight through settings / onboarding
+* Sleep score summary / message no longer remains highlighted when dragged
+* Copy on troubleshooting / warning cards in device settings properly wraps
+* Sense card in Device settings no longer display values (wifi ssid) that overlap with the label
+
 ## 1.1.3.6
 
 Fixes:
@@ -312,7 +405,7 @@ Fixes:
 
 Fixes:
 
-* 
+*
 
 ## 1.1.0.1
 
@@ -402,7 +495,7 @@ Fixes:
 
 Fixes:
 
-* Fixes issue where you cannot swipe left when there no data 
+* Fixes issue where you cannot swipe left when there no data
 
 ## 1.0.8.7
 

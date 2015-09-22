@@ -14,13 +14,10 @@ clean:
 
 deploy: ipa upload
 
-test: test_ios8
+test: test_ios9
 
-test_ios7:
-	$(DEFAULT_TASK) -sdk iphonesimulator7.1 test | xcpretty -c
-
-test_ios8:
-	$(DEFAULT_TASK) -sdk iphonesimulator8.4 test | xcpretty -c
+test_ios9:
+	$(DEFAULT_TASK) -sdk iphonesimulator9.0 test | xcpretty -c
 
 ci:
 	set -o pipefail && $(DEFAULT_TASK) -sdk iphonesimulator8.3 test | tee $CIRCLE_ARTIFACTS/xcodebuild.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml

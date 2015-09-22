@@ -1,6 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '7.0'
+platform :ios, '8.0'
+
+ENV['COCOAPODS_DISABLE_STATS'] = '1'
 
 # UI
 pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git',

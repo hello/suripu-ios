@@ -10,6 +10,7 @@
 #import "HEMPopupView.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMMarkdown.h"
+#import "HEMScreenUtils.h"
 #import "NSAttributedString+HEMUtils.h"
 
 @interface HEMPopupView ()
@@ -31,8 +32,8 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
 }
 
 - (CGSize)intrinsicContentSize {
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    CGSize size = [self.label.attributedText sizeWithWidth:CGRectGetWidth(screenBounds) - HEMPopupMargin];
+    CGRect windowBounds = HEMKeyWindowBounds();
+    CGSize size = [self.label.attributedText sizeWithWidth:CGRectGetWidth(windowBounds) - HEMPopupMargin];
     size.height += HEMPopupPointerHeight + HEMPopupMargin;
     size.width += HEMPopupMargin;
     return size;

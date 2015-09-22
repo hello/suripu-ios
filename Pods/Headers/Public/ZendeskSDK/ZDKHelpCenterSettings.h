@@ -1,1 +1,0 @@
-../../../ZendeskSDK/ZendeskSDK.framework/Headers/ZDKHelpCenterSettings.h

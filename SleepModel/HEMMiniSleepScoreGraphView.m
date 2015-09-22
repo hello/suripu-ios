@@ -2,6 +2,7 @@
 #import "HEMMiniSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 @implementation HEMMiniSleepScoreGraphView
 
@@ -75,9 +76,13 @@ CGFloat const miniScoreBaseHeight = 72.f;
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: sleepScoreTextSize], NSForegroundColorAttributeName: sleepScoreColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
+    NSDictionary* sleepScoreLabelFontAttributes = @{
+        NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: sleepScoreTextSize],
+        NSForegroundColorAttributeName: sleepScoreColor,
+        NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
-    CGFloat sleepScoreLabelTextHeight = [sleepScoreText boundingRectWithSize: CGSizeMake(sleepScoreLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height;
+    CGFloat sleepScoreLabelTextHeight = [sleepScoreText heightBoundedByWidth:CGRectGetWidth(sleepScoreLabelRect)
+                                                                  attributes:sleepScoreLabelFontAttributes];
     CGContextSaveGState(context);
     CGContextClipToRect(context, sleepScoreLabelRect);
     [sleepScoreText drawInRect: CGRectMake(CGRectGetMinX(sleepScoreLabelRect), CGRectGetMinY(sleepScoreLabelRect) + (CGRectGetHeight(sleepScoreLabelRect) - sleepScoreLabelTextHeight) / 2, CGRectGetWidth(sleepScoreLabelRect), sleepScoreLabelTextHeight) withAttributes: sleepScoreLabelFontAttributes];

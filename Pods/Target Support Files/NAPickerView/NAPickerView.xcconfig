@@ -1,0 +1,1 @@
+NAPICKERVIEW_OTHER_LDFLAGS = -framework "QuartzCore"

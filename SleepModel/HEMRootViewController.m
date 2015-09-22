@@ -35,6 +35,7 @@
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingController.h"
 #import "HEMAppUsage.h"
+#import "HEMScreenUtils.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -227,9 +228,9 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 - (CGFloat)drawerPaneRevealHeight {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    CGRect windowFrame = HEMKeyWindowBounds();
     CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
-    CGFloat screenHeight = MAX(CGRectGetHeight(screenFrame), CGRectGetWidth(screenFrame));
+    CGFloat screenHeight = MAX(CGRectGetHeight(windowFrame), CGRectGetWidth(windowFrame));
     return screenHeight - (HEMRootDrawerRevealHeight + statusBarHeight - HEMRootDrawerStatusBarOffset);
 }
 
@@ -239,7 +240,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
     [self.drawerViewController setRevealWidth:[self drawerPaneRevealHeight] forDirection:MSDynamicsDrawerDirectionTop];
     self.drawerViewController.paneState = state;
-    self.drawerViewController.view.frame = [[UIScreen mainScreen] bounds];
+    self.drawerViewController.view.frame = HEMKeyWindowBounds();
 }
 
 - (void)registerForNotifications
@@ -437,9 +438,9 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 - (void)animatePaneVisible:(BOOL)visible {
     UIView* paneView = self.drawerViewController.paneView;
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect windowBounds = HEMKeyWindowBounds();
     CGRect targetFrame = paneView.frame;
-    targetFrame.origin.y = CGRectGetMaxY(screenBounds) + self.drawerViewController.paneStateOpenWideEdgeOffset;
+    targetFrame.origin.y = CGRectGetMaxY(windowBounds) + self.drawerViewController.paneStateOpenWideEdgeOffset;
     CGRect startFrame = CGRectMake(0,
                                    [self drawerPaneRevealHeight],
                                    CGRectGetWidth(paneView.bounds),

@@ -5,6 +5,7 @@
 //
 
 #import <Availability.h>
+#import <CGFloatType/CGFloatType.h>
 #import "SENAnalytics+HEMAppAnalytics.h"
 
 #ifndef __IPHONE_5_0

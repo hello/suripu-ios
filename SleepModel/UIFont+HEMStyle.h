@@ -333,12 +333,6 @@
 + (UIFont*)onboardingRoomCheckSensorValueFont;
 
 /**
- * Font for the sensor unit within the sensor check view during onboarding's
- * room check screen
- */
-+ (UIFont*)onboardingRoomCheckSensorUnitFont;
-
-/**
  * Font used to display activity status full screen
  */
 + (UIFont*)onboardingActivityFontLarge;

@@ -52,9 +52,9 @@
 // help links
 "help.email.address" = "support@hello.is";
 "help.email.subject" = "Sense Help Request";
-"help.url.support.hyperlink-text" = "https://support.hello.is";
+"help.url.support.hyperlink-text" = "https://support.hello.is/";
 "help.url.order-form" = "https://order.hello.is/";
-"help.url.support" = "http://support.hello.is/hc/en-us/";
+"help.url.support" = "https://support.hello.is/hc/";
 "help.url.slug.turn-on-ble" = "articles/205493335";
 "help.url.slug.pill-pairing" = "articles/204797129";
 "help.url.slug.pill-setup" = "articles/205493045";
@@ -74,7 +74,7 @@
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
-"video.url.intro" = "http://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
+"video.url.intro" = "https://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
 
 // user information
 "user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
@@ -102,6 +102,7 @@
 "pairing.error.pill-already-paired" = "This Sleep Pill is already paired with another account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
 "pairing.error.pill-pairing-failed" = "Sense could not pair your Sleep Pill. Please try again.";
+"pairing.error.pill-pairing-no-network" = "Sense could not pair your Sleep Pill. Please ensure the network Sense is connected to can reach the internet then try again.";
 "pairing.pill.skip-confirmation-title" = "Are you sure?";
 "pairing.pill.skip-confirmation-message" = "Sense is not designed to work without a Sleep Pill. You will not be able to track your sleep, or set Smart Alarms. If you're having trouble, you can skip for now, and pair a Sleep Pill later.";
 
@@ -386,7 +387,7 @@
 "measurement.light.format" = "%.flx";
 "measurement.sound.format" = "%.fdB";
 "measurement.particle.format" = "%.0f";
-"measurement.cm.format" = "%ldcm";
+"measurement.cm.format" = "%ld cm";
 "measurement.ft.format" = "%ld'";
 "measurement.in.format" = "%ld\"";
 "measurement.kg.format" = "%.0f kg";
@@ -566,8 +567,8 @@
 
 // actitivity messages
 "activity.loading" = "Loading...";
-"activity.share.last-night.format" = "Last night #mysleepscore was %.0ld — http://hello.is";
-"activity.share.other-days.format" = "#mysleepscore was %.0ld on %@ — http://hello.is";
+"activity.share.last-night.format" = "Last night #mysleepscore was %.0ld — https://hello.is";
+"activity.share.other-days.format" = "#mysleepscore was %.0ld on %@ — https://hello.is";
 "activity.saving.changes" = "Saving changes...";
 
 // account info
@@ -685,9 +686,9 @@
 "app-review.question.answer.no-thanks" = "No thanks";
 
 // videos
-"video.url.onboarding.pill-pair" = "http://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
-"video.url.alarm" = "http://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
-"video.url.onboarding.pill-setup" = "http://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
-"video.url.onboarding.pairing-mode" = "http://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
-"video.url.onboarding.alarm" = "http://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
-"video.url.onboarding.bedroom-condition" = "http://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
+"video.url.onboarding.pill-pair" = "https://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
+"video.url.alarm" = "https://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
+"video.url.onboarding.pill-setup" = "https://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
+"video.url.onboarding.pairing-mode" = "https://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
+"video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
+"video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";

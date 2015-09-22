@@ -11,6 +11,10 @@ NSDate* SENDateFromNumber(id value) {
     return nil;
 }
 
+NSNumber* SENDateMillisecondsSince1970(NSDate* date) {
+    return @([date timeIntervalSince1970] * 1000);
+}
+
 id SENObjectOfClass(id object, __unsafe_unretained Class klass) {
     return [object isKindOfClass:klass] ? object : nil;
 }

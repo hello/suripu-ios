@@ -1,7 +1,7 @@
 
 #import "AFHTTPSessionManager.h"
 #import "SENAPITimeline.h"
-#import "SENTimeline.h"
+#import "Model.h"
 
 @implementation SENAPITimeline
 
@@ -108,13 +108,6 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
     return timeChange;
 }
 
-+ (NSNumber*)timestampForDate:(NSDate*)date {
-    if (date == nil) {
-        return nil;
-    }
-    return @([date timeIntervalSince1970] * 1000);
-}
-
 + (NSDateFormatter*)dateFormatter {
     static NSDateFormatter* formatter = nil;
     static dispatch_once_t onceToken;
@@ -133,7 +126,7 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
             [[self dateFormatter] stringFromDate:dateOfSleep],
             SENAPITimelineFeedbackPath,
             SENTimelineSegmentTypeNameFromType([event type]),
-            [self timestampForDate:[event date]]];
+            SENDateMillisecondsSince1970(event.date)];
 }
 
 + (NSString*)timelinePathForDate:(NSDate*)date

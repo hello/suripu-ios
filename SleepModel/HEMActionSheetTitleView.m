@@ -9,6 +9,7 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "NSString+HEMUtils.h"
+#import "HEMScreenUtils.h"
 
 static CGFloat HEMActionSheetTitleHorzPadding = 24.0f;
 static CGFloat HEMActionSheetTitleVertPadding = 22.0f;
@@ -30,7 +31,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
                  andColor:(UIColor*)color
                 atYOrigin:(CGFloat)y {
     
-    CGFloat screenWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat screenWidth = CGRectGetWidth(HEMKeyWindowBounds());
     CGFloat frameWidth = screenWidth - (2 * HEMActionSheetTitleHorzPadding);
     CGFloat textHeight = [text heightBoundedByWidth:frameWidth usingFont:font];
     
@@ -79,7 +80,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
         maxY = CGRectGetMaxY([descLabel frame]);
     }
     
-    CGFloat screenWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat screenWidth = CGRectGetWidth(HEMKeyWindowBounds());
     CGRect frame = [self frame];
     frame.size.width = screenWidth;
     frame.size.height = maxY + HEMActionSheetTitleVertPadding;

@@ -22,13 +22,8 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
 
 + (void)registerForRemoteNotifications
 {
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]) {
-        [self registerInteractiveNotificationTypes];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-    } else {
-        UIRemoteNotificationType types = (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge);
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:types];
-    }
+    [self registerInteractiveNotificationTypes];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 + (void)clearNotifications

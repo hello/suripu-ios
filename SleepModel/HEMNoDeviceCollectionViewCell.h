@@ -24,7 +24,8 @@
 
 /**
  *  Set the title, message and styling for a missing pill device
+ *  @param canPair: YES if user can pair the pill right now.  NO otherwise
  */
-- (void)configureForPill;
+- (void)configureForPill:(BOOL)canPair;
 
 @end

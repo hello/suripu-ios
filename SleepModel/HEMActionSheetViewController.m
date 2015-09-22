@@ -12,6 +12,7 @@
 #import "NSString+HEMUtils.h"
 #import "HEMActionSheetOptionCell.h"
 #import "HEMMainStoryboard.h"
+#import "HEMScreenUtils.h"
 
 static NSString* const HEMActionSheetOptionColor = @"color";
 static NSString* const HEMActionSheetOptionImage = @"image";
@@ -64,9 +65,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 -(void)setDefaults {
-    if ([self respondsToSelector:@selector(presentationController)]) {
-        [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
-    }
+    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [[self optionTableView] setSeparatorColor:[UIColor actionSheetSeparatorColor]];
     [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
@@ -156,9 +155,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 
 - (void)show {
     [[self optionTableView] reloadData];
-    
-    UIScreen* mainScreen = [UIScreen mainScreen];
-    CGFloat screenHeight = CGRectGetHeight([mainScreen bounds]);
+    CGRect windowBounds = HEMKeyWindowBounds();
+    CGFloat screenHeight = CGRectGetHeight(windowBounds);
     CGFloat contentHeight = [[self optionTableView] contentSize].height;
     
     [[self optionTableView] setScrollEnabled:contentHeight > screenHeight];
@@ -167,8 +165,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
         || self.oTVHeightConstraint.constant != height;
     BOOL needsUpdateAlpha = self.shadedOverlayView.alpha != 1.f;
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    self.shadedOverlayView.accessibilityFrame = CGRectMake(0, 0, CGRectGetWidth(screenBounds), CGRectGetHeight(screenBounds) - height);
+    self.shadedOverlayView.accessibilityFrame = CGRectMake(0, 0, CGRectGetWidth(windowBounds), screenHeight - height);
     if (needsUpdateConstraints) {
         [[self oTVHeightConstraint] setConstant:height];
         [[self oTVBottomConstraint] setConstant:height];

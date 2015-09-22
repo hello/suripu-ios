@@ -217,6 +217,43 @@ typedef NS_ENUM(NSUInteger, SENSenseProtobufVersion) {
 
 #pragma mark - Errors
 
+- (SENSenseManagerErrorCode)errorCodeFrom:(ErrorType)senseErrorType {
+    switch (senseErrorType) {
+        case ErrorTypeTimeOut:
+            return SENSenseManagerErrorCodeTimeout;
+        case ErrorTypeDeviceAlreadyPaired:
+            return SENSenseManagerErrorCodeSenseAlreadyPaired;
+        case ErrorTypeInternalOperationFailed:
+            return SENSenseManagerErrorCodeSenseInternalFailure;
+        case ErrorTypeDeviceNoMemory:
+            return SENSenseManagerErrorCodeSenseOutOfMemory;
+        case ErrorTypeDeviceDatabaseFull:
+            return SENSenseManagerErrorCodeSenseDbFull;
+        case ErrorTypeNetworkError:
+            return SENSenseManagerErrorCodeSenseNetworkError;
+        case ErrorTypeNoEndpointInRange:
+            return SENSenseManagerErrorCodeWifiNotInRange;
+        case ErrorTypeWlanConnectionError:
+            return SENSenseManagerErrorCodeWLANConnection;
+        case ErrorTypeFailToObtainIp:
+            return SENSenseManagerErrorCodeFailToObtainIP;
+        case ErrorTypeInternalDataError:
+            return SENSenseManagerErrorCodeCorruptTransmission;
+        case ErrorTypeWlanEndpointDeleteFailed:
+            return SENSenseManagerErrorCodeWLANEndpointDeletionFailure;
+        case ErrorTypeInvalidAccountId:
+            return SENSenseManagerErrorCodeInvalidAccountId;
+        case ErrorTypeForceDataPushFailed:
+            return SENSenseManagerErrorCodeForceDataPushFailed;
+        case ErrorTypeProtobufEncodeFailed:
+            return SENSenseManagerErrorCodeProtobufEncodingFailed;
+        case ErrorTypeProtobufDecodeFailed:
+            return SENSenseManagerErrorCodeProtobufDecodingFailed;
+        default:
+            return SENSenseManagerErrorCodeUnexpectedResponse;
+    }
+}
+
 - (NSError*)errorWithCode:(SENSenseManagerErrorCode)code
               description:(NSString*)description
       fromUnderlyingError:(NSError*)error {
@@ -799,61 +836,6 @@ typedef NS_ENUM(NSUInteger, SENSenseProtobufVersion) {
 }
 
 #pragma mark - (Private) Reading Response
-
-- (SENSenseManagerErrorCode)errorCodeFrom:(ErrorType)senseErrorType {
-    SENSenseManagerErrorCode code = SENSenseManagerErrorCodeNone;
-    switch (senseErrorType) {
-        case ErrorTypeTimeOut:
-            code = SENSenseManagerErrorCodeTimeout;
-            break;
-        case ErrorTypeDeviceAlreadyPaired:
-            code = SENSenseManagerErrorCodeSenseAlreadyPaired;
-            break;
-        case ErrorTypeInternalOperationFailed:
-            code = SENSenseManagerErrorCodeSenseInternalFailure;
-            break;
-        case ErrorTypeDeviceNoMemory:
-            code = SENSenseManagerErrorCodeSenseOutOfMemory;
-            break;
-        case ErrorTypeDeviceDatabaseFull:
-            code = SENSenseManagerErrorCodeSenseDbFull;
-            break;
-        case ErrorTypeNetworkError:
-            code = SENSenseManagerErrorCodeSenseNetworkError;
-            break;
-        case ErrorTypeNoEndpointInRange:
-            code = SENSenseManagerErrorCodeWifiNotInRange;
-            break;
-        case ErrorTypeWlanConnectionError:
-            code = SENSenseManagerErrorCodeWLANConnection;
-            break;
-        case ErrorTypeFailToObtainIp:
-            code = SENSenseManagerErrorCodeFailToObtainIP;
-            break;
-        case ErrorTypeInternalDataError:
-            code = SENSenseManagerErrorCodeCorruptTransmission;
-            break;
-        case ErrorTypeWlanEndpointDeleteFailed:
-            code = SENSenseManagerErrorCodeWLANEndpointDeletionFailure;
-            break;
-        case ErrorTypeInvalidAccountId:
-            code = SENSenseManagerErrorCodeInvalidAccountId;
-            break;
-        case ErrorTypeForceDataPushFailed:
-            code = SENSenseManagerErrorCodeForceDataPushFailed;
-            break;
-        case ErrorTypeProtobufEncodeFailed:
-            code = SENSenseManagerErrorCodeProtobufEncodingFailed;
-            break;
-        case ErrorTypeProtobufDecodeFailed:
-            code = SENSenseManagerErrorCodeProtobufDecodingFailed;
-            break;
-        default:
-            code = SENSenseManagerErrorCodeUnexpectedResponse;
-            break;
-    }
-    return code;
-}
 
 /**
  * Handle response from Sense until it's done sending data back.  Since response

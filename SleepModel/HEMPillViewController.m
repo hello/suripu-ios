@@ -11,7 +11,7 @@
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
-
+#import "NSAttributedString+HEMUtils.h"
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceActionCollectionViewCell.h"
@@ -97,15 +97,6 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
              NSForegroundColorAttributeName : [UIColor blackColor]};
 }
 
-- (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
-    NSAttributedString* message = [self attributedMessageForWarning:warning];
-    CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
-                                          options:NSStringDrawingUsesFontLeading
-                     |NSStringDrawingUsesLineFragmentOrigin
-                                          context:nil];
-    return CGRectGetHeight(bounds);
-}
-
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -154,13 +145,10 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize size = [layout itemSize];
     if ([indexPath row] < [[self warnings] count]) {
+        CGFloat maxWidth = size.width - (2*HEMWarningCellMessageHorzPadding);
         HEMDeviceWarning warning = [[self warnings][[indexPath row]] integerValue];
         NSAttributedString* message = [self attributedMessageForWarning:warning];
-        CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
-                                              options:NSStringDrawingUsesFontLeading
-                                                     |NSStringDrawingUsesLineFragmentOrigin
-                                              context:nil];
-        size.height = CGRectGetHeight(bounds) + HEMWarningCellBaseHeight;
+        size.height = [message sizeWithWidth:maxWidth].height + HEMWarningCellBaseHeight;
     } else if ([indexPath row] == [[self warnings] count]) {
         size.height = HEMPillActionsCellHeight;
     }
@@ -201,13 +189,6 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
                        }];
     
     UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    if (![root respondsToSelector:@selector(presentationController)]) {
-        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
-        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
-        [sheet addDismissAction:^{
-            [root setModalPresentationStyle:origStyle];
-        }];
-    }
     [root presentViewController:sheet animated:NO completion:nil];
 }
 

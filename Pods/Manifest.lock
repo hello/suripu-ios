@@ -22,6 +22,7 @@ PODS:
     - AFNetworking/NSURLSession
   - AttributedMarkdown (0.9.2)
   - BEMSimpleLineGraph (3.3)
+  - CGFloatType (1.3.1)
   - CocoaLumberjack (1.6.3):
     - CocoaLumberjack/Core (= 1.6.3)
     - CocoaLumberjack/Extensions (= 1.6.3)
@@ -71,13 +72,19 @@ PODS:
     - YapDatabase/standard (= 2.6.5)
   - YapDatabase/standard (2.6.5):
     - CocoaLumberjack (~> 1)
-  - ZendeskSDK (1.3.0.1)
+  - ZendeskSDK (1.4.0.2):
+    - ZendeskSDK/Core (= 1.4.0.2)
+    - ZendeskSDK/Localization (= 1.4.0.2)
+  - ZendeskSDK/Core (1.4.0.2)
+  - ZendeskSDK/Localization (1.4.0.2):
+    - ZendeskSDK/Core
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`,
     commit `6bf420df77117f519af32a6393520ead4e7848c6`)
   - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`, commit
     `201b13c35d4a4bebafd0ca8493387b9dddc717e5`)
+  - CGFloatType (~> 1.3.1)
   - Kiwi
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
   - MSDynamicsDrawerViewController (= 1.5.1)
@@ -90,7 +97,7 @@ DEPENDENCIES:
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
   - UICountingLabel (~> 1.2.0)
   - UIImageEffects (~> 0.0.1)
-  - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.3.0.1`)
+  - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.4.0.2`)
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
@@ -111,7 +118,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/TransitApp/SVWebViewController.git
   ZendeskSDK:
     :git: https://github.com/zendesk/zendesk_sdk_ios.git
-    :tag: 1.3.0.1
+    :tag: 1.4.0.2
 
 CHECKOUT OPTIONS:
   AttributedMarkdown:
@@ -124,10 +131,10 @@ CHECKOUT OPTIONS:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
     :git: git@github.com:hello/LGBluetooth.git
   NAPickerView:
-    :commit: 4155277fe96e5b7f32d6365d0adfa24c1ab037a6
+    :commit: 78b35ccd98cafcba11a551b2e47d49d51ac766f4
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 017c17087686b3c73c08db0943106899801f6480
+    :commit: 3efdfda0b9b0101a02ceddd33f93c0b99e74652e
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: e44003540c7b52b8fa29a05a059e43751e25d0d4
@@ -137,12 +144,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/TransitApp/SVWebViewController.git
   ZendeskSDK:
     :git: https://github.com/zendesk/zendesk_sdk_ios.git
-    :tag: 1.3.0.1
+    :tag: 1.4.0.2
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   AttributedMarkdown: ac5060667280be8cc8ee33a46c73e4ec6b17ca1a
   BEMSimpleLineGraph: 5999b2da02b6e935121608cfc58f6c369e06bde8
+  CGFloatType: fa1da294540051a76750092a427b95296bbdc006
   CocoaLumberjack: 79086d1841c6c61383afa50cafc8883b7f44f63c
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
@@ -160,6 +168,6 @@ SPEC CHECKSUMS:
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
   YapDatabase: 814f9ff862a95c1e581d93335a4020482b69155b
-  ZendeskSDK: c527fd6d474701b6241e92c0b9b7726071a84f22
+  ZendeskSDK: c97e29286726c6eaf4f6fe97867dba354cbbd199
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.2

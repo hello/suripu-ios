@@ -61,12 +61,7 @@
     },
     {
       "name": "Model",
-      "source_files": "Pod/Classes/Model/*",
-      "dependencies": {
-        "YapDatabase": [
-          "~> 2.6.4"
-        ]
-      }
+      "source_files": "Pod/Classes/Model/*"
     },
     {
       "name": "Service",

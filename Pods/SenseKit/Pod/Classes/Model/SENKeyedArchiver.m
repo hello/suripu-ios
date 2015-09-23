@@ -1,21 +1,13 @@
 
-#import <YapDatabase/YapDatabase.h>
+#import <CocoaLumberjack/DDLog.h>
 #import "SENKeyedArchiver.h"
 
 @implementation SENKeyedArchiver
 
-static NSString* const SENKeyedArchiverGroupId = @"group.is.hello.sense.data";
-static NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStore";
+NSString* const SENKeyedArchiverGroupId = @"group.is.hello.sense.data";
+NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverCache";
 
-+ (YapDatabase*)datastore
-{
-    static YapDatabase* database = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        database = [[YapDatabase alloc] initWithPath:[self datastorePath]];
-    });
-    return database;
-}
+static dispatch_queue_t SENKeyedArchiverQueue = nil;
 
 + (NSString*)datastorePath
 {
@@ -23,77 +15,107 @@ static NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStore";
     return [[url path] stringByAppendingPathComponent:SENKeyedArchiverStoreName];
 }
 
-+ (YapDatabaseConnection*)mainConnection
-{
-    static YapDatabaseConnection* connection = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        connection = [[self datastore] newConnection];
-    });
-    return connection;
++ (NSString*)pathForCollection:(NSString*)collectionName {
+    return [[self datastorePath] stringByAppendingPathComponent:collectionName];
 }
 
 + (NSArray*)allObjectsInCollection:(NSString*)collectionName
 {
-    __block NSMutableArray* objects = [[NSMutableArray alloc] init];
-    [[self mainConnection] readWithBlock:^(YapDatabaseReadTransaction* transaction) {
-        for (NSString* key in [transaction allKeysInCollection:collectionName]) {
-            id obj = [transaction objectForKey:key inCollection:collectionName];
-            if (obj)
-                [objects addObject:obj];
-        }
-    }];
+    NSArray* objects = [[self collectionWithName:collectionName] allValues];
+    if (!objects)
+        objects = @[];
     return objects;
+}
+
++ (NSDictionary*)collectionWithName:(NSString*)collectionName {
+    NSString* path = [self pathForCollection:collectionName];
+    __block NSDictionary* collection = nil;
+    [self onInternalQueue:^{
+        collection = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    }];
+    if (!collection)
+        collection = @{};
+    return collection;
 }
 
 + (void)removeAllObjectsInCollection:(NSString*)collectionName
 {
-    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-        [transaction removeAllObjectsInCollection:collectionName];
-    }];
+    [self writeCollection:nil withName:collectionName];
 }
 
 + (void)removeAllObjects
 {
-    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-        [transaction removeAllObjectsInAllCollections];
+    NSString* path = [self datastorePath];
+    [self onInternalQueue:^{
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     }];
 }
 
-+ (NSSet*)objectsForKey:(NSString*)key inCollection:(NSString*)collectionName
++ (id)objectsForKey:(NSString*)key inCollection:(NSString*)collectionName
 {
-    __block id objects = nil;
-    [[self mainConnection] readWithBlock:^(YapDatabaseReadTransaction* transaction) {
-        objects = [transaction objectForKey:key inCollection:collectionName];
-    }];
-    return objects;
+    return [self collectionWithName:collectionName][key];
 }
 
-+ (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString*)collectionName
++ (void)setObject:(id<NSCoding>)object forKey:(NSString*)key inCollection:(NSString*)collectionName
 {
+    if (key.length == 0 || collectionName.length == 0)
+        return;
     if (!object) {
         [self removeAllObjectsForKey:key inCollection:collectionName];
         return;
     }
-    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction* transaction) {
-        [transaction setObject:object forKey:key inCollection:collectionName];
-    }];
+    NSMutableDictionary* collection = [[self collectionWithName:collectionName] mutableCopy];
+    collection[key] = object;
+    [self writeCollection:collection withName:collectionName];
 }
 
-+ (void)removeAllObjectsForKey:(NSString*)key inCollection:(NSString*)collectionName
++ (void)removeAllObjectsForKey:(nonnull NSString*)key inCollection:(NSString*)collectionName
 {
-    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction* transaction) {
-        [transaction removeObjectForKey:key inCollection:collectionName];
-    }];
+    NSMutableDictionary* collection = [[self collectionWithName:collectionName] mutableCopy];
+    [collection removeObjectForKey:key];
+    [self writeCollection:collection withName:collectionName];
 }
 
 + (BOOL)hasObjectForKey:(NSString*)key inCollection:(NSString*)collectionName
 {
-    __block BOOL hasObject = NO;
-    [[self mainConnection] readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        hasObject = [transaction hasObjectForKey:key inCollection:collectionName];
+    NSDictionary* collection = [self collectionWithName:collectionName];
+    return collection[key] != nil;
+}
+
++ (void)writeCollection:(NSDictionary*)collection withName:(NSString*)collectionName {
+    NSString* path = [self pathForCollection:collectionName];
+    NSString* datastorePath = [self datastorePath];
+    [self onInternalQueue:^{
+        BOOL isDir = NO;
+        [[NSFileManager defaultManager] fileExistsAtPath:datastorePath isDirectory:&isDir];
+        if (!isDir) {
+            NSError* error = nil;
+            [[NSFileManager defaultManager] createDirectoryAtPath:datastorePath
+                                      withIntermediateDirectories:YES
+                                                       attributes:nil
+                                                            error:&error];
+            if (error)
+                return;
+        }
+        if (collection) {
+            [NSKeyedArchiver archiveRootObject:collection toFile:path];
+        } else {
+            NSError* error = nil;
+            [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+        }
+
     }];
-    return hasObject;
+}
+
+/**
+ * Execute task on an internal synchronized queue
+ */
++ (void)onInternalQueue:(void(^)())block {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        SENKeyedArchiverQueue = dispatch_queue_create("SENKeyedArchiver-Read", NULL);
+    });
+    dispatch_sync(SENKeyedArchiverQueue, block);
 }
 
 @end

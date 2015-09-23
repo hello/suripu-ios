@@ -63,7 +63,7 @@
     if ([self isModal] && ![self cancelItem]) {
         NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
         UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:cancelText
-                                                                       style:UIBarButtonItemStyleBordered
+                                                                       style:UIBarButtonItemStylePlain
                                                                       target:self
                                                                       action:@selector(cancel)];
         [[self navigationItem] setLeftBarButtonItem:cancelItem];

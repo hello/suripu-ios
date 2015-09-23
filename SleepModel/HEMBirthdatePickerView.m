@@ -194,8 +194,8 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
         [components setMonth:month];
         
         NSCalendar* calendar = [NSCalendar currentCalendar];
-        NSRange range = [calendar rangeOfUnit:NSDayCalendarUnit
-                                       inUnit:NSMonthCalendarUnit
+        NSRange range = [calendar rangeOfUnit:NSCalendarUnitDay
+                                       inUnit:NSCalendarUnitMonth
                                       forDate:[calendar dateFromComponents:components]];
         
         if (month == 2 && range.length < 29) {

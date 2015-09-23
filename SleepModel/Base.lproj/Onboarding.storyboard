@@ -238,7 +238,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="RYl-gV-ozZ" kind="push" id="sRv-Yt-VPY"/>
+                                    <segue destination="RYl-gV-ozZ" kind="show" id="sRv-Yt-VPY"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tuz-ez-XXK" customClass="HEMActionButton">
@@ -249,7 +249,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5ic-x1-0Fg" kind="push" id="Wuv-OR-ObL"/>
+                                    <segue destination="5ic-x1-0Fg" kind="show" id="Wuv-OR-ObL"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyF-xX-5db">
@@ -373,7 +373,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5JR-hM-9bB" kind="push" id="RA5-RW-zTF"/>
+                                    <segue destination="5JR-hM-9bB" kind="show" id="RA5-RW-zTF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -503,8 +503,8 @@
                         <outlet property="titleHeightConstraint" destination="nkx-wh-4nQ" id="xJN-th-9kf"/>
                         <outlet property="titleLabel" destination="cY3-74-70H" id="884-je-W4w"/>
                         <outlet property="view" destination="NOa-KQ-y5R" id="daF-YS-tzi"/>
-                        <segue destination="R0p-kB-1qZ" kind="push" identifier="moreInfo" id="ZOJ-Sh-Dzx"/>
-                        <segue destination="AER-Sm-Ec9" kind="push" identifier="signupToNoBle" id="gnj-0L-LWR"/>
+                        <segue destination="R0p-kB-1qZ" kind="show" identifier="moreInfo" id="ZOJ-Sh-Dzx"/>
+                        <segue destination="AER-Sm-Ec9" kind="show" identifier="signupToNoBle" id="gnj-0L-LWR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Twr-BC-O7O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -603,7 +603,7 @@
                         <outlet property="titleHeightConstraint" destination="9bJ-7x-vuM" id="EwQ-Zq-tlh"/>
                         <outlet property="titleLabel" destination="znD-8e-Xes" id="UOF-tQ-Cng"/>
                         <outlet property="view" destination="234-Uu-w8v" id="Hwx-zi-9de"/>
-                        <segue destination="gpF-55-MmK" kind="push" identifier="gender" id="Bj1-eU-Rc8"/>
+                        <segue destination="gpF-55-MmK" kind="show" identifier="gender" id="Bj1-eU-Rc8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffw-pv-gaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -729,7 +729,7 @@
                         <outlet property="skipButton" destination="tOK-gj-1np" id="bdD-TD-lFP"/>
                         <outlet property="titleHeightConstraint" destination="aP9-If-Gct" id="QhO-td-Wxz"/>
                         <outlet property="titleLabel" destination="iyM-PD-FTT" id="t6k-S6-Zfp"/>
-                        <segue destination="f6G-Sh-hYd" kind="push" identifier="weight" id="jX4-7l-Grb"/>
+                        <segue destination="f6G-Sh-hYd" kind="show" identifier="weight" id="jX4-7l-Grb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8j0-DD-Qpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -838,7 +838,7 @@
                         <outlet property="titleHeightConstraint" destination="BjX-xd-N8f" id="knK-cO-MHz"/>
                         <outlet property="titleLabel" destination="gvl-uZ-ZRh" id="fLo-xO-ZeJ"/>
                         <outlet property="view" destination="E50-HK-wnd" id="l6c-lF-vh7"/>
-                        <segue destination="58j-vj-AB8" kind="push" identifier="wifiToPill" id="u9Q-g4-qbd"/>
+                        <segue destination="58j-vj-AB8" kind="show" identifier="wifiToPill" id="u9Q-g4-qbd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -967,7 +967,7 @@
                         <outlet property="titleLabel" destination="kPY-hQ-rr3" id="PEQ-YG-Jkm"/>
                         <outlet property="topPickerShadow" destination="cBE-aS-DJb" id="QY3-4f-Z28"/>
                         <outlet property="wifiPickerTableView" destination="uzN-XV-GHq" id="ffT-TW-d5f"/>
-                        <segue destination="qC8-fd-UCX" kind="push" identifier="wifiPassword" id="Rko-UE-A3y"/>
+                        <segue destination="qC8-fd-UCX" kind="show" identifier="wifiPassword" id="Rko-UE-A3y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGV-Fr-TJ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1192,7 +1192,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="collectionView" destination="oIk-07-Zii" id="PQC-71-kk3"/>
                         <outlet property="continueButton" destination="qdG-tg-U0e" id="PIQ-2A-zSC"/>
                         <outlet property="view" destination="lwn-in-ftH" id="5W8-Rh-obp"/>
-                        <segue destination="DIj-70-bYO" kind="push" identifier="pillSetupToColors" id="gUR-KW-V2G"/>
+                        <segue destination="DIj-70-bYO" kind="show" identifier="pillSetupToColors" id="gUR-KW-V2G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1295,7 +1295,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="titleHeightConstraint" destination="5Ju-hM-OxI" id="B7t-SR-mnZ"/>
                         <outlet property="titleLabel" destination="eDs-8j-Vd9" id="5lJ-TI-eYd"/>
                         <outlet property="view" destination="JjN-cZ-h4j" id="RyG-bL-B3t"/>
-                        <segue destination="Ibh-UM-msk" kind="push" identifier="getApp" id="oeH-Et-htw"/>
+                        <segue destination="Ibh-UM-msk" kind="show" identifier="getApp" id="oeH-Et-htw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybc-rT-E02" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1358,7 +1358,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="Aoy-k8-hYr" kind="push" id="L4u-DE-B7w"/>
+                                    <segue destination="Aoy-k8-hYr" kind="show" id="L4u-DE-B7w"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1523,8 +1523,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="titleHeightConstraint" destination="jPj-6g-PN4" id="0kL-tC-IyC"/>
                         <outlet property="titleLabel" destination="beC-YD-29R" id="YuT-R4-1d3"/>
                         <outlet property="videoView" destination="AAA-qc-JNR" id="ks3-nr-QWR"/>
-                        <segue destination="4s2-Gt-ovZ" kind="push" identifier="done" id="QBf-6a-MaN"/>
-                        <segue destination="DIj-70-bYO" kind="push" identifier="skipPillPairSegue" id="7LA-fg-2Jb"/>
+                        <segue destination="4s2-Gt-ovZ" kind="show" identifier="done" id="QBf-6a-MaN"/>
+                        <segue destination="DIj-70-bYO" kind="show" identifier="skipPillPairSegue" id="7LA-fg-2Jb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rQM-de-S9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1659,8 +1659,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="tempImageView" destination="mNf-gA-NAw" id="y2h-81-Dpr"/>
                         <outlet property="videoView" destination="h0F-Wt-wPJ" id="o71-ui-lfK"/>
                         <outlet property="view" destination="WvV-c5-RHy" id="kFz-r6-vwP"/>
-                        <segue destination="cpr-oG-Go7" kind="push" identifier="beforeSleeptoRoomCheck" id="M7J-nW-DOf"/>
-                        <segue destination="0qJ-qR-xla" kind="push" identifier="beforeSleepToSmartAlarm" id="zxE-Zn-Swl"/>
+                        <segue destination="cpr-oG-Go7" kind="show" identifier="beforeSleeptoRoomCheck" id="M7J-nW-DOf"/>
+                        <segue destination="0qJ-qR-xla" kind="show" identifier="beforeSleepToSmartAlarm" id="zxE-Zn-Swl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g3P-F6-Zsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1776,7 +1776,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="titleLabel" destination="JeP-LV-puG" id="q2S-e0-zoS"/>
                         <outlet property="videoView" destination="XVL-7j-gjt" id="tbS-Vb-YuS"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
-                        <segue destination="fc9-7S-Ult" kind="push" identifier="alarmToAnotherPill" id="eyP-2h-xaH"/>
+                        <segue destination="fc9-7S-Ult" kind="show" identifier="alarmToAnotherPill" id="eyP-2h-xaH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1901,7 +1901,7 @@ Now let’s set your first Smart Alarm</string>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="0qJ-qR-xla" kind="push" identifier="roomCheckToSmartAlarm" id="tkT-Pb-lgk"/>
+                                            <segue destination="0qJ-qR-xla" kind="show" identifier="roomCheckToSmartAlarm" id="tkT-Pb-lgk"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2092,7 +2092,7 @@ Now let’s set your first Smart Alarm</string>
                         <outlet property="titleHeightConstraint" destination="X5R-ZP-Yez" id="TYK-Ik-F8g"/>
                         <outlet property="titleLabel" destination="S9f-tS-yQg" id="ttD-FM-YZM"/>
                         <outlet property="view" destination="zvn-d7-Xkt" id="mnG-5y-cRs"/>
-                        <segue destination="uc7-01-jZi" kind="push" identifier="height" id="2QV-xl-cNq"/>
+                        <segue destination="uc7-01-jZi" kind="show" identifier="height" id="2QV-xl-cNq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uPx-en-DTv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2218,8 +2218,8 @@ Now let’s set your first Smart Alarm</string>
                         <outlet property="titleHeightConstraint" destination="HeH-0k-zJV" id="hF2-rV-A7U"/>
                         <outlet property="titleLabel" destination="Vca-9S-Db1" id="3PV-w0-uNz"/>
                         <outlet property="weightLabel" destination="YLN-GF-KON" id="JvJ-nm-ySe"/>
-                        <segue destination="ufA-sU-dsq" kind="push" identifier="weightToHealthKit" id="HXF-IR-iTO"/>
-                        <segue destination="KXH-dY-O28" kind="push" identifier="weightToLocation" id="3DQ-Vg-FaT"/>
+                        <segue destination="ufA-sU-dsq" kind="show" identifier="weightToHealthKit" id="HXF-IR-iTO"/>
+                        <segue destination="KXH-dY-O28" kind="show" identifier="weightToLocation" id="3DQ-Vg-FaT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJk-Le-TAF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2314,7 +2314,7 @@ Now let’s set your first Smart Alarm</string>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
                         <outlet property="titleHeightConstraint" destination="VhK-Dg-f7D" id="deh-SZ-hQb"/>
                         <outlet property="titleLabel" destination="zaK-X5-Jnp" id="xxd-fu-A4z"/>
-                        <segue destination="ihV-hq-yEO" kind="push" identifier="locationToPush" id="Z6Q-kO-khO"/>
+                        <segue destination="ihV-hq-yEO" kind="show" identifier="locationToPush" id="Z6Q-kO-khO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IpC-eY-cSk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2410,7 +2410,7 @@ Now let’s set your first Smart Alarm</string>
                         <outlet property="titleHeightConstraint" destination="r2J-KU-7cw" id="uhV-hk-PBY"/>
                         <outlet property="titleLabel" destination="qjM-t5-PIi" id="eZs-9p-hiU"/>
                         <outlet property="view" destination="OTU-OI-8wa" id="5xQ-WT-ota"/>
-                        <segue destination="KXH-dY-O28" kind="push" identifier="healthKitToLocation" id="zvu-eW-603"/>
+                        <segue destination="KXH-dY-O28" kind="show" identifier="healthKitToLocation" id="zvu-eW-603"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wd8-1z-fqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2514,7 +2514,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="skipButton" destination="ZLg-Bc-ITS" id="gHI-OT-UMw"/>
                         <outlet property="titleHeightConstraint" destination="iS7-kV-WDa" id="V83-1e-DmG"/>
                         <outlet property="titleLabel" destination="4Cj-AM-Ri7" id="wi5-SZ-5oz"/>
-                        <segue destination="Qk9-qi-Wt3" kind="push" identifier="audioToSetup" id="etc-Yw-7Q2"/>
+                        <segue destination="Qk9-qi-Wt3" kind="show" identifier="audioToSetup" id="etc-Yw-7Q2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M6X-uC-NAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2609,7 +2609,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleHeightConstraint" destination="eFQ-oR-ERS" id="cIT-vD-3Si"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
-                        <segue destination="ldR-fW-wOZ" kind="push" identifier="notificationToAudio" id="zLj-M6-XwY"/>
+                        <segue destination="ldR-fW-wOZ" kind="show" identifier="notificationToAudio" id="zLj-M6-XwY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJV-po-vQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2663,7 +2663,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="RbA-ga-2g6" kind="push" id="rYC-qX-U9H"/>
+                                    <segue destination="RbA-ga-2g6" kind="show" id="rYC-qX-U9H"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
@@ -2711,8 +2711,8 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="titleHeightConstraint" destination="mde-7P-QTN" id="yBx-7W-leE"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
-                        <segue destination="H2i-xS-f14" kind="push" identifier="wifi" id="IQX-WG-nAB"/>
-                        <segue destination="58j-vj-AB8" kind="push" identifier="sensePairToPill" id="JsS-bV-f7k"/>
+                        <segue destination="H2i-xS-f14" kind="show" identifier="wifi" id="IQX-WG-nAB"/>
+                        <segue destination="58j-vj-AB8" kind="show" identifier="sensePairToPill" id="JsS-bV-f7k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2869,7 +2869,7 @@ Flip the switch to On</string>
                         <outlet property="step3Label" destination="WhI-1R-olH" id="OHz-TI-Vkv"/>
                         <outlet property="titleHeightConstraint" destination="Xxa-Zj-87F" id="rse-ve-5dK"/>
                         <outlet property="titleLabel" destination="WSp-oq-I62" id="4Q5-mb-N6A"/>
-                        <segue destination="R0p-kB-1qZ" kind="push" identifier="noBleToBirthday" id="d9a-nc-483"/>
+                        <segue destination="R0p-kB-1qZ" kind="show" identifier="noBleToBirthday" id="d9a-nc-483"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-3B-dpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2926,7 +2926,7 @@ Flip the switch to On</string>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="cgk-PX-LxG" kind="push" id="Dzn-yM-CjI"/>
+                                    <segue destination="cgk-PX-LxG" kind="show" id="Dzn-yM-CjI"/>
                                 </connections>
                             </button>
                         </subviews>

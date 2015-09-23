@@ -1,1 +1,0 @@
-SHSPROTOBUF_WARNING_CFLAGS = $(inherited) -Wno-missing-prototypes -Wno-format

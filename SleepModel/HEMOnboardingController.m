@@ -226,7 +226,7 @@
          andTrackWithStepName:(NSString*)stepName {
     UIBarButtonItem* item =
     [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"question-mark", nil)
-                                     style:UIBarButtonItemStyleBordered
+                                     style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(help:)];
     [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
@@ -270,7 +270,7 @@
 - (void)showCancelButtonWithSelector:(SEL)selector {
     NSString* title = NSLocalizedString(@"actions.cancel", nil);
     UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
-                                                                   style:UIBarButtonItemStyleBordered
+                                                                   style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:selector];
     [cancelItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithWhite:1.0f alpha:0.0f]}

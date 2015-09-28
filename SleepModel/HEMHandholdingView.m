@@ -32,8 +32,6 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    // TODO (jimmy): somehow only allow certain gestures to go through to the
-    // view below (not subviews of this view) and block everything else.
     BOOL onMessage = CGRectContainsPoint([[self messageView] frame], point);
     if (!onMessage) {
         [self animateOut];

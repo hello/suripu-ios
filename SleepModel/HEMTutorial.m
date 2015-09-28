@@ -71,15 +71,15 @@ static CGFloat const HEMTutorialDelay = 0.5f;
         return NO;
     }
     
-    NSDate* firstCheckedDate = [preferences sessionPreferenceForKey:HEMTutorialHHTimelineDaySwitchCounter];
+    NSDate* firstCheckedDate = [preferences persistentPreferenceForKey:HEMTutorialHHTimelineDaySwitchCounter];
     return [firstCheckedDate daysElapsed] >= HEMTutorialHHTimelineDaysMinDaysChecked;
 }
 
 + (void)setHandholdingFirstChecked:(NSString*)key {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    NSDate* date = [preferences sessionPreferenceForKey:key];
+    NSDate* date = [preferences persistentPreferenceForKey:key];
     if (!date) {
-        [preferences setSessionPreference:[NSDate date] forKey:key];
+        [preferences setPersistentPreference:[NSDate date] forKey:key];
     }
 }
 
@@ -303,27 +303,40 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     return [self showTutorialWithContent:@[tutorial]];
 }
 
-#pragma mark - Session Preferences
+#pragma mark - Preferences
 
+/**
+ * TODO: remove session preference check at some distant version of the app.
+ *
+ * Previously it was showing per session, but now we want to show only once per
+ * install of the app.  For users who have installed the app before 1.1.5, we 
+ * want to still make sure they won't see the dialogs on an update to 1.1.5
+ * so we must also check to see that session preference exist or not.
+ *
+ * For early users, if user logs out, they will see the dialogs once more and that's
+ * it for the life of the app.
+ */
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
 {
-    return ![[[SENLocalPreferences sharedPreferences] sessionPreferenceForKey:key] boolValue];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return ![[preferences persistentPreferenceForKey:key] boolValue]
+        && ![[preferences sessionPreferenceForKey:key] boolValue];
 }
 
 + (void)markTutorialViewed:(NSString*)key
 {
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@YES forKey:key];
+    [[SENLocalPreferences sharedPreferences] setPersistentPreference:@YES forKey:key];
 }
 
 + (void)resetTutorials {
     SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialTimelineKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialSensorsKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialPillColorKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialHHTimelineZoom];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialTimelineKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialTrendsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialPillColorKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
 }
 
 @end

@@ -1,0 +1,1 @@
+ATTRIBUTEDMARKDOWN_OTHER_LDFLAGS = -framework "CoreText" -framework "Foundation" -framework "UIKit"

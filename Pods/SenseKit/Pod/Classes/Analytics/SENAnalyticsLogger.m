@@ -1,11 +1,7 @@
 
-#import <CocoaLumberjack/DDLog.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #import "SENAnalyticsLogger.h"
 #import "SENAnalyticsProvider.h"
-
-#ifndef ddLogLevel
-#define ddLogLevel LOG_LEVEL_VERBOSE
-#endif
 
 @interface SENAnalyticsLogger()
 
@@ -15,6 +11,8 @@
 @end
 
 @implementation SENAnalyticsLogger
+
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (id)init {
     self = [super init];

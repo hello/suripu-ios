@@ -21,11 +21,11 @@
       "name": "Analytics",
       "source_files": "Pod/Classes/Analytics/*",
       "dependencies": {
-        "Mixpanel": [
-          "2.7.2"
+        "Mixpanel-simple": [
+
         ],
         "CocoaLumberjack": [
-          "1.6.3"
+          "~> 2.0.0"
         ]
       }
     },
@@ -37,7 +37,7 @@
           "~> 1.5.1"
         ],
         "AFNetworking": [
-          "~> 2.5.0"
+          "~> 2.6.0"
         ],
         "NSJSONSerialization-NSNullRemoval": [
           "~> 1.0.0"
@@ -55,7 +55,7 @@
 
         ],
         "CocoaLumberjack": [
-          "1.6.3"
+          "~> 2.0.0"
         ]
       }
     },
@@ -68,7 +68,7 @@
       "source_files": "Pod/Classes/Service/*",
       "dependencies": {
         "CocoaLumberjack": [
-          "1.6.3"
+          "~> 2.0.0"
         ]
       }
     }

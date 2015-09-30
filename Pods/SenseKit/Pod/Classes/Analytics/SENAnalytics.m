@@ -90,13 +90,15 @@ static NSMutableDictionary* providers;
 
 + (void)startEvent:(NSString *)eventName {
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
-        [provider startEvent:eventName];
+        if ([provider respondsToSelector:@selector(startEvent:)])
+            [provider startEvent:eventName];
     }];
 }
 
 + (void)endEvent:(NSString *)eventName {
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
-        [provider endEvent:eventName];
+        if ([provider respondsToSelector:@selector(endEvent:)])
+            [provider endEvent:eventName];
     }];
 }
 

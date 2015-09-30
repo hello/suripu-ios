@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 1/26/15.
 //
 //
-#import <CocoaLumberjack/DDLog.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #import <HealthKit/HealthKit.h>
 
@@ -14,10 +14,6 @@
 #import "Model.h"
 #import "SENAPITimeline.h"
 #import "SENLocalPreferences.h"
-
-#ifndef ddLogLevel
-#define ddLogLevel LOG_LEVEL_VERBOSE
-#endif
 
 static NSString* const SENServiceHKErrorDomain = @"is.hello.service.hk";
 static NSString* const SENServiceHKLastDateWritten = @"is.hello.service.hk.lastdate";
@@ -31,6 +27,8 @@ static CGFloat const SENServiceHKBackFillLimit = 3;
 @end
 
 @implementation SENServiceHealthKit
+
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 + (id)sharedService {
     static SENServiceHealthKit* service = nil;

@@ -264,7 +264,7 @@
 "settings.sense.advanced.option.factory-reset" = "Factory reset";
 "settings.sense.advanced.option.factory-reset.desc" = "If you want to reset Sense to factory settings, and remove it from this account.";
 "settings.sense.factory-reset.complete.title" = "Power Cycle Sense";
-"settings.sense.factory-reset.complete.confirmation" = "Sense has successfully restored to factory settings.  Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
+"settings.sense.factory-reset.complete.confirmation" = "Sense has been successfully restored to factory settings.  Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.wifi" = "WiFi";
 "settings.sense.unpairing-message" = "Removing Sense";

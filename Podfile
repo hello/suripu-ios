@@ -17,7 +17,7 @@ pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 pod 'MSDynamicsDrawerViewController', '1.5.1'
 pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
-                  :tag => '1.4.0.2'
+                  :tag => '1.4.1.2'
 pod 'UICountingLabel', '~> 1.2.0'
 pod 'CGFloatType', '~> 1.3.1'
 

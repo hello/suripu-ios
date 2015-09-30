@@ -1,7 +1,7 @@
 {
   "name": "ZendeskSDK",
-  "version": "1.4.0.2",
-  "summary": "Zendesk SDK 1.4.0.2",
+  "version": "1.4.1.2",
+  "summary": "Zendesk SDK 1.4.1.2",
   "homepage": "https://github.com/zendesk/zendesk_sdk_ios",
   "license": {
     "type": "Copyright",
@@ -10,7 +10,7 @@
   "authors": "Zendesk",
   "source": {
     "git": "https://github.com/zendesk/zendesk_sdk_ios.git",
-    "tag": "1.4.0.2"
+    "tag": "1.4.1.2"
   },
   "platforms": {
     "ios": "6.0"

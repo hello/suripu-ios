@@ -23,12 +23,15 @@
 
 @implementation HEMTutorial
 
+static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbing";
+
 static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTimelineDaySwitchCounter";
 static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
-static NSString* const HEMTutorialHHTimelineZoom = @"HandholdingTimelineZoom";
 static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
 static CGFloat const HEMTutorialHHTimelineDaysGestureXStart = 45.0f;
 static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 2;
+
+static NSString* const HEMTutorialHHTimelineZoom = @"HandholdingTimelineZoom";
 static NSUInteger const HEMTutorialHHTimelineZoomMinTimelinesViewed = 5;
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
@@ -112,6 +115,37 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [handholdingView showInView:view];
 }
 
++ (BOOL)showHandholdingForSensorScrubbingIfNeededIn:(UIView*)view
+                               relativeToGraphFrame:(CGRect)graphFrame {
+    if (![self shouldShowTutorialForKey:HEMTutorialHHSensorScrubbing]) {
+        return NO;
+    }
+    
+    CGFloat gesturePadding = 20.0f;
+    CGFloat halfGestureSize = HEMHandholdingGestureSize / 2.0f;
+    CGFloat gestureCenterY = CGRectGetMinY(graphFrame) + gesturePadding + halfGestureSize;
+    CGFloat gestureEndCenterX = CGRectGetMaxX(graphFrame) - gesturePadding - halfGestureSize;
+    CGPoint startPoint = CGPointMake(gesturePadding + halfGestureSize, gestureCenterY);
+    CGPoint endPoint = CGPointMake(gestureEndCenterX, gestureCenterY);
+    
+    [self showHandholdingForSensorScrubbingIn:view from:startPoint to:endPoint];
+    [self markTutorialViewed:HEMTutorialHHSensorScrubbing];
+    return YES;
+}
+
++ (void)showHandholdingForSensorScrubbingIn:(UIView*)view
+                                       from:(CGPoint)start
+                                         to:(CGPoint)end {
+    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
+    [handholdingView setGestureStartCenter:start];
+    [handholdingView setGestureEndCenter:end];
+    
+    [handholdingView setMessage:NSLocalizedString(@"handholding.message.sensor-scrubbing", nil)];
+    [handholdingView setAnchor:HEMHHDialogAnchorTop];
+    
+    [handholdingView showInView:view];
+}
+
 #pragma mark - Dialogs
 
 + (void)showTutorialForTimelineIfNeeded
@@ -146,7 +180,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     dispatch_after(after, dispatch_get_main_queue(), block);
 }
 
-+ (void)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
++ (BOOL)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
 {
     NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
     if ([self shouldShowTutorialForKey:key]) {
@@ -154,7 +188,9 @@ static CGFloat const HEMTutorialDelay = 0.5f;
             [self showTutorialForSensorNamed:sensorName];
             [self markTutorialViewed:key];
         }];
+        return YES;
     }
+    return NO;
 }
 
 + (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
@@ -337,6 +373,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialPillColorKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHSensorScrubbing];
 }
 
 @end

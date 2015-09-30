@@ -10,7 +10,7 @@
 #import "HEMHintGestureView.h"
 #import "HEMHintMessageView.h"
 
-static CGFloat const HEMHandholdingGestureSize = 50.0f;
+CGFloat const HEMHandholdingGestureSize = 50.0f;
 static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 
 @interface HEMHandholdingView()

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.5.0
+
+New:
+
+* Updated Zendesk SDK to 1.4.1.2 to prevent crash on 6s devices when creating ticket
+* Slimmed down the mixpanel dependency with Mixpanel-simple to reduce crashers from mixpanel
+* Moved app assets to asset catalog in preparation for app thinning
+* Cleaned up iOS 9 warnings
+* Cleaned up storyboards to remove deprecated calls and modernize it
+
+Fixes:
+
+* Logging out and back in will no longer retrigger welcome / tutorial dialogs
+
 ## 1.1.4.8
 
 New

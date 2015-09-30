@@ -460,12 +460,20 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 
 - (void)pairingMode:(id)sender {
     NSString* title = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-title", nil);
-    NSString* message = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message", nil);
-    NSAttributedString* attributedMessage =
-        [[NSAttributedString alloc] initWithString:message attributes:[self dialogMessageAttributes:NO]];
+    NSString* msgFormat = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message.format", nil);
+    NSString* guideLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
+    
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* message =
+        [[NSMutableAttributedString alloc] initWithFormat:msgFormat
+                                                     args:args
+                                                baseColor:[UIColor blackColor]
+                                                 baseFont:[UIFont dialogMessageFont]];
     
     __weak typeof(self) weakSelf = self;
-    [self showConfirmation:title message:attributedMessage action:^{
+    [self showConfirmation:title message:message action:^{
         [weakSelf enablePairingMode];
     }];
 }

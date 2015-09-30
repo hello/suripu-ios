@@ -1,0 +1,24 @@
+{
+  "name": "Mixpanel-simple",
+  "version": "1.0.0",
+  "summary": "Tracking or GTFO",
+  "homepage": "https://github.com/hello/mixpanel-simple",
+  "authors": {
+    "Delisa Mason": "delisa@sayhello.com",
+    "Conrad Kramer": "conrad@kramerapps.com"
+  },
+  "source": {
+    "git": "git@github.com:hello/mixpanel-simple.git",
+    "tag": "1.0.0"
+  },
+  "platforms": {
+    "ios": "5.0"
+  },
+  "requires_arc": true,
+  "source_files": "Mixpanel/*.{h,m}",
+  "license": "Apache 2.0",
+  "frameworks": [
+    "CoreTelephony",
+    "UIKit"
+  ]
+}

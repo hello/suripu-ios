@@ -24,6 +24,7 @@ pod 'CGFloatType', '~> 1.3.1'
 # Private
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
+pod 'Mixpanel-simple', :git => 'git@github.com:hello/Mixpanel-simple.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
 
 post_install do |installer|

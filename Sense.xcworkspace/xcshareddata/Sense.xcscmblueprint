@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "81ED32DD441023EF84FCAD446D46BF982022FBB6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "81ED32DD441023EF84FCAD446D46BF982022FBB6" : 0,
+    "124F63D97679E741A8408497CE145BBCC89F73C9" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7A83AD29-E02E-44C9-ADA2-AB7376BB1F7C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "81ED32DD441023EF84FCAD446D46BF982022FBB6" : "suripu-ios",
+    "124F63D97679E741A8408497CE145BBCC89F73C9" : "SenseKit\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Sense",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Sense.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/hello\/SenseKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "124F63D97679E741A8408497CE145BBCC89F73C9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/hello\/suripu-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "81ED32DD441023EF84FCAD446D46BF982022FBB6"
+    }
+  ]
+}

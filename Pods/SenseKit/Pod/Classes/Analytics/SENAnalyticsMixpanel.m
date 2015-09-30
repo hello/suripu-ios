@@ -5,10 +5,18 @@
 //  Created by Jimmy Lu on 12/12/14.
 //
 //
-#import <Mixpanel/Mixpanel.h>
+#import <Mixpanel-simple/Mixpanel.h>
+#import <Mixpanel-simple/MPTracker.h>
+#import <Mixpanel-simple/MPPeople.h>
 #import "SENAnalyticsMixpanel.h"
 
+@interface SENAnalyticsMixpanel ()
+@property (nonatomic,strong) Mixpanel* mixpanel;
+@end
+
 @implementation SENAnalyticsMixpanel
+
+NSString* const SENAMCacheDirectory = @"MixpanelCache";
 
 - (void)configureWithProperties:(NSDictionary*)dictionary {
 #if DEBUG
@@ -17,16 +25,22 @@
     NSAssert(dictionary != nil && dictionary[kSENAnalyticsProviderToken] != nil,
              @"provider token is required");
 #endif
-    
-    Mixpanel* mixpanel = [Mixpanel sharedInstanceWithToken:dictionary[kSENAnalyticsProviderToken]];
-    mixpanel.checkForNotificationsOnActive = YES;
-    mixpanel.checkForSurveysOnActive = YES;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:SENAMCacheDirectory];
+    BOOL isDir = NO;
+    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir];
+    if (!(isDir && exists))
+        [[NSFileManager defaultManager] createDirectoryAtPath:path
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil error:nil];
+    self.mixpanel = [[Mixpanel alloc] initWithToken:dictionary[kSENAnalyticsProviderToken]
+                                     cacheDirectory:[NSURL URLWithString:path]];
 }
 
 - (void)userWithId:(NSString *)userId didSignupWithProperties:(NSDictionary *)properties {
-    Mixpanel* mp = [Mixpanel sharedInstance];
-    NSString* origDistinctId = [[mp distinctId] copy];
-    [mp createAlias:userId forDistinctID:origDistinctId];
+    MPTracker* tracker = self.mixpanel.tracker;
+    NSString* origDistinctId = [[tracker distinctId] copy];
+    [tracker createAlias:userId forDistinctID:origDistinctId];
     // per Mixpanel, we need to use mixpanel's original distinct id when we
     // identify the user while creating the alias to prevent a race condition
     // where identify: completes before the createAlias:forDistinctId call, causing
@@ -35,34 +49,25 @@
 }
 
 - (void)setUserId:(NSString*)userId withProperties:(NSDictionary *)properties {
-    Mixpanel* mp = [Mixpanel sharedInstance];
-    NSString* identifier = userId ?: [mp distinctId];
-    [mp identify:identifier];
-    
-    if ([properties count] > 0) {
-        [[mp people] set:properties];
-    }
+    NSString* identifier = userId ?: [self.mixpanel.tracker distinctId];
+    [self.mixpanel identify:identifier];
+    if (properties.count > 0)
+        [self.mixpanel.people setUserProperties:properties];
 }
 
 - (void)setGlobalEventProperties:(NSDictionary *)properties {
     if ([properties count] == 0) return;
-    [[Mixpanel sharedInstance] registerSuperProperties:properties];
+    MPTracker* tracker = self.mixpanel.tracker;
+    tracker.defaultProperties = properties;
 }
 
 - (void)setUserProperties:(NSDictionary*)properties {
-    [[[Mixpanel sharedInstance] people] set:properties];
+    if (properties.count > 0)
+        [self.mixpanel.people setUserProperties:properties];
 }
 
 - (void)track:(NSString*)eventName withProperties:(NSDictionary*)properties {
-    [[Mixpanel sharedInstance] track:eventName properties:properties];
-}
-
-- (void)startEvent:(NSString *)eventName {
-    [[Mixpanel sharedInstance] timeEvent:eventName];
-}
-
-- (void)endEvent:(NSString *)eventName {
-    [[Mixpanel sharedInstance] track:eventName];
+    [self.mixpanel.tracker track:eventName properties:properties];
 }
 
 @end

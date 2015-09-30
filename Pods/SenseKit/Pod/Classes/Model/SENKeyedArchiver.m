@@ -1,5 +1,5 @@
 
-#import <CocoaLumberjack/DDLog.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
 #import "SENKeyedArchiver.h"
 
 @implementation SENKeyedArchiver

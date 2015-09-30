@@ -86,7 +86,23 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
                                                        userInfo:nil
                                                         repeats:YES];
     [self registerForNotifications];
-    [HEMTutorial showTutorialIfNeededForSensorNamed:self.sensor.name];
+    [self showTutorialIfNeeded];
+}
+
+- (BOOL)haveDataToShow {
+    return [[self hourlyDataSeries] count] > 0 || [[self dailyDataSeries] count] > 0;
+}
+
+- (void)showTutorialIfNeeded {
+    if (![HEMTutorial showTutorialIfNeededForSensorNamed:self.sensor.name]) {
+        if ([self haveDataToShow]) {
+            UIView* view = [self view];
+            CGRect relativeFrame = [[self graphView] convertRect:[[self graphView] bounds]
+                                                          toView:view];
+            [HEMTutorial showHandholdingForSensorScrubbingIfNeededIn:view
+                                                relativeToGraphFrame:relativeFrame];
+        }
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -276,33 +292,41 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 {
     if (![SENAuthorizationService isAuthorized] || [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive)
         return;
+    
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
+    
+    __weak typeof(self) weakSelf = self;
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
-            self.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
-            self.statusLabel.alpha = 1;
-            self.overlayView.alpha = 0;
-            self.graphView.alpha = 0;
+            strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
+            strongSelf.statusLabel.alpha = 1;
+            strongSelf.overlayView.alpha = 0;
+            strongSelf.graphView.alpha = 0;
             return;
         }
-        if (![self.hourlyDataSeries isEqualToArray:data]) {
-            self.hourlyDataSeries = data;
-            if ([self isShowingHourlyData])
-                [self updateGraphWithHourlyData:data];
+        if (![strongSelf.hourlyDataSeries isEqualToArray:data]) {
+            strongSelf.hourlyDataSeries = data;
+            [strongSelf showTutorialIfNeeded];
+            if ([strongSelf isShowingHourlyData])
+                [strongSelf updateGraphWithHourlyData:data];
         }
+        
     }];
     [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
-            self.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
-            self.statusLabel.alpha = 1;
-            self.overlayView.alpha = 0;
-            self.graphView.alpha = 0;
+            strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
+            strongSelf.statusLabel.alpha = 1;
+            strongSelf.overlayView.alpha = 0;
+            strongSelf.graphView.alpha = 0;
             return;
         }
-        if (![self.dailyDataSeries isEqualToArray:data]) {
-            self.dailyDataSeries = data;
-            if (![self isShowingHourlyData])
-                [self updateGraphWithDailyData:data];
+        if (![strongSelf.dailyDataSeries isEqualToArray:data]) {
+            strongSelf.dailyDataSeries = data;
+            [strongSelf showTutorialIfNeeded];
+            if (![strongSelf isShowingHourlyData])
+                [strongSelf updateGraphWithDailyData:data];
         }
     }];
     [SENSensor refreshCachedSensors];

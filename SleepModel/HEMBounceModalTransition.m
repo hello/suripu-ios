@@ -12,6 +12,7 @@
 
 static CGFloat const HEMBounceDefaultDamping = 0.8f;
 static CGFloat const HEMBounceEndScale = 0.7f;
+static CGFloat const HEMBounceDismissDelay = 0.33f;
 
 @implementation HEMBounceModalTransition
 
@@ -93,7 +94,7 @@ static CGFloat const HEMBounceEndScale = 0.7f;
                          [whiteBg addSubview:activityView];
                          
                          [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
-                             NSTimeInterval delayInSeconds = 1.0f;
+                             NSTimeInterval delayInSeconds = HEMBounceDismissDelay;
                              dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                              dispatch_after(delay, dispatch_get_main_queue(), completion);
                          }];

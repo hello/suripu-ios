@@ -39,12 +39,16 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTableView];
+    [self listenToTicketCreationEvents];
+    
     [[HEMZendeskService sharedService] configure:^(NSError *error) {
         if (error) {
             DDLogWarn(@"failed to configure zendesk with error %@", error);
             [SENAnalytics trackError:error];
         }
     }];
+    
+    [SENAnalytics track:HEMAnalyticsEventSupport];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,6 +79,20 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     
     __weak typeof(self) weakSelf = self;
     [[self navigationController] setDelegate:weakSelf];
+}
+
+#pragma mark - Notifications
+
+- (void)listenToTicketCreationEvents {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didCreateTicket)
+                   name:ZDKAPI_RequestSubmissionSuccess
+                 object:nil];
+}
+
+- (void)didCreateTicket {
+    [SENAnalytics track:HEMAnalyticsEventSupportTicketSubmitted];
 }
 
 #pragma mark - UITableViewDataSource / Delegate
@@ -127,15 +145,19 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch ([indexPath row]) {
         case HEMSupportRowIndexUserGuide: {
+            [SENAnalytics track:HEMAnalyticsEventSupportUserGuide];
+            
             [self overrideNavigationDelegate];
             [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]
                                                layoutGuide:ZDKLayoutRespectNone];
             break;
         }
         case HEMSupportRowIndexContactUs:
+            [SENAnalytics track:HEMAnalyticsEventSupportContactUs];
             [self performSegueWithIdentifier:[HEMMainStoryboard topicsSegueIdentifier] sender:self];
             break;
         case HEMSupportRowIndexTickets: {
+            [SENAnalytics track:HEMAnalyticsEventSupportTickets];
             [self overrideNavigationDelegate];
             [ZDKRequests showRequestListWithNavController:[self navigationController]];
             break;

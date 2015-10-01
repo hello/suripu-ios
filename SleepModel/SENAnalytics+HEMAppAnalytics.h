@@ -121,6 +121,8 @@ NSString* const HEMAnalyticsEventBackViewTapped;
 extern NSString* const HEMAnalyticsEventSupport;
 extern NSString* const HEMAnalyticsEventSupportContactUs;
 extern NSString* const HEMAnalyticsEventSupportTickets;
+extern NSString* const HEMAnalyticsEventSupportUserGuide;
+extern NSString* const HEMAnalyticsEventSupportTicketSubmitted;
 
 // authentication
 extern NSString* const kHEMAnalyticsEventSignInStart;

@@ -10,6 +10,13 @@
 
 @implementation NSDate (HEMRelative)
 
++ (NSDate *)timelineInitialDate {
+    NSDate* startDate = [[NSDate date] previousDay];
+    if ([startDate shouldCountAsPreviousDay])
+        startDate = [startDate previousDay];
+    return startDate;
+}
+
 - (NSInteger)daysElapsed {
     NSDate *now = [NSDate date];
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
@@ -92,6 +99,17 @@
     NSDateComponents *otherComponents = [calendar components:flags fromDate:otherDate];
 
     return ([components day] == [otherComponents day] && [components month] == [otherComponents month] && [components year] == [otherComponents year]);
+}
+
+- (BOOL)shouldCountAsPreviousDay {
+    NSInteger const HEMSleepDateStartHour = 3;
+    NSDate* now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    if ([self isOnSameDay:[now previousDay]]) {
+        NSInteger hour = [calendar component:(NSCalendarUnitHour) fromDate:now];
+        return hour < HEMSleepDateStartHour;
+    }
+    return NO;
 }
 
 @end

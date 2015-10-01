@@ -89,7 +89,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate
 {
     if (!startDate)
-        startDate = [[NSDate date] previousDay];
+        startDate = [NSDate timelineInitialDate];
     
     HEMSleepSummarySlideViewController* slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
     [slideController setDelegate:self];

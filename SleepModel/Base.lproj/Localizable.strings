@@ -264,7 +264,7 @@
 "settings.sense.advanced.option.factory-reset" = "Factory reset";
 "settings.sense.advanced.option.factory-reset.desc" = "If you want to reset Sense to factory settings, and remove it from this account.";
 "settings.sense.factory-reset.complete.title" = "Power Cycle Sense";
-"settings.sense.factory-reset.complete.confirmation" = "Sense has successfully restored to factory settings.  Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
+"settings.sense.factory-reset.complete.confirmation" = "Sense has been successfully restored to factory settings.  Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.wifi" = "WiFi";
 "settings.sense.unpairing-message" = "Removing Sense";
@@ -275,7 +275,7 @@
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure Sense is plugged in and nearby and try again.";
 "settings.sense.no-sense-message" = "Make sure Sense is plugged in and nearby and try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
-"settings.sense.dialog.enable-pair-mode-message" = "Are you sure you want to put Sense into pairing mode?";
+"settings.sense.dialog.enable-pair-mode-message.format" = "Are you sure you want to put Sense into Pairing Mode? You should use this option only if you have another mobile device you wish to pair with Sense. If you're having trouble, visit %@ for support.";
 "settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
 "settings.sense.warning.wifi-format" = "Sense %@. Tap below to edit your WiFi credentials.";
 "settings.sense.warning.cannont-connect-wifi" = "cannot connect to WiFi";

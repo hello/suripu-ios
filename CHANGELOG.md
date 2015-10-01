@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.5.1
+
+New:
+
+* Added analytics events for support screens
+* Confirmation dialog dismissal timing reduced significantly
+* Updated pairing mode confirmation dialog copy
+* Updated factory reset completion confirmation dialog copy
+* Added handholding for sensor detail scrubbing behavior
+
 ## 1.1.5.0
 
 New:

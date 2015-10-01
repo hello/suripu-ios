@@ -129,6 +129,8 @@ NSString* const HEMAnalyticsEventBackViewTapped = @"Top view tab tapped"; // nam
 NSString* const HEMAnalyticsEventSupport = @"Support";
 NSString* const HEMAnalyticsEventSupportContactUs = @"Contact us";
 NSString* const HEMAnalyticsEventSupportTickets = @"My tickets";
+NSString* const HEMAnalyticsEventSupportUserGuide = @"User guide";
+NSString* const HEMAnalyticsEventSupportTicketSubmitted = @"Submit ticket";
 
 // authentication
 NSString* const kHEMAnalyticsEventSignInStart = @"Sign In Start";

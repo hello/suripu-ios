@@ -99,6 +99,8 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 {
     NSUInteger capacity = HEMSleepDataCapacity;
     NSDate* today = [[NSDate date] dateAtMidnight];
+    if ([[today previousDay] shouldCountAsPreviousDay])
+        today = [today previousDay];
     NSDate* creationDate = [[[SENServiceAccount sharedService] account] createdAt];
     if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
         NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay fromDate:creationDate  toDate:today options:0];

@@ -4,14 +4,28 @@
 #import "HEMSleepGraphViewController.h"
 #import "NSDate+HEMRelative.h"
 
+@interface HEMSleepSummaryPagingDataSource ()
+@property (nonatomic, strong) NSCalendar* calendar;
+@end
+
 @implementation HEMSleepSummaryPagingDataSource
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    }
+    return self;
+}
 
 #pragma mark - UIPageViewControllerDataSource
 
 - (UIViewController*)controllerAfter:(UIViewController*)viewController {
     HEMSleepGraphViewController* sleepVC = (HEMSleepGraphViewController*)viewController;
     NSDate* nextDay = [[sleepVC dateForNightOfSleep] nextDay];
-    if ([nextDay isOnSameDay:[NSDate date]] || [nextDay compare:[NSDate date]] == NSOrderedDescending) {
+    NSDate* now = [NSDate date];
+    if ([nextDay isOnSameDay:now]
+        || [nextDay compare:now] == NSOrderedDescending
+        || [nextDay shouldCountAsPreviousDay]) {
         return nil; // no data to show in the future
     }
     return [self sleepSummaryControllerWithDate:nextDay];
@@ -24,7 +38,7 @@
     if (!createdAt || [createdAt compare:previousDay] == NSOrderedAscending)
         return [self sleepSummaryControllerWithDate:previousDay];
     return nil;
-} 
+}
 
 #pragma mark - UIPageViewController
 

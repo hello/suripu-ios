@@ -27,10 +27,9 @@
 @implementation HEMSleepSummarySlideViewController
 
 - (id)init {
-    NSDate* startDate = [[NSDate date] previousDay];
     if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                         navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil]) {
-        [self __initStackWithControllerForDate:startDate];
+        [self __initStackWithControllerForDate:[NSDate timelineInitialDate]];
     }
     
     return self;

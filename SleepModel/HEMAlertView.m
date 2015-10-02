@@ -17,12 +17,12 @@
 
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
 @property (nonatomic, copy)   NSString* title;
-@property (nonatomic, copy)   NSString* message;
 @property (nonatomic, strong) UIImage* image;
 @property (nonatomic, weak)   UIButton* okButton; // used as anchor for actions
 @property (nonatomic, strong) NSMutableDictionary* actionsCallbacks; // key = title, value = block
 @property (nonatomic, copy)   NSAttributedString* attributedMessage;
 @property (nonatomic, getter=isSingleButtonAlert) BOOL singleButtonAlert;
+@property (nonatomic) HEMAlertViewType type;
 @end
 
 @implementation HEMAlertView
@@ -47,35 +47,15 @@ static CGFloat const kHEMDialogButtonHeight = 56.0f;
     return frame;
 }
 
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message {
-    
-    return [self initWithImage:image title:title message:message frame:[[self class] defaultFrame]];
-}
-
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-  attributedMessage:(NSAttributedString*)message {
-    self = [super initWithFrame:[[self class] defaultFrame]];
-    if (self) {
-        [self setImage:image];
-        [self setTitle:title];
-        [self setAttributedMessage:message];
-        [self setup];
-    }
-    return self;
-}
-
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message
-              frame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self setImage:image];
-        [self setTitle:title];
-        [self setMessage:message];
+- (instancetype)initWithImage:(UIImage*)image
+                        title:(NSString*)title
+                         type:(HEMAlertViewType)type
+            attributedMessage:(NSAttributedString*)message {
+    if (self = [super initWithFrame:[HEMAlertView defaultFrame]]) {
+        _image = image;
+        _title = title;
+        _attributedMessage = message;
+        _type = type;
         [self setup];
     }
     return self;
@@ -96,7 +76,8 @@ static CGFloat const kHEMDialogButtonHeight = 56.0f;
     CGFloat maxY = [self addDialogImage];
     maxY = [self addTitleLabelAtY:maxY];
     maxY = [self addMessageView:maxY] + kHEMDialogSpaceBetweenMessageAndButtons;
-    maxY = [self addOkButtonAtY:maxY] + kHEMDialogContentBotPadding;
+    if (self.type == HEMAlertViewTypeVertical)
+        maxY = [self addOkButtonAtY:maxY] + kHEMDialogContentBotPadding;
     
     CGRect myFrame = [self frame];
     myFrame.size.height = maxY;
@@ -157,18 +138,6 @@ static CGFloat const kHEMDialogButtonHeight = 56.0f;
     }
     
     return maxY;
-}
-
-- (NSAttributedString*)attributedMessage {
-    if (_attributedMessage) {
-        return _attributedMessage;
-    } else if (_message) {
-        NSDictionary* atts = @{NSFontAttributeName : [UIFont dialogMessageFont],
-                               NSForegroundColorAttributeName : [UIColor blackColor]};
-        return [[NSAttributedString alloc] initWithString:_message attributes:atts];
-    } else {
-        return nil;
-    }
 }
 
 - (CGFloat)addMessageView:(CGFloat)y {

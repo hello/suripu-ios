@@ -6,13 +6,16 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import <AttributedMarkdown/markdown_peg.h>
 #import "UIView+HEMSnapshot.h"
 #import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
 #import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMAlertView.h"
 #import "HEMSupportUtil.h"
 #import "HEMAnimationUtils.h"
+#import "HEMMarkdown.h"
 
 @interface HEMAlertViewController()
 
@@ -29,7 +32,7 @@
     UIView* view = [HEMRootViewController rootViewControllerForKeyWindow].view;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     dialogVC.title = title;
-    dialogVC.message = message;
+    dialogVC.attributedMessage = [self attributedMessageText:message];
     dialogVC.defaultButtonTitle = NSLocalizedString(@"actions.ok", nil);
     dialogVC.viewToShowThrough = view;
     [dialogVC showFrom:controller onDefaultActionSelected:nil];
@@ -41,13 +44,29 @@
                                   action:(void (^)())action {
     HEMAlertViewController *dialogVC = [HEMAlertViewController new];
     dialogVC.title = title;
-    dialogVC.message = message;
+    dialogVC.attributedMessage = [self attributedMessageText:message];
     dialogVC.defaultButtonTitle = NSLocalizedString(@"actions.yes", nil);
     dialogVC.viewToShowThrough = controller.view;
     [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
                 primary:NO
             actionBlock:nil];
     [dialogVC showFrom:controller onDefaultActionSelected:action];
+}
+
++ (NSAttributedString *)attributedMessageText:(NSString *)text {
+    NSDictionary *attributes = [HEMMarkdown attributesForAlertMessageText][@(PARA)];
+    NSAttributedString* attributedMessage = nil;
+    if (text.length > 0)
+        attributedMessage = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return attributedMessage;
+}
+
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
+    if (self = [super init]) {
+        self.title = title;
+        _attributedMessage = [HEMAlertViewController attributedMessageText:message];
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -79,16 +98,11 @@
 }
 
 - (void)setupDialogView {
-    if ([self attributedMessage]) {
-        [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
-                                                          title:[self title]
-                                              attributedMessage:[self attributedMessage]]];
-    } else {
-        [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
-                                                          title:[self title]
-                                                        message:[self message]]];
-    }
-    
+    [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
+                                                      title:[self title]
+                                                       type:HEMAlertViewTypeVertical
+                                          attributedMessage:[self attributedMessage]]];
+
     if ([[self defaultButtonTitle] length] > 0) {
         [[[self dialogView] okButton] setTitle:[self.defaultButtonTitle uppercaseString]
                                       forState:UIControlStateNormal];

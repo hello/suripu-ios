@@ -11,51 +11,30 @@
 typedef void(^HEMDialogActionBlock)(void);
 typedef void(^HEMDialogLinkActionBlock)(NSURL* link);
 
+typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
+    HEMAlertViewTypeVertical = 0,
+    HEMAlertViewTypeBoolean  = 1,
+};
+
 @interface HEMAlertView : UIView
 
 @property (nonatomic, weak, readonly) UIButton* okButton;
 
 /**
- * Initiallize the dialog with an image that sits
- * above the title, the title of the message, and
- * the message for the dialog to display
- * 
- * @param image:   the image to show above the title
- * @param title:   the title of the dialog
- * @param message: the message of the dialog
- */
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message;
-
-/**
- * Initiallize the dialog with an image that sits
+ * Initialize the dialog with an image that sits
  * above the title, the title of the message, and
  * the message for the dialog to display
  *
- * @param image:   the image to show above the title
- * @param title:   the title of the dialog
- * @param message: the attributed message of the dialog
+ * @param image   the image to show above the title
+ * @param title   the title of the dialog
+ * @param type    the button layout for the alert, either
+ *                vertical or boolean (yes/no)
+ * @param message the attributed message of the dialog
  */
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-  attributedMessage:(NSAttributedString*)message;
-
-/**
- * Initiallize the dialog with an image that sits
- * above the title, the title of the message, and
- * the message for the dialog to display
- *
- * @param image:   the image to show above the title
- * @param title:   the title of the dialog
- * @param message: the message of the dialog
- * @param frame:   the frame of the dialog to initialize with, which will may or
- *                 may not be adjusted based on the contents of the view
- */
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message
-              frame:(CGRect)frame;
+- (instancetype)initWithImage:(UIImage*)image
+                        title:(NSString*)title
+                         type:(HEMAlertViewType)type
+            attributedMessage:(NSAttributedString*)message;
 
 /**
  * Set the callback to invoke when user taps on the 'okay' button

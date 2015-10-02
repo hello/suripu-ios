@@ -17,7 +17,6 @@
  */
 @property (nonatomic, weak)   UIView* viewToShowThrough;
 @property (nonatomic, strong) UIImage* dialogImage;
-@property (nonatomic, copy)   NSString* message;
 @property (nonatomic, copy)   NSAttributedString* attributedMessage;
 
 /**
@@ -57,6 +56,8 @@
                                  message:(NSString *)message
                               controller:(UIViewController *)controller
                                   action:(void (^)())action;
+
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
 
 /**
  * Add additional action buttons to the dialog

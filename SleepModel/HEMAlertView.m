@@ -13,18 +13,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMScreenUtils.h"
 
-static CGFloat const kHEMDialogHorzMargins = 17.0f;
-static CGFloat const kHEMDialogCornerRadius = 4.0f;
-static CGFloat const kHEMDialogContentSpacing = 30.0f;
-static CGFloat const kHEMDialogContentHorzPadding = 25.0f;
-static CGFloat const kHEMDialogContentTopPadding = 34.0f;
-static CGFloat const kHEMDialogContentBotPadding = 10.0f;
-static CGFloat const kHEMDialogContentMaxImageHeight = 150.0f;
-static CGFloat const kHEMDialogButtonBorderWidth = 1.0f;
-static CGFloat const kHEMDialogButtonHorzPadding = 20.0f;
-static CGFloat const kHEMDialogButtonHeight = 40.0f;
-static CGFloat const kHEMDialogButtonSpacing = 10.0f;
-
 @interface HEMAlertView() <UITextViewDelegate>
 
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
@@ -34,16 +22,28 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 @property (nonatomic, weak)   UIButton* okButton; // used as anchor for actions
 @property (nonatomic, strong) NSMutableDictionary* actionsCallbacks; // key = title, value = block
 @property (nonatomic, copy)   NSAttributedString* attributedMessage;
-
+@property (nonatomic, getter=isSingleButtonAlert) BOOL singleButtonAlert;
 @end
 
 @implementation HEMAlertView
+
+static CGFloat const kHEMDialogHorzMargins = 8.0f;
+static CGFloat const kHEMDialogCornerRadius = 4.0f;
+static CGFloat const kHEMDialogContentSpacing = 8.0f;
+static CGFloat const kHEMDialogSpaceBetweenMessageAndButtons = 38.0f;
+static CGFloat const kHEMDialogContentHorzPadding = 25.0f;
+static CGFloat const kHEMDialogContentTopPadding = 40.0f;
+static CGFloat const kHEMDialogContentBotPadding = 8.0f;
+static CGFloat const kHEMDialogContentMaxImageHeight = 150.0f;
+static CGFloat const kHEMDialogButtonBorderWidth = 1.0f;
+static CGFloat const kHEMDialogButtonHorzPadding = 8.0f;
+static CGFloat const kHEMDialogButtonHeight = 56.0f;
 
 + (CGRect)defaultFrame {
     CGRect screenBounds = HEMKeyWindowBounds();
     CGRect frame = CGRectZero;
     frame.size.width = CGRectGetWidth(screenBounds)-(2*kHEMDialogHorzMargins);
-    frame.size.height = kHEMDialogContentTopPadding + kHEMDialogContentBotPadding;
+    frame.size.height = kHEMDialogContentTopPadding;
     return frame;
 }
 
@@ -95,12 +95,13 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     
     CGFloat maxY = [self addDialogImage];
     maxY = [self addTitleLabelAtY:maxY];
-    maxY = [self addMessageView:maxY];
-    maxY = [self addOkButtonAtY:maxY];
+    maxY = [self addMessageView:maxY] + kHEMDialogSpaceBetweenMessageAndButtons;
+    maxY = [self addOkButtonAtY:maxY] + kHEMDialogContentBotPadding;
     
     CGRect myFrame = [self frame];
-    myFrame.size.height = maxY + kHEMDialogContentBotPadding;
+    myFrame.size.height = maxY;
     [self setFrame:myFrame];
+    _singleButtonAlert = YES;
 }
 
 - (CGFloat)addDialogImage {
@@ -225,7 +226,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [self setOkButton:ok];
     [self addSubview:ok];
     
-    return CGRectGetMaxY([ok frame]) + kHEMDialogButtonSpacing;
+    return CGRectGetMaxY([ok frame]);
 }
 
 #pragma mark - UITextViewDelegate
@@ -253,7 +254,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
                           action:(HEMDialogActionBlock)block {
     
     CGRect okFrame = [[self okButton] frame];
-    CGRect buttonFrame = [self buttonFrameAtY:CGRectGetMinY(okFrame)];
+    CGRect buttonFrame = [self buttonFrameAtY:CGRectGetMaxY(okFrame)];
     UIButton* button = nil;
     
     if (primary) {
@@ -272,11 +273,12 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     
     [[self actionsCallbacks] setValue:[block copy] forKey:title];
 
-    CGFloat increasedHeight = CGRectGetHeight(buttonFrame) + kHEMDialogButtonSpacing;
+    CGFloat increasedHeight = CGRectGetHeight(buttonFrame);
+    if ([self isSingleButtonAlert]) {
+        increasedHeight -= kHEMDialogContentBotPadding;
+        self.singleButtonAlert = NO;
+    }
     [self insertSubview:button belowSubview:[self okButton]];
-    
-    okFrame.origin.y += increasedHeight;
-    [[self okButton] setFrame:okFrame];
  
     CGRect myFrame = [self frame];
     myFrame.size.height += increasedHeight;

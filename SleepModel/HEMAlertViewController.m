@@ -7,6 +7,7 @@
 //
 
 #import "UIView+HEMSnapshot.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMAlertView.h"
@@ -60,8 +61,8 @@
         [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
         [imageView setTranslatesAutoresizingMaskIntoConstraints:YES];
         
-        UIColor* tint = [UIColor colorWithWhite:0.95f alpha:0.8f];
-        UIImage* bgImage = [[self viewToShowThrough] blurredSnapshotWithTint:tint];
+        UIColor* tint = [UIColor alertBackgroundColor];
+        UIImage* bgImage = [[self viewToShowThrough] snapshotWithTint:tint];
         [imageView setImage:bgImage];
         
         [[self view] insertSubview:imageView atIndex:0];
@@ -89,7 +90,8 @@
     }
     
     if ([[self defaultButtonTitle] length] > 0) {
-        [[[self dialogView] okButton] setTitle:[self defaultButtonTitle] forState:UIControlStateNormal];
+        [[[self dialogView] okButton] setTitle:[self.defaultButtonTitle uppercaseString]
+                                      forState:UIControlStateNormal];
     }
     
     if ([[self helpPage] length] > 0) {

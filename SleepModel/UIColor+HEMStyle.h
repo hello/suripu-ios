@@ -99,6 +99,7 @@
 + (UIColor *)barButtonDisabledColor;
 + (UIColor *)actionViewTitleTextColor;
 + (UIColor *)actionViewCancelButtonTextColor;
++ (UIColor *)alertBackgroundColor;
 + (UIColor *)buttonDividerColor;
 + (UIColor *)questionAnswerSelectedBgColor;
 + (UIColor *)questionAnswerSelectedTextColor;

@@ -78,11 +78,9 @@
                     title:(NSString*)title
                     image:(UIImage*)image
            seeThroughView:(UIView*)seeThroughView
-                 withHelpPage:(NSString*)helpPage {
+             withHelpPage:(NSString*)helpPage {
     
-    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
-    [dialogVC setTitle:title];
-    [dialogVC setMessage:message];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     [dialogVC setHelpPage:helpPage];
     [dialogVC setDialogImage:image];
     [dialogVC setViewToShowThrough:seeThroughView];

@@ -193,9 +193,8 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     UIViewController *controller = (id)delegate.window.rootViewController;
     UIView *viewtoShowThrough = [controller view];
 
-    HEMAlertViewController *dialogVC = [[HEMAlertViewController alloc] init];
-    [dialogVC setTitle:NSLocalizedString(@"actions.sign-out", nil)];
-    [dialogVC setMessage:NSLocalizedString(@"settings.sign-out.confirmation", nil)];
+    HEMAlertViewController *dialogVC = [[HEMAlertViewController alloc] initWithTitle:NSLocalizedString(@"actions.sign-out", nil)
+                                                                             message:NSLocalizedString(@"settings.sign-out.confirmation", nil)];
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.yes", nil)];
     [dialogVC setViewToShowThrough:viewtoShowThrough];
 

@@ -283,9 +283,8 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)showSkipConfirmation {
-    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
-    [dialogVC setTitle:NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil)];
-    [dialogVC setMessage:NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil)];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil)
+                                                                             message:NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil)];
     [dialogVC setDefaultButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     

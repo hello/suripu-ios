@@ -448,21 +448,22 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             ? [[strongSelf parentViewController] view]
             : [strongSelf view];
 
-        HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
-        [dialogVC setTitle:NSLocalizedString(@"pairing.failed.title", nil)];
-        [dialogVC setViewToShowThrough:seeThroughView];
+        NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
+        HEMAlertViewController* dialogVC = nil;
 
         if (allowWiFiEdit) {
-            [dialogVC setMessage:NSLocalizedString(@"pairing.error.link-account-failed-edit-wifi", nil)];
+            NSString* message = NSLocalizedString(@"pairing.error.link-account-failed-edit-wifi", nil);
+            dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
             [dialogVC addAction:NSLocalizedString(@"actions.edit.wifi", nil) primary:NO actionBlock:^{
                 [strongSelf setCurrentState:HEMSensePairStateNeedWiFiChange];
                 [strongSelf executeNextStep];
             }];
         } else {
-            [dialogVC setMessage:NSLocalizedString(@"pairing.error.link-account-failed", nil)];
+            NSString* message = NSLocalizedString(@"pairing.error.link-account-failed", nil);
+            dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
             [dialogVC setHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
         }
-
+        [dialogVC setViewToShowThrough:seeThroughView];
         [dialogVC showFrom:strongSelf onDefaultActionSelected:nil];
     }];
 }

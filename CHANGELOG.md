@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.5.2
+
+New:
+
+* Timeline will only automatically advance / update for last night when device time is past 3AM
+
+Fixes:
+
+* Fixes issue during wifi scan within settings where an error will always be thrown if putting app in to the background when screen is visible
+* Replacing Sense will also disconnect from Sense in settings
+
 ## 1.1.5.1
 
 New:

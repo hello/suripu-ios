@@ -265,6 +265,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     [HEMAudioCache clearCache];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [[HEMOnboardingService sharedService] resetOnboardingCheckpoint];
+    [[SENServiceDevice sharedService] reset];
 }
 
 @end

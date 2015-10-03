@@ -150,13 +150,14 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 #pragma mark -
 
 - (void)resetDeviceStates {
-    [self clearCache];
     [self setCheckingStates:NO];
     [self setDeviceState:SENServiceDeviceStateUnknown];
-    [SENSenseManager stopScan]; // if it was scannig
 }
 
-- (void)clearCache {
+- (void)reset {
+    [SENSenseManager stopScan];
+    
+    [self resetDeviceStates];
     [self setPillInfo:nil];
     [self setSenseInfo:nil];
     [self setSenseManager:nil];
@@ -504,7 +505,9 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 - (void)unlinkSenseFromAccount:(SENServiceDeviceCompletionBlock)completion {
     if ([self senseInfo] == nil) {
-        if (completion) completion ( [self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
+        if (completion) {
+            completion ( [self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
+        }
         return;
     }
     
@@ -515,13 +518,16 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         NSError* deviceError = nil;
         
         if (error != nil) {
-            deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkPillFromAccount];
+            deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkSenseFromAccount];
         } else {
+            [[strongSelf senseManager] disconnectFromSense];
             [strongSelf setSenseInfo:nil];
             [strongSelf setSenseManager:nil];
         }
         
-        if (completion) completion (deviceError);
+        if (completion) {
+            completion (deviceError);
+        }
     }];
 }
 
@@ -575,7 +581,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                 
                 [[blockSelf senseManager] resetToFactoryState:^(__unused id response) {
                     [[blockSelf senseManager] disconnectFromSense];
-                    [blockSelf resetDeviceStates];
+                    [blockSelf reset];
                     [blockSelf notifyFactoryRestore];
                     callback (nil);
                 } failure:turnOffLedThenFail];

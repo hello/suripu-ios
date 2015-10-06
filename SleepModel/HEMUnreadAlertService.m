@@ -126,6 +126,7 @@
 }
 
 - (void)updateQuestionsReadStatus:(HEMUnreadCompletionHandler)completion {
+    // optimistically update questions unread based on whether 
     [self updateUnread:^(NSError *error) {
         if (completion) {
             completion ([self hasUnread], nil);

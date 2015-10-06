@@ -87,15 +87,20 @@
             if (error) {
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
             } else {
-                BOOL hasUnreadInsightQuestions = [strongSelf hasUnreadItems];
-                [[strongSelf tabBarItem] setBadgeValue:hasUnreadInsightQuestions ? @"1" : nil];
+                [strongSelf updateUnreadIndicator];
             }
         }];
     }
 }
 
+- (void)updateUnreadIndicator {
+    BOOL hasUnreadInsightQuestions = [self hasUnreadItems];
+    [[self tabBarItem] setBadgeValue:hasUnreadInsightQuestions ? @"1" : nil];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [self updateUnreadIndicator];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

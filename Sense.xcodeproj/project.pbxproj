@@ -207,6 +207,8 @@
 		BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */; };
 		BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */; };
 		BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */; };
+		BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */; settings = {ASSET_TAGS = (); }; };
+		BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */; settings = {ASSET_TAGS = (); }; };
 		BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */; };
 		BF98E4461A42378900E3CDEB /* HEMSinkModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98E4451A42378900E3CDEB /* HEMSinkModalTransition.m */; };
 		BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */; };
@@ -667,6 +669,9 @@
 		BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMImageCollectionViewCell.m; sourceTree = "<group>"; };
 		BF90E2BC1A857DF600816BC1 /* HEMTextCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTextCollectionViewCell.h; sourceTree = "<group>"; };
 		BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTextCollectionViewCell.m; sourceTree = "<group>"; };
+		BF9450A81BC316CE00BA0023 /* HEMUnreadAlertService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnreadAlertService.h; sourceTree = "<group>"; };
+		BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnreadAlertService.m; sourceTree = "<group>"; };
+		BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SystemAlerts.xcassets; sourceTree = "<group>"; };
 		BF98E4411A422D0B00E3CDEB /* NSDate+HEMRelative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HEMRelative.h"; sourceTree = "<group>"; };
 		BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+HEMRelative.m"; sourceTree = "<group>"; };
 		BF98E4441A42378900E3CDEB /* HEMSinkModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSinkModalTransition.h; sourceTree = "<group>"; };
@@ -1721,8 +1726,6 @@
 		BF80F6DD19BF99E800A4D779 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BF6E3A981A2D27450019C110 /* HEMActionView.h */,
-				BF6E3A991A2D27450019C110 /* HEMActionView.m */,
 				BF5D53291A26749F0090DD6A /* HEMActivityIndicatorView.h */,
 				BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */,
 				BF257EE81A1D269300DAF923 /* HEMAlertView.h */,
@@ -1756,6 +1759,15 @@
 				BFC5E6781BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m */,
 			);
 			name = Analytics;
+			sourceTree = "<group>";
+		};
+		BF9450AB1BC352FF00BA0023 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BF6E3A981A2D27450019C110 /* HEMActionView.h */,
+				BF6E3A991A2D27450019C110 /* HEMActionView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		BFABE74E19A2E6C900AB2F0F /* Common */ = {
@@ -1912,8 +1924,12 @@
 		BFF03EC71A536D0C00BD65D4 /* System Alerts */ = {
 			isa = PBXGroup;
 			children = (
+				BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */,
+				BF9450AB1BC352FF00BA0023 /* Views */,
 				BFF03EC81A536D8C00BD65D4 /* HEMSystemAlertController.h */,
 				BFF03EC91A536D8C00BD65D4 /* HEMSystemAlertController.m */,
+				BF9450A81BC316CE00BA0023 /* HEMUnreadAlertService.h */,
+				BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */,
 			);
 			name = "System Alerts";
 			sourceTree = "<group>";
@@ -2070,6 +2086,7 @@
 				8AD3313F1BB0A93600DFF95A /* Onboarding.xcassets in Resources */,
 				8AD331261BB0836700DFF95A /* Alarm.xcassets in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */,
 				8AD3312A1BB08D5300DFF95A /* Sensors.xcassets in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
 				BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */,
@@ -2327,6 +2344,7 @@
 				8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */,
 				BFF03ECA1A536D8C00BD65D4 /* HEMSystemAlertController.m in Sources */,
 				BFC3BE7C1A7087430022C6C2 /* HEMSettingsAccountDataSource.m in Sources */,
+				BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */,
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				8AA1E6171A895EF200590EB6 /* HEMNotificationSettingsViewController.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,

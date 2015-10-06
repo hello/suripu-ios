@@ -227,7 +227,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    [dialogVC showFrom:self];
 }
 
 - (void)showUnpairMessageForError:(NSError*)error {

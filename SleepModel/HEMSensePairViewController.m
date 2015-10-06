@@ -461,10 +461,15 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         } else {
             NSString* message = NSLocalizedString(@"pairing.error.link-account-failed", nil);
             dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
-            [dialogVC setHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
+            [dialogVC addAction:NSLocalizedString(@"dialog.help.title", nil)
+                        primary:NO
+                    actionBlock:^{
+                        [HEMSupportUtil openHelpToPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)
+                                        fromController:strongSelf];
+                    }];
         }
         [dialogVC setViewToShowThrough:seeThroughView];
-        [dialogVC showFrom:strongSelf onDefaultActionSelected:nil];
+        [dialogVC showFrom:strongSelf];
     }];
 }
 

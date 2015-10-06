@@ -81,10 +81,15 @@
              withHelpPage:(NSString*)helpPage {
     
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
-    [dialogVC setHelpPage:helpPage];
     [dialogVC setDialogImage:image];
     [dialogVC setViewToShowThrough:seeThroughView];
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    __weak typeof(self) weakSelf = self;
+    [dialogVC addAction:NSLocalizedString(@"dialog.help.title", nil)
+                primary:NO
+            actionBlock:^{
+            [HEMSupportUtil openHelpToPage:helpPage fromController:weakSelf];
+        }];
+    [dialogVC showFrom:self];
 }
 
 - (void)dealloc {

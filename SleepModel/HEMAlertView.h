@@ -8,17 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^HEMDialogActionBlock)(void);
-typedef void(^HEMDialogLinkActionBlock)(NSURL* link);
+typedef void (^HEMDialogActionBlock)(void);
+typedef void (^HEMDialogLinkActionBlock)(NSURL *link);
 
 typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
     HEMAlertViewTypeVertical = 0,
-    HEMAlertViewTypeBoolean  = 1,
+    HEMAlertViewTypeBoolean = 1,
 };
 
 @interface HEMAlertView : UIView
-
-@property (nonatomic, weak, readonly) UIButton* okButton;
 
 /**
  * Initialize the dialog with an image that sits
@@ -31,17 +29,16 @@ typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
  *                vertical or boolean (yes/no)
  * @param message the attributed message of the dialog
  */
-- (instancetype)initWithImage:(UIImage*)image
-                        title:(NSString*)title
+- (instancetype)initWithImage:(UIImage *)image
+                        title:(NSString *)title
                          type:(HEMAlertViewType)type
-            attributedMessage:(NSAttributedString*)message;
+            attributedMessage:(NSAttributedString *)message;
 
 /**
  * Set the callback to invoke when user taps on the 'okay' button
  * @param doneBlock: the block to invoke
  */
-- (void)onDone:(HEMDialogActionBlock)doneBlock;
-
+- (void)setCompletionBlock:(HEMDialogActionBlock)doneBlock;
 
 /**
  * Add additional action buttons with the title and the block to call when user
@@ -50,16 +47,16 @@ typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
  * @param primary: YES if it's a primary button, NO otherwise
  * @param blocK:   the block to invoke when button is pressed
  */
-- (void)addActionButtonWithTitle:(NSString*)title
-                         primary:(BOOL)primary
-                          action:(HEMDialogActionBlock)block;
+- (void)addActionButtonWithTitle:(NSString *)title primary:(BOOL)primary action:(HEMDialogActionBlock)block;
 
 /**
  * Set the callback to invoke when a link in the body of the alert is pressed
- * 
+ *
  * @param url:         the url string that should trigger the action block
  * @param actionBlock: the block to call when the url is tapped on
  */
-- (void)onLink:(NSString*)url tap:(HEMDialogLinkActionBlock)actionBlock;
+- (void)onLink:(NSString *)url tap:(HEMDialogLinkActionBlock)actionBlock;
+
+- (void)setDefaultButtonText:(NSString *)text;
 
 @end

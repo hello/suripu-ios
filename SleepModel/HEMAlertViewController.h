@@ -18,20 +18,12 @@
 @property (nonatomic, weak)   UIView* viewToShowThrough;
 @property (nonatomic, strong) UIImage* dialogImage;
 @property (nonatomic, copy)   NSAttributedString* attributedMessage;
+@property (nonatomic) HEMAlertViewType type;
 
 /**
  *  Title of the default (primary) button
  */
 @property (nonatomic, copy)   NSString* defaultButtonTitle;
-
-/**
- * @property helpURL
- *
- * @discussion
- * This is the "slug" or page path to the help guide.  If this is not set, the
- * troubleshooting button will not be shown
- */
-@property (nonatomic, copy)   NSString* helpPage;
 
 /**
  *  Present a non-interactive dialog
@@ -43,19 +35,19 @@
 + (void)showInfoDialogWithTitle:(NSString*)title message:(NSString*)message controller:(UIViewController*)controller;
 
 /**
- *  Present a dialog with "yes" and "no" as possible options, where answering
+ *  Create a dialog with "yes" and "no" as possible options, where answering
  *  "yes" (default) performs an action, and no dismisses the dialog without
  *  further interaction.
  *
- *  @param title      title of the dialog
- *  @param message    dialog message content
- *  @param controller presenting controller
- *  @param action     block executed when answer is "yes"
+ *  @param title         title of the dialog
+ *  @param message       dialog message content
+ *  @param controller    presenting controller
+ *  @param action        block executed when answer is "yes"
  */
-+ (void)showBooleanChoiceDialogWithTitle:(NSString *)title
-                                 message:(NSString *)message
-                              controller:(UIViewController *)controller
-                                  action:(void (^)())action;
+- (instancetype)initBooleanDialogWithTitle:(NSString*)title
+                                   message:(NSString*)message
+                             defaultsToYes:(BOOL)defaultsToYes
+                                    action:(void (^)())action;
 
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
 
@@ -85,6 +77,8 @@
  * @param doneBlock:  the block to invoke when user taps on the default button
  */
 - (void)showFrom:(UIViewController*)controller onDefaultActionSelected:(HEMDialogActionBlock)doneBlock;
+
+- (void)showFrom:(UIViewController*)controller;
 
 /**
  * Call this method if you are presenting this controller yourself, which will

@@ -129,7 +129,7 @@
     UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:self.title message:message];
     [dialogVC setViewToShowThrough:[rootVC view]];
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    [dialogVC showFrom:self];
 }
 
 #pragma mark - Actions

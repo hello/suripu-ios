@@ -283,7 +283,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    [dialogVC showFrom:self];
 }
 
 - (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {

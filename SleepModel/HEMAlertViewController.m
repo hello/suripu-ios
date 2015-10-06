@@ -21,7 +21,6 @@
 
 @property (nonatomic, strong) HEMAlertView* dialogView;
 @property (nonatomic, weak)   UIViewController* myPresentingController;
-
 @end
 
 @implementation HEMAlertViewController
@@ -30,27 +29,28 @@
                         message:(NSString *)message
                      controller:(UIViewController *)controller {
     UIView* view = [HEMRootViewController rootViewControllerForKeyWindow].view;
-    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
-    dialogVC.title = title;
-    dialogVC.attributedMessage = [self attributedMessageText:message];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     dialogVC.defaultButtonTitle = NSLocalizedString(@"actions.ok", nil);
     dialogVC.viewToShowThrough = view;
-    [dialogVC showFrom:controller onDefaultActionSelected:nil];
+    [dialogVC showFrom:controller];
 }
 
-+ (void)showBooleanChoiceDialogWithTitle:(NSString *)title
-                                 message:(NSString *)message
-                              controller:(UIViewController *)controller
-                                  action:(void (^)())action {
-    HEMAlertViewController *dialogVC = [HEMAlertViewController new];
-    dialogVC.title = title;
-    dialogVC.attributedMessage = [self attributedMessageText:message];
-    dialogVC.defaultButtonTitle = NSLocalizedString(@"actions.yes", nil);
-    dialogVC.viewToShowThrough = controller.view;
-    [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
-                primary:NO
+- (instancetype)initBooleanDialogWithTitle:(NSString *)title
+                                   message:(NSString *)message
+                             defaultsToYes:(BOOL)defaultsToYes
+                                    action:(void (^)())action {
+    if (self = [super init]) {
+        self.title = title;
+        _type = HEMAlertViewTypeBoolean;
+        _attributedMessage = [[self class] attributedMessageText:message];
+        [self addAction:NSLocalizedString(@"actions.yes", nil)
+                primary:defaultsToYes
+            actionBlock:action];
+        [self addAction:NSLocalizedString(@"actions.no", nil)
+                primary:!defaultsToYes
             actionBlock:nil];
-    [dialogVC showFrom:controller onDefaultActionSelected:action];
+    }
+    return self;
 }
 
 + (NSAttributedString *)attributedMessageText:(NSString *)text {
@@ -77,16 +77,12 @@
 - (void)addBackgroundView {
     if ([self viewToShowThrough] != nil) {
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
-        [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-        [imageView setTranslatesAutoresizingMaskIntoConstraints:YES];
-        
-        UIColor* tint = [UIColor alertBackgroundColor];
-        UIImage* bgImage = [[self viewToShowThrough] snapshotWithTint:tint];
-        [imageView setImage:bgImage];
-        
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        imageView.translatesAutoresizingMaskIntoConstraints = YES;
+        imageView.image = [[self viewToShowThrough] snapshotWithTint:[UIColor alertBackgroundColor]];
         [[self view] insertSubview:imageView atIndex:0];
     } else {
-        [[self view] setBackgroundColor:[UIColor whiteColor]];
+        [[self view] setBackgroundColor:[UIColor alertBackgroundColor]];
     }
 }
 
@@ -94,44 +90,29 @@
     CGRect dialogFrame = [[self dialogView] frame];
     dialogFrame.origin.x = (CGRectGetWidth([[self view] bounds])-CGRectGetWidth(dialogFrame))/2;
     dialogFrame.origin.y = (CGRectGetHeight([[self view] bounds])-CGRectGetHeight(dialogFrame))/2;
-    [[self dialogView] setFrame:dialogFrame];
+    _dialogView.frame = dialogFrame;
 }
 
-- (void)setupDialogView {
-    [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
-                                                      title:[self title]
-                                                       type:HEMAlertViewTypeVertical
-                                          attributedMessage:[self attributedMessage]]];
+- (HEMAlertView *)dialogView {
+    if (!_dialogView) {
+        _dialogView = [[HEMAlertView alloc] initWithImage:self.dialogImage
+                                                    title:self.title
+                                                     type:self.type
+                                        attributedMessage:self.attributedMessage];
+        if (self.defaultButtonTitle.length > 0)
+            [_dialogView setDefaultButtonText:self.defaultButtonTitle];
 
-    if ([[self defaultButtonTitle] length] > 0) {
-        [[[self dialogView] okButton] setTitle:[self.defaultButtonTitle uppercaseString]
-                                      forState:UIControlStateNormal];
+        [self updateDialogPosition];
     }
-    
-    if ([[self helpPage] length] > 0) {
-        __weak typeof(self) weakSelf = self;
-        [self addAction:NSLocalizedString(@"dialog.help.title", nil)
-                primary:NO
-            actionBlock:^{
-                __strong typeof(weakSelf) strongSelf = weakSelf;
-                [HEMSupportUtil openHelpToPage:[strongSelf helpPage]
-                                fromController:[strongSelf myPresentingController]];
-            }];
-    }
-    
-    [self updateDialogPosition];
+    return _dialogView;
 }
 
 - (void)addAction:(NSString*)title primary:(BOOL)primary actionBlock:(HEMDialogActionBlock)block {
-    if ([self dialogView] == nil) {
-        [self setupDialogView];
-    }
-    
     __weak typeof(self) weakSelf = self;
     [[self dialogView] addActionButtonWithTitle:title primary:primary action:^{
         [weakSelf dismissViewControllerAnimated:YES completion:^{
             if (block) {
-                block ();
+                block();
             }
         }];
     }];
@@ -140,36 +121,29 @@
 }
 
 - (void)onLinkTapOf:(NSString*)url takeAction:(HEMDialogLinkActionBlock)action {
-    if ([self dialogView] == nil) {
-        [self setupDialogView];
-    }
-    
     __weak typeof(self) weakSelf = self;
-    HEMDialogLinkActionBlock linkBlock = ^(NSURL* linkURL) {
+    [[self dialogView] onLink:url tap:^(NSURL* linkURL) {
         [weakSelf dismissViewControllerAnimated:YES completion:^{
             if (action) {
-                action (linkURL);
+                action(linkURL);
             }
         }];
-    };
-    
-    [[self dialogView] onLink:url tap:linkBlock];
+    }];
+}
+
+- (void)showFrom:(UIViewController *)controller {
+    [self showFrom:controller onDefaultActionSelected:nil];
 }
 
 - (void)showFrom:(UIViewController*)controller onDefaultActionSelected:(HEMDialogActionBlock)doneBlock {
-    if ([self dialogView] == nil) {
-        [self setupDialogView];
-    }
-    
     __weak typeof(self) weakSelf = self;
-    HEMDialogActionBlock completion = ^{
+    [[self dialogView] setCompletionBlock:^{
         [weakSelf dismissViewControllerAnimated:YES completion:^{
             if (doneBlock) {
                 doneBlock();
             }
         }];
-    };
-    [[self dialogView] onDone:completion];
+    }];
     [self setMyPresentingController:controller];
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [controller presentViewController:self animated:YES completion:^{
@@ -180,12 +154,7 @@
 }
 
 - (void)show:(HEMDialogActionBlock)doneBlock {
-    if ([self dialogView] == nil) {
-        [self setupDialogView];
-    }
-    
-    [[self dialogView] onDone:doneBlock];
-    
+    [[self dialogView] setCompletionBlock:doneBlock];
     [[self dialogView] setTransform:CGAffineTransformMakeScale(0.1f, 0.1f)];
     [[self view] addSubview:[self dialogView]];
     [HEMAnimationUtils grow:[self dialogView] completion:nil];

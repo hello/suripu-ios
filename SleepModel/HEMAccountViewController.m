@@ -189,23 +189,13 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 #pragma mark - Actions
 
 - (void)showSignOutConfirmation {
-    id<UIApplicationDelegate> delegate = (id)[UIApplication sharedApplication].delegate;
-    UIViewController *controller = (id)delegate.window.rootViewController;
-    UIView *viewtoShowThrough = [controller view];
-
-    HEMAlertViewController *dialogVC = [[HEMAlertViewController alloc] initWithTitle:NSLocalizedString(@"actions.sign-out", nil)
-                                                                             message:NSLocalizedString(@"settings.sign-out.confirmation", nil)];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.yes", nil)];
-    [dialogVC setViewToShowThrough:viewtoShowThrough];
-
-    [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
-                primary:NO
-            actionBlock:nil];
-
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        [SENAuthorizationService deauthorize];
-        [SENAnalytics track:kHEMAnalyticsEventSignOut];
-    }];
+    [[[HEMAlertViewController alloc] initBooleanDialogWithTitle:NSLocalizedString(@"actions.sign-out", nil)
+                                                        message:NSLocalizedString(@"settings.sign-out.confirmation", nil)
+                                                  defaultsToYes:YES
+                                                         action:^{
+                                                             [SENAuthorizationService deauthorize];
+                                                             [SENAnalytics track:kHEMAnalyticsEventSignOut];
+                                                         }] showFrom:self];
 }
 
 - (void)togglePreferenceSwitch:(UISwitch *)preferenceSwitch {

@@ -19,6 +19,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 @interface HEMTimelineTopBarCollectionReusableView ()
 
 @property (weak,   nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak,   nonatomic) IBOutlet UIImageView* unreadIndicatorView;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *centerTitleTopConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *drawerTopConstraint;
 @property (strong, nonatomic) NSCalendar *calendar;
@@ -39,6 +40,10 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
     self.drawerButton.accessibilityLabel = NSLocalizedString(@"timeline.accessibility-label.menu", nil);
     self.dateLabel.isAccessibilityElement = NO;
     self.dateButton.accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.history-open", nil);
+}
+
+- (void)setUnread:(BOOL)unread {
+    [[self unreadIndicatorView] setHidden:!unread];
 }
 
 - (void)setDate:(NSDate*)date {

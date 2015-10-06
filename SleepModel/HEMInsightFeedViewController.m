@@ -23,6 +23,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAppReview.h"
 #import "HEMSleepQuestionsDataSource.h"
+#import "HEMUnreadAlertService.h"
 
 @interface HEMInsightFeedViewController () <
     UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -74,6 +75,23 @@
                                                  name:SENAPIReachableNotification object:nil];
     
     [SENAnalytics track:kHEMAnalyticsEventFeed];
+    
+}
+
+- (void)updateLastViewed:(HEMUnreadType)type {
+    if ([[self dataSource] hasData]) {
+        __weak typeof(self) weakSelf = self;
+        HEMUnreadAlertService* unreadService = [HEMUnreadAlertService sharedService];
+        [unreadService updateLastViewFor:type completion:^(BOOL hasUnread, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+            } else {
+                BOOL hasUnreadInsightQuestions = [strongSelf hasUnreadItems];
+                [[strongSelf tabBarItem] setBadgeValue:hasUnreadInsightQuestions ? @"1" : nil];
+            }
+        }];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -89,8 +107,16 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!didUpdate)
             return;
+        
+        [strongSelf updateLastViewed:HEMUnreadTypeInsights];
         [[strongSelf collectionView] reloadData];
     }];
+}
+
+- (BOOL)hasUnreadItems {
+    HEMUnreadAlertService* service = [HEMUnreadAlertService sharedService];
+    return [[service unreadStats] hasUnreadInsights]
+        || [[service unreadStats] hasUnreadQuestions];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -185,6 +211,7 @@
         __weak typeof(self) weakSelf = self;
         [[SENServiceQuestions sharedService] skipQuestion:question completion:^(NSError *error) {
             [weakSelf removeCellAtIndexPath:path];
+            [weakSelf updateLastViewed:HEMUnreadTypeQuestions];
             [sender setEnabled:YES];
         }];
     }

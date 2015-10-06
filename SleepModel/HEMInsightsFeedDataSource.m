@@ -52,6 +52,10 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     return [self isLoadingInsights] || [[SENServiceQuestions sharedService] isUpdating];
 }
 
+- (BOOL)hasData {
+    return [[self data] count] > 0;
+}
+
 - (void)refresh:(void(^)(BOOL))completion {
     __block NSMutableArray* tmpData = [NSMutableArray array];
     __block BOOL insightsRefreshed = NO;

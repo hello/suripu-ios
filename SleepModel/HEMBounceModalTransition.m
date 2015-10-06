@@ -12,7 +12,7 @@
 
 static CGFloat const HEMBounceDefaultDamping = 0.8f;
 static CGFloat const HEMBounceEndScale = 0.7f;
-static CGFloat const HEMBounceDismissDelay = 0.33f;
+static CGFloat const HEMBounceDismissDelay = 0.8f;
 
 @implementation HEMBounceModalTransition
 

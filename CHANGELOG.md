@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.5.3
+
+New:
+
+* Adding unread indicator for insights / unanswered questions on both timeline menu icon as well as insights back view icon
+
 ## 1.1.5.2
 
 New:

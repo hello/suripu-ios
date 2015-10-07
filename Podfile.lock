@@ -56,7 +56,8 @@ PODS:
     - CocoaLumberjack (~> 2.0.0)
     - LGBluetooth
     - SHSProtoBuf
-  - SenseKit/Model (0.1.0)
+  - SenseKit/Model (0.1.0):
+    - CGFloatType (~> 1.3.1)
   - SenseKit/Service (0.1.0):
     - CocoaLumberjack (~> 2.0.0)
   - SHSProtoBuf (0.9):
@@ -135,7 +136,7 @@ CHECKOUT OPTIONS:
     :commit: 78b35ccd98cafcba11a551b2e47d49d51ac766f4
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 13254227a49caad84d825f9ffed2d379bb3765a7
+    :commit: 9bb43c3be692376e5bd83921e2e2dd9761e26150
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: e44003540c7b52b8fa29a05a059e43751e25d0d4
@@ -161,7 +162,7 @@ SPEC CHECKSUMS:
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
-  SenseKit: 1997bd34101b0e3d4151d377afc8317d6437e69e
+  SenseKit: 276b32392eabf5228c3b69484817fd283725d04a
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a

@@ -128,8 +128,10 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
 
     self.selectionIndex = index;
     for (int i = 0; i < buttons.count; i++) {
-        UIButton* button = buttons[i];
+        HEMSnazzBarButton* button = buttons[i];
         if ((button.selected = (i == index))) {
+            [button setUnread:NO]; // always hide when selected
+            
             void (^animations)() = ^{
                 [self indicateButtonSelected:button];
                 button.selected = YES;
@@ -147,6 +149,14 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
         } else {
             button.selected = NO;
         }
+    }
+}
+
+- (void)showUnreadIndicator:(BOOL)unread atIndex:(NSUInteger)index {
+    NSArray* buttons = [self buttons];
+    if (index < buttons.count) {
+        HEMSnazzBarButton* snazzButton = buttons[index];
+        [snazzButton setUnread:unread];
     }
 }
 

@@ -24,6 +24,7 @@ extern CGFloat const HEMSnazzBarAnimationDuration;
 - (void)removeAllButtons;
 - (void)addButtonWithTitle:(NSString*)title image:(UIImage*)image selectedImage:(UIImage*)selectedImage;
 - (void)selectButtonAtIndex:(NSUInteger)index animated:(BOOL)animated;
+- (void)showUnreadIndicator:(BOOL)unread atIndex:(NSUInteger)index;
 - (void)removeButtonAtIndex:(NSUInteger)index;
 - (void)setSelectionRatio:(CGFloat)ratio;
 

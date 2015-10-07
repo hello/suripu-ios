@@ -19,6 +19,7 @@
 #import "HEMSleepQuestionsDataSource.h"
 #import "HEMSingleResponseCell.h"
 #import "HEMMultipleResponseCell.h"
+#import "HEMUnreadAlertService.h"
 
 @interface HEMSleepQuestionsViewController () <UITableViewDelegate>
 
@@ -165,6 +166,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)dismiss {
     BOOL implementsAction = [[self dataSource] respondsToSelector:@selector(takeActionBeforeDismissingFrom:)];
     if (!implementsAction || ![[self dataSource] takeActionBeforeDismissingFrom:self]) {
+        [[HEMUnreadAlertService sharedService] updateLastViewFor:HEMUnreadTypeQuestions completion:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

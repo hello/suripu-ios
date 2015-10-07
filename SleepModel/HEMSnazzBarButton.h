@@ -10,4 +10,6 @@
 
 @interface HEMSnazzBarButton : UIButton
 
+- (void)setUnread:(BOOL)unread;
+
 @end

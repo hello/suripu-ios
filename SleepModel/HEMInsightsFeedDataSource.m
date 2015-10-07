@@ -9,6 +9,7 @@
 #import <SenseKit/SENQuestion.h>
 #import <SenseKit/SENAPIInsight.h>
 #import <SenseKit/SENInsight.h>
+#import <SenseKit/SENAppUnreadStats.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
@@ -17,9 +18,11 @@
 #import "HEMQuestionCell.h"
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMAppReview.h"
+#import "HEMUnreadAlertService.h"
 
 static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
 static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
+static NSString* const HEMInsightsFeedErrorDomain = @"is.hello.app.insight";
 
 @interface HEMInsightsFeedDataSource()
 
@@ -50,6 +53,17 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 
 - (BOOL)isLoading {
     return [self isLoadingInsights] || [[SENServiceQuestions sharedService] isUpdating];
+}
+
+- (BOOL)hasData {
+    return [[self data] count] > 0;
+}
+
+- (BOOL)hasUnreadItems {
+    // we only care about insights and questions here, not everything that can be new
+    HEMUnreadAlertService* service = [HEMUnreadAlertService sharedService];
+    return [[service unreadStats] hasUnreadInsights]
+        || [[service unreadStats] hasUnreadQuestions];
 }
 
 - (void)refresh:(void(^)(BOOL))completion {
@@ -155,6 +169,23 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
             }];
         }
     }];
+}
+
+- (void)updateLastViewed:(HEMUnreadType)type completion:(void(^)(NSError* error))completion {
+    void(^done)(BOOL unread, NSError* error) = ^(BOOL unread, NSError* error) {
+        if (completion) {
+            completion (error);
+        }
+    };
+    
+    if ([self hasData]) {
+        HEMUnreadAlertService* unreadService = [HEMUnreadAlertService sharedService];
+        [unreadService updateLastViewFor:type completion:done];
+    } else {
+        done (NO, [NSError errorWithDomain:HEMInsightsFeedErrorDomain
+                                      code:HEMInsightsFeedErrorNoData
+                                  userInfo:nil]);
+    }
 }
 
 #pragma mark - CollectionView

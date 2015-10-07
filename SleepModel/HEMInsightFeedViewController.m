@@ -23,7 +23,6 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAppReview.h"
 #import "HEMSleepQuestionsDataSource.h"
-#import "HEMUnreadAlertService.h"
 
 @interface HEMInsightFeedViewController () <
     UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -79,22 +78,19 @@
 }
 
 - (void)updateLastViewed:(HEMUnreadType)type {
-    if ([[self dataSource] hasData]) {
-        __weak typeof(self) weakSelf = self;
-        HEMUnreadAlertService* unreadService = [HEMUnreadAlertService sharedService];
-        [unreadService updateLastViewFor:type completion:^(BOOL hasUnread, NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
-            } else {
-                [strongSelf updateUnreadIndicator];
-            }
-        }];
-    }
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] updateLastViewed:type completion:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+        } else {
+            [strongSelf updateUnreadIndicator];
+        }
+    }];
 }
 
 - (void)updateUnreadIndicator {
-    BOOL hasUnreadInsightQuestions = [self hasUnreadItems];
+    BOOL hasUnreadInsightQuestions = [[self dataSource] hasUnreadItems];
     [[self tabBarItem] setBadgeValue:hasUnreadInsightQuestions ? @"1" : nil];
 }
 
@@ -113,15 +109,10 @@
         if (!didUpdate)
             return;
         
+        [[strongSelf dataSource] updateLastViewed:HEMUnreadTypeInsights completion:nil];
         [strongSelf updateLastViewed:HEMUnreadTypeInsights];
         [[strongSelf collectionView] reloadData];
     }];
-}
-
-- (BOOL)hasUnreadItems {
-    HEMUnreadAlertService* service = [HEMUnreadAlertService sharedService];
-    return [[service unreadStats] hasUnreadInsights]
-        || [[service unreadStats] hasUnreadQuestions];
 }
 
 #pragma mark - UICollectionViewDelegate

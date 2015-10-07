@@ -15,10 +15,10 @@ static NSString* const SENAPIAppStatusUnreadPath = @"unread";
 
 @implementation SENAPIAppStats
 
-+ (void)stats:(SENAPIDataBlock)completion {
++ (void)retrieveStats:(SENAPIDataBlock)completion {
     [SENAPIClient GET:SENAPIAppStatusEndpoint parameters:nil completion:^(id data, NSError *error) {
         SENAppStats* stats = nil;
-        if (!error) {
+        if (!error && [data isKindOfClass:[NSDictionary class]]) {
             stats = [[SENAppStats alloc] initWithDictionary:data];
         }
         completion (stats, error);
@@ -27,18 +27,14 @@ static NSString* const SENAPIAppStatusUnreadPath = @"unread";
 
 + (void)updateStats:(SENAppStats*)stats completion:(SENAPIDataBlock)completion {
     NSDictionary* params = [stats dictionaryValue];
-    [SENAPIClient PATCH:SENAPIAppStatusEndpoint parameters:params completion:^(id data, NSError *error) {
-        if (completion) {
-            completion (data, error);
-        }
-    }];
+    [SENAPIClient PATCH:SENAPIAppStatusEndpoint parameters:params completion:completion];
 }
 
-+ (void)unread:(SENAPIDataBlock)completion {
++ (void)retrieveUnread:(SENAPIDataBlock)completion {
     NSString* path = [SENAPIAppStatusEndpoint stringByAppendingPathComponent:SENAPIAppStatusUnreadPath];
     [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
         SENAppUnreadStats* unreadStats = nil;
-        if (!error) {
+        if (!error && [data isKindOfClass:[NSDictionary class]]) {
             unreadStats = [[SENAppUnreadStats alloc] initWithDictionary:data];
         }
         completion (unreadStats, error);

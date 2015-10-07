@@ -25,13 +25,9 @@
     static HEMUnreadAlertService* service = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        service = [[super allocWithZone:NULL] init];
+        service = [[super alloc] init];
     });
     return service;
-}
-
-+ (id)allocWithZone:(struct _NSZone *)zone {
-    return [self sharedService];
 }
 
 - (BOOL)lastViewedIsToday {
@@ -47,7 +43,7 @@
         return;
     }
     
-    [SENAPIAppStats stats:^(SENAppStats* stats, NSError *error) {
+    [SENAPIAppStats retrieveStats:^(SENAppStats* stats, NSError *error) {
         if (!error) {
             [self setLastReadStats:stats];
         }
@@ -56,7 +52,7 @@
 }
 
 - (void)updateUnread:(void(^)(NSError* error))completion {
-    [SENAPIAppStats unread:^(SENAppUnreadStats* stats, NSError *error) {
+    [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
         if (!error) {
             [self setUnreadStats:stats];
         }

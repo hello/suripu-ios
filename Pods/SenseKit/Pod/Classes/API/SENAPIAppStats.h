@@ -20,7 +20,7 @@
  *                    request was successful, the data returned with be a SENAppStats
  *                    object.  Otherwise, an error is returned
  */
-+ (void)stats:(nonnull SENAPIDataBlock)completion;
++ (void)retrieveStats:(nonnull SENAPIDataBlock)completion;
 
 /**
  * Update the appplication stats given the object that represents the changes.
@@ -40,6 +40,6 @@
  *                    request was successful, the data returned with be a SENAppUnreadStats
  *                    object.  Otherwise, an error is returned
  */
-+ (void)unread:(nonnull SENAPIDataBlock)completion;
++ (void)retrieveUnread:(nonnull SENAPIDataBlock)completion;
 
 @end

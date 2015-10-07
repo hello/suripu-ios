@@ -33,7 +33,8 @@
 CGFloat const HEMDialogContentSpacing = 8.0f;
 CGFloat const HEMDialogContentTopPadding = 40.0f;
 CGFloat const HEMDialogContentBotPadding = 8.0f;
-CGFloat const HEMDialogSpaceBetweenMessageAndButtons = 38.0f;
+CGFloat const HEMDialogVerticalSpaceBetweenMessageAndButtons = 38.0f;
+CGFloat const HEMDialogBooleanSpaceBetweenMessageAndButtons = 38.0f;
 CGFloat const HEMDialogButtonHeight = 56.0f;
 CGFloat const HEMDialogHorzMargins = 8.0f;
 
@@ -48,6 +49,25 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
         [self layoutElementsWithImage:image title:title message:message];
     }
     return self;
+}
+
+- (CGSize)intrinsicContentSize {
+    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds()) - (2 * HEMDialogHorzMargins);
+    CGFloat height = CGRectGetMaxY(self.messageTextView.frame);
+    if (self.type == HEMAlertViewTypeVertical) {
+        height += (self.buttons.count * HEMDialogButtonHeight) + HEMDialogVerticalSpaceBetweenMessageAndButtons;
+        if (self.buttons.count == 1)
+            height += HEMDialogContentBotPadding;
+    } else {
+        height += HEMDialogButtonHeight + HEMDialogBooleanSpaceBetweenMessageAndButtons;
+    }
+    return CGSizeMake(width, ceilCGFloat(height));
+}
+
+- (void)updateFrame {
+    CGRect frame = self.frame;
+    frame.size = [self intrinsicContentSize];
+    self.frame = frame;
 }
 
 - (void)layoutElementsWithImage:(UIImage *)image title:(NSString *)title message:(NSAttributedString *)message {
@@ -66,9 +86,18 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
     [self addTitleLabelWithText:title];
     [self addMessageViewWithText:message];
 
-    if (self.type == HEMAlertViewTypeVertical)
-        [self setDefaultButtonText:NSLocalizedString(@"actions.ok", nil)];
-    [self invalidateIntrinsicContentSize];
+    if (self.type == HEMAlertViewTypeBoolean)
+        [self addButtonDivider];
+    [self updateFrame];
+}
+
+- (void)addButtonDivider {
+    CGSize alertSize = [self intrinsicContentSize];
+    CGFloat height = HEMDialogButtonHeight;
+    CGRect frame = CGRectMake(floorCGFloat(alertSize.width/2), alertSize.height - height, 1, height);
+    UIView *divider = [[UIView alloc] initWithFrame:frame];
+    divider.backgroundColor = [UIColor colorWithHex:0xE6E6E6 alpha:1.0];
+    [self addSubview:divider];
 }
 
 - (void)addImageViewWithImage:(UIImage *)image {
@@ -123,48 +152,41 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
 
 - (void)setDefaultButtonText:(NSString *)text {
     UIButton *button;
+    NSString * title = [text uppercaseString];
     if (!self.defaultButton) {
-        button = [[HEMActionButton alloc] initWithFrame:[self nextButtonFrame]];
-        [button addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
+        button = [self buttonWithTitle:title isPrimary:YES];
         [self.buttons addObject:button];
         [self addSubview:button];
     } else {
         button = [self.buttons firstObject];
+        [button setTitle:title forState:UIControlStateNormal];
     }
-    [button setTitle:[text uppercaseString] forState:UIControlStateNormal];
-}
-
-- (CGSize)intrinsicContentSize {
-    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds()) - (2 * HEMDialogHorzMargins);
-    CGFloat height = CGRectGetMaxY(self.messageTextView.frame);
-    if (self.buttons.count > 0) {
-        height += HEMDialogSpaceBetweenMessageAndButtons;
-        height += (self.buttons.count * HEMDialogButtonHeight);
-        if (self.buttons.count == 1)
-            height += HEMDialogContentBotPadding;
-    }
-
-    return CGSizeMake(width, ceilCGFloat(height));
-}
-
-- (void)invalidateIntrinsicContentSize {
-    [super invalidateIntrinsicContentSize];
-    CGRect frame = self.frame;
-    frame.size = [self intrinsicContentSize];
-    self.frame = frame;
 }
 
 - (CGRect)nextButtonFrame {
     CGFloat const HEMDialogButtonHorzPadding = 8.0f;
-    CGFloat top = 0;
+    CGFloat top = 0, width = 0, left = 0;
+    CGFloat messageFrameBottom = CGRectGetMaxY(self.messageTextView.frame);
     UIButton *lastButton = [self.buttons lastObject];
-    if (lastButton)
-        top = CGRectGetMaxY(lastButton.frame);
-    else
-        top = HEMDialogSpaceBetweenMessageAndButtons + CGRectGetMaxY(self.messageTextView.frame);
-
-    CGFloat width = [self intrinsicContentSize].width - (2 * HEMDialogButtonHorzPadding);
-    return CGRectMake(HEMDialogButtonHorzPadding, top, width, HEMDialogButtonHeight);
+    if (lastButton) {
+        if (self.type == HEMAlertViewTypeVertical) {
+            top = CGRectGetMaxY(lastButton.frame);
+            left = HEMDialogButtonHorzPadding;
+        } else {
+            top = messageFrameBottom + HEMDialogBooleanSpaceBetweenMessageAndButtons;
+            left = CGRectGetMaxX(lastButton.frame);
+        }
+    } else if (self.type == HEMAlertViewTypeVertical) {
+        top = messageFrameBottom + HEMDialogVerticalSpaceBetweenMessageAndButtons;
+        left = HEMDialogButtonHorzPadding;
+    } else {
+        top = messageFrameBottom + HEMDialogBooleanSpaceBetweenMessageAndButtons;
+        left = HEMDialogButtonHorzPadding;
+    }
+    width = [self intrinsicContentSize].width - (2 * HEMDialogButtonHorzPadding);
+    if (self.type == HEMAlertViewTypeBoolean)
+        width = floorCGFloat(width/2);
+    return CGRectMake(left, top, width, HEMDialogButtonHeight);
 }
 
 #pragma mark - UITextViewDelegate
@@ -190,30 +212,46 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
 }
 
 - (void)addActionButtonWithTitle:(NSString *)title primary:(BOOL)primary action:(HEMDialogActionBlock)block {
+    UIButton *button = [self buttonWithTitle:title isPrimary:primary];
+    [[self actionsCallbacks] setValue:[block copy] forKey:title];
+    [self addSubview:button];
+    [self.buttons addObject:button];
+    [self updateFrame];
+}
+
+- (UIButton *)buttonWithTitle:(NSString *)title isPrimary:(BOOL)primary {
     CGRect buttonFrame = [self nextButtonFrame];
     UIButton *button = nil;
 
-    if (primary) {
-        button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
+    if (self.type == HEMAlertViewTypeVertical) {
+        if (primary) {
+            button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
+        } else {
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.titleLabel.font = [UIFont secondaryButtonFont];
+            button.frame = buttonFrame;
+            [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+        }
     } else {
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.titleLabel.font = [UIFont secondaryButtonFont];
         button.frame = buttonFrame;
+        if (primary) {
+            [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont booleanPrimaryButtonFont];
+        } else {
+            [button setTitleColor:[UIColor alertBooleanSecondaryColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont booleanSecondaryButtonFont];
+        }
     }
 
     [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    [[self actionsCallbacks] setValue:[block copy] forKey:title];
-    [self insertSubview:button belowSubview:self.defaultButton];
-    [self.buttons addObject:button];
-    [self invalidateIntrinsicContentSize];
+    return button;
 }
 
 - (void)customAction:(UIButton *)button {
     NSString *buttonTitle = [button titleForState:UIControlStateNormal];
-    HEMDialogActionBlock block = [[self actionsCallbacks] valueForKey:buttonTitle];
+    HEMDialogActionBlock block = self.actionsCallbacks[buttonTitle];
     if (block) {
         block();
     }

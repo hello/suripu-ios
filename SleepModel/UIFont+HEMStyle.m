@@ -291,6 +291,16 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
 }
 
++ (UIFont*)booleanPrimaryButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
+}
+
++ (UIFont*)booleanSecondaryButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
 + (UIFont*)navButtonTitleFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];

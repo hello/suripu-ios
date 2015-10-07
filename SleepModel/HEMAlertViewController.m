@@ -43,10 +43,10 @@
         self.title = title;
         _type = HEMAlertViewTypeBoolean;
         _attributedMessage = [[self class] attributedMessageText:message];
-        [self addAction:NSLocalizedString(@"actions.yes", nil)
+        [self addAction:[NSLocalizedString(@"actions.yes", nil) uppercaseString]
                 primary:defaultsToYes
             actionBlock:action];
-        [self addAction:NSLocalizedString(@"actions.no", nil)
+        [self addAction:[NSLocalizedString(@"actions.no", nil) uppercaseString]
                 primary:!defaultsToYes
             actionBlock:nil];
     }

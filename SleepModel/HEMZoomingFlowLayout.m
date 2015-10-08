@@ -25,12 +25,15 @@ CGFloat const HEMZoomActiveDistance = 20.f;
 
 - (NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    NSArray* array = [super layoutAttributesForElementsInRect:rect];
+    NSArray* existingAttributes = [super layoutAttributesForElementsInRect:rect];
+    NSMutableArray* attributes = [NSMutableArray new];
     CGRect visibleRect;
     visibleRect.origin = self.collectionView.contentOffset;
     visibleRect.size = self.collectionView.bounds.size;
 
-    for (UICollectionViewLayoutAttributes* attr in array) {
+    for (UICollectionViewLayoutAttributes* existingAttr in existingAttributes) {
+        UICollectionViewLayoutAttributes* attr = [existingAttr copy];
+        [attributes addObject:attr];
         if (CGRectIntersectsRect(attr.frame, rect)) {
             CGFloat distance = CGRectGetMidX(visibleRect) - attr.center.x;
             CGFloat normalizedDistance = distance / HEMZoomActiveDistance;
@@ -42,7 +45,7 @@ CGFloat const HEMZoomActiveDistance = 20.f;
             }
         }
     }
-    return array;
+    return attributes;
 }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.5.5
+
+New:
+
+* Updated button styles
+* Updated alert dialog visual design
+
+Fixes:
+
+* Fixed issue with Mixpanel identification
+
 ## 1.1.5.4
 
 Fixes:

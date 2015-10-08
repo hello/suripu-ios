@@ -48,11 +48,11 @@
 
 /**
  * Add additional action buttons to the dialog
- * @param title:   title of the action button
- * @param primary: YES if primary action, NO otherwise
- * @param block:   the block to invoke when button is tapped
+ * @param title: title of the action button
+ * @param style: button style
+ * @param block: the block to invoke when button is tapped
  */
-- (void)addAction:(NSString*)title primary:(BOOL)primary actionBlock:(HEMDialogActionBlock)block;
+- (void)addButtonWithTitle:(NSString*)title style:(HEMAlertViewButtonStyle)style action:(HEMDialogActionBlock)block;
 
 /**
  * If the message set has a link, this configures the dialog to forward the tap

@@ -241,14 +241,14 @@
  */
 + (UIFont*)primaryButtonFont;
 
-+ (UIFont*)booleanPrimaryButtonFont;
++ (UIFont*)alertBoldButtonFont;
 
 /**
  * Font used for normal UIButtons that are secondary actions
  */
 + (UIFont*)secondaryButtonFont;
 
-+ (UIFont*)booleanSecondaryButtonFont;
++ (UIFont*)alertLightButtonFont;
 
 /**
  * Font to be used with buttons on the navigation bar

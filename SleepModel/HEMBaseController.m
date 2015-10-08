@@ -84,9 +84,10 @@
     [dialogVC setDialogImage:image];
     [dialogVC setViewToShowThrough:seeThroughView];
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"dialog.help.title", nil)
-                primary:NO
-            actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"dialog.help.title", nil)
+                           style:HEMAlertViewButtonStyleBlueText
+                          action:^{
             [HEMSupportUtil openHelpToPage:helpPage fromController:weakSelf];
         }];
     [dialogVC showFrom:self];

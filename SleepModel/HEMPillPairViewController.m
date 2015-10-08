@@ -287,7 +287,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     NSString *message = NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil);
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"actions.skip-for-now", nil) primary:YES actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.skip-for-now", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
         __strong typeof(weakSelf) strongSelf = self;
         NSDictionary* props = @{kHEMAnalyticsEventPropOnBScreen :kHEMAnalyticsEventPropScreenPillPairing};
         [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
@@ -297,7 +297,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
         [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
-    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil) style:HEMAlertViewButtonStyleBlueText action:nil];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     [dialogVC showFrom:self];
 }

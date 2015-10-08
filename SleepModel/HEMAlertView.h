@@ -16,6 +16,13 @@ typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
     HEMAlertViewTypeBoolean = 1,
 };
 
+typedef NS_ENUM(NSUInteger, HEMAlertViewButtonStyle) {
+    HEMAlertViewButtonStyleRoundRect,
+    HEMAlertViewButtonStyleBlueText,
+    HEMAlertViewButtonStyleBlueBoldText,
+    HEMAlertViewButtonStyleGrayText,
+};
+
 @interface HEMAlertView : UIView
 
 /**
@@ -43,11 +50,11 @@ typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
 /**
  * Add additional action buttons with the title and the block to call when user
  * taps on it
- * @param title:   the text for the button
- * @param primary: YES if it's a primary button, NO otherwise
- * @param blocK:   the block to invoke when button is pressed
+ * @param title: the text for the button
+ * @param style: button style
+ * @param blocK: the block to invoke when button is pressed
  */
-- (void)addActionButtonWithTitle:(NSString *)title primary:(BOOL)primary action:(HEMDialogActionBlock)block;
+- (void)addActionButtonWithTitle:(NSString *)title style:(HEMAlertViewButtonStyle)style action:(HEMDialogActionBlock)block;
 
 /**
  * Set the callback to invoke when a link in the body of the alert is pressed

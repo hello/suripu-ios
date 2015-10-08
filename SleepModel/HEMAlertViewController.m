@@ -30,7 +30,9 @@
                      controller:(UIViewController *)controller {
     UIView* view = [HEMRootViewController rootViewControllerForKeyWindow].view;
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
-    [dialogVC addAction:[NSLocalizedString(@"actions.ok", nil) uppercaseString] primary:YES actionBlock:nil];
+    [dialogVC addButtonWithTitle:[NSLocalizedString(@"actions.ok", nil) uppercaseString]
+                           style:HEMAlertViewButtonStyleRoundRect
+                          action:nil];
     dialogVC.viewToShowThrough = view;
     [dialogVC showFrom:controller];
 }
@@ -43,12 +45,12 @@
         self.title = title;
         _type = HEMAlertViewTypeBoolean;
         _attributedMessage = [[self class] attributedMessageText:message];
-        [self addAction:[NSLocalizedString(@"actions.yes", nil) uppercaseString]
-                primary:defaultsToYes
-            actionBlock:action];
-        [self addAction:[NSLocalizedString(@"actions.no", nil) uppercaseString]
-                primary:!defaultsToYes
-            actionBlock:nil];
+        [self addButtonWithTitle:[NSLocalizedString(@"actions.yes", nil) uppercaseString]
+                           style:defaultsToYes ? HEMAlertViewButtonStyleBlueBoldText : HEMAlertViewButtonStyleGrayText
+                          action:action];
+        [self addButtonWithTitle:[NSLocalizedString(@"actions.no", nil) uppercaseString]
+                           style:defaultsToYes ? HEMAlertViewButtonStyleGrayText : HEMAlertViewButtonStyleBlueBoldText
+                          action:nil];
     }
     return self;
 }
@@ -96,9 +98,9 @@
     return _dialogView;
 }
 
-- (void)addAction:(NSString*)title primary:(BOOL)primary actionBlock:(HEMDialogActionBlock)block {
+- (void)addButtonWithTitle:(NSString*)title style:(HEMAlertViewButtonStyle)style action:(HEMDialogActionBlock)block {
     __weak typeof(self) weakSelf = self;
-    [[self dialogView] addActionButtonWithTitle:title primary:primary action:^{
+    [[self dialogView] addActionButtonWithTitle:title style:style action:^{
         [weakSelf dismissViewControllerAnimated:YES completion:block];
     }];
 }

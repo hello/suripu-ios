@@ -198,36 +198,37 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
     [[self actionsCallbacks] setValue:[actionBlock copy] forKey:url];
 }
 
-- (void)addActionButtonWithTitle:(NSString *)title primary:(BOOL)primary action:(HEMDialogActionBlock)block {
-    UIButton *button = [self buttonWithTitle:title isPrimary:primary];
+- (void)addActionButtonWithTitle:(NSString *)title style:(HEMAlertViewButtonStyle)style action:(HEMDialogActionBlock)block {
+    UIButton *button = [self buttonWithTitle:title style:style];
     [[self actionsCallbacks] setValue:[block copy] forKey:title];
     [self addSubview:button];
     [self.buttons addObject:button];
     [self updateFrame];
 }
 
-- (UIButton *)buttonWithTitle:(NSString *)title isPrimary:(BOOL)primary {
+- (UIButton *)buttonWithTitle:(NSString *)title style:(HEMAlertViewButtonStyle)style {
     CGRect buttonFrame = [self nextButtonFrame];
     UIButton *button = nil;
-
-    if (self.type == HEMAlertViewTypeVertical) {
-        if (primary) {
-            button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
-        } else {
-            button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.titleLabel.font = [UIFont secondaryButtonFont];
-            button.frame = buttonFrame;
-            [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-        }
+    if (style == HEMAlertViewButtonStyleRoundRect) {
+        button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
     } else {
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = buttonFrame;
-        if (primary) {
-            [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont booleanPrimaryButtonFont];
-        } else {
-            [button setTitleColor:[UIColor alertBooleanSecondaryColor] forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont booleanSecondaryButtonFont];
+        switch (style) {
+            case HEMAlertViewButtonStyleBlueBoldText:
+                [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont alertBoldButtonFont];
+                break;
+            case HEMAlertViewButtonStyleGrayText:
+                [button setTitleColor:[UIColor alertBooleanSecondaryColor] forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont alertLightButtonFont];
+                break;
+            case HEMAlertViewButtonStyleBlueText:
+                [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont secondaryButtonFont];
+                break;
+            default:
+                break;
         }
     }
 

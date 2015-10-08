@@ -271,8 +271,8 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
     [dialogVC setViewToShowThrough:self.view];
-    [dialogVC addAction:NSLocalizedString(@"actions.no", nil) primary:YES actionBlock:nil];
-    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         if (action) {
             action();
         }
@@ -423,10 +423,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [dialogVC setViewToShowThrough:self.view];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"timezone.action.use-local", nil) primary:YES actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.use-local", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
         [weakSelf updateToLocalTimeZone];
     }];
-    [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.select-manually", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
     }];
     [dialogVC showFrom:self];

@@ -449,28 +449,40 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             : [strongSelf view];
 
         NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
-        HEMAlertViewController* dialogVC = nil;
-
         if (allowWiFiEdit) {
-            NSString* message = NSLocalizedString(@"pairing.error.link-account-failed-edit-wifi", nil);
-            dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
-            [dialogVC addAction:NSLocalizedString(@"actions.edit.wifi", nil) primary:NO actionBlock:^{
-                [strongSelf setCurrentState:HEMSensePairStateNeedWiFiChange];
-                [strongSelf executeNextStep];
-            }];
+            [strongSelf showEditWifiDialogWithTitle:title fromView:seeThroughView];
         } else {
-            NSString* message = NSLocalizedString(@"pairing.error.link-account-failed", nil);
-            dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
-            [dialogVC addAction:NSLocalizedString(@"dialog.help.title", nil)
-                        primary:NO
-                    actionBlock:^{
-                        [HEMSupportUtil openHelpToPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)
-                                        fromController:strongSelf];
-                    }];
+            [strongSelf showLinkAccountFailedDialogWithTitle:title fromView:seeThroughView];
         }
-        [dialogVC setViewToShowThrough:seeThroughView];
-        [dialogVC showFrom:strongSelf];
+
     }];
+}
+
+- (void)showEditWifiDialogWithTitle:(NSString *)title fromView:(UIView *)view {
+    NSString *message = NSLocalizedString(@"pairing.error.link-account-failed-edit-wifi", nil);
+    HEMAlertViewController *dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.edit.wifi", nil) style:HEMAlertViewButtonStyleBlueText action:^{
+        [self setCurrentState:HEMSensePairStateNeedWiFiChange];
+        [self executeNextStep];
+    }];
+    dialogVC.viewToShowThrough = view;
+    [dialogVC showFrom:self];
+}
+
+- (void)showLinkAccountFailedDialogWithTitle:(NSString *)title fromView:(UIView *)view {
+    NSString* message = NSLocalizedString(@"pairing.error.link-account-failed", nil);
+    __weak typeof(self) weakSelf = self;
+    HEMAlertViewController *dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"dialog.help.title", nil)
+                           style:HEMAlertViewButtonStyleBlueText
+                          action:^{
+                              [HEMSupportUtil openHelpToPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)
+                                              fromController:weakSelf];
+                          }];
+    dialogVC.viewToShowThrough = view;
+    [dialogVC showFrom:self];
 }
 
 - (void)showErrorMessage:(NSString*)message {

@@ -219,8 +219,8 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     [dialogVC setViewToShowThrough:self.view];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"actions.no", nil) primary:YES actionBlock:nil];
-    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         [weakSelf unpair];
     }];
     [dialogVC onLinkTapOf:helpLink takeAction:^(NSURL *link) {

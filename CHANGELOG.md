@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.5.4
+
+Fixes:
+
+* Insight detail text is no longer cut off
+* The unread indicator code has been slightly modified, but has now been reviewed
+
 ## 1.1.5.3
 
 New:

@@ -45,9 +45,9 @@
             NSLog(@"%@: Error: Could not save events to disk without a distinctId and token", self);
             return;
         }
-        NSDictionary* people = MPJSONSerializableObject(@{@"token":token,
-                                                          @"distinct_id":distinctId,
-                                                          @"set":properties});
+        NSDictionary* people = MPJSONSerializableObject(@{@"$token":token,
+                                                          @"$distinct_id":distinctId,
+                                                          @"$set":properties});
         strongSelf.peopleUpdates = [strongSelf.peopleUpdates arrayByAddingObject:people];
         if (![strongSelf writePropertiesToDisk:people])
             return;

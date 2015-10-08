@@ -157,7 +157,7 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
     if (message == nil) return nil;
     
     NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText];
-    _attributedMessage = [markdown_to_attr_string(message, 0, attributes) copy];
+    _attributedMessage = [[markdown_to_attr_string(message, 0, attributes) trim] copy];
     return _attributedMessage;
 }
 
@@ -220,7 +220,8 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
         itemSize.height = HEMInsightImageHeight;
     } else {
         NSAttributedString* attributedText = (row == self.titleRow) ? self.attributedTitle : self.attributedMessage;
-        CGFloat maxWidth = itemSize.width - (HEMInsightTextHorzPadding*2);
+        CGFloat margins = [collectionView layoutMargins].left + [collectionView layoutMargins].right;
+        CGFloat maxWidth = itemSize.width - (HEMInsightTextHorzPadding * 2) - margins;
         CGFloat textHeight = [attributedText sizeWithWidth:maxWidth].height;
         itemSize.height = textHeight + (HEMInsightTextVertPadding * 2);
     }

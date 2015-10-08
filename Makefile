@@ -23,6 +23,7 @@ test_ios9:
 
 ci:
 	set -o pipefail && $(CI_TASK) test | tee $(CIRCLE_ARTIFACTS)/xcodebuild.log | xcpretty --color --report junit --output $(CIRCLE_TEST_REPORTS)/xcode/results.xml
+	./Scripts/pods_project_fmt_checker.sh
 
 ipa:
 	ipa build

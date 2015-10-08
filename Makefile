@@ -1,5 +1,7 @@
-PROJECT_NAME=Sense
 DEFAULT_TASK=xcodebuild -workspace Sense.xcworkspace -scheme Sense
+CI_TASK=$(DEFAULT_TASK) -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6,OS=8.3"
+
+.PHONY:
 
 default: build
 
@@ -20,7 +22,7 @@ test_ios9:
 	$(DEFAULT_TASK) -sdk iphonesimulator9.0 test | xcpretty -c
 
 ci:
-	set -o pipefail && $(DEFAULT_TASK) -sdk iphonesimulator8.3 test | tee $CIRCLE_ARTIFACTS/xcodebuild.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
+	set -o pipefail && $(CI_TASK) test | tee $(CIRCLE_ARTIFACTS)/xcodebuild.log | xcpretty --color --report junit --output $(CIRCLE_TEST_REPORTS)/xcode/results.xml
 
 ipa:
 	ipa build

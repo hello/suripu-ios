@@ -8,79 +8,60 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^HEMDialogActionBlock)(void);
-typedef void(^HEMDialogLinkActionBlock)(NSURL* link);
+typedef void (^HEMDialogActionBlock)(void);
+typedef void (^HEMDialogLinkActionBlock)(NSURL *link);
+
+typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
+    HEMAlertViewTypeVertical = 0,
+    HEMAlertViewTypeBoolean = 1,
+};
+
+typedef NS_ENUM(NSUInteger, HEMAlertViewButtonStyle) {
+    HEMAlertViewButtonStyleRoundRect,
+    HEMAlertViewButtonStyleBlueText,
+    HEMAlertViewButtonStyleBlueBoldText,
+    HEMAlertViewButtonStyleGrayText,
+};
 
 @interface HEMAlertView : UIView
 
-@property (nonatomic, weak, readonly) UIButton* okButton;
-
 /**
- * Initiallize the dialog with an image that sits
- * above the title, the title of the message, and
- * the message for the dialog to display
- * 
- * @param image:   the image to show above the title
- * @param title:   the title of the dialog
- * @param message: the message of the dialog
- */
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message;
-
-/**
- * Initiallize the dialog with an image that sits
+ * Initialize the dialog with an image that sits
  * above the title, the title of the message, and
  * the message for the dialog to display
  *
- * @param image:   the image to show above the title
- * @param title:   the title of the dialog
- * @param message: the attributed message of the dialog
+ * @param image   the image to show above the title
+ * @param title   the title of the dialog
+ * @param type    the button layout for the alert, either
+ *                vertical or boolean (yes/no)
+ * @param message the attributed message of the dialog
  */
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-  attributedMessage:(NSAttributedString*)message;
-
-/**
- * Initiallize the dialog with an image that sits
- * above the title, the title of the message, and
- * the message for the dialog to display
- *
- * @param image:   the image to show above the title
- * @param title:   the title of the dialog
- * @param message: the message of the dialog
- * @param frame:   the frame of the dialog to initialize with, which will may or
- *                 may not be adjusted based on the contents of the view
- */
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message
-              frame:(CGRect)frame;
+- (instancetype)initWithImage:(UIImage *)image
+                        title:(NSString *)title
+                         type:(HEMAlertViewType)type
+            attributedMessage:(NSAttributedString *)message;
 
 /**
  * Set the callback to invoke when user taps on the 'okay' button
  * @param doneBlock: the block to invoke
  */
-- (void)onDone:(HEMDialogActionBlock)doneBlock;
-
+- (void)setCompletionBlock:(HEMDialogActionBlock)doneBlock;
 
 /**
  * Add additional action buttons with the title and the block to call when user
  * taps on it
- * @param title:   the text for the button
- * @param primary: YES if it's a primary button, NO otherwise
- * @param blocK:   the block to invoke when button is pressed
+ * @param title: the text for the button
+ * @param style: button style
+ * @param blocK: the block to invoke when button is pressed
  */
-- (void)addActionButtonWithTitle:(NSString*)title
-                         primary:(BOOL)primary
-                          action:(HEMDialogActionBlock)block;
+- (void)addActionButtonWithTitle:(NSString *)title style:(HEMAlertViewButtonStyle)style action:(HEMDialogActionBlock)block;
 
 /**
  * Set the callback to invoke when a link in the body of the alert is pressed
- * 
+ *
  * @param url:         the url string that should trigger the action block
  * @param actionBlock: the block to call when the url is tapped on
  */
-- (void)onLink:(NSString*)url tap:(HEMDialogLinkActionBlock)actionBlock;
+- (void)onLink:(NSString *)url tap:(HEMDialogLinkActionBlock)actionBlock;
 
 @end

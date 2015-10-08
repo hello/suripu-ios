@@ -172,27 +172,21 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 - (IBAction)deleteAndDismissFromView:(id)sender {
     NSString *title = NSLocalizedString(@"alarm.delete.confirm.title", nil);
     NSString *message = NSLocalizedString(@"alarm.delete.confirm.message", nil);
-    HEMAlertViewController *dialogVC = [HEMAlertViewController new];
-    [dialogVC setTitle:title];
-    [dialogVC setMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.yes", nil)];
-    [dialogVC setViewToShowThrough:self.view];
-    [dialogVC addAction:NSLocalizedString(@"actions.no", nil)
-                primary:NO
-            actionBlock:nil];
-
     __weak typeof(self) weakSelf = self;
-    [dialogVC showFrom:self onDefaultActionSelected:^{
+    [[[HEMAlertViewController alloc] initBooleanDialogWithTitle:title
+                                                        message:message
+                                                  defaultsToYes:YES
+                                                         action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.alarm delete];
         [HEMAlarmUtils updateAlarmsFromPresentingController:strongSelf completion:^(NSError *error) {
-            if (error) {
-                [strongSelf.alarm save];
-            } else {
-                [strongSelf dismiss:NO];
-            }
+           if (error) {
+               [strongSelf.alarm save];
+           } else {
+               [strongSelf dismiss:NO];
+           }
         }];
-    }];
+    }] showFrom:self];
 }
 
 - (IBAction)updateAlarmState:(UISwitch *)sender {

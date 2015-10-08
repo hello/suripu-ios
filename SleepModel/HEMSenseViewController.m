@@ -270,9 +270,9 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
-    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         if (action) {
             action();
         }
@@ -283,7 +283,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    [dialogVC showFrom:self];
 }
 
 - (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {
@@ -420,16 +420,16 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
     [dialogVC setViewToShowThrough:self.view];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
-        [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
-    }];
-    [dialogVC showFrom:self onDefaultActionSelected:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.use-local", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
         [weakSelf updateToLocalTimeZone];
     }];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.select-manually", nil) style:HEMAlertViewButtonStyleBlueText action:^{
+        [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
+    }];
+    [dialogVC showFrom:self];
 }
 
 - (void)updateToLocalTimeZone {

@@ -78,15 +78,19 @@
                     title:(NSString*)title
                     image:(UIImage*)image
            seeThroughView:(UIView*)seeThroughView
-                 withHelpPage:(NSString*)helpPage {
+             withHelpPage:(NSString*)helpPage {
     
-    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
-    [dialogVC setTitle:title];
-    [dialogVC setMessage:message];
-    [dialogVC setHelpPage:helpPage];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     [dialogVC setDialogImage:image];
     [dialogVC setViewToShowThrough:seeThroughView];
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    __weak typeof(self) weakSelf = self;
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"dialog.help.title", nil)
+                           style:HEMAlertViewButtonStyleBlueText
+                          action:^{
+            [HEMSupportUtil openHelpToPage:helpPage fromController:weakSelf];
+        }];
+    [dialogVC showFrom:self];
 }
 
 - (void)dealloc {

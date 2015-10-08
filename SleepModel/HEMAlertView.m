@@ -150,19 +150,6 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
     return [self.buttons firstObject];
 }
 
-- (void)setDefaultButtonText:(NSString *)text {
-    UIButton *button;
-    NSString * title = [text uppercaseString];
-    if (!self.defaultButton) {
-        button = [self buttonWithTitle:title isPrimary:YES];
-        [self.buttons addObject:button];
-        [self addSubview:button];
-    } else {
-        button = [self.buttons firstObject];
-        [button setTitle:title forState:UIControlStateNormal];
-    }
-}
-
 - (CGRect)nextButtonFrame {
     CGFloat const HEMDialogButtonHorzPadding = 8.0f;
     CGFloat top = 0, width = 0, left = 0;

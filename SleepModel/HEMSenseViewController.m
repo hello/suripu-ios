@@ -270,8 +270,8 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
+    [dialogVC addAction:NSLocalizedString(@"actions.no", nil) primary:YES actionBlock:nil];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
         if (action) {
             action();
@@ -420,16 +420,16 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
     [dialogVC setViewToShowThrough:self.view];
     
     __weak typeof(self) weakSelf = self;
+    [dialogVC addAction:NSLocalizedString(@"timezone.action.use-local", nil) primary:YES actionBlock:^{
+        [weakSelf updateToLocalTimeZone];
+    }];
     [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
         [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
     }];
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        [weakSelf updateToLocalTimeZone];
-    }];
+    [dialogVC showFrom:self];
 }
 
 - (void)updateToLocalTimeZone {

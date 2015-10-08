@@ -57,6 +57,4 @@ typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
  */
 - (void)onLink:(NSString *)url tap:(HEMDialogLinkActionBlock)actionBlock;
 
-- (void)setDefaultButtonText:(NSString *)text;
-
 @end

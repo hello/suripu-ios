@@ -21,11 +21,6 @@
 @property (nonatomic) HEMAlertViewType type;
 
 /**
- *  Title of the default (primary) button
- */
-@property (nonatomic, copy)   NSString* defaultButtonTitle;
-
-/**
  *  Present a non-interactive dialog
  *
  *  @param title      title of the dialog
@@ -74,19 +69,7 @@
  * will dismiss itself when the default action has been selected.
  *
  * @param controller: the controller that is presenting this dialog
- * @param doneBlock:  the block to invoke when user taps on the default button
  */
-- (void)showFrom:(UIViewController*)controller onDefaultActionSelected:(HEMDialogActionBlock)doneBlock;
-
 - (void)showFrom:(UIViewController*)controller;
-
-/**
- * Call this method if you are presenting this controller yourself, which will
- * show the dialog.  If using this method, call it after you have presented the
- * controller for optimal experience
- *
- * @param doneBlock:  the block to invoke when user taps on Okay button
- */
-- (void)show:(HEMDialogActionBlock)doneBlock;
 
 @end

@@ -96,7 +96,7 @@ NSMutableURLRequest* MPDataURLRequest(NSData *data, NSString *endpoint) {
 #pragma clang diagnostic pop
     }
 
-    NSData *body = [[NSString stringWithFormat:@"ip=0&data=%@", escapedData] dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *body = [[NSString stringWithFormat:@"ip=1&data=%@", escapedData] dataUsingEncoding:NSUTF8StringEncoding];
     NSURL *baseURL = [NSURL URLWithString:MPBaseURLString];
     NSURL *url = [NSURL URLWithString:endpoint relativeToURL:baseURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];

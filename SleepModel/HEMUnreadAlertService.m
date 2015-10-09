@@ -30,21 +30,11 @@
     return service;
 }
 
-- (BOOL)lastViewedIsToday {
-    return [self lastReadStats]
-        && [[[self lastReadStats] lastViewedInsights] isOnSameDay:[NSDate date]];
-}
-
 #pragma mark - Updates
 
 - (void)udpateLastViewStats:(void(^)(NSError* error))completion {
-    if ([self lastViewedIsToday]) {
-        completion (nil);
-        return;
-    }
-    
     [SENAPIAppStats retrieveStats:^(SENAppStats* stats, NSError *error) {
-        if (!error) {
+        if (!error && stats) {
             [self setLastReadStats:stats];
         }
         completion (error);
@@ -53,7 +43,8 @@
 
 - (void)updateUnread:(void(^)(NSError* error))completion {
     [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
-        if (!error) {
+        if (!error && stats) {
+            DDLogVerbose(@"updated unread statuses, has unread %@", [self hasUnread] ? @"y" : @"n");
             [self setUnreadStats:stats];
         }
         completion (error);
@@ -61,16 +52,6 @@
 }
 
 - (void)update:(HEMUnreadCompletionHandler)completion {
-    // There can potentially be case where last viewed was today, but there are
-    // stil unread items such as questions so we should check again in case user
-    // has answered some questions
-    if ([self lastViewedIsToday] && ![self hasUnread]) {
-        if (completion) {
-            completion ([self hasUnread], nil);
-        }
-        return;
-    }
-    
     [self udpateLastViewStats:^(NSError* error) {
         if (!error) {
             [self updateUnread:^(NSError *error) {
@@ -88,6 +69,7 @@
 
 - (void)updateLastViewFor:(HEMUnreadType)unreadType
                completion:(HEMUnreadCompletionHandler)completion {
+    // not everything needs to update / pull everything
     switch (unreadType) {
         case HEMUnreadTypeInsights: {
             [self updateInsightsLastViewed:completion];
@@ -107,25 +89,23 @@
 }
 
 - (void)updateInsightsLastViewed:(HEMUnreadCompletionHandler)completion {
-    NSDate* today = [NSDate date];
-    if (![[[self lastReadStats] lastViewedInsights] isOnSameDay:today]) {
-        SENAppStats* stats = [SENAppStats new];
-        [stats setLastViewedInsights:today];
-        [SENAPIAppStats updateStats:stats completion:^(id data, NSError *error) {
+    SENAppStats* stats = [SENAppStats new];
+    [stats setLastViewedInsights:[NSDate date]];
+    [SENAPIAppStats updateStats:stats completion:^(id data, NSError *error) {
+        if (!error) {
             [self update:completion];
-        }];
-    } else {
-        if (completion) {
-            completion ([self hasUnread], nil);
+        } else {
+            if (completion) {
+                completion ([self hasUnread], error);
+            }
         }
-    }
+    }];
 }
 
 - (void)updateQuestionsReadStatus:(HEMUnreadCompletionHandler)completion {
-    // optimistically update questions unread based on whether 
     [self updateUnread:^(NSError *error) {
         if (completion) {
-            completion ([self hasUnread], nil);
+            completion ([self hasUnread], error);
         }
     }];
 }

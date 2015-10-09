@@ -109,7 +109,6 @@
         if (!didUpdate)
             return;
         
-        [[strongSelf dataSource] updateLastViewed:HEMUnreadTypeInsights completion:nil];
         [strongSelf updateLastViewed:HEMUnreadTypeInsights];
         [[strongSelf collectionView] reloadData];
     }];

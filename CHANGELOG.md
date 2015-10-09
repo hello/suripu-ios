@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.5.8
+
+Fixes:
+
+* fixes slowness when entering in to zoomed out view of timeline
+
 ## 1.1.5.7
 
 Fixes:

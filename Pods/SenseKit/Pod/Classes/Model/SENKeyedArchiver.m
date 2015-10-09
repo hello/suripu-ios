@@ -115,7 +115,7 @@ static dispatch_queue_t SENKeyedArchiverQueue = nil;
     dispatch_once(&onceToken, ^{
         SENKeyedArchiverQueue = dispatch_queue_create("SENKeyedArchiver-Read", NULL);
     });
-    dispatch_sync(SENKeyedArchiverQueue, block);
+    dispatch_async(SENKeyedArchiverQueue, block);
 }
 
 @end

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.5.7
+
+Fixes:
+
+* fixes issue where alert dialogs shown in password / email / name cannot be dismissed
+* fixes app icon catalog references
+
 ## 1.1.5.6
 
 Fixes:

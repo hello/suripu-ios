@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.5.6
+
+Fixes:
+
+* setting ip=1 flag in mixpanel request to force geolocation props to set
+* always check unread / update insight last viewed
+
 ## 1.1.5.5
 
 New:

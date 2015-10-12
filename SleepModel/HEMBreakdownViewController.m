@@ -302,7 +302,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         default:
             break;
     }
-    
+
     return value ? [[HEMSplitTextObject alloc] initWithValue:value unit:unit] : nil;
 }
 
@@ -310,7 +310,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     NSString* format = @"sleep-stat.%@.condition.%@";
     NSString* name = [[metric name] lowercaseString];
     NSString* condition = nil;
-    
+
     switch ([metric condition]) {
         case SENConditionAlert:
             condition = @"alert";
@@ -326,7 +326,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         default:
             condition = @"unknown";
     }
-    
+
     NSString* key = [NSString stringWithFormat:format, name, condition];
     return NSLocalizedString(key, nil);
 }

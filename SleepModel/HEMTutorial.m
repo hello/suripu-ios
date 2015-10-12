@@ -23,12 +23,15 @@
 
 @implementation HEMTutorial
 
+static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbing";
+
 static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTimelineDaySwitchCounter";
 static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
-static NSString* const HEMTutorialHHTimelineZoom = @"HandholdingTimelineZoom";
 static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
 static CGFloat const HEMTutorialHHTimelineDaysGestureXStart = 45.0f;
 static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 2;
+
+static NSString* const HEMTutorialHHTimelineZoom = @"HandholdingTimelineZoom";
 static NSUInteger const HEMTutorialHHTimelineZoomMinTimelinesViewed = 5;
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
@@ -71,15 +74,15 @@ static CGFloat const HEMTutorialDelay = 0.5f;
         return NO;
     }
     
-    NSDate* firstCheckedDate = [preferences sessionPreferenceForKey:HEMTutorialHHTimelineDaySwitchCounter];
+    NSDate* firstCheckedDate = [preferences persistentPreferenceForKey:HEMTutorialHHTimelineDaySwitchCounter];
     return [firstCheckedDate daysElapsed] >= HEMTutorialHHTimelineDaysMinDaysChecked;
 }
 
 + (void)setHandholdingFirstChecked:(NSString*)key {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    NSDate* date = [preferences sessionPreferenceForKey:key];
+    NSDate* date = [preferences persistentPreferenceForKey:key];
     if (!date) {
-        [preferences setSessionPreference:[NSDate date] forKey:key];
+        [preferences setPersistentPreference:[NSDate date] forKey:key];
     }
 }
 
@@ -108,6 +111,37 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     
     [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-zoom", nil)];
     [handholdingView setAnchor:HEMHHDialogAnchorBottom];
+    
+    [handholdingView showInView:view];
+}
+
++ (BOOL)showHandholdingForSensorScrubbingIfNeededIn:(UIView*)view
+                               relativeToGraphFrame:(CGRect)graphFrame {
+    if (![self shouldShowTutorialForKey:HEMTutorialHHSensorScrubbing]) {
+        return NO;
+    }
+    
+    CGFloat gesturePadding = 20.0f;
+    CGFloat halfGestureSize = HEMHandholdingGestureSize / 2.0f;
+    CGFloat gestureCenterY = CGRectGetMinY(graphFrame) + gesturePadding + halfGestureSize;
+    CGFloat gestureEndCenterX = CGRectGetMaxX(graphFrame) - gesturePadding - halfGestureSize;
+    CGPoint startPoint = CGPointMake(gesturePadding + halfGestureSize, gestureCenterY);
+    CGPoint endPoint = CGPointMake(gestureEndCenterX, gestureCenterY);
+    
+    [self showHandholdingForSensorScrubbingIn:view from:startPoint to:endPoint];
+    [self markTutorialViewed:HEMTutorialHHSensorScrubbing];
+    return YES;
+}
+
++ (void)showHandholdingForSensorScrubbingIn:(UIView*)view
+                                       from:(CGPoint)start
+                                         to:(CGPoint)end {
+    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
+    [handholdingView setGestureStartCenter:start];
+    [handholdingView setGestureEndCenter:end];
+    
+    [handholdingView setMessage:NSLocalizedString(@"handholding.message.sensor-scrubbing", nil)];
+    [handholdingView setAnchor:HEMHHDialogAnchorTop];
     
     [handholdingView showInView:view];
 }
@@ -146,7 +180,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     dispatch_after(after, dispatch_get_main_queue(), block);
 }
 
-+ (void)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
++ (BOOL)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
 {
     NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
     if ([self shouldShowTutorialForKey:key]) {
@@ -154,7 +188,9 @@ static CGFloat const HEMTutorialDelay = 0.5f;
             [self showTutorialForSensorNamed:sensorName];
             [self markTutorialViewed:key];
         }];
+        return YES;
     }
+    return NO;
 }
 
 + (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
@@ -303,27 +339,41 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     return [self showTutorialWithContent:@[tutorial]];
 }
 
-#pragma mark - Session Preferences
+#pragma mark - Preferences
 
+/**
+ * TODO: remove session preference check at some distant version of the app.
+ *
+ * Previously it was showing per session, but now we want to show only once per
+ * install of the app.  For users who have installed the app before 1.1.5, we 
+ * want to still make sure they won't see the dialogs on an update to 1.1.5
+ * so we must also check to see that session preference exist or not.
+ *
+ * For early users, if user logs out, they will see the dialogs once more and that's
+ * it for the life of the app.
+ */
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
 {
-    return ![[[SENLocalPreferences sharedPreferences] sessionPreferenceForKey:key] boolValue];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return ![[preferences persistentPreferenceForKey:key] boolValue]
+        && ![[preferences sessionPreferenceForKey:key] boolValue];
 }
 
 + (void)markTutorialViewed:(NSString*)key
 {
-    [[SENLocalPreferences sharedPreferences] setSessionPreference:@YES forKey:key];
+    [[SENLocalPreferences sharedPreferences] setPersistentPreference:@YES forKey:key];
 }
 
 + (void)resetTutorials {
     SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialTimelineKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialSensorsKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialPillColorKey];
-    [prefs setSessionPreference:@NO forKey:HEMTutorialHHTimelineZoom];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialTimelineKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialTrendsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialPillColorKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHSensorScrubbing];
 }
 
 @end

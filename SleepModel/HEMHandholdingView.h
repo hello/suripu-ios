@@ -13,6 +13,8 @@ typedef NS_ENUM(NSUInteger, HEMHHDialogAnchor) {
     HEMHHDialogAnchorBottom = 2,
 };
 
+extern CGFloat const HEMHandholdingGestureSize;
+
 @interface HEMHandholdingView : UIView
 
 /**

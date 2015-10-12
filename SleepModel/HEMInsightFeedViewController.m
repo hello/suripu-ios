@@ -74,10 +74,29 @@
                                                  name:SENAPIReachableNotification object:nil];
     
     [SENAnalytics track:kHEMAnalyticsEventFeed];
+    
+}
+
+- (void)updateLastViewed:(HEMUnreadType)type {
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] updateLastViewed:type completion:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+        } else {
+            [strongSelf updateUnreadIndicator];
+        }
+    }];
+}
+
+- (void)updateUnreadIndicator {
+    BOOL hasUnreadInsightQuestions = [[self dataSource] hasUnreadItems];
+    [[self tabBarItem] setBadgeValue:hasUnreadInsightQuestions ? @"1" : nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [self updateUnreadIndicator];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -89,6 +108,8 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!didUpdate)
             return;
+        
+        [strongSelf updateLastViewed:HEMUnreadTypeInsights];
         [[strongSelf collectionView] reloadData];
     }];
 }
@@ -185,6 +206,7 @@
         __weak typeof(self) weakSelf = self;
         [[SENServiceQuestions sharedService] skipQuestion:question completion:^(NSError *error) {
             [weakSelf removeCellAtIndexPath:path];
+            [weakSelf updateLastViewed:HEMUnreadTypeQuestions];
             [sender setEnabled:YES];
         }];
     }

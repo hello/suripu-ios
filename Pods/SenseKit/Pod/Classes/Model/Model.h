@@ -14,6 +14,8 @@
 #import "SENPreference.h"
 #import "SENLocalPreferences.h"
 #import "SENSupportTopic.h"
+#import "SENAppStats.h"
+#import "SENAppUnreadStats.h"
 
 void SENClearModel();
 
@@ -35,6 +37,13 @@ NSDate* SENDateFromNumber(id value);
  *  @return a number or nil
  */
 NSNumber* SENDateMillisecondsSince1970(NSDate* date);
+
+/**
+ *  @param value to translate in to a BOOL value
+ *
+ *  @return BOOL value or NO if value cannot be translated
+ */
+BOOL SENBoolValue(id value);
 
 /**
  *  Checks the type of an object, returning the object if it

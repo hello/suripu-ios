@@ -23,7 +23,6 @@
 #import "HEMSnazzBarController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDebugController.h"
-#import "HEMActionView.h"
 #import "HEMSystemAlertController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
@@ -89,7 +88,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate
 {
     if (!startDate)
-        startDate = [[NSDate date] previousDay];
+        startDate = [NSDate timelineInitialDate];
     
     HEMSleepSummarySlideViewController* slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
     [slideController setDelegate:self];

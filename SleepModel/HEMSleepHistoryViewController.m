@@ -99,9 +99,11 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 {
     NSUInteger capacity = HEMSleepDataCapacity;
     NSDate* today = [[NSDate date] dateAtMidnight];
+    if ([[today previousDay] shouldCountAsPreviousDay])
+        today = [today previousDay];
     NSDate* creationDate = [[[SENServiceAccount sharedService] account] createdAt];
     if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
-        NSDateComponents *difference = [self.calendar components:NSDayCalendarUnit fromDate:creationDate  toDate:today options:0];
+        NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay fromDate:creationDate  toDate:today options:0];
         capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
     }
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
@@ -118,7 +120,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 - (void)scrollToSelectedDateAnimated:(BOOL)animated
 {
     NSDate* initialDate = [(SENTimeline*)[self.sleepDataSummaries firstObject] date];
-    NSDateComponents *components = [self.calendar components:NSDayCalendarUnit
+    NSDateComponents *components = [self.calendar components:NSCalendarUnitDay
                                                     fromDate:initialDate
                                                       toDate:self.selectedDate
                                                      options:0];
@@ -144,7 +146,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 
 - (BOOL)currentDateHasSameYearAsDate:(NSDate*)date
 {
-    NSCalendarUnit units = NSYearCalendarUnit;
+    NSCalendarUnit units = NSCalendarUnitYear;
     NSDateComponents* dateComponents = [self.calendar components:units fromDate:date];
     NSDateComponents* currentDateComponents = [self.calendar components:units fromDate:[NSDate date]];
     return dateComponents.year == currentDateComponents.year;

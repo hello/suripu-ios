@@ -268,12 +268,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)dialogTitleFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:18.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
 }
 
 + (UIFont*)dialogMessageFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
 }
 
 + (UIFont*)dialogMessageBoldFont
@@ -283,12 +283,22 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)primaryButtonFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:15.0f];
 }
 
 + (UIFont*)secondaryButtonFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameBook size:16.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+}
+
++ (UIFont*)alertBoldButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
+}
+
++ (UIFont*)alertLightButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
 + (UIFont*)navButtonTitleFont

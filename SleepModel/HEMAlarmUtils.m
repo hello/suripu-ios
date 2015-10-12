@@ -11,7 +11,7 @@
     NSUInteger const tooSoonMinuteLimit = 5;
     NSDate *now = [NSDate date];
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSCalendarUnit units = (NSHourCalendarUnit | NSMinuteCalendarUnit);
+    NSCalendarUnit units = (NSCalendarUnitHour | NSCalendarUnitMinute);
     NSDateComponents *components = [calendar components:units fromDate:now];
     NSUInteger minuteCutOff = components.minute + tooSoonMinuteLimit;
     BOOL alarmIsInNextHour = (alarmHour == components.hour + 1 || (alarmHour == 0 && components.hour == 23));
@@ -112,7 +112,7 @@
     dummyAlarm.hour = hour;
     NSDate* fireDate = [dummyAlarm nextRingDate];
     [dummyAlarm delete];
-    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents* components = [calendar components:NSCalendarUnitWeekday fromDate:fireDate];
     switch (components.weekday) {
         case 1: return SENAlarmRepeatSunday;

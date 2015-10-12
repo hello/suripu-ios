@@ -283,25 +283,23 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)showSkipConfirmation {
-    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
-    [dialogVC setTitle:NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil)];
-    [dialogVC setMessage:NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil)];
-    [dialogVC setDefaultButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
-    [dialogVC setViewToShowThrough:[[self navigationController] view]];
-    
-    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:nil];
-    
+    NSString *title = NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil);
+    NSString *message = NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil);
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     __weak typeof(self) weakSelf = self;
-    [dialogVC showFrom:self onDefaultActionSelected:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.skip-for-now", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
         __strong typeof(weakSelf) strongSelf = self;
         NSDictionary* props = @{kHEMAnalyticsEventPropOnBScreen :kHEMAnalyticsEventPropScreenPillPairing};
         [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
-        
+
         [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
         [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
         NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
         [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil) style:HEMAlertViewButtonStyleBlueText action:nil];
+    [dialogVC setViewToShowThrough:[[self navigationController] view]];
+    [dialogVC showFrom:self];
 }
 
 - (void)cancel:(id)sender {

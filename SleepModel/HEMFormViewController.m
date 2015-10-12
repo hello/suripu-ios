@@ -127,12 +127,10 @@
 
 - (void)showErrorMessage:(NSString*)message {
     UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    
-    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
-    [dialogVC setTitle:[self title]];
-    [dialogVC setMessage:message];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:self.title message:message];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
     [dialogVC setViewToShowThrough:[rootVC view]];
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    [dialogVC showFrom:self];
 }
 
 #pragma mark - Actions

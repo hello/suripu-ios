@@ -141,7 +141,6 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     
     __weak typeof(self) weakSelf = self;
     SENServiceDevice* service = [SENServiceDevice sharedService];
-    [service clearCache];
     [service replaceWithNewlyPairedSenseManager:senseManager completion:^(NSError *error) {
         [weakSelf setLoadingSense:NO];
         

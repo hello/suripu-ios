@@ -8,38 +8,24 @@
 
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/SENKeyedArchiver.h>
-#import <YapDatabase/YapDatabase.h>
 #import "HEMAppUsage.h"
 #import "NSDate+HEMRelative.h"
-
-@interface SENKeyedArchiver()
-+ (YapDatabaseConnection*)mainConnection;
-@end
 
 SPEC_BEGIN(HEMAppUsageSpec)
 
 describe(@"HEMAppUsage", ^{
 
     __block HEMAppUsage* appUsage;
-    __block YapDatabaseConnection* conn;
-
-    beforeAll(^{
-        NSString *databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppUsageSpec.sqlite"];
-        YapDatabase* db = [[YapDatabase alloc] initWithPath:databasePath];
-        conn = [db newConnection];
-    });
+    __block NSString* databasePath = nil;
 
     beforeEach(^{
-        [SENKeyedArchiver stub:@selector(mainConnection) andReturn:conn];
+        databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppUsageSpec"];
+        [SENKeyedArchiver stub:@selector(datastorePath) andReturn:databasePath];
     });
 
     afterEach(^{
-        appUsage = nil;
-        [conn readWriteWithBlock:^(YapDatabaseReadWriteTransaction * __nonnull transaction) {
-            [transaction removeAllObjectsInAllCollections];
-        }];
+        [[NSFileManager defaultManager] removeItemAtPath:databasePath error:nil];
     });
-
     describe(@"+appUsageForIdentifier:completion", ^{
         
         context(@"first time retrieving app usage", ^{

@@ -11,6 +11,13 @@
 @interface NSDate (HEMRelative)
 
 /**
+ *  Date to display while initializing a timeline view
+ *
+ *  @return a date
+ */
++ (NSDate*)timelineInitialDate;
+
+/**
  * @return number of days that from today
  */
 - (NSInteger)daysElapsed;
@@ -47,4 +54,14 @@
 
 - (BOOL)isOnSameDay:(NSDate *)otherDate;
 
+/**
+ *  Checks if the current time is the early morning hours of 'today'
+ *
+ *  @discussion If a user checks their timeline/history during the early
+ *  hours while still in bed, they should see the data from the previous
+ *  day instead of "Not Enough Data", as they are still in bed.
+ *
+ *  @return YES if it is early in the morning of 'today'
+ */
+- (BOOL)shouldCountAsPreviousDay;
 @end

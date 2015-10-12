@@ -109,33 +109,4 @@ typedef NS_ENUM(NSUInteger, SENAnalyticsProviderName) {
  */
 + (void)trackError:(NSError*)error withEventName:(NSString*)eventName;
 
-/**
- * @method startEvent:
- *
- * @discussion
- * Start a time-tracked event by name, which will log the time in which this
- * event was started.  Once the event is done, call endEvent: to track the
- * event by name and log the duration of the event.
- *
- * Both startEvent: and endEvent: must be provided with the same event name.
- * If startEvent: is called without a matching endEvent:, a potential leak may
- * occur, though the leak is likely minimal.
- *
- * @see endEvent:
- *
- * @param eventName: the name of the event
- */
-+ (void)startEvent:(NSString*)eventName;
-
-/**
- * @method endEvent:
- *
- * @discussion
- * End the event that has been started by the same eventName specified.  If the
- * event by name has not been started, this will simply do nothing.
- *
- * @param eventName: the name of the event, which must match the startEvent: name
- */
-+ (void)endEvent:(NSString*)eventName;
-
 @end

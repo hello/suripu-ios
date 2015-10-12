@@ -6,226 +6,174 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import <CGFloatType/CGFloatType.h>
 #import "HEMAlertView.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "NSString+HEMUtils.h"
+#import "NSAttributedString+HEMUtils.h"
+#import "HEMAlertTextView.h"
 #import "HEMScreenUtils.h"
 
-static CGFloat const kHEMDialogHorzMargins = 17.0f;
-static CGFloat const kHEMDialogCornerRadius = 4.0f;
-static CGFloat const kHEMDialogContentSpacing = 30.0f;
-static CGFloat const kHEMDialogContentHorzPadding = 25.0f;
-static CGFloat const kHEMDialogContentTopPadding = 34.0f;
-static CGFloat const kHEMDialogContentBotPadding = 10.0f;
-static CGFloat const kHEMDialogContentMaxImageHeight = 150.0f;
-static CGFloat const kHEMDialogButtonBorderWidth = 1.0f;
-static CGFloat const kHEMDialogButtonHorzPadding = 20.0f;
-static CGFloat const kHEMDialogButtonHeight = 40.0f;
-static CGFloat const kHEMDialogButtonSpacing = 10.0f;
-
-@interface HEMAlertView() <UITextViewDelegate>
+@interface HEMAlertView () <UITextViewDelegate>
 
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
-@property (nonatomic, copy)   NSString* title;
-@property (nonatomic, copy)   NSString* message;
-@property (nonatomic, strong) UIImage* image;
-@property (nonatomic, weak)   UIButton* okButton; // used as anchor for actions
-@property (nonatomic, strong) NSMutableDictionary* actionsCallbacks; // key = title, value = block
-@property (nonatomic, copy)   NSAttributedString* attributedMessage;
-
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UITextView *messageTextView;
+@property (nonatomic, strong) NSMutableArray *buttons;
+@property (nonatomic, strong) NSMutableDictionary *actionsCallbacks; // key = title, value = block
+@property (nonatomic) HEMAlertViewType type;
 @end
 
 @implementation HEMAlertView
 
-+ (CGRect)defaultFrame {
-    CGRect screenBounds = HEMKeyWindowBounds();
-    CGRect frame = CGRectZero;
-    frame.size.width = CGRectGetWidth(screenBounds)-(2*kHEMDialogHorzMargins);
-    frame.size.height = kHEMDialogContentTopPadding + kHEMDialogContentBotPadding;
-    return frame;
-}
+CGFloat const HEMDialogContentSpacing = 8.0f;
+CGFloat const HEMDialogContentTopPadding = 40.0f;
+CGFloat const HEMDialogContentBotPadding = 8.0f;
+CGFloat const HEMDialogVerticalSpaceBetweenMessageAndButtons = 38.0f;
+CGFloat const HEMDialogBooleanSpaceBetweenMessageAndButtons = 38.0f;
+CGFloat const HEMDialogButtonHeight = 56.0f;
+CGFloat const HEMDialogHorzMargins = 8.0f;
 
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message {
-    
-    return [self initWithImage:image title:title message:message frame:[[self class] defaultFrame]];
-}
-
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-  attributedMessage:(NSAttributedString*)message {
-    self = [super initWithFrame:[[self class] defaultFrame]];
-    if (self) {
-        [self setImage:image];
-        [self setTitle:title];
-        [self setAttributedMessage:message];
-        [self setup];
+- (instancetype)initWithImage:(UIImage *)image
+                        title:(NSString *)title
+                         type:(HEMAlertViewType)type
+            attributedMessage:(NSAttributedString *)message {
+    if (self = [super initWithFrame:CGRectZero]) {
+        _type = type;
+        _actionsCallbacks = [NSMutableDictionary new];
+        _buttons = [NSMutableArray new];
+        [self layoutElementsWithImage:image title:title message:message];
     }
     return self;
 }
 
-- (id)initWithImage:(UIImage*)image
-              title:(NSString*)title
-            message:(NSString*)message
-              frame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self setImage:image];
-        [self setTitle:title];
-        [self setMessage:message];
-        [self setup];
-    }
-    return self;
-}
-
-- (void)setup {
-    [self setActionsCallbacks:[NSMutableDictionary dictionary]];
-    [self setContentInsets:UIEdgeInsetsMake(kHEMDialogContentTopPadding,
-                                            kHEMDialogContentHorzPadding,
-                                            kHEMDialogContentBotPadding,
-                                            kHEMDialogContentHorzPadding)];
-    
-    [self setBackgroundColor:[UIColor whiteColor]];
-    [[self layer] setCornerRadius:kHEMDialogCornerRadius];
-    [[self layer] setBorderWidth:kHEMDialogButtonBorderWidth];
-    [[self layer] setBorderColor:[[UIColor colorWithWhite:0.0f alpha:0.1f] CGColor]];
-    
-    CGFloat maxY = [self addDialogImage];
-    maxY = [self addTitleLabelAtY:maxY];
-    maxY = [self addMessageView:maxY];
-    maxY = [self addOkButtonAtY:maxY];
-    
-    CGRect myFrame = [self frame];
-    myFrame.size.height = maxY + kHEMDialogContentBotPadding;
-    [self setFrame:myFrame];
-}
-
-- (CGFloat)addDialogImage {
-    CGFloat maxY = kHEMDialogContentTopPadding;
-    if ([self image] != nil) {
-        CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
-        CGRect imageFrame = {
-            [self contentInsets].left,
-            [self contentInsets].top,
-            CGRectGetWidth([self bounds]) - horzPadding,
-            MIN(kHEMDialogContentMaxImageHeight, [[self image] size].height)
-        };
-        
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:imageFrame];
-        [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        [imageView setTranslatesAutoresizingMaskIntoConstraints:YES];
-        [imageView setContentMode:UIViewContentModeCenter];
-        [imageView setBackgroundColor:[UIColor clearColor]];
-        [imageView setImage:[self image]];
-        
-        [self addSubview:imageView];
-        
-        maxY = CGRectGetMaxY(imageFrame) + kHEMDialogContentSpacing;
-    }
-    return maxY;
-}
-
-- (CGFloat)addTitleLabelAtY:(CGFloat)y {
-    CGFloat maxY = y;
-    
-    if ([[self title] length] > 0) {
-        UILabel* label = [[UILabel alloc] init];
-        [label setText:[self title]];
-        [label setTextColor:[UIColor blackColor]];
-        [label setFont:[UIFont dialogTitleFont]];
-        [label setNumberOfLines:0];
-        
-        CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
-        CGRect labelFrame = {
-            [self contentInsets].left,
-            y,
-            CGRectGetWidth([self bounds]) - horzPadding,
-            MAXFLOAT // will get resized later
-        };
-        CGSize constraint = labelFrame.size;
-        CGSize textSize = [label sizeThatFits:constraint];
-        labelFrame.size.height = textSize.height;
-        [label setFrame:labelFrame];
-        
-        [self addSubview:label];
-        
-        maxY = CGRectGetMaxY(labelFrame) + kHEMDialogContentSpacing;
-    }
-    
-    return maxY;
-}
-
-- (NSAttributedString*)attributedMessage {
-    if (_attributedMessage) {
-        return _attributedMessage;
-    } else if (_message) {
-        NSDictionary* atts = @{NSFontAttributeName : [UIFont dialogMessageFont],
-                               NSForegroundColorAttributeName : [UIColor blackColor]};
-        return [[NSAttributedString alloc] initWithString:_message attributes:atts];
+- (CGSize)intrinsicContentSize {
+    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds()) - (2 * HEMDialogHorzMargins);
+    CGFloat height = CGRectGetMaxY(self.messageTextView.frame);
+    if (self.type == HEMAlertViewTypeVertical) {
+        height += (self.buttons.count * HEMDialogButtonHeight) + HEMDialogVerticalSpaceBetweenMessageAndButtons;
+        if (self.buttons.count == 1)
+            height += HEMDialogContentBotPadding;
     } else {
-        return nil;
+        height += HEMDialogButtonHeight + HEMDialogBooleanSpaceBetweenMessageAndButtons;
     }
+    return CGSizeMake(width, ceilCGFloat(height));
 }
 
-- (CGFloat)addMessageView:(CGFloat)y {
-    UITextView *textView = [[UITextView alloc] init];
-    [textView setAttributedText:[self attributedMessage]];
-    [textView setEditable:NO];
-    [textView setDelegate:self];
-    [textView setScrollEnabled:NO];
-    [textView setBackgroundColor:[UIColor clearColor]];
-    [textView setDataDetectorTypes:UIDataDetectorTypeLink | UIDataDetectorTypeAddress];
-    [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [textView setLinkTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor],
-                                      NSFontAttributeName : [UIFont dialogMessageBoldFont]}];
-    
-    // remove the magic padding / margins in the text view.
-    [textView setTextContainerInset:UIEdgeInsetsZero];
-    [[textView textContainer] setLineFragmentPadding:0.0f];
-    
-    // size the text view based on the attribted text's required height, leaving
-    // the width as is
+- (void)updateFrame {
+    CGRect frame = self.frame;
+    frame.size = [self intrinsicContentSize];
+    self.frame = frame;
+}
+
+- (void)layoutElementsWithImage:(UIImage *)image title:(NSString *)title message:(NSAttributedString *)message {
+    CGFloat const HEMDialogButtonBorderWidth = 1.0f;
+    CGFloat const HEMDialogCornerRadius = 4.0f;
+    CGFloat const HEMDialogContentHorzPadding = 25.0f;
+    self.contentInsets = UIEdgeInsetsMake(HEMDialogContentTopPadding, HEMDialogContentHorzPadding,
+                                          HEMDialogContentBotPadding, HEMDialogContentHorzPadding);
+
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.cornerRadius = HEMDialogCornerRadius;
+    self.layer.borderWidth = HEMDialogButtonBorderWidth;
+    self.layer.borderColor = [UIColor colorWithWhite:0.0f alpha:0.1f].CGColor;
+
+    [self addImageViewWithImage:image];
+    [self addTitleLabelWithText:title];
+    [self addMessageViewWithText:message];
+
+    if (self.type == HEMAlertViewTypeBoolean)
+        [self addButtonDivider];
+    [self updateFrame];
+}
+
+- (void)addButtonDivider {
+    CGSize alertSize = [self intrinsicContentSize];
+    CGFloat height = HEMDialogButtonHeight;
+    CGRect frame = CGRectMake(floorCGFloat(alertSize.width/2), alertSize.height - height, 1, height);
+    UIView *divider = [[UIView alloc] initWithFrame:frame];
+    divider.backgroundColor = [UIColor colorWithHex:0xE6E6E6 alpha:1.0];
+    [self addSubview:divider];
+}
+
+- (void)addImageViewWithImage:(UIImage *)image {
+    if (!image)
+        return;
+    CGFloat const HEMDialogContentMaxImageHeight = 150.0f;
     CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
-    CGRect messageFrame = CGRectZero;
-    messageFrame.origin = CGPointMake([self contentInsets].left, y);
-    messageFrame.size   = CGSizeMake(CGRectGetWidth([self bounds]) - horzPadding, MAXFLOAT);
-    
-    CGSize constraint = messageFrame.size;
-    constraint.height = MAXFLOAT;
-    CGSize textSize = [textView sizeThatFits:constraint];
-    messageFrame.size.height = textSize.height;
-    
-    [textView setFrame:messageFrame];
+    CGRect imageFrame
+        = CGRectMake([self contentInsets].left, [self contentInsets].top, CGRectGetWidth([self bounds]) - horzPadding,
+                     MIN(HEMDialogContentMaxImageHeight, image.size.height));
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
+    imageView.contentMode = UIViewContentModeCenter;
+    imageView.backgroundColor = [UIColor clearColor];
+    imageView.image = image;
+    self.imageView = imageView;
+    [self addSubview:imageView];
+}
+
+- (void)addTitleLabelWithText:(NSString *)text {
+    CGFloat top = HEMDialogContentTopPadding;
+    if (self.imageView)
+        top = HEMDialogContentSpacing + CGRectGetMaxY(self.imageView.frame);
+
+    UIFont *font = [UIFont dialogTitleFont];
+    CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
+    CGFloat width = [self intrinsicContentSize].width - horzPadding;
+    CGFloat height = [text heightBoundedByWidth:width usingFont:font];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.contentInsets.left, top, width, height)];
+    label.text = text;
+    label.textColor = [UIColor blackColor];
+    label.font = font;
+    label.numberOfLines = 0;
+    self.titleLabel = label;
+    [self addSubview:label];
+}
+
+- (void)addMessageViewWithText:(NSAttributedString *)text {
+    CGFloat top = HEMDialogContentSpacing + CGRectGetMaxY(self.titleLabel.frame);
+    CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
+    CGSize textSize = [text sizeWithWidth:[self intrinsicContentSize].width - horzPadding];
+    UITextView *textView = [[HEMAlertTextView alloc]
+        initWithFrame:(CGRect){.origin = CGPointMake(self.contentInsets.left, top), .size = textSize }];
+    textView.attributedText = text;
+    textView.delegate = self;
+    self.messageTextView = textView;
     [self addSubview:textView];
-    
-    return CGRectGetMaxY(messageFrame) + kHEMDialogContentSpacing;
 }
 
-- (CGRect)buttonFrameAtY:(CGFloat)y {
-    CGRect buttonFrame = {
-        kHEMDialogButtonHorzPadding,
-        y,
-        CGRectGetWidth([self bounds]) - (2*kHEMDialogButtonHorzPadding),
-        kHEMDialogButtonHeight
-    };
-    return buttonFrame;
+- (UIButton *)defaultButton {
+    return [self.buttons firstObject];
 }
 
-- (CGFloat)addOkButtonAtY:(CGFloat)y {
-    NSString* title = NSLocalizedString(@"actions.ok", nil);
-    HEMActionButton* ok = [[HEMActionButton alloc] initWithFrame:[self buttonFrameAtY:y]];
-    [ok setTitle:title forState:UIControlStateNormal];
-    [ok setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [ok setTranslatesAutoresizingMaskIntoConstraints:YES];
-    [ok addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    [self setOkButton:ok];
-    [self addSubview:ok];
-    
-    return CGRectGetMaxY([ok frame]) + kHEMDialogButtonSpacing;
+- (CGRect)nextButtonFrame {
+    CGFloat const HEMDialogButtonHorzPadding = 8.0f;
+    CGFloat top = 0, width = 0, left = 0;
+    CGFloat messageFrameBottom = CGRectGetMaxY(self.messageTextView.frame);
+    UIButton *lastButton = [self.buttons lastObject];
+    if (lastButton) {
+        if (self.type == HEMAlertViewTypeVertical) {
+            top = CGRectGetMaxY(lastButton.frame);
+            left = HEMDialogButtonHorzPadding;
+        } else {
+            top = messageFrameBottom + HEMDialogBooleanSpaceBetweenMessageAndButtons;
+            left = CGRectGetMaxX(lastButton.frame);
+        }
+    } else if (self.type == HEMAlertViewTypeVertical) {
+        top = messageFrameBottom + HEMDialogVerticalSpaceBetweenMessageAndButtons;
+        left = HEMDialogButtonHorzPadding;
+    } else {
+        top = messageFrameBottom + HEMDialogBooleanSpaceBetweenMessageAndButtons;
+        left = HEMDialogButtonHorzPadding;
+    }
+    width = [self intrinsicContentSize].width - (2 * HEMDialogButtonHorzPadding);
+    if (self.type == HEMAlertViewTypeBoolean)
+        width = floorCGFloat(width/2);
+    return CGRectMake(left, top, width, HEMDialogButtonHeight);
 }
 
 #pragma mark - UITextViewDelegate
@@ -233,59 +181,65 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
     HEMDialogLinkActionBlock actionBlock = [[self actionsCallbacks] objectForKey:[URL absoluteString]];
     if (actionBlock) {
-        actionBlock (URL);
+        actionBlock(URL);
     }
     return NO;
 }
 
 #pragma mark - Actions
 
-- (void)onDone:(HEMDialogActionBlock)doneBlock {
-    NSString* doneTitle = [[self okButton] titleForState:UIControlStateNormal];
-    [[self actionsCallbacks] setValue:[doneBlock copy] forKey:doneTitle];
+- (void)setCompletionBlock:(HEMDialogActionBlock)doneBlock {
+    NSString *doneTitle = [self.defaultButton titleForState:UIControlStateNormal];
+    if (doneTitle.length > 0)
+        [[self actionsCallbacks] setValue:[doneBlock copy] forKey:doneTitle];
 }
 
-- (void)onLink:(NSString*)url tap:(HEMDialogLinkActionBlock)actionBlock {
+- (void)onLink:(NSString *)url tap:(HEMDialogLinkActionBlock)actionBlock {
     [[self actionsCallbacks] setValue:[actionBlock copy] forKey:url];
 }
-- (void)addActionButtonWithTitle:(NSString*)title
-                         primary:(BOOL)primary
-                          action:(HEMDialogActionBlock)block {
-    
-    CGRect okFrame = [[self okButton] frame];
-    CGRect buttonFrame = [self buttonFrameAtY:CGRectGetMinY(okFrame)];
-    UIButton* button = nil;
-    
-    if (primary) {
+
+- (void)addActionButtonWithTitle:(NSString *)title style:(HEMAlertViewButtonStyle)style action:(HEMDialogActionBlock)block {
+    UIButton *button = [self buttonWithTitle:title style:style];
+    [[self actionsCallbacks] setValue:[block copy] forKey:title];
+    [self addSubview:button];
+    [self.buttons addObject:button];
+    [self updateFrame];
+}
+
+- (UIButton *)buttonWithTitle:(NSString *)title style:(HEMAlertViewButtonStyle)style {
+    CGRect buttonFrame = [self nextButtonFrame];
+    UIButton *button = nil;
+    if (style == HEMAlertViewButtonStyleRoundRect) {
         button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
     } else {
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [[button titleLabel] setFont:[UIFont secondaryButtonFont]];
+        button.frame = buttonFrame;
+        switch (style) {
+            case HEMAlertViewButtonStyleBlueBoldText:
+                [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont alertBoldButtonFont];
+                break;
+            case HEMAlertViewButtonStyleGrayText:
+                [button setTitleColor:[UIColor alertBooleanSecondaryColor] forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont alertLightButtonFont];
+                break;
+            case HEMAlertViewButtonStyleBlueText:
+                [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont secondaryButtonFont];
+                break;
+            default:
+                break;
+        }
     }
-    
-    [button setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [button setTranslatesAutoresizingMaskIntoConstraints:YES];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
-    [button setFrame:buttonFrame];
-    
-    [[self actionsCallbacks] setValue:[block copy] forKey:title];
 
-    CGFloat increasedHeight = CGRectGetHeight(buttonFrame) + kHEMDialogButtonSpacing;
-    [self insertSubview:button belowSubview:[self okButton]];
-    
-    okFrame.origin.y += increasedHeight;
-    [[self okButton] setFrame:okFrame];
- 
-    CGRect myFrame = [self frame];
-    myFrame.size.height += increasedHeight;
-    [self setFrame:myFrame];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
+    return button;
 }
 
-- (void)customAction:(UIButton*)button {
-    NSString* buttonTitle = [button titleForState:UIControlStateNormal];
-    HEMDialogActionBlock block = [[self actionsCallbacks] valueForKey:buttonTitle];
+- (void)customAction:(UIButton *)button {
+    NSString *buttonTitle = [button titleForState:UIControlStateNormal];
+    HEMDialogActionBlock block = self.actionsCallbacks[buttonTitle];
     if (block) {
         block();
     }

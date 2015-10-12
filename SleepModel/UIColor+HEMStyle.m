@@ -134,6 +134,12 @@ static UIColor *_tintColor = nil;
 + (UIColor *)actionViewCancelButtonTextColor {
     return [UIColor colorWithHex:0x999999 alpha:1.f];
 }
++ (UIColor *)alertBackgroundColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.9];
+}
++ (UIColor *)alertBooleanSecondaryColor {
+    return [UIColor colorWithHex:0x69788C alpha:0.5];
+}
 + (UIColor *)buttonDividerColor {
     return [UIColor colorWithHex:0x999999 alpha:0.2];
 }

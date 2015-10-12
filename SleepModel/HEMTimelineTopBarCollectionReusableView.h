@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *dateButton;
 
 - (void)setDate:(NSDate*)date;
+- (void)setUnread:(BOOL)unread;
 - (void)setOpened:(BOOL)isOpen;
 - (void)setShareEnabled:(BOOL)enabled animated:(BOOL)animated;
 - (NSString*)dateTitle;

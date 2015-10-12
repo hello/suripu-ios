@@ -92,13 +92,14 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
 + (instancetype)sharedService;
 
 /**
- * @method clearCache:
+ * @method reset:
  *
  * @discussion
- * Clear the cache of device information and state of the center.  You should
- * only do this if switching users or resetting back to factory.
+ * Clear the cache of device information and reset service as if it was just
+ * initialized.  You should only do this if switching users or resetting back 
+ * to factory.
  */
-- (void)clearCache;
+- (void)reset;
 
 /**
  * Clears the cache and resets any device states that was cached from previous

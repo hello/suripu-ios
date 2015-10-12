@@ -81,11 +81,19 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 
 - (void)reloadButtonsBar {
     [self.buttonsBar removeAllButtons];
+    
+    NSUInteger index = 0;
     for (UIViewController* viewController in self.viewControllers) {
         [self.buttonsBar addButtonWithTitle:viewController.tabBarItem.title
                                       image:viewController.tabBarItem.image
                               selectedImage:viewController.tabBarItem.selectedImage];
+        
+        [self.buttonsBar showUnreadIndicator:viewController.tabBarItem.badgeValue != nil
+                                     atIndex:index];
+        
+        index++;
     }
+    
     [self.buttonsBar selectButtonAtIndex:self.selectedIndex animated:NO];
 }
 
@@ -149,6 +157,11 @@ CGFloat const HEMSnazzBarHeight = 65.f;
         [controller beginAppearanceTransition:visibleNow animated:NO];
         [controller endAppearanceTransition];
         self.controllerVisibility[index] = @(visibleNow);
+        
+        if (!visibleNow) {
+            [self.buttonsBar showUnreadIndicator:controller.tabBarItem.badgeValue != nil
+                                         atIndex:index];
+        }
     }
 }
 

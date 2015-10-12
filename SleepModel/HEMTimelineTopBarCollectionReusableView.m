@@ -19,6 +19,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 @interface HEMTimelineTopBarCollectionReusableView ()
 
 @property (weak,   nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak,   nonatomic) IBOutlet UIImageView* unreadIndicatorView;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *centerTitleTopConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *drawerTopConstraint;
 @property (strong, nonatomic) NSCalendar *calendar;
@@ -41,9 +42,13 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
     self.dateButton.accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.history-open", nil);
 }
 
+- (void)setUnread:(BOOL)unread {
+    [[self unreadIndicatorView] setHidden:!unread];
+}
+
 - (void)setDate:(NSDate*)date {
     NSDate* previousDay = [[NSDate date] previousDay];
-    NSDateComponents *diff = [self.calendar components:NSDayCalendarUnit
+    NSDateComponents *diff = [self.calendar components:NSCalendarUnitDay
                                               fromDate:date
                                                 toDate:previousDay
                                                options:0];

@@ -110,7 +110,7 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-LJ-HjM">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-LJ-HjM">
                                                     <rect key="frame" x="16" y="16" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="Yil-Ys-fIp"/>
@@ -128,7 +128,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="o1C-Ws-IOX"/>
                                                     </constraints>
-                                                    <state key="normal" image="infoButtonIconSmall.png">
+                                                    <state key="normal" image="infoButtonIconSmall">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -172,13 +172,13 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSoundIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="8dY-0j-fHj">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSoundIcon" translatesAutoresizingMaskIntoConstraints="NO" id="8dY-0j-fHj">
                                                     <rect key="frame" x="16" y="17" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="xAz-Af-V7B"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="gFg-NX-sGf">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="gFg-NX-sGf">
                                                     <rect key="frame" x="572" y="21" width="8" height="15"/>
                                                 </imageView>
                                             </subviews>
@@ -198,7 +198,7 @@
                                         <connections>
                                             <outlet property="detailLabel" destination="7vq-dr-gEC" id="rAX-o8-h9R"/>
                                             <outlet property="titleLabel" destination="ycu-Zi-bjJ" id="Dt6-1k-wB3"/>
-                                            <segue destination="jZp-61-2lX" kind="push" identifier="pickSound" id="bpm-xV-x5h"/>
+                                            <segue destination="jZp-61-2lX" kind="show" identifier="pickSound" id="bpm-xV-x5h"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmRepeatCell" id="XvR-xj-Zpd" customClass="HEMAlarmTableViewCell">
@@ -220,13 +220,13 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmRepeatIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="cat-rB-3EA">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmRepeatIcon" translatesAutoresizingMaskIntoConstraints="NO" id="cat-rB-3EA">
                                                     <rect key="frame" x="16" y="17" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="9fF-oU-aFA"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="sVq-mc-4Ub">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="sVq-mc-4Ub">
                                                     <rect key="frame" x="572" y="21" width="8" height="15"/>
                                                 </imageView>
                                             </subviews>
@@ -246,7 +246,7 @@
                                         <connections>
                                             <outlet property="detailLabel" destination="wIf-FK-vch" id="ynF-75-ejU"/>
                                             <outlet property="titleLabel" destination="VeZ-HT-TUJ" id="7bu-mb-oWk"/>
-                                            <segue destination="8jA-eI-sZN" kind="push" identifier="alarmRepeat" id="Kk3-sm-r3e"/>
+                                            <segue destination="8jA-eI-sZN" kind="show" identifier="alarmRepeat" id="Kk3-sm-r3e"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="alarmDeleteCell" id="uiU-Di-5k5" customClass="HEMAlarmTableViewCell">
@@ -386,7 +386,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="536" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questions_circle.png" translatesAutoresizingMaskIntoConstraints="NO" id="UEe-GF-C1P">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questions_circle" translatesAutoresizingMaskIntoConstraints="NO" id="UEe-GF-C1P">
                                                     <rect key="frame" x="0.0" y="0.0" width="21" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="21" id="G3P-Ze-A6G"/>
@@ -398,7 +398,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questions_check.png" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-Eh-lsY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questions_check" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-Eh-lsY">
                                                     <rect key="frame" x="516" y="0.0" width="20" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="3Ot-ft-hRK"/>
@@ -777,7 +777,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_action_adjust.png" translatesAutoresizingMaskIntoConstraints="NO" id="dQg-tB-zFC">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_action_adjust" translatesAutoresizingMaskIntoConstraints="NO" id="dQg-tB-zFC">
                                                     <rect key="frame" x="24" y="25" width="0.0" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" id="lFS-Wd-gLw"/>
@@ -877,7 +877,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="xBy-cy-DE3"/>
                                 </constraints>
-                                <state key="normal" image="escape button.png">
+                                <state key="normal" image="escape button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1056,7 +1056,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="rGP-zR-be5">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="rGP-zR-be5">
                                                     <rect key="frame" x="553" y="0.0" width="15" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="Lge-PA-UBS"/>
@@ -1195,7 +1195,7 @@
                     <navigationItem key="navigationItem" title="My account" id="4ab-2L-Omr"/>
                     <connections>
                         <outlet property="infoTableView" destination="siy-bj-GCk" id="3SF-fY-OMA"/>
-                        <segue destination="Zbn-wT-cB8" kind="push" identifier="updateAccountInfo" id="qH1-Ij-3b1"/>
+                        <segue destination="Zbn-wT-cB8" kind="show" identifier="updateAccountInfo" id="qH1-Ij-3b1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7MN-lT-xwN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1243,7 +1243,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="wIR-bu-uQj">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="wIR-bu-uQj">
                                                     <rect key="frame" x="553" y="0.0" width="15" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="Jnr-m5-kz1"/>
@@ -1296,7 +1296,7 @@
                     <connections>
                         <outlet property="unitTableView" destination="4nR-Z8-UZV" id="ooJ-cf-ueS"/>
                         <outlet property="view" destination="tIo-Tw-mI0" id="qzS-ep-UQq"/>
-                        <segue destination="63V-Yh-P8Y" kind="push" identifier="choice" id="BTE-Aw-btu"/>
+                        <segue destination="63V-Yh-P8Y" kind="show" identifier="choice" id="BTE-Aw-btu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xTo-cF-RjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1334,7 +1334,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="BKW-NT-78e">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="BKW-NT-78e">
                                                     <rect key="frame" x="545" y="0.0" width="15" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="OQe-Uf-4H7"/>
@@ -1376,11 +1376,11 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="settingsTableView" destination="X4b-Va-8rq" id="zf9-GA-mKg"/>
-                        <segue destination="mDw-uo-PDk" kind="push" identifier="devicesSettings" id="iUu-8C-Pgj"/>
-                        <segue destination="vA6-d5-31W" kind="push" identifier="unitsSettings" id="FWQ-VC-M1c"/>
-                        <segue destination="idz-L4-hpw" kind="push" identifier="accountSettings" id="Bkx-fs-oZz"/>
-                        <segue destination="KKS-QC-rMW" kind="push" identifier="notificationSettings" id="Ogb-e2-EmZ"/>
-                        <segue destination="3mQ-zN-H0E" kind="push" identifier="settingsToSupport" id="WJe-XJ-9PQ"/>
+                        <segue destination="mDw-uo-PDk" kind="show" identifier="devicesSettings" id="iUu-8C-Pgj"/>
+                        <segue destination="vA6-d5-31W" kind="show" identifier="unitsSettings" id="FWQ-VC-M1c"/>
+                        <segue destination="idz-L4-hpw" kind="show" identifier="accountSettings" id="Bkx-fs-oZz"/>
+                        <segue destination="KKS-QC-rMW" kind="show" identifier="notificationSettings" id="Ogb-e2-EmZ"/>
+                        <segue destination="3mQ-zN-H0E" kind="show" identifier="settingsToSupport" id="WJe-XJ-9PQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MDd-3F-Lt8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1506,7 +1506,7 @@
                                                     </constraints>
                                                     <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </activityIndicatorView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="yFe-NR-82V">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="yFe-NR-82V">
                                                     <rect key="frame" x="536" y="16" width="8" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="8" id="2Sl-VB-lHq"/>
@@ -1626,8 +1626,8 @@
                     <connections>
                         <outlet property="collectionView" destination="p6A-zV-ehg" id="ovQ-xy-TfL"/>
                         <outlet property="view" destination="mJD-g5-7aT" id="Hzq-KT-VyS"/>
-                        <segue destination="S23-X6-9pb" kind="push" identifier="pill" id="Mxb-Pq-ETB"/>
-                        <segue destination="0ke-gs-abm" kind="push" identifier="sense" id="z9F-Wb-l3V"/>
+                        <segue destination="S23-X6-9pb" kind="show" identifier="pill" id="Mxb-Pq-ETB"/>
+                        <segue destination="0ke-gs-abm" kind="show" identifier="sense" id="z9F-Wb-l3V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cW-Cr-Bbn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1663,7 +1663,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="4ns-Mt-V9v">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="4ns-Mt-V9v">
                                                     <rect key="frame" x="545" y="0.0" width="15" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="fn0-HP-Qym"/>
@@ -1713,7 +1713,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableView" destination="kOS-ID-RUw" id="hDq-L0-vvW"/>
-                        <segue destination="QUF-LK-JnK" kind="push" identifier="topics" id="wxy-PA-hue"/>
+                        <segue destination="QUF-LK-JnK" kind="show" identifier="topics" id="wxy-PA-hue"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fy-NF-yiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1749,7 +1749,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="6lK-gQ-h9Q">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="6lK-gQ-h9Q">
                                                     <rect key="frame" x="545" y="0.0" width="15" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="7hN-yg-XLK"/>
@@ -1826,7 +1826,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning.png" translatesAutoresizingMaskIntoConstraints="NO" id="RUk-5G-v9e">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="RUk-5G-v9e">
                                                     <rect key="frame" x="268" y="21" width="24" height="22"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7W-bh-11H">
@@ -1965,7 +1965,7 @@
                     <connections>
                         <outlet property="collectionView" destination="Qgk-DZ-cLY" id="0cs-Bl-BoN"/>
                         <outlet property="view" destination="1Ml-OR-V9I" id="LYw-rK-OTi"/>
-                        <segue destination="3tP-4b-YaJ" kind="modal" identifier="timezone" id="vxg-TS-gLD"/>
+                        <segue destination="3tP-4b-YaJ" kind="presentation" identifier="timezone" id="vxg-TS-gLD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9h-4l-Pe7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2019,7 +2019,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingsCheck.png" translatesAutoresizingMaskIntoConstraints="NO" id="nxX-Tf-fWe">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingsCheck" translatesAutoresizingMaskIntoConstraints="NO" id="nxX-Tf-fWe">
                                                     <rect key="frame" x="553" y="0.0" width="19" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="19" id="T7T-y7-iaF"/>
@@ -2128,7 +2128,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning.png" translatesAutoresizingMaskIntoConstraints="NO" id="JKC-yw-cXJ">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="JKC-yw-cXJ">
                                                     <rect key="frame" x="268" y="21" width="24" height="22"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ra-on-mRH">
@@ -2408,7 +2408,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingsCheck.png" translatesAutoresizingMaskIntoConstraints="NO" id="YjP-yO-rcQ">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingsCheck" translatesAutoresizingMaskIntoConstraints="NO" id="YjP-yO-rcQ">
                                                     <rect key="frame" x="541" y="0.0" width="19" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="19" id="Sd6-3d-Jfo"/>
@@ -2613,7 +2613,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="205"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="aQz-EQ-vlP">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aQz-EQ-vlP">
                                                     <rect key="frame" x="16" y="16" width="36" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="36" id="ps1-1w-L0V"/>
@@ -2756,7 +2756,7 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Tone" id="NyU-xY-h8D">
-                                        <barButtonItem key="leftBarButtonItem" image="backIcon.png" id="e4Z-L8-x9H">
+                                        <barButtonItem key="leftBarButtonItem" image="backIcon" id="e4Z-L8-x9H">
                                             <connections>
                                                 <action selector="goBack:" destination="jZp-61-2lX" id="A9u-ek-VXD"/>
                                             </connections>
@@ -2793,14 +2793,14 @@
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXY-YU-m4N">
                                                     <rect key="frame" x="537" y="0.0" width="63" height="63"/>
-                                                    <state key="normal" image="miniPlayButton.png">
+                                                    <state key="normal" image="miniPlayButton">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="toggleAudio:" destination="jZp-61-2lX" eventType="touchUpInside" id="58T-bX-mxo"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="7KZ-YY-pJd">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="7KZ-YY-pJd">
                                                     <rect key="frame" x="20" y="24" width="20" height="15"/>
                                                 </imageView>
                                             </subviews>
@@ -3017,7 +3017,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YU-EY-ydB" userLabel="alarm button">
                                 <rect key="frame" x="530" y="530" width="54" height="54"/>
                                 <accessibility key="accessibilityConfiguration" hint="Double tap to open alarm list" label="Shortcut to alarms"/>
-                                <state key="normal" image="alarmShortcut.png">
+                                <state key="normal" image="alarmShortcut">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -3108,7 +3108,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timelineNoDataIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qqc-Yh-nIP">
+                                    <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timelineNoDataIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Qqc-Yh-nIP">
                                         <rect key="frame" x="200" y="18" width="200" height="228"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="228" id="DDK-6w-ScP"/>
@@ -3277,7 +3277,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="205"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="7LE-py-rFj">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseIcon" translatesAutoresizingMaskIntoConstraints="NO" id="7LE-py-rFj">
                                                     <rect key="frame" x="16" y="16" width="36" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="36" id="EDi-ja-V6Q"/>
@@ -3598,7 +3598,7 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Repeat" id="5aC-dV-btn">
-                                        <barButtonItem key="leftBarButtonItem" image="backIcon.png" id="7jG-DL-sGY">
+                                        <barButtonItem key="leftBarButtonItem" image="backIcon" id="7jG-DL-sGY">
                                             <connections>
                                                 <action selector="goBack:" destination="8jA-eI-sZN" id="Raq-Tr-fdd"/>
                                             </connections>
@@ -3625,7 +3625,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="6Ib-P3-wd3">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="6Ib-P3-wd3">
                                                     <rect key="frame" x="560" y="24" width="20" height="15"/>
                                                 </imageView>
                                             </subviews>
@@ -4031,7 +4031,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="VlW-ON-5ld">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="VlW-ON-5ld">
                                                     <rect key="frame" x="516" y="76" width="8" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="8" id="Fsz-hR-kU5"/>
@@ -4174,7 +4174,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="heO-Ks-7wj"/>
                                 </constraints>
-                                <state key="normal" image="escape button.png">
+                                <state key="normal" image="escape button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -4429,22 +4429,22 @@
         </scene>
     </scenes>
     <resources>
-        <image name="accessory.png" width="8" height="15"/>
-        <image name="alarmRepeatIcon.png" width="25" height="25"/>
-        <image name="alarmShortcut.png" width="54" height="54"/>
-        <image name="alarmSmartIcon.png" width="25" height="25"/>
-        <image name="alarmSoundIcon.png" width="25" height="25"/>
-        <image name="backIcon.png" width="10" height="18"/>
-        <image name="checkmark.png" width="20" height="15"/>
-        <image name="escape button.png" width="32" height="32"/>
-        <image name="infoButtonIconSmall.png" width="22" height="22"/>
-        <image name="miniPlayButton.png" width="25" height="25"/>
-        <image name="questions_check.png" width="20" height="15"/>
-        <image name="questions_circle.png" width="21" height="21"/>
-        <image name="senseIcon.png" width="40" height="40"/>
-        <image name="settingsCheck.png" width="16" height="13"/>
-        <image name="timelineNoDataIcon.png" width="200" height="228"/>
-        <image name="timeline_action_adjust.png" width="32" height="32"/>
-        <image name="warning.png" width="24" height="22"/>
+        <image name="accessory" width="8" height="15"/>
+        <image name="alarmRepeatIcon" width="25" height="25"/>
+        <image name="alarmShortcut" width="54" height="54"/>
+        <image name="alarmSmartIcon" width="25" height="25"/>
+        <image name="alarmSoundIcon" width="25" height="25"/>
+        <image name="backIcon" width="10" height="18"/>
+        <image name="checkmark" width="20" height="15"/>
+        <image name="escape button" width="32" height="32"/>
+        <image name="infoButtonIconSmall" width="22" height="22"/>
+        <image name="miniPlayButton" width="25" height="25"/>
+        <image name="questions_check" width="20" height="15"/>
+        <image name="questions_circle" width="21" height="21"/>
+        <image name="senseIcon" width="40" height="40"/>
+        <image name="settingsCheck" width="16" height="13"/>
+        <image name="timelineNoDataIcon" width="200" height="228"/>
+        <image name="timeline_action_adjust" width="32" height="32"/>
+        <image name="warning" width="24" height="22"/>
     </resources>
 </document>

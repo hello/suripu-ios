@@ -1,5 +1,6 @@
 
 #import "SENKeyedArchiver.h"
+#import "CGFloatType.h"
 
 void SENClearModel() {
     [SENKeyedArchiver removeAllObjects];
@@ -12,7 +13,16 @@ NSDate* SENDateFromNumber(id value) {
 }
 
 NSNumber* SENDateMillisecondsSince1970(NSDate* date) {
-    return @([date timeIntervalSince1970] * 1000);
+    // trunc required because the backend, depending on which endpoint we interact
+    // with, may reject double / floating point values for the date
+    return @(truncCGFloat([date timeIntervalSince1970] * 1000));
+}
+
+BOOL SENBoolValue(id value) {
+    if ([value respondsToSelector:@selector(boolValue)]) {
+        return [value boolValue];
+    }
+    return NO;
 }
 
 id SENObjectOfClass(id object, __unsafe_unretained Class klass) {

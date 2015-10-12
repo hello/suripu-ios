@@ -61,7 +61,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     if (!self.segment)
         return;
     self.calendar.timeZone = self.segment.timezone;
-    NSDateComponents* components = [self.calendar components:(NSHourCalendarUnit|NSMinuteCalendarUnit)
+    NSDateComponents* components = [self.calendar components:(NSCalendarUnitHour|NSCalendarUnitMinute)
                                                     fromDate:self.segment.date];
     [self.clockView updateTimeToHour:components.hour minute:components.minute];
     NSString* type = [SENTimelineSegmentTypeNameFromType(self.segment.type) lowercaseString];

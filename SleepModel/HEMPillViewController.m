@@ -216,18 +216,18 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:confirmation];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         [weakSelf unpair];
     }];
     [dialogVC onLinkTapOf:helpLink takeAction:^(NSURL *link) {
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    [dialogVC showFrom:self];
 }
 
 - (void)showUnpairMessageForError:(NSError*)error {

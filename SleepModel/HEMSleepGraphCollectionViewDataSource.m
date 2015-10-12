@@ -4,6 +4,7 @@
 #import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENAppUnreadStats.h>
 #import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -25,6 +26,7 @@
 #import "HEMEventBubbleView.h"
 #import "HEMWaveform.h"
 #import "HEMTimelineMessageContainerView.h"
+#import "HEMUnreadAlertService.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -112,6 +114,17 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self reloadData:nil];
 }
 
+- (void)updateUnreadIndicator {
+    __weak typeof(self) weakSelf = self;
+    [[HEMUnreadAlertService sharedService] update:^(BOOL hasUnread, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+        } else {
+            [[weakSelf topBarView] setUnread:hasUnread];
+        }
+    }];
+}
+
 - (void)reloadData:(void (^)(NSError*))completion {
     self.loading = YES;
     [self reloadDateFormatters];
@@ -133,6 +146,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                       if (completion)
                           completion(error);
                     }];
+    
+    [self updateUnreadIndicator];
 }
 
 - (void)fetchTimelineForDate:(NSDate *)date completion:(void (^)(SENTimeline *, NSError *))completion {
@@ -234,6 +249,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
  *  @param isOpen the state of the drawer
  */
 - (void)updateTimelineState:(BOOL)isOpen {
+    BOOL hasUnread = [[HEMUnreadAlertService sharedService] hasUnread];
+    [[self topBarView] setUnread:!isOpen && hasUnread];
     [[self topBarView] setOpened:isOpen];
     [[self topBarView] setShareEnabled:[self hasTimelineData] && !isOpen animated:YES];
     if (isOpen)
@@ -297,6 +314,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [view setShareEnabled:score > 0 && drawerClosed animated:YES];
 
     [view setDate:[self dateForNightOfSleep]];
+    [view setUnread:[[HEMUnreadAlertService sharedService] hasUnread]];
 
     [self setTopBarView:view];
 
@@ -348,7 +366,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (BOOL)dateIsLastNight {
-    NSDateComponents *diff = [self.calendar components:NSDayCalendarUnit
+    NSDateComponents *diff = [self.calendar components:NSCalendarUnitDay
                                               fromDate:self.dateForNightOfSleep
                                                 toDate:[[NSDate date] previousDay]
                                                options:0];

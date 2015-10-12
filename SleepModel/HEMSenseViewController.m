@@ -270,9 +270,9 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
-    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         if (action) {
             action();
         }
@@ -283,7 +283,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
-    [dialogVC showFrom:self onDefaultActionSelected:nil];
+    [dialogVC showFrom:self];
 }
 
 - (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {
@@ -420,16 +420,16 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
     [dialogVC setViewToShowThrough:self.view];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
-        [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
-    }];
-    [dialogVC showFrom:self onDefaultActionSelected:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.use-local", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
         [weakSelf updateToLocalTimeZone];
     }];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.select-manually", nil) style:HEMAlertViewButtonStyleBlueText action:^{
+        [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
+    }];
+    [dialogVC showFrom:self];
 }
 
 - (void)updateToLocalTimeZone {
@@ -460,12 +460,20 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 
 - (void)pairingMode:(id)sender {
     NSString* title = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-title", nil);
-    NSString* message = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message", nil);
-    NSAttributedString* attributedMessage =
-        [[NSAttributedString alloc] initWithString:message attributes:[self dialogMessageAttributes:NO]];
+    NSString* msgFormat = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message.format", nil);
+    NSString* guideLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
+    
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* message =
+        [[NSMutableAttributedString alloc] initWithFormat:msgFormat
+                                                     args:args
+                                                baseColor:[UIColor blackColor]
+                                                 baseFont:[UIFont dialogMessageFont]];
     
     __weak typeof(self) weakSelf = self;
-    [self showConfirmation:title message:attributedMessage action:^{
+    [self showConfirmation:title message:message action:^{
         [weakSelf enablePairingMode];
     }];
 }

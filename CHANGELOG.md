@@ -1,5 +1,90 @@
 # Changelog
 
+## 1.1.5.8
+
+Fixes:
+
+* addresses local storage issue, for reals
+
+## 1.1.5.8
+
+Fixes:
+
+* fixes slowness when entering in to zoomed out view of timeline
+
+## 1.1.5.7
+
+Fixes:
+
+* fixes issue where alert dialogs shown in password / email / name cannot be dismissed
+* fixes app icon catalog references
+
+## 1.1.5.6
+
+Fixes:
+
+* setting ip=1 flag in mixpanel request to force geolocation props to set
+* always check unread / update insight last viewed
+
+## 1.1.5.5
+
+New:
+
+* Updated button styles
+* Updated alert dialog visual design
+
+Fixes:
+
+* Fixed issue with Mixpanel identification
+
+## 1.1.5.4
+
+Fixes:
+
+* Insight detail text is no longer cut off
+* The unread indicator code has been slightly modified, but has now been reviewed
+
+## 1.1.5.3
+
+New:
+
+* Adding unread indicator for insights / unanswered questions on both timeline menu icon as well as insights back view icon
+
+## 1.1.5.2
+
+New:
+
+* Timeline will only automatically advance / update for last night when device time is past 3AM
+
+Fixes:
+
+* Fixes issue during wifi scan within settings where an error will always be thrown if putting app in to the background when screen is visible
+* Replacing Sense will also disconnect from Sense in settings
+
+## 1.1.5.1
+
+New:
+
+* Added analytics events for support screens
+* Confirmation dialog dismissal timing reduced significantly
+* Updated pairing mode confirmation dialog copy
+* Updated factory reset completion confirmation dialog copy
+* Added handholding for sensor detail scrubbing behavior
+
+## 1.1.5.0
+
+New:
+
+* Updated Zendesk SDK to 1.4.1.2 to prevent crash on 6s devices when creating ticket
+* Slimmed down the mixpanel dependency with Mixpanel-simple to reduce crashers from mixpanel
+* Moved app assets to asset catalog in preparation for app thinning
+* Cleaned up iOS 9 warnings
+* Cleaned up storyboards to remove deprecated calls and modernize it
+
+Fixes:
+
+* Logging out and back in will no longer retrigger welcome / tutorial dialogs
+
 ## 1.1.4.8
 
 New

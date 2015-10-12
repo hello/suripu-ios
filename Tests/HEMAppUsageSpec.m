@@ -11,10 +11,6 @@
 #import "HEMAppUsage.h"
 #import "NSDate+HEMRelative.h"
 
-@interface SENKeyedArchiver ()
-+ (void)onInternalQueue:(void(^)())block;
-@end
-
 SPEC_BEGIN(HEMAppUsageSpec)
 
 describe(@"HEMAppUsage", ^{
@@ -25,11 +21,6 @@ describe(@"HEMAppUsage", ^{
     beforeEach(^{
         databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppUsageSpec"];
         [SENKeyedArchiver stub:@selector(datastorePath) andReturn:databasePath];
-        [SENKeyedArchiver stub:@selector(onInternalQueue:) withBlock:^id(NSArray *params) {
-            void (^block)() = [params lastObject];
-            block();
-            return nil;
-        }];
     });
 
     afterEach(^{

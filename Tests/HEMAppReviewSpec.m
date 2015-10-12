@@ -14,10 +14,6 @@
 #import "HEMConfig.h"
 #import "HEMAppUsage.h"
 
-@interface SENKeyedArchiver ()
-+ (void)onInternalQueue:(void(^)())block;
-@end
-
 @interface HEMAppReview()
 
 + (void)hasSenseAndPillPaired:(void(^)(BOOL hasPairedDevices))completion;
@@ -47,11 +43,6 @@ describe(@"HEMAppReview", ^{
     beforeEach(^{
         databasePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpAppReviewSpec"];
         [SENKeyedArchiver stub:@selector(datastorePath) andReturn:databasePath];
-        [SENKeyedArchiver stub:@selector(onInternalQueue:) withBlock:^id(NSArray *params) {
-            void (^block)() = [params lastObject];
-            block();
-            return nil;
-        }];
     });
 
     afterEach(^{

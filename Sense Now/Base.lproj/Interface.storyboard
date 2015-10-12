@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8DX-kK-ReM">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8092"/>
+    </dependencies>
+    <scenes>
+        <!--Sense-->
+        <scene sceneID="XY8-ih-NuH">
+            <objects>
+                <controller title="Sense" id="8DX-kK-ReM" customClass="InterfaceController">
+                    <items>
+                        <group width="1" height="142" alignment="left" layout="vertical" id="7G1-vj-aGy">
+                            <items>
+                                <group width="1" height="0.50000000000000011" alignment="left" id="BcC-da-WVq">
+                                    <items>
+                                        <button alignment="center" verticalAlignment="center" id="Iv6-Km-31f" userLabel="Timeline button">
+                                            <group key="contentGroup" width="1" height="67" alignment="left" layout="vertical" id="fCu-3n-pji">
+                                                <items>
+                                                    <imageView alignment="center" verticalAlignment="center" image="moon_blue_watch" id="DmD-zh-5Au"/>
+                                                    <label alignment="center" verticalAlignment="center" text="Last night" id="nbn-fD-QJa">
+                                                        <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                                    </label>
+                                                </items>
+                                            </group>
+                                            <connections>
+                                                <segue destination="0Rb-Go-Ag1" kind="push" id="5Mx-KR-Eqa"/>
+                                            </connections>
+                                        </button>
+                                    </items>
+                                </group>
+                                <group width="1" height="0.50000000000000011" alignment="left" id="fRV-kx-41a">
+                                    <items>
+                                        <group width="65" height="140" alignment="center" verticalAlignment="center" layout="vertical" id="fQa-Pd-xmy">
+                                            <items>
+                                                <button alignment="center" verticalAlignment="center" id="SGT-r1-knp" userLabel="Room button">
+                                                    <group key="contentGroup" width="1" height="67" alignment="left" layout="vertical" id="8iW-SM-jCU">
+                                                        <items>
+                                                            <imageView alignment="center" verticalAlignment="center" image="currently_blue_watch" id="6Jf-fM-Laz"/>
+                                                            <label alignment="center" verticalAlignment="center" text="Room" id="LIa-gu-SZt">
+                                                                <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                    <connections>
+                                                        <segue destination="0DX-wb-zIz" kind="push" id="T5l-Gt-rh5"/>
+                                                    </connections>
+                                                </button>
+                                            </items>
+                                        </group>
+                                        <group width="65" height="140" alignment="center" verticalAlignment="center" layout="vertical" id="PSM-aN-EZd">
+                                            <items>
+                                                <button alignment="center" verticalAlignment="center" id="MIw-v2-L85" userLabel="Alarm button">
+                                                    <group key="contentGroup" width="1" alignment="left" layout="vertical" id="Bsr-Z0-lbH">
+                                                        <items>
+                                                            <imageView alignment="center" verticalAlignment="center" image="alarm_blue_watch" id="RzN-Xz-Fdi"/>
+                                                            <label alignment="center" verticalAlignment="center" text="Alarms" id="JdO-bj-sJQ">
+                                                                <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                    <connections>
+                                                        <segue destination="sRu-wD-dzR" kind="push" id="KaP-Go-1tj"/>
+                                                    </connections>
+                                                </button>
+                                            </items>
+                                        </group>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="235" y="347"/>
+        </scene>
+        <!--Last night-->
+        <scene sceneID="G87-Ej-Pw5">
+            <objects>
+                <controller title="Last night" id="0Rb-Go-Ag1" customClass="GlanceController">
+                    <items>
+                        <label alignment="center" text="SLEEP SCORE" id="rXy-RY-4ov">
+                            <fontDescription key="font" type="boldSystem" pointSize="14"/>
+                        </label>
+                        <label alignment="center" text="78" id="FcE-wn-Q3b">
+                            <fontDescription key="font" type="system" pointSize="30"/>
+                        </label>
+                        <label width="1" alignment="left" text="You slept for 8.6 hours, deeply for 5.2 (60%) and moved 2 times." numberOfLines="0" minimumScaleFactor="0.80000000000000004" id="Hzp-oJ-uwy"/>
+                    </items>
+                    <connections>
+                        <outlet property="messageLabel" destination="Hzp-oJ-uwy" id="Z1u-kF-0cu"/>
+                        <outlet property="sleepScoreLabel" destination="FcE-wn-Q3b" id="w6l-6k-Fk4"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="526" y="89"/>
+        </scene>
+        <!--Room-->
+        <scene sceneID="vNG-LX-Pit">
+            <objects>
+                <controller title="Room" id="0DX-wb-zIz" customClass="RoomInterfaceController">
+                    <items>
+                        <table alignment="left" id="e7L-tG-8Qt">
+                            <items>
+                                <tableRow identifier="watchSensor" selectable="NO" id="Xqf-iB-KuD" customClass="SensorRowItem">
+                                    <group key="rootItem" width="1" height="59.5" alignment="left" layout="vertical" id="csn-Nv-YWc">
+                                        <items>
+                                            <group width="1" alignment="left" id="yD3-0v-F8e">
+                                                <items>
+                                                    <label alignment="left" text="Light" id="AcF-7y-rig">
+                                                        <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
+                                                    </label>
+                                                </items>
+                                            </group>
+                                            <group width="1" alignment="left" id="GSG-th-ARU">
+                                                <items>
+                                                    <imageView width="0.34999999999999998" alignment="left" verticalAlignment="center" image="light" contentMode="scaleAspectFit" id="90n-2V-pQ0"/>
+                                                    <group width="0.75" alignment="left" verticalAlignment="center" id="rHb-zI-maQ">
+                                                        <items>
+                                                            <label alignment="left" verticalAlignment="bottom" text="249" id="vrV-Q7-M69">
+                                                                <fontDescription key="font" type="system" pointSize="30"/>
+                                                            </label>
+                                                            <label alignment="left" verticalAlignment="center" text="lx" id="lbo-hY-unY">
+                                                                <fontDescription key="font" type="system" pointSize="18"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                        </items>
+                                        <color key="backgroundColor" white="0.05112340328" alpha="1" colorSpace="calibratedWhite"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="iconImage" destination="90n-2V-pQ0" id="bkZ-iF-WqG"/>
+                                        <outlet property="titleLabel" destination="AcF-7y-rig" id="920-yi-OkB"/>
+                                        <outlet property="unitLabel" destination="lbo-hY-unY" id="SRB-bu-Rz3"/>
+                                        <outlet property="valueLabel" destination="vrV-Q7-M69" id="1F2-C0-U2y"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="e7L-tG-8Qt" id="Vkh-Pe-n7x"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="526" y="347"/>
+        </scene>
+        <!--Alarms-->
+        <scene sceneID="ngr-tc-yxs">
+            <objects>
+                <controller title="Alarms" id="sRu-wD-dzR" customClass="AlarmListInterfaceController">
+                    <items>
+                        <table alignment="left" id="frL-av-JGt">
+                            <items>
+                                <tableRow identifier="watchAlarmList" id="PRx-pF-8BF" customClass="AlarmRowItem">
+                                    <group key="rootItem" width="1" height="64.5" alignment="left" layout="vertical" id="WYr-46-bbk">
+                                        <items>
+                                            <label alignment="left" text="Weekend" id="H1H-sv-Yvn">
+                                                <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
+                                            </label>
+                                            <label alignment="left" verticalAlignment="center" text="12:45am" id="EWZ-BP-s6U">
+                                                <fontDescription key="font" type="system" pointSize="30"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="scopeLabel" destination="H1H-sv-Yvn" id="pzS-7i-qng"/>
+                                        <outlet property="timeLabel" destination="EWZ-BP-s6U" id="tBZ-qO-Z1G"/>
+                                        <segue destination="7bu-Fd-ZdN" kind="modal" id="xQh-F0-s9j"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="frL-av-JGt" id="jZy-jt-B5s"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="526" y="624"/>
+        </scene>
+        <!--Alarm-->
+        <scene sceneID="Zv0-TQ-ehY">
+            <objects>
+                <controller identifier="alarmView" title="Alarm" id="7bu-Fd-ZdN" customClass="AlarmInterfaceController">
+                    <items>
+                        <group width="1" height="0.70000000000000007" alignment="left" layout="vertical" id="Nc9-l0-ePn">
+                            <items>
+                                <group width="1" height="0.30000000000000016" alignment="left" id="fpR-Sz-Ws1">
+                                    <items>
+                                        <button alignment="left" verticalAlignment="bottom" id="X1h-Z1-rwV">
+                                            <group key="contentGroup" width="0.5" height="1" alignment="left" id="Ngz-ZX-a7S">
+                                                <items>
+                                                    <imageView alignment="center" verticalAlignment="bottom" image="up_watch" contentMode="center" id="yMp-X8-fKc"/>
+                                                </items>
+                                            </group>
+                                            <connections>
+                                                <action selector="decrementHour" destination="7bu-Fd-ZdN" id="h5h-e1-LXp"/>
+                                            </connections>
+                                        </button>
+                                        <button alignment="left" verticalAlignment="bottom" id="XSH-vf-UI0">
+                                            <group key="contentGroup" width="0.5" height="1" alignment="left" id="bub-43-uFM">
+                                                <items>
+                                                    <imageView alignment="center" verticalAlignment="bottom" image="up_watch" contentMode="center" id="0Nj-mf-HKJ"/>
+                                                </items>
+                                            </group>
+                                            <connections>
+                                                <action selector="decrementMinute" destination="7bu-Fd-ZdN" id="5hT-Ba-obN"/>
+                                            </connections>
+                                        </button>
+                                    </items>
+                                </group>
+                                <label width="1" alignment="left" text="12:45am" textAlignment="center" id="xts-9u-ccb">
+                                    <fontDescription key="font" type="system" pointSize="30"/>
+                                </label>
+                                <group width="1" height="0.30000000000000016" alignment="left" id="vbf-mF-AjT">
+                                    <items>
+                                        <button alignment="left" id="8Wb-me-06d">
+                                            <group key="contentGroup" width="0.5" height="1" alignment="left" id="ALN-sc-ai3">
+                                                <items>
+                                                    <imageView alignment="center" image="down_watch" contentMode="center" id="jWV-lR-6cx"/>
+                                                </items>
+                                            </group>
+                                            <connections>
+                                                <action selector="incrementHour" destination="7bu-Fd-ZdN" id="vgx-8T-7ES"/>
+                                            </connections>
+                                        </button>
+                                        <button alignment="left" id="VY6-mA-Lco">
+                                            <group key="contentGroup" width="0.5" height="1" alignment="left" id="wZ4-Hs-nNS">
+                                                <items>
+                                                    <imageView alignment="center" image="down_watch" contentMode="center" id="FkW-NI-FU7"/>
+                                                </items>
+                                            </group>
+                                            <connections>
+                                                <action selector="incrementMinute" destination="7bu-Fd-ZdN" id="mad-Vw-0OI"/>
+                                            </connections>
+                                        </button>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <switch width="1" alignment="left" value="YES" title="Enabled" id="Sxs-Ni-x6O">
+                            <connections>
+                                <action selector="updateEnabled:" destination="7bu-Fd-ZdN" id="lRW-la-AtJ"/>
+                            </connections>
+                        </switch>
+                    </items>
+                    <connections>
+                        <outlet property="enabledSwitch" destination="Sxs-Ni-x6O" id="wyJ-HE-feT"/>
+                        <outlet property="timeLabel" destination="xts-9u-ccb" id="tcZ-OG-plU"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="730" y="624"/>
+        </scene>
+        <!--Glance Interface Controller-->
+        <scene sceneID="4kt-rk-N6f">
+            <objects>
+                <glanceController spacing="0.0" topTemplateType="body1Large" id="n5c-ZK-eUM" customClass="GlanceController">
+                    <items>
+                        <label alignment="left" text="Last Night" id="rs0-aR-Wnr"/>
+                        <label alignment="left" text="78" id="NaV-ZR-6sk"/>
+                        <group alignment="left" layout="vertical" id="aR8-vw-CDd">
+                            <items>
+                                <label alignment="center" verticalAlignment="bottom" text="You slept for 8.6 hours, deeply for 5.2 (60%) and moved 2 times." textAlignment="left" numberOfLines="0" minimumScaleFactor="0.70000000000000007" id="eGK-4Z-qMR">
+                                    <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                </label>
+                            </items>
+                        </group>
+                    </items>
+                    <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
+                    <connections>
+                        <outlet property="messageLabel" destination="eGK-4Z-qMR" id="BLR-uW-jdi"/>
+                        <outlet property="sleepScoreLabel" destination="NaV-ZR-6sk" id="vp3-ZL-Zbz"/>
+                    </connections>
+                </glanceController>
+            </objects>
+            <point key="canvasLocation" x="235" y="748"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="rWX-qp-hVh">
+            <objects>
+                <notificationController id="tx4-Td-Lhl">
+                    <items>
+                        <label alignment="left" text="Alert Label" id="1mu-HF-vU7"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" id="8eb-Cc-9yk"/>
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="1mu-HF-vU7" id="2qE-9n-kQv"/>
+                        <segue destination="Zsr-eQ-Zkg" kind="relationship" relationship="dynamicNotificationInterface" id="GoV-1i-tQ8"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="235" y="1001"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="OWq-h6-lJu">
+            <objects>
+                <controller id="Zsr-eQ-Zkg" customClass="NotificationController">
+                    <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="553" y="1001"/>
+        </scene>
+    </scenes>
+</document>

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0842C5C55EB0B3AAF2414799"
+               BlueprintIdentifier = "68E00CA10F18232B0BB18D70"
                BuildableName = "libPods-Sense Now Extension-FXKeychain.a"
                BlueprintName = "Pods-Sense Now Extension-FXKeychain"
                ReferencedContainer = "container:Pods.xcodeproj">

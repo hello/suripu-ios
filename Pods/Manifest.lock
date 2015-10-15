@@ -138,7 +138,7 @@ CHECKOUT OPTIONS:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
     :git: git@github.com:hello/LGBluetooth.git
   Mixpanel-simple:
-    :commit: aa14f4c464a6b4444b110ce5d8fbb0c38931f7eb
+    :commit: 3fedd657eda4da6adf77b368c8522c5ea29fa22e
     :git: git@github.com:hello/Mixpanel-simple.git
   NAPickerView:
     :commit: 78b35ccd98cafcba11a551b2e47d49d51ac766f4

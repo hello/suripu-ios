@@ -8,7 +8,6 @@
 
 #import <SenseKit/SenseKit.h>
 #import "ModelCache.h"
-#import "NSDate+HEMRelative.h"
 
 NSString *const ModelCacheUpdatedNotification = @"ModelCacheUpdatedNotification";
 NSString *const ModelCacheUpdatedObjectAlarms = @"alarms";
@@ -43,8 +42,17 @@ static NSString *const HEMAPIDevPath = @"https://dev-api.hello.is";
     [self refreshSensors];
 }
 
++ (NSDate *)yesterday {
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents* components = [NSDateComponents new];
+    components.day = -1;
+    return [calendar dateByAddingComponents:components
+                                     toDate:[NSDate date]
+                                    options:0];
+}
+
 + (void)refreshTimeline {
-    NSDate *yesterday = [[NSDate date] previousDay];
+    NSDate *yesterday = [self yesterday];
     timeline = timeline ?: [SENTimeline timelineForDate:yesterday];
     [SENAPITimeline timelineForDate:yesterday
                          completion:^(NSArray *timelines, NSError *error) {

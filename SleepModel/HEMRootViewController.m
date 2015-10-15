@@ -27,7 +27,6 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMStyledNavigationViewController.h"
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
 #import "HEMTimelineContainerViewController.h"
@@ -323,12 +322,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:checkpoint force:NO];
 
     if (controller != nil) {
-        UINavigationController* onboardingNav
-            = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
-        [[onboardingNav navigationBar] setTintColor:[UIColor tintColor]];
-
-        [self presentViewController:onboardingNav animated:animated completion:^{
-            [self showStatusBar];
+        [self presentViewController:controller animated:animated completion:^{
             [self removeDrawerViewController];
         }];
     } else {

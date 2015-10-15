@@ -4,9 +4,16 @@
 "question-mark" = "?";
 
 // welcome
-"welcome.title.meet-sense" = "Meet Sense";
-"welcome.title.welcome" = "Welcome";
-"welcome.subtitle" = "A simple system that tracks your sleep, monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
+"welcome.title" = "Meet Sense";
+"welcome.description" = "The first system for understanding your sleep and bedroom.";
+"welcome.intro.title.alarm" = "Smart Alarm";
+"welcome.intro.desc.alarm" = "Unlike a normal alarm, Sense's Smart Alarm analyzes your sleep cycle to know when you're sleeping lightly, and wakes you up at the optimal time to start your day off right.";
+"welcome.intro.title.timeline" = "Sleep Timeline";
+"welcome.intro.desc.timeline" = "Your Sleep Timeline shows you a detailed analysis of your sleep cycles and helps you see how even minor interruptions to your sleep, like tossing and turning, can impact the quality of your rest.";
+"welcome.intro.title.sleep-score" = "Sleep Score";
+"welcome.intro.desc.sleep-score" = "Get instant feedback on your sleep and see how the quality of your sleep fluctuates over time with your Sleep Score. Sense takes the environmental readings of your bedroom, your sleep during the night, and analyzes the information to provide you with a unique score out of 100.";
+"welcome.intro.title.current-conditions" = "Current Conditions";
+"welcome.intro.desc.current-conditions" = "It's hard to believe that something so small could be so powerful. Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
 
 // onboarding
 "sign-up.activity.message" = "Creating your account";

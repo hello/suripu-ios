@@ -28,6 +28,7 @@
 
 - (UIBarButtonItem*)cancelItem;
 - (SENSenseManager*)manager;
+- (void)showBackButtonAsCancelWithSelector:(SEL)action;
 - (void)showCancelButtonWithSelector:(SEL)selector;
 - (void)enableBackButton:(BOOL)enable;
 - (void)showHelpButtonForPage:(NSString*)page

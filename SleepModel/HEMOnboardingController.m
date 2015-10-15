@@ -276,6 +276,19 @@
     [cancelItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithWhite:1.0f alpha:0.0f]}
                               forState:UIControlStateDisabled];
     [self setCancelItem:cancelItem];
+}
+
+- (void)showBackButtonAsCancelWithSelector:(SEL)action {
+    UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit backIcon]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:action];
+    [cancelItem setTintColor:[UIColor tintColor]];
+    [self setCancelItem:cancelItem];
+}
+
+- (void)setCancelItem:(UIBarButtonItem *)cancelItem {
+    _cancelItem = cancelItem;
     [self setLeftBarItem:cancelItem];
     [[self navigationItem] setLeftBarButtonItem:[self cancelItem]];
 }

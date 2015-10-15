@@ -12,7 +12,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self showBackButtonAsCancelWithSelector:@selector(cancel:)];
     [SENAnalytics track:HEMAnalyticsEventOnbStart];
+}
+
+- (void)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

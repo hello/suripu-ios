@@ -5,6 +5,8 @@
 //  Created by Jimmy Lu on 8/18/14.
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
+#import <MediaPlayer/MPMoviePlayerViewController.h>
+
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 
@@ -49,6 +51,16 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     [self configureAppearance];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self hideStatusBar:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self hideStatusBar:NO];
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     if (![self meetSenseView]) {
@@ -56,9 +68,16 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     }
 }
 
-- (void)configureAppearance {
+- (void)hideStatusBar:(BOOL)hide {
     HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root hideStatusBar];
+    if (hide) {
+        [root hideStatusBar];
+    } else {
+        [root showStatusBar];
+    }
+}
+
+- (void)configureAppearance {
     // controller is launched in to a container controller that is styled and
     // always shows a left bar button, which we don't want
     [[self navigationItem] setLeftBarButtonItem:nil];
@@ -167,7 +186,11 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 #pragma mark - Actions
 
 - (void)playVideo:(UIButton*)videoButton {
-    
+    NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
+    MPMoviePlayerViewController* videoPlayer
+        = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
+    [self presentMoviePlayerViewControllerAnimated:videoPlayer];
+    [SENAnalytics track:kHEMAnalyticsEventVideo];
 }
 
 - (IBAction)logIn:(id)sender {

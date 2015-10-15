@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,26 +12,23 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cottonSense" translatesAutoresizingMaskIntoConstraints="NO" id="Xdb-jk-MiS">
-                    <rect key="frame" x="32" y="105" width="536" height="213"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="213" id="bNT-Bp-YNk"/>
-                    </constraints>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cottonSense" translatesAutoresizingMaskIntoConstraints="NO" id="Xdb-jk-MiS">
+                    <rect key="frame" x="32" y="105" width="536" height="211"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meet Sense" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keU-az-EGV">
-                    <rect key="frame" x="83" y="328" width="434" height="55"/>
+                    <rect key="frame" x="40" y="326" width="520" height="55"/>
                     <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="40"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The first system for understanding your sleep and bedroom." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TyN-UO-5XW">
-                    <rect key="frame" x="60" y="386" width="480" height="21"/>
+                    <rect key="frame" x="32" y="384" width="536" height="20.5"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQw-wz-GWp">
-                    <rect key="frame" x="233" y="422" width="134" height="25"/>
+                    <rect key="frame" x="233" y="419.5" width="134" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="134" id="9BJ-6N-fit"/>
                     </constraints>
@@ -45,16 +43,16 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="cQw-wz-GWp" firstAttribute="top" secondItem="TyN-UO-5XW" secondAttribute="bottom" constant="15" id="4sG-vA-qut"/>
-                <constraint firstAttribute="trailing" secondItem="keU-az-EGV" secondAttribute="trailing" constant="83" id="CTL-rL-u5o"/>
+                <constraint firstAttribute="trailing" secondItem="keU-az-EGV" secondAttribute="trailing" constant="40" id="CTL-rL-u5o"/>
                 <constraint firstItem="TyN-UO-5XW" firstAttribute="top" secondItem="keU-az-EGV" secondAttribute="bottom" constant="3" id="Cym-Kg-Jk5"/>
                 <constraint firstAttribute="trailing" secondItem="Xdb-jk-MiS" secondAttribute="trailing" constant="32" id="I7z-ls-ri4"/>
-                <constraint firstAttribute="trailing" secondItem="TyN-UO-5XW" secondAttribute="trailing" constant="60" id="OFN-na-mYO"/>
+                <constraint firstAttribute="trailing" secondItem="TyN-UO-5XW" secondAttribute="trailing" constant="32" id="OFN-na-mYO"/>
                 <constraint firstItem="cQw-wz-GWp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="QaZ-y2-blg"/>
                 <constraint firstItem="Xdb-jk-MiS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="TK4-2Z-JyP"/>
-                <constraint firstItem="keU-az-EGV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="83" id="ak0-H7-0y4"/>
+                <constraint firstItem="keU-az-EGV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="ak0-H7-0y4"/>
                 <constraint firstItem="keU-az-EGV" firstAttribute="top" secondItem="Xdb-jk-MiS" secondAttribute="bottom" constant="10" id="asW-57-sUW"/>
-                <constraint firstItem="Xdb-jk-MiS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="105" id="dcK-xf-2uQ"/>
-                <constraint firstItem="TyN-UO-5XW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="tPJ-X5-F5U"/>
+                <constraint firstItem="Xdb-jk-MiS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" multiplier="4:3" constant="105" id="dcK-xf-2uQ"/>
+                <constraint firstItem="TyN-UO-5XW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="tPJ-X5-F5U"/>
             </constraints>
             <connections>
                 <outlet property="descriptionLabel" destination="TyN-UO-5XW" id="RIc-Xd-hWv"/>

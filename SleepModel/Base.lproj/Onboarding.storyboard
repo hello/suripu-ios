@@ -328,13 +328,13 @@
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0B-PY-KLe">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0B-PY-KLe">
                                 <rect key="frame" x="20" y="68" width="560" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" ambiguous="YES" misplaced="YES" image="sense" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
+                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" image="sense" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
                                 <rect key="frame" x="0.0" y="109" width="600" height="421"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">

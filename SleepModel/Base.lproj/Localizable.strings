@@ -5,7 +5,7 @@
 
 // welcome
 "welcome.title" = "Meet Sense";
-"welcome.description" = "The first system for understanding your sleep and bedroom.";
+"welcome.description" = "The first system for understanding\nyour sleep and bedroom.";
 "welcome.intro.title.alarm" = "Smart Alarm";
 "welcome.intro.desc.alarm" = "Unlike a normal alarm, Sense's Smart Alarm analyzes your sleep cycle to know when you're sleeping lightly, and wakes you up at the optimal time to start your day off right.";
 "welcome.intro.title.timeline" = "Sleep Timeline";

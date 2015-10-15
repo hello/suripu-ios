@@ -4,8 +4,8 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.is.hello.sense.settings</string>
 		<string>group.is.hello.sense.data</string>
+		<string>group.is.hello.sense.settings</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

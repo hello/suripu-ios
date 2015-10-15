@@ -9,6 +9,7 @@
 #import <SenseKit/API.h>
 #import <SenseKit/Model.h>
 #import "ModelCache.h"
+#import "HEMConfig.h"
 
 NSString *const ModelCacheUpdatedNotification = @"ModelCacheUpdatedNotification";
 NSString *const ModelCacheUpdatedObjectAlarms = @"alarms";
@@ -20,9 +21,6 @@ NSString *const ModelCacheUpdatedObjectSleepResult = @"sleepResult";
 static NSArray *cachedAlarms = nil;
 static NSArray *cachedSensors = nil;
 static SENTimeline *timeline = nil;
-
-static NSString *const HEMAPIProdPath = @"https://api.hello.is";
-static NSString *const HEMAPIDevPath = @"https://dev-api.hello.is";
 
 + (NSArray *)alarms {
     return cachedAlarms;
@@ -96,13 +94,13 @@ static NSString *const HEMAPIDevPath = @"https://dev-api.hello.is";
 }
 
 + (void)configureAPI {
-    NSString *path = nil;
-#if DEBUG
-    path = HEMAPIDevPath;
-#else
-    path = HEMAPIProdPath;
-#endif
+    static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
+    NSString* path = [HEMConfig stringForConfig:HEMConfAPIURL];
+    NSString* clientID = [HEMConfig stringForConfig:HEMConfClientId];
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     [SENAPIClient setBaseURLFromPath:path];
+    [SENAPIClient setValue:version forHTTPHeaderField:HEMApiXVersionHeader];
+    [SENAuthorizationService setClientAppID:clientID];
     [SENAuthorizationService authorizeRequestsFromKeychain];
 }
 

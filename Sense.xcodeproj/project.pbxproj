@@ -59,6 +59,7 @@
 		8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */; };
 		8A50A18A1B548C1A007FDECC /* UIImage+HEMBlurTint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1891B548C1A007FDECC /* UIImage+HEMBlurTint.m */; };
 		8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A54029E19AE299B00FC6085 /* Crashlytics.framework */; };
+		8A556C381BD05184005182EE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A556C371BD05184005182EE /* HealthKit.framework */; };
 		8A576F121A79B12200287398 /* HEMTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A576F111A79B12200287398 /* HEMTutorial.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A63D5551A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A63D5541A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m */; };
@@ -449,6 +450,8 @@
 		8A50A1891B548C1A007FDECC /* UIImage+HEMBlurTint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HEMBlurTint.m"; sourceTree = "<group>"; };
 		8A54029E19AE299B00FC6085 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8A5402A019AE72F300FC6085 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
+		8A556C361BD05168005182EE /* Sense Now Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Sense Now Extension.entitlements"; sourceTree = "<group>"; };
+		8A556C371BD05184005182EE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		8A576F101A79B12200287398 /* HEMTutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTutorial.h; sourceTree = "<group>"; };
 		8A576F111A79B12200287398 /* HEMTutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTutorial.m; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
@@ -911,6 +914,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA4EED04A361BEF42550B9ED /* libPods-Sense Now Extension.a in Frameworks */,
+				8A556C381BD05184005182EE /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,6 +968,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A556C371BD05184005182EE /* HealthKit.framework */,
 				BF62150C1AB8C1C80047A518 /* libicucore.dylib */,
 				BF414CE01A770A6D006204DE /* HealthKit.framework */,
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
@@ -1083,6 +1088,7 @@
 		8A2F28511BCC5DAF00F971B3 /* Sense Now Extension */ = {
 			isa = PBXGroup;
 			children = (
+				8A556C361BD05168005182EE /* Sense Now Extension.entitlements */,
 				8A2F285E1BCC5DAF00F971B3 /* Assets.xcassets */,
 				8A91176E1BD03F06003B0855 /* Alarms */,
 				8A9117711BD03FA9003B0855 /* Glances */,
@@ -2281,6 +2287,18 @@
 					};
 					8A2F284C1BCC5DAF00F971B3 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = MSG86J7GNF;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					BF7F1BC719E304050028F799 = {
 						CreatedOnToolsVersion = 6.0;
@@ -3209,6 +3227,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sense Now Extension/Sense Now Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3222,6 +3243,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -3235,6 +3257,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sense Now Extension/Sense Now Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3244,6 +3269,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -3257,6 +3283,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sense Now Extension/Sense Now Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3266,6 +3295,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -3279,6 +3309,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sense Now Extension/Sense Now Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3288,6 +3321,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

@@ -399,7 +399,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)welcomeButtonFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:13.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
 
 + (UIFont*)welcomeIntroTitleFont

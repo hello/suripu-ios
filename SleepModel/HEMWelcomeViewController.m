@@ -193,13 +193,7 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     [SENAnalytics track:kHEMAnalyticsEventVideo];
 }
 
-- (IBAction)logIn:(id)sender {
-    
-}
-
-- (IBAction)signUp:(id)sender {
-    
-}
+// log in and sign up actions are done through segues in the storyboard
 
 #pragma mark - Scrolling
 

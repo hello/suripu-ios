@@ -42,6 +42,7 @@ PODS:
   - SenseKit (0.1.0):
     - SenseKit/Analytics (= 0.1.0)
     - SenseKit/API (= 0.1.0)
+    - SenseKit/API-UIKit (= 0.1.0)
     - SenseKit/BLE (= 0.1.0)
     - SenseKit/Model (= 0.1.0)
     - SenseKit/Service (= 0.1.0)
@@ -52,6 +53,8 @@ PODS:
     - AFNetworking (~> 2.6.0)
     - FXKeychain (~> 1.5.1)
     - NSJSONSerialization-NSNullRemoval (~> 1.0.0)
+  - SenseKit/API-UIKit (0.1.0):
+    - SenseKit/API (= 0.1.0)
   - SenseKit/BLE (0.1.0):
     - CocoaLumberjack (~> 2.0.0)
     - LGBluetooth
@@ -164,7 +167,7 @@ SPEC CHECKSUMS:
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
-  SenseKit: e648c0f6d2ca58e00b71e54e7f9b09c671c519cf
+  SenseKit: 1a4699196676531e20d6835df6161bf83fceffbf
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a

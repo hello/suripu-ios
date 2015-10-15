@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/API/SENAPIAppStats.h
+../../../../../SenseKit/Pod/Classes/API-UIKit/SENAPIAppStats.h

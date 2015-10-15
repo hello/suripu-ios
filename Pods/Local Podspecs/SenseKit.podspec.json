@@ -42,6 +42,15 @@
       }
     },
     {
+      "name": "API-UIKit",
+      "source_files": "Pod/Classes/API-UIKit/*",
+      "dependencies": {
+        "SenseKit/API": [
+          "0.1.0"
+        ]
+      }
+    },
+    {
       "name": "BLE",
       "source_files": "Pod/Classes/BLE/**/*.{h,m}",
       "dependencies": {

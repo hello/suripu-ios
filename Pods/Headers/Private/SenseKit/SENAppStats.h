@@ -1,1 +1,1 @@
-../../../SenseKit/Pod/Classes/Model/SENAppStats.h
+../../../../../SenseKit/Pod/Classes/Model/SENAppStats.h

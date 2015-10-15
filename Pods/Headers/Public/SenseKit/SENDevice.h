@@ -1,1 +1,1 @@
-../../../SenseKit/Pod/Classes/Model/SENDevice.h
+../../../../../SenseKit/Pod/Classes/Model/SENDevice.h

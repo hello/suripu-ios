@@ -1,1 +1,1 @@
-../../../SenseKit/Pod/Classes/Analytics/SENAnalyticsMixpanel.h
+../../../../../SenseKit/Pod/Classes/Analytics/SENAnalyticsMixpanel.h

@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C3FD8765A7EC3437ED6DF00 /* libPods-SenseWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A33E205864C6A714367192B6 /* libPods-SenseWidget.a */; };
 		2109C3418ADD4BA6824507C6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD539145AF784DC3AA0DAF13 /* libPods.a */; };
+		3E10EEA3F19B0AAB115A3FC6 /* libPods-Sense.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3645A3B3275FAA920C4FFCC /* libPods-Sense.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -280,7 +282,9 @@
 		BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5B51B335A3300A30429 /* HEMHintGestureView.m */; };
 		BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */; };
 		BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */; };
+		CA4EED04A361BEF42550B9ED /* libPods-Sense Now Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 963684DE1E1944AEF71B9193 /* libPods-Sense Now Extension.a */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
+		FBF4B27466C4627B785D3227 /* libPods-Sense Now.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B461E9422BB483889D167ADA /* libPods-Sense Now.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -358,6 +362,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0841BDE853ABBB4175E12FE1 /* Pods-Sense Now Extension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now Extension.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now Extension/Pods-Sense Now Extension.beta.xcconfig"; sourceTree = "<group>"; };
+		12785C95CFAAF7AB9F5EC918 /* Pods-Sense Now.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now/Pods-Sense Now.dev.xcconfig"; sourceTree = "<group>"; };
+		47F171821B582669B65E773D /* Pods-Sense Now Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now Extension/Pods-Sense Now Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56BD6DDD616CA07689AE1232 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sense.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -608,6 +615,10 @@
 		8AFD8A1C1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmPropertyTableViewCell.h; sourceTree = "<group>"; };
 		8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMAlarmPropertyTableViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8AFE90991B9A20C0000D638E /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
+		963684DE1E1944AEF71B9193 /* libPods-Sense Now Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sense Now Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A33E205864C6A714367192B6 /* libPods-SenseWidget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SenseWidget.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB9EA3C1AC54DEDA7147B436 /* Pods-Sense Now Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now Extension/Pods-Sense Now Extension.release.xcconfig"; sourceTree = "<group>"; };
+		B461E9422BB483889D167ADA /* libPods-Sense Now.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sense Now.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF005C6E19FECACC00E68E87 /* HEMWifiPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiPickerViewController.h; sourceTree = "<group>"; };
 		BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiPickerViewController.m; sourceTree = "<group>"; };
 		BF005C7119FED17800E68E87 /* HEMWiFiDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWiFiDataSource.h; sourceTree = "<group>"; };
@@ -669,6 +680,7 @@
 		BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMSnapshot.m"; sourceTree = "<group>"; };
 		BF4E88E81A1301D700831380 /* HEMInsightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightViewController.h; sourceTree = "<group>"; };
 		BF4E88E91A1301D700831380 /* HEMInsightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightViewController.m; sourceTree = "<group>"; };
+		BF4ED4E83CD2C02D6B4C4610 /* Pods-Sense Now.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now/Pods-Sense Now.debug.xcconfig"; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
 		BF5AE0501B4F551A00646B6E /* TimeZones.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TimeZones.plist; sourceTree = "<group>"; };
@@ -858,7 +870,11 @@
 		BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandholdingView.m; sourceTree = "<group>"; };
 		BFF6A5BB1B339CA400A30429 /* HEMHintMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHintMessageView.h; sourceTree = "<group>"; };
 		BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHintMessageView.m; sourceTree = "<group>"; };
+		D3645A3B3275FAA920C4FFCC /* libPods-Sense.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sense.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEBBF87CE9F109BD61655F7A /* Pods-Sense Now.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now/Pods-Sense Now.release.xcconfig"; sourceTree = "<group>"; };
+		DF5E3D2078A5937E294CE7E0 /* Pods-Sense Now.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now/Pods-Sense Now.beta.xcconfig"; sourceTree = "<group>"; };
 		ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		ED3849D538B02EF3239D88BF /* Pods-Sense Now Extension.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sense Now Extension.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Sense Now Extension/Pods-Sense Now Extension.dev.xcconfig"; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -875,6 +891,7 @@
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */,
 				2109C3418ADD4BA6824507C6 /* libPods.a in Frameworks */,
+				3E10EEA3F19B0AAB115A3FC6 /* libPods-Sense.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,6 +910,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA4EED04A361BEF42550B9ED /* libPods-Sense Now Extension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -902,6 +920,15 @@
 			files = (
 				BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */,
 				BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */,
+				0C3FD8765A7EC3437ED6DF00 /* libPods-SenseWidget.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0305836E6D22EA6B19FC568 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBF4B27466C4627B785D3227 /* libPods-Sense Now.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,6 +978,10 @@
 				FD539145AF784DC3AA0DAF13 /* libPods.a */,
 				4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */,
 				BF7F1BC919E304050028F799 /* NotificationCenter.framework */,
+				D3645A3B3275FAA920C4FFCC /* libPods-Sense.a */,
+				B461E9422BB483889D167ADA /* libPods-Sense Now.a */,
+				A33E205864C6A714367192B6 /* libPods-SenseWidget.a */,
+				963684DE1E1944AEF71B9193 /* libPods-Sense Now Extension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1602,6 +1633,14 @@
 				BF79185A099B572C06592929 /* Pods.release.xcconfig */,
 				56BD6DDD616CA07689AE1232 /* Pods-Tests.debug.xcconfig */,
 				8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */,
+				BF4ED4E83CD2C02D6B4C4610 /* Pods-Sense Now.debug.xcconfig */,
+				DEBBF87CE9F109BD61655F7A /* Pods-Sense Now.release.xcconfig */,
+				DF5E3D2078A5937E294CE7E0 /* Pods-Sense Now.beta.xcconfig */,
+				12785C95CFAAF7AB9F5EC918 /* Pods-Sense Now.dev.xcconfig */,
+				47F171821B582669B65E773D /* Pods-Sense Now Extension.debug.xcconfig */,
+				AB9EA3C1AC54DEDA7147B436 /* Pods-Sense Now Extension.release.xcconfig */,
+				0841BDE853ABBB4175E12FE1 /* Pods-Sense Now Extension.beta.xcconfig */,
+				ED3849D538B02EF3239D88BF /* Pods-Sense Now Extension.dev.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2155,8 +2194,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8A2F286E1BCC5DB000F971B3 /* Build configuration list for PBXNativeTarget "Sense Now" */;
 			buildPhases = (
+				905663690B8F5CF15B917BB5 /* Check Pods Manifest.lock */,
 				8A2F283F1BCC5DAE00F971B3 /* Resources */,
 				8A2F286D1BCC5DB000F971B3 /* Embed App Extensions */,
+				F0305836E6D22EA6B19FC568 /* Frameworks */,
+				BEA160DFE2FEFCA156428530 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2172,9 +2214,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8A2F286C1BCC5DB000F971B3 /* Build configuration list for PBXNativeTarget "Sense Now Extension" */;
 			buildPhases = (
+				5B0557E3AD132D955EF0CE3F /* Check Pods Manifest.lock */,
 				8A2F28491BCC5DAF00F971B3 /* Sources */,
 				8A2F284A1BCC5DAF00F971B3 /* Frameworks */,
 				8A2F284B1BCC5DAF00F971B3 /* Resources */,
+				4A18FA13E83D5CD4F80EF537 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2189,9 +2233,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF7F1BD819E304050028F799 /* Build configuration list for PBXNativeTarget "SenseWidget" */;
 			buildPhases = (
+				10B36A667F0C72BE4729DE4E /* Check Pods Manifest.lock */,
 				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC519E304050028F799 /* Frameworks */,
 				BF7F1BC619E304050028F799 /* Resources */,
+				A67137E14C33DB14C3B8996D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2342,6 +2388,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		10B36A667F0C72BE4729DE4E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		352ECF48FC214905A51E01BC /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2354,10 +2415,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sense/Pods-Sense-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4078913592044716B8672C8D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4A18FA13E83D5CD4F80EF537 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sense Now Extension/Pods-Sense Now Extension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B0557E3AD132D955EF0CE3F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2384,6 +2475,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Crashlytics.framework/run f464ccd280d3e5730dcdaa9b64d1d108694ee9a9 c1c2f12a5d26d28ba58d88e8f4045241f854d6ce829415d932df453877112636";
+			showEnvVarsInLog = 0;
+		};
+		905663690B8F5CF15B917BB5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A67137E14C33DB14C3B8996D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseWidget/Pods-SenseWidget-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEA160DFE2FEFCA156428530 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sense Now/Pods-Sense Now-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C2DAFDFE628B4AE1A8B7C294 /* Copy Pods Resources */ = {
@@ -2969,6 +3105,7 @@
 		};
 		8A2F28641BCC5DB000F971B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF4ED4E83CD2C02D6B4C4610 /* Pods-Sense Now.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -2996,6 +3133,7 @@
 		};
 		8A2F28651BCC5DB000F971B3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEBBF87CE9F109BD61655F7A /* Pods-Sense Now.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -3019,6 +3157,7 @@
 		};
 		8A2F28661BCC5DB000F971B3 /* Beta */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF5E3D2078A5937E294CE7E0 /* Pods-Sense Now.beta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -3042,6 +3181,7 @@
 		};
 		8A2F28671BCC5DB000F971B3 /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 12785C95CFAAF7AB9F5EC918 /* Pods-Sense Now.dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -3065,6 +3205,7 @@
 		};
 		8A2F28681BCC5DB000F971B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47F171821B582669B65E773D /* Pods-Sense Now Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -3090,6 +3231,7 @@
 		};
 		8A2F28691BCC5DB000F971B3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB9EA3C1AC54DEDA7147B436 /* Pods-Sense Now Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -3111,6 +3253,7 @@
 		};
 		8A2F286A1BCC5DB000F971B3 /* Beta */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0841BDE853ABBB4175E12FE1 /* Pods-Sense Now Extension.beta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -3132,6 +3275,7 @@
 		};
 		8A2F286B1BCC5DB000F971B3 /* Dev */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED3849D538B02EF3239D88BF /* Pods-Sense Now Extension.dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_UNREACHABLE_CODE = YES;

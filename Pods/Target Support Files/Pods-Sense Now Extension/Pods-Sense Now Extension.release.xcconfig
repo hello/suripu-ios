@@ -1,0 +1,5 @@
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/CGFloatType" "${PODS_ROOT}/Headers/Public/FXKeychain" "${PODS_ROOT}/Headers/Public/NSJSONSerialization-NSNullRemoval" "${PODS_ROOT}/Headers/Public/SenseKit"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/CGFloatType" -isystem "${PODS_ROOT}/Headers/Public/FXKeychain" -isystem "${PODS_ROOT}/Headers/Public/NSJSONSerialization-NSNullRemoval" -isystem "${PODS_ROOT}/Headers/Public/SenseKit"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"Pods-Sense Now Extension-AFNetworking" -l"Pods-Sense Now Extension-CGFloatType" -l"Pods-Sense Now Extension-NSJSONSerialization-NSNullRemoval" -l"Pods-Sense Now Extension-SenseKit" -framework "CoreGraphics" -framework "MobileCoreServices" -framework "Security"
+PODS_ROOT = ${SRCROOT}/Pods

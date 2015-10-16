@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1AC1CC9443962C4700CC53EB'
+               BlueprintIdentifier = '3025A20FB4B6F0DA9D714D5C'
                BlueprintName = 'Pods-Sense Now Extension-FXKeychain'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-Sense Now Extension-FXKeychain.a'>

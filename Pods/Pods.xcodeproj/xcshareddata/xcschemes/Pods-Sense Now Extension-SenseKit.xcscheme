@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1808853A4BC11BA46311D6A8'
+               BlueprintIdentifier = '131D4F42061201AB240E38DA'
                BlueprintName = 'Pods-Sense Now Extension-SenseKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-Sense Now Extension-SenseKit.a'>

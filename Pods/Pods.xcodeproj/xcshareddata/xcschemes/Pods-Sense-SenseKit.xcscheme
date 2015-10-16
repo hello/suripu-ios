@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '4249C383367275F236259B73'
+               BlueprintIdentifier = '0BA77E4906F06E966F3F2C58'
                BlueprintName = 'Pods-Sense-SenseKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-Sense-SenseKit.a'>

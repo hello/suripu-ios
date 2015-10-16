@@ -6,7 +6,8 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
-#import <SenseKit/SenseKit.h>
+#import <SenseKit/API.h>
+#import <SenseKit/Model.h>
 #import "ModelCache.h"
 
 NSString *const ModelCacheUpdatedNotification = @"ModelCacheUpdatedNotification";

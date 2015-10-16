@@ -1,5 +1,5 @@
 DEFAULT_TASK=xcodebuild -workspace Sense.xcworkspace -scheme Sense
-CI_TASK=$(DEFAULT_TASK) -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6,OS=8.3"
+CI_TASK=$(DEFAULT_TASK) -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6,OS=8.4"
 
 .PHONY:
 

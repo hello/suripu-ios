@@ -33,7 +33,7 @@
                                     <items>
                                         <group width="65" height="140" alignment="center" verticalAlignment="center" layout="vertical" id="fQa-Pd-xmy">
                                             <items>
-                                                <button alignment="center" verticalAlignment="center" id="SGT-r1-knp" userLabel="Room button">
+                                                <button alignment="center" verticalAlignment="bottom" id="SGT-r1-knp" userLabel="Room button">
                                                     <group key="contentGroup" width="1" height="67" alignment="left" layout="vertical" id="8iW-SM-jCU">
                                                         <items>
                                                             <imageView alignment="center" verticalAlignment="center" image="currently_blue_watch" id="6Jf-fM-Laz"/>
@@ -50,7 +50,7 @@
                                         </group>
                                         <group width="65" height="140" alignment="center" verticalAlignment="center" layout="vertical" id="PSM-aN-EZd">
                                             <items>
-                                                <button alignment="center" verticalAlignment="center" id="MIw-v2-L85" userLabel="Alarm button">
+                                                <button alignment="center" verticalAlignment="bottom" id="MIw-v2-L85" userLabel="Alarm button">
                                                     <group key="contentGroup" width="1" alignment="left" layout="vertical" id="Bsr-Z0-lbH">
                                                         <items>
                                                             <imageView alignment="center" verticalAlignment="center" image="alarm_blue_watch" id="RzN-Xz-Fdi"/>

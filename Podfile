@@ -5,7 +5,7 @@ ENV['COCOAPODS_DISABLE_STATS'] = '1'
 def core_libs
     pod 'CGFloatType', '~> 1.3.1'
     pod 'FXKeychain', :path => 'Vendor/'
-    pod 'AFNetworking', :git => 'https://github.com/AFNetworking/AFNetworking', :branch => 'kylef/os_obj_use_objc'
+    pod 'AFNetworking', :git => 'https://github.com/AFNetworking/AFNetworking', :commit => 'acfaa7ea804137dc34f64a7de846eef30badbea2'
 end
 
 def app_utils

@@ -79,6 +79,7 @@ PODS:
     - ZendeskSDK/Core
 
 DEPENDENCIES:
+  - AFNetworking (from `https://github.com/AFNetworking/AFNetworking`, branch `kylef/os_obj_use_objc`)
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`,
     commit `6bf420df77117f519af32a6393520ead4e7848c6`)
   - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`, commit
@@ -103,6 +104,9 @@ DEPENDENCIES:
   - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.4.1.2`)
 
 EXTERNAL SOURCES:
+  AFNetworking:
+    :branch: kylef/os_obj_use_objc
+    :git: https://github.com/AFNetworking/AFNetworking
   AttributedMarkdown:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
@@ -128,6 +132,9 @@ EXTERNAL SOURCES:
     :tag: 1.4.1.2
 
 CHECKOUT OPTIONS:
+  AFNetworking:
+    :commit: 02b80938ee1502f210cdf754139aa0054106a15f
+    :git: https://github.com/AFNetworking/AFNetworking
   AttributedMarkdown:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
@@ -176,4 +183,4 @@ SPEC CHECKSUMS:
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
   ZendeskSDK: c100e5e75b988ccc58ae29c236cc270b967235be
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENSenseWiFiStatus.h
+../../../../../SenseKit/Pod/Classes/BLE/SENSenseWiFiStatus.h

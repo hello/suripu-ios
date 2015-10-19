@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,8 +11,11 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cottonSense" translatesAutoresizingMaskIntoConstraints="NO" id="Xdb-jk-MiS">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="cottonSense" translatesAutoresizingMaskIntoConstraints="NO" id="Xdb-jk-MiS">
                     <rect key="frame" x="32" y="105" width="536" height="211"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="211" id="u6u-LM-tuP"/>
+                    </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meet Sense" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keU-az-EGV">
                     <rect key="frame" x="40" y="326" width="520" height="55"/>
@@ -21,14 +23,14 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The first system for understanding your sleep and bedroom." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TyN-UO-5XW">
-                    <rect key="frame" x="32" y="384" width="536" height="20.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wake up feeling great, improve your sleep, and learn how the environment of your bedroom affects your rest" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TyN-UO-5XW">
+                    <rect key="frame" x="32" y="384" width="536" height="41"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQw-wz-GWp">
-                    <rect key="frame" x="233" y="419.5" width="134" height="25"/>
+                    <rect key="frame" x="233" y="440" width="134" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="134" id="9BJ-6N-fit"/>
                     </constraints>
@@ -40,7 +42,7 @@
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="cQw-wz-GWp" firstAttribute="top" secondItem="TyN-UO-5XW" secondAttribute="bottom" constant="15" id="4sG-vA-qut"/>
                 <constraint firstAttribute="trailing" secondItem="keU-az-EGV" secondAttribute="trailing" constant="40" id="CTL-rL-u5o"/>
@@ -51,13 +53,16 @@
                 <constraint firstItem="Xdb-jk-MiS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="TK4-2Z-JyP"/>
                 <constraint firstItem="keU-az-EGV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="ak0-H7-0y4"/>
                 <constraint firstItem="keU-az-EGV" firstAttribute="top" secondItem="Xdb-jk-MiS" secondAttribute="bottom" constant="10" id="asW-57-sUW"/>
-                <constraint firstItem="Xdb-jk-MiS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" multiplier="4:3" constant="105" id="dcK-xf-2uQ"/>
+                <constraint firstItem="Xdb-jk-MiS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="105" id="dcK-xf-2uQ"/>
                 <constraint firstItem="TyN-UO-5XW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="tPJ-X5-F5U"/>
             </constraints>
             <connections>
                 <outlet property="descriptionLabel" destination="TyN-UO-5XW" id="RIc-Xd-hWv"/>
+                <outlet property="senseImageHeightConstraint" destination="u6u-LM-tuP" id="oTK-uZ-hxK"/>
+                <outlet property="senseImageTopConstraint" destination="dcK-xf-2uQ" id="Uiw-Pp-MXz"/>
                 <outlet property="senseImageView" destination="Xdb-jk-MiS" id="ZjB-hs-mK5"/>
                 <outlet property="titleLabel" destination="keU-az-EGV" id="WZx-7E-DMr"/>
+                <outlet property="titleTopConstraint" destination="asW-57-sUW" id="3q3-8j-ryI"/>
                 <outlet property="videoButton" destination="cQw-wz-GWp" id="upa-ms-dVZ"/>
             </connections>
         </view>

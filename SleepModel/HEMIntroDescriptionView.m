@@ -16,6 +16,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeadingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLeadingConstraint;
 
 @end
 
@@ -45,6 +49,20 @@
     return @{NSFontAttributeName : [UIFont welcomeIntroDescriptionFont],
              NSForegroundColorAttributeName : [UIColor welcomeIntroDescriptionColor],
              NSParagraphStyleAttributeName : style};
+}
+
+- (void)awakeFromNib {
+    [self adjustConstraintsForScreenSize];
+}
+
+- (void)adjustConstraintsForScreenSize {
+    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
+        CGFloat const horzConstant = 28.0f;
+        [[self titleLeadingConstraint] setConstant:horzConstant];
+        [[self titleLeadingConstraint] setConstant:horzConstant];
+        [[self descriptionLeadingConstraint] setConstant:horzConstant];
+        [[self descriptionLeadingConstraint] setConstant:horzConstant];
+    }
 }
 
 @end

@@ -12,13 +12,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Smart Alarm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P4g-He-tDi">
-                    <rect key="frame" x="20" y="32" width="560" height="28"/>
+                    <rect key="frame" x="40" y="32" width="520" height="28"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vZ-P3-tfM">
-                    <rect key="frame" x="20" y="66" width="560" height="62"/>
+                    <rect key="frame" x="40" y="67" width="520" height="62"/>
                     <string key="text">Unlike a normal alarm, Sense's Smart Alarm analyzes your sleep cycle to know when you're sleeping lightly, and wakes you up at the optimal time to start your day off right.</string>
                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -27,16 +27,20 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="P4g-He-tDi" secondAttribute="trailing" constant="20" id="4UI-CR-fLd"/>
-                <constraint firstItem="P4g-He-tDi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="E5L-CU-Kbt"/>
-                <constraint firstAttribute="trailing" secondItem="9vZ-P3-tfM" secondAttribute="trailing" constant="20" id="Tf7-4s-hNL"/>
+                <constraint firstAttribute="trailing" secondItem="P4g-He-tDi" secondAttribute="trailing" constant="40" id="4UI-CR-fLd"/>
+                <constraint firstItem="P4g-He-tDi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="E5L-CU-Kbt"/>
+                <constraint firstAttribute="trailing" secondItem="9vZ-P3-tfM" secondAttribute="trailing" constant="40" id="Tf7-4s-hNL"/>
                 <constraint firstItem="9vZ-P3-tfM" firstAttribute="top" secondItem="P4g-He-tDi" secondAttribute="bottom" constant="7" id="b2o-vV-ZcM"/>
                 <constraint firstItem="P4g-He-tDi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="32" id="rn0-mE-BfY"/>
-                <constraint firstItem="9vZ-P3-tfM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="uKS-JU-Lcv"/>
+                <constraint firstItem="9vZ-P3-tfM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="uKS-JU-Lcv"/>
             </constraints>
             <connections>
                 <outlet property="descriptionLabel" destination="9vZ-P3-tfM" id="UDf-vq-PyR"/>
+                <outlet property="descriptionLeadingConstraint" destination="uKS-JU-Lcv" id="G1W-XX-FiX"/>
+                <outlet property="descriptionTrailingConstraint" destination="Tf7-4s-hNL" id="sSb-nD-07p"/>
                 <outlet property="titleLabel" destination="P4g-He-tDi" id="bN9-xa-3hS"/>
+                <outlet property="titleLeadingConstraint" destination="E5L-CU-Kbt" id="53E-Uk-Inv"/>
+                <outlet property="titleTrailingConstraint" destination="4UI-CR-fLd" id="EpQ-w3-0XR"/>
             </connections>
         </view>
     </objects>

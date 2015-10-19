@@ -9,12 +9,16 @@
 #import "UIColor+HEMStyle.h"
 
 #import "HEMMeetSenseView.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMMeetSenseView()
 
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseImageTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseImageHeightConstraint;
 
 @end
 
@@ -33,6 +37,7 @@
 
 - (void)awakeFromNib {
     [self configureAppearance];
+    [self updateConstraintsForScreenDifferences];
 }
 
 - (void)configureAppearance {
@@ -50,6 +55,17 @@
                                                                           attributes:attributes];
     
     [[self descriptionLabel] setAttributedText:attrDescription];
+}
+
+- (void)updateConstraintsForScreenDifferences {
+    if (HEMIsIPhone4Family()) {
+        [[self senseImageTopConstraint] setConstant:31.0f];
+        [[self senseImageHeightConstraint] setConstant:170.0f];
+        [[self titleTopConstraint] setConstant:-5.0f];
+    } else if (HEMIsIPhone5Family()) {
+        [[self senseImageTopConstraint] setConstant:50.0f];
+        [[self titleTopConstraint] setConstant:5.0f];
+    }
 }
 
 - (NSDictionary*)descriptionAttributes {

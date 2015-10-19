@@ -5,15 +5,15 @@
 
 // welcome
 "welcome.title" = "Meet Sense";
-"welcome.description" = "The first system for understanding\nyour sleep and bedroom.";
+"welcome.description" = "Wake up feeling great, improve your sleep, and learn how the environment of your bedroom affects your rest";
 "welcome.intro.title.alarm" = "Smart Alarm";
 "welcome.intro.desc.alarm" = "Unlike a normal alarm, Sense's Smart Alarm analyzes your sleep cycle to know when you're sleeping lightly, and wakes you up at the optimal time to start your day off right.";
 "welcome.intro.title.timeline" = "Sleep Timeline";
 "welcome.intro.desc.timeline" = "Your Sleep Timeline shows you a detailed analysis of your sleep cycles and helps you see how even minor interruptions to your sleep, like tossing and turning, can impact the quality of your rest.";
 "welcome.intro.title.sleep-score" = "Sleep Score";
-"welcome.intro.desc.sleep-score" = "Get instant feedback on your sleep and see how the quality of your sleep fluctuates over time with your Sleep Score. Sense takes the environmental readings of your bedroom, your sleep during the night, and analyzes the information to provide you with a unique score out of 100.";
+"welcome.intro.desc.sleep-score" = "Get instant feedback on your sleep and see how the quality of your sleep fluctuates over time. Make adjustments to your bedroom environment and sleep habits, get better sleep, and raise your Sleep Score.";
 "welcome.intro.title.current-conditions" = "Current Conditions";
-"welcome.intro.desc.current-conditions" = "It's hard to believe that something so small could be so powerful. Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
+"welcome.intro.desc.current-conditions" = "Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
 
 // onboarding
 "sign-up.activity.message" = "Creating your account";

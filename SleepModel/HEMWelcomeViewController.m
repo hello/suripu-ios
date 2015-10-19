@@ -16,6 +16,7 @@
 #import "HEMMeetSenseView.h"
 #import "HEMIntroDescriptionView.h"
 #import "HEMRootViewController.h"
+#import "HEMScreenUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomePageMeetSense = 0,
@@ -35,6 +36,8 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 @property (weak, nonatomic) IBOutlet UIButton *logInButton;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logInButtonTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageControlBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *introImageHeightConstraint;
 
 @property (weak, nonatomic) HEMMeetSenseView* meetSenseView;
 @property (assign, nonatomic) CGFloat previousScrollOffsetX;
@@ -66,6 +69,10 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     if (![self meetSenseView]) {
         [self configureContent];
     }
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self introImageHeightConstraint] withDiff:-48.0f];
 }
 
 - (void)hideStatusBar:(BOOL)hide {
@@ -258,13 +265,9 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
             
             [self updateActionButtonLayoutWithPercentage:1 - pagePercentage];
             
-            if (pagePercentage < 0.25f) {
-                
-                [self updateImageView:[self introImageView]
-                            withImage:[self introImageForPage:nextPage]
-                       pagePercentage:pagePercentage];
-                
-            }
+            [self updateImageView:[self introImageView]
+                        withImage:[self introImageForPage:nextPage]
+                   pagePercentage:pagePercentage];
             
         } else if (!movingRight && nextPage == HEMWelcomePageMeetSense) {
             

@@ -182,12 +182,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5O3-ta-KKB">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="208"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VfS-9q-RyP">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="208"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="188" id="46f-qw-Xei"/>
+                                    <constraint firstAttribute="height" constant="208" id="46f-qw-Xei"/>
                                 </constraints>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQE-5N-Yo5">
@@ -198,7 +198,7 @@
                                 </connections>
                             </scrollView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="VTU-r7-AIx">
-                                <rect key="frame" x="260" y="483" width="80" height="37"/>
+                                <rect key="frame" x="260" y="507" width="80" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="chG-n2-trA"/>
                                 </constraints>
@@ -264,7 +264,7 @@
                             <constraint firstItem="fLD-XK-tY6" firstAttribute="top" secondItem="WGy-A8-W4g" secondAttribute="bottom" id="Paa-5D-DbJ"/>
                             <constraint firstItem="VfS-9q-RyP" firstAttribute="leading" secondItem="k8F-r0-Evx" secondAttribute="leadingMargin" constant="-20" id="WOP-vA-iDH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WGy-A8-W4g" secondAttribute="trailing" constant="-20" id="gev-sM-pvJ"/>
-                            <constraint firstItem="VTU-r7-AIx" firstAttribute="bottom" secondItem="WGy-A8-W4g" secondAttribute="top" constant="-24" id="iPN-Ts-wUt"/>
+                            <constraint firstItem="VTU-r7-AIx" firstAttribute="bottom" secondItem="WGy-A8-W4g" secondAttribute="top" id="iPN-Ts-wUt"/>
                             <constraint firstItem="PQE-5N-Yo5" firstAttribute="leading" secondItem="k8F-r0-Evx" secondAttribute="leadingMargin" constant="-20" id="kBy-u6-178"/>
                             <constraint firstAttribute="trailingMargin" secondItem="PQE-5N-Yo5" secondAttribute="trailing" constant="-20" id="mqi-Jj-zFq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="VfS-9q-RyP" secondAttribute="trailing" constant="-20" id="pwl-IV-U8j"/>
@@ -279,10 +279,12 @@
                         <outlet property="buttonContainerView" destination="WGy-A8-W4g" id="Gq1-gn-vTN"/>
                         <outlet property="contentPageControl" destination="VTU-r7-AIx" id="P6c-hC-udX"/>
                         <outlet property="contentScrollView" destination="PQE-5N-Yo5" id="bb1-ea-1Gm"/>
+                        <outlet property="introImageHeightConstraint" destination="46f-qw-Xei" id="nuF-Ym-7xs"/>
                         <outlet property="introImageView" destination="VfS-9q-RyP" id="qm1-sc-lk3"/>
                         <outlet property="introSecondImageView" destination="5O3-ta-KKB" id="8lY-0T-51R"/>
                         <outlet property="logInButton" destination="N7h-8T-8md" id="mZG-Z8-kv2"/>
                         <outlet property="logInButtonTrailingConstraint" destination="sdP-Pj-GLN" id="1gW-p9-ntR"/>
+                        <outlet property="pageControlBottomConstraint" destination="iPN-Ts-wUt" id="klS-Gn-Ucg"/>
                         <outlet property="signUpButton" destination="JvA-Nn-Uap" id="sMu-6d-1fm"/>
                         <outlet property="view" destination="k8F-r0-Evx" id="oD5-oC-DCx"/>
                     </connections>

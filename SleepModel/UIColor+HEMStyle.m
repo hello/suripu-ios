@@ -156,13 +156,13 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
 }
 + (UIColor *)separatorColor {
-    return [UIColor colorWithHex:0x000000 alpha:0.039];
+    return [UIColor colorWithHex:0x000000 alpha:0.039f];
 }
 + (UIColor *)onboardingDescriptionColor {
-    return [UIColor colorWithHex:0x000000 alpha:0.4];
+    return [UIColor colorWithHex:0x0B0B0B alpha:0.5f];
 }
 + (UIColor *)onboardingTitleColor {
-    return [UIColor colorWithHex:0x000000 alpha:1.f];
+    return [UIColor colorWithHex:0x000000 alpha:0.7f];
 }
 + (UIColor *)textfieldPlaceholderFocusedColor {
     return [UIColor colorWithHex:0x000000 alpha:0.25];

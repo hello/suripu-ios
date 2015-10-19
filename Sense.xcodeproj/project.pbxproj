@@ -573,7 +573,6 @@
 		BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+HEMFormat.m"; sourceTree = "<group>"; };
 		BF1C46AF1B155B4900AFCB7B /* HEMHealthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHealthViewController.h; sourceTree = "<group>"; };
 		BF1C46B01B155B4900AFCB7B /* HEMHealthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHealthViewController.m; sourceTree = "<group>"; };
-		BF1C46B31B155CD400AFCB7B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BF1E2E5B1A00691000DDD0D0 /* HEMInsightCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightCollectionViewCell.h; sourceTree = "<group>"; };
 		BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightCollectionViewCell.m; sourceTree = "<group>"; };
 		BF1E2E701A02BFC400DDD0D0 /* HEMPagingFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPagingFlowLayout.h; sourceTree = "<group>"; };
@@ -761,6 +760,7 @@
 		BFD3CCF01B9F7F8D00643987 /* NSShadow+HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSShadow+HEMStyle.m"; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
+		BFDCA6451BD5AC7100E9C33F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
 		BFDFCE9D1B72884B000DA303 /* HEMSensorValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorValueFormatter.h; sourceTree = "<group>"; };
@@ -2526,7 +2526,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				BFBECCE31A15706700335CC6 /* Base */,
-				BF1C46B31B155CD400AFCB7B /* en */,
+				BFDCA6451BD5AC7100E9C33F /* en */,
 			);
 			name = Onboarding.storyboard;
 			sourceTree = "<group>";

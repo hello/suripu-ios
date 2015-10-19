@@ -287,12 +287,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)primaryButtonFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:15.0f];
 }
 
 + (UIFont*)secondaryButtonFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
 
 + (UIFont*)alertBoldButtonFont
@@ -439,27 +439,27 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)onboardingTitleFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:24.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:20.0f];
 }
 
 + (UIFont*)onboardingTitleLargeFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:32.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:28.0f];
 }
 
 + (UIFont*)onboardingDescriptionFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.0f];
 }
 
 + (UIFont*)onboardingDescriptionLargeFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:17.0f];
 }
 
 + (UIFont*)onboardingDescriptionBoldFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.0f];
 }
 
 + (UIFont*)onboardingRoomCheckSensorLightFont {

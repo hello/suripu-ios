@@ -27,7 +27,6 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMStyledNavigationViewController.h"
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
 #import "HEMTimelineContainerViewController.h"
@@ -35,6 +34,7 @@
 #import "HEMOnboardingController.h"
 #import "HEMAppUsage.h"
 #import "HEMScreenUtils.h"
+#import "UIView+HEMSnapshot.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -308,6 +308,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
         }
 
         if ([self presentedViewController] != nil) {
+            [[[self presentedViewController] view] addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO]];
             [self dismissViewControllerAnimated:animated completion:nil];
         }
     }
@@ -323,12 +324,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:checkpoint force:NO];
 
     if (controller != nil) {
-        UINavigationController* onboardingNav
-            = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
-        [[onboardingNav navigationBar] setTintColor:[UIColor tintColor]];
-
-        [self presentViewController:onboardingNav animated:animated completion:^{
-            [self showStatusBar];
+        [self presentViewController:controller animated:animated completion:^{
             [self removeDrawerViewController];
         }];
     } else {

@@ -156,13 +156,13 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
 }
 + (UIColor *)separatorColor {
-    return [UIColor colorWithHex:0x000000 alpha:0.039];
+    return [UIColor colorWithHex:0x000000 alpha:0.039f];
 }
 + (UIColor *)onboardingDescriptionColor {
-    return [UIColor colorWithHex:0x000000 alpha:0.4];
+    return [UIColor colorWithHex:0x0B0B0B alpha:0.5f];
 }
 + (UIColor *)onboardingTitleColor {
-    return [UIColor colorWithHex:0x000000 alpha:1.f];
+    return [UIColor colorWithHex:0x000000 alpha:0.7f];
 }
 + (UIColor *)textfieldPlaceholderFocusedColor {
     return [UIColor colorWithHex:0x000000 alpha:0.25];
@@ -241,6 +241,21 @@ static UIColor *_tintColor = nil;
 }
 + (UIColor *)timelineWaveformColor {
     return [UIColor colorWithHex:0xCCD3DB alpha:1.f];
+}
++ (UIColor *)welcomeTitleColor {
+    return [UIColor colorWithHex:0x000000 alpha:1.0f];
+}
++ (UIColor *)welcomeDescriptionColor {
+    return [UIColor colorWithHex:0x0B0B0B alpha:0.5f];
+}
++ (UIColor *)welcomeVideoButtonColor {
+    return [UIColor colorWithHex:0x0B0B0B alpha:0.4f];
+}
++ (UIColor *)welcomeIntroTitleColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.7f];
+}
++ (UIColor *)welcomeIntroDescriptionColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.7f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

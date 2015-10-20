@@ -135,6 +135,11 @@
 + (UIColor *)timelineSelectedBackgroundColor;
 + (UIColor *)timelineAccentColor;
 + (UIColor *)timelineWaveformColor;
++ (UIColor *)welcomeTitleColor;
++ (UIColor *)welcomeDescriptionColor;
++ (UIColor *)welcomeVideoButtonColor;
++ (UIColor *)welcomeIntroTitleColor;
++ (UIColor *)welcomeIntroDescriptionColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

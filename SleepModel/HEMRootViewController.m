@@ -34,6 +34,7 @@
 #import "HEMOnboardingController.h"
 #import "HEMAppUsage.h"
 #import "HEMScreenUtils.h"
+#import "UIView+HEMSnapshot.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -307,6 +308,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
         }
 
         if ([self presentedViewController] != nil) {
+            [[[self presentedViewController] view] addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO]];
             [self dismissViewControllerAnimated:animated completion:nil];
         }
     }

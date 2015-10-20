@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self hideStatusBar:NO];
+    [self hideStatusBar:![self presentedViewController]];
 }
 
 - (void)viewDidLayoutSubviews {

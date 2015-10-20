@@ -215,7 +215,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="BDL-3H-00Z" kind="presentation" id="Lum-nT-LgF"/>
+                                            <segue destination="BDL-3H-00Z" kind="show" id="Lum-nT-LgF"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PpU-TR-DnJ">
@@ -232,7 +232,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="zsj-ez-nqY" kind="presentation" id="cSt-Zf-nGd"/>
+                                            <segue destination="zsj-ez-nqY" kind="show" id="cSt-Zf-nGd"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -128,7 +128,6 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
                 }];
             } else {
                 [strongSelf letUserIntoApp];
-                [strongSelf stopActivity:nil];
             }
         }];
     }];

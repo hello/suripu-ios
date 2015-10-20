@@ -1,6 +1,12 @@
 # Changelog
 
-## 1.1.5.8
+## 1.1.6.0
+
+New:
+
+* Updated logged out state experience with new intro screen
+
+## 1.1.5.9
 
 Fixes:
 

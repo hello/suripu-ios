@@ -232,7 +232,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="zsj-ez-nqY" kind="show" id="cSt-Zf-nGd"/>
+                                            <segue destination="zsj-ez-nqY" kind="show" id="EUj-a1-Q48"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -302,7 +302,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="RYl-gV-ozZ" kind="relationship" relationship="rootViewController" id="RX0-c6-hFO"/>
+                        <segue destination="RYl-gV-ozZ" kind="relationship" relationship="rootViewController" id="B67-Dc-6f6"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HBq-s5-17a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2622,7 +2622,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pair your Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHT-0z-rBN">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair your Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHT-0z-rBN">
                                 <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="mde-7P-QTN"/>
@@ -2631,7 +2631,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="34"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Now we'll pair your phone with Sense. Make sure Sense is plugged in, nearby, and glowing purple. Tap Continue when ready.">
@@ -2643,16 +2643,23 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" misplaced="YES" image="sensePurple" translatesAutoresizingMaskIntoConstraints="NO" id="ahI-Ri-OCe">
-                                <rect key="frame" x="0.0" y="101" width="600" height="374"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseBackground" translatesAutoresizingMaskIntoConstraints="NO" id="qgY-WF-PLN">
+                                <rect key="frame" x="0.0" y="272" width="600" height="210"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sensePurple" translatesAutoresizingMaskIntoConstraints="NO" id="ahI-Ri-OCe">
+                                <rect key="frame" x="0.0" y="261" width="600" height="184"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="184" id="KfE-AJ-gGk"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="JOa-ZV-j6V"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
-                                <state key="normal" title="Sense isn't glowing purple?">
+                                <state key="normal" title="SENSE ISN'T GLOWING PURPLE?">
                                     <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2678,21 +2685,23 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="0fo-8k-s7Q"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ahI-Ri-OCe" secondAttribute="trailing" constant="-16" id="Bva-v6-Aw6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ahI-Ri-OCe" secondAttribute="trailing" constant="-20" id="Bva-v6-Aw6"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="4" id="D61-4A-EJJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" constant="4" id="KNC-U4-JbD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" id="KNC-U4-JbD"/>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="bottom" constant="77" id="KzW-NL-AkV"/>
-                            <constraint firstItem="xHT-0z-rBN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="M3V-dV-0vf"/>
-                            <constraint firstItem="ahI-Ri-OCe" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-16" id="O7N-Oh-RX2"/>
+                            <constraint firstItem="xHT-0z-rBN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" id="M3V-dV-0vf"/>
+                            <constraint firstItem="ahI-Ri-OCe" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-20" id="O7N-Oh-RX2"/>
+                            <constraint firstItem="qgY-WF-PLN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-20" id="R9k-3g-98o"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="2TQ-o7-Rs6" secondAttribute="bottom" constant="20" id="VKI-gd-baI"/>
-                            <constraint firstItem="ahI-Ri-OCe" firstAttribute="top" secondItem="mFI-cr-rhB" secondAttribute="bottom" id="X8M-YN-6Gu"/>
-                            <constraint firstItem="mFI-cr-rhB" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="YpL-lA-O3e"/>
+                            <constraint firstItem="mFI-cr-rhB" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" id="YpL-lA-O3e"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qgY-WF-PLN" secondAttribute="trailing" constant="-20" id="a5q-pG-0J7"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="top" constant="-10" id="cUY-fa-DEC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" constant="4" id="jFT-SI-kIS"/>
+                            <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="qgY-WF-PLN" secondAttribute="bottom" constant="118" id="gyO-py-tGj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" id="jFT-SI-kIS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="4" id="kx2-M4-RDe"/>
-                            <constraint firstItem="bX7-3Z-6yh" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="q6q-ws-CKy"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bX7-3Z-6yh" secondAttribute="trailing" constant="4" id="w0J-7J-bbG"/>
-                            <constraint firstItem="ahI-Ri-OCe" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="top" id="zwg-LI-H8S"/>
+                            <constraint firstItem="ahI-Ri-OCe" firstAttribute="top" secondItem="qgY-WF-PLN" secondAttribute="top" constant="-11" id="l8Z-G6-DFC"/>
+                            <constraint firstItem="bX7-3Z-6yh" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" id="q6q-ws-CKy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bX7-3Z-6yh" secondAttribute="trailing" id="w0J-7J-bbG"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MWW-Jm-AdT"/>
@@ -2702,6 +2711,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="descriptionTopConstraint" destination="cUY-fa-DEC" id="6wz-Dm-eoT"/>
                         <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Dcn-nY-xAS"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
+                        <outlet property="senseIconHeightConstraint" destination="KfE-AJ-gGk" id="xjh-y3-ptH"/>
                         <outlet property="titleHeightConstraint" destination="mde-7P-QTN" id="yBx-7W-leE"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
@@ -3044,18 +3054,18 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="senseBackground" width="320" height="210"/>
         <image name="senseGreen" width="186" height="183"/>
         <image name="sensePlacement" width="320" height="198"/>
-        <image name="sensePurple" width="162" height="172"/>
+        <image name="sensePurple" width="187" height="184"/>
         <image name="senseRed" width="186" height="183"/>
         <image name="senseYellow" width="186" height="183"/>
         <image name="settingsAppIcon" width="32" height="32"/>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tkT-Pb-lgk"/>
         <segue reference="gUR-KW-V2G"/>
-        <segue reference="u9Q-g4-qbd"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="zvu-eW-603"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="tkT-Pb-lgk"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

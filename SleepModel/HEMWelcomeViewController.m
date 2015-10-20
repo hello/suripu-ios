@@ -289,4 +289,10 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     [self setPreviousScrollOffsetX:offsetX];
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSUInteger currentPage = [[self contentPageControl] currentPage] + 1; // we want page, not index
+    NSDictionary* props = @{HEMAnalyticsEventPropScreen : @(currentPage)};
+    [SENAnalytics track:HEMAnalyticsEventWelcomeIntroSwipe properties:props];
+}
+
 @end

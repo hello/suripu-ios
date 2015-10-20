@@ -156,9 +156,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 }
 
 - (void)configureAnalytics {
-#if defined(DEBUG)
-    return;
-#endif
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
     NSString* crashylyticsToken = [HEMConfig stringForConfig:HEMConfCrashlyticsToken];
     

@@ -38,6 +38,7 @@
 
 - (IBAction)orderSense:(id)sender {
     [HEMSupportUtil openOrderFormFrom:self];
+    [SENAnalytics track:kHEMAnalyticsEventOnBNoSense];
 }
 
 @end

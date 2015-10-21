@@ -127,7 +127,6 @@ static NSString* const HEMAllScopeType = @"ALL";
     HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
     HEMSnazzBarController* snazzVC = [rootVC barController];
     if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
-        && self.defaultTrends.count > 0
         && self.isViewLoaded
         && self.view.window) {
         [HEMTutorial showTutorialForTrendsIfNeeded];

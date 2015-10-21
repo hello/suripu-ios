@@ -14,8 +14,8 @@
 @implementation HEMNoDeviceCollectionViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self actionButton] setUserInteractionEnabled:NO]; // let entire cell be tappable
-    [[self actionButton] setBackgroundColor:[UIColor tintColor]];
 }
 
 - (void)configureForSense {
@@ -24,6 +24,8 @@
     self.messageLabel.text = NSLocalizedString(@"settings.device.no-sense", nil);
     [self.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-sense", nil)
                        forState:UIControlStateNormal];
+    [[self actionButton] setBackgroundColor:[UIColor tintColor]];
+    [[self actionButton] setHidden:NO];
 }
 
 - (void)configureForPill:(BOOL)canPair {
@@ -32,13 +34,7 @@
     self.messageLabel.text = NSLocalizedString(@"settings.device.no-pill", nil);
     [self.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-pill", nil)
                        forState:UIControlStateNormal];
-    
-    if (canPair) {
-        [[self actionButton] setBackgroundColor:[UIColor tintColor]];
-    } else {
-        [[self actionButton] setBackgroundColor:[UIColor actionButtonDisabledColor]];
-    }
-    
+    [[self actionButton] setHidden:!canPair];
     [self setUserInteractionEnabled:canPair];
 }
 

@@ -22,7 +22,7 @@ test_ios9:
 	$(DEFAULT_TASK) -sdk iphonesimulator9.0 test | xcpretty -c
 
 ci_deps:
-	gem install xcpretty --no-ri --no-rdoc
+	gem install xcpretty --no-ri --no-rdoc -v 0.1.12
 
 ci:
 	set -o pipefail && $(CI_TASK) test | tee $(CIRCLE_ARTIFACTS)/xcodebuild.log | xcpretty --color --report junit --output $(CIRCLE_TEST_REPORTS)/xcode/results.xml

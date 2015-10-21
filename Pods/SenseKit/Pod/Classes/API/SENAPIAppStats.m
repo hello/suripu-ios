@@ -10,7 +10,7 @@
 #import "SENAppStats.h"
 #import "SENAppUnreadStats.h"
 
-static NSString* const SENAPIAppStatusEndpoint = @"v1/app/stats";
+static NSString* const SENAPIAppStatusEndpoint = @"";
 static NSString* const SENAPIAppStatusUnreadPath = @"unread";
 
 @implementation SENAPIAppStats

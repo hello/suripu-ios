@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.1.6.1
+
+New:
+
+* Improved disabled state of Sleep Pill settings when Sense not paired
+* Trends welcome tutorial shows even when no data is availale to match text
+* updated assets in pair sense onboarding screen
+* updated light disturbance asset
+* added analytics for new intro screen
+* increased tap target on Timeline top bar buttons
+
+Fixes:
+
+* sense pair button in device settings will no longer be accidentally disabled
+* back button (should be cancel) for modal device screens work again
+* fixed trends graph view not being clipped behind border
+* fixed copy where periods are missing
+
 ## 1.1.6.0
 
 New:

@@ -5,10 +5,13 @@
 //  Created by Jimmy Lu on 9/24/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENAPITimeZone.h>
+#import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENPillMetadata.h>
+#import <SenseKit/SENSenseWiFiStatus.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
@@ -37,16 +40,26 @@
 
 static CGFloat const HEMSenseActionHeight = 62.0f;
 
+typedef NS_ENUM(NSInteger, HEMSenseWarning) {
+    HEMSenseWarningLongLastSeen = 1,
+    HEMSenseWarningNoInternet = 2,
+    HEMSenseWarningNotConnectedToSense = 3
+};
+
 @interface HEMSenseViewController() <UICollectionViewDataSource, UICollectionViewDelegate, HEMWiFiConfigurationDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (strong, nonatomic) NSMutableOrderedSet* warnings;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
+@property (assign, nonatomic, getter=isCheckingConnectivity) BOOL checkingConnectivity;
+@property (assign, nonatomic, getter=hasCheckedConnectivity) BOOL checkedConnectivity;
 @property (assign, nonatomic) BOOL updatedWiFi;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic) CGSize footerSize;
 @property (strong, nonatomic) HEMBounceModalTransition* modalTransitionDelegate;
 @property (strong, nonatomic) id disconnectObserverId;
+@property (strong, nonatomic) SENSenseWiFiStatus* wiFiStatus;
 
 @end
 
@@ -55,6 +68,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [self checkWiFiConnectivity];
     [SENAnalytics track:kHEMAnalyticsEventSense];
 }
 
@@ -80,8 +94,9 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 }
 
 - (NSAttributedString*)attributedLastSeenWarning {
+    SENSenseMetadata* senseMetadata = [[[SENServiceDevice sharedService] devices] senseMetadata];
     NSString* format = NSLocalizedString(@"settings.sense.warning.last-seen-format", nil);
-    NSString* lastSeen = [[[[SENServiceDevice sharedService] senseInfo] lastSeen] timeAgo];
+    NSString* lastSeen = [[senseMetadata lastSeenDate] timeAgo];
     NSArray* args = @[[self redMessage:lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil)]];
     
     NSMutableAttributedString* attrWarning =
@@ -113,10 +128,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     return attrWarning;
 }
 
-- (NSAttributedString*)attributedMessageForWarning:(HEMDeviceWarning)warning {
+- (NSAttributedString*)attributedMessageForWarning:(HEMSenseWarning)warning {
     NSAttributedString* message = nil;
     switch (warning) {
-        case HEMDeviceWarningLongLastSeen:
+        case HEMSenseWarningLongLastSeen:
             message = [self attributedLastSeenWarning];
             break;
         case HEMSenseWarningNoInternet:
@@ -131,10 +146,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     return message;
 }
 
-- (NSString*)actionButtonTitleForWarning:(HEMDeviceWarning)warning {
+- (NSString*)actionButtonTitleForWarning:(HEMSenseWarning)warning {
     NSString* title = nil;
     switch (warning) {
-        case HEMDeviceWarningLongLastSeen:
+        case HEMSenseWarningLongLastSeen:
         case HEMSenseWarningNoInternet:
         case HEMSenseWarningNotConnectedToSense:
             title = NSLocalizedString(@"actions.troubleshoot", nil);
@@ -147,6 +162,45 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 
 - (BOOL)isWarningCellRow:(NSInteger)row {
     return row < [[self warnings] count];
+}
+
+- (void)determineWarnings {
+    NSMutableOrderedSet* warnings = [NSMutableOrderedSet new];
+    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+    SENSenseMetadata* senseMetdata = [[deviceService devices] senseMetadata];
+    BOOL connected = [deviceService pairedSenseAvailable]
+                        && [[deviceService senseManager] isConnected];
+    
+    if ([deviceService shouldWarnAboutLastSeenForDevice:senseMetdata]) {
+        [warnings addObject:@(HEMSenseWarningLongLastSeen)];
+    }
+    
+    if (!connected) {
+        [warnings addObject:@(HEMSenseWarningNotConnectedToSense)];
+    } else if (![[self wiFiStatus] isConnected]) {
+        [warnings addObject:@(HEMSenseWarningNoInternet)];
+    }
+    
+    [self setWarnings:warnings];
+}
+
+- (void)checkWiFiConnectivity {
+    if (![self hasCheckedConnectivity]) {
+        [self setCheckingConnectivity:YES];
+        __weak typeof(self) weakSelf = self;
+        SENServiceDevice* service = [SENServiceDevice sharedService];
+        [service getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus *status, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error];
+            }
+            [strongSelf setWiFiStatus:status];
+            [strongSelf setCheckedConnectivity:YES];
+            [strongSelf setCheckingConnectivity:NO];
+            [strongSelf determineWarnings];
+            [[strongSelf collectionView] reloadData];
+        }];
+    }
 }
 
 - (BOOL)isConnectedToSense {
@@ -173,7 +227,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 }
 
 - (void)setupWarningCell:(HEMWarningCollectionViewCell*)warningCell
-              forWarning:(HEMDeviceWarning)warning {
+              forWarning:(HEMSenseWarning)warning {
     [[warningCell warningMessageLabel] setAttributedText:[self attributedMessageForWarning:warning]];
     [[warningCell actionButton] setTitle:[self actionButtonTitleForWarning:warning]
                                 forState:UIControlStateNormal];
@@ -207,10 +261,12 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
                                                                            forIndexPath:indexPath];
     
     if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
-        HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
+        HEMDeviceActionCollectionViewCell* actionCell = (id)cell;
+        BOOL isBusy = [self isCheckingConnectivity] || ![self hasCheckedConnectivity];
+        [actionCell showActivity:isBusy withText:NSLocalizedString(@"settings.sense.connecting", nil)];
         [self setupFrequentActionsCell:actionCell];
     } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
-        HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
+        HEMSenseWarning warning = (HEMSenseWarning)[[self warnings][[indexPath row]] integerValue];
         HEMWarningCollectionViewCell* warningCell = (HEMWarningCollectionViewCell*)cell;
         [self setupWarningCell:warningCell forWarning:warning];
     }
@@ -227,7 +283,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     
     if ([self isWarningCellRow:[indexPath row]]) {
         CGFloat widthConstraint = size.width - (2*HEMWarningCellMessageHorzPadding);
-        HEMDeviceWarning warning = [self.warnings[indexPath.item] integerValue];
+        HEMSenseWarning warning = [self.warnings[indexPath.item] integerValue];
         NSAttributedString* message = [self attributedMessageForWarning:warning];
         size.height = [message sizeWithWidth:widthConstraint].height + HEMWarningCellBaseHeight;
     } else {
@@ -240,14 +296,14 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 #pragma mark - Actions
 
 - (void)takeWarningAction:(UIButton*)sender {
-    HEMDeviceWarning warning = [sender tag];
+    HEMSenseWarning warning = [sender tag];
     NSString* helpPage = nil;
     
     switch (warning) {
         case HEMSenseWarningNotConnectedToSense:
             helpPage = NSLocalizedString(@"help.url.slug.sense-not-connected", nil);
             break;
-        case HEMDeviceWarningLongLastSeen:
+        case HEMSenseWarningLongLastSeen:
             helpPage = NSLocalizedString(@"help.url.slug.sense-not-seen", nil);
             break;
         case HEMSenseWarningNoInternet:
@@ -357,7 +413,8 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [[self delegate] willUnpairSenseFrom:self];
     }
     
-    NSString* senseId = [[[SENServiceDevice sharedService] senseInfo] deviceId];
+    SENSenseMetadata* senseMetadata = [[[SENServiceDevice sharedService] devices] senseMetadata];
+    NSString* senseId = [senseMetadata uniqueId];
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionUnpairSense,
                           kHEMAnalyticsEventPropSenseId : senseId ?: @"unknown"}];
@@ -571,8 +628,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 - (void)restore {
     
     SENServiceDevice* deviceService = [SENServiceDevice sharedService];
-    NSString* senseId = [[deviceService senseInfo] deviceId];
-    NSString* pillId = [[deviceService pillInfo] deviceId];
+    SENDeviceMetadata* senseMetadata = [[deviceService devices] senseMetadata];
+    SENDeviceMetadata* pillMetdata = [[deviceService devices] pillMetadata];
+    NSString* senseId = [senseMetadata uniqueId];
+    NSString* pillId = [pillMetdata uniqueId];
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionFactoryRestore,
                           kHEMAnalyticsEventPropSenseId : senseId ?: @"unknown",
@@ -626,6 +685,11 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     if ([[self delegate] respondsToSelector:@selector(didUpdateWiFiFrom:)]) {
         [[self delegate] didUpdateWiFiFrom:self];
     }
+    if (ssid && [[self warnings] count] > 0) {
+        [[self warnings] removeObject:@(HEMSenseWarningNotConnectedToSense)];
+        [[self warnings] removeObject:@(HEMSenseWarningNoInternet)];
+        [[self collectionView] reloadData];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -642,6 +706,12 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
             [nav setModalPresentationStyle:UIModalPresentationCustom];
         }
     }
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [[[SENServiceDevice sharedService] senseManager] disconnectFromSense];
 }
 
 @end

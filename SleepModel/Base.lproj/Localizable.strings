@@ -227,8 +227,8 @@
 // colors
 "color.blue" = "Blue";
 "color.red" = "Red";
-"color.black" = "Black";
-"color.white" = "White";
+"color.charcoal" = "Charcoal";
+"color.cotton" = "Cotton";
 
 // device management
 "settings.device.sense" = "Sense";
@@ -239,7 +239,6 @@
 "settings.device.color" = "Color";
 "settings.device.battery.good" = "Good";
 "settings.device.battery.low" = "Low";
-"settings.device.network.disconnected" = "Unable to connect";
 "settings.device.no-sense" = "You don't currently have a Sense connected to your account.";
 "settings.device.no-pill" = "You don't currently have a Sleep Pill connected to your account.";
 "settings.device.button.title.pair-sense" = "PAIR WITH SENSE";
@@ -288,6 +287,7 @@
 "settings.sense.warning.cannont-connect-wifi" = "cannot connect to WiFi";
 "settings.sense.warning.not-connected-sense" = "Could not connect with Sense over Bluetooth. Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot.\n\nSome actions below are disabled.";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
+"settings.sense.connecting" = "Checking connectivity";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
 "settings.device.dialog.factory-restore-message" = "This will disconnect your account from this Sense, as well as any Sleep Pills you have paired. You will need to pair with another Sense to continue using the application. You should only perform a factory reset if instructed to do so by Support. This operation cannot be undone.";

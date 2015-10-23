@@ -9,11 +9,14 @@
 #import "SENServiceDevice.h"
 #import "SENAuthorizationService.h"
 #import "SENSenseManager.h"
-#import "SENDevice.h"
 #import "SENSense.h"
 #import "SENAPIDevice.h"
 #import "SENService+Protected.h"
 #import "SENSenseWiFiStatus.h"
+#import "SENDeviceMetadata.h"
+#import "SENPairedDevices.h"
+#import "SENPillMetadata.h"
+#import "SENSenseMetadata.h"
 
 NSString* const SENServiceDeviceNotificationFactorySettingsRestored = @"sense.restored";
 NSString* const SENServiceDeviceNotificationWarning = @"sense.warning";
@@ -21,8 +24,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 @interface SENServiceDevice()
 
-@property (nonatomic, strong) SENDevice* pillInfo;
-@property (nonatomic, strong) SENDevice* senseInfo;
+@property (nonatomic, strong) SENPairedDevices* devices;
 @property (nonatomic, strong) SENSenseManager* senseManager;
 
 @property (nonatomic, assign) SENServiceDeviceState deviceState;
@@ -99,7 +101,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 - (void)checkSenseState:(void(^)(SENServiceDeviceState state))completion {
     SENServiceDeviceState deviceState
-        = [self senseInfo] == nil
+        = ![[self devices] hasPairedSense]
         ? SENServiceDeviceStateSenseNotPaired
         : SENServiceDeviceStateNormal;
     
@@ -109,28 +111,19 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         }
     }
     
-    if (deviceState == SENServiceDeviceStateNormal) {
-        switch ([[self senseInfo] state]) {
-            case SENDeviceStateNoData:
-                deviceState = SENServiceDeviceStateSenseNoData;
-                break;
-            default:
-                break;
-        }
-    }
-    
     completion (deviceState);
 }
 
 - (void)checkPillState:(void(^)(SENServiceDeviceState state))completion {
     SENServiceDeviceState deviceState
-        = [self pillInfo] == nil
+        = ![[self devices] hasPairedPill]
         ? SENServiceDeviceStatePillNotPaired
         : SENServiceDeviceStateNormal;
     
     if (deviceState == SENServiceDeviceStateNormal) {
-        switch ([[self pillInfo] state]) {
-            case SENDeviceStateLowBattery:
+        SENPillMetadata* metadata = [[self devices] pillMetadata];
+        switch ([metadata state]) {
+            case SENPillStateLowBattery:
                 deviceState = SENServiceDeviceStatePillLowBattery;
                 break;
             default:
@@ -158,8 +151,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     [SENSenseManager stopScan];
     
     [self resetDeviceStates];
-    [self setPillInfo:nil];
-    [self setSenseInfo:nil];
+    [self setDevices:nil];
     [self setSenseManager:nil];
     [self setInfoLoaded:NO];
     [self setLoadingInfo:NO];
@@ -174,7 +166,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 - (void)whenPairedSenseIsReadyDo:(void(^)(NSError* error))completion {
     if (!completion) return;
     
-    if ([self senseInfo] == nil) {
+    if (![[self devices] hasPairedSense]) {
         
         completion ([self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
         
@@ -206,8 +198,14 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 #pragma mark - Device Info
 
 - (void)loadDeviceInfo:(void(^)(NSError* error))completion {
+    void(^done)(NSError* error) = ^(NSError* error) {
+        if (completion) {
+            completion (error);
+        }
+    };
+    
     if ([self isLoadingInfo]) {
-        if (completion) completion ([self errorWithType:SENServiceDeviceErrorInProgress]);
+        done ([self errorWithType:SENServiceDeviceErrorInProgress]);
         return;
     }
 
@@ -215,47 +213,32 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     // caller explicitly calls clear or when response comes back without error.
 
     [self setLoadingInfo:YES];
+    
     __weak typeof(self) weakSelf = self;
-    [SENAPIDevice getPairedDevices:^(NSArray* devicesInfo, NSError *error) {
+    [SENAPIDevice getPairedDevices:^(SENPairedDevices* devices, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            if (error == nil) {
-                [strongSelf processDeviceInfo:devicesInfo];
-                [strongSelf setInfoLoaded:YES];
-            }
-            [strongSelf setLoadingInfo:NO];
+        if (!error) {
+            [strongSelf setDevices:devices];
+            [strongSelf setInfoLoaded:YES];
         }
-        if (completion) completion( error );
+        [strongSelf setLoadingInfo:NO];
+        done( error );
     }];
 }
 
 - (void)loadDeviceInfoIfNeeded:(SENServiceDeviceCompletionBlock)completion {
-    if ([self isLoadingInfo]) {
-        if (completion)
-            completion([self errorWithType:SENServiceDeviceErrorInProgress]);
-    } else if ([self isInfoLoaded]) {
-        if (completion)
-            completion(nil);
-    } else {
-        [self loadDeviceInfo:completion];
-    }
-}
-
-- (void)processDeviceInfo:(NSArray*)devicesInfo {
-    // first, clear the currently cached info so it will actually update
-    [self setPillInfo:nil];
-    [self setSenseInfo:nil];
-    
-    SENDevice* device = nil;
-    NSInteger i = [devicesInfo count] - 1;
-    while (i >= 0 && ([self senseInfo] == nil || [self pillInfo] == nil)) {
-        device = [devicesInfo objectAtIndex:i];
-        if ([self pillInfo] == nil && [device type] == SENDeviceTypePill) {
-            [self setPillInfo:device];
-        } else if ([self senseInfo] == nil && [device type] == SENDeviceTypeSense) {
-            [self setSenseInfo:device];
+    void(^done)(NSError* error) = ^(NSError* error) {
+        if (completion) {
+            completion (error);
         }
-        i--;
+    };
+    
+    if ([self isLoadingInfo]) {
+        done([self errorWithType:SENServiceDeviceErrorInProgress]);
+    } else if ([self isInfoLoaded]) {
+        done(nil);
+    } else {
+        [self loadDeviceInfo:done];
     }
 }
 
@@ -294,23 +277,23 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     }];
 }
 
-- (BOOL)shouldWarnAboutLastSeenForDevice:(SENDevice*)device {
-    if (device == nil) return NO;
+- (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata {
+    if (metadata == nil) return NO;
     
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents* components = [NSDateComponents new];
     components.day = -1;
     
     NSDate* dayOld = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
-    return [[device lastSeen] compare:dayOld] == NSOrderedAscending;
+    return [[metadata lastSeenDate] compare:dayOld] == NSOrderedAscending;
 }
 
 - (BOOL)shouldWarnAboutPillLastSeen {
-    return [self shouldWarnAboutLastSeenForDevice:[self pillInfo]];
+    return [self shouldWarnAboutLastSeenForDevice:[[self devices] pillMetadata]];
 }
 
 - (BOOL)shouldWarnAboutSenseLastSeen {
-    return [self shouldWarnAboutLastSeenForDevice:[self senseInfo]];
+    return [self shouldWarnAboutLastSeenForDevice:[[self devices] senseMetadata]];
 }
 
 #pragma mark - Last Connected Sense
@@ -332,7 +315,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         
         done ([self errorWithType:SENServiceDeviceErrorBLEUnavailable]);
         
-    } else if ([self senseInfo] != nil) {
+    } else if ([[self devices] hasPairedSense]) {
         
         [self findAndManageSense:done];
         
@@ -347,14 +330,14 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                 return;
             }
             
-            if ([strongSelf senseInfo] != nil) {
+            if ([[strongSelf devices] hasPairedSense]) {
                 [strongSelf findAndManageSense:done];
             } else {
                 done ([strongSelf errorWithType:SENServiceDeviceErrorSenseNotPaired]);
             }
         }];
         
-    } else if ([self senseInfo] == nil) { // loaded, but still no info?
+    } else if (![[self devices] hasPairedSense]) { // loaded, but still no info?
         
         done ([self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
         
@@ -364,11 +347,12 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 }
 
 - (BOOL)senseIsTheOnePairedToAccount:(SENSense*)sense {
-    if (!sense || ![self senseInfo]) {
+    if (!sense || ![[self devices] hasPairedSense]) {
         return NO;
     }
     
-    NSString* pairedDeviceId = [[[self senseInfo] deviceId] lowercaseString];
+    SENSenseMetadata* senseMetadata = [[self devices] senseMetadata];
+    NSString* pairedDeviceId = [[senseMetadata uniqueId] lowercaseString];
     NSString* senseDeviceId = [[sense deviceId] lowercaseString];
     return [pairedDeviceId isEqualToString:senseDeviceId];
 }
@@ -434,8 +418,14 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 - (void)replaceWithNewlyPairedSenseManager:(SENSenseManager*)senseManager
                                 completion:(void(^)(NSError* error))completion {
+    void(^done)(NSError* error) = ^(NSError* error) {
+        if (completion) {
+            completion (error);
+        }
+    };
+    
     if (senseManager == nil || [senseManager  sense] == nil) {
-        if (completion) completion ([self errorWithType:SENServiceDeviceErrorSenseUnavailable]);
+        done ([self errorWithType:SENServiceDeviceErrorSenseUnavailable]);
         return;
     }
     // first, load devices info since it likely would have changed
@@ -443,7 +433,8 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     [self loadDeviceInfo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error == nil) {
-            if ([[[strongSelf senseInfo] deviceId] isEqualToString:[[senseManager sense] deviceId]]) {
+            SENSenseMetadata* senseMetadata = [[strongSelf devices] senseMetadata];
+            if ([[senseMetadata uniqueId] isEqualToString:[[senseManager sense] deviceId]]) {
                 [strongSelf setSenseManager:senseManager];
             } else {
                 error = [strongSelf errorWithType:SENServiceDeviceErrorSenseNotMatching];
@@ -478,41 +469,50 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 #pragma mark Unpairing Sleep Pill
 
 - (void)unpairSleepPill:(SENServiceDeviceCompletionBlock)completion {
-    if ([self pillInfo] == nil) {
-        if (completion) completion ( [self errorWithType:SENServiceDeviceErrorPillNotPaired] );
+    void(^done)(NSError* error) = ^(NSError* error) {
+        if (completion) {
+            completion (error);
+        }
+    };
+    
+    if (![[self devices] hasPairedPill]) {
+        done ( [self errorWithType:SENServiceDeviceErrorPillNotPaired] );
         return;
     }
     
+    SENPillMetadata* pillMetadata = [[self devices] pillMetadata];
     __weak typeof(self) weakSelf = self;
-    [SENAPIDevice unregisterPill:[self pillInfo] completion:^(id data, NSError *error) {
+    [SENAPIDevice unregisterPill:pillMetadata completion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        NSError* deviceError = nil;
-        
-        if (strongSelf) {
-            if (error != nil) {
-                deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkPillFromAccount];
-            } else {
-                [strongSelf setPillInfo:nil];
-            }
+        NSError* deviceError = error;
+        if (error != nil) {
+            deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkPillFromAccount];
+        } else {
+            [[strongSelf devices] removePairedPill];
         }
         
-        if (completion) completion (deviceError);
+        done (deviceError);
     }];
 }
 
 #pragma mark Unlink Sense From account
 
 - (void)unlinkSenseFromAccount:(SENServiceDeviceCompletionBlock)completion {
-    if ([self senseInfo] == nil) {
+    void(^done)(NSError* error) = ^(NSError* error) {
         if (completion) {
-            completion ( [self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
+            completion (error);
         }
+    };
+    
+    if (![[self devices] hasPairedSense]) {
+        done ([self errorWithType:SENServiceDeviceErrorSenseNotPaired]);
         return;
     }
     
+    SENSenseMetadata* senseMetadata = [[self devices] senseMetadata];
     __weak typeof(self) weakSelf = self;
-    [SENAPIDevice unregisterSense:[self senseInfo] completion:^(id data, NSError *error) {
+    [SENAPIDevice unregisterSense:senseMetadata completion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
         NSError* deviceError = nil;
@@ -521,13 +521,11 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkSenseFromAccount];
         } else {
             [[strongSelf senseManager] disconnectFromSense];
-            [strongSelf setSenseInfo:nil];
+            [[strongSelf devices] removePairedSense];
             [strongSelf setSenseManager:nil];
         }
         
-        if (completion) {
-            completion (deviceError);
-        }
+        done (deviceError);
     }];
 }
 
@@ -539,19 +537,21 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 }
 
 - (void)restoreFactorySettings:(SENServiceDeviceCompletionBlock)completion {
-    if ([self senseInfo] == nil) {
-        if (completion) completion ([self errorWithType:SENServiceDeviceErrorSenseUnavailable]);
+    void(^done)(NSError* error) = ^(NSError* error) {
+        if (completion) {
+            completion (error);
+        }
+    };
+    
+    if (![[self devices] hasPairedSense]) {
+        done ([self errorWithType:SENServiceDeviceErrorSenseUnavailable]);
         return;
     }
     
     __weak typeof(self) weakSelf = self;
-    
-    SENServiceDeviceCompletionBlock callback = completion;
-    if (!callback) callback = ^(NSError* error){};
-    
     void(^turnOffLedThenFail)(NSError* error) = ^(NSError* error) {
         [weakSelf setLEDState:SENSenseLEDStateOff completion:^(__unused NSError *ledError) {
-            callback (error);
+            done (error);
         }];
     };
     // per discussion, we should reverse the logic as the unlinking of devices
@@ -563,17 +563,18 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         __block typeof(weakSelf) blockSelf = weakSelf;
         
         if (error != nil) {
-            callback (error);
+            done (error);
             return;
         }
         
         [blockSelf setLEDState:SENSenseLEDStateActivity completion:^(NSError *error) {
             if (error != nil) {
-                callback (error);
+                done (error);
                 return;
             }
             
-            [SENAPIDevice removeAssociationsToSense:[self senseInfo] completion:^(__unused id data, NSError *error) {
+            SENSenseMetadata* senseMetadata = [[blockSelf devices] senseMetadata];
+            [SENAPIDevice removeAssociationsToSense:senseMetadata completion:^(__unused id data, NSError *error) {
                 if (error != nil) {
                     turnOffLedThenFail(error);
                     return;
@@ -583,7 +584,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                     [[blockSelf senseManager] disconnectFromSense];
                     [blockSelf reset];
                     [blockSelf notifyFactoryRestore];
-                    callback (nil);
+                    done (nil);
                 } failure:turnOffLedThenFail];
             }];
             

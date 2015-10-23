@@ -15,7 +15,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [[self actionButton] setUserInteractionEnabled:NO]; // let entire cell be tappable
+    [[self actionButton] setUserInteractionEnabled:NO]; // let cell cause the action instead
 }
 
 - (void)configureForSense {
@@ -26,6 +26,7 @@
                        forState:UIControlStateNormal];
     [[self actionButton] setBackgroundColor:[UIColor tintColor]];
     [[self actionButton] setHidden:NO];
+    [self setUserInteractionEnabled:YES];
 }
 
 - (void)configureForPill:(BOOL)canPair {

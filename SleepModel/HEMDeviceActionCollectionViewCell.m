@@ -8,9 +8,16 @@
 
 #import "HEMDeviceActionCollectionViewCell.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMActivityCoverView.h"
 
 static CGFloat const HEMDeviceActionSeparatorSize = 0.5f;
 static CGFloat const HEMDeviceActionSeparatorIndentation = 16.0f;
+
+@interface HEMDeviceActionCollectionViewCell()
+
+@property (nonatomic, weak) HEMActivityCoverView* activityView;
+
+@end
 
 @implementation HEMDeviceActionCollectionViewCell
 
@@ -23,7 +30,6 @@ static CGFloat const HEMDeviceActionSeparatorIndentation = 16.0f;
     [[self action3Button] setBackgroundColor:[UIColor clearColor]];
     [[self action4Button] setBackgroundColor:[UIColor clearColor]];
 }
-
 
 - (void)drawRect:(CGRect)rect {
     
@@ -49,6 +55,16 @@ static CGFloat const HEMDeviceActionSeparatorIndentation = 16.0f;
         CGContextMoveToPoint(context, HEMDeviceActionSeparatorIndentation, y);
         CGContextAddLineToPoint(context, CGRectGetWidth([self bounds]), y);
         CGContextStrokePath(context);
+    }
+}
+
+- (void)showActivity:(BOOL)show withText:(NSString*)text {
+    if (show) {
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[self contentView] withText:text activity:YES completion:nil];
+        [self setActivityView:activityView];
+    } else {
+        [[self activityView] removeFromSuperview];
     }
 }
 

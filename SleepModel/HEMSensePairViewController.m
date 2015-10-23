@@ -341,9 +341,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             pairState = HEMSensePairStateWiFiDetected;
             [strongSelf setDetectedSSID:ssid];
         }
-        if ([ssid length] > 0) {
-            [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
-        }
+
         DDLogVerbose(@"wifi %@ with status %@", ssid, status);
         [strongSelf setCurrentState:pairState];
         [strongSelf executeNextStep];

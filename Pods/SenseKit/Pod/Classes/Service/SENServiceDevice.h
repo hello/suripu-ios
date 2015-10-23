@@ -5,13 +5,13 @@
 //  Created by Jimmy Lu on 12/29/14.
 //
 //
-
 #import "SENService.h"
 #import "SENSenseManager.h"
 
-@class SENDevice;
+@class SENPairedDevices;
 @class SENSenseManager;
 @class SENSenseWiFiStatus;
+@class SENDeviceMetadata;
 
 extern NSString* const SENServiceDeviceNotificationFactorySettingsRestored;
 extern NSString* const SENServiceDeviceNotificationWarning;
@@ -21,11 +21,12 @@ typedef NS_ENUM(NSUInteger, SENServiceDeviceState) {
     SENServiceDeviceStateUnknown = 0,
     SENServiceDeviceStateNormal = 1,
     SENServiceDeviceStateSenseNotPaired = 2,
-    SENServiceDeviceStateSenseNoData = 3,
     SENServiceDeviceStatePillNotPaired = 4,
     SENServiceDeviceStatePillLowBattery = 5,
     SENServiceDeviceStateSenseNotSeen = 6,
-    SENServiceDeviceStatePillNotSeen = 7
+    SENServiceDeviceStatePillNotSeen = 7,
+    
+    SENServiceDeviceStateSenseNoData NS_ENUM_DEPRECATED_IOS(7_0, 9_0, "No longer returned") = 3
 };
 
 typedef NS_ENUM(NSInteger, SENServiceDeviceError) {
@@ -44,15 +45,7 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
 
 @interface SENServiceDevice : SENService
 
-/**
- * @property pillInfo: the device information for the Sleep Pill
- */
-@property (nonatomic, strong, readonly) SENDevice* pillInfo;
-
-/**
- * @property pillInfo: the device information for the Sense
- */
-@property (nonatomic, strong, readonly) SENDevice* senseInfo;
+@property (nonatomic, strong, readonly) SENPairedDevices* devices;
 
 /**
  * @property systemState: the state of the current Sense system
@@ -141,30 +134,11 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
 - (void)loadDeviceInfoIfNeeded:(SENServiceDeviceCompletionBlock)completion;
 
 /**
- * @method shouldWarnAboutLastSeenForDevice:
- * 
- * @param device: the device to check
- * @return YES if the loaded info indicates the device hasn't been seen for a
- *         theshold configured.  No, if no info to check or is ok.
+ * @param metadata: the device metadata
+ * @return YES if the device metadata's last seen date is greater than the specified
+ *         threshold of how long the device should be offline for
  */
-- (BOOL)shouldWarnAboutLastSeenForDevice:(SENDevice*)device;
-
-/**
- * @return YES if the loaded info indicates the pill hasn't been seen for a 
- *         theshold configured.  No, if no info to check or is ok.
- *
- * @see @method shouldWarnAboutLastSeenForDevice:
- */
-- (BOOL)shouldWarnAboutPillLastSeen;
-
-/**
- * @return YES if the loaded info indicates that Sense hasn't been seen for a
- *         threshold configured.  No, if no info to check or is ok.
- *
- * @see @method shouldWarnAboutLastSeenForDevice:
- */
-- (BOOL)shouldWarnAboutSenseLastSeen;
-
+- (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
 
 /**
  * @method scanForPairedSense

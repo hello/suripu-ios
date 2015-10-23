@@ -267,7 +267,9 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     if ([deviceId length] > 0) {
         __weak typeof(self) weakSelf = self;
         [SENAPIDevice getPairingInfo:^(SENDevicePairingInfo* info, NSError *error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+            if (error) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+            }
             [weakSelf setPairedAccountsToSense:[info pairedAccounts]];
         }];
     }

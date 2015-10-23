@@ -29,7 +29,6 @@ static NSUInteger const HEMOnboardingSensorPollIntervals = 5.0f;
 static NSInteger const HEMOnboardingMaxSenseScanAttempts = 10;
 // settings / preferences
 static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
-static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 
 @interface HEMOnboardingService()
 
@@ -37,7 +36,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 @property (nonatomic, assign) NSUInteger sensorPollingAttempts;
 @property (nonatomic, copy)   NSArray* nearbySensesFound;
 @property (nonatomic, assign) NSInteger senseScanAttempts;
-@property (nonatomic, copy)   NSNumber* pairedAccountsToSense;
+@property (nonatomic, strong) NSNumber* pairedAccountsToSense;
 @property (nonatomic, strong) SENAccount* currentAccount;
 @property (nonatomic, strong) SENSenseManager* currentSenseManager;
 @property (nonatomic, assign, getter=shouldStopPreScanningForSenses) BOOL stopPreScanningForSenses;
@@ -267,9 +266,9 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     NSString* deviceId = [[[self currentSenseManager] sense] deviceId];
     if ([deviceId length] > 0) {
         __weak typeof(self) weakSelf = self;
-        [SENAPIDevice getNumberOfAccountsForPairedSense:deviceId completion:^(NSNumber* pairedAccounts, NSError *error) {
-            DDLogVerbose(@"sense %@ has %ld account paired to it", deviceId, [pairedAccounts longValue]);
-            [weakSelf setPairedAccountsToSense:pairedAccounts];
+        [SENAPIDevice getPairingInfo:^(SENDevicePairingInfo* info, NSError *error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+            [weakSelf setPairedAccountsToSense:[info pairedAccounts]];
         }];
     }
 }
@@ -489,26 +488,12 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
         return;
     }
     
-    __weak typeof(self) weakSelf = self;
     [manager setWiFi:ssid password:password securityType:type update:update success:^(id response) {
-        [weakSelf saveConfiguredSSID:ssid];
         if (completion) {
             completion (nil);
         }
     } failure:completion];
     
-}
-
-- (void)saveConfiguredSSID:(NSString*)ssid {
-    if ([ssid length] == 0) return;
-    
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    [preferences setUserPreference:ssid forKey:HEMOnboardingSettingSSID];
-}
-
-- (NSString*)lastConfiguredSSID {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    return [preferences userPreferenceForKey:HEMOnboardingSettingSSID];
 }
 
 #pragma mark - Link Account

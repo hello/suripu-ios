@@ -20,7 +20,6 @@
 
 @interface HEMPillViewController : UIViewController
 
-@property (nonatomic, copy) NSOrderedSet* warnings;
 @property (nonatomic, weak) id<HEMPillControllerDelegate> delegate;
 
 @end

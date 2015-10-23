@@ -5,8 +5,9 @@
 //  Created by Jimmy Lu on 9/24/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENDevice.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENPillMetadata.h>
+#import <SenseKit/SENPairedDevices.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
@@ -25,10 +26,16 @@
 
 static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
+typedef NS_ENUM(NSUInteger, HEMPillWarning) {
+    HEMPillWarningLongLastSeen,
+    HEMPillWarningLowBattery
+};
+
 @interface HEMPillViewController() <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
+@property (strong, nonatomic) NSMutableOrderedSet* warnings;
 
 @end
 
@@ -36,8 +43,30 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self determineWarnings];
     [self configureCollectionView];
     [SENAnalytics track:kHEMAnalyticsEventPill];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[self collectionView] reloadData];
+}
+
+- (void)determineWarnings {
+    NSMutableOrderedSet* warnings = [NSMutableOrderedSet new];
+    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+    SENPillMetadata* pillMetdata = [[deviceService devices] pillMetadata];
+    
+    if ([deviceService shouldWarnAboutLastSeenForDevice:pillMetdata]) {
+        [warnings addObject:@(HEMPillWarningLongLastSeen)];
+    }
+    
+    if ([pillMetdata state] == SENPillStateLowBattery) {
+        [warnings addObject:@(HEMPillWarningLowBattery)];
+    }
+    
+    [self setWarnings:warnings];
 }
 
 - (void)configureCollectionView {
@@ -52,8 +81,9 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 }
 
 - (NSAttributedString*)attributedLongLastSeenMessage {
+    SENPillMetadata* pillMetadata = [[[SENServiceDevice sharedService] devices] pillMetadata];
     NSString* format = NSLocalizedString(@"settings.pill.warning.last-seen-format", nil);
-    NSString* lastSeen = [[[[SENServiceDevice sharedService] pillInfo] lastSeen] timeAgo];
+    NSString* lastSeen = [[pillMetadata lastSeenDate] timeAgo];
     NSArray* args = @[[self redMessage:lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil)]];
     
     NSMutableAttributedString* attrWarning =
@@ -77,13 +107,13 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     return attrWarning;
 }
 
-- (NSAttributedString*)attributedMessageForWarning:(HEMDeviceWarning)warning {
+- (NSAttributedString*)attributedMessageForWarning:(HEMPillWarning)warning {
     NSAttributedString* message = nil;
     switch (warning) {
-        case HEMDeviceWarningLongLastSeen:
+        case HEMPillWarningLongLastSeen:
             message = [self attributedLongLastSeenMessage];
             break;
-        case HEMPillWarningHasLowBattery:
+        case HEMPillWarningLowBattery:
             message = [self attributedLowBatteryMessage];
             break;
         default:
@@ -124,7 +154,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
                                        action:@selector(showAdvancedOptions:)
                              forControlEvents:UIControlEventTouchUpInside];
     } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
-        HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
+        HEMPillWarning warning = [[self warnings][[indexPath row]] integerValue];
         HEMWarningCollectionViewCell* warningCell = (HEMWarningCollectionViewCell*)cell;
         [[warningCell warningMessageLabel] setAttributedText:[self attributedMessageForWarning:warning]];
         [[warningCell actionButton] setTitle:[NSLocalizedString(@"actions.troubleshoot", nil) uppercaseString]
@@ -146,7 +176,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     CGSize size = [layout itemSize];
     if ([indexPath row] < [[self warnings] count]) {
         CGFloat maxWidth = size.width - (2*HEMWarningCellMessageHorzPadding);
-        HEMDeviceWarning warning = [[self warnings][[indexPath row]] integerValue];
+        HEMPillWarning warning = [[self warnings][[indexPath row]] integerValue];
         NSAttributedString* message = [self attributedMessageForWarning:warning];
         size.height = [message sizeWithWidth:maxWidth].height + HEMWarningCellBaseHeight;
     } else if ([indexPath row] == [[self warnings] count]) {
@@ -158,14 +188,14 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 #pragma mark - Actions
 
 - (void)takeWarningAction:(UIButton*)sender {
-    HEMDeviceWarning warning = [sender tag];
+    HEMPillWarning warning = [sender tag];
     switch (warning) {
-        case HEMDeviceWarningLongLastSeen: {
+        case HEMPillWarningLongLastSeen: {
             NSString* page = NSLocalizedString(@"help.url.slug.pill-not-seen", nil);
             [HEMSupportUtil openHelpToPage:page fromController:self];
             break;
         }
-        case HEMPillWarningHasLowBattery: {
+        case HEMPillWarningLowBattery: {
             [self replaceBattery:self];
             break;
         }
@@ -263,7 +293,8 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
         [[self delegate] willUnpairPillFrom:self];
     }
     
-    NSString* pillId = [[[SENServiceDevice sharedService] pillInfo] deviceId];
+    SENPillMetadata* pillMetadata = [[[SENServiceDevice sharedService] devices] pillMetadata];
+    NSString* pillId = [pillMetadata uniqueId];
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionUnpairPill,
                           kHEMAnalyticsEventPropPillId : pillId ?: @"unknown"}];

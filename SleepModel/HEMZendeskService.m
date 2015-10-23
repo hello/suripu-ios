@@ -9,7 +9,8 @@
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceDevice.h>
-#import <SenseKit/SENDevice.h>
+#import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENPairedDevices.h>
 
 #import <ZendeskSDK/ZendeskSDK.h>
 #import <SenseKit/SENService+Protected.h>
@@ -119,14 +120,15 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
     [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
         // NOTE: Zendesk tags will automatically split words in your strings by spaces and dashes.  Use
         // underscore if multiple words are needed
+        SENSenseMetadata* senseMetadata = [[[SENServiceDevice sharedService] devices] senseMetadata];
         NSBundle* bundle = [NSBundle mainBundle];
         UIDevice* device = [UIDevice currentDevice];
         NSString* osVersion = [self tagMinusZDKTagTokens:[device systemVersion]];
         NSString* deviceModel = [self tagMinusZDKTagTokens:[HEMSupportUtil deviceModel]];
         NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
-        NSString* fwVersion = [[[SENServiceDevice sharedService] senseInfo] firmwareVersion];
+        NSString* fwVersion = [senseMetadata  firmwareVersion];
         NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-        NSString* senseId = [[[SENServiceDevice sharedService] senseInfo] deviceId];
+        NSString* senseId = [senseMetadata uniqueId];
 
         NSMutableArray* tags = [@[deviceModel, osVersion] mutableCopy];
         if (fwVersion) {

@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
-#import <SenseKit/SENDevice.h>
+#import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENServiceDevice.h>
-#import <SenseKit/SENSenseWiFiStatus.h>
+#import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENPillMetadata.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -26,23 +27,23 @@
 #import "HEMOnboardingService.h"
 
 NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
+NSInteger const HEMDeviceRowSense = 0;
+NSInteger const HEMDeviceRowPill = 1;
 
-static NSInteger const HEMDeviceRowSense = 0;
-static NSInteger const HEMDeviceRowPill = 1;
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 @interface HEMDeviceDataSource()
 
 @property (nonatomic, weak)   UICollectionView* collectionView;
 @property (nonatomic, copy)   NSAttributedString* attributedFooterText;
-@property (nonatomic, copy)   NSString* configuredSSID;
-@property (nonatomic, strong) SENSenseWiFiStatus* wiFiStatus;
-@property (nonatomic, assign, getter=isLoadingSense) BOOL loadingSense;
-@property (nonatomic, assign, getter=isLoadingPill)  BOOL loadingPill;
+
 @property (nonatomic, assign) BOOL attemptedDataLoad;
 @property (nonatomic, weak)   id<HEMTextFooterDelegate> footerDelegate;
 @property (nonatomic, weak)   UIActivityIndicatorView* senseActivityIndicator;
 @property (nonatomic, weak)   UIActivityIndicatorView* pillActivityIndicator;
+
+@property (nonatomic, strong) SENPairedDevices* pairedDevices;
+@property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 
 @end
 
@@ -74,41 +75,18 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 #pragma mark - Loading Data
 
-- (void)refreshWithUpdate:(void(^)(void))update completion:(void(^)(NSError* error))completion {
-    [self setWiFiStatus:nil];
-    [self setConfiguredSSID:nil];
-    [self setLoadingSense:YES];
-    [self setLoadingPill:YES];
+- (void)refresh:(void(^)(NSError* error))completion {
+    [self setRefreshing:YES];
     
-    __weak typeof(self) weakSelf = self;
-    [self refereshDeviceInfo:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        [strongSelf setLoadingPill:NO];
-        [strongSelf setAttemptedDataLoad:YES];
-        
-        if (error != nil) {
-            [strongSelf setLoadingSense:NO];
-            if (completion) completion (error);
-        } else {
-            if (update) update();
-            
-            [strongSelf refreshSenseData:^(NSError *error) {
-                [strongSelf setLoadingSense:NO];
-                if (completion) completion (error);
-            }];
-        }
-    }];
-}
-
-- (void)refereshDeviceInfo:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
     [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [strongSelf setAttemptedDataLoad:YES];
+        
         NSError* deviceError = error;
         
         if (error != nil) {
-            
             if ([error code] == SENServiceDeviceErrorInProgress && completion) {
                 [strongSelf invokeWhenInfoIsLoaded:completion];
                 return;
@@ -119,10 +97,13 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
                                                   code:HEMDeviceErrorDeviceInfoNotLoaded
                                               userInfo:nil];
             }
-            
         }
+    
+        [strongSelf setRefreshing:NO];
         
-        if (completion) completion (deviceError);
+        if (completion) {
+            completion (deviceError);
+        }
     }];
 }
 
@@ -133,167 +114,106 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
                    afterDelay:0.1f];
         return;
     }
+    
+    [self setRefreshing:NO];
     completion (nil);
 }
 
-- (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion {
-    [self setLoadingSense:YES];
-    
-    __weak typeof(self) weakSelf = self;
-    SENServiceDevice* service = [SENServiceDevice sharedService];
-    [service replaceWithNewlyPairedSenseManager:senseManager completion:^(NSError *error) {
-        [weakSelf setLoadingSense:NO];
-        
-        NSError* opError = nil;
-        if (error) {
-            opError = [NSError errorWithDomain:HEMDeviceErrorDomain
-                                          code:HEMDeviceErrorReplacedSenseInfoNotLoaded
-                                      userInfo:nil];
-        }
-        if (completion) completion (opError);
-    }];
-}
-
-- (void)refreshSenseData:(void(^)(NSError* error))completion {
-    __weak typeof(self) weakSelf = self;
-    
-    [SENSenseManager whenBleStateAvailable:^(BOOL on) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!on) {
-            if (completion) completion ([NSError errorWithDomain:HEMDeviceErrorDomain
-                                                            code:HEMDeviceErrorNoBle
-                                                        userInfo:nil]);
-            return;
-        }
-        
-        [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid,
-                                                              SENSenseWiFiStatus* status,
-                                                              NSError *error) {
-            
-            if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]
-                && [error code] == SENServiceDeviceErrorInProgress) {
-                [strongSelf performSelector:@selector(refreshSenseData:)
-                                 withObject:completion
-                                 afterDelay:0.2f];
-                return;
-            }
-            NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
-            [strongSelf setConfiguredSSID:wifiSSID];
-            [strongSelf setWiFiStatus:status];
-            [[HEMOnboardingService sharedService] saveConfiguredSSID:wifiSSID];
-            
-            if (completion) completion (error);
-        }];
-    }];
-}
-
 - (BOOL)canPairPill {
-    BOOL hasSense = [[SENServiceDevice sharedService] pairedSenseAvailable];
-    return ![self isLoadingSense] && [self attemptedDataLoad] && hasSense;
-}
-
-#pragma mark - Warnings
-
-- (BOOL)lostInternetConnection:(SENDevice*)device {
-    return [device type] == SENDeviceTypeSense && ![[self wiFiStatus] isConnected];
-}
-
-- (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device {
-    NSMutableOrderedSet* set = [[NSMutableOrderedSet alloc] init];
-    if ([device type] == SENDeviceTypePill
-        && [device state] == SENDeviceStateLowBattery) {
-        [set addObject:@(HEMPillWarningHasLowBattery)];
-    }
-    if ([[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]) {
-        [set addObject:@(HEMDeviceWarningLongLastSeen)];
-    }
-    
-    BOOL connectedToSense = YES;
-    if ([device type] == SENDeviceTypeSense
-        && (![[SENServiceDevice sharedService] pairedSenseAvailable]
-            || ![[[SENServiceDevice sharedService] senseManager] isConnected])) {
-            [set addObject:@(HEMSenseWarningNotConnectedToSense)];
-            connectedToSense = NO;
-        }
-    
-    if (connectedToSense && [self lostInternetConnection:device]) {
-        [set addObject:@(HEMSenseWarningNoInternet)];
-    }
-    
-    return set;
+    return [[[SENServiceDevice sharedService] devices] hasPairedSense];
 }
 
 #pragma mark - Convenience Methods
 
-- (NSString*)lastSeen:(SENDevice*)device {
+- (NSString*)lastSeen:(SENDeviceMetadata*)deviceMetadata {
+    NSDate* lastSeenDate = [deviceMetadata lastSeenDate];
     NSString* desc = nil;
-    if ([device lastSeen] != nil && [device state] != SENDeviceStateUnknown) {
+    
+    if (lastSeenDate != nil) {
         NSString* lastSeen = NSLocalizedString(@"settings.device.last-seen", nil);
-        desc = [NSString stringWithFormat:@"%@ %@", lastSeen, [[device lastSeen] timeAgo]];
+        desc = [NSString stringWithFormat:@"%@ %@", lastSeen, [lastSeenDate timeAgo]];
     } else {
         desc = NSLocalizedString(@"empty-data", nil);
     }
+    
     return desc;
 }
 
-- (UIColor*)lastSeenTextColorFor:(SENDevice*)device {
-    return [[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]
-            ? [UIColor redColor] : [UIColor blackColor];
+- (UIColor*)lastSeenTextColorFor:(SENDeviceMetadata*)deviceMetadata {
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    return [service shouldWarnAboutLastSeenForDevice:deviceMetadata]
+         ? [UIColor redColor]
+         : [UIColor blackColor];
 }
 
-- (SENDevice*)deviceAtIndexPath:(NSIndexPath*)indexPath {
+- (SENDeviceMetadata*)deviceAtIndexPath:(NSIndexPath*)indexPath {
     SENServiceDevice* service = [SENServiceDevice sharedService];
-    SENDevice* device = nil;
+    SENDeviceMetadata* deviceMetadata = nil;
     switch ([indexPath row]) {
         case HEMDeviceRowSense:
-            device = [service senseInfo];
+            deviceMetadata = [[service devices] senseMetadata];
             break;
         case HEMDeviceRowPill:
-            device = [service pillInfo];
+            deviceMetadata = [[service devices] pillMetadata];
             break;
         default:
             break;
     }
-    return device;
-}
-
-- (SENDeviceType)deviceTypeAtIndexPath:(NSIndexPath*)indexPath {
-    return [indexPath row] == HEMDeviceRowSense ? SENDeviceTypeSense : SENDeviceTypePill;
+    return deviceMetadata;
 }
 
 - (NSString*)wifiValue {
-    NSString* lastConfiguredSSID = [[HEMOnboardingService sharedService] lastConfiguredSSID];
-    NSString* value = [self configuredSSID] ?: lastConfiguredSSID;
-    if ([value length] == 0 && [self wiFiStatus] && ![[self wiFiStatus] isConnected]) {
-        value = NSLocalizedString(@"settings.device.network.disconnected", nil);
-    } else if ([value length] == 0) {
-        value = NSLocalizedString(@"empty-data", nil);
-    }
-    return value;
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    SENSenseMetadata* senseMetadata = [[service devices] senseMetadata];
+    NSString* ssid = [[senseMetadata wiFi] ssid];
+    return ssid ?: NSLocalizedString(@"empty-data", nil);
 }
 
 - (UIColor*)wifiValueColor {
-    UIColor* color = [UIColor blackColor];
-    if ([self wiFiStatus] && ![[self wiFiStatus] isConnected]) {
-        color = [UIColor redColor];
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    SENSenseMetadata* senseMetadata = [[service devices] senseMetadata];
+    SENWiFiCondition condition = [[senseMetadata wiFi] condition];
+    
+    switch (condition) {
+        case SENWiFiConditionNone:
+            return [UIColor redColor];
+        case SENWiFiConditionBad:
+            return [UIColor orangeColor];
+        case SENWiFiConditionFair:
+        case SENWiFiConditionGood:
+        default:
+            return [UIColor blackColor];
     }
-    return color;
 }
 
-- (NSString*)colorStringForDevice:(SENDevice*)device {
-    switch ([device color]) {
-        case SENDeviceColorBlack:
-            return NSLocalizedString(@"color.black", nil);
-        case SENDeviceColorWhite:
-            return NSLocalizedString(@"color.white", nil);
-        case SENDeviceColorBlue:
-            return NSLocalizedString(@"color.blue", nil);
-        case SENDeviceColorRed:
-            return NSLocalizedString(@"color.red", nil);
-        case SENDeviceColorUnknown:
-        default:
-            return NSLocalizedString(@"empty-data", nil);
+- (NSString*)colorStringForDevice:(SENDeviceMetadata*)deviceMetadata {
+    NSString* colorString = nil;
+    
+    if ([deviceMetadata isKindOfClass:[SENSenseMetadata class]]) {
+        SENSenseColor senseColor = [((SENSenseMetadata*)deviceMetadata) color];
+        switch (senseColor) {
+            case SENSenseColorCharcoal:
+                colorString = NSLocalizedString(@"color.charcoal", nil);
+                break;
+            case SENSenseColorCotton:
+                colorString = NSLocalizedString(@"color.cotton", nil);
+            default:
+                break;
+        }
+    } else if ([deviceMetadata isKindOfClass:[SENPillMetadata class]]) {
+        SENPillColor pillColor = [((SENPillMetadata*)deviceMetadata) color];
+        switch (pillColor) {
+            case SENPillColorBlue:
+                colorString = NSLocalizedString(@"color.blue", nil);
+                break;
+            case SENPillColorRed:
+                colorString = NSLocalizedString(@"color.red", nil);
+            default:
+                break;
+        }
     }
+    
+    return colorString ?: NSLocalizedString(@"empty-data", nil);
 }
 
 #pragma mark - Cell Appearance
@@ -320,20 +240,20 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     }
 }
 
-- (void)updateSenseInfo:(SENDevice*)senseInfo forCell:(HEMDeviceCollectionViewCell*)cell {
+- (void)updateSenseInfo:(SENSenseMetadata*)senseMetadata forCell:(HEMDeviceCollectionViewCell*)cell {
     NSString* lastSeen
-        = [senseInfo lastSeen] != nil
-        ? [[senseInfo lastSeen] timeAgo]
+        = [senseMetadata lastSeenDate] != nil
+        ? [[senseMetadata lastSeenDate] timeAgo]
         : NSLocalizedString(@"empty-data", nil);
     
-    UIColor* lastSeenColor = [self lastSeenTextColorFor:senseInfo];
+    UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
     UIImage* icon = [HelloStyleKit senseIcon];
     NSString* name = NSLocalizedString(@"settings.device.sense", nil);
     NSString* property1Name = NSLocalizedString(@"settings.sense.wifi", nil);
     NSString* property1Value = [self wifiValue];
     UIColor* property1ValueColor = [self wifiValueColor];
     NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
-    NSString* property2Value = [senseInfo firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
+    NSString* property2Value = [senseMetadata firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
     
     [[cell iconImageView] setImage:icon];
     [[cell nameLabel] setText:name];
@@ -346,28 +266,33 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     [[cell property2ValueLabel] setText:property2Value];
 }
 
-- (void)updatePillInfo:(SENDevice*)pillInfo forCell:(HEMDeviceCollectionViewCell*)cell {
+- (void)updatePillInfo:(SENPillMetadata*)pillMetadata forCell:(HEMDeviceCollectionViewCell*)cell {
     NSString* lastSeen
-        = [pillInfo lastSeen] != nil
-        ? [[pillInfo lastSeen] timeAgo]
+        = [pillMetadata lastSeenDate] != nil
+        ? [[pillMetadata lastSeenDate] timeAgo]
         : NSLocalizedString(@"empty-data", nil);
     
-    UIColor* lastSeenColor = [self lastSeenTextColorFor:pillInfo];
+    UIColor* lastSeenColor = [self lastSeenTextColorFor:pillMetadata];
     UIImage* icon = [HelloStyleKit pillIcon];
     NSString* name = NSLocalizedString(@"settings.device.pill", nil);
     NSString* property1Name = NSLocalizedString(@"settings.device.battery", nil);
     NSString* property1Value = nil;
     UIColor* property1ValueColor =nil;
     NSString* property2Name = NSLocalizedString(@"settings.device.color", nil);
-    NSString* property2Value = [self colorStringForDevice:pillInfo];
+    NSString* property2Value = [self colorStringForDevice:pillMetadata];
     
-    if ([pillInfo state] == SENDeviceStateLowBattery) {
-        property1Value = NSLocalizedString(@"settings.device.battery.low", nil);
-        property1ValueColor = [UIColor redColor];
-    } else if ([pillInfo state] == SENDeviceStateNormal) {
-        property1Value = NSLocalizedString(@"settings.device.battery.good", nil);
-    } else {
-        property1Value = NSLocalizedString(@"empty-data", nil);
+    switch ([pillMetadata state]) {
+        case SENPillStateLowBattery:
+            property1Value = NSLocalizedString(@"settings.device.battery.low", nil);
+            property1ValueColor = [UIColor redColor];
+            break;
+        case SENPillStateNormal:
+            property1Value = NSLocalizedString(@"settings.device.battery.good", nil);
+            break;
+        case SENPillStateUnknown:
+        default:
+            property1Value = NSLocalizedString(@"empty-data", nil);
+            break;
     }
     
     [[cell iconImageView] setImage:icon];
@@ -382,19 +307,13 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (void)updateDeviceInfoForCell:(HEMDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    SENDevice* device = [self deviceAtIndexPath:indexPath];
-    SENDeviceType type = [self deviceTypeAtIndexPath:indexPath]; // device may be nil
-    BOOL loading = NO;
-    
-    if (type == SENDeviceTypeSense) {
-        [self updateSenseInfo:device forCell:cell];
-        loading = [self isLoadingSense];
-    } else if (type == SENDeviceTypePill) {
-        [self updatePillInfo:device forCell:cell];
-        loading = [self isLoadingPill];
+    SENDeviceMetadata* deviceMetadata = [self deviceAtIndexPath:indexPath];
+    if ([deviceMetadata isKindOfClass:[SENSenseMetadata class]]) {
+        [self updateSenseInfo:(id)deviceMetadata forCell:cell];
+    } else if ([deviceMetadata isKindOfClass:[SENPillMetadata class]]) {
+        [self updatePillInfo:(id)deviceMetadata forCell:cell];
     }
-    
-    [cell showDataLoadingIndicator:loading || ![self attemptedDataLoad]];
+    [cell showDataLoadingIndicator:[self isRefreshing] || ![self attemptedDataLoad]];
 }
 
 - (NSAttributedString*)attributedFooterText {
@@ -441,9 +360,9 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SENDevice* device = [self deviceAtIndexPath:indexPath];
+    SENDeviceMetadata* deviceMetadata = [self deviceAtIndexPath:indexPath];
     NSString* reuseId
-        = [[SENServiceDevice sharedService] isInfoLoaded] && device == nil
+        = [[SENServiceDevice sharedService] isInfoLoaded] && deviceMetadata == nil
         ? [HEMMainStoryboard pairReuseIdentifier]
         : [HEMMainStoryboard deviceReuseIdentifier];
     

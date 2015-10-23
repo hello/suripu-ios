@@ -10,13 +10,8 @@
 #import "HEMTextFooterCollectionReusableView.h"
 
 extern NSString* const HEMDeviceErrorDomain;
-
-typedef NS_ENUM(NSUInteger, HEMDeviceWarning) {
-    HEMDeviceWarningLongLastSeen = 1,
-    HEMSenseWarningNoInternet = 2,
-    HEMSenseWarningNotConnectedToSense = 3,
-    HEMPillWarningHasLowBattery = 4
-};
+extern NSInteger const HEMDeviceRowSense;
+extern NSInteger const HEMDeviceRowPill;
 
 typedef NS_ENUM(NSInteger, HEMDeviceError) {
     HEMDeviceErrorNoBle = -1,
@@ -24,21 +19,17 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
     HEMDeviceErrorReplacedSenseInfoNotLoaded = -3
 };
 
-@class SENDevice;
+@class SENDeviceMetadata;
 
 @interface HEMDeviceDataSource : NSObject <UICollectionViewDataSource>
 
-@property (nonatomic, assign, readonly, getter=isLoadingSense) BOOL loadingSense;
-@property (nonatomic, assign, readonly, getter=isLoadingPill)  BOOL loadingPill;
+@property (nonatomic, assign, readonly, getter=isRefreshing) BOOL refreshing;
 
 - (instancetype)initWithCollectionView:(UICollectionView*)collectionView
                      andFooterDelegate:(id<HEMTextFooterDelegate>)delegate;
 
-- (void)refreshWithUpdate:(void(^)(void))update completion:(void(^)(NSError* error))completion;
-- (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device;
-- (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion;
-- (SENDevice*)deviceAtIndexPath:(NSIndexPath*)indexPath;
-- (SENDeviceType)deviceTypeAtIndexPath:(NSIndexPath*)indexPath;
+- (void)refresh:(void(^)(NSError* error))completion;
+- (SENDeviceMetadata*)deviceAtIndexPath:(NSIndexPath*)indexPath;
 - (void)updateCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
 - (NSAttributedString*)attributedFooterText;
 - (BOOL)canPairPill;

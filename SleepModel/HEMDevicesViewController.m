@@ -5,7 +5,8 @@
 //  Created by Jimmy Lu on 9/23/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENDevice.h>
+#import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENPillMetadata.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
@@ -47,7 +48,7 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
 @property (strong, nonatomic) HEMDeviceDataSource* dataSource;
 @property (assign, nonatomic) BOOL loaded;
 @property (assign, nonatomic, getter=isWaitingToShowFactoryResetDialog) BOOL waitingToShowFactoryResetDialog;
-@property (strong, nonatomic) SENDevice* selectedDevice;
+@property (strong, nonatomic) SENDeviceMetadata* selectedDevice;
 
 @end
 
@@ -99,35 +100,13 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
 }
 
 - (void)didUpdatePairing:(NSNotification*)notification {
-    NSString* managerKey = HEMOnboardingNotificationUserInfoSenseManager;
-    SENSenseManager* manager = [[notification userInfo] objectForKey:managerKey];
-    if (manager) {
-        [self updateDataWithSenseManager:manager];
-    } else {
-        [self refreshDataSource:YES];
-    }
-}
-
-- (void)updateDataWithSenseManager:(SENSenseManager*)senseManager {
-    if (senseManager != nil) {
-        __weak typeof(self) weakSelf = self;
-        [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error != nil) {
-                [strongSelf showMessageForError:error];
-            }
-            [strongSelf reloadData];
-        }];
-        
-        [self reloadData]; // clear current state
-    }
+    [self refreshDataSource:YES];
 }
 
 - (void)refreshDataSource:(BOOL)clearCurrentState {
     __weak typeof(self) weakSelf = self;
-    [[self dataSource] refreshWithUpdate:^{
-        [weakSelf reloadData];
-    } completion:^(NSError *error) {
+    
+    [[self dataSource] refresh:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
             [strongSelf showMessageForError:error];
@@ -174,12 +153,11 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SENDevice* device = [[self dataSource] deviceAtIndexPath:indexPath];
-    SENDeviceType type = [[self dataSource] deviceTypeAtIndexPath:indexPath];
+    SENDeviceMetadata* device = [[self dataSource] deviceAtIndexPath:indexPath];
     CGSize size = [layout itemSize];
     if (device) {
         size.height = HEMDeviceInfoHeight;
-    } else if (type == SENDeviceTypePill && ![[self dataSource] canPairPill]) {
+    } else if ([indexPath row] == HEMDeviceRowPill && ![[self dataSource] canPairPill]) {
         size.height = HEMNoDeviceWithoutButtonHeight;
     } else {
         size.height = HEMNoDeviceHeight;
@@ -194,37 +172,28 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
-    SENDeviceType type = [[self dataSource] deviceTypeAtIndexPath:indexPath];
+    if ([[self dataSource] isRefreshing]) {
+        return;
+    }
     
-    switch (type) {
-        case SENDeviceTypeSense: {
-            if (![[self dataSource] isLoadingSense]) {
-                if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
-                    [self showSensePairingController];
-                } else {
-                    [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
-                    [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
-                                              sender:self];
-                }
-            }
-            break;
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if ([indexPath row] == HEMDeviceRowSense) {
+        if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+            [self showSensePairingController];
+        } else {
+            [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+            [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
+                                      sender:self];
         }
-        case SENDeviceTypePill:
-            if (![[self dataSource] isLoadingPill]) {
-                if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
-                    // cell interaction will be disabled if not ready to pair
-                    [self showPillPairingController];
-                } else {
-                    [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
-                    [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
-                                              sender:self];
-                }
-            }
-
-            break;
-        default:
-            break;
+    } else if ([indexPath row] == HEMDeviceRowPill) {
+        if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+            // cell interaction will be disabled if not ready to pair
+            [self showPillPairingController];
+        } else {
+            [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+            [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
+                                      sender:self];
+        }
     }
 }
 
@@ -315,12 +284,10 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue destinationViewController] isKindOfClass:[HEMSenseViewController class]]) {
         HEMSenseViewController* senseVC = [segue destinationViewController];
-        [senseVC setWarnings:[[self dataSource] deviceWarningsFor:[self selectedDevice]]];
         [senseVC setDelegate:self];
     } else if ([[segue destinationViewController] isKindOfClass:[HEMPillViewController class]]) {
         HEMPillViewController* pillVC = [segue destinationViewController];
         [pillVC setDelegate:self];
-        [pillVC setWarnings:[[self dataSource] deviceWarningsFor:[self selectedDevice]]];
     }
 }
 

@@ -52,11 +52,11 @@ static NSString* const HEMDevicesDictPropPills = @"pills";
 }
 
 - (SENSenseMetadata*)senseMetadata {
-    return [[self senses] count] > 0 ? [[self senses] firstObject] : nil;
+    return [[self senses] firstObject];
 }
 
 - (SENPillMetadata*)pillMetadata {
-    return [[self pills] count] > 0 ? [[self pills] firstObject] : nil;
+    return [[self pills] firstObject];
 }
 
 - (BOOL)hasPairedSense {

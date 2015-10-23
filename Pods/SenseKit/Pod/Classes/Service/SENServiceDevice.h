@@ -5,7 +5,6 @@
 //  Created by Jimmy Lu on 12/29/14.
 //
 //
-
 #import "SENService.h"
 #import "SENSenseManager.h"
 
@@ -22,11 +21,12 @@ typedef NS_ENUM(NSUInteger, SENServiceDeviceState) {
     SENServiceDeviceStateUnknown = 0,
     SENServiceDeviceStateNormal = 1,
     SENServiceDeviceStateSenseNotPaired = 2,
-    SENServiceDeviceStateSenseNoData = 3, // 2015-10-21: obsolete
     SENServiceDeviceStatePillNotPaired = 4,
     SENServiceDeviceStatePillLowBattery = 5,
     SENServiceDeviceStateSenseNotSeen = 6,
-    SENServiceDeviceStatePillNotSeen = 7
+    SENServiceDeviceStatePillNotSeen = 7,
+    
+    SENServiceDeviceStateSenseNoData NS_ENUM_DEPRECATED_IOS(7_0, 9_0, "No longer returned") = 3
 };
 
 typedef NS_ENUM(NSInteger, SENServiceDeviceError) {

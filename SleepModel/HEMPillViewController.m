@@ -26,9 +26,9 @@
 
 static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
-typedef NS_ENUM(NSUInteger, HEMPillWarning) {
-    HEMPillWarningLongLastSeen,
-    HEMPillWarningLowBattery
+typedef NS_ENUM(NSInteger, HEMPillWarning) {
+    HEMPillWarningLongLastSeen = 1,
+    HEMPillWarningLowBattery = 2
 };
 
 @interface HEMPillViewController() <UICollectionViewDataSource, UICollectionViewDelegate>

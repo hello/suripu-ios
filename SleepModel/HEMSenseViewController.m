@@ -40,7 +40,7 @@
 
 static CGFloat const HEMSenseActionHeight = 62.0f;
 
-typedef NS_ENUM(NSUInteger, HEMSenseWarning) {
+typedef NS_ENUM(NSInteger, HEMSenseWarning) {
     HEMSenseWarningLongLastSeen = 1,
     HEMSenseWarningNoInternet = 2,
     HEMSenseWarningNotConnectedToSense = 3

@@ -1,6 +1,0 @@
-module SVWebViewController {
-  umbrella header "SVWebViewController-umbrella.h"
-
-  export *
-  module * { export * }
-}

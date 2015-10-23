@@ -1,6 +1,0 @@
-module SORelativeDateTransformer {
-  umbrella header "SORelativeDateTransformer-umbrella.h"
-
-  export *
-  module * { export * }
-}

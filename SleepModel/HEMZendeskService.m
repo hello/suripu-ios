@@ -11,9 +11,9 @@
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENSenseMetadata.h>
 #import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENService+Protected.h>
 
 #import <ZendeskSDK/ZendeskSDK.h>
-#import <SenseKit/SENService+Protected.h>
 
 #import "HEMZendeskService.h"
 #import "HEMSupportUtil.h"

@@ -1,0 +1,6 @@
+module NSJSONSerialization_NSNullRemoval {
+  umbrella header "NSJSONSerialization-NSNullRemoval-umbrella.h"
+
+  export *
+  module * { export * }
+}

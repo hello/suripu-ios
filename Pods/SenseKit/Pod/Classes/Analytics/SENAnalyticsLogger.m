@@ -67,7 +67,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (void)endEvent:(NSString *)eventName {
     NSDate* startTime = [[self timedEvents] valueForKey:eventName];
     if (startTime != nil) {
-        NSTimeInterval elapsed = abs([startTime timeIntervalSinceNow]);
+        NSTimeInterval elapsed = fabs([startTime timeIntervalSinceNow]);
         NSString* event = [NSString stringWithFormat:@"%@ took %0.2f", eventName, elapsed];
         [self logEvent:event withProperties:nil];
         [[self timedEvents] removeObjectForKey:eventName];

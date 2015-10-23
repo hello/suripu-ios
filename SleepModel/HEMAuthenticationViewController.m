@@ -1,6 +1,3 @@
-
-#import <CocoaLumberjack/DDLog.h>
-
 #import "UIFont+HEMStyle.h"
 
 #import "HEMAuthenticationViewController.h"

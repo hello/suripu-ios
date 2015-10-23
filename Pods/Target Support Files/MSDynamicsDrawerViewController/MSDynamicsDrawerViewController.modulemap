@@ -1,0 +1,6 @@
+module MSDynamicsDrawerViewController {
+  umbrella header "MSDynamicsDrawerViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

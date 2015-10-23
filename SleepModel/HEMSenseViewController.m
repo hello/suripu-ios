@@ -192,7 +192,7 @@ typedef NS_ENUM(NSUInteger, HEMSenseWarning) {
         [service getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus *status, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
-                [SENAnalytics track:error];
+                [SENAnalytics trackError:error];
             }
             [strongSelf setWiFiStatus:status];
             [strongSelf setCheckedConnectivity:YES];

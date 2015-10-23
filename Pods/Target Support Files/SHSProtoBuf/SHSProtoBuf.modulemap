@@ -1,0 +1,6 @@
+module ProtocolBuffers {
+  umbrella header "SHSProtoBuf-umbrella.h"
+
+  export *
+  module * { export * }
+}

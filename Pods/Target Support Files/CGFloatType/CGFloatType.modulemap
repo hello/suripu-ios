@@ -1,0 +1,6 @@
+module CGFloatType {
+  umbrella header "CGFloatType-umbrella.h"
+
+  export *
+  module * { export * }
+}

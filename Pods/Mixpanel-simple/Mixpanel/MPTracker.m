@@ -9,9 +9,13 @@
 #import "MPTracker.h"
 #import "MPUtilities.h"
 
-@implementation MPTracker {
-    NSArray *_events;
-}
+@interface MPTracker ()
+@property (nonatomic, strong) NSArray *events;
+@property (nonatomic, strong) NSMutableDictionary <NSString *, NSDate *>*timedEvents;
+@property (nonatomic, strong) NSLock *timedEventLock;
+@end
+
+@implementation MPTracker
 
 - (instancetype)init {
     return [self initWithToken:nil cacheURL:nil queueName:nil];
@@ -20,6 +24,8 @@
 - (instancetype)initWithToken:(NSString *)token cacheURL:(NSURL *)cacheURL queueName:(const char *)queueName{
     if (self = [super initWithToken:token cacheURL:cacheURL queueName:queueName]) {
         _events = [NSArray new];
+        _timedEvents = [NSMutableDictionary new];
+        _timedEventLock = [NSLock new];
     }
     return self;
 }
@@ -45,6 +51,14 @@
     dispatch_async(self.queue, ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSString *distinctId = strongSelf.distinctId;
+        [strongSelf.timedEventLock lock];
+        NSDate* startDate = strongSelf.timedEvents[event];
+        [strongSelf.timedEventLock unlock];
+        if (startDate) {
+            NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:startDate];
+            NSString* duration = [NSString stringWithFormat:@"%.3f", elapsed];
+            mergedProperties[@"$duration"] = duration;
+        }
         [mergedProperties addEntriesFromDictionary:strongSelf.defaultProperties];
         [mergedProperties setValue:distinctId forKey:@"distinct_id"];
         [mergedProperties setValue:strongSelf.token forKey:@"token"];
@@ -91,6 +105,16 @@
     }
     
     [self track:@"$create_alias" properties:@{@"distinct_id": distinctID, @"alias": alias}];
+}
+
+- (void)timeEvent:(NSString *)event {
+    [self.timedEventLock lock];
+    self.timedEvents[event] = [NSDate date];
+    [self.timedEventLock unlock];
+}
+
+- (void)endEvent:(NSString *)event {
+    [self track:event];
 }
 
 

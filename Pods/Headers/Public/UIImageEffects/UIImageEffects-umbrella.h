@@ -1,0 +1,1 @@
+../../../Target Support Files/UIImageEffects/UIImageEffects-umbrella.h

@@ -1,0 +1,6 @@
+module Mixpanel_simple {
+  umbrella header "Mixpanel-simple-umbrella.h"
+
+  export *
+  module * { export * }
+}

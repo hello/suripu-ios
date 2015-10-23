@@ -16,6 +16,9 @@
 - (void)track:(NSString *)event;
 - (void)track:(NSString *)event properties:(NSDictionary *)properties;
 
+- (void)timeEvent:(NSString *)event;
+- (void)endEvent:(NSString *)event;
+
 - (void)createAlias:(NSString *)alias forDistinctID:(NSString *)distinctID;
 
 @end

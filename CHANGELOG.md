@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.6.2
+
+New:
+
+* Updated to v2 Devices API to obtain SSID from server instead of through Sense
+* Moved the connection with Sense in settings in to Sense settings rather than
+  from the device settings screen
+* Using server localized messages for timeline feedback instead of client side
+  generic error messages when updating timeline events fail
+
+Fixes:
+
+* When pill is not paired, sense pairing is not also disabled on iphone 5 and 4s
+
 ## 1.1.6.1
 
 New:

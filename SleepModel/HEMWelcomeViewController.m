@@ -250,6 +250,11 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     CGFloat halfWidth = CGRectGetWidth([[self view] bounds]) / 2.0f;
     CGFloat hiddenConstant = halfWidth + (2 * [self origLogInTrailingConstraintConstant]);
     [[self logInButtonTrailingConstraint] setConstant:percentage * hiddenConstant];
+    
+    // change the alpha of the button elements
+    CGFloat separatorAlpha = HEMWelcomeButtonSeparatorMaxOpacity - (HEMWelcomeButtonSeparatorMaxOpacity* percentage);
+    [[self buttonSeparatorView] setAlpha:separatorAlpha];
+    [[self logInButton] setAlpha:1.0f - percentage];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

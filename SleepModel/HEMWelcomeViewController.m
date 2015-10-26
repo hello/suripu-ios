@@ -26,6 +26,8 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomeIntroPageMeetCurrentConditions = 4
 };
 
+static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
+
 @interface HEMWelcomeViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *introImageView;
@@ -34,6 +36,7 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 @property (weak, nonatomic) IBOutlet UIPageControl *contentPageControl;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 @property (weak, nonatomic) IBOutlet UIButton *logInButton;
+@property (weak, nonatomic) IBOutlet UIView *buttonSeparatorView;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logInButtonTrailingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageControlBottomConstraint;
@@ -95,6 +98,8 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     [[self signUpButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self setOrigLogInTrailingConstraintConstant:[[self logInButtonTrailingConstraint] constant]];
+    
+    [[self buttonSeparatorView] setAlpha:HEMWelcomeButtonSeparatorMaxOpacity];
 }
 
 - (void)configureContent {

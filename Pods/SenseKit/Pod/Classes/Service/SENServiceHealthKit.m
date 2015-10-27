@@ -169,7 +169,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
     // last night
-    NSCalendarUnit unitsWeCareAbout = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
+    NSCalendarUnit unitsWeCareAbout = NSCalendarUnitYear |NSCalendarUnitMonth | NSCalendarUnitDay;
     NSDateComponents* todayComponents = [calendar components:unitsWeCareAbout fromDate:[NSDate date]];
     NSDate* today = [calendar dateFromComponents:todayComponents];
     
@@ -220,7 +220,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                        until:(NSDate*)endDate
                 withCalendar:(NSCalendar*)calendar
                   completion:(void(^)(NSArray* timelines, NSError* error))completion {
-    NSCalendarUnit unitsWeCareAbout = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
+    NSCalendarUnit unitsWeCareAbout = NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay;
     NSDate* nextStartDate = startDate;
     NSDateComponents* components = nil;
     

@@ -51,7 +51,7 @@ static NSString* const SENTimelineDateFormat = @"yyyy-MM-dd";
         return nil;
 
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents* components = [calendar components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit)
+    NSDateComponents* components = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear)
                                                fromDate:date];
     return [NSString stringWithFormat:SENTimelineRetrievalKeyFormat, (long)components.day, (long)components.month, (long)components.year];
 }

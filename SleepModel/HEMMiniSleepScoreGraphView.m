@@ -30,11 +30,10 @@ CGFloat const miniScoreBaseHeight = 72.f;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
     UIColor* sleepScoreOvalColor = [UIColor colorWithRed: 0.898 green: 0.898 blue: 0.898 alpha: 1];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.alertSensorColor : (sleepScore < 80 ? HelloStyleKit.warningSensorColor : HelloStyleKit.idealSensorColor)) : sleepScoreNoValueColor;
+    UIColor* sleepScoreColor = [UIColor colorForSleepScore:sleepScore];
     CGFloat graphPercentageAngle = MAX(MIN(sleepScore > 0 ? (sleepScore < 100 ? 400 - sleepScore * 0.01 * 300 : 0.01) : 0.01, 359), 102);
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (long)round(sleepScore)] : @"100") : @"";
     CGFloat sleepScoreTextSize = sleepScoreHeight / 2.0;

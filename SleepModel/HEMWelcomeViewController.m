@@ -294,9 +294,21 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSUInteger currentPage = [[self contentPageControl] currentPage] + 1; // we want page, not index
-    NSDictionary* props = @{HEMAnalyticsEventPropScreen : @(currentPage)};
+    CGFloat offsetX = [scrollView contentOffset].x;
+    NSUInteger currentPage = [[self contentPageControl] currentPage];
+    NSUInteger currentIndex = currentPage + 1; // we want page, not index
+    NSDictionary* props = @{HEMAnalyticsEventPropScreen : @(currentIndex)};
     [SENAnalytics track:HEMAnalyticsEventWelcomeIntroSwipe properties:props];
+    
+    if (offsetX >= 0.0f) {
+        if (currentPage == HEMWelcomeIntroPageSmartAlarm) {
+            [self updateActionButtonLayoutWithPercentage:currentPage];
+        } else if (currentPage == HEMWelcomePageMeetSense) {
+            [self updateActionButtonLayoutWithPercentage:currentPage];
+            [[self introSecondImageView] setImage:nil];
+            [[self introImageView] setAlpha:currentPage];
+        }
+    }
 }
 
 #pragma mark - Segues

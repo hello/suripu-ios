@@ -219,14 +219,14 @@
                                         </connections>
                                     </button>
                                     <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PpU-TR-DnJ">
-                                        <rect key="frame" x="300" y="16" width="1" height="24"/>
+                                        <rect key="frame" x="299" y="16" width="1" height="24"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="Fn7-WD-qdP"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvA-Nn-Uap">
-                                        <rect key="frame" x="302" y="0.0" width="298" height="56"/>
+                                        <rect key="frame" x="301" y="0.0" width="299" height="56"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
                                         <state key="normal" title="GET STARTED">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -240,7 +240,7 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="N7h-8T-8md" secondAttribute="bottom" id="Avh-dp-Wq0"/>
                                     <constraint firstItem="N7h-8T-8md" firstAttribute="top" secondItem="WGy-A8-W4g" secondAttribute="top" id="Dw7-ZK-FLj"/>
-                                    <constraint firstItem="PpU-TR-DnJ" firstAttribute="leading" secondItem="N7h-8T-8md" secondAttribute="trailing" constant="2" id="G3R-z6-hNt"/>
+                                    <constraint firstItem="PpU-TR-DnJ" firstAttribute="leading" secondItem="N7h-8T-8md" secondAttribute="trailing" constant="1" id="G3R-z6-hNt"/>
                                     <constraint firstItem="JvA-Nn-Uap" firstAttribute="leading" secondItem="PpU-TR-DnJ" secondAttribute="leading" constant="2" id="Jbo-sd-Icj"/>
                                     <constraint firstAttribute="bottom" secondItem="PpU-TR-DnJ" secondAttribute="bottom" constant="16" id="QVl-3q-fy1"/>
                                     <constraint firstItem="N7h-8T-8md" firstAttribute="leading" secondItem="WGy-A8-W4g" secondAttribute="leading" id="VAx-1y-FHc"/>

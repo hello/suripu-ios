@@ -187,18 +187,33 @@ typedef NS_ENUM(NSInteger, HEMSenseWarning) {
 - (void)checkWiFiConnectivity {
     if (![self hasCheckedConnectivity]) {
         [self setCheckingConnectivity:YES];
+        
         __weak typeof(self) weakSelf = self;
-        SENServiceDevice* service = [SENServiceDevice sharedService];
-        [service getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus *status, NSError *error) {
+        
+        void (^finishChecking)(void) = ^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error) {
-                [SENAnalytics trackError:error];
-            }
-            [strongSelf setWiFiStatus:status];
-            [strongSelf setCheckedConnectivity:YES];
             [strongSelf setCheckingConnectivity:NO];
+            [strongSelf setCheckedConnectivity:YES];
             [strongSelf determineWarnings];
             [[strongSelf collectionView] reloadData];
+        };
+        
+        [SENSenseManager whenBleStateAvailable:^(BOOL on) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (!on) {
+                finishChecking();
+                return;
+            }
+            
+            SENServiceDevice* service = [SENServiceDevice sharedService];
+            [service getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus *status, NSError *error) {
+                if (error) {
+                    [SENAnalytics trackError:error];
+                }
+                [strongSelf setWiFiStatus:status];
+                finishChecking();
+            }];
+            
         }];
     }
 }

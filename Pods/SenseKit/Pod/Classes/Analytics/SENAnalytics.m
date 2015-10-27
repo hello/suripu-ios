@@ -88,18 +88,4 @@ static NSMutableDictionary* providers;
     }];
 }
 
-+ (void)startEvent:(NSString *)eventName {
-    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
-        if ([provider respondsToSelector:@selector(startEvent:)])
-            [provider startEvent:eventName];
-    }];
-}
-
-+ (void)endEvent:(NSString *)eventName {
-    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
-        if ([provider respondsToSelector:@selector(endEvent:)])
-            [provider endEvent:eventName];
-    }];
-}
-
 @end

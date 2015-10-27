@@ -133,7 +133,7 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
 {
     NSString* calendarId = NSCalendarIdentifierGregorian;
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:calendarId];
-    NSCalendarUnit flags = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+    NSCalendarUnit flags = (NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear);
     NSDateComponents* components = [calendar components:flags fromDate:date];
     return [NSString stringWithFormat:SENAPITimelineEndpointFormat,
             (long)components.year, (long)components.month, (long)components.day];

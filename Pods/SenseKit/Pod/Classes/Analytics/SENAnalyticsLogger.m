@@ -5,7 +5,6 @@
 
 @interface SENAnalyticsLogger()
 
-@property (nonatomic, strong) NSMutableDictionary* timedEvents;
 @property (nonatomic, strong) NSMutableDictionary* globalProperties;
 
 @end
@@ -17,7 +16,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (id)init {
     self = [super init];
     if (self) {
-        [self setTimedEvents:[NSMutableDictionary dictionary]];
         [self setGlobalEventProperties:[NSMutableDictionary dictionary]];
     }
     return self;
@@ -58,20 +56,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)logEvent:(NSString*)name withProperties:(NSDictionary*)properties {
     DDLogVerbose(@"[%@] : %@", name, properties ?: @"");
-}
-
-- (void)startEvent:(NSString *)eventName {
-    [[self timedEvents] setValue:[NSDate date] forKey:eventName];
-}
-
-- (void)endEvent:(NSString *)eventName {
-    NSDate* startTime = [[self timedEvents] valueForKey:eventName];
-    if (startTime != nil) {
-        NSTimeInterval elapsed = fabs([startTime timeIntervalSinceNow]);
-        NSString* event = [NSString stringWithFormat:@"%@ took %0.2f", eventName, elapsed];
-        [self logEvent:event withProperties:nil];
-        [[self timedEvents] removeObjectForKey:eventName];
-    }
 }
 
 @end

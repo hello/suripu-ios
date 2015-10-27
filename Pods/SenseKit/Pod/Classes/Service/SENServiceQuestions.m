@@ -82,7 +82,7 @@ static NSString* const SENServiceQuestionsErrorDomain = @"is.hello.service.quest
     dispatch_once(&onceToken, ^{
         calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     });
-    unsigned flags = NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+    unsigned flags = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear;
     NSDateComponents* now = [calendar components:flags fromDate:[NSDate date]];
     [now setCalendar:calendar];
     return [now date];

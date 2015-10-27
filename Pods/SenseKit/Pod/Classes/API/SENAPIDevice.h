@@ -11,11 +11,11 @@
 #import "SENAPIClient.h"
 
 typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
-    SENAPIDeviceErrorInvalidParam = -1,
-    SENAPIDeviceErrorUnexpectedResponse = -2
+    SENAPIDeviceErrorInvalidParam = -1
 };
 
-@class SENDevice;
+@class SENPillMetadata;
+@class SENSenseMetadata;
 
 @interface SENAPIDevice : NSObject
 
@@ -25,53 +25,44 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
  *
  * @param completion: the completion block to invoke when request returns
  */
-+ (void)getPairedDevices:(SENAPIDataBlock)completion;
++ (void)getPairedDevices:(nonnull SENAPIDataBlock)completion;
+
+/**
+ * Get pairing information for the currently paired Sense for the signed in user
+ *
+ * @param completion: the block to invoke upon completion
+ */
++ (void)getPairingInfo:(nonnull SENAPIDataBlock)completion;
 
 /**
  * Unregister the pill from the currently signed in account (must be authorized).
  *
- * @param device: the pill to unregister
+ * @param pillMetadata: the metadata for the pill to unregister
  * @param completion: the completion block to invoke when done
  */
-+ (void)unregisterPill:(SENDevice*)device completion:(SENAPIDataBlock)completion;
++ (void)unregisterPill:(nonnull SENPillMetadata*)pillMetadata
+            completion:(nonnull SENAPIDataBlock)completion;
 
 /**
  * Unregister Sense from the currently signed in account (must be authorized).
  *
- * @param device: the sense to unregister
+ * @param senseMetadata: the metadata for the sense to unregister
  * @param completion: the completion block to invoke when done
  */
-+ (void)unregisterSense:(SENDevice*)device completion:(SENAPIDataBlock)completion;
++ (void)unregisterSense:(nonnull SENSenseMetadata*)senseMetadata
+             completion:(nonnull SENAPIDataBlock)completion;
 
 /**
- * Get metadata for the currently paired Sense for the signed in user
- *
- * @param completion: the block to invoke upon completion
- */
-+ (void)getSenseMetaData:(SENAPIDataBlock)completion;
-
-/**
- * Get the number of paired accounts for the specified senseId.  The response will
- * contain a NSNumber with an integer value indicating the number of paired accounts
- * for that Sense.  If an error is encountered at any point, that value is nil
- *
- * @param deviceId: the id of Sense
- * @param completion: the block to invoke upon completion.
- * @see getSenseMetadata
- */
-+ (void)getNumberOfAccountsForPairedSense:(NSString*)deviceId completion:(SENAPIDataBlock)completion;
-
-/**
- * Remove associations to Sense represented by the SENDevice object.  The object
- * must be of type SENDeviceTypeSense and contain a device id.
+ * Remove associations to Sense represented by the SENSenseMetadata object.
  *
  * The associations removed include any accounts currently paired to the specified
  * sense, pills attached to those accounts, as well as any alarms attached to those 
  * accounts.
  *
- * @param sense:      the device info object representing Sense
- * @param completion: the block to invoke upon completion.
+ * @param senseMetadata: the sense metadata object representing Sense
+ * @param completion:    the block to invoke upon completion.
  */
-+ (void)removeAssociationsToSense:(SENDevice*)sense completion:(SENAPIDataBlock)completion;
++ (void)removeAssociationsToSense:(nonnull SENSenseMetadata*)senseMetadata
+                       completion:(nonnull SENAPIDataBlock)completion;
 
 @end

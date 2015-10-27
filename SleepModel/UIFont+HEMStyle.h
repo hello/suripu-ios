@@ -315,6 +315,42 @@
 #pragma mark - Onboarding
 
 /**
+ * Font used for the title on the very first screen shown when user has not been
+ * authenticated
+ */
++ (UIFont*)welcomeTitleFont;
+
+/**
+ * Font used for the description on the very first screen shown when user has not
+ * been authenticated
+ */
++ (UIFont*)welcomeDescriptionFont;
+
+/**
+ * Font used for the video button on the very first screen shown when user has not
+ * been authenticated
+ */
++ (UIFont*)welcomeVideoButtonFont;
+
+/**
+ * Font used for the buttons on the very first screen shown when user has not
+ * been authenticated
+ */
++ (UIFont*)welcomeButtonFont;
+
+/**
+ * Font used for the title of the intro sections on the very first screen shown
+ * when user has not been authenticated
+ */
++ (UIFont*)welcomeIntroTitleFont;
+
+/**
+ * Font used for the description of the intro sections on the very first screen shown
+ * when user has not been authenticated
+ */
++ (UIFont*)welcomeIntroDescriptionFont;
+
+/**
  * Font used for the light, checking ..., message in room check
  */
 + (UIFont*)onboardingRoomCheckSensorLightFont;

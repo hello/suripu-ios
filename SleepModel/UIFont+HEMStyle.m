@@ -17,6 +17,10 @@ static NSString* const HEMFontFamilyNameLight = @"Avenir-Light";
 static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
 static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
 static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
+static NSString* const HEMFontFamilyNameModernUltraLight = @"AvenirNext-UltraLight";
+static NSString* const HEMFontFamilyNameModernRegular = @"AvenirNext-Regular";
+static NSString* const HEMFontFamilyNameModernMedium = @"AvenirNext-Medium";
+
 static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
 static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
 static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
@@ -283,12 +287,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)primaryButtonFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:15.0f];
 }
 
 + (UIFont*)secondaryButtonFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
 
 + (UIFont*)alertBoldButtonFont
@@ -378,6 +382,36 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 #pragma mark - Onboarding
 
++ (UIFont*)welcomeTitleFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernUltraLight size:40.0f];
+}
+
++ (UIFont*)welcomeDescriptionFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:15.0f];
+}
+
++ (UIFont*)welcomeVideoButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:13.0f];
+}
+
++ (UIFont*)welcomeButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
+}
+
++ (UIFont*)welcomeIntroTitleFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:20.0f];
+}
+
++ (UIFont*)welcomeIntroDescriptionFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:15.0f];
+}
+
 + (UIFont*)onboardingActivityFontLarge
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
@@ -405,27 +439,27 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)onboardingTitleFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:24.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:20.0f];
 }
 
 + (UIFont*)onboardingTitleLargeFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:32.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:28.0f];
 }
 
 + (UIFont*)onboardingDescriptionFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.0f];
 }
 
 + (UIFont*)onboardingDescriptionLargeFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:17.0f];
 }
 
 + (UIFont*)onboardingDescriptionBoldFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.0f];
 }
 
 + (UIFont*)onboardingRoomCheckSensorLightFont {

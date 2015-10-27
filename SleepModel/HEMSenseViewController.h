@@ -24,16 +24,6 @@
 
 @interface HEMSenseViewController : HEMBaseController
 
-/**
- * @property warnings:
- *
- * @discussion
- * An ordered set of HEMDeviceWarning NSNumber values that should be displayed
- *
- * @see HEMDeviceDataSource for the possible warning types
- */
-@property (copy, nonatomic) NSOrderedSet* warnings;
-
 @property (nonatomic, weak) id<HEMSenseControllerDelegate> delegate;
 
 @end

@@ -1,6 +1,56 @@
 # Changelog
 
-## 1.1.5.8
+## 1.1.6.3
+
+Fixes:
+
+* Updated the intro / welcome screen per feedback
+* Fixed issue with first day of timeline history not scrolled to the proper
+  position
+* Fixed issue with inconsistencies between sleep score color and the graph / line
+* Fixed issue where swiping fast on initial / welcome screen may cause buttons
+  to not be properly laid out
+* Added SSL exception for s3 aws buckets to fix insight image loading problems
+
+## 1.1.6.2
+
+New:
+
+* Updated to v2 Devices API to obtain SSID from server instead of through Sense
+* Moved the connection with Sense in settings in to Sense settings rather than
+  from the device settings screen
+* Using server localized messages for timeline feedback instead of client side
+  generic error messages when updating timeline events fail
+
+Fixes:
+
+* When pill is not paired, sense pairing is not also disabled on iphone 5 and 4s
+
+## 1.1.6.1
+
+New:
+
+* Improved disabled state of Sleep Pill settings when Sense not paired
+* Trends welcome tutorial shows even when no data is availale to match text
+* updated assets in pair sense onboarding screen
+* updated light disturbance asset
+* added analytics for new intro screen
+* increased tap target on Timeline top bar buttons
+
+Fixes:
+
+* sense pair button in device settings will no longer be accidentally disabled
+* back button (should be cancel) for modal device screens work again
+* fixed trends graph view not being clipped behind border
+* fixed copy where periods are missing
+
+## 1.1.6.0
+
+New:
+
+* Updated logged out state experience with new intro screen
+
+## 1.1.5.9
 
 Fixes:
 

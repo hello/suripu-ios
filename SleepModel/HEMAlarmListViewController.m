@@ -161,7 +161,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)checkDeviceInfoForSenseAndRefresh {
     SENServiceDevice *service = [SENServiceDevice sharedService];
-    BOOL hasSense = [service senseInfo] != nil;
+    BOOL hasSense = [[service devices] hasPairedSense];
     if (hasSense) {
         self.noSense = NO;
         [self refreshAlarmList];

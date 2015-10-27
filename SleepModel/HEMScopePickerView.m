@@ -28,6 +28,7 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
     self.selectionView = [UIView new];
     self.selectionView.backgroundColor = [UIColor tintColor];
     [self addSubview:self.selectionView];
+    [self setBackgroundColor:[UIColor clearColor]];
 }
 
 - (CGSize)intrinsicContentSize

@@ -44,6 +44,11 @@ NSString* const kHEManaltyicsEventStatusNotSupported = @"not supported";
 
 // onboarding
 //
+// welcome
+//
+NSString* const HEMAnalyticsEventWelcomeIntroSwipe = @"Onboarding intro swiped";
+NSString* const HEMAnalyticsEventPropScreen = @"screen";
+//
 // Some events fire outside of onboarding b/c the controllers are reused.
 // If the event is fired during onboarding, make sure HEMAnalyticsEventOnboardingPrefix
 // is added to the event name.

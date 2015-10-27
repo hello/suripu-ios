@@ -39,6 +39,8 @@ extern NSString* const kHEManaltyicsEventStatusDisabled;
 extern NSString* const kHEManaltyicsEventStatusNotSupported;
 
 // onboarding
+extern NSString* const HEMAnalyticsEventWelcomeIntroSwipe;
+extern NSString* const HEMAnalyticsEventPropScreen;
 extern NSString* const HEMAnalyticsEventOnboardingPrefix;
 extern NSString* const kHEMAnalyticsEventOnBNoSense;
 extern NSString* const kHEMAnalyticsEventOnBHelp;

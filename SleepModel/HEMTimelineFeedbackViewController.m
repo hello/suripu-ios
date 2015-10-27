@@ -91,8 +91,10 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
             [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                 [[strongSelf cancelButton] setEnabled:YES];
                 [sender setEnabled:YES];
+                
+                NSString* errorMessage = [error localizedDescription] ?: NSLocalizedString(@"sleep-event.feedback.failed.message", nil);
                 [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
-                                                        message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
+                                                        message:errorMessage
                                                      controller:strongSelf];
                 NSDictionary* userInfo = @{NSLocalizedDescriptionKey : HEMAnalyticsEventTimelineAdjustTimeFailed};
                 [SENAnalytics trackError:[NSError errorWithDomain:[error domain]

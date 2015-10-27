@@ -12,11 +12,12 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CU2-Jf-IpR" userLabel="drawer button">
-                    <rect key="frame" x="10" y="12" width="40" height="40"/>
+                    <rect key="frame" x="10" y="12" width="60" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="F86-wH-KZZ"/>
-                        <constraint firstAttribute="width" constant="40" id="jW5-Oh-6oW"/>
+                        <constraint firstAttribute="width" constant="60" id="jW5-Oh-6oW"/>
                     </constraints>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
                     <state key="normal" image="Menu">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -42,12 +43,13 @@
                     </state>
                 </button>
                 <button opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VMg-mK-NnC" userLabel="share button">
-                    <rect key="frame" x="550" y="12" width="40" height="40"/>
+                    <rect key="frame" x="530" y="12" width="60" height="40"/>
                     <accessibility key="accessibilityConfiguration" hint="Double tap to share your sleep score" label="Share"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="40" id="H7Z-nl-wSu"/>
+                        <constraint firstAttribute="width" constant="60" id="H7Z-nl-wSu"/>
                         <constraint firstAttribute="height" constant="40" id="fnw-8A-wZf"/>
                     </constraints>
+                    <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" image="Share.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>

@@ -17,6 +17,7 @@
 #import "HEMIntroDescriptionView.h"
 #import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
+#import "HEMModalTransitionDelegate.h"
 
 typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomePageMeetSense = 0,
@@ -47,6 +48,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 @property (assign, nonatomic) CGFloat origLogInTrailingConstraintConstant;
 @property (weak, nonatomic) UIImageView* currentIntroImageView;
 @property (weak, nonatomic) UIImageView* nextIntroImageView;
+@property (strong, nonatomic) HEMModalTransitionDelegate* transitionDelegate;
 
 @end
 
@@ -59,12 +61,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self hideStatusBar:YES];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self hideStatusBar:![self presentedViewController]];
+    [self hideStatusBar];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -78,13 +75,9 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     [self updateConstraint:[self introImageHeightConstraint] withDiff:-48.0f];
 }
 
-- (void)hideStatusBar:(BOOL)hide {
+- (void)hideStatusBar {
     HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    if (hide) {
-        [root hideStatusBar];
-    } else {
-        [root showStatusBar];
-    }
+    [root hideStatusBar];
 }
 
 - (void)configureAppearance {
@@ -103,6 +96,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 }
 
 - (void)configureContent {
+    [[self contentPageControl] setUserInteractionEnabled:NO];
     [[self introImageView] setAlpha:0.0f];
     
     CGRect contentBounds = [[self contentScrollView] bounds];
@@ -250,7 +244,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     CGFloat halfWidth = CGRectGetWidth([[self view] bounds]) / 2.0f;
     CGFloat hiddenConstant = halfWidth + (2 * [self origLogInTrailingConstraintConstant]);
     [[self logInButtonTrailingConstraint] setConstant:percentage * hiddenConstant];
-    
+
     // change the alpha of the button elements
     CGFloat separatorAlpha = HEMWelcomeButtonSeparatorMaxOpacity - (HEMWelcomeButtonSeparatorMaxOpacity* percentage);
     [[self buttonSeparatorView] setAlpha:separatorAlpha];
@@ -303,6 +297,19 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     NSUInteger currentPage = [[self contentPageControl] currentPage] + 1; // we want page, not index
     NSDictionary* props = @{HEMAnalyticsEventPropScreen : @(currentPage)};
     [SENAnalytics track:HEMAnalyticsEventWelcomeIntroSwipe properties:props];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if (![self transitionDelegate]) {
+        HEMModalTransitionDelegate* delegate = [HEMModalTransitionDelegate new];
+        [delegate setWantsStatusBar:YES];
+        [self setTransitionDelegate:delegate];
+    }
+    UIViewController* destVC = [segue destinationViewController];
+    [destVC setModalPresentationStyle:UIModalPresentationCustom];
+    [destVC setTransitioningDelegate:[self transitionDelegate]];
 }
 
 @end

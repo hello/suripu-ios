@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.6.3
+
+Fixes:
+
+* Updated the intro / welcome screen per feedback
+* Fixed issue with first day of timeline history not scrolled to the proper
+  position
+* Fixed issue with inconsistencies between sleep score color and the graph / line
+* Fixed issue where swiping fast on initial / welcome screen may cause buttons
+  to not be properly laid out
+* Added SSL exception for s3 aws buckets to fix insight image loading problems
+
 ## 1.1.6.2
 
 New:

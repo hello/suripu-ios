@@ -540,7 +540,7 @@ Fixes:
 
 Fixes:
 
-* 
+*
 
 ## 1.1.0.1
 
@@ -630,7 +630,7 @@ Fixes:
 
 Fixes:
 
-* Fixes issue where you cannot swipe left when there no data 
+* Fixes issue where you cannot swipe left when there no data
 
 ## 1.0.8.7
 

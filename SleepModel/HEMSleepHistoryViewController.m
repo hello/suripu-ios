@@ -127,9 +127,13 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     NSInteger index = components.day + 1;
     NSInteger item = MIN(index, [self collectionView:self.historyCollectionView numberOfItemsInSection:0] - 1);
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:0];
-    [self.historyCollectionView scrollToItemAtIndexPath:indexPath
-                                       atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                               animated:animated];
+    if (index == 1) {
+        [self.historyCollectionView setContentOffset:CGPointMake(10.0f, 0.0f) animated:YES];
+    } else {
+        [self.historyCollectionView scrollToItemAtIndexPath:indexPath
+                                           atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                                   animated:animated];
+    }
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, [self.historyCollectionView cellForItemAtIndexPath:indexPath]);
 }
 
@@ -229,9 +233,13 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     if ([indexPath isEqual:centeredIndexPath]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
-        [collectionView scrollToItemAtIndexPath:indexPath
-                               atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                       animated:YES];
+        if ([indexPath item] == 1) {
+            [collectionView setContentOffset:CGPointMake(10.0f, 0.0f) animated:YES];
+        } else {
+            [collectionView scrollToItemAtIndexPath:indexPath
+                                   atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                           animated:YES];
+        }
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -262,6 +270,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset
 {
+    DDLogVerbose(@"target content offset %f", targetContentOffset->x);
     UICollectionViewLayout* layout = self.historyCollectionView.collectionViewLayout;
     CGRect rect = CGRectMake((*targetContentOffset).x, 0, 10, CGRectGetHeight(self.historyCollectionView.bounds));
     UICollectionViewLayoutAttributes *attribute = [[layout layoutAttributesForElementsInRect:rect] firstObject];

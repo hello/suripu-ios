@@ -46,6 +46,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 @property (weak, nonatomic) IBOutlet UIButton *notGlowingButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseIconHeightConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (strong, nonatomic) SENSenseManager* senseManager;
@@ -81,7 +82,8 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
+    [self updateConstraint:[self descriptionTopConstraint] withDiff:10.0f];
+    [self updateConstraint:[self senseIconHeightConstraint] withDiff:40.0f];
 }
 
 - (void)disconnectSense {
@@ -339,9 +341,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
             pairState = HEMSensePairStateWiFiDetected;
             [strongSelf setDetectedSSID:ssid];
         }
-        if ([ssid length] > 0) {
-            [[HEMOnboardingService sharedService] saveConfiguredSSID:ssid];
-        }
+
         DDLogVerbose(@"wifi %@ with status %@", ssid, status);
         [strongSelf setCurrentState:pairState];
         [strongSelf executeNextStep];

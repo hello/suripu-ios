@@ -185,7 +185,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (void)checkDeviceInfoForSenseAndRefresh {
     SENServiceDevice *service = [SENServiceDevice sharedService];
-    self.noSense = service.senseInfo == nil;
+    self.noSense = ![[service devices] hasPairedSense];
     if ([self hasNoSense]) {
         self.loading = NO;
         self.sensors = nil;

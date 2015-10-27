@@ -4,9 +4,16 @@
 "question-mark" = "?";
 
 // welcome
-"welcome.title.meet-sense" = "Meet Sense";
-"welcome.title.welcome" = "Welcome";
-"welcome.subtitle" = "A simple system that tracks your sleep, monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
+"welcome.title" = "Meet Sense";
+"welcome.description" = "Wake up feeling great, improve your sleep, and learn how the environment of your bedroom affects your rest.";
+"welcome.intro.title.alarm" = "Smart Alarm";
+"welcome.intro.desc.alarm" = "Unlike a normal alarm, Sense's Smart Alarm analyzes your sleep cycle to know when you're sleeping lightly, and wakes you up at the optimal time to start your day off right.";
+"welcome.intro.title.timeline" = "Sleep Timeline";
+"welcome.intro.desc.timeline" = "Your Sleep Timeline shows you a detailed analysis of your sleep cycles and helps you see how even minor interruptions to your sleep, like tossing and turning, can impact the quality of your rest.";
+"welcome.intro.title.sleep-score" = "Sleep Score";
+"welcome.intro.desc.sleep-score" = "Get instant feedback on your sleep and see how the quality of your sleep fluctuates over time. Make adjustments to your bedroom environment and sleep habits, get better sleep, and raise your Sleep Score.";
+"welcome.intro.title.current-conditions" = "Current Conditions";
+"welcome.intro.desc.current-conditions" = "Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
 
 // onboarding
 "sign-up.activity.message" = "Creating your account";
@@ -220,8 +227,8 @@
 // colors
 "color.blue" = "Blue";
 "color.red" = "Red";
-"color.black" = "Black";
-"color.white" = "White";
+"color.charcoal" = "Charcoal";
+"color.cotton" = "Cotton";
 
 // device management
 "settings.device.sense" = "Sense";
@@ -232,7 +239,6 @@
 "settings.device.color" = "Color";
 "settings.device.battery.good" = "Good";
 "settings.device.battery.low" = "Low";
-"settings.device.network.disconnected" = "Unable to connect";
 "settings.device.no-sense" = "You don't currently have a Sense connected to your account.";
 "settings.device.no-pill" = "You don't currently have a Sleep Pill connected to your account.";
 "settings.device.button.title.pair-sense" = "PAIR WITH SENSE";
@@ -281,6 +287,7 @@
 "settings.sense.warning.cannont-connect-wifi" = "cannot connect to WiFi";
 "settings.sense.warning.not-connected-sense" = "Could not connect with Sense over Bluetooth. Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot.\n\nSome actions below are disabled.";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
+"settings.sense.connecting" = "Checking connectivity";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
 "settings.device.dialog.factory-restore-message" = "This will disconnect your account from this Sense, as well as any Sleep Pills you have paired. You will need to pair with another Sense to continue using the application. You should only perform a factory reset if instructed to do so by Support. This operation cannot be undone.";

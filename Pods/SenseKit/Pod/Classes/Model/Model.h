@@ -3,7 +3,6 @@
 #import "SENAccount.h"
 #import "SENAlarm.h"
 #import "SENAnswer.h"
-#import "SENDevice.h"
 #import "SENInsight.h"
 #import "SENQuestion.h"
 #import "SENSense.h"
@@ -16,6 +15,10 @@
 #import "SENSupportTopic.h"
 #import "SENAppStats.h"
 #import "SENAppUnreadStats.h"
+#import "SENPairedDevices.h"
+#import "SENSenseMetadata.h"
+#import "SENPillMetadata.h"
+#import "SENDevicePairingInfo.h"
 
 void SENClearModel();
 

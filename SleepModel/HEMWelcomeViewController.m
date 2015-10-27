@@ -6,44 +6,49 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 #import <MediaPlayer/MPMoviePlayerViewController.h>
-#import "UIView+HEMMotionEffects.h"
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+
 #import "HEMWelcomeViewController.h"
-#import "HEMActionButton.h"
-#import "HEMAnimationUtils.h"
 #import "HEMSignUpViewController.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMSupportUtil.h"
+#import "HEMMeetSenseView.h"
+#import "HEMIntroDescriptionView.h"
+#import "HEMRootViewController.h"
+#import "HEMScreenUtils.h"
+#import "HEMModalTransitionDelegate.h"
 
-static CGFloat const kHEMWelcomeMotionEffectBorder = 10.0f;
-static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;
-static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
+typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
+    HEMWelcomePageMeetSense = 0,
+    HEMWelcomeIntroPageSmartAlarm = 1,
+    HEMWelcomeIntroPageMeetTimeline = 2,
+    HEMWelcomeIntroPageMeetSleepScore = 3,
+    HEMWelcomeIntroPageMeetCurrentConditions = 4
+};
 
-@interface HEMWelcomeViewController ()
+static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
-@property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet HEMActionButton *signupButton;
-@property (weak, nonatomic) IBOutlet UIButton *signinButton;
-@property (weak, nonatomic) IBOutlet HEMActionButton *getStartedButton;
-@property (weak, nonatomic) IBOutlet UIButton *noSenseButton;
-@property (weak, nonatomic) IBOutlet UIButton *cancelGetStartedButton;
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@interface HEMWelcomeViewController () <UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getStartedLeadingConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getStartedTrailingConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *noSenseCenterXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginCenterXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupCenterXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelCenterXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *playCenterYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgCenterXConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *introImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *introSecondImageView;
+@property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
+@property (weak, nonatomic) IBOutlet UIPageControl *contentPageControl;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
+@property (weak, nonatomic) IBOutlet UIButton *logInButton;
+@property (weak, nonatomic) IBOutlet UIView *buttonSeparatorView;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logInButtonTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageControlBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *introImageHeightConstraint;
 
-@property (assign, nonatomic) CGFloat origGetStartedLeadingConstant;
-@property (assign, nonatomic) CGFloat origGetStartedTrailingConstant;
+@property (weak, nonatomic) HEMMeetSenseView* meetSenseView;
+@property (assign, nonatomic) CGFloat previousScrollOffsetX;
+@property (assign, nonatomic) CGFloat origLogInTrailingConstraintConstant;
+@property (weak, nonatomic) UIImageView* currentIntroImageView;
+@property (weak, nonatomic) UIImageView* nextIntroImageView;
+@property (strong, nonatomic) HEMModalTransitionDelegate* transitionDelegate;
 
 @end
 
@@ -51,255 +56,142 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureAppearance];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self hideStatusBar];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (![self meetSenseView]) {
+        [self configureContent];
+    }
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self introImageHeightConstraint] withDiff:-48.0f];
+}
+
+- (void)hideStatusBar {
+    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+    [root hideStatusBar];
+}
+
+- (void)configureAppearance {
+    // controller is launched in to a container controller that is styled and
+    // always shows a left bar button, which we don't want
     [[self navigationItem] setLeftBarButtonItem:nil];
     
-    [self configureTitle];
-    [self configureSubtitle];
-    [self configureButtonStyles];
-    [self configureDefaultConstraints];
- 
-    [[self bgImageView] add3DEffectWithBorder:kHEMWelcomeMotionEffectBorder];
+    [[[self logInButton] titleLabel] setFont:[UIFont welcomeButtonFont]];
+    [[self logInButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [[[self signUpButton] titleLabel] setFont:[UIFont welcomeButtonFont]];
+    [[self signUpButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [self setOrigLogInTrailingConstraintConstant:[[self logInButtonTrailingConstraint] constant]];
+    
+    [[self buttonSeparatorView] setAlpha:HEMWelcomeButtonSeparatorMaxOpacity];
 }
 
-- (void)configureTitle {
-    [[self titleLabel] setTextColor:[UIColor whiteColor]];
-    [[self titleLabel] setFont:[UIFont onboardingTitleLargeFont]];
-}
-
-- (void)configureDefaultConstraints {
-    CGFloat width = CGRectGetWidth([[self view] bounds]);
-    [[self loginCenterXConstraint] setConstant:-width];
-    [[self signupCenterXConstraint] setConstant:-width];
-    [[self cancelCenterXConstraint] setConstant:-width];
+- (void)configureContent {
+    [[self contentPageControl] setUserInteractionEnabled:NO];
+    [[self introImageView] setAlpha:0.0f];
     
-    [self setOrigGetStartedLeadingConstant:[[self getStartedLeadingConstraint] constant]];
-    [self setOrigGetStartedTrailingConstant:[[self getStartedTrailingConstraint] constant]];
-}
-
-- (void)configureButtonStyles {
-    CGFloat borderWidth = 2.0f;
-    UIColor* bgColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
-    UIColor* whiteColor = [UIColor whiteColor];
-    CGColorRef white = [whiteColor CGColor];
+    CGRect contentBounds = [[self contentScrollView] bounds];
     
-    [[self getStartedButton] setBackgroundColor:bgColor];
-    [[self getStartedButton] setTitleColor:whiteColor forState:UIControlStateNormal];
+    // initial page / screen in the content
+    HEMMeetSenseView* meetSense = [HEMMeetSenseView createMeetSenseViewWithFrame:contentBounds];
+    [[meetSense videoButton] setTitleColor:[UIColor welcomeVideoButtonColor] forState:UIControlStateNormal];
+    [[meetSense videoButton] addTarget:self
+                                action:@selector(playVideo:)
+                      forControlEvents:UIControlEventTouchUpInside];
+    [self setMeetSenseView:meetSense];
     
-    [[self signinButton] setTitleColor:whiteColor forState:UIControlStateNormal];
-    [[self signinButton] setBackgroundColor:bgColor];
+    // add all the content screens
+    CGSize contentSize = [[self contentScrollView] contentSize];
+    contentSize.width += CGRectGetWidth([meetSense bounds]);
     
-    [[self signupButton] setTitleColor:whiteColor forState:UIControlStateNormal];
-    [[self signupButton] setBackgroundColor:bgColor];
-    
-    [[[self getStartedButton] layer] setBorderWidth:borderWidth];
-    [[[self getStartedButton] layer] setBorderColor:white];
-    [[[self signinButton] layer] setBorderWidth:borderWidth];
-    [[[self signinButton] layer] setBorderColor:white];
-    [[[self signupButton] layer] setBorderColor:white];
-    [[[self signupButton] layer] setBorderWidth:borderWidth];
-    
-    [[[self noSenseButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[[self cancelGetStartedButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-}
-
-- (void)configureSubtitle {
-    NSString* text = NSLocalizedString(@"welcome.subtitle", nil);
-    
-    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
-    [attrText addAttributes:@{NSFontAttributeName : [UIFont onboardingDescriptionLargeFont],
-                              NSForegroundColorAttributeName : [UIColor whiteColor]}
-                      range:NSMakeRange(0, [attrText length])];
-    
-    [[self subtitleLabel] setAttributedText:attrText];
-}
-
-#pragma mark - Animations
-
-- (void)showGettingStartedActions:(NSNumber*)showValue {
-    BOOL show = [showValue boolValue];
-    CGFloat alpha = 0.0f;
-    CGFloat xConstant = -CGRectGetWidth([[self view] bounds]);
-    NSString* timingFunction = kCAMediaTimingFunctionEaseIn;
-    
-    if (show) {
-        timingFunction = kCAMediaTimingFunctionEaseOut;
-        alpha = 1.0f;
-        xConstant = 1.0f;
-        
-        [[self signinButton] setHidden:NO];
-        [[self signupButton] setHidden:NO];
-        [[self cancelGetStartedButton] setHidden:NO];
+    [[self contentScrollView] addSubview:meetSense];
+    for (NSUInteger i = HEMWelcomeIntroPageSmartAlarm; i <= HEMWelcomeIntroPageMeetCurrentConditions; i++) {
+        UIView* introView = [self introViewForPage:i];
+        [[self contentScrollView] addSubview:introView];
+        contentSize.width += CGRectGetWidth([introView bounds]);
     }
     
-    [HEMAnimationUtils transactAnimation:^{
-        // why not use CABasicAnimations here?  well it's because those do not
-        // work with autolayout constraints :(
-        [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
-                              delay:0.0f
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             [[self signinButton] setAlpha:alpha];
-                             [[self loginCenterXConstraint] setConstant:xConstant];
-                             [[self view] layoutIfNeeded];
-                         }
-                         completion:nil];
-        
-        [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
-                              delay:kHEMWelcomeButtonDelayIncrements
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             [[self signupButton] setAlpha:alpha];
-                             [[self signupCenterXConstraint] setConstant:xConstant];
-                             [[self view] layoutIfNeeded];
-                         }
-                         completion:nil];
-        
-        [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
-                              delay:kHEMWelcomeButtonDelayIncrements*2
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             [[self cancelGetStartedButton] setAlpha:alpha];
-                             [[self cancelCenterXConstraint] setConstant:xConstant];
-                             [[self view] layoutIfNeeded];
-                         }
-                         completion:nil];
-    } completion:^{
-        if (!show) {
-            [[self signinButton] setHidden:YES];
-            [[self signupButton] setHidden:YES];
-            [[self cancelGetStartedButton] setHidden:YES];
-        }
-    } timing:timingFunction];
+    [[self contentScrollView] setContentSize:contentSize];
+}
+
+- (UIView*)introViewForPage:(NSUInteger)page {
+    CGFloat bottomOfIntroImageView = CGRectGetHeight([[self introImageView] bounds]);
+    CGFloat contentFullHeight = CGRectGetHeight([[self contentScrollView] bounds]);
+    CGFloat contentFullWidth = CGRectGetWidth([[self contentScrollView] bounds]);
+    CGFloat viewHeight = contentFullHeight - bottomOfIntroImageView;
+    CGFloat viewXOrigin = contentFullWidth * page;
     
-    if (!show) {
-        [self performSelector:@selector(showInitialActions:)
-                   withObject:@(YES)
-                   afterDelay:kHEMWelcomeButtonDelayIncrements*2];
+    CGRect frame = CGRectZero;
+    frame.origin = CGPointMake(viewXOrigin, bottomOfIntroImageView);
+    frame.size = CGSizeMake(contentFullWidth, viewHeight);
+    
+    NSString* title = [self introTitleForPage:page];
+    NSString* desc = [self introDescriptionForPage:page];
+    return [HEMIntroDescriptionView createDescriptionViewWithFrame:frame
+                                                             title:title
+                                                    andDescription:desc];
+}
+
+- (UIImage*)introImageForPage:(NSUInteger)page {
+    switch (page) {
+        case HEMWelcomeIntroPageSmartAlarm:
+            return [UIImage imageNamed:@"introSmartAlarm"];
+        case HEMWelcomeIntroPageMeetTimeline:
+            return [UIImage imageNamed:@"introTimeline"];
+        case HEMWelcomeIntroPageMeetSleepScore:
+            return [UIImage imageNamed:@"introSleepScore"];
+        case HEMWelcomeIntroPageMeetCurrentConditions:
+            return [UIImage imageNamed:@"introConditions"];
+        case HEMWelcomePageMeetSense:
+        default:
+            return nil;
     }
 }
 
-- (void)updateTtitle:(NSString*)text alignment:(NSTextAlignment)alignment {
-    CGFloat halfDuration = kHEMWelcomeButtonAnimationDuration/2;
-    [UIView animateWithDuration:halfDuration
-                     animations:^{
-                         [[self titleLabel] setAlpha:0.0f];
-                     }
-                     completion:^(BOOL finished) {
-                         [[self titleLabel] setTextAlignment:alignment];
-                         [[self titleLabel] setText:text];
-                         [UIView animateWithDuration:halfDuration
-                                          animations:^{
-                                              [[self titleLabel] setAlpha:1.0f];
-                                          }];
-                     }];
+- (NSString*)introTitleForPage:(NSUInteger)page {
+    switch (page) {
+        case HEMWelcomeIntroPageSmartAlarm:
+            return NSLocalizedString(@"welcome.intro.title.alarm", nil);
+        case HEMWelcomeIntroPageMeetTimeline:
+            return NSLocalizedString(@"welcome.intro.title.timeline", nil);
+        case HEMWelcomeIntroPageMeetSleepScore:
+            return NSLocalizedString(@"welcome.intro.title.sleep-score", nil);
+        case HEMWelcomeIntroPageMeetCurrentConditions:
+            return NSLocalizedString(@"welcome.intro.title.current-conditions", nil);
+        case HEMWelcomePageMeetSense:
+        default:
+            return nil;
+    }
 }
 
-- (void)showInitialActions:(NSNumber*)showValue {
-    BOOL show = [showValue boolValue];
-    CGFloat width = CGRectGetWidth([[self view] bounds]);
-    CGFloat getStartedLeadConstant = -width + [self origGetStartedLeadingConstant];
-    CGFloat getStartedTrailConstant = width + [self origGetStartedTrailingConstant];
-    CGFloat noSenseConstant = width;
-    CGFloat alpha = 0.0f;
-    CGFloat bgXConstant = ((CGRectGetWidth([[self bgImageView] bounds]) - noSenseConstant)/2)
-                            - kHEMWelcomeMotionEffectBorder;
-    NSString* timingFunction = kCAMediaTimingFunctionEaseIn;
-    NSString* title = NSLocalizedString(@"welcome.title.welcome", nil);
-    NSTextAlignment alignment = NSTextAlignmentCenter;
-    
-    if (show) {
-        alpha = 1.0f;
-        bgXConstant = -(bgXConstant);
-        getStartedLeadConstant = [self origGetStartedLeadingConstant];
-        getStartedTrailConstant = [self origGetStartedTrailingConstant];
-        noSenseConstant = 0.0f;
-        timingFunction = kCAMediaTimingFunctionEaseOut;
-        alignment = NSTextAlignmentLeft;
-        title = NSLocalizedString(@"welcome.title.meet-sense", nil);
-        
-        [[self getStartedButton] setHidden:NO];
-        [[self noSenseButton] setHidden:NO];
-        [[self playButton] setHidden:NO];
-    }
-    
-    [HEMAnimationUtils transactAnimation:^{
-        [self updateTtitle:title alignment:alignment];
-        // why not use CABasicAnimations here?  well it's because those do not
-        // work with autolayout constraints :(
-        [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
-                              delay:0.0f
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             [[self getStartedButton] setAlpha:alpha];
-                            
-                             // order matters, otherwise logs will show constraints
-                             // being broken
-                             if (!show) {
-                                 [[self getStartedLeadingConstraint] setConstant:getStartedLeadConstant];
-                                 [[self getStartedTrailingConstraint] setConstant: getStartedTrailConstant];
-                             } else {
-                                 [[self getStartedTrailingConstraint] setConstant: getStartedTrailConstant];
-                                 [[self getStartedLeadingConstraint] setConstant:getStartedLeadConstant];
-                             }
-
-                             [[self view] layoutIfNeeded];
-                         }
-                         completion:nil];
-        
-        [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
-                              delay:kHEMWelcomeButtonDelayIncrements
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             [[self noSenseButton] setAlpha:alpha];
-                             
-                             [[self noSenseCenterXConstraint] setConstant:noSenseConstant];
-                             
-                             [[self view] layoutIfNeeded];
-                         }
-                         completion:nil];
-        
-        [UIView animateWithDuration:kHEMWelcomeButtonDelayIncrements +
-                                    kHEMWelcomeButtonAnimationDuration
-                              delay:0.0f
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             [[self playButton] setAlpha:alpha];
-                             [[self subtitleLabel] setAlpha:alpha];
-                             [[self bgCenterXConstraint] setConstant:bgXConstant];
-                             [[self view] layoutIfNeeded];
-                         }
-                         completion:nil];
-    } completion:^{
-        if (!show) {
-            [[self getStartedButton] setHidden:YES];
-            [[self noSenseButton] setHidden:YES];
-            [[self playButton] setHidden:YES];
-        }
-    } timing:timingFunction];
-
-    if (!show) {
-        [self performSelector:@selector(showGettingStartedActions:)
-                   withObject:@(YES)
-                   afterDelay:kHEMWelcomeButtonDelayIncrements];
+- (NSString*)introDescriptionForPage:(NSUInteger)page {
+    switch (page) {
+        case HEMWelcomeIntroPageSmartAlarm:
+            return NSLocalizedString(@"welcome.intro.desc.alarm", nil);
+        case HEMWelcomeIntroPageMeetTimeline:
+            return NSLocalizedString(@"welcome.intro.desc.timeline", nil);
+        case HEMWelcomeIntroPageMeetSleepScore:
+            return NSLocalizedString(@"welcome.intro.desc.sleep-score", nil);
+        case HEMWelcomeIntroPageMeetCurrentConditions:
+            return NSLocalizedString(@"welcome.intro.desc.current-conditions", nil);
+        case HEMWelcomePageMeetSense:
+        default:
+            return nil;
     }
 }
 
 #pragma mark - Actions
 
-- (IBAction)getStarted:(id)sender {
-    [self showInitialActions:@(NO)];
-}
-
-- (IBAction)getSense:(id)sender {
-    [HEMSupportUtil openOrderFormFrom:self];
-    [SENAnalytics track:kHEMAnalyticsEventOnBNoSense];
-}
-
-- (IBAction)cancelGettingStarted:(id)sender {
-    [self showGettingStartedActions:@(NO)];
-}
-
-- (IBAction)playVideo:(id)sender {
+- (void)playVideo:(UIButton*)videoButton {
     NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
     MPMoviePlayerViewController* videoPlayer
         = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
@@ -307,10 +199,129 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     [SENAnalytics track:kHEMAnalyticsEventVideo];
 }
 
-#pragma mark - Cleanup
+// log in and sign up actions are done through segues in the storyboard
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+#pragma mark - Scrolling
+
+- (void)crossFadeIntroImageWithPagePercentage:(CGFloat)percentage
+                                  forNextPage:(NSUInteger)nextPage
+                              andPreviousPage:(NSUInteger)prevPage {
+    UIImage* nextImage = [self introImageForPage:nextPage];
+    UIImage* prevImage = [self introImageForPage:prevPage];
+    
+    if ([[[self introImageView] image] isEqual:prevImage]) {
+        
+        [self updateImageView:[self introSecondImageView]
+                    withImage:nextImage
+               pagePercentage:percentage];
+        
+    } else {
+        
+        [self updateImageView:[self introImageView]
+                    withImage:nextImage
+               pagePercentage:percentage];
+        
+    }
+}
+
+- (void)updateImageView:(UIImageView*)imageView
+              withImage:(UIImage*)image
+         pagePercentage:(CGFloat)pagePercentage {
+    
+    UIImageView* secondaryImageView = nil;
+    if (imageView == [self introImageView]) {
+        secondaryImageView = [self introSecondImageView];
+    } else {
+        secondaryImageView = [self introImageView];
+    }
+    
+    [imageView setImage:image];
+    [imageView setAlpha:1 - pagePercentage];
+    [secondaryImageView setAlpha:pagePercentage];
+}
+
+- (void)updateActionButtonLayoutWithPercentage:(CGFloat)percentage {
+    CGFloat halfWidth = CGRectGetWidth([[self view] bounds]) / 2.0f;
+    CGFloat hiddenConstant = halfWidth + (2 * [self origLogInTrailingConstraintConstant]);
+    [[self logInButtonTrailingConstraint] setConstant:percentage * hiddenConstant];
+
+    // change the alpha of the button elements
+    CGFloat separatorAlpha = HEMWelcomeButtonSeparatorMaxOpacity - (HEMWelcomeButtonSeparatorMaxOpacity* percentage);
+    [[self buttonSeparatorView] setAlpha:separatorAlpha];
+    [[self logInButton] setAlpha:1.0f - percentage];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat offsetX = [scrollView contentOffset].x;
+    CGFloat maxOffsetX = [scrollView contentSize].width;
+    CGFloat pageWidth = CGRectGetWidth([scrollView bounds]);
+    CGFloat totalPercentage = offsetX / pageWidth;
+    
+    if (offsetX >= 0.0f && offsetX <= maxOffsetX) {
+        CGFloat pageWidth = CGRectGetWidth([scrollView bounds]);
+        CGFloat totalPercentage = offsetX / pageWidth;
+        BOOL movingRight = offsetX > [self previousScrollOffsetX];
+        NSUInteger nextPage = movingRight ? ceilCGFloat(totalPercentage) : floorCGFloat(totalPercentage);
+        NSUInteger prevPage = movingRight ? nextPage - 1 : nextPage + 1;
+        CGFloat pagePercentage = absCGFloat(nextPage - totalPercentage);
+        
+        if (movingRight && nextPage == HEMWelcomeIntroPageSmartAlarm) {
+            
+            [self updateActionButtonLayoutWithPercentage:1 - pagePercentage];
+            
+            [self updateImageView:[self introImageView]
+                        withImage:[self introImageForPage:nextPage]
+                   pagePercentage:pagePercentage];
+            
+        } else if (!movingRight && nextPage == HEMWelcomePageMeetSense) {
+            
+            [self updateActionButtonLayoutWithPercentage:pagePercentage];
+            [[self introSecondImageView] setImage:nil];
+            [[self introImageView] setAlpha:pagePercentage];
+            
+        } else if (nextPage >= HEMWelcomeIntroPageSmartAlarm
+                   && nextPage <= HEMWelcomeIntroPageMeetCurrentConditions) {
+            
+            [self crossFadeIntroImageWithPagePercentage:pagePercentage
+                                            forNextPage:nextPage
+                                        andPreviousPage:prevPage];
+            
+        }
+    }
+    
+    [[self contentPageControl] setCurrentPage:roundCGFloat(totalPercentage)];
+    [self setPreviousScrollOffsetX:offsetX];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat offsetX = [scrollView contentOffset].x;
+    NSUInteger currentPage = [[self contentPageControl] currentPage];
+    NSUInteger currentIndex = currentPage + 1; // we want page, not index
+    NSDictionary* props = @{HEMAnalyticsEventPropScreen : @(currentIndex)};
+    [SENAnalytics track:HEMAnalyticsEventWelcomeIntroSwipe properties:props];
+    
+    if (offsetX >= 0.0f) {
+        if (currentPage == HEMWelcomeIntroPageSmartAlarm) {
+            [self updateActionButtonLayoutWithPercentage:currentPage];
+        } else if (currentPage == HEMWelcomePageMeetSense) {
+            [self updateActionButtonLayoutWithPercentage:currentPage];
+            [[self introSecondImageView] setImage:nil];
+            [[self introImageView] setAlpha:currentPage];
+        }
+    }
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if (![self transitionDelegate]) {
+        HEMModalTransitionDelegate* delegate = [HEMModalTransitionDelegate new];
+        [delegate setWantsStatusBar:YES];
+        [self setTransitionDelegate:delegate];
+    }
+    UIViewController* destVC = [segue destinationViewController];
+    [destVC setModalPresentationStyle:UIModalPresentationCustom];
+    [destVC setTransitioningDelegate:[self transitionDelegate]];
 }
 
 @end

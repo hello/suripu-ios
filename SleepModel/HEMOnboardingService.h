@@ -50,8 +50,8 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * Set, after calling checkNumberOfPairedAccounts.  If it was set then, the method
  * is called again, it will override what was set before
  */
-@property (nonatomic, copy, readonly) NSNumber* pairedAccountsToSense;
-@property (nonatomic, copy, readonly) NSArray* nearbySensesFound;;
+@property (nonatomic, strong, readonly) NSNumber* pairedAccountsToSense;
+@property (nonatomic, copy,   readonly) NSArray* nearbySensesFound;;
 @property (nonatomic, strong, readonly) SENAccount* currentAccount;
 @property (nonatomic, strong, readonly) SENSenseManager* currentSenseManager;
 
@@ -258,26 +258,6 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
    securityType:(SENWifiEndpointSecurityType)type
          update:(void(^)(SENSenseWiFiStatus* status))update
      completion:(void(^)(NSError* error))completion;
-
-/**
- * @method saveConfiguredSSID:
- *
- * @discussion
- * TEMPORARY solution to handle cases of displaying the user's SSID.  This should
- * probably be stored and saved on the server as this is duplicated logic and can
- * be very error prone
- *
- * In the mean time, we will store the ssid and allow caller to retrieve it
- */
-- (void)saveConfiguredSSID:(NSString*)ssid;
-
-/**
- * @method lastConfiguredSSID
- *
- * @discussion
- * Retrieve the last known SSID saved, if any
- */
-- (NSString*)lastConfiguredSSID;
 
 
 #pragma mark - Checkpoints

@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENPairedDevices.h>
 
 #import "HEMAppReview.h"
 #import "HEMAppUsage.h"
@@ -69,7 +70,8 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
 + (void)hasSenseAndPillPaired:(void(^)(BOOL hasPairedDevices))completion {
     SENServiceDevice* deviceService = [SENServiceDevice sharedService];
     [deviceService loadDeviceInfo:^(NSError *error) {
-        completion (error == nil && [deviceService senseInfo] && [deviceService pillInfo]);
+        SENPairedDevices* devices = [deviceService devices];
+        completion (error == nil && [devices hasPairedSense] && [devices hasPairedPill]);
     }];
 }
 

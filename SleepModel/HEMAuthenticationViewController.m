@@ -1,6 +1,3 @@
-
-#import <CocoaLumberjack/DDLog.h>
-
 #import "UIFont+HEMStyle.h"
 
 #import "HEMAuthenticationViewController.h"
@@ -35,6 +32,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
     [super viewDidLoad];
 
     [self configureForgotPassword];
+    [self showBackButtonAsCancelWithSelector:@selector(cancel:)];
     
     [SENAnalytics track:kHEMAnalyticsEventSignInStart];
 }
@@ -127,7 +125,6 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
                 }];
             } else {
                 [strongSelf letUserIntoApp];
-                [strongSelf stopActivity:nil];
             }
         }];
     }];
@@ -151,6 +148,11 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 
 - (IBAction)didTapForgotPasswordButton:(UIButton*)sender {
     [HEMSupportUtil openURL:[HEMConfig stringForConfig:HEMConfPassResetURL] from:self];
+}
+
+- (void)cancel:(id)sender {
+    [[self view] endEditing:NO];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITextFieldDelegate

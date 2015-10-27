@@ -17,6 +17,7 @@
 #import "HEMIntroDescriptionView.h"
 #import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
+#import "HEMModalTransitionDelegate.h"
 
 typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomePageMeetSense = 0,
@@ -26,6 +27,8 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomeIntroPageMeetCurrentConditions = 4
 };
 
+static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
+
 @interface HEMWelcomeViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *introImageView;
@@ -34,6 +37,7 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 @property (weak, nonatomic) IBOutlet UIPageControl *contentPageControl;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 @property (weak, nonatomic) IBOutlet UIButton *logInButton;
+@property (weak, nonatomic) IBOutlet UIView *buttonSeparatorView;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logInButtonTrailingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageControlBottomConstraint;
@@ -44,6 +48,7 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 @property (assign, nonatomic) CGFloat origLogInTrailingConstraintConstant;
 @property (weak, nonatomic) UIImageView* currentIntroImageView;
 @property (weak, nonatomic) UIImageView* nextIntroImageView;
+@property (strong, nonatomic) HEMModalTransitionDelegate* transitionDelegate;
 
 @end
 
@@ -56,12 +61,7 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self hideStatusBar:YES];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self hideStatusBar:![self presentedViewController]];
+    [self hideStatusBar];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -75,13 +75,9 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     [self updateConstraint:[self introImageHeightConstraint] withDiff:-48.0f];
 }
 
-- (void)hideStatusBar:(BOOL)hide {
+- (void)hideStatusBar {
     HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    if (hide) {
-        [root hideStatusBar];
-    } else {
-        [root showStatusBar];
-    }
+    [root hideStatusBar];
 }
 
 - (void)configureAppearance {
@@ -95,9 +91,12 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     [[self signUpButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self setOrigLogInTrailingConstraintConstant:[[self logInButtonTrailingConstraint] constant]];
+    
+    [[self buttonSeparatorView] setAlpha:HEMWelcomeButtonSeparatorMaxOpacity];
 }
 
 - (void)configureContent {
+    [[self contentPageControl] setUserInteractionEnabled:NO];
     [[self introImageView] setAlpha:0.0f];
     
     CGRect contentBounds = [[self contentScrollView] bounds];
@@ -245,6 +244,11 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     CGFloat halfWidth = CGRectGetWidth([[self view] bounds]) / 2.0f;
     CGFloat hiddenConstant = halfWidth + (2 * [self origLogInTrailingConstraintConstant]);
     [[self logInButtonTrailingConstraint] setConstant:percentage * hiddenConstant];
+
+    // change the alpha of the button elements
+    CGFloat separatorAlpha = HEMWelcomeButtonSeparatorMaxOpacity - (HEMWelcomeButtonSeparatorMaxOpacity* percentage);
+    [[self buttonSeparatorView] setAlpha:separatorAlpha];
+    [[self logInButton] setAlpha:1.0f - percentage];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -290,9 +294,34 @@ typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSUInteger currentPage = [[self contentPageControl] currentPage] + 1; // we want page, not index
-    NSDictionary* props = @{HEMAnalyticsEventPropScreen : @(currentPage)};
+    CGFloat offsetX = [scrollView contentOffset].x;
+    NSUInteger currentPage = [[self contentPageControl] currentPage];
+    NSUInteger currentIndex = currentPage + 1; // we want page, not index
+    NSDictionary* props = @{HEMAnalyticsEventPropScreen : @(currentIndex)};
     [SENAnalytics track:HEMAnalyticsEventWelcomeIntroSwipe properties:props];
+    
+    if (offsetX >= 0.0f) {
+        if (currentPage == HEMWelcomeIntroPageSmartAlarm) {
+            [self updateActionButtonLayoutWithPercentage:currentPage];
+        } else if (currentPage == HEMWelcomePageMeetSense) {
+            [self updateActionButtonLayoutWithPercentage:currentPage];
+            [[self introSecondImageView] setImage:nil];
+            [[self introImageView] setAlpha:currentPage];
+        }
+    }
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if (![self transitionDelegate]) {
+        HEMModalTransitionDelegate* delegate = [HEMModalTransitionDelegate new];
+        [delegate setWantsStatusBar:YES];
+        [self setTransitionDelegate:delegate];
+    }
+    UIViewController* destVC = [segue destinationViewController];
+    [destVC setModalPresentationStyle:UIModalPresentationCustom];
+    [destVC setTransitioningDelegate:[self transitionDelegate]];
 }
 
 @end

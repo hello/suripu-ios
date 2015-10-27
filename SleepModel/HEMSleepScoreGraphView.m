@@ -138,10 +138,11 @@ CGFloat const arcOffsetY = 80.f;
     CGColorRef idealColor = [UIColor conditionIdealColor].CGColor;
     NSMutableArray *values = [NSMutableArray arrayWithObjects:(__bridge id)alertColor, nil];
     CGColorRef targetColor = [UIColor colorForCondition:self.condition].CGColor;
-    if (!CGColorEqualToColor(targetColor, alertColor)) {
+    BOOL targetIsAlert = CGColorEqualToColor(targetColor, alertColor);
+    if (!targetIsAlert) {
         [values addObject:(__bridge id)warningColor];
     }
-    if (!CGColorEqualToColor(targetColor, warningColor)) {
+    if (!CGColorEqualToColor(targetColor, warningColor) && !targetIsAlert) {
         [values addObject:(__bridge id)idealColor];
     }
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"strokeColor"];

@@ -218,15 +218,15 @@
                                             <segue destination="BDL-3H-00Z" kind="show" id="Lum-nT-LgF"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PpU-TR-DnJ">
-                                        <rect key="frame" x="300" y="8" width="1" height="40"/>
+                                    <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PpU-TR-DnJ">
+                                        <rect key="frame" x="299" y="16" width="1" height="24"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="Fn7-WD-qdP"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvA-Nn-Uap">
-                                        <rect key="frame" x="302" y="0.0" width="298" height="56"/>
+                                        <rect key="frame" x="301" y="0.0" width="299" height="56"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
                                         <state key="normal" title="GET STARTED">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -240,16 +240,16 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="N7h-8T-8md" secondAttribute="bottom" id="Avh-dp-Wq0"/>
                                     <constraint firstItem="N7h-8T-8md" firstAttribute="top" secondItem="WGy-A8-W4g" secondAttribute="top" id="Dw7-ZK-FLj"/>
-                                    <constraint firstItem="PpU-TR-DnJ" firstAttribute="leading" secondItem="N7h-8T-8md" secondAttribute="trailing" constant="2" id="G3R-z6-hNt"/>
+                                    <constraint firstItem="PpU-TR-DnJ" firstAttribute="leading" secondItem="N7h-8T-8md" secondAttribute="trailing" constant="1" id="G3R-z6-hNt"/>
                                     <constraint firstItem="JvA-Nn-Uap" firstAttribute="leading" secondItem="PpU-TR-DnJ" secondAttribute="leading" constant="2" id="Jbo-sd-Icj"/>
-                                    <constraint firstAttribute="bottom" secondItem="PpU-TR-DnJ" secondAttribute="bottom" constant="8" id="QVl-3q-fy1"/>
+                                    <constraint firstAttribute="bottom" secondItem="PpU-TR-DnJ" secondAttribute="bottom" constant="16" id="QVl-3q-fy1"/>
                                     <constraint firstItem="N7h-8T-8md" firstAttribute="leading" secondItem="WGy-A8-W4g" secondAttribute="leading" id="VAx-1y-FHc"/>
                                     <constraint firstItem="JvA-Nn-Uap" firstAttribute="top" secondItem="WGy-A8-W4g" secondAttribute="top" id="VPw-zc-vDm"/>
                                     <constraint firstAttribute="bottom" secondItem="JvA-Nn-Uap" secondAttribute="bottom" id="XrW-pM-oWG"/>
                                     <constraint firstAttribute="trailing" secondItem="JvA-Nn-Uap" secondAttribute="trailing" id="iL1-Hh-xua"/>
                                     <constraint firstAttribute="height" constant="56" id="rH9-b5-CRc"/>
                                     <constraint firstAttribute="centerX" secondItem="N7h-8T-8md" secondAttribute="trailing" constant="2" id="sdP-Pj-GLN"/>
-                                    <constraint firstItem="PpU-TR-DnJ" firstAttribute="top" secondItem="WGy-A8-W4g" secondAttribute="top" constant="8" id="vEc-N0-Ma2"/>
+                                    <constraint firstItem="PpU-TR-DnJ" firstAttribute="top" secondItem="WGy-A8-W4g" secondAttribute="top" constant="16" id="vEc-N0-Ma2"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -277,6 +277,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="buttonContainerView" destination="WGy-A8-W4g" id="Gq1-gn-vTN"/>
+                        <outlet property="buttonSeparatorView" destination="PpU-TR-DnJ" id="fcM-bc-ErR"/>
                         <outlet property="contentPageControl" destination="VTU-r7-AIx" id="P6c-hC-udX"/>
                         <outlet property="contentScrollView" destination="PQE-5N-Yo5" id="bb1-ea-1Gm"/>
                         <outlet property="introImageHeightConstraint" destination="46f-qw-Xei" id="nuF-Ym-7xs"/>

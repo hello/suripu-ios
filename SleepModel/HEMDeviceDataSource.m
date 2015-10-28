@@ -354,7 +354,8 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return 2; // always 1 sense and 1 pill, even if we are trying to pair one
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    return [service isInfoLoaded] ? 2 : 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -380,7 +381,13 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
                                                  withReuseIdentifier:HEMDevicesFooterReuseIdentifier
                                                         forIndexPath:indexPath];
         
-        [footer setText:[self attributedFooterText]];
+        NSInteger numberOfItems = [collectionView numberOfItemsInSection:0];
+        if (numberOfItems > 0) {
+            [footer setText:[self attributedFooterText]];
+        } else {
+            [footer setText:nil];
+        }
+        
         [footer setDelegate:[self footerDelegate]];
         
         view = footer;

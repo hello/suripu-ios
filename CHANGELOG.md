@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.6.4
+
+Fixes:
+
+* Fixed issue where entering Sense settings without BLE turned on will cause it
+  to never show any options with a never ending activity view
+* Fixed issue where if an error was encountered retrieving device metadata from
+  server, the layout of the device settings is messed up
+
 ## 1.1.6.3
 
 Fixes:

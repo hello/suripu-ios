@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.6.5
+
+Fixes:
+
+* Fixed crasher where collection view layout is invalidated, but layout attributes
+  are still returned for something that is not there.  Happens on Factory Reset.
+* Fixed issue when onboarding is resumed at a checkpoint where user cannot proceed
+
 ## 1.1.6.4
 
 Fixes:

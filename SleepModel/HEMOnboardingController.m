@@ -19,6 +19,7 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAlertViewController.h"
+#import "HEMStyledNavigationViewController.h"
 #import "HelloStyleKit.h"
 
 @interface HEMOnboardingController()
@@ -43,6 +44,13 @@
     return [onboardingStoryboard instantiateInitialViewController];
 }
 
++ (UINavigationController*)containedOnboardingController:(UIViewController*)controller {
+    if ([controller isKindOfClass:[UINavigationController class]] || !controller) {
+        return (id)controller;
+    }
+    return [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
+}
+
 + (UIViewController*)controllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint force:(BOOL)force {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     if (![service isAuthorizedUser] || force) {
@@ -54,11 +62,11 @@
         case HEMOnboardingCheckpointStart:
             return [self onboardingRootViewController];
         case HEMOnboardingCheckpointAccountCreated:
-            return [HEMOnboardingStoryboard instantiateDobViewController];
+            return [self containedOnboardingController:[HEMOnboardingStoryboard instantiateDobViewController]];
         case HEMOnboardingCheckpointAccountDone:
-            return [HEMOnboardingStoryboard instantiateSenseSetupViewController];
+            return [self containedOnboardingController:[HEMOnboardingStoryboard instantiateSenseSetupViewController]];
         case HEMOnboardingCheckpointSenseDone:
-            return [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
+            return [self containedOnboardingController:[HEMOnboardingStoryboard instantiatePillDescriptionViewController]];
         case HEMOnboardingCheckpointPillDone:
         default:
             return nil;

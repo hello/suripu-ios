@@ -442,13 +442,19 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     return text;
 }
 
-- (NSString*)errorMessageFromAccountUpdateError:(NSError*)error {
+- (NSString*)errorMessageFromAccountUpdateError:(NSError*)error
+                                  forUpdateType:(HEMSettingsAccountInfoType)type {
     switch ([error code]) {
         case SENServiceAccountErrorInvalidArg:
             return NSLocalizedString(@"settings.account.update.failure", nil);
         default: {
             HEMOnboardingService* service = [HEMOnboardingService sharedService];
-            return [service localizedMessageFromAccountError:error];
+            NSInteger httpCode = [service httpStatusCodeFromError:error];
+            if (type == HEMSettingsAccountInfoTypePassword && httpCode == 409) {
+                return NSLocalizedString(@"settings.account.password.current-password-wrong", nil);
+            } else {
+                return [service localizedMessageFromAccountError:error];
+            }
         }
     }
 }
@@ -462,7 +468,8 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
         NSString* errorMessage = nil;
         if (error) {
             [SENAnalytics trackError:error];
-            errorMessage = [weakSelf errorMessageFromAccountUpdateError:error];
+            errorMessage = [weakSelf errorMessageFromAccountUpdateError:error
+                                                          forUpdateType:[weakSelf selectedInfoType]];
         }
         if (completion) {
             completion (errorMessage);

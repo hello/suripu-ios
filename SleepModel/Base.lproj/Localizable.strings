@@ -199,6 +199,7 @@
 "settings.account.name.update.title" = "Change name";
 "settings.account.password.update.title" = "Change password";
 "settings.account.update.failure" = "A value is required for your account.";
+"settings.account.password.current-password-wrong" = "Current password is not recognized.";
 
 // support
 "debug.options.title" = "Debug options";

@@ -407,13 +407,18 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
     
     if (errorType == SENAPIAccountErrorUnknown) {
-        NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-        alertMessage = [self httpErrorMessageForStatusCode:[response statusCode]];
+        NSInteger statusCode = [self httpStatusCodeFromError:error];
+        alertMessage = [self httpErrorMessageForStatusCode:statusCode];
     } else {
         alertMessage = [self accountErrorMessageForType:errorType];
     }
     
     return alertMessage;
+}
+
+- (NSInteger)httpStatusCodeFromError:(NSError*)error {
+    NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    return [response statusCode];
 }
 
 - (NSString*)httpErrorMessageForStatusCode:(NSInteger)statusCode {

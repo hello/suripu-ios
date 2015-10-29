@@ -11,12 +11,14 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMFormViewController () <UITableViewDataSource, UITableViewDelegate, HEMFieldTableViewCellDelegate>
 
 @property (weak,   nonatomic) IBOutlet UITableView *formTableview;
+@property (weak,   nonatomic) IBOutlet UIBarButtonItem *saveButtonItem;
 @property (strong, nonatomic) NSMutableDictionary* formContent;
-@property (assign, nonatomic, getter=isChanged) BOOL changed;
+@property (assign, nonatomic) NSUInteger numberOfFields;
 
 @end
 
@@ -24,23 +26,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureTitle];
+    [self configureNavigationBar];
     [self configureTableView];
 }
 
-- (void)configureTitle {
+- (void)configureNavigationBar {
     if ([[self delegate] respondsToSelector:@selector(titleForForm:)]) {
         [self setTitle:[[self delegate] titleForForm:self]];
     }
+    
+    UIColor* disabledColor = [UIColor barButtonDisabledColor];
+    NSDictionary* attributes = @{NSForegroundColorAttributeName : disabledColor};
+    [[self saveButtonItem] setTitleTextAttributes:attributes
+                                         forState:UIControlStateDisabled];
+    [[self saveButtonItem] setEnabled:NO]; // disable to start since nothing has changed
 }
 
 - (void)configureTableView {
-    [self setFormContent:[[NSMutableDictionary alloc] init]];
+    [self setNumberOfFields:[[self delegate] numberOfFieldsIn:self]];
+    [self setFormContent:[[NSMutableDictionary alloc] initWithCapacity:[self numberOfFields]]];
     
     CGRect frame = CGRectZero;
     frame.size.height = HEMSettingsCellTableMargin;
     [[self formTableview] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    
     [[self formTableview] setKeyboardDismissMode:UIScrollViewKeyboardDismissModeInteractive];
 }
 
@@ -58,7 +66,7 @@
 #pragma mark - UITableViewDelegate / DataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self delegate] numberOfFieldsIn:self];
+    return [self numberOfFields];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -88,7 +96,7 @@
     
     // update appearance of the cell
     BOOL firstRow = [indexPath row] == 0;
-    BOOL lastRow = [indexPath row] == [[self delegate] numberOfFieldsIn:self] - 1;
+    BOOL lastRow = [indexPath row] == [self numberOfFields] - 1;
     
     if (firstRow && lastRow) {
         [fieldCell showTopAndBottomCorners];
@@ -108,23 +116,21 @@
 #pragma mark - Text changes / HEMFieldTableViewCellDelegate
 
 - (void)didTapOnKeyboardReturnKeyFrom:(HEMFieldTableViewCell *)cell {
-    NSInteger numberOfFields = [[self delegate] numberOfFieldsIn:self];
-    BOOL lastRow = [cell tag] == numberOfFields - 1;
+    BOOL lastRow = [cell tag] == [self numberOfFields] - 1;
     if (lastRow) {
         [self saveChanges:self];
     } else {
-        NSInteger nextIndex = ([cell tag] + 1) % numberOfFields;
+        NSInteger nextIndex = ([cell tag] + 1) % [self numberOfFields];
         [self forceFirstResponderToBeAtRowAtIndex:nextIndex];
     }
 }
 
 - (void)didChangeTextTo:(NSString *)text from:(HEMFieldTableViewCell *)cell {
-    [self setChanged:YES];
-    [[self formContent] setValue:text forKey:[cell placeHolderText]];
+    [[self formContent] setValue:([text length] > 0 ? text : nil) forKey:[cell placeHolderText]];
+    [[self saveButtonItem] setEnabled:[[self formContent] count] == [self numberOfFields]];
 }
 
 #pragma mark - Errors
-
 - (void)showErrorMessage:(NSString*)message {
     UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:self.title message:message];
@@ -136,7 +142,7 @@
 #pragma mark - Actions
 
 - (IBAction)saveChanges:(id)sender {
-    if ([self isChanged]) {
+    if ([[self saveButtonItem] isEnabled]) {
         [[self view] endEditing:NO];
         
         UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];

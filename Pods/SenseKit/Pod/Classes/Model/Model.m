@@ -12,7 +12,7 @@ NSDate* SENDateFromNumber(id value) {
 }
 
 NSNumber* SENDateMillisecondsSince1970(NSDate* date) {
-    long timeInMillis = [date timeIntervalSince1970] * 1000;
+    long long timeInMillis = [date timeIntervalSince1970] * 1000;
     return @(timeInMillis);
 }
 

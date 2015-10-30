@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.6.7
+
+Fixes:
+
+* Fixes issue with date conversion, affecting unread indicators on 32-bit devices
+
+## 1.1.6.6
+
+Fixes:
+
+* Fixed issue where timeline event could not be updated on 32-bit devices
+
 ## 1.1.6.5
 
 Fixes:

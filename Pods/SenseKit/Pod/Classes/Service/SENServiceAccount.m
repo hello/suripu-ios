@@ -57,6 +57,11 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     [self setPreferences:nil];
 }
 
+- (NSString*)trim:(NSString*)value {
+    NSCharacterSet* spaces = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    return [value stringByTrimmingCharactersInSet:spaces];
+}
+
 #pragma mark - Authentication Changes
 
 - (void)listenForAuthChanges {
@@ -136,7 +141,8 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
 
 - (void)changeEmail:(NSString*)email completion:(SENAccountResponseBlock)completion {
     
-    if ([email length] == 0) {
+    NSString* trimmedEmail = [self trim:email];
+    if ([trimmedEmail length] == 0) {
         if (completion) completion ([self errorWithCode:SENServiceAccountErrorInvalidArg]);
         return;
     }
@@ -147,8 +153,8 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
             if (completion) completion (error);
-        } else if (strongSelf) {
-            [[strongSelf account] setEmail:email];
+        } else {
+            [[strongSelf account] setEmail:trimmedEmail];
             [SENAPIAccount changeEmailInAccount:[strongSelf account]
                                 completionBlock:^(id data, NSError *error) {
                                     if (completion) completion (error);

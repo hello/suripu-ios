@@ -102,14 +102,15 @@
 
 - (void)reload {
     if ([[self dataSource] isLoading]) return;
+
+    [self updateLastViewed:HEMUnreadTypeInsights];
     
     __weak typeof(self) weakSelf = self;
     [[self dataSource] refresh:^(BOOL didUpdate){
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!didUpdate)
             return;
-        
-        [strongSelf updateLastViewed:HEMUnreadTypeInsights];
+
         [[strongSelf collectionView] reloadData];
     }];
 }

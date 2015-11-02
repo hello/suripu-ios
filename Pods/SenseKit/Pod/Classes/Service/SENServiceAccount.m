@@ -1,3 +1,4 @@
+
 //
 //  SENServiceAccount.m
 //  Pods
@@ -5,6 +6,8 @@
 //  Created by Jimmy Lu on 12/5/14.
 //
 //
+#import <AFNetworking/AFNetworking.h>
+
 #import "SENServiceAccount.h"
 #import "SENAPIAccount.h"
 #import "SENAPIPreferences.h"
@@ -13,7 +16,7 @@
 #import "SENService+Protected.h"
 #import "SENPreference.h"
 
-static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account";
+NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account";
 
 @interface SENServiceAccount()
 
@@ -84,23 +87,68 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
 
 #pragma mark - Account Management
 
+- (NSError*)commonServiceErrorFromAPIError:(NSError*)error unrecognizedStatusCode:(NSInteger*)statusCode {
+    SENAPIAccountError accountError = [SENAPIAccount errorForAPIResponseError:error];
+    switch (accountError) {
+        case SENAPIAccountErrorInvalidArgument:
+            return [self errorWithCode:SENServiceAccountErrorInvalidArg];
+        case SENAPIAccountErrorNameTooShort:
+            return [self errorWithCode:SENServiceAccountErrorNameTooShort];
+        case SENAPIAccountErrorEmailInvalid:
+            return [self errorWithCode:SENServiceAccountErrorEmailInvalid];
+        case SENAPIAccountErrorNameTooLong:
+            return [self errorWithCode:SENServiceAccountErrorNameTooLong];
+        case SENAPIAccountErrorPasswordInsecure:
+            return [self errorWithCode:SENServiceAccountErrorPasswordInsecure];
+        case SENAPIAccountErrorPasswordTooShort:
+            return [self errorWithCode:SENServiceAccountErrorPasswordTooShort];
+        case SENAPIAccountErrorUnknown:
+        default: {
+            NSHTTPURLResponse* response = [error userInfo][AFNetworkingOperationFailingURLResponseErrorKey];
+            switch ([response statusCode]) {
+                case 412:
+                    return [self errorWithCode:SENServiceAccountErrorAccountNotUpToDate];
+                case 500:
+                    return [self errorWithCode:SENServiceAccountErrorServerFailure];
+                default:
+                    if (statusCode != NULL) {
+                        *statusCode = [response statusCode];
+                    }
+                    return nil;
+            }
+        }
+    }
+}
+
 - (void)refreshAccount:(SENAccountResponseBlock)completion {
     __block BOOL accountUpdated = NO;
     __block BOOL preferencesUpdated = NO;
     __block SENAccountResponseBlock callback = completion;
+    __block NSError* accountError = nil;
+    __block NSError* preferencesError = nil;
+    __weak typeof(self) weakSelf = self;
     
-    SENAccountResponseBlock finishBlock = ^(NSError* error) {
+    void(^finishBlock)(void) = ^(void) {
         if (callback && accountUpdated && preferencesUpdated) {
-            callback(error);
+            NSError* serviceError = nil;
+            NSError* apiError = nil;
+            if (accountError || preferencesError) {
+                // account error takes precedence
+                apiError = accountError ?: preferencesError;
+                serviceError = [weakSelf commonServiceErrorFromAPIError:apiError
+                                                 unrecognizedStatusCode:nil];
+            }
+            callback(serviceError ?: apiError);
         }
     };
-    __weak typeof(self) weakSelf = self;
+    
     [SENAPIAccount getAccount:^(SENAccount* response, NSError *error) {
         if (error == nil) {
             [weakSelf setAccount:response];
         }
+        accountError = error;
         accountUpdated = YES;
-        finishBlock(error);
+        finishBlock();
     }];
     
     [SENAPIPreferences getPreferences:^(NSDictionary* data, NSError *error) {
@@ -110,8 +158,30 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
             [[data allValues] makeObjectsPerformSelector:@selector(saveLocally)];
         }
         preferencesUpdated = YES;
-        finishBlock(error);
+        preferencesError = error;
+        finishBlock();
     }];
+}
+
+#pragma mark Password
+
+- (NSError*)translatePasswordUpdateAPIError:(NSError*)error {
+    NSInteger unrecognizedCode = 0;
+    NSError* serviceError = [self commonServiceErrorFromAPIError:error
+                                          unrecognizedStatusCode:&unrecognizedCode];
+    
+    if (!serviceError) {
+        switch (unrecognizedCode) {
+            case 409:
+                serviceError = [self errorWithCode:SENServiceAccountErrorPasswordNotRecognized];
+                break;
+            default:
+                serviceError = error; // pass error through since it can't be interpreted here
+                break;
+        }
+    }
+
+    return serviceError;
 }
 
 - (void)changePassword:(NSString*)currentPassword
@@ -119,32 +189,55 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
            forUsername:(NSString*)username
             completion:(SENAccountResponseBlock)completion {
     
-    if ([currentPassword length] == 0 || [password length] == 0) {
-        if (completion) completion ([self errorWithCode:SENServiceAccountErrorInvalidArg]);
-        return;
+    if ([currentPassword length] == 0 || [password length] == 0 || [username length] == 0) {
+        return [self callIfSafe:completion
+                      withError:[self errorWithCode:SENServiceAccountErrorInvalidArg]];
     }
     
+    __weak typeof(self) weakSelf = self;
     [SENAPIAccount changePassword:currentPassword
                     toNewPassword:password
                   completionBlock:^(id data, NSError *error) {
+                      __strong typeof(weakSelf) strongSelf = weakSelf;
                       if (error) {
-                          if (completion) {
-                              completion (error);
-                          }
-                          return;
+                          return [strongSelf callIfSafe:completion
+                                              withError:[strongSelf translatePasswordUpdateAPIError:error]];
                       }
                       
-                      [SENAuthorizationService reauthorizeUser:username password:password callback:completion];
+                      [SENAuthorizationService reauthorizeUser:username
+                                                      password:password
+                                                      callback:completion];
                       
                   }];
+}
+
+#pragma mark Email
+
+- (NSError*)translateEmailUpdateAPIError:(NSError*)error {
+    NSInteger unrecognizedCode = 0;
+    NSError* serviceError = [self commonServiceErrorFromAPIError:error
+                                          unrecognizedStatusCode:&unrecognizedCode];
+    
+    if (!serviceError) {
+        switch (unrecognizedCode) {
+            case 409:
+                serviceError = [self errorWithCode:SENServiceAccountErrorEmailAlreadyExists];
+                break;
+            default:
+                serviceError = error; // pass error through since it can't be interpreted here
+                break;
+        }
+    }
+    
+    return serviceError;
 }
 
 - (void)changeEmail:(NSString*)email completion:(SENAccountResponseBlock)completion {
     
     NSString* trimmedEmail = [self trim:email];
     if ([trimmedEmail length] == 0) {
-        if (completion) completion ([self errorWithCode:SENServiceAccountErrorInvalidArg]);
-        return;
+        return [self callIfSafe:completion
+                            withError:[self errorWithCode:SENServiceAccountErrorInvalidArg]];
     }
     
     // force a refreh, even if an account already exists
@@ -152,35 +245,47 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     [self refreshAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
-            if (completion) completion (error);
+            [strongSelf callIfSafe:completion withError:error];
         } else {
             [[strongSelf account] setEmail:trimmedEmail];
             [SENAPIAccount changeEmailInAccount:[strongSelf account]
                                 completionBlock:^(id data, NSError *error) {
-                                    if (completion) completion (error);
+                                    NSError* serviceError = nil;
+                                    if (error) {
+                                        serviceError = [strongSelf translateEmailUpdateAPIError:error];
+                                    }
+                                    [strongSelf callIfSafe:completion withError:serviceError];
                                 }];
         }
     }];
 }
 
+#pragma mark Name
+
+- (NSError*)transateNameUpdateAPIError:(NSError*)error {
+    NSError* serviceError = [self commonServiceErrorFromAPIError:error
+                                          unrecognizedStatusCode:nil];
+    return serviceError ?: error;
+}
+
 - (void)changeName:(NSString *)name completion:(SENAccountResponseBlock)completion {
     if (name.length == 0) {
-        if (completion)
-            completion([self errorWithCode:SENServiceAccountErrorInvalidArg]);
-        return;
+        return [self callIfSafe:completion
+                      withError:[self errorWithCode:SENServiceAccountErrorInvalidArg]];
     }
     __weak typeof(self) weakSelf = self;
     [self refreshAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
-            if (completion)
-                completion(error);
-            return;
+            return [strongSelf callIfSafe:completion withError:error];
         }
         [[strongSelf account] setName:name];
         [SENAPIAccount updateAccount:[strongSelf account] completionBlock:^(id data, NSError *error) {
-            if (completion)
-                completion(error);
+            NSError* serviceError = nil;
+            if (error) {
+                serviceError = [strongSelf transateNameUpdateAPIError:error];
+            }
+            [strongSelf callIfSafe:completion withError:serviceError];
         }];
     }];
 }
@@ -192,21 +297,25 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     
     void(^update)(NSError* error) = ^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error != nil) {
+        if (error) {
             callback(error);
+            return;
         }
-        [SENAPIAccount updateAccount:[strongSelf account] completionBlock:^(SENAccount* account, NSError *updateError) {
-            if (error == nil && account != nil) {
+        
+        [SENAPIAccount updateAccount:[strongSelf account] completionBlock:^(SENAccount* account, NSError *error) {
+            NSError* serviceError = nil;
+            if (!error && account) {
                 [strongSelf setAccount:account];
+            } else if (error) {
+                serviceError = [strongSelf commonServiceErrorFromAPIError:error
+                                                   unrecognizedStatusCode:nil];
             }
-            callback(error);
+            callback(serviceError ?: error);
         }];
     };
     
     if ([self account] == nil) {
-        [self refreshAccount:^(NSError *error) {
-            update(error);
-        }];
+        [self refreshAccount:update];
     } else {
         update(nil);
     }
@@ -215,10 +324,8 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
 
 - (void)updatePreference:(SENPreference*)preference completion:(SENAccountResponseBlock)completion {
     if (preference == nil) {
-        if (completion) completion ([NSError errorWithDomain:SENServiceAccountErrorDomain
-                                                        code:SENServiceAccountErrorInvalidArg
-                                                    userInfo:nil]);
-        return;
+        return [self callIfSafe:completion
+                      withError:[self errorWithCode:SENServiceAccountErrorInvalidArg]];
     }
 
     // optimistically update the preference locally
@@ -227,18 +334,20 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     __weak typeof(self) weakSelf = self;
     [SENAPIPreferences updatePreferencesWithCompletion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error == nil) {
+        NSError* serviceError = nil;
+        if (!error) {
             NSMutableDictionary* updatedPref = [[strongSelf preferences] mutableCopy];
             if (updatedPref == nil) updatedPref = [NSMutableDictionary dictionary];
             [updatedPref setObject:preference forKey:@([preference type])];
             [strongSelf setPreferences:updatedPref];
+        } else {
+            serviceError = [strongSelf commonServiceErrorFromAPIError:error
+                                               unrecognizedStatusCode:nil];
         }
-        if (completion) completion (error);
+        [strongSelf callIfSafe:completion withError:serviceError ?: error];
     }];
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+// observer already removed in SENService
 
 @end

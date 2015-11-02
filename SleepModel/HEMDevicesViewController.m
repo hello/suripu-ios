@@ -236,6 +236,11 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
 
 #pragma mark HEMSenseControllerDelegate
 
+- (void)didEnterPairingModeFrom:(HEMSenseViewController *)viewController {
+    // no need to refresh data source since nothing changed.
+    [[self navigationController] popViewControllerAnimated:NO];
+}
+
 - (void)didUpdateWiFiFrom:(HEMSenseViewController *)viewController {
     [self refreshDataSource:YES];
 }

@@ -200,7 +200,7 @@
 "settings.account.password.update.title" = "Change password";
 "settings.account.update.failure" = "A value is required for your account.";
 "settings.account.password.current-password-wrong" = "Current password is not recognized.";
-"settings.account.password-too-short" = "New password is too short.  Create one that is longer and try again.";
+"settings.account.password-too-short" = "Your password is too sjhort. Passwords must be at least six characters.";
 "settings.account.password-insecure" = "New password is too insecure.  Enter a new one and try again.";
 "settings.account.update.account-not-up-to-date" = "A recent modification to your account conflicted with your change.  Try again.";
 "settings.account.update.unknown-failure" = "Unable to update your account at this time.  Try again later.";

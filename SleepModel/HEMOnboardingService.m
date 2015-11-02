@@ -407,8 +407,22 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
     
     if (errorType == SENAPIAccountErrorUnknown) {
-        NSInteger statusCode = [self httpStatusCodeFromError:error];
-        alertMessage = [self httpErrorMessageForStatusCode:statusCode];
+        if ([[error domain] isEqualToString:NSURLErrorDomain]) {
+            alertMessage = [error localizedDescription];
+        } else {
+            NSInteger statusCode = [self httpStatusCodeFromError:error];
+            switch (statusCode) {
+                case 401:
+                    alertMessage = NSLocalizedString(@"authorization.sign-in.failed.message", nil);
+                    break;
+                case 409:
+                    alertMessage = NSLocalizedString(@"sign-up.error.conflict", nil);
+                    break;
+                default:
+                    alertMessage = NSLocalizedString(@"sign-up.error.generic", nil);
+                    break;
+            }
+        }
     } else {
         alertMessage = [self accountErrorMessageForType:errorType];
     }
@@ -419,38 +433,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 - (NSInteger)httpStatusCodeFromError:(NSError*)error {
     NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
     return [response statusCode];
-}
-
-- (NSString*)httpErrorMessageForStatusCode:(NSInteger)statusCode {
-    NSString* message = nil;
-    // note that we will not attempt to create a message for every error code
-    // that exists, but rather only for those that are commonly encountered.
-    // We should never return the localizedDescription here as that provides
-    // the user a unfriendly message that only iOS developers can actually understand
-    switch (statusCode) {
-        case 401:
-            message = NSLocalizedString(@"authorization.sign-in.failed.message", nil);
-            break;
-        case 409:
-            message = NSLocalizedString(@"sign-up.error.conflict", nil);
-            break;
-        case NSURLErrorNotConnectedToInternet:
-            message = NSLocalizedString(@"network.error.not-connected", nil);
-            break;
-        case NSURLErrorNetworkConnectionLost:
-            message = NSLocalizedString(@"network.error.connection-lost", nil);
-            break;
-        case NSURLErrorCannotConnectToHost:
-            message = NSLocalizedString(@"network.error.cannot-connect-to-host", nil);
-            break;
-        case NSURLErrorTimedOut:
-            message = NSLocalizedString(@"network.error.timed-out", nil);
-            break;
-        default:
-            message = NSLocalizedString(@"sign-up.error.generic", nil);
-            break;
-    }
-    return message;
 }
 
 - (NSString*)accountErrorMessageForType:(SENAPIAccountError)errorType {

@@ -442,21 +442,47 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     return text;
 }
 
-- (NSString*)errorMessageFromAccountUpdateError:(NSError*)error
-                                  forUpdateType:(HEMSettingsAccountInfoType)type {
-    switch ([error code]) {
-        case SENServiceAccountErrorInvalidArg:
-            return NSLocalizedString(@"settings.account.update.failure", nil);
-        default: {
-            HEMOnboardingService* service = [HEMOnboardingService sharedService];
-            NSInteger httpCode = [service httpStatusCodeFromError:error];
-            if (type == HEMSettingsAccountInfoTypePassword && httpCode == 409) {
-                return NSLocalizedString(@"settings.account.password.current-password-wrong", nil);
-            } else {
-                return [service localizedMessageFromAccountError:error];
-            }
+- (NSString*)errorMessageFromAccountUpdateError:(NSError*)error {
+    
+    NSString* message = nil;
+    if ([[error domain] isEqualToString:SENServiceAccountErrorDomain]) {
+        switch ([error code]) {
+            case SENServiceAccountErrorInvalidArg:
+                message = NSLocalizedString(@"settings.account.update.failure", nil);
+                break;
+            case SENServiceAccountErrorPasswordTooShort:
+                message = NSLocalizedString(@"settings.account.password-too-short", nil);
+                break;
+            case SENServiceAccountErrorPasswordInsecure:
+                 message = NSLocalizedString(@"settings.account.password-insecure", nil);
+                break;
+            case SENServiceAccountErrorPasswordNotRecognized:
+                message = NSLocalizedString(@"settings.account.password.current-password-wrong", nil);
+                break;
+            case SENServiceAccountErrorAccountNotUpToDate:
+                message = NSLocalizedString(@"settings.account.update.account-not-up-to-date", nil);
+                break;
+            case SENServiceAccountErrorEmailAlreadyExists:
+                message = NSLocalizedString(@"settings.account.update.email-already-exists", nil);
+                break;
+            case SENServiceAccountErrorEmailInvalid:
+                message = NSLocalizedString(@"settings.account.update.email-invalid", nil);
+                break;
+            case SENServiceAccountErrorNameTooLong:
+                message = NSLocalizedString(@"settings.account.update.name-too-long", nil);
+                break;
+            case SENServiceAccountErrorNameTooShort:
+                message = NSLocalizedString(@"settings.account.update.name-too-short", nil);
+            case SENServiceAccountErrorServerFailure:
+            case SENServiceAccountErrorUnknown:
+            default:
+                break;
         }
+    } else if ([[error domain] isEqualToString:NSURLErrorDomain]){
+        message = [error localizedDescription];
     }
+    
+    return message ?: NSLocalizedString(@"settings.account.update.unknown-failure", nil);
 }
 
 - (void)saveFormContent:(NSDictionary*)content
@@ -468,8 +494,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
         NSString* errorMessage = nil;
         if (error) {
             [SENAnalytics trackError:error];
-            errorMessage = [weakSelf errorMessageFromAccountUpdateError:error
-                                                          forUpdateType:[weakSelf selectedInfoType]];
+            errorMessage = [weakSelf errorMessageFromAccountUpdateError:error];
         }
         if (completion) {
             completion (errorMessage);

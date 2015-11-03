@@ -22,11 +22,13 @@
 @implementation HEMSensePairingModeViewController
 
 - (void)viewDidLoad {
+    [self configureAttributedSubtitle];
+    
     [super viewDidLoad];
+    
     [self configureVideoView];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
-    [self configureAttributedSubtitle];
     [self trackAnalyticsEvent:HEMAnalyticsEventPairingMode];
 }
 
@@ -48,6 +50,7 @@
     UIImage* image = [UIImage imageNamed:@"pairingMode"];
     NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pairing-mode", nil);
     [[self videoView] setFirstFrame:image videoPath:videoPath];
+    [[self view] updateConstraintsIfNeeded];
 }
 
 - (void)configureAttributedSubtitle {

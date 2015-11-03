@@ -29,8 +29,6 @@
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL enableBack;
 @property (copy,   nonatomic) NSString* analyticsHelpStep;
-@property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
-@property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 @property (copy,   nonatomic) NSString* helpPage;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
 

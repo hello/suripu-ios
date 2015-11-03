@@ -303,7 +303,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="RYl-gV-ozZ" kind="relationship" relationship="rootViewController" id="v6S-6n-Ftl"/>
+                        <segue destination="RYl-gV-ozZ" kind="relationship" relationship="rootViewController" id="4Pl-SE-Bmr"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HBq-s5-17a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1056,6 +1056,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                     <connections>
                         <outlet property="continueButton" destination="uDw-jj-ZIo" id="2Gq-lZ-hh1"/>
                         <outlet property="descriptionLabel" destination="0se-fT-N6l" id="nx1-bH-fRs"/>
+                        <outlet property="descriptionTopConstraint" destination="bkw-Qq-JXe" id="SLr-7R-q9o"/>
                         <outlet property="titleHeightConstraint" destination="EgG-I3-2LF" id="OEE-xh-EpN"/>
                         <outlet property="titleLabel" destination="phz-De-JCe" id="KZ3-uU-nQ3"/>
                         <outlet property="videoView" destination="iCk-oN-npe" id="76y-9E-Ojj"/>

@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENAlarm.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
@@ -177,9 +178,12 @@ NSString* const kHEMAnalyticsEventAlarms = @"Alarms";
 NSString* const HEMAnalyticsEventCreateNewAlarm = @"Create new alarm";
 NSString* const HEMAnalyticsEventSwitchSmartAlarm = @"Flip smart alarm switch";
 NSString* const HEMAnalyticsEventSwitchSmartAlarmOn = @"on";
-NSString* const HEMAnalyticsEventSaveAlarm = @"Save alarm";
-NSString* const HEMAnalyticsEventSaveAlarmHour = @"hour";
-NSString* const HEMAnalyticsEventSaveAlarmMinute = @"minute";
+NSString* const HEMAnalyticsEventSaveAlarm = @"Alarm Saved";
+NSString* const HEMAnalyticsEventPropDaysRepeated = @"days_repeated";
+NSString* const HEMAnalyticsEventPropEnabled = @"enabled";
+NSString* const HEMAnalyticsEventPropIsSmart = @"smart_alarm";
+NSString* const HEMAnalyticsEventPropHour = @"hour";
+NSString* const HEMAnalyticsEventPropMinute = @"minute";
 
 // system alerts
 NSString* const HEMAnalyticsEventSystemAlert = @"System Alert";
@@ -299,6 +303,66 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
             break;
     }
     [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropGender : genderString}];
+}
+
++ (NSString*)trueFalsePropertyValue:(BOOL)isTrue {
+    return isTrue ? @"true" : @"false";
+}
+
++ (void)appendValue:(NSString*)value toCommaSeparatedString:(NSMutableString*)csString{
+    
+    if ([csString length] > 0) {
+        [csString appendFormat:@", %@", value];
+    } else {
+        [csString appendString:value];
+    }
+
+}
+
+#pragma mark - Special Alarm Analytics
+
++ (NSString*)alarmRepeatedDaysPropertyValue:(SENAlarm*)alarm {
+    NSMutableString* repeatedDays = [NSMutableString new];
+    NSUInteger flags = [alarm repeatFlags];
+    
+    if (flags & SENAlarmRepeatSunday) {
+        [self appendValue:@"0" toCommaSeparatedString:repeatedDays];
+    }
+    
+    if (flags & SENAlarmRepeatMonday) {
+        [self appendValue:@"1" toCommaSeparatedString:repeatedDays];
+    }
+    
+    if (flags & SENAlarmRepeatTuesday) {
+        [self appendValue:@"2" toCommaSeparatedString:repeatedDays];
+    }
+    
+    if (flags & SENAlarmRepeatWednesday) {
+        [self appendValue:@"3" toCommaSeparatedString:repeatedDays];
+    }
+    
+    if (flags & SENAlarmRepeatThursday) {
+        [self appendValue:@"4" toCommaSeparatedString:repeatedDays];
+    }
+    
+    if (flags & SENAlarmRepeatFriday) {
+        [self appendValue:@"5" toCommaSeparatedString:repeatedDays];
+    }
+    
+    if (flags & SENAlarmRepeatSaturday) {
+        [self appendValue:@"6" toCommaSeparatedString:repeatedDays];
+    }
+    
+    return repeatedDays;
+}
+
++ (void)trackAlarmSave:(SENAlarm*)alarm {
+    NSDictionary* props = @{HEMAnalyticsEventPropHour : @([alarm hour]),
+                            HEMAnalyticsEventPropMinute : @([alarm minute]),
+                            HEMAnalyticsEventPropEnabled : [self trueFalsePropertyValue:[alarm isOn]],
+                            HEMAnalyticsEventPropIsSmart : [self trueFalsePropertyValue:[alarm isSmartAlarm]],
+                            HEMAnalyticsEventPropDaysRepeated : [self alarmRepeatedDaysPropertyValue:alarm]};
+    [self track:HEMAnalyticsEventSaveAlarm properties:props];
 }
 
 @end

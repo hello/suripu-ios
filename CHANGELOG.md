@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.7.0
+
+New:
+
+* Updated analytics when saving alarm to match Android
+* Removed the Force sign out option in settings bundle
+
+Fixes:
+
+* Fixed truncated description in pairing mode screen on 4s
+* Kick user out of Sense settings after entering pairing mode via app
+* Tapping outside the content of an alert will dismiss it
+* Better error handling in change password screen
+* Trim email when updating it
+
 ## 1.1.6.7
 
 Fixes:

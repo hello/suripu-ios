@@ -231,6 +231,14 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 - (NSString*)localizedMessageFromAccountError:(NSError*)error;
 
 /**
+ * @discussion
+ * Convenience method to retrieve the http status code from the NSError
+ *
+ * @return http status code if available
+ */
+- (NSInteger)httpStatusCodeFromError:(NSError*)error;
+
+/**
  * Check the number of paired accounts currently attached to the Sense that
  * has been set for the currently active sense manager, if any.  Upon completion,
  * the property pairedAccountsToSense will be set

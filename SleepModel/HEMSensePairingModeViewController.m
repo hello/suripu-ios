@@ -11,6 +11,7 @@
 #import "HEMSensePairingModeViewController.h"
 #import "HEMActionButton.h"
 #import "HEMEmbeddedVideoView.h"
+#import "HEMBaseController+Protected.h"
 
 @interface HEMSensePairingModeViewController()
 
@@ -23,10 +24,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self configureAttributedSubtitle];
     [self configureVideoView];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
-    [self configureAttributedSubtitle];
     [self trackAnalyticsEvent:HEMAnalyticsEventPairingMode];
 }
 
@@ -48,6 +50,7 @@
     UIImage* image = [UIImage imageNamed:@"pairingMode"];
     NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pairing-mode", nil);
     [[self videoView] setFirstFrame:image videoPath:videoPath];
+    [[self view] updateConstraintsIfNeeded];
 }
 
 - (void)configureAttributedSubtitle {
@@ -58,8 +61,19 @@
     NSMutableAttributedString* attrSubtitle
         = [[NSMutableAttributedString alloc] initWithFormat:format args:args];
     
+    NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSTextAlignmentLeft];
+    [attrSubtitle addAttribute:NSParagraphStyleAttributeName
+                         value:style
+                         range:NSMakeRange(0, [attrSubtitle length])];
+    
     [self applyCommonDescriptionAttributesTo:attrSubtitle];
     [[self descriptionLabel] setAttributedText:attrSubtitle];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [super adjustConstraintsForIPhone4];
+    [[self descriptionTopConstraint] setConstant:0.0f];
 }
 
 - (IBAction)done:(id)sender {

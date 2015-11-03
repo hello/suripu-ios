@@ -199,6 +199,15 @@
 "settings.account.name.update.title" = "Change name";
 "settings.account.password.update.title" = "Change password";
 "settings.account.update.failure" = "A value is required for your account.";
+"settings.account.password.current-password-wrong" = "Current password is not recognized.";
+"settings.account.password-too-short" = "Your password is too sjhort. Passwords must be at least six characters.";
+"settings.account.password-insecure" = "New password is too insecure.  Enter a new one and try again.";
+"settings.account.update.account-not-up-to-date" = "A recent modification to your account conflicted with your change.  Try again.";
+"settings.account.update.unknown-failure" = "Unable to update your account at this time.  Try again later.";
+"settings.account.update.email-already-exists" = "The email provided already exists.";
+"settings.account.update.email-invalid" = "The email is invalid.  Check that you entered the correct email and try again.";
+"settings.account.update.name-too-long" = "New name is too long and cannot be accepted.  Try again with a shorter name.";
+"settings.account.update.name-too-short" = "New name is too short.  Try again with longer name.";
 
 // support
 "debug.options.title" = "Debug options";
@@ -597,12 +606,6 @@
 "notifications.actions.daily" = "Daily";
 "notifications.actions.weekly" = "Weekly";
 "notifications.actions.infrequently" = "Infrequently";
-
-// network connection error code messages
-"network.error.not-connected" = "An internet connection is required to proceed. Make sure you are connected and try again.";
-"network.error.connection-lost" = "Connection to the internet was lost during the request. Try again.";
-"network.error.cannot-connect-to-host" = "Unable to connect to our servers. Try again later.";
-"network.error.timed-out" = "The request timed out. Make sure you have a good internet connection and try again.";
 
 // dialog
 "dialog.help.title" = "I'm having trouble";

@@ -10,9 +10,21 @@
 
 typedef void(^SENAccountResponseBlock)(NSError* error);
 
-typedef NS_ENUM(NSUInteger, SENServiceAccountError) {
-    SENServiceAccountErrorInvalidArg = 1
+typedef NS_ENUM(NSInteger, SENServiceAccountError) {
+    SENServiceAccountErrorUnknown = 0,
+    SENServiceAccountErrorInvalidArg = -1,
+    SENServiceAccountErrorPasswordNotRecognized = -2,
+    SENServiceAccountErrorAccountNotUpToDate = -3,
+    SENServiceAccountErrorNameTooShort = -4,
+    SENServiceAccountErrorNameTooLong = -5,
+    SENServiceAccountErrorEmailInvalid = -6,
+    SENServiceAccountErrorPasswordInsecure = -7,
+    SENServiceAccountErrorPasswordTooShort = -8,
+    SENServiceAccountErrorEmailAlreadyExists = -9,
+    SENServiceAccountErrorServerFailure = -10
 };
+
+extern NSString* const SENServiceAccountErrorDomain;
 
 @class SENAccount;
 @class SENPreference;

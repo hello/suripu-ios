@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) HEMAlertView* dialogView;
 @property (nonatomic, weak)   UIViewController* myPresentingController;
+
 @end
 
 @implementation HEMAlertViewController
@@ -35,6 +36,14 @@
                           action:nil];
     dialogVC.viewToShowThrough = view;
     [dialogVC showFrom:controller];
+}
+
++ (NSAttributedString *)attributedMessageText:(NSString *)text {
+    NSDictionary *attributes = [HEMMarkdown attributesForAlertMessageText][@(PARA)];
+    NSAttributedString* attributedMessage = nil;
+    if (text.length > 0)
+        attributedMessage = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return attributedMessage;
 }
 
 - (instancetype)initBooleanDialogWithTitle:(NSString *)title
@@ -55,14 +64,6 @@
     return self;
 }
 
-+ (NSAttributedString *)attributedMessageText:(NSString *)text {
-    NSDictionary *attributes = [HEMMarkdown attributesForAlertMessageText][@(PARA)];
-    NSAttributedString* attributedMessage = nil;
-    if (text.length > 0)
-        attributedMessage = [[NSAttributedString alloc] initWithString:text attributes:attributes];
-    return attributedMessage;
-}
-
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
     if (self = [super init]) {
         self.title = title;
@@ -74,6 +75,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addBackgroundView];
+    [self configureGestures];
 }
 
 - (void)addBackgroundView {
@@ -86,6 +88,12 @@
     } else {
         [[self view] setBackgroundColor:[UIColor alertBackgroundColor]];
     }
+}
+
+- (void)configureGestures {
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] init];
+    [tapGesture addTarget:self action:@selector(didTapOnBackground:)];
+    [[self view] addGestureRecognizer:tapGesture];
 }
 
 - (HEMAlertView *)dialogView {
@@ -125,6 +133,15 @@
         [[self view] addSubview:[self dialogView]];
         [HEMAnimationUtils grow:[self dialogView] completion:nil];
     }];
+}
+
+- (void)didTapOnBackground:(UITapGestureRecognizer*)gesture {
+    if ([gesture state] == UIGestureRecognizerStateEnded) {
+        CGPoint tapPoint = [gesture locationInView:[self view]];
+        if (!CGRectContainsPoint([[self dialogView] frame], tapPoint)) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
 }
 
 @end

@@ -201,6 +201,7 @@
 		BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
+		BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */; settings = {ASSET_TAGS = (); }; };
 		BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */; };
 		BF8E1AA11A689FB2009E421F /* HEMSenseAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1AA01A689FB2009E421F /* HEMSenseAudioViewController.m */; };
 		BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */; };
@@ -665,6 +666,7 @@
 		BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportUtil.m; sourceTree = "<group>"; };
 		BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRootViewController.h; sourceTree = "<group>"; };
 		BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRootViewController.m; sourceTree = "<group>"; };
+		BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trends.xcassets; sourceTree = "<group>"; };
 		BF8E1A801A6873A2009E421F /* HEMSensePairingModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairingModeViewController.h; sourceTree = "<group>"; };
 		BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairingModeViewController.m; sourceTree = "<group>"; };
 		BF8E1A9F1A689FB2009E421F /* HEMSenseAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseAudioViewController.h; sourceTree = "<group>"; };
@@ -1332,6 +1334,7 @@
 		8AC276A91A3CE54C00B082D9 /* Trends */ = {
 			isa = PBXGroup;
 			children = (
+				BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */,
 				8AC276AA1A3CE71200B082D9 /* View Controllers */,
 				8A4D49091A67460000DD6ECE /* Views */,
 			);
@@ -2107,6 +2110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
+				BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
 				8AF7BCD01B3880F9000793D7 /* HEMSleepSegmentCollectionViewCell.xib in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,

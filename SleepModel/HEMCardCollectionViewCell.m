@@ -32,7 +32,7 @@
     self.layer.shadowColor = [[shadow shadowColor] CGColor];
     self.layer.shadowRadius = [shadow shadowBlurRadius];
     self.layer.shadowOpacity = 1.f;
-    self.layer.masksToBounds = NO;
+    self.layer.masksToBounds = YES;
 }
 
 @end

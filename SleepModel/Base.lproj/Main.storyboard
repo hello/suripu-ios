@@ -3721,27 +3721,27 @@
                                 <rect key="frame" x="0.0" y="67" width="600" height="487"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yR9-IH-qIm" customClass="HEMCardFlowLayout">
-                                    <size key="itemSize" width="540" height="235"/>
+                                    <size key="itemSize" width="584" height="235"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="overTime" id="guW-fA-0W9" userLabel="empty" customClass="HEMEmptyTrendCollectionViewCell">
-                                        <rect key="frame" x="30" y="64" width="540" height="185"/>
+                                        <rect key="frame" x="8" y="64" width="584" height="248"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="540" height="185"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="248"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SLEEP TRENDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LV7-gY-Z7H">
-                                                    <rect key="frame" x="22" y="30" width="496" height="16"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
-                                                    <color key="textColor" red="0.5296475887298584" green="0.52963173389434814" blue="0.52964073419570923" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough data yet, check back later" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qC-jO-Gfz">
-                                                    <rect key="frame" x="8" y="86" width="524" height="20"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyStateTrends" translatesAutoresizingMaskIntoConstraints="NO" id="5j7-Lc-pYu">
+                                                    <rect key="frame" x="0.0" y="0.0" width="584" height="180"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="180" id="ny1-cb-epz"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your trends appear after a week of sleep." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qC-jO-Gfz">
+                                                    <rect key="frame" x="40" y="204" width="504" height="20"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -3751,28 +3751,28 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="top" secondItem="LV7-gY-Z7H" secondAttribute="bottom" constant="40" id="012-73-GoV"/>
-                                            <constraint firstItem="LV7-gY-Z7H" firstAttribute="top" secondItem="guW-fA-0W9" secondAttribute="topMargin" constant="22" id="Jm0-RR-LGc"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="9qC-jO-Gfz" secondAttribute="trailing" id="S8Q-7m-qRE"/>
-                                            <constraint firstItem="LV7-gY-Z7H" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" priority="750" constant="14" id="gHq-bm-vxd"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="LV7-gY-Z7H" secondAttribute="trailing" constant="14" id="gwr-ml-CER"/>
-                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" id="hDt-oE-ZlD"/>
+                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" constant="32" id="1C4-ne-gWx"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="9qC-jO-Gfz" secondAttribute="trailing" constant="32" id="OBD-Dj-LWi"/>
+                                            <constraint firstItem="5j7-Lc-pYu" firstAttribute="top" secondItem="guW-fA-0W9" secondAttribute="topMargin" constant="-8" id="OSq-UU-7m8"/>
+                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="top" secondItem="guW-fA-0W9" secondAttribute="topMargin" constant="196" id="WV3-r3-Dww"/>
+                                            <constraint firstItem="5j7-Lc-pYu" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" constant="-8" id="e3g-AV-yC9"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="5j7-Lc-pYu" secondAttribute="trailing" constant="-8" id="zcb-3U-rZD"/>
                                         </constraints>
-                                        <size key="customSize" width="540" height="185"/>
+                                        <size key="customSize" width="584" height="248"/>
                                         <connections>
                                             <outlet property="detailLabel" destination="9qC-jO-Gfz" id="w0C-Si-NUb"/>
-                                            <outlet property="titleLabel" destination="LV7-gY-Z7H" id="etC-Oh-Onc"/>
+                                            <outlet property="illustrationView" destination="5j7-Lc-pYu" id="53s-Cc-74V"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="trendGraph" id="AoB-W3-581" userLabel="graph" customClass="HEMTrendCollectionViewCell">
-                                        <rect key="frame" x="30" y="259" width="540" height="255"/>
+                                        <rect key="frame" x="8" y="322" width="584" height="255"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="540" height="255"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="255"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SLEEP SCORE OVER TIME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVd-Hi-XJW">
-                                                    <rect key="frame" x="14" y="76" width="512" height="20"/>
+                                                    <rect key="frame" x="14" y="76" width="556" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="OcU-PF-hAP"/>
                                                     </constraints>
@@ -3781,17 +3781,17 @@
                                                     <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jl4-Bk-rKU" userLabel="bar graph view" customClass="HEMBarGraphView">
-                                                    <rect key="frame" x="0.0" y="120" width="540" height="135"/>
+                                                    <rect key="frame" x="0.0" y="120" width="584" height="135"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="135" id="ngO-Wr-g4F"/>
                                                     </constraints>
                                                 </view>
                                                 <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mz2-Dc-hJA" userLabel="line graph container">
-                                                    <rect key="frame" x="0.0" y="134" width="540" height="121"/>
+                                                    <rect key="frame" x="0.0" y="134" width="584" height="121"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NlD-7X-U68" customClass="BEMSimpleLineGraphView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="540" height="121"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="584" height="121"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </view>
                                                     </subviews>
@@ -3804,14 +3804,14 @@
                                                     </constraints>
                                                 </view>
                                                 <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHF-JM-qCz" userLabel="overlay view" customClass="HEMGraphSectionOverlayView">
-                                                    <rect key="frame" x="0.0" y="120" width="540" height="135"/>
+                                                    <rect key="frame" x="0.0" y="120" width="584" height="135"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="GkP-h4-wTp" userLabel="scope picker" customClass="HEMScopePickerView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="540" height="52"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="584" height="52"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="emg-VO-eRc" userLabel="scope picker border">
-                                                            <rect key="frame" x="0.0" y="51" width="540" height="1"/>
+                                                            <rect key="frame" x="0.0" y="51" width="584" height="1"/>
                                                             <color key="backgroundColor" red="0.95081578038674031" green="0.95081578038674031" blue="0.95081578038674031" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="1" id="4vE-X1-tCo"/>
@@ -3826,7 +3826,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-ZL-kDz">
-                                                    <rect key="frame" x="212" y="136" width="117" height="21"/>
+                                                    <rect key="frame" x="233" y="136" width="117" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -3857,7 +3857,7 @@
                                             <constraint firstAttribute="bottom" secondItem="jl4-Bk-rKU" secondAttribute="bottom" id="z36-tq-XCW"/>
                                             <constraint firstAttribute="trailing" secondItem="uVd-Hi-XJW" secondAttribute="trailing" constant="14" id="zlv-XM-gKC"/>
                                         </constraints>
-                                        <size key="customSize" width="540" height="255"/>
+                                        <size key="customSize" width="584" height="255"/>
                                         <connections>
                                             <outlet property="barGraphView" destination="jl4-Bk-rKU" id="2MK-jd-uFw"/>
                                             <outlet property="graphLeftConstraint" destination="b9t-G1-odI" id="Icb-k2-5lt"/>
@@ -4422,6 +4422,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="EmptyStateTrends" width="359" height="180"/>
         <image name="accessory" width="8" height="15"/>
         <image name="alarmRepeatIcon" width="25" height="25"/>
         <image name="alarmShortcut" width="54" height="54"/>

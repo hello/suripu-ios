@@ -29,7 +29,7 @@
 
 @implementation HEMTrendsViewController
 
-static CGFloat const HEMTrendsViewCellHeight = 198.f;
+static CGFloat const HEMTrendsViewCellHeight = 248.f;
 static CGFloat const HEMTrendsViewOptionsCellHeight = 255.f;
 
 static NSString* const HEMScoreTrendType = @"SLEEP_SCORE";
@@ -212,9 +212,7 @@ static NSString* const HEMAllScopeType = @"ALL";
         NSFontAttributeName : [UIFont backViewTitleFont] };
     NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:trend.title attributes:attributes];
     if (trend.dataPoints.count <= 2) {
-        HEMEmptyTrendCollectionViewCell* cell = [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
-        cell.titleLabel.attributedText = attributedTitle;
-        return cell;
+        return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
     NSString* identifier = [HEMMainStoryboard trendGraphReuseIdentifier];
     HEMTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
@@ -229,16 +227,12 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (HEMEmptyTrendCollectionViewCell*)collectionView:(UICollectionView*)collectionView emptyCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     NSString* identifier = [HEMMainStoryboard overTimeReuseIdentifier];
-    NSDictionary* attributes = @{ NSKernAttributeName : @(2.2) };
     HEMEmptyTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                       forIndexPath:indexPath];
     if ([self isLoading]) {
-        cell.titleLabel.text = nil;
         cell.detailLabel.text = NSLocalizedString(@"activity.loading", nil);
     }
     else {
-        NSString* title = [NSLocalizedString(@"trends.not-enough-data.title", nil) uppercaseString];
-        cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
         cell.detailLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
     }
     return cell;

@@ -291,4 +291,9 @@
     self.currentIndex = middleIndex;
 }
 
+- (void)dealloc {
+    [_tableView setDelegate:nil];
+    [_tableView setDataSource:nil];
+}
+
 @end

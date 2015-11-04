@@ -113,6 +113,10 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         [self setControlsEnabled:NO];
         [self pairPill:self];
         [self setLoaded:YES];
+    } else {
+        if ([[self retryButton] isShowingActivity]) {
+            [[self videoView] playVideoWhenReady];
+        }
     }
 }
 

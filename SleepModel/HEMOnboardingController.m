@@ -273,23 +273,27 @@
     [[[self navigationController] interactivePopGestureRecognizer] setEnabled:enable];
 }
 
+- (UIBarButtonItem*)cancelItemWithTitle:(NSString*)title image:(UIImage*)image action:(SEL)action {
+    UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelButton setTitle:title forState:UIControlStateNormal];
+    [cancelButton setImage:image forState:UIControlStateNormal];
+    [[cancelButton titleLabel] setFont:[UIFont navButtonTitleFont]];
+    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [cancelButton setTitleColor:[UIColor clearColor] forState:UIControlStateDisabled];
+    [cancelButton setTintColor:[UIColor tintColor]];
+    [cancelButton sizeToFit];
+    [cancelButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    return [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+}
+
 - (void)showCancelButtonWithSelector:(SEL)selector {
     NSString* title = NSLocalizedString(@"actions.cancel", nil);
-    UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:selector];
-    [cancelItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithWhite:1.0f alpha:0.0f]}
-                              forState:UIControlStateDisabled];
+    UIBarButtonItem* cancelItem = [self cancelItemWithTitle:title image:nil action:selector];
     [self useCancelBarButtonItem:cancelItem];
 }
 
 - (void)showBackButtonAsCancelWithSelector:(SEL)action {
-    UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit backIcon]
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:action];
-    [cancelItem setTintColor:[UIColor tintColor]];
+    UIBarButtonItem* cancelItem = [self cancelItemWithTitle:nil image:[HelloStyleKit backIcon] action:action];
     [self useCancelBarButtonItem:cancelItem];
 }
 

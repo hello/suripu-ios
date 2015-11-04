@@ -497,10 +497,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [service notifyOfSensePairingChange];
 
         if ([strongSelf delegate] != nil) {
-            [[HEMOnboardingService sharedService] clear];
+            [[HEMOnboardingService sharedService] clearAll];
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
         } else if ([strongSelf sensePairDelegate] != nil) {
-            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:strongSelf];
+            __block SENSenseManager* manager = [strongSelf manager];
+            [[HEMOnboardingService sharedService] clearAll];
+            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:manager from:strongSelf];
         } else {
             [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]

@@ -179,6 +179,7 @@ NSString* const HEMAnalyticsEventCreateNewAlarm = @"Create new alarm";
 NSString* const HEMAnalyticsEventSwitchSmartAlarm = @"Flip smart alarm switch";
 NSString* const HEMAnalyticsEventSwitchSmartAlarmOn = @"on";
 NSString* const HEMAnalyticsEventSaveAlarm = @"Alarm Saved";
+NSString* const HEMAnalyticsEventAlarmOnOff = @"Alarm On/Off";
 NSString* const HEMAnalyticsEventPropDaysRepeated = @"days_repeated";
 NSString* const HEMAnalyticsEventPropEnabled = @"enabled";
 NSString* const HEMAnalyticsEventPropIsSmart = @"smart_alarm";
@@ -356,13 +357,22 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
     return repeatedDays;
 }
 
++ (NSDictionary*)alarmPropertiesFor:(SENAlarm*)alarm {
+    return @{HEMAnalyticsEventPropHour : @([alarm hour]),
+             HEMAnalyticsEventPropMinute : @([alarm minute]),
+             HEMAnalyticsEventPropEnabled : [self trueFalsePropertyValue:[alarm isOn]],
+             HEMAnalyticsEventPropIsSmart : [self trueFalsePropertyValue:[alarm isSmartAlarm]],
+             HEMAnalyticsEventPropDaysRepeated : [self alarmRepeatedDaysPropertyValue:alarm]};
+}
+
 + (void)trackAlarmSave:(SENAlarm*)alarm {
-    NSDictionary* props = @{HEMAnalyticsEventPropHour : @([alarm hour]),
-                            HEMAnalyticsEventPropMinute : @([alarm minute]),
-                            HEMAnalyticsEventPropEnabled : [self trueFalsePropertyValue:[alarm isOn]],
-                            HEMAnalyticsEventPropIsSmart : [self trueFalsePropertyValue:[alarm isSmartAlarm]],
-                            HEMAnalyticsEventPropDaysRepeated : [self alarmRepeatedDaysPropertyValue:alarm]};
+    NSDictionary* props = [self alarmPropertiesFor:alarm];
     [self track:HEMAnalyticsEventSaveAlarm properties:props];
+}
+
++ (void)trackAlarmToggle:(SENAlarm*)alarm {
+    NSDictionary* props = [self alarmPropertiesFor:alarm];
+    [self track:HEMAnalyticsEventAlarmOnOff properties:props];
 }
 
 @end

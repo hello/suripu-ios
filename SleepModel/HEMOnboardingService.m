@@ -2,6 +2,10 @@
 //  HEMOnboardingService.m
 //  Sense
 //
+//  TODO: we should merge this with the device service or handle all device
+//  interaction through SENServiceDevice or here, but not spread it across
+//  both
+//
 //  Created by Jimmy Lu on 7/16/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
@@ -49,13 +53,9 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     static HEMOnboardingService* service = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        service = [[super allocWithZone:NULL] init];
+        service = [[super alloc] init];
     });
     return service;
-}
-
-+ (id)allocWithZone:(struct _NSZone *)zone {
-    return [self sharedService];
 }
 
 - (void)clear {
@@ -67,6 +67,12 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
     // leave the current sense manager in place
+}
+
+- (void)clearAll {
+    [self clear];
+    [self disconnectCurrentSense];
+    [self setCurrentSenseManager:nil];
 }
 
 - (NSError*)errorWithCode:(HEMOnboardingError)code reason:(NSString*)reason {
@@ -95,6 +101,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 }
 
 - (void)replaceCurrentSenseManagerWith:(SENSenseManager*)manager {
+    DDLogVerbose(@"replacing current manager %@, with %@", [self currentSenseManager], manager);
     [self setCurrentSenseManager:manager];
 }
 
@@ -487,6 +494,10 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 #pragma mark - Link Account
 
+// TODO: we probably should clean up onboarding service and device service
+// so that all device interaction happens within one of them and not both
+// such that these types of interactions are more fluid (see note after linking
+// account)
 - (void)linkCurrentAccount:(void(^)(NSError* error))completion {
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self currentSenseManager];
@@ -507,7 +518,13 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
         return;
     }
 
+    __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
+        // load the service data so is readily available, if not in onboarding
+        if ([weakSelf hasFinishedOnboarding]) {
+            [[SENServiceDevice sharedService] loadDeviceInfo:nil];
+        }
+        
         if (completion) {
             completion (nil);
         }
@@ -540,9 +557,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 - (void)markOnboardingAsComplete {
     // if you call this method, you want to leave onboarding so make sure it's set
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
-    [self clear];
-    [self disconnectCurrentSense];
-    [self setCurrentSenseManager:nil];
+    [self clearAll];
 }
 
 #pragma mark - Notifications

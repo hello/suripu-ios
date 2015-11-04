@@ -285,6 +285,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
         return;
     }
     alarm.on = on;
+    [SENAnalytics trackAlarmToggle:alarm];
     [HEMAlarmUtils updateAlarmsFromPresentingController:self
                                              completion:^(NSError *error) {
                                                if (error) {

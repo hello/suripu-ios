@@ -167,6 +167,7 @@ extern NSString* const HEMAnalyticsEventTimelineAlarmShortcut;
 extern NSString* const kHEMAnalyticsEventAlarms;
 extern NSString* const HEMAnalyticsEventCreateNewAlarm;
 extern NSString* const HEMAnalyticsEventSwitchSmartAlarm;
+extern NSString* const HEMAnalyticsEventAlarmOnOff;
 extern NSString* const HEMAnalyticsEventPropDaysRepeated;
 extern NSString* const HEMAnalyticsEventPropEnabled;
 extern NSString* const HEMAnalyticsEventPropIsSmart;
@@ -202,5 +203,6 @@ extern NSString* const HEMAnalyticsEventAppReviewSkip;
 + (void)trackError:(NSError*)error;
 + (void)updateGender:(SENAccountGender)gender;
 + (void)trackAlarmSave:(SENAlarm*)alarm;
++ (void)trackAlarmToggle:(SENAlarm*)alarm;
 
 @end

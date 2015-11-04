@@ -49,8 +49,6 @@
 	<string>${SENSE_APP_REVIEW_URL}</string>
 	<key>SenseClientId</key>
 	<string>${SENSE_CLIENT_ID}</string>
-	<key>SenseCrashReportsToken</key>
-	<string>${SENSE_CRASH_REPORTS_TOKEN}</string>
 	<key>SensePasswordResetURL</key>
 	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>SenseZendeskClientId</key>

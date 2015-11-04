@@ -14,7 +14,6 @@
 static NSString* const HEMConfigAPIPlistKey = @"SenseApiUrl";
 static NSString* const HEMConfigClientIdPlistKey = @"SenseClientId";
 static NSString* const HEMConfigAnalyticsTokenPlistKey = @"SenseAnalyticsToken";
-static NSString* const HEMConfigCrashTokenPlistKey = @"SenseCrashReportsToken";
 static NSString* const HEMConfigAppReviewURLPlistKey = @"SenseAppReviewURL";
 static NSString* const HEMConfigPassResetURLPlistKey = @"SensePasswordResetURL";
 
@@ -38,8 +37,6 @@ static NSString* const HEMConfigZendeskClientIdPlistKey = @"SenseZendeskClientId
         case HEMConfClientId:
             return [bundle objectForInfoDictionaryKey:HEMConfigClientIdPlistKey];
         case HEMConfAnalyticsToken:
-            return [bundle objectForInfoDictionaryKey:HEMConfigAnalyticsTokenPlistKey];
-        case HEMConfCrashlyticsToken:
             return [bundle objectForInfoDictionaryKey:HEMConfigAnalyticsTokenPlistKey];
         case HEMConfAllowDebugOptions:
             return [bundle objectForInfoDictionaryKey:HEMConfigAllowSupportOptions];

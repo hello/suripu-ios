@@ -305,6 +305,16 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 - (void)clear;
 
 /**
+ * @method clearAll
+ *
+ * @discussion
+ * Clears the current cache, disconnects from sense, and clears the sense manager
+ *
+ * @see clear
+ */
+- (void)clearAll;
+
+/**
  * @method markOnboardingAsComplete:
  *
  * @discussion

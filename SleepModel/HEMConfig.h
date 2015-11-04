@@ -12,7 +12,6 @@ typedef NS_ENUM(NSUInteger, HEMConf) {
     HEMConfAPIURL,
     HEMConfClientId,
     HEMConfAnalyticsToken,
-    HEMConfCrashlyticsToken,
     HEMConfAllowDebugOptions,
     HEMConfZendeskToken,
     HEMConfZendeskURL,

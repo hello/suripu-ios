@@ -48,7 +48,6 @@
 		8A4D49121A67532800DD6ECE /* HEMScopePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4D49111A67532800DD6ECE /* HEMScopePickerView.m */; };
 		8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */; };
 		8A50A18A1B548C1A007FDECC /* UIImage+HEMBlurTint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1891B548C1A007FDECC /* UIImage+HEMBlurTint.m */; };
-		8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A54029E19AE299B00FC6085 /* Crashlytics.framework */; };
 		8A576F121A79B12200287398 /* HEMTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A576F111A79B12200287398 /* HEMTutorial.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A63D5551A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A63D5541A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m */; };
@@ -383,7 +382,6 @@
 		8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMScreenUtils.m; sourceTree = "<group>"; };
 		8A50A1881B548C1A007FDECC /* UIImage+HEMBlurTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HEMBlurTint.h"; sourceTree = "<group>"; };
 		8A50A1891B548C1A007FDECC /* UIImage+HEMBlurTint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HEMBlurTint.m"; sourceTree = "<group>"; };
-		8A54029E19AE299B00FC6085 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8A5402A019AE72F300FC6085 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
 		8A576F101A79B12200287398 /* HEMTutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTutorial.h; sourceTree = "<group>"; };
 		8A576F111A79B12200287398 /* HEMTutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTutorial.m; sourceTree = "<group>"; };
@@ -818,7 +816,6 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */,
 				2109C3418ADD4BA6824507C6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -876,7 +873,6 @@
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
 				BF7F1BDF19E30DCC0028F799 /* libPods.a */,
 				BF7F1BDD19E30D9A0028F799 /* libPods.a */,
-				8A54029E19AE299B00FC6085 /* Crashlytics.framework */,
 				BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
@@ -1994,7 +1990,6 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				352ECF48FC214905A51E01BC /* Copy Pods Resources */,
-				8A54029D19AE296200FC6085 /* ShellScript */,
 				BF7F1BDB19E304050028F799 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -2189,20 +2184,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		8A54029D19AE296200FC6085 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run f464ccd280d3e5730dcdaa9b64d1d108694ee9a9 c1c2f12a5d26d28ba58d88e8f4045241f854d6ce829415d932df453877112636";
 			showEnvVarsInLog = 0;
 		};
 		C2DAFDFE628B4AE1A8B7C294 /* Copy Pods Resources */ = {
@@ -2592,7 +2573,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = iphone_pill;
-				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -2641,7 +2621,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
-				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
 				SENSE_SUPPORT_OPTIONS = NO;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -2846,7 +2825,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
-				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -2969,7 +2947,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = iphone_pill;
-				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;

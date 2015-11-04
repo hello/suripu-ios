@@ -1,5 +1,4 @@
 #import <SenseKit/SenseKit.h>
-#import <Crashlytics/Crashlytics.h>
 
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
@@ -156,14 +155,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
 - (void)configureAnalytics {
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
-    NSString* crashylyticsToken = [HEMConfig stringForConfig:HEMConfCrashlyticsToken];
-    
-    if ([crashylyticsToken length] > 0) {
-        DDLogVerbose(@"crashlytics enabled");
-        [Crashlytics startWithAPIKey:crashylyticsToken];
-        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
-        if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
-    }
     
     if ([analyticsToken length] > 0) {
         DDLogVerbose(@"analytics enabled");

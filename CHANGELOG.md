@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.7.2
+
+Misc:
+
+* Attempt to fix stupid iTC by forcing a new upload
+
 ## 1.1.7.1
 
 New:

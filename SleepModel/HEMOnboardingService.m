@@ -487,6 +487,10 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 #pragma mark - Link Account
 
+// TODO: we probably should clean up onboarding service and device service
+// so that all device interaction happens within one of them and not both
+// such that these types of interactions are more fluid (see note after linking
+// account)
 - (void)linkCurrentAccount:(void(^)(NSError* error))completion {
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self currentSenseManager];
@@ -507,7 +511,13 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
         return;
     }
 
+    __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
+        // load the service data so is readily available, if not in onboarding
+        if ([weakSelf hasFinishedOnboarding]) {
+            [[SENServiceDevice sharedService] loadDeviceInfo:nil];
+        }
+        
         if (completion) {
             completion (nil);
         }

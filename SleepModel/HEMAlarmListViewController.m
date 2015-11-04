@@ -69,6 +69,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self configureSpinnerView];
     [self configureNoAlarmInstructions];
     [self configureDateFormatters];
+    [self listenForPairingNotifications];
     [self refreshData];
 }
 
@@ -98,6 +99,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
         self.alarms = nil;
     }
     [super didReceiveMemoryWarning];
+}
+
+- (void)listenForPairingNotifications {
+    
 }
 
 - (void)configureAddButton {

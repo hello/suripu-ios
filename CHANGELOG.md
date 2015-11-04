@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.1.7.1
+
+New:
+
+* Add alarm on/off analytics event
+
+Fixes:
+
+* Prevent unexpected disconnect if factory resetting and pairing sense multiple
+  times in 1 session
+* Resume pill pairing demo video when view re-appears
+* Time picker no longer crashes if you are playing around with it and spinning
+  the picker and cancelling out really fast at the right second
+* Refresh room conditions and alarm view after pairing with sense from those
+  screens
+* Fixed re-appearance of cancel button in various settings screen when view
+  re-appears
+
 ## 1.1.7.0
 
 New:

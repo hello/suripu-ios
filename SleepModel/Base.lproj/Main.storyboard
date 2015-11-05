@@ -3186,17 +3186,17 @@
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2SF-Wz-APV">
                                 <rect key="frame" x="0.0" y="3" width="600" height="487"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kxy-bs-n5o" customClass="HEMCardFlowLayout">
-                                    <size key="itemSize" width="560" height="95"/>
+                                    <size key="itemSize" width="584" height="95"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sensorGraphCell" id="Dcm-5V-93r" customClass="HEMSensorGraphCollectionViewCell">
-                                        <rect key="frame" x="20" y="0.0" width="560" height="95"/>
+                                        <rect key="frame" x="8" y="0.0" width="584" height="95"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="95"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="95"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="79" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="can-BL-pKK">
@@ -3206,17 +3206,17 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TU-LC-75s" userLabel="graph view" customClass="BEMSimpleLineGraphView">
-                                                    <rect key="frame" x="0.0" y="70" width="560" height="25"/>
+                                                    <rect key="frame" x="0.0" y="70" width="584" height="25"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No graph available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEK-bM-6TS">
-                                                    <rect key="frame" x="217" y="37" width="127" height="21"/>
+                                                    <rect key="frame" x="229" y="37" width="127" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiq-hi-kqe" userLabel="message label">
-                                                    <rect key="frame" x="133" y="36" width="419" height="18"/>
+                                                    <rect key="frame" x="133" y="36" width="443" height="18"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -3257,72 +3257,54 @@
                                             <outlet property="statusLabel" destination="bEK-bM-6TS" id="bnT-d0-aIu"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pair" id="VGs-ap-Mnm" customClass="HEMNoDeviceCollectionViewCell">
-                                        <rect key="frame" x="20" y="105" width="560" height="205"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pair" id="VGs-ap-Mnm" customClass="HEMSenseRequiredCollectionViewCell">
+                                        <rect key="frame" x="8" y="105" width="584" height="352"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="205"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="352"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseIcon" translatesAutoresizingMaskIntoConstraints="NO" id="7LE-py-rFj">
-                                                    <rect key="frame" x="16" y="16" width="36" height="36"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="EDi-ja-V6Q"/>
-                                                        <constraint firstAttribute="height" constant="36" id="IAY-gI-phV"/>
-                                                    </constraints>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noSense" translatesAutoresizingMaskIntoConstraints="NO" id="SvR-hw-Pwg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="584" height="180"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ir5-2m-A4Z">
-                                                    <rect key="frame" x="68" y="16" width="476" height="36"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="36" id="7xS-oS-p3s"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account.  Please pair with Sense to view current conditions." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vwY-HG-lJf">
+                                                    <rect key="frame" x="40" y="204" width="504" height="39"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzb-fH-BSr" customClass="HEMActionButton">
-                                                    <rect key="frame" x="16" y="142" width="528" height="40"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LIE-eZ-EFu" customClass="HEMActionButton">
+                                                    <rect key="frame" x="8" y="288" width="568" height="56"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="8qH-Ud-V5g"/>
+                                                        <constraint firstAttribute="height" constant="56" id="6Tr-DP-KO7"/>
                                                     </constraints>
-                                                    <state key="normal" title="PAIR A SENSE">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <state key="normal" title="PAIR NEW SENSE">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="pairSense:" destination="kT5-aR-lha" eventType="touchUpInside" id="Ccf-SW-T1e"/>
-                                                    </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hao-nF-lYk">
-                                                    <rect key="frame" x="16" y="76" width="528" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="tpu-tJ-LCj"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Tzb-fH-BSr" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="8" id="AWX-Xz-ser"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="hao-nF-lYk" secondAttribute="trailing" constant="8" id="SLZ-Gl-mle"/>
-                                            <constraint firstItem="hao-nF-lYk" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="8" id="ST4-nl-Uno"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="Tzb-fH-BSr" secondAttribute="bottom" constant="15" id="d1l-KL-0yd"/>
-                                            <constraint firstItem="ir5-2m-A4Z" firstAttribute="top" secondItem="VGs-ap-Mnm" secondAttribute="topMargin" constant="8" id="dQZ-2c-fVO"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="ir5-2m-A4Z" secondAttribute="trailing" constant="8" id="hig-fG-x8U"/>
-                                            <constraint firstItem="7LE-py-rFj" firstAttribute="top" secondItem="VGs-ap-Mnm" secondAttribute="topMargin" constant="8" id="hnM-g2-wCy"/>
-                                            <constraint firstItem="7LE-py-rFj" firstAttribute="bottom" secondItem="hao-nF-lYk" secondAttribute="top" constant="-24" id="n4b-KL-xLV"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="Tzb-fH-BSr" secondAttribute="trailing" constant="8" id="t0p-ds-cKM"/>
-                                            <constraint firstItem="ir5-2m-A4Z" firstAttribute="leading" secondItem="7LE-py-rFj" secondAttribute="trailing" constant="16" id="wVG-iZ-Lw4"/>
-                                            <constraint firstItem="7LE-py-rFj" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="8" id="yrf-hR-dTu"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="vwY-HG-lJf" secondAttribute="trailing" constant="32" id="3ZP-y0-leS"/>
+                                            <constraint firstItem="vwY-HG-lJf" firstAttribute="top" secondItem="SvR-hw-Pwg" secondAttribute="bottom" constant="24" id="HQr-Wf-pef"/>
+                                            <constraint firstItem="vwY-HG-lJf" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="32" id="NOJ-sc-CkQ"/>
+                                            <constraint firstAttribute="leadingMargin" secondItem="LIE-eZ-EFu" secondAttribute="leading" id="R9P-7c-fsd"/>
+                                            <constraint firstItem="SvR-hw-Pwg" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="-8" id="ROy-fo-GCF"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="LIE-eZ-EFu" secondAttribute="trailing" id="SVR-NA-mxo"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="LIE-eZ-EFu" secondAttribute="bottom" id="Sd0-jT-jGX"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="SvR-hw-Pwg" secondAttribute="trailing" constant="-8" id="a6f-lO-4kg"/>
+                                            <constraint firstItem="SvR-hw-Pwg" firstAttribute="top" secondItem="VGs-ap-Mnm" secondAttribute="topMargin" constant="-8" id="oY4-4D-c2G"/>
                                         </constraints>
-                                        <size key="customSize" width="560" height="205"/>
+                                        <size key="customSize" width="584" height="352"/>
                                         <connections>
-                                            <outlet property="iconImageView" destination="7LE-py-rFj" id="bwQ-gw-gRT"/>
-                                            <outlet property="messageLabel" destination="hao-nF-lYk" id="Luf-wK-oW1"/>
-                                            <outlet property="nameLabel" destination="ir5-2m-A4Z" id="WnT-59-SwR"/>
+                                            <outlet property="descriptionLabel" destination="vwY-HG-lJf" id="730-TP-U61"/>
+                                            <outlet property="illustrationView" destination="SvR-hw-Pwg" id="Vqt-tm-3fp"/>
+                                            <outlet property="leadingDescriptionConstraint" destination="NOJ-sc-CkQ" id="mBP-Rm-nfR"/>
+                                            <outlet property="pairSenseButton" destination="LIE-eZ-EFu" id="0yI-1O-aJw"/>
+                                            <outlet property="trailingDescriptionConstraint" destination="3ZP-y0-leS" id="NrD-vm-Kcg"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -4424,7 +4406,6 @@
         <image name="noSense" width="359" height="180"/>
         <image name="questions_check" width="20" height="15"/>
         <image name="questions_circle" width="21" height="21"/>
-        <image name="senseIcon" width="40" height="40"/>
         <image name="settingsCheck" width="16" height="13"/>
         <image name="timelineNoDataIcon" width="200" height="228"/>
         <image name="timeline_action_adjust" width="32" height="32"/>

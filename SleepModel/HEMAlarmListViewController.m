@@ -373,6 +373,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
                                                                                          forIndexPath:indexPath];
     [[cell descriptionLabel] setText:NSLocalizedString(@"alarms.no-sense.message", nil)];
     [[cell pairSenseButton] addTarget:self action:@selector(pairSense:) forControlEvents:UIControlEventTouchUpInside];
+    [[cell pairSenseButton] setTitle:[NSLocalizedString(@"alarms.no-sense.button.title", nil) uppercaseString]
+                            forState:UIControlStateNormal];
     return cell;
 }
 

@@ -392,6 +392,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [cell.alarmButton addTarget:self action:@selector(addNewAlarm:) forControlEvents:UIControlEventTouchUpInside];
     [cell.alarmButton setTitle:[NSLocalizedString(@"alarms.first-alarm.button-title", nil) uppercaseString]
                       forState:UIControlStateNormal];
+    
     return cell;
 }
 

@@ -9,6 +9,13 @@
 #import "HEMCardCollectionViewCell.h"
 #import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMActivityCoverView.h"
+
+@interface HEMCardCollectionViewCell()
+
+@property (nonatomic, weak) HEMActivityCoverView* activityView;
+
+@end
 
 @implementation HEMCardCollectionViewCell
 
@@ -33,6 +40,16 @@
     self.layer.shadowRadius = [shadow shadowBlurRadius];
     self.layer.shadowOpacity = 1.f;
     self.layer.masksToBounds = YES;
+}
+
+- (void)showActivity:(BOOL)show withText:(NSString*)text {
+    if (show) {
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[self contentView] withText:text activity:YES completion:nil];
+        [self setActivityView:activityView];
+    } else {
+        [[self activityView] removeFromSuperview];
+    }
 }
 
 @end

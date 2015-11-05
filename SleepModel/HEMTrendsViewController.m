@@ -231,11 +231,13 @@ static NSString* const HEMAllScopeType = @"ALL";
     HEMEmptyTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                       forIndexPath:indexPath];
     if ([self isLoading]) {
-        cell.detailLabel.text = NSLocalizedString(@"activity.loading", nil);
+        [cell showActivity:YES withText:NSLocalizedString(@"activity.loading", nil)];
     }
     else {
+        [cell showActivity:NO withText:nil];
         cell.detailLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
     }
+    
     return cell;
 }
 

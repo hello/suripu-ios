@@ -135,7 +135,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)enableControls:(BOOL)enable {
     if (!enable) {
-        [[self view] endEditing:NO];
+        [[self view] endEditing:YES];
     }
 
     [[self ssidField] setEnabled:enable];
@@ -184,7 +184,11 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         self.disconnectObserverId =
             [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                if ([strongSelf isVisible]) {
+                // only show error message if view is visible and the step finished is
+                // not linking account, which has nothing to do with Sense so we do
+                // not care if it unexpected disconnected there and also because the
+                // subsequent steps will attempt to reconnect anyways
+                if ([strongSelf isVisible] && [strongSelf stepFinished] != HEMWiFiSetupStepLinkAccount) {
                     NSString* title = NSLocalizedString(@"wifi.error.title", nil);
                     NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
                     [strongSelf showErrorMessage:message withTitle:title];
@@ -452,13 +456,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)setupTimezone {
     [self enableControls:NO];
-    NSString* message = NSLocalizedString(@"wifi.activity.setting-timezone", nil);
-    [self updateActivityText:message completion:nil];
-
+    
     __weak typeof(self) weakSelf = self;
-    [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+    NSString* message = NSLocalizedString(@"wifi.activity.setting-timezone", nil);
+    [self updateActivityText:message completion:^(BOOL finished) {
+        [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error == nil) {
                 [strongSelf setStepFinished:HEMWiFiSetupStepSetTimezone];
                 [strongSelf executeNextStep];
@@ -469,8 +472,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 [strongSelf showErrorMessage:msg withTitle:title];
                 [SENAnalytics trackError:error];
             }
-
-        }
+        }];
     }];
 }
 

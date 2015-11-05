@@ -16,7 +16,7 @@ CGFloat const HEMSettingsCellTableMargin = 20.0f;
 
 static CGFloat const HEMSettingsCellCornerRadius = 2.0f;
 static CGFloat const HEMSettingsCellSeparatorSize = 1.0f;
-static CGFloat const HEMSettingsCellMargins = 16.0f;
+static CGFloat const HEMSettingsCellMargins = 8.0f;
 
 @interface HEMSettingsTableViewCell ()
 

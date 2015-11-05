@@ -558,7 +558,7 @@
 
 // trends
 "trends.title" = "Trends";
-"trends.not-enough-data.message" = "Your trends appear after a week of sleep.";
+"trends.not-enough-data.message" = "Your trends will appear here after a week of sleep.";
 
 // actions
 "actions.cancel" = "Cancel";

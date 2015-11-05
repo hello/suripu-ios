@@ -51,12 +51,6 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
 }
 
-- (void)setEnabled:(BOOL)enabled {
-    UIColor* color = enabled ? [UIColor tintColor] : [UIColor actionButtonDisabledColor];
-    [self setBackgroundColor:color];
-    [super setEnabled:enabled];
-}
-
 - (void)addActivityView {
     // TODO (jimmy): we should animate a border around the circle instead, similar to the sleep number view
     if ([self activityView] == nil) {

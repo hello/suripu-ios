@@ -898,12 +898,11 @@
 		6003F593195388D20070C39A /* Sense */ = {
 			isa = PBXGroup;
 			children = (
-				8ADF03CA1A719144002B036A /* Root */,
+				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F59C195388D20070C39A /* HEMAppDelegate.h */,
 				6003F59D195388D20070C39A /* HEMAppDelegate.m */,
 				BFC458BC1BDAA2CE008EE871 /* HEMGlobalContants.h */,
 				BFC458BD1BDAA2CE008EE871 /* HEMGlobalContants.m */,
-				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F59F195388D20070C39A /* Main.storyboard */,
 				BFBECCE41A15706700335CC6 /* Onboarding.storyboard */,
 				BFC4C2081B90D64100BB7761 /* Action Sheet */,
@@ -918,6 +917,7 @@
 				8A28CAF919CB85030044A27D /* Notifications */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
 				8A8621641B5D5D860033F44C /* Review */,
+				8ADF03CA1A719144002B036A /* Root */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
 				BFC3AA0319C2650F0055D308 /* Sleep Questions */,

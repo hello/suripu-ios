@@ -6,6 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMNoAlarmCell.h"
 #import "HEMScreenUtils.h"
 
@@ -20,6 +22,10 @@
 @implementation HEMNoAlarmCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [[self detailLabel] setFont:[UIFont emptyStateDescriptionFont]];
+    
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
         CGFloat const MARGIN = 20.0f;
         [[self trailingDetailMargin] setConstant:MARGIN];

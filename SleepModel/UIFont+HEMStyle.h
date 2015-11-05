@@ -508,4 +508,11 @@
  */
 + (UIFont*)timelineActionConfirmationSubtitleFont;
 
+#pragma mark - Empty state font
+
+/**
+ * Font used for the text in the empty state views
+ */
++ (UIFont*)emptyStateDescriptionFont;
+
 @end

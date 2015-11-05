@@ -2549,7 +2549,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="372"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyStateAlarm" translatesAutoresizingMaskIntoConstraints="NO" id="zJb-vF-qzr">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyStateAlarm" translatesAutoresizingMaskIntoConstraints="NO" id="zJb-vF-qzr">
                                                     <rect key="frame" x="0.0" y="0.0" width="584" height="180"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bus-ep-dfy">
@@ -2620,72 +2620,54 @@
                                             <outlet property="detailLabel" destination="QuX-2N-W4J" id="2sO-oP-cGY"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pair" id="EKp-xm-t3D" customClass="HEMNoDeviceCollectionViewCell">
-                                        <rect key="frame" x="4" y="656" width="584" height="205"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pair" id="EKp-xm-t3D" customClass="HEMSenseRequiredCollectionViewCell">
+                                        <rect key="frame" x="4" y="656" width="584" height="352"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="584" height="205"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="352"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aQz-EQ-vlP">
-                                                    <rect key="frame" x="16" y="16" width="36" height="36"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="ps1-1w-L0V"/>
-                                                        <constraint firstAttribute="height" constant="36" id="s6X-Dg-5n6"/>
-                                                    </constraints>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noSense" translatesAutoresizingMaskIntoConstraints="NO" id="P8q-yU-rcX">
+                                                    <rect key="frame" x="0.0" y="0.0" width="584" height="180"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOc-8P-3bK">
-                                                    <rect key="frame" x="68" y="16" width="500" height="36"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="36" id="yU3-UD-tTo"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account.  Please pair with Sense to set alarms." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jL-bH-Nhy">
+                                                    <rect key="frame" x="40" y="204" width="504" height="39"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jzW-s2-g3P" customClass="HEMActionButton">
-                                                    <rect key="frame" x="16" y="142" width="552" height="40"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dl3-hv-1Eh" customClass="HEMActionButton">
+                                                    <rect key="frame" x="8" y="288" width="568" height="56"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="h25-0T-PiF"/>
+                                                        <constraint firstAttribute="height" constant="56" id="zop-zP-Ukq"/>
                                                     </constraints>
-                                                    <state key="normal" title="PAIR A SENSE">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <state key="normal" title="PAIR NEW SENSE">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="pairSense:" destination="Mem-QL-GCW" eventType="touchUpInside" id="aQr-cJ-21j"/>
-                                                    </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajt-NQ-fC4">
-                                                    <rect key="frame" x="16" y="76" width="552" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="RY4-0U-k4v"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="gOc-8P-3bK" firstAttribute="leading" secondItem="aQz-EQ-vlP" secondAttribute="trailing" constant="16" id="2lg-KE-Ifw"/>
-                                            <constraint firstItem="aQz-EQ-vlP" firstAttribute="bottom" secondItem="ajt-NQ-fC4" secondAttribute="top" constant="-24" id="54q-S3-h00"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="ajt-NQ-fC4" secondAttribute="trailing" constant="8" id="8FH-xz-PjT"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="jzW-s2-g3P" secondAttribute="trailing" constant="8" id="BC7-fK-MtC"/>
-                                            <constraint firstItem="aQz-EQ-vlP" firstAttribute="leading" secondItem="EKp-xm-t3D" secondAttribute="leadingMargin" constant="8" id="CCn-pH-cSl"/>
-                                            <constraint firstItem="aQz-EQ-vlP" firstAttribute="top" secondItem="EKp-xm-t3D" secondAttribute="topMargin" constant="8" id="HGj-5r-jh5"/>
-                                            <constraint firstItem="ajt-NQ-fC4" firstAttribute="leading" secondItem="EKp-xm-t3D" secondAttribute="leadingMargin" constant="8" id="LVF-5a-S0E"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="jzW-s2-g3P" secondAttribute="bottom" constant="15" id="fbh-bp-bni"/>
-                                            <constraint firstItem="jzW-s2-g3P" firstAttribute="leading" secondItem="EKp-xm-t3D" secondAttribute="leadingMargin" constant="8" id="o7N-aT-NMt"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="gOc-8P-3bK" secondAttribute="trailing" constant="8" id="pqm-Mi-T4M"/>
-                                            <constraint firstItem="gOc-8P-3bK" firstAttribute="top" secondItem="EKp-xm-t3D" secondAttribute="topMargin" constant="8" id="skM-u8-KeL"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="5jL-bH-Nhy" secondAttribute="trailing" constant="32" id="Bwr-lJ-Rzb"/>
+                                            <constraint firstAttribute="leadingMargin" secondItem="Dl3-hv-1Eh" secondAttribute="leading" id="JZh-BZ-vrD"/>
+                                            <constraint firstItem="P8q-yU-rcX" firstAttribute="leading" secondItem="EKp-xm-t3D" secondAttribute="leadingMargin" constant="-8" id="Sy1-oF-ssN"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="P8q-yU-rcX" secondAttribute="trailing" constant="-8" id="bD7-H0-LO7"/>
+                                            <constraint firstItem="5jL-bH-Nhy" firstAttribute="leading" secondItem="EKp-xm-t3D" secondAttribute="leadingMargin" constant="32" id="efS-qI-SEZ"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="Dl3-hv-1Eh" secondAttribute="trailing" id="enh-SL-cWF"/>
+                                            <constraint firstItem="5jL-bH-Nhy" firstAttribute="top" secondItem="P8q-yU-rcX" secondAttribute="bottom" constant="24" id="gxa-up-hxE"/>
+                                            <constraint firstItem="P8q-yU-rcX" firstAttribute="top" secondItem="EKp-xm-t3D" secondAttribute="topMargin" constant="-8" id="rl3-u3-IRw"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="Dl3-hv-1Eh" secondAttribute="bottom" id="y8V-c7-rEQ"/>
                                         </constraints>
-                                        <size key="customSize" width="584" height="205"/>
+                                        <size key="customSize" width="584" height="352"/>
                                         <connections>
-                                            <outlet property="iconImageView" destination="aQz-EQ-vlP" id="lnl-tD-Vo5"/>
-                                            <outlet property="messageLabel" destination="ajt-NQ-fC4" id="x85-0S-OIM"/>
-                                            <outlet property="nameLabel" destination="gOc-8P-3bK" id="wzE-ka-SrQ"/>
+                                            <outlet property="descriptionLabel" destination="5jL-bH-Nhy" id="AWk-C6-II7"/>
+                                            <outlet property="illustrationView" destination="P8q-yU-rcX" id="Fzo-Zu-tff"/>
+                                            <outlet property="leadingDescriptionConstraint" destination="efS-qI-SEZ" id="6re-Rn-snd"/>
+                                            <outlet property="pairSenseButton" destination="Dl3-hv-1Eh" id="gr1-M1-Zrw"/>
+                                            <outlet property="trailingDescriptionConstraint" destination="Bwr-lJ-Rzb" id="MH3-z4-X4R"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -3739,7 +3721,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="248"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyStateTrends" translatesAutoresizingMaskIntoConstraints="NO" id="5j7-Lc-pYu">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyStateTrends" translatesAutoresizingMaskIntoConstraints="NO" id="5j7-Lc-pYu">
                                                     <rect key="frame" x="0.0" y="0.0" width="584" height="180"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="180" id="ny1-cb-epz"/>
@@ -4439,6 +4421,7 @@
         <image name="escape button" width="32" height="32"/>
         <image name="infoButtonIconSmall" width="22" height="22"/>
         <image name="miniPlayButton" width="25" height="25"/>
+        <image name="noSense" width="359" height="180"/>
         <image name="questions_check" width="20" height="15"/>
         <image name="questions_circle" width="21" height="21"/>
         <image name="senseIcon" width="40" height="40"/>

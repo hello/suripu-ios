@@ -16,7 +16,7 @@
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMBounceModalTransition.h"
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
@@ -46,7 +46,7 @@
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
-static CGFloat const HEMAlarmListPairCellHeight = 205.f;
+static CGFloat const HEMAlarmListPairCellHeight = 352.f;
 static CGFloat const HEMAlarmListNoAlarmCellHeight = 372.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
@@ -161,6 +161,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
         self.loading = NO;
         self.loadingFailed = NO;
         self.alarms = nil;
+        self.addButton.hidden = YES;
         self.addButton.enabled = NO;
         [self.collectionView reloadData];
     }
@@ -199,7 +200,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
     self.loading = NO;
     self.alarms = cachedAlarms;
-    self.addButton.hidden = self.alarms.count == 0; // empty alarm cell has a button
+    self.addButton.hidden = self.alarms.count == 0 || [self hasNoSense];
     self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
     [self.collectionView reloadData];
 }
@@ -368,9 +369,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
            pairingCellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifer = [HEMMainStoryboard pairReuseIdentifier];
-    HEMNoDeviceCollectionViewCell *cell =
-        [collectionView dequeueReusableCellWithReuseIdentifier:identifer forIndexPath:indexPath];
-    [cell configureForSense];
+    HEMSenseRequiredCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifer
+                                                                                         forIndexPath:indexPath];
+    [[cell descriptionLabel] setText:NSLocalizedString(@"alarms.no-sense.message", nil)];
+    [[cell pairSenseButton] addTarget:self action:@selector(pairSense:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 

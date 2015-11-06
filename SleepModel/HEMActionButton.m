@@ -4,7 +4,6 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 
-static CGFloat const kHEMActionDisabledAlpha = 0.3f;
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 @interface HEMActionButton()
@@ -50,15 +49,6 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
                forState:UIControlStateDisabled];
     [self.titleLabel setFont:[UIFont primaryButtonFont]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
-}
-
-- (void)setEnabled:(BOOL)enabled {
-    UIColor* color = [UIColor tintColor];
-    if (!enabled) {
-        color = [color colorWithAlphaComponent:kHEMActionDisabledAlpha];
-    }
-    [[self layer] setBorderColor:[color CGColor]];
-    [super setEnabled:enabled];
 }
 
 - (void)addActivityView {

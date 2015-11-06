@@ -132,7 +132,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 #pragma mark - Updating Text
 
 - (void)updateText:(NSString*)text completion:(void(^)(BOOL finished))completion {
-    [self updateText:text hideActivity:NO completion:nil];
+    [self updateText:text hideActivity:NO completion:completion];
 }
 
 - (void)updateText:(NSString *)text

@@ -15,8 +15,6 @@ static CGFloat const HEMDeviceActionSeparatorIndentation = 16.0f;
 
 @interface HEMDeviceActionCollectionViewCell()
 
-@property (nonatomic, weak) HEMActivityCoverView* activityView;
-
 @end
 
 @implementation HEMDeviceActionCollectionViewCell
@@ -55,16 +53,6 @@ static CGFloat const HEMDeviceActionSeparatorIndentation = 16.0f;
         CGContextMoveToPoint(context, HEMDeviceActionSeparatorIndentation, y);
         CGContextAddLineToPoint(context, CGRectGetWidth([self bounds]), y);
         CGContextStrokePath(context);
-    }
-}
-
-- (void)showActivity:(BOOL)show withText:(NSString*)text {
-    if (show) {
-        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
-        [activityView showInView:[self contentView] withText:text activity:YES completion:nil];
-        [self setActivityView:activityView];
-    } else {
-        [[self activityView] removeFromSuperview];
     }
 }
 

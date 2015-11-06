@@ -21,8 +21,8 @@
 @property (nonatomic, assign, getter=isReady) BOOL ready;
 
 /**
- * @param autoplay: YES to loop the video when it's done.  No otherwise.  Defaults
- *                  to YES
+ * @param loop: YES to loop the video when it's done.  No otherwise.  Defaults
+ *              to YES
  */
 @property (nonatomic, assign) BOOL loop;
 

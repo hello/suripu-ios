@@ -10,4 +10,6 @@
 
 @interface HEMCardCollectionViewCell : UICollectionViewCell
 
+- (void)showActivity:(BOOL)show withText:(NSString*)text;
+
 @end

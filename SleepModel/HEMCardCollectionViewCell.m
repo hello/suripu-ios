@@ -9,6 +9,13 @@
 #import "HEMCardCollectionViewCell.h"
 #import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMActivityCoverView.h"
+
+@interface HEMCardCollectionViewCell()
+
+@property (nonatomic, weak) HEMActivityCoverView* activityView;
+
+@end
 
 @implementation HEMCardCollectionViewCell
 
@@ -24,15 +31,27 @@
 {
     NSShadow* shadow = [HelloStyleKit backViewCardShadow];
 
-    self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 3.f;
-    self.layer.borderColor = [[UIColor cardBorderColor] CGColor];
-    self.layer.borderWidth = 1.f;
-    self.layer.shadowOffset = [shadow shadowOffset];
-    self.layer.shadowColor = [[shadow shadowColor] CGColor];
-    self.layer.shadowRadius = [shadow shadowBlurRadius];
-    self.layer.shadowOpacity = 1.f;
-    self.layer.masksToBounds = NO;
+    self.backgroundColor = [UIColor clearColor];
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    
+    self.contentView.layer.cornerRadius = 3.f;
+    self.contentView.layer.borderColor = [[UIColor cardBorderColor] CGColor];
+    self.contentView.layer.borderWidth = 1.f;
+    self.contentView.layer.shadowOffset = [shadow shadowOffset];
+    self.contentView.layer.shadowColor = [[shadow shadowColor] CGColor];
+    self.contentView.layer.shadowRadius = [shadow shadowBlurRadius];
+    self.contentView.layer.shadowOpacity = 1.f;
+    self.contentView.layer.masksToBounds = YES;
+}
+
+- (void)showActivity:(BOOL)show withText:(NSString*)text {
+    if (show) {
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[self contentView] withText:text activity:YES completion:nil];
+        [self setActivityView:activityView];
+    } else {
+        [[self activityView] removeFromSuperview];
+    }
 }
 
 @end

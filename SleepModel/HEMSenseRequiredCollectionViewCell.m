@@ -6,8 +6,10 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "HEMSenseRequiredCollectionViewCell.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
+
+#import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMScreenUtils.h"
 
 @interface HEMSenseRequiredCollectionViewCell()
@@ -23,6 +25,7 @@
     [super awakeFromNib];
     
     [[self descriptionLabel] setFont:[UIFont emptyStateDescriptionFont]];
+    [[self descriptionLabel] setTextColor:[UIColor emptyStateDescriptionColor]];
     
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
         CGFloat const MARGIN = 20.0f;

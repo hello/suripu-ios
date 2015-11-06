@@ -7,6 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMNoAlarmCell.h"
 #import "HEMScreenUtils.h"
@@ -25,6 +26,7 @@
     [super awakeFromNib];
     
     [[self detailLabel] setFont:[UIFont emptyStateDescriptionFont]];
+    [[self detailLabel] setTextColor:[UIColor emptyStateDescriptionColor]];
     
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
         CGFloat const MARGIN = 20.0f;

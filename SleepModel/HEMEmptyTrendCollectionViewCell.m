@@ -7,6 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMEmptyTrendCollectionViewCell.h"
 
@@ -16,6 +17,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [[self detailLabel] setFont:[UIFont emptyStateDescriptionFont]];
+    [[self detailLabel] setTextColor:[UIColor emptyStateDescriptionColor]];
 }
 
 @end

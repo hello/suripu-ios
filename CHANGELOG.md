@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.7.3
+
+New:
+
+* Empty state for Trends
+* Empty state for Alarms
+* No Sense state for Alarms
+* No Sense state for Current Conditions
+* Return specific WEP error if non hex value detected
+
+Fixes:
+
+* Pairing pill video will no longer resume unexpectedly when coming back to foreground
+* Prevent keyboard from showing over the activity view when setting time zone if
+  unexpected disconnect occurred AND time zone update failed together.
+
+
 ## 1.1.7.2
 
 Misc:

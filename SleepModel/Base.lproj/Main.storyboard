@@ -3703,7 +3703,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="248"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyStateTrends" translatesAutoresizingMaskIntoConstraints="NO" id="5j7-Lc-pYu">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyStateTrends" translatesAutoresizingMaskIntoConstraints="NO" id="5j7-Lc-pYu">
                                                     <rect key="frame" x="0.0" y="0.0" width="584" height="180"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="180" id="ny1-cb-epz"/>
@@ -4391,6 +4391,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="EmptyStateTrends" width="359" height="180"/>
         <image name="accessory" width="8" height="15"/>
         <image name="alarmRepeatIcon" width="25" height="25"/>
         <image name="alarmShortcut" width="54" height="54"/>
@@ -4399,7 +4400,6 @@
         <image name="backIcon" width="10" height="18"/>
         <image name="checkmark" width="20" height="15"/>
         <image name="emptyStateAlarm" width="359" height="180"/>
-        <image name="emptyStateTrends" width="359" height="180"/>
         <image name="escape button" width="32" height="32"/>
         <image name="infoButtonIconSmall" width="22" height="22"/>
         <image name="miniPlayButton" width="25" height="25"/>

@@ -592,7 +592,13 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)showInvalidInputMessage {
-    [self showMessageDialog:NSLocalizedString(@"wifi.error.invalid-input", nil)
+    NSString* message = nil;
+    if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+        message = NSLocalizedString(@"wifi.error.invalid-wep-key", nil);
+    } else {
+        message = NSLocalizedString(@"wifi.error.invalid-input", nil);
+    }
+    [self showMessageDialog:message
                       title:NSLocalizedString(@"wifi.error.title", nil)
                       image:nil
                withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];

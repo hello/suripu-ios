@@ -173,10 +173,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
                                               completion:^(NSError *error) {
                                                 [self.spinnerView stopAnimating];
                                                 if (error) {
-                                                    BOOL hasAlarms = self.alarms.count > 0;
                                                     self.loadingFailed = YES;
                                                     self.loading = NO;
-                                                    if (!hasAlarms) {
+                                                    if (self.alarms.count == 0) {
                                                         [self.collectionView reloadData];
                                                         return;
                                                     }

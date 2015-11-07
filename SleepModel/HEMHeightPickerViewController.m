@@ -14,10 +14,9 @@
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
 
-static NSInteger const HEMMaxHeightInFeet = 9;
 static NSInteger const HEMInchesPerFeet = 12;
-static NSInteger const HEMHeightDefaultFeet = 5;
-static NSInteger const HEMHeightDefaultInch = 8;
+static NSUInteger const HEMHeightTotalSegments = 274; // 1:1 segment:cm
+static CGFloat const HEMHeightDefaultInCm = 172.72f;
 
 @interface HEMHeightPickerViewController () <UIScrollViewDelegate>
 
@@ -28,22 +27,14 @@ static NSInteger const HEMHeightDefaultInch = 8;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightLabelTrailingConstraint;
 
-@property (assign, nonatomic) float selectedHeightInCm;
+@property (assign, nonatomic) CGFloat selectedHeightInCm;
 @property (strong, nonatomic) HEMRulerView* ruler;
 @property (assign, nonatomic, getter=isOffsetInitialized) BOOL offsetInitialized;
+@property (assign, nonatomic) BOOL useMetric;
 
 @end
 
 @implementation HEMHeightPickerViewController
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        _feet = -1;
-        _inches = -1;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,7 +54,9 @@ static NSInteger const HEMHeightDefaultInch = 8;
 }
 
 - (void)configureRuler {
-    [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMMaxHeightInFeet*HEMInchesPerFeet
+    [self setUseMetric:[SENPreference useMetricUnitForHeight]];
+    
+    [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMHeightTotalSegments
                                                 direction:HEMRulerDirectionVertical]];
     
     [[self scrollView] addSubview:[self ruler]];
@@ -104,11 +97,9 @@ static NSInteger const HEMHeightDefaultInch = 8;
 }
 
 - (void)scrollToSetHeight {
-    NSInteger feet = [self feet] >= 0 ? [self feet] : HEMHeightDefaultFeet;
-    NSInteger inch = [self inches] >= 0 ? [self inches] : HEMHeightDefaultInch;
-    NSInteger totalInches = (feet * HEMInchesPerFeet) + inch;
-    NSInteger maxInches = HEMMaxHeightInFeet * HEMInchesPerFeet;
-    CGFloat offset = ((maxInches-totalInches) * (HEMRulerSegmentSpacing+HEMRulerSegmentWidth)) - [[self scrollView] contentInset].top;
+    NSNumber* cm = [self heightInCm] ?: @(HEMHeightDefaultInCm);
+    CGFloat spacePerSegment = (HEMRulerSegmentSpacing+HEMRulerSegmentWidth);
+    CGFloat offset = ((HEMHeightTotalSegments - [cm CGFloatValue]) * spacePerSegment) - [[self scrollView] contentInset].top;
     [[self scrollView] setContentOffset:CGPointMake(0.0f, offset) animated:YES];
 }
 
@@ -126,12 +117,21 @@ static NSInteger const HEMHeightDefaultInch = 8;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offY = [scrollView contentOffset].y;
-    CGFloat totalInches = MAX(0.0f, (offY + [scrollView contentInset].top) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
-    CGFloat maxInches = HEMMaxHeightInFeet * HEMInchesPerFeet;
-    CGFloat actualInches = maxInches - totalInches; // values are reversed
-    CGFloat cm = actualInches * HEMHeightPickerCentimetersPerInch;
-    [self updateTextLabelsWithInches:actualInches];
+    CGFloat topInset = [scrollView contentInset].top;
+    CGFloat spacePerSegment = (HEMRulerSegmentSpacing+HEMRulerSegmentWidth);
+    // it is important that we floor the value here b/c our API floors the value
+    // when it is processed, which means that if we don't floor here, the value
+    // shown may be different from what got stored
+    CGFloat cm = floorCGFloat(HEMHeightTotalSegments - MAX(0.0f, (offY + topInset) / spacePerSegment));
+    
+    if ([self useMetric]) {
+        [self updateLabelWithCentimeters:cm];
+    } else {
+        [self updateLabelWithInches:HEMToInches(@(cm))];
+    }
+    
     [self setSelectedHeightInCm:cm];
+    
     if ([self delegate] == nil) {
         SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
         [account setHeight:@(cm)];
@@ -139,18 +139,16 @@ static NSInteger const HEMHeightDefaultInch = 8;
     
 }
 
-- (void)updateTextLabelsWithInches:(CGFloat)actualInches {
-    CGFloat cm = actualInches * HEMHeightPickerCentimetersPerInch;
-    BOOL useMetric = [SENPreference useMetricUnitForHeight];
-    if (useMetric) {
-        self.heightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
-    } else {
-        NSInteger inches = (int)actualInches % HEMInchesPerFeet;
-        NSInteger feet = actualInches / HEMInchesPerFeet;
-        NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
-        NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
-        self.heightLabel.text = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];
-    }
+- (void)updateLabelWithCentimeters:(CGFloat)cm {
+    self.heightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
+}
+
+- (void)updateLabelWithInches:(CGFloat)totalInches {
+    CGFloat feet = floorCGFloat(totalInches / HEMInchesPerFeet);
+    CGFloat inches = totalInches - (feet * HEMInchesPerFeet);
+    NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
+    NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
+    self.heightLabel.text = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];
 }
 
 #pragma mark - Actions

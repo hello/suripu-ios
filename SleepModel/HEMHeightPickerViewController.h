@@ -6,7 +6,7 @@
 
 @protocol HEMHeightPickerDelegate <NSObject>
 
-- (void)didSelectHeightInCentimeters:(int)centimeters
+- (void)didSelectHeightInCentimeters:(CGFloat)centimeters
                                 from:(HEMHeightPickerViewController*)controller;
 - (void)didCancelHeightFrom:(HEMHeightPickerViewController*)controller;
 
@@ -14,8 +14,7 @@
 
 @interface HEMHeightPickerViewController : HEMOnboardingController
 
-@property (assign, nonatomic) NSInteger feet;
-@property (assign, nonatomic) NSInteger inches;
+@property (assign, nonatomic) NSNumber* heightInCm;
 
 @property (weak, nonatomic) id<HEMHeightPickerDelegate> delegate;
 

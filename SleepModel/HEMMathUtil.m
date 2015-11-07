@@ -14,7 +14,11 @@ CGFloat const HEMMathPoundsPerGram = 0.0022046f;
 CGFloat const HEMMathGramsPerPound = 453.592f;
 
 CGFloat HEMToInches (NSNumber* centimeters) {
-    return round([centimeters CGFloatValue] / HEMMathCentimetersPerInch);
+    return [centimeters CGFloatValue] / HEMMathCentimetersPerInch;
+}
+
+CGFloat HEMToCm (NSNumber* inches) {
+    return [inches CGFloatValue] * HEMMathCentimetersPerInch;
 }
 
 CGFloat HEMGramsToKilograms (NSNumber *grams) {

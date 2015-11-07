@@ -109,16 +109,16 @@ describe(@"HEMAppUsage", ^{
                 [NSDate stub:@selector(date) andReturn:eightDaysAgo];
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
                 [appUsage increment:YES];
+                
+                [NSDate clearStubs]; // clear it after calling appUsageForIdentifier:
             });
             
             it(@"should return 0 in last 7 days", ^{
-                [NSDate clearStubs];
                 NSUInteger count = [appUsage usageWithin:HEMAppUsageIntervalLast7Days];
                 [[@(count) should] equal:@(0)];
             });
             
             it(@"should return 1 in last 31 days", ^{
-                [NSDate clearStubs];
                 NSUInteger count = [appUsage usageWithin:HEMAppUsageIntervalLast31Days];
                 [[@(count) should] equal:@(1)];
             });
@@ -133,16 +133,16 @@ describe(@"HEMAppUsage", ^{
                 [NSDate stub:@selector(date) andReturn:longTimeAgo];
                 appUsage = [HEMAppUsage appUsageForIdentifier:identifier];
                 [appUsage increment:YES];
+                
+                [NSDate clearStubs]; // clear it after calling appUsageForIdentifier:
             });
             
             it(@"should return 0 in last 7 days", ^{
-                [NSDate clearStubs];
                 NSUInteger count = [appUsage usageWithin:HEMAppUsageIntervalLast7Days];
                 [[@(count) should] equal:@(0)];
             });
             
             it(@"should return 0 in last 31 days", ^{
-                [NSDate clearStubs];
                 NSUInteger count = [appUsage usageWithin:HEMAppUsageIntervalLast31Days];
                 [[@(count) should] equal:@(0)];
             });

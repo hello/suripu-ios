@@ -251,10 +251,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 - (HEMHeightPickerViewController *)heightController {
     HEMHeightPickerViewController *heightPicker
         = (HEMHeightPickerViewController *)[HEMOnboardingStoryboard instantiateHeightPickerViewController];
-    NSInteger totalInches = [[self dataSource] heightInInches];
-    NSInteger feet = totalInches / 12;
-    [heightPicker setFeet:feet];
-    [heightPicker setInches:totalInches % 12];
+    [heightPicker setHeightInCm:[[self dataSource] heightInCm]];
     [heightPicker setDelegate:self];
     return heightPicker;
 }
@@ -316,7 +313,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
 #pragma mark Height Delegate
 
-- (void)didSelectHeightInCentimeters:(int)centimeters
+- (void)didSelectHeightInCentimeters:(CGFloat)centimeters
                                 from:(HEMHeightPickerViewController *)controller {
 
     __weak typeof(self) weakSelf = self;

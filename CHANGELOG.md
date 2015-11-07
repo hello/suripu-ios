@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.7.4
+
+Fixes:
+
+* Adjusted margins in back view cards
+* Fixed bug with user height adjustments through settings not reflecting the
+  correct value
+
 ## 1.1.7.3
 
 New:

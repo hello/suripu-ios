@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.7.5
+
+Fixes:
+
+* Fixed typo in error message when changing password that is too short
+
 ## 1.1.7.4
 
 Fixes:

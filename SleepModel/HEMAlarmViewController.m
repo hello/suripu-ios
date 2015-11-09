@@ -152,11 +152,8 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
         updateAlarmsFromPresentingController:self
                                   completion:^(NSError *error) {
                                     __strong typeof(weakSelf) strongSelf = weakSelf;
-                                    [SENAnalytics track:HEMAnalyticsEventSaveAlarm
-                                             properties:@{
-                                                 HEMAnalyticsEventSaveAlarmHour : @(self.alarmCache.hour),
-                                                 HEMAnalyticsEventSaveAlarmMinute : @(self.alarmCache.minute)
-                                             }];
+                                    [SENAnalytics trackAlarmSave:[strongSelf alarm]];
+                                      
                                     if (error) {
                                         [SENAnalytics trackError:error];
                                     }

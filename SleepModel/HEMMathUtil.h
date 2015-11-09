@@ -11,9 +11,16 @@
 /**
  * Converts centimeters to inches
  * @param centimeters: centimeters to convert to inches
- * @param inches
+ * @return inches
  */
 CGFloat HEMToInches (NSNumber* centimeters);
+
+/**
+ * Converts inches to centimeters
+ * @param inches: inches to convert to centimeters
+ * @return centimeters
+ */
+CGFloat HEMToCm (NSNumber* inches);
 
 /**
  * Converts grams to pounds

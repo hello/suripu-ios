@@ -1,5 +1,4 @@
 #import <SenseKit/SenseKit.h>
-#import <Crashlytics/Crashlytics.h>
 
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
@@ -20,7 +19,6 @@
 
 @implementation HEMAppDelegate
 
-static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
@@ -157,14 +155,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
 - (void)configureAnalytics {
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
-    NSString* crashylyticsToken = [HEMConfig stringForConfig:HEMConfCrashlyticsToken];
-    
-    if ([crashylyticsToken length] > 0) {
-        DDLogVerbose(@"crashlytics enabled");
-        [Crashlytics startWithAPIKey:crashylyticsToken];
-        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
-        if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
-    }
     
     if ([analyticsToken length] > 0) {
         DDLogVerbose(@"analytics enabled");
@@ -178,11 +168,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
 - (BOOL)deauthorizeIfNeeded {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    if ([[preferences persistentPreferenceForKey:HEMAppForceLogout] boolValue]) {
-        [SENAuthorizationService deauthorize];
-        [preferences setPersistentPreference:nil forKey:HEMAppForceLogout];
-        return YES;
-    } else if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
+    if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
         [SENAuthorizationService deauthorize];
         [preferences setPersistentPreference:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
         return YES;

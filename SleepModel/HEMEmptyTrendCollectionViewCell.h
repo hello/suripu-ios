@@ -12,6 +12,7 @@
 
 @interface HEMEmptyTrendCollectionViewCell : HEMCardCollectionViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel* titleLabel;
-@property (nonatomic, weak) IBOutlet UILabel* detailLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
+@property (weak, nonatomic) IBOutlet UILabel* detailLabel;
+
 @end

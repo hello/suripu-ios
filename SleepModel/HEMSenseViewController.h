@@ -19,6 +19,7 @@
 - (void)didUpdateWiFiFrom:(HEMSenseViewController*)viewController;
 - (void)didFactoryRestoreFrom:(HEMSenseViewController*)viewController;
 - (void)didDismissActivityFrom:(HEMSenseViewController*)viewController;
+- (void)didEnterPairingModeFrom:(HEMSenseViewController*)viewController;
 
 @end
 

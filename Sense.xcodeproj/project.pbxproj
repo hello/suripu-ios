@@ -48,7 +48,6 @@
 		8A4D49121A67532800DD6ECE /* HEMScopePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4D49111A67532800DD6ECE /* HEMScopePickerView.m */; };
 		8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */; };
 		8A50A18A1B548C1A007FDECC /* UIImage+HEMBlurTint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1891B548C1A007FDECC /* UIImage+HEMBlurTint.m */; };
-		8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A54029E19AE299B00FC6085 /* Crashlytics.framework */; };
 		8A576F121A79B12200287398 /* HEMTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A576F111A79B12200287398 /* HEMTutorial.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A63D5551A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A63D5541A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m */; };
@@ -202,6 +201,8 @@
 		BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
+		BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */; settings = {ASSET_TAGS = (); }; };
+		BF8A0DDB1BEACC58006B3B70 /* HEMNoAlarmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A0DDA1BEACC58006B3B70 /* HEMNoAlarmCell.m */; settings = {ASSET_TAGS = (); }; };
 		BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */; };
 		BF8E1AA11A689FB2009E421F /* HEMSenseAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1AA01A689FB2009E421F /* HEMSenseAudioViewController.m */; };
 		BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */; };
@@ -257,6 +258,8 @@
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
+		BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */; settings = {ASSET_TAGS = (); }; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
 		BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */; };
 		BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */; };
@@ -383,7 +386,6 @@
 		8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMScreenUtils.m; sourceTree = "<group>"; };
 		8A50A1881B548C1A007FDECC /* UIImage+HEMBlurTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HEMBlurTint.h"; sourceTree = "<group>"; };
 		8A50A1891B548C1A007FDECC /* UIImage+HEMBlurTint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HEMBlurTint.m"; sourceTree = "<group>"; };
-		8A54029E19AE299B00FC6085 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8A5402A019AE72F300FC6085 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
 		8A576F101A79B12200287398 /* HEMTutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTutorial.h; sourceTree = "<group>"; };
 		8A576F111A79B12200287398 /* HEMTutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTutorial.m; sourceTree = "<group>"; };
@@ -667,6 +669,9 @@
 		BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportUtil.m; sourceTree = "<group>"; };
 		BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRootViewController.h; sourceTree = "<group>"; };
 		BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRootViewController.m; sourceTree = "<group>"; };
+		BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trends.xcassets; sourceTree = "<group>"; };
+		BF8A0DD91BEACC58006B3B70 /* HEMNoAlarmCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNoAlarmCell.h; sourceTree = "<group>"; };
+		BF8A0DDA1BEACC58006B3B70 /* HEMNoAlarmCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNoAlarmCell.m; sourceTree = "<group>"; };
 		BF8E1A801A6873A2009E421F /* HEMSensePairingModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairingModeViewController.h; sourceTree = "<group>"; };
 		BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairingModeViewController.m; sourceTree = "<group>"; };
 		BF8E1A9F1A689FB2009E421F /* HEMSenseAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseAudioViewController.h; sourceTree = "<group>"; };
@@ -772,6 +777,9 @@
 		BFDFCE9D1B72884B000DA303 /* HEMSensorValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorValueFormatter.h; sourceTree = "<group>"; };
 		BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatter.m; sourceTree = "<group>"; };
 		BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatterSpec.m; sourceTree = "<group>"; };
+		BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseRequiredCollectionViewCell.h; sourceTree = "<group>"; };
+		BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseRequiredCollectionViewCell.m; sourceTree = "<group>"; };
+		BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
 		BFE872CC1A2F9ADC00494231 /* HEMRoomCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoomCheckViewController.h; sourceTree = "<group>"; };
 		BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoomCheckViewController.m; sourceTree = "<group>"; };
 		BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWelcomeViewController.h; sourceTree = "<group>"; };
@@ -818,7 +826,6 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */,
 				2109C3418ADD4BA6824507C6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -876,7 +883,6 @@
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
 				BF7F1BDF19E30DCC0028F799 /* libPods.a */,
 				BF7F1BDD19E30D9A0028F799 /* libPods.a */,
-				8A54029E19AE299B00FC6085 /* Crashlytics.framework */,
 				BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
@@ -892,12 +898,11 @@
 		6003F593195388D20070C39A /* Sense */ = {
 			isa = PBXGroup;
 			children = (
-				8ADF03CA1A719144002B036A /* Root */,
+				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F59C195388D20070C39A /* HEMAppDelegate.h */,
 				6003F59D195388D20070C39A /* HEMAppDelegate.m */,
 				BFC458BC1BDAA2CE008EE871 /* HEMGlobalContants.h */,
 				BFC458BD1BDAA2CE008EE871 /* HEMGlobalContants.m */,
-				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F59F195388D20070C39A /* Main.storyboard */,
 				BFBECCE41A15706700335CC6 /* Onboarding.storyboard */,
 				BFC4C2081B90D64100BB7761 /* Action Sheet */,
@@ -912,6 +917,7 @@
 				8A28CAF919CB85030044A27D /* Notifications */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
 				8A8621641B5D5D860033F44C /* Review */,
+				8ADF03CA1A719144002B036A /* Root */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
 				BFC3AA0319C2650F0055D308 /* Sleep Questions */,
@@ -1318,6 +1324,8 @@
 				8A91F2A51A44DB3D00F211B4 /* HEMAlarmTableViewCell.m */,
 				8AA1E62A1A898EDB00590EB6 /* HEMClockPickerView.h */,
 				8AA1E62B1A898EDB00590EB6 /* HEMClockPickerView.m */,
+				BF8A0DD91BEACC58006B3B70 /* HEMNoAlarmCell.h */,
+				BF8A0DDA1BEACC58006B3B70 /* HEMNoAlarmCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1336,6 +1344,7 @@
 		8AC276A91A3CE54C00B082D9 /* Trends */ = {
 			isa = PBXGroup;
 			children = (
+				BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */,
 				8AC276AA1A3CE71200B082D9 /* View Controllers */,
 				8A4D49091A67460000DD6ECE /* Views */,
 			);
@@ -1781,6 +1790,8 @@
 				BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */,
 				BFC7D3291B91118600D40D58 /* HEMVideoCollectionViewCell.h */,
 				BFC7D32A1B91118600D40D58 /* HEMVideoCollectionViewCell.m */,
+				BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */,
+				BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1806,6 +1817,7 @@
 		BFABE74E19A2E6C900AB2F0F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */,
 				BF645D911A9FAE880051C120 /* Transitions */,
 				BFABE74F19A2E6D900AB2F0F /* Utilities */,
 				BF80F6DD19BF99E800A4D779 /* Views */,
@@ -1994,7 +2006,6 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				352ECF48FC214905A51E01BC /* Copy Pods Resources */,
-				8A54029D19AE296200FC6085 /* ShellScript */,
 				BF7F1BDB19E304050028F799 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -2112,6 +2123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
+				BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
 				8AF7BCD01B3880F9000793D7 /* HEMSleepSegmentCollectionViewCell.xib in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
@@ -2130,6 +2142,7 @@
 				8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */,
 				8A63D5571A5F38FE00F5307D /* HEMTimelineFooterCollectionReusableView.xib in Resources */,
 				8AD3312C1BB08D9900DFF95A /* Settings.xcassets in Resources */,
+				BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				BF5AE0511B4F551A00646B6E /* TimeZones.plist in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -2189,20 +2202,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		8A54029D19AE296200FC6085 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run f464ccd280d3e5730dcdaa9b64d1d108694ee9a9 c1c2f12a5d26d28ba58d88e8f4045241f854d6ce829415d932df453877112636";
 			showEnvVarsInLog = 0;
 		};
 		C2DAFDFE628B4AE1A8B7C294 /* Copy Pods Resources */ = {
@@ -2353,6 +2352,7 @@
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
 				BF8E1AA11A689FB2009E421F /* HEMSenseAudioViewController.m in Sources */,
 				BF7105CA1ADC6DAE0066885B /* HEMSpinnerView.m in Sources */,
+				BF8A0DDB1BEACC58006B3B70 /* HEMNoAlarmCell.m in Sources */,
 				BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */,
 				BFC4C20B1B90D89500BB7761 /* HEMEmbeddedVideoView.m in Sources */,
 				BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */,
@@ -2367,6 +2367,7 @@
 				8ADE06071B2A4DE100976654 /* HEMTimelineContainerViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */,
 				BFC458BE1BDAA2CE008EE871 /* HEMGlobalContants.m in Sources */,
 				BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */,
 				BFC3BE9C1A7202DA0022C6C2 /* HEMChoiceViewController.m in Sources */,
@@ -2592,7 +2593,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = iphone_pill;
-				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -2641,7 +2641,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
-				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
 				SENSE_SUPPORT_OPTIONS = NO;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -2846,7 +2845,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
-				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -2969,7 +2967,6 @@
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
 				SENSE_CLIENT_ID = iphone_pill;
-				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;

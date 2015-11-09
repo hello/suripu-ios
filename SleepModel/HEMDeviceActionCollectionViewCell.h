@@ -15,6 +15,4 @@
 @property (weak, nonatomic) IBOutlet UIButton *action3Button;
 @property (weak, nonatomic) IBOutlet UIButton *action4Button;
 
-- (void)showActivity:(BOOL)show withText:(NSString*)text;
-
 @end

@@ -1,5 +1,75 @@
 # Changelog
 
+## 1.1.7.5
+
+Fixes:
+
+* Fixed typo in error message when changing password that is too short
+
+## 1.1.7.4
+
+Fixes:
+
+* Adjusted margins in back view cards
+* Fixed bug with user height adjustments through settings not reflecting the
+  correct value
+
+## 1.1.7.3
+
+New:
+
+* Empty state for Trends
+* Empty state for Alarms
+* No Sense state for Alarms
+* No Sense state for Current Conditions
+* Return specific WEP error if non hex value detected
+
+Fixes:
+
+* Pairing pill video will no longer resume unexpectedly when coming back to foreground
+* Prevent keyboard from showing over the activity view when setting time zone if
+  unexpected disconnect occurred AND time zone update failed together.
+
+
+## 1.1.7.2
+
+Misc:
+
+* Attempt to fix stupid iTC by forcing a new upload
+
+## 1.1.7.1
+
+New:
+
+* Add alarm on/off analytics event
+
+Fixes:
+
+* Prevent unexpected disconnect if factory resetting and pairing sense multiple
+  times in 1 session
+* Resume pill pairing demo video when view re-appears
+* Time picker no longer crashes if you are playing around with it and spinning
+  the picker and cancelling out really fast at the right second
+* Refresh room conditions and alarm view after pairing with sense from those
+  screens
+* Fixed re-appearance of cancel button in various settings screen when view
+  re-appears
+
+## 1.1.7.0
+
+New:
+
+* Updated analytics when saving alarm to match Android
+* Removed the Force sign out option in settings bundle
+
+Fixes:
+
+* Fixed truncated description in pairing mode screen on 4s
+* Kick user out of Sense settings after entering pairing mode via app
+* Tapping outside the content of an alert will dismiss it
+* Better error handling in change password screen
+* Trim email when updating it
+
 ## 1.1.6.7
 
 Fixes:

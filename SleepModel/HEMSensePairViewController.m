@@ -45,7 +45,6 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *notGlowingButton;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseIconHeightConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
@@ -208,8 +207,10 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)useSense:(SENSense*)sense {
-    DDLogVerbose(@"using sense %@", [[self senseManager] sense]);
-    [self setSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
+    DDLogVerbose(@"was using sense %@, now using %@", [[self senseManager] sense], sense);
+    if (![sense isEqual:[[self senseManager] sense]]) {
+        [self setSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
+    }
     [self setCurrentState:HEMSensePairStateSenseFound];
     [self executeNextStep];
 }
@@ -528,7 +529,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         [self performSegueWithIdentifier:segueId sender:self];
     } else {
         if ([self detectedSSID] != nil) {
-            [[HEMOnboardingService sharedService] clear];
+            [[HEMOnboardingService sharedService] clearAll];
             [[self delegate] didPairSenseUsing:[self senseManager] from:self];
         } else {
             [self performSegueWithIdentifier:[HEMOnboardingStoryboard wifiSegueIdentifier]

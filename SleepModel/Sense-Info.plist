@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.6</string>
+	<string>1.1.7</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.1.6.7</string>
+	<string>1.1.7.5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -49,8 +49,6 @@
 	<string>${SENSE_APP_REVIEW_URL}</string>
 	<key>SenseClientId</key>
 	<string>${SENSE_CLIENT_ID}</string>
-	<key>SenseCrashReportsToken</key>
-	<string>${SENSE_CRASH_REPORTS_TOKEN}</string>
 	<key>SensePasswordResetURL</key>
 	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>SenseZendeskClientId</key>

@@ -15,6 +15,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 
 @property (assign, nonatomic, readonly, getter=isVisible) BOOL visible;
 

@@ -36,7 +36,6 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     self = [super init];
     if (self) {
         [self setLoop:YES];
-        [self listenToAppEvents];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     }
     return self;
@@ -46,7 +45,6 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     self = [super initWithFrame:frame];
     if (self) {
         [self setLoop:YES];
-        [self listenToAppEvents];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     }
     return self;
@@ -56,29 +54,8 @@ static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBuffe
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self setLoop:YES];
-        [self listenToAppEvents];
     }
     return self;
-}
-
-- (void)listenToAppEvents {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(didBecomeActive)
-                   name:UIApplicationDidBecomeActiveNotification
-                 object:nil];
-    [center addObserver:self
-               selector:@selector(didEnterBackground)
-                   name:UIApplicationDidEnterBackgroundNotification
-                 object:nil];
-}
-
-- (void)didBecomeActive {
-    [self playVideoWhenReady];
-}
-
-- (void)didEnterBackground {
-    [self pause];
 }
 
 - (void)setFirstFrame:(UIImage*)image videoPath:(NSString*)videoPath {

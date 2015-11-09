@@ -9,6 +9,8 @@
 #import <SenseKit/SENAnalytics.h>
 #import <SenseKit/SENAccount.h>
 
+@class  SENAlarm;
+
 // general
 extern NSString* const kHEMAnalyticsEventWarning;
 extern NSString* const kHEMAnalyticsEventHelp;
@@ -165,10 +167,14 @@ extern NSString* const HEMAnalyticsEventTimelineAlarmShortcut;
 extern NSString* const kHEMAnalyticsEventAlarms;
 extern NSString* const HEMAnalyticsEventCreateNewAlarm;
 extern NSString* const HEMAnalyticsEventSwitchSmartAlarm;
+extern NSString* const HEMAnalyticsEventAlarmOnOff;
+extern NSString* const HEMAnalyticsEventPropDaysRepeated;
+extern NSString* const HEMAnalyticsEventPropEnabled;
+extern NSString* const HEMAnalyticsEventPropIsSmart;
 extern NSString* const HEMAnalyticsEventSwitchSmartAlarmOn;
 extern NSString* const HEMAnalyticsEventSaveAlarm;
-extern NSString* const HEMAnalyticsEventSaveAlarmHour;
-extern NSString* const HEMAnalyticsEventSaveAlarmMinute;
+extern NSString* const HEMAnalyticsEventPropHour;
+extern NSString* const HEMAnalyticsEventPropMinute;
 
 // system alerts
 extern NSString* const HEMAnalyticsEventSystemAlert;
@@ -196,5 +202,7 @@ extern NSString* const HEMAnalyticsEventAppReviewSkip;
 + (void)trackWarningWithMessage:(NSString*)message;
 + (void)trackError:(NSError*)error;
 + (void)updateGender:(SENAccountGender)gender;
++ (void)trackAlarmSave:(SENAlarm*)alarm;
++ (void)trackAlarmToggle:(SENAlarm*)alarm;
 
 @end

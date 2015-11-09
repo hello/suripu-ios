@@ -140,6 +140,7 @@
 + (UIColor *)welcomeVideoButtonColor;
 + (UIColor *)welcomeIntroTitleColor;
 + (UIColor *)welcomeIntroDescriptionColor;
++ (UIColor *)emptyStateDescriptionColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

@@ -226,22 +226,6 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     }];
 }
 
-- (void)loadDeviceInfoIfNeeded:(SENServiceDeviceCompletionBlock)completion {
-    void(^done)(NSError* error) = ^(NSError* error) {
-        if (completion) {
-            completion (error);
-        }
-    };
-    
-    if ([self isLoadingInfo]) {
-        done([self errorWithType:SENServiceDeviceErrorInProgress]);
-    } else if ([self isInfoLoaded]) {
-        done(nil);
-    } else {
-        [self loadDeviceInfo:done];
-    }
-}
-
 - (void)currentSenseRSSI:(void(^)(NSNumber* rssi, NSError* error))completion {
     if (!completion) return; // do nothing
     

@@ -573,6 +573,9 @@ typedef NS_ENUM(NSInteger, HEMSenseWarning) {
                     [strongSelf showFailureToEnablePairingModeAlert];
                 }];
             } else {
+                if ([[strongSelf delegate] respondsToSelector:@selector(didEnterPairingModeFrom:)]) {
+                    [[strongSelf delegate] didEnterPairingModeFrom:strongSelf];
+                }
                 [strongSelf dismissActivityWithSuccess:nil];
             }
         }];
@@ -727,6 +730,8 @@ typedef NS_ENUM(NSInteger, HEMSenseWarning) {
 
 - (void)dealloc {
     [[[SENServiceDevice sharedService] senseManager] disconnectFromSense];
+    [[self collectionView] setDelegate:nil];
+    [[self collectionView] setDataSource:nil];
 }
 
 @end

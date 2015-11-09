@@ -258,23 +258,25 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     return gender;
 }
 
-- (CGFloat)heightInInches {
-    return HEMToInches([[[SENServiceAccount sharedService] account] height]);
+- (NSNumber*)heightInCm {
+    return [[[SENServiceAccount sharedService] account] height];
 }
 
 - (NSString*)height {
-    NSNumber* cm = [[[SENServiceAccount sharedService] account] height];
-    if (cm == nil) return nil;
+    NSNumber* cm = [self heightInCm];
+    if (!cm) {
+        return NSLocalizedString(@"empty.data", nil);
+    }
     
-    long cmValue = [cm longValue];
     NSString* height = nil;
     
     if ([SENPreference useMetricUnitForHeight]) {
-        height = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cmValue];
+        CGFloat cmToDisplay = roundCGFloat([cm CGFloatValue]);
+        height = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cmToDisplay];
     } else {
-        long inValue = HEMToInches(cm);
-        long feet = inValue / 12;
-        long inches = inValue % 12;
+        CGFloat totalInches = HEMToInches(cm);
+        CGFloat feet = floorCGFloat(totalInches / 12.0f);
+        CGFloat inches = totalInches - (feet * 12.0f);
         NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
         NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
         height = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];
@@ -463,7 +465,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     }];
 }
 
-- (void)updateHeight:(int)heightInCentimeters completion:(void(^)(NSError* error))completion {
+- (void)updateHeight:(CGFloat)heightInCentimeters completion:(void(^)(NSError* error))completion {
     __block SENAccount* account = [[SENServiceAccount sharedService] account];
     
     NSNumber* oldHeight = [account height];

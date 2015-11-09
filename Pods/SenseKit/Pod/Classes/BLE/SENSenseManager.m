@@ -1151,7 +1151,14 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 + (BOOL)isWepKeyValid:(NSString*)key {
     NSUInteger len = [key length];
-    return len > 0 && len % 2 == 0;
+    BOOL valid = len > 0 && len % 2 == 0;
+    
+    if (valid) {
+        NSCharacterSet* hexCharacters = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"] invertedSet];
+        valid = [[key uppercaseString] rangeOfCharacterFromSet:hexCharacters].location == NSNotFound;
+    }
+    
+    return valid;
 }
 
 /**
@@ -1168,7 +1175,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         if (error != NULL) {
             NSString* errorMsg = @"invalid wep network key";
             DDLogVerbose(@"%@", errorMsg);
-            *error = [self errorWithCode:SENSenseManagerErrorCodeInvalidArgument
+            *error = [self errorWithCode:SENSenseManagerErrorCodeInvalidWEPKey
                              description:errorMsg
                      fromUnderlyingError:nil];
         }

@@ -10,7 +10,7 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMTutorial.h"
-#import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
@@ -38,7 +38,7 @@
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 10.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
-static CGFloat const HEMCurrentConditionsPairViewHeight = 205.0f;
+static CGFloat const HEMCurrentConditionsPairViewHeight = 352.0f;
 static CGFloat const HEMCurrentConditionsItemSpacing = 8.f;
 static NSUInteger const HEMConditionGraphPointLimit = 130;
 
@@ -378,9 +378,12 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self hasNoSense]) {
         NSString *identifier = [HEMMainStoryboard pairReuseIdentifier];
-        HEMNoDeviceCollectionViewCell *cell =
-            [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-        [cell configureForSense];
+        HEMSenseRequiredCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
+                                                                                             forIndexPath:indexPath];
+        [[cell descriptionLabel] setText:NSLocalizedString(@"sensor.no-sense.message", nil)];
+        [[cell pairSenseButton] addTarget:self action:@selector(pairSense:) forControlEvents:UIControlEventTouchUpInside];
+        [[cell pairSenseButton] setTitle:[NSLocalizedString(@"sensor.no-sense.button.title", nil) uppercaseString]
+                                forState:UIControlStateNormal];
         return cell;
     } else {
         NSString *identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];

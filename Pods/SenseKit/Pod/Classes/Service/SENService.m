@@ -38,6 +38,12 @@
 - (void)serviceWillBecomeInactive {}
 - (void)serviceReceivedMemoryWarning {}
 
+- (void)callIfSafe:(void(^)(NSError* error))block withError:(NSError*)error {
+    if (block) {
+        block (error);
+    }
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

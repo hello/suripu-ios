@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountError) {
 - (BOOL)isLastRow:(NSIndexPath*)indexPath;
 - (NSDateComponents*)birthdateComponents;
 - (NSUInteger)genderEnumValue;
-- (CGFloat)heightInInches;
+- (NSNumber*)heightInCm;
 - (NSNumber*)weightInGrams;
 
 #pragma mark - Updates
@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountError) {
                     year:(NSInteger)year
               completion:(void(^)(NSError* error))completion;
 
-- (void)updateHeight:(int)heightInCentimeters
+- (void)updateHeight:(CGFloat)heightInCentimeters
           completion:(void(^)(NSError* error))completion;
 
 - (void)updateWeight:(CGFloat)grams

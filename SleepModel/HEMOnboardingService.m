@@ -2,6 +2,10 @@
 //  HEMOnboardingService.m
 //  Sense
 //
+//  TODO: we should merge this with the device service or handle all device
+//  interaction through SENServiceDevice or here, but not spread it across
+//  both
+//
 //  Created by Jimmy Lu on 7/16/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
@@ -49,13 +53,9 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     static HEMOnboardingService* service = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        service = [[super allocWithZone:NULL] init];
+        service = [[super alloc] init];
     });
     return service;
-}
-
-+ (id)allocWithZone:(struct _NSZone *)zone {
-    return [self sharedService];
 }
 
 - (void)clear {
@@ -67,6 +67,12 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
     // leave the current sense manager in place
+}
+
+- (void)clearAll {
+    [self clear];
+    [self disconnectCurrentSense];
+    [self setCurrentSenseManager:nil];
 }
 
 - (NSError*)errorWithCode:(HEMOnboardingError)code reason:(NSString*)reason {
@@ -95,6 +101,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 }
 
 - (void)replaceCurrentSenseManagerWith:(SENSenseManager*)manager {
+    DDLogVerbose(@"replacing current manager %@, with %@", [self currentSenseManager], manager);
     [self setCurrentSenseManager:manager];
 }
 
@@ -407,8 +414,22 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
     
     if (errorType == SENAPIAccountErrorUnknown) {
-        NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-        alertMessage = [self httpErrorMessageForStatusCode:[response statusCode]];
+        if ([[error domain] isEqualToString:NSURLErrorDomain]) {
+            alertMessage = [error localizedDescription];
+        } else {
+            NSInteger statusCode = [self httpStatusCodeFromError:error];
+            switch (statusCode) {
+                case 401:
+                    alertMessage = NSLocalizedString(@"authorization.sign-in.failed.message", nil);
+                    break;
+                case 409:
+                    alertMessage = NSLocalizedString(@"sign-up.error.conflict", nil);
+                    break;
+                default:
+                    alertMessage = NSLocalizedString(@"sign-up.error.generic", nil);
+                    break;
+            }
+        }
     } else {
         alertMessage = [self accountErrorMessageForType:errorType];
     }
@@ -416,36 +437,9 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     return alertMessage;
 }
 
-- (NSString*)httpErrorMessageForStatusCode:(NSInteger)statusCode {
-    NSString* message = nil;
-    // note that we will not attempt to create a message for every error code
-    // that exists, but rather only for those that are commonly encountered.
-    // We should never return the localizedDescription here as that provides
-    // the user a unfriendly message that only iOS developers can actually understand
-    switch (statusCode) {
-        case 401:
-            message = NSLocalizedString(@"authorization.sign-in.failed.message", nil);
-            break;
-        case 409:
-            message = NSLocalizedString(@"sign-up.error.conflict", nil);
-            break;
-        case NSURLErrorNotConnectedToInternet:
-            message = NSLocalizedString(@"network.error.not-connected", nil);
-            break;
-        case NSURLErrorNetworkConnectionLost:
-            message = NSLocalizedString(@"network.error.connection-lost", nil);
-            break;
-        case NSURLErrorCannotConnectToHost:
-            message = NSLocalizedString(@"network.error.cannot-connect-to-host", nil);
-            break;
-        case NSURLErrorTimedOut:
-            message = NSLocalizedString(@"network.error.timed-out", nil);
-            break;
-        default:
-            message = NSLocalizedString(@"sign-up.error.generic", nil);
-            break;
-    }
-    return message;
+- (NSInteger)httpStatusCodeFromError:(NSError*)error {
+    NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    return [response statusCode];
 }
 
 - (NSString*)accountErrorMessageForType:(SENAPIAccountError)errorType {
@@ -500,6 +494,10 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 #pragma mark - Link Account
 
+// TODO: we probably should clean up onboarding service and device service
+// so that all device interaction happens within one of them and not both
+// such that these types of interactions are more fluid (see note after linking
+// account)
 - (void)linkCurrentAccount:(void(^)(NSError* error))completion {
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self currentSenseManager];
@@ -520,7 +518,13 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
         return;
     }
 
+    __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
+        // load the service data so is readily available, if not in onboarding
+        if ([weakSelf hasFinishedOnboarding]) {
+            [[SENServiceDevice sharedService] loadDeviceInfo:nil];
+        }
+        
         if (completion) {
             completion (nil);
         }
@@ -553,9 +557,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 - (void)markOnboardingAsComplete {
     // if you call this method, you want to leave onboarding so make sure it's set
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
-    [self clear];
-    [self disconnectCurrentSense];
-    [self setCurrentSenseManager:nil];
+    [self clearAll];
 }
 
 #pragma mark - Notifications

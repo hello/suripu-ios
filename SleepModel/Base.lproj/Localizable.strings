@@ -267,7 +267,7 @@
 "settings.pill.dialog.unable-to-unpair" = "Unable to unpair your Sleep Pill.";
 "settings.pill.unpair-error-title" = "Unpairing failed";
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill";
-"settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired.";
+"settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired";
 "settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
 "settings.pill.warning.low-battery-format" = "Your Sleep Pill %@. We'll walk you through replacing it.";
 "settings.pill.warning.battery-low" = "battery is low";

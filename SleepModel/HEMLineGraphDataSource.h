@@ -8,8 +8,6 @@
 
 - (instancetype)initWithDataSeries:(NSArray*)dataSeries unit:(SENSensorUnit)unit;
 
-- (NSArray*)valuesForSectionIndexes;
-
 - (SENSensorDataPoint*)dataPointAtIndex:(NSInteger)index;
 
 @property (nonatomic, strong, readonly) NSArray* dataSeries;

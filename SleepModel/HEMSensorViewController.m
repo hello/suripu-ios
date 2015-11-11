@@ -524,7 +524,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 }
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
-    [self.overlayView setSectionFooters:self.graphDataSource.valuesForSectionIndexes headers:nil];
     [self.graphView setUserInteractionEnabled:self.graphDataSource.dataSeries.count > 0];
     [UIView animateWithDuration:0.75f animations:^{
         self.graphView.alpha = 1;

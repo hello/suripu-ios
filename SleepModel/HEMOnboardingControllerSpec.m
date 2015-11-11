@@ -73,7 +73,7 @@ describe(@"+onboardingControllerForCheckpoint", ^{
         
         it(@"should return nil if onboarding is done", ^{
             
-            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillDone;
+            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointSenseColorsViewed;
             UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
             [[controller should] beNil];
             

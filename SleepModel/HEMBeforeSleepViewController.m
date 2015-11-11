@@ -63,6 +63,9 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
     [self configureButtons];
     [self configureScrollView];
     [self configureInitialScreen];
+    // start checking for paired accounts to the previously paired Sense so
+    // that future steps in the flow can use the cached data
+    [[HEMOnboardingService sharedService] checkNumberOfPairedAccounts];
     [self trackAnalyticsEvent:HEMAnalyticsEventSenseColors];
 }
 
@@ -399,6 +402,9 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
 }
 
 - (IBAction)next:(id)sender {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsViewed];
+    
     NSString* nextSegueId
         = [self sensorsAreReady]
         ? [HEMOnboardingStoryboard beforeSleeptoRoomCheckSegueIdentifier]

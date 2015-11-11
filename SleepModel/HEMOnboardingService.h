@@ -34,7 +34,8 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
     HEMOnboardingCheckpointAccountCreated = 1,
     HEMOnboardingCheckpointAccountDone = 2,
     HEMOnboardingCheckpointSenseDone = 3,
-    HEMOnboardingCheckpointPillDone = 4
+    HEMOnboardingCheckpointPillDone = 4,
+    HEMOnboardingCheckpointSenseColorsViewed = 5
 };
 
 @class SENSense;

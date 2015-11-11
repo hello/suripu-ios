@@ -263,14 +263,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                  object:nil];
 }
 
-- (BOOL)shouldMonitorSystem
-{
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    HEMOnboardingCheckpoint checkpoint = [service onboardingCheckpoint];
+- (BOOL)shouldMonitorSystem {
     return [SENAuthorizationService isAuthorized]
         && [self presentedViewController] == nil
-        && (checkpoint == HEMOnboardingCheckpointStart
-               || checkpoint == HEMOnboardingCheckpointPillDone);
+        && [[HEMOnboardingService sharedService] hasFinishedOnboarding];
 }
 
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date

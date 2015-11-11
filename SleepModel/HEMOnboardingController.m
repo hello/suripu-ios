@@ -66,6 +66,8 @@
         case HEMOnboardingCheckpointSenseDone:
             return [self containedOnboardingController:[HEMOnboardingStoryboard instantiatePillDescriptionViewController]];
         case HEMOnboardingCheckpointPillDone:
+            return [self containedOnboardingController:[HEMOnboardingStoryboard instantiateSenseColorsViewController]];
+        case HEMOnboardingCheckpointSenseColorsViewed:
         default:
             return nil;
     }

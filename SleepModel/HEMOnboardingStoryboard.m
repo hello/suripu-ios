@@ -33,6 +33,7 @@ static NSString *const _HEMpillSetupVideoCell = @"pillSetupVideoCell";
 static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMroomCheckToSmartAlarm = @"roomCheckToSmartAlarm";
 static NSString *const _HEMsenseAudio = @"senseAudio";
+static NSString *const _HEMsenseColors = @"senseColors";
 static NSString *const _HEMsensePairToPill = @"sensePairToPill";
 static NSString *const _HEMsensePairViewController = @"sensePairViewController";
 static NSString *const _HEMsenseSetup = @"senseSetup";
@@ -93,6 +94,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(id)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
 +(id)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
 +(id)instantiateSenseAudioViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseAudio]; }
++(id)instantiateSenseColorsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseColors]; }
 +(id)instantiateSensePairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensePairViewController]; }
 +(id)instantiateSenseSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseSetup]; }
 +(id)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }

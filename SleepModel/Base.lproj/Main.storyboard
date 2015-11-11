@@ -2209,10 +2209,6 @@
                             <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="jXq-nN-8Qt" userLabel="Graph Container">
                                 <rect key="frame" x="0.0" y="375" width="600" height="161"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oVZ-oK-eUb" customClass="HEMGraphSectionOverlayView">
-                                        <rect key="frame" x="0.0" y="6" width="600" height="151"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xE4-J4-AJU" userLabel="graph divider">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
                                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -2233,8 +2229,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="oVZ-oK-eUb" firstAttribute="bottom" secondItem="eKU-VY-IW0" secondAttribute="bottom" constant="-24" id="AaZ-Q6-dZm"/>
-                                    <constraint firstItem="oVZ-oK-eUb" firstAttribute="top" secondItem="eKU-VY-IW0" secondAttribute="top" constant="-16" id="Et4-X8-tCp"/>
                                     <constraint firstItem="xE4-J4-AJU" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="top" id="PlQ-Bb-XLU"/>
                                     <constraint firstItem="DyW-hQ-mCU" firstAttribute="trailing" secondItem="jXq-nN-8Qt" secondAttribute="trailing" id="Urb-jc-Zba"/>
                                     <constraint firstItem="DyW-hQ-mCU" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="top" id="X6s-7t-MUn"/>
@@ -2245,8 +2239,6 @@
                                     <constraint firstItem="eKU-VY-IW0" firstAttribute="leading" secondItem="jXq-nN-8Qt" secondAttribute="leading" id="jsF-5w-MC3"/>
                                     <constraint firstItem="eKU-VY-IW0" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="top" constant="22" id="kJh-rp-daa"/>
                                     <constraint firstAttribute="bottom" secondItem="eKU-VY-IW0" secondAttribute="bottom" constant="-20" id="nt5-ct-ogh"/>
-                                    <constraint firstAttribute="trailing" secondItem="oVZ-oK-eUb" secondAttribute="trailing" id="sJo-u2-cWf"/>
-                                    <constraint firstItem="oVZ-oK-eUb" firstAttribute="leading" secondItem="jXq-nN-8Qt" secondAttribute="leading" id="ueJ-5J-DaH"/>
                                     <constraint firstAttribute="trailing" secondItem="eKU-VY-IW0" secondAttribute="trailing" id="ycE-j6-9lO"/>
                                 </constraints>
                             </view>
@@ -2354,7 +2346,6 @@
                         <outlet property="graphContainerView" destination="jXq-nN-8Qt" id="1Dd-eu-q83"/>
                         <outlet property="graphView" destination="eKU-VY-IW0" id="7TD-qB-cd7"/>
                         <outlet property="hourlyGraphButton" destination="d9H-QV-uE8" id="v7k-ws-X03"/>
-                        <outlet property="overlayView" destination="oVZ-oK-eUb" id="A5O-Hw-Uph"/>
                         <outlet property="selectionLeftConstraint" destination="28H-9X-Pe6" id="ZED-Vw-eIx"/>
                         <outlet property="selectionView" destination="EGP-k0-Pe2" id="rsg-zi-v8i"/>
                         <outlet property="statusLabel" destination="DyW-hQ-mCU" id="Se1-Sv-uBy"/>

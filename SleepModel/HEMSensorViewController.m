@@ -9,7 +9,6 @@
 
 #import "HEMSensorViewController.h"
 #import "HEMLineGraphDataSource.h"
-#import "HEMGraphSectionOverlayView.h"
 #import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
@@ -30,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* chartContainerView;
 @property (weak, nonatomic) IBOutlet UIView* selectionView;
-@property (weak, nonatomic) IBOutlet HEMGraphSectionOverlayView* overlayView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* selectionLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* tinySeparatorConstraint;
 
@@ -211,7 +209,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)configureGraphView
 {
-    self.overlayView.alpha = 0;
     self.graphView.delegate = self;
     self.graphView.enableBezierCurve = NO;
     self.graphView.enableTouchReport = YES;
@@ -301,7 +298,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
         if (error) {
             strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
             strongSelf.statusLabel.alpha = 1;
-            strongSelf.overlayView.alpha = 0;
             strongSelf.graphView.alpha = 0;
             return;
         }
@@ -318,7 +314,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
         if (error) {
             strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
             strongSelf.statusLabel.alpha = 1;
-            strongSelf.overlayView.alpha = 0;
             strongSelf.graphView.alpha = 0;
             return;
         }
@@ -364,7 +359,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 {
     void (^animations)() = ^{
         self.graphView.alpha = 0;
-        self.overlayView.alpha = 0;
     };
     void (^completion)(BOOL) = ^(BOOL finished) {
         if ([self isShowingHourlyData]) {
@@ -509,25 +503,18 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
     self.statusMessageLabel.font = [UIFont sensorTimestampFont];
     [self updateValueLabelWithValue:dataPoint.value];
-    [UIView animateWithDuration:0.2f animations:^{
-        self.overlayView.alpha = 0;
-    }];
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
     [self.view setNeedsUpdateConstraints];
     [self configureSensorValueViews];
     self.panning = NO;
-    [UIView animateWithDuration:0.2f animations:^{
-        self.overlayView.alpha = 1;
-    }];
 }
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
     [self.graphView setUserInteractionEnabled:self.graphDataSource.dataSeries.count > 0];
     [UIView animateWithDuration:0.75f animations:^{
         self.graphView.alpha = 1;
-        self.overlayView.alpha = 1;
     }];
 }
 

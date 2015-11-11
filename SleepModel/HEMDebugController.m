@@ -42,7 +42,7 @@
 - (id)initWithViewController:(UIViewController*)controller {
     self = [super init];
     if (self) {
-        [self setPresentingController:[controller presentedViewController] ?: controller];
+        [self setPresentingController:controller];
         [self setOrigPresentationStyle:[[self presentingController] modalPresentationStyle]];
     }
     return self;
@@ -55,8 +55,15 @@
     }
 }
 
-- (void)presentOptions:(HEMActionSheetViewController*)optionsVC {
-    [[self presentingController] presentViewController:optionsVC animated:NO completion:nil];
+- (void)showController:(UIViewController*)controller
+              animated:(BOOL)animated
+            completion:(void (^)(void))completion{
+    
+    UIViewController* parent = [self presentingController];
+    while ([parent presentedViewController]) {
+        parent = [parent presentedViewController];
+    }
+    [parent presentViewController:controller animated:animated completion:completion];
 }
 
 - (void)showSupportOptions {
@@ -67,7 +74,6 @@
     [sheet setTitle:NSLocalizedString(@"debug.options.title", nil)];
     
     [self addContactSupportOptionTo:sheet];
-    [self addResetCheckpointOptionTo:sheet];
     [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
@@ -81,7 +87,7 @@
         [self setSupportOptionController:nil];
     }];
     
-    [self presentOptions:sheet];
+    [self showController:sheet animated:NO completion:nil];
 }
 
 - (void)addContactSupportOptionTo:(HEMActionSheetViewController*)sheet {
@@ -112,23 +118,6 @@
     }];
 }
 
-- (void)addResetCheckpointOptionTo:(HEMActionSheetViewController*)sheet {
-    __weak typeof(self) weakSelf = self;
-    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset", nil) action:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([[strongSelf presentingController] isKindOfClass:[UINavigationController class]]) {
-            UINavigationController* onboardingVC = (UINavigationController*)[strongSelf presentingController];
-            HEMOnboardingCheckpoint checkpoint = HEMOnboardingCheckpointStart;
-            UIViewController* startController = [HEMOnboardingController controllerForCheckpoint:checkpoint force:YES];
-            if (![[onboardingVC topViewController] isKindOfClass:[startController class]]) {
-                [onboardingVC setViewControllers:@[startController] animated:YES];
-            }
-        }
-        [strongSelf setSupportOptionController:nil];
-        [SENAuthorizationService deauthorize];
-    }];
-}
-
 #pragma mark Debug Info
 
 - (void)showDebugInfo {
@@ -139,7 +128,7 @@
     HEMDebugInfoDataSource* source = [[HEMDebugInfoDataSource alloc] init];
     [infoVC setInfoSource:source];
     
-    [[self presentingController] presentViewController:navVC animated:YES completion:nil];
+    [self showController:navVC animated:YES completion:nil];
 }
 
 #pragma mark API Address
@@ -209,7 +198,7 @@
         [self setLedOptionController:nil];
     }];
     
-    [self presentOptions:sheet];
+    [self showController:sheet animated:NO completion:nil];
 }
 
 - (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMActionSheetViewController*)sheet {
@@ -253,7 +242,7 @@
 - (void)showRoomCheckController {
     UIViewController* rcVC = [HEMOnboardingStoryboard instantiateRoomCheckViewController];
     UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:rcVC];
-    [[self presentingController] presentViewController:nav animated:YES completion:nil];
+    [self showController:nav animated:YES completion:nil];
 
     [self setRoomCheckViewController:nav];
     [[NSNotificationCenter defaultCenter] addObserver:self

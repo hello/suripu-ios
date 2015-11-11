@@ -72,17 +72,10 @@ NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account";
     [center addObserver:self selector:@selector(didSignOut)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
-    [center addObserver:self selector:@selector(didSignIn)
-                   name:SENAuthorizationServiceDidAuthorizeNotification
-                 object:nil];
 }
 
 - (void)didSignOut {
     [self setAccount:nil];
-}
-
-- (void)didSignIn {
-    [self refreshAccount:nil];
 }
 
 #pragma mark - Account Management

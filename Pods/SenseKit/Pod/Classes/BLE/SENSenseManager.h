@@ -116,12 +116,7 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      * If this device has connected to a Sense before (and remembered so), but
      * the device has forgotten Sense from Settings or other means
      */
-    SENSenseManagerErrorCodeForgottenSense = -25,
-    /**
-     * Attempt to send WiFi credentials for a WEP secured network, but password
-     * specified is an invalid WEP key (cannot use passphrase)
-     */
-    SENSenseManagerErrorCodeInvalidWEPKey = -26
+    SENSenseManagerErrorCodeForgottenSense = -25
 };
 
 @interface SENSenseManager : NSObject

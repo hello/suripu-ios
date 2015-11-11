@@ -1,1 +1,0 @@
-MIXPANEL_SIMPLE_OTHER_LDFLAGS = -framework "CoreTelephony" -framework "UIKit"

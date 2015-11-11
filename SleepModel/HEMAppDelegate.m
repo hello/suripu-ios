@@ -1,5 +1,7 @@
 #import <SenseKit/SenseKit.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
@@ -11,11 +13,12 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSnazzBarController.h"
 #import "HEMAudioCache.h"
-#import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAuthenticationViewController.h"
 #import "HEMConfig.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSegmentProvider.h"
+#import "HEMDebugController.h"
 
 @implementation HEMAppDelegate
 
@@ -24,12 +27,11 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    
-    if (![HEMConfig booleanForConfig:HEMConfAllowDebugOptions]) {
-        [application setApplicationSupportsShakeToEdit:NO];
-    }
-
+    // order matters
     [self configureAPI];
+    
+    [HEMDebugController disableDebugMenuIfNeeded];
+    
     [HEMLogUtils enableLogger];
 
     if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey])
@@ -37,7 +39,9 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
                                           fetchCompletionHandler:NULL];
 
     [self deauthorizeIfNeeded];
-    [self configureAnalytics];
+    
+    [SENAnalytics enableAnalytics];
+
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
@@ -153,19 +157,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     [SENAuthorizationService authorizeRequestsFromKeychain];
 }
 
-- (void)configureAnalytics {
-    NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
-    
-    if ([analyticsToken length] > 0) {
-        DDLogVerbose(@"analytics enabled");
-        [SENAnalytics configure:SENAnalyticsProviderNameMixpanel
-                           with:@{kSENAnalyticsProviderToken : analyticsToken}];
-        [SENAnalytics trackUserSession];
-    }
-    
-    [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
-}
-
 - (BOOL)deauthorizeIfNeeded {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
     if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
@@ -246,6 +237,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 {
     SENClearModel();
     [HEMAudioCache clearCache];
+    [SENAnalytics reset:nil];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [[HEMOnboardingService sharedService] resetOnboardingCheckpoint];
     [[SENServiceDevice sharedService] reset];

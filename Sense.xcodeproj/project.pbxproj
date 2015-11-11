@@ -255,6 +255,7 @@
 		BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD3CCF01B9F7F8D00643987 /* NSShadow+HEMStyle.m */; };
 		BFD4012C1BDED8E600F6C419 /* HEMModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD4012B1BDED8E600F6C419 /* HEMModalTransitionDelegate.m */; settings = {ASSET_TAGS = (); }; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
+		BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */; settings = {ASSET_TAGS = (); }; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
@@ -771,6 +772,8 @@
 		BFD4012B1BDED8E600F6C419 /* HEMModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMModalTransitionDelegate.m; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
+		BFD9D1FE1BF27E2900948CB7 /* HEMSegmentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSegmentProvider.h; sourceTree = "<group>"; };
+		BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSegmentProvider.m; sourceTree = "<group>"; };
 		BFDCA64A1BD6C0D200E9C33F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
@@ -1964,6 +1967,8 @@
 				BFB7C3B21B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m */,
 				BF2123F41B66E8B50017D67A /* HEMAppUsage.h */,
 				BF2123F51B66E8B50017D67A /* HEMAppUsage.m */,
+				BFD9D1FE1BF27E2900948CB7 /* HEMSegmentProvider.h */,
+				BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */,
 			);
 			name = Analytics;
 			sourceTree = "<group>";
@@ -2328,6 +2333,7 @@
 				8ADE06391B2F521B00976654 /* HEMSplitTextFormatter.m in Sources */,
 				8A6FCDE41B0E52AE004EB7ED /* HEMEventBubbleView.m in Sources */,
 				8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */,
+				BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */,
 				BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */,
 				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
@@ -2587,7 +2593,7 @@
 				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
-				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
+				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is/v1";
 				SENSE_APP_ID = is.hello.sensetest;
 				SENSE_APP_NAME = Sense;
@@ -2635,7 +2641,7 @@
 				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
-				SENSE_ANALYTICS_TOKEN = 43c61cc553f0ccf2b3e1f73bc30bbfb4;
+				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
 				SENSE_API_URL = "https://api.hello.is/v1";
 				SENSE_APP_ID = is.hello.Sense;
 				SENSE_APP_NAME = Sense;
@@ -2669,7 +2675,7 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PROVISIONING_PROFILE = "";
-				SENSE_ANALYTICS_TOKEN = "";
+				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_CLIENT_ID = iphone_pill;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2839,7 +2845,7 @@
 				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
-				SENSE_ANALYTICS_TOKEN = 43c61cc553f0ccf2b3e1f73bc30bbfb4;
+				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
 				SENSE_API_URL = "https://api.hello.is";
 				SENSE_APP_ID = is.hello.Sense;
 				SENSE_APP_NAME = Sense;
@@ -2961,7 +2967,7 @@
 				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
-				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
+				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is/v1";
 				SENSE_APP_ID = is.hello.sensetest;
 				SENSE_APP_NAME = Sense;

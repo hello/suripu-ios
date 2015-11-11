@@ -196,6 +196,7 @@ extern NSString* const HEMAnalyticsEventAppReviewSkip;
 
 @interface SENAnalytics (HEMAppAnalytics)
 
++ (void)enableAnalytics;
 + (void)trackSignUpOfNewAccount:(SENAccount*)account;
 + (void)trackUserSession;
 + (void)trackErrorWithMessage:(NSString*)message;

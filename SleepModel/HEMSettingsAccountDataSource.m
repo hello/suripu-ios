@@ -189,7 +189,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
             break;
         case HEMSettingsAccountInfoTypeBirthday: {
             SENAccount* account = [[SENServiceAccount sharedService] account];
-            value = [account localizedBirthdateWithStyle:NSDateFormatterLongStyle];
+            if ([account birthdate]) {
+                value = [account localizedBirthdateWithStyle:NSDateFormatterLongStyle];
+            }
             break;
         }
         case HEMSettingsAccountInfoTypeGender:
@@ -264,8 +266,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 
 - (NSString*)height {
     NSNumber* cm = [self heightInCm];
-    if (!cm) {
-        return NSLocalizedString(@"empty.data", nil);
+    if (!cm || [cm CGFloatValue] == 0.0f) {
+        return nil;
     }
     
     NSString* height = nil;
@@ -291,7 +293,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 
 - (NSString*)weight {
     NSNumber* grams = [[[SENServiceAccount sharedService] account] weight];
-    if (grams == nil) return nil;
+    if (!grams || [grams CGFloatValue] == 0.0f) {
+        return nil;
+    }
     
     NSString* weight = nil;
     

@@ -508,13 +508,11 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - Shake to Show Debug Options
 
-- (BOOL)canBecomeFirstResponder
-{
+- (BOOL)canBecomeFirstResponder {
     return [HEMDebugController isEnabled];
 }
 
-- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent*)event
-{
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent*)event {
     if ([HEMConfig booleanForConfig:HEMConfAllowDebugOptions] && motion == UIEventSubtypeMotionShake) {
         if ([self debugController] == nil) {
             [self setDebugController:[[HEMDebugController alloc] initWithViewController:self]];
@@ -525,8 +523,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - Cleanup
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

@@ -22,6 +22,7 @@
 #import "HEMOnboardingController.h"
 #import "HEMInfoViewController.h"
 #import "HEMDebugInfoDataSource.h"
+#import "HEMConfig.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -35,8 +36,14 @@
 
 @implementation HEMDebugController
 
++ (void)disableDebugMenuIfNeeded {
+    if (![self isEnabled]) {
+        [[UIApplication sharedApplication] setApplicationSupportsShakeToEdit:NO];
+    }
+}
+
 + (BOOL)isEnabled {
-    return YES; // need to create a pre-processor flag to return here
+    return [HEMConfig booleanForConfig:HEMConfAllowDebugOptions];
 }
 
 - (id)initWithViewController:(UIViewController*)controller {

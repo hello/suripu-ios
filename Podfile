@@ -20,11 +20,11 @@ pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
                   :tag => '1.4.1.2'
 pod 'UICountingLabel', '~> 1.2.0'
 pod 'CGFloatType', '~> 1.3.1'
+pod 'Analytics/Segmentio', '~> 2.0.17'
 
 # Private
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
-pod 'Mixpanel-simple', :git => 'git@github.com:hello/Mixpanel-simple.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
 
 post_install do |installer|

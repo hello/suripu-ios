@@ -22,9 +22,6 @@
       "name": "Analytics",
       "source_files": "Pod/Classes/Analytics/*",
       "dependencies": {
-        "Mixpanel-simple": [
-
-        ],
         "CocoaLumberjack": [
           "~> 2.0.0"
         ]

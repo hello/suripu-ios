@@ -8,8 +8,12 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENAnalyticsLogger.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
+
+#import "HEMConfig.h"
+#import "HEMSegmentProvider.h"
 
 // general
 NSString* const kHEMAnalyticsEventWarning = @"Warning";
@@ -208,6 +212,19 @@ NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
 static NSString* const kHEMAnalyticsEventError = @"Error";
 
 @implementation SENAnalytics (HEMAppAnalytics)
+
++ (void)enableAnalytics {
+    // whatever 3rd party vendor we use for analytics, configure it here
+    NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
+    if ([analyticsToken length] > 0) {
+        DDLogVerbose(@"analytics enabled");
+        HEMSegmentProvider* segment = [[HEMSegmentProvider alloc] initWithWriteKey:analyticsToken];
+        [SENAnalytics addProvider:segment];
+        [SENAnalytics trackUserSession];
+    }
+    // logging for our own perhaps to replicate analytic events on console
+    [SENAnalytics addProvider:[SENAnalyticsLogger new]];
+}
 
 + (void)trackSignUpOfNewAccount:(SENAccount*)account {
     if (!account) {

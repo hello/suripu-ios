@@ -10,7 +10,7 @@
 
 @interface HEMSegmentProvider : NSObject <SENAnalyticsProvider>
 
-- (instancetype)initWithWriteKey:(NSString*)writeKey NS_DESIGNATED_INITIALIZER;
-- (instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)initWithWriteKey:(nonnull NSString*)writeKey NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end

@@ -266,7 +266,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 
 - (NSString*)height {
     NSNumber* cm = [self heightInCm];
-    if (!cm || [cm CGFloatValue] == 0.0f) {
+    if ([cm CGFloatValue] == 0.0f) {
         return nil;
     }
     
@@ -293,7 +293,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 
 - (NSString*)weight {
     NSNumber* grams = [[[SENServiceAccount sharedService] account] weight];
-    if (!grams || [grams CGFloatValue] == 0.0f) {
+    if ([grams CGFloatValue] == 0.0f) {
         return nil;
     }
     

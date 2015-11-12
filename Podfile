@@ -25,7 +25,7 @@ pod 'Analytics/Segmentio', '~> 2.0.17'
 # Private
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
-pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git', :branch => 'jimmy/segment-cleanup'
+pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
 
 post_install do |installer|
     require 'fileutils'

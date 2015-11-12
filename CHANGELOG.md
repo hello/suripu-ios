@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.8.0
+
+New:
+
+* Added onboarding checkpoint for Sense colors screen
+* Removed sensor history graph labels
+
+Fixes:
+
+* Removed an out of place period in a status update message
+* Vertically align text in empty trends view
+* Display -- in settings when onboarding screens for demographic data are skipped
+* Display the first frame of the pill pairing video
+
 ## 1.1.7.5
 
 Fixes:

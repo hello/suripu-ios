@@ -25,23 +25,19 @@
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
-- (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
-{
+- (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     // order matters
     [self configureAPI];
     
     [HEMDebugController disableDebugMenuIfNeeded];
-    
     [HEMLogUtils enableLogger];
+    [SENAnalytics enableAnalytics];
 
     if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey])
         [HEMNotificationHandler handleRemoteNotificationWithInfo:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]
                                           fetchCompletionHandler:NULL];
 
     [self deauthorizeIfNeeded];
-    
-    [SENAnalytics enableAnalytics];
-
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
@@ -63,8 +59,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     return YES;
 }
 
-- (void)openDetailViewForSensorNamed:(NSString*)name
-{
+- (void)openDetailViewForSensorNamed:(NSString*)name {
     if (![SENAuthorizationService isAuthorized] || [self deauthorizeIfNeeded])
         return;
 
@@ -85,8 +80,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     }
 }
 
-- (void)applicationDidBecomeActive:(UIApplication*)application
-{
+- (void)applicationDidBecomeActive:(UIApplication*)application {
     [HEMNotificationHandler clearNotifications];
     [self deauthorizeIfNeeded];
     [self syncData];
@@ -167,18 +161,15 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     return NO;
 }
 
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
     [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [HEMNotificationHandler handleRemoteNotificationWithInfo:userInfo fetchCompletionHandler:completionHandler];
 }
 
-- (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler
-{
+- (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler {
     // FIXME (jimmy): does the server even support this?  I don't see anything
     // on the server side ...
     NSNumber* qId = userInfo[@"qid"];
@@ -194,8 +185,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
                                                   }];
 }
 
-- (void)configureAppearance
-{
+- (void)configureAppearance {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[HEMStyledNavigationViewController class], nil];
     [appearance setBackgroundImage:[[UIImage alloc] init]
@@ -212,8 +202,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     } forState:UIControlStateNormal];
 }
 
-- (void)createAndShowWindow
-{
+- (void)createAndShowWindow {
     UIWindow* window = [UIWindow new];
     if (CGSizeEqualToSize(window.bounds.size, CGSizeZero))
         window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -223,8 +212,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     [self.window makeKeyAndVisible];
 }
 
-- (void)registerForNotifications
-{
+- (void)registerForNotifications {
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
@@ -233,8 +221,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
                  object:nil];
 }
 
-- (void)reset
-{
+- (void)reset {
     SENClearModel();
     [HEMAudioCache clearCache];
     [SENAnalytics reset:nil];

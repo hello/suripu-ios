@@ -131,12 +131,6 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
     }
     
     [self setSelectedHeightInCm:cm];
-    
-    if ([self delegate] == nil) {
-        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
-        [account setHeight:@(cm)];
-    }
-    
 }
 
 - (void)updateLabelWithCentimeters:(CGFloat)cm {
@@ -157,6 +151,9 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
     if ([self delegate] != nil) {
         [[self delegate] didSelectHeightInCentimeters:[self selectedHeightInCm] from:self];
     } else {
+        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
+        [account setHeight:@([self selectedHeightInCm])];
+        
         [self next];
     }
 }

@@ -14,10 +14,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self enableBackButton:NO];
-    
-    // start checking for paired accounts to the previously paired Sense so
-    // that future steps in the flow can use the cached data
-    [[HEMOnboardingService sharedService] checkNumberOfPairedAccounts];
     [self trackAnalyticsEvent:HEMAnalyticsEventSleepPill];
 }
 

@@ -48,6 +48,7 @@
 +(id)instantiatePillPairViewController;
 +(id)instantiateRoomCheckViewController;
 +(id)instantiateSenseAudioViewController;
++(id)instantiateSenseColorsViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
 +(id)instantiateSignUpViewController;

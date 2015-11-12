@@ -15,4 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
 @property (weak, nonatomic) IBOutlet UILabel* detailLabel;
 
++ (CGFloat)heightWithDescription:(NSString*)description cellWidth:(CGFloat)width;
+
 @end

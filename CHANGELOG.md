@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.8.1
+
+New:
+
+* Send country code to Sense when scanning for WiFi upon retry
+
+Fixes:
+
+* Handle out of order responses from Sense
+
 ## 1.1.8.0
 
 New:

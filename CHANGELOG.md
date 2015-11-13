@@ -5,6 +5,7 @@
 New:
 
 * Send country code to Sense when scanning for WiFi upon retry
+* Replaced Mixpanel with Segment
 
 Fixes:
 

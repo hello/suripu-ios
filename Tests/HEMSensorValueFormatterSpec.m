@@ -63,7 +63,7 @@ describe(@"HEMSensorValueFormatter", ^{
             });
             
             it(@"should not contain fractions, rounded up and converted to Fahrenheit ", ^{
-                [[sensorValue should] equal:@"89"];
+                [[sensorValue should] equal:@"32"];
             });
             
         });

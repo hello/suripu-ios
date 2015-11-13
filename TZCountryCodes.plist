@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>America/New_York</key>
+	<string>US</string>
+	<key>America/Detroit</key>
+	<string>US</string>
+	<key>America/Kentucky/Louisville</key>
+	<string>US</string>
+	<key>America/Indiana/Indianapolis</key>
+	<string>US</string>
+	<key>America/Indiana/Marengo</key>
+	<string>US</string>
+	<key>America/Indiana/Knox</key>
+	<string>US</string>
+	<key>America/Indiana/Vevay</key>
+	<string>US</string>
+	<key>America/Kentucky/Monticello</key>
+	<string>US</string>
+	<key>America/Chicago</key>
+	<string>US</string>
+	<key>America/Indiana/Vincennes</key>
+	<string>US</string>
+	<key>America/Indiana/Petersburg</key>
+	<string>US</string>
+	<key>America/Menominee</key>
+	<string>US</string>
+	<key>America/North_Dakota/Center</key>
+	<string>US</string>
+	<key>America/North_Dakota/New_Salem</key>
+	<string>US</string>
+	<key>America/Denver</key>
+	<string>US</string>
+	<key>America/Boise</key>
+	<string>US</string>
+	<key>America/Shiprock</key>
+	<string>US</string>
+	<key>America/Phoenix</key>
+	<string>US</string>
+	<key>America/Los_Angeles</key>
+	<string>US</string>
+	<key>America/Anchorage</key>
+	<string>US</string>
+	<key>America/Juneau</key>
+	<string>US</string>
+	<key>America/Yakutat</key>
+	<string>US</string>
+	<key>America/Nome</key>
+	<string>US</string>
+	<key>America/Adak</key>
+	<string>US</string>
+	<key>Pacific/Honolulu</key>
+	<string>US</string>
+	<key>Asia/Tokyo</key>
+	<string>JP</string>
+</dict>
+</plist>

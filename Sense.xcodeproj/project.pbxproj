@@ -256,6 +256,7 @@
 		BFD4012C1BDED8E600F6C419 /* HEMModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD4012B1BDED8E600F6C419 /* HEMModalTransitionDelegate.m */; settings = {ASSET_TAGS = (); }; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
 		BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */; settings = {ASSET_TAGS = (); }; };
+		BFD9D2021BF5527000948CB7 /* TZCountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFD9D2011BF5527000948CB7 /* TZCountryCodes.plist */; settings = {ASSET_TAGS = (); }; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
@@ -774,6 +775,7 @@
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
 		BFD9D1FE1BF27E2900948CB7 /* HEMSegmentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSegmentProvider.h; sourceTree = "<group>"; };
 		BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSegmentProvider.m; sourceTree = "<group>"; };
+		BFD9D2011BF5527000948CB7 /* TZCountryCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TZCountryCodes.plist; sourceTree = SOURCE_ROOT; };
 		BFDCA64A1BD6C0D200E9C33F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
@@ -1270,7 +1272,6 @@
 				BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */,
 				BF62150E1AB8CF730047A518 /* HEMTimeZoneViewController.h */,
 				BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */,
-				BF5AE0501B4F551A00646B6E /* TimeZones.plist */,
 				BF2AB93A1B1940610092E9C4 /* HEMFormViewController.h */,
 				BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */,
 			);
@@ -1860,6 +1861,8 @@
 				8A7D80221A40EADE00B0BFD7 /* NSString+HEMUtils.m */,
 				BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */,
 				BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */,
+				BF5AE0501B4F551A00646B6E /* TimeZones.plist */,
+				BFD9D2011BF5527000948CB7 /* TZCountryCodes.plist */,
 				8A7D800C1A3F952000B0BFD7 /* UIColor+HEMStyle.h */,
 				8A7D800D1A3F952000B0BFD7 /* UIColor+HEMStyle.m */,
 				8A1C94B61A08178A006E3A31 /* UIFont+HEMStyle.h */,
@@ -2150,6 +2153,7 @@
 				BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				BF5AE0511B4F551A00646B6E /* TimeZones.plist in Resources */,
+				BFD9D2021BF5527000948CB7 /* TZCountryCodes.plist in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				8AD331301BB08DFF00DFF95A /* Timeline.xcassets in Resources */,
 				BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */,

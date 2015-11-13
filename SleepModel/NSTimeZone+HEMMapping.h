@@ -28,4 +28,15 @@
  */
 + (NSDictionary*)timeZoneMapping;
 
+/*!
+ * @method
+ * 
+ * @discussion
+ * Retrieve the country code mapping from the time zone that is meant to be used
+ * for Sense, which supports only US, JP, and EU
+ *
+ * @return US, JP, or EU
+ */
++ (NSString*)countryCodeForSense;
+
 @end

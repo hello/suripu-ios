@@ -4,7 +4,7 @@ platform :ios, '8.0'
 
 ENV['COCOAPODS_DISABLE_STATS'] = '1'
 
-# UI
+# Third parties
 pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git',
                           :commit => '6bf420df77117f519af32a6393520ead4e7848c6',
                           :inhibit_warnings => true

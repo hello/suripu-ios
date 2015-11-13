@@ -360,6 +360,22 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
  * all nearby networks.  1 scan typically returns a good set, but missing some, but
  * 2 usually returns a full set.  3 would probably be max needed.
  *
+ * Setting the country code will tell Sense to scan based the regulations for that
+ * country, which may be not what Sense is currently configured for.
+ *
+ * @param countryCode: the 2 letter country code, US, EU, JP, ...
+ * @param success:     the block to call when the command succeeded
+ * @param failure:     the block to call if the command encountered an error
+ */
+- (void)scanForWifiNetworksInCountry:(NSString*)countryCode
+                             success:(SENSenseSuccessBlock)success
+                             failure:(SENSenseFailureBlock)failure;
+
+/**
+ * Scan for WiFi networks that Sense can see.  It may take multiple scans to see
+ * all nearby networks.  1 scan typically returns a good set, but missing some, but
+ * 2 usually returns a full set.  3 would probably be max needed.
+ *
  * @param success:  the block to call when the command succeeded
  * @param failure:  the block to call if the command encountered an error
  */

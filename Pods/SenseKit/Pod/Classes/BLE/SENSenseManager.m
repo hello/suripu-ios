@@ -1260,12 +1260,17 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
               failure:failure];
 }
 
-- (void)scanForWifiNetworks:(SENSenseSuccessBlock)success
-                    failure:(SENSenseFailureBlock)failure {
+- (void)scanForWifiNetworksInCountry:(NSString*)countryCode
+                             success:(SENSenseSuccessBlock)success
+                             failure:(SENSenseFailureBlock)failure {
     
     DDLogVerbose(@"scanning for wifi networks Sense can see");
     SENSenseMessageType type = SENSenseMessageTypeStartWifiscan;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    
+    if (countryCode) {
+        [builder setCountryCode:countryCode];
+    }
     
     __weak typeof(self) weakSelf = self;
     __block NSMutableArray* wifis = [NSMutableArray array];
@@ -1300,6 +1305,13 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                   if (success) success (wifis);
               }
               failure:failure];
+}
+
+- (void)scanForWifiNetworks:(SENSenseSuccessBlock)success
+                    failure:(SENSenseFailureBlock)failure {
+    
+    [self scanForWifiNetworksInCountry:nil success:success failure:failure];
+    
 }
 
 - (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENSenseWiFiStatus* status))success

@@ -55,15 +55,19 @@ describe(@"HEMSensorValueFormatter", ^{
                 NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
                 [NSLocale stub:@selector(currentLocale) andReturn:locale];
                 [formatter setSensorUnit:SENSensorUnitDegreeCentigrade];
+                
+                KWValue* fahrenheit = [KWValue valueWithInteger:SENTemperatureFormatFahrenheit];
+                [SENPreference stub:@selector(temperatureFormat) andReturn:fahrenheit];
                 sensorValue = [formatter stringFromSensorValue:@31.6];
             });
             
             afterEach(^{
                 [NSLocale clearStubs];
+                [SENPreference clearStubs];
             });
             
             it(@"should not contain fractions, rounded up and converted to Fahrenheit ", ^{
-                [[sensorValue should] equal:@"32"];
+                [[sensorValue should] equal:@"89"];
             });
             
         });

@@ -39,8 +39,6 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
 
 @implementation HEMAlarmViewController
 
-static NSUInteger const HEMClockMinuteIncrement = 5;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTableView];
@@ -262,7 +260,6 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 
 - (void)configureClockView {
     self.clockView.delegate = self;
-    self.clockView.minuteIncrement = HEMClockMinuteIncrement;
     [self.clockView updateTimeToHour:self.alarmCache.hour minute:self.alarmCache.minute];
 }
 

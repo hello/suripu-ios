@@ -121,7 +121,12 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      * Attempt to send WiFi credentials for a WEP secured network, but password
      * specified is an invalid WEP key (cannot use passphrase)
      */
-    SENSenseManagerErrorCodeInvalidWEPKey = -26
+    SENSenseManagerErrorCodeInvalidWEPKey = -26,
+    /**
+     * If Sense responds to a command / message with a type that does not match
+     * the command that was sent
+     */
+    SENSenseManagerErrorCodeOutOfOrderResponse = -27
 };
 
 @interface SENSenseManager : NSObject
@@ -354,6 +359,22 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
  */
 - (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENSenseWiFiStatus* status))success
                   failure:(SENSenseFailureBlock)failure;
+
+/**
+ * Scan for WiFi networks that Sense can see.  It may take multiple scans to see
+ * all nearby networks.  1 scan typically returns a good set, but missing some, but
+ * 2 usually returns a full set.  3 would probably be max needed.
+ *
+ * Setting the country code will tell Sense to scan based the regulations for that
+ * country, which may be not what Sense is currently configured for.
+ *
+ * @param countryCode: the 2 letter country code, US, EU, JP, ...
+ * @param success:     the block to call when the command succeeded
+ * @param failure:     the block to call if the command encountered an error
+ */
+- (void)scanForWifiNetworksInCountry:(NSString*)countryCode
+                             success:(SENSenseSuccessBlock)success
+                             failure:(SENSenseFailureBlock)failure;
 
 /**
  * Scan for WiFi networks that Sense can see.  It may take multiple scans to see

@@ -500,7 +500,13 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     
     if ([self selectedInfoType] == HEMSettingsAccountInfoTypeEmail) {
         NSString* emailPlaceHolder = NSLocalizedString(@"settings.account.email.placeholder", nil);
-        [[self dataSource] updateEmail:[content objectForKey:emailPlaceHolder] completion:done];
+        NSString* email = [content objectForKey:emailPlaceHolder];
+        [[self dataSource] updateEmail:email completion:^(NSError *error) {
+            if (!error) {
+                [SENAnalytics updateEmail:email];
+            }
+            done (error);
+        }];
     } else if ([self selectedInfoType] == HEMSettingsAccountInfoTypeName) {
         NSString* namePlaceHolder = NSLocalizedString(@"settings.account.name.placeholder", nil);
         [[self dataSource] updateName:[content objectForKey:namePlaceHolder] completion:done];

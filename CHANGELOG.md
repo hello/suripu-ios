@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.8.1
+
+New:
+
+* Send country code to Sense when scanning for WiFi upon retry
+* Replaced Mixpanel with Segment
+
+Fixes:
+
+* Handle out of order responses from Sense
+
 ## 1.1.8.0
 
 New:

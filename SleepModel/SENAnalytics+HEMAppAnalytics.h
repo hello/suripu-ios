@@ -22,7 +22,6 @@ extern NSString* const kHEMAnalyticsEventPropType;
 extern NSString* const kHEMAnalyticsEventPropPlatform;
 extern NSString* const kHEMAnalyticsEventPlatform;
 extern NSString* const kHEMAnalyticsEventPropName;
-extern NSString* const kHEMAnalyticsEventMpPropName;
 extern NSString* const kHEMAnalyticsEventPropGender;
 extern NSString* const kHEMAnalyticsEventPropAccount;
 extern NSString* const kHEMAnalyticsEventPropSenseId;
@@ -197,13 +196,14 @@ extern NSString* const HEMAnalyticsEventAppReviewSkip;
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;
-+ (void)trackSignUpOfNewAccount:(SENAccount*)account;
++ (void)trackSignUpOfNewAccount:(nonnull SENAccount*)account;
 + (void)trackUserSession;
-+ (void)trackErrorWithMessage:(NSString*)message;
-+ (void)trackWarningWithMessage:(NSString*)message;
-+ (void)trackError:(NSError*)error;
++ (void)trackErrorWithMessage:(nonnull NSString*)message;
++ (void)trackWarningWithMessage:(nonnull NSString*)message;
++ (void)trackError:(nonnull NSError*)error;
 + (void)updateGender:(SENAccountGender)gender;
-+ (void)trackAlarmSave:(SENAlarm*)alarm;
-+ (void)trackAlarmToggle:(SENAlarm*)alarm;
++ (void)updateEmail:(nonnull NSString*)email;
++ (void)trackAlarmSave:(nonnull SENAlarm*)alarm;
++ (void)trackAlarmToggle:(nonnull SENAlarm*)alarm;
 
 @end

@@ -19,7 +19,7 @@ describe(@"HEMAlarmUtils", ^{
         const NSUInteger minute = 10;
         __block NSDate *baseDate;
         
-        beforeAll(^{
+        beforeEach(^{
             NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
             NSDateComponents *dateComponents = [NSDateComponents new];
             dateComponents.year = 2015;
@@ -138,7 +138,7 @@ describe(@"HEMAlarmUtils", ^{
         __block NSDate *baseDate;
         __block SENAlarmRepeatDays baseDateDay;
         
-        beforeAll(^{
+        beforeEach(^{
             NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
             NSDateComponents *dateComponents = [NSDateComponents new];
             dateComponents.year = 2015;

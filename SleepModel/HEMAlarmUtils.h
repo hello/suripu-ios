@@ -3,6 +3,8 @@
 
 @class SENAlarm, HEMAlarmCache;
 
+extern NSUInteger const HEMAlarmTooSoonMinuteLimit;
+
 @interface HEMAlarmUtils : NSObject
 
 /**

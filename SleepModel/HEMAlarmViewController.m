@@ -136,7 +136,8 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
 }
 
 - (IBAction)saveAndDismissFromView:(id)sender {
-    if ([HEMAlarmUtils timeIsTooSoonByHour:self.alarmCache.hour minute:self.alarmCache.minute]) {
+    if ([HEMAlarmUtils timeIsTooSoonByHour:self.alarmCache.hour minute:self.alarmCache.minute] &&
+        [HEMAlarmUtils willRingTodayWithHour:self.alarmCache.hour minute:self.alarmCache.minute repeatDays:self.alarmCache.repeatFlags]) {
         [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.save-error.too-soon.title", nil)
                                                 message:NSLocalizedString(@"alarm.save-error.too-soon.message", nil)
                                              controller:self];

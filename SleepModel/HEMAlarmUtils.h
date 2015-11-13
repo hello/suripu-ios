@@ -3,6 +3,12 @@
 
 @class SENAlarm, HEMAlarmCache;
 
+/**
+ *  The number of minutes after the current time where an
+ *  alarm cannot be set due to Sense syncing limitations.
+ */
+extern NSUInteger const HEMAlarmTooSoonMinuteLimit;
+
 @interface HEMAlarmUtils : NSObject
 
 /**
@@ -23,6 +29,28 @@
  *  @return localized repeat settings text
  */
 + (NSString*)repeatTextForUnitFlags:(NSUInteger)alarmRepeatFlags;
+
+/**
+ *  Check whether or not a given hour/minute pair will ring
+ *  today when paired with a given bitmask of alarm repeat days.
+ *
+ *  @param hour         hour to validate.
+ *  @param minute       minute to validate.
+ *  @param repeatDays   repeat days of the alarm.
+ *
+ *  @return YES if the alarm will ring today; NO otherwise.
+ */
++ (BOOL)willRingTodayWithHour:(NSUInteger)hour
+                       minute:(NSUInteger)minute
+                   repeatDays:(SENAlarmRepeatDays)repeatDays;
+
+/**
+ *  Convert an NSDate into an SENAlarmRepeatDays.
+ *  @param date The date to convert
+ *
+ *  @return The repeat day corresponding to the date.
+ */
++ (SENAlarmRepeatDays)alarmRepeatDayForDate:(NSDate*)date;
 
 /**
  *  Upload changes to alarms to server

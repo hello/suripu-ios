@@ -32,6 +32,10 @@ describe(@"HEMAlarmUtils", ^{
             [NSDate stub:@selector(date) andReturn:baseDate];
         });
         
+        afterAll(^{
+            [NSDate clearStubs];
+        });
+        
         it(@"should return true for now", ^{
             BOOL tooSoon = [HEMAlarmUtils timeIsTooSoonByHour:hour minute:minute];
             [[@(tooSoon) should] equal:@YES];
@@ -80,6 +84,10 @@ describe(@"HEMAlarmUtils", ^{
         beforeEach(^{
             NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
             [NSLocale stub:@selector(currentLocale) andReturn:locale];
+        });
+        
+        afterAll(^{
+            [NSLocale clearStubs];
         });
         
         it(@"should return none", ^{
@@ -155,6 +163,10 @@ describe(@"HEMAlarmUtils", ^{
             baseDate = [calendar dateFromComponents:dateComponents];
             baseDateDay = [HEMAlarmUtils alarmRepeatDayForDate:baseDate];
             [NSDate stub:@selector(date) andReturn:baseDate];
+        });
+        
+        afterAll(^{
+            [NSDate clearStubs];
         });
         
         it(@"should return true for now with no repeat days", ^{

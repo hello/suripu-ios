@@ -121,7 +121,12 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      * Attempt to send WiFi credentials for a WEP secured network, but password
      * specified is an invalid WEP key (cannot use passphrase)
      */
-    SENSenseManagerErrorCodeInvalidWEPKey = -26
+    SENSenseManagerErrorCodeInvalidWEPKey = -26,
+    /**
+     * If Sense responds to a command / message with a type that does not match
+     * the command that was sent
+     */
+    SENSenseManagerErrorCodeOutOfOrderResponse = -27
 };
 
 @interface SENSenseManager : NSObject

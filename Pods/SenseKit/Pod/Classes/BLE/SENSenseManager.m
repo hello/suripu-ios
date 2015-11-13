@@ -835,6 +835,21 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 #pragma mark - (Private) Reading Response
 
+- (BOOL)response:(SENSenseMessage*)response matchesRequestType:(SENSenseMessageType)type {
+    SENSenseMessageType responseType = [response type];
+    BOOL matches = YES;
+    if (type == SENSenseMessageTypeStartWifiscan) {
+        matches = responseType == SENSenseMessageTypeStartWifiscan
+                    || responseType == SENSenseMessageTypeStopWifiscan;
+    } else if (type == SENSenseMessageTypeSetWifiEndpoint) {
+        matches = responseType == SENSenseMessageTypeSetWifiEndpoint
+                    || responseType == SENSenseMessageTypeConnectionState;
+    } else {
+        matches = type == responseType;
+    }
+    return matches;
+}
+
 /**
  * Handle response from Sense until it's done sending data back.  Since response
  * will likely be split in to multiple packets, we need to append all data as they
@@ -872,17 +887,19 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         if ([*totalPackets intValue] == 1 || [*totalPackets intValue] - 1 == seq) {
             NSError* parseError = nil;
             SENSenseMessage* responseMsg = [self messageFromBlePackets:*allPackets error:&parseError];
-            if (parseError != nil || [responseMsg hasError]) {
+            if (parseError || [responseMsg hasError]) {
                 NSInteger code
                     = parseError != nil
                     ? [parseError code]
                     : SENSenseManagerErrorCodeUnexpectedResponse;
                 NSString* desc = [NSString stringWithFormat:@"response error from command %ld", (long)type];
                 [self failWithBlock:failure errorCode:code description:desc];
+            } else if (![self response:responseMsg matchesRequestType:type]) {
+                DDLogWarn(@"ble response %u does not match request %u", [responseMsg type], type);
+                NSString* desc = [NSString stringWithFormat:@"response %ld not expected for command %ld",
+                                  (long)[responseMsg type], (long)type];
+                [self failWithBlock:nil errorCode:SENSenseManagerErrorCodeOutOfOrderResponse description:desc];
             } else {
-                if (type != [responseMsg type]) {
-                    DDLogWarn(@"ble response %u does not match request %u", [responseMsg type], type);
-                }
                 // jimmy 3/15/2015: firmware updated message version to pivot
                 // on how certain messages are handled so for us to send them
                 // the correct version, we need to see what it sends back first

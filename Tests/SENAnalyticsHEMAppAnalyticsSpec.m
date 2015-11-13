@@ -67,11 +67,6 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
             
         });
         
-        it(@"should not call userWithId:didSignUpWithProperties: if account not provided", ^{
-            [[SENAnalytics shouldNot] receive:@selector(userWithId:didSignUpWithProperties:)];
-            [SENAnalytics trackSignUpOfNewAccount:nil];
-        });
-        
     });
     
 });

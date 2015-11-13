@@ -34,9 +34,10 @@ NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
 NSString* const kHEMAnalyticsEventPropSSID = @"SSID";
 NSString* const kHEMAnalyticsEventPropPassLength = @"Password length";
 
+static NSString* const HEMAnalyticsEventPropEmail = @"email";
 // special mixpanel special properties
-NSString* const kHEMAnalyticsEventMpPropName = @"$name";
-NSString* const kHEMAnalyticsEventMpPropCreated = @"$created";
+static NSString* const kHEMAnalyticsEventMpPropName = @"$name";
+static NSString* const kHEMAnalyticsEventMpPropCreated = @"$created";
 
 // permissions
 NSString* const kHEMAnalyticsEventPermissionLoc = @"Permission Location";
@@ -227,13 +228,10 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
 }
 
 + (void)trackSignUpOfNewAccount:(SENAccount*)account {
-    if (!account) {
-        DDLogWarn(@"attempted to track account sign up without an account object, skipping");
-        return;
-    }
-    
     NSString* name = [account name] ?: @"";
     NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
+    NSString* email = [account email] ?: @"";
+    
     if ([accountId length] == 0) {
         // checking this case as it seemed to have happened before
         DDLogInfo(@"account id not found after sign up!");
@@ -244,6 +242,7 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
      didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : name,
                                kHEMAnalyticsEventMpPropCreated : [NSDate date],
                                kHEMAnalyticsEventPropAccount : accountId,
+                               HEMAnalyticsEventPropEmail : email,
                                kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
     
     // these are properties that will be sent up for every event
@@ -257,9 +256,12 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
     NSMutableDictionary* gProperties = [NSMutableDictionary dictionary]; // props sent for every event
     NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     
-    if (account != nil) {
+    if (account) {
         NSString* name = [account name] ?: @"";
+        NSString* email = [account email] ?: @"";
+        
         uProperties[kHEMAnalyticsEventMpPropName] = name;
+        uProperties[HEMAnalyticsEventPropEmail] = email;
         
         if (accountId) {
             uProperties[kHEMAnalyticsEventPropAccount] = accountId;
@@ -305,6 +307,10 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
         }
     }
     [self trackError:error withEventName:eventName];
+}
+
++ (void)updateEmail:(NSString*)email {
+    [SENAnalytics setUserProperties:@{HEMAnalyticsEventPropEmail : email}];
 }
 
 + (void)updateGender:(SENAccountGender)gender {

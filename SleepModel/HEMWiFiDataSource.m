@@ -10,6 +10,8 @@
 #import <SenseKit/SENSenseMessage.pb.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "NSTimeZone+HEMMapping.h"
+
 #import "HEMWiFiDataSource.h"
 #import "HEMOnboardingService.h"
 
@@ -21,6 +23,8 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
 @interface HEMWiFiDataSource()
 
 @property (nonatomic, strong) NSMutableArray* wifisDetected;
+@property (nonatomic, assign) NSUInteger scanCount;
+
 /**
  * @property uniqueSSIDs
  *
@@ -98,43 +102,48 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
 }
 
 - (void)scan:(void(^)(NSError* error))completion {
-    if (!completion) return;
-    
     SENSenseManager* manager = [self manager];
     if (manager) {
         [self setScanning:YES];
         
         __weak typeof(self) weakSelf = self;
+        
+        void(^finish)(NSError* error) = ^(NSError* error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf setScanning:NO];
+            [strongSelf setScanned:YES];
+            completion (error);
+        };
 
         [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
+            
             if (error != nil) {
-                [strongSelf setScanning:NO];
-                [strongSelf setScanned:YES];
-                completion (error);
+                finish (error);
                 return;
             }
             
-            [[strongSelf manager] scanForWifiNetworks:^(id response) {
-                __block id wifiResponse = response;
-                
-                [strongSelf keepLEDOnIfRequiredThen:^{
-                    [strongSelf setScanning:NO];
-                    [strongSelf setScanned:YES];
-                    [strongSelf addDetectedNetworksFromArray:wifiResponse];
-                    completion (nil);
-                }];
+            [strongSelf setScanCount:[strongSelf scanCount] + 1];
+            
+            NSString* countryCode = nil;
+            if ([strongSelf scanCount] > 1) {
+                countryCode = [NSTimeZone countryCodeForSense];
+                DDLogVerbose(@"sending country code %@ to Sense", countryCode);
+            }
+            
+            [[strongSelf manager] scanForWifiNetworksInCountry:countryCode success:^(id response) {
 
+                [strongSelf keepLEDOnIfRequiredThen:^{
+                    [strongSelf addDetectedNetworksFromArray:response];
+                    finish (nil);
+                }];
                 
             } failure:^(NSError *error) {
-                
                 [strongSelf keepLEDOnIfRequiredThen:^{
-                    [strongSelf setScanning:NO];
-                    [strongSelf setScanned:YES];
-                    completion (error);
+                    finish (error);
                 }];
-
             }];
+            
         }];
     } else {
         completion ([NSError errorWithDomain:kHEMWifiNetworkErrorDomain

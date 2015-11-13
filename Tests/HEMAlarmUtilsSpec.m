@@ -27,6 +27,7 @@ describe(@"HEMAlarmUtils", ^{
             dateComponents.day = 13;
             dateComponents.hour = hour;
             dateComponents.minute = minute;
+            dateComponents.timeZone = [NSTimeZone defaultTimeZone];
             baseDate = [calendar dateFromComponents:dateComponents];
             [NSDate stub:@selector(date) andReturn:baseDate];
         });
@@ -51,12 +52,16 @@ describe(@"HEMAlarmUtils", ^{
             dateComponents.day = 13;
             dateComponents.hour = 11;
             dateComponents.minute = 59;
+            dateComponents.timeZone = [NSTimeZone defaultTimeZone];
             baseDate = [calendar dateFromComponents:dateComponents];
             [NSDate stub:@selector(date) andReturn:baseDate];
             
+            [[@([HEMAlarmUtils timeIsTooSoonByHour:11 minute:58]) should] equal:@NO];
             [[@([HEMAlarmUtils timeIsTooSoonByHour:11 minute:59]) should] equal:@YES];
             [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:0]) should] equal:@YES];
             [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:1]) should] equal:@YES];
+            [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:2]) should] equal:@NO];
+            [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:59]) should] equal:@NO];
         });
         
         it(@"should return false for times before now", ^{
@@ -146,6 +151,7 @@ describe(@"HEMAlarmUtils", ^{
             dateComponents.day = 13;
             dateComponents.hour = hour;
             dateComponents.minute = minute;
+            dateComponents.timeZone = [NSTimeZone defaultTimeZone];
             baseDate = [calendar dateFromComponents:dateComponents];
             baseDateDay = [HEMAlarmUtils alarmRepeatDayForDate:baseDate];
             [NSDate stub:@selector(date) andReturn:baseDate];
@@ -168,12 +174,12 @@ describe(@"HEMAlarmUtils", ^{
         
         it(@"should return false for short times before now with no repeat days", ^{
             BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute - 10 repeatDays:0];
-            [[@(willRing) should] equal:@YES];
+            [[@(willRing) should] equal:@NO];
         });
         
         it(@"should return false for long times before now with no repeat days", ^{
             BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour - 2 minute:minute repeatDays:0];
-            [[@(willRing) should] equal:@YES];
+            [[@(willRing) should] equal:@NO];
         });
         
         it(@"should return false for any time when repeat doesn't contain today", ^{
@@ -184,7 +190,7 @@ describe(@"HEMAlarmUtils", ^{
                                        SENAlarmRepeatThursday |
                                        SENAlarmRepeatFriday |
                                        SENAlarmRepeatSaturday);
-            days |= ~baseDateDay;
+            days &= ~baseDateDay;
             
             [[@([HEMAlarmUtils willRingTodayWithHour:hour minute:minute repeatDays:days]) should] equal:@NO];
             [[@([HEMAlarmUtils willRingTodayWithHour:hour minute:minute + 10 repeatDays:days]) should] equal:@NO];
@@ -210,12 +216,12 @@ describe(@"HEMAlarmUtils", ^{
         
         it(@"should return false for short times before now with repeat days containing today", ^{
             BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute - 10 repeatDays:baseDateDay];
-            [[@(willRing) should] equal:@YES];
+            [[@(willRing) should] equal:@NO];
         });
         
         it(@"should return false for long times before now with repeat days containing today", ^{
             BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour - 2 minute:minute repeatDays:baseDateDay];
-            [[@(willRing) should] equal:@YES];
+            [[@(willRing) should] equal:@NO];
         });
     });
 });

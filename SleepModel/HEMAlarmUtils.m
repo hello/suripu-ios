@@ -21,9 +21,9 @@ NSUInteger const HEMAlarmTooSoonMinuteLimit = 2;
                               alarmMinute >= components.minute &&
                               alarmMinute <= minuteCutOff);
     BOOL tooSoonInNextHour = (alarmIsInNextHour &&
-                              components.minute > 60 - HEMAlarmTooSoonMinuteLimit &&
-                              alarmMinute < HEMAlarmTooSoonMinuteLimit - (60 - components.minute));
-
+                              components.minute > 59 - HEMAlarmTooSoonMinuteLimit &&
+                              alarmMinute < HEMAlarmTooSoonMinuteLimit - (59 - components.minute));
+    NSLog(@"{TEST} now: %@, hour: %ld, minute: %ld", now, alarmHour, alarmMinute);
     return tooSoonInSameHour || tooSoonInNextHour;
 }
 

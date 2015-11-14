@@ -19,6 +19,8 @@
 
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
+@property (weak, nonatomic) IBOutlet UIView* contentView;
 @property (weak, nonatomic) IBOutlet UIButton* dailyGraphButton;
 @property (weak, nonatomic) IBOutlet UIButton* hourlyGraphButton;
 @property (weak, nonatomic) IBOutlet UILabel* valueLabel;
@@ -27,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UILabel* statusLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
-@property (weak, nonatomic) IBOutlet UIView* chartContainerView;
 @property (weak, nonatomic) IBOutlet UIView* selectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* selectionLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* tinySeparatorConstraint;
@@ -43,16 +44,17 @@
 @property (nonatomic) CGFloat maxGraphValue;
 @property (nonatomic) CGFloat minGraphValue;
 @property (nonatomic, getter=isPanning) BOOL panning;
+@property (nonatomic) CGPoint oldScrollOffset;
 @end
 
 @implementation HEMSensorViewController
 
 static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
-static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self configureFormatters];
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
@@ -113,7 +115,9 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [self adjustValueViewHeights];
+    if (self.scrollView.contentSize.height == 0.0) {
+        self.scrollView.contentSize = self.contentView.bounds.size;
+    }
 }
 
 - (void)dealloc
@@ -247,21 +251,13 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
         [statusMessage appendAttributedString:divider];
         [statusMessage appendAttributedString:idealMessage];
     }
+    
     self.statusMessageLabel.attributedText = statusMessage;
-    [self adjustValueViewHeights];
     self.graphView.colorTouchInputLine = color;
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.7;
     self.graphView.colorPoint = color;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
-}
-
-- (void)adjustValueViewHeights
-{
-    [self.view layoutIfNeeded];
-    BOOL shouldHideValue = CGRectGetHeight(self.valueLabel.bounds) < HEMSensorValueMinLabelHeight;
-    self.valueLabel.hidden = shouldHideValue;
-    self.unitLabel.hidden = shouldHideValue;
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
@@ -497,18 +493,26 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {
     self.panning = YES;
+    if (CGPointEqualToPoint(self.oldScrollOffset, CGPointZero)) {
+        self.oldScrollOffset = self.scrollView.contentOffset;
+        self.scrollView.contentOffset = CGPointZero;
+    }
     SENSensorDataPoint* dataPoint = [self.graphDataSource dataPointAtIndex:index];
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
-    self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
-    self.statusMessageLabel.font = [UIFont sensorTimestampFont];
+    NSString* formattedDataPoint = [formatter stringFromDate:dataPoint.date];
+    NSDictionary<NSString*, id>* attributes = @{NSFontAttributeName : [UIFont sensorTimestampFont]};
+    NSAttributedString *statusMessage = [[NSAttributedString alloc] initWithString:formattedDataPoint
+                                                                        attributes:attributes];
+    self.statusMessageLabel.attributedText = statusMessage;
     [self updateValueLabelWithValue:dataPoint.value];
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
-    [self.view setNeedsUpdateConstraints];
     [self configureSensorValueViews];
     self.panning = NO;
+    self.scrollView.contentOffset = self.oldScrollOffset;
+    self.oldScrollOffset = CGPointZero;
 }
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {

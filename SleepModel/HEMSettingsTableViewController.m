@@ -42,7 +42,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
 
 @implementation HEMSettingsTableViewController
 
-static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
+static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {

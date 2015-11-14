@@ -267,6 +267,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     // If the touch report is enabled, set it up
     if (self.enableTouchReport == YES || self.enablePopUpReport == YES) {
         // Initialize the vertical gray line that appears where the user touches the graph.
+        [self.touchInputLine removeFromSuperview];
         self.touchInputLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.widthTouchInputLine, self.frame.size.height)];
         self.touchInputLine.backgroundColor = self.colorTouchInputLine;
         self.touchInputLine.alpha = 0;

@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, HEMInsightsFeedError) {
  * controller
  */
 - (BOOL)hasUnreadItems;
-- (void)updateLastViewed:(HEMUnreadType)type completion:(void(^)(NSError* error))completion;
+- (void)updateLastViewed:(HEMUnreadTypes)types completion:(void(^)(NSError* error))completion;
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width;
 - (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isLoading;

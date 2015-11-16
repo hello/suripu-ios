@@ -77,9 +77,9 @@
     
 }
 
-- (void)updateLastViewed:(HEMUnreadType)type {
+- (void)updateLastViewed:(HEMUnreadTypes)types {
     __weak typeof(self) weakSelf = self;
-    [[self dataSource] updateLastViewed:type completion:^(NSError *error) {
+    [[self dataSource] updateLastViewed:types completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
@@ -102,8 +102,6 @@
 
 - (void)reload {
     if ([[self dataSource] isLoading]) return;
-
-    [self updateLastViewed:HEMUnreadTypeInsights];
     
     __weak typeof(self) weakSelf = self;
     [[self dataSource] refresh:^(BOOL didUpdate){
@@ -111,6 +109,8 @@
         if (!didUpdate)
             return;
 
+        [self updateLastViewed:(HEMUnreadTypeInsights | HEMUnreadTypeQuestions)];
+        
         [[strongSelf collectionView] reloadData];
     }];
 }

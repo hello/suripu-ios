@@ -61,11 +61,6 @@
 + (UIFont*)iPhone4SSettingsTitleFont;
 
 /**
- *  Font used for 'sign out' text in account settings
- */
-+ (UIFont*)signOutFont;
-
-/**
  * Font used for the help text in settings
  */
 + (UIFont*)settingsHelpFont;

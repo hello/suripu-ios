@@ -15,19 +15,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMNotificationHandler.h"
 
-// \u0222 is a round dot
-static NSString* const HEMSettingsAcctPasswordPlaceholder = @"\u2022\u2022\u2022\u2022\u2022\u2022";
 static NSString* const HEMSettingsAcctDataSourceErrorDomain = @"is.hello.app.settings.account";
 static NSString* const HEMSettingsAcctBirthdateFormat = @"MM dd, yyyy";
-
-typedef NS_ENUM(NSUInteger, HEMSettingsAcctSection) {
-    HEMSettingsAcctSectionAccount = 0,      HEMSettingsAcctAccountTotRows = 3,
-    HEMSettingsAcctSectionDemographics = 1, HEMSettingsAcctDemographicsTotRows = 4,
-    HEMSettingsAcctSectionPreferences = 2,  HEMSettingsAcctPreferenceTotRows = 2,
-    HEMSettingsAcctSectionExplanations = 3, HEMSettingsAcctExplanationsTotRows = 1,
-    HEMSettingsAcctSectionSignOut = 4,      HEMSettingsAcctSignOutTotRows = 1,
-    HEMSettingsAcctTotalSections = 5 // increment when sections added
-};
 
 typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     HEMSettingsAcctRowName = 0,
@@ -41,6 +30,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 
     HEMSettingsAcctRowHealthKit = 0,
     HEMSettingsAcctRowEnhancedAudio = 1,
+    HEMSettingsAcctRowAudioExplanation = 2
 };
 
 @interface HEMSettingsAccountDataSource()
@@ -67,27 +57,20 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger rows = 0;
     switch (section) {
         case HEMSettingsAcctSectionAccount:
-            rows = HEMSettingsAcctAccountTotRows;
-            break;
+            return HEMSettingsAcctAccountTotRows;
         case HEMSettingsAcctSectionDemographics:
-            rows = HEMSettingsAcctDemographicsTotRows;
-            break;
+            return HEMSettingsAcctDemographicsTotRows;
         case HEMSettingsAcctSectionPreferences:
-            rows = HEMSettingsAcctPreferenceTotRows;
-            break;
-        case HEMSettingsAcctSectionExplanations:
-            rows = HEMSettingsAcctExplanationsTotRows;
-            break;
+            return HEMSettingsAcctPreferenceTotRows;
+        case HEMSettingsacctSectionAudioExplanation:
+            return HEMSettingsAcctAudioExplationTotRows;
         case HEMSettingsAcctSectionSignOut:
-            rows = HEMSettingsAcctSignOutTotRows;
-            break;
+            return HEMSettingsAcctSignOutTotRows;
         default:
-            break;
+            return 0;
     }
-    return rows;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
@@ -97,7 +80,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     
     if (section == HEMSettingsAcctSectionPreferences) {
         reuseId = [HEMMainStoryboard preferenceReuseIdentifier];
-    } else if (section == HEMSettingsAcctSectionExplanations) {
+    } else if (section == HEMSettingsacctSectionAudioExplanation) {
         reuseId = [HEMMainStoryboard explanationReuseIdentifier];
     } else if (section == HEMSettingsAcctSectionSignOut) {
         reuseId = [HEMMainStoryboard signoutReuseIdentifier];
@@ -124,6 +107,35 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
         
         if (completion) completion (error);
     }];
+}
+
+- (UIImage*)iconImageForCellAtIndexPath:(NSIndexPath*)indexPath {
+    HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
+    switch (type) {
+        case HEMSettingsAccountInfoTypeName:
+            return [UIImage imageNamed:@"settingsNameIcon"];
+        case HEMSettingsAccountInfoTypeEmail:
+            return [UIImage imageNamed:@"settingsEmailIcon"];
+        case HEMSettingsAccountInfoTypePassword:
+            return [UIImage imageNamed:@"settingsPasswordIcon"];
+        case HEMSettingsAccountInfoTypeBirthday:
+            return [UIImage imageNamed:@"settingsBirthdayIcon"];
+        case HEMSettingsAccountInfoTypeGender:
+            return [UIImage imageNamed:@"settingsGenderIcon"];
+        case HEMSettingsAccountInfoTypeHeight:
+            return [UIImage imageNamed:@"settingsHeightIcon"];
+        case HEMSettingsAccountInfoTypeWeight:
+            return [UIImage imageNamed:@"settingsWeightIcon"];
+        case HEMSettingsAccountInfoTypeHealthKit:
+            return [UIImage imageNamed:@"settingsHealthIcon"];
+        case HEMSettingsAccountInfoTypeEnhancedAudio:
+            return [UIImage imageNamed:@"settingsEnhancedAudioIcon"];
+        case HEMSettingsAccountInfoTypeSignOut:
+            return [UIImage imageNamed:@"settingsSignOutIcon"];
+        case HEMSettingsAccountInfoTypeAudioExplanation:
+        default:
+            return nil;
+    }
 }
 
 - (NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -161,7 +173,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
             title = NSLocalizedString(@"settings.enhanced-audio.desc", nil);
             break;
         case HEMSettingsAccountInfoTypeSignOut:
-            title = [NSLocalizedString(@"actions.sign-out", nil) uppercaseString];
+            title = NSLocalizedString(@"actions.sign-out", nil);
             break;
         default:
             break;
@@ -185,7 +197,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
             value = [[[SENServiceAccount sharedService] account] email];
             break;
         case HEMSettingsAccountInfoTypePassword:
-            value = HEMSettingsAcctPasswordPlaceholder;
+            value = NSLocalizedString(@"settings.account.password", nil);
             break;
         case HEMSettingsAccountInfoTypeBirthday: {
             SENAccount* account = [[SENServiceAccount sharedService] account];
@@ -310,30 +322,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     return weight;
 }
 
-- (BOOL)isLastRow:(NSIndexPath*)indexPath {
-    BOOL last = NO;
-    switch ([indexPath section]) {
-        case HEMSettingsAcctSectionAccount:
-            last = [indexPath row] == HEMSettingsAcctAccountTotRows - 1;
-            break;
-        case HEMSettingsAcctSectionDemographics:
-            last = [indexPath row] == HEMSettingsAcctDemographicsTotRows - 1;
-            break;
-        case HEMSettingsAcctSectionPreferences:
-            last = [indexPath row] == HEMSettingsAcctPreferenceTotRows - 1;
-            break;
-        case HEMSettingsAcctSectionExplanations:
-            last = [indexPath row] == HEMSettingsAcctExplanationsTotRows - 1;
-            break;
-        case HEMSettingsAcctSectionSignOut:
-            last = [indexPath row] == HEMSettingsAcctSignOutTotRows - 1;
-            break;
-        default:
-            break;
-    }
-    return last;
-}
-
 - (HEMSettingsAccountInfoType)accountInfoTypeForRow:(NSInteger)row {
     switch (row) {
         default:
@@ -391,8 +379,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
         type = [self demographicInfoTypeForRow:row];
     } else if (section == HEMSettingsAcctSectionPreferences) {
         type = [self preferenceInfoTypeForRow:row];
-    } else if (section == HEMSettingsAcctSectionExplanations) {
-        type = HEMSettingsAccountInfoTypeAudioExplanation; // only row
+    } else if (section == HEMSettingsacctSectionAudioExplanation) {
+        type = HEMSettingsAccountInfoTypeAudioExplanation;
     } else if (section == HEMSettingsAcctSectionSignOut) {
         type = HEMSettingsAccountInfoTypeSignOut; // only row
     }

@@ -171,7 +171,7 @@ static NSString* const HEMInsightsFeedErrorDomain = @"is.hello.app.insight";
     }];
 }
 
-- (void)updateLastViewed:(HEMUnreadType)type completion:(void(^)(NSError* error))completion {
+- (void)updateLastViewed:(HEMUnreadTypes)types completion:(void(^)(NSError* error))completion {
     void(^done)(BOOL unread, NSError* error) = ^(BOOL unread, NSError* error) {
         if (completion) {
             completion (error);
@@ -180,7 +180,7 @@ static NSString* const HEMInsightsFeedErrorDomain = @"is.hello.app.insight";
     
     if ([self hasData]) {
         HEMUnreadAlertService* unreadService = [HEMUnreadAlertService sharedService];
-        [unreadService updateLastViewFor:type completion:done];
+        [unreadService updateLastViewFor:types completion:done];
     } else {
         done (NO, [NSError errorWithDomain:HEMInsightsFeedErrorDomain
                                       code:HEMInsightsFeedErrorNoData

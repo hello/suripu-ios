@@ -10,9 +10,9 @@
 
 typedef void(^HEMUnreadCompletionHandler)(BOOL hasUnread, NSError* error);
 
-typedef NS_ENUM(NSUInteger, HEMUnreadType) {
-    HEMUnreadTypeInsights,
-    HEMUnreadTypeQuestions
+typedef NS_OPTIONS(NSUInteger, HEMUnreadTypes) {
+    HEMUnreadTypeInsights = (1 << 1),
+    HEMUnreadTypeQuestions = (1 << 2),
 };
 
 @class SENAppUnreadStats;
@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, HEMUnreadType) {
 
 + (instancetype)sharedService;
 - (void)update:(HEMUnreadCompletionHandler)completion;
-- (void)updateLastViewFor:(HEMUnreadType)unreadType
+- (void)updateLastViewFor:(HEMUnreadTypes)unreadTypes
                completion:(HEMUnreadCompletionHandler)completion;
 
 /**

@@ -30,9 +30,10 @@
 #import "HEMSupportUtil.h"
 #import "HEMTutorial.h"
 
-static CGFloat const HEMDeviceInfoHeight = 190.0f;
-static CGFloat const HEMNoDeviceHeight = 205.0f;
+static CGFloat const HEMDeviceInfoHeight = 184.0f;
+static CGFloat const HEMNoDeviceHeight = 203.0f;
 static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
+static CGFloat const HEMDeviceContentMargin = 18.0f;
 
 @interface HEMDevicesViewController() <
     UICollectionViewDelegate,
@@ -154,7 +155,10 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
                   layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     SENDeviceMetadata* device = [[self dataSource] deviceAtIndexPath:indexPath];
+    
     CGSize size = [layout itemSize];
+    size.width = CGRectGetWidth([collectionView bounds]);
+    
     if (device) {
         size.height = HEMDeviceInfoHeight;
     } else if ([indexPath row] == HEMDeviceRowPill && ![[self dataSource] canPairPill]) {
@@ -162,6 +166,7 @@ static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
     } else {
         size.height = HEMNoDeviceHeight;
     }
+    
     return size;
 }
 

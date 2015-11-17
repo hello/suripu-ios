@@ -31,6 +31,7 @@ NSInteger const HEMDeviceRowSense = 0;
 NSInteger const HEMDeviceRowPill = 1;
 
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
+static CGFloat const HEMDeviceContentMargin = 18.0f;
 
 @interface HEMDeviceDataSource()
 
@@ -67,10 +68,13 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
                      withReuseIdentifier:HEMDevicesFooterReuseIdentifier];
     
     UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
-    UIEdgeInsets insets = [layout sectionInset];
+    
+    UIEdgeInsets insets = UIEdgeInsetsMake(HEMDeviceContentMargin, 0.0f, HEMDeviceContentMargin, 0.0f);
+    [layout setSectionInset:insets];
+    
     CGSize size = [[self attributedFooterText] sizeWithWidth:layout.itemSize.width];
     size.height += insets.top + insets.bottom;
-    layout.footerReferenceSize = size;
+    [layout setFooterReferenceSize:size];
 }
 
 #pragma mark - Loading Data
@@ -232,7 +236,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             [cell configureForSense];
             break;
         case HEMDeviceRowPill: {
-            [cell configureForPill:[self canPairPill]];
+            [cell configureForPill];
             break;
         }
         default:
@@ -354,8 +358,12 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
+    NSInteger items = 0;
     SENServiceDevice* service = [SENServiceDevice sharedService];
-    return [service isInfoLoaded] ? 2 : 0;
+    if ([service isInfoLoaded]) {
+        items = [[service devices] hasPairedSense] ? 2 : 1;
+    }
+    return items;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -382,7 +390,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
                                                         forIndexPath:indexPath];
         
         NSInteger numberOfItems = [collectionView numberOfItemsInSection:0];
-        if (numberOfItems > 0) {
+        if (numberOfItems > 0 && [self canPairPill]) {
             [footer setText:[self attributedFooterText]];
         } else {
             [footer setText:nil];

@@ -129,6 +129,13 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AvenirNext-Light.ttf</string>
+		<string>AvenirNext-LightItalic.ttf</string>
+		<string>AvenirNext-Thin.ttf</string>
+		<string>AvenirNext-ThinItalic.ttf</string>
+	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

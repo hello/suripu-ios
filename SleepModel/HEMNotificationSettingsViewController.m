@@ -125,6 +125,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [cell setBackgroundColor:[UIColor whiteColor]];
     [cell setAccessoryView:preferenceSwitch];
     [[cell textLabel] setText:[self titleAtIndexPath:indexPath]];
+    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
 }
 
 - (NSString*)titleAtIndexPath:(NSIndexPath*)indexPath {

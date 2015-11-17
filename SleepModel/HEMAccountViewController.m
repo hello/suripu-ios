@@ -145,6 +145,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
       willDisplayCell:(UITableViewCell *)cell
     forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
     
     [[cell detailTextLabel] setTextColor:[UIColor settingsValueTextColor]];
     [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];

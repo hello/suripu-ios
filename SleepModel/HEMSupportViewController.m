@@ -7,13 +7,14 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMSupportViewController.h"
-#import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
+#import "HEMSettingsHeaderFooterView.h"
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     HEMSupportRowIndexUserGuide = 0,
@@ -62,13 +63,12 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 }
 
 - (void)configureTableView {
-    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds());
-    
-    // header
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsCellTableMargin;
-    frame.size.width = width;
-    [[self tableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    [[self tableView] setTableHeaderView:header];
+    [[self tableView] setTableFooterView:footer];
+    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
+    [[self tableView] setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)overrideNavigationDelegate {
@@ -123,22 +123,9 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    HEMSettingsTableViewCell *supportCell = (HEMSettingsTableViewCell *)cell;
-    [[supportCell titleLabel] setText:[self titleForRowAtIndexPath:indexPath]];
-    
-    NSInteger numberOfRows = [tableView numberOfRowsInSection:[indexPath section]];
-    
-    if ([indexPath row] == 0 && [indexPath row] == numberOfRows - 1) {
-        [supportCell showTopAndBottomCorners];
-    } else if ([indexPath row] == 0) {
-        [supportCell showTopCorners];
-    } else if ([indexPath row] == numberOfRows - 1) {
-        [supportCell showBottomCorners];
-    } else {
-        [supportCell showNoCorners];
-    }
-    
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
+    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

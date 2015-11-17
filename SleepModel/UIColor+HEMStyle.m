@@ -179,6 +179,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)settingsSectionHeaderTextColor {
     return [UIColor colorWithHex:0x000000 alpha:0.4f];
 }
++ (UIColor *)settingsCellTitleTextColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.7f];
+}
 + (UIColor *)settingsValueTextColor {
     return [UIColor colorWithHex:0x000000 alpha:0.4];
 }

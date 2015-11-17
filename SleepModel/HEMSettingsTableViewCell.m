@@ -36,7 +36,7 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
     [self addSeparator];
 
     [[self titleLabel] setFont:[UIFont settingsTableCellFont]];
-    [[self titleLabel] setTextColor:[UIColor backViewTextColor]];
+    [[self titleLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
     [[self titleLabel] setBackgroundColor:[UIColor clearColor]];
 
     [[self valueLabel] setFont:[UIFont settingsTableCellDetailFont]];

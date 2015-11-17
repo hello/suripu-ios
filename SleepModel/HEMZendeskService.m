@@ -15,6 +15,9 @@
 
 #import <ZendeskSDK/ZendeskSDK.h>
 
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
+
 #import "HEMZendeskService.h"
 #import "HEMSupportUtil.h"
 #import "HEMConfig.h"
@@ -66,6 +69,7 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
         
         [zendesk initializeWithAppId:token zendeskUrl:url ClientId:clientId onSuccess:^{
             // singleton, no need to weak / strong self
+            [self configureAppearance];
             [self setZendeskIdentity];
             [self configureRequests:^(void) {
                 [self setConfigured:YES];
@@ -75,6 +79,13 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
             }];
         } onError:completion];
     }
+}
+
+- (void)configureAppearance {
+    id supportCellAppearance = [ZDKSupportTableViewCell appearance];
+    [supportCellAppearance setTitleLabelFont:[UIFont settingsTableCellFont]];
+    [supportCellAppearance setTitleLabelColor:[UIColor settingsCellTitleTextColor]];
+    [supportCellAppearance setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)setZendeskIdentity {

@@ -7,9 +7,9 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMSupportTopicsViewController.h"
-#import "HEMSettingsTableViewCell.h"
 #import "HEMZendeskService.h"
 #import "HEMMainStoryboard.h"
 #import "HEMBaseController+Protected.h"
@@ -17,6 +17,7 @@
 #import "HEMSupportTopicDataSource.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
+#import "HEMSettingsHeaderFooterView.h"
 
 @interface HEMSupportTopicsViewController () <UITableViewDelegate>
 
@@ -41,17 +42,14 @@
 - (void)configureTableView {
     [self setDataSource:[[HEMSupportTopicDataSource alloc] init]];
     [[self tableView] setDataSource:[self dataSource]];
+
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    [header setHidden:YES];
+    [[self tableView] setTableHeaderView:header];
     
-    CGFloat width = CGRectGetWidth(HEMKeyWindowBounds());
-    
-    // header
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsCellTableMargin;
-    frame.size.width = width;
-    [[self tableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    
-    // footer
-    [[self tableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    [footer setHidden:YES];
+    [[self tableView] setTableFooterView:footer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,12 +82,16 @@
 
 - (void)loadData {
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    [activityView setBackgroundColor:[UIColor clearColor]];
     NSString* loadingText = NSLocalizedString(@"activity.loading", nil);
     [activityView showInView:[self tableView] withText:loadingText activity:YES completion:nil];
     
     __weak typeof(self) weakSelf = self;
     [[self dataSource] reloadData:^(NSError *error) {
+        [[[weakSelf tableView] tableHeaderView] setHidden:NO];
+        [[[weakSelf tableView] tableFooterView] setHidden:NO];
         [[weakSelf tableView] reloadData];
+        
         [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
         if (error) {
             [SENAnalytics trackError:error];
@@ -116,20 +118,9 @@
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    HEMSettingsTableViewCell *supportCell = (HEMSettingsTableViewCell *)cell;
-    [[supportCell titleLabel] setText:[[self dataSource] displayNameForRowAtIndexPath:indexPath]];
-    
-    NSInteger numberOfRows = [tableView numberOfRowsInSection:[indexPath section]];
-    
-    if ([indexPath row] == 0 && [indexPath row] == numberOfRows - 1) {
-        [supportCell showTopAndBottomCorners];
-    } else if ([indexPath row] == 0) {
-        [supportCell showTopCorners];
-    } else if ([indexPath row] == numberOfRows - 1) {
-        [supportCell showBottomCorners];
-    } else {
-        [supportCell showNoCorners];
-    }
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setText:[[self dataSource] displayNameForRowAtIndexPath:indexPath]];
+    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

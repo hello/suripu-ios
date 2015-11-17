@@ -156,6 +156,7 @@
 // settings
 "settings.title" = "Settings";
 "settings.notifications" = "Notifications";
+"settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My account";
 "settings.units" = "Units and time";
 "settings.support" = "Support";
@@ -170,7 +171,7 @@
 "settings.units.feet" = "Feet";
 "settings.units.pounds" = "Pounds";
 "settings.units.kilograms" = "Kilograms";
-"settings.units.clock" = "Time";
+"settings.units.clock" = "Time unit";
 "settings.units.temp" = "Temperature";
 "settings.units.weight" = "Weight";
 "settings.units.height" = "Height";

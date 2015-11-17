@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.1.8.2
+
+New:
+
+* Updated Settings VX
+* Updated Account Settings VX
+* Updated Notification Settings VX
+* Updated Preference Settings VX
+* Updated Support Settings VX
+* Changed how unread indicator is handled
+* Relax the "too soon" alarm restriction to 2 minutes
+* Make sensor history view scrollable, when needed
+
+Fixes:
+
+* Fix issue where the "too soon" alarm restriction would fire even if the day
+  is different
+
 ## 1.1.8.1
 
 New:

@@ -19,16 +19,14 @@
 #import "HEMBirthdatePickerViewController.h"
 #import "HEMGenderPickerViewController.h"
 #import "HEMHeightPickerViewController.h"
-#import "HEMHelpFooterTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSettingsAccountDataSource.h"
-#import "HEMSettingsTableViewCell.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMFormViewController.h"
+#import "HEMSettingsHeaderFooterView.h"
 
-static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
 static CGFloat const HEMAccountTableBaseRowHeight = 56.0f;
 static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
@@ -59,14 +57,15 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 - (void)configureTable {
     [self setDataSource:[[HEMSettingsAccountDataSource alloc] initWithTableView:[self infoTableView]]];
 
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsCellTableMargin;
-    frame.size.width = CGRectGetWidth([[self infoTableView] bounds]);
-
-    [[self infoTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    [[self infoTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
+    UIView* headerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    [[self infoTableView] setTableHeaderView:headerView];
+    [[self infoTableView] setTableFooterView:footerView];
+    [[self infoTableView] setBackgroundColor:[UIColor clearColor]];
+    [[self infoTableView] setBackgroundView:nil];
     [[self infoTableView] setDataSource:[self dataSource]];
     [[self infoTableView] setDelegate:self];
+    [[self infoTableView] setSeparatorColor:[UIColor separatorColor]];
 }
 
 #pragma mark - UITableViewDelegate
@@ -78,62 +77,85 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return section == 0 ? 0.0f : HEMAccountTableSectionHeaderHeight;
+    CGFloat height;
+    if (section == HEMSettingsAcctSectionAccount) {
+        height = 0.0f;
+    } else if (section == HEMSettingsacctSectionAudioExplanation) {
+        height = HEMSettingsHeaderFooterBorderHeight; // only show border
+    } else {
+        height = HEMSettingsHeaderFooterHeight;
+    }
+    return height;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] init];
-    [headerView setBackgroundColor:[UIColor clearColor]];
-    return headerView;
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    BOOL top = section != HEMSettingsAcctSectionSignOut;
+    BOOL bottom = section != HEMSettingsacctSectionAudioExplanation;
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:top bottomBorder:bottom];
+}
+
+- (void)updateCell:(UITableViewCell*)cell forType:(HEMSettingsAccountInfoType)type atIndexPath:(NSIndexPath*)indexPath {
+    UIImage* iconImage = [[self dataSource] iconImageForCellAtIndexPath:indexPath];
+    [[cell imageView] setImage:iconImage];
+    
+    NSString *title = [[self dataSource] titleForCellAtIndexPath:indexPath];
+    NSString *value = [[self dataSource] valueForCellAtIndexPath:indexPath];
+    
+    switch (type) {
+        case HEMSettingsAccountInfoTypeName:
+        case HEMSettingsAccountInfoTypePassword:
+        case HEMSettingsAccountInfoTypeEmail:
+            [[cell textLabel] setText:value];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            break;
+        case HEMSettingsAccountInfoTypeSignOut:
+            [[cell textLabel] setText:title];
+            [[cell textLabel] setTextColor:[UIColor redColor]];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            break;
+        case HEMSettingsAccountInfoTypeHealthKit:
+        case HEMSettingsAccountInfoTypeEnhancedAudio: {
+            [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+            [[cell textLabel] setText:title];
+            
+            UISwitch *preferenceSwitch = [UISwitch new];
+            BOOL enabled = [[self dataSource] isEnabledAtIndexPath:indexPath];
+            [preferenceSwitch setOn:enabled];
+            [preferenceSwitch setTag:type];
+            [preferenceSwitch setOnTintColor:[UIColor tintColor]];
+            [preferenceSwitch addTarget:self
+                                 action:@selector(togglePreferenceSwitch:)
+                       forControlEvents:UIControlEventTouchUpInside];
+            [cell setAccessoryView:preferenceSwitch];
+            break;
+        }
+        case HEMSettingsAccountInfoTypeAudioExplanation:
+            [[cell textLabel] setText:title];
+            [[cell textLabel] setFont:[UIFont settingsHelpFont]];
+            break;
+        default:
+            [[cell textLabel] setText:title];
+            [[cell detailTextLabel] setText:value];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            break;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView
       willDisplayCell:(UITableViewCell *)cell
     forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *title = [[self dataSource] titleForCellAtIndexPath:indexPath];
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    
+    [[cell detailTextLabel] setTextColor:[UIColor settingsValueTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    [[cell detailTextLabel] setText:nil];
+    
+    [cell setAccessoryType:UITableViewCellAccessoryNone];
+    [cell setAccessoryView:nil];
 
-    if ([cell isKindOfClass:[HEMSettingsTableViewCell class]]) {
-        HEMSettingsTableViewCell *settingsCell = (HEMSettingsTableViewCell *)cell;
-        HEMSettingsAccountInfoType type = [[self dataSource] infoTypeAtIndexPath:indexPath];
-        NSString *value = [[self dataSource] valueForCellAtIndexPath:indexPath];
-
-        if ([[settingsCell accessory] isKindOfClass:[UISwitch class]]) {
-            UISwitch *settingsSwitch = (UISwitch *)[settingsCell accessory];
-            BOOL enabled = [[self dataSource] isEnabledAtIndexPath:indexPath];
-            [settingsSwitch setOn:enabled];
-            [settingsSwitch setTag:type];
-            [settingsSwitch addTarget:self
-                               action:@selector(togglePreferenceSwitch:)
-                     forControlEvents:UIControlEventTouchUpInside];
-        }
-
-        [[settingsCell titleLabel] setText:title];
-        [[settingsCell valueLabel] setText:value];
-
-        BOOL firstRow = [indexPath row] == 0;
-        BOOL lastRow = [[self dataSource] isLastRow:indexPath];
-
-        if (firstRow && lastRow) {
-            [settingsCell showTopAndBottomCorners];
-        } else if (firstRow) {
-            [settingsCell showTopCorners];
-        } else if (lastRow) {
-            [settingsCell showBottomCorners];
-        } else {
-            [settingsCell showNoCorners];
-        }
-
-        if (type == HEMSettingsAccountInfoTypeSignOut) {
-            [[settingsCell titleLabel] setTextColor:[UIColor redColor]];
-            [[settingsCell titleLabel] setFont:[UIFont signOutFont]];
-        }
-
-    } else if ([cell isKindOfClass:[HEMHelpFooterTableViewCell class]]) {
-        HEMHelpFooterTableViewCell* helpCell = (id)cell;
-        helpCell.contentLabel.textColor = [UIColor backViewTextColor];
-        helpCell.contentLabel.text = title;
-        helpCell.contentLabel.font = [UIFont settingsHelpFont];
-    }
+    HEMSettingsAccountInfoType type = [[self dataSource] infoTypeAtIndexPath:indexPath];
+    [self updateCell:cell forType:type atIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

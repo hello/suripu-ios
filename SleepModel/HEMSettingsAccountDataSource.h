@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, HEMSettingsAcctSection) {
+    HEMSettingsAcctSectionAccount = 0,      HEMSettingsAcctAccountTotRows = 3,
+    HEMSettingsAcctSectionDemographics = 1, HEMSettingsAcctDemographicsTotRows = 4,
+    HEMSettingsAcctSectionPreferences = 2,  HEMSettingsAcctPreferenceTotRows = 2,
+    HEMSettingsacctSectionAudioExplanation = 3, HEMSettingsAcctAudioExplationTotRows = 1,
+    HEMSettingsAcctSectionSignOut = 4,      HEMSettingsAcctSignOutTotRows = 1,
+    HEMSettingsAcctTotalSections = 5 // increment when sections added
+};
+
 typedef NS_ENUM(NSUInteger, HEMSettingsAccountInfoType) {
     HEMSettingsAccountInfoTypeName,
     HEMSettingsAccountInfoTypeEmail,
@@ -35,12 +44,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountError) {
 - (instancetype)initWithTableView:(UITableView*)tableView;
 - (void)reload:(void(^)(NSError* error))completion;
 - (HEMSettingsAccountInfoType)infoTypeAtIndexPath:(NSIndexPath*)indexPath;
+- (UIImage*)iconImageForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)valueForInfoType:(HEMSettingsAccountInfoType)type;
 - (NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)valueForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isEnabledAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isTypeEnabled:(HEMSettingsAccountInfoType)type;
-- (BOOL)isLastRow:(NSIndexPath*)indexPath;
 - (NSDateComponents*)birthdateComponents;
 - (NSUInteger)genderEnumValue;
 - (NSNumber*)heightInCm;

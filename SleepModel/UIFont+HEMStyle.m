@@ -17,9 +17,11 @@ static NSString* const HEMFontFamilyNameLight = @"Avenir-Light";
 static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
 static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
 static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
+
 static NSString* const HEMFontFamilyNameModernUltraLight = @"AvenirNext-UltraLight";
 static NSString* const HEMFontFamilyNameModernRegular = @"AvenirNext-Regular";
 static NSString* const HEMFontFamilyNameModernMedium = @"AvenirNext-Medium";
+static NSString* const HEMFontFamilyNameModernLight = @"AvenirNext-Light";
 
 static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
 static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
@@ -67,7 +69,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)settingsTableCellDetailFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:14.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:14.f];
 }
 
 + (UIFont*)settingsTitleFont

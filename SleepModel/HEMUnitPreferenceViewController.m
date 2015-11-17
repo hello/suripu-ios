@@ -9,25 +9,26 @@
 #import <SenseKit/SENServiceAccount.h>
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMUnitPreferenceViewController.h"
+#import "HEMSettingsHeaderFooterView.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSettingsTableViewCell.h"
-#import "HEMChoiceViewController.h"
 
-static NSUInteger const HEMUnitPreferenceTime = 0;
-static NSUInteger const HEMUnitPreferenceTemp = 1;
-static NSUInteger const HEMUnitPreferenceWeight = 2;
-static NSUInteger const HEMUnitPreferenceHeight = 3;
+typedef NS_ENUM(NSInteger, HEMUnitSection) {
+    HEMUnitSectionTime = 0,
+    HEMUnitSectionTemp = 1,
+    HEMUnitSectionWeight = 2,
+    HEMUnitSectionHeight = 3,
+    HEMUnitSectionTotal = 4
+};
 
 @interface HEMUnitPreferenceViewController () <
     UITableViewDataSource,
-    UITableViewDelegate,
-    HEMChoiceDelegate
+    UITableViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UITableView *unitTableView;
-@property (copy, nonatomic) NSIndexPath* selectedPath;
 
 @end
 
@@ -41,20 +42,61 @@ static NSUInteger const HEMUnitPreferenceHeight = 3;
 }
 
 - (void)configureTable {
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsCellTableMargin;
-    frame.size.width = CGRectGetWidth([[self unitTableView] bounds]);
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     
-    [[self unitTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    [[self unitTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
+    [[self unitTableView] setTableHeaderView:header];
+    [[self unitTableView] setTableFooterView:footer];
     [[self unitTableView] setDataSource:self];
     [[self unitTableView] setDelegate:self];
 }
 
+- (NSString*)sectionTitleForSection:(NSInteger)section {
+    switch (section) {
+        case HEMUnitSectionTime:
+            return NSLocalizedString(@"settings.units.clock", nil);
+        case HEMUnitSectionTemp:
+            return NSLocalizedString(@"settings.units.temp", nil);
+        case HEMUnitSectionWeight:
+            return NSLocalizedString(@"settings.units.weight", nil);
+        case HEMUnitSectionHeight:
+            return NSLocalizedString(@"settings.units.height", nil);
+        default:
+            return nil;
+    }
+}
+
+- (void)updatePreference:(SENPreferenceType)type withValue:(BOOL)isEnabled {
+    SENPreference* preference = [[SENPreference alloc] initWithType:type enable:isEnabled];
+    [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
+}
+
 #pragma mark - UITableViewDelegate / DataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return HEMUnitSectionTotal;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return HEMSettingsHeaderFooterHeightWithTitle;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return HEMSettingsHeaderFooterHeight;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+    [header setTitle:[[self sectionTitleForSection:section] uppercaseString]];
+    return header;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
@@ -64,133 +106,128 @@ static NSUInteger const HEMUnitPreferenceHeight = 3;
 }
 
 - (void)tableView:(UITableView *)tableView
-  willDisplayCell:(HEMSettingsTableViewCell*)cell
+  willDisplayCell:(UITableViewCell*)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self configureCornersForCell:cell atIndexPath:indexPath];
-    switch (indexPath.row) {
-        case HEMUnitPreferenceTime:
-            [self configureTimeSettingCell:cell];
+    
+    UIImageView* toggleView = (id) [cell accessoryView];
+    if (!toggleView) {
+        [cell setAccessoryView:[self unitToggleAccessoryView:NO]];
+    }
+    
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+    switch ([indexPath section]) {
+        case HEMUnitSectionTime:
+            [self configureTimeSettingCell:cell forIndexPath:indexPath];
             break;
-        case HEMUnitPreferenceTemp:
-            [self configureTemperatureSettingCell:cell];
+        case HEMUnitSectionTemp:
+            [self configureTemperatureSettingCell:cell forIndexPath:indexPath];
             break;
-        case HEMUnitPreferenceHeight:
-            [self configureForHeightSettingCell:cell];
+        case HEMUnitSectionWeight:
+            [self configureWeightSettingCell:cell forIndexPath:indexPath];
             break;
-        case HEMUnitPreferenceWeight:
-            [self configureWeightSettingCell:cell];
+        case HEMUnitSectionHeight:
+            [self configureHeightSettingCell:cell forIndexPath:indexPath];
             break;
     }
 }
 
-- (void)configureCornersForCell:(HEMSettingsTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == 0) {
-        [cell showTopCorners];
-    } if (indexPath.row == [self tableView:nil numberOfRowsInSection:indexPath.section] - 1) {
-        [cell showBottomCorners];
+- (UIImageView*)unitToggleAccessoryView:(BOOL)selected {
+    UIImage* activeToggleImage = [UIImage imageNamed:@"settingsToggleIconActive"];
+    UIImage* inactiveToggleImage = [UIImage imageNamed:@"settingsToggleIconInactive"];
+    UIImageView* toggleView = [[UIImageView alloc] initWithImage:inactiveToggleImage
+                                                highlightedImage:activeToggleImage];
+    
+    CGRect toggleFrame = CGRectZero;
+    toggleFrame.size = [activeToggleImage size];
+    [toggleView setFrame:toggleFrame];
+    
+    [toggleView setHighlighted:selected];
+    
+    return toggleView;
+}
+
+- (void)configureTimeSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path {
+    NSInteger row = [path row];
+    UIImageView* toggleView = (id) [cell accessoryView];
+
+    if (row == 0) {
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.12-hour", nil)];
+        [toggleView setHighlighted:[SENPreference timeFormat] != SENTimeFormat24Hour];
     } else {
-        [cell showNoCorners];
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.24-hour", nil)];
+        [toggleView setHighlighted:[SENPreference timeFormat] == SENTimeFormat24Hour];
     }
 }
 
-- (void)configureTimeSettingCell:(HEMSettingsTableViewCell*)cell {
-    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.clock", nil)];
-    if ([SENPreference timeFormat] == SENTimeFormat24Hour)
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.24-hour", nil);
-    else
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.12-hour", nil);
+- (void)configureWeightSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path  {
+    NSInteger row = [path row];
+    UIImageView* toggleView = (id) [cell accessoryView];
+
+    if (row == 0) {
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.pounds", nil)];
+        [toggleView setHighlighted:[SENPreference useMetricUnitForWeight]];
+    } else {
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.kilograms", nil)];
+        [toggleView setHighlighted:![SENPreference useMetricUnitForWeight]];
+    }
 }
 
-- (void)configureWeightSettingCell:(HEMSettingsTableViewCell*)cell {
-    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.weight", nil)];
-    if ([SENPreference useMetricUnitForWeight])
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.kilograms", nil);
-    else
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.pounds", nil);
+- (void)configureHeightSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path  {
+    NSInteger row = [path row];
+    UIImageView* toggleView = (id) [cell accessoryView];
+    
+    if (row == 0) {
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.feet", nil)];
+        [toggleView setHighlighted:[SENPreference useMetricUnitForHeight]];
+    } else {
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.centimeters", nil)];
+        [toggleView setHighlighted:![SENPreference useMetricUnitForHeight]];
+    }
 }
 
-- (void)configureForHeightSettingCell:(HEMSettingsTableViewCell*)cell {
-    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.height", nil)];
-    if ([SENPreference useMetricUnitForHeight])
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.centimeters", nil);
-    else
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.feet", nil);
-}
-
-- (void)configureTemperatureSettingCell:(HEMSettingsTableViewCell*)cell {
-    [[cell titleLabel] setText:NSLocalizedString(@"settings.units.temp", nil)];
-    if ([SENPreference temperatureFormat] == SENTemperatureFormatCentigrade)
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.celsius", nil);
-    else
-        cell.valueLabel.text = NSLocalizedString(@"settings.units.fahrenheit", nil);
+- (void)configureTemperatureSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path  {
+    NSInteger row = [path row];
+    UIImageView* toggleView = (id) [cell accessoryView];
+    
+    if (row == 0) {
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.celsius", nil)];
+        [toggleView setHighlighted:[SENPreference useCentigrade]];
+    } else {
+        [[cell textLabel] setText:NSLocalizedString(@"settings.units.fahrenheit", nil)];
+        [toggleView setHighlighted:![SENPreference useCentigrade]];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self setSelectedPath:indexPath];
-    [self performSegueWithIdentifier:[HEMMainStoryboard choiceSegueIdentifier]
-                              sender:self];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue destinationViewController] isKindOfClass:[HEMChoiceViewController class]]) {
-        HEMChoiceViewController* choiceVC = [segue destinationViewController];
-        [self configureChoiceViewController:choiceVC withRow:[[self selectedPath] row]];
-        [choiceVC setDelegate:self];
-    }
-}
-
-- (void)configureChoiceViewController:(HEMChoiceViewController*)controller withRow:(NSUInteger)row {
-    switch (row) {
-        case HEMUnitPreferenceTime: {
-            controller.title = NSLocalizedString(@"settings.units.clock", nil);
-            controller.choices = @[NSLocalizedString(@"settings.units.12-hour", nil),
-                                   NSLocalizedString(@"settings.units.24-hour", nil)];
-            controller.selectedIndex = [SENPreference timeFormat] == SENTimeFormat12Hour ? 0 : 1;
-        } break;
-        case HEMUnitPreferenceTemp: {
-            controller.title = NSLocalizedString(@"settings.units.temp", nil);
-            controller.choices = @[NSLocalizedString(@"settings.units.celsius", nil),
-                        NSLocalizedString(@"settings.units.fahrenheit", nil)];
-            controller.selectedIndex = [SENPreference temperatureFormat] == SENTemperatureFormatCentigrade ? 0 : 1;
-        } break;
-        case HEMUnitPreferenceHeight: {
-            controller.title = NSLocalizedString(@"settings.units.height", nil);
-            controller.choices = @[NSLocalizedString(@"settings.units.feet", nil),
-                                   NSLocalizedString(@"settings.units.centimeters", nil)];
-            controller.selectedIndex = [SENPreference useMetricUnitForHeight] ? 1 : 0;
-        } break;
-        case HEMUnitPreferenceWeight: {
-            controller.title = NSLocalizedString(@"settings.units.weight", nil);
-            controller.choices = @[NSLocalizedString(@"settings.units.pounds", nil),
-                                   NSLocalizedString(@"settings.units.kilograms", nil)];
-            controller.selectedIndex = [SENPreference useMetricUnitForWeight] ? 1 : 0;
-        } break;
-    }
-}
-
-#pragma mark - HEMChoiceDelegate
-
-- (void)didSelectChoiceAtIndex:(NSUInteger)index from:(HEMChoiceViewController *)controller {
-    switch ([[self selectedPath] row]) {
-        case HEMUnitPreferenceTime:
-            [self updatePreference:SENPreferenceTypeTime24 withValue:index != 0];
+    NSInteger row = [indexPath row];
+    NSInteger sec = [indexPath section];
+    
+    switch (sec) {
+        case HEMUnitSectionTime:
+            [self updatePreference:SENPreferenceTypeTime24 withValue:row != 0];
             break;
-        case HEMUnitPreferenceTemp:
-            [self updatePreference:SENPreferenceTypeTempCelcius withValue:index == 0];
+        case HEMUnitSectionTemp:
+            [self updatePreference:SENPreferenceTypeTempCelcius withValue:row == 0];
             break;
-        case HEMUnitPreferenceHeight:
-            [self updatePreference:SENPreferenceTypeHeightMetric withValue:index != 0];
+        case HEMUnitSectionWeight:
+            [self updatePreference:SENPreferenceTypeWeightMetric withValue:row == 0];
             break;
-        case HEMUnitPreferenceWeight:
-            [self updatePreference:SENPreferenceTypeWeightMetric withValue:index != 0];
+        case HEMUnitSectionHeight:
+            [self updatePreference:SENPreferenceTypeHeightMetric withValue:row == 0];
+            break;
+        default:
             break;
     }
-    [[self unitTableView] reloadData];
-}
-
-- (void)updatePreference:(SENPreferenceType)type withValue:(BOOL)isEnabled {
-    SENPreference* preference = [[SENPreference alloc] initWithType:type enable:isEnabled];
-    [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
+    
+    // prevent reloading section headers as well
+    NSIndexPath* firstPath = [NSIndexPath indexPathForRow:0 inSection:sec];
+    NSIndexPath* secondPath = [NSIndexPath indexPathForRow:1 inSection:sec];
+    [tableView reloadRowsAtIndexPaths:@[firstPath, secondPath]
+                     withRowAnimation:UITableViewRowAnimationNone];
+    
 }
 
 @end

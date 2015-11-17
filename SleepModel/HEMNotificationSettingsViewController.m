@@ -9,9 +9,11 @@
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENPreference.h>
 
+#import "UIColor+HEMStyle.h"
+
 #import "HEMNotificationSettingsViewController.h"
-#import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsHeaderFooterView.h"
 
 typedef NS_ENUM(NSUInteger, HEMNotificationRow) {
     HEMNotificationRowConditionIndex = 0,
@@ -29,21 +31,26 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureTable];
+    [self reload];
+}
+
+- (void)configureTable {
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    [[self tableView] setTableHeaderView:header];
+    [[self tableView] setTableFooterView:footer];
+    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
+}
+
+- (void)reload {
     __weak typeof(self) weakSelf = self;
     [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
         [weakSelf.tableView reloadData];
     }];
-    
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsCellTableMargin;
-    frame.size.width = CGRectGetWidth([[self tableView] bounds]);
-    
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:frame];
-    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:frame];
 }
 
-- (IBAction)didFlipSwitch:(UISwitch*)sender
-{
+- (IBAction)didFlipSwitch:(UISwitch*)sender {
     BOOL isOn = [sender isOn];
     NSUInteger row = sender.tag - HEMNotificationTagOffset;
     SENPreference* preference = [self preferenceAtIndex:row];
@@ -59,9 +66,19 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 
 #pragma mark - UITableViewDelegate
 
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return HEMSettingsHeaderFooterHeightWithTitle;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString* title = [NSLocalizedString(@"settings.notifications.section.push", nil) uppercaseString];
+    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    [header setTitle:title];
+    return header;
 }
 
 #pragma mark - UITableViewDataSource
@@ -85,43 +102,32 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return HEMNotificationRowCount;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    HEMSettingsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard preferenceReuseIdentifier]];
-    [self configureCell:cell atIndexPath:indexPath];
-    return cell;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard preferenceReuseIdentifier]];
 }
 
-- (void)configureCell:(HEMSettingsTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath
-{
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUInteger row = indexPath.row;
     SENPreference* pref = [self preferenceAtIndex:row];
-    UISwitch* prefSwitch = (id)cell.accessory;
-    prefSwitch.hidden = NO;
-    prefSwitch.on = [pref isEnabled];
-    prefSwitch.tag = HEMNotificationTagOffset + row;
-    cell.titleLabel.text = [self titleAtIndexPath:indexPath];
-    [self layoutCornersOnCell:cell forRow:row];
+    
+    UISwitch *preferenceSwitch = [UISwitch new];
+    [preferenceSwitch setOn:[pref isEnabled]];
+    [preferenceSwitch setTag:HEMNotificationTagOffset + row];
+    [preferenceSwitch setOnTintColor:[UIColor tintColor]];
+    [preferenceSwitch addTarget:self
+                         action:@selector(didFlipSwitch:)
+               forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell setBackgroundColor:[UIColor whiteColor]];
+    [cell setAccessoryView:preferenceSwitch];
+    [[cell textLabel] setText:[self titleAtIndexPath:indexPath]];
 }
 
-- (void)layoutCornersOnCell:(HEMSettingsTableViewCell*)cell forRow:(NSUInteger)row
-{
-    if (row == 0) {
-        [cell showTopCorners];
-    } else if (row == HEMNotificationRowCount - 1) {
-        [cell showBottomCorners];
-    } else {
-        [cell showNoCorners];
-    }
-}
-
-- (NSString*)titleAtIndexPath:(NSIndexPath*)indexPath
-{
+- (NSString*)titleAtIndexPath:(NSIndexPath*)indexPath {
     switch (indexPath.row) {
         case HEMNotificationRowConditionIndex:
             return NSLocalizedString(@"settings.account.push-conditions", nil);

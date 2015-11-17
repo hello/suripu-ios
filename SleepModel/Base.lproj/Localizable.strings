@@ -156,6 +156,7 @@
 // settings
 "settings.title" = "Settings";
 "settings.notifications" = "Notifications";
+"settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My account";
 "settings.units" = "Units and time";
 "settings.support" = "Support";

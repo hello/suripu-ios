@@ -60,6 +60,8 @@
 
 + (UIFont*)iPhone4SSettingsTitleFont;
 
++ (UIFont *)settingsSectionHeaderFont;
+
 /**
  * Font used for the help text in settings
  */

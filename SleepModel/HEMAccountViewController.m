@@ -19,16 +19,14 @@
 #import "HEMBirthdatePickerViewController.h"
 #import "HEMGenderPickerViewController.h"
 #import "HEMHeightPickerViewController.h"
-#import "HEMHelpFooterTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMFormViewController.h"
+#import "HEMSettingsHeaderFooterView.h"
 
-static CGFloat const HEMAccountTableHeaderFooterHeight = 18.0f;
-static CGFloat const HEMAccountTableHeaderFooterBorderHeight = 1.0f;
 static CGFloat const HEMAccountTableBaseRowHeight = 56.0f;
 static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
@@ -59,8 +57,8 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 - (void)configureTable {
     [self setDataSource:[[HEMSettingsAccountDataSource alloc] initWithTableView:[self infoTableView]]];
 
-    UIView* headerView = [self headerFooterViewWithTopBorder:NO bottomBorder:YES];
-    UIView* footerView = [self headerFooterViewWithTopBorder:YES bottomBorder:NO];
+    UIView* headerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     [[self infoTableView] setTableHeaderView:headerView];
     [[self infoTableView] setTableFooterView:footerView];
     [[self infoTableView] setBackgroundColor:[UIColor clearColor]];
@@ -68,34 +66,6 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     [[self infoTableView] setDataSource:[self dataSource]];
     [[self infoTableView] setDelegate:self];
     [[self infoTableView] setSeparatorColor:[UIColor separatorColor]];
-}
-
-- (UIView*)borderViewAtYOrigin:(CGFloat)yOrigin {
-    CGRect borderFrame = CGRectZero;
-    borderFrame.origin.y = yOrigin;
-    borderFrame.size.height = HEMAccountTableHeaderFooterBorderHeight;
-    UIView* border = [[UIView alloc] initWithFrame:borderFrame];
-    [border setBackgroundColor:[UIColor separatorColor]];
-    [border setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    return border;
-}
-
-- (UIView*)headerFooterViewWithTopBorder:(BOOL)topBoarder bottomBorder:(BOOL)bottomBorder {
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMAccountTableHeaderFooterHeight;
-    
-    UIView* view = [[UIView alloc] initWithFrame:frame];
-    
-    if (topBoarder) {
-        [view addSubview:[self borderViewAtYOrigin:0.0f]];
-    }
-    
-    if (bottomBorder) {
-        CGFloat y = MAX(0.0f, HEMAccountTableHeaderFooterHeight - HEMAccountTableHeaderFooterBorderHeight);
-        [view addSubview:[self borderViewAtYOrigin:y]];
-    }
-    
-    return view;
 }
 
 #pragma mark - UITableViewDelegate
@@ -111,9 +81,9 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     if (section == HEMSettingsAcctSectionAccount) {
         height = 0.0f;
     } else if (section == HEMSettingsacctSectionAudioExplanation) {
-        height = HEMAccountTableHeaderFooterBorderHeight; // only show border
+        height = HEMSettingsHeaderFooterBorderHeight; // only show border
     } else {
-        height = HEMAccountTableHeaderFooterHeight;
+        height = HEMSettingsHeaderFooterHeight;
     }
     return height;
 }
@@ -121,7 +91,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     BOOL top = section != HEMSettingsAcctSectionSignOut;
     BOOL bottom = section != HEMSettingsacctSectionAudioExplanation;
-    return [self headerFooterViewWithTopBorder:top bottomBorder:bottom];
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:top bottomBorder:bottom];
 }
 
 - (void)updateCell:(UITableViewCell*)cell forType:(HEMSettingsAccountInfoType)type atIndexPath:(NSIndexPath*)indexPath {

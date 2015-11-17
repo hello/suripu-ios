@@ -114,6 +114,7 @@
 + (UIColor *)rulerSegmentDarkColor;
 + (UIColor *)rulerSegmentLightColor;
 + (UIColor *)settingsValueTextColor;
++ (UIColor *)settingsSectionHeaderTextColor;
 + (UIColor *)textfieldTextColor;
 + (UIColor *)actionButtonTextColor;
 + (UIColor *)alarmSelectionRowColor;

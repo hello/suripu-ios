@@ -8,6 +8,7 @@
 
 #import "HEMAlertTextView.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMAlertTextView
 
@@ -37,7 +38,7 @@
     self.scrollEnabled = NO;
     self.backgroundColor = [UIColor clearColor];
     self.dataDetectorTypes = UIDataDetectorTypeLink | UIDataDetectorTypeAddress;
-    self.linkTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor],
+    self.linkTextAttributes = @{NSForegroundColorAttributeName : [UIColor tintColor],
                                 NSFontAttributeName : [UIFont dialogMessageBoldFont]};
     self.textContainerInset = UIEdgeInsetsZero;
     self.textContainer.lineFragmentPadding = 0;

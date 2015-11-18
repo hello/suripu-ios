@@ -69,6 +69,7 @@ static CGFloat const HEMNoDeviceHeight = 203.0f;
     [[self collectionView] setDelegate:self];
     [[self collectionView] setDataSource:dataSource];
     [[self collectionView] setAlwaysBounceVertical:YES];
+    [[self collectionView] setBackgroundColor:[UIColor backViewBackgroundColor]];
 }
 
 - (void)listenForPairingChanges {

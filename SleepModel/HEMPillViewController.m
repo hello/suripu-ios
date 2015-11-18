@@ -9,13 +9,15 @@
 #import <SenseKit/SENPillMetadata.h>
 #import <SenseKit/SENPairedDevices.h>
 
+#import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
+
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMDeviceActionCollectionViewCell.h"
+#import "HEMDeviceActionCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
 #import "HEMWarningCollectionViewCell.h"
@@ -24,11 +26,17 @@
 #import "HEMActionButton.h"
 #import "HEMActionSheetViewController.h"
 
-static NSInteger const HEMPillActionsCellHeight = 124.0f;
+static NSInteger const HEMPillActionCellHeight = 56.0f;
+static NSString* const HEMPillHeaderReuseId = @"sectionHeader";
 
 typedef NS_ENUM(NSInteger, HEMPillWarning) {
     HEMPillWarningLongLastSeen = 1,
     HEMPillWarningLowBattery = 2
+};
+
+typedef NS_ENUM(NSInteger, HEMPillAction) {
+    HEMPillActionReplaceBattery = 0,
+    HEMPillActionAdvanced = 1
 };
 
 @interface HEMPillViewController() <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -75,19 +83,16 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
     [[self collectionView] setAlwaysBounceVertical:YES];
 }
 
-- (NSAttributedString*)redMessage:(NSString*)message {
-    NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
-    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
-}
-
 - (NSAttributedString*)attributedLongLastSeenMessage {
     SENPillMetadata* pillMetadata = [[[SENServiceDevice sharedService] devices] pillMetadata];
     NSString* format = NSLocalizedString(@"settings.pill.warning.last-seen-format", nil);
     NSString* lastSeen = [[pillMetadata lastSeenDate] timeAgo];
-    NSArray* args = @[[self redMessage:lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil)]];
+    lastSeen = lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil);
+    
+    NSAttributedString* attrLastSeen = [[NSAttributedString alloc] initWithString:lastSeen];
     
     NSMutableAttributedString* attrWarning =
-        [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+        [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
     [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
                          range:NSMakeRange(0, [attrWarning length])];
     
@@ -95,31 +100,31 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
 }
 
 - (NSAttributedString*)attributedLowBatteryMessage {
-    NSString* format = NSLocalizedString(@"settings.pill.warning.low-battery-format", nil);
-    NSString* batteryLow = NSLocalizedString(@"settings.pill.warning.battery-low", nil);
-    NSArray* args = @[[self redMessage:batteryLow]];
-    
-    NSMutableAttributedString* attrWarning =
-    [[NSMutableAttributedString alloc] initWithFormat:format args:args];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
-                         range:NSMakeRange(0, [attrWarning length])];
-    
-    return attrWarning;
+    NSString* message = NSLocalizedString(@"settings.pill.warning.low-battery", nil);
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]};
+    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
 - (NSAttributedString*)attributedMessageForWarning:(HEMPillWarning)warning {
-    NSAttributedString* message = nil;
     switch (warning) {
         case HEMPillWarningLongLastSeen:
-            message = [self attributedLongLastSeenMessage];
-            break;
+            return [self attributedLongLastSeenMessage];
         case HEMPillWarningLowBattery:
-            message = [self attributedLowBatteryMessage];
-            break;
+            return [self attributedLowBatteryMessage];
         default:
-            break;
+            return nil;
     }
-    return message;
+}
+
+- (NSString*)warningTitleForWarning:(HEMPillWarning)warning {
+    switch (warning) {
+        case HEMPillWarningLongLastSeen:
+            return NSLocalizedString(@"settings.pill.warning.title.last-seen", nil);
+        case HEMPillWarningLowBattery:
+            return NSLocalizedString(@"settings.pill.warning.title.low-battery", nil);
+        default:
+            return nil;
+    }
 }
 
 - (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
@@ -129,33 +134,55 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
 
 #pragma mark - UICollectionViewDataSource
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return [[self warnings] count] + 1; // actions always available
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return [[self warnings] count] + 1; // actions always available
+    return section < [[self warnings] count] ? 1 : 2;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSInteger row = [indexPath row];
+    NSInteger sec = [indexPath section];
     
     NSString* reuseId
-        = [indexPath row] < [[self warnings] count]
+        = sec < [[self warnings] count]
         ? [HEMMainStoryboard warningReuseIdentifier]
-        : [HEMMainStoryboard actionsReuseIdentifier];
+        : [HEMMainStoryboard actionReuseIdentifier];
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                                            forIndexPath:indexPath];
     
-    if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
-        HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
-        [[actionCell action1Button] addTarget:self
-                                       action:@selector(replaceBattery:)
-                             forControlEvents:UIControlEventTouchUpInside];
-        [[actionCell action2Button] addTarget:self
-                                       action:@selector(showAdvancedOptions:)
-                             forControlEvents:UIControlEventTouchUpInside];
+    if ([cell isKindOfClass:[HEMDeviceActionCell class]]) {
+        HEMDeviceActionCell* actionCell = (id) cell;
+        NSString* text = nil;
+        UIImage* icon = nil;
+        BOOL showTopSeparator = NO;
+        BOOL showSeparator = YES;
+        
+        if (row == HEMPillActionReplaceBattery) {
+            icon = [UIImage imageNamed:@"settingsBatteryIcon"];
+            text = NSLocalizedString(@"settings.pill.replace-battery.title", nil) ;
+            showTopSeparator = YES;
+        } else {
+            icon = [UIImage imageNamed:@"settingsAdvanceIcon"];
+            text = NSLocalizedString(@"settings.pill.advanced.option.title", nil);
+            showSeparator = NO;
+        }
+        
+        [[actionCell textLabel] setText:text];
+        [[actionCell iconView] setImage:icon];
+        [[actionCell separatorView] setHidden:!showSeparator];
+        [[actionCell topSeparatorView] setHidden:!showTopSeparator];
+        
     } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
-        HEMPillWarning warning = [[self warnings][[indexPath row]] integerValue];
+        HEMPillWarning warning = [[self warnings][sec] integerValue];
         HEMWarningCollectionViewCell* warningCell = (HEMWarningCollectionViewCell*)cell;
+        [[warningCell warningSummaryLabel] setText:[self warningTitleForWarning:warning]];
         [[warningCell warningMessageLabel] setAttributedText:[self attributedMessageForWarning:warning]];
         [[warningCell actionButton] setTitle:[NSLocalizedString(@"actions.troubleshoot", nil) uppercaseString]
                                     forState:UIControlStateNormal];
@@ -168,21 +195,58 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
     return cell;
 }
 
+- (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView
+          viewForSupplementaryElementOfKind:(NSString *)kind
+                                atIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionReusableView* view = nil;
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                  withReuseIdentifier:HEMPillHeaderReuseId
+                                                         forIndexPath:indexPath];
+        [view setBackgroundColor:[UIColor backViewBackgroundColor]];
+    }
+    
+    return view;
+    
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize size = [layout itemSize];
-    if ([indexPath row] < [[self warnings] count]) {
+    NSInteger sec = [indexPath section];
+
+    size.width = CGRectGetWidth([collectionView bounds]);
+    
+    if (sec < [[self warnings] count]) {
         CGFloat maxWidth = size.width - (2*HEMWarningCellMessageHorzPadding);
-        HEMPillWarning warning = [[self warnings][[indexPath row]] integerValue];
+        HEMPillWarning warning = [[self warnings][sec] integerValue];
         NSAttributedString* message = [self attributedMessageForWarning:warning];
         size.height = [message sizeWithWidth:maxWidth].height + HEMWarningCellBaseHeight;
-    } else if ([indexPath row] == [[self warnings] count]) {
-        size.height = HEMPillActionsCellHeight;
+    } else {
+        size.height = HEMPillActionCellHeight;
     }
+    
     return size;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger sec = [indexPath section];
+    if (sec == [[self warnings] count]) {
+        switch ([indexPath row]) {
+            case HEMPillActionReplaceBattery:
+                [self replaceBattery];
+                break;
+            case HEMPillActionAdvanced:
+                [self showAdvancedOptions];
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 #pragma mark - Actions
@@ -196,7 +260,7 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
             break;
         }
         case HEMPillWarningLowBattery: {
-            [self replaceBattery:self];
+            [self replaceBattery];
             break;
         }
         default:
@@ -204,7 +268,7 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
     }
 }
 
-- (void)showAdvancedOptions:(id)sender {
+- (void)showAdvancedOptions {
     HEMActionSheetViewController* sheet =
         [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setTitle:NSLocalizedString(@"settings.pill.advanced.option.title", nil)];
@@ -222,7 +286,7 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
     [root presentViewController:sheet animated:NO completion:nil];
 }
 
-- (void)replaceBattery:(id)sender {
+- (void)replaceBattery {
     NSString* page = NSLocalizedString(@"help.url.slug.pill-battery", nil);
     [HEMSupportUtil openHelpToPage:page fromController:self];
 }

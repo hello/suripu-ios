@@ -270,9 +270,11 @@
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill";
 "settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired";
 "settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
-"settings.pill.warning.low-battery-format" = "Your Sleep Pill %@. We'll walk you through replacing it.";
-"settings.pill.warning.battery-low" = "battery is low";
+"settings.pill.warning.low-battery" = "Your Sleep Pill battery is low. We'll walk you through replacing it.";
+"settings.pill.warning.title.last-seen" = "No recent data";
+"settings.pill.warning.title.low-battery" = "Low battery";
 "settings.pill.advanced.option.title" = "Advanced";
+"settings.pill.replace-battery.title" = "Replace battery";
 "settings.pill.advanced.option.replace-pill" = "Replace this Sleep Pill";
 "settings.pill.advanced.option.replace-pill.desc" = "If you have a new Sleep Pill you want to pair with this account.";
 "settings.sense.advanced.option.title" = "Advanced";

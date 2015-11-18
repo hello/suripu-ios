@@ -300,6 +300,11 @@
 + (UIFont*)deviceSettingsPropertyValueFont;
 
 /**
+ * Font used to display a warning summary for the device in a collection view cell
+ */
++ (UIFont*)deviceCellWarningSummaryFont;
+
+/**
  * Font used to display a warning message for the device in a collection view cell
  */
 + (UIFont*)deviceCellWarningMessageFont;

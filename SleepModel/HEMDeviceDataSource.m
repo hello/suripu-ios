@@ -25,6 +25,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMOnboardingService.h"
+#import "HEMWifiUtils.h"
 
 NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 NSInteger const HEMDeviceRowSense = 0;
@@ -173,6 +174,12 @@ static CGFloat const HEMDeviceContentMargin = 18.0f;
     return ssid ?: NSLocalizedString(@"empty-data", nil);
 }
 
+- (long)wifiRssiValue {
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    SENSenseMetadata* senseMetadata = [[service devices] senseMetadata];
+    return [[[senseMetadata wiFi] rssi] longValue];
+}
+
 - (UIColor*)wifiValueColor {
     SENServiceDevice* service = [SENServiceDevice sharedService];
     SENSenseMetadata* senseMetadata = [[service devices] senseMetadata];
@@ -251,20 +258,20 @@ static CGFloat const HEMDeviceContentMargin = 18.0f;
         : NSLocalizedString(@"empty-data", nil);
     
     UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
-    UIImage* icon = [HelloStyleKit senseIcon];
     NSString* name = NSLocalizedString(@"settings.device.sense", nil);
     NSString* property1Name = NSLocalizedString(@"settings.sense.wifi", nil);
     NSString* property1Value = [self wifiValue];
     UIColor* property1ValueColor = [self wifiValueColor];
     NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
     NSString* property2Value = [senseMetadata firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
+    UIImage* wifiIcon = [HEMWifiUtils wifiIconForRssi:[self wifiRssiValue]];
     
-    [[cell iconImageView] setImage:icon];
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
     [[cell lastSeenValueLabel] setTextColor:lastSeenColor];
     [[cell property1Label] setText:property1Name];
     [[cell property1ValueLabel] setText:property1Value];
+    [[cell property1IconView] setImage:wifiIcon];
     [[cell property1ValueLabel] setTextColor:property1ValueColor];
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
@@ -277,7 +284,6 @@ static CGFloat const HEMDeviceContentMargin = 18.0f;
         : NSLocalizedString(@"empty-data", nil);
     
     UIColor* lastSeenColor = [self lastSeenTextColorFor:pillMetadata];
-    UIImage* icon = [HelloStyleKit pillIcon];
     NSString* name = NSLocalizedString(@"settings.device.pill", nil);
     NSString* property1Name = NSLocalizedString(@"settings.device.battery", nil);
     NSString* property1Value = nil;
@@ -299,7 +305,6 @@ static CGFloat const HEMDeviceContentMargin = 18.0f;
             break;
     }
     
-    [[cell iconImageView] setImage:icon];
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
     [[cell lastSeenValueLabel] setTextColor:lastSeenColor];

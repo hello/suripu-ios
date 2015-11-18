@@ -32,8 +32,6 @@
 
 static CGFloat const HEMDeviceInfoHeight = 184.0f;
 static CGFloat const HEMNoDeviceHeight = 203.0f;
-static CGFloat const HEMNoDeviceWithoutButtonHeight = 132.0f;
-static CGFloat const HEMDeviceContentMargin = 18.0f;
 
 @interface HEMDevicesViewController() <
     UICollectionViewDelegate,
@@ -161,8 +159,6 @@ static CGFloat const HEMDeviceContentMargin = 18.0f;
     
     if (device) {
         size.height = HEMDeviceInfoHeight;
-    } else if ([indexPath row] == HEMDeviceRowPill && ![[self dataSource] canPairPill]) {
-        size.height = HEMNoDeviceWithoutButtonHeight;
     } else {
         size.height = HEMNoDeviceHeight;
     }

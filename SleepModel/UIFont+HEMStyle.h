@@ -285,9 +285,19 @@
 + (UIFont*)feedInsightMessageBoldFont;
 
 /**
- * Font used to display the system alert message;
+ * Font used to display the system alert message
  */
 + (UIFont*)systemAlertMessageFont;
+
+/**
+ * Font used to display the label text in device settings
+ */
++ (UIFont*)deviceSettingsLabelFont;
+
+/**
+ * Font used to display the value text in device settings
+ */
++ (UIFont*)deviceSettingsPropertyValueFont;
 
 /**
  * Font used to display a warning message for the device in a collection view cell

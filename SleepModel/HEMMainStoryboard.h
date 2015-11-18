@@ -31,9 +31,9 @@
 +(NSString *)supportCellReuseIdentifier;
 +(NSString *)topicCellReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
-+(NSString *)actionsReuseIdentifier;
-+(NSString *)timezoneReuseIdentifier;
 +(NSString *)actionReuseIdentifier;
++(NSString *)connectionReuseIdentifier;
++(NSString *)timezoneReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;

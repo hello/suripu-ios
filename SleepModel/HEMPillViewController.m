@@ -26,7 +26,6 @@
 #import "HEMActionButton.h"
 #import "HEMActionSheetViewController.h"
 
-static NSInteger const HEMPillActionCellHeight = 56.0f;
 static NSString* const HEMPillHeaderReuseId = @"sectionHeader";
 
 typedef NS_ENUM(NSInteger, HEMPillWarning) {
@@ -227,7 +226,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
         NSAttributedString* message = [self attributedMessageForWarning:warning];
         size.height = [message sizeWithWidth:maxWidth].height + HEMWarningCellBaseHeight;
     } else {
-        size.height = HEMPillActionCellHeight;
+        size.height = HEMDeviceActionCellHeight;
     }
     
     return size;

@@ -12,7 +12,6 @@ static NSString *const _HEMrootViewController = @"RootViewController";
 static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMaction = @"action";
 static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
-static NSString *const _HEMactions = @"actions";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
@@ -29,6 +28,7 @@ static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMbreakdownController = @"breakdownController";
 static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
+static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
@@ -89,7 +89,6 @@ static NSString *const _HEMwarning = @"warning";
 
 /** Cell Reuse Identifiers */
 +(NSString *)actionReuseIdentifier { return _HEMaction; }
-+(NSString *)actionsReuseIdentifier { return _HEMactions; }
 +(NSString *)alarmChoiceCellReuseIdentifier { return _HEMalarmChoiceCell; }
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
@@ -99,6 +98,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmSoundCellReuseIdentifier { return _HEMalarmSoundCell; }
 +(NSString *)alarmSwitchCellReuseIdentifier { return _HEMalarmSwitchCell; }
 +(NSString *)breakdownLineCellReuseIdentifier { return _HEMbreakdownLineCell; }
++(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldCellReuseIdentifier { return _HEMfieldCell; }

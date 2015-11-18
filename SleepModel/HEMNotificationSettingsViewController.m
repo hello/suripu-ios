@@ -37,10 +37,11 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 
 - (void)configureTable {
     UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
-    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
     [[self tableView] setSeparatorColor:[UIColor separatorColor]];
+    [[self tableView] setBackgroundColor:[UIColor backViewBackgroundColor]];
 }
 
 - (void)reload {
@@ -76,7 +77,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString* title = [NSLocalizedString(@"settings.notifications.section.push", nil) uppercaseString];
-    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [header setTitle:title];
     return header;
 }

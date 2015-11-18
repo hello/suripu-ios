@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
     [[self unitTableView] setTableFooterView:footer];
     [[self unitTableView] setDataSource:self];
     [[self unitTableView] setDelegate:self];
+    [[self unitTableView] setBackgroundColor:[UIColor backViewBackgroundColor]];
 }
 
 - (NSString*)sectionTitleForSection:(NSInteger)section {

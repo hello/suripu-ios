@@ -169,10 +169,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (row == 0) {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.pounds", nil)];
-        [toggleView setHighlighted:[SENPreference useMetricUnitForWeight]];
+        [toggleView setHighlighted:![SENPreference useMetricUnitForWeight]];
     } else {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.kilograms", nil)];
-        [toggleView setHighlighted:![SENPreference useMetricUnitForWeight]];
+        [toggleView setHighlighted:[SENPreference useMetricUnitForWeight]];
     }
 }
 
@@ -182,10 +182,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (row == 0) {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.feet", nil)];
-        [toggleView setHighlighted:[SENPreference useMetricUnitForHeight]];
+        [toggleView setHighlighted:![SENPreference useMetricUnitForHeight]];
     } else {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.centimeters", nil)];
-        [toggleView setHighlighted:![SENPreference useMetricUnitForHeight]];
+        [toggleView setHighlighted:[SENPreference useMetricUnitForHeight]];
     }
 }
 
@@ -214,10 +214,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [self updatePreference:SENPreferenceTypeTempCelcius withValue:row == 0];
             break;
         case HEMUnitSectionWeight:
-            [self updatePreference:SENPreferenceTypeWeightMetric withValue:row == 0];
+            [self updatePreference:SENPreferenceTypeWeightMetric withValue:row != 0];
             break;
         case HEMUnitSectionHeight:
-            [self updatePreference:SENPreferenceTypeHeightMetric withValue:row == 0];
+            [self updatePreference:SENPreferenceTypeHeightMetric withValue:row != 0];
             break;
         default:
             break;

@@ -5,6 +5,8 @@
 //  Created by Jimmy Lu on 1/6/15.
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
+#import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
 
 #import "HEMDeviceCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
@@ -19,8 +21,20 @@
 
 @implementation HEMDeviceCollectionViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [[self nameLabel] setTextColor:[UIColor tintColor]];
+    [[self nameLabel] setFont:[UIFont deviceSettingsLabelFont]];
+    [[self lastSeenLabel] setFont:[UIFont deviceSettingsLabelFont]];
+    [[self property1Label] setFont:[UIFont deviceSettingsLabelFont]];
+    [[self property2Label] setFont:[UIFont deviceSettingsLabelFont]];
+    [[self property1ValueLabel] setFont:[UIFont deviceSettingsPropertyValueFont]];
+    [[self property2ValueLabel] setFont:[UIFont deviceSettingsPropertyValueFont]];
+}
+
 - (void)prepareForReuse {
     [self showDataLoadingIndicator:YES];
+    [[self property1IconView] setImage:nil];
 }
 
 - (void)showDataLoadingIndicator:(BOOL)show {

@@ -87,7 +87,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         + [self descriptionHeight]
         + HEMPillSetupLayoutMinLineSpacing;
     
-    UIImage* image = [HelloStyleKit pillSetup];
+    UIImage* image = [UIImage imageNamed:@"pillSetup"];
     CGFloat imageHeight = CGRectGetHeight([[self collectionView] bounds]) - contentHeight;
     [self setVideoHeight:MAX(image.size.height, imageHeight)];
 }
@@ -190,7 +190,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
                 = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                             forIndexPath:indexPath];
             
-            UIImage* firstFrame = [HelloStyleKit pillSetup];
+            UIImage* firstFrame = [UIImage imageNamed:@"pillSetup"];
             NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-setup", nil);
             [[videoCell videoView] setFirstFrame:firstFrame videoPath:videoPath];
             

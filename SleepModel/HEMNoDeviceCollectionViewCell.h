@@ -12,7 +12,6 @@
 
 @interface HEMNoDeviceCollectionViewCell : HEMCardCollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *actionButton;
@@ -24,8 +23,7 @@
 
 /**
  *  Set the title, message and styling for a missing pill device
- *  @param canPair: YES if user can pair the pill right now.  NO otherwise
  */
-- (void)configureForPill:(BOOL)canPair;
+- (void)configureForPill;
 
 @end

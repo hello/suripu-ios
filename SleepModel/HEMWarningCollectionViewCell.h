@@ -13,9 +13,10 @@ extern CGFloat const HEMWarningCellMessageHorzPadding;
 
 @class HEMActionButton;
 
-@interface HEMWarningCollectionViewCell : HEMCardCollectionViewCell
+@interface HEMWarningCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet UILabel *warningSummaryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *warningMessageLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *actionButton;
 

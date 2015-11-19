@@ -16,27 +16,24 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [[self actionButton] setUserInteractionEnabled:NO]; // let cell cause the action instead
+    [[self messageLabel] setNumberOfLines:0];
 }
 
 - (void)configureForSense {
-    self.iconImageView.image = [HelloStyleKit senseIcon];
     self.nameLabel.text = NSLocalizedString(@"settings.device.sense", nil);
     self.messageLabel.text = NSLocalizedString(@"settings.device.no-sense", nil);
     [self.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-sense", nil)
                        forState:UIControlStateNormal];
     [[self actionButton] setBackgroundColor:[UIColor tintColor]];
-    [[self actionButton] setHidden:NO];
-    [self setUserInteractionEnabled:YES];
+    [self layoutIfNeeded];
 }
 
-- (void)configureForPill:(BOOL)canPair {
-    self.iconImageView.image = [HelloStyleKit pillIcon];
+- (void)configureForPill {
     self.nameLabel.text = NSLocalizedString(@"settings.device.pill", nil);
     self.messageLabel.text = NSLocalizedString(@"settings.device.no-pill", nil);
     [self.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-pill", nil)
                        forState:UIControlStateNormal];
-    [[self actionButton] setHidden:!canPair];
-    [self setUserInteractionEnabled:canPair];
+    [self layoutIfNeeded];
 }
 
 @end

@@ -238,7 +238,7 @@
                                                                             summary:summary
                                                                             message:message
                                                                         supportPage:support]];
-        } else if ([wiFiStatus isConnected]) {
+        } else if (![wiFiStatus isConnected]) {
             NSString* summary = NSLocalizedString(@"settings.sense.warning.summary.wifi", nil);
             NSString* support = NSLocalizedString(@"help.url.slug.sense-no-internet", nil);
             NSAttributedString* message = [strongSelf attributedWiFiWarning];

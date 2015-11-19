@@ -299,7 +299,7 @@
 "settings.sense.dialog.pair-failed-title" = "Action failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure Sense is plugged in and nearby and try again.";
 "settings.sense.connecting" = "Connecting over Bluetooth...";
-"settings.sense.connected" = "Connected over Bluetooth...";
+"settings.sense.connected" = "Connected over Bluetooth.";
 "settings.sense.no-sense-message" = "Make sure Sense is plugged in and nearby and try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message.format" = "Are you sure you want to put Sense into Pairing Mode? You should use this option only if you have another mobile device you wish to pair with Sense. If you're having trouble, visit %@ for support.";

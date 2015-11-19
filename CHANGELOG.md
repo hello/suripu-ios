@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.8.3
+
+New:
+
+* Updated VX of links in alert dialogs
+* Updated device settings VX + UX
+* Update Sense settings VX + UX
+* Update Pill settings VX
+
+Fixes:
+
+* Fix unit preferences being reversed for height and weight
+* Fix visual bug with notification settings
+
 ## 1.1.8.2
 
 New:

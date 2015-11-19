@@ -10,6 +10,7 @@
 #import <SenseKit/SENPreference.h>
 
 #import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
 
 #import "HEMNotificationSettingsViewController.h"
 #import "HEMMainStoryboard.h"
@@ -127,6 +128,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [cell setAccessoryView:preferenceSwitch];
     [[cell textLabel] setText:[self titleAtIndexPath:indexPath]];
     [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
 }
 
 - (NSString*)titleAtIndexPath:(NSIndexPath*)indexPath {

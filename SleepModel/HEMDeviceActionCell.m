@@ -14,7 +14,6 @@
 #import "HEMAnimationUtils.h"
 
 CGFloat const HEMDeviceActionCellHeight = 56.0f;
-static CGFloat const HEMDeviceActionActivitySize = 20.0f;
 
 @interface HEMDeviceActionCell()
 
@@ -46,12 +45,14 @@ static CGFloat const HEMDeviceActionActivitySize = 20.0f;
     [[self textLabel] setText:text];
     
     if (show) {
+        UIImage* loaderImage = [UIImage imageNamed:@"settingsLoader"];
         CGPoint iconCenter = [[self iconView] center];
         CGRect indicatorFrame = CGRectZero;
-        indicatorFrame.origin.x = iconCenter.x - (HEMDeviceActionActivitySize / 2.0f);
-        indicatorFrame.origin.y = iconCenter.y - (HEMDeviceActionActivitySize / 2.0f);
-        indicatorFrame.size = CGSizeMake(HEMDeviceActionActivitySize, HEMDeviceActionActivitySize);
-        [self setIndicator:[[HEMActivityIndicatorView alloc] initWithFrame:indicatorFrame]];
+        indicatorFrame.origin.x = iconCenter.x - (loaderImage.size.width / 2.0f);
+        indicatorFrame.origin.y = iconCenter.y - (loaderImage.size.height / 2.0f);
+        indicatorFrame.size = loaderImage.size;
+        [self setIndicator:[[HEMActivityIndicatorView alloc] initWithImage:loaderImage
+                                                                  andFrame:indicatorFrame]];
         
         [[self iconView] setHidden:YES];
         [[self iconView] setTransform:CGAffineTransformMakeScale(0.1f, 0.1f)];

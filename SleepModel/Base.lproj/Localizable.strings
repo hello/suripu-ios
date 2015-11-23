@@ -690,6 +690,8 @@
 "timezone.error.message" = "Could not update the time zone at this time. Make sure your device is connected to the internet and try again.";
 "timezone.action.use-local" = "Set this time zone";
 "timezone.action.select-manually" = "Select from a list";
+"timezone.section.title.current" = "Current time zone";
+"timezone.section.title.other" = "Other time zones";
 
 // handholding
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days.";

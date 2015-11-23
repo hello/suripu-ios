@@ -129,8 +129,6 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 }
 
 - (void)next {
-    [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    
     NSString* segueId = nil;
     if ([[SENServiceHealthKit sharedService] isSupported]) {
         segueId = [HEMOnboardingStoryboard weightToHealthKitSegueIdentifier];

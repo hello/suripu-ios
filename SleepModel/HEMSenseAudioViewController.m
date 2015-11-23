@@ -39,6 +39,7 @@
 }
 
 - (void)next {
+    [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard audioToSetupSegueIdentifier]
                               sender:self];
 }

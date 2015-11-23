@@ -6,12 +6,14 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import "UIColor+HEMStyle.h"
+
 #import "HEMFormViewController.h"
+#import "HEMSettingsHeaderFooterView.h"
 #import "HEMFieldTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
-#import "UIColor+HEMStyle.h"
 
 @interface HEMFormViewController () <UITableViewDataSource, UITableViewDelegate, HEMFieldTableViewCellDelegate>
 
@@ -46,9 +48,10 @@
     [self setNumberOfFields:[[self delegate] numberOfFieldsIn:self]];
     [self setFormContent:[[NSMutableDictionary alloc] initWithCapacity:[self numberOfFields]]];
     
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsCellTableMargin;
-    [[self formTableview] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    [[self formTableview] setTableHeaderView:header];
+    [[self formTableview] setTableFooterView:footer];
     [[self formTableview] setKeyboardDismissMode:UIScrollViewKeyboardDismissModeInteractive];
 }
 
@@ -78,6 +81,9 @@
     [fieldCell setDelegate:self];
     [fieldCell setTag:[indexPath row]];
     
+    UIImage* icon = [[self delegate] iconIn:self atIndex:[indexPath row]];
+    [[fieldCell imageView] setImage:icon];
+    
     NSString* placeHolderText = [[self delegate] placeHolderTextIn:self atIndex:[indexPath row]];
     [fieldCell setPlaceHolder:placeHolderText];
     
@@ -99,16 +105,12 @@
     BOOL lastRow = [indexPath row] == [self numberOfFields] - 1;
     
     if (firstRow && lastRow) {
-        [fieldCell showTopAndBottomCorners];
         [fieldCell setKeyboardReturnKeyType:UIReturnKeyDone];
     } else if (firstRow) {
-        [fieldCell showTopCorners];
         [fieldCell setKeyboardReturnKeyType:UIReturnKeyNext];
     } else if (lastRow) {
-        [fieldCell showBottomCorners];
         [fieldCell setKeyboardReturnKeyType:UIReturnKeyDone];
     } else {
-        [fieldCell showNoCorners];
         [fieldCell setKeyboardReturnKeyType:UIReturnKeyNext];
     }
 }

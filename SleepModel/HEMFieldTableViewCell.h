@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
-#import "HEMSettingsTableViewCell.h"
-
 @class HEMFieldTableViewCell;
 
 @protocol HEMFieldTableViewCellDelegate <NSObject>
@@ -19,7 +17,7 @@
 
 @end
 
-@interface HEMFieldTableViewCell : HEMSettingsTableViewCell
+@interface HEMFieldTableViewCell : UITableViewCell
 
 @property (nonatomic, weak) id<HEMFieldTableViewCellDelegate> delegate;
 

@@ -4466,21 +4466,21 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KbQ-hp-1Nz">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="56" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="KbQ-hp-1Nz">
                                 <rect key="frame" x="4" y="0.0" width="592" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="fieldCell" id="mfK-Y2-rx4" customClass="HEMFieldTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="592" height="64"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="fieldCell" rowHeight="56" id="mfK-Y2-rx4" customClass="HEMFieldTableViewCell">
+                                        <rect key="frame" x="0.0" y="18" width="592" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mfK-Y2-rx4" id="XCb-K8-t3K">
-                                            <rect key="frame" x="0.0" y="0.0" width="592" height="64"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="592" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="veS-gA-se1">
-                                                    <rect key="frame" x="24" y="1" width="544" height="62"/>
+                                                    <rect key="frame" x="64" y="1" width="504" height="54"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
@@ -4491,14 +4491,14 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="veS-gA-se1" firstAttribute="top" secondItem="XCb-K8-t3K" secondAttribute="topMargin" constant="-7" id="536-TU-xOf"/>
-                                                <constraint firstItem="veS-gA-se1" firstAttribute="leading" secondItem="XCb-K8-t3K" secondAttribute="leadingMargin" constant="16" id="K02-rd-BCe"/>
+                                                <constraint firstItem="veS-gA-se1" firstAttribute="leading" secondItem="XCb-K8-t3K" secondAttribute="leadingMargin" constant="56" id="K02-rd-BCe"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="veS-gA-se1" secondAttribute="bottom" constant="-7" id="Qdy-lP-dX1"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="veS-gA-se1" secondAttribute="trailing" constant="16" id="We3-Yb-V7v"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="textField" destination="veS-gA-se1" id="2DJ-CE-8HG"/>
                                         </connections>

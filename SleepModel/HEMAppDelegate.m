@@ -92,7 +92,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     if ([SENAuthorizationService isAuthorized]) {
         
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-            [SENAnalytics trackUserSession]; // update user session data
+            [SENAnalytics trackUserSession:[SENAnalytics shouldIdentifyUserForSession]]; // update user session data
         }];
         
         [self syncHealthKit];

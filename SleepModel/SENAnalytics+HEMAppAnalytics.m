@@ -9,11 +9,13 @@
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENAnalyticsLogger.h>
+#import <SenseKit/SENLocalPreferences.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
 #import "HEMConfig.h"
 #import "HEMSegmentProvider.h"
+#import "HEMOnboardingService.h"
 
 // general
 NSString* const kHEMAnalyticsEventWarning = @"Warning";
@@ -212,6 +214,9 @@ NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 
+// used only to ensure nothing is wrong when upgrading version with Segment
+static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segment";
+
 @implementation SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics {
@@ -219,12 +224,15 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
     if ([analyticsToken length] > 0) {
         DDLogVerbose(@"analytics enabled");
-        HEMSegmentProvider* segment = [[HEMSegmentProvider alloc] initWithWriteKey:analyticsToken];
-        [SENAnalytics addProvider:segment];
-        [SENAnalytics trackUserSession];
+        [self addProvider:[[HEMSegmentProvider alloc] initWithWriteKey:analyticsToken]];
     }
     // logging for our own perhaps to replicate analytic events on console
-    [SENAnalytics addProvider:[SENAnalyticsLogger new]];
+    [self addProvider:[SENAnalyticsLogger new]];
+}
+
++ (BOOL)shouldIdentifyUserForSession {
+    BOOL upgrade = ![[SENLocalPreferences sharedPreferences] persistentPreferenceForKey:HEMAnalyticsSettingsSegment];
+    return [[HEMOnboardingService sharedService] hasFinishedOnboarding] && upgrade;
 }
 
 + (void)trackSignUpOfNewAccount:(SENAccount*)account {
@@ -251,46 +259,37 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
 }
 
 + (void)trackSignInWithAccount:(SENAccount*)account {
-    NSString* name = [account name] ?: @"";
-    NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
-    
-    if (accountId) {
-        [SENAnalytics setUserId:[account accountId]
-                     properties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
-                                  kHEMAnalyticsEventMpPropName : name,
-                                  HEMAnalyticsEventPropEmail : [account  email] ?: @"",
-                                  kHEMAnalyticsEventPropAccount : [account accountId]}];
-        
-        [SENAnalytics setGlobalEventProperties:@{kHEMAnalyticsEventPropName : name,
-                                                 kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
-    }
+    [self trackUserSession:YES];
 
 }
 
-+ (void)trackUserSession {
++ (void)trackUserSession:(BOOL)identifyUser {
     SENAccount* account = [[SENServiceAccount sharedService] account];
-    NSMutableDictionary* uProperties = [NSMutableDictionary dictionary]; // updates profile properties
-    NSMutableDictionary* gProperties = [NSMutableDictionary dictionary]; // props sent for every event
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     
     if (account) {
         NSString* name = [account name] ?: @"";
         NSString* email = [account email] ?: @"";
+        NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
         
-        uProperties[kHEMAnalyticsEventMpPropName] = name;
-        uProperties[HEMAnalyticsEventPropEmail] = email;
+        [self setUserId:identifyUser ? accountId : nil
+             properties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
+                          kHEMAnalyticsEventMpPropName : name,
+                          HEMAnalyticsEventPropEmail : email,
+                          kHEMAnalyticsEventPropAccount : accountId}];
         
-        if (accountId) {
-            uProperties[kHEMAnalyticsEventPropAccount] = accountId;
-        }
+        [self setGlobalEventProperties:@{kHEMAnalyticsEventPropName : name,
+                                         kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
+    } else {
         
-        gProperties[kHEMAnalyticsEventPropName] = name;
+        [self setUserId:identifyUser ? [SENAuthorizationService accountIdOfAuthorizedUser] : nil
+             properties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
+        [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
+        
     }
     
-    uProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
-    gProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
-
-    [SENAnalytics setGlobalEventProperties:gProperties];
+    if (identifyUser) {
+        [[SENLocalPreferences sharedPreferences] setPersistentPreference:@YES forKey:HEMAnalyticsSettingsSegment];
+    }
     
 }
 

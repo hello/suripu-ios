@@ -1,4 +1,5 @@
 #import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENAuthorizationService.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -127,7 +128,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
                 }];
             } else {
                 [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-                    [SENAnalytics trackUserSession]; // update with account info
+                    [SENAnalytics trackSignInWithAccount:[[SENServiceAccount sharedService] account]];
                 }];
                 // don't wait for the account to refresh to proceed
                 [strongSelf letUserIntoApp];

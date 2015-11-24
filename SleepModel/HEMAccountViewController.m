@@ -451,6 +451,18 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     return placeHolderText;
 }
 
+- (UIImage*)iconIn:(HEMFormViewController*)formViewController atIndex:(NSUInteger)index {
+    switch ([self selectedInfoType]) {
+        default:
+        case HEMSettingsAccountInfoTypeEmail:
+            return [UIImage imageNamed:@"settingsEmailIcon"];
+        case HEMSettingsAccountInfoTypeName:
+            return [UIImage imageNamed:@"settingsNameIcon"];
+        case HEMSettingsAccountInfoTypePassword:
+            return [UIImage imageNamed:@"settingsPasswordIcon"];
+    }
+}
+
 - (NSString*)defaultTextIn:(HEMFormViewController*)formViewController atIndex:(NSUInteger)index {
     NSString* text = nil;
     if ([self selectedInfoType] == HEMSettingsAccountInfoTypeEmail) {

@@ -10,6 +10,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "UITableViewCell+HEMSettings.h"
 
 #import "HEMUnitPreferenceViewController.h"
 #import "HEMSettingsHeaderFooterView.h"
@@ -110,11 +111,7 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
   willDisplayCell:(UITableViewCell*)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UIImageView* toggleView = (id) [cell accessoryView];
-    if (!toggleView) {
-        [cell setAccessoryView:[self unitToggleAccessoryView:NO]];
-    }
-    
+    [cell setAccessorySelection:NO];
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -135,70 +132,49 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-- (UIImageView*)unitToggleAccessoryView:(BOOL)selected {
-    UIImage* activeToggleImage = [UIImage imageNamed:@"settingsToggleIconActive"];
-    UIImage* inactiveToggleImage = [UIImage imageNamed:@"settingsToggleIconInactive"];
-    UIImageView* toggleView = [[UIImageView alloc] initWithImage:inactiveToggleImage
-                                                highlightedImage:activeToggleImage];
-    
-    CGRect toggleFrame = CGRectZero;
-    toggleFrame.size = [activeToggleImage size];
-    [toggleView setFrame:toggleFrame];
-    
-    [toggleView setHighlighted:selected];
-    
-    return toggleView;
-}
-
 - (void)configureTimeSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path {
     NSInteger row = [path row];
-    UIImageView* toggleView = (id) [cell accessoryView];
-
     if (row == 0) {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.12-hour", nil)];
-        [toggleView setHighlighted:[SENPreference timeFormat] != SENTimeFormat24Hour];
+        [cell setAccessorySelection:[SENPreference timeFormat] != SENTimeFormat24Hour];
     } else {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.24-hour", nil)];
-        [toggleView setHighlighted:[SENPreference timeFormat] == SENTimeFormat24Hour];
+        [cell setAccessorySelection:[SENPreference timeFormat] == SENTimeFormat24Hour];
     }
 }
 
 - (void)configureWeightSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path  {
     NSInteger row = [path row];
-    UIImageView* toggleView = (id) [cell accessoryView];
-
     if (row == 0) {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.pounds", nil)];
-        [toggleView setHighlighted:![SENPreference useMetricUnitForWeight]];
+        [cell setAccessorySelection:![SENPreference useMetricUnitForWeight]];
     } else {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.kilograms", nil)];
-        [toggleView setHighlighted:[SENPreference useMetricUnitForWeight]];
+        [cell setAccessorySelection:[SENPreference useMetricUnitForWeight]];
     }
 }
 
 - (void)configureHeightSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path  {
     NSInteger row = [path row];
-    UIImageView* toggleView = (id) [cell accessoryView];
     
     if (row == 0) {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.feet", nil)];
-        [toggleView setHighlighted:![SENPreference useMetricUnitForHeight]];
+        [cell setAccessorySelection:![SENPreference useMetricUnitForHeight]];
     } else {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.centimeters", nil)];
-        [toggleView setHighlighted:[SENPreference useMetricUnitForHeight]];
+        [cell setAccessorySelection:[SENPreference useMetricUnitForHeight]];
     }
 }
 
 - (void)configureTemperatureSettingCell:(UITableViewCell*)cell forIndexPath:(NSIndexPath*)path  {
     NSInteger row = [path row];
-    UIImageView* toggleView = (id) [cell accessoryView];
     
     if (row == 0) {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.celsius", nil)];
-        [toggleView setHighlighted:[SENPreference useCentigrade]];
+        [cell setAccessorySelection:[SENPreference useCentigrade]];
     } else {
         [[cell textLabel] setText:NSLocalizedString(@"settings.units.fahrenheit", nil)];
-        [toggleView setHighlighted:![SENPreference useCentigrade]];
+        [cell setAccessorySelection:![SENPreference useCentigrade]];
     }
 }
 

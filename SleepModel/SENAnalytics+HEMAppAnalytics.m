@@ -250,6 +250,23 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
                                              kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
 }
 
++ (void)trackSignInWithAccount:(SENAccount*)account {
+    NSString* name = [account name] ?: @"";
+    NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
+    
+    if (accountId) {
+        [SENAnalytics setUserId:[account accountId]
+                     properties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
+                                  kHEMAnalyticsEventMpPropName : name,
+                                  HEMAnalyticsEventPropEmail : [account  email] ?: @"",
+                                  kHEMAnalyticsEventPropAccount : [account accountId]}];
+        
+        [SENAnalytics setGlobalEventProperties:@{kHEMAnalyticsEventPropName : name,
+                                                 kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
+    }
+
+}
+
 + (void)trackUserSession {
     SENAccount* account = [[SENServiceAccount sharedService] account];
     NSMutableDictionary* uProperties = [NSMutableDictionary dictionary]; // updates profile properties
@@ -272,13 +289,7 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
     
     uProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
     gProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
-    // need to additionally set the account id as a separate property so that it
-    // is shown in as a user property when viewing People in Mixpanel.  If not using
-    // mixpanel, we can probably just remove it
-    
-    if (accountId) {
-        [SENAnalytics setUserId:accountId properties:uProperties];
-    }
+
     [SENAnalytics setGlobalEventProperties:gProperties];
     
 }

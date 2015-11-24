@@ -29,6 +29,7 @@
 
 - (void)configureWithKey:(NSString*)key {
     SEGAnalyticsConfiguration* config = [SEGAnalyticsConfiguration configurationWithWriteKey:key];
+    [config setFlushAt:1];
     [SEGAnalytics setupWithConfiguration:config];
     DDLogVerbose(@"configured segment analytics");
 }
@@ -44,6 +45,7 @@
 #pragma mark - Sign Out
 
 - (void)reset:(NSString*)userId {
+    [[self globalEventProperties] removeAllObjects];
     [[SEGAnalytics sharedAnalytics] reset];
 }
 

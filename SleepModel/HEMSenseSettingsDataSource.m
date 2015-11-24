@@ -89,32 +89,35 @@
                           kHEMAnalyticsEventPropPillId : pillId ?: @"unknown"}];
     
     [deviceService restoreFactorySettings:^(NSError *error) {
+        NSError* translatedError = nil;
+        
         if (error) {
             [SENAnalytics trackError:error];
-        }
-        
-        NSString* localizedMessage = nil;
-        switch ([error code]) {
-            case SENServiceDeviceErrorUnlinkPillFromAccount:
-                localizedMessage = NSLocalizedString(@"settings.factory-restore.error.unlink-pill", nil);
-                break;
-            case SENServiceDeviceErrorUnlinkSenseFromAccount:
-                localizedMessage = NSLocalizedString(@"settings.factory-restore.error.unlink-sense", nil);
-                break;
-            case SENServiceDeviceErrorInProgress:
-            case SENServiceDeviceErrorSenseUnavailable: {
-                localizedMessage = NSLocalizedString(@"settings.sense.no-sense-message", nil);
-                break;
+            
+            NSString* localizedMessage = nil;
+            switch ([error code]) {
+                case SENServiceDeviceErrorUnlinkPillFromAccount:
+                    localizedMessage = NSLocalizedString(@"settings.factory-restore.error.unlink-pill", nil);
+                    break;
+                case SENServiceDeviceErrorUnlinkSenseFromAccount:
+                    localizedMessage = NSLocalizedString(@"settings.factory-restore.error.unlink-sense", nil);
+                    break;
+                case SENServiceDeviceErrorInProgress:
+                case SENServiceDeviceErrorSenseUnavailable: {
+                    localizedMessage = NSLocalizedString(@"settings.sense.no-sense-message", nil);
+                    break;
+                }
+                default:
+                    break;
             }
-            default:
-                break;
+            
+            NSMutableDictionary* info = [[error userInfo] mutableCopy];
+            [info setValue:localizedMessage forKey:NSLocalizedDescriptionKey];
+            translatedError = [NSError errorWithDomain:[error domain]
+                                                  code:[error code]
+                                              userInfo:info];
         }
         
-        NSMutableDictionary* info = [[error userInfo] mutableCopy];
-        [info setValue:localizedMessage forKey:NSLocalizedDescriptionKey];
-        NSError* translatedError = [NSError errorWithDomain:[error domain]
-                                                       code:[error code]
-                                                   userInfo:info];
         completion (translatedError);
     }];
 }

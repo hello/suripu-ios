@@ -25,15 +25,9 @@
 - (void)getTimeZones:(nonnull HEMAllTimeZoneHandler)completion {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSDictionary* timeZoneCodeMapping = [NSTimeZone timeZoneMapping];
-        NSArray* timeZoneCities = [timeZoneCodeMapping allKeys];
-        NSArray* sortedCities = [timeZoneCities sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            return [obj1 compare:obj2];
-        }];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            completion (timeZoneCodeMapping, sortedCities);
+            completion (timeZoneCodeMapping);
         });
-        
     });
 }
 
@@ -52,6 +46,58 @@
         }
         
     }];
+}
+
+- (nonnull NSArray<NSString*>*)sortedCityNamesFrom:(nonnull NSDictionary<NSString*, NSString*>*)timeZoneMapping {
+    NSArray* timeZoneCities = [timeZoneMapping allKeys];
+    return [timeZoneCities sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+}
+
+- (nonnull NSString*)cityForTimeZone:(nonnull NSTimeZone*)timeZone
+                         fromMapping:(nonnull NSDictionary<NSString*, NSString*>*)timeZoneMapping {
+    NSArray<NSString*>* cityNames = [timeZoneMapping allKeys];
+    NSString* currentTimeZoneName = [timeZone name];
+    NSString* matchingCityName = nil;
+    for (NSString* city in cityNames) {
+        NSString* timeZoneName = timeZoneMapping[city];
+        if ([timeZoneName isEqualToString:currentTimeZoneName]) {
+            matchingCityName = city;
+            break;
+        }
+    }
+    return matchingCityName;
+}
+
+- (nonnull NSArray<NSString*>*)sortedCityNamesWithout:(nonnull NSTimeZone*)timeZone
+                                                 from:(nonnull NSDictionary<NSString*, NSString*>*)timeZoneMapping
+                                     matchingCityName:(NSString *_Nonnull *_Nonnull)matchingCityName {
+    
+    NSArray* sortedCities = [self sortedCityNamesFrom:timeZoneMapping];
+    NSString* cityNameToFilter = [self cityForTimeZone:timeZone fromMapping:timeZoneMapping];
+    
+    if (cityNameToFilter) {
+        NSRange fullRange = NSMakeRange(0, [sortedCities count]);
+        NSMutableArray* mutableNames = [sortedCities mutableCopy];
+        NSInteger foundIndex = [mutableNames indexOfObject:cityNameToFilter
+                                             inSortedRange:fullRange
+                                                   options:NSBinarySearchingFirstEqual
+                                           usingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                                               return [obj1 compare:obj2];
+                                           }];
+        if (foundIndex != NSNotFound) {
+            [mutableNames removeObjectAtIndex:foundIndex];
+        }
+        
+        if (matchingCityName != NULL) {
+            *matchingCityName = cityNameToFilter;
+        }
+        
+        return mutableNames;
+    } else {
+        return sortedCities;
+    }
 }
 
 @end

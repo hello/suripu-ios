@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.8.4
+
+New:
+
+* Email / name update screen vx
+* Time Zone settings vx
+
+Fixes:
+
+* Include optional account settings as part of checkpoint in onboarding
+
 ## 1.1.8.3
 
 New:

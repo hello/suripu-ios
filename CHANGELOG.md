@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.8.5
+
+Fixes:
+
+* Fixes crasher on factory reset (introduced in this release 1.1.8)
+* Fixes time zone display
+* Fixes upgrade path for Segment, but still broken
+
 ## 1.1.8.4
 
 New:

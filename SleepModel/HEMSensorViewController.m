@@ -17,6 +17,12 @@
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
 
+typedef NS_ENUM(NSInteger, HEMSensorLoadState) {
+    HEMSensorLoadStateLoading = 0,
+    HEMSensorLoadStateLoaded = 1,
+    HEMSensorLoadStateError = 2,
+};
+
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
@@ -44,8 +50,8 @@
 @property (nonatomic) CGFloat minGraphValue;
 @property (nonatomic, getter=isPanning) BOOL panning;
 @property (nonatomic) CGPoint oldScrollOffset;
-@property (nonatomic, assign, getter=hasLoadedHourlyData) BOOL loadedHourlyData;
-@property (nonatomic, assign, getter=hasLoadedDailyData) BOOL loadedDailyData;
+@property (nonatomic, assign) HEMSensorLoadState hourlyDataLoadState;
+@property (nonatomic, assign) HEMSensorLoadState dailyDataLoadState;
 @end
 
 @implementation HEMSensorViewController
@@ -290,12 +296,14 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     __weak typeof(self) weakSelf = self;
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setLoadedHourlyData:YES];
         
         if (error) {
+            strongSelf.hourlyDataLoadState = HEMSensorLoadStateError;
             strongSelf.graphView.alpha = 0;
             return;
         }
+        
+        strongSelf.hourlyDataLoadState = HEMSensorLoadStateLoaded;
         
         if (![strongSelf.hourlyDataSeries isEqualToArray:data]) {
             strongSelf.hourlyDataSeries = data;
@@ -308,12 +316,13 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        [strongSelf setLoadedDailyData:YES];
-        
         if (error) {
+            strongSelf.dailyDataLoadState = HEMSensorLoadStateError;
             strongSelf.graphView.alpha = 0;
             return;
         }
+        
+        strongSelf.dailyDataLoadState = HEMSensorLoadStateLoaded;
         
         if (![strongSelf.dailyDataSeries isEqualToArray:data]) {
             strongSelf.dailyDataSeries = data;
@@ -484,12 +493,16 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (NSAttributedString *)noDataLabelAttributedTextForLineGraph:(BEMSimpleLineGraphView *)graph {
-    BOOL loading = ([self isShowingHourlyData] && ![self hasLoadedDailyData])
-                || (![self isShowingHourlyData] && ![self hasLoadedDailyData]);
+    BOOL loading = ([self isShowingHourlyData] && [self hourlyDataLoadState] == HEMSensorLoadStateLoading)
+                || (![self isShowingHourlyData] && [self dailyDataLoadState] == HEMSensorLoadStateLoading);
+    BOOL error = ([self isShowingHourlyData] && [self hourlyDataLoadState] == HEMSensorLoadStateError)
+                || (![self isShowingHourlyData] && [self dailyDataLoadState] == HEMSensorLoadStateError);
     
     NSString* text = nil;
     if (loading) {
         text = NSLocalizedString(@"activity.loading", nil);
+    } else if (error) {
+        text = NSLocalizedString(@"graph-data.error", nil);
     } else {
         text = NSLocalizedString(@"graph-data.unavailable", nil);
     }

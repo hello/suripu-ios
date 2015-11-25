@@ -196,14 +196,11 @@ extern NSString* _Nonnull const HEMAnalyticsEventAppReviewSkip;
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;
-+ (BOOL)shouldIdentifyUserForSession;
 + (void)trackSignUpOfNewAccount:(nonnull SENAccount*)account;
-+ (void)trackSignInWithAccount:(nonnull SENAccount*)account;
-+ (void)trackUserSession:(BOOL)identifyUser;
++ (void)trackUserSession:(nonnull SENAccount*)account;
 + (void)trackErrorWithMessage:(nonnull NSString*)message;
 + (void)trackWarningWithMessage:(nonnull NSString*)message;
 + (void)trackError:(nonnull NSError*)error;
-+ (void)updateGender:(SENAccountGender)gender;
 + (void)updateEmail:(nonnull NSString*)email;
 + (void)trackAlarmSave:(nonnull SENAlarm*)alarm;
 + (void)trackAlarmToggle:(nonnull SENAlarm*)alarm;

@@ -127,8 +127,10 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
                     [strongSelf showMessageDialog:[error localizedDescription] title:title];
                 }];
             } else {
-                [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-                    [SENAnalytics trackSignInWithAccount:[[SENServiceAccount sharedService] account]];
+                SENServiceAccount* acctService = [SENServiceAccount sharedService];
+                [acctService refreshAccount:^(NSError *error) {
+                    SENAccount* account = [acctService account];
+                    [SENAnalytics trackUserSession:account];
                 }];
                 // don't wait for the account to refresh to proceed
                 [strongSelf letUserIntoApp];

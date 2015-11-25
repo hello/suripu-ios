@@ -6,6 +6,7 @@
 #import "HEMMiniSleepScoreGraphView.h"
 #import "SENSensorAccessibility.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMOnboardingService.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -101,8 +102,9 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     NSDate* today = [[NSDate date] dateAtMidnight];
     if ([[today previousDay] shouldCountAsPreviousDay])
         today = [today previousDay];
-    NSDate* creationDate = [[[SENServiceAccount sharedService] account] createdAt];
-    if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
+    SENAccount* account = [[SENServiceAccount sharedService] account] ?: [[HEMOnboardingService sharedService] currentAccount];
+    NSDate *creationDate = [account createdAt];
+    if (creationDate && [creationDate compare:today] == NSOrderedDescending) {
         NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay fromDate:creationDate  toDate:today options:0];
         capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
     }

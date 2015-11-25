@@ -1,2 +1,0 @@
-ANALYTICS_GCC_PREPROCESSOR_DEFINITIONS = ANALYTICS_VERSION=2.0.17
-ANALYTICS_OTHER_LDFLAGS = -weak_framework "CoreBluetooth" -weak_framework "CoreLocation" -weak_framework "SystemConfiguration"

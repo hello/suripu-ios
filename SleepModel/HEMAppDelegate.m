@@ -87,14 +87,19 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 }
 
 - (void)syncData {
-    // pre fetch account information so that it's readily availble to the user
-    // when the account is accessed.  This is per discussion with design and James
-    if ([SENAuthorizationService isAuthorized]) {
-        
-        [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-            [SENAnalytics trackUserSession:[SENAnalytics shouldIdentifyUserForSession]]; // update user session data
+    BOOL finishedOnboarding = [[HEMOnboardingService sharedService] hasFinishedOnboarding];
+    BOOL signedIn = [SENAuthorizationService isAuthorized];
+    
+    if (signedIn && finishedOnboarding) {
+        // pre fetch account information so that it's readily availble to the user
+        // when the account is accessed.  This is per discussion with design and James
+        SENServiceAccount* acctService = [SENServiceAccount sharedService];
+        [acctService refreshAccount:^(NSError *error) {
+            // even if there is an error, we want to track the user session
+            SENAccount* account = [acctService account];
+            [SENAnalytics trackUserSession:account];
         }];
-        
+        // write timeline data in to Health app, if enabled and data is available
         [self syncHealthKit];
     }
 }
@@ -104,10 +109,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
  * for the day, this will have no effect.
  */
 - (void)syncHealthKit {
-    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
-        DDLogVerbose(@"onboarding not complete, skipping healthkit");
-        return;
-    }
     [[SENServiceHealthKit sharedService] sync:^(NSError *error) {
         if (error != nil) {
             switch ([error code]) {

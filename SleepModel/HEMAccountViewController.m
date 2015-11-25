@@ -375,9 +375,6 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     [[self dataSource] updateGender:gender
                          completion:^(NSError *error) {
                            [weakSelf showErrorIfAny:error];
-                           if (error == nil) {
-                               [SENAnalytics updateGender:gender];
-                           }
                          }];
 
     [self dismissViewControllerAnimated:YES completion:nil];

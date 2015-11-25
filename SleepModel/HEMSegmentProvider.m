@@ -6,7 +6,9 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import <Analytics/Analytics.h>
+#import <Analytics/SEGAnalytics.h>
+
+#import <SenseKit/SENAuthorizationService.h>
 
 #import "HEMSegmentProvider.h"
 
@@ -23,22 +25,40 @@
     if (self) {
         _globalEventProperties = [NSMutableDictionary dictionary];
         [self configureWithKey:writeKey];
+        [self listenForApplicationEvents];
     }
     return self;
 }
 
 - (void)configureWithKey:(NSString*)key {
     SEGAnalyticsConfiguration* config = [SEGAnalyticsConfiguration configurationWithWriteKey:key];
-    [config setFlushAt:1];
     [SEGAnalytics setupWithConfiguration:config];
-    DDLogVerbose(@"configured segment analytics");
+    DDLogVerbose(@"configured segment %@", config);
+}
+
+#pragma mark - Application Activities
+
+- (void)listenForApplicationEvents {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(willEnterBackground)
+                   name:UIApplicationWillResignActiveNotification
+                 object:nil];
+}
+
+- (void)willEnterBackground {
+    SEGAnalytics* segment = [SEGAnalytics sharedAnalytics];
+    [segment flush];
 }
 
 #pragma mark - Sign Up
 
 - (void)userWithId:(NSString *)userId didSignupWithProperties:(NSDictionary *)properties {
     SEGAnalytics* segment = [SEGAnalytics sharedAnalytics];
+    // alias it, then flush it to make sure that is processed first
     [segment alias:userId];
+    [segment flush];
+    // set user traits without identifying since it seems to break the funnel
     [segment identify:nil traits:properties];
 }
 
@@ -46,13 +66,15 @@
 
 - (void)reset:(NSString*)userId {
     [[self globalEventProperties] removeAllObjects];
-    [[SEGAnalytics sharedAnalytics] reset];
+    SEGAnalytics* segment = [SEGAnalytics sharedAnalytics];
+    [segment reset];
 }
 
 #pragma mark - Sign In / App Launches
 
 - (void)setUserId:(NSString *)userId withProperties:(NSDictionary *)properties {
-    [[SEGAnalytics sharedAnalytics] identify:userId traits:properties];
+    SEGAnalytics* segment = [SEGAnalytics sharedAnalytics];
+    [segment identify:userId traits:properties];
 }
 
 #pragma mark - Tracking
@@ -74,6 +96,12 @@
     }
     
     [[SEGAnalytics sharedAnalytics] track:eventName properties:eventProps];
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

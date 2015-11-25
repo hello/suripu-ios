@@ -31,8 +31,9 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
 @property (weak, nonatomic) HEMBaseController* controller;
 @property (weak, nonatomic) UITableView* tableView;
 @property (strong, nonatomic) NSTimeZone* currentTimeZone;
+@property (copy, nonatomic) NSString* currentTimeZoneCityName;
 @property (strong, nonatomic) NSDictionary<NSString*, NSString*>* timeZoneCodeMapping;
-@property (strong, nonatomic) NSArray<NSString*>* sortedTimeZoneNames;
+@property (strong, nonatomic) NSArray<NSString*>* sortedCityNames;
 @property (copy, nonatomic) HEMTimeZonePresenterDoneBlock doneAction;
 
 @end
@@ -86,50 +87,25 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
             dispatch_group_leave(dataLoaders);
         }];
         
-        [[self service] getTimeZones:^(NSDictionary * _Nonnull tzMapping, NSArray * _Nonnull sortedTzNames) {
+        [[self service] getTimeZones:^(NSDictionary * _Nonnull tzMapping) {
             [weakSelf setTimeZoneCodeMapping:tzMapping];
-            [weakSelf setSortedTimeZoneNames:sortedTzNames];
             dispatch_group_leave(dataLoaders);
         }];
     }];
     
     dispatch_group_notify(dataLoaders, dispatch_get_main_queue(), ^{
-        [weakSelf removeCurrentTimeZoneFromDataSource];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSTimeZone* currentTZ = [strongSelf currentTimeZone];
+        NSDictionary* mapping = [strongSelf timeZoneCodeMapping];
+        NSString* currentCityNameFromTz = nil;
+        NSArray* sortedCityNames = [[strongSelf service] sortedCityNamesWithout:currentTZ
+                                                                           from:mapping
+                                                               matchingCityName:&currentCityNameFromTz];
+        [strongSelf setSortedCityNames:sortedCityNames];
+        [strongSelf setCurrentTimeZoneCityName:currentCityNameFromTz];
         [blockTable reloadData];
         [busyView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
     });
-}
-
-- (void)removeCurrentTimeZoneFromDataSource {
-    NSArray<NSString*>* cityNames = [[self timeZoneCodeMapping] allKeys];
-    NSString* currentTimeZoneName = [[self currentTimeZone] name];
-    NSString* matchingCityName = nil;
-    for (NSString* city in cityNames) {
-        NSString* timeZoneName = [self timeZoneCodeMapping][city];
-        if ([timeZoneName isEqualToString:currentTimeZoneName]) {
-            matchingCityName = city;
-            break;
-        }
-    }
-    
-    if (matchingCityName) {
-        NSMutableDictionary* updatedMapping = [[self timeZoneCodeMapping] mutableCopy];
-        [updatedMapping removeObjectForKey:matchingCityName];
-        [self setTimeZoneCodeMapping:updatedMapping];
-        
-        NSRange fullRange = NSMakeRange(0, [[self sortedTimeZoneNames] count]);
-        NSMutableArray* mutableNames = [[self sortedTimeZoneNames] mutableCopy];
-        NSInteger foundIndex = [mutableNames indexOfObject:matchingCityName
-                                             inSortedRange:fullRange
-                                                   options:NSBinarySearchingFirstEqual
-                                           usingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                                               return [obj1 compare:obj2];
-                                           }];
-        if (foundIndex != NSNotFound) {
-            [mutableNames removeObjectAtIndex:foundIndex];
-            [self setSortedTimeZoneNames:mutableNames];
-        }
-    }
 }
 
 - (void)updateTimeZoneTo:(NSTimeZone*)timeZone {
@@ -203,7 +179,7 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == HEMTimeZoneSectionCurrent ? 1 : [[self sortedTimeZoneNames] count];
+    return section == HEMTimeZoneSectionCurrent ? 1 : [[self sortedCityNames] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -217,20 +193,19 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSInteger sec = [indexPath section];
-    NSString* timeZoneName = nil;
+    NSString* city = nil;
     BOOL isSelected = NO;
     
     if (sec == HEMTimeZoneSectionCurrent) {
-        timeZoneName = [[self currentTimeZone] name];
+        city = [self currentTimeZoneCityName];
         isSelected = YES;
     } else {
-        NSString* city = [self sortedTimeZoneNames][[indexPath row]];
-        timeZoneName = [self timeZoneCodeMapping][city];
+        city = [self sortedCityNames][[indexPath row]];
     }
     
     [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setText:timeZoneName];
+    [[cell textLabel] setText:city];
     [cell setTag:[indexPath row]];
     [cell setAccessorySelection:isSelected];
 }
@@ -251,7 +226,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         UITableViewCell* cell = [tableView cellForRowAtIndexPath:currentPath];
         [cell setAccessorySelection:NO];
         
-        NSString* city = [self sortedTimeZoneNames][[indexPath row]];
+        NSString* city = [self sortedCityNames][[indexPath row]];
         NSString* timeZoneName = [self timeZoneCodeMapping][city];
         [self updateTimeZoneTo:[NSTimeZone timeZoneWithName:timeZoneName]];
     }

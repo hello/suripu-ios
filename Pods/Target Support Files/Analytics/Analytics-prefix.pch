@@ -2,4 +2,3 @@
 #import <UIKit/UIKit.h>
 #endif
 
-#define USE_ANALYTICS_SEGMENTIO 1

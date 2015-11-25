@@ -9,13 +9,11 @@
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENAnalyticsLogger.h>
-#import <SenseKit/SENLocalPreferences.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
 #import "HEMConfig.h"
 #import "HEMSegmentProvider.h"
-#import "HEMOnboardingService.h"
 
 // general
 NSString* const kHEMAnalyticsEventWarning = @"Warning";
@@ -36,10 +34,10 @@ NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
 NSString* const kHEMAnalyticsEventPropSSID = @"SSID";
 NSString* const kHEMAnalyticsEventPropPassLength = @"Password length";
 
+// special mixpanel - segment mapping special properties
 static NSString* const HEMAnalyticsEventPropEmail = @"email";
-// special mixpanel special properties
-static NSString* const kHEMAnalyticsEventMpPropName = @"$name";
-static NSString* const kHEMAnalyticsEventMpPropCreated = @"$created";
+static NSString* const HEMAnalyticsEventPropName = @"name";
+static NSString* const HEMAnalyticsEventPropCreated = @"createdAt";
 
 // permissions
 NSString* const kHEMAnalyticsEventPermissionLoc = @"Permission Location";
@@ -213,6 +211,7 @@ NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
 
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
+static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";
 
 // used only to ensure nothing is wrong when upgrading version with Segment
 static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segment";
@@ -223,72 +222,39 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     // whatever 3rd party vendor we use for analytics, configure it here
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
     if ([analyticsToken length] > 0) {
-        DDLogVerbose(@"analytics enabled");
+        DDLogVerbose(@"segment analytics enabled");
         [self addProvider:[[HEMSegmentProvider alloc] initWithWriteKey:analyticsToken]];
     }
     // logging for our own perhaps to replicate analytic events on console
     [self addProvider:[SENAnalyticsLogger new]];
 }
 
-+ (BOOL)shouldIdentifyUserForSession {
-    BOOL upgrade = ![[SENLocalPreferences sharedPreferences] persistentPreferenceForKey:HEMAnalyticsSettingsSegment];
-    return [[HEMOnboardingService sharedService] hasFinishedOnboarding] && upgrade;
++ (NSDictionary*)propertiesFromAccount:(nonnull SENAccount*)account {
+    NSString* name = [account name] ?: @"";
+    NSString* email = [account email] ?: @"";
+    NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
+    NSDate* createDate = [account createdAt] ?: [NSDate date];
+    return @{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
+             HEMAnalyticsEventPropCreated : createDate,
+             HEMAnalyticsEventPropName : name,
+             HEMAnalyticsEventPropEmail : email,
+             kHEMAnalyticsEventPropAccount : accountId};
 }
 
 + (void)trackSignUpOfNewAccount:(SENAccount*)account {
-    NSString* name = [account name] ?: @"";
-    NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
-    NSString* email = [account email] ?: @"";
-    
-    if ([accountId length] == 0) {
-        // checking this case as it seemed to have happened before
-        DDLogInfo(@"account id not found after sign up!");
-        accountId = @"";
-    }
-    
-    [SENAnalytics userWithId:accountId
-     didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : name,
-                               kHEMAnalyticsEventMpPropCreated : [NSDate date],
-                               kHEMAnalyticsEventPropAccount : accountId,
-                               HEMAnalyticsEventPropEmail : email,
-                               kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
-    
-    // these are properties that will be sent up for every event
-    [SENAnalytics setGlobalEventProperties:@{kHEMAnalyticsEventPropName : name,
-                                             kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
+    NSDictionary* properties = [self propertiesFromAccount:account];
+    [self userWithId:properties[kHEMAnalyticsEventPropAccount] didSignUpWithProperties:properties];
+    // track required? for segment after alias and identify
+    [self track:HEMAnalyticsEventAccountCreated];
 }
 
-+ (void)trackSignInWithAccount:(SENAccount*)account {
-    [self trackUserSession:YES];
-
-}
-
-+ (void)trackUserSession:(BOOL)identifyUser {
-    SENAccount* account = [[SENServiceAccount sharedService] account];
-    
++ (void)trackUserSession:(nonnull SENAccount*)account {
     if (account) {
-        NSString* name = [account name] ?: @"";
-        NSString* email = [account email] ?: @"";
-        NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
-        
-        [self setUserId:identifyUser ? accountId : nil
-             properties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
-                          kHEMAnalyticsEventMpPropName : name,
-                          HEMAnalyticsEventPropEmail : email,
-                          kHEMAnalyticsEventPropAccount : accountId}];
-        
-        [self setGlobalEventProperties:@{kHEMAnalyticsEventPropName : name,
-                                         kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
+        NSDictionary* properties = [self propertiesFromAccount:account];
+        [self setUserId:[account accountId] properties:properties];
     } else {
-        
-        [self setUserId:identifyUser ? [SENAuthorizationService accountIdOfAuthorizedUser] : nil
+        [self setUserId:[SENAuthorizationService accountIdOfAuthorizedUser]
              properties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
-        [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
-        
-    }
-    
-    if (identifyUser) {
-        [[SENLocalPreferences sharedPreferences] setPersistentPreference:@YES forKey:HEMAnalyticsSettingsSegment];
     }
     
 }
@@ -321,22 +287,6 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 
 + (void)updateEmail:(NSString*)email {
     [SENAnalytics setUserProperties:@{HEMAnalyticsEventPropEmail : email}];
-}
-
-+ (void)updateGender:(SENAccountGender)gender {
-    NSString* genderString = nil;
-    switch (gender) {
-        case SENAccountGenderFemale:
-            genderString = @"female";
-            break;
-        case SENAccountGenderMale:
-            genderString = @"male";
-            break;
-        default:
-            genderString = @"other";
-            break;
-    }
-    [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropGender : genderString}];
 }
 
 + (NSString*)trueFalsePropertyValue:(BOOL)isTrue {

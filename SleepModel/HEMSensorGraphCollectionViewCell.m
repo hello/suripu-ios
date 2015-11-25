@@ -139,11 +139,6 @@
     return self.minGraphValue;
 }
 
-- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph
-{
-    return NO;
-}
-
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph
 {
     if (graph.alpha == 1)

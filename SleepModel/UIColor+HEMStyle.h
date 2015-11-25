@@ -143,6 +143,7 @@
 + (UIColor *)welcomeIntroTitleColor;
 + (UIColor *)welcomeIntroDescriptionColor;
 + (UIColor *)emptyStateDescriptionColor;
++ (UIColor *)sensorGraphNoDataColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

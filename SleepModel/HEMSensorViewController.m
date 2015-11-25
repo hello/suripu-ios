@@ -26,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel* valueLabel;
 @property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView* graphView;
 @property (weak, nonatomic) IBOutlet UILabel* statusMessageLabel;
-@property (weak, nonatomic) IBOutlet UILabel* statusLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* selectionView;
@@ -45,6 +44,8 @@
 @property (nonatomic) CGFloat minGraphValue;
 @property (nonatomic, getter=isPanning) BOOL panning;
 @property (nonatomic) CGPoint oldScrollOffset;
+@property (nonatomic, assign, getter=hasLoadedHourlyData) BOOL loadedHourlyData;
+@property (nonatomic, assign, getter=hasLoadedDailyData) BOOL loadedDailyData;
 @end
 
 @implementation HEMSensorViewController
@@ -286,17 +287,16 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     if (![SENAuthorizationService isAuthorized] || [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive)
         return;
     
-    self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
-    
     __weak typeof(self) weakSelf = self;
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setLoadedHourlyData:YES];
+        
         if (error) {
-            strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
-            strongSelf.statusLabel.alpha = 1;
             strongSelf.graphView.alpha = 0;
             return;
         }
+        
         if (![strongSelf.hourlyDataSeries isEqualToArray:data]) {
             strongSelf.hourlyDataSeries = data;
             [strongSelf showTutorialIfNeeded];
@@ -307,12 +307,14 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     }];
     [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [strongSelf setLoadedDailyData:YES];
+        
         if (error) {
-            strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
-            strongSelf.statusLabel.alpha = 1;
             strongSelf.graphView.alpha = 0;
             return;
         }
+        
         if (![strongSelf.dailyDataSeries isEqualToArray:data]) {
             strongSelf.dailyDataSeries = data;
             [strongSelf showTutorialIfNeeded];
@@ -428,12 +430,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [self setGraphValueBoundsWithData:dataSeries];
     if (![self isPanning])
         [self.graphView reloadGraph];
-    if (dataSeries.count == 0) {
-        self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
-        self.statusLabel.alpha = 1;
-    } else {
-        self.statusLabel.alpha = 0;
-    }
     [self ensureSelectionViewVisible];
 }
 
@@ -487,8 +483,25 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     return ceil(self.dataSeries.count/8);
 }
 
-- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph {
-    return NO;
+- (NSAttributedString *)noDataLabelAttributedTextForLineGraph:(BEMSimpleLineGraphView *)graph {
+    BOOL loading = ([self isShowingHourlyData] && ![self hasLoadedDailyData])
+                || (![self isShowingHourlyData] && ![self hasLoadedDailyData]);
+    
+    NSString* text = nil;
+    if (loading) {
+        text = NSLocalizedString(@"activity.loading", nil);
+    } else {
+        text = NSLocalizedString(@"graph-data.unavailable", nil);
+    }
+    
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSTextAlignmentCenter];
+    
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont sensorGraphNoDataFont],
+                                 NSForegroundColorAttributeName : [UIColor sensorGraphNoDataColor],
+                                 NSParagraphStyleAttributeName : style};
+
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {

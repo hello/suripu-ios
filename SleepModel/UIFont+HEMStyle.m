@@ -111,6 +111,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:13.f];
 }
 
++ (UIFont*)sensorGraphNoDataFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:14.f];
+}
+
 + (UIFont*)sensorGraphHeadingFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameBook size:10.f];

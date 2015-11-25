@@ -113,6 +113,11 @@
 + (UIFont*)sensorGraphNumberBoldFont;
 
 /**
+ *  Sensor history graph's no data label (loading as well)
+ */
++ (UIFont*)sensorGraphNoDataFont;
+
+/**
  *  Font for headings at the top of each graph section
  */
 + (UIFont*)sensorGraphHeadingFont;

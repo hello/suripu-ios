@@ -45,7 +45,7 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
             });
             
             it(@"should track with account name", ^{
-                NSString* name = propertiesOnCreation[@"$name"];
+                NSString* name = propertiesOnCreation[@"name"];
                 [[name should] equal:[account name]];
             });
             
@@ -61,7 +61,7 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
             });
             
             it(@"should add created date property", ^{
-                id date = propertiesOnCreation[@"$created"];
+                id date = propertiesOnCreation[@"createdAt"];
                 [[date should] beKindOfClass:[NSDate class]];
             });
             

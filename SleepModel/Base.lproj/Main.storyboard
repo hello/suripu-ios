@@ -3472,6 +3472,14 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QfK-Bp-al6" customClass="HEMActivityIndicatorView">
+                                                    <rect key="frame" x="25" y="84" width="40" height="40"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="6wy-LJ-pvc"/>
+                                                        <constraint firstAttribute="width" constant="40" id="7Jo-11-vDp"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -3479,6 +3487,7 @@
                                         <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="QfK-Bp-al6" firstAttribute="centerY" secondItem="kpY-SE-mCR" secondAttribute="centerY" id="4Lu-9L-PmW"/>
                                             <constraint firstItem="dGv-oi-2yL" firstAttribute="top" secondItem="cjI-p9-hEA" secondAttribute="bottom" constant="-3" id="5Kw-1y-3Uq"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="f73-P1-mzR" secondAttribute="bottom" id="6v9-Jh-9NV"/>
                                             <constraint firstItem="gDg-wQ-7uO" firstAttribute="top" secondItem="cjI-p9-hEA" secondAttribute="top" constant="4" id="Hbk-30-POk"/>
@@ -3486,6 +3495,7 @@
                                             <constraint firstItem="kpY-SE-mCR" firstAttribute="top" secondItem="dGv-oi-2yL" secondAttribute="bottom" constant="16" id="JGH-9k-0Ma"/>
                                             <constraint firstAttribute="bottom" secondItem="EyJ-Aw-mg8" secondAttribute="bottom" id="L3H-Z5-ZUe"/>
                                             <constraint firstItem="dGv-oi-2yL" firstAttribute="centerX" secondItem="cjI-p9-hEA" secondAttribute="centerX" id="RJF-fg-ar0"/>
+                                            <constraint firstItem="QfK-Bp-al6" firstAttribute="centerX" secondItem="kpY-SE-mCR" secondAttribute="centerX" id="ZOQ-xm-Sqe"/>
                                             <constraint firstItem="f73-P1-mzR" firstAttribute="top" secondItem="kpY-SE-mCR" secondAttribute="bottom" constant="24" id="awB-jd-i3T"/>
                                             <constraint firstItem="cjI-p9-hEA" firstAttribute="top" secondItem="44R-nU-0sW" secondAttribute="topMargin" constant="2" id="bsw-wY-XHY"/>
                                             <constraint firstAttribute="centerX" secondItem="dGv-oi-2yL" secondAttribute="centerX" id="dMp-9z-LfI"/>
@@ -3497,6 +3507,7 @@
                                             <constraint firstItem="f73-P1-mzR" firstAttribute="centerX" secondItem="dGv-oi-2yL" secondAttribute="centerX" id="uUj-rM-UuW"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="activityView" destination="QfK-Bp-al6" id="ZJi-Rt-Lo2"/>
                                             <outlet property="dayLabel" destination="cjI-p9-hEA" id="nd9-g2-zYw"/>
                                             <outlet property="dayOfWeekLabel" destination="dGv-oi-2yL" id="az8-s6-hav"/>
                                             <outlet property="graphView" destination="f73-P1-mzR" id="1i9-aB-YcM"/>
@@ -3542,6 +3553,7 @@
                     </view>
                     <connections>
                         <outlet property="historyCollectionView" destination="sYw-Ld-Bhs" id="OCM-YH-ebV"/>
+                        <outlet property="lastNightButton" destination="Q0T-w5-tJv" id="Ulf-We-4Fi"/>
                         <outlet property="timeFrameLabel" destination="fBu-FT-ARo" id="rAm-Q7-Fh4"/>
                     </connections>
                 </viewController>

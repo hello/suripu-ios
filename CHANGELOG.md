@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.8.6
+
+New:
+
+* Loading indicator in Timeline history + VX / UX changes
+* Moved us back to Mixpanel SDK for now
+
+Fixes:
+
+* Prevent "no data" from showing while loading graph data in sensor history
+
 ## 1.1.8.5
 
 Fixes:

@@ -266,6 +266,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)emptyStateDescriptionColor {
     return [UIColor colorWithHex:0x000000 alpha:0.5f];
 }
++ (UIColor *)sensorGraphNoDataColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.5f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors

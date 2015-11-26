@@ -247,11 +247,6 @@
 
 #pragma mark BEMSimpleLineGraphDelegate
 
-- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView*)graph
-{
-    return NO;
-}
-
 - (void)lineGraphDidBeginLoading:(BEMSimpleLineGraphView*)graph
 {
     self.labeledIndexes = [NSMutableArray new];

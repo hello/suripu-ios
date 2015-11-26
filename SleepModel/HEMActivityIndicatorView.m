@@ -18,6 +18,7 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 
 @property (nonatomic, strong) CALayer* indicatorLayer;
 @property (nonatomic, strong) UIImage* indicatorImage;
+@property (nonatomic, assign, getter=isAnimating) BOOL animating;
 
 @end
 
@@ -34,6 +35,15 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 
 - (id)initWithFrame:(CGRect)frame {
     return [self initWithImage:[HelloStyleKit loading] andFrame:frame];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _indicatorImage = [HelloStyleKit loading];
+        [self setup];
+    }
+    return self;
 }
 
 - (void)setup {
@@ -62,12 +72,14 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
         animation.fillMode = kCAFillModeForwards;
         animation.autoreverses = NO;
         [[self indicatorLayer] addAnimation:animation forKey:HEMActivityIndicatorRotateKey];
+        [self setAnimating:YES];
     }
 }
 
 - (void)stop {
     [[self indicatorLayer] removeAnimationForKey:HEMActivityIndicatorRotateKey];
     [[self indicatorLayer] removeFromSuperlayer];
+    [self setAnimating:NO];
 }
 
 

@@ -393,6 +393,7 @@
 "sensor.value.none" = "No data";
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";
+"graph-data.error" = "Unable to load data";
 "graph-data.unavailable" = "No data available";
 "sensor.accessibility-value.condition-alert" = "poor";
 "sensor.accessibility-value.condition-warning" = "acceptable";

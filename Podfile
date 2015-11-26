@@ -11,9 +11,6 @@ pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMark
 pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'
-pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git',
-                          :commit => '9c36fead9677dfd7d17230b56602cd89ce54af01'
-pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 pod 'MSDynamicsDrawerViewController', '1.5.1'
 pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
@@ -21,8 +18,11 @@ pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
 pod 'UICountingLabel', '~> 1.2.0'
 pod 'CGFloatType', '~> 1.3.1'
 pod 'Analytics', '~> 3.0.0'
+pod 'Mixpanel', '~> 2.9.0'
 
 # Private
+pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
+pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git'
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'

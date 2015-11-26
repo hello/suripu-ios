@@ -21,7 +21,6 @@ extern NSString* _Nonnull const kHEMAnalyticsEventPropDate;
 extern NSString* _Nonnull const kHEMAnalyticsEventPropType;
 extern NSString* _Nonnull const kHEMAnalyticsEventPropPlatform;
 extern NSString* _Nonnull const kHEMAnalyticsEventPlatform;
-extern NSString* _Nonnull const kHEMAnalyticsEventPropName;
 extern NSString* _Nonnull const kHEMAnalyticsEventPropGender;
 extern NSString* _Nonnull const kHEMAnalyticsEventPropAccount;
 extern NSString* _Nonnull const kHEMAnalyticsEventPropSenseId;
@@ -198,6 +197,8 @@ extern NSString* _Nonnull const HEMAnalyticsEventAppReviewSkip;
 + (void)enableAnalytics;
 + (void)trackSignUpOfNewAccount:(nonnull SENAccount*)account;
 + (void)trackUserSession:(nonnull SENAccount*)account;
++ (void)trackUserSession:(nonnull SENAccount *)account
+              properties:(nullable NSDictionary<NSString*, NSString*>*)properties;
 + (void)trackErrorWithMessage:(nonnull NSString*)message;
 + (void)trackWarningWithMessage:(nonnull NSString*)message;
 + (void)trackError:(nonnull NSError*)error;

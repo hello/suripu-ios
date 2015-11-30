@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.8.7
+
+Fixes:
+
+* Fix analytics for new accounts
+
 ## 1.1.8.6
 
 New:

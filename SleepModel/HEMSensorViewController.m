@@ -518,12 +518,17 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {
+    SENSensorDataPoint* dataPoint = [self.graphDataSource dataPointAtIndex:index];
+    if (!dataPoint) {
+        return;
+    }
+    
     self.panning = YES;
     if (CGPointEqualToPoint(self.oldScrollOffset, CGPointZero)) {
         self.oldScrollOffset = self.scrollView.contentOffset;
         self.scrollView.contentOffset = CGPointZero;
     }
-    SENSensorDataPoint* dataPoint = [self.graphDataSource dataPointAtIndex:index];
+    
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
     NSString* formattedDataPoint = [formatter stringFromDate:dataPoint.date];
@@ -531,6 +536,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     NSAttributedString *statusMessage = [[NSAttributedString alloc] initWithString:formattedDataPoint
                                                                         attributes:attributes];
     self.statusMessageLabel.attributedText = statusMessage;
+
     [self updateValueLabelWithValue:dataPoint.value];
 }
 

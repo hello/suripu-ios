@@ -14,9 +14,10 @@ pod 'SpinKit', '~> 1.2.0'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 pod 'MSDynamicsDrawerViewController', '1.5.1'
 pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
-                  :tag => '1.4.1.2'
+                  :tag => '1.5.2.1'
 pod 'UICountingLabel', '~> 1.2.0'
 pod 'CGFloatType', '~> 1.3.1'
+# rip out Analytics (Segment) if can't fix by next release
 pod 'Analytics', '~> 3.0.0'
 pod 'Mixpanel', '~> 2.9.0'
 

@@ -1,6 +1,6 @@
 :warning: *Use of this software is subject to important terms and conditions as set forth in the License file* :warning:
 
-# Zendesk Mobile SDK for iOS 1.4.1.2
+# Zendesk Mobile SDK for iOS 1.5.2.1
 
 Zendesk SDK for mobile is a quick, convenient way to get customer support into your mobile apps. With just a few lines of code, you can provide your end users with an easy way to get in touch from any mobile app.
 
@@ -8,14 +8,15 @@ Zendesk SDK for mobile is a quick, convenient way to get customer support into y
 
  * SampleApp - sample project for core request management
  * ZendeskSDK.bundle - the SDK resource bundle
- * ZendeskSDK.framework - the SDK framework
+ * ZendeskSDK.framework - UI components for SDK 
+ * ZendeskProviderSDK.framework - Provider only framework, no UI components
  * ZendeskSDKStrings.bundle - the SDK localization strings bundle
 
 You can also reference this repository as a cocoapod:
 
 
 ````
-source 'https://github.com/zendesk/Specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'ZendeskSDK'
 ````
@@ -23,10 +24,14 @@ pod 'ZendeskSDK'
 To choose a specific version: 
 
 ```
-source 'https://github.com/zendesk/Specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'ZendeskSDK', '~> RELEASE_VERSION_TAG'
 ```
+
+## Documentation
+
+You can find [documentation](https://developer.zendesk.com/embeddables/docs/ios/overview) for the SDK and [release notes](https://developer.zendesk.com/embeddables/docs/ios/release_notes) on https://developer.zendesk.com.
 
 ## Copyright and license
 

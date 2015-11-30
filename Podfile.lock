@@ -70,12 +70,14 @@ PODS:
   - SVWebViewController (1.0)
   - UICountingLabel (1.2.0)
   - UIImageEffects (0.0.1)
-  - ZendeskSDK (1.4.1.2):
-    - ZendeskSDK/Core (= 1.4.1.2)
-    - ZendeskSDK/Localization (= 1.4.1.2)
-  - ZendeskSDK/Core (1.4.1.2)
-  - ZendeskSDK/Localization (1.4.1.2):
+  - ZendeskSDK (1.5.2.1):
+    - ZendeskSDK/Core (= 1.5.2.1)
+    - ZendeskSDK/Localization (= 1.5.2.1)
+    - ZendeskSDK/Providers (= 1.5.2.1)
+  - ZendeskSDK/Core (1.5.2.1)
+  - ZendeskSDK/Localization (1.5.2.1):
     - ZendeskSDK/Core
+  - ZendeskSDK/Providers (1.5.2.1)
 
 DEPENDENCIES:
   - Analytics (~> 3.0.0)
@@ -96,7 +98,7 @@ DEPENDENCIES:
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
   - UICountingLabel (~> 1.2.0)
   - UIImageEffects (~> 0.0.1)
-  - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.4.1.2`)
+  - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.5.2.1`)
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
@@ -116,7 +118,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/TransitApp/SVWebViewController.git
   ZendeskSDK:
     :git: https://github.com/zendesk/zendesk_sdk_ios.git
-    :tag: 1.4.1.2
+    :tag: 1.5.2.1
 
 CHECKOUT OPTIONS:
   AttributedMarkdown:
@@ -142,7 +144,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/TransitApp/SVWebViewController.git
   ZendeskSDK:
     :git: https://github.com/zendesk/zendesk_sdk_ios.git
-    :tag: 1.4.1.2
+    :tag: 1.5.2.1
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
@@ -166,6 +168,6 @@ SPEC CHECKSUMS:
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
-  ZendeskSDK: c100e5e75b988ccc58ae29c236cc270b967235be
+  ZendeskSDK: 22cbb79ebb0f9b7b79a9d143b2c0ebcab3f42bb8
 
 COCOAPODS: 0.38.2

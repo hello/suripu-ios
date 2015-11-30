@@ -1,0 +1,1 @@
+../../../../ZendeskSDK/ZendeskProviderSDK.framework/Headers/ZDKSettings.h

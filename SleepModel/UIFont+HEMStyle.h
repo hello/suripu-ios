@@ -60,10 +60,7 @@
 
 + (UIFont*)iPhone4SSettingsTitleFont;
 
-/**
- *  Font used for 'sign out' text in account settings
- */
-+ (UIFont*)signOutFont;
++ (UIFont *)settingsSectionHeaderFont;
 
 /**
  * Font used for the help text in settings
@@ -114,6 +111,11 @@
  *  Bold font for numbers
  */
 + (UIFont*)sensorGraphNumberBoldFont;
+
+/**
+ *  Sensor history graph's no data label (loading as well)
+ */
++ (UIFont*)sensorGraphNoDataFont;
 
 /**
  *  Font for headings at the top of each graph section
@@ -288,9 +290,24 @@
 + (UIFont*)feedInsightMessageBoldFont;
 
 /**
- * Font used to display the system alert message;
+ * Font used to display the system alert message
  */
 + (UIFont*)systemAlertMessageFont;
+
+/**
+ * Font used to display the label text in device settings
+ */
++ (UIFont*)deviceSettingsLabelFont;
+
+/**
+ * Font used to display the value text in device settings
+ */
++ (UIFont*)deviceSettingsPropertyValueFont;
+
+/**
+ * Font used to display a warning summary for the device in a collection view cell
+ */
++ (UIFont*)deviceCellWarningSummaryFont;
 
 /**
  * Font used to display a warning message for the device in a collection view cell

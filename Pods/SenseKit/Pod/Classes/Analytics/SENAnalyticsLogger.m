@@ -21,10 +21,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     return self;
 }
 
-- (void)configureWithProperties:(NSDictionary *)properties {
-    [self logEvent:@"Configured Logger" withProperties:properties];
-}
-
 - (void)userWithId:(NSString *)userId didSignupWithProperties:(NSDictionary *)properties {
     NSString* event = [NSString stringWithFormat:@"User signed up with id %@", userId];
     [self logEvent:event withProperties:properties];

@@ -10,6 +10,7 @@
 
 @interface HEMDebugController : NSObject
 
++ (void)disableDebugMenuIfNeeded;
 + (BOOL)isEnabled;
 - (id)initWithViewController:(UIViewController*)controller;
 - (void)showSupportOptions;

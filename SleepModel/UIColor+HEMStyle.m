@@ -114,7 +114,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x494949 alpha:1.f];
 }
 + (UIColor *)backViewBackgroundColor {
-    return [UIColor colorWithHex:0xF2F2F2 alpha:1.f];
+    return [UIColor colorWithHex:0xEBEDF0 alpha:1.f];
 }
 + (UIColor *)backViewNavTitleColor {
     return [UIColor colorWithHex:0x494949 alpha:1.f];
@@ -156,7 +156,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
 }
 + (UIColor *)separatorColor {
-    return [UIColor colorWithHex:0x000000 alpha:0.039f];
+    return [UIColor colorWithHex:0x000000 alpha:0.05f];
 }
 + (UIColor *)onboardingDescriptionColor {
     return [UIColor colorWithHex:0x0B0B0B alpha:0.5f];
@@ -175,6 +175,12 @@ static UIColor *_tintColor = nil;
 }
 + (UIColor *)rulerSegmentLightColor {
     return [UIColor colorWithHex:0x000000 alpha:0.1];
+}
++ (UIColor *)settingsSectionHeaderTextColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.4f];
+}
++ (UIColor *)settingsCellTitleTextColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.7f];
 }
 + (UIColor *)settingsValueTextColor {
     return [UIColor colorWithHex:0x000000 alpha:0.4];
@@ -258,6 +264,9 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x000000 alpha:0.7f];
 }
 + (UIColor *)emptyStateDescriptionColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.5f];
+}
++ (UIColor *)sensorGraphNoDataColor {
     return [UIColor colorWithHex:0x000000 alpha:0.5f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {

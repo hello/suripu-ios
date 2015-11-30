@@ -13,4 +13,6 @@
 @property (weak, nonatomic) IBOutlet HEMMiniSleepScoreGraphView* sleepScoreView;
 @property (weak, nonatomic) IBOutlet HEMMiniSleepHistoryView* graphView;
 
+- (void)showLoadingActivity:(BOOL)show;
+
 @end

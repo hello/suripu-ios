@@ -30,7 +30,6 @@
 @implementation HEMTrendsViewController
 
 static CGFloat const HEMTrendsViewCellHeight = 198.0f;
-static CGFloat const HEMTrendsNoDataCellHeight = 248.0f;
 static CGFloat const HEMTrendsViewOptionsCellHeight = 255.f;
 
 static NSString* const HEMScoreTrendType = @"SLEEP_SCORE";
@@ -184,8 +183,10 @@ static NSString* const HEMAllScopeType = @"ALL";
     UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
     if (self.defaultTrends.count == 0) {
-        return CGSizeMake(width, HEMTrendsNoDataCellHeight);
+        NSString* desc = NSLocalizedString(@"trends.not-enough-data.message", nil);
+        return CGSizeMake(width, [HEMEmptyTrendCollectionViewCell heightWithDescription:desc cellWidth:width]);
     }
+    
     SENTrend* trend = self.defaultTrends[indexPath.row];
     CGFloat height = trend.options.count > 0 ? HEMTrendsViewOptionsCellHeight : HEMTrendsViewCellHeight;
     return CGSizeMake(width, height);

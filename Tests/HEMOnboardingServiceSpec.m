@@ -72,10 +72,10 @@ describe(@"HEMOnboardingService", ^{
                 
             });
             
-            it(@"should return YES if checkpoint is post pill pairing", ^{
+            it(@"should return YES if checkpoint indicates sense colors screen has been viewed", ^{
                 
                 [service stub:@selector(onboardingCheckpoint)
-                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseColorsViewed]];
                 
                 BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(YES)];
@@ -166,7 +166,7 @@ describe(@"HEMOnboardingService", ^{
             
             beforeEach(^{
                 [service stub:@selector(isAuthorizedUser) andReturn:[KWValue valueWithBool:YES]];
-                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsViewed];
             });
             
             afterEach(^{

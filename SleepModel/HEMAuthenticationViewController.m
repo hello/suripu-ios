@@ -1,3 +1,6 @@
+#import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENAuthorizationService.h>
+
 #import "UIFont+HEMStyle.h"
 
 #import "HEMAuthenticationViewController.h"
@@ -124,6 +127,12 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
                     [strongSelf showMessageDialog:[error localizedDescription] title:title];
                 }];
             } else {
+                SENServiceAccount* acctService = [SENServiceAccount sharedService];
+                [acctService refreshAccount:^(NSError *error) {
+                    SENAccount* account = [acctService account];
+                    [SENAnalytics trackUserSession:account];
+                }];
+                // don't wait for the account to refresh to proceed
                 [strongSelf letUserIntoApp];
             }
         }];
@@ -131,7 +140,6 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 }
 
 - (void)letUserIntoApp {
-    [SENAnalytics trackUserSession]; // update user session, since it maybe a different user now
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     [[self view] endEditing:NO];

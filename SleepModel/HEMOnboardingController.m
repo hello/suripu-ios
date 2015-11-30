@@ -9,14 +9,16 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "UIBarButtonItem+HEMNav.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
+
 #import "HEMOnboardingController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMSupportUtil.h"
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingService.h"
 #import "HEMScreenUtils.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"
@@ -66,6 +68,8 @@
         case HEMOnboardingCheckpointSenseDone:
             return [self containedOnboardingController:[HEMOnboardingStoryboard instantiatePillDescriptionViewController]];
         case HEMOnboardingCheckpointPillDone:
+            return [self containedOnboardingController:[HEMOnboardingStoryboard instantiateSenseColorsViewController]];
+        case HEMOnboardingCheckpointSenseColorsViewed:
         default:
             return nil;
     }
@@ -273,27 +277,14 @@
     [[[self navigationController] interactivePopGestureRecognizer] setEnabled:enable];
 }
 
-- (UIBarButtonItem*)cancelItemWithTitle:(NSString*)title image:(UIImage*)image action:(SEL)action {
-    UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelButton setTitle:title forState:UIControlStateNormal];
-    [cancelButton setImage:image forState:UIControlStateNormal];
-    [[cancelButton titleLabel] setFont:[UIFont navButtonTitleFont]];
-    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [cancelButton setTitleColor:[UIColor clearColor] forState:UIControlStateDisabled];
-    [cancelButton setTintColor:[UIColor tintColor]];
-    [cancelButton sizeToFit];
-    [cancelButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-    return [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
-}
-
 - (void)showCancelButtonWithSelector:(SEL)selector {
     NSString* title = NSLocalizedString(@"actions.cancel", nil);
-    UIBarButtonItem* cancelItem = [self cancelItemWithTitle:title image:nil action:selector];
+    UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:title image:nil target:self action:selector];
     [self useCancelBarButtonItem:cancelItem];
 }
 
 - (void)showBackButtonAsCancelWithSelector:(SEL)action {
-    UIBarButtonItem* cancelItem = [self cancelItemWithTitle:nil image:[HelloStyleKit backIcon] action:action];
+    UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil image:[HelloStyleKit backIcon] target:self action:action];
     [self useCancelBarButtonItem:cancelItem];
 }
 

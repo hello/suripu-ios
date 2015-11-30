@@ -1,5 +1,7 @@
 #import <SenseKit/SenseKit.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
@@ -11,33 +13,31 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSnazzBarController.h"
 #import "HEMAudioCache.h"
-#import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAuthenticationViewController.h"
 #import "HEMConfig.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSegmentProvider.h"
+#import "HEMDebugController.h"
 
 @implementation HEMAppDelegate
 
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
-- (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
-{
-    
-    if (![HEMConfig booleanForConfig:HEMConfAllowDebugOptions]) {
-        [application setApplicationSupportsShakeToEdit:NO];
-    }
-
+- (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
+    // order matters
     [self configureAPI];
+    
+    [HEMDebugController disableDebugMenuIfNeeded];
     [HEMLogUtils enableLogger];
+    [SENAnalytics enableAnalytics];
 
     if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey])
         [HEMNotificationHandler handleRemoteNotificationWithInfo:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]
                                           fetchCompletionHandler:NULL];
 
     [self deauthorizeIfNeeded];
-    [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
@@ -59,8 +59,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     return YES;
 }
 
-- (void)openDetailViewForSensorNamed:(NSString*)name
-{
+- (void)openDetailViewForSensorNamed:(NSString*)name {
     if (![SENAuthorizationService isAuthorized] || [self deauthorizeIfNeeded])
         return;
 
@@ -81,22 +80,26 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     }
 }
 
-- (void)applicationDidBecomeActive:(UIApplication*)application
-{
+- (void)applicationDidBecomeActive:(UIApplication*)application {
     [HEMNotificationHandler clearNotifications];
     [self deauthorizeIfNeeded];
     [self syncData];
 }
 
 - (void)syncData {
-    // pre fetch account information so that it's readily availble to the user
-    // when the account is accessed.  This is per discussion with design and James
-    if ([SENAuthorizationService isAuthorized]) {
-        
-        [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-            [SENAnalytics trackUserSession]; // update user session data
+    BOOL finishedOnboarding = [[HEMOnboardingService sharedService] hasFinishedOnboarding];
+    BOOL signedIn = [SENAuthorizationService isAuthorized];
+    
+    if (signedIn && finishedOnboarding) {
+        // pre fetch account information so that it's readily availble to the user
+        // when the account is accessed.  This is per discussion with design and James
+        SENServiceAccount* acctService = [SENServiceAccount sharedService];
+        [acctService refreshAccount:^(NSError *error) {
+            // even if there is an error, we want to track the user session
+            SENAccount* account = [acctService account];
+            [SENAnalytics trackUserSession:account];
         }];
-        
+        // write timeline data in to Health app, if enabled and data is available
         [self syncHealthKit];
     }
 }
@@ -106,10 +109,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
  * for the day, this will have no effect.
  */
 - (void)syncHealthKit {
-    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
-        DDLogVerbose(@"onboarding not complete, skipping healthkit");
-        return;
-    }
     [[SENServiceHealthKit sharedService] sync:^(NSError *error) {
         if (error != nil) {
             switch ([error code]) {
@@ -153,19 +152,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     [SENAuthorizationService authorizeRequestsFromKeychain];
 }
 
-- (void)configureAnalytics {
-    NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
-    
-    if ([analyticsToken length] > 0) {
-        DDLogVerbose(@"analytics enabled");
-        [SENAnalytics configure:SENAnalyticsProviderNameMixpanel
-                           with:@{kSENAnalyticsProviderToken : analyticsToken}];
-        [SENAnalytics trackUserSession];
-    }
-    
-    [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
-}
-
 - (BOOL)deauthorizeIfNeeded {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
     if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
@@ -176,18 +162,15 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     return NO;
 }
 
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
     [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [HEMNotificationHandler handleRemoteNotificationWithInfo:userInfo fetchCompletionHandler:completionHandler];
 }
 
-- (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler
-{
+- (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler {
     // FIXME (jimmy): does the server even support this?  I don't see anything
     // on the server side ...
     NSNumber* qId = userInfo[@"qid"];
@@ -203,8 +186,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
                                                   }];
 }
 
-- (void)configureAppearance
-{
+- (void)configureAppearance {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[HEMStyledNavigationViewController class], nil];
     [appearance setBackgroundImage:[[UIImage alloc] init]
@@ -221,8 +203,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     } forState:UIControlStateNormal];
 }
 
-- (void)createAndShowWindow
-{
+- (void)createAndShowWindow {
     UIWindow* window = [UIWindow new];
     if (CGSizeEqualToSize(window.bounds.size, CGSizeZero))
         window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -232,8 +213,7 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
     [self.window makeKeyAndVisible];
 }
 
-- (void)registerForNotifications
-{
+- (void)registerForNotifications {
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
@@ -242,10 +222,10 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
                  object:nil];
 }
 
-- (void)reset
-{
+- (void)reset {
     SENClearModel();
     [HEMAudioCache clearCache];
+    [SENAnalytics reset:nil];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [[HEMOnboardingService sharedService] resetOnboardingCheckpoint];
     [[SENServiceDevice sharedService] reset];

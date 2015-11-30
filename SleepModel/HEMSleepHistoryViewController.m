@@ -6,11 +6,13 @@
 #import "HEMMiniSleepScoreGraphView.h"
 #import "SENSensorAccessibility.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMOnboardingService.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView* historyCollectionView;
 @property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *lastNightButton;
 @property (strong, nonatomic) NSDateFormatter* dayOfWeekFormatter;
 @property (strong, nonatomic) NSDateFormatter* dayFormatter;
 @property (strong, nonatomic) NSDateFormatter* readerDateFormatter;
@@ -18,6 +20,7 @@
 @property (strong, nonatomic) NSDateFormatter* monthYearFormatter;
 @property (strong, nonatomic) NSMutableArray* sleepDataSummaries;
 @property (strong, nonatomic) NSDate* startDate;
+@property (strong, nonatomic) NSMutableSet* pendingDataFetches;
 @property (nonatomic) NSInteger numberOfDays;
 @property (nonatomic, strong) NSCalendar* calendar;
 @property (nonatomic, getter=didLayoutSubviews) BOOL laidOutSubviews;
@@ -101,12 +104,15 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     NSDate* today = [[NSDate date] dateAtMidnight];
     if ([[today previousDay] shouldCountAsPreviousDay])
         today = [today previousDay];
-    NSDate* creationDate = [[[SENServiceAccount sharedService] account] createdAt];
+    SENAccount* account = [[SENServiceAccount sharedService] account] ?: [[HEMOnboardingService sharedService] currentAccount];
+    NSDate *creationDate = [account createdAt];
     if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
         NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay fromDate:creationDate  toDate:today options:0];
         capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
     }
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
+    self.pendingDataFetches = [NSMutableSet new];
+
     NSDateComponents* components = [NSDateComponents new];
     for (NSUInteger i = capacity; i > 0; i--) {
         components.day = -i;
@@ -193,20 +199,19 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepHistoryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
-    if (indexPath.row > 0) {
-        SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
-        NSInteger score = [sleepResult.score integerValue];
-        [cell.sleepScoreView setSleepScore:score];
-        [cell.graphView setSleepDataSegments:sleepResult.segments];
-        cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
-        cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
-        cell.rightBorderView.hidden = indexPath.row == HEMSleepDataCapacity;
-        cell.leftBorderView.hidden = indexPath.row == 1;
-        cell.isAccessibilityElement = YES;
-        cell.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-history.accessibility-value.timeline.format", nil), [self.readerDateFormatter stringFromDate:sleepResult.date], (long)score, SENConditionReadableValue(sleepResult.scoreCondition)];
-    }
     cell.hidden = indexPath.row == 0;
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SENTimeline* timeline = [self resultAtIndexPath:indexPath];
+    if (timeline) {
+        HEMMiniGraphCollectionViewCell* graphCell = (id)cell;
+        [self updateCell:graphCell atIndexPath:indexPath];
+    }
 }
 
 - (SENTimeline*)resultAtIndexPath:(NSIndexPath*)indexPath {
@@ -217,8 +222,10 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 }
 
 - (NSInteger)indexAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == 0)
+    NSInteger numberOfItems = [self.historyCollectionView numberOfItemsInSection:indexPath.section] - 1;
+    if (indexPath.row == 0 || indexPath.row - 1 >= numberOfItems) {
         return NSNotFound;
+    }
     return indexPath.row - 1;
 }
 
@@ -264,47 +271,108 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     if (indexPath.row > 0) {
         SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
         [self updateTimeFrameLabelWithDate:sleepResult.date];
+        self.lastNightButton.hidden = indexPath.row >= self.sleepDataSummaries.count;
     }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    DDLogVerbose(@"target content offset %f", targetContentOffset->x);
     UICollectionViewLayout* layout = self.historyCollectionView.collectionViewLayout;
     CGRect rect = CGRectMake((*targetContentOffset).x, 0, 10, CGRectGetHeight(self.historyCollectionView.bounds));
     UICollectionViewLayoutAttributes *attribute = [[layout layoutAttributesForElementsInRect:rect] firstObject];
     NSIndexPath* indexPath = attribute.indexPath;
     if (indexPath) {
         [self fetchTimelineForResultAtRow:indexPath.row];
-        if (indexPath.row > 0)
-            [self fetchTimelineForResultAtRow:indexPath.row - 1];
-        if (indexPath.row < [self.historyCollectionView numberOfItemsInSection:indexPath.section] - 1)
-            [self fetchTimelineForResultAtRow:indexPath.row + 1];
+        if (indexPath.row > 0) {
+            // make sure we fetch at least what is visible which will be 3 cells
+            if (velocity.x <= 0.0f) { // moving left
+                [self fetchTimelineForResultAtRow:indexPath.row + 1];
+                [self fetchTimelineForResultAtRow:indexPath.row + 2];
+            } else {
+                [self fetchTimelineForResultAtRow:indexPath.row - 1];
+                [self fetchTimelineForResultAtRow:indexPath.row - 2];
+            }
+        }
     }
+}
+
+- (HEMMiniGraphCollectionViewCell*)showLoadingIndicator:(BOOL)show onCellAtIndexPath:(NSIndexPath*)indexPath {
+    HEMMiniGraphCollectionViewCell* cell = nil;
+    NSInteger index = [self indexAtIndexPath:indexPath];
+    if (index != NSNotFound) {
+        cell = (id)[self.historyCollectionView cellForItemAtIndexPath:indexPath];
+        [cell showLoadingActivity:show];
+    }
+    return cell;
+}
+
+- (void)updateCell:(HEMMiniGraphCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
+    SENTimeline* timeline = [self resultAtIndexPath:indexPath];
+    if (!timeline) {
+        return;
+    }
+    NSInteger score = [timeline.score integerValue];
+    [cell.sleepScoreView setSleepScore:score];
+    [cell.graphView setSleepDataSegments:timeline.segments];
+    cell.dayLabel.text = [self.dayFormatter stringFromDate:timeline.date];
+    cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:timeline.date] uppercaseString];
+    cell.rightBorderView.hidden = indexPath.row == HEMSleepDataCapacity;
+    cell.leftBorderView.hidden = indexPath.row == 1;
+    cell.isAccessibilityElement = YES;
+    cell.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-history.accessibility-value.timeline.format", nil),
+                                    [self.readerDateFormatter stringFromDate:timeline.date],
+                                    (long)score,
+                                    SENConditionReadableValue(timeline.scoreCondition)];
+    [cell showLoadingActivity:timeline.scoreCondition == SENConditionUnknown];
 }
 
 - (void)fetchTimelineForResultAtRow:(NSUInteger)row
 {
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
-    if (!sleepResult.date || sleepResult.segments.count > 0)
+    if (!sleepResult.date || sleepResult.scoreCondition != SENConditionUnknown) {
+        [self showLoadingIndicator:NO onCellAtIndexPath:indexPath];
         return;
-
+    }
+    
+    if ([self.pendingDataFetches containsObject:sleepResult.date]) {
+        return;
+    }
+    
+    [self.pendingDataFetches addObject:sleepResult.date];
+    
+    DDLogVerbose(@"pending data fetches are now at %ld", (long)[self.pendingDataFetches count]);
+    
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:sleepResult.date completion:^(SENTimeline* timeline, NSError* error) {
         typeof(weakSelf) strongSelf = weakSelf;
-        if (error || !timeline.date)
+        
+        if (error) {
+            [strongSelf showLoadingIndicator:NO onCellAtIndexPath:indexPath];
             return;
-
+        }
+        
+        [strongSelf.pendingDataFetches removeObject:sleepResult.date];
+        DDLogVerbose(@"pending data fetches are now at %ld", (long)[strongSelf.pendingDataFetches count]);
+        // ix the issue where timeline response from server may not return with
+        // a date.  doing it here to reduce risk else where that depends on this logic.
+        if (!timeline.date) {
+            timeline.date = sleepResult.date;
+        }
+        
+        NSInteger index = [strongSelf indexAtIndexPath:indexPath];
         BOOL didUpdate = ![sleepResult isEqual:timeline];
         if (didUpdate) {
             [timeline save];
-            NSInteger index = [self indexAtIndexPath:indexPath];
             if (index != NSNotFound) {
-                self.sleepDataSummaries[[self indexAtIndexPath:indexPath]] = timeline;
-                [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+                strongSelf.sleepDataSummaries[[strongSelf indexAtIndexPath:indexPath]] = timeline;
             }
+        }
+        
+        if (index != NSNotFound) {
+            HEMMiniGraphCollectionViewCell* graphCell = (id)[strongSelf.historyCollectionView cellForItemAtIndexPath:indexPath];
+            [strongSelf updateCell:graphCell atIndexPath:indexPath];
         }
     }];
 }

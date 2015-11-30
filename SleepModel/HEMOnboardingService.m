@@ -537,7 +537,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     HEMOnboardingCheckpoint checkpoint = [self onboardingCheckpoint];
     return [self isAuthorizedUser]
         && (checkpoint == HEMOnboardingCheckpointStart // start and authorized = signed in
-        || checkpoint == HEMOnboardingCheckpointPillDone);
+        || checkpoint == HEMOnboardingCheckpointSenseColorsViewed);
 }
 
 - (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
@@ -556,7 +556,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 - (void)markOnboardingAsComplete {
     // if you call this method, you want to leave onboarding so make sure it's set
-    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsViewed];
     [self clearAll];
 }
 

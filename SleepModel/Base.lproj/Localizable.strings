@@ -156,6 +156,7 @@
 // settings
 "settings.title" = "Settings";
 "settings.notifications" = "Notifications";
+"settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My account";
 "settings.units" = "Units and time";
 "settings.support" = "Support";
@@ -170,7 +171,7 @@
 "settings.units.feet" = "Feet";
 "settings.units.pounds" = "Pounds";
 "settings.units.kilograms" = "Kilograms";
-"settings.units.clock" = "Time";
+"settings.units.clock" = "Time unit";
 "settings.units.temp" = "Temperature";
 "settings.units.weight" = "Weight";
 "settings.units.height" = "Height";
@@ -267,13 +268,21 @@
 "settings.pill.dialog.unable-to-unpair" = "Unable to unpair your Sleep Pill.";
 "settings.pill.unpair-error-title" = "Unpairing failed";
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill";
-"settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired.";
+"settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired";
 "settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
-"settings.pill.warning.low-battery-format" = "Your Sleep Pill %@. We'll walk you through replacing it.";
-"settings.pill.warning.battery-low" = "battery is low";
+"settings.pill.warning.low-battery" = "Your Sleep Pill battery is low. We'll walk you through replacing it.";
+"settings.pill.warning.title.last-seen" = "No recent data.";
+"settings.pill.warning.title.low-battery" = "Low battery";
 "settings.pill.advanced.option.title" = "Advanced";
+"settings.pill.replace-battery.title" = "Replace battery";
 "settings.pill.advanced.option.replace-pill" = "Replace this Sleep Pill";
 "settings.pill.advanced.option.replace-pill.desc" = "If you have a new Sleep Pill you want to pair with this account.";
+"settings.sense.warning.summary.last-seen" = "No recent data.";
+"settings.sense.warning.summary.not-connected-ble" = "Could not connect over Bluetooth.";
+"settings.sense.action.pairing-mode" = "Put into pairing mode";
+"settings.sense.action.edit-wifi" = "Edit WiFi";
+"settings.sense.action.change-time-zone" = "Change Time Zone";
+"settings.sense.action.advanced" = "Advanced";
 "settings.sense.advanced.option.title" = "Advanced";
 "settings.sense.advanced.option.replace-sense" = "Replace this Sense";
 "settings.sense.advanced.option.replace-sense.desc" = "If you have a new Sense you want to pair with this account.";
@@ -289,15 +298,16 @@
 "settings.sense.unpair.failed-message" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
 "settings.sense.dialog.pair-failed-title" = "Action failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure Sense is plugged in and nearby and try again.";
+"settings.sense.connecting" = "Connecting over Bluetooth...";
+"settings.sense.connected" = "Connected over Bluetooth.";
 "settings.sense.no-sense-message" = "Make sure Sense is plugged in and nearby and try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message.format" = "Are you sure you want to put Sense into Pairing Mode? You should use this option only if you have another mobile device you wish to pair with Sense. If you're having trouble, visit %@ for support.";
 "settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
-"settings.sense.warning.wifi-format" = "Sense %@. Tap below to edit your WiFi credentials.";
-"settings.sense.warning.cannont-connect-wifi" = "cannot connect to WiFi";
-"settings.sense.warning.not-connected-sense" = "Could not connect with Sense over Bluetooth. Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot.\n\nSome actions below are disabled.";
+"settings.sense.warning.summary.wifi" = "Sense cannot connect to WiFi.";
+"settings.sense.warning.wifi" = "Tap below to edit your WiFi credentials.";
+"settings.sense.warning.not-connected-sense" = "Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot. Some actions below are disabled.";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
-"settings.sense.connecting" = "Checking connectivity";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
 "settings.device.dialog.factory-restore-message" = "This will disconnect your account from this Sense, as well as any Sleep Pills you have paired. You will need to pair with another Sense to continue using the application. You should only perform a factory reset if instructed to do so by Support. This operation cannot be undone.";
@@ -383,6 +393,7 @@
 "sensor.value.none" = "No data";
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";
+"graph-data.error" = "Unable to load data";
 "graph-data.unavailable" = "No data available";
 "sensor.accessibility-value.condition-alert" = "poor";
 "sensor.accessibility-value.condition-warning" = "acceptable";
@@ -680,6 +691,8 @@
 "timezone.error.message" = "Could not update the time zone at this time. Make sure your device is connected to the internet and try again.";
 "timezone.action.use-local" = "Set this time zone";
 "timezone.action.select-manually" = "Select from a list";
+"timezone.section.title.current" = "Current time zone";
+"timezone.section.title.other" = "Other time zones";
 
 // handholding
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days.";

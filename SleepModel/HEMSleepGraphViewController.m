@@ -36,6 +36,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMTappableView.h"
 #import "HEMScreenUtils.h"
+#import "HEMOnboardingService.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -869,7 +870,8 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)updateLayoutWithError:(NSError *)error {
     BOOL hasTimelineData = [self.dataSource hasTimelineData];
-    NSDate *accountCreationDate = [[[SENServiceAccount sharedService] account] createdAt];
+    SENAccount* account = [[SENServiceAccount sharedService] account] ?: [[HEMOnboardingService sharedService] currentAccount];
+    NSDate *accountCreationDate = [account createdAt];
     BOOL justOnboarded = accountCreationDate
                          && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
     self.errorSupportButton.hidden = YES;

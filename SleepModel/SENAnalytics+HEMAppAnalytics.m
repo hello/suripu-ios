@@ -8,8 +8,12 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENAnalyticsLogger.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
+
+#import "HEMConfig.h"
+#import "HEMMixpanelProvider.h"
 
 // general
 NSString* const kHEMAnalyticsEventWarning = @"Warning";
@@ -21,7 +25,6 @@ NSString* const kHEMAnalyticsEventPropDate = @"Date";
 NSString* const kHEMAnalyticsEventPropType = @"Type";
 NSString* const kHEMAnalyticsEventPropPlatform = @"Platform";
 NSString* const kHEMAnalyticsEventPlatform = @"iOS";
-NSString* const kHEMAnalyticsEventPropName = @"Name";
 NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
 NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
@@ -30,9 +33,12 @@ NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
 NSString* const kHEMAnalyticsEventPropSSID = @"SSID";
 NSString* const kHEMAnalyticsEventPropPassLength = @"Password length";
 
-// special mixpanel special properties
-NSString* const kHEMAnalyticsEventMpPropName = @"$name";
-NSString* const kHEMAnalyticsEventMpPropCreated = @"$created";
+static NSString* const HEMAnalyticsEventPropName = @"Name";
+
+// special mixpanel - segment mapping special properties
+static NSString* const HEMAnalyticsEventReservedPropEmail = @"$email";
+static NSString* const HEMAnalyticsEventReservedPropName = @"$name";
+static NSString* const HEMAnalyticsEventReservedPropCreated = @"$created";
 
 // permissions
 NSString* const kHEMAnalyticsEventPermissionLoc = @"Permission Location";
@@ -206,62 +212,69 @@ NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
 
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
+static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";
+
+// used only to ensure nothing is wrong when upgrading version with Segment
+static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segment";
 
 @implementation SENAnalytics (HEMAppAnalytics)
 
-+ (void)trackSignUpOfNewAccount:(SENAccount*)account {
-    if (!account) {
-        DDLogWarn(@"attempted to track account sign up without an account object, skipping");
-        return;
++ (void)enableAnalytics {
+    // whatever 3rd party vendor we use for analytics, configure it here
+    NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
+    if ([analyticsToken length] > 0) {
+        DDLogVerbose(@"mixpanel analytics enabled");
+        [self addProvider:[[HEMMixpanelProvider alloc] initWithToken:analyticsToken]];
     }
-    
-    NSString* name = [account name] ?: @"";
-    NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
-    if ([accountId length] == 0) {
-        // checking this case as it seemed to have happened before
-        DDLogInfo(@"account id not found after sign up!");
-        accountId = @"";
-    }
-    
-    [SENAnalytics userWithId:accountId
-     didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : name,
-                               kHEMAnalyticsEventMpPropCreated : [NSDate date],
-                               kHEMAnalyticsEventPropAccount : accountId,
-                               kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
-    
-    // these are properties that will be sent up for every event
-    [SENAnalytics setGlobalEventProperties:@{kHEMAnalyticsEventPropName : name,
-                                             kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
+    // logging for our own perhaps to replicate analytic events on console
+    [self addProvider:[SENAnalyticsLogger new]];
 }
 
-+ (void)trackUserSession {
-    SENAccount* account = [[SENServiceAccount sharedService] account];
-    NSMutableDictionary* uProperties = [NSMutableDictionary dictionary]; // updates profile properties
-    NSMutableDictionary* gProperties = [NSMutableDictionary dictionary]; // props sent for every event
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
++ (NSDictionary*)propertiesFromAccount:(nonnull SENAccount*)account {
+    NSString* name = [account name] ?: @"";
+    NSString* email = [account email] ?: @"";
+    NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
+    NSDate* createDate = [account createdAt] ?: [NSDate date];
+    return @{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
+             HEMAnalyticsEventReservedPropCreated : createDate,
+             HEMAnalyticsEventReservedPropName : name,
+             HEMAnalyticsEventReservedPropEmail : email,
+             kHEMAnalyticsEventPropAccount : accountId};
+}
+
++ (void)trackSignUpOfNewAccount:(SENAccount*)account {
+    NSDictionary* properties = [self propertiesFromAccount:account];
+    [self userWithId:properties[kHEMAnalyticsEventPropAccount] didSignUpWithProperties:properties];
+    // track required? for segment after alias and identify
+    [self track:HEMAnalyticsEventAccountCreated];
+    [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
+                                     HEMAnalyticsEventPropName : [account name] ?: @""}];
+}
+
++ (void)trackUserSession:(nonnull SENAccount*)account {
+    [self trackUserSession:account properties:nil];
+}
+
++ (void)trackUserSession:(nonnull SENAccount *)account
+              properties:(nullable NSDictionary<NSString*, NSString*>*)properties {
     
-    if (account != nil) {
-        NSString* name = [account name] ?: @"";
-        uProperties[kHEMAnalyticsEventMpPropName] = name;
-        
-        if (accountId) {
-            uProperties[kHEMAnalyticsEventPropAccount] = accountId;
+    if (account) {
+        NSMutableDictionary* accountProperties = [[self propertiesFromAccount:account] mutableCopy];
+        if ([properties count] > 0) {
+            [accountProperties addEntriesFromDictionary:properties];
         }
-        
-        gProperties[kHEMAnalyticsEventPropName] = name;
+        [self setUserId:[account accountId] properties:accountProperties];
+    } else {
+        NSMutableDictionary* platformProperties = [NSMutableDictionary new];
+        [platformProperties setValue:kHEMAnalyticsEventPlatform forKey:kHEMAnalyticsEventPropPlatform];
+        if ([properties count] > 0) {
+            [platformProperties addEntriesFromDictionary:properties];
+        }
+        [self setUserId:[SENAuthorizationService accountIdOfAuthorizedUser] properties:platformProperties];
     }
     
-    uProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
-    gProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
-    // need to additionally set the account id as a separate property so that it
-    // is shown in as a user property when viewing People in Mixpanel.  If not using
-    // mixpanel, we can probably just remove it
-    
-    if (accountId) {
-        [SENAnalytics setUserId:accountId properties:uProperties];
-    }
-    [SENAnalytics setGlobalEventProperties:gProperties];
-    
+    [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
+                                     HEMAnalyticsEventPropName : [account name] ?: @""}];
 }
 
 + (void)trackErrorWithMessage:(NSString*)message {
@@ -290,20 +303,8 @@ static NSString* const kHEMAnalyticsEventError = @"Error";
     [self trackError:error withEventName:eventName];
 }
 
-+ (void)updateGender:(SENAccountGender)gender {
-    NSString* genderString = nil;
-    switch (gender) {
-        case SENAccountGenderFemale:
-            genderString = @"female";
-            break;
-        case SENAccountGenderMale:
-            genderString = @"male";
-            break;
-        default:
-            genderString = @"other";
-            break;
-    }
-    [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropGender : genderString}];
++ (void)updateEmail:(NSString*)email {
+    [SENAnalytics setUserProperties:@{HEMAnalyticsEventReservedPropEmail : email}];
 }
 
 + (NSString*)trueFalsePropertyValue:(BOOL)isTrue {

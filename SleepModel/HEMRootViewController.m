@@ -263,14 +263,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                  object:nil];
 }
 
-- (BOOL)shouldMonitorSystem
-{
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    HEMOnboardingCheckpoint checkpoint = [service onboardingCheckpoint];
+- (BOOL)shouldMonitorSystem {
     return [SENAuthorizationService isAuthorized]
         && [self presentedViewController] == nil
-        && (checkpoint == HEMOnboardingCheckpointStart
-               || checkpoint == HEMOnboardingCheckpointPillDone);
+        && [[HEMOnboardingService sharedService] hasFinishedOnboarding];
 }
 
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date
@@ -512,13 +508,11 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - Shake to Show Debug Options
 
-- (BOOL)canBecomeFirstResponder
-{
+- (BOOL)canBecomeFirstResponder {
     return [HEMDebugController isEnabled];
 }
 
-- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent*)event
-{
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent*)event {
     if ([HEMConfig booleanForConfig:HEMConfAllowDebugOptions] && motion == UIEventSubtypeMotionShake) {
         if ([self debugController] == nil) {
             [self setDebugController:[[HEMDebugController alloc] initWithViewController:self]];
@@ -529,8 +523,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - Cleanup
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

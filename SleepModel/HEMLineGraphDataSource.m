@@ -24,19 +24,6 @@ static CGFloat const HEMLineGraphMissingPoint = -200.f;
     return self;
 }
 
-- (NSArray*)valuesForSectionIndexes {
-    NSMutableArray* labels = [[NSMutableArray alloc] initWithCapacity:self.labeledIndexes.count];
-    NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(compare:)];
-    for (NSNumber* index in indexes) {
-        SENSensorDataPoint* dataPoint = [self dataPointAtIndex:[index integerValue]];
-        NSString* formattedValue = NSLocalizedString(@"empty-data", nil);
-        if (dataPoint.value)
-            formattedValue = [SENSensor formatValue:dataPoint.value withUnit:self.unit];
-        [labels addObject:formattedValue];
-    }
-    return labels;
-}
-
 #pragma mark - BEMSimpleLineGraphDataSource
 
 - (SENSensorDataPoint*)dataPointAtIndex:(NSInteger)index {

@@ -10,6 +10,7 @@
 #import "Model.h"
 
 static NSString* const SENAppStatsInsightsLastViewed = @"insights_last_viewed";
+static NSString* const SENAppStatsQuestionsLastViewed = @"questions_last_viewed";
 
 @implementation SENAppStats
 
@@ -17,15 +18,20 @@ static NSString* const SENAppStatsInsightsLastViewed = @"insights_last_viewed";
     self = [super init];
     if (self) {
         _lastViewedInsights = SENDateFromNumber(dictionary[SENAppStatsInsightsLastViewed]);
+        _lastViewedQuestions = SENDateFromNumber(dictionary[SENAppStatsQuestionsLastViewed]);
     }
     return self;
 }
 
 - (NSDictionary*)dictionaryValue {
-    if (![self lastViewedInsights]) {
-        return @{};
+    NSMutableDictionary *dictionaryValue = [NSMutableDictionary dictionaryWithCapacity:2];
+    if ([self lastViewedInsights]) {
+        dictionaryValue[SENAppStatsInsightsLastViewed] = SENDateMillisecondsSince1970([self lastViewedInsights]);
     }
-    return @{SENAppStatsInsightsLastViewed : SENDateMillisecondsSince1970([self lastViewedInsights])};
+    if ([self lastViewedQuestions]) {
+        dictionaryValue[SENAppStatsQuestionsLastViewed] = SENDateMillisecondsSince1970([self lastViewedQuestions]);
+    }
+    return dictionaryValue;
 }
 
 @end

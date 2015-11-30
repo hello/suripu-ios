@@ -17,9 +17,11 @@ static NSString* const HEMFontFamilyNameLight = @"Avenir-Light";
 static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
 static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
 static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
+
 static NSString* const HEMFontFamilyNameModernUltraLight = @"AvenirNext-UltraLight";
 static NSString* const HEMFontFamilyNameModernRegular = @"AvenirNext-Regular";
 static NSString* const HEMFontFamilyNameModernMedium = @"AvenirNext-Medium";
+static NSString* const HEMFontFamilyNameModernLight = @"AvenirNext-Light";
 
 static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
 static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
@@ -62,12 +64,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)settingsTableCellFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.f];
 }
 
 + (UIFont*)settingsTableCellDetailFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:14.f];
 }
 
 + (UIFont*)settingsTitleFont
@@ -80,14 +82,13 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
 }
 
-+ (UIFont*)signOutFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.f];
++ (UIFont *)settingsSectionHeaderFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:10.0f];
 }
 
 + (UIFont*)settingsHelpFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:14.0f];
 }
 
 + (UIFont*)preferenceControlFont
@@ -108,6 +109,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)sensorGraphNumberBoldFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:13.f];
+}
+
++ (UIFont*)sensorGraphNoDataFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:14.f];
 }
 
 + (UIFont*)sensorGraphHeadingFont
@@ -350,9 +355,24 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
++ (UIFont*)deviceSettingsLabelFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:16.0f];
+}
+
++ (UIFont*)deviceSettingsPropertyValueFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:16.0f];
+}
+
++ (UIFont*)deviceCellWarningSummaryFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:14.0f];
+}
+
 + (UIFont*)deviceCellWarningMessageFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:14.0f];
 }
 
 + (UIFont*)textfieldPlaceholderFont

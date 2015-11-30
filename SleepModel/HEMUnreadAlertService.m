@@ -15,7 +15,6 @@
 @interface HEMUnreadAlertService()
 
 @property (nonatomic, strong) SENAppUnreadStats* unreadStats;
-@property (nonatomic, strong) SENAppStats* lastReadStats;
 
 @end
 
@@ -32,65 +31,38 @@
 
 #pragma mark - Updates
 
-- (void)udpateLastViewStats:(void(^)(NSError* error))completion {
-    [SENAPIAppStats retrieveStats:^(SENAppStats* stats, NSError *error) {
-        if (!error && stats) {
-            [self setLastReadStats:stats];
-        }
-        completion (error);
-    }];
-}
-
 - (void)updateUnread:(void(^)(NSError* error))completion {
     [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
         if (!error && stats) {
-            DDLogVerbose(@"updated unread statuses, has unread %@", [self hasUnread] ? @"y" : @"n");
             [self setUnreadStats:stats];
+            DDLogVerbose(@"updated unread statuses, has unread %@", [self hasUnread] ? @"y" : @"n");
         }
         completion (error);
     }];
 }
 
 - (void)update:(HEMUnreadCompletionHandler)completion {
-    [self udpateLastViewStats:^(NSError* error) {
+    [self updateUnread:^(NSError *error) {
+        BOOL hasUnread = NO;
         if (!error) {
-            [self updateUnread:^(NSError *error) {
-                BOOL hasUnread = NO;
-                if (!error) {
-                    hasUnread = [self hasUnread];
-                }
-                if (completion) {
-                    completion (hasUnread, error);
-                }
-            }];
+            hasUnread = [self hasUnread];
+        }
+        if (completion) {
+            completion (hasUnread, error);
         }
     }];
 }
 
-- (void)updateLastViewFor:(HEMUnreadType)unreadType
+- (void)updateLastViewFor:(HEMUnreadTypes)unreadTypes
                completion:(HEMUnreadCompletionHandler)completion {
-    // not everything needs to update / pull everything
-    switch (unreadType) {
-        case HEMUnreadTypeInsights: {
-            [self updateInsightsLastViewed:completion];
-            break;
-        }
-        case HEMUnreadTypeQuestions: {
-            [self updateQuestionsReadStatus:completion];
-            break;
-        }
-        default: {
-            if (completion) {
-                completion ([self hasUnread], nil);
-            }
-            break;
-        }
-    }
-}
-
-- (void)updateInsightsLastViewed:(HEMUnreadCompletionHandler)completion {
     SENAppStats* stats = [SENAppStats new];
-    [stats setLastViewedInsights:[NSDate date]];
+    NSDate *now = [NSDate date];
+    if ((unreadTypes & HEMUnreadTypeInsights) == HEMUnreadTypeInsights) {
+        [stats setLastViewedInsights:now];
+    }
+    if ((unreadTypes & HEMUnreadTypeQuestions) == HEMUnreadTypeQuestions) {
+        [stats setLastViewedQuestions:now];
+    }
     [SENAPIAppStats updateStats:stats completion:^(id data, NSError *error) {
         if (!error) {
             [self update:completion];
@@ -102,19 +74,11 @@
     }];
 }
 
-- (void)updateQuestionsReadStatus:(HEMUnreadCompletionHandler)completion {
-    [self updateUnread:^(NSError *error) {
-        if (completion) {
-            completion ([self hasUnread], error);
-        }
-    }];
-}
-
 #pragma mark - Unread
 
 - (BOOL)hasUnread {
-    return [[self unreadStats] hasUnreadInsights]
-        || [[self unreadStats] hasUnreadQuestions];
+    return ([[self unreadStats] hasUnreadInsights]
+            || [[self unreadStats] hasUnreadQuestions]);
 }
 
 @end

@@ -58,8 +58,9 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureVideo {
+    UIImage* image = [UIImage imageNamed:@"pairing_your_sleep_pill"];
     NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-pair", nil);
-    [[self videoView] setVideoPath:videoPath];
+    [[self videoView] setFirstFrame:image videoPath:videoPath];
 }
 
 - (void)configureActivity {

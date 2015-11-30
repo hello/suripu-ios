@@ -114,6 +114,8 @@
 + (UIColor *)rulerSegmentDarkColor;
 + (UIColor *)rulerSegmentLightColor;
 + (UIColor *)settingsValueTextColor;
++ (UIColor *)settingsSectionHeaderTextColor;
++ (UIColor *)settingsCellTitleTextColor;
 + (UIColor *)textfieldTextColor;
 + (UIColor *)actionButtonTextColor;
 + (UIColor *)alarmSelectionRowColor;
@@ -141,6 +143,7 @@
 + (UIColor *)welcomeIntroTitleColor;
 + (UIColor *)welcomeIntroDescriptionColor;
 + (UIColor *)emptyStateDescriptionColor;
++ (UIColor *)sensorGraphNoDataColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

@@ -20,6 +20,15 @@
 @property (nonatomic, strong, nullable) NSDate* lastViewedInsights;
 
 /**
+ * @property lastViewedQuestions
+ *
+ * @discussion
+ * The date in which questions were last viewed.  It may be null if account has
+ * yet to update this property before
+ */
+@property (nonatomic, strong, nullable) NSDate* lastViewedQuestions;
+
+/**
  * Initialize the object with the provied raw dictionary values retrieved from
  * an API request
  *

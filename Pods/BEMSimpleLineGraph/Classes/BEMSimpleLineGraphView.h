@@ -388,15 +388,11 @@
  @return The minimum value of the Y-Axis. */
 - (CGFloat)minValueForLineGraph:(BEMSimpleLineGraphView *)graph;
 
-/** Optional method to control whether a label indicating NO DATA will be shown while number of data is zero
+/** Optional method to control the attributed text to be displayed on NO DATA label
+ If delegate does not implement this method, the label will not be displayed.
  @param graph The graph object for the NO DATA label
- @return The boolean value indicating the availability of the NO DATA label. */
-- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph;
-
-/** Optional method to control the text to be displayed on NO DATA label
- @param graph The graph object for the NO DATA label
- @return The text to show on the NO DATA label. */
-- (NSString *)noDataLabelTextForLineGraph:(BEMSimpleLineGraphView *)graph;
+ @return The attributed text to show on the NO DATA label. */
+- (NSAttributedString *)noDataLabelAttributedTextForLineGraph:(BEMSimpleLineGraphView *)graph;
 
 /** Optional method to set the static padding distance between the graph line and the whole graph
  @param graph The graph object requesting the padding value.

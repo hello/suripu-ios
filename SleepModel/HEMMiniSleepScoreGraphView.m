@@ -36,7 +36,7 @@ CGFloat const miniScoreBaseHeight = 72.f;
     UIColor* sleepScoreColor = [UIColor colorForSleepScore:sleepScore];
     CGFloat graphPercentageAngle = MAX(MIN(sleepScore > 0 ? (sleepScore < 100 ? 400 - sleepScore * 0.01 * 300 : 0.01) : 0.01, 359), 102);
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (long)round(sleepScore)] : @"100") : @"";
-    CGFloat sleepScoreTextSize = sleepScoreHeight / 2.0;
+    CGFloat sleepScoreTextSize = sleepScoreHeight / 2.3f;
 
     //// background oval Drawing
     CGContextSaveGState(context);
@@ -71,7 +71,7 @@ CGFloat const miniScoreBaseHeight = 72.f;
 
 
     //// sleep score label Drawing
-    CGRect sleepScoreLabelRect = CGRectMake(-1, 5.67, 77, 67.53);
+    CGRect sleepScoreLabelRect = CGRectMake(1, 5.67, 77, 67.53);
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 

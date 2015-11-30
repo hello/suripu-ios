@@ -39,6 +39,17 @@
 - (NSString*)placeHolderTextIn:(HEMFormViewController*)formViewController atIndex:(NSUInteger)index;
 
 /**
+ * @discussion
+ * Return the icon that should be displayed before the text field at given index
+ * based on numberOfFieldsIn:
+ *
+ * @param formViewController: the controller that manages the form
+ * @param index: the index of the field in the form
+ * @return icon
+ */
+- (UIImage*)iconIn:(HEMFormViewController*)formViewController atIndex:(NSUInteger)index;
+
+/**
  * Save the form content represented by the dictionary.  This is only called if
  * the form was modified, even if it was modified to the same content as it was
  * originally displayed.

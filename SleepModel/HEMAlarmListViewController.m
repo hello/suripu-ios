@@ -263,7 +263,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (IBAction)flippedEnabledSwitch:(UISwitch *)sender {
     __block SENAlarm *alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
-    if (on && [HEMAlarmUtils timeIsTooSoonByHour:alarm.hour minute:alarm.minute]) {
+    if (on && [HEMAlarmUtils timeIsTooSoonByHour:alarm.hour minute:alarm.minute] &&
+        [HEMAlarmUtils willRingTodayWithHour:alarm.hour minute:alarm.minute repeatDays:alarm.repeatFlags]) {
         [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.save-error.too-soon.title", nil)
                                                 message:NSLocalizedString(@"alarm.save-error.too-soon.message", nil)
                                              controller:self];

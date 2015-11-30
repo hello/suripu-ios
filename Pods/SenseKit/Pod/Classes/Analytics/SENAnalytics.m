@@ -8,10 +8,7 @@
 
 #import "SENAnalytics.h"
 #import "SENAuthorizationService.h"
-#import "SENAnalyticsMixpanel.h"
-#import "SENAnalyticsLogger.h"
 
-NSString* const kSENAnalyticsConfigAPIKey = @"kSENAnalyticsConfigAPIKey";
 NSString* const kSENAnalyticsPropConnection = @"connection";
 NSString* const kSENAnalyticsPropCode = @"code";
 NSString* const kSENAnalyticsPropMessage = @"message";
@@ -21,25 +18,12 @@ NSString* const kSENAnalyticsPropDomain = @"domain";
 
 static NSMutableDictionary* providers;
 
-+ (void)configure:(SENAnalyticsProviderName)name with:(NSDictionary*)properties {
-    id<SENAnalyticsProvider> provider;
-
-    switch (name) {
-        case SENAnalyticsProviderNameMixpanel:
-            provider = [[SENAnalyticsMixpanel alloc] init];
-            break;
-        case SENAnalyticsProviderNameLogger:
-            provider = [[SENAnalyticsLogger alloc] init];
-            break;
-        default:
-            break;
-    }
-
-    [provider configureWithProperties:properties];
-    if (!providers)
++ (void)addProvider:(id<SENAnalyticsProvider>)provider {
+    if (!providers) {
         providers = [NSMutableDictionary new];
-    if (provider)
-        providers[@(name)] = provider;
+    }
+    NSString* providerName = NSStringFromClass([provider class]);
+    providers[providerName] = provider;
 }
 
 + (void)setUserId:(NSString*)userId properties:(NSDictionary*)properties {
@@ -56,13 +40,17 @@ static NSMutableDictionary* providers;
 
 + (void)setGlobalEventProperties:(NSDictionary*)properties {
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
-        [provider setGlobalEventProperties:properties];
+        if ([provider respondsToSelector:@selector(setGlobalEventProperties:)]) {
+            [provider setGlobalEventProperties:properties];
+        }
     }];
 }
 
 + (void)setUserProperties:(NSDictionary*)properties {
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
-        [provider setUserProperties:properties];
+        if ([provider respondsToSelector:@selector(setUserProperties:)]) {
+            [provider setUserProperties:properties];
+        }
     }];
 }
 
@@ -85,6 +73,14 @@ static NSMutableDictionary* providers;
     }
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
         [provider track:eventName withProperties:mutableProps];
+    }];
+}
+
++ (void)reset:(NSString*)userId {
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        if ([provider respondsToSelector:@selector(reset:)]) {
+            [provider reset:userId];
+        }
     }];
 }
 

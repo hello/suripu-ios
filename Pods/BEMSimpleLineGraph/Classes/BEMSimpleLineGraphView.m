@@ -221,23 +221,16 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     
     // There are no points to load
     if (numberOfPoints == 0) {
-        if (self.delegate &&
-            [self.delegate respondsToSelector:@selector(noDataLabelEnableForLineGraph:)] &&
-            ![self.delegate noDataLabelEnableForLineGraph:self]) return;
-
+        if (![self.delegate respondsToSelector:@selector(noDataLabelAttributedTextForLineGraph:)]) {
+            return;
+        }
+        
         NSLog(@"[BEMSimpleLineGraph] Data source contains no data. A no data label will be displayed and drawing will stop. Add data to the data source and then reload the graph.");
         
         self.noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.viewForBaselineLayout.frame.size.width, self.viewForBaselineLayout.frame.size.height)];
         self.noDataLabel.backgroundColor = [UIColor clearColor];
-        self.noDataLabel.textAlignment = NSTextAlignmentCenter;
-        NSString *noDataText;
-        if ([self.delegate respondsToSelector:@selector(noDataLabelTextForLineGraph:)])
-        {
-            noDataText = [self.delegate noDataLabelTextForLineGraph:self];
-        }
-        self.noDataLabel.text = noDataText ?: NSLocalizedString(@"No Data", nil);
-        self.noDataLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15];
-        self.noDataLabel.textColor = self.colorLine;
+        self.noDataLabel.attributedText = [self.delegate noDataLabelAttributedTextForLineGraph:self];
+
         [self.viewForBaselineLayout addSubview:self.noDataLabel];
         
         // Let the delegate know that the graph finished layout updates
@@ -267,6 +260,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     // If the touch report is enabled, set it up
     if (self.enableTouchReport == YES || self.enablePopUpReport == YES) {
         // Initialize the vertical gray line that appears where the user touches the graph.
+        [self.touchInputLine removeFromSuperview];
         self.touchInputLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.widthTouchInputLine, self.frame.size.height)];
         self.touchInputLine.backgroundColor = self.colorTouchInputLine;
         self.touchInputLine.alpha = 0;

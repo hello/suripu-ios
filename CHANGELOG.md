@@ -1,5 +1,92 @@
 # Changelog
 
+## 1.1.8.6
+
+New:
+
+* Loading indicator in Timeline history + VX / UX changes
+* Moved us back to Mixpanel SDK for now
+
+Fixes:
+
+* Prevent "no data" from showing while loading graph data in sensor history
+
+## 1.1.8.5
+
+Fixes:
+
+* Fixes crasher on factory reset (introduced in this release 1.1.8)
+* Fixes time zone display
+* Fixes upgrade path for Segment, but still broken
+
+## 1.1.8.4
+
+New:
+
+* Email / name update screen vx
+* Time Zone settings vx
+
+Fixes:
+
+* Include optional account settings as part of checkpoint in onboarding
+
+## 1.1.8.3
+
+New:
+
+* Updated VX of links in alert dialogs
+* Updated device settings VX + UX
+* Update Sense settings VX + UX
+* Update Pill settings VX
+
+Fixes:
+
+* Fix unit preferences being reversed for height and weight
+* Fix visual bug with notification settings
+
+## 1.1.8.2
+
+New:
+
+* Updated Settings VX
+* Updated Account Settings VX
+* Updated Notification Settings VX
+* Updated Preference Settings VX
+* Updated Support Settings VX
+* Changed how unread indicator is handled
+* Relax the "too soon" alarm restriction to 2 minutes
+* Make sensor history view scrollable, when needed
+
+Fixes:
+
+* Fix issue where the "too soon" alarm restriction would fire even if the day
+  is different
+
+## 1.1.8.1
+
+New:
+
+* Send country code to Sense when scanning for WiFi upon retry
+* Replaced Mixpanel with Segment
+
+Fixes:
+
+* Handle out of order responses from Sense
+
+## 1.1.8.0
+
+New:
+
+* Added onboarding checkpoint for Sense colors screen
+* Removed sensor history graph labels
+
+Fixes:
+
+* Removed an out of place period in a status update message
+* Vertically align text in empty trends view
+* Display -- in settings when onboarding screens for demographic data are skipped
+* Display the first frame of the pill pairing video
+
 ## 1.1.7.5
 
 Fixes:

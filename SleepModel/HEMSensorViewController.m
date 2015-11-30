@@ -9,7 +9,6 @@
 
 #import "HEMSensorViewController.h"
 #import "HEMLineGraphDataSource.h"
-#import "HEMGraphSectionOverlayView.h"
 #import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
@@ -18,19 +17,24 @@
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
 
+typedef NS_ENUM(NSInteger, HEMSensorLoadState) {
+    HEMSensorLoadStateLoading = 0,
+    HEMSensorLoadStateLoaded = 1,
+    HEMSensorLoadStateError = 2,
+};
+
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
+@property (weak, nonatomic) IBOutlet UIView* contentView;
 @property (weak, nonatomic) IBOutlet UIButton* dailyGraphButton;
 @property (weak, nonatomic) IBOutlet UIButton* hourlyGraphButton;
 @property (weak, nonatomic) IBOutlet UILabel* valueLabel;
 @property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView* graphView;
 @property (weak, nonatomic) IBOutlet UILabel* statusMessageLabel;
-@property (weak, nonatomic) IBOutlet UILabel* statusLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
-@property (weak, nonatomic) IBOutlet UIView* chartContainerView;
 @property (weak, nonatomic) IBOutlet UIView* selectionView;
-@property (weak, nonatomic) IBOutlet HEMGraphSectionOverlayView* overlayView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* selectionLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* tinySeparatorConstraint;
 
@@ -45,16 +49,19 @@
 @property (nonatomic) CGFloat maxGraphValue;
 @property (nonatomic) CGFloat minGraphValue;
 @property (nonatomic, getter=isPanning) BOOL panning;
+@property (nonatomic) CGPoint oldScrollOffset;
+@property (nonatomic, assign) HEMSensorLoadState hourlyDataLoadState;
+@property (nonatomic, assign) HEMSensorLoadState dailyDataLoadState;
 @end
 
 @implementation HEMSensorViewController
 
 static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
-static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self configureFormatters];
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
@@ -115,7 +122,9 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [self adjustValueViewHeights];
+    if (self.scrollView.contentSize.height == 0.0) {
+        self.scrollView.contentSize = self.contentView.bounds.size;
+    }
 }
 
 - (void)dealloc
@@ -211,7 +220,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)configureGraphView
 {
-    self.overlayView.alpha = 0;
     self.graphView.delegate = self;
     self.graphView.enableBezierCurve = NO;
     self.graphView.enableTouchReport = YES;
@@ -250,21 +258,13 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
         [statusMessage appendAttributedString:divider];
         [statusMessage appendAttributedString:idealMessage];
     }
+    
     self.statusMessageLabel.attributedText = statusMessage;
-    [self adjustValueViewHeights];
     self.graphView.colorTouchInputLine = color;
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.7;
     self.graphView.colorPoint = color;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
-}
-
-- (void)adjustValueViewHeights
-{
-    [self.view layoutIfNeeded];
-    BOOL shouldHideValue = CGRectGetHeight(self.valueLabel.bounds) < HEMSensorValueMinLabelHeight;
-    self.valueLabel.hidden = shouldHideValue;
-    self.unitLabel.hidden = shouldHideValue;
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
@@ -293,18 +293,18 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     if (![SENAuthorizationService isAuthorized] || [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive)
         return;
     
-    self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
-    
     __weak typeof(self) weakSelf = self;
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error) {
-            strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
-            strongSelf.statusLabel.alpha = 1;
-            strongSelf.overlayView.alpha = 0;
+            strongSelf.hourlyDataLoadState = HEMSensorLoadStateError;
             strongSelf.graphView.alpha = 0;
             return;
         }
+        
+        strongSelf.hourlyDataLoadState = HEMSensorLoadStateLoaded;
+        
         if (![strongSelf.hourlyDataSeries isEqualToArray:data]) {
             strongSelf.hourlyDataSeries = data;
             [strongSelf showTutorialIfNeeded];
@@ -315,13 +315,15 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     }];
     [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error) {
-            strongSelf.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
-            strongSelf.statusLabel.alpha = 1;
-            strongSelf.overlayView.alpha = 0;
+            strongSelf.dailyDataLoadState = HEMSensorLoadStateError;
             strongSelf.graphView.alpha = 0;
             return;
         }
+        
+        strongSelf.dailyDataLoadState = HEMSensorLoadStateLoaded;
+        
         if (![strongSelf.dailyDataSeries isEqualToArray:data]) {
             strongSelf.dailyDataSeries = data;
             [strongSelf showTutorialIfNeeded];
@@ -364,7 +366,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 {
     void (^animations)() = ^{
         self.graphView.alpha = 0;
-        self.overlayView.alpha = 0;
     };
     void (^completion)(BOOL) = ^(BOOL finished) {
         if ([self isShowingHourlyData]) {
@@ -438,12 +439,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     [self setGraphValueBoundsWithData:dataSeries];
     if (![self isPanning])
         [self.graphView reloadGraph];
-    if (dataSeries.count == 0) {
-        self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
-        self.statusLabel.alpha = 1;
-    } else {
-        self.statusLabel.alpha = 0;
-    }
     [self ensureSelectionViewVisible];
 }
 
@@ -497,38 +492,59 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     return ceil(self.dataSeries.count/8);
 }
 
-- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph {
-    return NO;
+- (NSAttributedString *)noDataLabelAttributedTextForLineGraph:(BEMSimpleLineGraphView *)graph {
+    BOOL loading = ([self isShowingHourlyData] && [self hourlyDataLoadState] == HEMSensorLoadStateLoading)
+                || (![self isShowingHourlyData] && [self dailyDataLoadState] == HEMSensorLoadStateLoading);
+    BOOL error = ([self isShowingHourlyData] && [self hourlyDataLoadState] == HEMSensorLoadStateError)
+                || (![self isShowingHourlyData] && [self dailyDataLoadState] == HEMSensorLoadStateError);
+    
+    NSString* text = nil;
+    if (loading) {
+        text = NSLocalizedString(@"activity.loading", nil);
+    } else if (error) {
+        text = NSLocalizedString(@"graph-data.error", nil);
+    } else {
+        text = NSLocalizedString(@"graph-data.unavailable", nil);
+    }
+    
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSTextAlignmentCenter];
+    
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont sensorGraphNoDataFont],
+                                 NSForegroundColorAttributeName : [UIColor sensorGraphNoDataColor],
+                                 NSParagraphStyleAttributeName : style};
+
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {
     self.panning = YES;
+    if (CGPointEqualToPoint(self.oldScrollOffset, CGPointZero)) {
+        self.oldScrollOffset = self.scrollView.contentOffset;
+        self.scrollView.contentOffset = CGPointZero;
+    }
     SENSensorDataPoint* dataPoint = [self.graphDataSource dataPointAtIndex:index];
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
-    self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
-    self.statusMessageLabel.font = [UIFont sensorTimestampFont];
+    NSString* formattedDataPoint = [formatter stringFromDate:dataPoint.date];
+    NSDictionary<NSString*, id>* attributes = @{NSFontAttributeName : [UIFont sensorTimestampFont]};
+    NSAttributedString *statusMessage = [[NSAttributedString alloc] initWithString:formattedDataPoint
+                                                                        attributes:attributes];
+    self.statusMessageLabel.attributedText = statusMessage;
     [self updateValueLabelWithValue:dataPoint.value];
-    [UIView animateWithDuration:0.2f animations:^{
-        self.overlayView.alpha = 0;
-    }];
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
-    [self.view setNeedsUpdateConstraints];
     [self configureSensorValueViews];
     self.panning = NO;
-    [UIView animateWithDuration:0.2f animations:^{
-        self.overlayView.alpha = 1;
-    }];
+    self.scrollView.contentOffset = self.oldScrollOffset;
+    self.oldScrollOffset = CGPointZero;
 }
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
-    [self.overlayView setSectionFooters:self.graphDataSource.valuesForSectionIndexes headers:nil];
     [self.graphView setUserInteractionEnabled:self.graphDataSource.dataSeries.count > 0];
     [UIView animateWithDuration:0.75f animations:^{
         self.graphView.alpha = 1;
-        self.overlayView.alpha = 1;
     }];
 }
 

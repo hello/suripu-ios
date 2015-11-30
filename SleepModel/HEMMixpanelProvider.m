@@ -42,10 +42,11 @@
 
 - (void)userWithId:(NSString *)userId didSignupWithProperties:(NSDictionary *)properties {
     Mixpanel* mp = [Mixpanel sharedInstance];
-    NSString* distinctId = [mp distinctId];
+    NSString* distinctId = [[mp distinctId] copy];
     [mp createAlias:userId forDistinctID:distinctId];
     [mp flush];
-    [mp identify:distinctId];
+    [self setUserId:distinctId withProperties:properties];
+    DDLogVerbose(@"creating mixpanel alias %@ for distinct id %@", userId, distinctId);
 }
 
 #pragma mark - Sign Out
@@ -60,7 +61,11 @@
 - (void)setUserId:(NSString *)userId withProperties:(NSDictionary *)properties {
     Mixpanel* mp = [Mixpanel sharedInstance];
     [mp identify:userId];
-    [[mp people] set:properties];
+    
+    if ([properties count] > 0) {
+        [[mp people] set:properties];
+        DDLogVerbose(@"setting user properties %@ after identifying user", properties);
+    }
 }
 
 #pragma mark - Tracking

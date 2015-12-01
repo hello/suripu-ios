@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.8.9
+
+Fixes:
+
+* Fix issue with pill low battery mapping causing it to never show low battery
+
 ## 1.1.8.8
 
 Fixes:

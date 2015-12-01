@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.8.8
+
+Fixes:
+
+* Fix crasher in sensor history screen when scrubbing and tapping 
+
 ## 1.1.8.7
 
 Fixes:

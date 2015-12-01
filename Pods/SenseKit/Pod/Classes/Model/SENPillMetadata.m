@@ -47,7 +47,7 @@ static NSString* const SENPillMetadataDictPropBatteryLevel = @"battery_level";
     
     if ([upperValue isEqualToString:SENPillMetadataDictPropStateNormal]) {
         state = SENPillStateNormal;
-    } else if ([upperValue isEqualToString:SENPillMetadataDictPropStateNormal]) {
+    } else if ([upperValue isEqualToString:SENPillMetadataDictPropStateLowBattery]) {
         state = SENPillStateLowBattery;
     }
     

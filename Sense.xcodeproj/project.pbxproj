@@ -170,6 +170,7 @@
 		BF539CC41C0D3558000F77AA /* HEMQuestionsService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CC31C0D3558000F77AA /* HEMQuestionsService.m */; };
 		BF539CC71C0D38BA000F77AA /* HEMInsightsFeedPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CC61C0D38BA000F77AA /* HEMInsightsFeedPresenter.m */; };
 		BF539CD21C0F737D000F77AA /* HEMPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CD11C0F737D000F77AA /* HEMPresenter.m */; };
+		BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */; };
 		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
 		BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */; };
 		BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */; };
@@ -632,6 +633,7 @@
 		BF539CC61C0D38BA000F77AA /* HEMInsightsFeedPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsFeedPresenter.m; sourceTree = "<group>"; };
 		BF539CD01C0F737D000F77AA /* HEMPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPresenter.h; sourceTree = "<group>"; };
 		BF539CD11C0F737D000F77AA /* HEMPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPresenter.m; sourceTree = "<group>"; };
+		BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsServiceSpec.m; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
 		BF5D53291A26749F0090DD6A /* HEMActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActivityIndicatorView.h; sourceTree = "<group>"; };
@@ -1006,6 +1008,7 @@
 				8B8F5FA41BF661D500665D30 /* Alarm */,
 				BF812A981B6827BB00BF672F /* Analytics */,
 				BF78E98D1B20D1660015949F /* Common */,
+				BF539CD31C0F808E000F77AA /* Insights */,
 				BF2EAD221B31F85E00C3A6E3 /* Onboarding */,
 				BFC99BC21B6BED28008F7F0D /* Review */,
 				BFDFCEA01B729F96000DA303 /* Sensors */,
@@ -1736,6 +1739,14 @@
 				BF539CD11C0F737D000F77AA /* HEMPresenter.m */,
 			);
 			name = Presenters;
+			sourceTree = "<group>";
+		};
+		BF539CD31C0F808E000F77AA /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */,
+			);
+			name = Insights;
 			sourceTree = "<group>";
 		};
 		BF645D911A9FAE880051C120 /* Transitions */ = {
@@ -2646,6 +2657,7 @@
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
+				BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */,
 				8AC3C2E61A3CB7F40074A87F /* HEMSnazzBarControllerSpec.m in Sources */,
 				BF664A971ACC61AF003355D2 /* HEMSystemAlertControllerSpec.m in Sources */,
 				BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */,

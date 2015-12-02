@@ -204,6 +204,7 @@
 		BF7F1BD519E304050028F799 /* SenseToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BF7F1BC819E304050028F799 /* SenseToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BDF19E30DCC0028F799 /* libPods.a */; };
 		BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */; };
+		BF83397A1C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339791C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
 		BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */; };
@@ -695,6 +696,7 @@
 		BF7F1BDD19E30D9A0028F799 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		BF7F1BDF19E30DCC0028F799 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppUsageSpec.m; sourceTree = "<group>"; };
+		BF8339791C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMQuestionsServiceSpec.m; sourceTree = "<group>"; };
 		BF84C1FE1A0C111E009471D5 /* HEMSupportUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportUtil.h; sourceTree = "<group>"; };
 		BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportUtil.m; sourceTree = "<group>"; };
 		BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRootViewController.h; sourceTree = "<group>"; };
@@ -1010,6 +1012,7 @@
 				BF78E98D1B20D1660015949F /* Common */,
 				BF539CD31C0F808E000F77AA /* Insights */,
 				BF2EAD221B31F85E00C3A6E3 /* Onboarding */,
+				BF8339781C0F8BDB00BFD0F4 /* Questions */,
 				BFC99BC21B6BED28008F7F0D /* Review */,
 				BFDFCEA01B729F96000DA303 /* Sensors */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
@@ -1932,6 +1935,14 @@
 			name = Analytics;
 			sourceTree = "<group>";
 		};
+		BF8339781C0F8BDB00BFD0F4 /* Questions */ = {
+			isa = PBXGroup;
+			children = (
+				BF8339791C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m */,
+			);
+			name = Questions;
+			sourceTree = "<group>";
+		};
 		BF9450AB1BC352FF00BA0023 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2656,6 +2667,7 @@
 				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
+				BF83397A1C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
 				BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */,
 				8AC3C2E61A3CB7F40074A87F /* HEMSnazzBarControllerSpec.m in Sources */,

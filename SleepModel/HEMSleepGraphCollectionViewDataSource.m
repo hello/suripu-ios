@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
 @property (nonatomic, weak) HEMTimelineTopBarCollectionReusableView *topBarView;
+@property (nonatomic, strong) HEMUnreadAlertService* unreadService;
 
 @end
 
@@ -78,6 +79,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         _meridiemFormatter = [NSDateFormatter new];
         _inlineNumberFormatter = [HEMSplitTextFormatter new];
         _sleepResult = [SENTimeline timelineForDate:date];
+        _unreadService = [HEMUnreadAlertService new];
         [self configureCollectionView];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reloadData)
@@ -116,11 +118,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 - (void)updateUnreadIndicator {
     __weak typeof(self) weakSelf = self;
-    [[HEMUnreadAlertService sharedService] update:^(BOOL hasUnread, NSError *error) {
+    [[self unreadService] update:^(BOOL hasUnread, NSError *error) {
         if (error) {
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
         } else {
-            [[weakSelf topBarView] setUnread:hasUnread];
+            [[weakSelf topBarView] setUnread:[weakSelf shouldShowUnreadIndicator]];
         }
     }];
 }
@@ -240,6 +242,12 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     return [[self topBarView] dateTitle];
 }
 
+- (BOOL)shouldShowUnreadIndicator {
+    BOOL drawerClosed = ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
+    BOOL unread = [[self unreadService] hasUnread];
+    return drawerClosed && unread;
+}
+
 /**
  *  Move the elements of the top of the timeline to reflect the state of the drawer.
  *  The top bar view moves the icons/labels vertically to align with the drawer state,
@@ -249,8 +257,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
  *  @param isOpen the state of the drawer
  */
 - (void)updateTimelineState:(BOOL)isOpen {
-    BOOL hasUnread = [[HEMUnreadAlertService sharedService] hasUnread];
-    [[self topBarView] setUnread:!isOpen && hasUnread];
+    [[self topBarView] setUnread:[self shouldShowUnreadIndicator]];
     [[self topBarView] setOpened:isOpen];
     [[self topBarView] setShareEnabled:[self hasTimelineData] && !isOpen animated:YES];
     if (isOpen)
@@ -314,7 +321,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [view setShareEnabled:score > 0 && drawerClosed animated:YES];
 
     [view setDate:[self dateForNightOfSleep]];
-    [view setUnread:[[HEMUnreadAlertService sharedService] hasUnread]];
+    [view setUnread:[self shouldShowUnreadIndicator]];
 
     [self setTopBarView:view];
 

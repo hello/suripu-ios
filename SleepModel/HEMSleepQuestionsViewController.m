@@ -7,7 +7,6 @@
 //
 #import <SenseKit/SENQuestion.h>
 #import <SenseKit/SENAnswer.h>
-#import <SenseKit/SENServiceQuestions.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -28,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton* skipButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 
+@property (strong, nonatomic) HEMUnreadAlertService* unreadService;
 @property (strong, nonatomic) SENQuestion* currentQuestion;
 @property (strong, nonatomic) NSMutableSet* selectedAnswerPaths; // for multi selections only
 
@@ -53,6 +53,8 @@
 }
 
 - (void)configure {
+    [self setUnreadService:[HEMUnreadAlertService new]];
+    
     [[self questionLabel] setFont:[UIFont questionFont]];
     [[[self skipButton] titleLabel] setFont:[UIFont questionAnswerFont]];
     
@@ -166,7 +168,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)dismiss {
     BOOL implementsAction = [[self dataSource] respondsToSelector:@selector(takeActionBeforeDismissingFrom:)];
     if (!implementsAction || ![[self dataSource] takeActionBeforeDismissingFrom:self]) {
-        [[HEMUnreadAlertService sharedService] updateLastViewFor:HEMUnreadTypeQuestions completion:nil];
+        
+        [[self unreadService] updateLastViewFor:HEMUnreadTypeQuestions completion:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

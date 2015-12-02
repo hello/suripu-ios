@@ -20,15 +20,6 @@
 
 @implementation HEMUnreadAlertService
 
-+ (instancetype)sharedService {
-    static HEMUnreadAlertService* service = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        service = [[super alloc] init];
-    });
-    return service;
-}
-
 #pragma mark - Updates
 
 - (void)updateUnread:(void(^)(NSError* error))completion {

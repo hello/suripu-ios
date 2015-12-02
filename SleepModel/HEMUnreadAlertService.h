@@ -21,7 +21,6 @@ typedef NS_OPTIONS(NSUInteger, HEMUnreadTypes) {
 
 @property (nonatomic, strong, readonly) SENAppUnreadStats* unreadStats;
 
-+ (instancetype)sharedService;
 - (void)update:(HEMUnreadCompletionHandler)completion;
 - (void)updateLastViewFor:(HEMUnreadTypes)unreadTypes
                completion:(HEMUnreadCompletionHandler)completion;

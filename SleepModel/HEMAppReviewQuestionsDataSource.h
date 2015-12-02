@@ -9,9 +9,11 @@
 #import "HEMSleepQuestionsDataSource.h"
 
 @class HEMAppReviewQuestion;
+@class HEMQuestionsService;
 
 @interface HEMAppReviewQuestionsDataSource : NSObject <HEMQuestionsDataSource>
 
-- (instancetype)initWithAppReviewQuestion:(HEMAppReviewQuestion*)appReviewQuestion;
+- (nonnull instancetype)initWithAppReviewQuestion:(nonnull HEMAppReviewQuestion*)appReviewQuestion
+                                          service:(nonnull HEMQuestionsService*)questionsService;
 
 @end

@@ -11,12 +11,10 @@
 @interface HEMTellAFriendItemProvider : NSObject <UIActivityItemSource>
 
 - (nonnull instancetype)initWithSubject:(nullable NSString *)subject
-                              shortBody:(nonnull NSString *)shortBody
-                               longBody:(nonnull NSString *)longBody NS_DESIGNATED_INITIALIZER;
+                                   body:(nonnull NSString *)body NS_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 @property (readonly, copy, nullable) NSString *subject;
-@property (readonly, copy, nonnull) NSString *shortBody;
-@property (readonly, copy, nonnull) NSString *longBody;
+@property (readonly, copy, nonnull) NSString *body;
 
 @end

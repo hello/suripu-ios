@@ -229,9 +229,8 @@
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
 // tell a friend
-"settings.tell-a-friend.subject" = "Check out Sense";
-"settings.tell-a-friend.long-body" = "I've been using Sense to track my sleep and monitor the environment in my bedroom. I thought you might want to check it out: http://hello.is";
-"settings.tell-a-friend.short-body" = "I've been using Sense to track my sleep and monitor the environment in my bedroom. I thought you might want to check it out: http://hello.is";
+"settings.tell-a-friend.subject" = "Try Sense";
+"settings.tell-a-friend.body" = "Sense tracks your sleep, monitors the environment of your bedroom, and helps you wake up feeling great: https://hello.is";
 
 // changing server
 "debug.option.change-api-address" = "Change API Address";

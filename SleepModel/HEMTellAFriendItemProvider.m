@@ -11,12 +11,10 @@
 @implementation HEMTellAFriendItemProvider
 
 - (nonnull instancetype)initWithSubject:(nullable NSString *)subject
-                              shortBody:(nonnull NSString *)shortBody
-                               longBody:(nonnull NSString *)longBody {
+                                   body:(nonnull NSString *)body {
     if ((self = [super init])) {
         _subject = [subject copy];
-        _shortBody = [shortBody copy];
-        _longBody = [longBody copy];
+        _body = [body copy];
     }
     return self;
 }
@@ -24,16 +22,12 @@
 #pragma mark -
 
 - (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
-    return self.shortBody;
+    return self.body;
 }
 
 - (nullable id)activityViewController:(UIActivityViewController *)activityViewController
                   itemForActivityType:(NSString *)activityType {
-    if ([activityType isEqualToString:UIActivityTypeMail]) {
-        return self.longBody;
-    } else {
-        return self.shortBody;
-    }
+    return self.body;
 }
 
 - (NSString *)activityViewController:(UIActivityViewController *)activityViewController

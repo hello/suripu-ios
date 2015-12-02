@@ -280,11 +280,9 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     [SENAnalytics track:HEMAnalyticsEventTellAFriendTapped];
     
     NSString *subject = NSLocalizedString(@"settings.tell-a-friend.subject", nil);
-    NSString *shortBody = NSLocalizedString(@"settings.tell-a-friend.short-body", nil);
-    NSString *longBody = NSLocalizedString(@"settings.tell-a-friend.long-body", nil);
+    NSString *body = NSLocalizedString(@"settings.tell-a-friend.body", nil);
     HEMTellAFriendItemProvider *itemProvider = [[HEMTellAFriendItemProvider alloc] initWithSubject:subject
-                                                                                         shortBody:shortBody
-                                                                                          longBody:longBody];
+                                                                                              body:body];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[itemProvider]
                                                                                          applicationActivities:nil];
     [activityViewController setCompletionWithItemsHandler:^(NSString *activityType,
@@ -298,7 +296,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
         if (completed) {
             NSString *type = activityType ?: @"Unknown";
             [SENAnalytics track:HEMAnalyticsEventTellAFriendCompleted
-                     properties:@{HEMAnalyticsEventTellAFriendCompletedPropType: type}];
+                     properties:@{HEMAnalyticsEventTellAFriendCompletedPropType : type}];
         }
     }];
     [self presentViewController:activityViewController animated:YES completion:nil];

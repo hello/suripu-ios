@@ -131,8 +131,12 @@ NSString* const kHEMAnalyticsEventSensor = @"Sensor History";
 NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
 NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
-NSString* const HEMAnalyticsEventTellAFriend = @"Tell A Friend";
 NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
+
+// tell a friend
+NSString* const HEMAnalyticsEventTellAFriendTapped = @"Tell a friend tapped";
+NSString* const HEMAnalyticsEventTellAFriendCompleted = @"Tell a friend completed";
+NSString* const HEMAnalyticsEventTellAFriendCompletedPropType = @"type";
 
 // back view
 NSString* const HEMAnalyticsEventBackViewSwipe = @"Top view tab swiped"; // name required to match Android

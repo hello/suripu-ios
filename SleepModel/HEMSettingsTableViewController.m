@@ -277,7 +277,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 #pragma mark - Tell a Friend
 
 - (void)tellAFriend {
-    [SENAnalytics track:HEMAnalyticsEventTellAFriend];
+    [SENAnalytics track:HEMAnalyticsEventTellAFriendTapped];
     
     NSString *subject = NSLocalizedString(@"settings.tell-a-friend.subject", nil);
     NSString *shortBody = NSLocalizedString(@"settings.tell-a-friend.short-body", nil);
@@ -287,6 +287,20 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
                                                                                           longBody:longBody];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[itemProvider]
                                                                                          applicationActivities:nil];
+    [activityViewController setCompletionWithItemsHandler:^(NSString *activityType,
+                                                            BOOL completed,
+                                                            NSArray *returnedItems,
+                                                            NSError *error) {
+        if (error) {
+            DDLogError(@"Could not complete share action: %@", error);
+        }
+        
+        if (completed) {
+            NSString *type = activityType ?: @"Unknown";
+            [SENAnalytics track:HEMAnalyticsEventTellAFriendCompleted
+                     properties:@{HEMAnalyticsEventTellAFriendCompletedPropType: type}];
+        }
+    }];
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 

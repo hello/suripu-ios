@@ -26,10 +26,16 @@ typedef NS_ENUM(NSUInteger, HEMSettingsSupportRow) {
     HEMSettingsSupportRows = 1
 };
 
+typedef NS_ENUM(NSUInteger, HEMSettingsTellAFriendRow) {
+    HEMSettingsTellAFriendRowIndex = 0,
+    HEMSettingsTellAFriendRows = 1
+};
+
 typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsAccountSection = 0,
     HEMSettingsSupportSection = 1,
-    HEMSettingsSections = 2
+    HEMSettingsTellAFriendSection = 2,
+    HEMSettingsSections = 3
 };
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate,
@@ -140,6 +146,8 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
             return HEMSettingsAccountRows;
         case HEMSettingsSupportSection:
             return HEMSettingsSupportRows;
+        case HEMSettingsTellAFriendSection:
+            return HEMSettingsTellAFriendRows;
         default:
             return 0;
     }
@@ -148,6 +156,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
         case HEMSettingsSupportSection:
+        case HEMSettingsTellAFriendSection:
             return HEMSettingsSectionHeaderHeight;
         case HEMSettingsAccountSection:
         default:
@@ -242,6 +251,14 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
         switch (row) {
             case HEMSettingsSupportRowIndex:
                 title = NSLocalizedString(@"settings.support", nil);
+                break;
+            default:
+                break;
+        }
+    } else if (section == HEMSettingsTellAFriendSection) {
+        switch (row) {
+            case HEMSettingsTellAFriendRowIndex:
+                title = NSLocalizedString(@"settings.tell-a-friend", nil);
                 break;
             default:
                 break;

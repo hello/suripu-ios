@@ -120,11 +120,9 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
             [combinedData addObjectsFromArray:insightsData];
         }
         
-        [weakSelf setData:combinedData];
-        [weakSelf setQuestions:questionsData];
-        
-        // TODO: show something if there is an error
-        [[weakSelf collectionView] reloadData];
+        [strongSelf setData:combinedData];
+        [strongSelf setQuestions:questionsData];
+        [[strongSelf collectionView] reloadData];
         
         if (!insightsError && !questionsError) {
             HEMUnreadTypes types = HEMUnreadTypeInsights | HEMUnreadTypeQuestions;

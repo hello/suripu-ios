@@ -39,8 +39,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsSectionCount
 };
 
-@interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate,
-                                              MFMailComposeViewControllerDelegate>
+@interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
 @property (weak, nonatomic) UILabel *versionLabel;
@@ -287,14 +286,6 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[itemProvider]
                                                                                          applicationActivities:nil];
     [self presentViewController:activityViewController animated:YES completion:nil];
-}
-
-#pragma mark - Mail Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller
-          didFinishWithResult:(MFMailComposeResult)result
-                        error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - Cleanup

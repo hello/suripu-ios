@@ -19,6 +19,7 @@
 #import "SENSenseMetadata.h"
 #import "SENPillMetadata.h"
 #import "SENDevicePairingInfo.h"
+#import "SENRemoteImage.h"
 
 void SENClearModel();
 

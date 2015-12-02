@@ -35,9 +35,9 @@ PODS:
   - FXKeychain (1.5.3)
   - Kiwi (2.4.0)
   - LGBluetooth (1.1.4)
-  - Mixpanel (2.9.0):
-    - Mixpanel/Mixpanel (= 2.9.0)
-  - Mixpanel/Mixpanel (2.9.0)
+  - Mixpanel (2.9.1):
+    - Mixpanel/Mixpanel (= 2.9.1)
+  - Mixpanel/Mixpanel (2.9.1)
   - MSDynamicsDrawerViewController (1.5.1)
   - NAPickerView (0.0.1)
   - Nocilla (0.10.0)
@@ -134,7 +134,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: f95bafd9e79f410f192555692e4fa586c787d5da
+    :commit: fb0ea667a2638f19710609501392f046be0401e4
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -156,7 +156,7 @@ SPEC CHECKSUMS:
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
-  Mixpanel: 42ae6168effc48481d957f7883dd8514a398738d
+  Mixpanel: 5ca24b2a05f4c77fe9bcfe7671d681d0f3f8d76f
   MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a

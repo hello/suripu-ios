@@ -131,6 +131,7 @@ NSString* const kHEMAnalyticsEventSensor = @"Sensor History";
 NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
 NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
+NSString* const HEMAnalyticsEventTellAFriend = @"Tell A Friend";
 NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
 
 // back view

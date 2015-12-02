@@ -277,6 +277,8 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 #pragma mark - Tell a Friend
 
 - (void)tellAFriend {
+    [SENAnalytics track:HEMAnalyticsEventTellAFriend];
+    
     NSString *subject = NSLocalizedString(@"settings.tell-a-friend.subject", nil);
     NSString *shortBody = NSLocalizedString(@"settings.tell-a-friend.short-body", nil);
     NSString *longBody = NSLocalizedString(@"settings.tell-a-friend.long-body", nil);

@@ -114,6 +114,7 @@ extern NSString* _Nonnull const kHEMAnalyticsEventPropSensorName;
 extern NSString* _Nonnull const kHEMAnalyticsEventSense;
 extern NSString* _Nonnull const kHEMAnalyticsEventPill;
 extern NSString* _Nonnull const HEMAnalyticsEventHealthSync;
+extern NSString* _Nonnull const HEMAnalyticsEventTellAFriend;
 
 // back view
 NSString* _Nonnull const HEMAnalyticsEventBackViewSwipe;

@@ -10,6 +10,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMTellAFriendItemProvider.h"
 
 static CGFloat const HEMSettingsBottomMargin = 10.0f;
 
@@ -277,7 +278,15 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 #pragma mark - Tell a Friend
 
 - (void)tellAFriend {
-    
+    NSString *subject = NSLocalizedString(@"settings.tell-a-friend.subject", nil);
+    NSString *shortBody = NSLocalizedString(@"settings.tell-a-friend.short-body", nil);
+    NSString *longBody = NSLocalizedString(@"settings.tell-a-friend.long-body", nil);
+    HEMTellAFriendItemProvider *itemProvider = [[HEMTellAFriendItemProvider alloc] initWithSubject:subject
+                                                                                         shortBody:shortBody
+                                                                                          longBody:longBody];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[itemProvider]
+                                                                                         applicationActivities:nil];
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - Mail Delegate

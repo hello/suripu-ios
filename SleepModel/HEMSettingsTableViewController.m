@@ -15,27 +15,27 @@ static CGFloat const HEMSettingsBottomMargin = 10.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowIndex = 0,
-    HEMSettingsDevicesRowIndex = 1,
-    HEMSettingsNotificationRowIndex = 2,
-    HEMSettingsUnitsTimeRowIndex = 3,
-    HEMSettingsAccountRows = 4,
+    HEMSettingsDevicesRowIndex,
+    HEMSettingsNotificationRowIndex,
+    HEMSettingsUnitsTimeRowIndex,
+    HEMSettingsAccountRowCount
 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsSupportRow) {
     HEMSettingsSupportRowIndex = 0,
-    HEMSettingsSupportRows = 1
+    HEMSettingsSupportRowCount
 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsTellAFriendRow) {
     HEMSettingsTellAFriendRowIndex = 0,
-    HEMSettingsTellAFriendRows = 1
+    HEMSettingsTellAFriendRowCount
 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsAccountSection = 0,
-    HEMSettingsSupportSection = 1,
-    HEMSettingsTellAFriendSection = 2,
-    HEMSettingsSections = 3
+    HEMSettingsSupportSection,
+    HEMSettingsTellAFriendSection,
+    HEMSettingsSectionCount
 };
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate,
@@ -137,17 +137,17 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return HEMSettingsSections;
+    return HEMSettingsSectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case HEMSettingsAccountSection:
-            return HEMSettingsAccountRows;
+            return HEMSettingsAccountRowCount;
         case HEMSettingsSupportSection:
-            return HEMSettingsSupportRows;
+            return HEMSettingsSupportRowCount;
         case HEMSettingsTellAFriendSection:
-            return HEMSettingsTellAFriendRows;
+            return HEMSettingsTellAFriendRowCount;
         default:
             return 0;
     }
@@ -197,15 +197,21 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    NSString* nextSegueId = nil;
-    if ([indexPath section] == HEMSettingsAccountSection) {
-        nextSegueId = [self segueIdentifierForRow:indexPath.row];
-    } else if ([indexPath section] == HEMSettingsSupportSection) {
-        nextSegueId = [HEMMainStoryboard settingsToSupportSegueIdentifier];
-    }
-    
-    if (nextSegueId != nil) {
-        [self performSegueWithIdentifier:nextSegueId sender:self];
+    switch ([indexPath section]) {
+        case HEMSettingsAccountSection:
+            [self performSegueWithIdentifier:[self segueIdentifierForRow:indexPath.row]
+                                      sender:self];
+            break;
+        case HEMSettingsSupportSection:
+            [self performSegueWithIdentifier:[HEMMainStoryboard settingsToSupportSegueIdentifier]
+                                      sender:self];
+            break;
+        case HEMSettingsTellAFriendSection:
+            [self tellAFriend];
+            break;
+        default:
+            DDLogDebug(@"Unknown section %ld", (unsigned long) [indexPath section]);
+            break;
     }
 }
 
@@ -266,6 +272,12 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     }
 
     return title;
+}
+
+#pragma mark - Tell a Friend
+
+- (void)tellAFriend {
+    
 }
 
 #pragma mark - Mail Delegate

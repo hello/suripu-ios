@@ -160,6 +160,7 @@
 "settings.account" = "My account";
 "settings.units" = "Units and time";
 "settings.support" = "Support";
+"settings.tell-a-friend" = "Tell a friend about Sense";
 "settings.user-guide" = "User guide";
 "settings.contact-us" = "Contact us";
 "settings.my-tickets" = "My tickets";
@@ -226,6 +227,10 @@
 "debug.option.reset-tutorials" = "Reset tutorials";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
+
+// tell a friend
+"settings.tell-a-friend.subject" = "Try Sense";
+"settings.tell-a-friend.body" = "Sense tracks your sleep, monitors the environment of your bedroom, and helps you wake up feeling great: https://hello.is";
 
 // changing server
 "debug.option.change-api-address" = "Change API Address";

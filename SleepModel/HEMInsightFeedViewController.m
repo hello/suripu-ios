@@ -138,8 +138,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_collectionView setDelegate:nil];
-    [_collectionView setDataSource:nil];
+    [_presenter setDelegate:nil];
 }
 
 @end

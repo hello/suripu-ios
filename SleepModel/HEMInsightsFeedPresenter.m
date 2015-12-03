@@ -399,4 +399,11 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     }];
 }
 
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
+}
+
 @end

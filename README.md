@@ -39,12 +39,6 @@ To remedy the situation, various architectures have been considered including
 MVP, MVVM, and lastly VIPER (https://www.objc.io/issues/13-architecture/viper/).
 Ultimately, the goals of the architecture are:
 
-hard to reuse / debug / maintain.
-
-To remedy the situation, various architectures have been considered including
-MVP, MVVM, and lastly VIPER (https://www.objc.io/issues/13-architecture/viper/).
-Ultimately, the goals of the architecture are:
-
 1. Increase testability without dependencies to UI
 2. Create a shared understanding within the team about how to structure a module
    so that when changes are needed, developer knows where to look

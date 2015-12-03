@@ -8,7 +8,6 @@
 
 #import <SenseKit/SENQuestion.h>
 #import <SenseKit/SENInsight.h>
-#import <SenseKit/SENAppUnreadStats.h>
 
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
@@ -20,6 +19,7 @@
 #import "HEMQuestionCell.h"
 #import "HEMInsightCollectionViewCell.h"
 #import "HelloStyleKit.h"
+#import "HEMActivityIndicatorView.h"
 
 static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
 static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
@@ -33,6 +33,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 @property (weak, nonatomic) HEMUnreadAlertService* unreadService;
 @property (weak, nonatomic) UICollectionView* collectionView;
 @property (weak, nonatomic) UITabBarItem* tabBarItem;
+@property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
 @property (strong, nonatomic) NSCache* heightCache;
 
 @end
@@ -59,22 +60,24 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     [[self collectionView] setDataSource:self];
 }
 
-- (void)bindWithTabBarItem:(nonnull UITabBarItem*)tabBarItem {
-    tabBarItem.title = NSLocalizedString(@"insights.title", nil);
-    tabBarItem.image = [HelloStyleKit senseBarIcon];
-    tabBarItem.selectedImage = [UIImage imageNamed:@"senseBarIconActive"];
-    [self setTabBarItem:tabBarItem];
+- (void)bindWithActivityIndicator:(nonnull HEMActivityIndicatorView*)activityIndicator {
+    [activityIndicator stop]; // in case it's visible currently
+    [self setActivityIndicator:activityIndicator];
 }
 
-- (void)updateTabBarItemUnreadIndicator {
-    if ([self tabBarItem]) {
-        SENAppUnreadStats* unreadStats = [[self unreadService] unreadStats];
-        BOOL hasUnread = [unreadStats hasUnreadInsights] || [unreadStats hasUnreadQuestions];
-        [[self tabBarItem] setBadgeValue:hasUnread ? @"1" : nil];
+- (void)showLoadingActivity:(BOOL)show {
+    if (show) {
+        if ([[self data] count] == 0) {
+            [[self activityIndicator] start];
+        }
+    } else {
+        [[self activityIndicator] stop];
     }
 }
 
 - (void)refresh {
+    [self showLoadingActivity:YES];
+    
     dispatch_group_t dataGroup = dispatch_group_create();
     
     __block NSArray* insightsData = nil;
@@ -107,6 +110,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
+        [strongSelf showLoadingActivity:NO];
         [strongSelf updateViewWith:insightsData questions:questionsData];
         
         if (!insightsError && !questionsError) {
@@ -120,7 +124,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     });
 }
 
-- (void)updateViewWith:(NSArray<SENInsight*>*)insights questions:(NSArray<SENQuestion*>*)questions {
+- (void)updateViewWith:(NSArray<SENInsight*>*)insights
+             questions:(NSArray<SENQuestion*>*)questions {
     NSMutableArray* combinedData = [NSMutableArray array];
     
     if ([questions count] > 0) {
@@ -141,11 +146,6 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 - (void)didAppear {
     [super didAppear];
     [self refresh];
-}
-
-- (void)didDisappear {
-    [super didDisappear];
-    [self updateTabBarItemUnreadIndicator];
 }
 
 - (void)didComeBackFromBackground {

@@ -14,6 +14,7 @@
 @class HEMInsightsService;
 @class HEMQuestionsService;
 @class HEMUnreadAlertService;
+@class HEMActivityIndicatorView;
 
 typedef void(^HEMInsightsPresenterCompletion)(void);
 
@@ -36,7 +37,7 @@ typedef void(^HEMInsightsPresenterCompletion)(void);
 
 - (void)bindWithCollectionView:(nonnull UICollectionView*)collectionView;
 
-- (void)bindWithTabBarItem:(nonnull UITabBarItem*)tabBarItem;
+- (void)bindWithActivityIndicator:(nonnull HEMActivityIndicatorView*)activityIndicator;
 
 - (void)refresh;
 

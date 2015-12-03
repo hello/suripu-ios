@@ -19,20 +19,23 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAppReview.h"
 #import "HEMSleepQuestionsDataSource.h"
-
+#import "HEMActivityIndicatorView.h"
 #import "HEMQuestionsService.h"
 #import "HEMInsightsService.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMInsightsFeedPresenter.h"
+#import "HEMInsightsUnreadPresenter.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
-@property (weak,   nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 
-@property (strong, nonnull) HEMInsightsFeedPresenter* presenter;
-@property (strong, nonnull) HEMInsightsService* insightsFeedService;
-@property (strong, nonnull) HEMQuestionsService* questionsService;
-@property (strong, nonnull) HEMUnreadAlertService* unreadService;
+@property (strong, nonatomic) HEMInsightsFeedPresenter* feedPresenter;
+@property (strong, nonatomic) HEMInsightsUnreadPresenter* unreadPresenter;
+@property (strong, nonatomic) HEMInsightsService* insightsFeedService;
+@property (strong, nonatomic) HEMQuestionsService* questionsService;
+@property (strong, nonatomic) HEMUnreadAlertService* unreadService;
 
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> sinkTransition;
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> questionsTransition;
@@ -46,11 +49,14 @@
         _insightsFeedService = [HEMInsightsService new];
         _questionsService = [HEMQuestionsService new];
         _unreadService = [HEMUnreadAlertService new];
-        _presenter = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
-                                                              questionsService:_questionsService
-                                                                 unreadService:_unreadService];
+        _feedPresenter = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
+                                                                  questionsService:_questionsService
+                                                                     unreadService:_unreadService];
         
-        [_presenter bindWithTabBarItem:[self tabBarItem]];
+        _unreadPresenter = [[HEMInsightsUnreadPresenter alloc] initWithUnreadService:_unreadService];
+        // must bind with tab bar here so that the container knows how to display
+        // this controller even though the view has yet to be loaded
+        [_unreadPresenter bindWithTabBarItem:[self tabBarItem]];
     }
     return self;
 }
@@ -58,39 +64,42 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    HEMSinkModalTransition* modalTransitionDelegate = [[HEMSinkModalTransition alloc] init];
-    [modalTransitionDelegate setSinkView:[self view]];
-    [self setSinkTransition:modalTransitionDelegate];
-    
-    [[self presenter] bindWithCollectionView:[self collectionView]];
-    [[self presenter] setDelegate:self];
+    [[self feedPresenter] bindWithCollectionView:[self collectionView]];
+    [[self feedPresenter] bindWithActivityIndicator:[self activityIndicator]];
+    [[self feedPresenter] setDelegate:self];
 }
 
 - (void)viewDidBecomeActive {
     [super viewDidBecomeActive];
-    [[self presenter] didComeBackFromBackground];
+    [[self feedPresenter] didComeBackFromBackground];
+    [[self unreadPresenter] didComeBackFromBackground];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:[self presenter]
-                                             selector:@selector(didGainConnectivity)
-                                                 name:SENAPIReachableNotification object:nil];
     
-    [[self presenter] didAppear];
+    [[self feedPresenter] didAppear];
+    [[self unreadPresenter] didAppear];
     
     [SENAnalytics track:kHEMAnalyticsEventFeed];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [[self presenter] didDisappear];
+    [[self feedPresenter] didDisappear];
+    [[self unreadPresenter] didDisappear];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - HEMInsightFeedPresenterDelegate
 
 - (void)presenter:(HEMInsightsFeedPresenter *)presenter showInsight:(SENInsight *)insight {
+    if (![self sinkTransition]) {
+        HEMSinkModalTransition* modalTransitionDelegate = [[HEMSinkModalTransition alloc] init];
+        [modalTransitionDelegate setSinkView:[self view]];
+        [self setSinkTransition:modalTransitionDelegate];
+    }
+    
     HEMInsightViewController* insightVC = (id)[HEMMainStoryboard instantiateSleepInsightViewController];
     [insightVC setInsight:insight];
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
@@ -117,7 +126,7 @@
     }
     [qVC setDataSource:dataSource];
     
-    if ([self questionsTransition] == nil) {
+    if (![self questionsTransition]) {
         HEMBounceModalTransition* transition = [[HEMBounceModalTransition alloc] init];
         [transition setMessage:NSLocalizedString(@"sleep.questions.end.message", nil)];
         [self setQuestionsTransition:transition];
@@ -138,7 +147,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_presenter setDelegate:nil];
+    [_feedPresenter setDelegate:nil];
 }
 
 @end

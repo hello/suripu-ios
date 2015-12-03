@@ -774,7 +774,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="itE-j4-A7b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="498" y="2241"/>
+            <point key="canvasLocation" x="2002" y="-2392"/>
         </scene>
         <!--Action Sheet View Controller-->
         <scene sceneID="ztW-II-S6y">
@@ -4161,6 +4161,14 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akr-1S-aME" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="280" y="280" width="40" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="HXF-xk-tRU"/>
+                                    <constraint firstAttribute="height" constant="40" id="xYn-Pl-Aub"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -4168,10 +4176,12 @@
                             <constraint firstItem="9Ua-Ey-hb0" firstAttribute="leading" secondItem="DoT-Mt-7nK" secondAttribute="leadingMargin" constant="-16" id="2gn-Qd-H6A"/>
                             <constraint firstAttribute="width" secondItem="9Ua-Ey-hb0" secondAttribute="width" id="38l-Zf-hwW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9Ua-Ey-hb0" secondAttribute="trailing" constant="-16" id="7TR-nc-w7F"/>
+                            <constraint firstItem="akr-1S-aME" firstAttribute="centerX" secondItem="DoT-Mt-7nK" secondAttribute="centerX" id="JsW-0C-1Gu"/>
                             <constraint firstItem="9Ua-Ey-hb0" firstAttribute="top" secondItem="eQe-3s-OvL" secondAttribute="top" constant="3" id="O7X-MA-Zy2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9Ua-Ey-hb0" secondAttribute="trailing" constant="-16" id="Wjr-s5-Cw5"/>
                             <constraint firstItem="IbA-6B-t1D" firstAttribute="top" secondItem="9Ua-Ey-hb0" secondAttribute="bottom" constant="46" id="fx8-kC-0D4"/>
                             <constraint firstItem="9Ua-Ey-hb0" firstAttribute="leading" secondItem="DoT-Mt-7nK" secondAttribute="leadingMargin" constant="-16" id="jFZ-BL-pb8"/>
+                            <constraint firstItem="akr-1S-aME" firstAttribute="centerY" secondItem="DoT-Mt-7nK" secondAttribute="centerY" id="kXy-P3-DuU"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -4183,12 +4193,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="8Na-Kf-cgG"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="akr-1S-aME" id="Pmt-iF-F5H"/>
                         <outlet property="collectionView" destination="9Ua-Ey-hb0" id="N6T-2Y-ilN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ycj-0R-h5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3469" y="-2224"/>
+            <point key="canvasLocation" x="1253" y="-2392"/>
         </scene>
         <!--Alarm List Navigation Controller-->
         <scene sceneID="BgO-Cf-n7y">
@@ -4247,7 +4258,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wA-iz-R4F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2746" y="-2224"/>
+            <point key="canvasLocation" x="511" y="-2386"/>
         </scene>
         <!--Breakdown View Controller-->
         <scene sceneID="CKS-2Y-jGz">

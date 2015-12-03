@@ -28,7 +28,6 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 
 @property (strong, nonatomic) NSArray* data;
 @property (strong, nonatomic) NSArray<SENQuestion*>* questions;
-@property (assign, nonatomic, getter=isLoading) BOOL loading;
 @property (weak, nonatomic) HEMInsightsService* insightsService;
 @property (weak, nonatomic) HEMQuestionsService* questionsService;
 @property (weak, nonatomic) HEMUnreadAlertService* unreadService;
@@ -76,8 +75,6 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (void)refresh {
-    [self setLoading:YES];
-
     dispatch_group_t dataGroup = dispatch_group_create();
     
     __block NSArray* insightsData = nil;
@@ -110,19 +107,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        NSMutableArray* combinedData = [NSMutableArray array];
-        
-        if ([questionsData count] > 0) {
-            // only show the first question
-            [combinedData addObject:[questionsData firstObject]];
-        }
-        if ([insightsData count] > 0) {
-            [combinedData addObjectsFromArray:insightsData];
-        }
-        
-        [strongSelf setData:combinedData];
-        [strongSelf setQuestions:questionsData];
-        [[strongSelf collectionView] reloadData];
+        [strongSelf updateViewWith:insightsData questions:questionsData];
         
         if (!insightsError && !questionsError) {
             HEMUnreadTypes types = HEMUnreadTypeInsights | HEMUnreadTypeQuestions;
@@ -133,6 +118,22 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
             }];
         }
     });
+}
+
+- (void)updateViewWith:(NSArray<SENInsight*>*)insights questions:(NSArray<SENQuestion*>*)questions {
+    NSMutableArray* combinedData = [NSMutableArray array];
+    
+    if ([questions count] > 0) {
+        // only show the first question
+        [combinedData addObject:[questions firstObject]];
+    }
+    if ([insights count] > 0) {
+        [combinedData addObjectsFromArray:insights];
+    }
+    
+    [self setData:combinedData];
+    [self setQuestions:questions];
+    [[self collectionView] reloadData];
 }
 
 #pragma mark - Presenter events

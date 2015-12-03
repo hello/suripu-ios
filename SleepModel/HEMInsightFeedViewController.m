@@ -11,10 +11,6 @@
 
 #import "HEMInsightFeedViewController.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMInsightsFeedDataSource.h"
-#import "HEMQuestionCell.h"
-#import "HelloStyleKit.h"
-#import "HEMInsightCollectionViewCell.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMInsightViewController.h"
 #import "HEMMainStoryboard.h"
@@ -23,12 +19,23 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAppReview.h"
 #import "HEMSleepQuestionsDataSource.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMQuestionsService.h"
+#import "HEMInsightsService.h"
+#import "HEMUnreadAlertService.h"
+#import "HEMInsightsFeedPresenter.h"
+#import "HEMInsightsUnreadPresenter.h"
 
-@interface HEMInsightFeedViewController () <
-    UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
-@property (weak,   nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) HEMInsightsFeedDataSource* dataSource;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
+
+@property (weak, nonatomic) HEMInsightsFeedPresenter* feedPresenter;
+@property (strong, nonatomic) HEMInsightsService* insightsFeedService;
+@property (strong, nonatomic) HEMQuestionsService* questionsService;
+@property (strong, nonatomic) HEMUnreadAlertService* unreadService;
+
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> sinkTransition;
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> questionsTransition;
 
@@ -38,9 +45,23 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        self.tabBarItem.title = NSLocalizedString(@"insights.title", nil);
-        self.tabBarItem.image = [HelloStyleKit senseBarIcon];
-        self.tabBarItem.selectedImage = [UIImage imageNamed:@"senseBarIconActive"];
+        _insightsFeedService = [HEMInsightsService new];
+        _questionsService = [HEMQuestionsService new];
+        _unreadService = [HEMUnreadAlertService new];
+        HEMInsightsFeedPresenter* feedPresenter
+            = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
+                                                       questionsService:_questionsService
+                                                          unreadService:_unreadService];
+        // weak ref so we can bind collection view, activity and set delegate when view is loaded
+        _feedPresenter = feedPresenter;
+        [self addPresenter:feedPresenter];
+        
+        HEMInsightsUnreadPresenter* unreadPresenter
+            = [[HEMInsightsUnreadPresenter alloc] initWithUnreadService:_unreadService];
+        // must bind with tab bar here so that the container knows how to display
+        // this controller even though the view has yet to be loaded
+        [unreadPresenter bindWithTabBarItem:[self tabBarItem]];
+        [self addPresenter:unreadPresenter];
     }
     return self;
 }
@@ -48,138 +69,52 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    HEMSinkModalTransition* modalTransitionDelegate = [[HEMSinkModalTransition alloc] init];
-    [modalTransitionDelegate setSinkView:[self view]];
-    [self setSinkTransition:modalTransitionDelegate];
-    
-    [self setDataSource:[[HEMInsightsFeedDataSource alloc] initWithQuestionTarget:self
-                                                             questionSkipSelector:@selector(skipQuestions:)
-                                                           questionAnswerSelector:@selector(answerQuestions:)]];
-    
-    [[self collectionView] setDataSource:[self dataSource]];
-    [[self collectionView] setDelegate:self];
-    [[self collectionView] setAlwaysBounceVertical:YES];
-}
-
-- (void)viewDidBecomeActive {
-    [super viewDidBecomeActive];
-    [self reload];
+    [[self feedPresenter] bindWithCollectionView:[self collectionView]];
+    [[self feedPresenter] bindWithActivityIndicator:[self activityIndicator]];
+    [[self feedPresenter] setDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self reload];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reload)
-                                                 name:SENAPIReachableNotification object:nil];
-    
     [SENAnalytics track:kHEMAnalyticsEventFeed];
-    
 }
 
-- (void)updateLastViewed:(HEMUnreadTypes)types {
-    __weak typeof(self) weakSelf = self;
-    [[self dataSource] updateLastViewed:types completion:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
-        } else {
-            [strongSelf updateUnreadIndicator];
-        }
-    }];
-}
+#pragma mark - HEMInsightFeedPresenterDelegate
 
-- (void)updateUnreadIndicator {
-    BOOL hasUnreadInsightQuestions = [[self dataSource] hasUnreadItems];
-    [[self tabBarItem] setBadgeValue:hasUnreadInsightQuestions ? @"1" : nil];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self updateUnreadIndicator];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)reload {
-    if ([[self dataSource] isLoading]) return;
-    
-    __weak typeof(self) weakSelf = self;
-    [[self dataSource] refresh:^(BOOL didUpdate){
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!didUpdate)
-            return;
-
-        [self updateLastViewed:(HEMUnreadTypeInsights | HEMUnreadTypeQuestions)];
-        
-        [[strongSelf collectionView] reloadData];
-    }];
-}
-
-#pragma mark - UICollectionViewDelegate
-
-- (CGSize)collectionView:(UICollectionView*)collectionView
-                  layout:(UICollectionViewFlowLayout *)layout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGSize itemSize = [layout itemSize];
-    CGFloat textPadding = [[self dataSource] bodyTextPaddingForCellAtIndexPath:indexPath];
-    itemSize.height = [[self dataSource] heightForCellAtIndexPath:indexPath
-                                                        withWidth:itemSize.width - (textPadding*2)];
-    return itemSize;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView
-       willDisplayCell:(UICollectionViewCell *)cell
-    forItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [[self dataSource] displayCell:cell atIndexPath:indexPath];
-    
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    SENInsight* insight = [[self dataSource] insightAtIndexPath:indexPath];
-    if (insight != nil) {
-        [self showInsight:insight];
+- (void)presenter:(HEMInsightsFeedPresenter *)presenter showInsight:(SENInsight *)insight {
+    if (![self sinkTransition]) {
+        HEMSinkModalTransition* modalTransitionDelegate = [[HEMSinkModalTransition alloc] init];
+        [modalTransitionDelegate setSinkView:[self view]];
+        [self setSinkTransition:modalTransitionDelegate];
     }
-}
-
-
-- (void)removeCellAtIndexPath:(NSIndexPath*)indexPath {
-    [[self collectionView] performBatchUpdates:^{
-        [[self dataSource] removeQuestionAtIndexPath:indexPath];
-        [[self collectionView] deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:nil];
-}
-
-#pragma mark - Insights
-
-- (void)showInsight:(SENInsight*)insight {
-    HEMInsightViewController* insightVC
-        = (HEMInsightViewController*)[HEMMainStoryboard instantiateSleepInsightViewController];
+    
+    HEMInsightViewController* insightVC = (id)[HEMMainStoryboard instantiateSleepInsightViewController];
     [insightVC setInsight:insight];
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
     [insightVC setTransitioningDelegate:[self sinkTransition]];
     [self presentViewController:insightVC animated:YES completion:nil];
 }
 
-#pragma mark - Questions
-
-- (void)answerQuestions:(UIButton*)sender {
-    HEMSleepQuestionsViewController* qVC
-        = (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
+- (void)presenter:(HEMInsightsFeedPresenter *)presenter
+    showQuestions:(NSArray<SENQuestion *> *)questions
+       completion:(nullable HEMInsightsPresenterCompletion)completion {
     
-    NSIndexPath* path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-    SENQuestion* question = [[self dataSource] questionAtIndexPath:path];
+    HEMSleepQuestionsViewController* qVC = (id)[HEMMainStoryboard instantiateSleepQuestionsViewController];
+    
+    SENQuestion* firstQuestion = [questions firstObject];
     
     id<HEMQuestionsDataSource> dataSource = nil;
-    if ([question isKindOfClass:[HEMAppReviewQuestion class]]) {
-        dataSource = [[HEMAppReviewQuestionsDataSource alloc] initWithAppReviewQuestion:(id)question];
+    if ([firstQuestion isKindOfClass:[HEMAppReviewQuestion class]]) {
+        dataSource = [[HEMAppReviewQuestionsDataSource alloc] initWithAppReviewQuestion:(id)firstQuestion
+                                                                                service:[self questionsService]];
         [SENAnalytics track:HEMAnalyticsEventAppReviewStart];
     } else {
-        dataSource = [[HEMSleepQuestionsDataSource alloc] init];
+        dataSource = [[HEMSleepQuestionsDataSource alloc] initWithQuestions:questions
+                                                           questionsService:[self questionsService]];
     }
     [qVC setDataSource:dataSource];
     
-    if ([self questionsTransition] == nil) {
+    if (![self questionsTransition]) {
         HEMBounceModalTransition* transition = [[HEMBounceModalTransition alloc] init];
         [transition setMessage:NSLocalizedString(@"sleep.questions.end.message", nil)];
         [self setQuestionsTransition:transition];
@@ -190,34 +125,17 @@
     [nav setTransitioningDelegate:[self questionsTransition]];
     
     [self presentViewController:nav animated:YES completion:^{
-        [self removeCellAtIndexPath:path];
+        if (completion) {
+            completion ();
+        }
     }];
-}
-
-- (void)skipQuestions:(UIButton*)sender {
-    [sender setEnabled:NO];
-    NSIndexPath* path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-    SENQuestion* question = [[self dataSource] questionAtIndexPath:path];
-    if ([question isKindOfClass:[HEMAppReviewQuestion class]]) {
-        [HEMAppReview markAppReviewPromptCompleted];
-        [SENAnalytics track:HEMAnalyticsEventAppReviewSkip];
-        [self removeCellAtIndexPath:path];
-        [sender setEnabled:YES];
-    } else {
-        __weak typeof(self) weakSelf = self;
-        [[SENServiceQuestions sharedService] skipQuestion:question completion:^(NSError *error) {
-            [weakSelf removeCellAtIndexPath:path];
-            [weakSelf updateLastViewed:HEMUnreadTypeQuestions];
-            [sender setEnabled:YES];
-        }];
-    }
 }
 
 #pragma mark - Clean Up
 
 - (void)dealloc {
-    [_collectionView setDelegate:nil];
-    [_collectionView setDataSource:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_feedPresenter setDelegate:nil];
 }
 
 @end

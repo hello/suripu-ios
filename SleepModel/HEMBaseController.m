@@ -10,17 +10,47 @@
 #import "HEMAlertViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMScreenUtils.h"
+#import "HEMPresenter.h"
 
 @interface HEMBaseController()
 
 @property (nonatomic, assign) BOOL adjustedConstraints;
+@property (nullable, nonatomic, strong) NSArray<HEMPresenter*>* presenters;
 
 @end
 
 @implementation HEMBaseController
 
+#pragma mark - View Controller Lifecycle Events
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self listenForAppEvents];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[self presenters] makeObjectsPerformSelector:@selector(willAppear)];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[self presenters] makeObjectsPerformSelector:@selector(didAppear)];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[self presenters] makeObjectsPerformSelector:@selector(willDisappear)];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[self presenters] makeObjectsPerformSelector:@selector(didDisappear)];
+}
+
+#pragma mark - App Events
+
+- (void)listenForAppEvents {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(viewDidBecomeActive)
@@ -32,8 +62,26 @@
                  object:nil];
 }
 
-- (void)viewDidBecomeActive { /* do nothing here, meant for subclasses */ }
-- (void)viewDidEnterBackground { /* do nothing here, meant for subclasses */ }
+- (void)viewDidBecomeActive {
+    [[self presenters] makeObjectsPerformSelector:@selector(didComeBackFromBackground)];
+}
+
+- (void)viewDidEnterBackground {
+    [[self presenters] makeObjectsPerformSelector:@selector(didEnterBackground)];
+}
+
+#pragma mark - Presenters
+
+- (void)addPresenter:(HEMPresenter*)presenter {
+    NSMutableArray* mutableList = nil;
+    if ([self presenters]) {
+        mutableList = [[self presenters] mutableCopy];
+    } else {
+        mutableList = [NSMutableArray array];
+    }
+    [mutableList addObject:presenter];
+    [self setPresenters:mutableList];
+}
 
 #pragma mark - Constraints / Layouts for Devices
 

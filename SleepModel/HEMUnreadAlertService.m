@@ -20,36 +20,15 @@
 
 @implementation HEMUnreadAlertService
 
-+ (instancetype)sharedService {
-    static HEMUnreadAlertService* service = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        service = [[super alloc] init];
-    });
-    return service;
-}
-
 #pragma mark - Updates
 
-- (void)updateUnread:(void(^)(NSError* error))completion {
-    [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
-        if (!error && stats) {
-            [self setUnreadStats:stats];
-            DDLogVerbose(@"updated unread statuses, has unread %@", [self hasUnread] ? @"y" : @"n");
-        }
-        completion (error);
-    }];
-}
-
 - (void)update:(HEMUnreadCompletionHandler)completion {
-    [self updateUnread:^(NSError *error) {
-        BOOL hasUnread = NO;
-        if (!error) {
-            hasUnread = [self hasUnread];
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
+        if (!error && stats) {            
+            [weakSelf setUnreadStats:stats];
         }
-        if (completion) {
-            completion (hasUnread, error);
-        }
+        completion ([weakSelf hasUnread], error);
     }];
 }
 

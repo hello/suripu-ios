@@ -11,6 +11,7 @@ static NSString* const SENInsightId = @"identifier";
 static NSString* const SENInsightText = @"text";
 static NSString* const SENInsightImageUri = @"image_url";
 static NSString* const SENInsightInfoPreviewKey = @"info_preview";
+static NSString* const SENInsightMultiDensityImage = @"image";
 
 static NSString* const SENInsightCategoryGeneric = @"GENERIC";
 
@@ -21,11 +22,18 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
     if (self = [super init]) {
         _title = [dict[SENInsightTitleKey] copy];
         _message = [dict[SENInsightMessageKey] copy];
-        NSNumber* dateMillis = SENObjectOfClass(dict[SENInsightDateCreatedKey], [NSNumber class]);
-        if (dateMillis)
-            _dateCreated = SENDateFromNumber(dateMillis);
         _category = [dict[SENInsightCategory] copy];
         _infoPreview = [dict[SENInsightInfoPreviewKey] copy];
+        
+        NSNumber* dateMillis = SENObjectOfClass(dict[SENInsightDateCreatedKey], [NSNumber class]);
+        if (dateMillis) {
+            _dateCreated = SENDateFromNumber(dateMillis);
+        }
+        
+        NSDictionary* imageDict = SENObjectOfClass(dict[SENInsightMultiDensityImage], [NSDictionary class]);
+        if (imageDict) {
+            _remoteImage = [[SENRemoteImage alloc] initWithDictionary:imageDict];
+        }
     }
     return self;
 }
@@ -38,6 +46,7 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
         _dateCreated = [aDecoder decodeObjectForKey:SENInsightDateCreatedKey];
         _category = [aDecoder decodeObjectForKey:SENInsightCategory];
         _infoPreview = [aDecoder decodeObjectForKey:SENInsightInfoPreviewKey];
+        _remoteImage = [aDecoder decodeObjectForKey:SENInsightMultiDensityImage];
     }
     return self;
 }
@@ -49,6 +58,7 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
     if (self.dateCreated) [aCoder encodeObject:self.dateCreated forKey:SENInsightDateCreatedKey];
     if (self.category) [aCoder encodeObject:self.category forKey:SENInsightCategory];
     if (self.infoPreview) [aCoder encodeObject:self.infoPreview forKey:SENInsightInfoPreviewKey];
+    if (self.remoteImage) [aCoder encodeObject:self.remoteImage forKey:SENInsightMultiDensityImage];
 }
 
 - (BOOL)isGeneric {
@@ -62,17 +72,18 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
     } else if (![other isKindOfClass:[SENInsight class]]) {
         return NO;
     } else {
-        return ((self.title && [self.title isEqualToString:other.title]) || (!self.title && !other.title))
-            && ((self.message && [self.message isEqualToString:other.message]) || (!self.message && !other.message))
-            && ((self.dateCreated && [self.dateCreated isEqualToDate:other.dateCreated]) || (!self.dateCreated && !other.dateCreated))
-            && ((self.infoPreview && [self.infoPreview isEqualToString:other.infoPreview]) || (!self.infoPreview && !other.infoPreview))
-            && ((self.category && [self.category isEqualToString:other.category]) || (!self.category && !other.category));
+        return ([self.title isEqualToString:other.title] || (!self.title && !other.title))
+            && ([self.message isEqualToString:other.message] || (!self.message && !other.message))
+            && ([self.dateCreated isEqualToDate:other.dateCreated] || (!self.dateCreated && !other.dateCreated))
+            && ([self.infoPreview isEqualToString:other.infoPreview] || (!self.infoPreview && !other.infoPreview))
+            && ([self.category isEqualToString:other.category] || (!self.category && !other.category))
+            && ([self.remoteImage isEqual:other.remoteImage] || (!self.remoteImage && !other.remoteImage));
     }
 }
 
 - (NSUInteger)hash
 {
-    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash] + [self.infoPreview hash];
+    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash] + [self.infoPreview hash] + [self.remoteImage hash];
 }
 
 @end

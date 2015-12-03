@@ -7,13 +7,14 @@
 //
 
 #import "HEMTimeZoneService.h"
+#import "HEMPresenter.h"
 
 @class HEMBaseController;
 @class HEMTimeZoneService;
 
 typedef void(^HEMTimeZonePresenterDoneBlock)(void);
 
-@interface HEMTimeZonePresenter : NSObject
+@interface HEMTimeZonePresenter : HEMPresenter
 
 - (nonnull instancetype)initWithService:(nonnull HEMTimeZoneService*)service
                              controller:(nonnull HEMBaseController*)controller;

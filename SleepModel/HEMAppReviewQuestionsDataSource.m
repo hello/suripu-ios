@@ -12,6 +12,7 @@
 #import "HEMAppReview.h"
 #import "HEMZendeskService.h"
 #import "HEMSettingsNavigationController.h"
+#import "HEMQuestionsService.h"
 
 static NSString* const HEMQuestionCellIdSingle = @"single";
 static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
@@ -21,6 +22,7 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
 @property (nonatomic, strong) HEMAppReviewQuestion* currentReviewQuestion;
 @property (nonatomic, strong) HEMAppReviewAnswer* selectedAnswer;
 @property (nonatomic, weak)   UIViewController* controller;
+@property (nonatomic, weak)   HEMQuestionsService* service;
 
 // for app feedback
 @property (nonatomic, assign) SENAppReviewFeedback feedback;
@@ -30,7 +32,8 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
 
 @implementation HEMAppReviewQuestionsDataSource
 
-- (instancetype)initWithAppReviewQuestion:(HEMAppReviewQuestion*)appReviewQuestion {
+- (instancetype)initWithAppReviewQuestion:(HEMAppReviewQuestion*)appReviewQuestion
+                                  service:(HEMQuestionsService*)questionsService {
     self = [super init];
     if (self) {
         _currentReviewQuestion = appReviewQuestion;
@@ -97,8 +100,7 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
  * mark as completed
  */
 - (BOOL)skipQuestion {
-    [HEMAppReview markAppReviewPromptCompleted];
-    [SENAnalytics track:HEMAnalyticsEventAppReviewSkip];
+    [[self service] skipQuestion:[self currentReviewQuestion] completion:nil];
     [self setSelectedAnswer:nil];
     return NO;
 }

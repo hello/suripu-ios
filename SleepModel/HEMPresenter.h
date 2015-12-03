@@ -47,6 +47,14 @@
 /*
  * @discussion
  *
+ * View controllers should call this method upon entering the background when
+ * notified through UIApplicationDidEnterBackgroundNotification
+ */
+- (void)didEnterBackground;
+
+/*
+ * @discussion
+ *
  * View controllers should call this method when the app becomes active again
  * after changing state of the application
  */

@@ -31,8 +31,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 
-@property (strong, nonatomic) HEMInsightsFeedPresenter* feedPresenter;
-@property (strong, nonatomic) HEMInsightsUnreadPresenter* unreadPresenter;
+@property (weak, nonatomic) HEMInsightsFeedPresenter* feedPresenter;
 @property (strong, nonatomic) HEMInsightsService* insightsFeedService;
 @property (strong, nonatomic) HEMQuestionsService* questionsService;
 @property (strong, nonatomic) HEMUnreadAlertService* unreadService;
@@ -49,14 +48,20 @@
         _insightsFeedService = [HEMInsightsService new];
         _questionsService = [HEMQuestionsService new];
         _unreadService = [HEMUnreadAlertService new];
-        _feedPresenter = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
-                                                                  questionsService:_questionsService
-                                                                     unreadService:_unreadService];
+        HEMInsightsFeedPresenter* feedPresenter
+            = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
+                                                       questionsService:_questionsService
+                                                          unreadService:_unreadService];
+        // weak ref so we can bind collection view, activity and set delegate when view is loaded
+        _feedPresenter = feedPresenter;
+        [self addPresenter:feedPresenter];
         
-        _unreadPresenter = [[HEMInsightsUnreadPresenter alloc] initWithUnreadService:_unreadService];
+        HEMInsightsUnreadPresenter* unreadPresenter
+            = [[HEMInsightsUnreadPresenter alloc] initWithUnreadService:_unreadService];
         // must bind with tab bar here so that the container knows how to display
         // this controller even though the view has yet to be loaded
-        [_unreadPresenter bindWithTabBarItem:[self tabBarItem]];
+        [unreadPresenter bindWithTabBarItem:[self tabBarItem]];
+        [self addPresenter:unreadPresenter];
     }
     return self;
 }
@@ -69,26 +74,9 @@
     [[self feedPresenter] setDelegate:self];
 }
 
-- (void)viewDidBecomeActive {
-    [super viewDidBecomeActive];
-    [[self feedPresenter] didComeBackFromBackground];
-    [[self unreadPresenter] didComeBackFromBackground];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [[self feedPresenter] didAppear];
-    [[self unreadPresenter] didAppear];
-    
     [SENAnalytics track:kHEMAnalyticsEventFeed];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [[self feedPresenter] didDisappear];
-    [[self unreadPresenter] didDisappear];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - HEMInsightFeedPresenterDelegate

@@ -22,12 +22,6 @@ NSString* const HEMQuestionsServiceErrorDomain = @"is.hello.app.service.question
 // TODO: move logic of answering app review questions here
 @implementation HEMQuestionsService
 
-- (nonnull NSError*)errorWithCode:(HEMQuestionsError)code {
-    return [NSError errorWithDomain:HEMQuestionsServiceErrorDomain
-                               code:code
-                           userInfo:nil];
-}
-
 - (void)refreshQuestions:(nonnull HEMInsightsFeedQuestionHandler)completion {
     __weak typeof(self) weakSelf = self;
     [HEMAppReview shouldAskUserToRateTheApp:^(HEMAppReviewQuestion *question) {
@@ -90,12 +84,8 @@ NSString* const HEMQuestionsServiceErrorDomain = @"is.hello.app.service.question
     
     if ([question isKindOfClass:[HEMAppReviewQuestion class]]) {
         [self skipAppReviewQuestion:(id)question completion:completion];
-    } else if ([question isKindOfClass:[SENQuestion class]]) {
-        [self skipSleepQuestion:(id)question completion:completion];
     } else {
-        if (completion) {
-            completion ([self questions], [self errorWithCode:HEMQuestionsErrorUnsupported]);
-        }
+        [self skipSleepQuestion:question completion:completion];
     }
     
 }

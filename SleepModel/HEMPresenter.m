@@ -31,6 +31,7 @@
 - (void)willDisappear {}
 - (void)didDisappear {}
 
+- (void)didEnterBackground {}
 - (void)didComeBackFromBackground {}
 
 - (void)didGainConnectivity {}

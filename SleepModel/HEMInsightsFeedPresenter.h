@@ -16,29 +16,33 @@
 @class HEMUnreadAlertService;
 @class HEMActivityIndicatorView;
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void(^HEMInsightsPresenterCompletion)(void);
 
 @protocol HEMInsightsFeedPresenterDelegate <NSObject>
 
-- (void)presenter:(nonnull HEMInsightsFeedPresenter*)presenter showInsight:(nonnull SENInsight*)insight;
-- (void)presenter:(nonnull HEMInsightsFeedPresenter*)presenter
-    showQuestions:(nonnull NSArray<SENQuestion*>*)questions
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter showInsight:(SENInsight*)insight;
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+    showQuestions:(NSArray<SENQuestion*>*)questions
        completion:(nullable HEMInsightsPresenterCompletion)completion;
 
 @end
 
 @interface HEMInsightsFeedPresenter : HEMPresenter
 
-@property (nonatomic, weak) id<HEMInsightsFeedPresenterDelegate> delegate;
+@property (nonatomic, weak, nullable) id<HEMInsightsFeedPresenterDelegate> delegate;
 
-- (nonnull instancetype)initWithInsightsService:(nonnull HEMInsightsService*)insightsService
-                               questionsService:(nonnull HEMQuestionsService*)questionsService
-                                  unreadService:(nonnull HEMUnreadAlertService*)unreadService;
+- (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
+                               questionsService:(HEMQuestionsService*)questionsService
+                                  unreadService:(HEMUnreadAlertService*)unreadService;
 
-- (void)bindWithCollectionView:(nonnull UICollectionView*)collectionView;
+- (void)bindWithCollectionView:(UICollectionView*)collectionView;
 
-- (void)bindWithActivityIndicator:(nonnull HEMActivityIndicatorView*)activityIndicator;
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
 
 - (void)refresh;
 
 @end
+
+NS_ASSUME_NONNULL_END

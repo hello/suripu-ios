@@ -144,6 +144,7 @@
 + (UIColor *)welcomeIntroDescriptionColor;
 + (UIColor *)emptyStateDescriptionColor;
 + (UIColor *)sensorGraphNoDataColor;
++ (UIColor *)backgroundColorForRemoteImageView;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

@@ -7,7 +7,9 @@
 //
 
 #import "HEMQuestionCell.h"
+
 #import "UIFont+HEMStyle.h"
+#import "NSAttributedString+HEMUtils.h"
 
 CGFloat const HEMQuestionCellTextPadding = 22.0f;
 CGFloat const HEMQuestionCellContentPadding = 8.0f;
@@ -24,18 +26,11 @@ CGFloat const HEMQuestionCellBaseHeight = 141.0f;
 
 @implementation HEMQuestionCell
 
-+ (NSDictionary*)questionTextAttributes {
-    static NSDictionary* attributes = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableParagraphStyle* style =
-            [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-        [style setAlignment:NSTextAlignmentCenter];
-        
-        attributes = @{NSFontAttributeName : [UIFont feedQuestionFont],
-                       NSParagraphStyleAttributeName : style};
-    });
-    return attributes;
++ (CGFloat)heightForCellWithQuestion:(NSAttributedString*)question
+                           cellWidth:(CGFloat)width {
+    CGFloat maxWidth = width - (HEMQuestionCellTextPadding * 2);
+    CGFloat textHeight = [question sizeWithWidth:maxWidth].height;
+    return textHeight + HEMQuestionCellBaseHeight;
 }
 
 - (void)awakeFromNib {

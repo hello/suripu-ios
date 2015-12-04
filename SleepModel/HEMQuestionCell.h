@@ -18,6 +18,7 @@ extern CGFloat const HEMQuestionCellBaseHeight;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UIButton *answerButton;
 
-+ (NSDictionary*)questionTextAttributes;
++ (CGFloat)heightForCellWithQuestion:(NSAttributedString*)question
+                           cellWidth:(CGFloat)width;
 
 @end

@@ -5,12 +5,16 @@
 //  Created by Jimmy Lu on 11/30/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import <AttributedMarkdown/markdown_peg.h>
 
-#import <SenseKit/SENQuestion.h>
-#import <SenseKit/SENInsight.h>
+#import <SenseKit/Model.h>
+#import "SENRemoteImage+HEMDeviceSpecific.h"
 
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
+#import "NSAttributedString+HEMUtils.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMInsightsFeedPresenter.h"
 #import "HEMInsightsService.h"
@@ -20,6 +24,8 @@
 #import "HEMInsightCollectionViewCell.h"
 #import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMMarkdown.h"
+#import "HEMURLImageView.h"
 
 static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
 static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
@@ -35,6 +41,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 @property (weak, nonatomic) UITabBarItem* tabBarItem;
 @property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
 @property (strong, nonatomic) NSCache* heightCache;
+@property (strong, nonatomic) NSCache* attributedBodyCache;
 
 @end
 
@@ -49,6 +56,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
         _insightsService = insightsService;
         _questionsService = questionsService;
         _unreadService = unreadService;
+        _heightCache = [NSCache new];
+        _attributedBodyCache = [NSCache new];
     }
     return self;
 }
@@ -161,29 +170,6 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     return [indexPath row] >= [[self data] count] ? nil : [self data][[indexPath row]];
 }
 
-- (SENInsight*)insightAtIndexPath:(NSIndexPath*)indexPath {
-    id dataObj = [self objectAtIndexPath:indexPath];
-    return [dataObj isKindOfClass:[SENInsight class]] ? dataObj : nil;
-}
-
-- (SENQuestion*)questionAtIndexPath:(NSIndexPath*)indexPath {
-    id dataObj = [self objectAtIndexPath:indexPath];
-    return [dataObj isKindOfClass:[SENQuestion class]] ? dataObj : nil;
-}
-
-- (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath {
-    CGFloat padding = 0.0f;
-    id dataObj = [self objectAtIndexPath:indexPath];
-    
-    if ([dataObj isKindOfClass:[SENQuestion class]]) {
-        padding = HEMQuestionCellTextPadding;
-    } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        padding = HEMInsightCellMessagePadding;
-    }
-    
-    return padding;
-}
-
 - (NSString*)dateForCellAtIndexPath:(NSIndexPath*)indexPath {
     NSString* date = nil;
     
@@ -197,67 +183,48 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     return date;
 }
 
-- (NSString*)insightTitleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    NSString* title = nil;
-    id dataObj = [self objectAtIndexPath:indexPath];;
-    
-    if ([dataObj isKindOfClass:[SENInsight class]]) {
-        SENInsight* insight = (SENInsight*)dataObj;
-        title = [[insight title] uppercaseString];
-    }
-    
-    return title;
-}
-
-- (NSString*)bodyTextForCellAtIndexPath:(NSIndexPath*)indexPath {
+- (NSAttributedString*)attributedBodyForCellAtIndexPath:(NSIndexPath*)indexPath {
     NSString* body = nil;
     id dataObj = [self objectAtIndexPath:indexPath];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         SENQuestion* quest = (SENQuestion*)dataObj;
-        body = [quest text];
+        body = [[quest text] trim];
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
         SENInsight* insight = (SENInsight*)dataObj;
-        body = [insight message];
+        body = [[insight message] trim];
     }
     
-    return body;
-}
-
-- (NSString*)infoPreviewTextForCellAtIndexPath:(NSIndexPath*)indexPath {
-    NSString* preview = nil;
-    id dataObj = [self objectAtIndexPath:indexPath];
-    
-    if ([dataObj isKindOfClass:[SENInsight class]]) {
-        SENInsight* insight = (SENInsight*)dataObj;
-        preview = [insight infoPreview];
-        if ([preview length] == 0 && [insight isGeneric]) {
-            preview = [insight title];
+    NSAttributedString* attributedBody = [[self attributedBodyCache] objectForKey:body];
+    if (!attributedBody) {
+        if ([dataObj isKindOfClass:[SENQuestion class]]) {
+            attributedBody = [[NSAttributedString alloc] initWithString:body
+                                                             attributes:[self questionTextAttributes]];
+        } else if ([dataObj isKindOfClass:[SENInsight class]]) {
+            attributedBody = markdown_to_attr_string(body, 0, [HEMMarkdown attributesForBackViewText]);
         }
+        
+        attributedBody = [attributedBody trim];
+        [[self attributedBodyCache] setObject:attributedBody forKey:body];
     }
     
-    return preview;
+    return attributedBody;
 }
 
-- (NSString*)keyForHeightCachedForCellAtIndexPath:(NSIndexPath*)indexPath {
-    NSString* body = [self bodyTextForCellAtIndexPath:indexPath];
-    NSString* preview = [self infoPreviewTextForCellAtIndexPath:indexPath];
-    NSString* key = body;
-    
-    if (preview) {
-        key = [body stringByAppendingString:preview];
-    }
-    
-    return key;
+- (NSDictionary*)questionTextAttributes {
+    NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSTextAlignmentCenter];
+    return  @{NSFontAttributeName : [UIFont feedQuestionFont],
+              NSParagraphStyleAttributeName : style};
 }
 
-- (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width {
-    NSString* body = [self bodyTextForCellAtIndexPath:indexPath];
-    if ([body length] == 0) {
+- (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withCellWith:(CGFloat)width {
+    NSAttributedString* attributedBody = [self attributedBodyForCellAtIndexPath:indexPath];
+    if ([attributedBody length] == 0) {
         return 0.0f;
     }
     
-    NSString* cacheKey = [self keyForHeightCachedForCellAtIndexPath:indexPath];
+    NSString* cacheKey = [attributedBody string];
     if ([[self heightCache] objectForKey:cacheKey] != nil) {
         return [[[self heightCache] objectForKey:cacheKey] floatValue];
     }
@@ -266,18 +233,25 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     id dataObj = [self data][[indexPath row]];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
-        CGFloat textHeight = [body heightBoundedByWidth:width attributes:[HEMQuestionCell questionTextAttributes]];
-        calculatedHeight = textHeight + HEMQuestionCellBaseHeight;
+        calculatedHeight = [HEMQuestionCell heightForCellWithQuestion:attributedBody cellWidth:width];
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        NSString* preview = [self infoPreviewTextForCellAtIndexPath:indexPath];
-        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:body
-                                                                      infoPreview:preview
-                                                                          inWidth:width];
+        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:attributedBody inWidth:width];
     }
     
     [[self heightCache] setObject:@(calculatedHeight) forKey:cacheKey];
     return calculatedHeight;
     
+}
+
+- (NSString*)insightImageUriForCellAtIndexPath:(NSIndexPath*)indexPath {
+    SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
+    SENRemoteImage* remoteImage = [insight remoteImage];
+    return [remoteImage uriForCurrentDevice];
+}
+
+- (NSString*)insightCategoryNameForCellAtIndexPath:(NSIndexPath*)indexPath {
+    SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
+    return [insight category];
 }
 
 #pragma mark - End of helpers
@@ -307,8 +281,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
                   layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize itemSize = [layout itemSize];
-    CGFloat textPadding = [self bodyTextPaddingForCellAtIndexPath:indexPath];
-    itemSize.height = [self heightForCellAtIndexPath:indexPath withWidth:itemSize.width - (textPadding*2)];
+    itemSize.height = [self heightForCellAtIndexPath:indexPath withCellWith:itemSize.width];
     return itemSize;
 }
 
@@ -316,30 +289,28 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString* body = [self bodyTextForCellAtIndexPath:indexPath];
+    NSAttributedString* attrBody = [[self attributedBodyForCellAtIndexPath:indexPath] trim];
     
     if ([cell isKindOfClass:[HEMQuestionCell class]]) {
         HEMQuestionCell* qCell = (HEMQuestionCell*)cell;
-        NSDictionary* attributes = [HEMQuestionCell questionTextAttributes];
-        NSMutableAttributedString* attrBody
-        = [[NSMutableAttributedString alloc] initWithString:body attributes:attributes];
         [[qCell questionLabel] setAttributedText:attrBody];
         [[qCell answerButton] addTarget:self action:@selector(answerQuestion:) forControlEvents:UIControlEventTouchUpInside];
         [[qCell skipButton] addTarget:self action:@selector(skipQuestion:) forControlEvents:UIControlEventTouchUpInside];
         [[qCell answerButton] setTag:[indexPath row]];
         [[qCell skipButton] setTag:[indexPath row]];
     } else if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]) {
-        HEMInsightCollectionViewCell* iCell = (HEMInsightCollectionViewCell*)cell;
-        [iCell setMessage:body];
-        [iCell setInfoPreview:[self infoPreviewTextForCellAtIndexPath:indexPath]];
+        HEMInsightCollectionViewCell* iCell = (id)cell;
+        [[iCell messageLabel] setAttributedText:attrBody];
         [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
+        [[iCell uriImageView] setImageWithURL:[self insightImageUriForCellAtIndexPath:indexPath]];
+        [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
     }
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     // skip questions as those interactions are handled through button events
-    SENInsight* insight = [self insightAtIndexPath:indexPath];
+    SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     if (insight) {
         [[self delegate] presenter:self showInsight:insight];
     }
@@ -368,7 +339,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 
 - (void)skipQuestion:(UIButton*)skipButton {
     NSIndexPath* path = [NSIndexPath indexPathForRow:[skipButton tag] inSection:0];
-    SENQuestion* question = [self questionAtIndexPath:path];
+    SENQuestion* question = SENObjectOfClass([self objectAtIndexPath:path], [SENQuestion class]);
     if (question) {
         // optimistically skip the question
         [self removeQuestion:question atIndexPath:path];
@@ -394,7 +365,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 - (void)answerQuestion:(UIButton*)answerButton {
     [[self delegate] presenter:self showQuestions:[self questions] completion:^{
         NSIndexPath* path = [NSIndexPath indexPathForRow:[answerButton tag] inSection:0];
-        SENQuestion* question = [self questionAtIndexPath:path];
+        SENQuestion* question = SENObjectOfClass([self objectAtIndexPath:path], [SENQuestion class]);
         [self removeQuestion:question atIndexPath:path];
     }];
 }

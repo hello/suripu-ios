@@ -16,6 +16,7 @@
 + (NSDictionary *)attributesForBackViewText {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.lineSpacing = 2.f;
+    style.lineBreakMode = NSLineBreakByWordWrapping;
     style.alignment = NSTextAlignmentLeft;
     UIColor *textColor = [UIColor blackColor];
     return @{

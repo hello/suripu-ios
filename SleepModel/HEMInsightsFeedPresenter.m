@@ -289,7 +289,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSAttributedString* attrBody = [[self attributedBodyForCellAtIndexPath:indexPath] trim];
+    NSAttributedString* attrBody = [self attributedBodyForCellAtIndexPath:indexPath];
     
     if ([cell isKindOfClass:[HEMQuestionCell class]]) {
         HEMQuestionCell* qCell = (HEMQuestionCell*)cell;

@@ -1,5 +1,5 @@
 //
-//  HEMInsightsFeedService.h
+//  HEMInsightsService.h
 //  Sense
 //
 //  Created by Jimmy Lu on 11/30/15.

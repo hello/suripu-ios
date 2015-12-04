@@ -180,7 +180,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     if (self.navigationItem.rightBarButtonItems.count > 1)
         return;
     self.tinySeparatorConstraint.constant = 0.5f;
-    UIImage* image = [HelloStyleKit infoButtonIcon];
+    UIImage* image = [UIImage imageNamed:@"infoIconSmall"];
     UIButton* buttonView = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
     [buttonView setImage:image forState:UIControlStateNormal];

@@ -201,13 +201,13 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
             attributedBody = [[NSAttributedString alloc] initWithString:body
                                                              attributes:[self questionTextAttributes]];
         } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-            attributedBody = markdown_to_attr_string(body, 0, [HEMMarkdown attributesForBackViewText]);
+            attributedBody = markdown_to_attr_string(body, 0, [HEMMarkdown attributesForInsightSummaryText]);
         }
         
         attributedBody = [attributedBody trim];
         [[self attributedBodyCache] setObject:attributedBody forKey:body];
     }
-    
+
     return attributedBody;
 }
 

@@ -12,11 +12,19 @@
 
 /**
  * @discussion
+ * 
+ * Optionally display an activity indicator while image is being downloaded.
+ * Defaults to YES
+ */
+@property (nonatomic, assign) BOOL indicateActivity;
+
+/**
+ * @discussion
  * Initialize the image view with the given image url
  *
  * @param url: the url to the image
  */
-- (instancetype)initWithImageURL:(NSString*)url;
+- (nonnull instancetype)initWithImageURL:(nullable NSString*)url;
 
 /**
  * @discussion
@@ -25,7 +33,7 @@
  *
  * @param url: the url to the image
  */
-- (void)setImageWithURL:(NSString*)url;
+- (void)setImageWithURL:(nullable NSString*)url;
 
 /**
  * @discussion
@@ -35,7 +43,7 @@
  * @param url:     the url to the image
  * @param timeout: specify the timeout for the request when downloading the image
  */
-- (void)setImageWithURL:(NSString *)url withTimeout:(NSTimeInterval)timeout;
+- (void)setImageWithURL:(nullable NSString *)url withTimeout:(NSTimeInterval)timeout;
 
 /**
  * @discussion

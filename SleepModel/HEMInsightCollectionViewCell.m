@@ -34,7 +34,12 @@ static CGFloat const HEMInsightCellBaseHeight = 196.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self uriImageView] setBackgroundColor:[UIColor backgroundColorForRemoteImageView]];
+    [[self dateLabel] setTextColor:[UIColor insightSummaryDateColor]];
+    [[self categoryLabel] setTextColor:[UIColor insightSummaryCategoryColor]];
+    [[self messageLabel] setTextColor:[UIColor insightSummaryMessageColor]];
+    [[self separator] setBackgroundColor:[UIColor separatorColor]];
 }
 
 - (void)prepareForReuse {

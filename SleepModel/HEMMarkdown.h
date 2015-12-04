@@ -15,7 +15,6 @@
 + (NSDictionary*)attributesForBackViewTitle;
 + (NSDictionary*)attributesForInsightViewText;
 + (NSDictionary*)attributesForInsightTitleViewText;
-+ (NSDictionary*)attributesForInsightPreviewText;
 + (NSDictionary*)attributesForEventMessageText;
 + (NSDictionary*)attributesForTimelineTimeLabelsText;
 + (NSDictionary*)attributesForTimelineMessageText;
@@ -26,4 +25,5 @@
 + (NSDictionary*)attributesForRoomCheckSensorMessage;
 + (NSDictionary*)attributesForSensorMessage;
 + (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn;
++ (NSDictionary *)attributesForInsightSummaryText;
 @end

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0.0
+
+New:
+
+* New insights feed vx
+* Tell a friend settings option
+
+Fixes:
+
+* Unread indicator no longer appears on Timeline top bar when opened
+* Updated Zendesk SDK to fix issue photo attachments while keyboard is up
+
 ## 1.1.8.9
 
 Fixes:

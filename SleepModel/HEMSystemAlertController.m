@@ -330,7 +330,7 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
             break;
         case SENServiceDeviceStatePillLowBattery:
             *warningMessage = NSLocalizedString(@"alerts.device.pill-low-battery.message", nil);
-            *cancelTitle = NSLocalizedString(@"actions.skip", nil);
+            *cancelTitle = NSLocalizedString(@"actions.later", nil);
             *fixTitle = NSLocalizedString(@"actions.replace", nil);
             *type = HEMSystemAlertTypePillLowBattery;
             break;

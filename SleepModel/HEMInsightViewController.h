@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
 @class SENInsight;
 
-@interface HEMInsightViewController : UIViewController
+@interface HEMInsightViewController : HEMBaseController
 
 @property (nonatomic, strong) SENInsight* insight;
 

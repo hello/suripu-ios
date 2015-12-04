@@ -47,6 +47,14 @@
 /*
  * @discussion
  *
+ * View controllers should call this method upon viewDidLayoutSubviews to let
+ * the presenter know how to process changes in layout
+ */
+- (void)didRelayout;
+
+/*
+ * @discussion
+ *
  * View controllers should call this method upon entering the background when
  * notified through UIApplicationDidEnterBackgroundNotification
  */

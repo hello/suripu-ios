@@ -145,6 +145,90 @@ describe(@"HEMInsightsService", ^{
         
     });
     
+    describe(@"- getListOfInsightSummaries:", ^{
+        
+        context(@"api returned an error", ^{
+            
+            __block SENInsightInfo* info = nil;
+            __block NSError* error = nil;
+            __block BOOL trackedError = NO;
+            
+            beforeEach(^{
+                [SENAPIInsight stub:@selector(getInfoForInsight:completion:) withBlock:^id(NSArray *params) {
+                    SENAPIDataBlock block = [params lastObject];
+                    block (nil, [NSError errorWithDomain:@"test" code:-1 userInfo:nil]);
+                    return nil;
+                }];
+                
+                [SENAnalytics stub:@selector(trackError:) withBlock:^id(NSArray *params) {
+                    trackedError = YES;
+                    return nil;
+                }];
+                
+                [service getInsightForSummary:[SENInsight new] completion:^(SENInsightInfo* _Nullable data, NSError * _Nullable insightError) {
+                    info = data;
+                    error = insightError;
+                }];
+            });
+            
+            afterEach(^{
+                [SENAnalytics clearStubs];
+                [SENAPIInsight clearStubs];
+                info = nil;
+                error = nil;
+                trackedError = NO;
+            });
+            
+            it(@"should not return any data", ^{
+                [[info should] beNil];
+            });
+            
+            it(@"should have returned an error", ^{
+                [[error should] beNonNil];
+            });
+            
+            it(@"should have tracked the error", ^{
+                [[@(trackedError) should] beYes];
+            });
+            
+        });
+        
+        context(@"api returned the info with no error", ^{
+            
+            __block SENInsightInfo* info = nil;
+            __block NSError* error = nil;
+            
+            beforeEach(^{
+                [SENAPIInsight stub:@selector(getInfoForInsight:completion:) withBlock:^id(NSArray *params) {
+                    SENAPIDataBlock block = [params lastObject];
+                    block (@[[SENInsightInfo new]], nil);
+                    return nil;
+                }];
+                
+                [service getInsightForSummary:[SENInsight new] completion:^(SENInsightInfo * _Nullable insight, NSError * _Nullable insightError) {
+                    info = insight;
+                    error = insightError;
+                }];
+            });
+            
+            afterEach(^{
+                [SENAPIInsight clearStubs];
+                info = nil;
+                error = nil;
+            });
+            
+            it(@"should contain the info", ^{
+                [[info should] beKindOfClass:[SENInsightInfo class]];
+            });
+            
+            it(@"should not have returned an error", ^{
+                [[error should] beNil];
+            });
+            
+        });
+        
+    });
+    
 });
 
 SPEC_END

@@ -31,6 +31,8 @@
 - (void)willDisappear {}
 - (void)didDisappear {}
 
+- (void)didRelayout {}
+
 - (void)didEnterBackground {}
 - (void)didComeBackFromBackground {}
 

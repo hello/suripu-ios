@@ -18,7 +18,9 @@
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)preferenceReuseIdentifier;
 +(NSString *)imageReuseIdentifier;
-+(NSString *)textReuseIdentifier;
++(NSString *)summaryReuseIdentifier;
++(NSString *)titleReuseIdentifier;
++(NSString *)detailReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
 +(NSString *)infoReuseIdentifier;

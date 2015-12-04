@@ -16,6 +16,7 @@
 + (NSDictionary *)attributesForBackViewText {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.lineSpacing = 2.f;
+    style.lineBreakMode = NSLineBreakByWordWrapping;
     style.alignment = NSTextAlignmentLeft;
     UIColor *textColor = [UIColor blackColor];
     return @{
@@ -40,6 +41,35 @@
             NSForegroundColorAttributeName : textColor
         }
     };
+}
+
++ (NSDictionary *)attributesForInsightSummaryText {
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+    style.lineSpacing = 2.f;
+    style.lineBreakMode = NSLineBreakByWordWrapping;
+    style.alignment = NSTextAlignmentLeft;
+    return @{
+             @(EMPH) : @{
+                     NSFontAttributeName : [UIFont backViewBoldFont],
+                     NSParagraphStyleAttributeName : style,
+                     NSForegroundColorAttributeName : [UIColor blackColor]
+                     },
+             @(STRONG) : @{
+                     NSFontAttributeName : [UIFont backViewBoldFont],
+                     NSParagraphStyleAttributeName : style,
+                     NSForegroundColorAttributeName : [UIColor blackColor]
+                     },
+             @(PARA) : @{
+                     NSFontAttributeName : [UIFont backViewTextFont],
+                     NSParagraphStyleAttributeName : style,
+                     NSForegroundColorAttributeName : [UIColor insightSummaryMessageColor]
+                     },
+             @(BULLETLIST) : @{
+                     NSFontAttributeName : [UIFont backViewTextFont],
+                     NSParagraphStyleAttributeName : style,
+                     NSForegroundColorAttributeName : [UIColor insightSummaryMessageColor]
+                     }
+             };
 }
 
 + (NSDictionary *)attributesForAlertMessageText {
@@ -106,13 +136,6 @@
     return @{
         @(PARA) :
             @{ NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [UIFont insightTitleFont] }
-    };
-}
-
-+ (NSDictionary *)attributesForInsightPreviewText {
-    return @{
-        @(PARA) :
-            @{ NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [UIFont backViewBoldFont] }
     };
 }
 

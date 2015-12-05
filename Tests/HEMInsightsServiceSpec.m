@@ -201,7 +201,7 @@ describe(@"HEMInsightsService", ^{
             beforeEach(^{
                 [SENAPIInsight stub:@selector(getInfoForInsight:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
-                    block (@[[SENInsightInfo new]], nil);
+                    block ([SENInsightInfo new], nil);
                     return nil;
                 }];
                 

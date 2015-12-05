@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0.1
+
+New:
+
+* Updated insight detail vx
+
 ## 1.2.0.0
 
 New:

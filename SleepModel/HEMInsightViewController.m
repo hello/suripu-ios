@@ -10,11 +10,9 @@
 #import "HEMInsightsService.h"
 #import "HEMInsightPresenter.h"
 
-
-@interface HEMInsightViewController()
+@interface HEMInsightViewController() <HEMInsightActionDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *contentView;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @property (strong, nonatomic) HEMInsightsService* insightService;
@@ -34,11 +32,14 @@
     HEMInsightPresenter* presenter = [[HEMInsightPresenter alloc] initWithInsightService:service
                                                                               forInsight:[self insight]];
     [presenter bindWithCollectionView:[self contentView]];
+    [presenter bindWithCloseButton:[self doneButton]];
+    [presenter setActionDelegate:self];
+    
     [self addPresenter:presenter];
     [self setInsightService:service];
 }
 
-- (IBAction)done:(id)sender {
+- (void)closeInsightFromPresenter:(HEMInsightPresenter *)presenter {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

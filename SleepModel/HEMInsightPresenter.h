@@ -9,14 +9,24 @@
 #import "HEMPresenter.h"
 
 @class HEMInsightsService;
+@class HEMInsightPresenter;
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol HEMInsightActionDelegate <NSObject>
+
+- (void)closeInsightFromPresenter:(HEMInsightPresenter*)presenter;
+
+@end
+
 @interface HEMInsightPresenter : HEMPresenter
+
+@property (nonatomic, weak, nullable) id<HEMInsightActionDelegate> actionDelegate;
 
 - (instancetype)initWithInsightService:(HEMInsightsService*)insightsService
                             forInsight:(SENInsight*)insight;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
+- (void)bindWithCloseButton:(UIButton*)button;
 
 @end
 

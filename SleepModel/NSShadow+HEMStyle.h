@@ -15,4 +15,9 @@
  */
 + (NSShadow*)shadowForHandholdingMessage;
 
+/**
+ * @return shadow to show when content is beyond the view port
+ */
++ (NSShadow*)contentShadow;
+
 @end

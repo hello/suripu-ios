@@ -48,6 +48,11 @@
 + (UIFont*)insightFullMessageBoldFont;
 
 /**
+ * Font for the close button inside an insight
+ */
++ (UIFont*)insightDismissButtonFont;
+
+/**
  *  Font for current sensor value and sleep score
  */
 + (UIFont*)largeNumberFont;

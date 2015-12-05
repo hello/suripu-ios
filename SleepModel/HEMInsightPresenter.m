@@ -13,6 +13,8 @@
 #import "NSAttributedString+HEMUtils.h"
 #import "NSString+HEMUtils.h"
 #import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
+#import "NSShadow+HEMStyle.h"
 
 #import "HEMInsightPresenter.h"
 #import "HEMInsightsService.h"
@@ -32,7 +34,9 @@ typedef NS_ENUM(NSInteger, HEMInsightRow) {
     HEMINsightRowCount
 };
 
-static CGFloat const HEMInsightCellSummaryVerticalMargin = 32.0f;
+// FIXME: there is an extra pixel here (should be 32.0f), but required or else
+// height calculations are wrong and i'm not sure why
+static CGFloat const HEMInsightCellSummaryVerticalMargin = 33.0f;
 static CGFloat const HEMInsightCellSummaryLeftMargin = 48.0f;
 static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
 static CGFloat const HEMInsightCellTextHorizontalMargin = 24.0f;
@@ -49,6 +53,7 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 @property (nonatomic, strong) NSAttributedString* attributedSummary;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
 @property (nonatomic, strong) NSAttributedString* attributedDetail;
+@property (nonatomic, weak) UIButton* closeButton;
 
 @end
 
@@ -71,6 +76,35 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     [self loadInfo];
 }
 
+- (void)bindWithCloseButton:(UIButton*)button {
+    [button setBackgroundColor:[UIColor whiteColor]];
+    
+    NSShadow* shadow = [NSShadow contentShadow];
+    CALayer* buttonLayer = [button layer];
+    [buttonLayer setShadowColor:[[shadow shadowColor] CGColor]];
+    [buttonLayer setShadowOffset:[shadow shadowOffset]];
+    [buttonLayer setShadowOpacity:0.0f];
+    [buttonLayer setShadowRadius:[shadow shadowBlurRadius]];
+    
+    [[button titleLabel] setFont:[UIFont insightDismissButtonFont]];
+    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [button addTarget:self
+               action:@selector(closeInsight)
+     forControlEvents:UIControlEventTouchUpInside];
+    [self setCloseButton:button];
+}
+
+- (void)updateCloseButtonShadowOpacity {
+    CGFloat contentHeight = [[self collectionView] contentSize].height;
+    CGFloat scrollHeight = CGRectGetHeight([[self collectionView] bounds]);
+    if (contentHeight > scrollHeight) {
+        CGFloat yOffset = [[self collectionView] contentOffset].y;
+        CGFloat amountDisplayed = contentHeight - yOffset;
+        CGFloat percentage = MIN(1.0f, (amountDisplayed / scrollHeight) - 1.0f);
+        [[[self closeButton] layer] setShadowOpacity:percentage];
+    }
+}
+
 - (void)loadInfo {
     __block HEMActivityCoverView* activity = [[HEMActivityCoverView alloc] init];
     [activity showInView:[[self collectionView] superview] activity:YES completion:^{
@@ -83,6 +117,12 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
             [activity dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
         }];
     }];
+}
+
+#pragma mark - Actions
+
+- (void)closeInsight {
+    [[self actionDelegate] closeInsightFromPresenter:self];
 }
 
 #pragma mark - Presenter events
@@ -107,6 +147,8 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     itemSize.width = CGRectGetWidth([[self collectionView] bounds]);
     [layout setItemSize:itemSize];
     [[self collectionView] reloadData];
+    
+    [self updateCloseButtonShadowOpacity];
 }
 
 #pragma mark - Collection View
@@ -132,7 +174,7 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     switch ([indexPath row]) {
         case HEMInsightRowSummary: {
             if (![self attributedSummary]) {
-                NSString* summary = [[self insight] message];
+                NSString* summary = [[[self insight] message] trim];
                 if (summary) {
                     NSDictionary* attributes = [HEMMarkdown attributesForInsightSummaryText];
                     [self setAttributedSummary:[markdown_to_attr_string(summary, 0, attributes) trim]];
@@ -262,10 +304,7 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    CGFloat yOffset = [scrollView contentOffset].y;
-//    CGFloat currentBottom = CGRectGetHeight([scrollView bounds])+yOffset;
-//    CGFloat percentage = MIN(MAX(0.0f, ([self bottomOfContent] - currentBottom)/10.0f), 1.0f);
-//    [[[self buttonContainer] layer] setShadowOpacity:percentage];
+    [self updateCloseButtonShadowOpacity];
 }
 
 #pragma mark - Clean up

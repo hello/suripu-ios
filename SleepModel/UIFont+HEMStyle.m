@@ -64,7 +64,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)insightFullMessageBoldFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.f];
+}
+
++ (UIFont*)insightDismissButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.f];
 }
 
 + (UIFont*)largeNumberFont

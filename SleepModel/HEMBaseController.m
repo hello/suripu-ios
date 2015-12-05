@@ -48,6 +48,11 @@
     [[self presenters] makeObjectsPerformSelector:@selector(didDisappear)];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [[self presenters] makeObjectsPerformSelector:@selector(didRelayout)];
+}
+
 #pragma mark - App Events
 
 - (void)listenForAppEvents {

@@ -23,6 +23,16 @@
 + (UIFont*)alarmMeridiemFont;
 
 /**
+ *  Font for insight detail summary text that is in bold
+ */
++ (UIFont*)insightSummaryBoldFont;
+
+/**
+ *  Font for insight detail summary text
+ */
++ (UIFont*)insightSummaryFont;
+
+/**
  *  Font for section and insight headings
  */
 + (UIFont*)insightTitleFont;
@@ -36,6 +46,11 @@
  * Font for the bold message displayed on insight full view
  */
 + (UIFont*)insightFullMessageBoldFont;
+
+/**
+ * Font for the close button inside an insight
+ */
++ (UIFont*)insightDismissButtonFont;
 
 /**
  *  Font for current sensor value and sleep score

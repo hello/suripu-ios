@@ -50,22 +50,22 @@
     style.alignment = NSTextAlignmentLeft;
     return @{
              @(EMPH) : @{
-                     NSFontAttributeName : [UIFont backViewBoldFont],
+                     NSFontAttributeName : [UIFont insightSummaryBoldFont],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor blackColor]
                      },
              @(STRONG) : @{
-                     NSFontAttributeName : [UIFont backViewBoldFont],
+                     NSFontAttributeName : [UIFont insightSummaryBoldFont],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor blackColor]
                      },
              @(PARA) : @{
-                     NSFontAttributeName : [UIFont backViewTextFont],
+                     NSFontAttributeName : [UIFont insightSummaryFont],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor insightSummaryMessageColor]
                      },
              @(BULLETLIST) : @{
-                     NSFontAttributeName : [UIFont backViewTextFont],
+                     NSFontAttributeName : [UIFont insightSummaryFont],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor insightSummaryMessageColor]
                      }
@@ -125,7 +125,7 @@
         @(EMPH) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
         @(STRONG) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
         @(PARA) : @{
-            NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.7f],
+            NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.5f],
             NSFontAttributeName : [UIFont insightFullMessageFont],
             NSParagraphStyleAttributeName : style
         }
@@ -133,10 +133,8 @@
 }
 
 + (NSDictionary *)attributesForInsightTitleViewText {
-    return @{
-        @(PARA) :
-            @{ NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [UIFont insightTitleFont] }
-    };
+    return @{@(PARA) : @{ NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.7f],
+                          NSFontAttributeName : [UIFont insightTitleFont] }};
 }
 
 + (NSDictionary *)attributesForEventMessageText {

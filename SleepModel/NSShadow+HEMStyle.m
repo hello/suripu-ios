@@ -26,4 +26,10 @@
                                radius:5.0f];
 }
 
++ (NSShadow*)contentShadow {
+    return [self shadowStyleWithColor:[UIColor colorWithWhite:0.0f alpha:0.1f]
+                               offset:CGSizeZero
+                               radius:8.0f];
+}
+
 @end

@@ -42,19 +42,34 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:56.f];
 }
 
++ (UIFont*)insightSummaryBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.f];
+}
+
++ (UIFont*)insightSummaryFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:14.f];
+}
+
 + (UIFont*)insightTitleFont
 {
-    return [UIFont fontWithName:HEMTitleFontFamilyNameDemiBold size:24.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:24.f];
 }
 
 + (UIFont*)insightFullMessageFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.f];
 }
 
 + (UIFont*)insightFullMessageBoldFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:16.f];
+}
+
++ (UIFont*)insightDismissButtonFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.f];
 }
 
 + (UIFont*)largeNumberFont

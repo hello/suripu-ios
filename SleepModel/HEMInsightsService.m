@@ -23,4 +23,13 @@
     }];
 }
 
+- (void)getInsightForSummary:(SENInsight*)insight completion:(HEMInsightHandler)completion {
+    [SENAPIInsight getInfoForInsight:insight completion:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        completion (data, error);
+    }];
+}
+
 @end

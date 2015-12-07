@@ -115,6 +115,25 @@
 		<string>AvenirNext-Thin.ttf</string>
 		<string>AvenirNext-ThinItalic.ttf</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeAdd</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>New Alarm</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>is.hello.sense.shortcut.addalarm</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeAlarm</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Alarms</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>is.hello.sense.shortcut.editalarms</string>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

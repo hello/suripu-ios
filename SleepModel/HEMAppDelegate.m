@@ -7,6 +7,7 @@
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMCurrentConditionsViewController.h"
+#import "HEMAlarmListViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
@@ -24,6 +25,9 @@
 
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
+
+static NSString* const HEMShortcutTypeAddAlarm = @"is.hello.sense.shortcut.addalarm";
+static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.editalarms";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     // order matters
@@ -57,6 +61,38 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
         }
     }
     return YES;
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    NSString *shortcutType = shortcutItem.type;
+    DDLogDebug(@"incoming shortcut %@", shortcutType);
+    
+    if ([shortcutType isEqualToString:HEMShortcutTypeAddAlarm]) {
+        HEMRootViewController* root = (id)self.window.rootViewController;
+        [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
+        
+        HEMSnazzBarController* controller = (id)root.backController;
+        UINavigationController* nav = (id)[controller selectedViewController];
+        
+        void (^presentController)() = ^{
+            [nav popToRootViewControllerAnimated:NO];
+            HEMAlarmListViewController* controller = (id)nav.topViewController;
+            [controller addNewAlarm:shortcutItem];
+            
+            completionHandler(YES);
+        };
+        if (nav.presentedViewController) {
+            [nav dismissViewControllerAnimated:NO completion:presentController];
+        } else {
+            presentController();
+        }
+    } else if ([shortcutType isEqualToString:HEMShortcutTypeEditAlarms]) {
+        HEMRootViewController* root = (id)self.window.rootViewController;
+        [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
+        completionHandler(YES);
+    } else {
+        completionHandler(NO);
+    }
 }
 
 - (void)openDetailViewForSensorNamed:(NSString*)name {

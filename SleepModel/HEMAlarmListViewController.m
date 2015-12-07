@@ -41,6 +41,7 @@ NS_ENUM(NSUInteger) {
 @property (strong, nonatomic) NSDateFormatter *hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, getter=isLoading) BOOL loading;
+@property (nonatomic, getter=isWaitingForRefreshData) BOOL waitingForRefreshData;
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
 @property (nonatomic, strong) HEMBounceModalTransition *alarmSaveTransitionDelegate;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
@@ -73,7 +74,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];
-    [self refreshData];
+    self.waitingForRefreshData = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -137,7 +138,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
               self.loadingFailed = YES;
               self.loading = NO;
               [self.collectionView reloadData];
-          } else { [self checkDeviceInfoForSenseAndRefresh]; }
+          } else {
+              [self checkDeviceInfoForSenseAndRefresh];
+          }
         }];
     }
 }
@@ -205,6 +208,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     }];
 }
 
+#pragma mark - Properties
+
 - (void)setLoading:(BOOL)loading {
     _loading = loading;
     
@@ -216,6 +221,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
         self.loadingIndicator.hidden = YES;
     }
     
+    self.waitingForRefreshData = NO;
     [self.collectionView reloadData];
 }
 
@@ -343,7 +349,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 #pragma mark UICollectionViewDatasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (self.loading) {
+    if ([self isLoading] || [self isWaitingForRefreshData]) {
         return LoadingStateRowCount;
     } else if (self.alarms.count > 0) {
         return self.alarms.count;

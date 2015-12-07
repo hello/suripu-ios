@@ -3976,7 +3976,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-ZL-kDz">
-                                                    <rect key="frame" x="230" y="136" width="117" height="21"/>
+                                                    <rect key="frame" x="230" y="165" width="117" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
@@ -3991,18 +3991,18 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="jl4-Bk-rKU" secondAttribute="trailing" id="3dY-7D-eYD"/>
                                             <constraint firstItem="Mz2-Dc-hJA" firstAttribute="top" secondItem="bHF-JM-qCz" secondAttribute="top" constant="14" id="9Jv-1Q-Wdt"/>
+                                            <constraint firstItem="RQ0-ZL-kDz" firstAttribute="centerX" secondItem="jl4-Bk-rKU" secondAttribute="centerX" id="AL2-nc-Qdk"/>
                                             <constraint firstItem="bHF-JM-qCz" firstAttribute="trailing" secondItem="jl4-Bk-rKU" secondAttribute="trailing" id="BT3-w7-BEE"/>
                                             <constraint firstItem="jl4-Bk-rKU" firstAttribute="leading" secondItem="AoB-W3-581" secondAttribute="leading" id="Eif-Af-W77"/>
                                             <constraint firstItem="jl4-Bk-rKU" firstAttribute="top" secondItem="uVd-Hi-XJW" secondAttribute="bottom" constant="24" id="FC0-id-RSF"/>
                                             <constraint firstAttribute="trailing" secondItem="GkP-h4-wTp" secondAttribute="trailing" id="FWQ-E0-FFr"/>
-                                            <constraint firstAttribute="centerX" secondItem="RQ0-ZL-kDz" secondAttribute="centerX" id="LVo-9W-9EX"/>
                                             <constraint firstItem="Mz2-Dc-hJA" firstAttribute="leading" secondItem="jl4-Bk-rKU" secondAttribute="leading" id="Laq-sd-gsx"/>
                                             <constraint firstItem="bHF-JM-qCz" firstAttribute="leading" secondItem="jl4-Bk-rKU" secondAttribute="leading" id="MZo-Qm-g2e"/>
-                                            <constraint firstItem="RQ0-ZL-kDz" firstAttribute="top" secondItem="uVd-Hi-XJW" secondAttribute="bottom" constant="40" id="RKD-RK-g7T"/>
                                             <constraint firstItem="Mz2-Dc-hJA" firstAttribute="trailing" secondItem="jl4-Bk-rKU" secondAttribute="trailing" id="U0m-0Y-ibW"/>
                                             <constraint firstItem="bHF-JM-qCz" firstAttribute="top" secondItem="jl4-Bk-rKU" secondAttribute="top" id="WgP-QS-36m"/>
                                             <constraint firstItem="Mz2-Dc-hJA" firstAttribute="bottom" secondItem="jl4-Bk-rKU" secondAttribute="bottom" id="YxF-bs-C0O"/>
                                             <constraint firstItem="uVd-Hi-XJW" firstAttribute="leading" secondItem="AoB-W3-581" secondAttribute="leading" constant="14" id="ZNp-ey-TCX"/>
+                                            <constraint firstItem="RQ0-ZL-kDz" firstAttribute="centerY" secondItem="jl4-Bk-rKU" secondAttribute="centerY" constant="-12" id="aMr-XR-2EJ"/>
                                             <constraint firstItem="bHF-JM-qCz" firstAttribute="bottom" secondItem="jl4-Bk-rKU" secondAttribute="bottom" id="dkW-v7-wNI"/>
                                             <constraint firstItem="uVd-Hi-XJW" firstAttribute="top" secondItem="GkP-h4-wTp" secondAttribute="bottom" constant="24" id="eOb-N0-k7S"/>
                                             <constraint firstItem="GkP-h4-wTp" firstAttribute="top" secondItem="AoB-W3-581" secondAttribute="top" id="fYh-vF-u1z"/>
@@ -4028,19 +4028,31 @@
                                     <outlet property="delegate" destination="dvl-ut-646" id="RQ2-0m-Tgh"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="08e-Zm-mKn" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="280" y="280" width="40" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="A60-0g-dFl"/>
+                                    <constraint firstAttribute="width" constant="40" id="MCg-oK-5XN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="UtJ-3J-Jha" firstAttribute="top" secondItem="SGI-8T-ZVx" secondAttribute="bottom" constant="46" id="2ts-RR-ar1"/>
+                            <constraint firstItem="08e-Zm-mKn" firstAttribute="centerX" secondItem="jdC-gn-VDp" secondAttribute="centerX" id="3Ea-vo-Mmg"/>
                             <constraint firstAttribute="trailing" secondItem="SGI-8T-ZVx" secondAttribute="trailing" id="5Zc-Vh-f83"/>
                             <constraint firstItem="SGI-8T-ZVx" firstAttribute="leading" secondItem="jdC-gn-VDp" secondAttribute="leading" id="7Ml-MA-i9J"/>
+                            <constraint firstItem="08e-Zm-mKn" firstAttribute="centerY" secondItem="jdC-gn-VDp" secondAttribute="centerY" id="h7a-Os-S6s"/>
                             <constraint firstItem="SGI-8T-ZVx" firstAttribute="top" secondItem="tI0-Lz-X3V" secondAttribute="top" constant="3" id="mY5-kP-sTr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="E35-zG-rcT"/>
                     <connections>
                         <outlet property="collectionView" destination="SGI-8T-ZVx" id="C2E-AN-SMg"/>
+                        <outlet property="loadingIndicator" destination="08e-Zm-mKn" id="voK-jC-MTQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XFy-Nv-a7F" userLabel="First Responder" sceneMemberID="firstResponder"/>

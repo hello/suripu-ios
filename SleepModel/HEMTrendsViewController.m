@@ -20,10 +20,18 @@
 #import "HEMTutorial.h"
 #import "HEMSnazzBarController.h"
 #import "HEMRootViewController.h"
+#import "HEMActivityIndicatorView.h"
+
+NS_ENUM(NSUInteger) {
+    LoadingStateRowCount = 0,
+    EmptyStateRowCount = 1,
+};
 
 @interface HEMTrendsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate, HEMSnazzBarControllerChild>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
+@property (nonatomic, weak) IBOutlet HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, strong) NSMutableArray* defaultTrends;
+@property (nonatomic, getter=isWaitingForRefreshData) BOOL waitingForRefreshData;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @end
 
@@ -39,9 +47,8 @@ static NSString* const HEMMonthScopeType = @"M";
 static NSString* const HEMWeekScopeType = @"W";
 static NSString* const HEMAllScopeType = @"ALL";
 
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder]) {
+- (id)initWithCoder:(NSCoder*)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
         self.tabBarItem.title = NSLocalizedString(@"trends.title", nil);
         self.tabBarItem.image = [HelloStyleKit trendsBarIcon];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"trendsBarIconActive"];
@@ -49,18 +56,17 @@ static NSString* const HEMAllScopeType = @"ALL";
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self.collectionView setAlwaysBounceVertical:YES];
     UICollectionViewFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
     CGSize size = layout.itemSize;
     size.height = HEMTrendsViewCellHeight;
     layout.itemSize = size;
+    self.waitingForRefreshData = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshData)
@@ -69,30 +75,26 @@ static NSString* const HEMAllScopeType = @"ALL";
     [self refreshData];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:SENAPIReachableNotification
                                                   object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [SENAnalytics track:kHEMAnalyticsEventTrends];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     if (![self isViewLoaded] || !self.view.window) {
         self.defaultTrends = nil;
     }
     [super didReceiveMemoryWarning];
 }
 
-- (void)refreshData
-{
+- (void)refreshData {
     if ([self isLoading])
         return;
     self.loading = YES;
@@ -115,6 +117,24 @@ static NSString* const HEMAllScopeType = @"ALL";
     }];
 }
 
+#pragma mark - Properties
+
+- (void)setLoading:(BOOL)loading {
+    _loading = loading;
+    
+    if (loading) {
+        [self.loadingIndicator start];
+        self.loadingIndicator.hidden = NO;
+    } else {
+        [self.loadingIndicator stop];
+        self.loadingIndicator.hidden = YES;
+    }
+    
+    self.waitingForRefreshData = NO;
+    [self.collectionView reloadData];
+}
+
+
 #pragma mark - Snazz Events
 
 - (void)snazzViewDidAppear {
@@ -135,11 +155,11 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 #pragma mark HEMTrendCollectionViewCellDelegate
 
-- (void)didTapTimeScopeInCell:(HEMTrendCollectionViewCell*)cell withText:(NSString*)text
-{
+- (void)didTapTimeScopeInCell:(HEMTrendCollectionViewCell*)cell withText:(NSString*)text {
     NSIndexPath* indexPath = [self.collectionView indexPathForCell:cell];
     if (!indexPath)
         return;
+    
     cell.userInteractionEnabled = NO;
     SENTrend* trend = self.defaultTrends[indexPath.row];
     void (^completion)(NSArray*, NSError*) = ^(NSArray* data, NSError* error) {
@@ -154,32 +174,30 @@ static NSString* const HEMAllScopeType = @"ALL";
             [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         }
         cell.userInteractionEnabled = YES;
-        self.loading = NO;
     };
-    self.loading = YES;
+    
     [cell showGraphOfType:HEMTrendCellGraphTypeNone withData:nil];
     cell.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     cell.statusLabel.hidden = NO;
+    
     if ([trend.dataType isEqualToString:HEMScoreTrendType]) {
         [SENAPITrends sleepScoreTrendForTimePeriod:text completion:completion];
-    }
-    else if ([trend.dataType isEqualToString:HEMDurationTrendType]) {
+    } else if ([trend.dataType isEqualToString:HEMDurationTrendType]) {
         [SENAPITrends sleepDurationTrendForTimePeriod:text completion:completion];
-    }
-    else {
+    } else {
         cell.statusLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
     }
 }
 
 #pragma mark UICollectionViewDelegate
 
-- (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
-{
+- (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath {
     return NO;
 }
 
-- (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
-{
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath*)indexPath {
     UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
     if (self.defaultTrends.count == 0) {
@@ -194,28 +212,30 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 #pragma mark UICollectionViewDataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
-{
-    return 1;
+- (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
+    if ([self isLoading] || [self isWaitingForRefreshData]) {
+        return LoadingStateRowCount;
+    } else if (self.defaultTrends.count > 0) {
+        return self.defaultTrends.count;
+    } else {
+        return EmptyStateRowCount;
+    }
 }
 
-- (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.defaultTrends.count > 0 ? self.defaultTrends.count : 1;
-}
-
-- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
-{
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath*)indexPath {
     if (self.defaultTrends.count == 0) {
         return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
+    
     SENTrend* trend = self.defaultTrends[indexPath.row];
     NSDictionary* attributes = @{ NSKernAttributeName : @(1.2),
-        NSFontAttributeName : [UIFont backViewTitleFont] };
+                                  NSFontAttributeName : [UIFont backViewTitleFont] };
     NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:trend.title attributes:attributes];
     if (trend.dataPoints.count <= 2) {
         return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
+    
     NSString* identifier = [HEMMainStoryboard trendGraphReuseIdentifier];
     HEMTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                  forIndexPath:indexPath];
@@ -226,24 +246,17 @@ static NSString* const HEMAllScopeType = @"ALL";
     return cell;
 }
 
-- (HEMEmptyTrendCollectionViewCell*)collectionView:(UICollectionView*)collectionView emptyCellForItemAtIndexPath:(NSIndexPath*)indexPath
-{
+- (HEMEmptyTrendCollectionViewCell*)collectionView:(UICollectionView*)collectionView
+                       emptyCellForItemAtIndexPath:(NSIndexPath*)indexPath {
     NSString* identifier = [HEMMainStoryboard overTimeReuseIdentifier];
     HEMEmptyTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                       forIndexPath:indexPath];
-    if ([self isLoading]) {
-        [cell showActivity:YES withText:NSLocalizedString(@"activity.loading", nil)];
-    }
-    else {
-        [cell showActivity:NO withText:nil];
-        cell.detailLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
-    }
+    cell.detailLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
     
     return cell;
 }
 
-- (void)configureGraphForCell:(HEMTrendCollectionViewCell*)cell withTrend:(SENTrend*)trend
-{
+- (void)configureGraphForCell:(HEMTrendCollectionViewCell*)cell withTrend:(SENTrend*)trend {
     NSString* period = trend.timePeriod;
     HEMTrendCellGraphType type = trend.graphType == SENTrendGraphTypeTimeSeriesLine
         ? HEMTrendCellGraphTypeLine
@@ -287,8 +300,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 #pragma mark - Clean Up
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];

@@ -1,7 +1,6 @@
 #import "HEMAlarmListViewController.h"
 
 #import <SenseKit/SenseKit.h>
-#import <SpinKit/RTSpinKitView.h>
 #import <AttributedMarkdown/markdown_peg.h>
 
 #import "UIFont+HEMStyle.h"
@@ -23,6 +22,12 @@
 #import "NSString+HEMUtils.h"
 #import "HEMScreenUtils.h"
 #import "HEMNoAlarmCell.h"
+#import "HEMActivityIndicatorView.h"
+
+NS_ENUM(NSUInteger) {
+    LoadingStateRowCount = 0,
+    EmptyStateRowCount = 1,
+};
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate,
@@ -30,8 +35,8 @@
 
 @property (strong, nonatomic) NSArray *alarms;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton *addButton;
-@property (weak, nonatomic) IBOutlet RTSpinKitView *spinnerView;
 @property (strong, nonatomic) NSDateFormatter *hour24Formatter;
 @property (strong, nonatomic) NSDateFormatter *hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter *meridiemFormatter;
@@ -67,7 +72,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.alarmSaveTransitionDelegate.message = NSLocalizedString(@"actions.saved", nil);
     [self configureCollectionView];
     [self configureAddButton];
-    [self configureSpinnerView];
     [self configureDateFormatters];
     [self refreshData];
 }
@@ -108,16 +112,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
 }
 
-- (void)configureSpinnerView {
-    self.spinnerView.hidesWhenStopped = YES;
-    self.spinnerView.color = [UIColor whiteColor];
-    self.spinnerView.spinnerSize = CGRectGetHeight(self.spinnerView.bounds);
-    self.spinnerView.style = RTSpinKitViewStyleThreeBounce;
-    self.spinnerView.hidesWhenStopped = YES;
-    self.spinnerView.backgroundColor = [UIColor clearColor];
-    [self.spinnerView stopAnimating];
-}
-
 - (void)configureDateFormatters {
     self.hour12Formatter = [NSDateFormatter new];
     self.hour12Formatter.dateFormat = @"hh:mm";
@@ -133,13 +127,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.loading = YES;
     self.addButton.enabled = NO;
     self.noSense = NO;
-    [self.spinnerView startAnimating];
     SENServiceDevice *service = [SENServiceDevice sharedService];
     if ([service isInfoLoaded]) {
         [self checkDeviceInfoForSenseAndRefresh];
     } else {
         [service loadDeviceInfo:^(NSError *error) {
-          [self.spinnerView stopAnimating];
           if (error) {
               self.noSense = NO;
               self.loadingFailed = YES;
@@ -165,13 +157,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
         self.addButton.enabled = NO;
         [self.collectionView reloadData];
     }
-    [self.spinnerView stopAnimating];
 }
 
 - (void)refreshAlarmList {
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self
                                               completion:^(NSError *error) {
-                                                [self.spinnerView stopAnimating];
                                                 if (error) {
                                                     self.loadingFailed = YES;
                                                     self.loading = NO;
@@ -213,6 +203,20 @@ static NSUInteger const HEMAlarmListLimit = 8;
           result = [@(obj1.repeatFlags) compare:@(obj2.repeatFlags)];
       return result;
     }];
+}
+
+- (void)setLoading:(BOOL)loading {
+    _loading = loading;
+    
+    if (loading) {
+        [self.loadingIndicator start];
+        self.loadingIndicator.hidden = NO;
+    } else {
+        [self.loadingIndicator stop];
+        self.loadingIndicator.hidden = YES;
+    }
+    
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Actions
@@ -339,7 +343,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
 #pragma mark UICollectionViewDatasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.alarms.count > 0 ? self.alarms.count : 1;
+    if (self.loading) {
+        return LoadingStateRowCount;
+    } else if (self.alarms.count > 0) {
+        return self.alarms.count;
+    } else {
+        return EmptyStateRowCount;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -350,7 +360,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
         return [self collectionView:collectionView statusCellAtIndexPath:indexPath];
     } else if ([self hasNoSense]) {
         return [self collectionView:collectionView pairingCellForItemAtIndexPath:indexPath];
-    } else { return [self collectionView:collectionView emptyCellAtIndexPath:indexPath]; }
+    } else {
+        return [self collectionView:collectionView emptyCellAtIndexPath:indexPath];
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -404,8 +416,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
                    statusCellAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = [HEMMainStoryboard alarmListStatusCellReuseIdentifier];
     HEMAlarmListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    NSString *messageKey = [self isLoading] ? @"activity.loading" : @"alarms.no-data";
-    cell.detailLabel.text = NSLocalizedString(messageKey, nil);
+    cell.detailLabel.text = NSLocalizedString(@"alarms.no-data", nil);
     return cell;
 }
 
@@ -472,7 +483,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
         return CGSizeMake(width, HEMAlarmListCellHeight);
     } else if ([self hasNoSense]) {
         return CGSizeMake(width, HEMAlarmListPairCellHeight);
-    } else if (self.alarms.count == 0 || [self isLoading]) {
+    } else if (self.alarms.count == 0) {
         return CGSizeMake(width, HEMAlarmListNoAlarmCellHeight);
     }
     

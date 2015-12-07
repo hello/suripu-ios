@@ -118,16 +118,16 @@
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutIconTypeAdd</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>shortcut-new-alarm</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>New Alarm</string>
 			<key>UIApplicationShortcutItemType</key>
 			<string>is.hello.sense.shortcut.addalarm</string>
 		</dict>
 		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutIconTypeAlarm</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>shortcut-alarm-list</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Alarms</string>
 			<key>UIApplicationShortcutItemType</key>

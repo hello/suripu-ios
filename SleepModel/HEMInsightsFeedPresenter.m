@@ -312,7 +312,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     // skip questions as those interactions are handled through button events
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     if (insight) {
-        [[self delegate] presenter:self showInsight:insight];
+        HEMInsightCollectionViewCell* cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+        [[self delegate] presenter:self showInsight:insight fromCell:cell];
     }
 }
 

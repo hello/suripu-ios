@@ -19,7 +19,6 @@
 #import "HEMInsightPresenter.h"
 #import "HEMInsightsService.h"
 #import "HEMMainStoryboard.h"
-#import "HEMActivityCoverView.h"
 #import "HEMMarkdown.h"
 #import "HEMURLImageView.h"
 #import "HEMImageCollectionViewCell.h"
@@ -42,6 +41,8 @@ static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
 static CGFloat const HEMInsightCellTextHorizontalMargin = 24.0f;
 static CGFloat const HEMInsightCellHeightImage = 188.0f;
 static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
+static CGFloat const HEMInsightCloseButtonAnimation = 0.5f;
+static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
 
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -54,6 +55,7 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
 @property (nonatomic, strong) NSAttributedString* attributedDetail;
 @property (nonatomic, weak) UIButton* closeButton;
+@property (nonatomic, weak) NSLayoutConstraint* closeBottomConstraint;
 
 @end
 
@@ -76,7 +78,8 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     [self loadInfo];
 }
 
-- (void)bindWithCloseButton:(UIButton*)button {
+- (void)bindWithCloseButton:(UIButton*)button
+           bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [button setBackgroundColor:[UIColor whiteColor]];
     
     NSShadow* shadow = [NSShadow contentShadow];
@@ -92,6 +95,9 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
                action:@selector(closeInsight)
      forControlEvents:UIControlEventTouchUpInside];
     [self setCloseButton:button];
+  
+    [bottomConstraint setConstant:-CGRectGetHeight([button bounds])];
+    [self setCloseBottomConstraint:bottomConstraint];
 }
 
 - (void)updateCloseButtonShadowOpacity {
@@ -106,16 +112,13 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 }
 
 - (void)loadInfo {
-    __block HEMActivityCoverView* activity = [[HEMActivityCoverView alloc] init];
-    [activity showInView:[[self collectionView] superview] activity:YES completion:^{
-        __weak typeof(self) weakSelf = self;
-        [[self insightsService] getInsightForSummary:[self insight] completion:^(SENInsightInfo * _Nullable insight, NSError * _Nullable error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf setLoadError:error];
-            [strongSelf setInsightDetail:insight];
-            [[strongSelf collectionView] reloadData];
-            [activity dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
-        }];
+    __weak typeof(self) weakSelf = self;
+    [[self insightsService] getInsightForSummary:[self insight] completion:^(SENInsightInfo * _Nullable insight, NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setLoadError:error];
+        [strongSelf setInsightDetail:insight];
+        [[strongSelf collectionView] reloadData];
+        [strongSelf updateCloseButtonShadowOpacity];
     }];
 }
 
@@ -133,10 +136,25 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     [rootVC hideStatusBar];
 }
 
+- (void)didAppear {
+    [super didAppear];
+    
+    [[self closeBottomConstraint] setConstant:0.0f];
+    [UIView animateWithDuration:HEMInsightCloseButtonAnimation animations:^{
+        [[self closeButton] layoutIfNeeded];
+    }];
+    
+}
+
 - (void)willDisappear {
     [super willDisappear];
     HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
     [rootVC showStatusBar];
+}
+
+- (void)didDisappear {
+    [super didDisappear];
+    [[self closeBottomConstraint] setConstant:-CGRectGetHeight([[self closeButton] bounds])];
 }
 
 - (void)didRelayout {
@@ -229,6 +247,21 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     return [attrText sizeWithWidth:itemSize.width - horizontalMargins].height;
 }
 
+- (void)setAttributedText:(NSAttributedString*)attributedText
+               inTextCell:(HEMTextCollectionViewCell*)cell {
+    
+    [[cell textLabel] setAttributedText:attributedText];
+    
+    if ([[[cell textLabel] text] length] == 0) {
+        [[cell textLabel] setAlpha:0.0f];
+    } else {
+        [UIView animateWithDuration:HEMInsightTextAppearanceAnimation animations:^{
+            [[cell textLabel] setAlpha:1.0f];
+        }];
+    }
+    
+}
+
 #pragma mark End of helpers
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -259,10 +292,9 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
             HEMTextCollectionViewCell* textCell = (id)cell;
             [textCell setBackgroundColor:[UIColor whiteColor]];
             
-            NSAttributedString* attributedText = [self attributedTextForCellAtIndexPath:indexPath];
-            if (attributedText) {
-                [[textCell textLabel] setAttributedText:attributedText];
-            }
+            NSAttributedString* attributedText = [self attributedTextForCellAtIndexPath:indexPath
+                                                  ];
+            [self setAttributedText:attributedText inTextCell:textCell];
             break;
         }
         default:

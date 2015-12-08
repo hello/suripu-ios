@@ -7,12 +7,16 @@
 //
 
 #import "HEMTransitionDelegate.h"
+#import "HEMRootViewController.h"
 
+CGFloat const HEMTransitionDimmingViewMaxAlpha = 0.7f;
 static CGFloat const HEMTransitionDefaultDuration = 0.5f;
 
 @interface HEMTransitionDelegate()
 
 @property (nonatomic, assign) BOOL presenting;
+@property (nonatomic, assign) BOOL previouslyShowingStatusBar;
+@property (nonatomic, strong) UIView* dimmingView;
 
 @end
 
@@ -38,6 +42,38 @@ static CGFloat const HEMTransitionDefaultDuration = 0.5f;
     return self;
 }
 
+- (UIView*)dimmingViewWithContext:(id<UIViewControllerContextTransitioning>)context {
+    if (!_dimmingView) {
+        UIView* containerView = [context containerView];
+        CGRect containerBounds = [containerView bounds];
+        
+        UIView* dimmingView = [[UIView alloc] initWithFrame:containerBounds];
+        [dimmingView setAlpha:0.0f];
+        [dimmingView setBackgroundColor:[UIColor blackColor]];
+        _dimmingView = dimmingView;
+    }
+    return _dimmingView;
+}
+
+- (void)setTimelineVisible:(BOOL)visible animated:(BOOL)animated {
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    [rootVC setPaneVisible:visible animated:animated];
+}
+
+- (void)showStatusBar:(BOOL)show {
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    if (show) {
+        [rootVC showStatusBar];
+    } else {
+        [rootVC hideStatusBar];
+    }
+}
+
+- (BOOL)isStatusBarShowing {
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    return ![rootVC isStatusBarHidden];
+}
+
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -56,6 +92,5 @@ static CGFloat const HEMTransitionDefaultDuration = 0.5f;
 
 - (void)animatePresentationWithContext:(id<UIViewControllerContextTransitioning>)context {}
 - (void)animateDismissalWithContext:(id<UIViewControllerContextTransitioning>)context {}
-
 
 @end

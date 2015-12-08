@@ -25,6 +25,8 @@
 #import "HEMUnreadAlertService.h"
 #import "HEMInsightsFeedPresenter.h"
 #import "HEMInsightsUnreadPresenter.h"
+#import "HEMInsightTransition.h"
+#import "HEMInsightCollectionViewCell.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -36,7 +38,7 @@
 @property (strong, nonatomic) HEMQuestionsService* questionsService;
 @property (strong, nonatomic) HEMUnreadAlertService* unreadService;
 
-@property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> sinkTransition;
+@property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> insightTransition;
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> questionsTransition;
 
 @end
@@ -81,17 +83,23 @@
 
 #pragma mark - HEMInsightFeedPresenterDelegate
 
-- (void)presenter:(HEMInsightsFeedPresenter *)presenter showInsight:(SENInsight *)insight {
-    if (![self sinkTransition]) {
-        HEMSinkModalTransition* modalTransitionDelegate = [[HEMSinkModalTransition alloc] init];
-        [modalTransitionDelegate setSinkView:[self view]];
-        [self setSinkTransition:modalTransitionDelegate];
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+      showInsight:(SENInsight*)insight
+         fromCell:(HEMInsightCollectionViewCell*)cell {
+    
+    HEMInsightTransition* transition = (id)[self insightTransition];
+    if (!transition) {
+        transition = [HEMInsightTransition new];
+        [self setInsightTransition:transition];
     }
+    
+    CGRect relativeFrame = [cell convertRect:[cell bounds] toView:[self view]];
+    [transition expandFrom:cell withRelativeFrame:relativeFrame];
     
     HEMInsightViewController* insightVC = (id)[HEMMainStoryboard instantiateSleepInsightViewController];
     [insightVC setInsight:insight];
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
-    [insightVC setTransitioningDelegate:[self sinkTransition]];
+    [insightVC setTransitioningDelegate:transition];
     [self presentViewController:insightVC animated:YES completion:nil];
 }
 

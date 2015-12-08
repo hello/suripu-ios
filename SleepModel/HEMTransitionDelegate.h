@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface HEMTransitionDelegate : NSObject <
     UIViewControllerAnimatedTransitioning,
     UIViewControllerTransitioningDelegate
 >
+
+extern CGFloat const HEMTransitionDimmingViewMaxAlpha;
 
 @property (nonatomic, assign) CGFloat duration;
 
@@ -35,4 +39,43 @@
  */
 - (void)animateDismissalWithContext:(id<UIViewControllerContextTransitioning>)context;
 
+/**
+ * @discussion
+ * Convenience method to obtain a "dimming view" that can be used as a transparent
+ * background view while the transition takes place.  Caller must add the view
+ * directly the container as needed.  The dimming view will be returned with 0 alpha
+ *
+ * @param the context: the transitioning context
+ * @return the dimming view
+ */
+- (UIView*)dimmingViewWithContext:(id<UIViewControllerContextTransitioning>)context;
+
+/**
+ * @discussion
+ * Convenience method to show / hide the status bar when transitioning between
+ * controllers
+ *
+ * @param show: YES to show the status bar, NO otherwise
+ */
+- (void)showStatusBar:(BOOL)show;
+
+/**
+ * @discussion
+ * Convenience method to determine if status bar is currently showing
+ *
+ * @return YES if the status bar is currently showing.  NO otherwise
+ */
+- (BOOL)isStatusBarShowing;
+
+/**
+ * @discussion
+ * Convenience method to show / hide the timeline when transitioning
+ *
+ * @param visible : YES to keep the top of the timeline visible.  NO otherwise
+ * @param animated: YES to aniamte the change.  NO otherwise
+ */
+- (void)setTimelineVisible:(BOOL)visible animated:(BOOL)animated;
+
 @end
+
+NS_ASSUME_NONNULL_END

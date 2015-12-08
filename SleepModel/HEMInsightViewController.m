@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *contentView;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *doneButtonBottomConstraint;
 
 @property (strong, nonatomic) HEMInsightsService* insightService;
 
@@ -32,7 +33,8 @@
     HEMInsightPresenter* presenter = [[HEMInsightPresenter alloc] initWithInsightService:service
                                                                               forInsight:[self insight]];
     [presenter bindWithCollectionView:[self contentView]];
-    [presenter bindWithCloseButton:[self doneButton]];
+    [presenter bindWithCloseButton:[self doneButton]
+                  bottomConstraint:[self doneButtonBottomConstraint]];
     [presenter setActionDelegate:self];
     
     [self addPresenter:presenter];

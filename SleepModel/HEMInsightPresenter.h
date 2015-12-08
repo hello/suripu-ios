@@ -26,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithInsightService:(HEMInsightsService*)insightsService
                             forInsight:(SENInsight*)insight;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
-- (void)bindWithCloseButton:(UIButton*)button;
+- (void)bindWithCloseButton:(UIButton*)button
+           bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
 
 @end
 

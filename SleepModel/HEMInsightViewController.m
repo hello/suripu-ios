@@ -32,7 +32,7 @@
     HEMInsightsService* service = [HEMInsightsService new];
     HEMInsightPresenter* presenter = [[HEMInsightPresenter alloc] initWithInsightService:service
                                                                               forInsight:[self insight]];
-    [presenter bindWithCollectionView:[self contentView]];
+    [presenter bindWithCollectionView:[self contentView] withImageColor:[self imageColor]];
     [presenter bindWithCloseButton:[self doneButton]
                   bottomConstraint:[self doneButtonBottomConstraint]];
     [presenter setActionDelegate:self];

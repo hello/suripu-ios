@@ -7,7 +7,7 @@
 //
 #import <SenseKit/SenseKit.h>
 
-#import "UIView+HEMSnapshot.h"
+#import "UIImage+HEMPixelColor.h"
 
 #import "HEMInsightFeedViewController.h"
 #import "HEMBaseController+Protected.h"
@@ -27,6 +27,7 @@
 #import "HEMInsightsUnreadPresenter.h"
 #import "HEMInsightTransition.h"
 #import "HEMInsightCollectionViewCell.h"
+#import "HEMURLImageView.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -98,6 +99,7 @@
     
     HEMInsightViewController* insightVC = (id)[HEMMainStoryboard instantiateSleepInsightViewController];
     [insightVC setInsight:insight];
+    [insightVC setImageColor:[[[cell uriImageView] image] colorAtPosition:CGPointMake(1.0f, 1.0f)]];
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
     [insightVC setTransitioningDelegate:transition];
     [self presentViewController:insightVC animated:YES completion:nil];

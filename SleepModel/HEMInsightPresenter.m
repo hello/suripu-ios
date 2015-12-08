@@ -15,6 +15,7 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "NSShadow+HEMStyle.h"
+#import "UIImage+HEMPixelColor.h"
 
 #import "HEMInsightPresenter.h"
 #import "HEMInsightsService.h"
@@ -35,6 +36,7 @@ typedef NS_ENUM(NSInteger, HEMInsightRow) {
     HEMINsightRowCount
 };
 
+static NSString* const HEMInsightHeaderReuseId = @"header";
 // FIXME: there is an extra pixel here (should be 32.0f), but required or else
 // height calculations are wrong and i'm not sure why
 static CGFloat const HEMInsightCellSummaryVerticalMargin = 33.0f;
@@ -59,6 +61,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
 @property (nonatomic, weak) UIButton* closeButton;
 @property (nonatomic, weak) NSLayoutConstraint* closeBottomConstraint;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
+@property (nonatomic, strong) UIColor* imageColor;
 
 @end
 
@@ -74,7 +77,8 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
     return self;
 }
 
-- (void)bindWithCollectionView:(UICollectionView*)collectionView {
+- (void)bindWithCollectionView:(UICollectionView*)collectionView withImageColor:(UIColor*)imageColor {
+    [self setImageColor:imageColor];
     [self setCollectionView:collectionView];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setDataSource:self];
@@ -284,6 +288,25 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = [self reuseIdentifierForIndexPath:indexPath];
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+}
+
+- (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView
+          viewForSupplementaryElementOfKind:(NSString *)kind
+                                atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView* view = nil;
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                  withReuseIdentifier:HEMInsightHeaderReuseId
+                                                         forIndexPath:indexPath];
+    }
+    
+    return view;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view
+        forElementKind:(NSString *)elementKind
+           atIndexPath:(NSIndexPath *)indexPath {
+    [view setBackgroundColor:[self imageColor]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView

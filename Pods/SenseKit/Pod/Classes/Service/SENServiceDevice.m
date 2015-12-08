@@ -33,6 +33,8 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 @property (nonatomic, assign, getter=isLoadingInfo) BOOL loadingInfo;
 @property (nonatomic, assign, getter=isCheckingStates) BOOL checkingStates;
 
+@property (nonatomic, readonly) NSMutableArray<void(^)(NSError* error)> *pendingDeviceInfoDoneBlocks;
+
 @end
 
 @implementation SENServiceDevice
@@ -53,6 +55,8 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 - (id)init {
     self = [super init];
     if (self) {
+        _pendingDeviceInfoDoneBlocks = [NSMutableArray arrayWithCapacity:2];
+        
         [self setDeviceState:SENServiceDeviceStateUnknown];
     }
     return self;
@@ -101,9 +105,9 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 - (void)checkSenseState:(void(^)(SENServiceDeviceState state))completion {
     SENServiceDeviceState deviceState
-        = ![[self devices] hasPairedSense]
-        ? SENServiceDeviceStateSenseNotPaired
-        : SENServiceDeviceStateNormal;
+    = ![[self devices] hasPairedSense]
+    ? SENServiceDeviceStateSenseNotPaired
+    : SENServiceDeviceStateNormal;
     
     if (deviceState == SENServiceDeviceStateNormal) {
         if ([self shouldWarnAboutSenseLastSeen]) {
@@ -116,9 +120,9 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 - (void)checkPillState:(void(^)(SENServiceDeviceState state))completion {
     SENServiceDeviceState deviceState
-        = ![[self devices] hasPairedPill]
-        ? SENServiceDeviceStatePillNotPaired
-        : SENServiceDeviceStateNormal;
+    = ![[self devices] hasPairedPill]
+    ? SENServiceDeviceStatePillNotPaired
+    : SENServiceDeviceStateNormal;
     
     if (deviceState == SENServiceDeviceStateNormal) {
         SENPillMetadata* metadata = [[self devices] pillMetadata];
@@ -198,20 +202,17 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 #pragma mark - Device Info
 
 - (void)loadDeviceInfo:(void(^)(NSError* error))completion {
-    void(^done)(NSError* error) = ^(NSError* error) {
-        if (completion) {
-            completion (error);
-        }
-    };
+    if (completion) {
+        [self.pendingDeviceInfoDoneBlocks addObject:[completion copy]];
+    }
     
     if ([self isLoadingInfo]) {
-        done ([self errorWithType:SENServiceDeviceErrorInProgress]);
         return;
     }
-
+    
     // no need to set InfoLoaded to NO here b/c we will not clear the cache unless
     // caller explicitly calls clear or when response comes back without error.
-
+    
     [self setLoadingInfo:YES];
     
     __weak typeof(self) weakSelf = self;
@@ -222,7 +223,11 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             [strongSelf setInfoLoaded:YES];
         }
         [strongSelf setLoadingInfo:NO];
-        done( error );
+        
+        for (void(^completion)(NSError* error) in strongSelf.pendingDeviceInfoDoneBlocks) {
+            completion(error);
+        }
+        [strongSelf.pendingDeviceInfoDoneBlocks removeAllObjects];
     }];
 }
 
@@ -573,7 +578,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             }];
             
         }];
-
+        
     }];
 }
 

@@ -116,7 +116,7 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  *
  * @discussion
  * Load device information, populating both pillInfo and senseInfo on successful
- * completion.
+ * completion. Requests for device info are coalesced.
  *
  * @param completion: the block to invoke when complete
  *

@@ -769,6 +769,33 @@
                                             <outlet property="textLabel" destination="xkS-mO-ZSD" id="LZ1-WQ-FXQ"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loading" id="0ut-U6-Ptp" customClass="HEMLoadingCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="358" width="592" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="592" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VnP-aZ-nT8" customClass="HEMActivityIndicatorView">
+                                                    <rect key="frame" x="276" y="16" width="40" height="40"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="zfE-nJ-a58"/>
+                                                        <constraint firstAttribute="height" constant="40" id="zlQ-ke-sIa"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="VnP-aZ-nT8" firstAttribute="centerX" secondItem="0ut-U6-Ptp" secondAttribute="centerX" id="6zY-b3-Nc3"/>
+                                            <constraint firstItem="VnP-aZ-nT8" firstAttribute="centerY" secondItem="0ut-U6-Ptp" secondAttribute="centerY" id="f2P-wg-9NZ"/>
+                                        </constraints>
+                                        <size key="customSize" width="592" height="72"/>
+                                        <connections>
+                                            <outlet property="activityIndicator" destination="VnP-aZ-nT8" id="lRn-Qa-6bu"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="6Dv-nl-Crm" id="7L3-kd-J7A"/>

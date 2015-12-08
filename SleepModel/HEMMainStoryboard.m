@@ -42,6 +42,7 @@ static NSString *const _HEMinfoNavigationController = @"infoNavigationController
 static NSString *const _HEMinfoViewController = @"infoViewController";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
+static NSString *const _HEMloading = @"loading";
 static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoption = @"option";
@@ -109,6 +110,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
++(NSString *)loadingReuseIdentifier { return _HEMloading; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)optionReuseIdentifier { return _HEMoption; }
 +(NSString *)overTimeReuseIdentifier { return _HEMoverTime; }

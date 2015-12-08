@@ -29,6 +29,7 @@
 
 static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
 static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
+static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 @interface HEMInsightsFeedPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -304,6 +305,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
         [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
         [[iCell uriImageView] setImageWithURL:[self insightImageUriForCellAtIndexPath:indexPath]];
         [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
+        [self updateInsightImageOffsetOn:iCell];
     }
     
 }
@@ -314,6 +316,26 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     if (insight) {
         HEMInsightCollectionViewCell* cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
         [[self delegate] presenter:self showInsight:insight fromCell:cell];
+    }
+}
+
+#pragma mark Scroll delegate (for parallax)
+
+- (void)updateInsightImageOffsetOn:(HEMInsightCollectionViewCell*)insightCell {
+    CGFloat diff = [[self collectionView] contentOffset].y - CGRectGetMinY([insightCell frame]);
+    CGFloat imageOffset = diff / CGRectGetHeight([[insightCell uriImageView] bounds]);
+    imageOffset = imageOffset * HEMInsightsFeedImageParallaxMultipler;
+    
+    [[insightCell imageTopConstraint] setConstant:imageOffset];
+    [[insightCell imageBottomConstraint] setConstant:-imageOffset];
+    [[insightCell uriImageView] updateConstraintsIfNeeded];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    for (UICollectionViewCell* cell in [[self collectionView] visibleCells]) {
+        if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]) {
+            [self updateInsightImageOffsetOn:(id)cell];
+        }
     }
 }
 

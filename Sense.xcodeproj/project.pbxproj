@@ -211,7 +211,6 @@
 		BF8339891C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339881C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m */; };
 		BF83398C1C12277B00BFD0F4 /* HEMInsightPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83398B1C12277B00BFD0F4 /* HEMInsightPresenter.m */; };
 		BF8339901C1604BA00BFD0F4 /* HEMInsightTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83398F1C1604BA00BFD0F4 /* HEMInsightTransition.m */; };
-		BF8339931C16590300BFD0F4 /* HEMInsightTransitionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8339921C16590300BFD0F4 /* HEMInsightTransitionView.xib */; };
 		BF8339961C1659D300BFD0F4 /* HEMInsightTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339951C1659D300BFD0F4 /* HEMInsightTransitionView.m */; };
 		BF8339991C17607700BFD0F4 /* HEMLoadingCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339981C17607700BFD0F4 /* HEMLoadingCollectionViewCell.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
@@ -718,7 +717,6 @@
 		BF83398B1C12277B00BFD0F4 /* HEMInsightPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightPresenter.m; sourceTree = "<group>"; };
 		BF83398E1C1604BA00BFD0F4 /* HEMInsightTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightTransition.h; sourceTree = "<group>"; };
 		BF83398F1C1604BA00BFD0F4 /* HEMInsightTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightTransition.m; sourceTree = "<group>"; };
-		BF8339921C16590300BFD0F4 /* HEMInsightTransitionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMInsightTransitionView.xib; sourceTree = "<group>"; };
 		BF8339941C1659D300BFD0F4 /* HEMInsightTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightTransitionView.h; sourceTree = "<group>"; };
 		BF8339951C1659D300BFD0F4 /* HEMInsightTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightTransitionView.m; sourceTree = "<group>"; };
 		BF8339971C17607700BFD0F4 /* HEMLoadingCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLoadingCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1724,7 +1722,6 @@
 			children = (
 				BF1E2E5B1A00691000DDD0D0 /* HEMInsightCollectionViewCell.h */,
 				BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */,
-				BF8339921C16590300BFD0F4 /* HEMInsightTransitionView.xib */,
 				BF8339941C1659D300BFD0F4 /* HEMInsightTransitionView.h */,
 				BF8339951C1659D300BFD0F4 /* HEMInsightTransitionView.m */,
 			);
@@ -2390,7 +2387,6 @@
 				BFA540EF1BCEF10A007AF607 /* HEMIntroDescriptionView.xib in Resources */,
 				8AD3312E1BB08DCB00DFF95A /* Questions.xcassets in Resources */,
 				BFCB894D1BFBCAFB00A72ED3 /* AvenirNext-Light.ttf in Resources */,
-				BF8339931C16590300BFD0F4 /* HEMInsightTransitionView.xib in Resources */,
 				8AD3313F1BB0A93600DFF95A /* Onboarding.xcassets in Resources */,
 				BFCB89501BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf in Resources */,
 				8AD331261BB0836700DFF95A /* Alarm.xcassets in Resources */,

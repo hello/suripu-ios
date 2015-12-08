@@ -4203,10 +4203,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPn-VE-Ody">
-                                                    <rect key="frame" x="0.0" y="0.0" width="576" height="130"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="576" height="131"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rq6-DJ-Adv" customClass="HEMURLImageView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="576" height="130"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rq6-DJ-Adv" customClass="HEMURLImageView">
+                                                            <rect key="frame" x="0.0" y="-15" width="576" height="161"/>
                                                             <animations/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -4214,15 +4214,14 @@
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="rq6-DJ-Adv" secondAttribute="trailing" id="F4H-gp-eoW"/>
-                                                        <constraint firstAttribute="height" constant="130" id="Tp2-Td-K2Y"/>
-                                                        <constraint firstItem="rq6-DJ-Adv" firstAttribute="top" secondItem="WPn-VE-Ody" secondAttribute="top" id="ZWw-YC-wWC"/>
-                                                        <constraint firstItem="rq6-DJ-Adv" firstAttribute="leading" secondItem="WPn-VE-Ody" secondAttribute="leading" id="vMK-M3-3a0"/>
-                                                        <constraint firstAttribute="bottom" secondItem="rq6-DJ-Adv" secondAttribute="bottom" id="ylp-F6-vSK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="rq6-DJ-Adv" secondAttribute="trailing" id="5ly-H4-P5L"/>
+                                                        <constraint firstAttribute="bottom" secondItem="rq6-DJ-Adv" secondAttribute="bottom" constant="-15" id="aeI-iL-g80"/>
+                                                        <constraint firstItem="rq6-DJ-Adv" firstAttribute="top" secondItem="WPn-VE-Ody" secondAttribute="top" constant="-15" id="jAE-pE-roX"/>
+                                                        <constraint firstItem="rq6-DJ-Adv" firstAttribute="leading" secondItem="WPn-VE-Ody" secondAttribute="leading" id="luX-Ny-EFM"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiA-EQ-FvD" userLabel="message">
-                                                    <rect key="frame" x="20" y="154" width="536" height="1"/>
+                                                    <rect key="frame" x="20" y="155" width="536" height="0.0"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
@@ -4277,7 +4276,9 @@
                                         <connections>
                                             <outlet property="categoryLabel" destination="jBz-YF-H8a" id="7gV-yw-4AO"/>
                                             <outlet property="dateLabel" destination="Sz1-aQ-HOl" id="eb7-3q-VPM"/>
+                                            <outlet property="imageBottomConstraint" destination="aeI-iL-g80" id="NWj-2o-YHR"/>
                                             <outlet property="imageContainer" destination="WPn-VE-Ody" id="q2c-wR-Msc"/>
+                                            <outlet property="imageTopConstraint" destination="jAE-pE-roX" id="x44-f2-jwr"/>
                                             <outlet property="messageLabel" destination="BiA-EQ-FvD" id="dDi-qL-sqw"/>
                                             <outlet property="separator" destination="obI-fk-z4W" id="bt3-L2-gMj"/>
                                             <outlet property="uriImageView" destination="rq6-DJ-Adv" id="suV-5a-Zqw"/>

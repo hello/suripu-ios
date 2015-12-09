@@ -6,9 +6,10 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "HEMSelectHostDataSource.h"
+#import "HEMSelectHostPresenter.h"
 #import <sys/socket.h>
 #import <arpa/inet.h>
+#import "HEMNonsenseScanService.h"
 
 NS_ENUM(NSUInteger) {
     SectionStaticHosts = 0,
@@ -54,19 +55,28 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
 #pragma mark -
 
-@interface HEMSelectHostDataSource ()
+@interface HEMSelectHostPresenter () <UITableViewDataSource, UITableViewDelegate, HEMNonsenseScanServiceDelegate>
+
+@property (nonatomic, weak) HEMNonsenseScanService* service;
+@property (nonatomic, weak) UITableView* tableView;
+@property (nonatomic, copy) HEMSelectHostPresenterDone doneAction;
+
+#pragma mark -
 
 @property (nonatomic) NSArray<NSString*>* staticHosts;
 @property (nonatomic) NSMutableArray<NSNetService*>* discoveredHosts;
 
 @end
 
-@implementation HEMSelectHostDataSource
+@implementation HEMSelectHostPresenter
 
-- (instancetype)init
+- (instancetype)initWithService:(HEMNonsenseScanService*)service
 {
     self = [super init];
     if (self) {
+        self.service = service;
+        self.service.delegate = self;
+        
         self.staticHosts = @[@"https://dev-api.hello.is",
                          @"https://canary-api.hello.is",
                          @"https://api.hello.is"];
@@ -75,14 +85,34 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
     return self;
 }
 
-#pragma mark -
-
-- (void)addDiscoveredHost:(NSNetService*)host {
-    [self.discoveredHosts addObject:host];
+- (void)willAppear {
+    [self.service start];
 }
 
-- (void)removeDiscoveredHost:(NSNetService*)host {
-    [self.discoveredHosts removeObject:host];
+- (void)willDisappear {
+    [self.service stop];
+}
+
+- (void)bindTableView:(UITableView*)tableView whenDonePerform:(HEMSelectHostPresenterDone)doneAction {
+    self.tableView = tableView;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    self.doneAction = doneAction;
+}
+
+#pragma mark -
+
+- (void)nonsenseScanService:(HEMNonsenseScanService *)scanService
+               detectedHost:(NSNetService *)nonsense {
+    [self.discoveredHosts addObject:nonsense];
+    [self.tableView reloadData];
+}
+
+- (void)nonsenseScanService:(HEMNonsenseScanService *)scanService
+            hostDisappeared:(NSNetService *)nonsense {
+    [self.discoveredHosts removeObject:nonsense];
+    [self.tableView reloadData];
 }
 
 - (nullable NSString*)hostAtIndexPath:(NSIndexPath *)indexPath {
@@ -97,23 +127,6 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
         default: {
             return nil;
         }
-    }
-}
-
-- (void)displayCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    switch (indexPath.section) {
-        case SectionStaticHosts:
-            cell.textLabel.text = [self hostAtIndexPath:indexPath];
-            cell.detailTextLabel.text = nil;
-            break;
-            
-        case SectionDiscoveredHosts:
-            cell.textLabel.text = self.discoveredHosts[indexPath.row].name;
-            cell.detailTextLabel.text = [self hostAtIndexPath:indexPath];
-            break;
-            
-        default:
-            break;
     }
 }
 
@@ -157,6 +170,37 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
         default:
             return nil;
     }
+}
+
+#pragma mark - Table Delegate
+
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
+    NSString* host = [self hostAtIndexPath:indexPath];
+    self.doneAction(host);
+}
+
+- (void)tableView:(UITableView*)tableView willDisplayCell:(UITableViewCell*)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+    switch (indexPath.section) {
+        case SectionStaticHosts:
+            cell.textLabel.text = [self hostAtIndexPath:indexPath];
+            cell.detailTextLabel.text = nil;
+            break;
+            
+        case SectionDiscoveredHosts:
+            cell.textLabel.text = self.discoveredHosts[indexPath.row].name;
+            cell.detailTextLabel.text = [self hostAtIndexPath:indexPath];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc {
+    self.tableView.dataSource = nil;
+    self.tableView.delegate = nil;
 }
 
 @end

@@ -14,10 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMNonsenseScanService : SENService
 
-- (instancetype)initWithDelegate:(id <HEMNonsenseScanServiceDelegate>)delegate NS_DESIGNATED_INITIALIZER;
-- (instancetype)init NS_UNAVAILABLE;
-
-@property (nonatomic, readonly, weak, nullable) id <HEMNonsenseScanServiceDelegate> delegate;
+@property (nonatomic, weak, nullable) id <HEMNonsenseScanServiceDelegate> delegate;
 
 - (void)start;
 - (void)stop;

@@ -21,11 +21,9 @@ static NSTimeInterval const ResolveTimeout = 5.0;
 
 @implementation HEMNonsenseScanService
 
-- (instancetype)initWithDelegate:(id <HEMNonsenseScanServiceDelegate>)delegate {
+- (instancetype)init {
     self = [super init];
     if (self) {
-        _delegate = delegate;
-        
         self.discovering = [NSMutableArray array];
         self.netServiceBrowser = [NSNetServiceBrowser new];
         self.netServiceBrowser.delegate = self;
@@ -40,7 +38,7 @@ static NSTimeInterval const ResolveTimeout = 5.0;
 - (void)stop {
     [self.netServiceBrowser stop];
     
-    for (NSNetService *service in self.discovering) {
+    for (NSNetService* service in self.discovering) {
         [service stop];
         service.delegate = nil;
     }
@@ -49,15 +47,21 @@ static NSTimeInterval const ResolveTimeout = 5.0;
 
 #pragma mark - Service Discovery Delegate
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
-             didNotSearch:(NSDictionary<NSString *,NSNumber *> *)errorDict {
+- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser*)browser {
+    DDLogDebug(@"Beginning nonsense search");
+}
+
+- (void)netServiceBrowser:(NSNetServiceBrowser*)browser
+             didNotSearch:(NSDictionary<NSString *,NSNumber *>*)errorDict {
     DDLogError(@"Could not perform nonsense discovery %@", errorDict);
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
-           didFindService:(NSNetService *)service
+- (void)netServiceBrowser:(NSNetServiceBrowser*)browser
+           didFindService:(NSNetService*)service
                moreComing:(BOOL)moreComing {
     if ([service.name containsString:ServiceName]) {
+        DDLogDebug(@"Discovered nonsense instance %@", service);
+        
         [self.discovering addObject:service];
         service.delegate = self;
         [service resolveWithTimeout:ResolveTimeout];
@@ -75,6 +79,8 @@ static NSTimeInterval const ResolveTimeout = 5.0;
 #pragma mark -
 
 - (void)netServiceDidResolveAddress:(NSNetService*)service {
+    DDLogDebug(@"Resolved nonsense instance %@", service);
+    
     service.delegate = nil;
     [self.discovering removeObject:service];
     

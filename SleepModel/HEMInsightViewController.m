@@ -13,6 +13,7 @@
 @interface HEMInsightViewController() <HEMInsightActionDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *contentView;
+@property (weak, nonatomic) IBOutlet UIImageView *buttonShadow;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *doneButtonBottomConstraint;
 
@@ -35,6 +36,7 @@
     [presenter bindWithCollectionView:[self contentView] withImageColor:[self imageColor]];
     [presenter bindWithCloseButton:[self doneButton]
                   bottomConstraint:[self doneButtonBottomConstraint]];
+    [presenter bindWithButtonShadow:[self buttonShadow]];
     [presenter setActionDelegate:self];
     
     [self addPresenter:presenter];

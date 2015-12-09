@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithCollectionView:(UICollectionView*)collectionView withImageColor:(UIColor*)imageColor;
 - (void)bindWithCloseButton:(UIButton*)button
            bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
+- (void)bindWithButtonShadow:(UIImageView*)buttonShadow;
 
 @end
 

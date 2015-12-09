@@ -59,6 +59,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
 @property (nonatomic, strong) NSAttributedString* attributedDetail;
 @property (nonatomic, weak) UIButton* closeButton;
+@property (nonatomic, weak) UIImageView* buttonShadow;
 @property (nonatomic, weak) NSLayoutConstraint* closeBottomConstraint;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) UIColor* imageColor;
@@ -88,14 +89,6 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
 - (void)bindWithCloseButton:(UIButton*)button
            bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [button setBackgroundColor:[UIColor whiteColor]];
-    
-    NSShadow* shadow = [NSShadow contentShadow];
-    CALayer* buttonLayer = [button layer];
-    [buttonLayer setShadowColor:[[shadow shadowColor] CGColor]];
-    [buttonLayer setShadowOffset:[shadow shadowOffset]];
-    [buttonLayer setShadowOpacity:0.0f];
-    [buttonLayer setShadowRadius:[shadow shadowBlurRadius]];
-    
     [[button titleLabel] setFont:[UIFont insightDismissButtonFont]];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [button addTarget:self
@@ -107,6 +100,11 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
     [self setCloseBottomConstraint:bottomConstraint];
 }
 
+- (void)bindWithButtonShadow:(UIImageView*)buttonShadow {
+    [buttonShadow setAlpha:0.0f];
+    [self setButtonShadow:buttonShadow];
+}
+
 - (void)updateCloseButtonShadowOpacity {
     CGFloat contentHeight = [[self collectionView] contentSize].height;
     CGFloat scrollHeight = CGRectGetHeight([[self collectionView] bounds]);
@@ -114,7 +112,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
         CGFloat yOffset = [[self collectionView] contentOffset].y;
         CGFloat amountDisplayed = contentHeight - yOffset;
         CGFloat percentage = MIN(1.0f, (amountDisplayed / scrollHeight) - 1.0f);
-        [[[self closeButton] layer] setShadowOpacity:percentage];
+        [[self buttonShadow] setAlpha:percentage];
     }
 }
 
@@ -151,6 +149,10 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
     [[self closeBottomConstraint] setConstant:0.0f];
     [UIView animateWithDuration:HEMInsightCloseButtonAnimation animations:^{
         [[self closeButton] layoutIfNeeded];
+        [[self buttonShadow] layoutIfNeeded];
+        [self updateCloseButtonShadowOpacity];
+    } completion:^(BOOL finished) {
+        
     }];
     
 }
@@ -174,8 +176,6 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
     itemSize.width = CGRectGetWidth([[self collectionView] bounds]);
     [layout setItemSize:itemSize];
     [[self collectionView] reloadData];
-    
-    [self updateCloseButtonShadowOpacity];
 }
 
 #pragma mark - Collection View

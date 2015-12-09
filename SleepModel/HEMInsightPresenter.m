@@ -47,6 +47,7 @@ static CGFloat const HEMInsightCellHeightImage = 188.0f;
 static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 static CGFloat const HEMInsightCloseButtonAnimation = 0.5f;
 static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
+static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
 
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -88,6 +89,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 
 - (void)bindWithCloseButton:(UIButton*)button
            bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    [[button layer] setBorderColor:[[UIColor borderColor] CGColor]];
+    [[button layer] setBorderWidth:HEMInsightCloseButtonBorderWidth];
+    
     [button setBackgroundColor:[UIColor whiteColor]];
     [[button titleLabel] setFont:[UIFont insightDismissButtonFont]];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
@@ -149,7 +153,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     [[self closeBottomConstraint] setConstant:0.0f];
     [UIView animateWithDuration:HEMInsightCloseButtonAnimation animations:^{
         [[self closeButton] layoutIfNeeded];
-        [[self buttonShadow] layoutIfNeeded];
+    } completion:^(BOOL finished) {
         [self updateCloseButtonShadowOpacity];
     }];
     

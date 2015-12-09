@@ -281,6 +281,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)insightSummaryDateColor {
     return [UIColor colorWithHex:0x596980 alpha:0.5f];
 }
++ (UIColor *)borderColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.1f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors

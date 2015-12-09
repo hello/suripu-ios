@@ -225,6 +225,9 @@
 "debug.led.option.activity" = "Activity";
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
+"debug.host.action.custom-url" = "Custom";
+"debug.host.section.api" = "API Hosts";
+"debug.host.section.nonsense" = "Nonsense Hosts";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 

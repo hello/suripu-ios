@@ -22,6 +22,7 @@
 #import "HEMOnboardingController.h"
 #import "HEMInfoViewController.h"
 #import "HEMDebugInfoDataSource.h"
+#import "HEMSelectHostViewController.h"
 #import "HEMConfig.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
@@ -120,7 +121,7 @@
     __weak typeof(self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.change-api-address", nil) action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf showURLUpdateAlertView];
+        [strongSelf showSelectHostController];
         [strongSelf setSupportOptionController:nil];
     }];
 }
@@ -140,37 +141,10 @@
 
 #pragma mark API Address
 
-- (void)showURLUpdateAlertView {
-    UIAlertView* URLAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.set-url.title", nil)
-                                                           message:NSLocalizedString(@"authorization.set-url.message", nil)
-                                                          delegate:self
-                                                 cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
-                                                 otherButtonTitles:NSLocalizedString(@"actions.save", nil), NSLocalizedString(@"authorization.set-url.action.reset", nil), nil];
-    URLAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField* URLField = [URLAlertView textFieldAtIndex:0];
-    URLField.text = [SENAPIClient baseURL].absoluteString;
-    URLField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [URLAlertView show];
-}
-
-- (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 2: {
-            [SENAPIClient resetToDefaultBaseURL];
-            break;
-        }
-        case 1: {
-            UITextField* URLField = [alertView textFieldAtIndex:0];
-            if (![SENAPIClient setBaseURLFromPath:URLField.text]) {
-                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.failed-url.title", nil)
-                                            message:NSLocalizedString(@"authorization.failed-url.message", nil)
-                                           delegate:self
-                                  cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
-                                  otherButtonTitles:nil] show];
-            }
-            break;
-        }
-    }
+- (void)showSelectHostController {
+    HEMSelectHostViewController *selectHost = [HEMSelectHostViewController new];
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:selectHost];
+    [self showController:navigation animated:YES completion:nil];
 }
 
 #pragma mark LED Support

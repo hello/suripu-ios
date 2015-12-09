@@ -7,49 +7,13 @@
 //
 
 #import "HEMSelectHostPresenter.h"
-#import <sys/socket.h>
-#import <arpa/inet.h>
 #import "HEMNonsenseScanService.h"
 
 NS_ENUM(NSUInteger) {
-    SectionStaticHosts = 0,
-    SectionDiscoveredHosts,
+    SectionApiHosts = 0,
+    SectionNonsenseHosts,
     SectionCount
 };
-
-typedef union {
-    struct sockaddr sa;
-    struct sockaddr_in ipv4;
-    struct sockaddr_in6 ipv6;
-} ip_socket_address;
-
-static NSString* ResolveHostAddress(NSNetService* _Nonnull service) {
-    const ip_socket_address *socketAddress = service.addresses.firstObject.bytes;
-    if (socketAddress) {
-        char addressBuffer[INET6_ADDRSTRLEN];
-        switch (socketAddress->sa.sa_family) {
-            case AF_INET: {
-                const char *address = inet_ntop(socketAddress->sa.sa_family,
-                                                &(socketAddress->ipv4.sin_addr),
-                                                addressBuffer,
-                                                sizeof(addressBuffer));
-                return [NSString stringWithFormat:@"http://%s:%d", address, (long) service.port];
-            }
-            case AF_INET6: {
-                const char *address = inet_ntop(socketAddress->sa.sa_family,
-                                                &(socketAddress->ipv6.sin6_addr),
-                                                addressBuffer,
-                                                sizeof(addressBuffer));
-                return [NSString stringWithFormat:@"http://%s:%d", address, (long) service.port];
-            }
-            default: {
-                return service.hostName;
-            }
-        }
-    } else {
-        return service.hostName;
-    }
-}
 
 static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
@@ -63,8 +27,8 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
 #pragma mark -
 
-@property (nonatomic) NSArray<NSString*>* staticHosts;
-@property (nonatomic) NSMutableArray<NSNetService*>* discoveredHosts;
+@property (nonatomic) NSArray<NSString*>* apiHosts;
+@property (nonatomic) NSMutableArray<NSNetService*>* nonsenseHosts;
 
 @end
 
@@ -77,10 +41,10 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
         self.service = service;
         self.service.delegate = self;
         
-        self.staticHosts = @[@"https://dev-api.hello.is",
-                         @"https://canary-api.hello.is",
-                         @"https://api.hello.is"];
-        self.discoveredHosts = [NSMutableArray new];
+        self.apiHosts = @[@"https://dev-api.hello.is",
+                          @"https://canary-api.hello.is",
+                          @"https://api.hello.is"];
+        self.nonsenseHosts = [NSMutableArray array];
     }
     return self;
 }
@@ -103,26 +67,26 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
 #pragma mark -
 
-- (void)nonsenseScanService:(HEMNonsenseScanService *)scanService
-               detectedHost:(NSNetService *)nonsense {
-    [self.discoveredHosts addObject:nonsense];
+- (void)nonsenseScanService:(HEMNonsenseScanService*)scanService
+               detectedHost:(NSNetService*)nonsense {
+    [self.nonsenseHosts addObject:nonsense];
     [self.tableView reloadData];
 }
 
-- (void)nonsenseScanService:(HEMNonsenseScanService *)scanService
-            hostDisappeared:(NSNetService *)nonsense {
-    [self.discoveredHosts removeObject:nonsense];
+- (void)nonsenseScanService:(HEMNonsenseScanService*)scanService
+            hostDisappeared:(NSNetService*)nonsense {
+    [self.nonsenseHosts removeObject:nonsense];
     [self.tableView reloadData];
 }
 
 - (nullable NSString*)hostAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case SectionStaticHosts: {
-            return self.staticHosts[indexPath.row];
+        case SectionApiHosts: {
+            return self.apiHosts[indexPath.row];
         }
-        case SectionDiscoveredHosts: {
-            NSNetService* service = self.discoveredHosts[indexPath.row];
-            return ResolveHostAddress(service);
+        case SectionNonsenseHosts: {
+            NSNetService* nonsense = self.nonsenseHosts[indexPath.row];
+            return [self.service addressForNonsense:nonsense];
         }
         default: {
             return nil;
@@ -138,11 +102,11 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
-        case SectionStaticHosts:
-            return self.staticHosts.count;
+        case SectionApiHosts:
+            return self.apiHosts.count;
             
-        case SectionDiscoveredHosts:
-            return self.discoveredHosts.count;
+        case SectionNonsenseHosts:
+            return self.nonsenseHosts.count;
             
         default:
             DDLogError(@"Unknown section %d", (long)section);
@@ -161,10 +125,10 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
-        case SectionStaticHosts:
+        case SectionApiHosts:
             return NSLocalizedString(@"debug.host.section.api", nil);
             
-        case SectionDiscoveredHosts:
+        case SectionNonsenseHosts:
             return NSLocalizedString(@"debug.host.section.nonsense", nil);
             
         default:
@@ -181,13 +145,13 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
 - (void)tableView:(UITableView*)tableView willDisplayCell:(UITableViewCell*)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
     switch (indexPath.section) {
-        case SectionStaticHosts:
+        case SectionApiHosts:
             cell.textLabel.text = [self hostAtIndexPath:indexPath];
             cell.detailTextLabel.text = nil;
             break;
             
-        case SectionDiscoveredHosts:
-            cell.textLabel.text = self.discoveredHosts[indexPath.row].name;
+        case SectionNonsenseHosts:
+            cell.textLabel.text = self.nonsenseHosts[indexPath.row].name;
             cell.detailTextLabel.text = [self hostAtIndexPath:indexPath];
             break;
             

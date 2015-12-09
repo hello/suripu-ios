@@ -7,6 +7,14 @@
 //
 
 #import "HEMNonsenseScanService.h"
+#import <sys/socket.h>
+#import <arpa/inet.h>
+
+typedef union {
+    struct sockaddr sa;
+    struct sockaddr_in ipv4;
+    struct sockaddr_in6 ipv6;
+} ip_socket_address;
 
 static NSString* const ServiceType = @"_http._tcp.";
 static NSString* const ServiceName = @"nonsense-server";
@@ -43,6 +51,36 @@ static NSTimeInterval const ResolveTimeout = 5.0;
         service.delegate = nil;
     }
     [self.discovering removeAllObjects];
+}
+
+#pragma mark -
+
+- (nonnull NSString*)addressForNonsense:(nonnull NSNetService*)nonsense {
+    const ip_socket_address *socketAddress = nonsense.addresses.firstObject.bytes;
+    if (socketAddress) {
+        char addressBuffer[INET6_ADDRSTRLEN];
+        switch (socketAddress->sa.sa_family) {
+            case AF_INET: {
+                const char *address = inet_ntop(socketAddress->sa.sa_family,
+                                                &(socketAddress->ipv4.sin_addr),
+                                                addressBuffer,
+                                                sizeof(addressBuffer));
+                return [NSString stringWithFormat:@"http://%s:%d", address, (long) nonsense.port];
+            }
+            case AF_INET6: {
+                const char *address = inet_ntop(socketAddress->sa.sa_family,
+                                                &(socketAddress->ipv6.sin6_addr),
+                                                addressBuffer,
+                                                sizeof(addressBuffer));
+                return [NSString stringWithFormat:@"http://%s:%d", address, (long) nonsense.port];
+            }
+            default: {
+                return nonsense.hostName;
+            }
+        }
+    } else {
+        return nonsense.hostName;
+    }
 }
 
 #pragma mark - Service Discovery Delegate

@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)start;
 - (void)stop;
 
+- (nonnull NSString*)addressForNonsense:(nonnull NSNetService*)nonsense;
+
 @end
 
 @protocol HEMNonsenseScanServiceDelegate <NSObject>

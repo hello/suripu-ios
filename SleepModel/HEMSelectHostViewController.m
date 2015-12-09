@@ -8,17 +8,17 @@
 
 #import "HEMSelectHostViewController.h"
 #import "HEMSelectHostDataSource.h"
+#import "HEMNonsenseScanService.h"
 #import <SenseKit/SENAPIClient.h>
 
 static NSString* const NonsenseServiceType = @"_http._tcp.";
 static NSString* const NonsenseServiceName = @"nonsense-server";
 
-@interface HEMSelectHostViewController () <UITableViewDelegate, NSNetServiceDelegate, NSNetServiceBrowserDelegate>
+@interface HEMSelectHostViewController () <UITableViewDelegate, HEMNonsenseScanServiceDelegate>
 
 @property (nonatomic) HEMSelectHostDataSource *dataSource;
 
-@property (nonatomic) NSMutableArray<NSNetService*>* discovering;
-@property (nonatomic) NSNetServiceBrowser *netServiceBrowser;
+@property (nonatomic) HEMNonsenseScanService *scanService;
 
 @end
 
@@ -27,10 +27,7 @@ static NSString* const NonsenseServiceName = @"nonsense-server";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.discovering = [NSMutableArray new];
-    
-    self.netServiceBrowser = [NSNetServiceBrowser new];
-    self.netServiceBrowser.delegate = self;
+    self.scanService = [[HEMNonsenseScanService alloc] initWithDelegate:self];
     
     self.dataSource = [HEMSelectHostDataSource new];
     self.tableView.dataSource = self.dataSource;
@@ -51,19 +48,13 @@ static NSString* const NonsenseServiceName = @"nonsense-server";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.netServiceBrowser searchForServicesOfType:NonsenseServiceType inDomain:@"local"];
+    [self.scanService start];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self.netServiceBrowser stop];
-    
-    for (NSNetService *service in self.discovering) {
-        [service stop];
-        service.delegate = nil;
-    }
-    [self.discovering removeAllObjects];
+    [self.scanService stop];
 }
 
 #pragma mark - Custom Hosts
@@ -107,51 +98,18 @@ static NSString* const NonsenseServiceName = @"nonsense-server";
     }
 }
 
-#pragma mark - Service Discovery Delegate
+#pragma mark - Discovery Delegate
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
-             didNotSearch:(NSDictionary<NSString *,NSNumber *> *)errorDict {
-    DDLogError(@"Could not perform service discovery %@", errorDict);
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
-           didFindService:(NSNetService *)service
-               moreComing:(BOOL)moreComing {
-    if ([service.name containsString:NonsenseServiceName]) {
-        [self.discovering addObject:service];
-        service.delegate = self;
-        [service resolveWithTimeout:5.0];
-    }
+- (void)nonsenseScanService:(HEMNonsenseScanService*)scanService
+               detectedHost:(NSNetService*)nonsense {
+    [self.dataSource addDiscoveredHost:nonsense];
     [self.tableView reloadData];
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser*)browser
-         didRemoveService:(NSNetService*)service
-               moreComing:(BOOL)moreComing {
-    if ([service.name containsString:NonsenseServiceName]) {
-        [self.dataSource removeDiscoveredHost:service];
-        [self.tableView reloadData];
-    }
-}
-
-#pragma mark -
-
-- (void)netServiceDidResolveAddress:(NSNetService*)service {
-    service.delegate = nil;
-    [self.dataSource addDiscoveredHost:service];
+- (void)nonsenseScanService:(HEMNonsenseScanService*)scanService
+            hostDisappeared:(NSNetService*)nonsense {
+    [self.dataSource removeDiscoveredHost:nonsense];
     [self.tableView reloadData];
-    
-    [self.discovering removeObject:service];
-}
-
-- (void)netService:(NSNetService*)service
-     didNotResolve:(NSDictionary<NSString*, NSNumber*>*)errorDict {
-    DDLogError(@"Could not resolve service %@", errorDict);
-    
-    [self.dataSource removeDiscoveredHost:service];
-    [self.tableView reloadData];
-    
-    [self.discovering removeObject:service];
 }
 
 #pragma mark - Table Delegate

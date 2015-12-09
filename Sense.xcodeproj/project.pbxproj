@@ -134,6 +134,7 @@
 		8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */; };
 		8AFE909A1B9A20C0000D638E /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFE90991B9A20C0000D638E /* Config.m */; };
 		8B15FB5B1C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FB5A1C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.m */; };
+		8B1DB6DD1C18AC00006C8AFF /* HEMNonsenseScanService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6DC1C18AC00006C8AFF /* HEMNonsenseScanService.m */; };
 		8B45075D1C1794E500359453 /* HEMSelectHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */; };
 		8B4507601C17951F00359453 /* HEMSelectHostDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B45075F1C17951F00359453 /* HEMSelectHostDataSource.m */; };
 		8B8F5FA61BF661EB00665D30 /* HEMAlarmUtilsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F5FA51BF661EB00665D30 /* HEMAlarmUtilsSpec.m */; };
@@ -574,6 +575,8 @@
 		8AFE90991B9A20C0000D638E /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		8B15FB591C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTellAFriendItemProvider.h; sourceTree = "<group>"; };
 		8B15FB5A1C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTellAFriendItemProvider.m; sourceTree = "<group>"; };
+		8B1DB6DB1C18AC00006C8AFF /* HEMNonsenseScanService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNonsenseScanService.h; sourceTree = "<group>"; };
+		8B1DB6DC1C18AC00006C8AFF /* HEMNonsenseScanService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNonsenseScanService.m; sourceTree = "<group>"; };
 		8B45075B1C1794E500359453 /* HEMSelectHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSelectHostViewController.h; sourceTree = "<group>"; };
 		8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostViewController.m; sourceTree = "<group>"; };
 		8B45075E1C17951F00359453 /* HEMSelectHostDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSelectHostDataSource.h; sourceTree = "<group>"; };
@@ -1833,6 +1836,8 @@
 				8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */,
 				8B45075E1C17951F00359453 /* HEMSelectHostDataSource.h */,
 				8B45075F1C17951F00359453 /* HEMSelectHostDataSource.m */,
+				8B1DB6DB1C18AC00006C8AFF /* HEMNonsenseScanService.h */,
+				8B1DB6DC1C18AC00006C8AFF /* HEMNonsenseScanService.m */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -2697,6 +2702,7 @@
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,
 				BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */,
+				8B1DB6DD1C18AC00006C8AFF /* HEMNonsenseScanService.m in Sources */,
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
 				BF8339961C1659D300BFD0F4 /* HEMInsightTransitionView.m in Sources */,
 				BF8339901C1604BA00BFD0F4 /* HEMInsightTransition.m in Sources */,

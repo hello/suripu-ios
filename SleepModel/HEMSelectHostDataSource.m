@@ -56,8 +56,8 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
 @interface HEMSelectHostDataSource ()
 
-@property (nonatomic, readonly) NSArray<NSString*>* staticHosts;
-@property (nonatomic, readonly) NSMutableArray<NSNetService*>* discoveredHosts;
+@property (nonatomic) NSArray<NSString*>* staticHosts;
+@property (nonatomic) NSMutableArray<NSNetService*>* discoveredHosts;
 
 @end
 
@@ -67,22 +67,22 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 {
     self = [super init];
     if (self) {
-        _staticHosts = @[@"https://dev-api.hello.is",
+        self.staticHosts = @[@"https://dev-api.hello.is",
                          @"https://canary-api.hello.is",
                          @"https://api.hello.is"];
-        _discoveredHosts = [NSMutableArray new];
+        self.discoveredHosts = [NSMutableArray new];
     }
     return self;
 }
 
 #pragma mark -
 
-- (void)addDiscoveredHost:(nonnull NSNetService*)host {
-    [_discoveredHosts addObject:host];
+- (void)addDiscoveredHost:(NSNetService*)host {
+    [self.discoveredHosts addObject:host];
 }
 
-- (void)removeDiscoveredHost:(nonnull NSNetService*)host {
-    [_discoveredHosts removeObject:host];
+- (void)removeDiscoveredHost:(NSNetService*)host {
+    [self.discoveredHosts removeObject:host];
 }
 
 - (nullable NSString*)hostAtIndexPath:(NSIndexPath *)indexPath {
@@ -132,7 +132,7 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
             return self.discoveredHosts.count;
             
         default:
-            NSLog(@"Unknown section %d", (long)section);
+            DDLogError(@"Unknown section %d", (long)section);
             return 0;
     }
 }

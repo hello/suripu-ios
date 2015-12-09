@@ -1825,9 +1825,9 @@
 			children = (
 				BF71AFCD1A48F6E700D1208B /* HEMDebugController.h */,
 				BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */,
-				BFC4C1FD1B8D554600BB7761 /* HEMDebugInfoDataSource.h */,
 				BFC4C1FA1B8D536D00BB7761 /* HEMInfoViewController.h */,
 				BFC4C1FB1B8D536D00BB7761 /* HEMInfoViewController.m */,
+				BFC4C1FD1B8D554600BB7761 /* HEMDebugInfoDataSource.h */,
 				BFC4C1FE1B8D554600BB7761 /* HEMDebugInfoDataSource.m */,
 				8B45075B1C1794E500359453 /* HEMSelectHostViewController.h */,
 				8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */,

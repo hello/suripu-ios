@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMSelectHostDataSource : NSObject <UITableViewDataSource>
 
-- (void)addDiscoveredHost:(nonnull NSNetService*)host;
-- (void)removeDiscoveredHost:(nonnull NSNetService*)host;
+- (void)addDiscoveredHost:(NSNetService*)host;
+- (void)removeDiscoveredHost:(NSNetService*)host;
 
 - (nullable NSString*)hostAtIndexPath:(NSIndexPath *)indexPath;
 - (void)displayCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIColor+HEMStyle.h"
+
 #import "HEMSnazzBar.h"
 #import "HEMSnazzBarButton.h"
 
@@ -21,17 +23,14 @@ CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 @implementation HEMSnazzBar
 
 static CGFloat const HEMSnazzBarTopMargin = 20.f;
-static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
+static CGFloat const HEMSnazzBarIndicatorHeight = 1.0f;
+static CGFloat const HEMSnazzBarBorderHeight = 1.0f;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.layer.shadowOffset = CGSizeMake(0, 0.5);
-        self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
-        self.layer.shadowRadius = 0;
-        self.layer.shadowOpacity = 0.85f;
         _bottomBorderView = [UIView new];
-        _bottomBorderView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.f];
+        _bottomBorderView.backgroundColor = [UIColor borderColor];
         [self addSubview:_bottomBorderView];
     }
     return self;
@@ -41,7 +40,15 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
 {
     [super layoutSubviews];
     [self layoutBarButtons];
-    self.bottomBorderView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - HEMSnazzBarIndicatorHeight, CGRectGetWidth(self.bounds), HEMSnazzBarIndicatorHeight);
+    [self layoutBorder];
+}
+
+- (void)layoutBorder {
+    CGRect borderRect = [[self bottomBorderView] frame];
+    borderRect.size.height = HEMSnazzBarBorderHeight;
+    borderRect.size.width = CGRectGetWidth([self bounds]);
+    borderRect.origin.y = CGRectGetHeight([self bounds]) - HEMSnazzBarBorderHeight;
+    [[self bottomBorderView] setFrame:borderRect];
 }
 
 - (void)layoutBarButtons

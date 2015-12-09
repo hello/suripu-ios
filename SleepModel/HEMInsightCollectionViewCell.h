@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMInsightCollectionViewCell : HEMCardCollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *imageContainer;
 @property (weak, nonatomic) IBOutlet HEMURLImageView *uriImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageBottomConstraint;

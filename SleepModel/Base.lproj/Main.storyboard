@@ -573,7 +573,7 @@
                                         <rect key="frame" x="0.0" y="49.5" width="600" height="57"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="44s-u9-un0" id="uGF-Tm-wwR">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bIy-mE-ued">
@@ -706,7 +706,9 @@
                                         </constraints>
                                         <size key="customSize" width="592" height="84"/>
                                         <connections>
+                                            <outlet property="textBottomConstraint" destination="hNH-9Z-Yyf" id="T0G-46-1JG"/>
                                             <outlet property="textLabel" destination="S0U-m6-ZMO" id="PpX-b1-sHw"/>
+                                            <outlet property="textTopConstraint" destination="WSW-Je-TO9" id="5os-QX-BQY"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="title" id="G5k-3L-THZ" customClass="HEMTextCollectionViewCell">
@@ -736,7 +738,9 @@
                                         </constraints>
                                         <size key="customSize" width="592" height="27"/>
                                         <connections>
+                                            <outlet property="textBottomConstraint" destination="E89-kb-7y3" id="4S6-yA-YUw"/>
                                             <outlet property="textLabel" destination="q38-p6-fHh" id="WEc-cw-O27"/>
+                                            <outlet property="textTopConstraint" destination="Zoe-0u-aUR" id="qGS-3S-gie"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detail" id="Doq-BO-3IR" customClass="HEMTextCollectionViewCell">
@@ -766,7 +770,9 @@
                                         </constraints>
                                         <size key="customSize" width="592" height="59"/>
                                         <connections>
+                                            <outlet property="textBottomConstraint" destination="sCt-sC-KH6" id="hSe-Xo-RHj"/>
                                             <outlet property="textLabel" destination="xkS-mO-ZSD" id="LZ1-WQ-FXQ"/>
+                                            <outlet property="textTopConstraint" destination="J4O-uy-SWO" id="7yU-4L-7sq"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loading" id="0ut-U6-Ptp" customClass="HEMLoadingCollectionViewCell">
@@ -1305,7 +1311,7 @@
                                         <rect key="frame" x="0.0" y="49.5" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hnl-8X-ePs" id="VXC-Qa-E5S">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pvS-Pk-Ijk">
@@ -2133,7 +2139,7 @@
                                         <rect key="frame" x="0.0" y="49.5" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZWB-9J-EpX" id="oMT-YH-lO6">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VfY-6P-uC5">
@@ -4251,14 +4257,14 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBz-YF-H8a">
-                                                    <rect key="frame" x="20" y="180" width="26" height="14"/>
+                                                    <rect key="frame" x="20" y="180" width="25.5" height="14"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sz1-aQ-HOl">
-                                                    <rect key="frame" x="531" y="180" width="26" height="14"/>
+                                                    <rect key="frame" x="530.5" y="180" width="25.5" height="14"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

@@ -46,7 +46,7 @@ static CGFloat const HEMInsightCellTextHorizontalMargin = 24.0f;
 static CGFloat const HEMInsightCellHeightImage = 188.0f;
 static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 static CGFloat const HEMInsightCloseButtonAnimation = 0.5f;
-static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
+static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -151,16 +151,8 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
         [[self closeButton] layoutIfNeeded];
         [[self buttonShadow] layoutIfNeeded];
         [self updateCloseButtonShadowOpacity];
-    } completion:^(BOOL finished) {
-        
     }];
     
-}
-
-- (void)willDisappear {
-    [super willDisappear];
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [rootVC showStatusBar];
 }
 
 - (void)didDisappear {
@@ -267,13 +259,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
     
     [[cell textLabel] setAttributedText:attributedText];
     
-    if ([[[cell textLabel] text] length] == 0) {
-        [[cell textLabel] setAlpha:0.0f];
-    } else {
-        [UIView animateWithDuration:HEMInsightTextAppearanceAnimation animations:^{
-            [[cell textLabel] setAlpha:1.0f];
-        }];
-    }
+    [UIView animateWithDuration:HEMInsightTextAppearanceAnimation animations:^{
+        [[cell textLabel] setAlpha:1.0f];
+    }];
     
 }
 
@@ -287,7 +275,14 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = [self reuseIdentifierForIndexPath:indexPath];
-    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+    UICollectionViewCell* cell =  [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                                            forIndexPath:indexPath];
+    if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
+        HEMTextCollectionViewCell* textCell = (id)cell;
+        [[textCell textLabel] setAlpha:0.0f];
+    }
+    
+    return cell;
 }
 
 - (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView
@@ -387,6 +382,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.5f;
 - (void)dealloc {
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
+    
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    [rootVC showStatusBar];
 }
 
 @end

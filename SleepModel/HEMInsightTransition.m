@@ -47,7 +47,7 @@ static CGFloat const HEMInsightTransitionImageHeight = 188.0f;
     [containerView addSubview:[self dimmingViewWithContext:context]];
     [containerView addSubview:[self transitionView]];
     
-    [UIView animateWithDuration:[self duration]
+    [UIView animateWithDuration:0.4f
                      animations:^{
                          [self setTimelineVisible:NO animated:NO];
                          [self showStatusBar:NO];
@@ -75,7 +75,7 @@ static CGFloat const HEMInsightTransitionImageHeight = 188.0f;
     
     [fromView removeFromSuperview];
     
-    [UIView animateWithDuration:[self duration]
+    [UIView animateWithDuration:0.4f
                      animations:^{
                          [fromView setFrame:[self startFrame]];
                          [[self transitionView] shrink:[self startFrame] imageHeight:[self originalImageHeight]];

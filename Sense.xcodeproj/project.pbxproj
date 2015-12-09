@@ -137,6 +137,7 @@
 		8B1DB6DD1C18AC00006C8AFF /* HEMNonsenseScanService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6DC1C18AC00006C8AFF /* HEMNonsenseScanService.m */; };
 		8B1DB6DE1C18B35D006C8AFF /* HEMSelectHostPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B45075F1C17951F00359453 /* HEMSelectHostPresenter.m */; };
 		8B1DB6E11C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6E01C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m */; };
+		8B1DB6E31C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6E21C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m */; };
 		8B45075D1C1794E500359453 /* HEMSelectHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */; };
 		8B8F5FA61BF661EB00665D30 /* HEMAlarmUtilsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F5FA51BF661EB00665D30 /* HEMAlarmUtilsSpec.m */; };
 		BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */; };
@@ -579,6 +580,7 @@
 		8B1DB6DB1C18AC00006C8AFF /* HEMNonsenseScanService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNonsenseScanService.h; sourceTree = "<group>"; };
 		8B1DB6DC1C18AC00006C8AFF /* HEMNonsenseScanService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNonsenseScanService.m; sourceTree = "<group>"; };
 		8B1DB6E01C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNonsenseScanServiceSpec.m; sourceTree = "<group>"; };
+		8B1DB6E21C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostPresenterSpec.m; sourceTree = "<group>"; };
 		8B45075B1C1794E500359453 /* HEMSelectHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSelectHostViewController.h; sourceTree = "<group>"; };
 		8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostViewController.m; sourceTree = "<group>"; };
 		8B45075E1C17951F00359453 /* HEMSelectHostPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSelectHostPresenter.h; sourceTree = "<group>"; };
@@ -1581,6 +1583,7 @@
 			isa = PBXGroup;
 			children = (
 				8B1DB6E01C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m */,
+				8B1DB6E21C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -2785,6 +2788,7 @@
 				BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */,
 				BF7454B11B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m in Sources */,
 				BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */,
+				8B1DB6E31C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m in Sources */,
 				8B1DB6E11C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

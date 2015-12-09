@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMSelectHostDataSource : NSObject <UITableViewDataSource>
 
-@property (nonatomic, readonly, copy) NSArray<NSString*>* staticHosts;
-@property (nonatomic, readonly, copy) NSArray<NSNetService*>* discoveredHosts;
 - (void)addDiscoveredHost:(nonnull NSNetService*)host;
 - (void)removeDiscoveredHost:(nonnull NSNetService*)host;
 

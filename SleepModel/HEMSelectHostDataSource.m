@@ -52,9 +52,16 @@ static NSString* ResolveHostAddress(NSNetService* _Nonnull service) {
 
 static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 
-@implementation HEMSelectHostDataSource {
-    NSMutableArray<NSNetService*>* _discoveredHosts;
-}
+#pragma mark -
+
+@interface HEMSelectHostDataSource ()
+
+@property (nonatomic, readonly) NSArray<NSString*>* staticHosts;
+@property (nonatomic, readonly) NSMutableArray<NSNetService*>* discoveredHosts;
+
+@end
+
+@implementation HEMSelectHostDataSource
 
 - (instancetype)init
 {
@@ -69,8 +76,6 @@ static NSString* const HostCellIdentifier = @"HostCellIdentifier";
 }
 
 #pragma mark -
-
-@synthesize discoveredHosts = _discoveredHosts;
 
 - (void)addDiscoveredHost:(nonnull NSNetService*)host {
     [_discoveredHosts addObject:host];

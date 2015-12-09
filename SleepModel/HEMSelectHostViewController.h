@@ -6,8 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMSelectHostViewController : UITableViewController
+@interface HEMSelectHostViewController : HEMBaseController
 
 @end

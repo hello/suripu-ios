@@ -87,7 +87,6 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
 
 - (void)setImageWithURL:(NSString *)url withTimeout:(NSTimeInterval)timeout {
     if ([[self currentImageURL] isEqualToString:url] && [self image]) {
-        DDLogVerbose(@"image shown matches that of the current image url, skipping download");
         return;
     }
     

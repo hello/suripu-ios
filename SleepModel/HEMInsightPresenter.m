@@ -15,25 +15,28 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "NSShadow+HEMStyle.h"
+#import "UIImage+HEMPixelColor.h"
 
 #import "HEMInsightPresenter.h"
 #import "HEMInsightsService.h"
 #import "HEMMainStoryboard.h"
-#import "HEMActivityCoverView.h"
 #import "HEMMarkdown.h"
 #import "HEMURLImageView.h"
 #import "HEMImageCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
 #import "HEMRootViewController.h"
+#import "HEMLoadingCollectionViewCell.h"
+#import "HEMActivityIndicatorView.h"
 
 typedef NS_ENUM(NSInteger, HEMInsightRow) {
     HEMInsightRowImage = 0,
-    HEMInsightRowSummary,
+    HEMInsightRowSummaryOrLoading,
     HEMInsightRowTitle,
     HEMInsightRowDetail,
     HEMINsightRowCount
 };
 
+static NSString* const HEMInsightHeaderReuseId = @"header";
 // FIXME: there is an extra pixel here (should be 32.0f), but required or else
 // height calculations are wrong and i'm not sure why
 static CGFloat const HEMInsightCellSummaryVerticalMargin = 33.0f;
@@ -42,6 +45,8 @@ static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
 static CGFloat const HEMInsightCellTextHorizontalMargin = 24.0f;
 static CGFloat const HEMInsightCellHeightImage = 188.0f;
 static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
+static CGFloat const HEMInsightCloseButtonAnimation = 0.5f;
+static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -54,6 +59,10 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
 @property (nonatomic, strong) NSAttributedString* attributedDetail;
 @property (nonatomic, weak) UIButton* closeButton;
+@property (nonatomic, weak) UIImageView* buttonShadow;
+@property (nonatomic, weak) NSLayoutConstraint* closeBottomConstraint;
+@property (nonatomic, assign, getter=isLoading) BOOL loading;
+@property (nonatomic, strong) UIColor* imageColor;
 
 @end
 
@@ -69,29 +78,31 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     return self;
 }
 
-- (void)bindWithCollectionView:(UICollectionView*)collectionView {
+- (void)bindWithCollectionView:(UICollectionView*)collectionView withImageColor:(UIColor*)imageColor {
+    [self setImageColor:imageColor];
     [self setCollectionView:collectionView];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setDataSource:self];
     [self loadInfo];
 }
 
-- (void)bindWithCloseButton:(UIButton*)button {
+- (void)bindWithCloseButton:(UIButton*)button
+           bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [button setBackgroundColor:[UIColor whiteColor]];
-    
-    NSShadow* shadow = [NSShadow contentShadow];
-    CALayer* buttonLayer = [button layer];
-    [buttonLayer setShadowColor:[[shadow shadowColor] CGColor]];
-    [buttonLayer setShadowOffset:[shadow shadowOffset]];
-    [buttonLayer setShadowOpacity:0.0f];
-    [buttonLayer setShadowRadius:[shadow shadowBlurRadius]];
-    
     [[button titleLabel] setFont:[UIFont insightDismissButtonFont]];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [button addTarget:self
                action:@selector(closeInsight)
      forControlEvents:UIControlEventTouchUpInside];
     [self setCloseButton:button];
+  
+    [bottomConstraint setConstant:-CGRectGetHeight([button bounds])];
+    [self setCloseBottomConstraint:bottomConstraint];
+}
+
+- (void)bindWithButtonShadow:(UIImageView*)buttonShadow {
+    [buttonShadow setAlpha:0.0f];
+    [self setButtonShadow:buttonShadow];
 }
 
 - (void)updateCloseButtonShadowOpacity {
@@ -101,21 +112,20 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
         CGFloat yOffset = [[self collectionView] contentOffset].y;
         CGFloat amountDisplayed = contentHeight - yOffset;
         CGFloat percentage = MIN(1.0f, (amountDisplayed / scrollHeight) - 1.0f);
-        [[[self closeButton] layer] setShadowOpacity:percentage];
+        [[self buttonShadow] setAlpha:percentage];
     }
 }
 
 - (void)loadInfo {
-    __block HEMActivityCoverView* activity = [[HEMActivityCoverView alloc] init];
-    [activity showInView:[[self collectionView] superview] activity:YES completion:^{
-        __weak typeof(self) weakSelf = self;
-        [[self insightsService] getInsightForSummary:[self insight] completion:^(SENInsightInfo * _Nullable insight, NSError * _Nullable error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf setLoadError:error];
-            [strongSelf setInsightDetail:insight];
-            [[strongSelf collectionView] reloadData];
-            [activity dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
-        }];
+    [self setLoading:YES];
+    __weak typeof(self) weakSelf = self;
+    [[self insightsService] getInsightForSummary:[self insight] completion:^(SENInsightInfo * _Nullable insight, NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setLoading:NO];
+        [strongSelf setLoadError:error];
+        [strongSelf setInsightDetail:insight];
+        [[strongSelf collectionView] reloadData];
+        [strongSelf updateCloseButtonShadowOpacity];
     }];
 }
 
@@ -133,10 +143,21 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     [rootVC hideStatusBar];
 }
 
-- (void)willDisappear {
-    [super willDisappear];
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [rootVC showStatusBar];
+- (void)didAppear {
+    [super didAppear];
+    
+    [[self closeBottomConstraint] setConstant:0.0f];
+    [UIView animateWithDuration:HEMInsightCloseButtonAnimation animations:^{
+        [[self closeButton] layoutIfNeeded];
+        [[self buttonShadow] layoutIfNeeded];
+        [self updateCloseButtonShadowOpacity];
+    }];
+    
+}
+
+- (void)didDisappear {
+    [super didDisappear];
+    [[self closeBottomConstraint] setConstant:-CGRectGetHeight([[self closeButton] bounds])];
 }
 
 - (void)didRelayout {
@@ -147,8 +168,6 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     itemSize.width = CGRectGetWidth([[self collectionView] bounds]);
     [layout setItemSize:itemSize];
     [[self collectionView] reloadData];
-    
-    [self updateCloseButtonShadowOpacity];
 }
 
 #pragma mark - Collection View
@@ -160,19 +179,25 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
         default:
         case HEMInsightRowImage:
             return [HEMMainStoryboard imageReuseIdentifier];
-        case HEMInsightRowSummary:
-            return [HEMMainStoryboard summaryReuseIdentifier];
+        case HEMInsightRowSummaryOrLoading:
+            return [self isLoading]
+                ? [HEMMainStoryboard loadingReuseIdentifier]
+                : [HEMMainStoryboard summaryReuseIdentifier];
         case HEMInsightRowTitle:
             return [HEMMainStoryboard titleReuseIdentifier];
         case HEMInsightRowDetail:
             return [HEMMainStoryboard detailReuseIdentifier];
-
+            
     }
 }
 
 - (NSAttributedString*)attributedTextForCellAtIndexPath:(NSIndexPath*)indexPath {
     switch ([indexPath row]) {
-        case HEMInsightRowSummary: {
+        case HEMInsightRowSummaryOrLoading: {
+            if ([self isLoading]) {
+                return nil;
+            }
+            
             if (![self attributedSummary]) {
                 NSString* summary = [[[self insight] message] trim];
                 if (summary) {
@@ -216,7 +241,7 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     NSAttributedString* attrText = [self attributedTextForCellAtIndexPath:indexPath];
     CGFloat horizontalMargins = 0.0f;
     switch ([indexPath row]) {
-        case HEMInsightRowSummary:
+        case HEMInsightRowSummaryOrLoading: // if it's asking for text, assume is for summary
             horizontalMargins = HEMInsightCellSummaryLeftMargin + HEMInsightCellSummaryRightMargin;
             break;
         case HEMInsightRowTitle:
@@ -229,17 +254,54 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
     return [attrText sizeWithWidth:itemSize.width - horizontalMargins].height;
 }
 
+- (void)setAttributedText:(NSAttributedString*)attributedText
+               inTextCell:(HEMTextCollectionViewCell*)cell {
+    
+    [[cell textLabel] setAttributedText:attributedText];
+    
+    [UIView animateWithDuration:HEMInsightTextAppearanceAnimation animations:^{
+        [[cell textLabel] setAlpha:1.0f];
+    }];
+    
+}
+
 #pragma mark End of helpers
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return HEMINsightRowCount;
+    return [self isLoading] ? 2 : HEMINsightRowCount;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = [self reuseIdentifierForIndexPath:indexPath];
-    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+    UICollectionViewCell* cell =  [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                                            forIndexPath:indexPath];
+    if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
+        HEMTextCollectionViewCell* textCell = (id)cell;
+        [[textCell textLabel] setAlpha:0.0f];
+    }
+    
+    return cell;
+}
+
+- (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView
+          viewForSupplementaryElementOfKind:(NSString *)kind
+                                atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView* view = nil;
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                  withReuseIdentifier:HEMInsightHeaderReuseId
+                                                         forIndexPath:indexPath];
+    }
+    
+    return view;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view
+        forElementKind:(NSString *)elementKind
+           atIndexPath:(NSIndexPath *)indexPath {
+    [view setBackgroundColor:[self imageColor]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -253,16 +315,20 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
             [[imageCell urlImageView] setImageWithURL:[remoteImage uriForCurrentDevice]];
             break;
         }
-        case HEMInsightRowSummary:
+        case HEMInsightRowSummaryOrLoading:
+            if ([self isLoading]) {
+                HEMLoadingCollectionViewCell* loadingCell = (id)cell;
+                [[loadingCell activityIndicator] start];
+                break;
+            }
         case HEMInsightRowTitle:
         case HEMInsightRowDetail: {
             HEMTextCollectionViewCell* textCell = (id)cell;
             [textCell setBackgroundColor:[UIColor whiteColor]];
             
-            NSAttributedString* attributedText = [self attributedTextForCellAtIndexPath:indexPath];
-            if (attributedText) {
-                [[textCell textLabel] setAttributedText:attributedText];
-            }
+            NSAttributedString* attributedText = [self attributedTextForCellAtIndexPath:indexPath
+                                                  ];
+            [self setAttributedText:attributedText inTextCell:textCell];
             break;
         }
         default:
@@ -283,9 +349,13 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
         case HEMInsightRowImage:
             itemSize.height = HEMInsightCellHeightImage;
             break;
-        case HEMInsightRowSummary: {
-            CGFloat textHeight = [self heightForTextCellAtIndexPath:indexPath];
-            itemSize.height = textHeight + (HEMInsightCellSummaryVerticalMargin * 2);
+        case HEMInsightRowSummaryOrLoading: {
+            if ([self isLoading]) {
+                itemSize.height = CGRectGetHeight([collectionView bounds]) - HEMInsightCellHeightImage;
+            } else {
+                CGFloat textHeight = [self heightForTextCellAtIndexPath:indexPath];
+                itemSize.height = textHeight + (HEMInsightCellSummaryVerticalMargin * 2);
+            }
             break;
         }
         case HEMInsightRowTitle:
@@ -312,6 +382,9 @@ static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 - (void)dealloc {
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
+    
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    [rootVC showStatusBar];
 }
 
 @end

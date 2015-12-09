@@ -12,6 +12,8 @@
 
 @property (nonatomic, weak) IBOutlet UILabel* textLabel;
 @property (nonatomic, weak) IBOutlet UIView* separator;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textBottomConstraint;
 
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width;
 

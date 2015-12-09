@@ -14,5 +14,6 @@
 @interface HEMInsightViewController : HEMBaseController
 
 @property (nonatomic, strong) SENInsight* insight;
+@property (nonatomic, strong) UIColor* imageColor;
 
 @end

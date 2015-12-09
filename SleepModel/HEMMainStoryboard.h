@@ -21,6 +21,7 @@
 +(NSString *)summaryReuseIdentifier;
 +(NSString *)titleReuseIdentifier;
 +(NSString *)detailReuseIdentifier;
++(NSString *)loadingReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
 +(NSString *)infoReuseIdentifier;

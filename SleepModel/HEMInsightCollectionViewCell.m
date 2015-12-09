@@ -20,7 +20,6 @@ static CGFloat const HEMInsightCellBaseHeight = 206.0f;
 @interface HEMInsightCollectionViewCell()
 
 @property (weak, nonatomic) IBOutlet UIView *separator;
-@property (weak, nonatomic) IBOutlet UIView *imageContainer;
 
 @end
 

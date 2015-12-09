@@ -49,7 +49,20 @@
         SENServiceDevice* service = [SENServiceDevice sharedService];
         [service getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus *status, NSError *error) {
             if (error) {
-                [SENAnalytics trackError:error];
+                if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]) {
+                    switch ([error code]) {
+                        case SENServiceDeviceErrorSenseUnavailable:
+                        case SENServiceDeviceErrorBLEUnavailable:
+                            // ignore the above codes since these are expected
+                            // use cases that generate such codes
+                            break;
+                        default:
+                            [SENAnalytics trackError:error];
+                            break;
+                    }
+                } else {
+                    [SENAnalytics trackError:error];
+                }
             }
             completion (status);
         }];

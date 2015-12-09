@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0.2
+
+New:
+
+* Parallax on insight images within the feed
+* Added transition between the insights feed to the insight details creen
+* Added force touch to home screen to set an alarm for 6s+
+* Added better host selection from debug menu
+
+Fixes:
+
+* No longer tracking errors when entering Sense settings when not nearby
+
 ## 1.2.0.1
 
 New:

@@ -13,7 +13,9 @@
 @interface HEMInsightViewController() <HEMInsightActionDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *contentView;
+@property (weak, nonatomic) IBOutlet UIImageView *buttonShadow;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *doneButtonBottomConstraint;
 
 @property (strong, nonatomic) HEMInsightsService* insightService;
 
@@ -31,8 +33,10 @@
     HEMInsightsService* service = [HEMInsightsService new];
     HEMInsightPresenter* presenter = [[HEMInsightPresenter alloc] initWithInsightService:service
                                                                               forInsight:[self insight]];
-    [presenter bindWithCollectionView:[self contentView]];
-    [presenter bindWithCloseButton:[self doneButton]];
+    [presenter bindWithCollectionView:[self contentView] withImageColor:[self imageColor]];
+    [presenter bindWithCloseButton:[self doneButton]
+                  bottomConstraint:[self doneButtonBottomConstraint]];
+    [presenter bindWithButtonShadow:[self buttonShadow]];
     [presenter setActionDelegate:self];
     
     [self addPresenter:presenter];

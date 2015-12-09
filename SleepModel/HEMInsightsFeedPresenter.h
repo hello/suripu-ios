@@ -15,6 +15,7 @@
 @class HEMQuestionsService;
 @class HEMUnreadAlertService;
 @class HEMActivityIndicatorView;
+@class HEMInsightCollectionViewCell;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,7 +23,9 @@ typedef void(^HEMInsightsPresenterCompletion)(void);
 
 @protocol HEMInsightsFeedPresenterDelegate <NSObject>
 
-- (void)presenter:(HEMInsightsFeedPresenter*)presenter showInsight:(SENInsight*)insight;
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+      showInsight:(SENInsight*)insight
+         fromCell:(HEMInsightCollectionViewCell*)cell;
 - (void)presenter:(HEMInsightsFeedPresenter*)presenter
     showQuestions:(NSArray<SENQuestion*>*)questions
        completion:(nullable HEMInsightsPresenterCompletion)completion;

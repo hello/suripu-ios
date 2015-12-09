@@ -7,11 +7,9 @@
 //
 
 #import "HEMModalTransitionDelegate.h"
-#import "HEMRootViewController.h"
 
 @interface HEMModalTransitionDelegate()
 
-@property (nonatomic, weak)   UIView *dimmingView;
 @property (nonatomic, assign) UIWindowLevel originalWindowLevel;
 @property (nonatomic, assign) BOOL previouslyShowingStatusBar;
 
@@ -57,28 +55,18 @@
     }
 }
 
-#pragma mark - Status bar handling
+#pragma mark - Status Bar
 
 - (void)saveAndUpdateStatusBarAppearance {
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [self setPreviouslyShowingStatusBar:![rootVC isStatusBarHidden]];
+    [self setPreviouslyShowingStatusBar:[self isStatusBarShowing]];
     
     if ([self wantsStatusBar] != [self previouslyShowingStatusBar]) {
-        if ([self wantsStatusBar]) {
-            [rootVC showStatusBar];
-        } else {
-            [rootVC hideStatusBar];
-        }
+        [self showStatusBar:[self wantsStatusBar]];
     }
 }
 
 - (void)restoreStatusBarAppearance {
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    if ([self previouslyShowingStatusBar]) {
-        [rootVC showStatusBar];
-    } else {
-        [rootVC hideStatusBar];
-    }
+    [self showStatusBar:[self previouslyShowingStatusBar]];
 }
 
 #pragma mark - Transition styles
@@ -90,11 +78,8 @@
     
     CGRect containerBounds = [containerView bounds];
     
-    UIView* dimmingView = [[UIView alloc] initWithFrame:containerBounds];
-    [dimmingView setAlpha:0.0f];
-    [dimmingView setBackgroundColor:[UIColor blackColor]];
+    UIView* dimmingView = [self dimmingViewWithContext:context];
     [containerView addSubview:dimmingView];
-    [self setDimmingView:dimmingView];
     
     UIView* toView = [toController view];
     [containerView addSubview:toView];
@@ -108,7 +93,7 @@
                          CGRect frame = [toView frame];
                          frame.origin = CGPointZero;
                          [toView setFrame:frame];
-                         [[self dimmingView] setAlpha:0.7f];
+                         [[self dimmingViewWithContext:context] setAlpha:HEMTransitionDimmingViewMaxAlpha];
                      }
                      completion:^(BOOL finished) {
                          [context completeTransition:finished];
@@ -127,7 +112,7 @@
     [UIView animateWithDuration:[self duration]
                      animations:^{
                          [fromView setFrame:updateFrame];
-                         [[self dimmingView] setAlpha:0.0f];
+                         [[self dimmingViewWithContext:context] setAlpha:0.0f];
                      }
                      completion:^(BOOL finished) {
                          [fromView removeFromSuperview];

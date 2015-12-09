@@ -13,11 +13,6 @@
 /**
  * @return shadow for the message container of a handholding tutorial
  */
-+ (NSShadow*)shadowForHandholdingMessage;
-
-/**
- * @return shadow to show when content is beyond the view port
- */
-+ (NSShadow*)contentShadow;
++ (NSShadow*)shadowForHandholdingMessage;;
 
 @end

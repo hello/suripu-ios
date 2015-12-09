@@ -7,6 +7,13 @@
 //
 #import <SenseKit/SENAPIClient.h>
 #import "HEMPresenter.h"
+#import "HEMNavigationShadowView.h"
+
+@interface HEMPresenter()
+
+@property (nullable, nonatomic, weak) HEMNavigationShadowView* shadowView;
+
+@end
 
 @implementation HEMPresenter
 
@@ -23,6 +30,14 @@
                                              selector:@selector(didGainConnectivity)
                                                  name:SENAPIReachableNotification
                                                object:nil];
+}
+
+- (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView {
+    [self setShadowView:shadowView];
+}
+
+- (void)didScrollContentIn:(UIScrollView*)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
 }
 
 - (void)willAppear {}

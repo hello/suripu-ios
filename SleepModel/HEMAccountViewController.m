@@ -70,6 +70,10 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
 #pragma mark - UITableViewDelegate
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     HEMSettingsAccountInfoType type = [[self dataSource] infoTypeAtIndexPath:indexPath];
     return type == HEMSettingsAccountInfoTypeAudioExplanation ? HEMAccountTableAudioExplanationRowHeight

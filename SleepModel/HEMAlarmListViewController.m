@@ -499,6 +499,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
     return CGSizeMake(width, textHeight + HEMAlarmListEmptyCellBaseHeight);
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 #pragma mark - Clean Up
 
 - (void)dealloc {

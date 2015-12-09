@@ -248,6 +248,10 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 #pragma mark - Actions
 
 - (void)takeWarningAction:(UIButton*)sender {

@@ -73,6 +73,7 @@
     [super viewDidLoad];
     
     [[self feedPresenter] bindWithCollectionView:[self collectionView]];
+    [[self feedPresenter] bindWithShadowView:[self shadowView]];
     [[self feedPresenter] bindWithActivityIndicator:[self activityIndicator]];
     [[self feedPresenter] setDelegate:self];
 }

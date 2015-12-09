@@ -37,6 +37,7 @@ static NSString* const NonsenseServiceName = @"nonsense-server";
     self.tableView.delegate = self;
     
     self.navigationItem.title = NSLocalizedString(@"debug.option.change-api-address", nil);
+    self.navigationItem.prompt = [SENAPIClient baseURL].absoluteString;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"actions.cancel", nil)
                                                                              style:UIBarButtonItemStyleDone
                                                                             target:self

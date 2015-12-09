@@ -20,7 +20,7 @@ static NSString* const ServiceType = @"_http._tcp.";
 static NSString* const ServiceName = @"nonsense-server";
 static NSTimeInterval const ResolveTimeout = 5.0;
 
-@interface HEMNonsenseScanService () <NSNetServiceDelegate, NSNetServiceBrowserDelegate>
+@interface HEMNonsenseScanService ()
 
 @property (nonatomic) NSMutableArray<NSNetService*>* discovering;
 @property (nonatomic) NSNetServiceBrowser* netServiceBrowser;
@@ -56,19 +56,19 @@ static NSTimeInterval const ResolveTimeout = 5.0;
 #pragma mark -
 
 - (nonnull NSString*)addressForNonsense:(nonnull NSNetService*)nonsense {
-    const ip_socket_address *socketAddress = nonsense.addresses.firstObject.bytes;
+    const ip_socket_address* socketAddress = nonsense.addresses.firstObject.bytes;
     if (socketAddress) {
         char addressBuffer[INET6_ADDRSTRLEN];
         switch (socketAddress->sa.sa_family) {
             case AF_INET: {
-                const char *address = inet_ntop(socketAddress->sa.sa_family,
+                const char* address = inet_ntop(socketAddress->sa.sa_family,
                                                 &(socketAddress->ipv4.sin_addr),
                                                 addressBuffer,
                                                 sizeof(addressBuffer));
                 return [NSString stringWithFormat:@"http://%s:%d", address, (long) nonsense.port];
             }
             case AF_INET6: {
-                const char *address = inet_ntop(socketAddress->sa.sa_family,
+                const char* address = inet_ntop(socketAddress->sa.sa_family,
                                                 &(socketAddress->ipv6.sin6_addr),
                                                 addressBuffer,
                                                 sizeof(addressBuffer));

@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HEMNonsenseScanService : SENService
+@interface HEMNonsenseScanService : SENService <NSNetServiceDelegate, NSNetServiceBrowserDelegate>
 
 @property (nonatomic, weak, nullable) id <HEMNonsenseScanServiceDelegate> delegate;
 

@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.2.0.3
+
+New:
+
+* VX tweaks to transitions
+* VX tweaks to insight detail
+* VX tweaks to insights feed
+* Standardizing borders
+
+Fixes:
+
+* unread indicator will not be accidentally dismissed when using alarm shortcut
+* fixed alert text being cut off
+* fixed crasher occuring when answer questions
+* better factory reset error messages
+* better coloring of bold text in current conditions screen
+
 ## 1.2.0.2
 
 New:

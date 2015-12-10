@@ -331,6 +331,7 @@
 
 // Insights / Questions
 "insights.title" = "Insights";
+"insight.about" = "About you";
 "sleep.insight.info.title.no-text" = "Insight failed to load";
 "sleep.insight.info.message.no-text" = "Unable to load Insight information at the moment. Please make sure your device has an internet connection and try again.";
 "sleep.questions.end.message" = "Thank you";

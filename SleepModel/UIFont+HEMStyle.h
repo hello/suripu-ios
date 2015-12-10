@@ -23,6 +23,11 @@
 + (UIFont*)alarmMeridiemFont;
 
 /**
+ *  Font for insight about text in the detail screen
+ */
++ (UIFont*)insightAboutFont;
+
+/**
  *  Font for insight detail summary text that is in bold
  */
 + (UIFont*)insightSummaryBoldFont;

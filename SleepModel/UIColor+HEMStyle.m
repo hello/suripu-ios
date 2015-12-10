@@ -281,6 +281,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)insightSummaryDateColor {
     return [UIColor colorWithHex:0x596980 alpha:0.5f];
 }
++ (UIColor *)insightAboutTextColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.25f];
+}
 + (UIColor *)borderColor {
     return [UIColor colorWithHex:0xD2D3D6 alpha:1.f];
 }

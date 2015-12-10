@@ -130,6 +130,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 #pragma mark - Clean up
 
 - (void)dealloc {

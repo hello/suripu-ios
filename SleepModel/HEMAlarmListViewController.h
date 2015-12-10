@@ -1,7 +1,8 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMAlarmListViewController : UIViewController
+@interface HEMAlarmListViewController : HEMBaseController
 
 - (IBAction)addNewAlarm:(id)sender;
 

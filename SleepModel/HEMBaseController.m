@@ -14,6 +14,7 @@
 
 @interface HEMBaseController()
 
+@property (nonatomic, strong) HEMNavigationShadowView* shadowView;
 @property (nonatomic, assign) BOOL adjustedConstraints;
 @property (nullable, nonatomic, strong) NSArray<HEMPresenter*>* presenters;
 
@@ -73,6 +74,17 @@
 
 - (void)viewDidEnterBackground {
     [[self presenters] makeObjectsPerformSelector:@selector(didEnterBackground)];
+}
+
+#pragma mark - Shadows
+
+- (HEMNavigationShadowView*)shadowView {
+    if (!_shadowView) {
+        UINavigationBar* navBar = [[self navigationController] navigationBar];
+        _shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:navBar];
+        [navBar addSubview:_shadowView];
+    }
+    return _shadowView;
 }
 
 #pragma mark - Presenters

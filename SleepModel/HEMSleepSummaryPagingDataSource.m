@@ -3,6 +3,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepGraphViewController.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMOnboardingService.h"
 
 @interface HEMSleepSummaryPagingDataSource ()
 @property (nonatomic, strong) NSCalendar* calendar;
@@ -34,6 +35,9 @@
 - (UIViewController*)controllerBefore:(UIViewController*)viewController {
     NSDate* currentDate = [(HEMSleepGraphViewController*)viewController dateForNightOfSleep];
     NSDate* createdAt = [[[SENServiceAccount sharedService] account] createdAt];
+    if (!createdAt) {
+       createdAt = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
+    }
     NSDate* previousDay = [currentDate previousDay];
     if (!createdAt || [createdAt compare:previousDay] == NSOrderedAscending)
         return [self sleepSummaryControllerWithDate:previousDay];

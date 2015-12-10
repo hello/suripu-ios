@@ -217,6 +217,8 @@
 		BF8339961C1659D300BFD0F4 /* HEMInsightTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339951C1659D300BFD0F4 /* HEMInsightTransitionView.m */; };
 		BF8339991C17607700BFD0F4 /* HEMLoadingCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339981C17607700BFD0F4 /* HEMLoadingCollectionViewCell.m */; };
 		BF83399C1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83399B1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m */; };
+		BF83399F1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83399E1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m */; };
+		BF8339A21C18E05600BFD0F4 /* HEMNavigationShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339A11C18E05600BFD0F4 /* HEMNavigationShadowView.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
 		BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */; };
@@ -731,6 +733,10 @@
 		BF8339981C17607700BFD0F4 /* HEMLoadingCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLoadingCollectionViewCell.m; sourceTree = "<group>"; };
 		BF83399A1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HEMPixelColor.h"; sourceTree = "<group>"; };
 		BF83399B1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HEMPixelColor.m"; sourceTree = "<group>"; };
+		BF83399D1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDynamicsShadowStyler.h; sourceTree = "<group>"; };
+		BF83399E1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDynamicsShadowStyler.m; sourceTree = "<group>"; };
+		BF8339A01C18E05600BFD0F4 /* HEMNavigationShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNavigationShadowView.h; sourceTree = "<group>"; };
+		BF8339A11C18E05600BFD0F4 /* HEMNavigationShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNavigationShadowView.m; sourceTree = "<group>"; };
 		BF84C1FE1A0C111E009471D5 /* HEMSupportUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportUtil.h; sourceTree = "<group>"; };
 		BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportUtil.m; sourceTree = "<group>"; };
 		BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRootViewController.h; sourceTree = "<group>"; };
@@ -1575,6 +1581,8 @@
 				BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */,
 				8ADF03CB1A719185002B036A /* HEMDynamicsStatusStyler.h */,
 				8ADF03CC1A719185002B036A /* HEMDynamicsStatusStyler.m */,
+				BF83399D1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.h */,
+				BF83399E1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m */,
 			);
 			name = Root;
 			sourceTree = "<group>";
@@ -1981,6 +1989,8 @@
 				BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */,
 				BF8339971C17607700BFD0F4 /* HEMLoadingCollectionViewCell.h */,
 				BF8339981C17607700BFD0F4 /* HEMLoadingCollectionViewCell.m */,
+				BF8339A01C18E05600BFD0F4 /* HEMNavigationShadowView.h */,
+				BF8339A11C18E05600BFD0F4 /* HEMNavigationShadowView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2583,6 +2593,7 @@
 				BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */,
 				BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */,
 				8A0350FD1B2CAAD60077E6E6 /* HEMTimelineSummaryTitleLabel.m in Sources */,
+				BF83399F1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m in Sources */,
 				BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
 				8A9D7EA81B753273000959C5 /* HEMAudioSession.m in Sources */,
@@ -2612,6 +2623,7 @@
 				BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */,
 				BFC4C1FC1B8D536D00BB7761 /* HEMInfoViewController.m in Sources */,
 				BF78E9A61B2762060015949F /* HEMTutorialContent.m in Sources */,
+				BF8339A21C18E05600BFD0F4 /* HEMNavigationShadowView.m in Sources */,
 				BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */,
 				BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */,
 				8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */,
@@ -2980,6 +2992,9 @@
 			baseConfigurationReference = ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
+				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -3012,6 +3027,9 @@
 			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
@@ -3189,6 +3207,9 @@
 			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
@@ -3313,6 +3334,9 @@
 			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
+				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				ENABLE_BITCODE = NO;

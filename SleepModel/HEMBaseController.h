@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMNavigationShadowView.h"
 
 @class HEMPresenter;
 
@@ -14,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMBaseController : UIViewController
 
+@property (nonatomic, strong, readonly) HEMNavigationShadowView* shadowView;
 @property (nullable, nonatomic, strong, readonly) NSArray<HEMPresenter*>* presenters;
 
 - (void)addPresenter:(HEMPresenter*)presenter;

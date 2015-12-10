@@ -12,6 +12,7 @@
 #import "HEMURLImageView.h"
 
 static CGFloat const HEMInsightTransitionImageHeight = 188.0f;
+static CGFloat const HEMInsightTransitionDuration = 0.3f;
 
 @interface HEMInsightTransition()
 
@@ -47,7 +48,7 @@ static CGFloat const HEMInsightTransitionImageHeight = 188.0f;
     [containerView addSubview:[self dimmingViewWithContext:context]];
     [containerView addSubview:[self transitionView]];
     
-    [UIView animateWithDuration:0.4f
+    [UIView animateWithDuration:HEMInsightTransitionDuration
                      animations:^{
                          [self setTimelineVisible:NO animated:NO];
                          [self showStatusBar:NO];
@@ -75,7 +76,7 @@ static CGFloat const HEMInsightTransitionImageHeight = 188.0f;
     
     [fromView removeFromSuperview];
     
-    [UIView animateWithDuration:0.4f
+    [UIView animateWithDuration:HEMInsightTransitionDuration
                      animations:^{
                          [fromView setFrame:[self startFrame]];
                          [[self transitionView] shrink:[self startFrame] imageHeight:[self originalImageHeight]];

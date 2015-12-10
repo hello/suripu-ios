@@ -8,7 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
+@class HEMNavigationShadowView;
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface HEMPresenter : NSObject
+
+/*
+ * @discussion
+ *
+ * Throughout the app, we want to show a shadow on the top most part of the view
+ * when the content in the main view is scrolled "underneath".  To avoid code
+ * duplication, use this method to bind with the shadow view, and call 
+ * updateAppearanceOnScroll:
+ */
+- (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView;
+
+/*
+ * @discussion
+ *
+ * If the presenter manages a scrollview, call this method on scrollViewDidScroll:
+ * and pass the scroll view in to it to allow the base presenter to handle any
+ * changes needed based on the content changes
+ */
+- (void)didScrollContentIn:(UIScrollView*)scrollView;
 
 /*
  * @discussion
@@ -76,3 +99,5 @@
 - (void)didGainConnectivity;
 
 @end
+
+NS_ASSUME_NONNULL_END

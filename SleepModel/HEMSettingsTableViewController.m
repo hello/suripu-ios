@@ -215,6 +215,10 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 - (NSString *)segueIdentifierForRow:(NSUInteger)row {
     switch (row) {
     case HEMSettingsAccountRowIndex:

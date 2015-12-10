@@ -9,6 +9,7 @@
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
 static NSString *const _HEMrootViewController = @"RootViewController";
+static NSString *const _HEMabout = @"about";
 static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMaction = @"action";
 static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
@@ -91,6 +92,7 @@ static NSString *const _HEMwarning = @"warning";
 +(UIStoryboard *)storyboard { return _storyboard ?: (_storyboard = [UIStoryboard storyboardWithName:_HEMmain bundle:[NSBundle mainBundle]]); }
 
 /** Cell Reuse Identifiers */
++(NSString *)aboutReuseIdentifier { return _HEMabout; }
 +(NSString *)actionReuseIdentifier { return _HEMaction; }
 +(NSString *)alarmChoiceCellReuseIdentifier { return _HEMalarmChoiceCell; }
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }

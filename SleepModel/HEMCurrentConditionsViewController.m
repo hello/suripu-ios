@@ -485,4 +485,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     return defaultSize;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 @end

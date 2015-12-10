@@ -28,12 +28,15 @@
         if (!error && stats) {            
             [weakSelf setUnreadStats:stats];
         }
-        completion ([weakSelf hasUnread], error);
+        if (completion) {
+            completion ([weakSelf hasUnread], error);
+        }
     }];
 }
 
 - (void)updateLastViewFor:(HEMUnreadTypes)unreadTypes
                completion:(HEMUnreadCompletionHandler)completion {
+    
     SENAppStats* stats = [SENAppStats new];
     NSDate *now = [NSDate date];
     if ((unreadTypes & HEMUnreadTypeInsights) == HEMUnreadTypeInsights) {
@@ -42,12 +45,15 @@
     if ((unreadTypes & HEMUnreadTypeQuestions) == HEMUnreadTypeQuestions) {
         [stats setLastViewedQuestions:now];
     }
+    
+    __weak typeof(self) weakSelf = self;
     [SENAPIAppStats updateStats:stats completion:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
-            [self update:completion];
+            [strongSelf update:completion];
         } else {
             if (completion) {
-                completion ([self hasUnread], error);
+                completion ([strongSelf hasUnread], error);
             }
         }
     }];

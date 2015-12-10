@@ -199,6 +199,10 @@ static CGFloat const HEMNoDeviceHeight = 203.0f;
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 #pragma mark - Pill
 
 - (void)showPillPairingController {

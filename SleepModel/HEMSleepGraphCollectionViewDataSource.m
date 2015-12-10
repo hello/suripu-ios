@@ -257,7 +257,19 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
  *  @param isOpen the state of the drawer
  */
 - (void)updateTimelineState:(BOOL)isOpen {
-    [[self topBarView] setUnread:[self shouldShowUnreadIndicator]];
+    __weak typeof(self) weakSelf = self;
+    void(^updateUnread)(void) = ^(void) {
+        [[weakSelf topBarView] setUnread:[weakSelf shouldShowUnreadIndicator]];
+    };
+    
+    if (isOpen) {
+        updateUnread();
+    } else {
+        [[self unreadService] update:^(BOOL hasUnread, NSError *error) {
+            updateUnread();
+        }];
+    }
+    
     [[self topBarView] setOpened:isOpen];
     [[self topBarView] setShareEnabled:[self hasTimelineData] && !isOpen animated:YES];
     if (isOpen)

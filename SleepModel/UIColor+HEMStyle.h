@@ -148,6 +148,8 @@
 + (UIColor *)insightSummaryMessageColor;
 + (UIColor *)insightSummaryCategoryColor;
 + (UIColor *)insightSummaryDateColor;
++ (UIColor *)insightAboutTextColor;
++ (UIColor *)borderColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

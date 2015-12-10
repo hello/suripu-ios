@@ -35,6 +35,7 @@
 #import "HEMAppUsage.h"
 #import "HEMScreenUtils.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMDynamicsShadowStyler.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -196,13 +197,12 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     self.drawerViewController.delegate = self;
     self.drawerViewController.gravityMagnitude = HEMRootDrawerDefaultGravityMagnitude;
     [self hideStatusBar];
-    MSDynamicsDrawerShadowStyler* shadowStyler = [MSDynamicsDrawerShadowStyler styler];
-    shadowStyler.shadowRadius = 3.f;
-    shadowStyler.shadowOpacity = 0.2f;
-    [self.drawerViewController addStylersFromArray:@[ [HEMDynamicsStatusStyler styler], shadowStyler ]
+    
+    [self.drawerViewController addStylersFromArray:@[ [HEMDynamicsStatusStyler styler], [HEMDynamicsShadowStyler styler]]
                                       forDirection:MSDynamicsDrawerDirectionTop];
     [self.drawerViewController setDrawerViewController:[HEMRootViewController instantiateDrawerViewController]
                                           forDirection:MSDynamicsDrawerDirectionTop];
+    
     [self adjustRevealHeight];
     [self.drawerViewController setShouldAlignStatusBarToPaneView:NO];
 

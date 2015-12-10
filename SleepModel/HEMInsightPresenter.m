@@ -30,23 +30,30 @@
 
 typedef NS_ENUM(NSInteger, HEMInsightRow) {
     HEMInsightRowImage = 0,
-    HEMInsightRowSummaryOrLoading,
-    HEMInsightRowTitle,
+    HEMInsightRowTitleOrLoading,
     HEMInsightRowDetail,
+    HEMInsightAbout,
+    HEMInsightRowSummary,
     HEMINsightRowCount
 };
 
 static NSString* const HEMInsightHeaderReuseId = @"header";
-// FIXME: there is an extra pixel here (should be 32.0f), but required or else
-// height calculations are wrong and i'm not sure why
-static CGFloat const HEMInsightCellSummaryVerticalMargin = 33.0f;
+
+static CGFloat const HEMInsightCellSummaryTopMargin = 8.0f;
+static CGFloat const HEMInsightCellSummaryBotMargin = 32.0f;
 static CGFloat const HEMInsightCellSummaryLeftMargin = 48.0f;
 static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
+
+static CGFloat const HEMInsightCellTitleTopMargin = 32.0f;
+static CGFloat const HEMInsightCellTitleBotMargin = 12.0f;
+
+static CGFloat const HEMInsightCellAboutTopMargin = 36.0f;
+
 static CGFloat const HEMInsightCellTextHorizontalMargin = 24.0f;
 static CGFloat const HEMInsightCellHeightImage = 188.0f;
-static CGFloat const HEMInsightDetailVerticalMargin = 16.0f;
 static CGFloat const HEMInsightCloseButtonAnimation = 0.5f;
 static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
+static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
 
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -58,6 +65,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 @property (nonatomic, strong) NSAttributedString* attributedSummary;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
 @property (nonatomic, strong) NSAttributedString* attributedDetail;
+@property (nonatomic, strong) NSAttributedString* attributedAbout;
 @property (nonatomic, weak) UIButton* closeButton;
 @property (nonatomic, weak) UIImageView* buttonShadow;
 @property (nonatomic, weak) NSLayoutConstraint* closeBottomConstraint;
@@ -88,6 +96,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 
 - (void)bindWithCloseButton:(UIButton*)button
            bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    [[button layer] setBorderColor:[[UIColor borderColor] CGColor]];
+    [[button layer] setBorderWidth:HEMInsightCloseButtonBorderWidth];
+    
     [button setBackgroundColor:[UIColor whiteColor]];
     [[button titleLabel] setFont:[UIFont insightDismissButtonFont]];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
@@ -149,7 +160,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     [[self closeBottomConstraint] setConstant:0.0f];
     [UIView animateWithDuration:HEMInsightCloseButtonAnimation animations:^{
         [[self closeButton] layoutIfNeeded];
-        [[self buttonShadow] layoutIfNeeded];
+    } completion:^(BOOL finished) {
         [self updateCloseButtonShadowOpacity];
     }];
     
@@ -179,53 +190,75 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
         default:
         case HEMInsightRowImage:
             return [HEMMainStoryboard imageReuseIdentifier];
-        case HEMInsightRowSummaryOrLoading:
-            return [self isLoading]
-                ? [HEMMainStoryboard loadingReuseIdentifier]
-                : [HEMMainStoryboard summaryReuseIdentifier];
-        case HEMInsightRowTitle:
-            return [HEMMainStoryboard titleReuseIdentifier];
+        case HEMInsightAbout:
+            return [HEMMainStoryboard aboutReuseIdentifier];
+        case HEMInsightRowSummary:
+            return [HEMMainStoryboard summaryReuseIdentifier];
+        case HEMInsightRowTitleOrLoading:
+            return [self isLoading] ? [HEMMainStoryboard loadingReuseIdentifier] : [HEMMainStoryboard titleReuseIdentifier];
         case HEMInsightRowDetail:
             return [HEMMainStoryboard detailReuseIdentifier];
             
     }
 }
 
+- (NSAttributedString*)attributedAbout {
+    if (!_attributedAbout) {
+        NSString* about = [NSLocalizedString(@"insight.about", nil) uppercaseString];
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont insightAboutFont],
+                                     NSForegroundColorAttributeName : [UIColor insightAboutTextColor]};
+        _attributedAbout = [[NSAttributedString alloc] initWithString:about attributes:attributes];
+    }
+    return _attributedAbout;
+}
+
+- (NSAttributedString*)attributedSummary {
+    if (!_attributedSummary) {
+        NSString* summary = [[[self insight] message] trim];
+        if (summary) {
+            NSDictionary* attributes = [HEMMarkdown attributesForInsightSummaryText];
+            _attributedSummary = [markdown_to_attr_string(summary, 0, attributes) trim];
+        }
+    }
+    return _attributedSummary;
+}
+
+- (NSAttributedString*)attributedTitle {
+    if (!_attributedTitle) {
+        NSString* title = [[[self insightDetail] title] trim];
+        if (title) {
+            NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText][@(PARA)];
+            _attributedTitle = [[NSAttributedString alloc] initWithString:title
+                                                               attributes:attributes];
+        }
+    }
+    return _attributedTitle;
+}
+
+- (NSAttributedString*)attributedDetail {
+    if (!_attributedDetail) {
+        NSString* detail = [[[self insightDetail] info] trim];
+        if (detail) {
+            NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText];
+            _attributedDetail = [markdown_to_attr_string(detail, 0, attributes) trim];
+        }
+    }
+    return _attributedDetail;
+}
+
 - (NSAttributedString*)attributedTextForCellAtIndexPath:(NSIndexPath*)indexPath {
     switch ([indexPath row]) {
-        case HEMInsightRowSummaryOrLoading: {
+        case HEMInsightAbout:
+            return [self attributedAbout];
+        case HEMInsightRowSummary:
+            return [self attributedSummary];
+        case HEMInsightRowTitleOrLoading: {
             if ([self isLoading]) {
                 return nil;
-            }
-            
-            if (![self attributedSummary]) {
-                NSString* summary = [[[self insight] message] trim];
-                if (summary) {
-                    NSDictionary* attributes = [HEMMarkdown attributesForInsightSummaryText];
-                    [self setAttributedSummary:[markdown_to_attr_string(summary, 0, attributes) trim]];
-                }
-            }
-            return [self attributedSummary];
-        }
-        case HEMInsightRowTitle: {
-            if (![self attributedTitle]) {
-                NSString* title = [[[self insightDetail] title] trim];
-                if (title) {
-                    NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText][@(PARA)];
-                    [self setAttributedTitle:[[NSAttributedString alloc] initWithString:title
-                                                                             attributes:attributes]];
-                }
             }
             return [self attributedTitle];
         }
         case HEMInsightRowDetail: {
-            if (![self attributedDetail]) {
-                NSString* detail = [[[self insightDetail] info] trim];
-                if (detail) {
-                    NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText];
-                    [self setAttributedDetail:[markdown_to_attr_string(detail, 0, attributes) trim]];
-                }
-            }
             return [self attributedDetail];
         }
         case HEMInsightRowImage:
@@ -241,10 +274,11 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     NSAttributedString* attrText = [self attributedTextForCellAtIndexPath:indexPath];
     CGFloat horizontalMargins = 0.0f;
     switch ([indexPath row]) {
-        case HEMInsightRowSummaryOrLoading: // if it's asking for text, assume is for summary
+        case HEMInsightRowSummary:
             horizontalMargins = HEMInsightCellSummaryLeftMargin + HEMInsightCellSummaryRightMargin;
             break;
-        case HEMInsightRowTitle:
+        case HEMInsightAbout:
+        case HEMInsightRowTitleOrLoading: // if it's asking for text, assume is for summary
         case HEMInsightRowDetail:
             horizontalMargins = HEMInsightCellTextHorizontalMargin * 2;
             break;
@@ -275,14 +309,8 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = [self reuseIdentifierForIndexPath:indexPath];
-    UICollectionViewCell* cell =  [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                            forIndexPath:indexPath];
-    if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
-        HEMTextCollectionViewCell* textCell = (id)cell;
-        [[textCell textLabel] setAlpha:0.0f];
-    }
-    
-    return cell;
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                     forIndexPath:indexPath];
 }
 
 - (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView
@@ -315,19 +343,18 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
             [[imageCell urlImageView] setImageWithURL:[remoteImage uriForCurrentDevice]];
             break;
         }
-        case HEMInsightRowSummaryOrLoading:
+        case HEMInsightRowTitleOrLoading:
             if ([self isLoading]) {
                 HEMLoadingCollectionViewCell* loadingCell = (id)cell;
                 [[loadingCell activityIndicator] start];
                 break;
             }
-        case HEMInsightRowTitle:
+        case HEMInsightAbout:
+        case HEMInsightRowSummary:
         case HEMInsightRowDetail: {
             HEMTextCollectionViewCell* textCell = (id)cell;
             [textCell setBackgroundColor:[UIColor whiteColor]];
-            
-            NSAttributedString* attributedText = [self attributedTextForCellAtIndexPath:indexPath
-                                                  ];
+            NSAttributedString* attributedText = [self attributedTextForCellAtIndexPath:indexPath];
             [self setAttributedText:attributedText inTextCell:textCell];
             break;
         }
@@ -349,21 +376,26 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
         case HEMInsightRowImage:
             itemSize.height = HEMInsightCellHeightImage;
             break;
-        case HEMInsightRowSummaryOrLoading: {
+        case HEMInsightAbout: {
+            CGFloat textHeight = [self heightForTextCellAtIndexPath:indexPath];
+            itemSize.height = textHeight + HEMInsightCellAboutTopMargin;
+            break;
+        }
+        case HEMInsightRowSummary: {
+            CGFloat textHeight = [self heightForTextCellAtIndexPath:indexPath];
+            itemSize.height = textHeight + HEMInsightCellSummaryTopMargin + HEMInsightCellSummaryBotMargin;
+            break;
+        }
+        case HEMInsightRowTitleOrLoading:
             if ([self isLoading]) {
                 itemSize.height = CGRectGetHeight([collectionView bounds]) - HEMInsightCellHeightImage;
             } else {
                 CGFloat textHeight = [self heightForTextCellAtIndexPath:indexPath];
-                itemSize.height = textHeight + (HEMInsightCellSummaryVerticalMargin * 2);
+                itemSize.height = textHeight + HEMInsightCellTitleTopMargin + HEMInsightCellTitleBotMargin;
             }
             break;
-        }
-        case HEMInsightRowTitle:
-            itemSize.height = [self heightForTextCellAtIndexPath:indexPath];
-            break;
         case HEMInsightRowDetail: {
-            CGFloat textHeight = [self heightForTextCellAtIndexPath:indexPath];
-            itemSize.height = textHeight + (HEMInsightDetailVerticalMargin * 2);
+            itemSize.height = [self heightForTextCellAtIndexPath:indexPath];
             break;
         }
         default:

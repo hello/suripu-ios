@@ -130,6 +130,10 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 #pragma mark - Actions
 
 - (NSDictionary*)dialogMessageAttributes:(BOOL)bold {

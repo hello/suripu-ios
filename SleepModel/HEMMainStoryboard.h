@@ -20,8 +20,9 @@
 +(NSString *)imageReuseIdentifier;
 +(NSString *)summaryReuseIdentifier;
 +(NSString *)titleReuseIdentifier;
-+(NSString *)detailReuseIdentifier;
 +(NSString *)loadingReuseIdentifier;
++(NSString *)detailReuseIdentifier;
++(NSString *)aboutReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
 +(NSString *)infoReuseIdentifier;

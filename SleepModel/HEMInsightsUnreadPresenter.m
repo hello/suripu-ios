@@ -33,13 +33,20 @@
     tabBarItem.image = [HelloStyleKit senseBarIcon];
     tabBarItem.selectedImage = [UIImage imageNamed:@"senseBarIconActive"];
     [self setTabBarItem:tabBarItem];
+    [self updateTabBarItemUnreadIndicator];
 }
 
 - (void)updateTabBarItemUnreadIndicator {
     if ([self tabBarItem]) {
-        SENAppUnreadStats* unreadStats = [[self unreadService] unreadStats];
-        BOOL hasUnread = [unreadStats hasUnreadInsights] || [unreadStats hasUnreadQuestions];
-        [[self tabBarItem] setBadgeValue:hasUnread ? @"1" : nil];
+        __weak typeof(self) weakSelf = self;
+        [[self unreadService] update:^(BOOL hasUnread, NSError *error) {
+            if (!error) {
+                SENAppUnreadStats* unreadStats = [[weakSelf unreadService] unreadStats];
+                BOOL hasUnreadFeedItems = [unreadStats hasUnreadInsights] || [unreadStats hasUnreadQuestions];
+                [[weakSelf tabBarItem] setBadgeValue:hasUnreadFeedItems ? @"1" : nil];
+            }
+        }];
+
     }
 }
 

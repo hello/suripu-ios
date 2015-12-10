@@ -309,6 +309,7 @@
 "settings.sense.connecting" = "Connecting over Bluetooth...";
 "settings.sense.connected" = "Connected over Bluetooth.";
 "settings.sense.no-sense-message" = "Make sure Sense is plugged in and nearby and try again.";
+"settings.sense.busy" = "An operation is currently in progress.  Please wait a short time and try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message.format" = "Are you sure you want to put Sense into Pairing Mode? You should use this option only if you have another mobile device you wish to pair with Sense. If you're having trouble, visit %@ for support.";
 "settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
@@ -322,11 +323,15 @@
 "settings.factory-restore.error.title" = "Factory restore failed";
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
+"settings.factory-restore.error.ble-timeout" = "Communication with Sense timed out. Please try again.";
+"settings.factory-restore.error.general-failure" = "Unable to factory reset your Sense due to an unexpected problem.";
+"settings.factory-restore.error.general-ble-failure" = "Unable to factory reset your Sense due to an unexpected communication problem with Sense. Please Try again.";
 "settings.sense.operation-failed.title" = "Sense operation failed";
 "settings.sense.operation-failed.unexpected-disconnect" = "Sense unexpectedly disconnected.  Make sure you are near Sense and try again.";
 
 // Insights / Questions
 "insights.title" = "Insights";
+"insight.about" = "About you";
 "sleep.insight.info.title.no-text" = "Insight failed to load";
 "sleep.insight.info.message.no-text" = "Unable to load Insight information at the moment. Please make sure your device has an internet connection and try again.";
 "sleep.questions.end.message" = "Thank you";

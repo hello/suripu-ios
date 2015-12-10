@@ -207,4 +207,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 @end

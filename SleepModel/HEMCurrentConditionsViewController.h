@@ -1,7 +1,8 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMCurrentConditionsViewController : UIViewController
+@interface HEMCurrentConditionsViewController : HEMBaseController
 
 - (void)openDetailViewForSensorNamed:(NSString *)name;
 @end

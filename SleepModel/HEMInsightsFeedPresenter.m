@@ -163,6 +163,11 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     [self refresh];
 }
 
+- (void)didScrollContentIn:(UIScrollView *)scrollView {
+    [super didScrollContentIn:scrollView];
+    [self updateInsightImageParallax];
+}
+
 #pragma mark - UICollectionView
 
 #pragma mark Helpers
@@ -331,12 +336,16 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     [[insightCell uriImageView] updateConstraintsIfNeeded];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)updateInsightImageParallax {
     for (UICollectionViewCell* cell in [[self collectionView] visibleCells]) {
         if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]) {
             [self updateInsightImageOffsetOn:(id)cell];
         }
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
 }
 
 #pragma mark - Actions

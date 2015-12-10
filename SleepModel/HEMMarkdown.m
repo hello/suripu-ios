@@ -18,27 +18,27 @@
     style.lineSpacing = 2.f;
     style.lineBreakMode = NSLineBreakByWordWrapping;
     style.alignment = NSTextAlignmentLeft;
-    UIColor *textColor = [UIColor blackColor];
+
     return @{
         @(EMPH) : @{
             NSFontAttributeName : [UIFont backViewBoldFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : textColor
+            NSForegroundColorAttributeName : [UIColor blackColor]
         },
         @(STRONG) : @{
             NSFontAttributeName : [UIFont backViewBoldFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : textColor
+            NSForegroundColorAttributeName : [UIColor blackColor]
         },
         @(PARA) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : textColor
+            NSForegroundColorAttributeName : [UIColor backViewTextColor]
         },
         @(BULLETLIST) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : textColor
+            NSForegroundColorAttributeName : [UIColor backViewTextColor]
         }
     };
 }

@@ -313,7 +313,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:confirmation];
-    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC setViewToShowThrough:self.navigationController.view];
     
     __weak typeof(self) weakSelf = self;
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];

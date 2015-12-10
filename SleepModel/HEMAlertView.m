@@ -13,7 +13,6 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "NSString+HEMUtils.h"
-#import "NSAttributedString+HEMUtils.h"
 #import "HEMAlertTextView.h"
 #import "HEMScreenUtils.h"
 
@@ -137,11 +136,18 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
 - (void)addMessageViewWithText:(NSAttributedString *)text {
     CGFloat top = HEMDialogContentSpacing + CGRectGetMaxY(self.titleLabel.frame);
     CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
-    CGSize textSize = [text sizeWithWidth:[self intrinsicContentSize].width - horzPadding];
-    UITextView *textView = [[HEMAlertTextView alloc]
-        initWithFrame:(CGRect){.origin = CGPointMake(self.contentInsets.left, top), .size = textSize }];
+    CGFloat maxTextWidth = [self intrinsicContentSize].width - horzPadding;
+
+    UITextView *textView = [HEMAlertTextView new];
     textView.attributedText = text;
     textView.delegate = self;
+    CGSize textSize = [textView sizeThatFits:CGSizeMake(maxTextWidth, MAXFLOAT)];
+    
+    CGRect textFrame = CGRectZero;
+    textFrame.size = textSize;
+    textFrame.origin = CGPointMake(self.contentInsets.left, top);
+    textView.frame = textFrame;
+
     self.messageTextView = textView;
     [self addSubview:textView];
 }

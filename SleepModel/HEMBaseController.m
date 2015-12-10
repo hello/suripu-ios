@@ -14,7 +14,7 @@
 
 @interface HEMBaseController()
 
-@property (nullable, nonatomic, strong) HEMNavigationShadowView* shadowView;
+@property (nonatomic, strong) HEMNavigationShadowView* shadowView;
 @property (nonatomic, assign) BOOL adjustedConstraints;
 @property (nullable, nonatomic, strong) NSArray<HEMPresenter*>* presenters;
 

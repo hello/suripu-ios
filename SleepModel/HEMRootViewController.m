@@ -181,6 +181,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     
     [self setNetworkAlertService:networkAlertService];
     [self setDeviceAlertService:deviceAlertService];
+    [self setTzAlertService:tzAlertService];
     [self setSystemAlertPresenter:sysAlertPresenter];
     
     [self addPresenter:sysAlertPresenter];

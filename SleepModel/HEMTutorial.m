@@ -23,6 +23,8 @@
 
 @implementation HEMTutorial
 
+static NSString* const HEMTutorialHHInsightTap = @"HandholdingInsightTap";
+
 static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbing";
 
 static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTimelineDaySwitchCounter";
@@ -43,6 +45,35 @@ static NSString* const HEMTutorialPillColorKey = @"HEMTutorialPillColor";
 static CGFloat const HEMTutorialDelay = 0.5f;
 
 #pragma mark - Handholding
+
+#pragma mark Insights
+
++ (BOOL)shouldShowInsightTapTutorial {
+    return [self shouldShowTutorialForKey:HEMTutorialHHInsightTap];
+}
+
++ (BOOL)showHandholdingForInsightCardIfNeededIn:(UIView*)view atPoint:(CGPoint)point {
+    if (![self shouldShowInsightTapTutorial]) {
+        return NO;
+    }
+    
+    [self showHandholdingForInsightCardIn:view atPoint:point];
+    [self markTutorialViewed:HEMTutorialHHInsightTap];
+    return YES;
+}
+
++ (void)showHandholdingForInsightCardIn:(UIView*)view atPoint:(CGPoint)point {
+    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
+    [handholdingView setGestureStartCenter:point];
+    [handholdingView setGestureEndCenter:point];
+    
+    [handholdingView setMessage:NSLocalizedString(@"handholding.message.insight-tap", nil)];
+    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
+    
+    [handholdingView showInView:view];
+}
+
+#pragma mark Timeline
 
 + (BOOL)showHandholdingForTimelineDaySwitchIfNeededIn:(UIView*)view {
     if ([self shouldShowHandholdingForTimelineDaySwitch]) {
@@ -114,6 +145,8 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     
     [handholdingView showInView:view];
 }
+
+#pragma mark Sensor
 
 + (BOOL)showHandholdingForSensorScrubbingIfNeededIn:(UIView*)view
                                relativeToGraphFrame:(CGRect)graphFrame {
@@ -374,6 +407,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialPillColorKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHSensorScrubbing];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHInsightTap];
 }
 
 @end

@@ -28,6 +28,7 @@
 #import "HEMInsightTransition.h"
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMURLImageView.h"
+#import "HEMRootViewController.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -72,9 +73,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIView* rootView = [[HEMRootViewController rootViewControllerForKeyWindow] view];
     [[self feedPresenter] bindWithCollectionView:[self collectionView]];
     [[self feedPresenter] bindWithShadowView:[self shadowView]];
     [[self feedPresenter] bindWithActivityIndicator:[self activityIndicator]];
+    [[self feedPresenter] bindWithTutorialContainerView:rootView];
     [[self feedPresenter] setDelegate:self];
 }
 

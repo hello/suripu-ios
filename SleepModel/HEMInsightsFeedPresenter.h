@@ -44,6 +44,8 @@ typedef void(^HEMInsightsPresenterCompletion)(void);
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
 
+- (void)bindWithTutorialContainerView:(UIView*)tutorialContainerView;
+
 - (void)refresh;
 
 @end

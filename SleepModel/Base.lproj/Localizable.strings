@@ -711,6 +711,7 @@
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days.";
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 "handholding.message.sensor-scrubbing" = "Press and hold graphs to see historical data.";
+"handholding.message.insight-tap" = "Tap on a card to learn more.";
 
 // app review questions
 "app-review.question.1" = "Are you enjoying Sense?";

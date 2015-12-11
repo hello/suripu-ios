@@ -8,6 +8,7 @@
 
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/SENAPIDevice.h>
+#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/Model.h>
 #import "HEMDeviceAlertService.h"
 #import "NSDate+HEMRelative.h"
@@ -21,10 +22,12 @@ describe(@"HEMDeviceAlertService", ^{
         __block HEMDeviceAlertService* service = nil;
         
         beforeEach(^{
+            [SENAuthorizationService stub:@selector(isAuthorized) andReturn:[KWValue valueWithBool:YES]];
             service = [HEMDeviceAlertService new];
         });
         
         afterEach(^{
+            [SENAuthorizationService clearStubs];
             service = nil;
         });
         
@@ -52,7 +55,7 @@ describe(@"HEMDeviceAlertService", ^{
             });
             
             it(@"should return unknown state", ^{
-                [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStateUnknown)];
+                [[@(deviceState) should] equal:@(HEMDeviceAlertStateUnknown)];
             });
             
         });
@@ -79,7 +82,7 @@ describe(@"HEMDeviceAlertService", ^{
             });
             
             it(@"should return a no sense paired state", ^{
-                [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStateSenseNotPaired)];
+                [[@(deviceState) should] equal:@(HEMDeviceAlertStateSenseNotPaired)];
             });
             
         });
@@ -129,7 +132,7 @@ describe(@"HEMDeviceAlertService", ^{
                 });
                 
                 it(@"should return a sense not seen state", ^{
-                    [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStateSenseNotSeen)];
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStateSenseNotSeen)];
                 });
                 
             });
@@ -157,7 +160,7 @@ describe(@"HEMDeviceAlertService", ^{
                 });
                 
                 it(@"should return a no pill paired state", ^{
-                    [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStatePillNotPaired)];
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStatePillNotPaired)];
                 });
                 
             });
@@ -196,7 +199,7 @@ describe(@"HEMDeviceAlertService", ^{
                     [service checkDeviceState:^(HEMDeviceAlertState state) {
                         deviceState = state;
                     }];
-                    [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStatePillLowBattery)];
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStatePillLowBattery)];
                 });
                 
                 it(@"should not show a low battery state, if already shown today", ^{
@@ -207,7 +210,7 @@ describe(@"HEMDeviceAlertService", ^{
                         deviceState = state;
                     }];
                     
-                    [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStateNormal)];
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStateNormal)];
                 });
                 
                 it(@"should show a low battery state, if last low battery shown was yesterday", ^{
@@ -218,7 +221,7 @@ describe(@"HEMDeviceAlertService", ^{
                         deviceState = state;
                     }];
                     
-                    [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStatePillLowBattery)];
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStatePillLowBattery)];
                 });
                 
             });
@@ -257,7 +260,7 @@ describe(@"HEMDeviceAlertService", ^{
                 });
                 
                 it(@"should return a pill not seen state", ^{
-                    [[@(deviceState) shouldEventually] equal:@(HEMDeviceAlertStatePillNotSeen)];
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStatePillNotSeen)];
                 });
                 
             });

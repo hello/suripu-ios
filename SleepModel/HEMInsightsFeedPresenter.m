@@ -257,7 +257,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 - (NSString*)insightCategoryNameForCellAtIndexPath:(NSIndexPath*)indexPath {
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
-    return [insight category];
+    return [[insight categoryName] uppercaseString];
 }
 
 #pragma mark - End of helpers

@@ -239,7 +239,6 @@
 		BFA540ED1BCEF0ED007AF607 /* HEMIntroDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA540EC1BCEF0ED007AF607 /* HEMIntroDescriptionView.m */; };
 		BFA540EF1BCEF10A007AF607 /* HEMIntroDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFA540EE1BCEF10A007AF607 /* HEMIntroDescriptionView.xib */; };
 		BFA540F21BCEFDF1007AF607 /* NSBundle+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA540F11BCEFDF1007AF607 /* NSBundle+HEMUtils.m */; };
-		BFA884AA1C19FB3500613069 /* HEMSystemAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA884A91C19FB3500613069 /* HEMSystemAlertService.m */; };
 		BFA884AD1C1A012100613069 /* HEMNetworkAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA884AC1C1A012100613069 /* HEMNetworkAlertService.m */; };
 		BFA884B01C1A01A200613069 /* HEMDeviceAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA884AF1C1A01A200613069 /* HEMDeviceAlertService.m */; };
 		BFA884B41C1A0CAB00613069 /* HEMSystemAlertPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA884B31C1A0CAB00613069 /* HEMSystemAlertPresenter.m */; };
@@ -779,8 +778,6 @@
 		BFA540EE1BCEF10A007AF607 /* HEMIntroDescriptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMIntroDescriptionView.xib; sourceTree = "<group>"; };
 		BFA540F01BCEFDF1007AF607 /* NSBundle+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+HEMUtils.h"; sourceTree = "<group>"; };
 		BFA540F11BCEFDF1007AF607 /* NSBundle+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+HEMUtils.m"; sourceTree = "<group>"; };
-		BFA884A81C19FB3500613069 /* HEMSystemAlertService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSystemAlertService.h; sourceTree = "<group>"; };
-		BFA884A91C19FB3500613069 /* HEMSystemAlertService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSystemAlertService.m; sourceTree = "<group>"; };
 		BFA884AB1C1A012100613069 /* HEMNetworkAlertService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNetworkAlertService.h; sourceTree = "<group>"; };
 		BFA884AC1C1A012100613069 /* HEMNetworkAlertService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNetworkAlertService.m; sourceTree = "<group>"; };
 		BFA884AE1C1A01A200613069 /* HEMDeviceAlertService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceAlertService.h; sourceTree = "<group>"; };
@@ -1774,8 +1771,6 @@
 			children = (
 				BF9450A81BC316CE00BA0023 /* HEMUnreadAlertService.h */,
 				BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */,
-				BFA884A81C19FB3500613069 /* HEMSystemAlertService.h */,
-				BFA884A91C19FB3500613069 /* HEMSystemAlertService.m */,
 				BFA884AB1C1A012100613069 /* HEMNetworkAlertService.h */,
 				BFA884AC1C1A012100613069 /* HEMNetworkAlertService.m */,
 				BFA884AE1C1A01A200613069 /* HEMDeviceAlertService.h */,
@@ -2630,7 +2625,6 @@
 				8A9D7EA81B753273000959C5 /* HEMAudioSession.m in Sources */,
 				8A7D80271A40ECDB00B0BFD7 /* NSAttributedString+HEMUtils.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
-				BFA884AA1C19FB3500613069 /* HEMSystemAlertService.m in Sources */,
 				8A9F574519F873110009E50A /* HEMLogUtils.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiPasswordViewController.m in Sources */,
 				BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */,

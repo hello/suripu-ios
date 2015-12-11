@@ -9,6 +9,7 @@
 @property (nonatomic, copy, readonly)   NSString* title;
 @property (nonatomic, copy, readonly)   NSString* message;
 @property (nonatomic, copy, readonly)   NSString* category;
+@property (nonatomic, copy, readonly)   NSString* categoryName;
 @property (nonatomic, copy, readonly)   NSString* infoPreview;
 @property (nonatomic, strong, readonly) SENRemoteImage* remoteImage;
 

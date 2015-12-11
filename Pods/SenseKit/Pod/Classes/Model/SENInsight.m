@@ -12,6 +12,7 @@ static NSString* const SENInsightText = @"text";
 static NSString* const SENInsightImageUri = @"image_url";
 static NSString* const SENInsightInfoPreviewKey = @"info_preview";
 static NSString* const SENInsightMultiDensityImage = @"image";
+static NSString* const SENInsightCategoryName = @"category_name";
 
 static NSString* const SENInsightCategoryGeneric = @"GENERIC";
 
@@ -24,6 +25,7 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
         _message = [dict[SENInsightMessageKey] copy];
         _category = [dict[SENInsightCategory] copy];
         _infoPreview = [dict[SENInsightInfoPreviewKey] copy];
+        _categoryName = [dict[SENInsightCategoryName] copy];
         
         NSNumber* dateMillis = SENObjectOfClass(dict[SENInsightDateCreatedKey], [NSNumber class]);
         if (dateMillis) {
@@ -47,6 +49,7 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
         _category = [aDecoder decodeObjectForKey:SENInsightCategory];
         _infoPreview = [aDecoder decodeObjectForKey:SENInsightInfoPreviewKey];
         _remoteImage = [aDecoder decodeObjectForKey:SENInsightMultiDensityImage];
+        _categoryName = [aDecoder decodeObjectForKey:SENInsightCategoryName];
     }
     return self;
 }
@@ -59,6 +62,7 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
     if (self.category) [aCoder encodeObject:self.category forKey:SENInsightCategory];
     if (self.infoPreview) [aCoder encodeObject:self.infoPreview forKey:SENInsightInfoPreviewKey];
     if (self.remoteImage) [aCoder encodeObject:self.remoteImage forKey:SENInsightMultiDensityImage];
+    if (self.categoryName) [aCoder encodeObject:self.categoryName forKey:SENInsightCategoryName];
 }
 
 - (BOOL)isGeneric {
@@ -77,13 +81,14 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
             && ([self.dateCreated isEqualToDate:other.dateCreated] || (!self.dateCreated && !other.dateCreated))
             && ([self.infoPreview isEqualToString:other.infoPreview] || (!self.infoPreview && !other.infoPreview))
             && ([self.category isEqualToString:other.category] || (!self.category && !other.category))
-            && ([self.remoteImage isEqual:other.remoteImage] || (!self.remoteImage && !other.remoteImage));
+            && ([self.remoteImage isEqual:other.remoteImage] || (!self.remoteImage && !other.remoteImage))
+            && ([self.categoryName isEqual:other.categoryName] || (!self.categoryName && !other.categoryName));
     }
 }
 
 - (NSUInteger)hash
 {
-    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash] + [self.infoPreview hash] + [self.remoteImage hash];
+    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash] + [self.infoPreview hash] + [self.remoteImage hash] + [self.categoryName hash];
 }
 
 @end

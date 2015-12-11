@@ -30,12 +30,12 @@
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor blackColor]
         },
-        @(PARA) : @{
+        @(BULLETLIST) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor backViewTextColor]
         },
-        @(BULLETLIST) : @{
+        @(PARA) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor backViewTextColor]

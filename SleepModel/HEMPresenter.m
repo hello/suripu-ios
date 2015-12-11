@@ -6,6 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENAPIClient.h>
+#import <SenseKit/SENAuthorizationService.h>
+
 #import "HEMPresenter.h"
 #import "HEMNavigationShadowView.h"
 
@@ -21,6 +23,7 @@
     self = [super init];
     if (self) {
         [self listenForNetworkChanges];
+        [self listenForAuthChanges];
     }
     return self;
 }
@@ -30,6 +33,14 @@
                                              selector:@selector(didGainConnectivity)
                                                  name:SENAPIReachableNotification
                                                object:nil];
+}
+
+- (void)listenForAuthChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(userDidSignOut)
+                   name:SENAuthorizationServiceDidDeauthorizeNotification
+                 object:nil];
 }
 
 - (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView {
@@ -52,6 +63,8 @@
 - (void)didComeBackFromBackground {}
 
 - (void)didGainConnectivity {}
+
+- (void)userDidSignOut {}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

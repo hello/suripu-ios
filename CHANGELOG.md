@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.2.0.4
+
+New:
+
+* Insight tap gesture tutorial
+* Pill low battery alert only shown once a day
+
+Fixes:
+
+* Sense colors checkpoint will not be reached for older version users
+
 ## 1.2.0.3
 
 New:

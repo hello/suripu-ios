@@ -17,18 +17,6 @@ extern NSString* const SENServiceDeviceNotificationFactorySettingsRestored;
 extern NSString* const SENServiceDeviceNotificationWarning;
 extern NSString* const SENServiceDeviceErrorDomain;
 
-typedef NS_ENUM(NSUInteger, SENServiceDeviceState) {
-    SENServiceDeviceStateUnknown = 0,
-    SENServiceDeviceStateNormal = 1,
-    SENServiceDeviceStateSenseNotPaired = 2,
-    SENServiceDeviceStatePillNotPaired = 4,
-    SENServiceDeviceStatePillLowBattery = 5,
-    SENServiceDeviceStateSenseNotSeen = 6,
-    SENServiceDeviceStatePillNotSeen = 7,
-    
-    SENServiceDeviceStateSenseNoData NS_ENUM_DEPRECATED_IOS(7_0, 9_0, "No longer returned") = 3
-};
-
 typedef NS_ENUM(NSInteger, SENServiceDeviceError) {
     SENServiceDeviceErrorSenseUnavailable = -1,
     SENServiceDeviceErrorBLEUnavailable = -2,
@@ -46,11 +34,6 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
 @interface SENServiceDevice : SENService
 
 @property (nonatomic, strong, readonly) SENPairedDevices* devices;
-
-/**
- * @property systemState: the state of the current Sense system
- */
-@property (nonatomic, assign, readonly) SENServiceDeviceState deviceState;
 
 /**
  * @property senseManager: the manager for the paired Sense that was found.  You
@@ -93,23 +76,6 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  * to factory.
  */
 - (void)reset;
-
-/**
- * Clears the cache and resets any device states that was cached from previous
- * checks and stops the scanning for devices, if it was started.
- */
-- (void)resetDeviceStates;
-
-/**
- * Check to state of both the Sense and the Sleep Pill to see if there are any
- * problems with the user's Sense system.
- *
- * @param completion: the block to invoke with the first known problem that the
- *                    Sense system might be experiencing.  If there was a problem
- *                    loading information about the devices, SENServiceDeviceStateUnknown
- *                    is returned.
- */
-- (void)checkDevicesState:(void(^)(SENServiceDeviceState state))completion;
 
 /**
  * @method loadDeviceInfo
@@ -159,19 +125,6 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  * @see @method stopSenseOperations
  */
 - (void)putSenseIntoPairingMode:(SENServiceDeviceCompletionBlock)completion;
-
-/**
- * @method currentSenseRSSI
- *
- * @discussion
- * Grab the current RSSI value from Sense, if Sense is currently available and
- * close enough for the operation to succeed.
- *
- * @param completion: the completion block to invoke when done
- *
- *  * @see @method stopSenseOperations
- */
-- (void)currentSenseRSSI:(void(^)(NSNumber* rssi, NSError* error))completion;
 
 /**
  * @method stopScanning

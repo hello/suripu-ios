@@ -23,7 +23,6 @@
 #import "HEMSnazzBarController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDebugController.h"
-#import "HEMSystemAlertController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
 #import "HEMBaseController+Protected.h"
@@ -37,18 +36,33 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMDynamicsShadowStyler.h"
 
+#import "HEMSystemAlertPresenter.h"
+#import "HEMDeviceAlertService.h"
+#import "HEMNetworkAlertService.h"
+#import "HEMSupportUtil.h"
+#import "HEMTimeZoneViewController.h"
+#import "HEMTimeZoneAlertService.h"
+#import "HEMBounceModalTransition.h"
+
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
 NSString* const HEMRootDrawerDidOpenNotification = @"HEMRootDrawerDidOpenNotification";
 NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotification";
 
-@interface HEMRootViewController () <MSDynamicsDrawerViewControllerDelegate, UIPageViewControllerDelegate>
+@interface HEMRootViewController () <MSDynamicsDrawerViewControllerDelegate, UIPageViewControllerDelegate, HEMSystemAlertDelegate>
 
 @property (strong, nonatomic) HEMDebugController* debugController;
-@property (strong, nonatomic) HEMSystemAlertController* alertController;
 @property (strong, nonatomic) MSDynamicsDrawerViewController* drawerViewController;
 @property (assign, nonatomic, getter=isMainControllerLoaded) BOOL mainControllerLoaded;
 @property (nonatomic, getter=isAnimatingPaneState) BOOL animatingPaneState;
+
+@property (nonatomic, weak)   HEMSystemAlertPresenter* systemAlertPresenter;
+@property (nonatomic, strong) HEMDeviceAlertService* deviceAlertService;
+@property (nonatomic, strong) HEMTimeZoneAlertService* tzAlertService;
+@property (nonatomic, strong) HEMNetworkAlertService* networkAlertService;
+
+@property (nonatomic, strong) id<UIViewControllerTransitioningDelegate> tzViewControllerTransition;
+
 @end
 
 @implementation HEMRootViewController
@@ -103,7 +117,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (void)viewDidBecomeActive
 {
     [super viewDidBecomeActive];
-    [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
+    [[self systemAlertPresenter] setEnable:[self shouldMonitorSystem]];
     
     [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageAppLaunched];
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
@@ -112,7 +126,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
+    
+    [self configureSystemAlerts];
     [self registerForNotifications];
 
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
@@ -148,6 +163,48 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [super viewDidEnterBackground];
     [SENAnalytics track:kHEMAnalyticsEventAppClosed];
 }
+
+#pragma mark - System Alerts
+
+- (void)configureSystemAlerts {
+    HEMDeviceAlertService* deviceAlertService = [HEMDeviceAlertService new];
+    HEMNetworkAlertService*  networkAlertService = [HEMNetworkAlertService new];
+    HEMTimeZoneAlertService* tzAlertService = [HEMTimeZoneAlertService new];
+    
+    HEMSystemAlertPresenter* sysAlertPresenter
+    = [[HEMSystemAlertPresenter alloc] initWithNetworkAlertService:networkAlertService
+                                                deviceAlertService:deviceAlertService
+                                              timeZoneAlertService:tzAlertService];
+    
+    [sysAlertPresenter setDelegate:self];
+    [sysAlertPresenter bindWithContainerView:[self view]];
+    
+    [self setNetworkAlertService:networkAlertService];
+    [self setDeviceAlertService:deviceAlertService];
+    [self setTzAlertService:tzAlertService];
+    [self setSystemAlertPresenter:sysAlertPresenter];
+    
+    [self addPresenter:sysAlertPresenter];
+}
+
+- (void)presentSupportPageWithSlug:(NSString *)supportPageSlug from:(HEMSystemAlertPresenter *)presenter {
+    [HEMSupportUtil openHelpToPage:supportPageSlug fromController:self];
+}
+
+- (void)presentViewController:(UIViewController *)controller from:(HEMSystemAlertPresenter *)presenter {
+    if ([controller isKindOfClass:[HEMTimeZoneViewController class]]) {
+        [self setTzViewControllerTransition:[HEMBounceModalTransition new]]; // must hold a ref to it since controller ref is weak
+        [controller setTransitioningDelegate:[self tzViewControllerTransition]];
+        [controller setModalPresentationStyle:UIModalPresentationCustom];
+    }
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)dismissCurrentViewControllerFrom:(HEMSystemAlertPresenter *)presenter {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark -
 
 - (UIWindow*)keyWindow
 {
@@ -334,7 +391,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     if ([service hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:YES];
     }
-    [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
+    [[self systemAlertPresenter] setEnable:[self shouldMonitorSystem]];
 }
 
 - (void)didFinishOnboarding

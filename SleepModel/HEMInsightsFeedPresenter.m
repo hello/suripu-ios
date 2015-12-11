@@ -26,6 +26,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMMarkdown.h"
 #import "HEMURLImageView.h"
+#import "HEMTutorial.h"
 
 static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
 static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
@@ -39,6 +40,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 @property (weak, nonatomic) HEMQuestionsService* questionsService;
 @property (weak, nonatomic) HEMUnreadAlertService* unreadService;
 @property (weak, nonatomic) UICollectionView* collectionView;
+@property (weak, nonatomic) UIView* tutorialContainerView;
 @property (weak, nonatomic) UITabBarItem* tabBarItem;
 @property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
 @property (strong, nonatomic) NSCache* heightCache;
@@ -73,6 +75,10 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 - (void)bindWithActivityIndicator:(nonnull HEMActivityIndicatorView*)activityIndicator {
     [activityIndicator stop]; // in case it's visible currently
     [self setActivityIndicator:activityIndicator];
+}
+
+- (void)bindWithTutorialContainerView:(UIView*)tutorialContainerView {
+    [self setTutorialContainerView:tutorialContainerView];
 }
 
 - (void)showLoadingActivity:(BOOL)show {
@@ -149,6 +155,33 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     [self setData:combinedData];
     [self setQuestions:questions];
     [[self collectionView] reloadData];
+    [self showInsightTapTutorialIfNeeded];
+}
+
+#pragma mark - Tutorial
+
+- (void)showInsightTapTutorialIfNeeded {
+    if (![self tutorialContainerView] || ![HEMTutorial shouldShowInsightTapTutorial]) {
+        return;
+    }
+    
+    NSInteger insightIndex = [[self questions] count] > 0 ? 1 : 0;
+    NSInteger numberOfItems = [[self collectionView] numberOfItemsInSection:0];
+    if (numberOfItems >= insightIndex) {
+        int64_t delay = (int64_t)(1.0f * NSEC_PER_SEC);
+        __weak typeof(self) weakSelf = self;
+        
+        // must dispatch after a delay due to rendering of the cells and also
+        // because we want a slight delay anyways
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+            NSIndexPath* path = [NSIndexPath indexPathForItem:insightIndex inSection:0];
+            UICollectionViewCell* firstInsightCell = [[weakSelf collectionView] cellForItemAtIndexPath:path];
+            CGRect frame = [firstInsightCell convertRect:[firstInsightCell bounds] toView:[weakSelf tutorialContainerView]];
+            CGPoint midPoint = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+            [HEMTutorial showHandholdingForInsightCardIfNeededIn:[weakSelf tutorialContainerView] atPoint:midPoint];
+        });
+
+    }
 }
 
 #pragma mark - Presenter events
@@ -257,7 +290,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 - (NSString*)insightCategoryNameForCellAtIndexPath:(NSIndexPath*)indexPath {
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
-    return [insight category];
+    return [[insight categoryName] uppercaseString];
 }
 
 #pragma mark - End of helpers

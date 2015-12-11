@@ -11,5 +11,6 @@
 @interface NSBundle (HEMUtils)
 
 + (id)loadNibWithOwner:(id)owner;
++ (NSString*)appVersionShort;
 
 @end

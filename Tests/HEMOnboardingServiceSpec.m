@@ -12,6 +12,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingController.h"
+#import "NSBundle+HEMUtils.h"
 
 @interface HEMOnboardingService()
 
@@ -90,6 +91,52 @@ describe(@"HEMOnboardingService", ^{
                 BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(NO)];
                 
+            });
+            
+            it(@"should return NO if checkpoint is post sense pairing", ^{
+                
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseDone]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(NO)];
+                
+            });
+            
+            it(@"should return YES if checkpoint is pill done, with app version 1.1.7", ^{
+                [NSBundle stub:@selector(appVersionShort) andReturn:@"1.1.7"];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(YES)];
+            });
+            
+            it(@"should return YES if checkpoint is pill done, with app version 1.0.4", ^{
+                [NSBundle stub:@selector(appVersionShort) andReturn:@"1.0.4"];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(YES)];
+            });
+            
+            it(@"should return NO if checkpoint is pill done, with app version 1.2.0", ^{
+                [NSBundle stub:@selector(appVersionShort) andReturn:@"1.2.0"];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(NO)];
+            });
+            
+            it(@"should return YES if checkpoint is sense colors, with app version 1.2.0", ^{
+                [NSBundle stub:@selector(appVersionShort) andReturn:@"1.2.0"];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseColorsViewed]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(YES)];
             });
             
         });

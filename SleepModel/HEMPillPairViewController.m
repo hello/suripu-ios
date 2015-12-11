@@ -298,7 +298,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
 
         [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
-        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
         NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
         [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
@@ -317,7 +317,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [[HEMOnboardingService sharedService] notifyOfPillPairingChange];
     
     if ([self delegate] == nil) {
-        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
         
         NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];

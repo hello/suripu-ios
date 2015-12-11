@@ -46,11 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request
                                withParameters:(nullable id)parameters
-                                        error:(NSError * __nullable __autoreleasing *)error
-#ifdef NS_SWIFT_NOTHROW
-NS_SWIFT_NOTHROW
-#endif
-;
+                                        error:(NSError * __nullable __autoreleasing *)error;
+
 @end
 
 #pragma mark -

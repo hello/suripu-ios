@@ -23,7 +23,7 @@ pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
 pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git'
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
-pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
+pod 'SenseKit', :path => '../SenseKit' #:git => 'git@github.com:hello/SenseKit.git'
 pod 'AttributedMarkdown', :git => 'git@github.com:hello/AttributedMarkdown.git',
                           :inhibit_warnings => true
 
@@ -31,6 +31,16 @@ post_install do |installer|
     require 'fileutils'
     FileUtils.cp_r('Pods/Target Support Files/Pods/Pods-acknowledgements.plist',
                    'SleepModel/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+end
+
+target 'Sense Now Extension', :exclusive => true do
+    platform :watchos, '2.0'
+    pod 'CGFloatType', '~> 1.3.1'
+    pod 'FXKeychain', :path => 'Vendor/'
+    pod 'AFNetworking', :git => 'https://github.com/AFNetworking/AFNetworking', :commit => 'acfaa7ea804137dc34f64a7de846eef30badbea2'
+
+    pod 'SenseKit/Model', :path => '../SenseKit' #:git => 'git@github.com:hello/SenseKit.git'
+    pod 'SenseKit/API', :path => '../SenseKit' #:git => 'git@github.com:hello/SenseKit.git'
 end
 
 target 'Tests', :exclusive => true do

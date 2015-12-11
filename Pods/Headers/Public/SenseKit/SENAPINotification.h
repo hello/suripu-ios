@@ -1,1 +1,1 @@
-../../../SenseKit/Pod/Classes/API/SENAPINotification.h
+../../../../../SenseKit/Pod/Classes/API-UIKit/SENAPINotification.h

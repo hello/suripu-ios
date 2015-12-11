@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
+  - AFNetworking (2.6.1):
+    - AFNetworking/NSURLConnection (= 2.6.1)
+    - AFNetworking/NSURLSession (= 2.6.1)
+    - AFNetworking/Reachability (= 2.6.1)
+    - AFNetworking/Security (= 2.6.1)
+    - AFNetworking/Serialization (= 2.6.1)
+    - AFNetworking/UIKit (= 2.6.1)
+  - AFNetworking/NSURLConnection (2.6.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
+  - AFNetworking/NSURLSession (2.6.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
+  - AFNetworking/Reachability (2.6.1)
+  - AFNetworking/Security (2.6.1)
+  - AFNetworking/Serialization (2.6.1)
+  - AFNetworking/UIKit (2.6.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - Analytics (3.0.3)
@@ -45,6 +45,7 @@ PODS:
   - SenseKit (0.1.0):
     - SenseKit/Analytics (= 0.1.0)
     - SenseKit/API (= 0.1.0)
+    - SenseKit/API-UIKit (= 0.1.0)
     - SenseKit/BLE (= 0.1.0)
     - SenseKit/Model (= 0.1.0)
     - SenseKit/Service (= 0.1.0)
@@ -54,6 +55,8 @@ PODS:
     - AFNetworking (~> 2.6.0)
     - FXKeychain (~> 1.5.1)
     - NSJSONSerialization-NSNullRemoval (~> 1.0.0)
+  - SenseKit/API-UIKit (0.1.0):
+    - SenseKit/API (= 0.1.0)
   - SenseKit/BLE (0.1.0):
     - CocoaLumberjack (~> 2.0.0)
     - LGBluetooth
@@ -80,17 +83,21 @@ PODS:
   - ZendeskSDK/Providers (1.5.2.1)
 
 DEPENDENCIES:
+  - AFNetworking (from `https://github.com/AFNetworking/AFNetworking`, commit `acfaa7ea804137dc34f64a7de846eef30badbea2`)
   - Analytics (~> 3.0.0)
   - AttributedMarkdown (from `git@github.com:hello/AttributedMarkdown.git`)
   - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`)
   - CGFloatType (~> 1.3.1)
+  - FXKeychain (from `Vendor/`)
   - Kiwi
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
   - Mixpanel (~> 2.9.0)
   - MSDynamicsDrawerViewController (= 1.5.1)
   - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
   - Nocilla
-  - SenseKit (from `git@github.com:hello/SenseKit.git`)
+  - SenseKit (from `../SenseKit`)
+  - SenseKit/API (from `../SenseKit`)
+  - SenseKit/Model (from `../SenseKit`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
   - SpinKit (~> 1.2.0)
@@ -100,16 +107,21 @@ DEPENDENCIES:
   - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.5.2.1`)
 
 EXTERNAL SOURCES:
+  AFNetworking:
+    :commit: acfaa7ea804137dc34f64a7de846eef30badbea2
+    :git: https://github.com/AFNetworking/AFNetworking
   AttributedMarkdown:
     :git: git@github.com:hello/AttributedMarkdown.git
   BEMSimpleLineGraph:
     :git: git@github.com:hello/BEMSimpleLineGraph.git
+  FXKeychain:
+    :path: Vendor/
   LGBluetooth:
     :git: git@github.com:hello/LGBluetooth.git
   NAPickerView:
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :git: git@github.com:hello/SenseKit.git
+    :path: ../SenseKit
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
   SVWebViewController:
@@ -119,6 +131,9 @@ EXTERNAL SOURCES:
     :tag: 1.5.2.1
 
 CHECKOUT OPTIONS:
+  AFNetworking:
+    :commit: acfaa7ea804137dc34f64a7de846eef30badbea2
+    :git: https://github.com/AFNetworking/AFNetworking
   AttributedMarkdown:
     :commit: e5ecc13e844e86e8ef37b4805d3245a36aa8422c
     :git: git@github.com:hello/AttributedMarkdown.git
@@ -131,9 +146,6 @@ CHECKOUT OPTIONS:
   NAPickerView:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
-  SenseKit:
-    :commit: 50e100e785baa69286d8796b400b4b888ca2f4be
-    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
     :git: git@github.com:hello/protobuf-objc.git
@@ -145,13 +157,13 @@ CHECKOUT OPTIONS:
     :tag: 1.5.2.1
 
 SPEC CHECKSUMS:
-  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   Analytics: 7a5f10f6a2dd313d650f5db2642d9f967da3c693
   AttributedMarkdown: ac5060667280be8cc8ee33a46c73e4ec6b17ca1a
   BEMSimpleLineGraph: 5999b2da02b6e935121608cfc58f6c369e06bde8
   CGFloatType: fa1da294540051a76750092a427b95296bbdc006
   CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
-  FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
+  FXKeychain: 1ff255d01ed5d0223222aa301737c61f974cec6f
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
   Mixpanel: 5ca24b2a05f4c77fe9bcfe7671d681d0f3f8d76f
@@ -159,7 +171,7 @@ SPEC CHECKSUMS:
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
-  SenseKit: 5a346e4cf1eb67dee4a34706f8a21114529d7f64
+  SenseKit: dc0fddb2e6fc4ed73f2df487718fb85d9ea73ee0
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a

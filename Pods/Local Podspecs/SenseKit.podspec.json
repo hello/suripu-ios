@@ -11,9 +11,6 @@
     "git": "https://github.com/hello/SenseKit.git",
     "tag": "0.1.0"
   },
-  "platforms": {
-    "ios": "7.0"
-  },
   "requires_arc": true,
   "resources": "Pod/Assets/*.png",
   "source_files": "Pod/Classes/SenseKit.h",
@@ -39,6 +36,15 @@
         ],
         "NSJSONSerialization-NSNullRemoval": [
           "~> 1.0.0"
+        ]
+      }
+    },
+    {
+      "name": "API-UIKit",
+      "source_files": "Pod/Classes/API-UIKit/*",
+      "dependencies": {
+        "SenseKit/API": [
+          "0.1.0"
         ]
       }
     },

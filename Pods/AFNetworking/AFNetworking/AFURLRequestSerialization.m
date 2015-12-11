@@ -85,14 +85,11 @@ static NSString * AFPercentEscapedStringFromString(NSString *string) {
 
     static NSUInteger const batchSize = 50;
 
-    NSUInteger index = 0;
+    NSInteger index = 0;
     NSMutableString *escaped = @"".mutableCopy;
 
     while (index < string.length) {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wgnu"
         NSUInteger length = MIN(string.length - index, batchSize);
-#pragma GCC diagnostic pop
         NSRange range = NSMakeRange(index, length);
 
         // To avoid breaking up character sequences such as 👴🏻👮🏽
@@ -601,7 +598,7 @@ forHTTPHeaderField:(NSString *)field
     }
 
     self.mutableHTTPRequestHeaders = [[decoder decodeObjectOfClass:[NSDictionary class] forKey:NSStringFromSelector(@selector(mutableHTTPRequestHeaders))] mutableCopy];
-    self.queryStringSerializationStyle = (AFHTTPRequestQueryStringSerializationStyle)[[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(queryStringSerializationStyle))] unsignedIntegerValue];
+    self.queryStringSerializationStyle = [[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(queryStringSerializationStyle))] unsignedIntegerValue];
 
     return self;
 }
@@ -1402,7 +1399,7 @@ typedef enum {
         return nil;
     }
 
-    self.format = (NSPropertyListFormat)[[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(format))] unsignedIntegerValue];
+    self.format = [[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(format))] unsignedIntegerValue];
     self.writeOptions = [[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(writeOptions))] unsignedIntegerValue];
 
     return self;

@@ -45,7 +45,7 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
 }
 
 - (HEMDeviceAlertState)determineDeviceStateFromDevices:(SENPairedDevices*)devices {
-    if (!devices || ![devices hasPairedSense]) {
+    if (![devices hasPairedSense]) {
         
         return HEMDeviceAlertStateSenseNotPaired;
         

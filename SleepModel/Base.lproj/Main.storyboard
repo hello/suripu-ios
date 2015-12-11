@@ -630,7 +630,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wA4-u4-558">
-                                <rect key="frame" x="4" y="0.0" width="592" height="544"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="544"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GVx-1W-YAs" customClass="HEMExtendedHeaderCollectionViewLayout">
@@ -641,14 +641,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="image" id="JL1-nL-L7E" customClass="HEMImageCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="1" width="592" height="188"/>
+                                        <rect key="frame" x="0.0" y="1" width="600" height="183"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="592" height="188"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="183"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HU0-pt-HeF" customClass="HEMURLImageView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="592" height="188"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HU0-pt-HeF" customClass="HEMURLImageView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="183"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
@@ -658,21 +658,21 @@
                                         </view>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="bottomMargin" secondItem="HU0-pt-HeF" secondAttribute="bottom" constant="-8" id="8cl-Tx-pw9"/>
-                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="top" secondItem="JL1-nL-L7E" secondAttribute="topMargin" constant="-8" id="I5X-Cn-VJO"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="HU0-pt-HeF" secondAttribute="trailing" constant="-8" id="jFH-yb-5dZ"/>
-                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="leading" secondItem="JL1-nL-L7E" secondAttribute="leadingMargin" constant="-8" id="nXZ-Uw-upy"/>
+                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="top" secondItem="JL1-nL-L7E" secondAttribute="topMargin" constant="-8" id="1Y1-m3-BaV"/>
+                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="width" secondItem="JL1-nL-L7E" secondAttribute="width" id="Jxq-S0-LMe"/>
+                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="height" secondItem="JL1-nL-L7E" secondAttribute="height" id="nxA-Yy-bax"/>
+                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="leading" secondItem="JL1-nL-L7E" secondAttribute="leadingMargin" constant="-8" id="paC-0V-zXq"/>
                                         </constraints>
-                                        <size key="customSize" width="592" height="188"/>
+                                        <size key="customSize" width="600" height="183"/>
                                         <connections>
                                             <outlet property="urlImageView" destination="HU0-pt-HeF" id="ad9-8K-luz"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="summary" id="ipI-xW-fel" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="189" width="592" height="60"/>
+                                        <rect key="frame" x="0.0" y="184" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="592" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNv-oE-SdB">
@@ -684,7 +684,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tegt" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0U-m6-ZMO">
-                                                    <rect key="frame" x="50" y="8" width="518" height="20"/>
+                                                    <rect key="frame" x="50" y="8" width="526" height="20"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -704,7 +704,7 @@
                                             <constraint firstAttribute="bottomMargin" secondItem="CNv-oE-SdB" secondAttribute="bottom" constant="24" id="r02-pX-s6k"/>
                                             <constraint firstItem="CNv-oE-SdB" firstAttribute="leading" secondItem="ipI-xW-fel" secondAttribute="leadingMargin" constant="16" id="r9F-mp-iOF"/>
                                         </constraints>
-                                        <size key="customSize" width="592" height="60"/>
+                                        <size key="customSize" width="600" height="60"/>
                                         <connections>
                                             <outlet property="textBottomConstraint" destination="hNH-9Z-Yyf" id="T0G-46-1JG"/>
                                             <outlet property="textLabel" destination="S0U-m6-ZMO" id="PpX-b1-sHw"/>
@@ -712,14 +712,14 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="title" id="G5k-3L-THZ" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="249" width="592" height="71"/>
+                                        <rect key="frame" x="0.0" y="244" width="600" height="71"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="592" height="71"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="71"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tegt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q38-p6-fHh">
-                                                    <rect key="frame" x="24" y="32" width="544" height="27"/>
+                                                    <rect key="frame" x="24" y="32" width="552" height="27"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -736,20 +736,20 @@
                                             <constraint firstAttribute="bottomMargin" secondItem="q38-p6-fHh" secondAttribute="bottom" constant="4" id="bBa-f5-Svd"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="q38-p6-fHh" secondAttribute="trailing" constant="16" id="k67-MS-lqv"/>
                                         </constraints>
-                                        <size key="customSize" width="592" height="71"/>
+                                        <size key="customSize" width="600" height="71"/>
                                         <connections>
                                             <outlet property="textLabel" destination="q38-p6-fHh" id="WEc-cw-O27"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loading" id="0ut-U6-Ptp" customClass="HEMLoadingCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="320" width="592" height="72"/>
+                                        <rect key="frame" x="0.0" y="315" width="600" height="72"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="592" height="72"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VnP-aZ-nT8" customClass="HEMActivityIndicatorView">
-                                                    <rect key="frame" x="276" y="16" width="40" height="40"/>
+                                                    <rect key="frame" x="280" y="16" width="40" height="40"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="zfE-nJ-a58"/>
@@ -763,20 +763,20 @@
                                             <constraint firstItem="VnP-aZ-nT8" firstAttribute="centerX" secondItem="0ut-U6-Ptp" secondAttribute="centerX" id="6zY-b3-Nc3"/>
                                             <constraint firstItem="VnP-aZ-nT8" firstAttribute="centerY" secondItem="0ut-U6-Ptp" secondAttribute="centerY" id="f2P-wg-9NZ"/>
                                         </constraints>
-                                        <size key="customSize" width="592" height="72"/>
+                                        <size key="customSize" width="600" height="72"/>
                                         <connections>
                                             <outlet property="activityIndicator" destination="VnP-aZ-nT8" id="lRn-Qa-6bu"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detail" id="Doq-BO-3IR" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="392" width="592" height="19"/>
+                                        <rect key="frame" x="0.0" y="387" width="600" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="592" height="19"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="251" text="Tegt" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkS-mO-ZSD">
-                                                    <rect key="frame" x="24" y="0.0" width="544" height="19"/>
+                                                    <rect key="frame" x="24" y="0.0" width="552" height="19"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -793,7 +793,7 @@
                                             <constraint firstAttribute="bottomMargin" secondItem="xkS-mO-ZSD" secondAttribute="bottom" constant="-8" id="sCt-sC-KH6"/>
                                             <constraint firstItem="xkS-mO-ZSD" firstAttribute="leading" secondItem="Doq-BO-3IR" secondAttribute="leadingMargin" constant="16" id="uFt-vH-fLB"/>
                                         </constraints>
-                                        <size key="customSize" width="592" height="19"/>
+                                        <size key="customSize" width="600" height="19"/>
                                         <connections>
                                             <outlet property="textBottomConstraint" destination="sCt-sC-KH6" id="hSe-Xo-RHj"/>
                                             <outlet property="textLabel" destination="xkS-mO-ZSD" id="LZ1-WQ-FXQ"/>
@@ -801,14 +801,14 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="about" id="iUn-0f-gmz" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="411" width="592" height="55"/>
+                                        <rect key="frame" x="0.0" y="406" width="600" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="592" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="251" text="Tegt" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bht-vg-3cF">
-                                                    <rect key="frame" x="24" y="36" width="544" height="19"/>
+                                                    <rect key="frame" x="24" y="36" width="552" height="19"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -822,7 +822,7 @@
                                             <constraint firstAttribute="bottomMargin" secondItem="Bht-vg-3cF" secondAttribute="bottom" constant="-8" id="Ux5-Ca-a1r"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="Bht-vg-3cF" secondAttribute="trailing" constant="16" id="nxQ-JB-RLc"/>
                                         </constraints>
-                                        <size key="customSize" width="592" height="55"/>
+                                        <size key="customSize" width="600" height="55"/>
                                         <connections>
                                             <outlet property="textBottomConstraint" destination="Ux5-Ca-a1r" id="CAm-gD-h6n"/>
                                             <outlet property="textLabel" destination="Bht-vg-3cF" id="VjT-5L-yrm"/>
@@ -831,7 +831,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header" id="dSv-a6-Ywa">
-                                    <rect key="frame" x="0.0" y="0.0" width="592" height="1"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </collectionReusableView>
@@ -866,13 +866,13 @@
                             <constraint firstItem="o94-WI-OT3" firstAttribute="bottom" secondItem="pvw-dp-1ho" secondAttribute="top" id="0ou-x6-a3L"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pvw-dp-1ho" secondAttribute="trailing" constant="-20" id="10h-3S-jd0"/>
                             <constraint firstItem="wA4-u4-558" firstAttribute="bottom" secondItem="pvw-dp-1ho" secondAttribute="top" id="8oT-0i-YIj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wA4-u4-558" secondAttribute="trailing" constant="-16" id="FJN-FA-Vlt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wA4-u4-558" secondAttribute="trailing" constant="-20" id="FJN-FA-Vlt"/>
                             <constraint firstItem="wA4-u4-558" firstAttribute="top" secondItem="1Ej-Wd-DHd" secondAttribute="bottom" constant="-20" id="IRZ-F5-GLJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="o94-WI-OT3" secondAttribute="trailing" constant="-20" id="NfW-DK-dAO"/>
                             <constraint firstItem="XsL-Ws-6qy" firstAttribute="top" secondItem="pvw-dp-1ho" secondAttribute="bottom" id="Peo-1T-uzR"/>
                             <constraint firstItem="o94-WI-OT3" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-20" id="XUo-gN-WeF"/>
                             <constraint firstItem="pvw-dp-1ho" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-20" id="frk-IO-48C"/>
-                            <constraint firstItem="wA4-u4-558" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-16" id="gqE-0n-z3c"/>
+                            <constraint firstItem="wA4-u4-558" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-20" id="gqE-0n-z3c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EEc-Uh-i2f"/>
@@ -4253,7 +4253,7 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPn-VE-Ody">
                                                     <rect key="frame" x="0.0" y="0.0" width="576" height="131"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rq6-DJ-Adv" customClass="HEMURLImageView">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rq6-DJ-Adv" customClass="HEMURLImageView">
                                                             <rect key="frame" x="0.0" y="-15" width="576" height="161"/>
                                                             <animations/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

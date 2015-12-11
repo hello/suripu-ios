@@ -38,20 +38,20 @@
 
 - (void)updateTabBarItemUnreadIndicator {
     if ([self tabBarItem]) {
+        // since the service is shared, if the last viewed is updated, the stats
+        // will to, so we don't need to ask the service to update again.  Also
+        // because the SnazzBarController indirectly depends on the tabBarItem,
+        // updating the tabBar doesn't really have an effect immediately, which
+        // is partially why we don't want to make an async call here
         __weak typeof(self) weakSelf = self;
-        [[self unreadService] update:^(BOOL hasUnread, NSError *error) {
-            if (!error) {
-                SENAppUnreadStats* unreadStats = [[weakSelf unreadService] unreadStats];
-                BOOL hasUnreadFeedItems = [unreadStats hasUnreadInsights] || [unreadStats hasUnreadQuestions];
-                [[weakSelf tabBarItem] setBadgeValue:hasUnreadFeedItems ? @"1" : nil];
-            }
-        }];
-
+        SENAppUnreadStats* unreadStats = [[weakSelf unreadService] unreadStats];
+        BOOL hasUnreadFeedItems = [unreadStats hasUnreadInsights] || [unreadStats hasUnreadQuestions];
+        [[weakSelf tabBarItem] setBadgeValue:hasUnreadFeedItems ? @"1" : nil];
     }
 }
 
-- (void)didDisappear {
-    [super didDisappear];
+- (void)willDisappear {
+    [super willDisappear];
     [self updateTabBarItemUnreadIndicator];
 }
 

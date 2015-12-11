@@ -193,7 +193,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 - (void)presentViewController:(UIViewController *)controller from:(HEMSystemAlertPresenter *)presenter {
     if ([controller isKindOfClass:[HEMTimeZoneViewController class]]) {
-        [self setTzViewControllerTransition:[[HEMBounceModalTransition alloc] init]];
+        [self setTzViewControllerTransition:[HEMBounceModalTransition new]]; // must hold a ref to it since controller ref is weak
         [controller setTransitioningDelegate:[self tzViewControllerTransition]];
         [controller setModalPresentationStyle:UIModalPresentationCustom];
     }

@@ -65,8 +65,7 @@ static BOOL GetAdTrackingEnabled()
 @property (nonatomic, strong) NSTimer *flushTimer;
 @property (nonatomic, strong) dispatch_queue_t serialQueue;
 @property (nonatomic, strong) NSMutableDictionary *traits;
-@property (nonatomic, assign) BOOL enableAdvertisingTracking;
-@property (nonatomic, assign) NSDictionary *bundledIntegrations;
+@property (nonatomic, assign) SEGAnalytics *analytics;
 @property (nonatomic, assign) SEGAnalyticsConfiguration *configuration;
 
 @end
@@ -88,7 +87,7 @@ static BOOL GetAdTrackingEnabled()
         self.flushTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(flush) userInfo:nil repeats:YES];
         self.serialQueue = seg_dispatch_queue_create_specific("io.segment.analytics.segmentio", DISPATCH_QUEUE_SERIAL);
         self.flushTaskID = UIBackgroundTaskInvalid;
-        self.bundledIntegrations = [analytics bundledIntegrations];
+        self.analytics = analytics;
     }
     return self;
 }
@@ -121,7 +120,7 @@ static BOOL GetAdTrackingEnabled()
         if (NSClassFromString(SEGAdvertisingClassIdentifier)) {
             dict[@"adTrackingEnabled"] = @(GetAdTrackingEnabled());
         }
-        if (self.enableAdvertisingTracking) {
+        if (self.configuration.enableAdvertisingTracking) {
             NSString *idfa = SEGIDFA();
             if (idfa.length) dict[@"advertisingId"] = idfa;
         }
@@ -193,6 +192,7 @@ static BOOL GetAdTrackingEnabled()
         network;
     });
 
+    self.location = [self.configuration shouldUseLocationServices] ? [SEGLocation new] : nil;
     if (self.location.hasKnownLocation)
         context[@"location"] = self.location.locationDictionary;
 
@@ -341,7 +341,7 @@ static BOOL GetAdTrackingEnabled()
 - (NSDictionary *)integrationsDictionary:(NSDictionary *)integrations
 {
     NSMutableDictionary *dict = [integrations ?: @{} mutableCopy];
-    for (NSString *integration in self.bundledIntegrations) {
+    for (NSString *integration in self.analytics.bundledIntegrations) {
         dict[integration] = @NO;
     }
     return [dict copy];

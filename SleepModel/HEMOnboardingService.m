@@ -16,7 +16,11 @@
 #import <SenseKit/Model.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "NSBundle+HEMUtils.h"
+
 #import "HEMOnboardingService.h"
+
+static NSString* const HEMOnboardingSenseColorsCheckPointVersion = @"1.1.8";
 
 // notifications
 NSString* const HEMOnboardingNotificationDidChangeSensePairing = @"HEMOnboardingNotificationDidChangeSensePairing";
@@ -535,9 +539,13 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 - (BOOL)hasFinishedOnboarding {
     HEMOnboardingCheckpoint checkpoint = [self onboardingCheckpoint];
-    return [self isAuthorizedUser]
-        && (checkpoint == HEMOnboardingCheckpointStart // start and authorized = signed in
-        || checkpoint == HEMOnboardingCheckpointSenseColorsViewed);
+    
+    NSString* appVersion = [NSBundle appVersionShort];
+    BOOL preSenseColors = [appVersion compare:HEMOnboardingSenseColorsCheckPointVersion] == NSOrderedAscending;
+    BOOL passedCheckpoints = (preSenseColors && checkpoint == HEMOnboardingCheckpointPillDone)
+                            || (!preSenseColors && checkpoint == HEMOnboardingCheckpointSenseColorsViewed);
+    // if user is signed in and checkpoint is at the start, it means user signed in
+    return [self isAuthorizedUser] && (checkpoint == HEMOnboardingCheckpointStart || passedCheckpoints);
 }
 
 - (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {

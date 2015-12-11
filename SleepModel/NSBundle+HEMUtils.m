@@ -16,4 +16,8 @@
     return [contents firstObject];
 }
 
++ (NSString*)appVersionShort {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+}
+
 @end

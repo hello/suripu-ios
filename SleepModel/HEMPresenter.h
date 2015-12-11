@@ -94,9 +94,18 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * @discussion
  *
- * View controllers should call this method when network connectivity is regained
+ * Subclasses should override this to automaticaly be notified when network
+ * has gained connectivity
  */
 - (void)didGainConnectivity;
+
+/*
+ * @discussion
+ *
+ * Subclasses should override this to automatically be notified when the user
+ * signed out of the application
+ */
+- (void)userDidSignOut;
 
 @end
 

@@ -57,7 +57,7 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
         
         return HEMDeviceAlertStatePillNotPaired;
         
-    } else if ([self isBatteryIsStillLow:[devices pillMetadata]]) {
+    } else if ([self isBatteryStillLow:[devices pillMetadata]]) {
 
         return HEMDeviceAlertStatePillLowBattery;
         
@@ -87,7 +87,7 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
     [localPrefs setUserPreference:[NSDate date] forKey:key];
 }
 
-- (BOOL)isBatteryIsStillLow:(SENPillMetadata*)pillMetadata {
+- (BOOL)isBatteryStillLow:(SENPillMetadata*)pillMetadata {
     if ([pillMetadata state] != SENPillStateLowBattery) {
         return NO;
     }

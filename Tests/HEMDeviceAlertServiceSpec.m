@@ -115,6 +115,7 @@ describe(@"HEMDeviceAlertService", ^{
                 afterEach(^{
                     [SENAPIDevice clearStubs];
                     [senseMetadata clearStubs];
+                    deviceState = HEMDeviceAlertStateUnknown;
                 });
                 
                 it(@"should return a sense not seen state", ^{
@@ -142,6 +143,7 @@ describe(@"HEMDeviceAlertService", ^{
                 afterEach(^{
                     [SENAPIDevice clearStubs];
                     [senseMetadata clearStubs];
+                    deviceState = HEMDeviceAlertStateUnknown;
                 });
                 
                 it(@"should return a no pill paired state", ^{
@@ -177,6 +179,7 @@ describe(@"HEMDeviceAlertService", ^{
                     [senseMetadata clearStubs];
                     [[SENLocalPreferences sharedPreferences] clearStubs];
                     pillMetadata = nil;
+                    deviceState = HEMDeviceAlertStateUnknown;
                 });
                 
                 it(@"should return a low battery state", ^{
@@ -243,6 +246,7 @@ describe(@"HEMDeviceAlertService", ^{
                     [senseMetadata clearStubs];
                     [SENAPIDevice clearStubs];
                     pillMetadata = nil;
+                    deviceState = HEMDeviceAlertStateUnknown;
                 });
                 
                 it(@"should return a pill not seen state", ^{

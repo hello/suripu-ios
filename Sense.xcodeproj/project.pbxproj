@@ -152,6 +152,7 @@
 		8B3FFE371C1B77FF00C493DA /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FFE2E1C1B77FF00C493DA /* InterfaceController.m */; };
 		8B3FFE381C1B77FF00C493DA /* ModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FFE301C1B77FF00C493DA /* ModelCache.m */; };
 		8B3FFE3A1C1B7B3C00C493DA /* HEMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC381A9BB29D00AEC04C /* HEMConfig.m */; };
+		8B3FFE3B1C1B7E3F00C493DA /* UIColor+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7D800D1A3F952000B0BFD7 /* UIColor+HEMStyle.m */; };
 		8B45075D1C1794E500359453 /* HEMSelectHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */; };
 		8B8F5FA61BF661EB00665D30 /* HEMAlarmUtilsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F5FA51BF661EB00665D30 /* HEMAlarmUtilsSpec.m */; };
 		918DF5054EF1947401B7EFEA /* libPods-Sense Now Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C38E1E766344D6872E16D4 /* libPods-Sense Now Extension.a */; };
@@ -1713,7 +1714,6 @@
 		8B3FFDFC1C1B779700C493DA /* Sense Now Extension */ = {
 			isa = PBXGroup;
 			children = (
-				8B3FFE391C1B781A00C493DA /* Sense Now Extension.entitlements */,
 				8B3FFE211C1B77FF00C493DA /* Alarms */,
 				8B3FFE241C1B77FF00C493DA /* Glances */,
 				8B3FFE271C1B77FF00C493DA /* Notification */,
@@ -1725,7 +1725,6 @@
 				8B3FFE2F1C1B77FF00C493DA /* ModelCache.h */,
 				8B3FFE301C1B77FF00C493DA /* ModelCache.m */,
 				8B3FFE0B1C1B779700C493DA /* Assets.xcassets */,
-				8B3FFE0D1C1B779700C493DA /* Info.plist */,
 				8B3FFDFD1C1B779700C493DA /* Supporting Files */,
 			);
 			path = "Sense Now Extension";
@@ -1734,6 +1733,8 @@
 		8B3FFDFD1C1B779700C493DA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8B3FFE0D1C1B779700C493DA /* Info.plist */,
+				8B3FFE391C1B781A00C493DA /* Sense Now Extension.entitlements */,
 				8B3FFDFE1C1B779700C493DA /* PushNotificationPayload.apns */,
 			);
 			name = "Supporting Files";
@@ -2620,6 +2621,9 @@
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = MSG86J7GNF;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -3118,6 +3122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3FFE3B1C1B7E3F00C493DA /* UIColor+HEMStyle.m in Sources */,
 				8B3FFE361C1B77FF00C493DA /* ExtensionDelegate.m in Sources */,
 				8B3FFE351C1B77FF00C493DA /* RoomInterfaceController.m in Sources */,
 				8B3FFE3A1C1B7B3C00C493DA /* HEMConfig.m in Sources */,
@@ -3267,7 +3272,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
-				SENSE_API_URL = "https://dev-api.hello.is/v1";
+				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_APP_ID = is.hello.sensetest;
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
@@ -3315,7 +3320,7 @@
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
-				SENSE_API_URL = "https://api.hello.is/v1";
+				SENSE_API_URL = "https://api.hello.is";
 				SENSE_APP_ID = is.hello.Sense;
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
@@ -3453,6 +3458,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3479,6 +3485,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Sense_Now_Extension;
@@ -3501,6 +3508,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Sense_Now_Extension;
@@ -3523,6 +3531,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Sense_Now_Extension;
@@ -3546,6 +3555,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3575,6 +3585,7 @@
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sense Now Extension/Info.plist";
@@ -3600,6 +3611,7 @@
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sense Now Extension/Info.plist";
@@ -3625,6 +3637,7 @@
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sense Now Extension/Info.plist";
@@ -3852,7 +3865,7 @@
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
-				SENSE_API_URL = "https://dev-api.hello.is/v1";
+				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_APP_ID = is.hello.sensetest;
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";

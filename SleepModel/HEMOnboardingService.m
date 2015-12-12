@@ -20,8 +20,6 @@
 
 #import "HEMOnboardingService.h"
 
-static NSString* const HEMOnboardingSenseColorsCheckPointVersion = @"1.1.8";
-
 // notifications
 NSString* const HEMOnboardingNotificationDidChangeSensePairing = @"HEMOnboardingNotificationDidChangeSensePairing";
 NSString* const HEMOnboardingNotificationUserInfoSenseManager = @"HEMOnboardingNotificationUserInfoSenseManager";
@@ -540,10 +538,9 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 - (BOOL)hasFinishedOnboarding {
     HEMOnboardingCheckpoint checkpoint = [self onboardingCheckpoint];
     
-    NSString* appVersion = [NSBundle appVersionShort];
-    BOOL preSenseColors = [appVersion compare:HEMOnboardingSenseColorsCheckPointVersion] == NSOrderedAscending;
-    BOOL passedCheckpoints = (preSenseColors && checkpoint == HEMOnboardingCheckpointPillDone)
-                            || (!preSenseColors && checkpoint == HEMOnboardingCheckpointSenseColorsViewed);
+    BOOL passedCheckpoints = checkpoint == HEMOnboardingCheckpointPillDone
+                                || checkpoint == HEMOnboardingCheckpointSenseColorsViewed
+                                || checkpoint == HEMOnboardingCheckpointSenseColorsFinished;
     // if user is signed in and checkpoint is at the start, it means user signed in
     return [self isAuthorizedUser] && (checkpoint == HEMOnboardingCheckpointStart || passedCheckpoints);
 }
@@ -564,7 +561,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 - (void)markOnboardingAsComplete {
     // if you call this method, you want to leave onboarding so make sure it's set
-    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsViewed];
+    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsFinished];
     [self clearAll];
 }
 

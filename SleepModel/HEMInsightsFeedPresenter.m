@@ -45,6 +45,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 @property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
 @property (strong, nonatomic) NSCache* heightCache;
 @property (strong, nonatomic) NSCache* attributedBodyCache;
+@property (assign, nonatomic, getter=isVisible) BOOL visible;
 
 @end
 
@@ -174,11 +175,13 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         // must dispatch after a delay due to rendering of the cells and also
         // because we want a slight delay anyways
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-            NSIndexPath* path = [NSIndexPath indexPathForItem:insightIndex inSection:0];
-            UICollectionViewCell* firstInsightCell = [[weakSelf collectionView] cellForItemAtIndexPath:path];
-            CGRect frame = [firstInsightCell convertRect:[firstInsightCell bounds] toView:[weakSelf tutorialContainerView]];
-            CGPoint midPoint = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
-            [HEMTutorial showHandholdingForInsightCardIfNeededIn:[weakSelf tutorialContainerView] atPoint:midPoint];
+            if ([weakSelf isVisible]) {
+                NSIndexPath* path = [NSIndexPath indexPathForItem:insightIndex inSection:0];
+                UICollectionViewCell* firstInsightCell = [[weakSelf collectionView] cellForItemAtIndexPath:path];
+                CGRect frame = [firstInsightCell convertRect:[firstInsightCell bounds] toView:[weakSelf tutorialContainerView]];
+                CGPoint midPoint = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+                [HEMTutorial showHandholdingForInsightCardIfNeededIn:[weakSelf tutorialContainerView] atPoint:midPoint];
+            }
         });
 
     }
@@ -188,7 +191,13 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 - (void)didAppear {
     [super didAppear];
+    [self setVisible:YES];
     [self refresh];
+}
+
+- (void)willDisappear {
+    [super willDisappear];
+    [self setVisible:NO];
 }
 
 - (void)didComeBackFromBackground {

@@ -11,7 +11,7 @@
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMURLImageView.h"
 
-static CGFloat const HEMInsightTransitionImageHeight = 188.0f;
+static CGFloat const HEMInsightTransitionImageHeight = 178.66f;
 static CGFloat const HEMInsightTransitionDuration = 0.3f;
 
 @interface HEMInsightTransition()

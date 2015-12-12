@@ -16,7 +16,6 @@ CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 @interface HEMSnazzBar ()
 
 @property (nonatomic, strong) UIView* indicatorView;
-@property (nonatomic, strong) UIView* bottomBorderView;
 @property (nonatomic) NSUInteger selectionIndex;
 @end
 
@@ -24,31 +23,11 @@ CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 
 static CGFloat const HEMSnazzBarTopMargin = 20.f;
 static CGFloat const HEMSnazzBarIndicatorHeight = 1.0f;
-static CGFloat const HEMSnazzBarBorderHeight = 1.0f;
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
-        _bottomBorderView = [UIView new];
-        _bottomBorderView.backgroundColor = [UIColor borderColor];
-        [self addSubview:_bottomBorderView];
-    }
-    return self;
-}
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     [self layoutBarButtons];
-    [self layoutBorder];
-}
-
-- (void)layoutBorder {
-    CGRect borderRect = [[self bottomBorderView] frame];
-    borderRect.size.height = HEMSnazzBarBorderHeight;
-    borderRect.size.width = CGRectGetWidth([self bounds]);
-    borderRect.origin.y = CGRectGetHeight([self bounds]) - HEMSnazzBarBorderHeight;
-    [[self bottomBorderView] setFrame:borderRect];
 }
 
 - (void)layoutBarButtons

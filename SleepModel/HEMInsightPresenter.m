@@ -39,6 +39,8 @@ typedef NS_ENUM(NSInteger, HEMInsightRow) {
 
 static NSString* const HEMInsightHeaderReuseId = @"header";
 
+static CGFloat const HEMInsightCollectionViewDefaultInset = 4.0f;
+
 static CGFloat const HEMInsightCellSummaryTopMargin = 8.0f;
 static CGFloat const HEMInsightCellSummaryBotMargin = 32.0f;
 static CGFloat const HEMInsightCellSummaryLeftMargin = 48.0f;
@@ -50,7 +52,7 @@ static CGFloat const HEMInsightCellTitleBotMargin = 12.0f;
 static CGFloat const HEMInsightCellAboutTopMargin = 36.0f;
 
 static CGFloat const HEMInsightCellTextHorizontalMargin = 24.0f;
-static CGFloat const HEMInsightCellHeightImage = 188.0f;
+static CGFloat const HEMInsightCellHeightImage = 178.66f; // keep aspect ratio relatively the same as insight card
 static CGFloat const HEMInsightCloseButtonAnimation = 0.5f;
 static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
@@ -176,7 +178,8 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
     
     UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
     CGSize itemSize = [layout itemSize];
-    itemSize.width = CGRectGetWidth([[self collectionView] bounds]);
+    
+    itemSize.width = CGRectGetWidth([[[self collectionView] superview] bounds]);
     [layout setItemSize:itemSize];
     [[self collectionView] reloadData];
 }

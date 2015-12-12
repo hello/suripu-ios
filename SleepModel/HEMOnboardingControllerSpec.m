@@ -34,7 +34,7 @@ describe(@"+onboardingControllerForCheckpoint", ^{
         
         it(@"should return the initial view controller in the flow", ^{
             
-            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillDone;
+            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillFinished;
             UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
             
             UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
@@ -60,7 +60,7 @@ describe(@"+onboardingControllerForCheckpoint", ^{
         
         it(@"should force user back out when flag is set", ^{
             
-            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillDone;
+            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointPillFinished;
             UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:YES];
             
             UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
@@ -73,7 +73,7 @@ describe(@"+onboardingControllerForCheckpoint", ^{
         
         it(@"should return nil if onboarding is done", ^{
             
-            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointSenseColorsViewed;
+            HEMOnboardingCheckpoint check = HEMOnboardingCheckpointSenseColorsFinished;
             UIViewController* controller = [HEMOnboardingController controllerForCheckpoint:check force:NO];
             [[controller should] beNil];
             

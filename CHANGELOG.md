@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.0.5
+
+New:
+
+* updated to insights v2 api
+* nav bar shadow and border tweaks
+
+Fixes:
+
+* unread indicator fix
+* upgrade path for onboarding checkpoint fixed, for reals.  deprecated old checkpoints
+* aspect fill insight images to make it work for 6 plus
+* fix markdown lib to fix current conditions text
+
 ## 1.2.0.4
 
 New:

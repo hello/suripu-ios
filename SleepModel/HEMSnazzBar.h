@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 extern CGFloat const HEMSnazzBarAnimationDuration;
+extern CGFloat const HEMSnazzBarBorderHeight;
 
 @class HEMSnazzBar;
 

@@ -24,7 +24,7 @@ CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 
 static CGFloat const HEMSnazzBarTopMargin = 20.f;
 static CGFloat const HEMSnazzBarIndicatorHeight = 1.0f;
-static CGFloat const HEMSnazzBarBorderHeight = 1.0f;
+CGFloat const HEMSnazzBarBorderHeight = 0.5f;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

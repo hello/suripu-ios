@@ -285,7 +285,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x000000 alpha:0.25f];
 }
 + (UIColor *)borderColor {
-    return [UIColor colorWithHex:0xD2D3D6 alpha:1.f];
+    return [UIColor colorWithHex:0x000000 alpha:0.15f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

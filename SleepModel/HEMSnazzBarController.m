@@ -10,7 +10,7 @@
 #import "HEMSnazzBar.h"
 #import "UIColor+HEMStyle.h"
 
-CGFloat const HEMSnazzBarHeight = 65.f;
+CGFloat const HEMSnazzBarHeight = 64.0f;
 
 @interface HEMSnazzBarController ()<HEMSnazzBarDelegate, UIScrollViewDelegate>
 

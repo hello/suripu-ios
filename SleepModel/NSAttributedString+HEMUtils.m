@@ -38,8 +38,7 @@
     NSString* plainText = [self string];
     NSRange range = NSMakeRange(0, [self length]);
     NSDictionary* attributes = [self attributesAtIndex:0 effectiveRange:&range];
-    CGFloat height = [plainText heightBoundedByWidth:width attributes:attributes];
-    return CGSizeMake(ceilCGFloat(width), ceilCGFloat(height));
+    return [plainText sizeBoundedByWidth:width attriburtes:attributes];
 }
 
 @end

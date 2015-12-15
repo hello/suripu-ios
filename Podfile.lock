@@ -80,7 +80,7 @@ PODS:
   - ZendeskSDK/Providers (1.5.2.1)
 
 DEPENDENCIES:
-  - Analytics (~> 3.0.0)
+  - Analytics (= 3.0.3)
   - AttributedMarkdown (from `git@github.com:hello/AttributedMarkdown.git`)
   - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`)
   - CGFloatType (~> 1.3.1)

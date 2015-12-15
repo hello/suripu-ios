@@ -37,9 +37,10 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [HEMLogUtils enableLogger];
     [SENAnalytics enableAnalytics];
 
-    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey])
+    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
         [HEMNotificationHandler handleRemoteNotificationWithInfo:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]
                                           fetchCompletionHandler:NULL];
+    }
 
     [self deauthorizeIfNeeded];
     [self configureAppearance];

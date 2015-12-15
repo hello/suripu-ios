@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0.6
+
+Fixes:
+
+* System alerts are shown upon change application states only
+* Timeline overlay for sleep depth is correctly bounded
+* Changed insight 'about you' 'text margin from 8 to 20px
+
 ## 1.2.0.5
 
 New:

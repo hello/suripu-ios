@@ -39,12 +39,10 @@ typedef NS_ENUM(NSInteger, HEMInsightRow) {
 
 static NSString* const HEMInsightHeaderReuseId = @"header";
 
-static CGFloat const HEMInsightCollectionViewDefaultInset = 4.0f;
-
-static CGFloat const HEMInsightCellSummaryTopMargin = 8.0f;
+static CGFloat const HEMInsightCellSummaryTopMargin = 20.0f;
 static CGFloat const HEMInsightCellSummaryBotMargin = 32.0f;
 static CGFloat const HEMInsightCellSummaryLeftMargin = 48.0f;
-static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
+static CGFloat const HEMInsightCellSummaryRightMargin = 25.0f; // + 1 since it seems to need it for some reason
 
 static CGFloat const HEMInsightCellTitleTopMargin = 32.0f;
 static CGFloat const HEMInsightCellTitleBotMargin = 12.0f;
@@ -288,7 +286,8 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
         default:
             break;
     }
-    return [attrText sizeWithWidth:itemSize.width - horizontalMargins].height;
+    CGSize textSize = [attrText sizeWithWidth:itemSize.width - horizontalMargins];
+    return textSize.height;
 }
 
 - (void)setAttributedText:(NSAttributedString*)attributedText

@@ -32,6 +32,7 @@
 
 - (void)configureWithKey:(NSString*)key {
     SEGAnalyticsConfiguration* config = [SEGAnalyticsConfiguration configurationWithWriteKey:key];
+    [config setFlushAt:2]; // prevent user killing the app from destroying our analytics
     [SEGAnalytics setupWithConfiguration:config];
     DDLogVerbose(@"configured segment %@", config);
 }

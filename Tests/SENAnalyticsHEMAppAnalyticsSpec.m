@@ -29,7 +29,8 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
                 }];
                 
                 account = [[SENAccount alloc] initWithDictionary:@{@"name" : @"tester",
-                                                                   @"id" : @"1"}];
+                                                                   @"id" : @"1",
+                                                                   @"email" : @"jimmy@sayhello.com"}];
                 [SENAnalytics trackSignUpOfNewAccount:account];
             });
             
@@ -45,7 +46,7 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
             });
             
             it(@"should track with account name", ^{
-                NSString* name = propertiesOnCreation[@"$name"];
+                NSString* name = propertiesOnCreation[@"name"];
                 [[name should] equal:[account name]];
             });
             
@@ -61,8 +62,13 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
             });
             
             it(@"should add created date property", ^{
-                id date = propertiesOnCreation[@"$created"];
+                id date = propertiesOnCreation[@"createdAt"];
                 [[date should] beKindOfClass:[NSDate class]];
+            });
+            
+            it(@"should add email property", ^{
+                NSString* email = propertiesOnCreation[@"email"];
+                [[email should] equal:[account email]];
             });
             
         });

@@ -19,7 +19,8 @@
 #import "SENSenseMetadata.h"
 
 NSString* const SENServiceDeviceNotificationFactorySettingsRestored = @"sense.restored";
-NSString* const SENServiceDeviceNotificationWarning = @"sense.warning";
+NSString* const SENServiceDeviceNotificationSenseUnpaired = @"sense.unpaired";
+NSString* const SENServiceDeviceNotificationPillUnpaired = @"pill.unpaired";
 NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 @interface SENServiceDevice()
@@ -348,6 +349,11 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 #pragma mark Unpairing Sleep Pill
 
+- (void)notifyPillUnpaired {
+    NSString* name = SENServiceDeviceNotificationPillUnpaired;
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
+}
+
 - (void)unpairSleepPill:(SENServiceDeviceCompletionBlock)completion {
     void(^done)(NSError* error) = ^(NSError* error) {
         if (completion) {
@@ -370,6 +376,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkPillFromAccount];
         } else {
             [[strongSelf devices] removePairedPill];
+            [strongSelf notifyPillUnpaired];
         }
         
         done (deviceError);
@@ -377,6 +384,11 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 }
 
 #pragma mark Unlink Sense From account
+
+- (void)notifySenseUnpaired {
+    NSString* name = SENServiceDeviceNotificationSenseUnpaired;
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
+}
 
 - (void)unlinkSenseFromAccount:(SENServiceDeviceCompletionBlock)completion {
     void(^done)(NSError* error) = ^(NSError* error) {
@@ -403,6 +415,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             [[strongSelf senseManager] disconnectFromSense];
             [[strongSelf devices] removePairedSense];
             [strongSelf setSenseManager:nil];
+            [strongSelf notifySenseUnpaired];
         }
         
         done (deviceError);

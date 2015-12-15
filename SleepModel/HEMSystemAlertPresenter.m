@@ -52,7 +52,11 @@ typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
         _networkAlertService = networkAlertService;
         [_networkAlertService setDelegate:self];
         
+        __weak typeof(self) weakSelf = self;
         _deviceAlertService = deviceAlertService;
+        [_deviceAlertService observeDeviceChanges:^(HEMDeviceChange change) {
+            [weakSelf handleDeviceChange:change];
+        }];
         
         _tzAlertService = tzAlertService;
         
@@ -65,12 +69,16 @@ typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     [self setAlertContainerView:containerView];
 }
 
-#pragma mark - Presenter events
+#pragma mark - Handler device changes 
 
-- (void)didAppear {
-    [super didAppear];
-    [self runChecks];
+- (void)handleDeviceChange:(HEMDeviceChange)change {
+    // I don't see any reason why any device change should not dismiss an alert
+    // since user is currently actively taking action and we should let the next
+    // check to re-present the alert if it's still a problem
+    [self dismissActionView:nil];
 }
+
+#pragma mark - Presenter events
 
 - (void)didComeBackFromBackground {
     [super didComeBackFromBackground];

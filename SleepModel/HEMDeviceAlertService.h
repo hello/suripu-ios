@@ -20,14 +20,24 @@ typedef NS_ENUM(NSInteger, HEMDeviceAlertState) {
     HEMDeviceAlertStatePillNotSeen
 };
 
+typedef NS_ENUM(NSInteger, HEMDeviceChange) {
+    HEMDeviceChangeNothing = (1 << 0),
+    HEMDeviceChangeSensePaired = (1 << 1),
+    HEMDeviceChangeSenseUnpaired = (1 << 2),
+    HEMDeviceChangePillPaired = (1 << 3),
+    HEMDeviceChangePillUnpaired = (1 << 4)
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^HEMDeviceAlertStateCallback)(HEMDeviceAlertState state);
+typedef void(^HEMDeviceAlertChangeCallback)(HEMDeviceChange change);
 
 @interface HEMDeviceAlertService : SENService
 
 - (void)checkDeviceState:(HEMDeviceAlertStateCallback)completion;
 - (void)updateLastAlertShownForState:(HEMDeviceAlertState)state;
+- (void)observeDeviceChanges:(HEMDeviceAlertChangeCallback)changeCallback;
 
 @end
 

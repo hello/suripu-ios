@@ -14,7 +14,8 @@
 @class SENDeviceMetadata;
 
 extern NSString* const SENServiceDeviceNotificationFactorySettingsRestored;
-extern NSString* const SENServiceDeviceNotificationWarning;
+extern NSString* const SENServiceDeviceNotificationSenseUnpaired;
+extern NSString* const SENServiceDeviceNotificationPillUnpaired;
 extern NSString* const SENServiceDeviceErrorDomain;
 
 typedef NS_ENUM(NSInteger, SENServiceDeviceError) {

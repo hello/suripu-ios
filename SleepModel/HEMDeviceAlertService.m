@@ -13,13 +13,22 @@
 #import <SenseKit/SENSenseMetadata.h>
 #import <SenseKit/SENPillMetadata.h>
 
+#import <SenseKit/SENServiceDevice.h>
+
 #import "NSDate+HEMRelative.h"
 
 #import "HEMDeviceAlertService.h"
+#import "HEMOnboardingService.h"
 
 static NSInteger const HEMDeviceAlertLastSeenThresholdInDays = 1;
 static NSInteger const HEMDeviceAlertPillLowBatteryAlertThresholdInDays = 1;
 static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAlertPrefPillLowBatteryLastAlert";
+
+@interface HEMDeviceAlertService()
+
+@property (nonatomic, strong) NSMutableArray* changeObserverCallbacks;
+
+@end
 
 @implementation HEMDeviceAlertService
 
@@ -100,6 +109,72 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
 
 - (BOOL)isLastSeenTooLongAgo:(SENDeviceMetadata*)metadata {
     return [[metadata lastSeenDate] daysElapsed] >= HEMDeviceAlertLastSeenThresholdInDays;
+}
+
+#pragma mark - Pairing changes
+
+- (void)listenForPairingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(devicesCleared)
+                   name:SENServiceDeviceNotificationFactorySettingsRestored
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(pillPaired)
+                   name:HEMOnboardingNotificationDidChangePillPairing
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(sensePaired)
+                   name:HEMOnboardingNotificationDidChangeSensePairing
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(senseUnpaired)
+                   name:SENServiceDeviceNotificationSenseUnpaired
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(pillUnpaired)
+                   name:SENServiceDeviceNotificationPillUnpaired
+                 object:nil];
+}
+
+- (void)notifyObserversWithChange:(HEMDeviceChange)change {
+    for (HEMDeviceAlertChangeCallback cb in [self changeObserverCallbacks]) {
+        cb (change);
+    }
+}
+
+- (void)observeDeviceChanges:(HEMDeviceAlertChangeCallback)changeCallback {
+    if (![self changeObserverCallbacks]) {
+        [self listenForPairingChanges];
+        [self setChangeObserverCallbacks:[NSMutableArray array]];
+    }
+    [[self changeObserverCallbacks] addObject:[changeCallback copy]];
+}
+
+- (void)devicesCleared {
+    [self notifyObserversWithChange:HEMDeviceChangePillUnpaired | HEMDeviceChangeSenseUnpaired];
+}
+
+- (void)senseUnpaired {
+    [self notifyObserversWithChange:HEMDeviceChangeSenseUnpaired];
+}
+
+- (void)pillUnpaired {
+    [self notifyObserversWithChange:HEMDeviceChangePillUnpaired];
+}
+
+- (void)sensePaired {
+    [self notifyObserversWithChange:HEMDeviceChangeSensePaired];
+}
+
+- (void)pillPaired {
+    [self notifyObserversWithChange:HEMDeviceChangePillPaired];
+}
+
+#pragma mark - Cleanup
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

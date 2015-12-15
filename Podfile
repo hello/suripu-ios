@@ -15,7 +15,6 @@ pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
 pod 'UICountingLabel', '~> 1.2.0'
 pod 'CGFloatType', '~> 1.3.1'
 pod 'Analytics', '3.0.3'
-pod 'Mixpanel', '~> 2.9.0'
 
 # Private
 pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'

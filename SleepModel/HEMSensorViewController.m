@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, HEMSensorLoadState) {
     HEMSensorLoadStateError = 2,
 };
 
-@interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
+@interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (weak, nonatomic) IBOutlet UIView* contentView;
@@ -68,6 +68,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
+    [[self scrollView] setDelegate:self];
     NSString* sensorName = [[self sensor] localizedName] ?: @"";
     [SENAnalytics track:kHEMAnalyticsEventSensor
              properties:@{kHEMAnalyticsEventPropSensorName : sensorName}];
@@ -560,6 +561,12 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 
 - (CGFloat)minValueForLineGraph:(BEMSimpleLineGraphView *)graph {
     return self.minGraphValue;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
 }
 
 @end

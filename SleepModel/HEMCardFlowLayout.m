@@ -16,7 +16,6 @@
 
 @implementation HEMCardFlowLayout
 
-static CGFloat const HEMCardSectionMargin = 12.f;
 static CGFloat const HEMCardCardMargin = 12.f;
 static CGFloat const HEMCardDefaultItemHeight = 100.f;
 
@@ -37,7 +36,7 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
 - (void)configureDefaultAttributes {
     CGRect bounds = HEMKeyWindowBounds();
     self.itemSize = CGSizeMake(CGRectGetWidth(bounds) - HEMCardCardMargin * 2, HEMCardDefaultItemHeight);
-    self.sectionInset = UIEdgeInsetsMake(HEMCardSectionMargin, 0, HEMCardSectionMargin, 0);
+    self.sectionInset = UIEdgeInsetsMake(HEMConstantsContentTopMargin, 0, HEMConstantsContentTopMargin, 0);
     self.minimumInteritemSpacing = HEMCardCardMargin;
     self.minimumLineSpacing = HEMCardCardMargin;
     self.scrollDirection = UICollectionViewScrollDirectionVertical;

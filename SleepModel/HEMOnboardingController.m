@@ -77,6 +77,10 @@
     }
 }
 
+- (BOOL)wantsShadowView {
+    return NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setEnableBack:YES]; // by default

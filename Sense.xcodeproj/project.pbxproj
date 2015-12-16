@@ -175,6 +175,7 @@
 		BF539CC71C0D38BA000F77AA /* HEMInsightsFeedPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CC61C0D38BA000F77AA /* HEMInsightsFeedPresenter.m */; };
 		BF539CD21C0F737D000F77AA /* HEMPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CD11C0F737D000F77AA /* HEMPresenter.m */; };
 		BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */; };
+		BF5592421C21048D00FC7849 /* HEMInsightTabPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5592411C21048D00FC7849 /* HEMInsightTabPresenter.m */; };
 		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
 		BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */; };
 		BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */; };
@@ -208,7 +209,6 @@
 		BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BDF19E30DCC0028F799 /* libPods.a */; };
 		BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */; };
 		BF83397A1C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339791C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m */; };
-		BF8339851C0FD74000BFD0F4 /* HEMInsightsUnreadPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339841C0FD74000BFD0F4 /* HEMInsightsUnreadPresenter.m */; };
 		BF8339891C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339881C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m */; };
 		BF83398C1C12277B00BFD0F4 /* HEMInsightPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83398B1C12277B00BFD0F4 /* HEMInsightPresenter.m */; };
 		BF8339901C1604BA00BFD0F4 /* HEMInsightTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83398F1C1604BA00BFD0F4 /* HEMInsightTransition.m */; };
@@ -657,6 +657,8 @@
 		BF539CD01C0F737D000F77AA /* HEMPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPresenter.h; sourceTree = "<group>"; };
 		BF539CD11C0F737D000F77AA /* HEMPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPresenter.m; sourceTree = "<group>"; };
 		BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsServiceSpec.m; sourceTree = "<group>"; };
+		BF5592401C21048D00FC7849 /* HEMInsightTabPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightTabPresenter.h; sourceTree = "<group>"; };
+		BF5592411C21048D00FC7849 /* HEMInsightTabPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightTabPresenter.m; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
 		BF5D53291A26749F0090DD6A /* HEMActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActivityIndicatorView.h; sourceTree = "<group>"; };
@@ -718,8 +720,6 @@
 		BF7F1BDF19E30DCC0028F799 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		BF812A991B6827CD00BF672F /* HEMAppUsageSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppUsageSpec.m; sourceTree = "<group>"; };
 		BF8339791C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMQuestionsServiceSpec.m; sourceTree = "<group>"; };
-		BF8339831C0FD74000BFD0F4 /* HEMInsightsUnreadPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightsUnreadPresenter.h; sourceTree = "<group>"; };
-		BF8339841C0FD74000BFD0F4 /* HEMInsightsUnreadPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsUnreadPresenter.m; sourceTree = "<group>"; };
 		BF8339871C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SENRemoteImage+HEMDeviceSpecific.h"; sourceTree = "<group>"; };
 		BF8339881C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SENRemoteImage+HEMDeviceSpecific.m"; sourceTree = "<group>"; };
 		BF83398A1C12277B00BFD0F4 /* HEMInsightPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightPresenter.h; sourceTree = "<group>"; };
@@ -1778,10 +1778,10 @@
 			children = (
 				BF539CC51C0D38BA000F77AA /* HEMInsightsFeedPresenter.h */,
 				BF539CC61C0D38BA000F77AA /* HEMInsightsFeedPresenter.m */,
-				BF8339831C0FD74000BFD0F4 /* HEMInsightsUnreadPresenter.h */,
-				BF8339841C0FD74000BFD0F4 /* HEMInsightsUnreadPresenter.m */,
 				BF83398A1C12277B00BFD0F4 /* HEMInsightPresenter.h */,
 				BF83398B1C12277B00BFD0F4 /* HEMInsightPresenter.m */,
+				BF5592401C21048D00FC7849 /* HEMInsightTabPresenter.h */,
+				BF5592411C21048D00FC7849 /* HEMInsightTabPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -2721,7 +2721,6 @@
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				BFA540F21BCEFDF1007AF607 /* NSBundle+HEMUtils.m in Sources */,
 				BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */,
-				BF8339851C0FD74000BFD0F4 /* HEMInsightsUnreadPresenter.m in Sources */,
 				8AA1E6171A895EF200590EB6 /* HEMNotificationSettingsViewController.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,
 				BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */,
@@ -2764,6 +2763,7 @@
 				BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */,
 				8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */,
 				BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */,
+				BF5592421C21048D00FC7849 /* HEMInsightTabPresenter.m in Sources */,
 				BFA884B01C1A01A200613069 /* HEMDeviceAlertService.m in Sources */,
 				BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */,
 				BFD4012C1BDED8E600F6C419 /* HEMModalTransitionDelegate.m in Sources */,

@@ -338,16 +338,23 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         
         id postConnectionBlock = ^(NSError* error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            NSError* connectionError = nil;
             if (error == nil) {
                 [strongSelf saveSenseUUID];
                 [strongSelf listenForUnexpectedDisconnects];
             } else {
+                NSString* format = @"unable to connect to Sense due to %@";
+                NSString* description = [NSString stringWithFormat:format, [error localizedDescription]];
+                connectionError = [strongSelf errorWithCode:SENSenseManagerErrorCodeCannotConnectToSense
+                                                description:description
+                                        fromUnderlyingError:error];
                 // if you fail to connect to the peripheral once, calling LGPeripheral's
                 // connectWithTimeout:completion: will actually never call you back
                 // until you obtain a new new instance by scanning again
                 [strongSelf setValid:NO];
             }
-            completion (error);
+            completion (connectionError);
         };
         
         if (![self isValid]) {

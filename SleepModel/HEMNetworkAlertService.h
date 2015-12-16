@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMNetworkAlertService : SENService
 
-@property (nonatomic, assign, readonly, getter=wasNetworkReachable) BOOL networkReachable;
+@property (nonatomic, assign, readonly, getter=isNetworkReachable) BOOL networkReachable;
 
 @property (nonatomic, weak) id<HEMNetworkAlertDelegate> delegate;
 

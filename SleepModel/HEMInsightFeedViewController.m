@@ -24,7 +24,7 @@
 #import "HEMInsightsService.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMInsightsFeedPresenter.h"
-#import "HEMInsightsUnreadPresenter.h"
+#import "HEMInsightTabPresenter.h"
 #import "HEMInsightTransition.h"
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMURLImageView.h"
@@ -60,12 +60,12 @@
         _feedPresenter = feedPresenter;
         [self addPresenter:feedPresenter];
         
-        HEMInsightsUnreadPresenter* unreadPresenter
-            = [[HEMInsightsUnreadPresenter alloc] initWithUnreadService:_unreadService];
+        HEMInsightTabPresenter* tabPresenter
+            = [[HEMInsightTabPresenter alloc] initWithUnreadService:_unreadService];
         // must bind with tab bar here so that the container knows how to display
         // this controller even though the view has yet to be loaded
-        [unreadPresenter bindWithTabBarItem:[self tabBarItem]];
-        [self addPresenter:unreadPresenter];
+        [tabPresenter bindWithTabBarItem:[self tabBarItem]];
+        [self addPresenter:tabPresenter];
     }
     return self;
 }

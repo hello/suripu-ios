@@ -12,7 +12,7 @@
 
 @interface HEMNetworkAlertService()
 
-@property (nonatomic, assign, getter=wasNetworkReachable) BOOL networkReachable;
+@property (nonatomic, assign, getter=isNetworkReachable) BOOL networkReachable;
 
 @end
 
@@ -44,15 +44,15 @@
     BOOL changed = NO;
     
     if ([name isEqualToString:SENAPIUnreachableNotification]) {
-        changed = [self wasNetworkReachable];
+        changed = [self isNetworkReachable];
     } else if ([name isEqualToString:SENAPIReachableNotification]) {
-        changed = ![self wasNetworkReachable];
+        changed = ![self isNetworkReachable];
     }
     
     if (changed) {
-        [self setNetworkReachable:![self wasNetworkReachable]];
+        [self setNetworkReachable:![self isNetworkReachable]];
         [[self delegate] networkService:self
-                  detectedNetworkChange:[self wasNetworkReachable]];
+                  detectedNetworkChange:[self isNetworkReachable]];
     }
 }
 

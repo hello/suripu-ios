@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeTimeZone
 };
 
+static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
+
 @interface HEMSystemAlertPresenter() <HEMNetworkAlertDelegate, HEMSensePairingDelegate, HEMPillPairDelegate>
 
 @property (nonatomic, weak) HEMNetworkAlertService* networkAlertService;
@@ -141,8 +143,12 @@ typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
 
 - (void)runChecks {
     __weak typeof(self) weakSelf = self;
-    [self checkDevicesForProblems:^(BOOL alertShown) {
-        [weakSelf checkTimeZoneProblems];
+    [self showNetworkAlertIfNeeded:^(BOOL shown) {
+        if (!shown) {
+            [weakSelf checkDevicesForProblems:^(BOOL alertShown) {
+                [weakSelf checkTimeZoneProblems];
+            }];
+        }
     }];
 }
 
@@ -434,7 +440,24 @@ typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     [[self delegate] dismissCurrentViewControllerFrom:self];
 }
 
-#pragma mark - HEMNetworkAlertDelegate
+#pragma mark - Network alerts
+
+- (void)showNetworkAlertIfNeeded:(void(^)(BOOL shown))completion {
+    __weak typeof(self) weakSelf = self;
+    // a delay is needed because of the Reachability lib we are using will at
+    // first consider the network not reachable and then shortly notify that
+    // network is now reachable.
+    int64_t delayInSeconds = HEMSystemAlertNetworkCheckDelay * NSEC_PER_SEC;
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds);
+    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+        BOOL show = NO;
+        if (![[weakSelf networkAlertService] isNetworkReachable]) {
+            [weakSelf showNoInternetAlert];
+            show = YES;
+        } 
+        completion (show);
+    });
+}
 
 - (void)networkService:(HEMNetworkAlertService *)networkAlertService detectedNetworkChange:(BOOL)hasNetwork {
     if (hasNetwork) {

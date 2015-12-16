@@ -1,8 +1,8 @@
 //
-//  HEMInsightsUnreadPresenter.h
+//  HEMInsightTabPresenter.h
 //  Sense
 //
-//  Created by Jimmy Lu on 12/2/15.
+//  Created by Jimmy Lu on 12/15/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @class HEMUnreadAlertService;
 
-@interface HEMInsightsUnreadPresenter : HEMPresenter
+@interface HEMInsightTabPresenter : HEMPresenter
 
 - (nonnull instancetype)initWithUnreadService:(nonnull HEMUnreadAlertService*)unreadService;
 

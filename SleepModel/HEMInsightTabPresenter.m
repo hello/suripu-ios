@@ -1,24 +1,24 @@
 //
-//  HEMInsightsUnreadPresenter.m
+//  HEMInsightTabPresenter.m
 //  Sense
 //
-//  Created by Jimmy Lu on 12/2/15.
+//  Created by Jimmy Lu on 12/15/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENAppUnreadStats.h>
 
-#import "HEMInsightsUnreadPresenter.h"
+#import "HEMInsightTabPresenter.h"
 #import "HEMUnreadAlertService.h"
 #import "HelloStyleKit.h"
 
-@interface HEMInsightsUnreadPresenter()
+@interface HEMInsightTabPresenter()
 
 @property (nonatomic, weak) HEMUnreadAlertService* unreadService;
 @property (nonatomic, weak) UITabBarItem* tabBarItem;
 
 @end
 
-@implementation HEMInsightsUnreadPresenter
+@implementation HEMInsightTabPresenter
 
 - (nonnull instancetype)initWithUnreadService:(nonnull HEMUnreadAlertService*)unreadService {
     self = [super init];
@@ -43,11 +43,23 @@
         // because the SnazzBarController indirectly depends on the tabBarItem,
         // updating the tabBar doesn't really have an effect immediately, which
         // is partially why we don't want to make an async call here
-        __weak typeof(self) weakSelf = self;
-        SENAppUnreadStats* unreadStats = [[weakSelf unreadService] unreadStats];
-        BOOL hasUnreadFeedItems = [unreadStats hasUnreadInsights] || [unreadStats hasUnreadQuestions];
-        [[weakSelf tabBarItem] setBadgeValue:hasUnreadFeedItems ? @"1" : nil];
+        
+        SENAppUnreadStats* unreadStats = [[self unreadService] unreadStats];
+        if (unreadStats) {
+            [self updateBadge];
+        } else {
+            __weak typeof(self) weakSelf = self;
+            [[self unreadService] update:^(BOOL hasUnread, NSError *error) {
+                [weakSelf updateBadge];
+            }];
+        }
     }
+}
+
+- (void)updateBadge {
+    SENAppUnreadStats* unreadStats = [[self unreadService] unreadStats];
+    BOOL hasUnreadFeedItems = [unreadStats hasUnreadInsights] || [unreadStats hasUnreadQuestions];
+    [[self tabBarItem] setBadgeValue:hasUnreadFeedItems ? @"1" : nil];
 }
 
 - (void)willDisappear {

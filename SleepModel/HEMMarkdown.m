@@ -124,6 +124,11 @@
     return @{
         @(EMPH) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
         @(STRONG) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
+        @(BULLETLIST) : @{
+            NSFontAttributeName : [UIFont insightFullMessageFont],
+            NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.5f],
+            NSParagraphStyleAttributeName : style
+        },
         @(PARA) : @{
             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.5f],
             NSFontAttributeName : [UIFont insightFullMessageFont],

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0.7
+
+Fixes:
+
+* Unread indicator will properly be displayed if alarm shortcut is used to open
+  the timeline
+* No internet system alert will properly be displayed
+* insights detail view will not be clipped prematurely when transitioning in
+* When pairing with the pill, a proper error message is displayed when app cannot
+  connect to the Sense to start the process
+* Fixed tab icon for iPhone 6 plus
+
 ## 1.2.0.6
 
 Fixes:

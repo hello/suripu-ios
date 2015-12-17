@@ -696,19 +696,17 @@
                                         </view>
                                         <animations/>
                                         <constraints>
+                                            <constraint firstItem="S0U-m6-ZMO" firstAttribute="top" secondItem="CNv-oE-SdB" secondAttribute="top" id="ELz-Ra-9Cx"/>
                                             <constraint firstItem="S0U-m6-ZMO" firstAttribute="leading" secondItem="CNv-oE-SdB" secondAttribute="trailing" constant="24" id="J5t-Gg-8kR"/>
-                                            <constraint firstItem="S0U-m6-ZMO" firstAttribute="top" secondItem="ipI-xW-fel" secondAttribute="topMargin" constant="12" id="WSW-Je-TO9"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="S0U-m6-ZMO" secondAttribute="bottom" constant="24" id="hNH-9Z-Yyf"/>
                                             <constraint firstItem="CNv-oE-SdB" firstAttribute="top" secondItem="ipI-xW-fel" secondAttribute="topMargin" constant="12" id="hT0-Jw-3wF"/>
+                                            <constraint firstItem="S0U-m6-ZMO" firstAttribute="bottom" secondItem="CNv-oE-SdB" secondAttribute="bottom" id="j8U-q4-qxi"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="S0U-m6-ZMO" secondAttribute="trailing" constant="16" id="pfn-d6-GZ0"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="CNv-oE-SdB" secondAttribute="bottom" constant="24" id="r02-pX-s6k"/>
                                             <constraint firstItem="CNv-oE-SdB" firstAttribute="leading" secondItem="ipI-xW-fel" secondAttribute="leadingMargin" constant="16" id="r9F-mp-iOF"/>
                                         </constraints>
                                         <size key="customSize" width="600" height="72"/>
                                         <connections>
-                                            <outlet property="textBottomConstraint" destination="hNH-9Z-Yyf" id="T0G-46-1JG"/>
                                             <outlet property="textLabel" destination="S0U-m6-ZMO" id="PpX-b1-sHw"/>
-                                            <outlet property="textTopConstraint" destination="WSW-Je-TO9" id="5os-QX-BQY"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="title" id="G5k-3L-THZ" customClass="HEMTextCollectionViewCell">

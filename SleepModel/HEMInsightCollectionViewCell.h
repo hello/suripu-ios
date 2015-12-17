@@ -9,19 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "HEMCardCollectionViewCell.h"
 
+@class HEMURLImageView;
+
 extern CGFloat const HEMInsightCellMessagePadding;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMInsightCollectionViewCell : HEMCardCollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *imageContainer;
+@property (weak, nonatomic) IBOutlet HEMURLImageView *uriImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageBottomConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *previewLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 
-+ (NSAttributedString*)attributedTextForMessage:(NSString*)message;
-+ (CGFloat)contentHeightWithMessage:(NSString*)message
-                        infoPreview:(NSString*)infoPreview
++ (CGFloat)contentHeightWithMessage:(NSAttributedString*)message
                             inWidth:(CGFloat)contentWidth;
-- (void)setMessage:(NSString*)message;
-- (void)setInfoPreview:(NSString*)infoPreview;
 
 @end
+
+NS_ASSUME_NONNULL_END

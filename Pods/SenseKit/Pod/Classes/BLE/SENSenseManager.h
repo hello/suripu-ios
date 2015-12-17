@@ -126,7 +126,11 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      * If Sense responds to a command / message with a type that does not match
      * the command that was sent
      */
-    SENSenseManagerErrorCodeOutOfOrderResponse = -27
+    SENSenseManagerErrorCodeOutOfOrderResponse = -27,
+    /**
+     * If the peripheral is found, but cannot connect to Sense
+     */
+    SENSenseManagerErrorCodeCannotConnectToSense = -28
 };
 
 @interface SENSenseManager : NSObject

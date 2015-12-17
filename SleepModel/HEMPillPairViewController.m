@@ -298,7 +298,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
 
         [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
-        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
         NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
         [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
@@ -317,7 +317,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [[HEMOnboardingService sharedService] notifyOfPillPairingChange];
     
     if ([self delegate] == nil) {
-        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
         
         NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];
@@ -334,6 +334,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     if (message == nil) {
         
         switch ([error code]) {
+            case SENSenseManagerErrorCodeInvalidated:
+            case SENSenseManagerErrorCodeConnectionFailed:
+            case SENSenseManagerErrorCodeCannotConnectToSense:
+                message = NSLocalizedString(@"pairing.error.could-not-pair", nil);
+                break;
             case SENSenseManagerErrorCodeSenseAlreadyPaired:
                 message = NSLocalizedString(@"pairing.error.pill-already-paired", nil);
                 break;

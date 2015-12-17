@@ -10,30 +10,36 @@
 #import "HEMMainStoryboard.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMTellAFriendItemProvider.h"
 
 static CGFloat const HEMSettingsBottomMargin = 10.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowIndex = 0,
-    HEMSettingsDevicesRowIndex = 1,
-    HEMSettingsNotificationRowIndex = 2,
-    HEMSettingsUnitsTimeRowIndex = 3,
-    HEMSettingsAccountRows = 4,
+    HEMSettingsDevicesRowIndex,
+    HEMSettingsNotificationRowIndex,
+    HEMSettingsUnitsTimeRowIndex,
+    HEMSettingsAccountRowCount
 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsSupportRow) {
     HEMSettingsSupportRowIndex = 0,
-    HEMSettingsSupportRows = 1
+    HEMSettingsSupportRowCount
+};
+
+typedef NS_ENUM(NSUInteger, HEMSettingsTellAFriendRow) {
+    HEMSettingsTellAFriendRowIndex = 0,
+    HEMSettingsTellAFriendRowCount
 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsAccountSection = 0,
-    HEMSettingsSupportSection = 1,
-    HEMSettingsSections = 2
+    HEMSettingsSupportSection,
+    HEMSettingsTellAFriendSection,
+    HEMSettingsSectionCount
 };
 
-@interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate,
-                                              MFMailComposeViewControllerDelegate>
+@interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
 @property (weak, nonatomic) UILabel *versionLabel;
@@ -131,15 +137,17 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return HEMSettingsSections;
+    return HEMSettingsSectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case HEMSettingsAccountSection:
-            return HEMSettingsAccountRows;
+            return HEMSettingsAccountRowCount;
         case HEMSettingsSupportSection:
-            return HEMSettingsSupportRows;
+            return HEMSettingsSupportRowCount;
+        case HEMSettingsTellAFriendSection:
+            return HEMSettingsTellAFriendRowCount;
         default:
             return 0;
     }
@@ -148,6 +156,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
         case HEMSettingsSupportSection:
+        case HEMSettingsTellAFriendSection:
             return HEMSettingsSectionHeaderHeight;
         case HEMSettingsAccountSection:
         default:
@@ -188,16 +197,26 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    NSString* nextSegueId = nil;
-    if ([indexPath section] == HEMSettingsAccountSection) {
-        nextSegueId = [self segueIdentifierForRow:indexPath.row];
-    } else if ([indexPath section] == HEMSettingsSupportSection) {
-        nextSegueId = [HEMMainStoryboard settingsToSupportSegueIdentifier];
+    switch ([indexPath section]) {
+        case HEMSettingsAccountSection:
+            [self performSegueWithIdentifier:[self segueIdentifierForRow:indexPath.row]
+                                      sender:self];
+            break;
+        case HEMSettingsSupportSection:
+            [self performSegueWithIdentifier:[HEMMainStoryboard settingsToSupportSegueIdentifier]
+                                      sender:self];
+            break;
+        case HEMSettingsTellAFriendSection:
+            [self tellAFriend];
+            break;
+        default:
+            DDLogDebug(@"Unknown section %ld", (unsigned long) [indexPath section]);
+            break;
     }
-    
-    if (nextSegueId != nil) {
-        [self performSegueWithIdentifier:nextSegueId sender:self];
-    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
 }
 
 - (NSString *)segueIdentifierForRow:(NSUInteger)row {
@@ -246,17 +265,45 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
             default:
                 break;
         }
+    } else if (section == HEMSettingsTellAFriendSection) {
+        switch (row) {
+            case HEMSettingsTellAFriendRowIndex:
+                title = NSLocalizedString(@"settings.tell-a-friend", nil);
+                break;
+            default:
+                break;
+        }
     }
 
     return title;
 }
 
-#pragma mark - Mail Delegate
+#pragma mark - Tell a Friend
 
-- (void)mailComposeController:(MFMailComposeViewController *)controller
-          didFinishWithResult:(MFMailComposeResult)result
-                        error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+- (void)tellAFriend {
+    [SENAnalytics track:HEMAnalyticsEventTellAFriendTapped];
+    
+    NSString *subject = NSLocalizedString(@"settings.tell-a-friend.subject", nil);
+    NSString *body = NSLocalizedString(@"settings.tell-a-friend.body", nil);
+    HEMTellAFriendItemProvider *itemProvider = [[HEMTellAFriendItemProvider alloc] initWithSubject:subject
+                                                                                              body:body];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[itemProvider]
+                                                                                         applicationActivities:nil];
+    [activityViewController setCompletionWithItemsHandler:^(NSString *activityType,
+                                                            BOOL completed,
+                                                            NSArray *returnedItems,
+                                                            NSError *error) {
+        if (error) {
+            DDLogError(@"Could not complete share action: %@", error);
+        }
+        
+        if (completed) {
+            NSString *type = activityType ?: @"Unknown";
+            [SENAnalytics track:HEMAnalyticsEventTellAFriendCompleted
+                     properties:@{HEMAnalyticsEventTellAFriendCompletedPropType : type}];
+        }
+    }];
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark - Cleanup

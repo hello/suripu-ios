@@ -44,7 +44,7 @@ CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
 
 - (IBAction)alarmButtonTapped:(id)sender {
     HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
+    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:NO];
 }
 
 - (void)showAlarmButton:(BOOL)isVisible {

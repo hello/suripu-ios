@@ -14,3 +14,5 @@ NSInteger ddLogLevel =
 #else
     DDLogLevelError;
 #endif
+
+CGFloat const HEMConstantsContentTopMargin = 12.0f;

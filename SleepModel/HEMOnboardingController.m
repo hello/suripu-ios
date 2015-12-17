@@ -67,12 +67,18 @@
             return [self containedOnboardingController:[HEMOnboardingStoryboard instantiateSenseSetupViewController]];
         case HEMOnboardingCheckpointSenseDone:
             return [self containedOnboardingController:[HEMOnboardingStoryboard instantiatePillDescriptionViewController]];
+        case HEMOnboardingCheckpointPillFinished:
         case HEMOnboardingCheckpointPillDone:
             return [self containedOnboardingController:[HEMOnboardingStoryboard instantiateSenseColorsViewController]];
         case HEMOnboardingCheckpointSenseColorsViewed:
+        case HEMOnboardingCheckpointSenseColorsFinished:
         default:
             return nil;
     }
+}
+
+- (BOOL)wantsShadowView {
+    return NO;
 }
 
 - (void)viewDidLoad {

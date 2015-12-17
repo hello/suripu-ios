@@ -131,6 +131,10 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+}
+
 - (NSString*)titleAtIndexPath:(NSIndexPath*)indexPath {
     switch (indexPath.row) {
         case HEMNotificationRowConditionIndex:

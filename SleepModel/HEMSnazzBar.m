@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIColor+HEMStyle.h"
+
 #import "HEMSnazzBar.h"
 #import "HEMSnazzBarButton.h"
 
@@ -14,34 +16,18 @@ CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 @interface HEMSnazzBar ()
 
 @property (nonatomic, strong) UIView* indicatorView;
-@property (nonatomic, strong) UIView* bottomBorderView;
 @property (nonatomic) NSUInteger selectionIndex;
 @end
 
 @implementation HEMSnazzBar
 
 static CGFloat const HEMSnazzBarTopMargin = 20.f;
-static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
-        self.layer.shadowOffset = CGSizeMake(0, 0.5);
-        self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
-        self.layer.shadowRadius = 0;
-        self.layer.shadowOpacity = 0.85f;
-        _bottomBorderView = [UIView new];
-        _bottomBorderView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.f];
-        [self addSubview:_bottomBorderView];
-    }
-    return self;
-}
+static CGFloat const HEMSnazzBarIndicatorHeight = 1.0f;
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     [self layoutBarButtons];
-    self.bottomBorderView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - HEMSnazzBarIndicatorHeight, CGRectGetWidth(self.bounds), HEMSnazzBarIndicatorHeight);
 }
 
 - (void)layoutBarButtons

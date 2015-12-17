@@ -8,26 +8,29 @@
 
 #import <SenseKit/SENQuestion.h>
 #import <SenseKit/SENAnswer.h>
-#import <SenseKit/SENServiceQuestions.h>
 
 #import "HEMSleepQuestionsDataSource.h"
+#import "HEMQuestionsService.h"
 
 static NSString* const HEMSleepQuestionCellIdSingle = @"single";
 static NSString* const HEMSleepQuestionCellIdMulti = @"multiple";
 
 @interface HEMSleepQuestionsDataSource()
 
-@property (nonatomic, strong) NSArray* questions;
+@property (nonatomic, strong) NSMutableArray<SENQuestion*>* questions;
+@property (nonatomic, strong) HEMQuestionsService* service;
 
 @end
 
 @implementation HEMSleepQuestionsDataSource
 
-- (id)init {
+- (nonnull instancetype)initWithQuestions:(nonnull NSArray<SENQuestion *> *)questions
+                         questionsService:(nonnull HEMQuestionsService*)service {
     self = [super init];
     if (self) {
-        [self setSelectedQuestionIndex:0];
-        [self setQuestions:[[SENServiceQuestions sharedService] todaysQuestions]];
+        _selectedQuestionIndex = 0;
+        _questions = [questions mutableCopy];
+        _service = service;
     }
     return self;
 }
@@ -74,25 +77,20 @@ static NSString* const HEMSleepQuestionCellIdMulti = @"multiple";
 }
 
 - (BOOL)skipQuestion {
-    SENServiceQuestions* svc = [SENServiceQuestions sharedService];
-    [svc skipQuestion:[self selectedQuestion] completion:nil];
+    [[self service] skipQuestion:[self selectedQuestion] completion:nil];
     return [self hasMoreQuestions];
 }
 
 - (BOOL)selectAnswerAtIndexPath:(NSIndexPath*)indexPath {
-    SENServiceQuestions* svc = [SENServiceQuestions sharedService];
-    // per design, optimistically submit the answer as it's a better user experience
-    // to proceed rather than wait for something that is not very important
-    [svc submitAnswer:[self answerAtIndexPath:indexPath]
-          forQuestion:[self selectedQuestion]
-           completion:nil];
+    SENAnswer* answer = [self answerAtIndexPath:indexPath];
+    [[self service] answerSleepQuestion:[self selectedQuestion] withAnswers:@[answer] completion:nil];
+    [[self questions] removeObject:[self selectedQuestion]];
     return [self hasMoreQuestions];
 }
 
 - (BOOL)selectAnswersAtIndexPaths:(NSSet*)indexPaths {
     DDLogVerbose(@"selected %ld answers by paths", [indexPaths count]);
-    SENServiceQuestions* svc = [SENServiceQuestions sharedService];
-    NSMutableArray* answers = [NSMutableArray arrayWithCapacity:[indexPaths count]];
+    NSMutableArray<SENAnswer*>* answers = [NSMutableArray arrayWithCapacity:[indexPaths count]];
     for (NSIndexPath* path in indexPaths) {
         SENAnswer* answer = [self answerAtIndexPath:path];
         if (answer) {
@@ -104,7 +102,7 @@ static NSString* const HEMSleepQuestionCellIdMulti = @"multiple";
     DDLogVerbose(@"submitting %ld answers to question %@", [answers count], [question text]);
     // per design, optimistically submit the answer as it's a better user experience
     // to proceed rather than wait for something that is not very important
-    [svc submitAnswers:answers forQuestion:question completion:nil];
+    [[self service] answerSleepQuestion:question withAnswers:answers completion:nil];
     return [self hasMoreQuestions];
 }
 

@@ -20,41 +20,23 @@
 
 @implementation HEMUnreadAlertService
 
-+ (instancetype)sharedService {
-    static HEMUnreadAlertService* service = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        service = [[super alloc] init];
-    });
-    return service;
-}
-
 #pragma mark - Updates
 
-- (void)updateUnread:(void(^)(NSError* error))completion {
-    [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
-        if (!error && stats) {
-            [self setUnreadStats:stats];
-            DDLogVerbose(@"updated unread statuses, has unread %@", [self hasUnread] ? @"y" : @"n");
-        }
-        completion (error);
-    }];
-}
-
 - (void)update:(HEMUnreadCompletionHandler)completion {
-    [self updateUnread:^(NSError *error) {
-        BOOL hasUnread = NO;
-        if (!error) {
-            hasUnread = [self hasUnread];
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
+        if (!error && stats) {            
+            [weakSelf setUnreadStats:stats];
         }
         if (completion) {
-            completion (hasUnread, error);
+            completion ([weakSelf hasUnread], error);
         }
     }];
 }
 
 - (void)updateLastViewFor:(HEMUnreadTypes)unreadTypes
                completion:(HEMUnreadCompletionHandler)completion {
+    
     SENAppStats* stats = [SENAppStats new];
     NSDate *now = [NSDate date];
     if ((unreadTypes & HEMUnreadTypeInsights) == HEMUnreadTypeInsights) {
@@ -63,12 +45,15 @@
     if ((unreadTypes & HEMUnreadTypeQuestions) == HEMUnreadTypeQuestions) {
         [stats setLastViewedQuestions:now];
     }
+    
+    __weak typeof(self) weakSelf = self;
     [SENAPIAppStats updateStats:stats completion:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
-            [self update:completion];
+            [strongSelf update:completion];
         } else {
             if (completion) {
-                completion ([self hasUnread], error);
+                completion ([strongSelf hasUnread], error);
             }
         }
     }];

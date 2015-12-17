@@ -16,6 +16,8 @@
 #import <SenseKit/Model.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "NSBundle+HEMUtils.h"
+
 #import "HEMOnboardingService.h"
 
 // notifications
@@ -535,9 +537,12 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 - (BOOL)hasFinishedOnboarding {
     HEMOnboardingCheckpoint checkpoint = [self onboardingCheckpoint];
-    return [self isAuthorizedUser]
-        && (checkpoint == HEMOnboardingCheckpointStart // start and authorized = signed in
-        || checkpoint == HEMOnboardingCheckpointSenseColorsViewed);
+    
+    BOOL passedCheckpoints = checkpoint == HEMOnboardingCheckpointPillDone
+                                || checkpoint == HEMOnboardingCheckpointSenseColorsViewed
+                                || checkpoint == HEMOnboardingCheckpointSenseColorsFinished;
+    // if user is signed in and checkpoint is at the start, it means user signed in
+    return [self isAuthorizedUser] && (checkpoint == HEMOnboardingCheckpointStart || passedCheckpoints);
 }
 
 - (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
@@ -556,7 +561,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 - (void)markOnboardingAsComplete {
     // if you call this method, you want to leave onboarding so make sure it's set
-    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsViewed];
+    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsFinished];
     [self clearAll];
 }
 

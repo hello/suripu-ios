@@ -13,7 +13,6 @@
 @interface HEMTimeZoneViewController()
 
 @property (weak,   nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) HEMTimeZonePresenter* presenter;
 @property (strong, nonatomic) HEMTimeZoneService* service;
 
 @end
@@ -41,20 +40,13 @@
         [weakSelf dismiss];
     }];
     
-    [self setPresenter:presenter];
+    [self addPresenter:presenter];
 }
 
 #pragma mark - Actions
 
 - (void)dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Clean Up
-
-- (void)dealloc {
-    [_tableView setDelegate:nil];
-    [_tableView setDataSource:nil];
 }
 
 @end

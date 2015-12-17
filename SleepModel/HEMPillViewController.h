@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
 @class HEMPillViewController;
 
@@ -18,7 +19,7 @@
 
 @end
 
-@interface HEMPillViewController : UIViewController
+@interface HEMPillViewController : HEMBaseController
 
 @property (nonatomic, weak) id<HEMPillControllerDelegate> delegate;
 

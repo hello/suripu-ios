@@ -49,7 +49,20 @@
         SENServiceDevice* service = [SENServiceDevice sharedService];
         [service getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus *status, NSError *error) {
             if (error) {
-                [SENAnalytics trackError:error];
+                if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]) {
+                    switch ([error code]) {
+                        case SENServiceDeviceErrorSenseUnavailable:
+                        case SENServiceDeviceErrorBLEUnavailable:
+                            // ignore the above codes since these are expected
+                            // use cases that generate such codes
+                            break;
+                        default:
+                            [SENAnalytics trackError:error];
+                            break;
+                    }
+                } else {
+                    [SENAnalytics trackError:error];
+                }
             }
             completion (status);
         }];
@@ -75,6 +88,31 @@
     }];
 }
 
+- (NSString*)factoryResetMessageFromDeviceServiceError:(NSError*)error {
+    switch ([error code]) {
+        case SENServiceDeviceErrorUnlinkPillFromAccount:
+            return NSLocalizedString(@"settings.factory-restore.error.unlink-pill", nil);
+        case SENServiceDeviceErrorUnlinkSenseFromAccount:
+            return NSLocalizedString(@"settings.factory-restore.error.unlink-sense", nil);
+        case SENServiceDeviceErrorInProgress:
+            return NSLocalizedString(@"settings.sense.busy", nil);
+        case SENServiceDeviceErrorSenseUnavailable: {
+            return NSLocalizedString(@"settings.sense.no-sense-message", nil);
+        }
+        default:
+            return NSLocalizedString(@"settings.factory-restore.error.general-failure", nil);
+    }
+}
+
+- (NSString*)factoryResetMessageFromBluetoothError:(NSError*)error {
+    switch ([error code]) {
+        case SENSenseManagerErrorCodeTimeout:
+            return NSLocalizedString(@"settings.factory-restore.error.ble-timeout", nil);
+        default:
+            return NSLocalizedString(@"settings.factory-restore.error.general-ble-failure", nil);
+    }
+}
+
 - (void)factoryReset:(HEMSenseSettingsDisconnectBlock)completion {
     [self watchForBLEDisconnects];
     
@@ -88,27 +126,20 @@
                           kHEMAnalyticsEventPropSenseId : senseId ?: @"unknown",
                           kHEMAnalyticsEventPropPillId : pillId ?: @"unknown"}];
     
+    __weak typeof(self) weakSelf = self;
     [deviceService restoreFactorySettings:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         NSError* translatedError = nil;
         
         if (error) {
             [SENAnalytics trackError:error];
             
             NSString* localizedMessage = nil;
-            switch ([error code]) {
-                case SENServiceDeviceErrorUnlinkPillFromAccount:
-                    localizedMessage = NSLocalizedString(@"settings.factory-restore.error.unlink-pill", nil);
-                    break;
-                case SENServiceDeviceErrorUnlinkSenseFromAccount:
-                    localizedMessage = NSLocalizedString(@"settings.factory-restore.error.unlink-sense", nil);
-                    break;
-                case SENServiceDeviceErrorInProgress:
-                case SENServiceDeviceErrorSenseUnavailable: {
-                    localizedMessage = NSLocalizedString(@"settings.sense.no-sense-message", nil);
-                    break;
-                }
-                default:
-                    break;
+            if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]) {
+                localizedMessage = [strongSelf factoryResetMessageFromDeviceServiceError:error];
+            } else {
+                localizedMessage = [strongSelf factoryResetMessageFromBluetoothError:error];
             }
             
             NSMutableDictionary* info = [[error userInfo] mutableCopy];

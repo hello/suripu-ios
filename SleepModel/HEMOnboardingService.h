@@ -34,8 +34,12 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
     HEMOnboardingCheckpointAccountCreated = 1,
     HEMOnboardingCheckpointAccountDone = 2,
     HEMOnboardingCheckpointSenseDone = 3,
-    HEMOnboardingCheckpointPillDone = 4,
-    HEMOnboardingCheckpointSenseColorsViewed = 5
+    
+    HEMOnboardingCheckpointPillDone NS_ENUM_DEPRECATED_IOS(7_0, 9_0, "No longer set as of 1.2.0") = 4,
+    HEMOnboardingCheckpointSenseColorsViewed NS_ENUM_DEPRECATED_IOS(8_0, 9_0, "No longer set as of 1.2.0") = 5,
+    
+    HEMOnboardingCheckpointPillFinished = 6,
+    HEMOnboardingCheckpointSenseColorsFinished = 7
 };
 
 @class SENSense;

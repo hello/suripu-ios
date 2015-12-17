@@ -120,7 +120,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x494949 alpha:1.f];
 }
 + (UIColor *)backViewTextColor {
-    return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
+    return [UIColor colorWithHex:0x000000 alpha:0.5f];
 }
 + (UIColor *)backViewTintColor {
     return [UIColor whiteColor];
@@ -268,6 +268,24 @@ static UIColor *_tintColor = nil;
 }
 + (UIColor *)sensorGraphNoDataColor {
     return [UIColor colorWithHex:0x000000 alpha:0.5f];
+}
++ (UIColor *)backgroundColorForRemoteImageView {
+    return [UIColor colorWithHex:0xDFE1E6 alpha:1.0f];
+}
++ (UIColor *)insightSummaryMessageColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.5f];
+}
++ (UIColor *)insightSummaryCategoryColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.5f];
+}
++ (UIColor *)insightSummaryDateColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.5f];
+}
++ (UIColor *)insightAboutTextColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.25f];
+}
++ (UIColor *)borderColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.15f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

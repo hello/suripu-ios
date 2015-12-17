@@ -7,6 +7,7 @@
 //
 
 #import "NSAttributedString+HEMUtils.h"
+#import "NSString+HEMUtils.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 
@@ -33,11 +34,11 @@
 }
 
 - (CGSize)sizeWithWidth:(CGFloat)width {
-    CGSize rawSize = [self boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
-                                        options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin
-                                        context:nil]
-                         .size;
-    return CGSizeMake(ceilf(rawSize.width), ceilf(rawSize.height));
+    // note that attributed string's boundingRect... method is inaccurate!
+    NSString* plainText = [self string];
+    NSRange range = NSMakeRange(0, [self length]);
+    NSDictionary* attributes = [self attributesAtIndex:0 effectiveRange:&range];
+    return [plainText sizeBoundedByWidth:width attriburtes:attributes];
 }
 
 @end

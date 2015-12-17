@@ -9,7 +9,7 @@
 #import "SENAPIInsight.h"
 #import "SENInsight.h"
 
-static NSString* const kSENAPIInsightPath = @"v1/insights";
+static NSString* const SENAPIInsightPath = @"v2/insights";
 static NSString* const kSENAPIInsightErrorDomain = @"is.hello.api.insight";
 
 @implementation SENAPIInsight
@@ -48,7 +48,7 @@ static NSString* const kSENAPIInsightErrorDomain = @"is.hello.api.insight";
 + (void)getInsights:(SENAPIDataBlock)completion {
     if (!completion) return; // why do work for nothing?
     
-    [SENAPIClient GET:kSENAPIInsightPath parameters:nil completion:^(id data, NSError *error) {
+    [SENAPIClient GET:SENAPIInsightPath parameters:nil completion:^(id data, NSError *error) {
         NSArray* insights = error == nil ? [self insightsFromResponse:data] : nil;
         completion (insights, error);
     }];
@@ -63,7 +63,7 @@ static NSString* const kSENAPIInsightErrorDomain = @"is.hello.api.insight";
         return;
     }
     
-    NSString* path = [NSString stringWithFormat:@"%@/info/%@", kSENAPIInsightPath, [insight category]];
+    NSString* path = [NSString stringWithFormat:@"%@/info/%@", SENAPIInsightPath, [insight category]];
     [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
         completion ([self insightInfoFromResponse:data], error);
     }];

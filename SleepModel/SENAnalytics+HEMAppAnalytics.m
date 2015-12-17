@@ -13,7 +13,7 @@
 #import "SENAnalytics+HEMAppAnalytics.h"
 
 #import "HEMConfig.h"
-#import "HEMMixpanelProvider.h"
+#import "HEMSegmentProvider.h"
 
 // general
 NSString* const kHEMAnalyticsEventWarning = @"Warning";
@@ -36,9 +36,9 @@ NSString* const kHEMAnalyticsEventPropPassLength = @"Password length";
 static NSString* const HEMAnalyticsEventPropName = @"Name";
 
 // special mixpanel - segment mapping special properties
-static NSString* const HEMAnalyticsEventReservedPropEmail = @"$email";
-static NSString* const HEMAnalyticsEventReservedPropName = @"$name";
-static NSString* const HEMAnalyticsEventReservedPropCreated = @"$created";
+static NSString* const HEMAnalyticsEventReservedPropEmail = @"email";
+static NSString* const HEMAnalyticsEventReservedPropName = @"name";
+static NSString* const HEMAnalyticsEventReservedPropCreated = @"createdAt";
 
 // permissions
 NSString* const kHEMAnalyticsEventPermissionLoc = @"Permission Location";
@@ -133,6 +133,11 @@ NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
 NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
 
+// tell a friend
+NSString* const HEMAnalyticsEventTellAFriendTapped = @"Tell a friend tapped";
+NSString* const HEMAnalyticsEventTellAFriendCompleted = @"Tell a friend completed";
+NSString* const HEMAnalyticsEventTellAFriendCompletedPropType = @"type";
+
 // back view
 NSString* const HEMAnalyticsEventBackViewSwipe = @"Top view tab swiped"; // name required to match Android
 NSString* const HEMAnalyticsEventBackViewTapped = @"Top view tab tapped"; // name required to match Android
@@ -223,8 +228,8 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     // whatever 3rd party vendor we use for analytics, configure it here
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
     if ([analyticsToken length] > 0) {
-        DDLogVerbose(@"mixpanel analytics enabled");
-        [self addProvider:[[HEMMixpanelProvider alloc] initWithToken:analyticsToken]];
+        DDLogVerbose(@"segment analytics enabled");
+        [self addProvider:[[HEMSegmentProvider alloc] initWithWriteKey:analyticsToken]];
     }
     // logging for our own perhaps to replicate analytic events on console
     [self addProvider:[SENAnalyticsLogger new]];

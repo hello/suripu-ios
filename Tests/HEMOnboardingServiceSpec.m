@@ -75,7 +75,7 @@ describe(@"HEMOnboardingService", ^{
             it(@"should return YES if checkpoint indicates sense colors screen has been viewed", ^{
                 
                 [service stub:@selector(onboardingCheckpoint)
-                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseColorsViewed]];
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseColorsFinished]];
                 
                 BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(YES)];
@@ -90,6 +90,48 @@ describe(@"HEMOnboardingService", ^{
                 BOOL finished = [service hasFinishedOnboarding];
                 [[@(finished) should] equal:@(NO)];
                 
+            });
+            
+            it(@"should return NO if checkpoint is post sense pairing", ^{
+                
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseDone]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(NO)];
+                
+            });
+            
+            it(@"should return YES if checkpoint is pill done (for older versions)", ^{
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillDone]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(YES)];
+            });
+            
+            it(@"should return NO if checkpoint is pill finished (1.2.0 introduced)", ^{
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointPillFinished]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(NO)];
+            });
+            
+            it(@"should return YES if checkpoint is sense colors viewed (for older versions)", ^{
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseColorsViewed]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(YES)];
+            });
+            
+            it(@"should return YES if checkpoint is sense colors finished (1.2.0 introduced)", ^{
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseColorsFinished]];
+                
+                BOOL finished = [service hasFinishedOnboarding];
+                [[@(finished) should] equal:@(YES)];
             });
             
         });
@@ -166,7 +208,7 @@ describe(@"HEMOnboardingService", ^{
             
             beforeEach(^{
                 [service stub:@selector(isAuthorizedUser) andReturn:[KWValue valueWithBool:YES]];
-                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsViewed];
+                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsFinished];
             });
             
             afterEach(^{

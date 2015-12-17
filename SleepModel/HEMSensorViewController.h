@@ -1,9 +1,10 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
 @class SENSensor;
 
-@interface HEMSensorViewController : UIViewController
+@interface HEMSensorViewController : HEMBaseController
 
 @property (nonatomic, strong) SENSensor* sensor;
 @end

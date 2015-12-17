@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
 @class HEMFormViewController;
 
@@ -75,7 +76,7 @@
 
 @end
 
-@interface HEMFormViewController : UIViewController
+@interface HEMFormViewController : HEMBaseController
 
 @property (weak, nonatomic) id<HEMFormViewControllerDelegate> delegate;
 

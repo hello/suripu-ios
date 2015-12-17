@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMTrendsViewController : UIViewController
+@interface HEMTrendsViewController : HEMBaseController
 
 @end

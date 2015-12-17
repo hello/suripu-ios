@@ -403,7 +403,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
 
 - (IBAction)next:(id)sender {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsViewed];
+    [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsFinished];
     
     NSString* nextSegueId
         = [self sensorsAreReady]

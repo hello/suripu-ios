@@ -11,4 +11,4 @@
 #import "SENAnalytics+HEMAppAnalytics.h"
 
 extern NSInteger ddLogLevel;
-
+extern CGFloat const HEMConstantsContentTopMargin;

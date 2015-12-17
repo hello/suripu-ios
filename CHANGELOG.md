@@ -1,5 +1,107 @@
 # Changelog
 
+## 1.2.0.8
+
+Fixes:
+
+* Improved scroll performance in the backview
+* Fixed issue with zoomed out loading indicator not being dismissed when no timeline
+* Fixed insight text being cut off by using a different font
+* Fixed nav bar shadow
+
+## 1.2.0.7
+
+Fixes:
+
+* Unread indicator will properly be displayed if alarm shortcut is used to open
+  the timeline
+* No internet system alert will properly be displayed
+* insights detail view will not be clipped prematurely when transitioning in
+* When pairing with the pill, a proper error message is displayed when app cannot
+  connect to the Sense to start the process
+* Fixed tab icon for iPhone 6 plus
+
+## 1.2.0.6
+
+Fixes:
+
+* System alerts are shown upon change application states only
+* Timeline overlay for sleep depth is correctly bounded
+* Changed insight 'about you' 'text margin from 8 to 20px
+
+## 1.2.0.5
+
+New:
+
+* updated to insights v2 api
+* nav bar shadow and border tweaks
+
+Fixes:
+
+* unread indicator fix
+* upgrade path for onboarding checkpoint fixed, for reals.  deprecated old checkpoints
+* aspect fill insight images to make it work for 6 plus
+* fix markdown lib to fix current conditions text
+
+## 1.2.0.4
+
+New:
+
+* Insight tap gesture tutorial
+* Pill low battery alert only shown once a day
+
+Fixes:
+
+* Sense colors checkpoint will not be reached for older version users
+
+## 1.2.0.3
+
+New:
+
+* VX tweaks to transitions
+* VX tweaks to insight detail
+* VX tweaks to insights feed
+* Standardizing borders
+
+Fixes:
+
+* unread indicator will not be accidentally dismissed when using alarm shortcut
+* fixed alert text being cut off
+* fixed crasher occuring when answer questions
+* better factory reset error messages
+* better coloring of bold text in current conditions screen
+
+## 1.2.0.2
+
+New:
+
+* Parallax on insight images within the feed
+* Added transition between the insights feed to the insight details creen
+* Added force touch to home screen to set an alarm for 6s+
+* Added better host selection from debug menu
+
+Fixes:
+
+* No longer tracking errors when entering Sense settings when not nearby
+
+## 1.2.0.1
+
+New:
+
+* Updated insight detail vx
+
+## 1.2.0.0
+
+New:
+
+* New insights feed vx
+* Tell a friend settings option
+
+Fixes:
+
+* Unread indicator no longer appears on Timeline top bar when opened
+* Updated Zendesk SDK to fix issue photo attachments while keyboard is up
+
 ## 1.1.8.9
 
 Fixes:

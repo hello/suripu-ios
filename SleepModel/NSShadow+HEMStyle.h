@@ -13,6 +13,6 @@
 /**
  * @return shadow for the message container of a handholding tutorial
  */
-+ (NSShadow*)shadowForHandholdingMessage;
++ (NSShadow*)shadowForHandholdingMessage;;
 
 @end

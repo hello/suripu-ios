@@ -35,7 +35,7 @@
     [[self navigationBar] setBarTintColor:[UIColor backViewTintColor]];
     [[self navigationBar] setTranslucent:NO];
     [[self navigationBar] setClipsToBounds:NO];
-    [[self navigationBar] setShadowImage:nil];
+    [[self navigationBar] setShadowImage:[UIImage imageNamed:@"navBorder"]];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

@@ -12,8 +12,14 @@
 #import <Foundation/Foundation.h>
 #import "HEMQuestionsDataSource.h"
 
+@class SENQuestion;
+@class HEMQuestionsService;
+
 @interface HEMSleepQuestionsDataSource : NSObject <HEMQuestionsDataSource>
 
 @property (nonatomic, assign) NSInteger selectedQuestionIndex;
+
+- (nonnull instancetype)initWithQuestions:(nonnull NSArray<SENQuestion *> *)questions
+                         questionsService:(nonnull HEMQuestionsService*)service;
 
 @end

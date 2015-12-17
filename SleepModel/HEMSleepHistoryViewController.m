@@ -324,14 +324,14 @@ static NSUInteger const HEMSleepDataCapacity = 400;
                                     [self.readerDateFormatter stringFromDate:timeline.date],
                                     (long)score,
                                     SENConditionReadableValue(timeline.scoreCondition)];
-    [cell showLoadingActivity:timeline.scoreCondition == SENConditionUnknown];
+    [cell showLoadingActivity:!timeline.score];
 }
 
 - (void)fetchTimelineForResultAtRow:(NSUInteger)row
 {
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
-    if (!sleepResult.date || sleepResult.scoreCondition != SENConditionUnknown) {
+    if (!sleepResult.date || sleepResult.score) {
         [self showLoadingIndicator:NO onCellAtIndexPath:indexPath];
         return;
     }

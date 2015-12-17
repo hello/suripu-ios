@@ -186,6 +186,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         return;
     BOOL didChange = ![self.sleepResult isEqual:timeline];
     if (didChange) {
+        if (!timeline.date) {
+            timeline.date = self.sleepResult.date;
+        }
         self.sleepResult = timeline;
         [self.sleepResult save];
         [self.collectionView reloadData];

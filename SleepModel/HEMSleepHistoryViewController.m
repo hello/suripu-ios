@@ -119,7 +119,8 @@ static NSUInteger const HEMSleepDataCapacity = 400;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today
                                                      options:0];
-        [self.sleepDataSummaries addObject:[SENTimeline timelineForDate:date]];
+        SENTimeline* timeline = [SENTimeline timelineForDate:date];
+        [self.sleepDataSummaries addObject:timeline];
     }
 }
 

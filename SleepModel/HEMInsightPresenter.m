@@ -218,7 +218,7 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
         NSString* summary = [[[self insight] message] trim];
         if (summary) {
             NSDictionary* attributes = [HEMMarkdown attributesForInsightSummaryText];
-            _attributedSummary = [markdown_to_attr_string(summary, 0, attributes) trim];
+            _attributedSummary = [markdown_to_attr_string([summary trim], 0, attributes) trim];
         }
     }
     return _attributedSummary;

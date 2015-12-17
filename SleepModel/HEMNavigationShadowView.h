@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMNavigationShadowView : UIView
 
+@property (nonatomic, assign) CGFloat topOffset;
+
 - (instancetype)initWithNavigationBar:(UIView*)navBar;
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset;
 

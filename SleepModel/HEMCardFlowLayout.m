@@ -16,7 +16,6 @@
 
 @implementation HEMCardFlowLayout
 
-static CGFloat const HEMCardSectionMargin = 12.f;
 static CGFloat const HEMCardCardMargin = 12.f;
 static CGFloat const HEMCardDefaultItemHeight = 100.f;
 
@@ -37,44 +36,10 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
 - (void)configureDefaultAttributes {
     CGRect bounds = HEMKeyWindowBounds();
     self.itemSize = CGSizeMake(CGRectGetWidth(bounds) - HEMCardCardMargin * 2, HEMCardDefaultItemHeight);
-    self.sectionInset = UIEdgeInsetsMake(HEMCardSectionMargin, 0, HEMCardSectionMargin, 0);
+    self.sectionInset = UIEdgeInsetsMake(HEMConstantsContentTopMargin, 0, HEMConstantsContentTopMargin, 0);
     self.minimumInteritemSpacing = HEMCardCardMargin;
     self.minimumLineSpacing = HEMCardCardMargin;
     self.scrollDirection = UICollectionViewScrollDirectionVertical;
-}
-
-/**
- * @override 
- * layoutAttributesForElementsInRect:
- *
- * @discussion
- * If attributes are returned for an indexpath that is invalid, app will crash in
- * iOS 8.  Seems like an iOS bug?
- *
- * TODO: see if there's a better way to handle this unless it is an iOS bug since
- * the OS should really be the one handling this
- */
-- (NSArray*)layoutAttributesForElementsInRect:(CGRect)rect {
-    NSArray* attributes = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
-    NSMutableArray* updatedAttributes = [NSMutableArray arrayWithCapacity:[attributes count]];
-    NSInteger numberOfSections = [[self collectionView] numberOfSections];
-    
-    for (UICollectionViewLayoutAttributes* attribute in attributes) {
-        NSInteger section = [[attribute indexPath] section];
-        if (section < numberOfSections) {
-            NSInteger item = [[attribute indexPath] item];
-            NSInteger numberOfItems = [[self collectionView] numberOfItemsInSection:section];
-            if (item < numberOfItems) {
-                [updatedAttributes addObject:attribute];
-            }
-        }
-    }
-    
-    return updatedAttributes;
-}
-
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
-    return YES;
 }
 
 @end

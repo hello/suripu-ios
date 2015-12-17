@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0.8
+
+Fixes:
+
+* Improved scroll performance in the backview
+* Fixed issue with zoomed out loading indicator not being dismissed when no timeline
+* Fixed insight text being cut off by using a different font
+* Fixed nav bar shadow
+
 ## 1.2.0.7
 
 Fixes:

@@ -141,6 +141,9 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                     completion:^(SENTimeline *timeline, NSError *error) {
                       __strong typeof(weakSelf) strongSelf = weakSelf;
                       if (!error) {
+                          if (!timeline.date) {
+                              timeline.date = strongSelf.dateForNightOfSleep;
+                          }
                           [strongSelf refreshWithTimeline:timeline];
                           [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
                       }

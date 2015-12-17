@@ -98,7 +98,8 @@
         [self setInsightTransition:transition];
     }
     
-    CGRect relativeFrame = [cell convertRect:[cell bounds] toView:[self view]];
+    UINavigationController* nav = [self navigationController];
+    CGRect relativeFrame = [cell convertRect:[cell bounds] toView:[nav view]];
     [transition expandFrom:cell withRelativeFrame:relativeFrame];
     
     HEMInsightViewController* insightVC = (id)[HEMMainStoryboard instantiateSleepInsightViewController];

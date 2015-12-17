@@ -696,19 +696,17 @@
                                         </view>
                                         <animations/>
                                         <constraints>
+                                            <constraint firstItem="S0U-m6-ZMO" firstAttribute="top" secondItem="CNv-oE-SdB" secondAttribute="top" id="ELz-Ra-9Cx"/>
                                             <constraint firstItem="S0U-m6-ZMO" firstAttribute="leading" secondItem="CNv-oE-SdB" secondAttribute="trailing" constant="24" id="J5t-Gg-8kR"/>
-                                            <constraint firstItem="S0U-m6-ZMO" firstAttribute="top" secondItem="ipI-xW-fel" secondAttribute="topMargin" constant="12" id="WSW-Je-TO9"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="S0U-m6-ZMO" secondAttribute="bottom" constant="24" id="hNH-9Z-Yyf"/>
                                             <constraint firstItem="CNv-oE-SdB" firstAttribute="top" secondItem="ipI-xW-fel" secondAttribute="topMargin" constant="12" id="hT0-Jw-3wF"/>
+                                            <constraint firstItem="S0U-m6-ZMO" firstAttribute="bottom" secondItem="CNv-oE-SdB" secondAttribute="bottom" id="j8U-q4-qxi"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="S0U-m6-ZMO" secondAttribute="trailing" constant="16" id="pfn-d6-GZ0"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="CNv-oE-SdB" secondAttribute="bottom" constant="24" id="r02-pX-s6k"/>
                                             <constraint firstItem="CNv-oE-SdB" firstAttribute="leading" secondItem="ipI-xW-fel" secondAttribute="leadingMargin" constant="16" id="r9F-mp-iOF"/>
                                         </constraints>
                                         <size key="customSize" width="600" height="72"/>
                                         <connections>
-                                            <outlet property="textBottomConstraint" destination="hNH-9Z-Yyf" id="T0G-46-1JG"/>
                                             <outlet property="textLabel" destination="S0U-m6-ZMO" id="PpX-b1-sHw"/>
-                                            <outlet property="textTopConstraint" destination="WSW-Je-TO9" id="5os-QX-BQY"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="title" id="G5k-3L-THZ" customClass="HEMTextCollectionViewCell">
@@ -1395,7 +1393,7 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X4b-Va-8rq">
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X4b-Va-8rq">
                                 <rect key="frame" x="4" y="0.0" width="592" height="490"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1476,7 +1474,7 @@
         <!--Sense and Sleep Pill-->
         <scene sceneID="y2M-3z-OdD">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="mDw-uo-PDk" customClass="HEMDevicesViewController" sceneMemberID="viewController">
+                <viewController id="mDw-uo-PDk" customClass="HEMDevicesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lVb-av-zKx"/>
                         <viewControllerLayoutGuide type="bottom" id="Wrs-aM-ju6"/>
@@ -1486,7 +1484,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="p6A-zV-ehg">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="12" minimumInteritemSpacing="12" id="1xY-qq-QXf">
@@ -1710,7 +1708,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="p6A-zV-ehg" secondAttribute="trailing" constant="-20" id="47B-R7-G1q"/>
-                            <constraint firstItem="p6A-zV-ehg" firstAttribute="top" secondItem="lVb-av-zKx" secondAttribute="bottom" constant="-64" id="4Rt-Mq-IrE"/>
+                            <constraint firstItem="p6A-zV-ehg" firstAttribute="top" secondItem="lVb-av-zKx" secondAttribute="bottom" id="4Rt-Mq-IrE"/>
                             <constraint firstItem="Wrs-aM-ju6" firstAttribute="top" secondItem="p6A-zV-ehg" secondAttribute="bottom" id="GQs-J0-qPN"/>
                             <constraint firstItem="p6A-zV-ehg" firstAttribute="leading" secondItem="mJD-g5-7aT" secondAttribute="leadingMargin" constant="-20" id="vpl-zl-Ilo"/>
                         </constraints>
@@ -1881,7 +1879,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Qgk-DZ-cLY">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="07m-FG-yBb" customClass="HEMExtendedHeaderCollectionViewLayout">
@@ -2112,7 +2110,7 @@
                             <constraint firstItem="PY5-Oi-hgT" firstAttribute="top" secondItem="Qgk-DZ-cLY" secondAttribute="bottom" id="11C-Ni-Nwr"/>
                             <constraint firstItem="Qgk-DZ-cLY" firstAttribute="leading" secondItem="1Ml-OR-V9I" secondAttribute="leadingMargin" constant="-20" id="292-Hf-RaH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Qgk-DZ-cLY" secondAttribute="trailing" constant="-20" id="79n-fv-2Cj"/>
-                            <constraint firstItem="Qgk-DZ-cLY" firstAttribute="top" secondItem="wK7-6V-jaE" secondAttribute="bottom" constant="-64" id="DiI-On-oyk"/>
+                            <constraint firstItem="Qgk-DZ-cLY" firstAttribute="top" secondItem="wK7-6V-jaE" secondAttribute="bottom" id="DiI-On-oyk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Sense" id="7sy-8f-b6s"/>
@@ -4138,7 +4136,7 @@
         <!--Insight Feed View Controller-->
         <scene sceneID="ga7-Mh-3od">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="lfk-hy-Yjw" customClass="HEMInsightFeedViewController" sceneMemberID="viewController">
+                <viewController id="lfk-hy-Yjw" customClass="HEMInsightFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eQe-3s-OvL"/>
                         <viewControllerLayoutGuide type="bottom" id="IbA-6B-t1D"/>

@@ -31,6 +31,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[self shadowView] setHidden:NO];
     [[self presenters] makeObjectsPerformSelector:@selector(willAppear)];
 }
 
@@ -41,6 +42,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[self shadowView] setHidden:YES];
     [[self presenters] makeObjectsPerformSelector:@selector(willDisappear)];
 }
 
@@ -78,8 +80,13 @@
 
 #pragma mark - Shadows
 
+- (BOOL)wantsShadowView {
+    return YES;
+}
+
 - (HEMNavigationShadowView*)shadowView {
-    if (!_shadowView) {
+    if (!_shadowView && [self wantsShadowView]) {
+        [self setExtendedLayoutIncludesOpaqueBars:NO];
         UINavigationBar* navBar = [[self navigationController] navigationBar];
         _shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:navBar];
         [navBar addSubview:_shadowView];
@@ -160,6 +167,10 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    if (_shadowView) {
+        [_shadowView removeFromSuperview];
+    }
 }
 
 @end

@@ -48,10 +48,12 @@
     [shadowView setFrame:[self bounds]];
     [self addSubview:shadowView];
     [self setAlpha:0.0f];
+    [self setTopOffset:HEMConstantsContentTopMargin];
 }
 
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset {
-    CGFloat alpha = MAX(0.0f, MIN(1.0f, contentOffset / 10.0f));
+    CGFloat diff = MAX(0.0f, contentOffset - [self topOffset]);
+    CGFloat alpha = MAX(0.0f, MIN(1.0f, diff / 10.0f));
     [self setAlpha:alpha];
     [[self superview] bringSubviewToFront:self];
 }

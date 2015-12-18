@@ -7,10 +7,8 @@
 //
 
 #import "HEMStyledNavigationViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMScreenUtils.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 
 @interface HEMStyledNavigationViewController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
@@ -41,7 +39,7 @@
 }
 
 - (void)setBackButtonOnViewController:(UIViewController*)viewController {
-    UIImage* defaultBackImage = [HelloStyleKit backIcon];
+    UIImage* defaultBackImage = [UIImage imageNamed:@"backIcon"];
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:defaultBackImage style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     [item setTintColor:[UIColor tintColor]];
     [item setAccessibilityLabel:self.topViewController.title];

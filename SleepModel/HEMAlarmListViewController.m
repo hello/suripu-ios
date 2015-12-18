@@ -7,7 +7,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmListCell.h"
-#import "HelloStyleKit.h"
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
@@ -61,7 +60,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"alarms.title", nil);
-        self.tabBarItem.image = [HelloStyleKit alarmBarIcon];
+        self.tabBarItem.image = [UIImage imageNamed:@"alarmBarIcon"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"alarmBarIconActive"];
     }
     return self;

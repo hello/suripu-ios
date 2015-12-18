@@ -15,7 +15,6 @@
 #import "HEMTimelineFooterCollectionReusableView.h"
 #import "HEMSleepScoreGraphView.h"
 #import "NSAttributedString+HEMUtils.h"
-#import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMTimelineFeedbackViewController.h"
@@ -587,36 +586,36 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 - (UIImage *)imageForEventType:(SENTimelineSegmentType)eventType {
     switch (eventType) {
         case SENTimelineSegmentTypeAlarmRang:
-            return [HelloStyleKit alarmEventIcon];
+            return [UIImage imageNamed:@"alarmEventIcon"];
         case SENTimelineSegmentTypeFellAsleep:
-            return [HelloStyleKit sleepEventIcon];
+            return [UIImage imageNamed:@"sleepEventIcon"];
         case SENTimelineSegmentTypeGenericMotion:
-            return [HelloStyleKit motionEventIcon];
+            return [UIImage imageNamed:@"motionEventIcon"];
         case SENTimelineSegmentTypeGotInBed:
-            return [HelloStyleKit inBedEventIcon];
+            return [UIImage imageNamed:@"inBedEventIcon"];
         case SENTimelineSegmentTypeGotOutOfBed:
-            return [HelloStyleKit outOfBedEventIcon];
+            return [UIImage imageNamed:@"outOfBedEventIcon"];
         case SENTimelineSegmentTypeLight:
-            return [HelloStyleKit lightEventIcon];
+            return [UIImage imageNamed:@"lightEventIcon"];
         case SENTimelineSegmentTypeLightsOut:
-            return [HelloStyleKit lightsOutEventIcon];
+            return [UIImage imageNamed:@"lightsOutEventIcon"];
         case SENTimelineSegmentTypePartnerMotion:
-            return [HelloStyleKit partnerEventIcon];
+            return [UIImage imageNamed:@"partnerEventIcon"];
         case SENTimelineSegmentTypeSunrise:
-            return [HelloStyleKit sunriseEventIcon];
+            return [UIImage imageNamed:@"sunriseEventIcon"];
         case SENTimelineSegmentTypeSunset:
-            return [HelloStyleKit sunsetEventIcon];
+            return [UIImage imageNamed:@"sunsetEventIcon"];
         case SENTimelineSegmentTypeWokeUp:
-            return [HelloStyleKit wakeupEventIcon];
+            return [UIImage imageNamed:@"wakeupEventIcon"];
 
         case SENTimelineSegmentTypeSleepTalked:
         case SENTimelineSegmentTypeSnored:
         case SENTimelineSegmentTypeGenericSound:
-            return [HelloStyleKit noiseEventIcon];
+            return [UIImage imageNamed:@"noiseEventIcon"];
         case SENTimelineSegmentTypeInBed:
         case SENTimelineSegmentTypeUnknown:
         default:
-            return [HelloStyleKit unknownEventIcon];
+            return [UIImage imageNamed:@"unknownEventIcon"];
     }
 }
 

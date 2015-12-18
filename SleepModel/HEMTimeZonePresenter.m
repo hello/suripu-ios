@@ -16,7 +16,6 @@
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMBaseController+Protected.h"
-#import "HelloStyleKit.h"
 #import "HEMSettingsHeaderFooterView.h"
 
 typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
@@ -128,7 +127,7 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
                                                          title:NSLocalizedString(@"timezone.error.title", nil)];
                 }];
             } else {
-                UIImage* successIcon = [HelloStyleKit check];
+                UIImage* successIcon = [UIImage imageNamed:@"check"];
                 NSString* successText = NSLocalizedString(@"status.success", nil);
                 
                 [[activityView indicator] setHidden:YES];

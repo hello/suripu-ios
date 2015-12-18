@@ -9,7 +9,6 @@
 
 #import "HEMInsightTabPresenter.h"
 #import "HEMUnreadAlertService.h"
-#import "HelloStyleKit.h"
 
 @interface HEMInsightTabPresenter()
 
@@ -30,7 +29,7 @@
 
 - (void)bindWithTabBarItem:(nonnull UITabBarItem*)tabBarItem {
     tabBarItem.title = NSLocalizedString(@"insights.title", nil);
-    tabBarItem.image = [HelloStyleKit senseBarIcon];
+    tabBarItem.image = [UIImage imageNamed:@"senseBarIcon"];
     tabBarItem.selectedImage = [UIImage imageNamed:@"senseBarIconActive"];
     [self setTabBarItem:tabBarItem];
     [self updateTabBarItemUnreadIndicator];

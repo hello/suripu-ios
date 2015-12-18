@@ -9,7 +9,6 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMAlarmPropertyTableViewCell.h"
-#import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 #import "HEMAlertViewController.h"
@@ -126,7 +125,10 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
         [cell.loadingIndicatorView startAnimating];
     } else { [cell.loadingIndicatorView stopAnimating]; }
     if (isSelected && !isLoading) {
-        UIImage *image = [self.player isPlaying] ? [HelloStyleKit miniStopButton] : [HelloStyleKit miniPlayButton];
+        UIImage *image
+            = [self.player isPlaying]
+            ? [UIImage imageNamed:@"miniStopButton"]
+            : [UIImage imageNamed:@"miniPlayButton"];
         [cell.playStopButton setImage:image forState:UIControlStateNormal];
         cell.playStopButton.hidden = NO;
     } else { cell.playStopButton.hidden = YES; }
@@ -212,7 +214,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
         if (strongSelf.player) {
             strongSelf.player.volume = 1.0f;
             [strongSelf.player play];
-            [strongSelf updatePlayButtonWithImage:[HelloStyleKit miniStopButton]];
+            [strongSelf updatePlayButtonWithImage:[UIImage imageNamed:@"miniStopButton"]];
         } else {
             strongSelf.loadingIndexPath = [NSIndexPath indexPathForRow:[strongSelf selectedSoundIndex]
                                                              inSection:0];
@@ -225,7 +227,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
 - (void)stopAudio {
     [self.player stop];
     self.player.currentTime = 0;
-    [self updatePlayButtonWithImage:[HelloStyleKit miniPlayButton]];
+    [self updatePlayButtonWithImage:[UIImage imageNamed:@"miniPlayButton"]];
 }
 
 - (void)updatePlayButtonWithImage:(UIImage *)image {

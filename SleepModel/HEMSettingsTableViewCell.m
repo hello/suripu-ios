@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
+
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMathUtil.h"
-#import "HelloStyleKit.h"
 
 CGFloat const HEMSettingsCellTableMargin = 16.0f;
 
@@ -120,7 +119,7 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
 - (void)showShadow:(BOOL)isVisible {
     CALayer *layer = [self.layer.sublayers firstObject];
     if (isVisible) {
-        NSShadow *shadow = [HelloStyleKit backViewCardShadow];
+        NSShadow *shadow = [NSShadow shadowForBackViewCards];
         layer.shadowOffset = shadow.shadowOffset;
         layer.shadowOpacity = 1.f;
         layer.shadowRadius = shadow.shadowBlurRadius;

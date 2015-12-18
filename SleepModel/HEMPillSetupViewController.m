@@ -9,14 +9,12 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 #import "HEMPillSetupViewController.h"
+#import "HEMStyle.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HelloStyleKit.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMVideoCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
@@ -64,7 +62,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 }
 
 - (void)configureButtonContainerShadow {
-    NSShadow* shadow = [HelloStyleKit buttonContainerShadow];
+    NSShadow* shadow = [NSShadow shadowForButtonContainer];
     CALayer* containerLayer = [[self buttonContainer] layer];
     [containerLayer setShadowColor:[[shadow shadowColor] CGColor]];
     [containerLayer setShadowOffset:[shadow shadowOffset]];

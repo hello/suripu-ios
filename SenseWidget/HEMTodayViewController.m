@@ -15,7 +15,7 @@
 
 #import "HEMTodayViewController.h"
 #import "HEMTodayTableViewCell.h"
-#import "HelloStyleKit.h"
+#import "HEMStyle.h"
 
 static NSString* const HEMAPIPlistKey = @"SenseApiUrl";
 static NSString* const HEMClientIdPlistKey = @"SenseClientId";
@@ -192,10 +192,8 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 - (UIColor *)colorForSensor:(SENSensor *)sensor {
     switch ([sensor condition]) {
         case SENConditionAlert:
-            return [HelloStyleKit alertSensorColor];
         case SENConditionWarning:
-            return [HelloStyleKit warningSensorColor];
-
+            return [UIColor colorForCondition:[sensor condition]];
         default:
             return [UIColor whiteColor];
     }

@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "HEMCardCollectionViewCell.h"
-#import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
+#import "NSShadow+HEMStyle.h"
+
+#import "HEMCardCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
 
 @interface HEMCardCollectionViewCell()
@@ -29,7 +30,7 @@
 
 - (void)awakeFromNib
 {
-    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
+    NSShadow* shadow = [NSShadow shadowForBackViewCards];
 
     self.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor whiteColor];

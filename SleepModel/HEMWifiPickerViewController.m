@@ -13,7 +13,6 @@
 #import "HEMWifiPickerViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMWiFiDataSource.h"
-#import "HelloStyleKit.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
@@ -132,7 +131,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 #pragma mark - UITableViewDelegate
 
 - (UIView*)wifiAccessoryView {
-    UIImage* lockIcon = [HelloStyleKit lockIcon];
+    UIImage* lockIcon = [UIImage imageNamed:@"lockIcon"];
     UIImage* wifiIcon = [HEMWifiUtils wifiIconForRssi:-1]; // make sure to use a strong signal icon to start
     
     CGRect lockFrame = CGRectZero;

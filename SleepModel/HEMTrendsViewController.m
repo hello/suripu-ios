@@ -10,7 +10,6 @@
 #import <SenseKit/SENTrend.h>
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMTrendsViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTrendCollectionViewCell.h"
 #import "HEMEmptyTrendCollectionViewCell.h"
@@ -50,7 +49,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (id)initWithCoder:(NSCoder*)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
         self.tabBarItem.title = NSLocalizedString(@"trends.title", nil);
-        self.tabBarItem.image = [HelloStyleKit trendsBarIcon];
+        self.tabBarItem.image = [UIImage imageNamed:@"trendsBarIcon"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"trendsBarIconActive"];
     }
     return self;

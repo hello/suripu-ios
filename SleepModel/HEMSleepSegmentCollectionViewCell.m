@@ -1,9 +1,7 @@
 
 #import "HEMSleepSegmentCollectionViewCell.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
-#import "HelloStyleKit.h"
 
 CGFloat const HEMLinedCollectionViewCellLineOffset = 65.f;
 CGFloat const HEMLinedCollectionViewCellLineWidth = 2.f;
@@ -138,7 +136,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     [self.preFillColor setFill];
     CGContextFillRect(ctx, preRect);
 
-    CGGradientRef gradient = [HelloStyleKit timelineBarGradient].CGGradient;
+    CGGradientRef gradient = [[HEMGradient gradientForTimelineSleepSegment] gradientRef];
     CGContextSaveGState(ctx);
     CGContextAddRect(ctx, fillRect);
     CGContextClip(ctx);

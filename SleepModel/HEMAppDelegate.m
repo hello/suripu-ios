@@ -1,15 +1,13 @@
 #import <SenseKit/SenseKit.h>
 
-#import "UIFont+HEMStyle.h"
-
 #import "HEMAppDelegate.h"
+#import "HEMStyle.h"
 #import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMCurrentConditionsViewController.h"
 #import "HEMAlarmListViewController.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSnazzBarController.h"
@@ -236,7 +234,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     }];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{
         NSFontAttributeName : [UIFont navButtonTitleFont],
-        NSForegroundColorAttributeName : [HelloStyleKit tintColor]
+        NSForegroundColorAttributeName : [UIColor tintColor]
     } forState:UIControlStateNormal];
 }
 

@@ -22,7 +22,6 @@
 #import "HEMUnreadAlertService.h"
 #import "HEMQuestionCell.h"
 #import "HEMInsightCollectionViewCell.h"
-#import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMMarkdown.h"
 #import "HEMURLImageView.h"

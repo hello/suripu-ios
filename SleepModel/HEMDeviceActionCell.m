@@ -10,7 +10,6 @@
 
 #import "HEMDeviceActionCell.h"
 #import "HEMActivityIndicatorView.h"
-#import "HelloStyleKit.h"
 #import "HEMAnimationUtils.h"
 
 CGFloat const HEMDeviceActionCellHeight = 56.0f;

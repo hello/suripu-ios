@@ -31,7 +31,6 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMAppUsage.h"
-#import "HelloStyleKit.h"
 #import "HEMAudioSession.h"
 #import "HEMSupportUtil.h"
 #import "HEMTappableView.h"
@@ -279,11 +278,11 @@ static BOOL hasLoadedBefore = NO;
         if ([self.audioPlayer isPlaying]) {
             [self.playbackProgressTimer invalidate];
             [self.audioPlayer pause];
-            [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
+            [self.playingButton setImage:[UIImage imageNamed:@"playSound"] forState:UIControlStateNormal];
         } else {
             [self.audioPlayer play];
             [self monitorPlaybackProgress];
-            [self.playingButton setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+            [self.playingButton setImage:[UIImage imageNamed:@"pauseSound"] forState:UIControlStateNormal];
         }
     } else {
         [self clearPlayerState];
@@ -312,7 +311,7 @@ static BOOL hasLoadedBefore = NO;
           return;
       [strongSelf.audioPlayer play];
       [strongSelf monitorPlaybackProgress];
-      [button setImage:[HelloStyleKit pauseSound] forState:UIControlStateNormal];
+      [button setImage:[UIImage imageNamed:@"pauseSound"] forState:UIControlStateNormal];
       strongSelf.playingButton = button;
     });
 }
@@ -346,7 +345,7 @@ static BOOL hasLoadedBefore = NO;
     self.playingIndexPath = nil;
     [self.playbackProgressTimer invalidate];
     self.playbackProgressTimer = nil;
-    [self.playingButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
+    [self.playingButton setImage:[UIImage imageNamed:@"playSound"] forState:UIControlStateNormal];
     self.playingButton = nil;
     self.audioPlayer = nil;
 }
@@ -883,22 +882,22 @@ static BOOL hasLoadedBefore = NO;
     } else if (justOnboarded) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
-        self.errorImageView.image = [HelloStyleKit timelineJustSleepIcon];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineJustSleepIcon"];
     } else if (error) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
-        self.errorImageView.image = [HelloStyleKit timelineErrorIcon];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineErrorIcon"];
     } else if (self.dataSource.sleepResult.scoreCondition == SENConditionUnknown) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.none.message", nil);
-        self.errorImageView.image = [HelloStyleKit timelineNoDataIcon];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineNoDataIcon"];
         [self.errorSupportButton setTitle:NSLocalizedString(@"sleep-data.not-enough.contact-support", nil)
                                  forState:UIControlStateNormal];
         self.errorSupportButton.hidden = NO;
     } else {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.not-enough.message", nil);
-        self.errorImageView.image = [HelloStyleKit timelineNotEnoughDataIcon];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineNotEnoughDataIcon"];
         [self.errorSupportButton setTitle:NSLocalizedString(@"sleep-data.not-enough.contact-support", nil)
                                  forState:UIControlStateNormal];
         self.errorSupportButton.hidden = NO;

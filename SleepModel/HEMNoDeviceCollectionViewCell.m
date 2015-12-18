@@ -7,7 +7,6 @@
 //
 
 #import "HEMNoDeviceCollectionViewCell.h"
-#import "HelloStyleKit.h"
 #import "HEMActionButton.h"
 #import "UIColor+HEMStyle.h"
 

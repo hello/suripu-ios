@@ -5,7 +5,6 @@
 #import "HEMCurrentConditionsViewController.h"
 #import "HEMSensorViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
 #import "HEMSensorGraphCollectionViewCell.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
@@ -45,7 +44,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
-        self.tabBarItem.image = [HelloStyleKit sensorsBarIcon];
+        self.tabBarItem.image = [UIImage imageNamed:@"sensorsBarIcon"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"sensorsBarIconActive"];
     }
     return self;

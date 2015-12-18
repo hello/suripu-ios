@@ -10,7 +10,6 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMEventAdjustConfirmationView.h"
-#import "HelloStyleKit.h"
 
 static CGFloat const HEMAdjustConfirmIconSize = 40.0f;
 static CGFloat const HEMAdjustConfirmVertPadding = 25.0f;
@@ -51,7 +50,7 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 }
 
 - (void)addIcon {
-    UIImage* confirmIcon = [HelloStyleKit check];
+    UIImage* confirmIcon = [UIImage imageNamed:@"check"];
     
     CGFloat bWidth = CGRectGetWidth([self bounds]);
     CGRect confirmIconViewFrame = CGRectZero;

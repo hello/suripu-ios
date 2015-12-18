@@ -9,7 +9,6 @@
 
 #import "HEMSensorViewController.h"
 #import "HEMLineGraphDataSource.h"
-#import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"

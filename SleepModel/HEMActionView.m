@@ -5,11 +5,11 @@
 //  Created by Jimmy Lu on 12/1/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
-#import "HEMActionView.h"
-#import "HelloStyleKit.h"
+#import "NSShadow+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+
+#import "HEMActionView.h"
 #import "HEMScreenUtils.h"
 
 static CGFloat const HEMActionViewHorzPadding = 30.0f;
@@ -75,7 +75,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     
     [self setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.97f]];
     
-    NSShadow* shadow = [HelloStyleKit actionViewShadow];
+    NSShadow* shadow = [NSShadow shadowForActionView];
     [[self layer] setShadowColor:[[shadow shadowColor] CGColor]];
     [[self layer] setShadowOffset:[shadow shadowOffset]];
     [[self layer] setShadowRadius:[shadow shadowBlurRadius]];

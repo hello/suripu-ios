@@ -20,7 +20,6 @@
 #import "HEMDeviceDataSource.h"
 #import "HEMNoDeviceCollectionViewCell.h"
 #import "HEMDeviceCollectionViewCell.h"
-#import "HelloStyleKit.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTextFooterCollectionReusableView.h"

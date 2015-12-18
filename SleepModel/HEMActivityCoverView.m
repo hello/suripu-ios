@@ -8,7 +8,6 @@
 #import "HEMActivityCoverView.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
-#import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAnimationUtils.h"
 #import "HEMMathUtil.h"
@@ -67,7 +66,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 }
 
 - (void)addActivityIndicator {
-    UIImage* checkImage = [HelloStyleKit check];
+    UIImage* checkImage = [UIImage imageNamed:@"check"];
     CGRect indicatorFrame = CGRectZero;
     indicatorFrame.size = checkImage.size;
     
@@ -107,7 +106,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 - (UIView*)successMarkView {
     if (_successMarkView == nil) {
         UIImageView* mark = [[UIImageView alloc] initWithFrame:[[self indicator] frame]];
-        [mark setImage:[HelloStyleKit check]];
+        [mark setImage:[UIImage imageNamed:@"check"]];
         [mark setContentMode:UIViewContentModeScaleAspectFit];
         _successMarkView = mark;
     }

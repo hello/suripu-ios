@@ -7,7 +7,6 @@
 //
 
 #import "HEMActivityIndicatorView.h"
-#import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMMathUtil.h"
 
@@ -34,13 +33,13 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 }
 
 - (id)initWithFrame:(CGRect)frame {
-    return [self initWithImage:[HelloStyleKit loading] andFrame:frame];
+    return [self initWithImage:[UIImage imageNamed:@"loading"] andFrame:frame];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        _indicatorImage = [HelloStyleKit loading];
+        _indicatorImage = [UIImage imageNamed:@"loading"];
         [self setup];
     }
     return self;

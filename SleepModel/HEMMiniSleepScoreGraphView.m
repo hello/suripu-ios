@@ -1,6 +1,5 @@
 
 #import "HEMMiniSleepScoreGraphView.h"
-#import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 #import "NSString+HEMUtils.h"
 

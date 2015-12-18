@@ -9,11 +9,8 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
-#import "NSShadow+HEMStyle.h"
-
 #import "HEMPillSetupViewController.h"
+#import "HEMStyle.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMBaseController+Protected.h"

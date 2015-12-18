@@ -5,11 +5,9 @@
 //  Created by Jimmy Lu on 12/1/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import "NSShadow+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 
 #import "HEMActionView.h"
+#import "HEMStyle.h"
 #import "HEMScreenUtils.h"
 
 static CGFloat const HEMActionViewHorzPadding = 30.0f;

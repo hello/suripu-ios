@@ -6,9 +6,7 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
-#import "NSShadow+HEMStyle.h"
+#import "HEMStyle.h"
 
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMathUtil.h"

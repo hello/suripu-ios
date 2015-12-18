@@ -1,9 +1,7 @@
 #import <SenseKit/SenseKit.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
-
 #import "HEMAppDelegate.h"
+#import "HEMStyle.h"
 #import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"

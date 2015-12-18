@@ -8,8 +8,7 @@
 
 #import "HEMStyledNavigationViewController.h"
 #import "HEMScreenUtils.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 
 @interface HEMStyledNavigationViewController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 

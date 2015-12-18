@@ -229,6 +229,34 @@ describe(@"HEMInsightsService", ^{
         
     });
     
+    describe(@"-isGenericInsight:", ^{
+        
+        it(@"should return YES if category is GENERIC", ^{
+            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"GENERIC"}];
+            BOOL generic = [service isGenericInsight:insight];
+            [[@(generic) should] beYes];
+        });
+        
+        it(@"should return YES if category is SLEEP_DURATION", ^{
+            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"SLEEP_DURATION"}];
+            BOOL generic = [service isGenericInsight:insight];
+            [[@(generic) should] beYes];
+        });
+        
+        it(@"should return YES if category is sleep_hygiene, lower case", ^{
+            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"sleep_hygiene"}];
+            BOOL generic = [service isGenericInsight:insight];
+            [[@(generic) should] beYes];
+        });
+        
+        it(@"should return NO if category is not one of the generic categories", ^{
+            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"not_generic"}];
+            BOOL generic = [service isGenericInsight:insight];
+            [[@(generic) should] beNo];
+        });
+        
+    });
+    
 });
 
 SPEC_END

@@ -14,8 +14,6 @@ static NSString* const SENInsightInfoPreviewKey = @"info_preview";
 static NSString* const SENInsightMultiDensityImage = @"image";
 static NSString* const SENInsightCategoryName = @"category_name";
 
-static NSString* const SENInsightCategoryGeneric = @"GENERIC";
-
 @implementation SENInsight
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict
@@ -63,10 +61,6 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
     if (self.infoPreview) [aCoder encodeObject:self.infoPreview forKey:SENInsightInfoPreviewKey];
     if (self.remoteImage) [aCoder encodeObject:self.remoteImage forKey:SENInsightMultiDensityImage];
     if (self.categoryName) [aCoder encodeObject:self.categoryName forKey:SENInsightCategoryName];
-}
-
-- (BOOL)isGeneric {
-    return [[self category] isEqualToString:SENInsightCategoryGeneric];
 }
 
 - (BOOL)isEqual:(SENInsight*)other

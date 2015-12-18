@@ -32,6 +32,13 @@ typedef void(^HEMInsightHandler)(SENInsightInfo* _Nullable insight, NSError* _Nu
  */
 - (void)getInsightForSummary:(SENInsight*)insight completion:(HEMInsightHandler)completion;
 
+/**
+ * @param insight: the insight to check if it's a generic insight that is not
+ *                 personalized to the user
+ * @retutn YES if it's generic, NO otherwise
+ */
+- (BOOL)isGenericInsight:(SENInsight*)insight;
+
 @end
 
 NS_ASSUME_NONNULL_END

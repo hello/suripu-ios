@@ -12,20 +12,17 @@
 
 static NSPredicate* emailPredicate;
 
-+ (void)initialize
-{
++ (void)initialize {
     NSString* regex = @"^.+@.+\\..+$";
     emailPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
 }
 
-- (BOOL)isValidEmail
-{
+- (BOOL)isValidEmail {
     if ([self length] == 0) return NO;
     return [emailPredicate evaluateWithObject:self];
 }
 
-- (NSString*)trim
-{
+- (NSString*)trim {
     NSCharacterSet* spaces = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     return [self stringByTrimmingCharactersInSet:spaces];
 }

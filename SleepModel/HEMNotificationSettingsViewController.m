@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
-#import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENPreference.h>
 
 #import "UIColor+HEMStyle.h"
@@ -15,6 +14,7 @@
 #import "HEMNotificationSettingsViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSettingsHeaderFooterView.h"
+#import "HEMAccountService.h"
 
 typedef NS_ENUM(NSUInteger, HEMNotificationRow) {
     HEMNotificationRowConditionIndex = 0,
@@ -47,7 +47,8 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 
 - (void)reload {
     __weak typeof(self) weakSelf = self;
-    [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
+    HEMAccountService* service = [HEMAccountService sharedService];
+    [service refresh:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
         [weakSelf.tableView reloadData];
     }];
 }
@@ -56,10 +57,12 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     BOOL isOn = [sender isOn];
     NSUInteger row = sender.tag - HEMNotificationTagOffset;
     SENPreference* preference = [self preferenceAtIndex:row];
-    if (!preference)
+    if (!preference) {
         return;
-    [preference setEnabled:isOn];
-    [[SENServiceAccount sharedService] updatePreference:preference completion:^(NSError *error) {
+    }
+    
+    HEMAccountService* service = [HEMAccountService sharedService];
+    [service enablePreference:isOn forType:[preference type] completion:^(NSError * _Nullable error) {
         if (error) {
             sender.on = !isOn;
         }
@@ -85,9 +88,8 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 
 #pragma mark - UITableViewDataSource
 
-- (SENPreference*)preferenceAtIndex:(NSUInteger)row
-{
-    SENServiceAccount* service = [SENServiceAccount sharedService];
+- (SENPreference*)preferenceAtIndex:(NSUInteger)row {
+    HEMAccountService* service = [HEMAccountService sharedService];
     SENPreferenceType type = [self preferenceTypeAtIndex:row];
     return [[service preferences] objectForKey:@(type)];
 }

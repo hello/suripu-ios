@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENAnalyticsLogger.h>
 
@@ -256,11 +255,11 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
                                      HEMAnalyticsEventPropName : [account name] ?: @""}];
 }
 
-+ (void)trackUserSession:(nonnull SENAccount*)account {
++ (void)trackUserSession:(nullable SENAccount*)account {
     [self trackUserSession:account properties:nil];
 }
 
-+ (void)trackUserSession:(nonnull SENAccount *)account
++ (void)trackUserSession:(nullable SENAccount *)account
               properties:(nullable NSDictionary<NSString*, NSString*>*)properties {
     
     if (account) {

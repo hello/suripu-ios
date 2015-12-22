@@ -1,6 +1,5 @@
 
 #import <SenseKit/SenseKit.h>
-#import <SenseKit/SENServiceAccount.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
@@ -36,6 +35,7 @@
 #import "HEMTappableView.h"
 #import "HEMScreenUtils.h"
 #import "HEMOnboardingService.h"
+#import "HEMAccountService.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -869,7 +869,10 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)updateLayoutWithError:(NSError *)error {
     BOOL hasTimelineData = [self.dataSource hasTimelineData];
-    SENAccount* account = [[SENServiceAccount sharedService] account] ?: [[HEMOnboardingService sharedService] currentAccount];
+
+    HEMAccountService* accountService = [HEMAccountService sharedService];
+    HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
+    SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
     NSDate *accountCreationDate = [account createdAt];
     BOOL justOnboarded = accountCreationDate
                          && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;

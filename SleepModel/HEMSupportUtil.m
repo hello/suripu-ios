@@ -11,14 +11,13 @@
 
 #import <SVWebViewController/SVModalWebViewController.h>
 
-#import <SenseKit/SENServiceAccount.h>
-
 #import "UIFont+HEMStyle.h"
 
 #import "HEMSupportUtil.h"
 #import "HEMAlertViewController.h"
 #import "HEMLogUtils.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMAccountService.h"
 
 static NSString* const HEMSupportContactEmail = @"beta-logs@hello.is";
 static NSString* const HEMSupportContactSubject = @"App Support Request";
@@ -47,7 +46,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString* osVersion = [device systemVersion];
     NSString* deviceModel = [self deviceModel]; // this is used over UIDevice as it gives the model number
-    NSString* accountEmail = [[[SENServiceAccount sharedService] account] email];
+    NSString* accountEmail = [[[HEMAccountService sharedService] account] email];
     
     if (accountEmail) {
         return [NSString stringWithFormat:@"\n\n\n\n\n-----------------\n%@ v%@\nAccount %@\n%@\nOS %@",

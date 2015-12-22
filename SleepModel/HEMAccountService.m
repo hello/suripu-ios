@@ -391,7 +391,11 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
                  forType:(SENPreferenceType)type
               completion:(HEMAccountUpdateHandler)completion {
     SENPreference* preference = [[self preferences] objectForKey:@(type)];
-    [preference setEnabled:enable];
+    if (!preference) {
+        preference = [[SENPreference alloc] initWithType:type enable:enable];
+    } else {
+        [preference setEnabled:enable];
+    }
     
     // optimistically update the preference locally
     [preference saveLocally];

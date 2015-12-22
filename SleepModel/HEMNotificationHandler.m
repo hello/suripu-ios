@@ -1,10 +1,11 @@
 
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENPreference.h>
+
 #import "HEMNotificationHandler.h"
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
+#import "HEMAccountService.h"
 
 @implementation HEMNotificationHandler
 
@@ -37,10 +38,10 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
 {
     if (![SENAuthorizationService isAuthorized])
         return;
-    [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-        if (error)
+    [[HEMAccountService sharedService] refresh:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
+        if (!preferences) {
             return;
-        NSDictionary* preferences = [[SENServiceAccount sharedService] preferences];
+        }
         SENPreference* pushConditions = preferences[@(SENPreferenceTypePushConditions)];
         SENPreference* pushScore = preferences[@(SENPreferenceTypePushScore)];
         if ([pushConditions isEnabled] || [pushScore isEnabled]) {

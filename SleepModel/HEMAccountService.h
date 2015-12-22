@@ -36,12 +36,13 @@ typedef NS_ENUM(NSInteger, HEMAccountServiceError) {
     HEMAccountServiceErrorNoAccount = -11
 };
 
-typedef void(^HEMAccountHandler)(SENAccount* account, NSDictionary<NSNumber*, SENPreference*>* preferences);
+typedef void(^HEMAccountHandler)(SENAccount* _Nullable account, NSDictionary<NSNumber*, SENPreference*>* _Nullable preferences);
 typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
 
 @interface HEMAccountService : SENService
 
 @property (nonatomic, strong, readonly, nullable) SENAccount* account;
+@property (nonatomic, strong, readonly, nullable) NSDictionary* preferences;;
 
 + (instancetype)sharedService;
 

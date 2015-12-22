@@ -11,6 +11,7 @@
 #import "HEMRulerView.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMMathUtil.h"
+#import "HEMAccountUpdateDelegate.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
 
@@ -148,8 +149,10 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 #pragma mark - Actions
 
 - (IBAction)done:(id)sender {
-    if ([self delegate] != nil) {
-        [[self delegate] didSelectHeightInCentimeters:[self selectedHeightInCm] from:self];
+    if ([self delegate]) {
+        SENAccount* tempAccount = [SENAccount new];
+        [tempAccount setHeight:@([self selectedHeightInCm])];
+        [[self delegate] update:tempAccount];
     } else {
         SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
         [account setHeight:@([self selectedHeightInCm])];
@@ -159,8 +162,8 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 }
 
 - (IBAction)skip:(id)sender {
-    if ([self delegate] != nil) {
-        [[self delegate] didCancelHeightFrom:self];
+    if ([self delegate]) {
+        [[self delegate] cancel];
     } else {
         [self next];
     }

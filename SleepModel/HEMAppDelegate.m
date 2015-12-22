@@ -18,6 +18,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSegmentProvider.h"
 #import "HEMDebugController.h"
+#import "HEMAccountService.h"
 
 @implementation HEMAppDelegate
 
@@ -128,10 +129,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     if (signedIn && finishedOnboarding) {
         // pre fetch account information so that it's readily availble to the user
         // when the account is accessed.  This is per discussion with design and James
-        SENServiceAccount* acctService = [SENServiceAccount sharedService];
-        [acctService refreshAccount:^(NSError *error) {
-            // even if there is an error, we want to track the user session
-            SENAccount* account = [acctService account];
+        HEMAccountService* acctService = [HEMAccountService sharedService];
+        [acctService refresh:^(SENAccount * _Nonnull account, NSDictionary<NSNumber *,SENPreference *> * _Nonnull preferences) {
             [SENAnalytics trackUserSession:account];
         }];
         // write timeline data in to Health app, if enabled and data is available

@@ -76,6 +76,7 @@
 +(id)instantiateAlarmViewController;
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
++(id)instantiateFormViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightFeedViewController;

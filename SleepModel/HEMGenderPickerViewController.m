@@ -9,6 +9,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMAccountUpdateDelegate.h"
 
 @interface HEMGenderPickerViewController ()
 
@@ -41,7 +42,7 @@
 - (void)configureButtons {
     [self stylePrimaryButton:[self doneButton]
              secondaryButton:[self skipButton]
-                withDelegate:[self delegate] != nil];
+                withDelegate:[self delegate]];
     
     [self enableBackButton:NO];
 }
@@ -125,8 +126,10 @@
 }
 
 - (IBAction)done:(id)sender {
-    if ([self delegate] != nil) {
-        [[self delegate] didSelectGender:[self selectedGender] from:self];
+    if ([self delegate]) {
+        SENAccount* tempAccount = [SENAccount new];
+        [tempAccount setGender:[self selectedGender]];
+        [[self delegate] update:tempAccount];
     } else {
         SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
         [account setGender:[self selectedGender]];
@@ -135,8 +138,8 @@
 }
 
 - (IBAction)skip:(id)sender {
-    if ([self delegate] != nil) {
-        [[self delegate] didCancelGenderFrom:self];
+    if ([self delegate]) {
+        [[self delegate] cancel];
     } else {
         [self next];
     }

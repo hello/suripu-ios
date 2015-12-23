@@ -15,7 +15,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSenseRequiredCollectionViewCell.h"
-#import "HEMBounceModalTransition.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 #import "NSString+HEMUtils.h"
@@ -42,7 +42,7 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, getter=isWaitingForRefreshData) BOOL waitingForRefreshData;
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
-@property (nonatomic, strong) HEMBounceModalTransition *alarmSaveTransitionDelegate;
+@property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @end
 
@@ -68,8 +68,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.alarmSaveTransitionDelegate = [HEMBounceModalTransition new];
-    self.alarmSaveTransitionDelegate.message = NSLocalizedString(@"actions.saved", nil);
+    self.alarmSaveTransitionDelegate = [HEMSimpleModalTransitionDelegate new];
+    self.alarmSaveTransitionDelegate.wantsStatusBar = YES;
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];

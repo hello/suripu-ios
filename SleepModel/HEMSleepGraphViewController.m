@@ -6,7 +6,6 @@
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMAudioCache.h"
-#import "HEMBounceModalTransition.h"
 #import "HEMBreakdownViewController.h"
 #import "HEMEventAdjustConfirmationView.h"
 #import "HEMEventBubbleView.h"
@@ -47,7 +46,6 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
-@property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
@@ -210,9 +208,6 @@ static BOOL hasLoadedBefore = NO;
 - (void)configureTransitions {
     self.zoomAnimationDelegate = [HEMZoomAnimationTransitionDelegate new];
     self.transitioningDelegate = self.zoomAnimationDelegate;
-
-    self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
-    self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
 }
 
 - (void)handleAuthorization {

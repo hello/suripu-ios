@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.1.1
+
+New:
+
+* Refactored modal transitions so they reuse code
+* Timeline top bar is now 56pt
+* Play sound in the welcome video even if device is muted
+
+Fixes:
+
+* Fix the sticky separator in account settings
+* Fix small image flash in the last intro screen when swiping past it
+* Fix timeline top bar being shown after coming back from time zone list
+
 ## 1.2.1.0
 
 New:

@@ -14,8 +14,6 @@
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMInsightViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSinkModalTransition.h"
-#import "HEMBounceModalTransition.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAppReview.h"
 #import "HEMSleepQuestionsDataSource.h"
@@ -29,6 +27,7 @@
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMURLImageView.h"
 #import "HEMRootViewController.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -130,8 +129,8 @@
     [qVC setDataSource:dataSource];
     
     if (![self questionsTransition]) {
-        HEMBounceModalTransition* transition = [[HEMBounceModalTransition alloc] init];
-        [transition setMessage:NSLocalizedString(@"sleep.questions.end.message", nil)];
+        HEMSimpleModalTransitionDelegate* transition = [[HEMSimpleModalTransitionDelegate alloc] init];
+        [transition setDismissMessage:NSLocalizedString(@"sleep.questions.end.message", nil)];
         [self setQuestionsTransition:transition];
     }
     

@@ -6,16 +6,21 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "HEMModalTransitionDelegate.h"
+#import "HEMSimpleModalTransitionDelegate.h"
+#import "HEMActivityCoverView.h"
+#import "HEMActivityIndicatorView.h"
 
-@interface HEMModalTransitionDelegate()
+static CGFloat HEMSimpleModalDismissViewEndScale = 0.7f;
+static CGFloat HEMSimpleModalDismissMessageEndDelay = 0.8f;
+
+@interface HEMSimpleModalTransitionDelegate()
 
 @property (nonatomic, assign) UIWindowLevel originalWindowLevel;
 @property (nonatomic, assign) BOOL previouslyShowingStatusBar;
 
 @end
 
-@implementation HEMModalTransitionDelegate
+@implementation HEMSimpleModalTransitionDelegate
 
 - (void)animatePresentationWithContext:(id<UIViewControllerContextTransitioning>)context {
     UIView* containerView = [context containerView];
@@ -106,18 +111,58 @@
                                 to:(UIViewController*)toController completion:(void(^)(void))completion {
     
     UIView* fromView = [fromViewController view];
-    CGRect updateFrame = [fromView frame];
-    updateFrame.origin.y = CGRectGetHeight([containerView bounds]);
+    
+    __weak typeof(self) weakSelf = self;
+    void(^dismiss)(void) = ^{
+        CGRect updateFrame = [fromView frame];
+        updateFrame.origin.y = CGRectGetHeight([containerView bounds]);
+        
+        [UIView animateWithDuration:[weakSelf duration]
+                         animations:^{
+                             [fromView setFrame:updateFrame];
+                             [[weakSelf dimmingViewWithContext:context] setAlpha:0.0f];
+                         }
+                         completion:^(BOOL finished) {
+                             [fromView removeFromSuperview];
+                             [context completeTransition:finished];
+                             completion ();
+                         }];
+    };
+    
+    if ([self dismissMessage]) {
+        [self showEndMessageIn:fromView completion:dismiss];
+    } else {
+        dismiss ();
+    }
+
+}
+
+- (void)showEndMessageIn:(UIView*)fromView completion:(void(^)(void))completion {
+    UIView* whiteBg = [[UIView alloc] initWithFrame:[fromView bounds]];
+    [whiteBg setBackgroundColor:[UIColor whiteColor]];
+    
+    UIView* snapshot = [fromView snapshotViewAfterScreenUpdates:NO];
+    
+    [whiteBg addSubview:snapshot];
+    [fromView addSubview:whiteBg];
     
     [UIView animateWithDuration:[self duration]
                      animations:^{
-                         [fromView setFrame:updateFrame];
-                         [[self dimmingViewWithContext:context] setAlpha:0.0f];
+                         CGFloat scale = HEMSimpleModalDismissViewEndScale;
+                         [[snapshot layer] setTransform:CATransform3DMakeScale(scale, scale, scale)];
+                         [[snapshot layer] setOpacity:0.0f];
                      }
                      completion:^(BOOL finished) {
-                         [fromView removeFromSuperview];
-                         [context completeTransition:finished];
-                         completion ();
+                         HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] initWithFrame:[whiteBg bounds]];
+                         [[activityView activityLabel] setText:[self dismissMessage]];
+                         [[activityView indicator] setHidden:YES];
+                         [whiteBg addSubview:activityView];
+                         
+                         [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                             int64_t delayInSeconds = (int64_t) (HEMSimpleModalDismissMessageEndDelay * NSEC_PER_SEC);
+                             dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds);
+                             dispatch_after(delay, dispatch_get_main_queue(), completion);
+                         }];
                      }];
 }
 

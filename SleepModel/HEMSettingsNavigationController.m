@@ -91,7 +91,8 @@
 
 - (BOOL)shouldShowDrawerPane {
     NSInteger const HEMNavMaximumControllersVisible = 1;
-    return self.viewControllers.count <= HEMNavMaximumControllersVisible;
+    BOOL isBeingPresentedModally = self.presentingViewController.presentedViewController == self;
+    return !isBeingPresentedModally && self.viewControllers.count <= HEMNavMaximumControllersVisible;
 }
 
 - (void)updatePaneVisibilityAnimated:(BOOL)animated {

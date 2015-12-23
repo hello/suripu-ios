@@ -12,7 +12,6 @@
 #import "HEMClockPickerView.h"
 #import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
-#import "HEMBounceModalTransition.h"
 #import "HEMActivityCoverView.h"
 
 NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSuccessNotification";

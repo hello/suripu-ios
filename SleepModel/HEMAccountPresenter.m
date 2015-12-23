@@ -31,7 +31,6 @@ typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
     HEMAccountSectionDemographics,
     HEMAccountSectionPreferences,
-    HEMAccountSectionEnhancedAudioNote,
     HEMAccountSectionSignOut,
     HEMAccountSectionCount
 };
@@ -57,11 +56,6 @@ typedef NS_ENUM(NSInteger, HEMPreferencesRow) {
     HEMPreferencesRowCount
 };
 
-typedef NS_ENUM(NSInteger, HEMEnhancedAudioRow) {
-    HEMEnhancedAudioRowNote = 0,
-    HEMEnhancedAudioRowCount
-};
-
 typedef NS_ENUM(NSInteger, HEMSignOutRow) {
     HEMSignOutRowButton = 0,
     HEMSignOutRowCount
@@ -75,6 +69,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 @property (nonatomic, weak) HEMAccountService* accountService;
 @property (nonatomic, weak) SENServiceHealthKit* healthKitService;
 @property (nonatomic, weak) UITableView* tableView;
+@property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
 
 @end
 
@@ -100,6 +95,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
+    [tableView setSectionFooterHeight:0.0f];
     
     [self setTableView:tableView];
     [self refresh];
@@ -226,8 +222,14 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     }
 }
 
-- (NSString*)enhancedAudioNote {
-    return NSLocalizedString(@"settings.enhanced-audio.desc", nil);
+- (NSAttributedString*)enhancedAudioNote {
+    if (!_enhancedAudioNote) {
+        NSString* note = NSLocalizedString(@"settings.enhanced-audio.desc", nil);
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsHelpFont],
+                                     NSForegroundColorAttributeName : [UIColor settingsCellTitleTextColor]};
+        _enhancedAudioNote = [[NSAttributedString alloc] initWithString:note attributes:attributes];
+    }
+    return _enhancedAudioNote;
 }
 
 - (void)signOutIcon:(UIImage**)icon title:(NSString**)title {
@@ -298,31 +300,32 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 #pragma mark - UITableViewDataSource / Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch ([indexPath section]) {
-        case HEMAccountSectionEnhancedAudioNote:
-            return HEMAccountTableCellEnhancedAudioNoteHeight;
-        default:
-            return HEMAccountTableCellBaseHeight;
-    }
+    return HEMAccountTableCellBaseHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
         case HEMAccountSectionAccount:
             return 0.0f;
-        case HEMAccountSectionEnhancedAudioNote:
-            return HEMSettingsHeaderFooterBorderHeight;
         default:
             return HEMSettingsHeaderFooterHeight;
     }
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    BOOL top = section != HEMAccountSectionSignOut;
-    BOOL bottom = section != HEMAccountSectionEnhancedAudioNote;
-    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:top bottomBorder:bottom];
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return section == HEMAccountSectionPreferences ? HEMAccountTableCellEnhancedAudioNoteHeight : 0.0f;
 }
 
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    HEMSettingsHeaderFooterView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    [footer setAttributedTitle:[self enhancedAudioNote]];
+    return footer;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    BOOL top = section != HEMAccountSectionSignOut;
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:top bottomBorder:YES];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return HEMAccountSectionCount;
@@ -336,8 +339,6 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
             return HEMDemographicsRowCount;
         case HEMAccountSectionPreferences:
             return HEMPreferencesRowCount;
-        case HEMAccountSectionEnhancedAudioNote:
-            return HEMEnhancedAudioRowCount;
         case HEMAccountSectionSignOut:
             return HEMSignOutRowCount;
         default:
@@ -352,9 +353,6 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     switch ([indexPath section]) {
         case HEMAccountSectionPreferences:
             reuseId = [HEMMainStoryboard preferenceReuseIdentifier];
-            break;
-        case HEMAccountSectionEnhancedAudioNote:
-            reuseId = [HEMMainStoryboard explanationReuseIdentifier];
             break;
         case HEMAccountSectionSignOut:
             reuseId = [HEMMainStoryboard signoutReuseIdentifier];
@@ -401,10 +399,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [cell setAccessoryView:control];
             break;
         }
-        case HEMAccountSectionEnhancedAudioNote:
-            title = [self enhancedAudioNote];
-            [[cell textLabel] setFont:[UIFont settingsHelpFont]];
-            break;
         case HEMAccountSectionSignOut:
             [self signOutIcon:&icon title:&title];
             [[cell textLabel] setTextColor:[UIColor redColor]];

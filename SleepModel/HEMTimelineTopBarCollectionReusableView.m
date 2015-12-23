@@ -12,8 +12,8 @@
 #import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMCenterTitleDrawerClosedTop = 20.f;
-static CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
-static CGFloat const HEMDrawerButtonOpenTop = 4.0f;
+static CGFloat const HEMCenterTitleDrawerOpenTop = 15.f;
+static CGFloat const HEMDrawerButtonOpenTop = 9.0f;
 static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 
 @interface HEMTimelineTopBarCollectionReusableView ()

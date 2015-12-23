@@ -24,7 +24,6 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMainStoryboard.h"
-#import "HEMBounceModalTransition.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,

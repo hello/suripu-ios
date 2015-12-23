@@ -63,24 +63,30 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 }
 
 - (void)setTitle:(NSString*)title {
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsSectionHeaderFont],
+                                 NSForegroundColorAttributeName : [UIColor settingsSectionHeaderTextColor]};
+    NSAttributedString* attrTitle = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    [self setAttributedTitle:attrTitle];
+}
+
+- (void)setAttributedTitle:(NSAttributedString*)attributedTitle {
     if (![self titleLabel]) {
         UILabel* label = [UILabel new];
-        [label setFont:[UIFont settingsSectionHeaderFont]];
-        [label setTextColor:[UIColor settingsSectionHeaderTextColor]];
+        [label setNumberOfLines:0];
         [label setBackgroundColor:[UIColor clearColor]];
         
         [self addSubview:label];
         [self setTitleLabel:label];
     }
     
-    [[self titleLabel] setText:title];
+    [[self titleLabel] setAttributedText:attributedTitle];
 }
 
 - (void)layoutSubviews {
     if ([self titleLabel]) {
         CGRect frame = [[self titleLabel] frame];
         frame.size.width = CGRectGetWidth([self bounds]) - (2 * HEMSettingsHeaderFooterTitleMargins);
-        frame.size.height = HEMSettingsHeaderFooterHeightWithTitle;
+        frame.size.height = CGRectGetHeight([self bounds]);
         frame.origin.x = HEMSettingsHeaderFooterTitleMargins;
         [[self titleLabel] setFrame:frame];
         

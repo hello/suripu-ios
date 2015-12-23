@@ -16,6 +16,7 @@
 #import "HEMAlarmTableViewCell.h"
 #import "HEMClockPickerView.h"
 #import "HEMTutorial.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 
 typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
     HEMAlarmTableIndexSmart = 0,
@@ -118,10 +119,17 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
 #pragma mark - Actions
 
 - (void)dismiss:(BOOL)saved {
-    if (!saved) {
-        self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-        self.navigationController.transitioningDelegate = nil;
+    id transition = self.navigationController.transitioningDelegate;
+    if ([transition isKindOfClass:[HEMSimpleModalTransitionDelegate class]]) {
+        HEMSimpleModalTransitionDelegate* modalTransition = transition;
+        if (!saved) {
+            modalTransition.dismissMessage = nil;
+        } else {
+            modalTransition.dismissMessage = NSLocalizedString(@"actions.saved", nil);
+        }
+        
     }
+
     if (self.delegate) {
         if (saved) {
             [self.delegate didSaveAlarm:self.alarm from:self];

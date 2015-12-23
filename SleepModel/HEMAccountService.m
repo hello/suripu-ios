@@ -400,18 +400,13 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
     // optimistically update the preference locally
     [preference saveLocally];
     __weak typeof(self) weakSelf = self;
-    [SENAPIPreferences updatePreferencesWithCompletion:^(id data, NSError *error) {
+    [SENAPIPreferences updatePreferencesWithCompletion:^(NSDictionary* data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
         if (error) {
             [SENAnalytics trackError:error];
         } else {
-            NSMutableDictionary* updatedPref = [[strongSelf preferences] mutableCopy];
-            if (updatedPref) {
-                updatedPref = [NSMutableDictionary dictionary];
-            }
-            [updatedPref setObject:preference forKey:@([preference type])];
-            [strongSelf setPreferences:updatedPref];
+            [strongSelf setPreferences:data];
         }
         
         if (completion) {

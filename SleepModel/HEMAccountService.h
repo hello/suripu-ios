@@ -42,7 +42,7 @@ typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
 @interface HEMAccountService : SENService
 
 @property (nonatomic, strong, readonly, nullable) SENAccount* account;
-@property (nonatomic, strong, readonly, nullable) NSDictionary* preferences;;
+@property (nonatomic, strong, readonly, nullable) NSDictionary* preferences;
 
 + (instancetype)sharedService;
 

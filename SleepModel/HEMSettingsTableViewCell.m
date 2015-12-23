@@ -14,7 +14,7 @@
 CGFloat const HEMSettingsCellTableMargin = 16.0f;
 
 static CGFloat const HEMSettingsCellCornerRadius = 2.0f;
-static CGFloat const HEMSettingsCellSeparatorSize = 1.0f;
+static CGFloat const HEMSettingsCellSeparatorSize = 0.5f;
 static CGFloat const HEMSettingsCellMargins = 12.0f;
 
 @interface HEMSettingsTableViewCell ()
@@ -68,18 +68,21 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
 }
 
 - (void)addSeparator {
-    if ([self separator] != nil)
-        return;
-
-    CGFloat x = [self separatorIndentation];
-    CGRect separatorFrame
-        = { x, CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize,
-            CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x, HEMSettingsCellSeparatorSize };
-    UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
-    [separator setBackgroundColor:[UIColor separatorColor]];
-    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
-    [self setSeparator:separator];
-    [[self contentView] addSubview:separator];
+    if (![self separator]) {
+        CGFloat x = [self separatorIndentation];
+        CGRect separatorFrame = CGRectZero;
+        separatorFrame.origin.x = x;
+        separatorFrame.origin.y = CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize;
+        separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
+        separatorFrame.size.height = HEMSettingsCellSeparatorSize;
+        UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
+        [separator setBackgroundColor:[UIColor separatorColor]];
+        [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
+        [self setSeparator:separator];
+        [[self contentView] addSubview:separator];
+    }
+    
+    [[self separator] setBackgroundColor:[UIColor separatorColor]];
 }
 
 - (void)prepareForReuse {

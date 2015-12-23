@@ -12,8 +12,8 @@
 
 @interface HEMFormViewController () <HEMFormDelegate>
 
-@property (weak,   nonatomic) IBOutlet UITableView *formTableview;
-@property (weak,   nonatomic) IBOutlet UIBarButtonItem *saveButtonItem;
+@property (weak, nonatomic) IBOutlet UITableView *formTableview;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButtonItem;
 
 @end
 

@@ -69,7 +69,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 
 CGFloat const HEMRootDrawerDefaultGravityMagnitude = 2.5;
 CGFloat const HEMRootDrawerAnimationGravityMagnitude = 1.f;
-static CGFloat const HEMRootDrawerRevealHeight = 46.f;
+static CGFloat const HEMRootDrawerRevealHeight = 56.f;
 static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 + (instancetype)rootViewControllerForKeyWindow

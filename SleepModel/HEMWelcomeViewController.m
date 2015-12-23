@@ -289,7 +289,8 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
             [[self introImageView] setAlpha:pagePercentage];
             
         } else if (nextPage >= HEMWelcomeIntroPageSmartAlarm
-                   && nextPage <= HEMWelcomeIntroPageMeetCurrentConditions) {
+                   && nextPage <= HEMWelcomeIntroPageMeetCurrentConditions
+                   && prevPage <= HEMWelcomeIntroPageMeetCurrentConditions) {
             
             [self crossFadeIntroImageWithPagePercentage:pagePercentage
                                             forNextPage:nextPage

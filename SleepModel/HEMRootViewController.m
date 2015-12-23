@@ -42,7 +42,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMTimeZoneViewController.h"
 #import "HEMTimeZoneAlertService.h"
-#import "HEMBounceModalTransition.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -193,7 +193,9 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 - (void)presentViewController:(UIViewController *)controller from:(HEMSystemAlertPresenter *)presenter {
     if ([controller isKindOfClass:[HEMTimeZoneViewController class]]) {
-        [self setTzViewControllerTransition:[HEMBounceModalTransition new]]; // must hold a ref to it since controller ref is weak
+        HEMSimpleModalTransitionDelegate* transition = [HEMSimpleModalTransitionDelegate new];
+        [transition setWantsStatusBar:YES];
+        [self setTzViewControllerTransition:transition]; // must hold a ref to it since controller ref is weak
         [controller setTransitioningDelegate:[self tzViewControllerTransition]];
         [controller setModalPresentationStyle:UIModalPresentationCustom];
     }

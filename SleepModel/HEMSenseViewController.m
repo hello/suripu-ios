@@ -28,7 +28,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMTimeZoneViewController.h"
-#import "HEMBounceModalTransition.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMDeviceActionCell.h"
 #import "HEMSenseSettingsDataSource+HEMCollectionView.h"
@@ -40,7 +40,7 @@
 
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
-@property (strong, nonatomic) HEMBounceModalTransition* modalTransitionDelegate;
+@property (strong, nonatomic) HEMSimpleModalTransitionDelegate* modalTransitionDelegate;
 @property (strong, nonatomic) HEMSenseSettingsDataSource* dataSource;
 
 
@@ -449,7 +449,9 @@
         UIViewController* root = [nav topViewController];
         // only apply the transition to timezone
         if ([root isKindOfClass:[HEMTimeZoneViewController class]]) {
-            [self setModalTransitionDelegate:[[HEMBounceModalTransition alloc] init]];
+            HEMSimpleModalTransitionDelegate* transition = [HEMSimpleModalTransitionDelegate new];
+            [transition setWantsStatusBar:YES];
+            [self setModalTransitionDelegate:transition];
             [nav setTransitioningDelegate:[self modalTransitionDelegate]];
             [nav setModalPresentationStyle:UIModalPresentationCustom];
         }

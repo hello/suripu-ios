@@ -17,7 +17,7 @@
 #import "HEMIntroDescriptionView.h"
 #import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
-#import "HEMModalTransitionDelegate.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMAudioSession.h"
 
 typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
@@ -49,7 +49,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 @property (assign, nonatomic) CGFloat origLogInTrailingConstraintConstant;
 @property (weak, nonatomic) UIImageView* currentIntroImageView;
 @property (weak, nonatomic) UIImageView* nextIntroImageView;
-@property (strong, nonatomic) HEMModalTransitionDelegate* transitionDelegate;
+@property (strong, nonatomic) HEMSimpleModalTransitionDelegate* transitionDelegate;
 
 @end
 
@@ -324,7 +324,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if (![self transitionDelegate]) {
-        HEMModalTransitionDelegate* delegate = [HEMModalTransitionDelegate new];
+        HEMSimpleModalTransitionDelegate* delegate = [HEMSimpleModalTransitionDelegate new];
         [delegate setWantsStatusBar:YES];
         [self setTransitionDelegate:delegate];
     }

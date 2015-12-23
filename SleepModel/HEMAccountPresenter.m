@@ -226,8 +226,8 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     }
 }
 
-- (NSString*)enhancedAudioNoteTitle {
-    return NSLocalizedString(@"settings.account.enhanced-audio", nil);
+- (NSString*)enhancedAudioNote {
+    return NSLocalizedString(@"settings.enhanced-audio.desc", nil);
 }
 
 - (void)signOutIcon:(UIImage**)icon title:(NSString**)title {
@@ -402,7 +402,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
         }
         case HEMAccountSectionEnhancedAudioNote:
-            title = [self enhancedAudioNoteTitle];
+            title = [self enhancedAudioNote];
             [[cell textLabel] setFont:[UIFont settingsHelpFont]];
             break;
         case HEMAccountSectionSignOut:

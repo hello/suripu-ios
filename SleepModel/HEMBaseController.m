@@ -88,8 +88,10 @@
     if (!_shadowView && [self wantsShadowView]) {
         [self setExtendedLayoutIncludesOpaqueBars:NO];
         UINavigationBar* navBar = [[self navigationController] navigationBar];
-        _shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:navBar];
-        [navBar addSubview:_shadowView];
+        if (navBar) {
+            _shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:navBar];
+            [navBar addSubview:_shadowView];
+        }
     }
     return _shadowView;
 }

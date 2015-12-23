@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.1.0
+
+New:
+
+* Account settings refactored with the VSPER architecture
+* Removed dependency to PaintCode
+* Generic Insights will not show the About you section in the detail screen
+
+Fixes:
+
+* Account settings flashes the scroll bar when needed
+* Removed 1pt border around alerts
+* Send ISO dates as local time when requesting questions (temporary)
+
 ## 1.2.0.8
 
 Fixes:

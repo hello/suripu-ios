@@ -3,7 +3,6 @@
 #import "SENAPIRoom.h"
 #import "SENSensor.h"
 #import "SENPreference.h"
-#import "SENServiceAccount.h"
 
 @implementation SENAPIRoom
 

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENPreference.h>
-#import <SenseKit/SENServiceAccount.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -15,6 +14,7 @@
 #import "HEMUnitPreferenceViewController.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAccountService.h"
 
 typedef NS_ENUM(NSInteger, HEMUnitSection) {
     HEMUnitSectionTime = 0,
@@ -69,8 +69,7 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
 }
 
 - (void)updatePreference:(SENPreferenceType)type withValue:(BOOL)isEnabled {
-    SENPreference* preference = [[SENPreference alloc] initWithType:type enable:isEnabled];
-    [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
+    [[HEMAccountService sharedService] enablePreference:isEnabled forType:type completion:nil];
 }
 
 #pragma mark - UITableViewDelegate / DataSource

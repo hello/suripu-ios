@@ -3,6 +3,7 @@
 #import "HEMOnboardingController.h"
 
 @class HEMHeightPickerViewController;
+@class HEMAccountUpdateDelegate;
 
 @protocol HEMHeightPickerDelegate <NSObject>
 
@@ -15,7 +16,6 @@
 @interface HEMHeightPickerViewController : HEMOnboardingController
 
 @property (assign, nonatomic) NSNumber* heightInCm;
-
-@property (weak, nonatomic) id<HEMHeightPickerDelegate> delegate;
+@property (strong, nonatomic) HEMAccountUpdateDelegate* delegate;
 
 @end

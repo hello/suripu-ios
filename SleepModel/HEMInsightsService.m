@@ -12,6 +12,10 @@
 
 #import "HEMInsightsService.h"
 
+static NSString* const HEMInsightsServiceCategoryGeneric = @"GENERIC";
+static NSString* const HEMInsightsServiceCategorySleepDuration = @"SLEEP_DURATION";
+static NSString* const HEMInsightsServiceCategorySleepHygiene = @"SLEEP_HYGIENE";
+
 @implementation HEMInsightsService
 
 - (void)getListOfInsightSummaries:(nonnull HEMInsightSummariesHandler)completion {
@@ -30,6 +34,13 @@
         }
         completion (data, error);
     }];
+}
+
+- (BOOL)isGenericInsight:(SENInsight*)insight {
+    NSString* category = [[insight category] uppercaseString];
+    return [category isEqualToString:HEMInsightsServiceCategoryGeneric]
+        || [category isEqualToString:HEMInsightsServiceCategorySleepDuration]
+        || [category isEqualToString:HEMInsightsServiceCategorySleepHygiene];
 }
 
 @end

@@ -18,6 +18,7 @@
 #import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
 #import "HEMModalTransitionDelegate.h"
+#import "HEMAudioSession.h"
 
 typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomePageMeetSense = 0,
@@ -56,6 +57,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    HEMInitializeAudioSession();
     [self configureAppearance];
 }
 
@@ -192,11 +194,18 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 #pragma mark - Actions
 
 - (void)playVideo:(UIButton*)videoButton {
-    NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
-    MPMoviePlayerViewController* videoPlayer
-        = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
-    [self presentMoviePlayerViewControllerAnimated:videoPlayer];
-    [SENAnalytics track:kHEMAnalyticsEventVideo];
+    __weak typeof(self) weakSelf = self;
+    HEMActivateAudioSession(YES, ^(NSError *error) {
+        // play regardless of error
+        NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
+        MPMoviePlayerViewController* videoPlayer
+            = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
+        [weakSelf presentMoviePlayerViewControllerAnimated:videoPlayer];
+        [SENAnalytics track:kHEMAnalyticsEventVideo];
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+    });
 }
 
 // log in and sign up actions are done through segues in the storyboard

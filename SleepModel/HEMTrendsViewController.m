@@ -30,7 +30,6 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, weak) IBOutlet HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, strong) NSMutableArray* defaultTrends;
-@property (nonatomic, getter=isWaitingForRefreshData) BOOL waitingForRefreshData;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @end
 
@@ -62,7 +61,6 @@ static NSString* const HEMAllScopeType = @"ALL";
     CGSize size = layout.itemSize;
     size.height = HEMTrendsViewCellHeight;
     layout.itemSize = size;
-    self.waitingForRefreshData = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -96,7 +94,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (void)refreshData {
     if ([self isLoading])
         return;
-    self.loading = YES;
+    self.loading = !self.defaultTrends;
     
     __weak typeof(self) weakSelf = self;
     [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError* error) {
@@ -119,6 +117,10 @@ static NSString* const HEMAllScopeType = @"ALL";
 #pragma mark - Properties
 
 - (void)setLoading:(BOOL)loading {
+    if (_loading == loading) {
+        return;
+    }
+    
     _loading = loading;
     
     if (loading) {
@@ -128,8 +130,7 @@ static NSString* const HEMAllScopeType = @"ALL";
         [self.loadingIndicator stop];
         self.loadingIndicator.hidden = YES;
     }
-    
-    self.waitingForRefreshData = NO;
+
     [self.collectionView reloadData];
 }
 
@@ -216,7 +217,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([self isLoading] || [self isWaitingForRefreshData]) {
+    if ([self isLoading]) {
         return LoadingStateRowCount;
     } else if (self.defaultTrends.count > 0) {
         return self.defaultTrends.count;

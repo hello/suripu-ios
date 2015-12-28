@@ -40,7 +40,6 @@ NS_ENUM(NSUInteger) {
 @property (strong, nonatomic) NSDateFormatter *hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, getter=isLoading) BOOL loading;
-@property (nonatomic, getter=isWaitingForRefreshData) BOOL waitingForRefreshData;
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
 @property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
@@ -73,7 +72,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];
-    self.waitingForRefreshData = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -124,13 +122,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)refreshData {
     if ([self isLoading])
         return;
-    self.loading = YES;
     self.addButton.enabled = NO;
     self.noSense = NO;
     SENServiceDevice *service = [SENServiceDevice sharedService];
     if ([service isInfoLoaded]) {
         [self checkDeviceInfoForSenseAndRefresh];
     } else {
+        self.loading = YES;
         [service loadDeviceInfo:^(NSError *error) {
           if (error) {
               self.noSense = NO;
@@ -148,6 +146,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     SENServiceDevice *service = [SENServiceDevice sharedService];
     BOOL hasSense = [[service devices] hasPairedSense];
     if (hasSense) {
+        self.loading = YES;
         self.noSense = NO;
         [self refreshAlarmList];
     } else {
@@ -162,6 +161,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (void)refreshAlarmList {
+    self.loading = !self.alarms; // only show indicator if there's no alarms at all
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self
                                               completion:^(NSError *error) {
                                                 if (error) {
@@ -210,6 +210,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
 #pragma mark - Properties
 
 - (void)setLoading:(BOOL)loading {
+    if (_loading == loading) {
+        return;
+    }
+    
     _loading = loading;
     
     if (loading) {
@@ -220,7 +224,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
         self.loadingIndicator.hidden = YES;
     }
     
-    self.waitingForRefreshData = NO;
     [self.collectionView reloadData];
 }
 
@@ -348,7 +351,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 #pragma mark UICollectionViewDatasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([self isLoading] || [self isWaitingForRefreshData]) {
+    if ([self isLoading]) {
         return LoadingStateRowCount;
     } else if (self.alarms.count > 0) {
         return self.alarms.count;

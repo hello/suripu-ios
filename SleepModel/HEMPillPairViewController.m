@@ -303,7 +303,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil) style:HEMAlertViewButtonStyleBlueText action:nil];
-    [dialogVC setViewToShowThrough:[[self navigationController] view]];
+    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [dialogVC showFrom:self];
 }
 

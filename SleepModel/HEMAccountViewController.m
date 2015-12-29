@@ -70,8 +70,7 @@
                                                      defaultsToYes:YES
                                                             action:action];
     
-    UIView* seeThrough = [[HEMRootViewController rootViewControllerForKeyWindow] view];
-    [dialogVC setViewToShowThrough:seeThrough];
+    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [dialogVC showFrom:self];
 }
 

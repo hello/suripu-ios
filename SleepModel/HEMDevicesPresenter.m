@@ -22,6 +22,7 @@
 #import "HEMNoDeviceCollectionViewCell.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMMainStoryboard.h"
+#import "HEMTutorial.h"
 
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 static CGFloat const HEMDeviceSectionMargin = 15.0f;
@@ -355,6 +356,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     [[cell property1ValueLabel] setTextColor:property1ValueColor];
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
+    [[cell property2InfoButton] setHidden:YES];
 }
 
 - (void)updateCellForPill:(HEMDeviceCollectionViewCell*)cell {
@@ -391,6 +393,10 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     [[cell property1ValueLabel] setTextColor:property1ValueColor];
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
+    [[cell property2InfoButton] setHidden:NO];
+    [[cell property2InfoButton] addTarget:self
+                                   action:@selector(showPillColorTutorial)
+                         forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -422,6 +428,12 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self didScrollContentIn:scrollView];
+}
+
+#pragma mark - Actions
+
+- (void)showPillColorTutorial {
+    [HEMTutorial showTutorialForPillColor];
 }
 
 #pragma mark - HEMTextFooterDelegate

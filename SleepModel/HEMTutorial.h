@@ -71,7 +71,10 @@
  */
 + (void)showTutorialForSensorsIfNeeded;
 
-+ (void)showTutorialForPillColorIfNeeded;
+/**
+ *  Show tutorial to describe what pill colors are for
+ */
++ (void)showTutorialForPillColor;
 
 /**
  *  Present the tutorial for a particular sensor if not previously viewed

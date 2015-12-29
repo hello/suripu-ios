@@ -22,6 +22,14 @@ NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
 
 @implementation HEMDeviceService
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _devices = [[SENServiceDevice sharedService] devices]; // in case already loaded
+    }
+    return self;
+}
+
 - (NSError*)errorWithCode:(HEMDeviceError)code {
     return [NSError errorWithDomain:HEMDeviceServiceErrorDomain
                                code:code

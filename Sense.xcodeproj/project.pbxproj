@@ -225,6 +225,8 @@
 		BF8C092D1C29D508005AB5A7 /* HEMEmailChangePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C092C1C29D508005AB5A7 /* HEMEmailChangePresenter.m */; };
 		BF8C09301C29D9DF005AB5A7 /* HEMPasswordChangePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C092F1C29D9DF005AB5A7 /* HEMPasswordChangePresenter.m */; };
 		BF8C09331C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C09321C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m */; };
+		BF8C09471C330E55005AB5A7 /* HEMDevicesPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C09461C330E55005AB5A7 /* HEMDevicesPresenter.m */; };
+		BF8C094B1C3313E5005AB5A7 /* HEMDeviceService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C094A1C3313E5005AB5A7 /* HEMDeviceService.m */; };
 		BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */; };
 		BF8E1AA11A689FB2009E421F /* HEMSenseAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1AA01A689FB2009E421F /* HEMSenseAudioViewController.m */; };
 		BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */; };
@@ -755,6 +757,10 @@
 		BF8C092E1C29D9DF005AB5A7 /* HEMPasswordChangePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPasswordChangePresenter.h; sourceTree = "<group>"; };
 		BF8C092F1C29D9DF005AB5A7 /* HEMPasswordChangePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPasswordChangePresenter.m; sourceTree = "<group>"; };
 		BF8C09321C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAccountServiceSpec.m; sourceTree = "<group>"; };
+		BF8C09451C330E55005AB5A7 /* HEMDevicesPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDevicesPresenter.h; sourceTree = "<group>"; };
+		BF8C09461C330E55005AB5A7 /* HEMDevicesPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDevicesPresenter.m; sourceTree = "<group>"; };
+		BF8C09491C3313E5005AB5A7 /* HEMDeviceService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceService.h; sourceTree = "<group>"; };
+		BF8C094A1C3313E5005AB5A7 /* HEMDeviceService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDeviceService.m; sourceTree = "<group>"; };
 		BF8E1A801A6873A2009E421F /* HEMSensePairingModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairingModeViewController.h; sourceTree = "<group>"; };
 		BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairingModeViewController.m; sourceTree = "<group>"; };
 		BF8E1A9F1A689FB2009E421F /* HEMSenseAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseAudioViewController.h; sourceTree = "<group>"; };
@@ -2022,6 +2028,7 @@
 				BF8C09371C3308DE005AB5A7 /* Models */,
 				BF8C09351C3308D4005AB5A7 /* Presenters */,
 				BFB59E0D1C03A8ED001BD941 /* Services */,
+				BF8C09481C330ED9005AB5A7 /* Utilities */,
 				BF8C09381C3308FB005AB5A7 /* View Controllers */,
 				BF8C093E1C330A48005AB5A7 /* Views */,
 			);
@@ -2033,6 +2040,8 @@
 			children = (
 				BFB59E0A1C03A7CB001BD941 /* HEMTimeZonePresenter.h */,
 				BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */,
+				BF8C09451C330E55005AB5A7 /* HEMDevicesPresenter.h */,
+				BF8C09461C330E55005AB5A7 /* HEMDevicesPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -2179,6 +2188,17 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		BF8C09481C330ED9005AB5A7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				BFCB89451BFBCAEA00A72ED3 /* TimeZones.plist */,
+				BFCB89461BFBCAEA00A72ED3 /* TZCountryCodes.plist */,
+				BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */,
+				BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		BF9450AB1BC352FF00BA0023 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2286,12 +2306,10 @@
 		BFB59E0D1C03A8ED001BD941 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				BFCB89451BFBCAEA00A72ED3 /* TimeZones.plist */,
-				BFCB89461BFBCAEA00A72ED3 /* TZCountryCodes.plist */,
-				BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */,
-				BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */,
 				BFB59E0E1C03A929001BD941 /* HEMTimeZoneService.h */,
 				BFB59E0F1C03A929001BD941 /* HEMTimeZoneService.m */,
+				BF8C09491C3313E5005AB5A7 /* HEMDeviceService.h */,
+				BF8C094A1C3313E5005AB5A7 /* HEMDeviceService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -2799,6 +2817,7 @@
 				BF8339891C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
 				BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */,
+				BF8C09471C330E55005AB5A7 /* HEMDevicesPresenter.m in Sources */,
 				BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */,
 				BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
@@ -2825,6 +2844,7 @@
 				BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */,
 				BF83399C1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m in Sources */,
 				BFC7D32B1B91118600D40D58 /* HEMVideoCollectionViewCell.m in Sources */,
+				BF8C094B1C3313E5005AB5A7 /* HEMDeviceService.m in Sources */,
 				8A4D49121A67532800DD6ECE /* HEMScopePickerView.m in Sources */,
 				8A7D80201A40DCA400B0BFD7 /* HEMCardFlowLayout.m in Sources */,
 				BFC4C1FF1B8D554600BB7761 /* HEMDebugInfoDataSource.m in Sources */,

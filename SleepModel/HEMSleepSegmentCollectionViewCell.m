@@ -15,6 +15,7 @@ CGFloat const HEMSegmentPrefillTimeInset = 12.f;
 @property (nonatomic, strong) NSMutableArray *timeViews;
 @property (nonatomic, strong) UIColor *fillColor;
 @property (nonatomic, strong) UIColor *preFillColor;
+@property (nonatomic, strong) HEMGradient* barLineGradient;
 @property (nonatomic, getter=isWaitingForAnimation, readwrite) BOOL waitingForAnimation;
 @end
 
@@ -29,6 +30,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
     self.backgroundColor = [UIColor timelineGradientColor];
+    self.barLineGradient = [HEMGradient gradientForTimelineSleepSegment];
 }
 
 - (void)prepareForReuse {
@@ -136,7 +138,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     [self.preFillColor setFill];
     CGContextFillRect(ctx, preRect);
 
-    CGGradientRef gradient = [[HEMGradient gradientForTimelineSleepSegment] gradientRef];
+    CGGradientRef gradient = [self.barLineGradient gradientRef];
     CGContextSaveGState(ctx);
     CGContextAddRect(ctx, fillRect);
     CGContextClip(ctx);

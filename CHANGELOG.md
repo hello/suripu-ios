@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1.3
+
+Fixes:
+
+* Fixes crasher happening on timeline from the PaintCode removal
+
 ## 1.2.1.2
 
 Fixes:

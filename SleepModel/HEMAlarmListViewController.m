@@ -19,6 +19,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 #import "NSString+HEMUtils.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "HEMScreenUtils.h"
 #import "HEMNoAlarmCell.h"
 #import "HEMActivityIndicatorView.h"
@@ -43,6 +44,7 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
 @property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
+@property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
 @end
 
 @implementation HEMAlarmListViewController
@@ -51,8 +53,9 @@ static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
 static CGFloat const HEMAlarmListPairCellHeight = 352.f;
-static CGFloat const HEMAlarmListNoAlarmCellHeight = 372.0f;
+static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
+static CGFloat const HEMAlarmNoAlarmHorzMargin = 40.0f;
 static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSUInteger const HEMAlarmListLimit = 8;
 
@@ -350,6 +353,24 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 #pragma mark UICollectionViewDatasource
 
+- (NSAttributedString*)attributedNoAlarmText {
+    if (!_attributedNoAlarmText) {
+        NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+        style.lineSpacing = 8.f;
+        NSMutableDictionary *detailAttributes = [[HEMMarkdown attributesForBackViewText][@(PARA)] mutableCopy];
+        
+        NSMutableParagraphStyle *paraStyle = [detailAttributes[NSParagraphStyleAttributeName] mutableCopy];
+        paraStyle.alignment = NSTextAlignmentCenter;
+        detailAttributes[NSParagraphStyleAttributeName] = paraStyle;
+        
+        [detailAttributes removeObjectForKey:NSForegroundColorAttributeName];
+        
+        NSString* text = NSLocalizedString(@"alarms.no-alarm.message", nil);
+        _attributedNoAlarmText = [[NSAttributedString alloc] initWithString:text attributes:detailAttributes];
+    }
+    return _attributedNoAlarmText;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if ([self isLoading]) {
         return LoadingStateRowCount;
@@ -402,17 +423,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
                     emptyCellAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = [HEMMainStoryboard alarmListEmptyCellReuseIdentifier];
     HEMNoAlarmCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 8.f;
-    NSMutableDictionary *detailAttributes = [[HEMMarkdown attributesForBackViewText][@(PARA)] mutableCopy];
-    
-    NSMutableParagraphStyle *paraStyle = [detailAttributes[NSParagraphStyleAttributeName] mutableCopy];
-    paraStyle.alignment = NSTextAlignmentCenter;
-    detailAttributes[NSParagraphStyleAttributeName] = paraStyle;
-    
-    [detailAttributes removeObjectForKey:NSForegroundColorAttributeName];
-    cell.detailLabel.attributedText =
-        [[NSAttributedString alloc] initWithString:NSLocalizedString(@"alarms.no-alarm.message", nil) attributes:detailAttributes];
+    cell.detailLabel.attributedText = [self attributedNoAlarmText];
     [cell.alarmButton addTarget:self action:@selector(addNewAlarm:) forControlEvents:UIControlEventTouchUpInside];
     [cell.alarmButton setTitle:[NSLocalizedString(@"alarms.first-alarm.button-title", nil) uppercaseString]
                       forState:UIControlStateNormal];
@@ -492,7 +503,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
     } else if ([self hasNoSense]) {
         return CGSizeMake(width, HEMAlarmListPairCellHeight);
     } else if (self.alarms.count == 0) {
-        return CGSizeMake(width, HEMAlarmListNoAlarmCellHeight);
+        NSAttributedString* attributedText = [self attributedNoAlarmText];
+        CGFloat maxWidth = width - (HEMAlarmNoAlarmHorzMargin * 2);
+        CGFloat textHeight = [attributedText sizeWithWidth:maxWidth].height;
+        return CGSizeMake(width, textHeight + HEMAlarmListNoAlarmCellBaseHeight);
     }
     
     CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;

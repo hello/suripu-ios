@@ -23,7 +23,6 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMWarningCollectionViewCell.h"
-#import "HEMDeviceDataSource.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMStyledNavigationViewController.h"

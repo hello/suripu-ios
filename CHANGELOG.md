@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.1.2
+
+Fixes:
+
+* Better handling of loading state for alarm list screen
+* Better handling of loading state for trends screen
+* Adjusted text spacing for the no alarms state
+* Alert dialogs should properly show the content's background in the blurred state
+
 ## 1.2.1.1
 
 New:

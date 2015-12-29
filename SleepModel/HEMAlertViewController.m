@@ -10,7 +10,6 @@
 #import "UIView+HEMSnapshot.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
-#import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMAlertView.h"
 #import "HEMSupportUtil.h"
@@ -29,12 +28,19 @@
 + (void)showInfoDialogWithTitle:(NSString *)title
                         message:(NSString *)message
                      controller:(UIViewController *)controller {
-    UIView* view = [HEMRootViewController rootViewControllerForKeyWindow].view;
+    UIView* bgView = nil;
+    if ([controller parentViewController]) {
+        bgView = [[controller parentViewController] view];
+    } else if ([controller navigationController]) {
+        bgView = [[controller navigationController] view];
+    } else {
+        bgView = [controller view];
+    }
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     [dialogVC addButtonWithTitle:[NSLocalizedString(@"actions.ok", nil) uppercaseString]
                            style:HEMAlertViewButtonStyleRoundRect
                           action:nil];
-    dialogVC.viewToShowThrough = view;
+    dialogVC.viewToShowThrough = bgView;
     [dialogVC showFrom:controller];
 }
 

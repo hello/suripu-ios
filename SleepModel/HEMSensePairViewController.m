@@ -444,10 +444,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     __weak typeof(self) weakSelf = self;
     [self stopActivityBefore:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        UIView* seeThroughView
-            = [strongSelf parentViewController]
-            ? [[strongSelf parentViewController] view]
-            : [strongSelf view];
+        UIView* seeThroughView = [self backgroundViewForAlerts];
 
         NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
         if (allowWiFiEdit) {

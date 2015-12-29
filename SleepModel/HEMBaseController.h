@@ -29,6 +29,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)wantsShadowView;
 
+/**
+ * @return the "see through view" to display underneath alerts
+ */
+- (UIView*)backgroundViewForAlerts;
+
 @end
 
 NS_ASSUME_NONNULL_END

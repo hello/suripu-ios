@@ -59,7 +59,7 @@ NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
 }
 
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata {
-    if (!metadata) {
+    if (![metadata lastSeenDate]) {
         return NO;
     }
     
@@ -67,7 +67,9 @@ NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
     NSDateComponents* components = [NSDateComponents new];
     components.day = -1;
     
-    NSDate* dayOld = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
+    NSDate* dayOld = [calendar dateByAddingComponents:components
+                                               toDate:[NSDate date]
+                                              options:0];
     return [[metadata lastSeenDate] compare:dayOld] == NSOrderedAscending;
 }
 

@@ -41,7 +41,6 @@ static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialTrendsKey = @"HEMTutorialTrends";
-static NSString* const HEMTutorialPillColorKey = @"HEMTutorialPillColor";
 static CGFloat const HEMTutorialDelay = 0.5f;
 
 #pragma mark - Handholding
@@ -248,17 +247,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     }
 }
 
-+ (void)showTutorialForPillColorIfNeeded
-{
-    if ([self shouldShowTutorialForKey:HEMTutorialPillColorKey]) {
-        [self delayBlock:^{
-            if ([self showTutorialForPillColor]) {
-                [self markTutorialViewed:HEMTutorialPillColorKey];
-            }
-        }];
-    }
-}
-
 + (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
     UIImage* snapshot = [[controller view] snapshot];
     UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor tutorialBackgroundColor]];
@@ -404,7 +392,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTrendsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialPillColorKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHSensorScrubbing];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHInsightTap];

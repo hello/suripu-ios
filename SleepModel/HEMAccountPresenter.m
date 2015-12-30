@@ -201,6 +201,10 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
             *value = [[self accountService] localizedWeightInPreferredUnit];
             break;
     }
+    
+    if (!*value) {
+        *value = NSLocalizedString(@"empty-data", nil);
+    }
 }
 
 - (void)preferencesIcon:(UIImage**)icon title:(NSString**)title enabled:(BOOL*)value atRow:(NSInteger)row {

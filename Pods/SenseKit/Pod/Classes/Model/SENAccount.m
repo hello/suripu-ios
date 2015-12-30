@@ -52,7 +52,7 @@ NSString* const SENAccountPropertyLastModified = @"last_modified";
 NSString* const SENAccountPropertyBirthdate = @"dob";
 NSString* const SENAccountPropertyGender = @"gender";
 NSString* const SENAccountPropertyValueLatitude = @"lat";
-NSString* const SENAccountPropertyValueLongitude = @"lon";
+NSString* const SENAccountPropertyValueLongitude = @"long";
 NSString* const SENAccountPropertyCreated = @"created";
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {

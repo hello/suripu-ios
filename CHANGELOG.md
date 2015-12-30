@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.1.4
+
+New:
+
+* Added info icon for pill color in device settings to trigger welcome dialog
+* Refactored device settings with VSPER
+* Use API Sense WiFi condition to determine icon to use in device settings
+* Changed location property in account to send as 'long' for longitude
+
+Fixes:
+
+* Fix autolayout constraints for pairing mode screen
+
 ## 1.2.1.3
 
 Fixes:

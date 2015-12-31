@@ -1,5 +1,6 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
 @class SENAlarm;
 @class HEMAlarmViewController;
@@ -12,7 +13,7 @@
 
 @end
 
-@interface HEMAlarmViewController : UIViewController
+@interface HEMAlarmViewController : HEMBaseController
 
 @property (nonatomic, strong) SENAlarm* alarm;
 @property (nonatomic, weak)   id<HEMAlarmControllerDelegate> delegate;

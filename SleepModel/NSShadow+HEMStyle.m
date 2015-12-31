@@ -44,4 +44,10 @@
                                radius:3.0f];
 }
 
++ (NSShadow*)shadowForAlarmView {
+    return [self shadowStyleWithColor:[UIColor blackColor]
+                               offset:CGSizeMake(0.0f, 2.0f)
+                               radius:2.0f];
+}
+
 @end

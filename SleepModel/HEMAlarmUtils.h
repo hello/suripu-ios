@@ -9,6 +9,10 @@
  */
 extern NSUInteger const HEMAlarmTooSoonMinuteLimit;
 
+/**
+ * @discussion
+ * @deprecated Use HEMAlarmService instead!!
+ */
 @interface HEMAlarmUtils : NSObject
 
 /**

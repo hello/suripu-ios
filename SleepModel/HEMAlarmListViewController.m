@@ -167,18 +167,18 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.loading = !self.alarms; // only show indicator if there's no alarms at all
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self
                                               completion:^(NSError *error) {
-                                                if (error) {
-                                                    self.loadingFailed = YES;
-                                                    self.loading = NO;
-                                                    if (self.alarms.count == 0) {
-                                                        [self.collectionView reloadData];
-                                                        return;
-                                                    }
-                                                } else {
-                                                    self.loadingFailed = NO;
-                                                    [self reloadData];
-                                                }
-                                                self.addButton.enabled = YES;
+                                                  self.loading = NO;
+                                                  if (error) {
+                                                      self.loadingFailed = YES;
+                                                      if (self.alarms.count == 0) {
+                                                          [self.collectionView reloadData];
+                                                          return;
+                                                      }
+                                                  } else {
+                                                      self.loadingFailed = NO;
+                                                      [self reloadData];
+                                                  }
+                                                  self.addButton.enabled = YES;
                                               }];
 }
 
@@ -222,9 +222,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if (loading) {
         [self.loadingIndicator start];
         self.loadingIndicator.hidden = NO;
+        self.collectionView.hidden = YES;
     } else {
         [self.loadingIndicator stop];
         self.loadingIndicator.hidden = YES;
+        self.collectionView.hidden = NO;
     }
     
     [self.collectionView reloadData];
@@ -349,6 +351,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     UIEdgeInsets sectionInsets = layout.sectionInset;
     sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
     layout.sectionInset = sectionInsets;
+    self.collectionView.hidden = YES;
 }
 
 #pragma mark UICollectionViewDatasource

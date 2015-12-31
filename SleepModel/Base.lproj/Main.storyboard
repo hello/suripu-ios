@@ -36,36 +36,36 @@
                                 <rect key="frame" x="-1" y="267" width="602" height="334"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-fv-dyh" customClass="HEMClockPickerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="602" height="262"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="602" height="278"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0w-qW-V2E">
-                                        <rect key="frame" x="0.0" y="262" width="602" height="72"/>
+                                        <rect key="frame" x="0.0" y="278" width="602" height="56"/>
                                         <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="lh3-VV-zhJ">
+                                                <rect key="frame" x="0.0" y="-4" width="600" height="4"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="4" id="UjY-mG-Nfk"/>
+                                                </constraints>
+                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mk0-aU-9jH">
-                                                <rect key="frame" x="0.0" y="0.0" width="301" height="72"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="301" height="56"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                                 <state key="normal" title="CANCEL">
                                                     <color key="titleColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <connections>
-                                                    <action selector="dismissFromView:" destination="62Z-aY-sbu" eventType="touchUpInside" id="jqF-v1-1kl"/>
-                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnD-rD-tgL">
-                                                <rect key="frame" x="301" y="0.0" width="301" height="72"/>
+                                                <rect key="frame" x="301" y="0.0" width="301" height="56"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                                 <state key="normal" title="SAVE">
                                                     <color key="titleColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <connections>
-                                                    <action selector="saveAndDismissFromView:" destination="62Z-aY-sbu" eventType="touchUpInside" id="hus-f2-WyW"/>
-                                                </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn0-20-2K6">
-                                                <rect key="frame" x="301" y="21" width="1" height="31"/>
+                                                <rect key="frame" x="301" y="13" width="1" height="31"/>
                                                 <color key="backgroundColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="deviceRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="31" id="adJ-o0-ojT"/>
@@ -79,12 +79,15 @@
                                             <constraint firstItem="mk0-aU-9jH" firstAttribute="top" secondItem="j0w-qW-V2E" secondAttribute="top" id="6H7-Gs-Z5m"/>
                                             <constraint firstItem="nnD-rD-tgL" firstAttribute="width" secondItem="mk0-aU-9jH" secondAttribute="width" id="7wf-SI-KqB"/>
                                             <constraint firstAttribute="bottom" secondItem="nnD-rD-tgL" secondAttribute="bottom" id="RjK-Q4-vhq"/>
-                                            <constraint firstAttribute="height" constant="72" id="adf-pA-fZz"/>
+                                            <constraint firstAttribute="height" constant="56" id="adf-pA-fZz"/>
                                             <constraint firstItem="nnD-rD-tgL" firstAttribute="top" secondItem="j0w-qW-V2E" secondAttribute="top" id="dTF-u3-hko"/>
                                             <constraint firstAttribute="trailing" secondItem="nnD-rD-tgL" secondAttribute="trailing" id="eCc-Kl-euz"/>
                                             <constraint firstItem="fn0-20-2K6" firstAttribute="centerY" secondItem="mk0-aU-9jH" secondAttribute="centerY" id="fi0-XX-RHW"/>
                                             <constraint firstAttribute="bottom" secondItem="mk0-aU-9jH" secondAttribute="bottom" id="hlg-bq-lwh"/>
+                                            <constraint firstItem="lh3-VV-zhJ" firstAttribute="top" secondItem="j0w-qW-V2E" secondAttribute="top" constant="-4" id="lRJ-4b-OUd"/>
+                                            <constraint firstAttribute="trailing" secondItem="lh3-VV-zhJ" secondAttribute="trailing" constant="2" id="lfC-3z-bfm"/>
                                             <constraint firstItem="fn0-20-2K6" firstAttribute="leading" secondItem="mk0-aU-9jH" secondAttribute="trailing" id="vN0-SZ-7Ue"/>
+                                            <constraint firstItem="lh3-VV-zhJ" firstAttribute="leading" secondItem="j0w-qW-V2E" secondAttribute="leading" id="y5h-34-q9q"/>
                                             <constraint firstItem="nnD-rD-tgL" firstAttribute="leading" secondItem="mk0-aU-9jH" secondAttribute="trailing" id="yxC-4V-tXg"/>
                                         </constraints>
                                     </view>
@@ -132,9 +135,6 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Liy-h5-gd5" customClass="HEMSwitchControl">
                                                     <rect key="frame" x="529" y="13" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.0" green="0.6166666666666667" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                                    <connections>
-                                                        <action selector="updateAlarmState:" destination="62Z-aY-sbu" eventType="valueChanged" id="Uqi-Tk-X78"/>
-                                                    </connections>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpc-Vv-o4F">
                                                     <rect key="frame" x="157" y="0.0" width="40" height="57"/>
@@ -144,9 +144,6 @@
                                                     <state key="normal" image="infoIconSmall">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="showHelpfulDialogAboutSmartness:" destination="62Z-aY-sbu" eventType="touchUpInside" id="U5s-j0-C6m"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -163,6 +160,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="infoButton" destination="zpc-Vv-o4F" id="JTh-VK-lYD"/>
                                             <outlet property="smartSwitch" destination="Liy-h5-gd5" id="gbD-TY-kIV"/>
                                         </connections>
                                     </tableViewCell>
@@ -289,10 +287,6 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
-                                <connections>
-                                    <outlet property="dataSource" destination="62Z-aY-sbu" id="HQF-vc-PzR"/>
-                                    <outlet property="delegate" destination="62Z-aY-sbu" id="eM9-HR-aPB"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -320,8 +314,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="buttonContainerView" destination="j0w-qW-V2E" id="N4B-T6-UPM"/>
+                        <outlet property="cancelButton" destination="mk0-aU-9jH" id="xQR-mH-qEF"/>
                         <outlet property="clockView" destination="hlH-fv-dyh" id="71s-Al-ngo"/>
+                        <outlet property="saveButton" destination="nnD-rD-tgL" id="7NU-tV-dhf"/>
                         <outlet property="tableView" destination="mu9-Oc-BmZ" id="4Lk-BG-tJu"/>
                         <outlet property="tableViewHeightConstraint" destination="gqe-eZ-2zQ" id="SsP-Wz-hRQ"/>
                     </connections>
@@ -529,7 +524,7 @@
                                         <rect key="frame" x="0.0" y="49.5" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="44s-u9-un0" id="uGF-Tm-wwR">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bIy-mE-ued">

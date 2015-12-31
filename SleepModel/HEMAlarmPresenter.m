@@ -108,10 +108,12 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 }
 
 - (void)bindWithSaveButton:(UIButton*)saveButton {
+    [[saveButton titleLabel] setFont:[UIFont alarmButtonFont]];
     [saveButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)bindWithCancelButton:(UIButton*)cancelButton {
+    [[cancelButton titleLabel] setFont:[UIFont alarmButtonFont]];
     [cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
 }
 

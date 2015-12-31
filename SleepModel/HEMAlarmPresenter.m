@@ -238,7 +238,9 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     }
     HEMAlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     [[cell titleLabel] setText:title];
+    [[cell titleLabel] setFont:[UIFont alarmTitleFont]];
     [[cell detailLabel] setText:detail];
+    [[cell detailLabel] setFont:[UIFont alarmDetailFont]];
     // only cells prototyped with these views will have the following effect.
     // other cells will be No-Op
     [[cell smartSwitch] setOn:switchState];

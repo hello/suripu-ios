@@ -189,6 +189,7 @@ NSString* const HEMAnalyticsEventCreateNewAlarm = @"Create new alarm";
 NSString* const HEMAnalyticsEventSwitchSmartAlarm = @"Flip smart alarm switch";
 NSString* const HEMAnalyticsEventSwitchSmartAlarmOn = @"on";
 NSString* const HEMAnalyticsEventSaveAlarm = @"Alarm Saved";
+NSString* const HEMAnalyticsEventDeleteAlarm = @"Alarm Deleted";
 NSString* const HEMAnalyticsEventAlarmOnOff = @"Alarm On/Off";
 NSString* const HEMAnalyticsEventPropDaysRepeated = @"days_repeated";
 NSString* const HEMAnalyticsEventPropEnabled = @"enabled";

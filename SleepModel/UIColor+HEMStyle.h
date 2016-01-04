@@ -150,6 +150,7 @@
 + (UIColor *)insightSummaryDateColor;
 + (UIColor *)insightAboutTextColor;
 + (UIColor *)borderColor;
++ (UIColor *)alarmClockViewBackgroundColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

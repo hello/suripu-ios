@@ -16,6 +16,13 @@
 + (UIFont*)alarmNumberFont;
 
 + (UIFont*)alarmSelectedNumberFont;
++ (UIFont*)alarmDetailFont;
++ (UIFont*)alarmTitleFont;
+
+/**
+ * Font for Alarm UI's cancel and save buttons
+ */
++ (UIFont*)alarmButtonFont;
 
 /**
  *  Alarm picker view meridiem font

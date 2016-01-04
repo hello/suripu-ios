@@ -94,6 +94,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 
 - (void)bindWithClockPickerView:(HEMClockPickerView*)clockPicker {
     [clockPicker setDelegate:self];
+    [clockPicker setShowSelectionUnderlay:YES];
     [clockPicker setBackgroundColor:[UIColor alarmClockViewBackgroundColor]];
     [self setClockPicker:clockPicker];
 }

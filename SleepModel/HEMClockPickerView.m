@@ -74,23 +74,7 @@ static NSUInteger const HEMClock24HourCount = 24;
     _gradientView = [UIView new];
     _gradientView.userInteractionEnabled = NO;
     [self addSubview:_gradientView];
-    [self initializeUnderlay];
     [self layoutPickerViews];
-}
-
-- (void)initializeUnderlay {
-    CGRect underlayFrame = CGRectZero;
-    underlayFrame.size.width = CGRectGetWidth([self bounds]);
-    underlayFrame.size.height = HEMClockPickerUnderlayHeight;
-    
-    UIView* underlayView = [[UIView alloc] initWithFrame:underlayFrame];
-    [underlayView setBackgroundColor:[UIColor whiteColor]];
-    [[underlayView layer] setBorderWidth:0.5f];
-    [[underlayView layer] setBorderColor:[[UIColor separatorColor] CGColor]];
-    [underlayView setClipsToBounds:YES];
-    
-    [self setSelectionUnderlay:underlayView];
-    [self insertSubview:underlayView atIndex:0];
 }
 
 - (void)initializeHourPicker {
@@ -261,6 +245,30 @@ static NSUInteger const HEMClock24HourCount = 24;
                      completion:NULL];
 }
 
+- (void)setShowSelectionUnderlay:(BOOL)showSelectionUnderlay {
+    if (_showSelectionUnderlay == showSelectionUnderlay) {
+        return;
+    }
+    
+    if (showSelectionUnderlay) {
+        CGRect underlayFrame = CGRectZero;
+        underlayFrame.size.width = CGRectGetWidth([self bounds]);
+        underlayFrame.size.height = HEMClockPickerUnderlayHeight;
+        
+        UIView* underlayView = [[UIView alloc] initWithFrame:underlayFrame];
+        [underlayView setBackgroundColor:[UIColor whiteColor]];
+        [[underlayView layer] setBorderWidth:0.5f];
+        [[underlayView layer] setBorderColor:[[UIColor separatorColor] CGColor]];
+        [underlayView setClipsToBounds:YES];
+        
+        [self setSelectionUnderlay:underlayView];
+        [self insertSubview:underlayView atIndex:0];
+    } else {
+        [[self selectionUnderlay] removeFromSuperview];
+        [self setSelectionUnderlay:nil];
+    }
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self layoutPickerViews];
@@ -268,10 +276,12 @@ static NSUInteger const HEMClock24HourCount = 24;
 }
 
 - (void)layoutUnderlay {
-    CGPoint center = [self center];
-    CGPoint underlayCenter = [[self selectionUnderlay] center];
-    underlayCenter.y = center.y;
-    [[self selectionUnderlay] setCenter:underlayCenter];
+    if ([self selectionUnderlay]) {
+        CGFloat centerY = CGRectGetHeight([self bounds]) / 2.0f;
+        CGPoint underlayCenter = [[self selectionUnderlay] center];
+        underlayCenter.y = centerY;
+        [[self selectionUnderlay] setCenter:underlayCenter];
+    }
 }
 
 - (void)layoutPickerViews {

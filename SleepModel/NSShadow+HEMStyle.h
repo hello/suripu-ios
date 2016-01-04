@@ -34,11 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSShadow*)shadowForButtonContainer;
 
-/**
- * @return shadow to be shown for the alarm table view shown when setting an alarm
- */
-+ (NSShadow*)shadowForAlarmView;
-
 @end
 
 NS_ASSUME_NONNULL_END

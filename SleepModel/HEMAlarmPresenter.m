@@ -63,13 +63,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 - (void)bindWithTableView:(UITableView*)tableView heightConstraint:(NSLayoutConstraint*)heightConstraint {
     [tableView setDelegate:self];
     [tableView setDataSource:self];
-    
-    NSShadow* shadow = [NSShadow shadowForAlarmView];
-    
-    CALayer *layer = [tableView layer];
-    [layer setShadowRadius:[shadow shadowBlurRadius]];
-    [layer setShadowOffset:[shadow shadowOffset]];
-    [layer setShadowOpacity:0.05f];
+    [tableView setBackgroundColor:[UIColor clearColor]];
     
     if (![[self alarm] isSaved]) {
         CGFloat currentConstant = [heightConstraint constant];
@@ -100,6 +94,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 
 - (void)bindWithClockPickerView:(HEMClockPickerView*)clockPicker {
     [clockPicker setDelegate:self];
+    [clockPicker setBackgroundColor:[UIColor alarmClockViewBackgroundColor]];
     [self setClockPicker:clockPicker];
 }
 
@@ -207,6 +202,19 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 
 #pragma mark - TableView
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    UIImage* shadow = [UIImage imageNamed:@"topShadow"];
+    return [shadow size].height;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIImage* shadow = [UIImage imageNamed:@"topShadow"];
+    UIImageView* shadowView = [[UIImageView alloc] initWithImage:shadow];
+    [shadowView setBackgroundColor:[UIColor clearColor]]; // let it blend with clock view
+    [shadowView setContentMode:UIViewContentModeScaleAspectFill];
+    return shadowView;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return ![[self alarm] isSaved] ? 3 : 4;
 }
@@ -241,6 +249,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [[cell titleLabel] setFont:[UIFont alarmTitleFont]];
     [[cell detailLabel] setText:detail];
     [[cell detailLabel] setFont:[UIFont alarmDetailFont]];
+    [cell setBackgroundColor:[UIColor clearColor]];
     // only cells prototyped with these views will have the following effect.
     // other cells will be No-Op
     [[cell smartSwitch] setOn:switchState];

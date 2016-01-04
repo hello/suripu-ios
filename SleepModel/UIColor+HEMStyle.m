@@ -156,7 +156,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
 }
 + (UIColor *)separatorColor {
-    return [UIColor colorWithHex:0x000000 alpha:0.05f];
+    return [UIColor colorWithHex:0x000000 alpha:0.1f];
 }
 + (UIColor *)onboardingDescriptionColor {
     return [UIColor colorWithHex:0x0B0B0B alpha:0.5f];
@@ -286,6 +286,9 @@ static UIColor *_tintColor = nil;
 }
 + (UIColor *)borderColor {
     return [UIColor colorWithHex:0x000000 alpha:0.15f];
+}
++ (UIColor *)alarmClockViewBackgroundColor {
+    return [UIColor colorWithHex:0xF9F9FA alpha:1.0f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

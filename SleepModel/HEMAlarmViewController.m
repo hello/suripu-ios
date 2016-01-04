@@ -68,7 +68,7 @@
                                                             message:message
                                                       defaultsToYes:YES
                                                              action:action];
-    [alert setViewToShowThrough:[self backgroundViewForAlerts]];
+    [alert setViewToShowThrough:[[self navigationController] view]];
     [alert showFrom:self];
 }
 

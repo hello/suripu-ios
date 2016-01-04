@@ -261,8 +261,6 @@
 		BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */; };
 		BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */; };
 		BFB0FBF319D482E90056FFEC /* HEMSettingsNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */; };
-		BFB1F3D91A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3D81A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m */; };
-		BFB1F3DC1A0DA33A00E620AD /* HEMGetAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3DB1A0DA33A00E620AD /* HEMGetAppViewController.m */; };
 		BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */; };
 		BFB59E101C03A929001BD941 /* HEMTimeZoneService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E0F1C03A929001BD941 /* HEMTimeZoneService.m */; };
 		BFB59E151C03B98E001BD941 /* UITableViewCell+HEMSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E141C03B98E001BD941 /* UITableViewCell+HEMSettings.m */; };
@@ -824,10 +822,6 @@
 		BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseViewController.m; sourceTree = "<group>"; };
 		BFB0FBF119D482E90056FFEC /* HEMSettingsNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsNavigationController.h; sourceTree = "<group>"; };
 		BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsNavigationController.m; sourceTree = "<group>"; };
-		BFB1F3D71A0D9F7600E620AD /* HEMSetupAnotherPillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSetupAnotherPillViewController.h; sourceTree = "<group>"; };
-		BFB1F3D81A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSetupAnotherPillViewController.m; sourceTree = "<group>"; };
-		BFB1F3DA1A0DA33A00E620AD /* HEMGetAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGetAppViewController.h; sourceTree = "<group>"; };
-		BFB1F3DB1A0DA33A00E620AD /* HEMGetAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMGetAppViewController.m; sourceTree = "<group>"; };
 		BFB59E0A1C03A7CB001BD941 /* HEMTimeZonePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZonePresenter.h; sourceTree = "<group>"; };
 		BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimeZonePresenter.m; sourceTree = "<group>"; };
 		BFB59E0E1C03A929001BD941 /* HEMTimeZoneService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZoneService.h; sourceTree = "<group>"; };
@@ -1647,8 +1641,6 @@
 			children = (
 				BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */,
 				BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */,
-				BFB1F3D71A0D9F7600E620AD /* HEMSetupAnotherPillViewController.h */,
-				BFB1F3D81A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m */,
 				BF14E3CD19EF3C3D0006EFEA /* HEMPillSetupViewController.h */,
 				BF14E3CE19EF3C3D0006EFEA /* HEMPillSetupViewController.m */,
 				BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */,
@@ -1660,8 +1652,6 @@
 		BF0F635D1A2409360084E6B4 /* Post Set Up */ = {
 			isa = PBXGroup;
 			children = (
-				BFB1F3DA1A0DA33A00E620AD /* HEMGetAppViewController.h */,
-				BFB1F3DB1A0DA33A00E620AD /* HEMGetAppViewController.m */,
 				BF045B6C1A1EC2210026D5B9 /* HEMBeforeSleepViewController.h */,
 				BF045B6D1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m */,
 				BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */,
@@ -2792,7 +2782,6 @@
 				BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */,
 				8A576F121A79B12200287398 /* HEMTutorial.m in Sources */,
 				BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */,
-				BFB1F3DC1A0DA33A00E620AD /* HEMGetAppViewController.m in Sources */,
 				BF539CD21C0F737D000F77AA /* HEMPresenter.m in Sources */,
 				BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */,
 				BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */,
@@ -2825,7 +2814,6 @@
 				BFA884B41C1A0CAB00613069 /* HEMSystemAlertPresenter.m in Sources */,
 				BF539CC71C0D38BA000F77AA /* HEMInsightsFeedPresenter.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMLineGraphDataSource.m in Sources */,
-				BFB1F3D91A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m in Sources */,
 				8ADF03CD1A719185002B036A /* HEMDynamicsStatusStyler.m in Sources */,
 				8ADE06391B2F521B00976654 /* HEMSplitTextFormatter.m in Sources */,
 				8B45075D1C1794E500359453 /* HEMSelectHostViewController.m in Sources */,

@@ -12,8 +12,6 @@
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
-            <string>HelveticaNeue-Light</string>
-            <string>HelveticaNeue-Light</string>
         </mutableArray>
         <mutableArray key="HelveticaNeue-Medium.otf">
             <string>HelveticaNeue-Medium</string>
@@ -1196,109 +1194,6 @@ Sense will glow purple when it is in Pairing Mode.</string>
             </objects>
             <point key="canvasLocation" x="14050" y="535"/>
         </scene>
-        <!--Setup Another Pill View Controller-->
-        <scene sceneID="HZY-VN-bUX">
-            <objects>
-                <viewController id="fc9-7S-Ult" customClass="HEMSetupAnotherPillViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mVd-qk-DaN"/>
-                        <viewControllerLayoutGuide type="bottom" id="RB7-rd-PIm"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="JjN-cZ-h4j">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Set up another Sleep Pill?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-8j-Vd9">
-                                <rect key="frame" x="20" y="24" width="560" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="5Ju-hM-OxI"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
-                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
-                                <rect key="frame" x="20" y="78" width="560" height="74"/>
-                                <string key="text">If you're using Sense with a partner, they can create an account and set up their own Sleep Pill at this time.  If your partner is not nearby now, they can always do this later.</string>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" image="pairOfPills" translatesAutoresizingMaskIntoConstraints="NO" id="woJ-aC-K2e">
-                                <rect key="frame" x="0.0" y="152" width="600" height="323"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OB-Af-zlr">
-                                <rect key="frame" x="20" y="475" width="560" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="2ud-UG-uNl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Add another Sleep Pill now">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="setupAnother:" destination="fc9-7S-Ult" eventType="touchUpInside" id="zRR-q2-uq1"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kgp-n3-6dl" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="530" width="560" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="560" id="EX7-UP-jWc"/>
-                                    <constraint firstAttribute="height" constant="50" id="RO7-yz-HfF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="NOT RIGHT NOW">
-                                    <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="EX7-UP-jWc"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="skip:" destination="fc9-7S-Ult" eventType="touchUpInside" id="4Qx-Ti-hwY"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="iMZ-p6-gA8" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="0vv-vX-Ygi"/>
-                            <constraint firstItem="Kgp-n3-6dl" firstAttribute="bottom" secondItem="4OB-Af-zlr" secondAttribute="bottom" constant="55" id="31H-a3-rki"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="woJ-aC-K2e" secondAttribute="trailing" constant="-16" id="3lO-i6-WXm"/>
-                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="bottom" secondItem="iMZ-p6-gA8" secondAttribute="top" constant="-10" id="5uD-Lr-dgP"/>
-                            <constraint firstItem="4OB-Af-zlr" firstAttribute="top" secondItem="woJ-aC-K2e" secondAttribute="bottom" id="E9N-A2-PGt"/>
-                            <constraint firstItem="Kgp-n3-6dl" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="WiM-De-dUF"/>
-                            <constraint firstItem="4OB-Af-zlr" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="Y2G-Fy-KwT"/>
-                            <constraint firstItem="woJ-aC-K2e" firstAttribute="top" secondItem="iMZ-p6-gA8" secondAttribute="bottom" id="ZO5-CG-Mqg"/>
-                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="top" secondItem="mVd-qk-DaN" secondAttribute="bottom" constant="4" id="Zqc-Sd-kGI"/>
-                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="cKG-3r-Ovw"/>
-                            <constraint firstItem="RB7-rd-PIm" firstAttribute="top" secondItem="Kgp-n3-6dl" secondAttribute="bottom" constant="20" id="lBO-vO-6sx"/>
-                            <constraint firstItem="woJ-aC-K2e" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="-16" id="nuH-5k-A91"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iMZ-p6-gA8" secondAttribute="trailing" constant="4" id="peW-PL-F0w"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Kgp-n3-6dl" secondAttribute="trailing" constant="4" id="q3M-4F-1ZN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eDs-8j-Vd9" secondAttribute="trailing" constant="4" id="tfB-Dc-aN6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4OB-Af-zlr" secondAttribute="trailing" constant="4" id="tqI-cW-YSV"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="k5R-E8-szC"/>
-                    <connections>
-                        <outlet property="descriptionLabel" destination="iMZ-p6-gA8" id="DHX-Kf-3mN"/>
-                        <outlet property="descriptionTopConstraint" destination="5uD-Lr-dgP" id="gyz-mQ-ktH"/>
-                        <outlet property="setupButton" destination="4OB-Af-zlr" id="yWT-NH-fh2"/>
-                        <outlet property="titleHeightConstraint" destination="5Ju-hM-OxI" id="B7t-SR-mnZ"/>
-                        <outlet property="titleLabel" destination="eDs-8j-Vd9" id="5lJ-TI-eYd"/>
-                        <outlet property="view" destination="JjN-cZ-h4j" id="RyG-bL-B3t"/>
-                        <segue destination="Ibh-UM-msk" kind="show" identifier="getApp" id="oeH-Et-htw"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ybc-rT-E02" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="17391" y="905"/>
-        </scene>
         <!--Pill Description View Controller-->
         <scene sceneID="BGh-WE-MUR">
             <objects>
@@ -1773,7 +1668,6 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="titleLabel" destination="JeP-LV-puG" id="q2S-e0-zoS"/>
                         <outlet property="videoView" destination="XVL-7j-gjt" id="tbS-Vb-YuS"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
-                        <segue destination="fc9-7S-Ult" kind="show" identifier="alarmToAnotherPill" id="eyP-2h-xaH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2967,80 +2861,6 @@ Flip the switch to On</string>
             </objects>
             <point key="canvasLocation" x="9386" y="915"/>
         </scene>
-        <!--Get App View Controller-->
-        <scene sceneID="vUb-Wh-tE1">
-            <objects>
-                <viewController id="Ibh-UM-msk" customClass="HEMGetAppViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MZ4-xa-XYM"/>
-                        <viewControllerLayoutGuide type="bottom" id="iRc-gn-ncK"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="MIL-K3-LOc">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Have your partner get the app" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pe9-oy-MXl">
-                                <rect key="frame" x="20" y="24" width="560" height="29"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
-                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJO-3H-8zJ">
-                                <rect key="frame" x="20" y="63" width="560" height="67"/>
-                                <attributedString key="attributedText">
-                                    <fragment>
-                                        <string key="content">Sense is now in Pairing Mode.
-
-Have your partner visit senseapp.com on their device to download the Sense app and create a new account. They will be given instructions to set up their Sleep Pill.</string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="system" size="18"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imr-Jl-fE8" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="530" width="560" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="hJk-84-hf3"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="CONTINUE">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="finish:" destination="Ibh-UM-msk" eventType="touchUpInside" id="ROM-3N-sVX"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="sJO-3H-8zJ" firstAttribute="leading" secondItem="MIL-K3-LOc" secondAttribute="leadingMargin" constant="4" id="9cR-TI-Fqd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sJO-3H-8zJ" secondAttribute="trailing" constant="4" id="EB9-5v-Yn7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Pe9-oy-MXl" secondAttribute="trailing" constant="4" id="HrB-w8-nB9"/>
-                            <constraint firstItem="Pe9-oy-MXl" firstAttribute="top" secondItem="MZ4-xa-XYM" secondAttribute="bottom" constant="4" id="Ifk-Ne-mBu"/>
-                            <constraint firstItem="Pe9-oy-MXl" firstAttribute="bottom" secondItem="sJO-3H-8zJ" secondAttribute="top" constant="-10" id="Mez-bl-0wq"/>
-                            <constraint firstItem="Pe9-oy-MXl" firstAttribute="leading" secondItem="MIL-K3-LOc" secondAttribute="leadingMargin" constant="4" id="QSC-x5-5Xy"/>
-                            <constraint firstItem="iRc-gn-ncK" firstAttribute="top" secondItem="imr-Jl-fE8" secondAttribute="bottom" constant="20" id="ien-FN-CIx"/>
-                            <constraint firstItem="imr-Jl-fE8" firstAttribute="leading" secondItem="MIL-K3-LOc" secondAttribute="leadingMargin" constant="4" id="sMy-FX-4EP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="imr-Jl-fE8" secondAttribute="trailing" constant="4" id="uyH-7o-662"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="jbj-mL-oVl"/>
-                    <connections>
-                        <outlet property="descriptionLabel" destination="sJO-3H-8zJ" id="QhV-6m-EEF"/>
-                        <outlet property="descriptionTopConstraint" destination="Mez-bl-0wq" id="caD-Hc-1zL"/>
-                        <outlet property="titleLabel" destination="Pe9-oy-MXl" id="fjl-eJ-AL7"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4BU-cG-ggd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="17391" y="1718"/>
-        </scene>
     </scenes>
     <resources>
         <image name="bluetooth" width="32" height="32"/>
@@ -3050,7 +2870,6 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="listShadow" width="320" height="4"/>
         <image name="male" width="75" height="72"/>
         <image name="map" width="320" height="218"/>
-        <image name="pairOfPills" width="180" height="117"/>
         <image name="sampleNotification" width="320" height="186"/>
         <image name="sense" width="186" height="183"/>
         <image name="senseAppIcon" width="32" height="32"/>

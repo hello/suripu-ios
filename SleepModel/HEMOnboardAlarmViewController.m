@@ -58,15 +58,8 @@
 }
 
 - (void)next {
-    // if there are less than 2 accounts paired to Sense, ask if user wants to
-    // set up another Pill (another account), otherwise just finish onboarding
-    if ([[[HEMOnboardingService sharedService] pairedAccountsToSense] integerValue] < 2) {
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard alarmToAnotherPillSegueIdentifier]
-                                  sender:self];
-    } else {
-        [[HEMOnboardingService sharedService] disconnectCurrentSense];
-        [self completeOnboarding];
-    }
+    [[HEMOnboardingService sharedService] disconnectCurrentSense];
+    [self completeOnboarding];
 }
 
 #pragma mark - Actions

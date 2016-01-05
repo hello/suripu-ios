@@ -391,7 +391,9 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
         if (self.sensors.count > indexPath.row) {
             [self configureSensorCell:cell forItemAtIndexPath:indexPath];
-        } else { [self configureNoSensorsCell:cell]; }
+        } else {
+            [self configureNoSensorsCell:cell];
+        }
         return cell;
     }
 }

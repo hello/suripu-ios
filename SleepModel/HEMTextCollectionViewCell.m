@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 #import "HEMTextCollectionViewCell.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
 
 static CGFloat const HEMTextCollectionHorzPadding = 24.0f;

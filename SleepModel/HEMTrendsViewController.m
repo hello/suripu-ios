@@ -41,7 +41,7 @@ NS_ENUM(NSUInteger) {
 static CGFloat const HEMTrendsViewCellHeight = 198.0f;
 static CGFloat const HEMTrendsViewOptionsCellHeight = 255.f;
 static CGFloat const HEMTrendsErrorTextHorzPadding = 16.0f;
-static CGFloat const HEMTrendsErrorTextVertPadding = 36.0f;
+static CGFloat const HEMTrendsErrorTextVertPadding = 26.0f;
 
 static NSString* const HEMScoreTrendType = @"SLEEP_SCORE";
 static NSString* const HEMDurationTrendType = @"SLEEP_DURATION";
@@ -277,6 +277,7 @@ static NSString* const HEMAllScopeType = @"ALL";
     cell.textLabel.text = NSLocalizedString(@"trends.loading.error.message", nil);
     cell.textLabel.font = [UIFont errorStateDescriptionFont];
     cell.backgroundColor = [UIColor whiteColor];
+    [cell displayAsACard:YES];
     return cell;
 }
 

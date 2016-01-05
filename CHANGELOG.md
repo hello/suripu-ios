@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.1.5
+
+New:
+
+* Removed the "Setup another pill" onboarding screen
+* Removed the "Get the app" onboarding screen that appears after setup another pill
+* Adjusted action sheet background color to match alerts
+* Alarm VX updates
+* Refactored Alarm UI with VSPER
+
 ## 1.2.1.4
 
 New:

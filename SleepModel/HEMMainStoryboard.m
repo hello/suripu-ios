@@ -34,6 +34,7 @@ static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
+static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfieldCell = @"fieldCell";
 static NSString *const _HEMformViewController = @"formViewController";
@@ -107,6 +108,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
++(NSString *)errorReuseIdentifier { return _HEMerror; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldCellReuseIdentifier { return _HEMfieldCell; }
 +(NSString *)imageReuseIdentifier { return _HEMimage; }

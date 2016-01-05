@@ -2,12 +2,13 @@
 #import <SenseKit/SenseKit.h>
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 
+#import "NSString+HEMUtils.h"
+
 #import "HEMCurrentConditionsViewController.h"
 #import "HEMSensorViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSensorGraphCollectionViewCell.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
+#import "HEMStyle.h"
 #import "HEMTutorial.h"
 #import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMSensePairViewController.h"
@@ -17,6 +18,7 @@
 #import "HEMSensorValueFormatter.h"
 #import "HEMSnazzBarController.h"
 #import "HEMRootViewController.h"
+#import "HEMTextCollectionViewCell.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                                   UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate, HEMSnazzBarControllerChild>
@@ -189,7 +191,9 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
         self.loading = NO;
         self.sensors = nil;
         [self.collectionView reloadData];
-    } else { [self updateSensorsFromCache]; }
+    } else {
+        [self updateSensorsFromCache];
+    }
 }
 
 - (void)updateSensorsFromCache {
@@ -384,14 +388,16 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
         [[cell pairSenseButton] setTitle:[NSLocalizedString(@"sensor.no-sense.button.title", nil) uppercaseString]
                                 forState:UIControlStateNormal];
         return cell;
+    } else if (self.sensors.count <= indexPath.row){
+        NSString* identifier = [HEMMainStoryboard errorReuseIdentifier];
+        HEMTextCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+        [self configureNoSensorsCell:cell];
+        return cell;
     } else {
         NSString *identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
         HEMSensorGraphCollectionViewCell *cell =
             [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-
-        if (self.sensors.count > indexPath.row) {
-            [self configureSensorCell:cell forItemAtIndexPath:indexPath];
-        } else { [self configureNoSensorsCell:cell]; }
+        [self configureSensorCell:cell forItemAtIndexPath:indexPath];
         return cell;
     }
 }
@@ -449,14 +455,10 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     return unit;
 }
 
-- (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell {
-    cell.statusLabel.text = [self isLoading] ? NSLocalizedString(@"activity.loading", nil)
-                                             : NSLocalizedString(@"sensor.data-unavailable", nil);
-    cell.statusLabel.hidden = NO;
-    cell.sensorValueLabel.hidden = YES;
-    cell.sensorMessageLabel.hidden = YES;
-    cell.separatorView.hidden = YES;
-    cell.graphView.hidden = YES;
+- (void)configureNoSensorsCell:(HEMTextCollectionViewCell *)cell {
+    cell.textLabel.text = NSLocalizedString(@"sensor.data-unavailable", nil);
+    cell.textLabel.font = [UIFont errorStateDescriptionFont];
+    [cell displayAsACard:YES];
 }
 
 #pragma mark UICollectionViewDelegate
@@ -479,8 +481,15 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
                     layout:(UICollectionViewLayout *)collectionViewLayout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize defaultSize = ((UICollectionViewFlowLayout *)collectionViewLayout).itemSize;
-    if ([self hasNoSense])
+    if ([self hasNoSense]) {
         return CGSizeMake(defaultSize.width, HEMCurrentConditionsPairViewHeight);
+    } else if ([self.sensors count] == 0) {
+        NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
+        CGFloat maxWidth = defaultSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
+        UIFont* font = [UIFont errorStateDescriptionFont];
+        CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
+        return CGSizeMake(defaultSize.width, textHeight + (HEMStyleCardErrorTextVertMargin * 2));
+    }
     return defaultSize;
 }
 

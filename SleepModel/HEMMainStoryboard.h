@@ -46,6 +46,7 @@
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)overTimeReuseIdentifier;
 +(NSString *)trendGraphReuseIdentifier;
++(NSString *)errorReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;

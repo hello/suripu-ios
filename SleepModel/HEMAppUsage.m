@@ -172,7 +172,7 @@ static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
     }
     
     NSUInteger totalCount = 0;
-    NSInteger nextIndex = countIndex;
+    NSInteger nextIndex = 0;
     for (NSUInteger i = 0; i < daysToInclude; i++) {
         totalCount += [[self rollingCountPerDay][countIndex] integerValue];
         nextIndex = countIndex - 1;

@@ -69,8 +69,8 @@
     [[self textField] setSecureTextEntry:secure];
 }
 
-- (void)becomeFirstResponder {
-    [[self textField] becomeFirstResponder];
+- (BOOL)becomeFirstResponder {
+    return [[self textField] becomeFirstResponder];
 }
 
 - (void)didChangeTextInField:(UITextField*)textField {

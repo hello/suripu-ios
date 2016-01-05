@@ -308,14 +308,10 @@ static NSUInteger const HEMClock24HourCount = 24;
     NSInteger minuteRow = minute / self.minuteIncrement;
     NSInteger hourRow = hour;
     NSInteger meridiemRow = hour <= (HEMClock12HourCount - 1) ? 0 : 1;
-    NSInteger hourRowCount;
     if ([self shouldUse12Hour]) {
         if (hourRow > HEMClock12HourCount)
             hourRow -= HEMClock12HourCount;
         hourRow--;
-        hourRowCount = HEMClock12HourCount;
-    } else {
-        hourRowCount = HEMClock24HourCount;
     }
     [self.hourPickerView setIndex:hourRow];
     [self.minutePickerView setIndex:minuteRow];

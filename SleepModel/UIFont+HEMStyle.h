@@ -559,4 +559,9 @@
  */
 + (UIFont*)emptyStateDescriptionFont;
 
+/**
+ * Font used for text displayed when there was a problem retrieving data to load
+ */
++ (UIFont*)errorStateDescriptionFont;
+
 @end

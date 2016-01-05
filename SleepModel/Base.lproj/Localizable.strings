@@ -331,6 +331,7 @@
 "sleep.insight.info.title.no-text" = "Insight failed to load";
 "sleep.insight.info.message.no-text" = "Unable to load Insight information at the moment. Please make sure your device has an internet connection and try again.";
 "sleep.questions.end.message" = "Thank you";
+"insights.feed.error.message" = "There was a problem displaying your insights. Please try again.";
 
 // authentication/sign in
 "authorization.sign-in.activity.message" = "Signing in...";
@@ -398,7 +399,7 @@
 "sensor.particulates" = "Air quality";
 "sensor.sound" = "Noise";
 "sensor.light" = "Light";
-"sensor.data-unavailable" = "Sensor data is unavailable.";
+"sensor.data-unavailable" = "There was a problem displaying your sensor data. Please try again.";
 "sensor.value.none" = "No data";
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";
@@ -580,6 +581,7 @@
 // trends
 "trends.title" = "Trends";
 "trends.not-enough-data.message" = "Your trends will appear here after a week of sleep.";
+"trends.loading.error.message" = "There was a problem displaying your trends. Please try again.";
 
 // actions
 "actions.cancel" = "Cancel";

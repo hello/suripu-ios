@@ -27,6 +27,6 @@
 - (void)setKeyboardType:(UIKeyboardType)keyboardType;
 - (void)setKeyboardReturnKeyType:(UIReturnKeyType)returnType;
 - (void)setSecure:(BOOL)secure;
-- (void)becomeFirstResponder;
+- (BOOL)becomeFirstResponder;
 
 @end

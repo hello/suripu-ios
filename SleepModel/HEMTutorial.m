@@ -351,13 +351,12 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     return [self showTutorialWithContent:@[tutorial]];
 }
 
-+ (BOOL)showTutorialForPillColor
-{
++ (void)showTutorialForPillColor {
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.pill-color.title", nil)
                                          text:NSLocalizedString(@"tutorial.pill-color.message", nil)
                                         image:[UIImage imageNamed:@"pill_color_dialog"]];
-    return [self showTutorialWithContent:@[tutorial]];
+    [self showTutorialWithContent:@[tutorial]];
 }
 
 #pragma mark - Preferences

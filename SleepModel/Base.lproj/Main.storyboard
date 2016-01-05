@@ -18,6 +18,10 @@
             <string>AvenirNext-Light</string>
             <string>AvenirNext-Light</string>
             <string>AvenirNext-Light</string>
+            <string>AvenirNext-Light</string>
+            <string>AvenirNext-Light</string>
+            <string>AvenirNext-Light</string>
+            <string>AvenirNext-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1127,7 +1131,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="56" sectionHeaderHeight="18" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="siy-bj-GCk">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.050000000000000003" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="16" reuseIdentifier="info" textLabel="1Jf-nr-YW3" detailTextLabel="mJW-RQ-Kiz" rowHeight="56" style="IBUITableViewCellStyleValue1" id="tes-1M-YYv">
@@ -1306,14 +1310,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="592" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9T-de-MX3">
-                                                    <rect key="frame" x="30" y="0.0" width="500" height="60"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9T-de-MX3">
+                                                    <rect key="frame" x="30" y="0.0" width="500" height="56"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="BKW-NT-78e">
-                                                    <rect key="frame" x="547" y="0.0" width="15" height="60"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="BKW-NT-78e">
+                                                    <rect key="frame" x="547" y="0.0" width="15" height="56"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="OQe-Uf-4H7"/>
                                                     </constraints>
@@ -2546,9 +2550,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
                                                     <rect key="frame" x="16" y="35" width="552" height="24"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -3253,6 +3257,33 @@
                                             <outlet property="trailingDescriptionConstraint" destination="3ZP-y0-leS" id="NrD-vm-Kcg"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="Z93-Ty-BCd" customClass="HEMTextCollectionViewCell">
+                                        <rect key="frame" x="8" y="467" width="584" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Afc-8n-BWE">
+                                                    <rect key="frame" x="16" y="36" width="552" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="centerY" secondItem="Afc-8n-BWE" secondAttribute="centerY" id="20Y-cW-ATh"/>
+                                            <constraint firstItem="Afc-8n-BWE" firstAttribute="trailing" secondItem="Z93-Ty-BCd" secondAttribute="trailing" constant="-16" id="uQq-K6-sig"/>
+                                            <constraint firstItem="Afc-8n-BWE" firstAttribute="leading" secondItem="Z93-Ty-BCd" secondAttribute="leading" constant="16" id="yHS-HW-dHx"/>
+                                        </constraints>
+                                        <size key="customSize" width="584" height="94"/>
+                                        <connections>
+                                            <outlet property="textLabel" destination="Afc-8n-BWE" id="5E3-Ej-H7C"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="kT5-aR-lha" id="7oo-tF-oEp"/>
@@ -3796,6 +3827,33 @@
                                             <outlet property="titleLabel" destination="uVd-Hi-XJW" id="kRl-Uf-9bH"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="soM-Nd-KFN" customClass="HEMTextCollectionViewCell">
+                                        <rect key="frame" x="8" y="587" width="584" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9U-pX-upj">
+                                                    <rect key="frame" x="16" y="36" width="552" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="g9U-pX-upj" firstAttribute="leading" secondItem="soM-Nd-KFN" secondAttribute="leading" constant="16" id="1aZ-Z9-BUb"/>
+                                            <constraint firstAttribute="centerY" secondItem="g9U-pX-upj" secondAttribute="centerY" id="HMJ-4h-khD"/>
+                                            <constraint firstItem="g9U-pX-upj" firstAttribute="trailing" secondItem="soM-Nd-KFN" secondAttribute="trailing" constant="-16" id="K6F-wk-OcT"/>
+                                        </constraints>
+                                        <size key="customSize" width="584" height="94"/>
+                                        <connections>
+                                            <outlet property="textLabel" destination="g9U-pX-upj" id="5x9-bV-VGp"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="dvl-ut-646" id="jV2-uh-3TV"/>
@@ -4010,6 +4068,33 @@
                                             <outlet property="messageLabel" destination="BiA-EQ-FvD" id="dDi-qL-sqw"/>
                                             <outlet property="separator" destination="obI-fk-z4W" id="bt3-L2-gMj"/>
                                             <outlet property="uriImageView" destination="rq6-DJ-Adv" id="suV-5a-Zqw"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="VJn-Mt-cuR" customClass="HEMTextCollectionViewCell">
+                                        <rect key="frame" x="4" y="435" width="584" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7q-gL-7i8">
+                                                    <rect key="frame" x="16" y="36" width="552" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="x7q-gL-7i8" firstAttribute="leading" secondItem="VJn-Mt-cuR" secondAttribute="leading" constant="16" id="OIB-wz-74h"/>
+                                            <constraint firstItem="x7q-gL-7i8" firstAttribute="trailing" secondItem="VJn-Mt-cuR" secondAttribute="trailing" constant="-16" id="QXl-pP-d5f"/>
+                                            <constraint firstAttribute="centerY" secondItem="x7q-gL-7i8" secondAttribute="centerY" id="uXQ-rw-FMx"/>
+                                        </constraints>
+                                        <size key="customSize" width="584" height="94"/>
+                                        <connections>
+                                            <outlet property="textLabel" destination="x7q-gL-7i8" id="JOF-UO-K7N"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -580,6 +580,7 @@
 // trends
 "trends.title" = "Trends";
 "trends.not-enough-data.message" = "Your trends will appear here after a week of sleep.";
+"trends.loading.error.message" = "There was a problem displaying your trends. Please try again.";
 
 // actions
 "actions.cancel" = "Cancel";

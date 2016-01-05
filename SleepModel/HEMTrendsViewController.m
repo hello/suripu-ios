@@ -20,6 +20,8 @@
 #import "HEMSnazzBarController.h"
 #import "HEMRootViewController.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMTextCollectionViewCell.h"
+#import "NSString+HEMUtils.h"
 
 NS_ENUM(NSUInteger) {
     LoadingStateRowCount = 0,
@@ -31,12 +33,15 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, weak) IBOutlet HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, strong) NSMutableArray* defaultTrends;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
+@property (nonatomic, strong) NSError* loadingError;
 @end
 
 @implementation HEMTrendsViewController
 
 static CGFloat const HEMTrendsViewCellHeight = 198.0f;
 static CGFloat const HEMTrendsViewOptionsCellHeight = 255.f;
+static CGFloat const HEMTrendsErrorTextHorzPadding = 16.0f;
+static CGFloat const HEMTrendsErrorTextVertPadding = 36.0f;
 
 static NSString* const HEMScoreTrendType = @"SLEEP_SCORE";
 static NSString* const HEMDurationTrendType = @"SLEEP_DURATION";
@@ -95,21 +100,24 @@ static NSString* const HEMAllScopeType = @"ALL";
     if ([self isLoading])
         return;
     self.loading = !self.defaultTrends;
+    self.loadingError = nil;
+    [self.collectionView reloadData];
     
     __weak typeof(self) weakSelf = self;
     [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = self;
+        strongSelf.loadingError = error;
+        strongSelf.loading = NO;
         if (error) {
             [strongSelf.collectionView reloadData];
-            strongSelf.loading = NO;
             return;
         }
+        
         NSMutableArray* trends = [data mutableCopy];
         if (![trends isEqualToArray:strongSelf.defaultTrends]) {
             strongSelf.defaultTrends = trends;
-            [strongSelf.collectionView reloadData];
         }
-        strongSelf.loading = NO;
+        [strongSelf.collectionView reloadData];
         [strongSelf showTutorialIfSelectedWithData];
     }];
 }
@@ -130,8 +138,6 @@ static NSString* const HEMAllScopeType = @"ALL";
         [self.loadingIndicator stop];
         self.loadingIndicator.hidden = YES;
     }
-
-    [self.collectionView reloadData];
 }
 
 
@@ -200,6 +206,15 @@ static NSString* const HEMAllScopeType = @"ALL";
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath {
     UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
+    
+    if (self.loadingError) {
+        NSString* desc = NSLocalizedString(@"trends.loading.error.message", nil);
+        UIFont* font = [UIFont errorStateDescriptionFont];
+        CGFloat maxWidth = width - (HEMTrendsErrorTextHorzPadding * 2);
+        CGFloat textHeight = [desc heightBoundedByWidth:maxWidth usingFont:font];
+        return CGSizeMake(width, textHeight + (HEMTrendsErrorTextVertPadding * 2));
+    }
+    
     if (self.defaultTrends.count == 0) {
         NSString* desc = NSLocalizedString(@"trends.not-enough-data.message", nil);
         return CGSizeMake(width, [HEMEmptyTrendCollectionViewCell heightWithDescription:desc cellWidth:width]);
@@ -228,6 +243,10 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath {
+    if (self.loadingError) {
+        return [self collectionView:collectionView errorCellForItemAtIndexPath:indexPath];
+    }
+    
     if (self.defaultTrends.count == 0) {
         return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
@@ -247,6 +266,17 @@ static NSString* const HEMAllScopeType = @"ALL";
     cell.statusLabel.hidden = YES;
     cell.delegate = self;
     [self configureGraphForCell:cell withTrend:trend];
+    return cell;
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collection
+            errorCellForItemAtIndexPath:(NSIndexPath*)indexPath {
+    NSString* identifier = [HEMMainStoryboard errorReuseIdentifier];
+    HEMTextCollectionViewCell* cell = [collection dequeueReusableCellWithReuseIdentifier:identifier
+                                                                            forIndexPath:indexPath];
+    cell.textLabel.text = NSLocalizedString(@"trends.loading.error.message", nil);
+    cell.textLabel.font = [UIFont errorStateDescriptionFont];
+    cell.backgroundColor = [UIColor whiteColor];
     return cell;
 }
 

@@ -15,6 +15,7 @@
 #import "HEMSensePairViewController.h"
 #import "HEMSensePairDelegate.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMRootViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMSupportUtil.h"
 #import "HEMDeviceService.h"
@@ -96,7 +97,11 @@
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
     [[self devicesPresenter] refresh];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSTimeInterval delayInSeconds = 1.25f;
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
 - (void)didCancelPairing:(HEMPillPairViewController *)controller {

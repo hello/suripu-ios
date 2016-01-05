@@ -209,6 +209,11 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 }
 
 - (void)wiFiColor:(UIColor**)color icon:(UIImage**)icon {
+    if (![self attemptedDataLoad]) {
+        *color = [UIColor blackColor];
+        return;
+    }
+    
     SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
     SENWiFiCondition condition = [[senseMetadata wiFi] condition];
     

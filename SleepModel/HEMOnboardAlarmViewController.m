@@ -57,11 +57,6 @@
     [[self videoView] pause];
 }
 
-- (void)next {
-    [[HEMOnboardingService sharedService] disconnectCurrentSense];
-    [self completeOnboarding];
-}
-
 #pragma mark - Actions
 
 - (IBAction)setAlarmNow:(id)sender {
@@ -78,7 +73,7 @@
 }
 
 - (IBAction)setAlarmLater:(id)sender {
-    [self next];
+    [self completeOnboarding];
 }
 
 #pragma mark - HEMAlarmControllerDelegate
@@ -89,7 +84,7 @@
 
 - (void)didSaveAlarm:(__unused SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC {
     [self dismissViewControllerAnimated:NO completion:^{
-        [self next];
+        [self completeOnboarding];
     }];
 }
 

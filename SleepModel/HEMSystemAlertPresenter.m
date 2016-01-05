@@ -243,7 +243,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                             fixButtonTitle:&fixTitle
                                  alertType:state];
             
-            if (title && message) {
+            if (message) {
                 [strongSelf showDeviceWarningWithTitle:title
                                                message:message
                                      cancelButtonTitle:cancelTitle

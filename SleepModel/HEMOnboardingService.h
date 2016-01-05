@@ -48,14 +48,6 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 
 @interface HEMOnboardingService : SENService
 
-/**
- * @property pairedAccountsToSense
- *
- * @discussion
- * Set, after calling checkNumberOfPairedAccounts.  If it was set then, the method
- * is called again, it will override what was set before
- */
-@property (nonatomic, strong, readonly) NSNumber* pairedAccountsToSense;
 @property (nonatomic, copy,   readonly) NSArray* nearbySensesFound;;
 @property (nonatomic, strong, readonly) SENAccount* currentAccount;
 @property (nonatomic, strong, readonly) SENSenseManager* currentSenseManager;
@@ -242,13 +234,6 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * @return http status code if available
  */
 - (NSInteger)httpStatusCodeFromError:(NSError*)error;
-
-/**
- * Check the number of paired accounts currently attached to the Sense that
- * has been set for the currently active sense manager, if any.  Upon completion,
- * the property pairedAccountsToSense will be set
- */
-- (void)checkNumberOfPairedAccounts;
 
 #pragma mark - WiFi
 

@@ -71,7 +71,6 @@ NSString* const kHEMAnalyticsEventPropWiFiScan = @"wifi_scan";
 NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";
 NSString* const kHEMAnalyticsEventPropPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventPropPillPlacement = @"pill_placement";
-NSString* const kHEMAnalyticsEventPropPillAnother = @"pill_another";
 
 NSString* const HEMAnalyticsEventOnbStart = @"Onboarding Start";
 NSString* const HEMAnalyticsEventAccount = @"Account";
@@ -82,9 +81,7 @@ NSString* const HEMAnalyticsEventNoBle = @"No BLE";
 NSString* const HEMAnalyticsEventAudio = @"Sense Audio";
 NSString* const HEMAnalyticsEventSleepPill = @"Sleep Pill";
 NSString* const HEMAnalyticsEventPillPlacement = @"Onboarding Pill Placement";
-NSString* const HEMAnalyticsEventAnotherPill = @"Onboarding Another Pill";
 NSString* const HEMAnalyticsEventPairingMode = @"Pairing Mode Help";
-NSString* const HEMAnalyticsEventGetApp = @"Get App";
 NSString* const HEMAnalyticsEventSenseColors = @"Onboarding Sense Colors";
 NSString* const HEMAnalyticsEventFirstAlarm = @"Onboarding First Alarm";
 NSString* const HEMAnalyticsEventRoomCheck = @"Onboarding Room Check";

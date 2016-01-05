@@ -42,7 +42,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 @property (nonatomic, assign) NSUInteger sensorPollingAttempts;
 @property (nonatomic, copy)   NSArray* nearbySensesFound;
 @property (nonatomic, assign) NSInteger senseScanAttempts;
-@property (nonatomic, strong) NSNumber* pairedAccountsToSense;
 @property (nonatomic, strong) SENAccount* currentAccount;
 @property (nonatomic, strong) SENSenseManager* currentSenseManager;
 @property (nonatomic, assign, getter=shouldStopPreScanningForSenses) BOOL stopPreScanningForSenses;
@@ -64,7 +63,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     [self stopPreScanning];
     [SENSenseManager stopScan]; // if one is still scanning for some reason
     [self setNearbySensesFound:nil];
-    [self setPairedAccountsToSense:nil];
     [self setPollingSensorData:NO];
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
@@ -269,19 +267,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 - (BOOL)isAuthorizedUser {
     return [SENAuthorizationService isAuthorized];
-}
-
-- (void)checkNumberOfPairedAccounts {
-    NSString* deviceId = [[[self currentSenseManager] sense] deviceId];
-    if ([deviceId length] > 0) {
-        __weak typeof(self) weakSelf = self;
-        [SENAPIDevice getPairingInfo:^(SENDevicePairingInfo* info, NSError *error) {
-            if (error) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
-            }
-            [weakSelf setPairedAccountsToSense:[info pairedAccounts]];
-        }];
-    }
 }
 
 - (void)loadCurrentAccount:(void(^)(SENAccount* account, NSError* error))completion {

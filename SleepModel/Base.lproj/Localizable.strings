@@ -146,13 +146,6 @@
 "location.error.not-enabled" = "You have denied access to, or disabled, Location Services. You can change this preference inside the Settings app.";
 "location.error.weak-signal" = "We were unable to obtain your location. Try moving to a different location and try again.";
 
-// setting up second pill
-"setup.second-pill.error.title" = "Failed to enable Pairing Mode";
-"setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
-"setup.second-pill.error.sense-full" = "Sense cannot pair with any more devices.";
-"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode. Have your partner visit %@ on their mobile device to download the Sense app, and create a new account.\n\nThey will be given instructions to set up their Sleep Pill.";
-"setup.get-app.url" = "senseapp.com";
-
 // settings
 "settings.title" = "Settings";
 "settings.notifications" = "Notifications";

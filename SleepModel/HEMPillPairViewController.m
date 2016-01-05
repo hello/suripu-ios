@@ -264,20 +264,9 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 
 - (void)flashPairedState {
     NSString* paired = NSLocalizedString(@"pairing.done", nil);
-    [[self overlayActivityView] showWithText:paired activity:NO completion:^{
-        [[self cancelItem] setEnabled:YES];
-        
-        [[self overlayActivityView] dismissWithResultText:nil showSuccessMark:YES remove:YES completion:nil];
-        
-        SENSenseLEDState ledState = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
-        __weak typeof(self) weakSelf = self;
-        [[self manager] setLED:ledState completion:^(id response, NSError *error) {
-            if (error != nil) {
-                [SENAnalytics trackWarningWithMessage:@"failed to set LED on Sense"];
-            }
-            [weakSelf proceed];
-        }];
-
+    UIView* activitySuperview = [[self navigationController] view];
+    [[self overlayActivityView] showInView:activitySuperview withText:paired activity:NO completion:^{
+        [self proceed];
     }];
 }
 
@@ -294,11 +283,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     __weak typeof(self) weakSelf = self;
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.skip-for-now", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
         __strong typeof(weakSelf) strongSelf = self;
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
         NSDictionary* props = @{kHEMAnalyticsEventPropOnBScreen :kHEMAnalyticsEventPropScreenPillPairing};
         [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
-
-        [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
-        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
+        [service saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
+        [service disconnectCurrentSense];
         NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
         [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
     }];
@@ -308,20 +297,30 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)cancel:(id)sender {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service disconnectCurrentSense];
     [[self delegate] didCancelPairing:self];
 }
 
 #pragma mark - Next
 
 - (void)proceed {
-    [[HEMOnboardingService sharedService] notifyOfPillPairingChange];
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service notifyOfPillPairingChange];
+    [service disconnectCurrentSense];
+    
+    BOOL remove = ![self delegate];
+    [[self overlayActivityView] dismissWithResultText:nil
+                                      showSuccessMark:YES
+                                               remove:remove
+                                           completion:nil];
     
     if ([self delegate] == nil) {
-        [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
-        
+        [service saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
         NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];
     } else {
+        [[self cancelItem] setEnabled:YES];
         [[self delegate] didPairWithPillFrom:self];
     }
 }

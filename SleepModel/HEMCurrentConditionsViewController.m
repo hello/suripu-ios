@@ -42,8 +42,6 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 static CGFloat const HEMCurrentConditionsPairViewHeight = 352.0f;
 static CGFloat const HEMCurrentConditionsItemSpacing = 8.f;
 static NSUInteger const HEMConditionGraphPointLimit = 130;
-static CGFloat const HEMCurrentConditionsErrorTextHorzPadding = 16.0f;
-static CGFloat const HEMCurrentConditionsErrorTextVertPadding = 26.0f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -487,10 +485,10 @@ static CGFloat const HEMCurrentConditionsErrorTextVertPadding = 26.0f;
         return CGSizeMake(defaultSize.width, HEMCurrentConditionsPairViewHeight);
     } else if ([self.sensors count] == 0) {
         NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
-        CGFloat maxWidth = defaultSize.width - (HEMCurrentConditionsErrorTextHorzPadding * 2);
+        CGFloat maxWidth = defaultSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
         UIFont* font = [UIFont errorStateDescriptionFont];
         CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
-        return CGSizeMake(maxWidth, textHeight + (HEMCurrentConditionsErrorTextVertPadding * 2));
+        return CGSizeMake(defaultSize.width, textHeight + (HEMStyleCardErrorTextVertMargin * 2));
     }
     return defaultSize;
 }

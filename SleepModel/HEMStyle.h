@@ -10,3 +10,6 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "NSShadow+HEMStyle.h"
+
+extern CGFloat const HEMStyleCardErrorTextHorzMargin;
+extern CGFloat const HEMStyleCardErrorTextVertMargin;

@@ -21,6 +21,7 @@
             <string>AvenirNext-Light</string>
             <string>AvenirNext-Light</string>
             <string>AvenirNext-Light</string>
+            <string>AvenirNext-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -4067,6 +4068,33 @@
                                             <outlet property="messageLabel" destination="BiA-EQ-FvD" id="dDi-qL-sqw"/>
                                             <outlet property="separator" destination="obI-fk-z4W" id="bt3-L2-gMj"/>
                                             <outlet property="uriImageView" destination="rq6-DJ-Adv" id="suV-5a-Zqw"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="VJn-Mt-cuR" customClass="HEMTextCollectionViewCell">
+                                        <rect key="frame" x="4" y="435" width="584" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7q-gL-7i8">
+                                                    <rect key="frame" x="16" y="36" width="552" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="x7q-gL-7i8" firstAttribute="leading" secondItem="VJn-Mt-cuR" secondAttribute="leading" constant="16" id="OIB-wz-74h"/>
+                                            <constraint firstItem="x7q-gL-7i8" firstAttribute="trailing" secondItem="VJn-Mt-cuR" secondAttribute="trailing" constant="-16" id="QXl-pP-d5f"/>
+                                            <constraint firstAttribute="centerY" secondItem="x7q-gL-7i8" secondAttribute="centerY" id="uXQ-rw-FMx"/>
+                                        </constraints>
+                                        <size key="customSize" width="584" height="94"/>
+                                        <connections>
+                                            <outlet property="textLabel" destination="x7q-gL-7i8" id="JOF-UO-K7N"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

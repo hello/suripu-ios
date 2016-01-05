@@ -14,7 +14,7 @@
 #import "HEMTrendCollectionViewCell.h"
 #import "HEMEmptyTrendCollectionViewCell.h"
 #import "HEMGraphSectionOverlayView.h"
-#import "UIFont+HEMStyle.h"
+#import "HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
 #import "HEMSnazzBarController.h"
@@ -40,8 +40,6 @@ NS_ENUM(NSUInteger) {
 
 static CGFloat const HEMTrendsViewCellHeight = 198.0f;
 static CGFloat const HEMTrendsViewOptionsCellHeight = 255.f;
-static CGFloat const HEMTrendsErrorTextHorzPadding = 16.0f;
-static CGFloat const HEMTrendsErrorTextVertPadding = 26.0f;
 
 static NSString* const HEMScoreTrendType = @"SLEEP_SCORE";
 static NSString* const HEMDurationTrendType = @"SLEEP_DURATION";
@@ -101,7 +99,10 @@ static NSString* const HEMAllScopeType = @"ALL";
         return;
     self.loading = !self.defaultTrends;
     self.loadingError = nil;
-    [self.collectionView reloadData];
+    
+    if (self.isLoading) {
+        [self.collectionView reloadData];
+    }
     
     __weak typeof(self) weakSelf = self;
     [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError* error) {
@@ -210,9 +211,9 @@ static NSString* const HEMAllScopeType = @"ALL";
     if (self.loadingError) {
         NSString* desc = NSLocalizedString(@"trends.loading.error.message", nil);
         UIFont* font = [UIFont errorStateDescriptionFont];
-        CGFloat maxWidth = width - (HEMTrendsErrorTextHorzPadding * 2);
+        CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
         CGFloat textHeight = [desc heightBoundedByWidth:maxWidth usingFont:font];
-        return CGSizeMake(width, textHeight + (HEMTrendsErrorTextVertPadding * 2));
+        return CGSizeMake(width, textHeight + (HEMStyleCardErrorTextVertMargin * 2));
     }
     
     if (self.defaultTrends.count == 0) {

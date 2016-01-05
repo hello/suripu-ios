@@ -19,15 +19,22 @@
 #import "HEMSnazzBarController.h"
 #import "HEMRootViewController.h"
 #import "HEMTextCollectionViewCell.h"
+#import "HEMActivityIndicatorView.h"
 
-@interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
-                                                  UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate, HEMSnazzBarControllerChild>
+@interface HEMCurrentConditionsViewController () <
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout,
+    HEMSensePairingDelegate,
+    HEMSnazzBarControllerChild
+>
 @property (nonatomic, strong) NSArray *sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer *refreshTimer;
 @property (nonatomic, strong) NSMutableDictionary *sensorGraphData;
 @property (nonatomic) CGFloat refreshRate;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (nonatomic) BOOL shouldReload;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @property (nonatomic, strong) NSDate *lastRefreshDate;
@@ -166,6 +173,24 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     }
 }
 
+- (void)setLoading:(BOOL)loading {
+    if (_loading == loading) {
+        return;
+    }
+    
+    _loading = loading;
+    
+    if ([self.sensors count] == 0 && loading) {
+        [[self collectionView] setHidden:YES];
+        [[self activityIndicator] setHidden:NO];
+        [[self activityIndicator] start];
+    } else {
+        [[self activityIndicator] stop];
+        [[self activityIndicator] setHidden:YES];
+        [[self collectionView] setHidden:NO];
+    }
+}
+
 - (void)refreshSensors {
     if (![SENAuthorizationService isAuthorized])
         return;
@@ -179,7 +204,9 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
               self.noSense = NO;
               self.loading = NO;
               [self.collectionView reloadData];
-          } else { [self checkDeviceInfoForSenseAndRefresh]; }
+          } else {
+              [self checkDeviceInfoForSenseAndRefresh];
+          }
         }];
     }
 }

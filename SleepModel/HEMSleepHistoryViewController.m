@@ -221,7 +221,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 
 - (SENTimeline*)resultAtIndexPath:(NSIndexPath*)indexPath {
     NSInteger index = [self indexAtIndexPath:indexPath];
-    if (index == NSNotFound)
+    if (index == NSNotFound || index >= [self.sleepDataSummaries count])
         return nil;
     return [self.sleepDataSummaries objectAtIndex:index];
 }

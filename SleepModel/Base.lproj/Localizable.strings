@@ -398,7 +398,7 @@
 "sensor.particulates" = "Air quality";
 "sensor.sound" = "Noise";
 "sensor.light" = "Light";
-"sensor.data-unavailable" = "Sensor data is unavailable.";
+"sensor.data-unavailable" = "There was a problem displaying your sensor data. Please try again.";
 "sensor.value.none" = "No data";
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";

@@ -10,10 +10,10 @@
 
 #import "HEMSettingsHeaderFooterView.h"
 
-CGFloat const HEMSettingsHeaderFooterHeight = 16.0f;
+CGFloat const HEMSettingsHeaderFooterHeight = 15.0f;
 CGFloat const HEMSettingsHeaderFooterSectionHeight = 12.0f;
 CGFloat const HEMSettingsHeaderFooterBorderHeight = 0.5f;
-CGFloat const HEMSettingsHeaderFooterHeightWithTitle = 28.0f;
+CGFloat const HEMSettingsHeaderFooterHeightWithTitle = 25.0f;
 
 static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 

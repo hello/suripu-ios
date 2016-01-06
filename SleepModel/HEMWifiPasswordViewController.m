@@ -143,7 +143,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [[self continueButton] setEnabled:enable];
     [[self navigationItem] setHidesBackButton:!enable animated:YES];
 
-    if (enable) {
+    if (enable && [self isVisible]) {
         [[self passwordField] becomeFirstResponder];
     }
 }

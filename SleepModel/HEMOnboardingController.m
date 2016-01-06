@@ -93,8 +93,10 @@
     [self setVisible:YES];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // set visibility before it's actually disappeared in case anything is
+    // trying to present something while it's going away
     [self setVisible:NO];
 }
 

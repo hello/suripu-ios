@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.1.6
+
+New:
+
+* Improved back view states when data cannot be loaded
+
+Fixes:
+
+* Fixed various settings screen layouts when the in-call status bar is showing
+* Fixed spacing between sections inside device settings to match the back views
+* Fixed potential crasher that can occur in the timeline history view
+
 ## 1.2.1.5
 
 New:

@@ -107,6 +107,7 @@
 + (UIColor *)sleepScoreOvalColor;
 + (UIColor *)deviceAlertMessageColor;
 + (UIColor *)separatorColor;
++ (UIColor *)headerFooterDividerColor;
 + (UIColor *)onboardingDescriptionColor;
 + (UIColor *)onboardingTitleColor;
 + (UIColor *)textfieldPlaceholderFocusedColor;

@@ -118,6 +118,14 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     }];
 }
 
+- (void)didRelayout {
+    [super didRelayout];
+    UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
+    CGSize itemSize = [layout itemSize];
+    itemSize.width = CGRectGetWidth([[[self collectionView] superview] bounds]);
+    [layout setItemSize:itemSize];
+}
+
 #pragma mark - Content
 
 - (NSAttributedString*)attributedFooterText {
@@ -295,7 +303,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     BOOL hasDevice = [self hasDeviceAtIndexPath:indexPath];
     
     CGSize size = [layout itemSize];
-    size.width = CGRectGetWidth([collectionView bounds]);
+    size.width = CGRectGetWidth([[collectionView superview] bounds]);
     
     if (hasDevice) {
         size.height = HEMDeviceInfoHeight;

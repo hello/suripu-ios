@@ -6,13 +6,11 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
 #import "NSTimeZone+HEMMapping.h"
-#import "UIColor+HEMStyle.h"
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
@@ -22,16 +20,15 @@
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActivityCoverView.h"
-#import "HEMWarningCollectionViewCell.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMTimeZoneViewController.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMActionSheetViewController.h"
-#import "HEMDeviceActionCell.h"
 #import "HEMSenseSettingsDataSource+HEMCollectionView.h"
 #import "HEMDeviceWarning.h"
+#import "HEMStyle.h"
 
 @interface HEMSenseViewController() <UICollectionViewDelegate, HEMWiFiConfigurationDelegate>
 
@@ -97,6 +94,18 @@
 }
 
 #pragma mark - UICollectionViewDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+referenceSizeForHeaderInSection:(NSInteger)section {
+    CGSize size = [[collectionView superview] bounds].size;
+    if (section == 0) {
+        size.height = HEMStyleDeviceSectionTopMargin;
+    } else {
+        size.height = HEMStyleSectionTopMargin;
+    }
+    return size;
+}
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewFlowLayout *)layout

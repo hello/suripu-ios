@@ -7,6 +7,7 @@
 //
 
 #import "HEMNavigationShadowView.h"
+#import "HEMStyle.h"
 
 @implementation HEMNavigationShadowView
 
@@ -48,7 +49,7 @@
     [shadowView setFrame:[self bounds]];
     [self addSubview:shadowView];
     [self setAlpha:0.0f];
-    [self setTopOffset:HEMConstantsContentTopMargin];
+    [self setTopOffset:HEMStyleSectionTopMargin];
 }
 
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset {

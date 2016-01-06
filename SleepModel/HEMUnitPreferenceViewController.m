@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return HEMSettingsHeaderFooterHeight;
+    return HEMSettingsHeaderFooterSectionHeight;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

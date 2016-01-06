@@ -10,11 +10,20 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "UIDevice+HEMUtils.h"
+
 #import "HEMSegmentProvider.h"
+
+// traits = global properties require iOS prefix to not overwrite android props
+static NSString* const HEMSegmentTraitAppVersionName = @"iOS App Version";
+static NSString* const HEMSegmentTraitDeviceModelName = @"iOS Device Model";
+static NSString* const HEMSegmentTraitOSVersionName = @"iOS Version";
+static NSString* const HEMSegmentTraitCountryCode = @"Country Code";
 
 @interface HEMSegmentProvider()
 
 @property (strong, nonatomic) NSMutableDictionary* globalEventProperties;
+@property (strong, nonatomic) NSDictionary* defaultTraits;
 
 @end
 
@@ -28,6 +37,21 @@
         [self listenForApplicationEvents];
     }
     return self;
+}
+
+- (NSDictionary*)defaultTraits {
+    if (!_defaultTraits) {
+        NSBundle* bundle = [NSBundle mainBundle];
+        NSString* countryCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+        NSString* deviceModel = [UIDevice currentDeviceModel];
+        NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+        NSString* iOSVersion = [[UIDevice currentDevice] systemVersion];
+        _defaultTraits = @{HEMSegmentTraitAppVersionName : appVersion,
+                           HEMSegmentTraitDeviceModelName : deviceModel,
+                           HEMSegmentTraitOSVersionName : iOSVersion,
+                           HEMSegmentTraitCountryCode : countryCode};
+    }
+    return _defaultTraits;
 }
 
 - (void)configureWithKey:(NSString*)key {
@@ -60,7 +84,11 @@
     [segment alias:userId];
     [segment flush];
     // set user traits without identifying since it seems to break the funnel
-    [segment identify:nil traits:properties];
+    NSMutableDictionary* traits = [[self defaultTraits] mutableCopy];
+    if (properties) {
+        [traits addEntriesFromDictionary:properties];
+    }
+    [segment identify:nil traits:traits];
 }
 
 #pragma mark - Sign Out
@@ -75,7 +103,11 @@
 
 - (void)setUserId:(NSString *)userId withProperties:(NSDictionary *)properties {
     SEGAnalytics* segment = [SEGAnalytics sharedAnalytics];
-    [segment identify:userId traits:properties];
+    NSMutableDictionary* traits = [[self defaultTraits] mutableCopy];
+    if (properties) {
+        [traits addEntriesFromDictionary:properties];
+    }
+    [segment identify:userId traits:traits];
 }
 
 #pragma mark - Tracking

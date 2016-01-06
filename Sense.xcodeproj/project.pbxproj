@@ -162,7 +162,7 @@
 		BF2AB9391B1938CC0092E9C4 /* HEMFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */; };
 		BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */; };
 		BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */; };
-		BF414CE11A770A6D006204DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF414CE01A770A6D006204DE /* HealthKit.framework */; };
+		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
 		BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF44734F1A6341F600389ECE /* HEMOnboardingController.m */; };
 		BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */; };
 		BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E91A1301D700831380 /* HEMInsightViewController.m */; };
@@ -640,7 +640,8 @@
 		BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMFormViewController.m; sourceTree = "<group>"; };
 		BF2EAD1F1B2F520400C3A6E3 /* HEMSupportTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportTopicsViewController.h; sourceTree = "<group>"; };
 		BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportTopicsViewController.m; sourceTree = "<group>"; };
-		BF414CE01A770A6D006204DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+HEMUtils.h"; sourceTree = "<group>"; };
+		BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+HEMUtils.m"; sourceTree = "<group>"; };
 		BF44734E1A6341F600389ECE /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
 		BF44734F1A6341F600389ECE /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
 		BF4E88E51A12FB3700831380 /* UIView+HEMSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMSnapshot.h"; sourceTree = "<group>"; };
@@ -933,7 +934,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF414CE11A770A6D006204DE /* HealthKit.framework in Frameworks */,
 				8A4B669B19F6C9E900445883 /* MessageUI.framework in Frameworks */,
 				BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
@@ -993,7 +993,6 @@
 			isa = PBXGroup;
 			children = (
 				BF62150C1AB8C1C80047A518 /* libicucore.dylib */,
-				BF414CE01A770A6D006204DE /* HealthKit.framework */,
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
 				BF7F1BDF19E30DCC0028F799 /* libPods.a */,
 				BF7F1BDD19E30D9A0028F799 /* libPods.a */,
@@ -2299,6 +2298,8 @@
 				BFB59E171C03BBD6001BD941 /* UIBarButtonItem+HEMNav.m */,
 				BF83399A1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.h */,
 				BF83399B1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m */,
+				BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */,
+				BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2547,6 +2548,9 @@
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
+							};
+							com.apple.HealthKit = {
+								enabled = 0;
 							};
 							com.apple.Keychain = {
 								enabled = 1;
@@ -2930,6 +2934,7 @@
 				BFD4012C1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m in Sources */,
 				BFB815231BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m in Sources */,
 				8A7D801C1A40D71400B0BFD7 /* HEMCardCollectionViewCell.m in Sources */,
+				BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */,
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,
 				BF539CC41C0D3558000F77AA /* HEMQuestionsService.m in Sources */,
 				8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */,

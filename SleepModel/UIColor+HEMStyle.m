@@ -158,6 +158,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)separatorColor {
     return [UIColor colorWithHex:0x000000 alpha:0.1f];
 }
++ (UIColor *)headerFooterDividerColor {
+    return [UIColor colorWithHex:0x000000 alpha:0.05f];
+}
 + (UIColor *)onboardingDescriptionColor {
     return [UIColor colorWithHex:0x0B0B0B alpha:0.5f];
 }

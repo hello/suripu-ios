@@ -312,7 +312,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
         case HEMAccountSectionAccount:
             return 0.0f;
         default:
-            return HEMSettingsHeaderFooterHeight;
+            return HEMSettingsHeaderFooterSectionHeight;
     }
 }
 

@@ -10,9 +10,10 @@
 
 #import "HEMSettingsHeaderFooterView.h"
 
-CGFloat const HEMSettingsHeaderFooterHeight = 18.0f;
-CGFloat const HEMSettingsHeaderFooterBorderHeight = 1.0f;
-CGFloat const HEMSettingsHeaderFooterHeightWithTitle = 28.0f;
+CGFloat const HEMSettingsHeaderFooterHeight = 15.0f;
+CGFloat const HEMSettingsHeaderFooterSectionHeight = 12.0f;
+CGFloat const HEMSettingsHeaderFooterBorderHeight = 0.5f;
+CGFloat const HEMSettingsHeaderFooterHeightWithTitle = 25.0f;
 
 static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 
@@ -42,7 +43,7 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
     borderFrame.origin.y = yOrigin;
     borderFrame.size.height = HEMSettingsHeaderFooterBorderHeight;
     UIView* border = [[UIView alloc] initWithFrame:borderFrame];
-    [border setBackgroundColor:[UIColor separatorColor]];
+    [border setBackgroundColor:[UIColor headerFooterDividerColor]];
     [border setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     return border;
 }
@@ -55,7 +56,7 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
     }
     
     if (bottomBorder) {
-        CGFloat y = MAX(0.0f, HEMSettingsHeaderFooterHeight - HEMSettingsHeaderFooterBorderHeight);
+        CGFloat y = MAX(0.0f, CGRectGetHeight([self bounds]) - HEMSettingsHeaderFooterBorderHeight);
         UIView* bBorder = [self borderViewAtYOrigin:y];
         [self addSubview:bBorder];
         [self setBottomBorder:bBorder];

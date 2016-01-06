@@ -156,7 +156,7 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return section == HEMTimeZoneSectionCurrent ? HEMSettingsHeaderFooterHeight : 0.0f;
+    return section == HEMTimeZoneSectionCurrent ? HEMSettingsHeaderFooterSectionHeight : 0.0f;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

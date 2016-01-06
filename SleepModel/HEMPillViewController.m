@@ -9,8 +9,6 @@
 #import <SenseKit/SENPillMetadata.h>
 #import <SenseKit/SENPairedDevices.h>
 
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -24,6 +22,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 #import "HEMActionSheetViewController.h"
+#import "HEMStyle.h"
 
 static NSString* const HEMPillHeaderReuseId = @"sectionHeader";
 
@@ -37,7 +36,11 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     HEMPillActionAdvanced = 1
 };
 
-@interface HEMPillViewController() <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HEMPillViewController() <
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout
+>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
@@ -211,13 +214,25 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 #pragma mark - UICollectionViewDelegate
 
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+referenceSizeForHeaderInSection:(NSInteger)section {
+    CGSize size = [[collectionView superview] bounds].size;
+    if (section == 0) {
+        size.height = HEMStyleDeviceSectionTopMargin;
+    } else {
+        size.height = HEMStyleSectionTopMargin;
+    }
+    return size;
+}
+
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize size = [layout itemSize];
     NSInteger sec = [indexPath section];
 
-    size.width = CGRectGetWidth([collectionView bounds]);
+    size.width = CGRectGetWidth([[collectionView superview] bounds]);
     
     if (sec < [[self warnings] count]) {
         CGFloat maxWidth = size.width - (2*HEMWarningCellMessageHorzPadding);

@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 extern CGFloat const HEMSettingsHeaderFooterHeight;
+extern CGFloat const HEMSettingsHeaderFooterSectionHeight;
 extern CGFloat const HEMSettingsHeaderFooterBorderHeight;
 extern CGFloat const HEMSettingsHeaderFooterHeightWithTitle;
 

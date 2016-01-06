@@ -14,6 +14,8 @@
 
 #import <ZendeskSDK/ZendeskSDK.h>
 
+#import "UIDevice+HEMUtils.h"
+
 #import "HEMZendeskService.h"
 #import "HEMSupportUtil.h"
 #import "HEMConfig.h"
@@ -127,7 +129,7 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
         NSBundle* bundle = [NSBundle mainBundle];
         UIDevice* device = [UIDevice currentDevice];
         NSString* osVersion = [self tagMinusZDKTagTokens:[device systemVersion]];
-        NSString* deviceModel = [self tagMinusZDKTagTokens:[HEMSupportUtil deviceModel]];
+        NSString* deviceModel = [self tagMinusZDKTagTokens:[UIDevice currentDeviceModel]];
         NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
         NSString* fwVersion = [senseMetadata  firmwareVersion];
         NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];

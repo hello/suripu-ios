@@ -11,11 +11,6 @@
 @interface HEMSupportUtil : NSObject
 
 /**
- * @return model of the current device used
- */
-+ (NSString*)deviceModel;
-
-/**
  * Launch a mail composer, if email accounts are configured, with email and
  * subject prefilled as specified, attaching any logs that may exist for
  * troubleshooting purposes

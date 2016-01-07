@@ -24,26 +24,37 @@ CGFloat const HEMEventBubbleWaveformHeight = 26.f;
 
 @implementation HEMEventBubbleView
 
-CGFloat const HEMEventBubbleTextWidthOffset = 121.f;
-CGFloat const HEMEventBubbleWidthOffset = 50.f;
+// values more or less matches the xib file for the cell as well as the sketch
+// file.  If any of the two changes, be sure to update here
+CGFloat const HEMEventBubbleTextLeftMargin = 52.0f;
+CGFloat const HEMEventBubbleTextHorzPadding = 12.0f;
+CGFloat const HEMEventBubbleRightMargin = 40.f;
+CGFloat const HEMEventBubbleLeftMargin = 8.f;
+CGFloat const HEMEventBubbleContentHorzMargin = 8.f;
 CGFloat const HEMEventBubbleTextHeightOffset = 28.f;
 CGFloat const HEMEventBubbleMinimumHeight = 48.f;
-CGFloat const HEMEventTimeLabelWidth = 40.f;
+// max is really 48, but this is used only for calculations to get actual size
+// so it's ok to be slightly larger
+CGFloat const HEMEventTimeLabelWidth = 50.f;
 CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text
                         timeText:(NSAttributedString *)time
                     showWaveform:(BOOL)visible {
-    CGRect windowBounds = HEMKeyWindowBounds();
-    CGFloat screenWidth = CGRectGetWidth(windowBounds);
-    CGFloat textWidth = screenWidth - HEMEventBubbleTextWidthOffset - [time sizeWithWidth:HEMEventTimeLabelWidth].width;
-    CGSize textSize = [text sizeWithWidth:textWidth];
-    CGFloat width = screenWidth - HEMEventBubbleWidthOffset;
+    CGFloat screenWidth = CGRectGetWidth(HEMKeyWindowBounds());
+    CGFloat bubbleWidth = screenWidth - HEMEventBubbleRightMargin - HEMEventBubbleLeftMargin;
+    CGFloat textPadding = HEMEventBubbleTextLeftMargin + HEMEventBubbleContentHorzMargin;
+    CGFloat maxTextWidth = bubbleWidth- textPadding;
+    if (time) {
+        CGFloat timeWidth = [time sizeWithWidth:HEMEventTimeLabelWidth].width;
+        maxTextWidth += (timeWidth + HEMEventBubbleTextHorzPadding);
+    }
+    CGSize textSize = [text sizeWithWidth:maxTextWidth];
     CGFloat height = MAX(textSize.height + HEMEventBubbleTextHeightOffset, HEMEventBubbleMinimumHeight);
     if (visible) {
         height += HEMEventBubbleWaveformHeight;
     }
-    return CGSizeMake(width, height);
+    return CGSizeMake(bubbleWidth, height);
 }
 
 - (void)awakeFromNib {

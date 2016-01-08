@@ -44,7 +44,7 @@ static NSInteger const HEMInsightRowCountForGenerics = 3;
 
 static CGFloat const HEMInsightCellSummaryTopMargin = 20.0f;
 static CGFloat const HEMInsightCellSummaryBotMargin = 33.0f;
-static CGFloat const HEMInsightCellSummaryLeftMargin = 48.0f;
+static CGFloat const HEMInsightCellSummaryLeftMargin = 50.0f; // 48 + 2 for divider
 static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
 
 static CGFloat const HEMInsightCellTitleTopMargin = 32.0f;

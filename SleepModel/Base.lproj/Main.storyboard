@@ -613,10 +613,10 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="top" secondItem="JL1-nL-L7E" secondAttribute="topMargin" constant="-8" id="1Y1-m3-BaV"/>
+                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="top" secondItem="JL1-nL-L7E" secondAttribute="top" id="1Y1-m3-BaV"/>
                                             <constraint firstItem="HU0-pt-HeF" firstAttribute="width" secondItem="JL1-nL-L7E" secondAttribute="width" id="Jxq-S0-LMe"/>
                                             <constraint firstItem="HU0-pt-HeF" firstAttribute="height" secondItem="JL1-nL-L7E" secondAttribute="height" id="nxA-Yy-bax"/>
-                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="leading" secondItem="JL1-nL-L7E" secondAttribute="leadingMargin" constant="-8" id="paC-0V-zXq"/>
+                                            <constraint firstItem="HU0-pt-HeF" firstAttribute="leading" secondItem="JL1-nL-L7E" secondAttribute="leading" id="paC-0V-zXq"/>
                                         </constraints>
                                         <size key="customSize" width="600" height="183"/>
                                         <connections>
@@ -651,9 +651,9 @@
                                             <constraint firstItem="S0U-m6-ZMO" firstAttribute="leading" secondItem="CNv-oE-SdB" secondAttribute="trailing" constant="24" id="J5t-Gg-8kR"/>
                                             <constraint firstItem="CNv-oE-SdB" firstAttribute="top" secondItem="ipI-xW-fel" secondAttribute="topMargin" constant="12" id="hT0-Jw-3wF"/>
                                             <constraint firstItem="S0U-m6-ZMO" firstAttribute="bottom" secondItem="CNv-oE-SdB" secondAttribute="bottom" id="j8U-q4-qxi"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="S0U-m6-ZMO" secondAttribute="trailing" constant="16" id="pfn-d6-GZ0"/>
+                                            <constraint firstAttribute="trailing" secondItem="S0U-m6-ZMO" secondAttribute="trailing" constant="24" id="pfn-d6-GZ0"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="CNv-oE-SdB" secondAttribute="bottom" constant="24" id="r02-pX-s6k"/>
-                                            <constraint firstItem="CNv-oE-SdB" firstAttribute="leading" secondItem="ipI-xW-fel" secondAttribute="leadingMargin" constant="16" id="r9F-mp-iOF"/>
+                                            <constraint firstItem="CNv-oE-SdB" firstAttribute="leading" secondItem="ipI-xW-fel" secondAttribute="leading" constant="24" id="r9F-mp-iOF"/>
                                         </constraints>
                                         <size key="customSize" width="600" height="72"/>
                                         <connections>
@@ -807,13 +807,13 @@
                             <constraint firstItem="o94-WI-OT3" firstAttribute="bottom" secondItem="pvw-dp-1ho" secondAttribute="top" id="0ou-x6-a3L"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pvw-dp-1ho" secondAttribute="trailing" constant="-20" id="10h-3S-jd0"/>
                             <constraint firstItem="wA4-u4-558" firstAttribute="bottom" secondItem="pvw-dp-1ho" secondAttribute="top" id="8oT-0i-YIj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wA4-u4-558" secondAttribute="trailing" constant="-20" id="FJN-FA-Vlt"/>
+                            <constraint firstAttribute="trailing" secondItem="wA4-u4-558" secondAttribute="trailing" id="FJN-FA-Vlt"/>
                             <constraint firstItem="wA4-u4-558" firstAttribute="top" secondItem="1Ej-Wd-DHd" secondAttribute="bottom" constant="-20" id="IRZ-F5-GLJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="o94-WI-OT3" secondAttribute="trailing" constant="-20" id="NfW-DK-dAO"/>
                             <constraint firstItem="XsL-Ws-6qy" firstAttribute="top" secondItem="pvw-dp-1ho" secondAttribute="bottom" id="Peo-1T-uzR"/>
                             <constraint firstItem="o94-WI-OT3" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-20" id="XUo-gN-WeF"/>
                             <constraint firstItem="pvw-dp-1ho" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-20" id="frk-IO-48C"/>
-                            <constraint firstItem="wA4-u4-558" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-20" id="gqE-0n-z3c"/>
+                            <constraint firstItem="wA4-u4-558" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leading" id="gqE-0n-z3c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EEc-Uh-i2f"/>

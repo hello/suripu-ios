@@ -37,7 +37,7 @@ static NSPredicate* emailPredicate;
 
 - (CGSize)sizeBoundedByWidth:(CGFloat)width attriburtes:(NSDictionary *)attributes {
     NSStringDrawingOptions options
-        = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin;
+        = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesDeviceMetrics;
     CGSize textSize = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                          options:options
                                       attributes:attributes

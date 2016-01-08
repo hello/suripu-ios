@@ -139,13 +139,13 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     CGFloat const iconImageLeft = 4.f;
     CGFloat const iconImageTop = 4.f;
     CGFloat const iconImageDiameter = 40.f;
-    CGFloat const timeLabelRight = 12.f;
+    CGFloat const timeLabelRight = 8.f;
     CGFloat const timeLabelTop = 17.f;
     CGFloat const messageLabelLeft = 52.f;
     CGFloat const messageLabelTop = 14.f;
     CGFloat const messageLabelRight = 8.f;
     CGFloat const messageLabelHeightOffset = 26.f;
-    CGFloat const timeLabelMaxWidth = 40.f;
+    CGFloat const timeLabelMaxWidth = 48.f;
     CGFloat const timeLabelMaxHeight = 24.f;
     CGFloat const waveformEdgeInset = 4.f;
 

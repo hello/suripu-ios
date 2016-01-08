@@ -35,9 +35,21 @@ static NSPredicate* emailPredicate;
     return [self sizeBoundedByWidth:width attriburtes:attributes].height;
 }
 
+- (CGFloat)heightBoundedByWidth:(CGFloat)width
+                     attributes:(NSDictionary *)attributes
+             withDrawingOptions:(NSStringDrawingOptions)options {
+    return [self sizeBoundedByWidth:width attriburtes:attributes options:options].height;
+}
+
 - (CGSize)sizeBoundedByWidth:(CGFloat)width attriburtes:(NSDictionary *)attributes {
     NSStringDrawingOptions options
         = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesDeviceMetrics;
+    return [self sizeBoundedByWidth:width attriburtes:attributes options:options];
+}
+
+- (CGSize)sizeBoundedByWidth:(CGFloat)width
+                 attriburtes:(NSDictionary *)attributes
+                     options:(NSStringDrawingOptions)options {
     CGSize textSize = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                          options:options
                                       attributes:attributes

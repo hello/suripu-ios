@@ -265,6 +265,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     self.graphView.alphaLine = 0.7;
     self.graphView.colorPoint = color;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
+    [self.graphView reloadGraph];
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value

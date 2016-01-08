@@ -26,6 +26,7 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeadingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleHeightConstraint;
 
 @end
 
@@ -76,9 +77,8 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
     
     if ([[[self optionDescriptionLabel] text] length] == 0) {
         CGFloat bHeight = CGRectGetHeight([self bounds]);
-        CGFloat titleHeight = CGRectGetHeight([[self optionTitleLabel] bounds]);
-        CGFloat titleTopMargin = (bHeight - titleHeight) / 2;
-        [[self titleTopConstraint] setConstant:titleTopMargin];
+        [[self titleHeightConstraint] setConstant:bHeight];
+        [[self titleTopConstraint] setConstant:0.0f];
     }
     
     [[self imageViewWidth] setConstant:imageSize.width];

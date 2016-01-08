@@ -272,7 +272,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
                                                     <rect key="frame" x="64" y="18" width="93" height="20"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
@@ -868,6 +868,9 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="552" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAK-rd-1sW">
                                                     <rect key="frame" x="4" y="12" width="572" height="21"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="HZl-IF-PVV"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -889,12 +892,12 @@
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="dQg-tB-zFC" secondAttribute="centerY" id="Du6-iL-qHm"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="nAK-rd-1sW" secondAttribute="trailing" constant="16" id="Gs7-Bb-tcB"/>
-                                                <constraint firstItem="C2u-YN-8VF" firstAttribute="top" secondItem="nAK-rd-1sW" secondAttribute="bottom" constant="4" id="TcU-DD-ySn"/>
+                                                <constraint firstItem="C2u-YN-8VF" firstAttribute="top" secondItem="nAK-rd-1sW" secondAttribute="bottom" priority="750" constant="4" id="TcU-DD-ySn"/>
                                                 <constraint firstItem="dQg-tB-zFC" firstAttribute="leading" secondItem="JsL-x8-oq0" secondAttribute="leading" constant="24" id="Ts2-kx-Ka7"/>
                                                 <constraint firstItem="C2u-YN-8VF" firstAttribute="leading" secondItem="nAK-rd-1sW" secondAttribute="leading" id="XNY-iA-uhi"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="C2u-YN-8VF" secondAttribute="trailing" constant="16" id="auc-RY-fG1"/>
                                                 <constraint firstItem="nAK-rd-1sW" firstAttribute="leading" secondItem="dQg-tB-zFC" secondAttribute="trailing" constant="-20" id="gUa-6Q-LP4"/>
-                                                <constraint firstItem="nAK-rd-1sW" firstAttribute="top" secondItem="JsL-x8-oq0" secondAttribute="top" constant="12" id="ojI-n2-A8g"/>
+                                                <constraint firstItem="nAK-rd-1sW" firstAttribute="top" secondItem="JsL-x8-oq0" secondAttribute="top" priority="750" constant="12" id="ojI-n2-A8g"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -903,6 +906,7 @@
                                             <outlet property="imageViewWidth" destination="lFS-Wd-gLw" id="LfA-sN-tsd"/>
                                             <outlet property="optionDescriptionLabel" destination="C2u-YN-8VF" id="0gY-GX-lYp"/>
                                             <outlet property="optionTitleLabel" destination="nAK-rd-1sW" id="brK-rI-QeA"/>
+                                            <outlet property="titleHeightConstraint" destination="HZl-IF-PVV" id="QgM-fi-lK1"/>
                                             <outlet property="titleLeadingConstraint" destination="gUa-6Q-LP4" id="tSs-WF-39T"/>
                                             <outlet property="titleTopConstraint" destination="ojI-n2-A8g" id="ydr-Aw-JcG"/>
                                         </connections>

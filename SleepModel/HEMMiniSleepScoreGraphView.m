@@ -79,8 +79,12 @@ CGFloat const miniScoreBaseHeight = 72.f;
         NSForegroundColorAttributeName: sleepScoreColor,
         NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
-    CGFloat sleepScoreLabelTextHeight = [sleepScoreText heightBoundedByWidth:CGRectGetWidth(sleepScoreLabelRect)
-                                                                  attributes:sleepScoreLabelFontAttributes];
+    NSStringDrawingOptions options = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin;
+    CGFloat sleepScoreWidth = CGRectGetWidth(sleepScoreLabelRect);
+    CGFloat sleepScoreLabelTextHeight = [sleepScoreText heightBoundedByWidth:sleepScoreWidth
+                                                                  attributes:sleepScoreLabelFontAttributes
+                                                          withDrawingOptions:options];
+
     CGContextSaveGState(context);
     CGContextClipToRect(context, sleepScoreLabelRect);
     [sleepScoreText drawInRect: CGRectMake(CGRectGetMinX(sleepScoreLabelRect), CGRectGetMinY(sleepScoreLabelRect) + (CGRectGetHeight(sleepScoreLabelRect) - sleepScoreLabelTextHeight) / 2, CGRectGetWidth(sleepScoreLabelRect), sleepScoreLabelTextHeight) withAttributes: sleepScoreLabelFontAttributes];

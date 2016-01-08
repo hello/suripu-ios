@@ -27,15 +27,13 @@ CGFloat const HEMEventBubbleWaveformHeight = 26.f;
 // values more or less matches the xib file for the cell as well as the sketch
 // file.  If any of the two changes, be sure to update here
 CGFloat const HEMEventBubbleTextLeftMargin = 52.0f;
-CGFloat const HEMEventBubbleTextHorzPadding = 12.0f;
+CGFloat const HEMEventBubbleTextPaddingToTime = 8.0f;
 CGFloat const HEMEventBubbleRightMargin = 40.f;
 CGFloat const HEMEventBubbleLeftMargin = 8.f;
 CGFloat const HEMEventBubbleContentHorzMargin = 8.f;
-CGFloat const HEMEventBubbleTextHeightOffset = 28.f;
+CGFloat const HEMEventBubbleTextHeightOffset = 26.f;
 CGFloat const HEMEventBubbleMinimumHeight = 48.f;
-// max is really 48, but this is used only for calculations to get actual size
-// so it's ok to be slightly larger
-CGFloat const HEMEventTimeLabelWidth = 50.f;
+CGFloat const HEMEventTimeLabelWidth = 48.f;
 CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text
@@ -44,17 +42,17 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
     CGFloat screenWidth = CGRectGetWidth(HEMKeyWindowBounds());
     CGFloat bubbleWidth = screenWidth - HEMEventBubbleRightMargin - HEMEventBubbleLeftMargin;
     CGFloat textPadding = HEMEventBubbleTextLeftMargin + HEMEventBubbleContentHorzMargin;
-    CGFloat maxTextWidth = bubbleWidth- textPadding;
+    CGFloat maxTextWidth = bubbleWidth - textPadding;
     if (time) {
         CGFloat timeWidth = [time sizeWithWidth:HEMEventTimeLabelWidth].width;
-        maxTextWidth += (timeWidth + HEMEventBubbleTextHorzPadding);
+        maxTextWidth = maxTextWidth - timeWidth - HEMEventBubbleTextPaddingToTime;
     }
     CGSize textSize = [text sizeWithWidth:maxTextWidth];
     CGFloat height = MAX(textSize.height + HEMEventBubbleTextHeightOffset, HEMEventBubbleMinimumHeight);
     if (visible) {
         height += HEMEventBubbleWaveformHeight;
     }
-    return CGSizeMake(bubbleWidth, height);
+    return CGSizeMake(ceilCGFloat(bubbleWidth), ceilCGFloat(height));
 }
 
 - (void)awakeFromNib {

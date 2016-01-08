@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.1.7
+
+Fixes:
+
+* Fixed issue where Timeline events were sometimes truncated
+* Fixed issue where the keyboard will briefly appear after editing wifi from
+  settings
+* Add some missing analytics properties as traits
+
 ## 1.2.1.6
 
 New:

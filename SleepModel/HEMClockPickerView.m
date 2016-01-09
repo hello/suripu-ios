@@ -44,7 +44,6 @@ static CGFloat const HEMClockPickerUnderlayHeight = 96.0f;
 
 static NSUInteger const HEMClockMinuteCount = 60;
 static NSUInteger const HEMClock12HourCount = 12;
-static NSUInteger const HEMClock24HourCount = 24;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {

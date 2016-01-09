@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.1.8
+
+New:
+
+* Launch states for sign in / onboarding / app launch is now consistent to design
+* Support for snoring events
+
+Fixes:
+
+* Sensor history screen color for value and graph will not be in sync when refreshed
+* Alarm screen vx feedback fixes
+
 ## 1.2.1.7
 
 Fixes:

@@ -288,7 +288,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x000000 alpha:0.25f];
 }
 + (UIColor *)borderColor {
-    return [UIColor colorWithHex:0x000000 alpha:0.15f];
+    return [UIColor colorWithHex:0x000000 alpha:0.1f];
 }
 + (UIColor *)alarmClockViewBackgroundColor {
     return [UIColor colorWithHex:0xF9F9FA alpha:1.0f];

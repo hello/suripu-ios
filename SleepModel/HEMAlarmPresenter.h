@@ -45,8 +45,9 @@ typedef void(^HEMAlarmAction)(void);
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithTableView:(UITableView*)tableView heightConstraint:(NSLayoutConstraint*)heightConstraint;
 - (void)bindWithTutorialPresentingController:(UIViewController*)controller;
-- (void)bindWithSaveButton:(UIButton*)saveButton;
-- (void)bindWithCancelButton:(UIButton*)cancelButton;
+- (void)bindWithButtonContainer:(UIView*)container
+                   cancelButton:(UIButton*)cancelButton
+                     saveButton:(UIButton*)saveButton;
 - (void)bindWithClockPickerView:(HEMClockPickerView*)clockPicker;
 
 @end

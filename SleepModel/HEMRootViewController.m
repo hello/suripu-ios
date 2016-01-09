@@ -391,14 +391,14 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     if ([service hasFinishedOnboarding]) {
-        [self showArea:HEMRootAreaTimeline animated:YES];
+        [self showArea:HEMRootAreaBackView animated:YES];
     }
     [[self systemAlertPresenter] setEnable:[self shouldMonitorSystem]];
 }
 
 - (void)didFinishOnboarding
 {
-    [self showArea:HEMRootAreaBackView animated:YES];
+    [self showArea:HEMRootAreaTimeline animated:YES];
 }
 
 - (void)showOnboarding

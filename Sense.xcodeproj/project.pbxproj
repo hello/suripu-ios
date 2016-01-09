@@ -1221,15 +1221,6 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		8A660131199EBDFE007E6167 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				8A8397B41B6AE5270079AC24 /* test.mp3 */,
-				8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
 		8A660133199EBE5E007E6167 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1474,7 +1465,8 @@
 		8AC49F8F1981B92100C2BD63 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
-				8A660131199EBDFE007E6167 /* Assets */,
+				8A8397B41B6AE5270079AC24 /* test.mp3 */,
+				8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */,
 				8AA8D92619ABACC100349FD0 /* Cells */,
 				8AA8D93119ABDC8B00349FD0 /* Layouts */,
 				8A660130199EBDDE007E6167 /* View Controllers */,

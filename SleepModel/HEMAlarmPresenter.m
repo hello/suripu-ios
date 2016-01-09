@@ -94,7 +94,6 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 
 - (void)bindWithClockPickerView:(HEMClockPickerView*)clockPicker {
     [clockPicker setDelegate:self];
-    [clockPicker setShowSelectionUnderlay:YES];
     [clockPicker setBackgroundColor:[UIColor alarmClockViewBackgroundColor]];
     [self setClockPicker:clockPicker];
 }
@@ -103,12 +102,14 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [self setTutorialPresenter:controller];
 }
 
-- (void)bindWithSaveButton:(UIButton*)saveButton {
+- (void)bindWithButtonContainer:(UIView*)container
+                   cancelButton:(UIButton*)cancelButton
+                     saveButton:(UIButton*)saveButton {
+    [container addSubview:[self artificialBorderInView:container]];
+    
     [[saveButton titleLabel] setFont:[UIFont alarmButtonFont]];
     [saveButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)bindWithCancelButton:(UIButton*)cancelButton {
+    
     [[cancelButton titleLabel] setFont:[UIFont alarmButtonFont]];
     [cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -183,6 +184,16 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [HEMTutorial showTutorialForAlarmSmartnessFrom:[self tutorialPresenter]];
 }
 
+- (UIView*)artificialBorderInView:(UIView*)view {
+    CGFloat width = CGRectGetWidth([view bounds]);
+    CGRect borderFrame = CGRectZero;
+    borderFrame.size.width = width;
+    borderFrame.size.height = HEMStyleButtonContainerBorderWidth;
+    UIView* border = [[UIView alloc] initWithFrame:borderFrame];
+    [border setBackgroundColor:[UIColor borderColor]];
+    return border;
+}
+
 #pragma mark - Presenter events
 
 - (void)willAppear {
@@ -204,15 +215,16 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 #pragma mark - TableView
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    UIImage* shadow = [UIImage imageNamed:@"topShadow"];
+    UIImage* shadow = [UIImage imageNamed:@"topShadowStraight"];
     return [shadow size].height;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIImage* shadow = [UIImage imageNamed:@"topShadow"];
+    UIImage* shadow = [UIImage imageNamed:@"topShadowStraight"];
     UIImageView* shadowView = [[UIImageView alloc] initWithImage:shadow];
     [shadowView setBackgroundColor:[UIColor clearColor]]; // let it blend with clock view
     [shadowView setContentMode:UIViewContentModeScaleAspectFill];
+    [shadowView addSubview:[self artificialBorderInView:shadowView]];
     return shadowView;
 }
 

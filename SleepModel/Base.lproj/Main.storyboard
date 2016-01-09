@@ -41,20 +41,17 @@
                                 <rect key="frame" x="-1" y="264" width="602" height="337"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-fv-dyh" customClass="HEMClockPickerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="602" height="281"/>
+                                        <rect key="frame" x="0.0" y="-1" width="602" height="281"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0w-qW-V2E">
-                                        <rect key="frame" x="0.0" y="281" width="602" height="56"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="lh3-VV-zhJ">
+                                        <rect key="frame" x="1" y="276" width="600" height="4"/>
+                                    </imageView>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0w-qW-V2E">
+                                        <rect key="frame" x="0.0" y="280" width="602" height="57"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="lh3-VV-zhJ">
-                                                <rect key="frame" x="0.0" y="-4" width="600" height="4"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="4" id="UjY-mG-Nfk"/>
-                                                </constraints>
-                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mk0-aU-9jH">
-                                                <rect key="frame" x="0.0" y="0.0" width="301" height="56"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="301" height="57"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                                 <state key="normal" title="CANCEL">
                                                     <color key="titleColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="calibratedRGB"/>
@@ -62,7 +59,7 @@
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnD-rD-tgL">
-                                                <rect key="frame" x="301" y="0.0" width="301" height="56"/>
+                                                <rect key="frame" x="301" y="0.0" width="301" height="57"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
                                                 <state key="normal" title="SAVE">
                                                     <color key="titleColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
@@ -84,15 +81,12 @@
                                             <constraint firstItem="mk0-aU-9jH" firstAttribute="top" secondItem="j0w-qW-V2E" secondAttribute="top" id="6H7-Gs-Z5m"/>
                                             <constraint firstItem="nnD-rD-tgL" firstAttribute="width" secondItem="mk0-aU-9jH" secondAttribute="width" id="7wf-SI-KqB"/>
                                             <constraint firstAttribute="bottom" secondItem="nnD-rD-tgL" secondAttribute="bottom" id="RjK-Q4-vhq"/>
-                                            <constraint firstAttribute="height" constant="56" id="adf-pA-fZz"/>
+                                            <constraint firstAttribute="height" constant="57" id="adf-pA-fZz"/>
                                             <constraint firstItem="nnD-rD-tgL" firstAttribute="top" secondItem="j0w-qW-V2E" secondAttribute="top" id="dTF-u3-hko"/>
                                             <constraint firstAttribute="trailing" secondItem="nnD-rD-tgL" secondAttribute="trailing" id="eCc-Kl-euz"/>
                                             <constraint firstItem="fn0-20-2K6" firstAttribute="centerY" secondItem="mk0-aU-9jH" secondAttribute="centerY" id="fi0-XX-RHW"/>
                                             <constraint firstAttribute="bottom" secondItem="mk0-aU-9jH" secondAttribute="bottom" id="hlg-bq-lwh"/>
-                                            <constraint firstItem="lh3-VV-zhJ" firstAttribute="top" secondItem="j0w-qW-V2E" secondAttribute="top" constant="-4" id="lRJ-4b-OUd"/>
-                                            <constraint firstAttribute="trailing" secondItem="lh3-VV-zhJ" secondAttribute="trailing" constant="2" id="lfC-3z-bfm"/>
                                             <constraint firstItem="fn0-20-2K6" firstAttribute="leading" secondItem="mk0-aU-9jH" secondAttribute="trailing" id="vN0-SZ-7Ue"/>
-                                            <constraint firstItem="lh3-VV-zhJ" firstAttribute="leading" secondItem="j0w-qW-V2E" secondAttribute="leading" id="y5h-34-q9q"/>
                                             <constraint firstItem="nnD-rD-tgL" firstAttribute="leading" secondItem="mk0-aU-9jH" secondAttribute="trailing" id="yxC-4V-tXg"/>
                                         </constraints>
                                     </view>
@@ -100,12 +94,16 @@
                                 <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
+                                    <constraint firstItem="lh3-VV-zhJ" firstAttribute="top" secondItem="hlH-fv-dyh" secondAttribute="bottom" constant="-4" id="73T-g0-KrV"/>
+                                    <constraint firstItem="lh3-VV-zhJ" firstAttribute="leading" secondItem="WMx-Tl-eWw" secondAttribute="leading" constant="1" id="9kK-2s-8ly"/>
+                                    <constraint firstAttribute="trailing" secondItem="lh3-VV-zhJ" secondAttribute="trailing" constant="1" id="ClG-0N-Mpo"/>
                                     <constraint firstAttribute="bottom" secondItem="j0w-qW-V2E" secondAttribute="bottom" id="JXh-ku-nsm"/>
                                     <constraint firstAttribute="trailing" secondItem="j0w-qW-V2E" secondAttribute="trailing" id="bY2-hz-mzl"/>
                                     <constraint firstItem="hlH-fv-dyh" firstAttribute="leading" secondItem="WMx-Tl-eWw" secondAttribute="leading" id="dOu-sD-UUh"/>
                                     <constraint firstItem="j0w-qW-V2E" firstAttribute="leading" secondItem="WMx-Tl-eWw" secondAttribute="leading" id="gpT-fG-P3X"/>
-                                    <constraint firstItem="hlH-fv-dyh" firstAttribute="top" secondItem="WMx-Tl-eWw" secondAttribute="top" id="gzH-1g-CXh"/>
+                                    <constraint firstItem="hlH-fv-dyh" firstAttribute="top" secondItem="WMx-Tl-eWw" secondAttribute="top" constant="-1" id="gzH-1g-CXh"/>
                                     <constraint firstItem="j0w-qW-V2E" firstAttribute="top" secondItem="hlH-fv-dyh" secondAttribute="bottom" id="okh-Ec-Drp"/>
+                                    <constraint firstItem="lh3-VV-zhJ" firstAttribute="bottom" secondItem="j0w-qW-V2E" secondAttribute="top" id="uUc-1D-pzl"/>
                                     <constraint firstAttribute="trailing" secondItem="hlH-fv-dyh" secondAttribute="trailing" id="yMh-Lm-2xo"/>
                                 </constraints>
                             </view>
@@ -272,7 +270,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
                                                     <rect key="frame" x="64" y="18" width="93" height="20"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
@@ -326,6 +324,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonContainer" destination="j0w-qW-V2E" id="79f-jU-8zW"/>
                         <outlet property="cancelButton" destination="mk0-aU-9jH" id="xQR-mH-qEF"/>
                         <outlet property="clockView" destination="hlH-fv-dyh" id="71s-Al-ngo"/>
                         <outlet property="saveButton" destination="nnD-rD-tgL" id="7NU-tV-dhf"/>

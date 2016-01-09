@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet HEMClockPickerView *clockView;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
@@ -36,10 +37,11 @@
     HEMAlarmPresenter* presenter = [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm] alarmService:service];
     [presenter setDelegate:self];
     [presenter bindWithTutorialPresentingController:self];
-    [presenter bindWithSaveButton:[self saveButton]];
+    [presenter bindWithButtonContainer:[self buttonContainer]
+                          cancelButton:[self cancelButton]
+                            saveButton:[self saveButton]];
     [presenter bindWithTableView:[self tableView] heightConstraint:[self tableViewHeightConstraint]];
     [presenter bindWithClockPickerView:[self clockView]];
-    [presenter bindWithCancelButton:[self cancelButton]];
     
     [self setPresenter:presenter];
     [self addPresenter:presenter];

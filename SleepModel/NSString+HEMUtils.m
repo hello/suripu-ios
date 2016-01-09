@@ -43,7 +43,7 @@ static NSPredicate* emailPredicate;
 
 - (CGSize)sizeBoundedByWidth:(CGFloat)width attriburtes:(NSDictionary *)attributes {
     NSStringDrawingOptions options
-        = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesDeviceMetrics;
+        = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin;
     return [self sizeBoundedByWidth:width attriburtes:attributes options:options];
 }
 

@@ -41,4 +41,12 @@
     return [plainText sizeBoundedByWidth:width attriburtes:attributes];
 }
 
+- (CGSize)sizeWithHeight:(CGFloat)height {
+    // note that attributed string's boundingRect... method is inaccurate!
+    NSString* plainText = [self string];
+    NSRange range = NSMakeRange(0, [self length]);
+    NSDictionary* attributes = [self attributesAtIndex:0 effectiveRange:&range];
+    return [plainText sizeBoundedByHeight:height attributes:attributes];
+}
+
 @end

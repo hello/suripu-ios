@@ -25,6 +25,10 @@
     return self;
 }
 
+- (BOOL)isFieldSecureInRow:(NSInteger)row {
+    return YES;
+}
+
 - (NSUInteger)numberOfFields {
     return 3;
 }

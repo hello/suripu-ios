@@ -33,8 +33,8 @@ CGFloat const HEMEventBubbleLeftMargin = 8.f;
 CGFloat const HEMEventBubbleContentHorzMargin = 8.f;
 CGFloat const HEMEventBubbleTextHeightOffset = 26.f;
 CGFloat const HEMEventBubbleMinimumHeight = 48.f;
-CGFloat const HEMEventTimeLabelWidth = 48.f;
 CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
+CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
 
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text
                         timeText:(NSAttributedString *)time
@@ -44,7 +44,7 @@ CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
     CGFloat textPadding = HEMEventBubbleTextLeftMargin + HEMEventBubbleContentHorzMargin;
     CGFloat maxTextWidth = bubbleWidth - textPadding;
     if (time) {
-        CGFloat timeWidth = [time sizeWithWidth:HEMEventTimeLabelWidth].width;
+        CGFloat timeWidth = [time sizeWithHeight:HEMEventTimestampMaximumHeight].width;
         maxTextWidth = maxTextWidth - timeWidth - HEMEventBubbleTextPaddingToTime;
     }
     CGSize textSize = [text sizeWithWidth:maxTextWidth];

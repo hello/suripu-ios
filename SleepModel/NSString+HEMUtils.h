@@ -68,4 +68,15 @@
  */
 - (CGSize)sizeBoundedByWidth:(CGFloat)width attriburtes:(NSDictionary *)attributes;
 
+/**
+ *  Calculate the neccessary size to display a string given the height constraint
+ *  and attributes for the text
+ *
+ *  @param height      maximum height of a line of text
+ *  @param attributes attributes of the text layout
+ *
+ *  @return the size of the string, bounded by height
+ */
+- (CGSize)sizeBoundedByHeight:(CGFloat)height attributes:(NSDictionary *)attributes;
+
 @end

@@ -17,7 +17,9 @@ typedef NS_ENUM(NSUInteger, HEMConf) {
     HEMConfZendeskURL,
     HEMConfZendeskClientId,
     HEMConfAppReviewURL,
-    HEMConfPassResetURL
+    HEMConfPassResetURL,
+    HEMConfEnvironmentName,
+    HEMConfCrashReportToken
 };
 
 @interface HEMConfig : NSObject

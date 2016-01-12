@@ -143,7 +143,7 @@
 }
 
 + (NSDictionary *)attributesForEventMessageText {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     style.alignment = NSTextAlignmentLeft;
     style.lineSpacing = 2.f;
     style.maximumLineHeight = 18.f;

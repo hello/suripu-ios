@@ -145,7 +145,6 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     CGFloat const messageLabelTop = 14.f;
     CGFloat const messageLabelRight = 8.f;
     CGFloat const messageLabelHeightOffset = 26.f;
-    CGFloat const timeLabelMaxWidth = 48.f;
     CGFloat const timeLabelMaxHeight = 24.f;
     CGFloat const waveformEdgeInset = 4.f;
 
@@ -154,7 +153,7 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     CGRect eventImageFrame = CGRectMake(iconImageLeft, iconImageTop, iconImageDiameter, iconImageDiameter);
     self.eventTypeImageView.frame = eventImageFrame;
 
-    CGSize timeLabelSize = [self.eventTimeLabel sizeThatFits:CGSizeMake(timeLabelMaxWidth, timeLabelMaxHeight)];
+    CGSize timeLabelSize = [[self.eventTimeLabel attributedText] sizeWithHeight:timeLabelMaxHeight];
     CGFloat eventTimeLeft = containerWidth - (timeLabelSize.width + timeLabelRight);
     CGRect eventTimeLabelFrame = CGRectMake(eventTimeLeft, timeLabelTop, timeLabelSize.width, timeLabelSize.height);
     self.eventTimeLabel.frame = eventTimeLabelFrame;

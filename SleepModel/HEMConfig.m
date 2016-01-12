@@ -16,6 +16,8 @@ static NSString* const HEMConfigClientIdPlistKey = @"SenseClientId";
 static NSString* const HEMConfigAnalyticsTokenPlistKey = @"SenseAnalyticsToken";
 static NSString* const HEMConfigAppReviewURLPlistKey = @"SenseAppReviewURL";
 static NSString* const HEMConfigPassResetURLPlistKey = @"SensePasswordResetURL";
+static NSString* const HEMConfigCrashReportToken = @"SenseCrashReportToken";
+static NSString* const HEMConfigEnvironment = @"SenseEnvironment";
 
 // This flag indicates whether or not the app should be able to shake to show
 // an action sheet of debug options. this should be tied to feature flags on
@@ -50,6 +52,10 @@ static NSString* const HEMConfigZendeskClientIdPlistKey = @"SenseZendeskClientId
             return [bundle objectForInfoDictionaryKey:HEMConfigAppReviewURLPlistKey];
         case HEMConfPassResetURL:
             return [bundle objectForInfoDictionaryKey:HEMConfigPassResetURLPlistKey];
+        case HEMConfCrashReportToken:
+            return [bundle objectForInfoDictionaryKey:HEMConfigCrashReportToken];
+        case HEMConfEnvironmentName:
+            return [bundle objectForInfoDictionaryKey:HEMConfigEnvironment];
         default:
             return nil;
     }

@@ -13,5 +13,6 @@
 - (NSAttributedString *)trim;
 - (NSAttributedString *)hyperlink:(NSString*)url;
 - (CGSize)sizeWithWidth:(CGFloat)width;
+- (CGSize)sizeWithHeight:(CGFloat)height;
 
 @end

@@ -74,7 +74,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
                               MIN(CGRectGetHeight(self.bounds) * heightRatio,
                                   MAX(0, CGRectGetHeight(self.frame) - HEMSegmentTimeLabelHeight)));
     CGFloat labelYOffset = lineYOffset - floorf(HEMSegmentTimeLabelHeight / 2);
-    CGSize size = [text sizeWithWidth:HEMTimeLabelWidth];
+    CGSize size = [text sizeWithHeight:HEMSegmentTimeLabelHeight];
     CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - size.width - HEMTimeLabelLineTrailing, labelYOffset,
                                   size.width, HEMSegmentTimeLabelHeight);
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];

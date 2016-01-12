@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.1.9
+
+New:
+
+* Added Bugsnag
+
+Fixes:
+
+* Password change screen should use secured text fields
+* Timeline event text should not be truncated or improperly taking more room than
+  needed.
+* Timeline timestamp divider should not be truncated
+
 ## 1.2.1.8
 
 New:

@@ -1,3 +1,5 @@
+#import <Bugsnag/Bugsnag.h>
+
 #import <SenseKit/SenseKit.h>
 
 #import "HEMAppDelegate.h"
@@ -31,6 +33,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     // order matters
     [self configureAPI];
+    [self configureCrashReport];
     
     [HEMDebugController disableDebugMenuIfNeeded];
     [HEMLogUtils enableLogger];
@@ -184,6 +187,26 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [SENAPIClient setValue:version forHTTPHeaderField:HEMApiXVersionHeader];
     [SENAuthorizationService setClientAppID:clientID];
     [SENAuthorizationService authorizeRequestsFromKeychain];
+}
+
+- (void)configureCrashReport {
+    NSString* token = [HEMConfig stringForConfig:HEMConfCrashReportToken];
+    if (token) {
+        [Bugsnag startBugsnagWithApiKey:token];
+
+        BugsnagConfiguration* bugsnagConfig = [Bugsnag configuration];
+        
+        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+        if (accountId) {
+            [bugsnagConfig setUser:accountId withName:nil andEmail:nil];
+        }
+        
+        NSString* env = [HEMConfig stringForConfig:HEMConfEnvironmentName];
+        if (env) {
+            [bugsnagConfig setReleaseStage:env];
+        }
+        
+    }
 }
 
 - (BOOL)deauthorizeIfNeeded {

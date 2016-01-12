@@ -106,8 +106,12 @@
 	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>SenseZendeskClientId</key>
 	<string>${SENSE_ZENDESK_CLIENT_ID}</string>
+	<key>SenseCrashReportToken</key>
+	<string>${SENSE_CRASH_REPORT_TOKEN}</string>
 	<key>SenseZendeskToken</key>
 	<string>${SENSE_ZENDESK_TOKEN}</string>
+	<key>SenseEnvironment</key>
+	<string>${SENSE_ENV}</string>
 	<key>SenseZendeskURL</key>
 	<string>${SENSE_ZENDESK_URL}</string>
 	<key>UIAppFonts</key>

@@ -384,6 +384,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     // skip questions as those interactions are handled through button events
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     if (insight) {
+        [HEMTutorial cancelInsightTapTutorial];
         HEMInsightCollectionViewCell* cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
         [[self delegate] presenter:self showInsight:insight fromCell:cell];
     }

@@ -24,6 +24,8 @@
 @implementation HEMTutorial
 
 static NSString* const HEMTutorialHHInsightTap = @"HandholdingInsightTap";
+static NSString* const HEMTutorialHHInsightDaySwitchCounter = @"HandholdingInsightDaySwitchCounter";
+static NSInteger const HEMTutorialHHInsightTapMinDaysChecked = 1;
 
 static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbing";
 
@@ -48,7 +50,14 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 #pragma mark Insights
 
 + (BOOL)shouldShowInsightTapTutorial {
-    return [self shouldShowTutorialForKey:HEMTutorialHHInsightTap];
+    BOOL shouldShow = [self shouldShowTutorialForKey:HEMTutorialHHInsightTap];
+    if (shouldShow) {
+        [self setHandholdingFirstChecked:HEMTutorialHHInsightDaySwitchCounter];
+        SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+        NSDate* firstCheckedDate = [preferences persistentPreferenceForKey:HEMTutorialHHInsightDaySwitchCounter];
+        shouldShow = [firstCheckedDate daysElapsed] >= HEMTutorialHHInsightTapMinDaysChecked;
+    }
+    return shouldShow;
 }
 
 + (BOOL)showHandholdingForInsightCardIfNeededIn:(UIView*)view atPoint:(CGPoint)point {

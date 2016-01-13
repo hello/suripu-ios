@@ -44,8 +44,8 @@ static NSInteger const HEMInsightRowCountForGenerics = 3;
 
 static CGFloat const HEMInsightCellSummaryTopMargin = 20.0f;
 static CGFloat const HEMInsightCellSummaryBotMargin = 33.0f;
-static CGFloat const HEMInsightCellSummaryLeftMargin = 58.0f; // 48 + 2 for divider + 8 magic iOS 9 pixels from collection view
-static CGFloat const HEMInsightCellSummaryRightMargin = 32.0f; // 24 + 8 magic iOS 9 pixels
+static CGFloat const HEMInsightCellSummaryLeftMargin = 54.0f; // 48 + 2 for divider + 4 magic iOS 9 pixels from collection view
+static CGFloat const HEMInsightCellSummaryRightMargin = 28.0f; // 24 + 4 magic iOS 9 pixels
 
 static CGFloat const HEMInsightCellTitleTopMargin = 32.0f;
 static CGFloat const HEMInsightCellTitleBotMargin = 12.0f;

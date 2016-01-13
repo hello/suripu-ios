@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.2.1.10
+
+New:
+
+* Insight tap tutorial will not be shown until second day of viewing, if not
+  already cancelled
+
+Fixes:
+
+* Insight about you text is not truncated prematurely for some text on 4s/5/5s
+  devices
+* Prevent sensor graphs from drawing a flat line on first load if data series
+  have no fluctuations at all
+
 ## 1.2.1.9
 
 New:

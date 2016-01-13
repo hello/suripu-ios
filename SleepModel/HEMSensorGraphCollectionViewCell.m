@@ -97,7 +97,7 @@
             return NSOrderedDescending;
     }];
     NSNumber* maxValue = [values lastObject];
-    NSNumber* minValue = @0;
+    NSNumber* minValue = [values firstObject];
     if ([maxValue isEqual:[NSNull null]])
         self.maxGraphValue = 0;
     else
@@ -108,6 +108,11 @@
             break;
         }
     }
+    
+    if (!minValue || [minValue isEqual:[NSNull null]]) {
+        minValue = @0;
+    }
+    
     self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:sensor.unit] floatValue];
 }
 

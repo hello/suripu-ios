@@ -60,6 +60,10 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     return shouldShow;
 }
 
++ (void)cancelInsightTapTutorial {
+    [self markTutorialViewed:HEMTutorialHHInsightTap];
+}
+
 + (BOOL)showHandholdingForInsightCardIfNeededIn:(UIView*)view atPoint:(CGPoint)point {
     if (![self shouldShowInsightTapTutorial]) {
         return NO;

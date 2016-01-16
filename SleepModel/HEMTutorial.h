@@ -18,6 +18,12 @@
 + (BOOL)shouldShowInsightTapTutorial;
 
 /**
+ * Cancel the insight tap tutorial.  Call this if insight detail has been seen
+ * already
+ */
++ (void)cancelInsightTapTutorial;
+
+/**
  * Present the handholding UI to illustrate how to tap on an Insight card to
  * review more information if not previously shown
  *
@@ -71,7 +77,10 @@
  */
 + (void)showTutorialForSensorsIfNeeded;
 
-+ (void)showTutorialForPillColorIfNeeded;
+/**
+ *  Show tutorial to describe what pill colors are for
+ */
++ (void)showTutorialForPillColor;
 
 /**
  *  Present the tutorial for a particular sensor if not previously viewed

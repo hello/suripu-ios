@@ -24,7 +24,6 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMainStoryboard.h"
-#import "HEMBounceModalTransition.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,
@@ -244,7 +243,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                             fixButtonTitle:&fixTitle
                                  alertType:state];
             
-            if (title && message) {
+            if (message) {
                 [strongSelf showDeviceWarningWithTitle:title
                                                message:message
                                      cancelButtonTitle:cancelTitle

@@ -9,7 +9,6 @@
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMLogUtils.h"
-#import "HelloStyleKit.h"
 #import "HEMTellAFriendItemProvider.h"
 
 static CGFloat const HEMSettingsBottomMargin = 10.0f;
@@ -53,7 +52,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"settings.title", nil);
-        self.tabBarItem.image = [HelloStyleKit settingsBarIcon];
+        self.tabBarItem.image = [UIImage imageNamed:@"settingsBarIcon"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"settingsBarIconActive"];
     }
     return self;
@@ -70,6 +69,8 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     
     // footer
     [[self settingsTableView] setTableFooterView:[self versionFooterView]];
+    
+    [[self settingsTableView] setSeparatorColor:[UIColor separatorColor]];
 }
 
 - (UIView*)versionFooterView {

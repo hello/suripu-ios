@@ -13,23 +13,21 @@
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
 #import "NSAttributedString+HEMUtils.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 
 #import "HEMInsightsFeedPresenter.h"
+#import "HEMStyle.h"
 #import "HEMInsightsService.h"
 #import "HEMQuestionsService.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMQuestionCell.h"
 #import "HEMInsightCollectionViewCell.h"
-#import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMTextCollectionViewCell.h"
 #import "HEMMarkdown.h"
 #import "HEMURLImageView.h"
 #import "HEMTutorial.h"
+#import "HEMMainStoryboard.h"
 
-static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
-static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 @interface HEMInsightsFeedPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -46,6 +44,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 @property (strong, nonatomic) NSCache* heightCache;
 @property (strong, nonatomic) NSCache* attributedBodyCache;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
+@property (strong, nonatomic) NSError* dataError;
 
 @end
 
@@ -93,7 +92,12 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 }
 
 - (void)refresh {
+    [self setDataError:nil];
     [self showLoadingActivity:YES];
+    
+    if ([[self data] count] == 0) {
+        [[self collectionView] reloadData];
+    }
     
     dispatch_group_t dataGroup = dispatch_group_create();
     
@@ -127,9 +131,6 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        [strongSelf showLoadingActivity:NO];
-        [strongSelf updateViewWith:insightsData questions:questionsData];
-        
         if (!insightsError && !questionsError) {
             HEMUnreadTypes types = HEMUnreadTypeInsights | HEMUnreadTypeQuestions;
             [[strongSelf unreadService] updateLastViewFor:types completion:^(BOOL hasUnread, NSError *error) {
@@ -137,7 +138,12 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
                 }
             }];
+        } else if (insightsError && questionsError ) { // if error from both requests
+            [strongSelf setDataError:insightsError ?: questionsError];
         }
+        
+        [strongSelf showLoadingActivity:NO];
+        [strongSelf updateViewWith:insightsData questions:questionsData];
     });
 }
 
@@ -267,6 +273,14 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 }
 
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withCellWith:(CGFloat)width {
+    if ([indexPath row] == 0 && [self dataError]) {
+        NSString* text = NSLocalizedString(@"insights.feed.error.message", nil);
+        UIFont* font = [UIFont errorStateDescriptionFont];
+        CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
+        CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
+        return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+    }
+    
     NSAttributedString* attributedBody = [self attributedBodyForCellAtIndexPath:indexPath];
     if ([attributedBody length] == 0) {
         return 0.0f;
@@ -306,7 +320,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return [[self data] count];
+    return [self dataError] ? 1 : [[self data] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -316,9 +330,11 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     id dataObj = [self objectAtIndexPath:indexPath];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
-        reuseId = HEMInsightsFeedReuseIdQuestion;
+        reuseId = [HEMMainStoryboard questionReuseIdentifier];
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        reuseId = HEMInsightsFeedReuseIdInsight;
+        reuseId = [HEMMainStoryboard insightReuseIdentifier];
+    } else {
+        reuseId = [HEMMainStoryboard errorReuseIdentifier];
     }
     
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
@@ -353,6 +369,13 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         [[iCell uriImageView] setImageWithURL:[self insightImageUriForCellAtIndexPath:indexPath]];
         [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
         [self updateInsightImageOffsetOn:iCell];
+    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
+        if ([self dataError]) {
+            HEMTextCollectionViewCell* textCell = (id)cell;
+            [[textCell textLabel] setText:NSLocalizedString(@"insights.feed.error.message", nil)];
+            [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+            [textCell displayAsACard:YES];
+        }
     }
     
 }
@@ -361,6 +384,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     // skip questions as those interactions are handled through button events
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     if (insight) {
+        [HEMTutorial cancelInsightTapTutorial];
         HEMInsightCollectionViewCell* cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
         [[self delegate] presenter:self showInsight:insight fromCell:cell];
     }

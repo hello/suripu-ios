@@ -10,17 +10,18 @@
 #import <SenseKit/SENTrend.h>
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMTrendsViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTrendCollectionViewCell.h"
 #import "HEMEmptyTrendCollectionViewCell.h"
 #import "HEMGraphSectionOverlayView.h"
-#import "UIFont+HEMStyle.h"
+#import "HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
 #import "HEMSnazzBarController.h"
 #import "HEMRootViewController.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMTextCollectionViewCell.h"
+#import "NSString+HEMUtils.h"
 
 NS_ENUM(NSUInteger) {
     LoadingStateRowCount = 0,
@@ -31,8 +32,8 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, weak) IBOutlet HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, strong) NSMutableArray* defaultTrends;
-@property (nonatomic, getter=isWaitingForRefreshData) BOOL waitingForRefreshData;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
+@property (nonatomic, strong) NSError* loadingError;
 @end
 
 @implementation HEMTrendsViewController
@@ -50,7 +51,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (id)initWithCoder:(NSCoder*)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
         self.tabBarItem.title = NSLocalizedString(@"trends.title", nil);
-        self.tabBarItem.image = [HelloStyleKit trendsBarIcon];
+        self.tabBarItem.image = [UIImage imageNamed:@"trendsBarIcon"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"trendsBarIconActive"];
     }
     return self;
@@ -63,7 +64,6 @@ static NSString* const HEMAllScopeType = @"ALL";
     CGSize size = layout.itemSize;
     size.height = HEMTrendsViewCellHeight;
     layout.itemSize = size;
-    self.waitingForRefreshData = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,22 +97,28 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (void)refreshData {
     if ([self isLoading])
         return;
-    self.loading = YES;
+    self.loading = !self.defaultTrends;
+    self.loadingError = nil;
+    
+    if (self.isLoading) {
+        [self.collectionView reloadData];
+    }
     
     __weak typeof(self) weakSelf = self;
     [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = self;
+        strongSelf.loadingError = error;
+        strongSelf.loading = NO;
         if (error) {
             [strongSelf.collectionView reloadData];
-            strongSelf.loading = NO;
             return;
         }
+        
         NSMutableArray* trends = [data mutableCopy];
         if (![trends isEqualToArray:strongSelf.defaultTrends]) {
             strongSelf.defaultTrends = trends;
-            [strongSelf.collectionView reloadData];
         }
-        strongSelf.loading = NO;
+        [strongSelf.collectionView reloadData];
         [strongSelf showTutorialIfSelectedWithData];
     }];
 }
@@ -120,6 +126,10 @@ static NSString* const HEMAllScopeType = @"ALL";
 #pragma mark - Properties
 
 - (void)setLoading:(BOOL)loading {
+    if (_loading == loading) {
+        return;
+    }
+    
     _loading = loading;
     
     if (loading) {
@@ -129,9 +139,6 @@ static NSString* const HEMAllScopeType = @"ALL";
         [self.loadingIndicator stop];
         self.loadingIndicator.hidden = YES;
     }
-    
-    self.waitingForRefreshData = NO;
-    [self.collectionView reloadData];
 }
 
 
@@ -200,6 +207,15 @@ static NSString* const HEMAllScopeType = @"ALL";
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath {
     UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
+    
+    if (self.loadingError) {
+        NSString* desc = NSLocalizedString(@"trends.loading.error.message", nil);
+        UIFont* font = [UIFont errorStateDescriptionFont];
+        CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
+        CGFloat textHeight = [desc heightBoundedByWidth:maxWidth usingFont:font];
+        return CGSizeMake(width, textHeight + (HEMStyleCardErrorTextVertMargin * 2));
+    }
+    
     if (self.defaultTrends.count == 0) {
         NSString* desc = NSLocalizedString(@"trends.not-enough-data.message", nil);
         return CGSizeMake(width, [HEMEmptyTrendCollectionViewCell heightWithDescription:desc cellWidth:width]);
@@ -217,7 +233,7 @@ static NSString* const HEMAllScopeType = @"ALL";
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([self isLoading] || [self isWaitingForRefreshData]) {
+    if ([self isLoading]) {
         return LoadingStateRowCount;
     } else if (self.defaultTrends.count > 0) {
         return self.defaultTrends.count;
@@ -228,6 +244,10 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath {
+    if (self.loadingError) {
+        return [self collectionView:collectionView errorCellForItemAtIndexPath:indexPath];
+    }
+    
     if (self.defaultTrends.count == 0) {
         return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
@@ -247,6 +267,18 @@ static NSString* const HEMAllScopeType = @"ALL";
     cell.statusLabel.hidden = YES;
     cell.delegate = self;
     [self configureGraphForCell:cell withTrend:trend];
+    return cell;
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collection
+            errorCellForItemAtIndexPath:(NSIndexPath*)indexPath {
+    NSString* identifier = [HEMMainStoryboard errorReuseIdentifier];
+    HEMTextCollectionViewCell* cell = [collection dequeueReusableCellWithReuseIdentifier:identifier
+                                                                            forIndexPath:indexPath];
+    cell.textLabel.text = NSLocalizedString(@"trends.loading.error.message", nil);
+    cell.textLabel.font = [UIFont errorStateDescriptionFont];
+    cell.backgroundColor = [UIColor whiteColor];
+    [cell displayAsACard:YES];
     return cell;
 }
 

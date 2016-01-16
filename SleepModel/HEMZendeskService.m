@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENSenseMetadata.h>
@@ -15,12 +14,13 @@
 
 #import <ZendeskSDK/ZendeskSDK.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "UIDevice+HEMUtils.h"
 
 #import "HEMZendeskService.h"
 #import "HEMSupportUtil.h"
 #import "HEMConfig.h"
+#import "HEMAccountService.h"
+#import "HEMStyle.h"
 
 // the following are values found in the Zendesk admin interface that maps
 // to the custom fields created
@@ -103,18 +103,12 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
         [[ZDKConfig instance] setUserIdentity:identity];
     };
     
-    SENAccount* account = [[SENServiceAccount sharedService] account];
+    SENAccount* account = [[HEMAccountService sharedService] account];
     if (!account) {
-        [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-            NSString* email = nil;
-            NSString* name = nil;
-            if (!error) {
-                DDLogWarn(@"failed to refresh account");
-                SENAccount* account = [[SENServiceAccount sharedService] account];
-                email = [account email];
-                name = [account name];
+        [[HEMAccountService sharedService] refresh:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
+            if (account) {
+                setIdentity([account email], [account name]);
             }
-            setIdentity(email, name);
         }];
     } else {
         setIdentity([account email], [account name]);
@@ -135,7 +129,7 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
         NSBundle* bundle = [NSBundle mainBundle];
         UIDevice* device = [UIDevice currentDevice];
         NSString* osVersion = [self tagMinusZDKTagTokens:[device systemVersion]];
-        NSString* deviceModel = [self tagMinusZDKTagTokens:[HEMSupportUtil deviceModel]];
+        NSString* deviceModel = [self tagMinusZDKTagTokens:[UIDevice currentDeviceModel]];
         NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
         NSString* fwVersion = [senseMetadata  firmwareVersion];
         NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];

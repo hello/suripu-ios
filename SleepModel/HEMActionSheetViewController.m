@@ -7,8 +7,7 @@
 //
 
 #import "HEMActionSheetViewController.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
 #import "HEMActionSheetOptionCell.h"
 #import "HEMMainStoryboard.h"
@@ -142,10 +141,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTableViewHeader];
+    [self configureShadedOverlay];
     [[self view] setBackgroundColor:[UIColor clearColor]];
-    self.shadedOverlayView.isAccessibilityElement = YES;
-    self.shadedOverlayView.accessibilityTraits = UIAccessibilityTraitButton;
-    self.shadedOverlayView.accessibilityValue = NSLocalizedString(@"actions.cancel", nil);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -242,6 +239,13 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [labelContainer addSubview:label];
     
     return labelContainer;
+}
+
+- (void)configureShadedOverlay {
+    self.shadedOverlayView.isAccessibilityElement = YES;
+    self.shadedOverlayView.accessibilityTraits = UIAccessibilityTraitButton;
+    self.shadedOverlayView.accessibilityValue = NSLocalizedString(@"actions.cancel", nil);
+    self.shadedOverlayView.backgroundColor = [UIColor alertBackgroundColor];
 }
 
 - (void)configureTableViewHeader {

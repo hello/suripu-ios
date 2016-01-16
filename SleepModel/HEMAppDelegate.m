@@ -1,15 +1,15 @@
+#import <Bugsnag/Bugsnag.h>
+
 #import <SenseKit/SenseKit.h>
 
-#import "UIFont+HEMStyle.h"
-
 #import "HEMAppDelegate.h"
+#import "HEMStyle.h"
 #import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMCurrentConditionsViewController.h"
 #import "HEMAlarmListViewController.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSnazzBarController.h"
@@ -20,6 +20,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSegmentProvider.h"
 #import "HEMDebugController.h"
+#import "HEMAccountService.h"
 
 @implementation HEMAppDelegate
 
@@ -32,6 +33,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     // order matters
     [self configureAPI];
+    [self configureCrashReport];
     
     [HEMDebugController disableDebugMenuIfNeeded];
     [HEMLogUtils enableLogger];
@@ -130,10 +132,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     if (signedIn && finishedOnboarding) {
         // pre fetch account information so that it's readily availble to the user
         // when the account is accessed.  This is per discussion with design and James
-        SENServiceAccount* acctService = [SENServiceAccount sharedService];
-        [acctService refreshAccount:^(NSError *error) {
-            // even if there is an error, we want to track the user session
-            SENAccount* account = [acctService account];
+        HEMAccountService* acctService = [HEMAccountService sharedService];
+        [acctService refresh:^(SENAccount * _Nonnull account, NSDictionary<NSNumber *,SENPreference *> * _Nonnull preferences) {
             [SENAnalytics trackUserSession:account];
         }];
         // write timeline data in to Health app, if enabled and data is available
@@ -189,6 +189,26 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [SENAuthorizationService authorizeRequestsFromKeychain];
 }
 
+- (void)configureCrashReport {
+    NSString* token = [HEMConfig stringForConfig:HEMConfCrashReportToken];
+    if (token) {
+        [Bugsnag startBugsnagWithApiKey:token];
+
+        BugsnagConfiguration* bugsnagConfig = [Bugsnag configuration];
+        
+        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+        if (accountId) {
+            [bugsnagConfig setUser:accountId withName:nil andEmail:nil];
+        }
+        
+        NSString* env = [HEMConfig stringForConfig:HEMConfEnvironmentName];
+        if (env) {
+            [bugsnagConfig setReleaseStage:env];
+        }
+        
+    }
+}
+
 - (BOOL)deauthorizeIfNeeded {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
     if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
@@ -236,7 +256,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     }];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{
         NSFontAttributeName : [UIFont navButtonTitleFont],
-        NSForegroundColorAttributeName : [HelloStyleKit tintColor]
+        NSForegroundColorAttributeName : [UIColor tintColor]
     } forState:UIControlStateNormal];
 }
 

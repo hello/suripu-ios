@@ -24,6 +24,8 @@
 @implementation HEMTutorial
 
 static NSString* const HEMTutorialHHInsightTap = @"HandholdingInsightTap";
+static NSString* const HEMTutorialHHInsightDaySwitchCounter = @"HandholdingInsightDaySwitchCounter";
+static NSInteger const HEMTutorialHHInsightTapMinDaysChecked = 1;
 
 static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbing";
 
@@ -41,7 +43,6 @@ static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialTrendsKey = @"HEMTutorialTrends";
-static NSString* const HEMTutorialPillColorKey = @"HEMTutorialPillColor";
 static CGFloat const HEMTutorialDelay = 0.5f;
 
 #pragma mark - Handholding
@@ -49,7 +50,18 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 #pragma mark Insights
 
 + (BOOL)shouldShowInsightTapTutorial {
-    return [self shouldShowTutorialForKey:HEMTutorialHHInsightTap];
+    BOOL shouldShow = [self shouldShowTutorialForKey:HEMTutorialHHInsightTap];
+    if (shouldShow) {
+        [self setHandholdingFirstChecked:HEMTutorialHHInsightDaySwitchCounter];
+        SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+        NSDate* firstCheckedDate = [preferences persistentPreferenceForKey:HEMTutorialHHInsightDaySwitchCounter];
+        shouldShow = [firstCheckedDate daysElapsed] >= HEMTutorialHHInsightTapMinDaysChecked;
+    }
+    return shouldShow;
+}
+
++ (void)cancelInsightTapTutorial {
+    [self markTutorialViewed:HEMTutorialHHInsightTap];
 }
 
 + (BOOL)showHandholdingForInsightCardIfNeededIn:(UIView*)view atPoint:(CGPoint)point {
@@ -248,17 +260,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     }
 }
 
-+ (void)showTutorialForPillColorIfNeeded
-{
-    if ([self shouldShowTutorialForKey:HEMTutorialPillColorKey]) {
-        [self delayBlock:^{
-            if ([self showTutorialForPillColor]) {
-                [self markTutorialViewed:HEMTutorialPillColorKey];
-            }
-        }];
-    }
-}
-
 + (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
     UIImage* snapshot = [[controller view] snapshot];
     UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor tutorialBackgroundColor]];
@@ -363,13 +364,12 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     return [self showTutorialWithContent:@[tutorial]];
 }
 
-+ (BOOL)showTutorialForPillColor
-{
++ (void)showTutorialForPillColor {
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.pill-color.title", nil)
                                          text:NSLocalizedString(@"tutorial.pill-color.message", nil)
                                         image:[UIImage imageNamed:@"pill_color_dialog"]];
-    return [self showTutorialWithContent:@[tutorial]];
+    [self showTutorialWithContent:@[tutorial]];
 }
 
 #pragma mark - Preferences
@@ -404,7 +404,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTrendsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialPillColorKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHSensorScrubbing];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHInsightTap];

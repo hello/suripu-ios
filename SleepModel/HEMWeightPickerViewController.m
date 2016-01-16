@@ -12,6 +12,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMathUtil.h"
 #import "HEMRulerView.h"
+#import "HEMAccountUpdateDelegate.h"
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
 
@@ -111,8 +112,10 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 #pragma mark - Actions
 
 - (IBAction)done:(id)sender {
-    if ([self delegate] != nil) {
-        [[self delegate] didSelectWeightInGrams:[self weightInGrams] from:self];
+    if ([self delegate]) {
+        SENAccount* tempAccount = [SENAccount new];
+        [tempAccount setWeight:@([self weightInGrams])];
+        [[self delegate] update:tempAccount];
     } else {
         SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
         [account setWeight:@([self weightInGrams])];
@@ -121,8 +124,8 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 }
 
 - (IBAction)skip:(id)sender {
-    if ([self delegate] != nil) {
-        [[self delegate] didCancelWeightFrom:self];
+    if ([self delegate]) {
+        [[self delegate] cancel];
     } else {
         [self next];
     }

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *property1IconView;
 @property (weak, nonatomic) IBOutlet UILabel *property2Label;
 @property (weak, nonatomic) IBOutlet UILabel *property2ValueLabel;
+@property (weak, nonatomic) IBOutlet UIButton *property2InfoButton;
 
 - (void)showOverlayActivityWithText:(NSString*)text;
 - (void)dismissOverlayActivity;

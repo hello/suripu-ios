@@ -22,6 +22,7 @@ static NSString* const HEMFontFamilyNameModernUltraLight = @"AvenirNext-UltraLig
 static NSString* const HEMFontFamilyNameModernRegular = @"AvenirNext-Regular";
 static NSString* const HEMFontFamilyNameModernMedium = @"AvenirNext-Medium";
 static NSString* const HEMFontFamilyNameModernLight = @"AvenirNext-Light";
+static NSString* const HEMFontFamilyNameModernThin = @"AvenirNext-Thin";
 
 static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
 static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
@@ -34,12 +35,24 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)alarmNumberFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:28.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernThin size:32.f];
 }
 
 + (UIFont*)alarmSelectedNumberFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:56.f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernThin size:56.f];
+}
+
++ (UIFont*)alarmDetailFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:14.0f];
+}
+
++ (UIFont*)alarmTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:16.0f];
+}
+
++ (UIFont*)alarmButtonFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.f];
 }
 
 + (UIFont*)insightAboutFont
@@ -600,10 +613,14 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
-#pragma mark - Empty States
+#pragma mark - Empty / Error States
 
 + (UIFont*)emptyStateDescriptionFont {
     return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:14.0f];
+}
+
++ (UIFont*)errorStateDescriptionFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:17.0f];
 }
 
 @end

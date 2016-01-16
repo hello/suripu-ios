@@ -107,6 +107,7 @@
 + (UIColor *)sleepScoreOvalColor;
 + (UIColor *)deviceAlertMessageColor;
 + (UIColor *)separatorColor;
++ (UIColor *)headerFooterDividerColor;
 + (UIColor *)onboardingDescriptionColor;
 + (UIColor *)onboardingTitleColor;
 + (UIColor *)textfieldPlaceholderFocusedColor;
@@ -150,6 +151,7 @@
 + (UIColor *)insightSummaryDateColor;
 + (UIColor *)insightAboutTextColor;
 + (UIColor *)borderColor;
++ (UIColor *)alarmClockViewBackgroundColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

@@ -5,8 +5,10 @@
 //  Created by Jimmy Lu on 2/6/15.
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
+#import "UICollectionViewCell+HEMCard.h"
+
 #import "HEMTextCollectionViewCell.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
 
 static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
@@ -72,6 +74,10 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
     [super prepareForReuse];
     [[self textLabel] setText:nil];
     [[self separator] setHidden:YES];
+}
+
+- (void)displayAsACard:(BOOL)card {
+    [super displayAsACard:YES];
 }
 
 @end

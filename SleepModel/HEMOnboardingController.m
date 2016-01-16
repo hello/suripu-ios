@@ -22,7 +22,6 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HelloStyleKit.h"
 
 @interface HEMOnboardingController()
 
@@ -94,8 +93,10 @@
     [self setVisible:YES];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // set visibility before it's actually disappeared in case anything is
+    // trying to present something while it's going away
     [self setVisible:NO];
 }
 
@@ -290,7 +291,10 @@
 }
 
 - (void)showBackButtonAsCancelWithSelector:(SEL)action {
-    UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil image:[HelloStyleKit backIcon] target:self action:action];
+    UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil
+                                                                 image:[UIImage imageNamed:@"backIcon"]
+                                                                target:self
+                                                                action:action];
     [self useCancelBarButtonItem:cancelItem];
 }
 
@@ -371,7 +375,7 @@
         dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1.0f*NSEC_PER_SEC);
         dispatch_after(time, dispatch_get_main_queue(), ^{
             [activityView updateText:NSLocalizedString(@"onboarding.end-message.sleep", nil)
-                         successIcon:[HelloStyleKit moon]
+                         successIcon:[UIImage imageNamed:@"moon"]
                         hideActivity:YES
                           completion:^(BOOL finished) {
                               dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2.0f*NSEC_PER_SEC);

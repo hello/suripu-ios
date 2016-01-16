@@ -7,6 +7,7 @@
 #import "SENSensorAccessibility.h"
 #import "NSDate+HEMRelative.h"
 #import "HEMOnboardingService.h"
+#import "HEMAccountService.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -104,7 +105,10 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     NSDate* today = [[NSDate date] dateAtMidnight];
     if ([[today previousDay] shouldCountAsPreviousDay])
         today = [today previousDay];
-    SENAccount* account = [[SENServiceAccount sharedService] account] ?: [[HEMOnboardingService sharedService] currentAccount];
+    
+    HEMAccountService* accountService = [HEMAccountService sharedService];
+    HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
+    SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
     NSDate *creationDate = [account createdAt];
     if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
         NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay fromDate:creationDate  toDate:today options:0];
@@ -217,7 +221,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 
 - (SENTimeline*)resultAtIndexPath:(NSIndexPath*)indexPath {
     NSInteger index = [self indexAtIndexPath:indexPath];
-    if (index == NSNotFound)
+    if (index == NSNotFound || index >= [self.sleepDataSummaries count])
         return nil;
     return [self.sleepDataSummaries objectAtIndex:index];
 }

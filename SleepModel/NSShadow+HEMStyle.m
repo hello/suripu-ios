@@ -26,4 +26,22 @@
                                radius:5.0f];
 }
 
++ (NSShadow*)shadowForActionView {
+    return [self shadowStyleWithColor:[UIColor colorWithWhite:0.0f alpha:0.1f]
+                               offset:CGSizeMake(0.1f, -2.1f)
+                               radius:5.0f];
+}
+
++ (NSShadow*)shadowForBackViewCards {
+    return [self shadowStyleWithColor:[UIColor colorWithWhite:0.0f alpha:0.02f]
+                               offset:CGSizeMake(0.1f, 1.6f)
+                               radius:0.0f];
+}
+
++ (NSShadow*)shadowForButtonContainer {
+    return [self shadowStyleWithColor:[UIColor colorWithWhite:0.0f alpha:0.1f]
+                               offset:CGSizeMake(0.1f, 1.1f)
+                               radius:3.0f];
+}
+
 @end

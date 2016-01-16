@@ -70,7 +70,6 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
 }
 
 - (void)layoutElementsWithImage:(UIImage *)image title:(NSString *)title message:(NSAttributedString *)message {
-    CGFloat const HEMDialogButtonBorderWidth = 1.0f;
     CGFloat const HEMDialogCornerRadius = 4.0f;
     CGFloat const HEMDialogContentHorzPadding = 25.0f;
     self.contentInsets = UIEdgeInsetsMake(HEMDialogContentTopPadding, HEMDialogContentHorzPadding,
@@ -78,8 +77,6 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
 
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = HEMDialogCornerRadius;
-    self.layer.borderWidth = HEMDialogButtonBorderWidth;
-    self.layer.borderColor = [UIColor colorWithWhite:0.0f alpha:0.1f].CGColor;
 
     [self addImageViewWithImage:image];
     [self addTitleLabelWithText:title];

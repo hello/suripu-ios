@@ -16,6 +16,13 @@
 + (UIFont*)alarmNumberFont;
 
 + (UIFont*)alarmSelectedNumberFont;
++ (UIFont*)alarmDetailFont;
++ (UIFont*)alarmTitleFont;
+
+/**
+ * Font for Alarm UI's cancel and save buttons
+ */
++ (UIFont*)alarmButtonFont;
 
 /**
  *  Alarm picker view meridiem font
@@ -551,5 +558,10 @@
  * Font used for the text in the empty state views
  */
 + (UIFont*)emptyStateDescriptionFont;
+
+/**
+ * Font used for text displayed when there was a problem retrieving data to load
+ */
++ (UIFont*)errorStateDescriptionFont;
 
 @end

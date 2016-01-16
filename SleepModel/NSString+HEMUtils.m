@@ -12,20 +12,17 @@
 
 static NSPredicate* emailPredicate;
 
-+ (void)initialize
-{
++ (void)initialize {
     NSString* regex = @"^.+@.+\\..+$";
     emailPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
 }
 
-- (BOOL)isValidEmail
-{
+- (BOOL)isValidEmail {
     if ([self length] == 0) return NO;
     return [emailPredicate evaluateWithObject:self];
 }
 
-- (NSString*)trim
-{
+- (NSString*)trim {
     NSCharacterSet* spaces = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     return [self stringByTrimmingCharactersInSet:spaces];
 }
@@ -38,9 +35,31 @@ static NSPredicate* emailPredicate;
     return [self sizeBoundedByWidth:width attriburtes:attributes].height;
 }
 
+- (CGFloat)heightBoundedByWidth:(CGFloat)width
+                     attributes:(NSDictionary *)attributes
+             withDrawingOptions:(NSStringDrawingOptions)options {
+    return [self sizeBoundedByWidth:width attriburtes:attributes options:options].height;
+}
+
 - (CGSize)sizeBoundedByWidth:(CGFloat)width attriburtes:(NSDictionary *)attributes {
     NSStringDrawingOptions options
         = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin;
+    return [self sizeBoundedByWidth:width attriburtes:attributes options:options];
+}
+
+- (CGSize)sizeBoundedByHeight:(CGFloat)height attributes:(NSDictionary *)attributes {
+    NSStringDrawingOptions options
+        = NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin;
+    CGSize textSize = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, height)
+                                         options:options
+                                      attributes:attributes
+                                         context:nil].size;
+    return CGSizeMake(ceilCGFloat(textSize.width), ceilCGFloat(textSize.height));
+}
+
+- (CGSize)sizeBoundedByWidth:(CGFloat)width
+                 attriburtes:(NSDictionary *)attributes
+                     options:(NSStringDrawingOptions)options {
     CGSize textSize = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                          options:options
                                       attributes:attributes

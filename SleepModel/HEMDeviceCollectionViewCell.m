@@ -35,6 +35,7 @@
 - (void)prepareForReuse {
     [self showDataLoadingIndicator:YES];
     [[self property1IconView] setImage:nil];
+    [[self property2InfoButton] setHidden:YES];
 }
 
 - (void)showDataLoadingIndicator:(BOOL)show {

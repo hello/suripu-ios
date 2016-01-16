@@ -23,5 +23,6 @@
 @property (nonatomic, readonly) NSUInteger hour;
 @property (nonatomic, readonly) NSUInteger minute;
 @property (nonatomic) NSUInteger minuteIncrement;
+@property (nonatomic) BOOL showSelectionUnderlay;
 @property (nonatomic, weak) id<HEMClockPickerViewDelegate> delegate;
 @end

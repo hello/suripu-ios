@@ -146,7 +146,7 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
 - (CGSize)sizeForItemAtPath:(NSIndexPath*)indexPath inCollectionView:(UICollectionView*)collectionView {
     UICollectionViewFlowLayout* layout = (id) [collectionView collectionViewLayout];
     CGSize size = [layout itemSize];
-    size.width = CGRectGetWidth([collectionView bounds]);
+    size.width = CGRectGetWidth([[collectionView superview] bounds]);
     
     NSInteger sec = [indexPath section];
     

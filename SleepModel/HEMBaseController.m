@@ -88,8 +88,10 @@
     if (!_shadowView && [self wantsShadowView]) {
         [self setExtendedLayoutIncludesOpaqueBars:NO];
         UINavigationBar* navBar = [[self navigationController] navigationBar];
-        _shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:navBar];
-        [navBar addSubview:_shadowView];
+        if (navBar) {
+            _shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:navBar];
+            [navBar addSubview:_shadowView];
+        }
     }
     return _shadowView;
 }
@@ -132,18 +134,35 @@
 
 #pragma mark - alerts
 
+- (UIView*)backgroundViewForAlerts {
+    UIView* bgView = nil;
+    if ([self parentViewController]) {
+        bgView = [[self parentViewController] view];
+    } else if ([self navigationController]) {
+        bgView = [[self navigationController] view];
+    } else {
+        bgView = [self view];
+    }
+    return bgView;
+}
+
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
-    UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];
-    [self showMessageDialog:message title:title image:nil seeThroughView:seeThroughView withHelpPage:nil];
+    [self showMessageDialog:message
+                      title:title
+                      image:nil
+             seeThroughView:[self backgroundViewForAlerts]
+               withHelpPage:nil];
 }
 
 - (void)showMessageDialog:(NSString*)message
                     title:(NSString*)title
                     image:(UIImage*)image
              withHelpPage:(NSString*)helpPage {
-    
-    UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];
-    [self showMessageDialog:message title:title image:image seeThroughView:seeThroughView withHelpPage:helpPage];
+    [self showMessageDialog:message
+                      title:title
+                      image:image
+             seeThroughView:[self backgroundViewForAlerts]
+               withHelpPage:helpPage];
 }
 
 - (void)showMessageDialog:(NSString*)message

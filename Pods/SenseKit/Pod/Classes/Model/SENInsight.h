@@ -15,13 +15,6 @@
 
 - (instancetype)initWithDictionary:(NSDictionary*)dict;
 
-/**
- *  Convenience method for determining if an insight is in the generic category
- *
- *  @return YES if the category is generic
- */
-- (BOOL)isGeneric;
-
 @end
 
 @interface SENInsightInfo : NSObject <NSCoding>

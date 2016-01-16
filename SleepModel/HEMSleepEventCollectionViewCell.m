@@ -9,7 +9,6 @@
 #import "HEMMarkdown.h"
 #import "HEMEventBubbleView.h"
 #import "HEMWaveform.h"
-#import "HelloStyleKit.h"
 
 @interface HEMSleepEventCollectionViewCell ()
 @property (nonatomic) CGFloat cachedRatioFromCenter;
@@ -72,7 +71,7 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     self.transform = CGAffineTransformIdentity;
     self.contentContainerView.alpha = 1;
     [self.contentContainerView setMessageText:nil timeText:nil];
-    [self.playButton setImage:[HelloStyleKit playSound] forState:UIControlStateNormal];
+    [self.playButton setImage:[UIImage imageNamed:@"playSound"] forState:UIControlStateNormal];
 }
 
 - (void)prepareForEntryAnimation {
@@ -140,13 +139,12 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     CGFloat const iconImageLeft = 4.f;
     CGFloat const iconImageTop = 4.f;
     CGFloat const iconImageDiameter = 40.f;
-    CGFloat const timeLabelRight = 12.f;
+    CGFloat const timeLabelRight = 8.f;
     CGFloat const timeLabelTop = 17.f;
     CGFloat const messageLabelLeft = 52.f;
     CGFloat const messageLabelTop = 14.f;
     CGFloat const messageLabelRight = 8.f;
     CGFloat const messageLabelHeightOffset = 26.f;
-    CGFloat const timeLabelMaxWidth = 40.f;
     CGFloat const timeLabelMaxHeight = 24.f;
     CGFloat const waveformEdgeInset = 4.f;
 
@@ -155,7 +153,7 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     CGRect eventImageFrame = CGRectMake(iconImageLeft, iconImageTop, iconImageDiameter, iconImageDiameter);
     self.eventTypeImageView.frame = eventImageFrame;
 
-    CGSize timeLabelSize = [self.eventTimeLabel sizeThatFits:CGSizeMake(timeLabelMaxWidth, timeLabelMaxHeight)];
+    CGSize timeLabelSize = [[self.eventTimeLabel attributedText] sizeWithHeight:timeLabelMaxHeight];
     CGFloat eventTimeLeft = containerWidth - (timeLabelSize.width + timeLabelRight);
     CGRect eventTimeLabelFrame = CGRectMake(eventTimeLeft, timeLabelTop, timeLabelSize.width, timeLabelSize.height);
     self.eventTimeLabel.frame = eventTimeLabelFrame;

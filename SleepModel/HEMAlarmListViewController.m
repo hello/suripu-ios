@@ -7,7 +7,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmListCell.h"
-#import "HelloStyleKit.h"
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
@@ -16,10 +15,11 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSenseRequiredCollectionViewCell.h"
-#import "HEMBounceModalTransition.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 #import "NSString+HEMUtils.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "HEMScreenUtils.h"
 #import "HEMNoAlarmCell.h"
 #import "HEMActivityIndicatorView.h"
@@ -41,10 +41,10 @@ NS_ENUM(NSUInteger) {
 @property (strong, nonatomic) NSDateFormatter *hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, getter=isLoading) BOOL loading;
-@property (nonatomic, getter=isWaitingForRefreshData) BOOL waitingForRefreshData;
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
-@property (nonatomic, strong) HEMBounceModalTransition *alarmSaveTransitionDelegate;
+@property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
+@property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
 @end
 
 @implementation HEMAlarmListViewController
@@ -53,15 +53,16 @@ static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
 static CGFloat const HEMAlarmListPairCellHeight = 352.f;
-static CGFloat const HEMAlarmListNoAlarmCellHeight = 372.0f;
+static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
+static CGFloat const HEMAlarmNoAlarmHorzMargin = 40.0f;
 static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSUInteger const HEMAlarmListLimit = 8;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"alarms.title", nil);
-        self.tabBarItem.image = [HelloStyleKit alarmBarIcon];
+        self.tabBarItem.image = [UIImage imageNamed:@"alarmBarIcon"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"alarmBarIconActive"];
     }
     return self;
@@ -69,12 +70,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.alarmSaveTransitionDelegate = [HEMBounceModalTransition new];
-    self.alarmSaveTransitionDelegate.message = NSLocalizedString(@"actions.saved", nil);
+    self.alarmSaveTransitionDelegate = [HEMSimpleModalTransitionDelegate new];
+    self.alarmSaveTransitionDelegate.wantsStatusBar = YES;
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];
-    self.waitingForRefreshData = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,13 +125,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)refreshData {
     if ([self isLoading])
         return;
-    self.loading = YES;
     self.addButton.enabled = NO;
     self.noSense = NO;
     SENServiceDevice *service = [SENServiceDevice sharedService];
     if ([service isInfoLoaded]) {
         [self checkDeviceInfoForSenseAndRefresh];
     } else {
+        self.loading = YES;
         [service loadDeviceInfo:^(NSError *error) {
           if (error) {
               self.noSense = NO;
@@ -149,6 +149,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     SENServiceDevice *service = [SENServiceDevice sharedService];
     BOOL hasSense = [[service devices] hasPairedSense];
     if (hasSense) {
+        self.loading = YES;
         self.noSense = NO;
         [self refreshAlarmList];
     } else {
@@ -163,20 +164,21 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (void)refreshAlarmList {
+    self.loading = !self.alarms; // only show indicator if there's no alarms at all
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self
                                               completion:^(NSError *error) {
-                                                if (error) {
-                                                    self.loadingFailed = YES;
-                                                    self.loading = NO;
-                                                    if (self.alarms.count == 0) {
-                                                        [self.collectionView reloadData];
-                                                        return;
-                                                    }
-                                                } else {
-                                                    self.loadingFailed = NO;
-                                                    [self reloadData];
-                                                }
-                                                self.addButton.enabled = YES;
+                                                  self.loading = NO;
+                                                  if (error) {
+                                                      self.loadingFailed = YES;
+                                                      if (self.alarms.count == 0) {
+                                                          [self.collectionView reloadData];
+                                                          return;
+                                                      }
+                                                  } else {
+                                                      self.loadingFailed = NO;
+                                                      [self reloadData];
+                                                  }
+                                                  self.addButton.enabled = YES;
                                               }];
 }
 
@@ -211,17 +213,22 @@ static NSUInteger const HEMAlarmListLimit = 8;
 #pragma mark - Properties
 
 - (void)setLoading:(BOOL)loading {
+    if (_loading == loading) {
+        return;
+    }
+    
     _loading = loading;
     
     if (loading) {
         [self.loadingIndicator start];
         self.loadingIndicator.hidden = NO;
+        self.collectionView.hidden = YES;
     } else {
         [self.loadingIndicator stop];
         self.loadingIndicator.hidden = YES;
+        self.collectionView.hidden = NO;
     }
     
-    self.waitingForRefreshData = NO;
     [self.collectionView reloadData];
 }
 
@@ -344,12 +351,31 @@ static NSUInteger const HEMAlarmListLimit = 8;
     UIEdgeInsets sectionInsets = layout.sectionInset;
     sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
     layout.sectionInset = sectionInsets;
+    self.collectionView.hidden = YES;
 }
 
 #pragma mark UICollectionViewDatasource
 
+- (NSAttributedString*)attributedNoAlarmText {
+    if (!_attributedNoAlarmText) {
+        NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+        style.lineSpacing = 8.f;
+        NSMutableDictionary *detailAttributes = [[HEMMarkdown attributesForBackViewText][@(PARA)] mutableCopy];
+        
+        NSMutableParagraphStyle *paraStyle = [detailAttributes[NSParagraphStyleAttributeName] mutableCopy];
+        paraStyle.alignment = NSTextAlignmentCenter;
+        detailAttributes[NSParagraphStyleAttributeName] = paraStyle;
+        
+        [detailAttributes removeObjectForKey:NSForegroundColorAttributeName];
+        
+        NSString* text = NSLocalizedString(@"alarms.no-alarm.message", nil);
+        _attributedNoAlarmText = [[NSAttributedString alloc] initWithString:text attributes:detailAttributes];
+    }
+    return _attributedNoAlarmText;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([self isLoading] || [self isWaitingForRefreshData]) {
+    if ([self isLoading]) {
         return LoadingStateRowCount;
     } else if (self.alarms.count > 0) {
         return self.alarms.count;
@@ -400,17 +426,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
                     emptyCellAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = [HEMMainStoryboard alarmListEmptyCellReuseIdentifier];
     HEMNoAlarmCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 8.f;
-    NSMutableDictionary *detailAttributes = [[HEMMarkdown attributesForBackViewText][@(PARA)] mutableCopy];
-    
-    NSMutableParagraphStyle *paraStyle = [detailAttributes[NSParagraphStyleAttributeName] mutableCopy];
-    paraStyle.alignment = NSTextAlignmentCenter;
-    detailAttributes[NSParagraphStyleAttributeName] = paraStyle;
-    
-    [detailAttributes removeObjectForKey:NSForegroundColorAttributeName];
-    cell.detailLabel.attributedText =
-        [[NSAttributedString alloc] initWithString:NSLocalizedString(@"alarms.no-alarm.message", nil) attributes:detailAttributes];
+    cell.detailLabel.attributedText = [self attributedNoAlarmText];
     [cell.alarmButton addTarget:self action:@selector(addNewAlarm:) forControlEvents:UIControlEventTouchUpInside];
     [cell.alarmButton setTitle:[NSLocalizedString(@"alarms.first-alarm.button-title", nil) uppercaseString]
                       forState:UIControlStateNormal];
@@ -490,7 +506,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
     } else if ([self hasNoSense]) {
         return CGSizeMake(width, HEMAlarmListPairCellHeight);
     } else if (self.alarms.count == 0) {
-        return CGSizeMake(width, HEMAlarmListNoAlarmCellHeight);
+        NSAttributedString* attributedText = [self attributedNoAlarmText];
+        CGFloat maxWidth = width - (HEMAlarmNoAlarmHorzMargin * 2);
+        CGFloat textHeight = [attributedText sizeWithWidth:maxWidth].height;
+        return CGSizeMake(width, textHeight + HEMAlarmListNoAlarmCellBaseHeight);
     }
     
     CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;

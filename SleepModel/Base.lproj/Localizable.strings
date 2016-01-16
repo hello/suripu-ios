@@ -146,13 +146,6 @@
 "location.error.not-enabled" = "You have denied access to, or disabled, Location Services. You can change this preference inside the Settings app.";
 "location.error.weak-signal" = "We were unable to obtain your location. Try moving to a different location and try again.";
 
-// setting up second pill
-"setup.second-pill.error.title" = "Failed to enable Pairing Mode";
-"setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
-"setup.second-pill.error.sense-full" = "Sense cannot pair with any more devices.";
-"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode. Have your partner visit %@ on their mobile device to download the Sense app, and create a new account.\n\nThey will be given instructions to set up their Sleep Pill.";
-"setup.get-app.url" = "senseapp.com";
-
 // settings
 "settings.title" = "Settings";
 "settings.notifications" = "Notifications";
@@ -211,6 +204,9 @@
 "settings.account.update.email-invalid" = "The email is invalid.  Check that you entered the correct email and try again.";
 "settings.account.update.name-too-long" = "New name is too long and cannot be accepted.  Try again with a shorter name.";
 "settings.account.update.name-too-short" = "New name is too short.  Try again with longer name.";
+"settings.account.error.title.hk" = "Sync with Health";
+"settings.account.error.message.hk-not-supported" = "Apple Health is not supported on your device.";
+"settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app.  You may need to authorize this directly in your Health app then enable this.";
 
 // support
 "debug.options.title" = "Debug options";
@@ -335,6 +331,7 @@
 "sleep.insight.info.title.no-text" = "Insight failed to load";
 "sleep.insight.info.message.no-text" = "Unable to load Insight information at the moment. Please make sure your device has an internet connection and try again.";
 "sleep.questions.end.message" = "Thank you";
+"insights.feed.error.message" = "There was a problem displaying your insights. Please try again.";
 
 // authentication/sign in
 "authorization.sign-in.activity.message" = "Signing in...";
@@ -402,7 +399,7 @@
 "sensor.particulates" = "Air quality";
 "sensor.sound" = "Noise";
 "sensor.light" = "Light";
-"sensor.data-unavailable" = "Sensor data is unavailable.";
+"sensor.data-unavailable" = "There was a problem displaying your sensor data. Please try again.";
 "sensor.value.none" = "No data";
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";
@@ -584,6 +581,7 @@
 // trends
 "trends.title" = "Trends";
 "trends.not-enough-data.message" = "Your trends will appear here after a week of sleep.";
+"trends.loading.error.message" = "There was a problem displaying your trends. Please try again.";
 
 // actions
 "actions.cancel" = "Cancel";

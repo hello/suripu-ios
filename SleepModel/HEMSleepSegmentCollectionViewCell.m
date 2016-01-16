@@ -1,9 +1,7 @@
 
 #import "HEMSleepSegmentCollectionViewCell.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
-#import "HelloStyleKit.h"
 
 CGFloat const HEMLinedCollectionViewCellLineOffset = 65.f;
 CGFloat const HEMLinedCollectionViewCellLineWidth = 2.f;
@@ -17,6 +15,7 @@ CGFloat const HEMSegmentPrefillTimeInset = 12.f;
 @property (nonatomic, strong) NSMutableArray *timeViews;
 @property (nonatomic, strong) UIColor *fillColor;
 @property (nonatomic, strong) UIColor *preFillColor;
+@property (nonatomic, strong) HEMGradient* barLineGradient;
 @property (nonatomic, getter=isWaitingForAnimation, readwrite) BOOL waitingForAnimation;
 @end
 
@@ -31,6 +30,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
     self.backgroundColor = [UIColor timelineGradientColor];
+    self.barLineGradient = [HEMGradient gradientForTimelineSleepSegment];
 }
 
 - (void)prepareForReuse {
@@ -74,7 +74,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
                               MIN(CGRectGetHeight(self.bounds) * heightRatio,
                                   MAX(0, CGRectGetHeight(self.frame) - HEMSegmentTimeLabelHeight)));
     CGFloat labelYOffset = lineYOffset - floorf(HEMSegmentTimeLabelHeight / 2);
-    CGSize size = [text sizeWithWidth:HEMTimeLabelWidth];
+    CGSize size = [text sizeWithHeight:HEMSegmentTimeLabelHeight];
     CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - size.width - HEMTimeLabelLineTrailing, labelYOffset,
                                   size.width, HEMSegmentTimeLabelHeight);
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
@@ -138,7 +138,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     [self.preFillColor setFill];
     CGContextFillRect(ctx, preRect);
 
-    CGGradientRef gradient = [HelloStyleKit timelineBarGradient].CGGradient;
+    CGGradientRef gradient = [self.barLineGradient gradientRef];
     CGContextSaveGState(ctx);
     CGContextAddRect(ctx, fillRect);
     CGContextClip(ctx);

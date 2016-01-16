@@ -57,18 +57,6 @@
     [[self videoView] pause];
 }
 
-- (void)next {
-    // if there are less than 2 accounts paired to Sense, ask if user wants to
-    // set up another Pill (another account), otherwise just finish onboarding
-    if ([[[HEMOnboardingService sharedService] pairedAccountsToSense] integerValue] < 2) {
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard alarmToAnotherPillSegueIdentifier]
-                                  sender:self];
-    } else {
-        [[HEMOnboardingService sharedService] disconnectCurrentSense];
-        [self completeOnboarding];
-    }
-}
-
 #pragma mark - Actions
 
 - (IBAction)setAlarmNow:(id)sender {
@@ -85,7 +73,7 @@
 }
 
 - (IBAction)setAlarmLater:(id)sender {
-    [self next];
+    [self completeOnboarding];
 }
 
 #pragma mark - HEMAlarmControllerDelegate
@@ -96,7 +84,7 @@
 
 - (void)didSaveAlarm:(__unused SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC {
     [self dismissViewControllerAnimated:NO completion:^{
-        [self next];
+        [self completeOnboarding];
     }];
 }
 

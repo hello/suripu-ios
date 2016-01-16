@@ -10,6 +10,7 @@
 #import "HEMBirthdatePickerView.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
+#import "HEMAccountUpdateDelegate.h"
 
 static NSInteger const kHEMBirthdatePickerDefaultMonth = 7;
 static NSInteger const kHEMBirthdatePickerDefaultDay = 15;
@@ -34,7 +35,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     [self preLoadAccount]; // if does not yet exist, in case user returns to here
     [self configureButtons];
 
-    if ([self delegate] == nil) {
+    if (![self updateDelegate]) {
         // start looking for a sense right away here.  We want this step here b/c
         // this is one of the checkpoints and if user lands back here, this optimizatin
         // will also apply.  If there is a delegate, we do not want to pre scan
@@ -57,7 +58,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 - (void)configureButtons {
     [self stylePrimaryButton:[self doneButton]
              secondaryButton:[self skipButton]
-                withDelegate:[self delegate] != nil];
+                withDelegate:[self updateDelegate]];
     
     [self enableBackButton:NO];
 }
@@ -90,7 +91,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     NSInteger day = [[self dobPicker] selectedDay];
     NSInteger year = [[self dobPicker] selectedYear];
     
-    if ([self delegate] == nil) {
+    if (![self updateDelegate]) {
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
         
         if ([service currentAccount] == nil) {
@@ -99,15 +100,16 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
             [[service currentAccount] setBirthMonth:month day:day andYear:year];
             [self proceedToNextScreen];
         }
-
     } else {
-        [[self delegate] didSelectMonth:month day:day year:year from:self];
+        SENAccount* tempAccount = [SENAccount new];
+        [tempAccount setBirthMonth:month day:day andYear:year];
+        [[self updateDelegate] update:tempAccount];
     }
 }
 
 - (IBAction)skip:(id)sender {
-    if ([self delegate] != nil) {
-        [[self delegate] didCancelBirthdatePicker:self];
+    if ([self updateDelegate]) {
+        [[self updateDelegate] cancel];
     } else {
         [self proceedToNextScreen];
     }

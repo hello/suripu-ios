@@ -34,18 +34,23 @@ typedef NS_ENUM(NSInteger, HEMInsightRow) {
     HEMInsightRowDetail,
     HEMInsightAbout,
     HEMInsightRowSummary,
-    HEMINsightRowCount
+    HEMInsightRowCount
 };
 
 static NSString* const HEMInsightHeaderReuseId = @"header";
 
+static NSInteger const HEMInsightRowCountWhileLoading = 2;
+static NSInteger const HEMInsightRowCountForGenerics = 3;
+
 static CGFloat const HEMInsightCellSummaryTopMargin = 20.0f;
 static CGFloat const HEMInsightCellSummaryBotMargin = 33.0f;
-static CGFloat const HEMInsightCellSummaryLeftMargin = 48.0f;
-static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
+static CGFloat const HEMInsightCellSummaryLeftMargin = 54.0f; // 48 + 2 for divider + 4 magic iOS 9 pixels from collection view
+static CGFloat const HEMInsightCellSummaryRightMargin = 28.0f; // 24 + 4 magic iOS 9 pixels
 
 static CGFloat const HEMInsightCellTitleTopMargin = 32.0f;
 static CGFloat const HEMInsightCellTitleBotMargin = 12.0f;
+
+static CGFloat const HEMInsightCellDetailBotMarginForGenerics = 32.0f;
 
 static CGFloat const HEMInsightCellAboutTopMargin = 36.0f;
 
@@ -218,7 +223,7 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
         NSString* summary = [[[self insight] message] trim];
         if (summary) {
             NSDictionary* attributes = [HEMMarkdown attributesForInsightSummaryText];
-            _attributedSummary = [markdown_to_attr_string([summary trim], 0, attributes) trim];
+            _attributedSummary = [markdown_to_attr_string(summary, 0, attributes) trim];
         }
     }
     return _attributedSummary;
@@ -287,7 +292,7 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
         default:
             break;
     }
-    
+
     CGSize textSize = [attrText sizeWithWidth:itemSize.width - horizontalMargins];
     return textSize.height;
 }
@@ -307,7 +312,13 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return [self isLoading] ? 2 : HEMINsightRowCount;
+    NSInteger count = HEMInsightRowCount;
+    if ([self isLoading]) {
+        count = HEMInsightRowCountWhileLoading;
+    } else if ([[self insightsService] isGenericInsight:[self insight]]) {
+        count = HEMInsightRowCountForGenerics;
+    }
+    return count;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
@@ -400,6 +411,9 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
             break;
         case HEMInsightRowDetail: {
             itemSize.height = [self heightForTextCellAtIndexPath:indexPath];
+            if ([[self insightsService] isGenericInsight:[self insight]]) {
+                itemSize.height += HEMInsightCellDetailBotMarginForGenerics;
+            }
             break;
         }
         default:

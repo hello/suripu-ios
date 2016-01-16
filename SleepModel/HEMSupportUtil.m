@@ -11,14 +11,13 @@
 
 #import <SVWebViewController/SVModalWebViewController.h>
 
-#import <SenseKit/SENServiceAccount.h>
-
-#import "UIFont+HEMStyle.h"
+#import "UIDevice+HEMUtils.h"
 
 #import "HEMSupportUtil.h"
+#import "HEMStyle.h"
 #import "HEMAlertViewController.h"
 #import "HEMLogUtils.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMAccountService.h"
 
 static NSString* const HEMSupportContactEmail = @"beta-logs@hello.is";
 static NSString* const HEMSupportContactSubject = @"App Support Request";
@@ -27,18 +26,6 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
 
 @implementation HEMSupportUtil
 
-+ (NSString*)deviceModel {
-    size_t size;
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char* result = malloc(size);
-    sysctlbyname("hw.machine", result, &size, NULL, 0);
-    
-    NSString* deviceModel = [NSString stringWithUTF8String:result];
-    free(result);
-    
-    return deviceModel;
-}
-
 + (NSString*)emailMessageBody {
     UIDevice* device = [UIDevice currentDevice];
     NSBundle* bundle = [NSBundle mainBundle];
@@ -46,8 +33,8 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     NSString* appName = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString* osVersion = [device systemVersion];
-    NSString* deviceModel = [self deviceModel]; // this is used over UIDevice as it gives the model number
-    NSString* accountEmail = [[[SENServiceAccount sharedService] account] email];
+    NSString* deviceModel = [UIDevice currentDeviceModel]; // this is used over UIDevice as it gives the model number
+    NSString* accountEmail = [[[HEMAccountService sharedService] account] email];
     
     if (accountEmail) {
         return [NSString stringWithFormat:@"\n\n\n\n\n-----------------\n%@ v%@\nAccount %@\n%@\nOS %@",

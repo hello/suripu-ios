@@ -1,6 +1,5 @@
 
 #import "HEMAlarmAddButton.h"
-#import "HelloStyleKit.h"
 #import "UIView+HEMMotionEffects.h"
 #import "UIColor+HEMStyle.h"
 

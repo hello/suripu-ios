@@ -17,7 +17,8 @@
 #import "HEMIntroDescriptionView.h"
 #import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
-#import "HEMModalTransitionDelegate.h"
+#import "HEMSimpleModalTransitionDelegate.h"
+#import "HEMAudioSession.h"
 
 typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomePageMeetSense = 0,
@@ -48,7 +49,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 @property (assign, nonatomic) CGFloat origLogInTrailingConstraintConstant;
 @property (weak, nonatomic) UIImageView* currentIntroImageView;
 @property (weak, nonatomic) UIImageView* nextIntroImageView;
-@property (strong, nonatomic) HEMModalTransitionDelegate* transitionDelegate;
+@property (strong, nonatomic) HEMSimpleModalTransitionDelegate* transitionDelegate;
 
 @end
 
@@ -56,6 +57,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    HEMInitializeAudioSession();
     [self configureAppearance];
 }
 
@@ -192,11 +194,18 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 #pragma mark - Actions
 
 - (void)playVideo:(UIButton*)videoButton {
-    NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
-    MPMoviePlayerViewController* videoPlayer
-        = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
-    [self presentMoviePlayerViewControllerAnimated:videoPlayer];
-    [SENAnalytics track:kHEMAnalyticsEventVideo];
+    __weak typeof(self) weakSelf = self;
+    HEMActivateAudioSession(YES, ^(NSError *error) {
+        // play regardless of error
+        NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
+        MPMoviePlayerViewController* videoPlayer
+            = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
+        [weakSelf presentMoviePlayerViewControllerAnimated:videoPlayer];
+        [SENAnalytics track:kHEMAnalyticsEventVideo];
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+    });
 }
 
 // log in and sign up actions are done through segues in the storyboard
@@ -280,7 +289,8 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
             [[self introImageView] setAlpha:pagePercentage];
             
         } else if (nextPage >= HEMWelcomeIntroPageSmartAlarm
-                   && nextPage <= HEMWelcomeIntroPageMeetCurrentConditions) {
+                   && nextPage <= HEMWelcomeIntroPageMeetCurrentConditions
+                   && prevPage <= HEMWelcomeIntroPageMeetCurrentConditions) {
             
             [self crossFadeIntroImageWithPagePercentage:pagePercentage
                                             forNextPage:nextPage
@@ -315,7 +325,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if (![self transitionDelegate]) {
-        HEMModalTransitionDelegate* delegate = [HEMModalTransitionDelegate new];
+        HEMSimpleModalTransitionDelegate* delegate = [HEMSimpleModalTransitionDelegate new];
         [delegate setWantsStatusBar:YES];
         [self setTransitionDelegate:delegate];
     }

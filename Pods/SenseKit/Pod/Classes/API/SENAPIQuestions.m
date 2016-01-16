@@ -94,14 +94,15 @@ static NSString* const kSENAPIQuestionTypeCheckbox = @"CHECKBOX";
     dispatch_once(&onceToken, ^{
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]];
-        [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+        [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     });
     
-    NSString* dateParam
-    = date != nil
-    ? [NSString stringWithFormat:@"?date=%@", [dateFormatter stringFromDate:date]]
-    : @"";
+    NSString* dateParam = @"";
+    if (date) {
+        NSString* formattedDate = [dateFormatter stringFromDate:date];
+        dateParam = [NSString stringWithFormat:@"?date=%@", formattedDate];
+    }
     
     NSString* path = [NSString stringWithFormat:@"%@/%@", kSENAPIQuestionsPath, dateParam];
     [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {

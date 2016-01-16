@@ -1,5 +1,131 @@
 # Changelog
 
+## 1.2.1.10
+
+New:
+
+* Insight tap tutorial will not be shown until second day of viewing, if not
+  already cancelled
+
+Fixes:
+
+* Insight about you text is not truncated prematurely for some text on 4s/5/5s
+  devices
+* Prevent sensor graphs from drawing a flat line on first load if data series
+  have no fluctuations at all
+
+## 1.2.1.9
+
+New:
+
+* Added Bugsnag
+
+Fixes:
+
+* Password change screen should use secured text fields
+* Timeline event text should not be truncated or improperly taking more room than
+  needed.
+* Timeline timestamp divider should not be truncated
+
+## 1.2.1.8
+
+New:
+
+* Launch states for sign in / onboarding / app launch is now consistent to design
+* Support for snoring events
+
+Fixes:
+
+* Sensor history screen color for value and graph will not be in sync when refreshed
+* Alarm screen vx feedback fixes
+
+## 1.2.1.7
+
+Fixes:
+
+* Fixed issue where Timeline events were sometimes truncated
+* Fixed issue where the keyboard will briefly appear after editing wifi from
+  settings
+* Add some missing analytics properties as traits
+
+## 1.2.1.6
+
+New:
+
+* Improved back view states when data cannot be loaded
+
+Fixes:
+
+* Fixed various settings screen layouts when the in-call status bar is showing
+* Fixed spacing between sections inside device settings to match the back views
+* Fixed potential crasher that can occur in the timeline history view
+
+## 1.2.1.5
+
+New:
+
+* Removed the "Setup another pill" onboarding screen
+* Removed the "Get the app" onboarding screen that appears after setup another pill
+* Adjusted action sheet background color to match alerts
+* Alarm VX updates
+* Refactored Alarm UI with VSPER
+
+## 1.2.1.4
+
+New:
+
+* Added info icon for pill color in device settings to trigger welcome dialog
+* Refactored device settings with VSPER
+* Use API Sense WiFi condition to determine icon to use in device settings
+* Changed location property in account to send as 'long' for longitude
+
+Fixes:
+
+* Fix autolayout constraints for pairing mode screen
+
+## 1.2.1.3
+
+Fixes:
+
+* Fixes crasher happening on timeline from the PaintCode removal
+
+## 1.2.1.2
+
+Fixes:
+
+* Better handling of loading state for alarm list screen
+* Better handling of loading state for trends screen
+* Adjusted text spacing for the no alarms state
+* Alert dialogs should properly show the content's background in the blurred state
+
+## 1.2.1.1
+
+New:
+
+* Refactored modal transitions so they reuse code
+* Timeline top bar is now 56pt
+* Play sound in the welcome video even if device is muted
+
+Fixes:
+
+* Fix the sticky separator in account settings
+* Fix small image flash in the last intro screen when swiping past it
+* Fix timeline top bar being shown after coming back from time zone list
+
+## 1.2.1.0
+
+New:
+
+* Account settings refactored with the VSPER architecture
+* Removed dependency to PaintCode
+* Generic Insights will not show the About you section in the detail screen
+
+Fixes:
+
+* Account settings flashes the scroll bar when needed
+* Removed 1pt border around alerts
+* Send ISO dates as local time when requesting questions (temporary)
+
 ## 1.2.0.8
 
 Fixes:

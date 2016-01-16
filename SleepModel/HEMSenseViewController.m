@@ -6,13 +6,11 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
 #import "NSTimeZone+HEMMapping.h"
-#import "UIColor+HEMStyle.h"
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
@@ -22,17 +20,15 @@
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActivityCoverView.h"
-#import "HEMWarningCollectionViewCell.h"
-#import "HEMDeviceDataSource.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMTimeZoneViewController.h"
-#import "HEMBounceModalTransition.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMActionSheetViewController.h"
-#import "HEMDeviceActionCell.h"
 #import "HEMSenseSettingsDataSource+HEMCollectionView.h"
 #import "HEMDeviceWarning.h"
+#import "HEMStyle.h"
 
 @interface HEMSenseViewController() <UICollectionViewDelegate, HEMWiFiConfigurationDelegate>
 
@@ -40,7 +36,7 @@
 
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
-@property (strong, nonatomic) HEMBounceModalTransition* modalTransitionDelegate;
+@property (strong, nonatomic) HEMSimpleModalTransitionDelegate* modalTransitionDelegate;
 @property (strong, nonatomic) HEMSenseSettingsDataSource* dataSource;
 
 
@@ -99,6 +95,18 @@
 
 #pragma mark - UICollectionViewDelegate
 
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+referenceSizeForHeaderInSection:(NSInteger)section {
+    CGSize size = [[collectionView superview] bounds].size;
+    if (section == 0) {
+        size.height = HEMStyleDeviceSectionTopMargin;
+    } else {
+        size.height = HEMStyleSectionTopMargin;
+    }
+    return size;
+}
+
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -145,7 +153,7 @@
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         if (action) {
@@ -289,7 +297,7 @@
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     
     __weak typeof(self) weakSelf = self;
     [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.use-local", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
@@ -449,7 +457,9 @@
         UIViewController* root = [nav topViewController];
         // only apply the transition to timezone
         if ([root isKindOfClass:[HEMTimeZoneViewController class]]) {
-            [self setModalTransitionDelegate:[[HEMBounceModalTransition alloc] init]];
+            HEMSimpleModalTransitionDelegate* transition = [HEMSimpleModalTransitionDelegate new];
+            [transition setWantsStatusBar:YES];
+            [self setModalTransitionDelegate:transition];
             [nav setTransitioningDelegate:[self modalTransitionDelegate]];
             [nav setModalPresentationStyle:UIModalPresentationCustom];
         }

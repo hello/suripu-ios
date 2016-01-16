@@ -10,9 +10,10 @@
 
 #import "HEMSettingsHeaderFooterView.h"
 
-CGFloat const HEMSettingsHeaderFooterHeight = 18.0f;
-CGFloat const HEMSettingsHeaderFooterBorderHeight = 1.0f;
-CGFloat const HEMSettingsHeaderFooterHeightWithTitle = 28.0f;
+CGFloat const HEMSettingsHeaderFooterHeight = 15.0f;
+CGFloat const HEMSettingsHeaderFooterSectionHeight = 12.0f;
+CGFloat const HEMSettingsHeaderFooterBorderHeight = 0.5f;
+CGFloat const HEMSettingsHeaderFooterHeightWithTitle = 25.0f;
 
 static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 
@@ -42,7 +43,7 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
     borderFrame.origin.y = yOrigin;
     borderFrame.size.height = HEMSettingsHeaderFooterBorderHeight;
     UIView* border = [[UIView alloc] initWithFrame:borderFrame];
-    [border setBackgroundColor:[UIColor separatorColor]];
+    [border setBackgroundColor:[UIColor headerFooterDividerColor]];
     [border setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     return border;
 }
@@ -55,7 +56,7 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
     }
     
     if (bottomBorder) {
-        CGFloat y = MAX(0.0f, HEMSettingsHeaderFooterHeight - HEMSettingsHeaderFooterBorderHeight);
+        CGFloat y = MAX(0.0f, CGRectGetHeight([self bounds]) - HEMSettingsHeaderFooterBorderHeight);
         UIView* bBorder = [self borderViewAtYOrigin:y];
         [self addSubview:bBorder];
         [self setBottomBorder:bBorder];
@@ -63,24 +64,30 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 }
 
 - (void)setTitle:(NSString*)title {
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsSectionHeaderFont],
+                                 NSForegroundColorAttributeName : [UIColor settingsSectionHeaderTextColor]};
+    NSAttributedString* attrTitle = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    [self setAttributedTitle:attrTitle];
+}
+
+- (void)setAttributedTitle:(NSAttributedString*)attributedTitle {
     if (![self titleLabel]) {
         UILabel* label = [UILabel new];
-        [label setFont:[UIFont settingsSectionHeaderFont]];
-        [label setTextColor:[UIColor settingsSectionHeaderTextColor]];
+        [label setNumberOfLines:0];
         [label setBackgroundColor:[UIColor clearColor]];
         
         [self addSubview:label];
         [self setTitleLabel:label];
     }
     
-    [[self titleLabel] setText:title];
+    [[self titleLabel] setAttributedText:attributedTitle];
 }
 
 - (void)layoutSubviews {
     if ([self titleLabel]) {
         CGRect frame = [[self titleLabel] frame];
         frame.size.width = CGRectGetWidth([self bounds]) - (2 * HEMSettingsHeaderFooterTitleMargins);
-        frame.size.height = HEMSettingsHeaderFooterHeightWithTitle;
+        frame.size.height = CGRectGetHeight([self bounds]);
         frame.origin.x = HEMSettingsHeaderFooterTitleMargins;
         [[self titleLabel] setFrame:frame];
         

@@ -12,9 +12,7 @@
 #import "HEMClockPickerView.h"
 #import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
-#import "HEMBounceModalTransition.h"
 #import "HEMActivityCoverView.h"
-#import "HelloStyleKit.h"
 
 NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSuccessNotification";
 
@@ -109,7 +107,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
             [[NSNotificationCenter defaultCenter] postNotificationName:HEMTimelineFeedbackSuccessNotification object:strongSelf];
             
             NSString* message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
-            UIImage* icon = [HelloStyleKit check];
+            UIImage* icon = [UIImage imageNamed:@"check"];
             [activityView updateText:message successIcon:icon hideActivity:YES completion:^(BOOL finished) {
                 [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
                     NSTimeInterval delayInSeconds = 0.5f;

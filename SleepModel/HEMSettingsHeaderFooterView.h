@@ -8,13 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern CGFloat const HEMSettingsHeaderFooterHeight;
+extern CGFloat const HEMSettingsHeaderFooterSectionHeight;
 extern CGFloat const HEMSettingsHeaderFooterBorderHeight;
 extern CGFloat const HEMSettingsHeaderFooterHeightWithTitle;
 
 @interface HEMSettingsHeaderFooterView : UIView
 
-- (nonnull instancetype)initWithTopBorder:(BOOL)topBorder bottomBorder:(BOOL)bottomBorder;
+- (instancetype)initWithTopBorder:(BOOL)topBorder bottomBorder:(BOOL)bottomBorder;
 - (void)setTitle:(nullable NSString*)title;
+- (void)setAttributedTitle:(NSAttributedString*)attributedTitle;
 
 @end
+
+NS_ASSUME_NONNULL_END

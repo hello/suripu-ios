@@ -17,13 +17,26 @@ static NSString* const HEMTimelineSettingsAccountCreationDate = @"account.creati
 
 @implementation HEMTimelineService
 
-- (BOOL)isFirstNightOfSleep:(NSDate*)date forAccount:(SENAccount*)account {
+- (NSDate*)accountCreationDateFrom:(SENAccount*)account {
     SENLocalPreferences* localPreferences = [SENLocalPreferences sharedPreferences];
     NSDate* creationDate = [localPreferences userPreferenceForKey:HEMTimelineSettingsAccountCreationDate];
     if (!creationDate) {
         creationDate = [account createdAt];
-        [localPreferences setUserPreference:creationDate forKey:HEMTimelineSettingsAccountCreationDate];
+        if (creationDate) {
+            [localPreferences setUserPreference:creationDate
+                                         forKey:HEMTimelineSettingsAccountCreationDate];
+        }
     }
+    return creationDate;
+}
+
+- (BOOL)canViewTimelinesBefore:(NSDate*)date forAccount:(SENAccount*)account {
+    NSDate* creationDate = [self accountCreationDateFrom:account];
+    return !creationDate || [creationDate compare:date] == NSOrderedAscending;
+}
+
+- (BOOL)isFirstNightOfSleep:(NSDate*)date forAccount:(SENAccount*)account {
+    NSDate* creationDate = [self accountCreationDateFrom:account];
     return [creationDate isOnSameDay:date];
 }
 

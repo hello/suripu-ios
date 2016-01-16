@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMTimelineService : SENService
 
+- (BOOL)canViewTimelinesBefore:(NSDate*)date forAccount:(nullable SENAccount*)account;
 - (BOOL)isFirstNightOfSleep:(NSDate*)date forAccount:(nullable SENAccount*)account;
 
 @end

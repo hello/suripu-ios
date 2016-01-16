@@ -41,8 +41,8 @@
     HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
     SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
     NSDate* currentDate = [(HEMSleepGraphViewController*)viewController dateForNightOfSleep];
-    BOOL firstNight = [[self timelineService] isFirstNightOfSleep:currentDate forAccount:account];
-    return firstNight ? nil : [self sleepSummaryControllerWithDate:[currentDate previousDay]];
+    BOOL canView = [[self timelineService] canViewTimelinesBefore:currentDate forAccount:account];
+    return !canView ? nil : [self sleepSummaryControllerWithDate:[currentDate previousDay]];
 }
 
 #pragma mark - UIPageViewController

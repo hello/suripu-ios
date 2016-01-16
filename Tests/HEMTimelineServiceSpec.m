@@ -68,16 +68,11 @@ describe(@"HEMTimelineService", ^{
         context(@"just created account today, but account is not loaded", ^{
             
             __block BOOL didSetUserPreference = NO;
-            __block NSDate* creationDate = nil;
             
             beforeEach(^{
                 SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
                 [prefs stub:@selector(userPreferenceForKey:) andReturn:nil];
                 [prefs stub:@selector(setUserPreference:forKey:) withBlock:^id(NSArray *params) {
-                    creationDate = [params firstObject];
-                    if ([creationDate isKindOfClass:[NSNull class]]) {
-                        creationDate = nil;
-                    }
                     didSetUserPreference = YES;
                     return [KWValue valueWithBool:YES];
                 }];
@@ -95,7 +90,6 @@ describe(@"HEMTimelineService", ^{
                 fakeAccount = nil;
                 firstNight = YES;
                 didSetUserPreference = NO;
-                creationDate = nil;
             });
             
             it(@"should return NO if we cannot determine it", ^{
@@ -103,11 +97,7 @@ describe(@"HEMTimelineService", ^{
             });
             
             it(@"should not have saved any user preference since no creation date", ^{
-                [[@(didSetUserPreference) should] beYes];
-            });
-            
-            it(@"should have not set user preference with a date", ^{
-                [[creationDate should] beNil];
+                [[@(didSetUserPreference) should] beNo];
             });
         });
         
@@ -173,6 +163,228 @@ describe(@"HEMTimelineService", ^{
             
             it(@"should return NO", ^{
                 [[@(firstNight) should] beNo];
+            });
+            
+        });
+        
+        context(@"date passed in is before account creation date", ^{
+            
+            beforeEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs stub:@selector(userPreferenceForKey:) andReturn:nil];
+                [prefs stub:@selector(setUserPreference:forKey:) andReturn:[KWValue valueWithBool:YES]];
+                
+                firstNight = NO;
+                NSDate* today = [NSDate date];
+                
+                fakeAccount = [SENAccount new];
+                [fakeAccount setCreatedAt:today];
+                
+                timelineService = [HEMTimelineService new];
+                
+                firstNight = [timelineService isFirstNightOfSleep:[today daysFromNow:-3]
+                                                       forAccount:fakeAccount];
+            });
+            
+            afterEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs clearStubs];
+                
+                timelineService = nil;
+                fakeAccount = nil;
+                firstNight = NO;
+            });
+            
+            it(@"should return NO", ^{
+                [[@(firstNight) should] beNo];
+            });
+            
+        });
+        
+    });
+    
+    describe(@"-canViewTimelinesBefore:forAccount:", ^{
+        
+        __block HEMTimelineService* timelineService;
+        __block SENAccount* fakeAccount;
+        __block BOOL canView = NO;
+        
+        context(@"just created account today", ^{
+            
+            __block BOOL didSetUserPreference = NO;
+            
+            beforeEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs stub:@selector(userPreferenceForKey:) andReturn:nil];
+                [prefs stub:@selector(setUserPreference:forKey:) withBlock:^id(NSArray *params) {
+                    didSetUserPreference = YES;
+                    return [KWValue valueWithBool:YES];
+                }];
+                
+                canView = YES;
+                NSDate* date = [NSDate date];
+                
+                timelineService = [HEMTimelineService new];
+                
+                fakeAccount = [SENAccount new];
+                [fakeAccount setCreatedAt:date];
+                
+                canView = [timelineService canViewTimelinesBefore:date forAccount:fakeAccount];
+            });
+            
+            afterEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs clearStubs];
+                
+                timelineService = nil;
+                fakeAccount = nil;
+                canView = YES;
+                didSetUserPreference = NO;
+            });
+            
+            it(@"should return NO", ^{
+                [[@(canView) should] beNo];
+            });
+            
+            it(@"should have saved creation date", ^{
+                [[@(didSetUserPreference) should] beYes];
+            });
+            
+        });
+        
+        context(@"just created account today, but account is not loaded", ^{
+            
+            __block BOOL didSetUserPreference = NO;
+            
+            beforeEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs stub:@selector(userPreferenceForKey:) andReturn:nil];
+                [prefs stub:@selector(setUserPreference:forKey:) withBlock:^id(NSArray *params) {
+                    didSetUserPreference = YES;
+                    return [KWValue valueWithBool:YES];
+                }];
+                
+                canView = NO;
+                timelineService = [HEMTimelineService new];
+                canView = [timelineService canViewTimelinesBefore:[NSDate date] forAccount:nil];
+            });
+            
+            afterEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs clearStubs];
+                
+                timelineService = nil;
+                fakeAccount = nil;
+                canView = NO;
+                didSetUserPreference = NO;
+            });
+            
+            it(@"should return YES", ^{
+                [[@(canView) should] beYes];
+            });
+            
+            it(@"should not have saved any user preference since no creation date", ^{
+                [[@(didSetUserPreference) should] beNo];
+            });
+
+        });
+        
+        context(@"created an account yesterday", ^{
+            
+            beforeEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs stub:@selector(userPreferenceForKey:) andReturn:nil];
+                [prefs stub:@selector(setUserPreference:forKey:) andReturn:[KWValue valueWithBool:YES]];
+                
+                canView = NO;
+                NSDate* today = [NSDate date];
+                
+                fakeAccount = [SENAccount new];
+                [fakeAccount setCreatedAt:[today previousDay]];
+                
+                timelineService = [HEMTimelineService new];
+                
+                canView = [timelineService canViewTimelinesBefore:today forAccount:fakeAccount];
+            });
+            
+            afterEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs clearStubs];
+                
+                timelineService = nil;
+                fakeAccount = nil;
+                canView = NO;
+            });
+            
+            it(@"should return Yes", ^{
+                [[@(canView) should] beYes];
+            });
+            
+        });
+        
+        context(@"onboarded 90 days ago", ^{
+            
+            beforeEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs stub:@selector(userPreferenceForKey:) andReturn:nil];
+                [prefs stub:@selector(setUserPreference:forKey:) andReturn:[KWValue valueWithBool:YES]];
+                
+                canView = NO;
+                NSDate* today = [NSDate date];
+                
+                fakeAccount = [SENAccount new];
+                [fakeAccount setCreatedAt:[today daysFromNow:-90]];
+                
+                timelineService = [HEMTimelineService new];
+                
+                canView = [timelineService canViewTimelinesBefore:today forAccount:fakeAccount];
+            });
+            
+            afterEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs clearStubs];
+                
+                timelineService = nil;
+                fakeAccount = nil;
+                canView = NO;
+            });
+            
+            it(@"should return YES", ^{
+                [[@(canView) should] beYes];
+            });
+            
+        });
+        
+        context(@"date passed in is before account creation date", ^{
+            
+            beforeEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs stub:@selector(userPreferenceForKey:) andReturn:nil];
+                [prefs stub:@selector(setUserPreference:forKey:) andReturn:[KWValue valueWithBool:YES]];
+                
+                canView = YES;
+                NSDate* today = [NSDate date];
+                
+                fakeAccount = [SENAccount new];
+                [fakeAccount setCreatedAt:today];
+                
+                timelineService = [HEMTimelineService new];
+                
+                canView = [timelineService canViewTimelinesBefore:[today daysFromNow:-3]
+                                                       forAccount:fakeAccount];
+            });
+            
+            afterEach(^{
+                SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+                [prefs clearStubs];
+                
+                timelineService = nil;
+                fakeAccount = nil;
+                canView = YES;
+            });
+            
+            it(@"should return NO", ^{
+                [[@(canView) should] beNo];
             });
             
         });

@@ -877,8 +877,7 @@ static BOOL hasLoadedBefore = NO;
     HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
     SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
 
-    BOOL firstNight = [[self timelineService] isFirstNightOfSleep:self.dateForNightOfSleep
-                                                       forAccount:account];
+    BOOL firstNight = [[self timelineService] isFirstNightOfSleep:self.dateForNightOfSleep forAccount:account];
     
     self.errorSupportButton.hidden = YES;
     if (hasTimelineData || [self.dataSource isLoading]) {

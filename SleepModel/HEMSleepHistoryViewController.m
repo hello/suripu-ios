@@ -111,14 +111,15 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     HEMAccountService* accountService = [HEMAccountService sharedService];
     HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
     SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
-    
-    if ([[self timelineService] isFirstNightOfSleep:today forAccount:account]) {
+
+    if (![[self timelineService] canViewTimelinesBefore:today forAccount:account]) {
         NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay
                                                         fromDate:[account createdAt]
                                                           toDate:today
                                                          options:0];
         capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
     }
+    
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
     self.pendingDataFetches = [NSMutableSet new];
 

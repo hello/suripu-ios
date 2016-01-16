@@ -186,6 +186,8 @@
 		BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3AA21A2EA4CF0019C110 /* HEMAccountViewController.m */; };
 		BF7105CA1ADC6DAE0066885B /* HEMSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7105C91ADC6DAE0066885B /* HEMSpinnerView.m */; };
 		BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */; };
+		BF71BDA21C481E0A00919D0F /* HEMTimelineService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF71BDA11C481E0A00919D0F /* HEMTimelineService.m */; };
+		BF71BDA51C485B2800919D0F /* HEMTimelineServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF71BDA41C485B2800919D0F /* HEMTimelineServiceSpec.m */; };
 		BF7454AF1B5887BF00E6AE85 /* HEMOnboardingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */; };
 		BF7454B11B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B01B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m */; };
 		BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B21B5D764200E6AE85 /* HEMOnboardingControllerSpec.m */; };
@@ -686,6 +688,9 @@
 		BF7105C91ADC6DAE0066885B /* HEMSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSpinnerView.m; sourceTree = "<group>"; };
 		BF71AFCD1A48F6E700D1208B /* HEMDebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDebugController.h; sourceTree = "<group>"; };
 		BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDebugController.m; sourceTree = "<group>"; };
+		BF71BDA01C481E0A00919D0F /* HEMTimelineService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineService.h; sourceTree = "<group>"; };
+		BF71BDA11C481E0A00919D0F /* HEMTimelineService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineService.m; sourceTree = "<group>"; };
+		BF71BDA41C485B2800919D0F /* HEMTimelineServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineServiceSpec.m; sourceTree = "<group>"; };
 		BF7454AD1B5887BF00E6AE85 /* HEMOnboardingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingService.h; sourceTree = "<group>"; };
 		BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingService.m; sourceTree = "<group>"; };
 		BF7454B01B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingServiceSpec.m; sourceTree = "<group>"; };
@@ -1062,9 +1067,11 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				8AFE90991B9A20C0000D638E /* Config.m */,
 				BF664A951ACC60FD003355D2 /* Alerts */,
 				8B8F5FA41BF661D500665D30 /* Alarm */,
 				BF812A981B6827BB00BF672F /* Analytics */,
+				8AC3C2E71A3CB8130074A87F /* Back Attic */,
 				BF78E98D1B20D1660015949F /* Common */,
 				8B1DB6DF1C18BEE6006C8AFF /* Debug */,
 				BF539CD31C0F808E000F77AA /* Insights */,
@@ -1074,8 +1081,7 @@
 				BFDFCEA01B729F96000DA303 /* Sensors */,
 				BF8C09311C2A0B9A005AB5A7 /* Settings */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
-				8AC3C2E71A3CB8130074A87F /* Back Attic */,
-				8AFE90991B9A20C0000D638E /* Config.m */,
+				BF71BDA31C485AD500919D0F /* Timeline */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1469,6 +1475,7 @@
 				8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */,
 				8AA8D92619ABACC100349FD0 /* Cells */,
 				8AA8D93119ABDC8B00349FD0 /* Layouts */,
+				BF71BD9F1C481D7700919D0F /* Services */,
 				8A660130199EBDDE007E6167 /* View Controllers */,
 				8A660135199EBEB8007E6167 /* Views */,
 				8A4B669019EC7CD700445883 /* Utilities */,
@@ -1822,6 +1829,23 @@
 			name = Debug;
 			sourceTree = "<group>";
 		};
+		BF71BD9F1C481D7700919D0F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BF71BDA01C481E0A00919D0F /* HEMTimelineService.h */,
+				BF71BDA11C481E0A00919D0F /* HEMTimelineService.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		BF71BDA31C485AD500919D0F /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				BF71BDA41C485B2800919D0F /* HEMTimelineServiceSpec.m */,
+			);
+			name = Timeline;
+			sourceTree = "<group>";
+		};
 		BF781E3219DC84EC00B68EBC /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1836,17 +1860,9 @@
 		BF78E98D1B20D1660015949F /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				BF78E98E1B20D16E0015949F /* Utilities */,
-			);
-			name = Common;
-			sourceTree = "<group>";
-		};
-		BF78E98E1B20D16E0015949F /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
 				BF78E98F1B20D1C60015949F /* NSDateHEMRelativeSpec.m */,
 			);
-			name = Utilities;
+			name = Common;
 			sourceTree = "<group>";
 		};
 		BF78E9951B2128F70015949F /* Support */ = {
@@ -2907,6 +2923,7 @@
 				BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */,
 				8AB82DE11B2BFB7B002D769D /* HEMTimelineMessageContainerView.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */,
+				BF71BDA21C481E0A00919D0F /* HEMTimelineService.m in Sources */,
 				BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */,
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				BFA540F21BCEFDF1007AF607 /* NSBundle+HEMUtils.m in Sources */,
@@ -3000,6 +3017,7 @@
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
 				BFA884B91C1A40C200613069 /* HEMDeviceAlertServiceSpec.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
+				BF71BDA51C485B2800919D0F /* HEMTimelineServiceSpec.m in Sources */,
 				BF83397A1C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m in Sources */,
 				BF8C09331C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,

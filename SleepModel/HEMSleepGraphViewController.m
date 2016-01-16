@@ -35,6 +35,7 @@
 #import "HEMScreenUtils.h"
 #import "HEMOnboardingService.h"
 #import "HEMAccountService.h"
+#import "HEMTimelineService.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -64,6 +65,8 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, strong) NSIndexPath *playingIndexPath;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) NSTimer *playbackProgressTimer;
+@property (nonatomic, strong) HEMTimelineService* timelineService;
+
 @end
 
 @implementation HEMSleepGraphViewController
@@ -81,6 +84,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureTimelineService];
     [self configureCollectionView];
     [self configureTransitions];
 
@@ -119,6 +123,10 @@ static BOOL hasLoadedBefore = NO;
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self setVisible:NO];
+}
+
+- (void)configureTimelineService {
+    [self setTimelineService:[HEMTimelineService new]];
 }
 
 - (void)showTutorial {
@@ -868,16 +876,17 @@ static BOOL hasLoadedBefore = NO;
     HEMAccountService* accountService = [HEMAccountService sharedService];
     HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
     SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
-    NSDate *accountCreationDate = [account createdAt];
-    BOOL justOnboarded = accountCreationDate
-                         && [accountCreationDate compare:self.dateForNightOfSleep] == NSOrderedDescending;
+
+    BOOL firstNight = [[self timelineService] isFirstNightOfSleep:self.dateForNightOfSleep
+                                                       forAccount:account];
+    
     self.errorSupportButton.hidden = YES;
     if (hasTimelineData || [self.dataSource isLoading]) {
         [self setErrorViewsVisible:NO];
         if ([self isVisible])
             [self checkIfInitialAnimationNeeded];
         return;
-    } else if (justOnboarded) {
+    } else if (firstNight) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
         self.errorImageView.image = [UIImage imageNamed:@"timelineJustSleepIcon"];

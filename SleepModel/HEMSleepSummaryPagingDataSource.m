@@ -5,9 +5,11 @@
 #import "NSDate+HEMRelative.h"
 #import "HEMOnboardingService.h"
 #import "HEMAccountService.h"
+#import "HEMTimelineService.h"
 
 @interface HEMSleepSummaryPagingDataSource ()
 @property (nonatomic, strong) NSCalendar* calendar;
+@property (nonatomic, strong) HEMTimelineService* timelineService;
 @end
 
 @implementation HEMSleepSummaryPagingDataSource
@@ -15,6 +17,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        _timelineService = [HEMTimelineService new];
     }
     return self;
 }
@@ -34,15 +37,12 @@
 }
 
 - (UIViewController*)controllerBefore:(UIViewController*)viewController {
+    HEMAccountService* accountService = [HEMAccountService sharedService];
+    HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
+    SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
     NSDate* currentDate = [(HEMSleepGraphViewController*)viewController dateForNightOfSleep];
-    NSDate* createdAt = [[[HEMAccountService sharedService] account] createdAt];
-    if (!createdAt) {
-       createdAt = [[[HEMOnboardingService sharedService] currentAccount] createdAt];
-    }
-    NSDate* previousDay = [currentDate previousDay];
-    if (!createdAt || [createdAt compare:previousDay] == NSOrderedAscending)
-        return [self sleepSummaryControllerWithDate:previousDay];
-    return nil;
+    BOOL firstNight = [[self timelineService] isFirstNightOfSleep:currentDate forAccount:account];
+    return firstNight ? nil : [self sleepSummaryControllerWithDate:[currentDate previousDay]];
 }
 
 #pragma mark - UIPageViewController

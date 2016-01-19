@@ -35,14 +35,14 @@ describe(@"HEMTimelineService", ^{
                 }];
                 
                 firstNight = NO;
-                NSDate* date = [NSDate date];
+                NSDate* today = [NSDate date];
                 
                 timelineService = [HEMTimelineService new];
                 
                 fakeAccount = [SENAccount new];
-                [fakeAccount setCreatedAt:date];
+                [fakeAccount setCreatedAt:today];
                 
-                firstNight = [timelineService isFirstNightOfSleep:date forAccount:fakeAccount];
+                firstNight = [timelineService isFirstNightOfSleep:[today previousDay] forAccount:fakeAccount];
             });
             
             afterEach(^{
@@ -195,8 +195,8 @@ describe(@"HEMTimelineService", ^{
                 firstNight = NO;
             });
             
-            it(@"should return NO", ^{
-                [[@(firstNight) should] beNo];
+            it(@"should return YES", ^{
+                [[@(firstNight) should] beYes];
             });
             
         });
@@ -222,14 +222,14 @@ describe(@"HEMTimelineService", ^{
                 }];
                 
                 canView = YES;
-                NSDate* date = [NSDate date];
+                NSDate* today = [NSDate date];
                 
                 timelineService = [HEMTimelineService new];
                 
                 fakeAccount = [SENAccount new];
-                [fakeAccount setCreatedAt:date];
+                [fakeAccount setCreatedAt:today];
                 
-                canView = [timelineService canViewTimelinesBefore:date forAccount:fakeAccount];
+                canView = [timelineService canViewTimelinesBefore:[today previousDay] forAccount:fakeAccount];
             });
             
             afterEach(^{
@@ -266,7 +266,7 @@ describe(@"HEMTimelineService", ^{
                 
                 canView = NO;
                 timelineService = [HEMTimelineService new];
-                canView = [timelineService canViewTimelinesBefore:[NSDate date] forAccount:nil];
+                canView = [timelineService canViewTimelinesBefore:[[NSDate date] previousDay] forAccount:nil];
             });
             
             afterEach(^{
@@ -304,7 +304,7 @@ describe(@"HEMTimelineService", ^{
                 
                 timelineService = [HEMTimelineService new];
                 
-                canView = [timelineService canViewTimelinesBefore:today forAccount:fakeAccount];
+                canView = [timelineService canViewTimelinesBefore:[today previousDay] forAccount:fakeAccount];
             });
             
             afterEach(^{
@@ -316,8 +316,8 @@ describe(@"HEMTimelineService", ^{
                 canView = NO;
             });
             
-            it(@"should return Yes", ^{
-                [[@(canView) should] beYes];
+            it(@"should return NO", ^{
+                [[@(canView) should] beNo];
             });
             
         });
@@ -337,7 +337,7 @@ describe(@"HEMTimelineService", ^{
                 
                 timelineService = [HEMTimelineService new];
                 
-                canView = [timelineService canViewTimelinesBefore:today forAccount:fakeAccount];
+                canView = [timelineService canViewTimelinesBefore:[today previousDay] forAccount:fakeAccount];
             });
             
             afterEach(^{

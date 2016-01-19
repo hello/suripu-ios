@@ -117,7 +117,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
                                                         fromDate:[account createdAt]
                                                           toDate:today
                                                          options:0];
-        capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
+        capacity = MIN(MAX(1, difference.day + 1), HEMSleepDataCapacity);
     }
     
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];

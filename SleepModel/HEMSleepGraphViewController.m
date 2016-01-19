@@ -885,14 +885,14 @@ static BOOL hasLoadedBefore = NO;
         if ([self isVisible])
             [self checkIfInitialAnimationNeeded];
         return;
-    } else if (firstNight) {
-        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
-        self.errorImageView.image = [UIImage imageNamed:@"timelineJustSleepIcon"];
     } else if (error) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
         self.errorImageView.image = [UIImage imageNamed:@"timelineErrorIcon"];
+    } else if (firstNight) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
+        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
+        self.errorImageView.image = [UIImage imageNamed:@"timelineJustSleepIcon"];
     } else if (self.dataSource.sleepResult.scoreCondition == SENConditionUnknown) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.none.message", nil);

@@ -31,13 +31,26 @@ static NSString* const HEMTimelineSettingsAccountCreationDate = @"account.creati
 }
 
 - (BOOL)canViewTimelinesBefore:(NSDate*)date forAccount:(SENAccount*)account {
+    if (!account) {
+        // if account was not loaded / available, fallback to allowing user to
+        // view older timelines
+        return YES;
+    }
     NSDate* creationDate = [self accountCreationDateFrom:account];
-    return !creationDate || [creationDate compare:date] == NSOrderedAscending;
+    NSDate* dateWithoutTime = [date dateAtMidnight];
+    NSDate* createDateWithoutTime = [creationDate dateAtMidnight];
+    return [createDateWithoutTime compare:dateWithoutTime] == NSOrderedAscending;
 }
 
 - (BOOL)isFirstNightOfSleep:(NSDate*)date forAccount:(SENAccount*)account {
+    if (!account) {
+        return NO;
+    }
     NSDate* creationDate = [self accountCreationDateFrom:account];
-    return [creationDate isOnSameDay:date];
+    NSDate* dateWithoutTime = [date dateAtMidnight];
+    NSDate* createDateWithoutTime = [creationDate dateAtMidnight];
+    // if it's ascending or the same, it's the first night of sleep
+    return [dateWithoutTime compare:createDateWithoutTime] != NSOrderedDescending;
 }
 
 @end

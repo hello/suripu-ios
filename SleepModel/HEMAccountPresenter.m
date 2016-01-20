@@ -7,7 +7,6 @@
 //
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENPreference.h>
-#import <SenseKit/SENServiceHealthKit.h>
 #import <SenseKit/SENAuthorizationService.h>
 
 #import "HEMAccountPresenter.h"
@@ -26,6 +25,7 @@
 #import "HEMNameChangePresenter.h"
 #import "HEMEmailChangePresenter.h"
 #import "HEMPasswordChangePresenter.h"
+#import "HEMHealthKitService.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
@@ -67,7 +67,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 @interface HEMAccountPresenter() <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) HEMAccountService* accountService;
-@property (nonatomic, weak) SENServiceHealthKit* healthKitService;
+@property (nonatomic, weak) HEMHealthKitService* healthKitService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
 
@@ -76,7 +76,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 @implementation HEMAccountPresenter
 
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
-                      healthKitService:(SENServiceHealthKit*)healthKitService {
+                      healthKitService:(HEMHealthKitService*)healthKitService {
     self = [super init];
     if (self) {
         _accountService = accountService;
@@ -280,24 +280,25 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 // TODO: move this in to a HEMHealthKitService, when we move SENServiceHealthKit
 - (void)enableHealthKit:(BOOL)enable {
     if (enable) {
-        SENServiceHealthKit* service = [SENServiceHealthKit sharedService];
-        if (![service isSupported]) {
+        if (![[self healthKitService] isSupported]) {
             NSString* title = NSLocalizedString(@"settings.account.error.title.hk", nil);
             NSString* message = NSLocalizedString(@"settings.account.error.message.hk-not-supported", nil);
             [[self delegate] showErrorTitle:title message:message from:self];
         } else {
-            [service requestAuthorization:^(NSError *error) {
+            __weak typeof(self) weakSelf = self;
+            [[self healthKitService] requestAuthorization:^(NSError *error) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (!error) {
-                    [[SENServiceHealthKit sharedService] setEnableHealthKit:enable];
+                    [[strongSelf healthKitService] setEnableHealthKit:enable];
                 } else {
                     NSString* title = NSLocalizedString(@"settings.account.error.title.hk", nil);
                     NSString* message = NSLocalizedString(@"settings.account.error.message.hk-request-failed", nil);
-                    [[self delegate] showErrorTitle:title message:message from:self];
+                    [[strongSelf delegate] showErrorTitle:title message:message from:strongSelf];
                 }
             }];
         }
     } else {
-        [[SENServiceHealthKit sharedService] setEnableHealthKit:enable];
+        [[self healthKitService] setEnableHealthKit:enable];
     }
 }
 

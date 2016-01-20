@@ -9,7 +9,7 @@
 #import "HEMPresenter.h"
 
 @class HEMAccountPresenter;
-@class SENServiceHealthKit;
+@class HEMHealthKitService;
 @class HEMAccountService;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -35,7 +35,7 @@ typedef void(^HEMAccountSignOutHandler)(void);
 @property (nonatomic, weak) id<HEMAccountDelegate> delegate;
 
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
-                      healthKitService:(SENServiceHealthKit*)healthKitService NS_DESIGNATED_INITIALIZER;
+                      healthKitService:(HEMHealthKitService*)healthKitService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithTableView:(UITableView*)tableView;
 

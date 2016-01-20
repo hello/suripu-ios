@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import <SenseKit/SENServiceHealthKit.h>
-
 #import "HEMAccountViewController.h"
 #import "HEMAccountPresenter.h"
 #import "HEMAccountService.h"
@@ -16,6 +14,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMFormViewController.h"
+#import "HEMHealthKitService.h"
 
 @interface HEMAccountViewController () <HEMAccountDelegate>
 
@@ -34,7 +33,7 @@
 
 - (void)configurePresenter {
     HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:[HEMAccountService sharedService]
-                                                                        healthKitService:[SENServiceHealthKit sharedService]];
+                                                                        healthKitService:[HEMHealthKitService sharedService]];
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];
     

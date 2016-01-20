@@ -347,7 +347,7 @@ static CGFloat const HEMHKServiceBackFillLimit = 3;
     
     // look for in bed event from the beginning
     for (SENTimelineSegment* segment in [timeline segments]) {
-        if ([segment type] == SENTimelineSegmentTypeInBed) {
+        if ([segment type] == SENTimelineSegmentTypeGotInBed) {
             inBedDate = [segment date];
             break;
         }

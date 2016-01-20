@@ -29,6 +29,7 @@
              completion:(void(^)(SENTimeline* timeline, NSError* error))completion;
 - (void)syncTimelinesToHealthKit:(NSArray*)timelines completion:(void(^)(NSError* error))completion;
 - (HKSample*)asleepSampleFromTimeline:(SENTimeline*)timeline;
+- (HKSample*)inBedSampleFromTimeline:(SENTimeline*)timeline;
 
 @end
 
@@ -811,6 +812,123 @@ describe(@"HEMHealthKitService", ^{
             [timeline setMetrics:@[sleepMetric, wakeMetric]];
             id sample = [service asleepSampleFromTimeline:timeline];
             [[sample should] beKindOfClass:[HKSample class]];
+        });
+        
+    });
+    
+    describe(@"-inBedSampleFromTimeline:", ^{
+        
+        context(@"sufficient data for in bed sample", ^{
+           
+            __block HEMHealthKitService* service = nil;
+            __block id sample = nil;
+            __block NSDate* startDate = nil;
+            __block NSDate* endDate = nil;
+            
+            beforeEach(^{
+                service = [HEMHealthKitService new];
+                startDate = [[NSDate date] dateByAddingTimeInterval:-360];
+                endDate = [NSDate date];
+                
+                SENTimelineSegment* inBedSegment = [SENTimelineSegment new];
+                [inBedSegment setType:SENTimelineSegmentTypeGotInBed];
+                [inBedSegment setDate:startDate];
+                
+                SENTimelineSegment* outBedSegment = [SENTimelineSegment new];
+                [outBedSegment setType:SENTimelineSegmentTypeGotOutOfBed];
+                [outBedSegment setDate:endDate];
+                
+                SENTimeline* timeline = [SENTimeline new];
+                [timeline setScoreCondition:SENConditionIdeal];
+                [timeline setSegments:@[inBedSegment, outBedSegment]];
+                
+                sample = [service inBedSampleFromTimeline:timeline];
+            });
+            
+            afterEach(^{
+                service = nil;
+                sample = nil;
+                startDate = nil;
+                endDate = nil;
+            });
+            
+            it(@"should return a sample", ^{
+                [[sample should] beKindOfClass:[HKSample class]];
+            });
+            
+            it(@"should return a sample with start date same as in bed date", ^{
+                [[[sample startDate] should] equal:startDate];
+            });
+            
+            it(@"should return a sample with end date same as out of bed date", ^{
+                [[[sample endDate] should] equal:endDate];
+            });
+            
+        });
+        
+        context(@"insufficient segments for in bed sample", ^{
+            
+            __block HEMHealthKitService* service = nil;
+            __block id sample = nil;
+            
+            beforeEach(^{
+                service = [HEMHealthKitService new];
+                NSDate* startDate = [[NSDate date] dateByAddingTimeInterval:-360];
+                
+                SENTimelineSegment* inBedSegment = [SENTimelineSegment new];
+                [inBedSegment setType:SENTimelineSegmentTypeGotInBed];
+                [inBedSegment setDate:startDate];
+                
+                SENTimeline* timeline = [SENTimeline new];
+                [timeline setScoreCondition:SENConditionIdeal];
+                [timeline setSegments:@[inBedSegment]];
+                
+                sample = [service inBedSampleFromTimeline:timeline];
+            });
+            
+            afterEach(^{
+                service = nil;
+            });
+            
+            it(@"should not return a sample", ^{
+                [[sample should] beNil];
+            });
+            
+        });
+        
+        context(@"timeline condition is unknown for in bed sample", ^{
+            
+            __block HEMHealthKitService* service = nil;
+            __block id sample = nil;
+            
+            beforeEach(^{
+                service = [HEMHealthKitService new];
+                NSDate* startDate = [[NSDate date] dateByAddingTimeInterval:-360];
+                NSDate* endDate = [NSDate date];
+                
+                SENTimelineSegment* inBedSegment = [SENTimelineSegment new];
+                [inBedSegment setType:SENTimelineSegmentTypeGotInBed];
+                [inBedSegment setDate:startDate];
+                
+                SENTimelineSegment* outBedSegment = [SENTimelineSegment new];
+                [outBedSegment setType:SENTimelineSegmentTypeGotOutOfBed];
+                [outBedSegment setDate:endDate];
+                
+                SENTimeline* timeline = [SENTimeline new];
+                [timeline setScoreCondition:SENConditionUnknown];
+                [timeline setSegments:@[inBedSegment, outBedSegment]];
+                
+                sample = [service inBedSampleFromTimeline:timeline];
+            });
+            
+            afterEach(^{
+                service = nil;
+            });
+            
+            it(@"should not return a sample", ^{
+                [[sample should] beNil];
+            });
+            
         });
         
     });

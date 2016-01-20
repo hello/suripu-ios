@@ -155,6 +155,97 @@ describe(@"HEMDeviceService", ^{
         
     });
     
+    describe(@"-shouldShowPillInfo", ^{
+        
+        context(@"has no device data", ^{
+            __block BOOL showPill = YES;
+            
+            beforeEach(^{
+                HEMDeviceService* service = [HEMDeviceService new];
+                showPill = [service shouldShowPillInfo];
+            });
+            
+            afterEach(^{
+                showPill = YES;
+            });
+            
+            it(@"should return NO", ^{
+                [[@(showPill) should] beNo];
+            });
+        });
+        
+        context(@"has pill meta data, but no sense", ^{
+            __block BOOL showPill = NO;
+            
+            beforeEach(^{
+                HEMDeviceService* service = [HEMDeviceService new];
+                
+                SENPillMetadata* pill = [SENPillMetadata new];
+                [pill stub:@selector(uniqueId) andReturn:@"1"];
+                
+                SENPairedDevices* devices = [SENPairedDevices new];
+                [devices stub:@selector(pillMetadata) andReturn:pill];
+                
+                [service stub:@selector(devices) andReturn:devices];
+
+                showPill = [service shouldShowPillInfo];
+            });
+            
+            afterEach(^{
+                showPill = NO;
+            });
+            
+            it(@"should return YES", ^{
+                [[@(showPill) should] beYes];
+            });
+        });
+        
+        context(@"has no pill meta data and has sense meta data", ^{
+            __block BOOL showPill = NO;
+            
+            beforeEach(^{
+                HEMDeviceService* service = [HEMDeviceService new];
+                
+                SENSenseMetadata* sense = [SENSenseMetadata new];
+                [sense stub:@selector(uniqueId) andReturn:@"1"];
+                
+                SENPairedDevices* devices = [SENPairedDevices new];
+                [devices stub:@selector(senseMetadata) andReturn:sense];
+                
+                [service stub:@selector(devices) andReturn:devices];
+                
+                showPill = [service shouldShowPillInfo];
+            });
+            
+            afterEach(^{
+                showPill = NO;
+            });
+            
+            it(@"should return YES", ^{
+                [[@(showPill) should] beYes];
+            });
+        });
+        
+        context(@"has no pill meta data and no sense meta data", ^{
+            __block BOOL showPill = NO;
+            
+            beforeEach(^{
+                HEMDeviceService* service = [HEMDeviceService new];
+                [service stub:@selector(devices) andReturn:[SENPairedDevices new]];
+                showPill = [service shouldShowPillInfo];
+            });
+            
+            afterEach(^{
+                showPill = NO;
+            });
+            
+            it(@"should return NO", ^{
+                [[@(showPill) should] beNo];
+            });
+        });
+
+    });
+    
 });
 
 SPEC_END

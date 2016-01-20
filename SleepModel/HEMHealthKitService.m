@@ -261,9 +261,20 @@ static CGFloat const HEMHKServiceBackFillLimit = 3;
 }
 
 - (BOOL)timelineHasSufficientData:(SENTimeline*)timeline {
+    return [self timelineHasSufficientDataForInBedSample:timeline]
+        && [self timelineHasSufficientDataForAsleepSample:timeline];
+}
+
+- (BOOL)timelineHasSufficientDataForAsleepSample:(SENTimeline*)timeline {
     return [timeline scoreCondition] != SENConditionUnknown
-    && [timeline scoreCondition] != SENConditionIncomplete
-    && [[timeline metrics] count] > 0;
+        && [timeline scoreCondition] != SENConditionIncomplete
+        && [[timeline metrics] count] > 0;
+}
+
+- (BOOL)timelineHasSufficientDataForInBedSample:(SENTimeline*)timeline {
+    return [timeline scoreCondition] != SENConditionUnknown
+        && [timeline scoreCondition] != SENConditionIncomplete
+        && [[timeline segments] count] > 0;
 }
 
 - (void)timelineForDate:(NSDate*)date completion:(void(^)(SENTimeline* timeline, NSError* error))completion {
@@ -301,7 +312,12 @@ static CGFloat const HEMHKServiceBackFillLimit = 3;
     HKSample* sample = nil;
     NSMutableArray* samples = [NSMutableArray arrayWithCapacity:timelineCount];
     for (SENTimeline* timeline in timelines) {
-        sample = [self sleepSampleFromTimeline:timeline];
+        sample = [self inBedSampleFromTimeline:timeline];
+        if (sample) {
+            [samples addObject:sample];
+        }
+        
+        sample = [self asleepSampleFromTimeline:timeline];
         if (sample) {
             [samples addObject:sample];
         }
@@ -319,8 +335,52 @@ static CGFloat const HEMHKServiceBackFillLimit = 3;
     }];
 }
 
-- (HKSample*)sleepSampleFromTimeline:(SENTimeline*)timeline {
-    if (![self timelineHasSufficientData:timeline]) {
+- (HKSample*)inBedSampleFromTimeline:(SENTimeline*)timeline {
+    if (![self timelineHasSufficientDataForInBedSample:timeline]) {
+        return nil;
+    }
+
+    HKSample* sample = nil;
+    HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
+    NSDate* inBedDate = nil;
+    NSDate* outOfBedDate = nil;
+    
+    // look for in bed event from the beginning
+    for (SENTimelineSegment* segment in [timeline segments]) {
+        if ([segment type] == SENTimelineSegmentTypeInBed) {
+            inBedDate = [segment date];
+            break;
+        }
+    }
+    
+    if (inBedDate) {
+        // look for out of bed event from the end of the segments to reduce iterations
+        for (NSInteger idx = [[timeline segments] count] - 1; idx >= 0; idx--) {
+            SENTimelineSegment* segment = [timeline segments][idx];
+            if ([segment type] == SENTimelineSegmentTypeGotOutOfBed) {
+                outOfBedDate = [segment date];
+                break;
+            }
+        }
+    }
+    
+    if (inBedDate && outOfBedDate) {
+        DDLogVerbose(@"adding in bed data point");
+        if ([inBedDate compare:outOfBedDate] == NSOrderedAscending) {
+            sample = [HKCategorySample categorySampleWithType:hkSleepCategory
+                                                        value:HKCategoryValueSleepAnalysisInBed
+                                                    startDate:inBedDate
+                                                      endDate:outOfBedDate];
+        } else {
+            DDLogVerbose(@"out of bed time %@ is before in bed time! %@", outOfBedDate, inBedDate);
+        }
+    }
+    
+    return sample;
+}
+
+- (HKSample*)asleepSampleFromTimeline:(SENTimeline*)timeline {
+    if (![self timelineHasSufficientDataForAsleepSample:timeline]) {
         return nil;
     }
     

@@ -28,7 +28,7 @@
 - (void)timelineForDate:(NSDate*)date
              completion:(void(^)(SENTimeline* timeline, NSError* error))completion;
 - (void)syncTimelinesToHealthKit:(NSArray*)timelines completion:(void(^)(NSError* error))completion;
-- (HKSample*)sleepSampleFromTimeline:(SENTimeline*)timeline;
+- (HKSample*)asleepSampleFromTimeline:(SENTimeline*)timeline;
 
 @end
 
@@ -506,6 +506,7 @@ describe(@"HEMHealthKitService", ^{
                 SENTimeline* timeline = [[SENTimeline alloc] init];
                 [timeline setScoreCondition:SENConditionIdeal];
                 [timeline setMetrics:@[[SENTimelineMetric new]]];
+                [timeline setSegments:@[[SENTimelineSegment new]]];
                 [SENTimeline stub:@selector(timelineForDate:) andReturn:timeline];
                 [SENAPITimeline stub:@selector(timelineForDate:completion:) withBlock:^id(NSArray *params) {
                     void(^cb)(SENTimeline* timeline, NSError* error) = [params lastObject];
@@ -764,17 +765,18 @@ describe(@"HEMHealthKitService", ^{
             [[@(hasData) should] beNo];
         });
         
-        it(@"should return YES if timeline has at least 1 metric and condition is not unknown or incomplete", ^{
+        it(@"should return YES if timeline has condition, metrics, and segments", ^{
             SENTimeline* timeline = [SENTimeline new];
             [timeline setScoreCondition:SENConditionIdeal];
             [timeline setMetrics:@[[SENTimelineMetric new]]];
+            [timeline setSegments:@[[SENTimelineSegment new]]];
             BOOL hasData = [service timelineHasSufficientData:timeline];
             [[@(hasData) should] beYes];
         });
         
     });
     
-    describe(@"-sleepSampleFromTimeline:", ^{
+    describe(@"-asleepSampleFromTimeline:", ^{
         
         __block HEMHealthKitService* service = nil;
         
@@ -786,7 +788,7 @@ describe(@"HEMHealthKitService", ^{
             SENTimeline* timeline = [SENTimeline new];
             [timeline setScoreCondition:SENConditionIncomplete];
             [timeline setMetrics:@[[SENTimelineMetric new]]];
-            HKSample* sample = [service sleepSampleFromTimeline:timeline];
+            HKSample* sample = [service asleepSampleFromTimeline:timeline];
             [[sample should] beNil];
         });
         
@@ -807,7 +809,7 @@ describe(@"HEMHealthKitService", ^{
             SENTimeline* timeline = [SENTimeline new];
             [timeline setScoreCondition:SENConditionIdeal];
             [timeline setMetrics:@[sleepMetric, wakeMetric]];
-            id sample = [service sleepSampleFromTimeline:timeline];
+            id sample = [service asleepSampleFromTimeline:timeline];
             [[sample should] beKindOfClass:[HKSample class]];
         });
         

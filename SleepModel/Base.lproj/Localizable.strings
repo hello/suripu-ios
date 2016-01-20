@@ -310,7 +310,7 @@
 "settings.sense.dialog.enable-pair-mode-message.format" = "Are you sure you want to put Sense into Pairing Mode? You should use this option only if you have another mobile device you wish to pair with Sense. If you're having trouble, visit %@ for support.";
 "settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
 "settings.sense.warning.summary.wifi" = "Sense cannot connect to WiFi.";
-"settings.sense.warning.wifi" = "Tap below to edit your WiFi credentials.";
+"settings.sense.warning.wifi" = "To edit your WiFi credentials, tap 'Edit WiFi' below.";
 "settings.sense.warning.not-connected-sense" = "Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot. Some actions below are disabled.";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";

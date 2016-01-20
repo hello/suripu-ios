@@ -164,6 +164,8 @@
 		BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
 		BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF44734F1A6341F600389ECE /* HEMOnboardingController.m */; };
+		BF48274D1C4F060F005EDEB5 /* HEMHealthKitService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF48274C1C4F060F005EDEB5 /* HEMHealthKitService.m */; };
+		BF4827501C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF48274F1C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m */; };
 		BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */; };
 		BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E91A1301D700831380 /* HEMInsightViewController.m */; };
 		BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
@@ -646,6 +648,9 @@
 		BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+HEMUtils.m"; sourceTree = "<group>"; };
 		BF44734E1A6341F600389ECE /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
 		BF44734F1A6341F600389ECE /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
+		BF48274B1C4F060F005EDEB5 /* HEMHealthKitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHealthKitService.h; sourceTree = "<group>"; };
+		BF48274C1C4F060F005EDEB5 /* HEMHealthKitService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHealthKitService.m; sourceTree = "<group>"; };
+		BF48274F1C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHealthKitServiceSpec.m; sourceTree = "<group>"; };
 		BF4E88E51A12FB3700831380 /* UIView+HEMSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMSnapshot.h"; sourceTree = "<group>"; };
 		BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMSnapshot.m"; sourceTree = "<group>"; };
 		BF4E88E81A1301D700831380 /* HEMInsightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightViewController.h; sourceTree = "<group>"; };
@@ -1031,6 +1036,7 @@
 				8AC3C2D91A3C7FBD0074A87F /* Drawer */,
 				BF71AFCC1A48F5F200D1208B /* Debug */,
 				8A4B3D56199534DB00856BDE /* Generated Files */,
+				BF48274A1C4F05EB005EDEB5 /* HealthKit */,
 				BF1E2E5A1A0068AA00DDD0D0 /* Insights */,
 				8ACD40421BAC987400BB2815 /* Launch */,
 				8A28CAF919CB85030044A27D /* Notifications */,
@@ -1074,6 +1080,7 @@
 				8AC3C2E71A3CB8130074A87F /* Back Attic */,
 				BF78E98D1B20D1660015949F /* Common */,
 				8B1DB6DF1C18BEE6006C8AFF /* Debug */,
+				BF48274E1C4F0814005EDEB5 /* HealthKit */,
 				BF539CD31C0F808E000F77AA /* Insights */,
 				BF2EAD221B31F85E00C3A6E3 /* Onboarding */,
 				BF8339781C0F8BDB00BFD0F4 /* Questions */,
@@ -1694,6 +1701,23 @@
 				BF7454B21B5D764200E6AE85 /* HEMOnboardingControllerSpec.m */,
 			);
 			name = Onboarding;
+			sourceTree = "<group>";
+		};
+		BF48274A1C4F05EB005EDEB5 /* HealthKit */ = {
+			isa = PBXGroup;
+			children = (
+				BF48274B1C4F060F005EDEB5 /* HEMHealthKitService.h */,
+				BF48274C1C4F060F005EDEB5 /* HEMHealthKitService.m */,
+			);
+			name = HealthKit;
+			sourceTree = "<group>";
+		};
+		BF48274E1C4F0814005EDEB5 /* HealthKit */ = {
+			isa = PBXGroup;
+			children = (
+				BF48274F1C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m */,
+			);
+			name = HealthKit;
 			sourceTree = "<group>";
 		};
 		BF4E88EB1A1307C400831380 /* View Controllers */ = {
@@ -2985,6 +3009,8 @@
 				8ACAF4031A6890D50054885A /* HEMEmptyTrendCollectionViewCell.m in Sources */,
 				BF83398C1C12277B00BFD0F4 /* HEMInsightPresenter.m in Sources */,
 				BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */,
+				BF48274D1C4F060F005EDEB5 /* HEMHealthKitService.m in Sources */,
+				BFF3B44D1A5DC13C00B11643 /* HEMDeviceDataSource.m in Sources */,
 				BFA540ED1BCEF0ED007AF607 /* HEMIntroDescriptionView.m in Sources */,
 				BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */,
 				BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */,
@@ -3028,6 +3054,7 @@
 				BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */,
 				8B1DB6E31C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m in Sources */,
 				8B1DB6E11C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m in Sources */,
+				BF4827501C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

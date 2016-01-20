@@ -1,6 +1,5 @@
 
 #import <SenseKit/SENAccount.h>
-#import <SenseKit/SENServiceHealthKit.h>
 #import <SenseKit/SENPreference.h>
 
 #import "UIFont+HEMStyle.h"
@@ -13,6 +12,7 @@
 #import "HEMMathUtil.h"
 #import "HEMRulerView.h"
 #import "HEMAccountUpdateDelegate.h"
+#import "HEMHealthKitService.h"
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
 
@@ -133,7 +133,7 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 
 - (void)next {
     NSString* segueId = nil;
-    if ([[SENServiceHealthKit sharedService] isSupported]) {
+    if ([[HEMHealthKitService sharedService] isSupported]) {
         segueId = [HEMOnboardingStoryboard weightToHealthKitSegueIdentifier];
     } else {
         segueId = [HEMOnboardingStoryboard weightToLocationSegueIdentifier];

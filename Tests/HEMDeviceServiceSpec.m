@@ -228,10 +228,12 @@ describe(@"HEMDeviceService", ^{
         
         context(@"has no pill meta data and no sense meta data", ^{
             __block BOOL showPill = NO;
+            __block SENPairedDevices* devices = nil;
             
             beforeEach(^{
+                devices = [SENPairedDevices new];
                 HEMDeviceService* service = [HEMDeviceService new];
-                [service stub:@selector(devices) andReturn:[SENPairedDevices new]];
+                [service stub:@selector(devices) andReturn:devices];
                 showPill = [service shouldShowPillInfo];
             });
             

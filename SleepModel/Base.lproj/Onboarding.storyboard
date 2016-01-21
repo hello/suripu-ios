@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -301,7 +301,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="RYl-gV-ozZ" kind="relationship" relationship="rootViewController" id="4Pl-SE-Bmr"/>
+                        <segue destination="RYl-gV-ozZ" kind="relationship" relationship="rootViewController" id="NCE-7F-t3w"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HBq-s5-17a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -989,10 +989,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="iCk-oN-npe" customClass="HEMEmbeddedVideoView">
-                                <rect key="frame" x="0.0" y="200" width="600" height="331"/>
+                                <rect key="frame" x="0.0" y="199" width="600" height="331"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BNZ-r4-Ugo">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="330"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="331"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1020,9 +1020,9 @@
                                     <action selector="done:" destination="RbA-ga-2g6" eventType="touchUpInside" id="ETW-0Q-abg"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0se-fT-N6l" userLabel="descLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0se-fT-N6l" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="132"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Before you connect your phone, Sense needs to be put into Pairing Mode.
 
 Place your hand directly on top of Sense for seven seconds, and then remove it.
@@ -1041,8 +1041,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="uDw-jj-ZIo" firstAttribute="top" secondItem="iCk-oN-npe" secondAttribute="bottom" id="Qfi-vY-FX5"/>
                             <constraint firstItem="0se-fT-N6l" firstAttribute="bottom" secondItem="iCk-oN-npe" secondAttribute="top" priority="750" id="Y05-zZ-Gae"/>
                             <constraint firstItem="phz-De-JCe" firstAttribute="bottom" secondItem="0se-fT-N6l" secondAttribute="top" constant="-10" id="bkw-Qq-JXe"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iCk-oN-npe" secondAttribute="trailing" constant="-20" id="dNv-B6-GGN"/>
-                            <constraint firstItem="iCk-oN-npe" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="-20" id="e2w-30-3Sd"/>
+                            <constraint firstAttribute="trailing" secondItem="iCk-oN-npe" secondAttribute="trailing" id="dNv-B6-GGN"/>
+                            <constraint firstItem="iCk-oN-npe" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leading" id="e2w-30-3Sd"/>
                             <constraint firstAttribute="leadingMargin" secondItem="uDw-jj-ZIo" secondAttribute="leading" id="hHf-et-PTI"/>
                             <constraint firstItem="phz-De-JCe" firstAttribute="top" secondItem="KbS-hu-7hz" secondAttribute="bottom" constant="4" id="nbf-Xn-cgu"/>
                             <constraint firstItem="Eh9-8p-NMx" firstAttribute="top" secondItem="uDw-jj-ZIo" secondAttribute="bottom" constant="20" id="pc2-rX-L6q"/>

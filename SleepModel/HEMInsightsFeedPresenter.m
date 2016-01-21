@@ -393,13 +393,22 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 #pragma mark Scroll delegate (for parallax)
 
 - (void)updateInsightImageOffsetOn:(HEMInsightCollectionViewCell*)insightCell {
-    CGFloat diff = [[self collectionView] contentOffset].y - CGRectGetMinY([insightCell frame]);
-    CGFloat imageOffset = diff / CGRectGetHeight([[insightCell uriImageView] bounds]);
-    imageOffset = imageOffset * HEMInsightsFeedImageParallaxMultipler;
-    
-    [[insightCell imageTopConstraint] setConstant:imageOffset];
-    [[insightCell imageBottomConstraint] setConstant:-imageOffset];
-    [[insightCell uriImageView] updateConstraintsIfNeeded];
+    CGFloat imageHeight = CGRectGetHeight([[insightCell uriImageView] bounds]);
+    if (imageHeight > 0) {
+        CGFloat diff = [[self collectionView] contentOffset].y - CGRectGetMinY([insightCell frame]);
+        CGFloat imageOffset = diff / CGRectGetHeight([[insightCell uriImageView] bounds]);
+        imageOffset = imageOffset * HEMInsightsFeedImageParallaxMultipler;
+        
+        [[insightCell imageTopConstraint] setConstant:imageOffset];
+        [[insightCell imageBottomConstraint] setConstant:-imageOffset];
+        [[insightCell uriImageView] updateConstraintsIfNeeded];
+    } else {
+        NSString* imageUrl = [[insightCell uriImageView] currentImageURL];
+        NSString* message = [NSString stringWithFormat:@"insight image in feed has 0 height for %@",
+                             imageUrl ?: @"undefined"];
+        NSDictionary* props = @{kHEMAnalyticsEventPropMessage : message};
+        [SENAnalytics track:kHEMAnalyticsEventWarning properties:props];
+    }
 }
 
 - (void)updateInsightImageParallax {

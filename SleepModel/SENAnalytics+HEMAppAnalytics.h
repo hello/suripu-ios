@@ -140,6 +140,7 @@ extern NSString* const kHEMAnalyticsEventSignOut;
 extern NSString* const HEMAnalyticsEventTimeZone;
 extern NSString* const HEMAnalyticsEventTimeZoneChanged;
 extern NSString* const HEMAnalyticsEventPropTZ;
+extern NSString* const HEMAnalyticsEventMissingTZMapping;
 
 // device management
 extern NSString* const kHEMAnalyticsEventDeviceAction;

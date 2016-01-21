@@ -156,6 +156,7 @@ NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
 NSString* const HEMAnalyticsEventTimeZone = @"Time Zone";
 NSString* const HEMAnalyticsEventTimeZoneChanged = @"Time Zone Changed";
 NSString* const HEMAnalyticsEventPropTZ = @"tz";
+NSString* const HEMAnalyticsEventMissingTZMapping = @"Time Zone Mapping Missing";
 
 // device management
 NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";

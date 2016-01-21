@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.2.2.0
+
+Note: 1.2.2.0 is a place holder version in case we release a build before 1.3.0
+
+New:
+
+* Now writing In Bed Health sample to HealthKit
+* Sense not seen alert only shown once a day at most
+* Pill not seen alert only shown once a day at most
+* Updated copy for warning message when Sense is not connected to WiFi
+* Analytics event logged when Sense or Pill is paired successfully
+* Reduced Segment queue size down to 1 (remove queue)
+* Show Pill device info when one is paired, even if Sense is not paired
+* Update alarm analytics event to fire only when successfully changed
+
+Fixes:
+
+* Fix Timeline logic that prevents user from scrolling beyond account creation
+* Prevent 3 error messages from showing in Trends view if data was previously shown
+* Add mapping for Europe/Oslo and fire analytics event to catch more missing mapping
+* Fix truncated text in Pairing Mode screen on 4s
+
 ## 1.2.1.10
 
 New:

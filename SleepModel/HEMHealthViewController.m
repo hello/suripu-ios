@@ -5,11 +5,11 @@
 //  Created by Jimmy Lu on 5/26/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-#import <SenseKit/SENServiceHealthKit.h>
 
 #import "HEMHealthViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMHealthKitService.h"
 
 @interface HEMHealthViewController ()
 
@@ -32,7 +32,7 @@
 }
 
 - (IBAction)enableHealthKit:(id)sender {
-    SENServiceHealthKit* service = [SENServiceHealthKit sharedService];
+    HEMHealthKitService* service = [HEMHealthKitService sharedService];
     if (![service isSupported]) {
         [self showMessageDialog:NSLocalizedString(@"onboarding.health.enable.failure.unsupported", nil)
                           title:NSLocalizedString(@"onboarding.health.enable.failure.title", nil)];
@@ -44,7 +44,7 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
         if (error) {
-            if ([error code] != SENServiceHealthKitErrorCancelledAuthorization) {
+            if ([error code] != HEMHKServiceErrorCancelledAuthorization) {
                 [SENAnalytics trackError:error];
                 [strongSelf showMessageDialog:NSLocalizedString(@"onboarding.health.enable.failure.generic", @"")
                                         title:NSLocalizedString(@"onboarding.health.enable.failure.title", @"")];

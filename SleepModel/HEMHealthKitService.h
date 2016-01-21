@@ -1,24 +1,24 @@
 //
-//  SENServiceHealthKit.h
-//  Pods
+//  HEMHealthKitService.h
+//  Sense
 //
-//  Created by Jimmy Lu on 1/26/15.
-//
+//  Created by Jimmy Lu on 1/19/16.
+//  Copyright © 2016 Hello. All rights reserved.
 //
 
 #import "SENService.h"
 
-typedef NS_ENUM(NSInteger, SENServiceHealthKitError) {
-    SENServiceHealthKitErrorCancelledAuthorization = -1,
-    SENServiceHealthKitErrorNotAuthorized = -2,
-    SENServiceHealthKitErrorNotSupported = -3,
-    SENServiceHealthKitErrorNoDataToWrite = -4,
-    SENServiceHealthKitErrorAlreadySynced = -5,
-    SENServiceHealthKitErrorNotEnabled = -6,
-    SENServiceHealthKitErrorUnexpectedAPIResponse = -7,
+typedef NS_ENUM(NSInteger, HEMHKServiceError) {
+    HEMHKServiceErrorCancelledAuthorization = -1,
+    HEMHKServiceErrorNotAuthorized = -2,
+    HEMHKServiceErrorNotSupported = -3,
+    HEMHKServiceErrorNoDataToWrite = -4,
+    HEMHKServiceErrorAlreadySynced = -5,
+    HEMHKServiceErrorNotEnabled = -6,
+    HEMHKServiceErrorUnexpectedAPIResponse = -7,
 };
 
-@interface SENServiceHealthKit : SENService
+@interface HEMHealthKitService : SENService
 
 /**
  * Obtain the shared HealthKit service, which will integrate Sense with
@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, SENServiceHealthKitError) {
  * Call this to trigger a sync of the Sense sleep data to HealthKit
  *
  * @param completion: the block to invoke when sync is completed, whether it's
- *                    successful or not.  Refer to SENServiceHealthKitError to
+ *                    successful or not.  Refer to HEMHKServiceError to
  *                    interpret the code returned if an error is returned
  */
 - (void)sync:(void(^)(NSError* error))completion;

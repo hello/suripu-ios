@@ -246,6 +246,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         
         [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
             [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
+                [SENAnalytics track:HEMAnalyticsEventPillPaired];
                 [strongSelf flashPairedState];
             } failure:^(NSError *error) {
                 SENSenseLEDState ledState = [strongSelf delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;

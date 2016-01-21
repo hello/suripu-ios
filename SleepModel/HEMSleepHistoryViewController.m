@@ -8,6 +8,7 @@
 #import "NSDate+HEMRelative.h"
 #import "HEMOnboardingService.h"
 #import "HEMAccountService.h"
+#import "HEMTimelineService.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -25,6 +26,7 @@
 @property (nonatomic) NSInteger numberOfDays;
 @property (nonatomic, strong) NSCalendar* calendar;
 @property (nonatomic, getter=didLayoutSubviews) BOOL laidOutSubviews;
+@property (nonatomic, strong) HEMTimelineService* timelineService;
 @end
 
 @implementation HEMSleepHistoryViewController
@@ -40,7 +42,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     [self configureCollectionView];
     [self loadData];
     self.historyCollectionView.delegate = self;
-    
+    [self setTimelineService:[HEMTimelineService new]];
     [SENAnalytics track:HEMAnalyticsEventTimelineZoomOut];
 }
 
@@ -109,11 +111,15 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     HEMAccountService* accountService = [HEMAccountService sharedService];
     HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
     SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
-    NSDate *creationDate = [account createdAt];
-    if (creationDate && [creationDate compare:today] == NSOrderedAscending) {
-        NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay fromDate:creationDate  toDate:today options:0];
-        capacity = MIN(MAX(1, difference.day), HEMSleepDataCapacity);
+
+    if (![[self timelineService] canViewTimelinesBefore:today forAccount:account]) {
+        NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay
+                                                        fromDate:[account createdAt]
+                                                          toDate:today
+                                                         options:0];
+        capacity = MIN(MAX(1, difference.day + 1), HEMSleepDataCapacity);
     }
+    
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
     self.pendingDataFetches = [NSMutableSet new];
 

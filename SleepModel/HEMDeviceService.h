@@ -51,6 +51,11 @@ typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSE
 - (void)refreshMetadata:(HEMDeviceMetadataHandler)completion;
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
 
+/**
+ * @return YES if we should show pill information to the users, NO otherwise
+ */
+- (BOOL)shouldShowPillInfo;
+
 @end
 
 NS_ASSUME_NONNULL_END

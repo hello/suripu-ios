@@ -73,4 +73,10 @@ NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
     return [[metadata lastSeenDate] compare:dayOld] == NSOrderedAscending;
 }
 
+- (BOOL)shouldShowPillInfo {
+    return [self devices]
+        && ([[self devices] hasPairedPill]
+            || [[self devices] hasPairedSense]);
+}
+
 @end

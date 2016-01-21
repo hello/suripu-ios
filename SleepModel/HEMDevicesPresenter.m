@@ -254,7 +254,8 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return [[[self deviceService] devices] hasPairedSense] ? HEMDevicesRowCount : 1;
+    // always show an option for Sense
+    return [[self deviceService] shouldShowPillInfo] ? HEMDevicesRowCount : 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

@@ -81,6 +81,7 @@ extern NSString* const HEMAnalyticsEventHeight;
 extern NSString* const HEMAnalyticsEventWeight;
 extern NSString* const HEMAnalyticsEventSenseSetup;
 extern NSString* const HEMAnalyticsEventPairSense;
+extern NSString* const HEMAnalyticsEventSensePaired;
 extern NSString* const HEMAnalyticsEventWiFi;
 extern NSString* const HEMAnalyticsEventWiFiConnectionUpdate;
 extern NSString* const HEMAnalyticsEventPropWiFiStatus;
@@ -91,6 +92,7 @@ extern NSString* const HEMAnalyticsEventWiFiRescan;
 extern NSString* const HEMAnalyticsEventWiFiPass;
 extern NSString* const HEMAnalyticsEventWiFiSubmit;
 extern NSString* const HEMAnalyticsEventPairPill;
+extern NSString* const HEMAnalyticsEventPillPaired;
 extern NSString* const HEMAnalyticsEventPairPillRetry;
 
 
@@ -138,6 +140,7 @@ extern NSString* const kHEMAnalyticsEventSignOut;
 extern NSString* const HEMAnalyticsEventTimeZone;
 extern NSString* const HEMAnalyticsEventTimeZoneChanged;
 extern NSString* const HEMAnalyticsEventPropTZ;
+extern NSString* const HEMAnalyticsEventMissingTZMapping;
 
 // device management
 extern NSString* const kHEMAnalyticsEventDeviceAction;

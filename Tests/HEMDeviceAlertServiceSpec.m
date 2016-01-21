@@ -135,6 +135,28 @@ describe(@"HEMDeviceAlertService", ^{
                     [[@(deviceState) should] equal:@(HEMDeviceAlertStateSenseNotSeen)];
                 });
                 
+                it(@"should not return a sense not seen state if already seen today", ^{
+                    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                    [localPrefs stub:@selector(userPreferenceForKey:) andReturn:[NSDate date]];
+                    
+                    [service checkDeviceState:^(HEMDeviceAlertState state) {
+                        deviceState = state;
+                    }];
+                    
+                    [[@(deviceState) shouldNot] equal:@(HEMDeviceAlertStateSenseNotSeen)];
+                });
+                
+                it(@"should return a sense not seen state, if last shown was yesterday", ^{
+                    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                    [localPrefs stub:@selector(userPreferenceForKey:) andReturn:[[NSDate date] previousDay]];
+                    
+                    [service checkDeviceState:^(HEMDeviceAlertState state) {
+                        deviceState = state;
+                    }];
+                    
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStateSenseNotSeen)];
+                });
+                
             });
             
             context(@"pill not paired", ^{
@@ -260,6 +282,28 @@ describe(@"HEMDeviceAlertService", ^{
                 });
                 
                 it(@"should return a pill not seen state", ^{
+                    [[@(deviceState) should] equal:@(HEMDeviceAlertStatePillNotSeen)];
+                });
+                
+                it(@"should not return a pill not seen state if already seen today", ^{
+                    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                    [localPrefs stub:@selector(userPreferenceForKey:) andReturn:[NSDate date]];
+                    
+                    [service checkDeviceState:^(HEMDeviceAlertState state) {
+                        deviceState = state;
+                    }];
+                    
+                    [[@(deviceState) shouldNot] equal:@(HEMDeviceAlertStatePillNotSeen)];
+                });
+                
+                it(@"should return a pill not seen state, if last shown was yesterday", ^{
+                    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                    [localPrefs stub:@selector(userPreferenceForKey:) andReturn:[[NSDate date] previousDay]];
+                    
+                    [service checkDeviceState:^(HEMDeviceAlertState state) {
+                        deviceState = state;
+                    }];
+                    
                     [[@(deviceState) should] equal:@(HEMDeviceAlertStatePillNotSeen)];
                 });
                 

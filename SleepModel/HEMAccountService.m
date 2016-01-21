@@ -9,7 +9,6 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAPIPreferences.h>
-#import <SenseKit/SENServiceHealthKit.h>
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAccount.h>
 

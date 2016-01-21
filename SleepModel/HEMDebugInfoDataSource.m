@@ -6,12 +6,14 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import <SenseKit/API.h>
-#import <SenseKit/SENServiceHealthKit.h>
+
+#import "NSDate+HEMRelative.h"
+
 #import "HEMDebugInfoDataSource.h"
 #import "HEMConfig.h"
 #import "HEMAppUsage.h"
-#import "NSDate+HEMRelative.h"
 #import "HEMAppReview.h"
+#import "HEMHealthKitService.h"
 
 typedef NS_ENUM(NSUInteger, HEMDebugInfoSection) {
     HEMDebugInfoSectionApp = 0,
@@ -195,7 +197,7 @@ typedef NS_ENUM(NSUInteger, HEMDebugInfoUsage) {
 - (NSString*)valueForUsageInfoForRow:(NSUInteger)row {
     switch (row) {
         case HEMDebugInfoUsageHKLastSync: {
-            return [[[SENServiceHealthKit sharedService] lastSyncDate] timeAgo];
+            return [[[HEMHealthKitService sharedService] lastSyncDate] timeAgo];
         }
         case HEMDebugInfoUsageSysAlertShownLast31Days: {
             HEMAppUsage* usage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageSystemAlertShown];

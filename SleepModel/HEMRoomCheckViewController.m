@@ -57,6 +57,9 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [[self roomCheckView] setAlpha:0.0f];
     [[self roomCheckView] setDelegate:self];
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
+    
+    [[self resultsDescriptionLabel] setAlpha:0.0f];
+    [[self resultsTitleLabel] setAlpha:0.0f];
 }
 
 - (NSString*)imageName:(NSString*)imageName

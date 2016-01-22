@@ -402,13 +402,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         [[insightCell imageTopConstraint] setConstant:imageOffset];
         [[insightCell imageBottomConstraint] setConstant:-imageOffset];
         [[insightCell uriImageView] updateConstraintsIfNeeded];
-    } else {
-        NSString* imageUrl = [[insightCell uriImageView] currentImageURL];
-        NSString* message = [NSString stringWithFormat:@"insight image in feed has 0 height for %@",
-                             imageUrl ?: @"undefined"];
-        NSDictionary* props = @{kHEMAnalyticsEventPropMessage : message};
-        [SENAnalytics track:kHEMAnalyticsEventWarning properties:props];
-    }
+    } // TODO: else, see if we can send some analytics up to see what the problem is
 }
 
 - (void)updateInsightImageParallax {

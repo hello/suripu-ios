@@ -442,10 +442,10 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         [[self delegate] didUpdateWiFiFrom:self];
     }
     
-    __weak typeof(self) weakSelf = self;
-    [[self dataSource] checkForWarnings:^(NSOrderedSet<HEMDeviceWarning *> * _Nonnull warnings) {
-        [[weakSelf collectionView] reloadData];
-    }];
+    if ([[self dataSource] clearWiFiWarnings]) {
+        [[self collectionView] reloadData];
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

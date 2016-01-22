@@ -8,6 +8,8 @@
 
 #import "HEMDeviceWarning.h"
 
+static NSUInteger const HEMDeviceWarningHashPrime = 31;
+
 @interface HEMDeviceWarning()
 
 @property (nonatomic, copy, nonnull) NSString* localizedSummary;
@@ -32,6 +34,26 @@
         _supportPage = [supportPage copy];
     }
     return self;
+}
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[HEMDeviceWarning class]]) {
+        return NO;
+    }
+    
+    HEMDeviceWarning* other = object;
+    return [self type] == [other type]
+        && [[self localizedMessage] isEqualToAttributedString:[object localizedMessage]]
+        && [[self supportPage] isEqualToString:[other supportPage]]
+        && [[self localizedSummary] isEqualToString:[other localizedSummary]];
+}
+
+- (NSUInteger)hash {
+    NSUInteger result = HEMDeviceWarningHashPrime + [[self localizedSummary] hash];
+    result = HEMDeviceWarningHashPrime * result + [[self localizedMessage] hash];
+    result = HEMDeviceWarningHashPrime * result + [[self supportPage] hash];
+    result = HEMDeviceWarningHashPrime * result + [self type];
+    return result;
 }
 
 @end

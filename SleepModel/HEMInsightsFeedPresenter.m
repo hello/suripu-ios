@@ -396,7 +396,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     CGFloat imageHeight = CGRectGetHeight([[insightCell uriImageView] bounds]);
     if (imageHeight > 0) {
         CGFloat diff = [[self collectionView] contentOffset].y - CGRectGetMinY([insightCell frame]);
-        CGFloat imageOffset = diff / CGRectGetHeight([[insightCell uriImageView] bounds]);
+        CGFloat imageOffset = diff / imageHeight;
         imageOffset = imageOffset * HEMInsightsFeedImageParallaxMultipler;
         
         [[insightCell imageTopConstraint] setConstant:imageOffset];

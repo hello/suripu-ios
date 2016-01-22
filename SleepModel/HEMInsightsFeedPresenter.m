@@ -393,13 +393,16 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 #pragma mark Scroll delegate (for parallax)
 
 - (void)updateInsightImageOffsetOn:(HEMInsightCollectionViewCell*)insightCell {
-    CGFloat diff = [[self collectionView] contentOffset].y - CGRectGetMinY([insightCell frame]);
-    CGFloat imageOffset = diff / CGRectGetHeight([[insightCell uriImageView] bounds]);
-    imageOffset = imageOffset * HEMInsightsFeedImageParallaxMultipler;
-    
-    [[insightCell imageTopConstraint] setConstant:imageOffset];
-    [[insightCell imageBottomConstraint] setConstant:-imageOffset];
-    [[insightCell uriImageView] updateConstraintsIfNeeded];
+    CGFloat imageHeight = CGRectGetHeight([[insightCell uriImageView] bounds]);
+    if (imageHeight > 0) {
+        CGFloat diff = [[self collectionView] contentOffset].y - CGRectGetMinY([insightCell frame]);
+        CGFloat imageOffset = diff / imageHeight;
+        imageOffset = imageOffset * HEMInsightsFeedImageParallaxMultipler;
+        
+        [[insightCell imageTopConstraint] setConstant:imageOffset];
+        [[insightCell imageBottomConstraint] setConstant:-imageOffset];
+        [[insightCell uriImageView] updateConstraintsIfNeeded];
+    } // TODO: else, see if we can send some analytics up to see what the problem is
 }
 
 - (void)updateInsightImageParallax {

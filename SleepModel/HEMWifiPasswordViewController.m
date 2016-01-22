@@ -498,10 +498,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
         [service notifyOfSensePairingChange];
 
-        if ([strongSelf delegate] != nil) {
-            [[HEMOnboardingService sharedService] clearAll];
+        if ([strongSelf delegate] != nil) { // Edit-WiFi in settings
+            [[HEMOnboardingService sharedService] clear]; // don't clear all, aka disconnect from Sense, or else issues arise
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
-        } else if ([strongSelf sensePairDelegate] != nil) {
+        } else if ([strongSelf sensePairDelegate] != nil) { // pairing from inside app (not onboarding)
             __block SENSenseManager* manager = [strongSelf manager];
             [[HEMOnboardingService sharedService] clearAll];
             [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:manager from:strongSelf];

@@ -12,6 +12,12 @@
 
 /**
  * @discussion
+ * the current image url referenced, if any
+ */
+@property (nonatomic, copy, readonly, nullable) NSString* currentImageURL;
+
+/**
+ * @discussion
  * 
  * Optionally display an activity indicator while image is being downloaded.
  * Defaults to YES

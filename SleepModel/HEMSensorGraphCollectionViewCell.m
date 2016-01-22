@@ -109,7 +109,7 @@
         }
     }
     
-    if (!minValue || [minValue isEqual:[NSNull null]]) {
+    if (!minValue || [minValue isEqual:[NSNull null]] || [minValue isEqual:maxValue]) {
         minValue = @0;
     }
     

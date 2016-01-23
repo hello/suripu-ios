@@ -268,7 +268,7 @@
             NSString* summary = NSLocalizedString(@"settings.sense.warning.summary.not-connected-ble", nil);
             NSString* support = NSLocalizedString(@"help.url.slug.sense-not-connected", nil);
             NSAttributedString* message = [strongSelf attributedSenseNotConnectedWarning];
-            [[strongSelf warnings] addObject:[[HEMDeviceWarning alloc] initWithType:HEMDeviceWarningTypeLastSeen
+            [[strongSelf warnings] addObject:[[HEMDeviceWarning alloc] initWithType:HEMDeviceWarningTypeSenseNotConnectedOverBLE
                                                                             summary:summary
                                                                             message:message
                                                                         supportPage:support]];
@@ -276,7 +276,7 @@
             NSString* summary = NSLocalizedString(@"settings.sense.warning.summary.wifi", nil);
             NSString* support = NSLocalizedString(@"help.url.slug.sense-no-internet", nil);
             NSAttributedString* message = [strongSelf attributedWiFiWarning];
-            [[strongSelf warnings] addObject:[[HEMDeviceWarning alloc] initWithType:HEMDeviceWarningTypeLastSeen
+            [[strongSelf warnings] addObject:[[HEMDeviceWarning alloc] initWithType:HEMDeviceWarningTypeSenseLostServerConnection
                                                                             summary:summary
                                                                             message:message
                                                                         supportPage:support]];
@@ -284,6 +284,23 @@
         
         completion ([strongSelf warnings]);
     }];
+}
+
+- (BOOL)clearWiFiWarnings {
+    if ([[self warnings] count] == 0) {
+        return NO;
+    }
+
+    NSMutableOrderedSet* updatedWarnings = [[NSMutableOrderedSet alloc] initWithCapacity:[[self warnings] count]];
+    for (HEMDeviceWarning* warning in [self warnings]) {
+        if ([warning type] != HEMDeviceWarningTypeSenseLostServerConnection) {
+            [updatedWarnings addObject:warning];
+        }
+    }
+
+    BOOL updated = [updatedWarnings count] < [[self warnings] count];
+    [self setWarnings:updatedWarnings];
+    return updated;
 }
 
 #pragma mark - Clean up

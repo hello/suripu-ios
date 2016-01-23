@@ -42,7 +42,7 @@
 - (void)configureButtons {
     [self stylePrimaryButton:[self doneButton]
              secondaryButton:[self skipButton]
-                withDelegate:[self delegate]];
+                withDelegate:[self delegate] != nil];
     
     [self enableBackButton:NO];
 }

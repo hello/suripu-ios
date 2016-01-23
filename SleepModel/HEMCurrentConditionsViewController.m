@@ -306,6 +306,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (void)failedToRefreshSensors {
     [self setLoading:NO];
+    [self setSensors:nil];
     [self.collectionView reloadData];
 }
 

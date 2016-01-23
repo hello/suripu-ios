@@ -83,6 +83,13 @@
 }
 
 - (void)didSaveAlarm:(__unused SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC {
+    UINavigationController* nav = [self navigationController];
+    
+    UIImage* snapshot = [[alarmVC view] snapshot];
+    UIImageView* overlay = [[UIImageView alloc] initWithFrame:[[nav view] bounds]];
+    [overlay setImage:snapshot];
+
+    [[nav view] addSubview:overlay];
     [self dismissViewControllerAnimated:NO completion:^{
         [self completeOnboarding];
     }];

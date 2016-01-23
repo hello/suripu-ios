@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.2.1
+
+Fixes:
+
+* Fix crasher that occurs when room conditions sensor value is returned with -1
+  intermittently
+* Fix crasher that occurred on iOS 9.3 beta, when image view size is 0 in insight
+* Do not disconnect from Sense after user successfully edits Wi-Fi from settings
+  to prevent unexpectedly being disconnected from Sense on next connection
+* Prevent room conditions graph from drawing a flat line post onboarding
+* Smooth out onboarding end animation
+* Room conditions and alarms will properly show an error loading state when it
+  can not retrieve data from the server
+* After editing Wi-Fi from settings, clear any sense warnings related to wi-fi
+
 ## 1.2.2.0
 
 Note: 1.2.2.0 is a place holder version in case we release a build before 1.3.0

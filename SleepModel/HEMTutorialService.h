@@ -8,6 +8,14 @@
 
 #import "SENService.h"
 
+typedef NS_ENUM(NSInteger, HEMTutorial) {
+    HEMTutorialInsightTap = 1,
+    HEMTutorialSensorScrubbing,
+    HEMTutorialTimelineSwipe,
+    HEMTutorialTimelineZoom,
+    HEMTutorialTimelineExplanation
+};
+
 @interface HEMTutorialService : SENService
 
 @end

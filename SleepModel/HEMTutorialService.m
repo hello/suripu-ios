@@ -53,13 +53,17 @@ static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbi
 }
 
 - (void)completed:(NSString*)tutorialName {
+    [self tutorialRecordKeeper][tutorialName] = @YES;
+    
     SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-    [prefs setPersistentPreference:@YES forKey:tutorialName];
+    [prefs setPersistentPreference:[self tutorialRecordKeeper]
+                            forKey:HEMTutorialServicePrefName];
 }
 
 - (void)reset {
     SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
     [prefs setPersistentPreference:nil forKey:HEMTutorialServicePrefName];
+    [[self tutorialRecordKeeper] removeAllObjects];
 }
 
 #pragma mark - Deprecated storage

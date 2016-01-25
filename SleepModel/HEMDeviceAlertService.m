@@ -22,7 +22,10 @@
 
 static NSInteger const HEMDeviceAlertLastSeenThresholdInDays = 1;
 static NSInteger const HEMDeviceAlertPillLowBatteryAlertThresholdInDays = 1;
+static NSInteger const HEMDeviceAlertMaxLastSeenAlertsInDays = 1;
 static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAlertPrefPillLowBatteryLastAlert";
+static NSString* const HEMDeviceAlertPrefPillLastSeenLastAlert = @"HEMDeviceAlertPrefPillLastSeenLastAlert";
+static NSString* const HEMDeviceAlertPrefSenseLastSeenLastAlert = @"HEMDeviceAlertPrefSenseLastSeenLastAlert";
 
 @interface HEMDeviceAlertService()
 
@@ -58,7 +61,7 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
         
         return HEMDeviceAlertStateSenseNotPaired;
         
-    } else if ([self isLastSeenTooLongAgo:[devices senseMetadata]]) {
+    } else if ([self shouldShowDeviceHasNotBeenSeen:[devices senseMetadata]]) {
         
         return HEMDeviceAlertStateSenseNotSeen;
         
@@ -70,7 +73,7 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
 
         return HEMDeviceAlertStatePillLowBattery;
         
-    } else if ([self isLastSeenTooLongAgo:[devices pillMetadata]]) {
+    } else if ([self shouldShowDeviceHasNotBeenSeen:[devices pillMetadata]]) {
         
         return HEMDeviceAlertStatePillNotSeen;
         
@@ -85,6 +88,12 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
     switch (state) {
         case HEMDeviceAlertStatePillLowBattery:
             [self updateLastAlertDateForKey:HEMDeviceAlertPrefPillLowBatteryLastAlert];
+            break;
+        case HEMDeviceAlertStatePillNotSeen:
+            [self updateLastAlertDateForKey:HEMDeviceAlertPrefPillLastSeenLastAlert];
+            break;
+        case HEMDeviceAlertStateSenseNotSeen:
+            [self updateLastAlertDateForKey:HEMDeviceAlertPrefSenseLastSeenLastAlert];
             break;
         default:
             break;
@@ -107,8 +116,21 @@ static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAl
         || [lastLowBatteryAlertDate daysElapsed] >= HEMDeviceAlertPillLowBatteryAlertThresholdInDays;
 }
 
-- (BOOL)isLastSeenTooLongAgo:(SENDeviceMetadata*)metadata {
-    return [[metadata lastSeenDate] daysElapsed] >= HEMDeviceAlertLastSeenThresholdInDays;
+- (BOOL)shouldShowDeviceHasNotBeenSeen:(SENDeviceMetadata*)metadata {
+    if ([[metadata lastSeenDate] daysElapsed] < HEMDeviceAlertLastSeenThresholdInDays) {
+        return NO;
+    }
+    
+    NSString* lastSeenPrefKey = nil;
+    if ([metadata isKindOfClass:[SENSenseMetadata class]]) {
+        lastSeenPrefKey = HEMDeviceAlertPrefSenseLastSeenLastAlert;
+    } else {
+        lastSeenPrefKey = HEMDeviceAlertPrefPillLastSeenLastAlert;
+    }
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    NSDate* lastSeenAlertDate = [localPrefs userPreferenceForKey:lastSeenPrefKey];
+    return !lastSeenAlertDate
+        || [lastSeenAlertDate daysElapsed] >= HEMDeviceAlertMaxLastSeenAlertsInDays;
 }
 
 #pragma mark - Pairing changes

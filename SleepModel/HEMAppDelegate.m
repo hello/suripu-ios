@@ -21,6 +21,7 @@
 #import "HEMSegmentProvider.h"
 #import "HEMDebugController.h"
 #import "HEMAccountService.h"
+#import "HEMHealthKitService.h"
 
 @implementation HEMAppDelegate
 
@@ -146,28 +147,28 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
  * for the day, this will have no effect.
  */
 - (void)syncHealthKit {
-    [[SENServiceHealthKit sharedService] sync:^(NSError *error) {
+    [[HEMHealthKitService sharedService] sync:^(NSError *error) {
         if (error != nil) {
             switch ([error code]) {
-                case SENServiceHealthKitErrorAlreadySynced:
+                case HEMHKServiceErrorAlreadySynced:
                     DDLogVerbose(@"healthkit has already been synced, ignore");
                     break; // do nothing
-                case SENServiceHealthKitErrorNotAuthorized: {
+                case HEMHKServiceErrorNotAuthorized: {
                     NSDictionary* props = @{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusDenied};
                     [SENAnalytics setUserProperties:props];
                     break;
                 }
-                case SENServiceHealthKitErrorNotSupported: {
+                case HEMHKServiceErrorNotSupported: {
                     NSDictionary* props = @{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusNotSupported};
                     [SENAnalytics setUserProperties:props];
                     break;
                 }
-                case SENServiceHealthKitErrorNotEnabled: {
+                case HEMHKServiceErrorNotEnabled: {
                     NSDictionary* props = @{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusDisabled};
                     [SENAnalytics setUserProperties:props];
                     break;
                 }
-                case SENServiceHealthKitErrorNoDataToWrite:
+                case HEMHKServiceErrorNoDataToWrite:
                 default:
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
                     break;

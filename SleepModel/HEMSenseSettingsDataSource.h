@@ -24,5 +24,6 @@ typedef void(^HEMSenseSettingsDisconnectBlock)(NSError* _Nullable error);
 - (BOOL)isConnectedToSense;
 - (nonnull NSOrderedSet*)deviceWarnings;
 - (void)setDisconnectHandler:(nonnull HEMSenseSettingsDisconnectBlock)disconnectHandler;
+- (BOOL)clearWiFiWarnings;
 
 @end

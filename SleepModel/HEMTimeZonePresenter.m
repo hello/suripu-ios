@@ -100,6 +100,13 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
         NSArray* sortedCityNames = [[strongSelf service] sortedCityNamesWithout:currentTZ
                                                                            from:mapping
                                                                matchingCityName:&currentCityNameFromTz];
+        
+        if ([currentCityNameFromTz length] == 0) {
+            NSString* tzName = [currentTZ name];
+            NSDictionary* properties = @{HEMAnalyticsEventPropTZ : tzName ?: @""};
+            [SENAnalytics track:HEMAnalyticsEventMissingTZMapping properties:properties];
+        }
+        
         [strongSelf setSortedCityNames:sortedCityNames];
         [strongSelf setCurrentTimeZoneCityName:currentCityNameFromTz];
         [blockTable reloadData];

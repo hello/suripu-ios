@@ -93,6 +93,7 @@ NSString* const HEMAnalyticsEventHeight = @"Height";
 NSString* const HEMAnalyticsEventWeight = @"Weight";
 NSString* const HEMAnalyticsEventSenseSetup = @"Sense Setup";
 NSString* const HEMAnalyticsEventPairSense = @"Pair Sense";
+NSString* const HEMAnalyticsEventSensePaired = @"Sense Paired";
 NSString* const HEMAnalyticsEventWiFi = @"WiFi";
 NSString* const HEMAnalyticsEventWiFiConnectionUpdate = @"Sense WiFi Update";
 NSString* const HEMAnalyticsEventPropWiFiStatus = @"status";
@@ -106,6 +107,7 @@ NSString* const kHEMAnalyticsEventPropSecurityType = @"Security Type";
 NSString* const kHEMAnalyticsEventPropWiFiOther = @"Is Other";
 NSString* const kHEMAnalyticsEventPropWiFiRSSI = @"RSSI";
 NSString* const HEMAnalyticsEventPairPill = @"Pair Pill";
+NSString* const HEMAnalyticsEventPillPaired = @"Pill Paired";
 NSString* const HEMAnalyticsEventPairPillRetry = @"Pair Pill Retry";
 NSString* const kHEMAnalyticsEventPropOnBScreen = @"Screen";
 NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
@@ -154,6 +156,7 @@ NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
 NSString* const HEMAnalyticsEventTimeZone = @"Time Zone";
 NSString* const HEMAnalyticsEventTimeZoneChanged = @"Time Zone Changed";
 NSString* const HEMAnalyticsEventPropTZ = @"tz";
+NSString* const HEMAnalyticsEventMissingTZMapping = @"Time Zone Mapping Missing";
 
 // device management
 NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";

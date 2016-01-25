@@ -23,6 +23,7 @@
 #import "HEMScreenUtils.h"
 #import "HEMNoAlarmCell.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMBaseController+Protected.h"
 
 NS_ENUM(NSUInteger) {
     LoadingStateRowCount = 0,
@@ -98,6 +99,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self touchUpOutsideAddAlarmButton:nil];
 }
 
+- (void)viewDidBecomeActive {
+    [super viewDidBecomeActive];
+    [self refreshData];
+}
+
 - (void)didReceiveMemoryWarning {
     if (![self isViewLoaded] || !self.view.window) {
         self.alarms = nil;
@@ -165,21 +171,21 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)refreshAlarmList {
     self.loading = !self.alarms; // only show indicator if there's no alarms at all
-    [HEMAlarmUtils refreshAlarmsFromPresentingController:self
-                                              completion:^(NSError *error) {
-                                                  self.loading = NO;
-                                                  if (error) {
-                                                      self.loadingFailed = YES;
-                                                      if (self.alarms.count == 0) {
-                                                          [self.collectionView reloadData];
-                                                          return;
-                                                      }
-                                                  } else {
-                                                      self.loadingFailed = NO;
-                                                      [self reloadData];
-                                                  }
-                                                  self.addButton.enabled = YES;
-                                              }];
+    
+    __weak typeof(self) weakSelf = self;
+    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setLoading:NO];
+        [strongSelf setLoadingFailed:error != nil];
+        [[strongSelf addButton] setEnabled:error == nil];
+        if (error) {
+            [strongSelf setAlarms:nil];
+            [[strongSelf collectionView] reloadData];
+        } else {
+            [strongSelf reloadData];
+        }
+        
+    }];
 }
 
 - (void)reloadData {
@@ -289,12 +295,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
         return;
     }
     alarm.on = on;
-    [SENAnalytics trackAlarmToggle:alarm];
     [HEMAlarmUtils updateAlarmsFromPresentingController:self
                                              completion:^(NSError *error) {
                                                if (error) {
                                                    alarm.on = !on;
                                                    sender.on = !on;
+                                               } else {
+                                                   [SENAnalytics trackAlarmToggle:alarm];
                                                }
                                              }];
 }

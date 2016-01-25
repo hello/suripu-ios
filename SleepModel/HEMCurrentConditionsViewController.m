@@ -306,6 +306,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (void)failedToRefreshSensors {
     [self setLoading:NO];
+    [self setSensors:nil];
     [self.collectionView reloadData];
 }
 
@@ -448,16 +449,23 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 }
 
 - (NSAttributedString *)valueTextForSensor:(SENSensor *)sensor {
-    NSDictionary *baseAttributes = @{ NSFontAttributeName : [UIFont sensorListValueFontForUnit:sensor.unit] };
-    NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
-    NSMutableAttributedString *composite =
-        [[NSMutableAttributedString alloc] initWithString:valueText attributes:baseAttributes];
+    UIFont* font = [UIFont sensorListValueFontForUnit:sensor.unit];
+    NSDictionary *baseAttributes = @{ NSFontAttributeName : font };
+    NSMutableAttributedString *composite = nil;
     
     if (sensor.value) {
+        NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
+        composite = [[NSMutableAttributedString alloc] initWithString:valueText
+                                                           attributes:baseAttributes];
+        
         NSAttributedString* unitText = [self unitTextForSensor:sensor];
         if (unitText) {
             [composite appendAttributedString:unitText];
         }
+    } else {
+        NSString* emptyText = NSLocalizedString(@"empty-data", nil);
+        composite = [[NSMutableAttributedString alloc] initWithString:emptyText
+                                                           attributes:baseAttributes];
     }
 
     return composite;

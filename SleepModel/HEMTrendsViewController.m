@@ -235,6 +235,8 @@ static NSString* const HEMAllScopeType = @"ALL";
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
     if ([self isLoading]) {
         return LoadingStateRowCount;
+    } else if (self.loadingError) {
+        return EmptyStateRowCount;
     } else if (self.defaultTrends.count > 0) {
         return self.defaultTrends.count;
     } else {

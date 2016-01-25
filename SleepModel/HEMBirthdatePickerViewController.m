@@ -58,7 +58,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 - (void)configureButtons {
     [self stylePrimaryButton:[self doneButton]
              secondaryButton:[self skipButton]
-                withDelegate:[self updateDelegate]];
+                withDelegate:[self updateDelegate] != nil];
     
     [self enableBackButton:NO];
 }

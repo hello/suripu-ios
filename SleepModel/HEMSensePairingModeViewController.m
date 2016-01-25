@@ -12,6 +12,7 @@
 #import "HEMActionButton.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMSensePairingModeViewController()
 
@@ -23,9 +24,10 @@
 @implementation HEMSensePairingModeViewController
 
 - (void)viewDidLoad {
+    [self configureAttributedSubtitle];
+    
     [super viewDidLoad];
     
-    [self configureAttributedSubtitle];
     [self configureVideoView];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
@@ -47,10 +49,14 @@
 }
 
 - (void)configureVideoView {
-    UIImage* image = [UIImage imageNamed:@"pairingMode"];
-    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pairing-mode", nil);
-    [[self videoView] setFirstFrame:image videoPath:videoPath];
-    [[self view] updateConstraintsIfNeeded];
+    if (HEMIsIPhone4Family()) {
+        [[self videoView] removeFromSuperview];
+    } else {
+        UIImage* image = [UIImage imageNamed:@"pairingMode"];
+        NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pairing-mode", nil);
+        [[self videoView] setFirstFrame:image videoPath:videoPath];
+        [[self view] updateConstraintsIfNeeded];
+    }
 }
 
 - (void)configureAttributedSubtitle {

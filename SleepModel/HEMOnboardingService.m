@@ -512,6 +512,8 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
             [[SENServiceDevice sharedService] loadDeviceInfo:nil];
         }
         
+        [SENAnalytics track:HEMAnalyticsEventSensePaired];
+        
         if (completion) {
             completion (nil);
         }

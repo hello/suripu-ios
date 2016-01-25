@@ -1,46 +1,38 @@
 //
-//  SENServiceHealthKit.m
-//  Pods
+//  HEMHealthKitService.m
+//  Sense
 //
-//  Created by Jimmy Lu on 1/26/15.
+//  Created by Jimmy Lu on 1/19/16.
+//  Copyright © 2016 Hello. All rights reserved.
 //
-//
-#import <CocoaLumberjack/CocoaLumberjack.h>
-
 #import <HealthKit/HealthKit.h>
+#import <SenseKit/SENService+Protected.h>
+#import <SenseKit/Model.h>
+#import <SenseKit/SENAPITimeline.h>
+#import <SenseKit/SENLocalPreferences.h>
 
-#import "SENServiceHealthKit.h"
-#import "SENService+Protected.h"
-#import "Model.h"
-#import "SENAPITimeline.h"
-#import "SENLocalPreferences.h"
+#import "HEMHealthKitService.h"
 
-static NSString* const SENServiceHKErrorDomain = @"is.hello.service.hk";
-static NSString* const SENServiceHKLastDateWritten = @"is.hello.service.hk.lastdate";
-static NSString* const SENServiceHKEnable = @"is.hello.service.hk.enable";
-static CGFloat const SENServiceHKBackFillLimit = 3;
+static NSString* const HEMHKServiceErrorDomain = @"is.hello.service.hk";
+static NSString* const HEMHKServiceLastDateWritten = @"is.hello.service.hk.lastdate";
+static NSString* const HEMHKServiceEnable = @"is.hello.service.hk.enable";
+static CGFloat const HEMHKServiceBackFillLimit = 3;
 
-@interface SENServiceHealthKit()
+@interface HEMHealthKitService()
 
 @property (nonatomic, strong) HKHealthStore* hkStore;
 
 @end
 
-@implementation SENServiceHealthKit
-
-static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+@implementation HEMHealthKitService
 
 + (id)sharedService {
-    static SENServiceHealthKit* service = nil;
+    static HEMHealthKitService* service = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        service = [[super allocWithZone:NULL] init];
+        service = [[super alloc] init];
     });
     return service;
-}
-
-+ (id)allocWithZone:(struct _NSZone *)zone {
-    return [self sharedService];
 }
 
 - (id)init {
@@ -61,12 +53,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)setEnableHealthKit:(BOOL)enable {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    [preferences setUserPreference:@(enable) forKey:SENServiceHKEnable];
+    [preferences setUserPreference:@(enable) forKey:HEMHKServiceEnable];
 }
 
 - (BOOL)isHealthKitEnabled {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    return [[preferences userPreferenceForKey:SENServiceHKEnable] boolValue];
+    return [[preferences userPreferenceForKey:HEMHKServiceEnable] boolValue];
 }
 
 - (void)saveLastSyncDate:(NSDate*)date {
@@ -74,12 +66,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         return;
     }
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    [preferences setUserPreference:date forKey:SENServiceHKLastDateWritten];
+    [preferences setUserPreference:date forKey:HEMHKServiceLastDateWritten];
 }
 
 - (NSDate*)lastSyncDate {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    return [preferences userPreferenceForKey:SENServiceHKLastDateWritten];
+    return [preferences userPreferenceForKey:HEMHKServiceLastDateWritten];
 }
 
 #pragma mark - Support / Authorization
@@ -98,8 +90,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (void)requestAuthorization:(void(^)(NSError* error))completion {
     if (![self isSupported]) {
         if (completion) {
-            completion ([NSError errorWithDomain:SENServiceHKErrorDomain
-                                            code:SENServiceHealthKitErrorNotSupported
+            completion ([NSError errorWithDomain:HEMHKServiceErrorDomain
+                                            code:HEMHKServiceErrorNotSupported
                                         userInfo:nil]);
         }
         return;
@@ -115,13 +107,13 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         HKAuthorizationStatus status = [[self hkStore] authorizationStatusForType:hkSleepCategory];
         switch (status) {
             case HKAuthorizationStatusSharingDenied:
-                serviceError = [NSError errorWithDomain:SENServiceHKErrorDomain
-                                                   code:SENServiceHealthKitErrorNotAuthorized
+                serviceError = [NSError errorWithDomain:HEMHKServiceErrorDomain
+                                                   code:HEMHKServiceErrorNotAuthorized
                                                userInfo:nil];
                 break;
             case HKAuthorizationStatusNotDetermined: // user cancelled form
-                serviceError = [NSError errorWithDomain:SENServiceHKErrorDomain
-                                                   code:SENServiceHealthKitErrorCancelledAuthorization
+                serviceError = [NSError errorWithDomain:HEMHKServiceErrorDomain
+                                                   code:HEMHKServiceErrorCancelledAuthorization
                                                userInfo:nil];
                 break;
             default:
@@ -153,15 +145,15 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     if (enabled && supported && authorized) {
         [self syncRecentMissingDays:done];
     } else {
-        SENServiceHealthKitError code;
+        HEMHKServiceError code;
         if (!enabled) {
-            code = SENServiceHealthKitErrorNotEnabled;
+            code = HEMHKServiceErrorNotEnabled;
         } else if (!supported) {
-            code = SENServiceHealthKitErrorNotSupported;
+            code = HEMHKServiceErrorNotSupported;
         } else {
-            code = SENServiceHealthKitErrorNotAuthorized;
+            code = HEMHKServiceErrorNotAuthorized;
         }
-        done ([NSError errorWithDomain:SENServiceHKErrorDomain code:code userInfo:nil]);
+        done ([NSError errorWithDomain:HEMHKServiceErrorDomain code:code userInfo:nil]);
     }
 }
 
@@ -187,8 +179,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                                                      toDate:lastNight
                                                     options:0];
         if ([difference day] == 0) {
-            completion ([NSError errorWithDomain:SENServiceHKErrorDomain
-                                            code:SENServiceHealthKitErrorAlreadySynced
+            completion ([NSError errorWithDomain:HEMHKServiceErrorDomain
+                                            code:HEMHKServiceErrorAlreadySynced
                                         userInfo:nil]);
             return;
         } else if ([difference day] == 1) {
@@ -198,7 +190,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
             syncFromDate = lastNight;
         } else {
             NSDateComponents* backFillComps = [[NSDateComponents alloc] init];
-            [backFillComps setDay:-(MIN([difference day], SENServiceHKBackFillLimit) - 1)];
+            [backFillComps setDay:-(MIN([difference day], HEMHKServiceBackFillLimit) - 1)];
             syncFromDate = [calendar dateByAddingComponents:backFillComps
                                                      toDate:lastNight
                                                     options:0];
@@ -250,8 +242,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }
     
     if (!haveTimelines) {
-        completion (nil, [NSError errorWithDomain:SENServiceHKErrorDomain
-                                             code:SENServiceHealthKitErrorNoDataToWrite
+        completion (nil, [NSError errorWithDomain:HEMHKServiceErrorDomain
+                                             code:HEMHKServiceErrorNoDataToWrite
                                          userInfo:@{NSLocalizedDescriptionKey : @"start and end date did not evaluate to timelines"}]);
         return;
     }
@@ -265,13 +257,24 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
             });
         }];
     });
-
+    
 }
 
 - (BOOL)timelineHasSufficientData:(SENTimeline*)timeline {
+    return [self timelineHasSufficientDataForInBedSample:timeline]
+        && [self timelineHasSufficientDataForAsleepSample:timeline];
+}
+
+- (BOOL)timelineHasSufficientDataForAsleepSample:(SENTimeline*)timeline {
     return [timeline scoreCondition] != SENConditionUnknown
         && [timeline scoreCondition] != SENConditionIncomplete
         && [[timeline metrics] count] > 0;
+}
+
+- (BOOL)timelineHasSufficientDataForInBedSample:(SENTimeline*)timeline {
+    return [timeline scoreCondition] != SENConditionUnknown
+        && [timeline scoreCondition] != SENConditionIncomplete
+        && [[timeline segments] count] > 0;
 }
 
 - (void)timelineForDate:(NSDate*)date completion:(void(^)(SENTimeline* timeline, NSError* error))completion {
@@ -287,8 +290,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                     [timeline save];
                 } else {
                     timeline = nil;
-                    error = [NSError errorWithDomain:SENServiceHKErrorDomain
-                                                code:SENServiceHealthKitErrorUnexpectedAPIResponse
+                    error = [NSError errorWithDomain:HEMHKServiceErrorDomain
+                                                code:HEMHKServiceErrorUnexpectedAPIResponse
                                             userInfo:nil];
                 }
             }
@@ -300,8 +303,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 - (void)syncTimelinesToHealthKit:(NSArray*)timelines completion:(void(^)(NSError* error))completion {
     NSUInteger timelineCount = [timelines count];
     if (timelineCount == 0) {
-        completion ([NSError errorWithDomain:SENServiceHKErrorDomain
-                                        code:SENServiceHealthKitErrorNoDataToWrite
+        completion ([NSError errorWithDomain:HEMHKServiceErrorDomain
+                                        code:HEMHKServiceErrorNoDataToWrite
                                     userInfo:nil]);
         return;
     }
@@ -309,15 +312,20 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     HKSample* sample = nil;
     NSMutableArray* samples = [NSMutableArray arrayWithCapacity:timelineCount];
     for (SENTimeline* timeline in timelines) {
-        sample = [self sleepSampleFromTimeline:timeline];
+        sample = [self inBedSampleFromTimeline:timeline];
+        if (sample) {
+            [samples addObject:sample];
+        }
+        
+        sample = [self asleepSampleFromTimeline:timeline];
         if (sample) {
             [samples addObject:sample];
         }
     }
     
     if ([samples count] == 0) {
-        completion ([NSError errorWithDomain:SENServiceHKErrorDomain
-                                        code:SENServiceHealthKitErrorNoDataToWrite
+        completion ([NSError errorWithDomain:HEMHKServiceErrorDomain
+                                        code:HEMHKServiceErrorNoDataToWrite
                                     userInfo:nil]);
         return;
     }
@@ -327,8 +335,52 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }];
 }
 
-- (HKSample*)sleepSampleFromTimeline:(SENTimeline*)timeline {
-    if (![self timelineHasSufficientData:timeline]) {
+- (HKSample*)inBedSampleFromTimeline:(SENTimeline*)timeline {
+    if (![self timelineHasSufficientDataForInBedSample:timeline]) {
+        return nil;
+    }
+
+    HKSample* sample = nil;
+    HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
+    NSDate* inBedDate = nil;
+    NSDate* outOfBedDate = nil;
+    
+    // look for in bed event from the beginning
+    for (SENTimelineSegment* segment in [timeline segments]) {
+        if ([segment type] == SENTimelineSegmentTypeGotInBed) {
+            inBedDate = [segment date];
+            break;
+        }
+    }
+    
+    if (inBedDate) {
+        // look for out of bed event from the end of the segments to reduce iterations
+        for (NSInteger idx = [[timeline segments] count] - 1; idx >= 0; idx--) {
+            SENTimelineSegment* segment = [timeline segments][idx];
+            if ([segment type] == SENTimelineSegmentTypeGotOutOfBed) {
+                outOfBedDate = [segment date];
+                break;
+            }
+        }
+    }
+    
+    if (inBedDate && outOfBedDate) {
+        DDLogVerbose(@"adding in bed data point");
+        if ([inBedDate compare:outOfBedDate] == NSOrderedAscending) {
+            sample = [HKCategorySample categorySampleWithType:hkSleepCategory
+                                                        value:HKCategoryValueSleepAnalysisInBed
+                                                    startDate:inBedDate
+                                                      endDate:outOfBedDate];
+        } else {
+            DDLogVerbose(@"out of bed time %@ is before in bed time! %@", outOfBedDate, inBedDate);
+        }
+    }
+    
+    return sample;
+}
+
+- (HKSample*)asleepSampleFromTimeline:(SENTimeline*)timeline {
+    if (![self timelineHasSufficientDataForAsleepSample:timeline]) {
         return nil;
     }
     
@@ -337,7 +389,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     NSDate* wakeUpDate = nil;
     NSDate* sleepDate = nil;
     NSArray* metrics = [timeline metrics];
-
+    
     for (SENTimelineMetric* metric in metrics) {
         CGFloat metricValue = [metric.value doubleValue];
         
@@ -347,7 +399,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
             && metricValue > 0) {
             sleepDate = SENDateFromNumber(metric.value);
         }
-
+        
         if (sleepDate != nil
             && metric.type == SENTimelineMetricTypeWokeUp
             && metric.unit == SENTimelineMetricUnitTimestamp

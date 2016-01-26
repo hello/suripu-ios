@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2.2
+
+Fixes:
+
+* Fix a crasher that occurs when iOS is unable to determine a users current locale
+
 ## 1.2.2.1
 
 Fixes:

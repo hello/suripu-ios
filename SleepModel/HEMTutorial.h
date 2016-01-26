@@ -10,28 +10,7 @@
 
 @interface HEMTutorial : NSObject
 
-#pragma mark - Handholding\
-
-/**
- * @return YES if caller should show tutorial for insight tap gesture.  No otherwise
- */
-+ (BOOL)shouldShowInsightTapTutorial;
-
-/**
- * Cancel the insight tap tutorial.  Call this if insight detail has been seen
- * already
- */
-+ (void)cancelInsightTapTutorial;
-
-/**
- * Present the handholding UI to illustrate how to tap on an Insight card to
- * review more information if not previously shown
- *
- * @param view: the view to show the tutorial in
- * @param point: the center point for the gesture to appear at
- * @return YES if shown / needed, NO otherwise
- */
-+ (BOOL)showHandholdingForInsightCardIfNeededIn:(UIView*)view atPoint:(CGPoint)point;
+#pragma mark - Handholding
 
 /**
  * Present the handholding UI to illustrate how to switch days in the Timeline,

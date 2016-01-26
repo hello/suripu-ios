@@ -16,6 +16,7 @@
 @class HEMUnreadAlertService;
 @class HEMActivityIndicatorView;
 @class HEMInsightCollectionViewCell;
+@class HEMHandHoldingService;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,7 +39,8 @@ typedef void(^HEMInsightsPresenterCompletion)(void);
 
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
-                                  unreadService:(HEMUnreadAlertService*)unreadService;
+                                  unreadService:(HEMUnreadAlertService*)unreadService
+                             handHoldingService:(HEMHandHoldingService*)handHoldingService;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 

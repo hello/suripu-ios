@@ -182,7 +182,7 @@
 		BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF658A481B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m */; };
 		BF658A4C1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF658A4B1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m */; };
 		BF6952541C52D3FD000A8E85 /* HEMSwitchControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952531C52D3FD000A8E85 /* HEMSwitchControl.m */; };
-		BF6952581C52FB8F000A8E85 /* HEMTutorialService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952571C52FB8F000A8E85 /* HEMTutorialService.m */; };
+		BF6952581C52FB8F000A8E85 /* HEMHandHoldingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952571C52FB8F000A8E85 /* HEMHandHoldingService.m */; };
 		BF6A55841B44B979009CA820 /* HEMActionSheetTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */; };
 		BF6E3A9A1A2D27450019C110 /* HEMActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A991A2D27450019C110 /* HEMActionView.m */; };
 		BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9C1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m */; };
@@ -683,8 +683,8 @@
 		BF658A4B1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEventAdjustConfirmationView.m; sourceTree = "<group>"; };
 		BF6952521C52D3FD000A8E85 /* HEMSwitchControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSwitchControl.h; sourceTree = "<group>"; };
 		BF6952531C52D3FD000A8E85 /* HEMSwitchControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSwitchControl.m; sourceTree = "<group>"; };
-		BF6952561C52FB8F000A8E85 /* HEMTutorialService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTutorialService.h; sourceTree = "<group>"; };
-		BF6952571C52FB8F000A8E85 /* HEMTutorialService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTutorialService.m; sourceTree = "<group>"; };
+		BF6952561C52FB8F000A8E85 /* HEMHandHoldingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHandHoldingService.h; sourceTree = "<group>"; };
+		BF6952571C52FB8F000A8E85 /* HEMHandHoldingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandHoldingService.m; sourceTree = "<group>"; };
 		BF6A55821B44B979009CA820 /* HEMActionSheetTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionSheetTitleView.h; sourceTree = "<group>"; };
 		BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMActionSheetTitleView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BF6E3A981A2D27450019C110 /* HEMActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionView.h; sourceTree = "<group>"; };
@@ -1844,8 +1844,8 @@
 		BF6952551C52FACD000A8E85 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				BF6952561C52FB8F000A8E85 /* HEMTutorialService.h */,
-				BF6952571C52FB8F000A8E85 /* HEMTutorialService.m */,
+				BF6952561C52FB8F000A8E85 /* HEMHandHoldingService.h */,
+				BF6952571C52FB8F000A8E85 /* HEMHandHoldingService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2832,7 +2832,7 @@
 				BF037C011B7C178D00E1638D /* HEMTappableView.m in Sources */,
 				8A9D380B1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m in Sources */,
 				BF7454AF1B5887BF00E6AE85 /* HEMOnboardingService.m in Sources */,
-				BF6952581C52FB8F000A8E85 /* HEMTutorialService.m in Sources */,
+				BF6952581C52FB8F000A8E85 /* HEMHandHoldingService.m in Sources */,
 				8AA1E6351A8E6D0E00590EB6 /* HEMPopupView.m in Sources */,
 				BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */,
 				8A4637361B20C02300080863 /* HEMFadingParallaxLayout.m in Sources */,

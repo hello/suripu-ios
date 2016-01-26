@@ -47,44 +47,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 #pragma mark - Handholding
 
-#pragma mark Insights
-
-+ (BOOL)shouldShowInsightTapTutorial {
-    BOOL shouldShow = [self shouldShowTutorialForKey:HEMTutorialHHInsightTap];
-    if (shouldShow) {
-        [self setHandholdingFirstChecked:HEMTutorialHHInsightDaySwitchCounter];
-        SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-        NSDate* firstCheckedDate = [preferences persistentPreferenceForKey:HEMTutorialHHInsightDaySwitchCounter];
-        shouldShow = [firstCheckedDate daysElapsed] >= HEMTutorialHHInsightTapMinDaysChecked;
-    }
-    return shouldShow;
-}
-
-+ (void)cancelInsightTapTutorial {
-    [self markTutorialViewed:HEMTutorialHHInsightTap];
-}
-
-+ (BOOL)showHandholdingForInsightCardIfNeededIn:(UIView*)view atPoint:(CGPoint)point {
-    if (![self shouldShowInsightTapTutorial]) {
-        return NO;
-    }
-    
-    [self showHandholdingForInsightCardIn:view atPoint:point];
-    [self markTutorialViewed:HEMTutorialHHInsightTap];
-    return YES;
-}
-
-+ (void)showHandholdingForInsightCardIn:(UIView*)view atPoint:(CGPoint)point {
-    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
-    [handholdingView setGestureStartCenter:point];
-    [handholdingView setGestureEndCenter:point];
-    
-    [handholdingView setMessage:NSLocalizedString(@"handholding.message.insight-tap", nil)];
-    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
-    
-    [handholdingView showInView:view];
-}
-
 #pragma mark Timeline
 
 + (BOOL)showHandholdingForTimelineDaySwitchIfNeededIn:(UIView*)view {

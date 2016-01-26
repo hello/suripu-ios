@@ -28,6 +28,7 @@
 #import "HEMURLImageView.h"
 #import "HEMRootViewController.h"
 #import "HEMSimpleModalTransitionDelegate.h"
+#import "HEMHandHoldingService.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -38,6 +39,7 @@
 @property (strong, nonatomic) HEMInsightsService* insightsFeedService;
 @property (strong, nonatomic) HEMQuestionsService* questionsService;
 @property (strong, nonatomic) HEMUnreadAlertService* unreadService;
+@property (strong, nonatomic) HEMHandHoldingService* handHoldingService;
 
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> insightTransition;
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> questionsTransition;
@@ -51,10 +53,12 @@
         _insightsFeedService = [HEMInsightsService new];
         _questionsService = [HEMQuestionsService new];
         _unreadService = [HEMUnreadAlertService new];
+        _handHoldingService = [HEMHandHoldingService new];
         HEMInsightsFeedPresenter* feedPresenter
             = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
                                                        questionsService:_questionsService
-                                                          unreadService:_unreadService];
+                                                          unreadService:_unreadService
+                                                     handHoldingService:_handHoldingService];
         // weak ref so we can bind collection view, activity and set delegate when view is loaded
         _feedPresenter = feedPresenter;
         [self addPresenter:feedPresenter];

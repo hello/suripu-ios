@@ -27,8 +27,6 @@
 #import "HEMURLImageView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAppUsage.h"
-#import "HEMHandHoldingService.h"
-#import "HEMHandholdingView.h"
 
 static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
@@ -39,14 +37,12 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 @property (weak, nonatomic) HEMInsightsService* insightsService;
 @property (weak, nonatomic) HEMQuestionsService* questionsService;
 @property (weak, nonatomic) HEMUnreadAlertService* unreadService;
-@property (weak, nonatomic) HEMHandHoldingService* handHoldingService;
 @property (weak, nonatomic) UICollectionView* collectionView;
 @property (weak, nonatomic) UIView* tutorialContainerView;
 @property (weak, nonatomic) UITabBarItem* tabBarItem;
 @property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
 @property (strong, nonatomic) NSCache* heightCache;
 @property (strong, nonatomic) NSCache* attributedBodyCache;
-@property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (strong, nonatomic) NSError* dataError;
 
 @end
@@ -55,15 +51,13 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
-                                  unreadService:(HEMUnreadAlertService*)unreadService
-                             handHoldingService:(HEMHandHoldingService*)handHoldingService {
+                                  unreadService:(HEMUnreadAlertService*)unreadService {
     
     self = [super init];
     if (self) {
         _insightsService = insightsService;
         _questionsService = questionsService;
         _unreadService = unreadService;
-        _handHoldingService = handHoldingService;
         _heightCache = [NSCache new];
         _attributedBodyCache = [NSCache new];
     }
@@ -168,80 +162,18 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     [self setData:combinedData];
     [self setQuestions:questions];
     [[self collectionView] reloadData];
-    [self showInsightTapTutorialIfNeeded];
-}
-
-- (UICollectionViewCell*)insightCellToShowTapTargetOn {
-    NSArray* visibleCells = [[self collectionView] visibleCells];
-    UICollectionViewCell* firstUsableInsightCell = [visibleCells firstObject];
     
-    CGFloat currentOffset = [[self collectionView] contentOffset].y;
-    for (UICollectionViewCell* cell in visibleCells) {
-        CGFloat minY = CGRectGetMinY([cell frame]);
-        if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]
-            && minY > currentOffset - 10.0f
-            && minY < CGRectGetMinY([firstUsableInsightCell frame])) {
-            firstUsableInsightCell = cell;
-        }
+    if ([self onLoadCallback]) {
+        [self onLoadCallback] (combinedData);
     }
-    
-    return firstUsableInsightCell;
-}
 
-#pragma mark - Tutorial
-
-- (void)showInsightTapTutorialIfNeeded {
-    if (![self tutorialContainerView]
-        || ![[self handHoldingService] shouldShow:HEMHandHoldingInsightTap]) {
-        return;
-    }
-    
-    NSInteger numberOfItems = [[self collectionView] numberOfItemsInSection:0];
-    if (numberOfItems > 0) {
-        int64_t delay = (int64_t)(1.0f * NSEC_PER_SEC);
-        __weak typeof(self) weakSelf = self;
-        
-        // must dispatch after a delay due to rendering of the cells and also
-        // because we want a slight delay anyways
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            if ([strongSelf isVisible]) {
-                UICollectionViewCell* insightCell = [strongSelf insightCellToShowTapTargetOn];
-                if (insightCell) {
-                    CGRect frame = [insightCell convertRect:[insightCell bounds]
-                                                     toView:[strongSelf tutorialContainerView]];
-                    CGPoint midPoint = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
-                    
-                    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
-                    [handholdingView setGestureStartCenter:midPoint];
-                    [handholdingView setGestureEndCenter:midPoint];
-                    
-                    [handholdingView setMessage:NSLocalizedString(@"handholding.message.insight-tap", nil)];
-                    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
-                    
-                    [handholdingView showInView:[strongSelf tutorialContainerView]];
-                } else {
-                    DDLogVerbose(@"did not find first insight cell to show handholding");
-                }
-
-            }
-        });
-
-    }
 }
 
 #pragma mark - Presenter events
 
 - (void)didAppear {
     [super didAppear];
-    [self setVisible:YES];
     [self refresh];
-}
-
-- (void)willDisappear {
-    [super willDisappear];
-    [self setVisible:NO];
 }
 
 - (void)didComeBackFromBackground {
@@ -422,8 +354,6 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     // skip questions as those interactions are handled through button events
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     if (insight) {
-        [[self handHoldingService] completed:HEMHandHoldingInsightTap];
-        
         HEMInsightCollectionViewCell* cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
         [[self delegate] presenter:self showInsight:insight fromCell:cell];
     }

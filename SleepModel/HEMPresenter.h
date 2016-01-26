@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMPresenter : NSObject
 
+@property (nonatomic, assign, getter=isVisible, readonly) BOOL visible;
+
 /*
  * @discussion
  *

@@ -29,6 +29,7 @@
 #import "HEMRootViewController.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMHandHoldingService.h"
+#import "HEMInsightsHandHoldingPresenter.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -36,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 
 @property (weak, nonatomic) HEMInsightsFeedPresenter* feedPresenter;
+@property (weak, nonatomic) HEMInsightsHandHoldingPresenter* handHoldingPresenter;
 @property (strong, nonatomic) HEMInsightsService* insightsFeedService;
 @property (strong, nonatomic) HEMQuestionsService* questionsService;
 @property (strong, nonatomic) HEMUnreadAlertService* unreadService;
@@ -54,11 +56,16 @@
         _questionsService = [HEMQuestionsService new];
         _unreadService = [HEMUnreadAlertService new];
         _handHoldingService = [HEMHandHoldingService new];
+        
+        HEMInsightsHandHoldingPresenter* hhPresenter
+            = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:_handHoldingService];
+        _handHoldingPresenter = hhPresenter;
+        [self addPresenter:hhPresenter];
+        
         HEMInsightsFeedPresenter* feedPresenter
             = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
                                                        questionsService:_questionsService
-                                                          unreadService:_unreadService
-                                                     handHoldingService:_handHoldingService];
+                                                          unreadService:_unreadService];
         // weak ref so we can bind collection view, activity and set delegate when view is loaded
         _feedPresenter = feedPresenter;
         [self addPresenter:feedPresenter];
@@ -76,12 +83,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIView* rootView = [[HEMRootViewController rootViewControllerForKeyWindow] view];
     [[self feedPresenter] bindWithCollectionView:[self collectionView]];
     [[self feedPresenter] bindWithShadowView:[self shadowView]];
     [[self feedPresenter] bindWithActivityIndicator:[self activityIndicator]];
-    [[self feedPresenter] bindWithTutorialContainerView:rootView];
     [[self feedPresenter] setDelegate:self];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self feedPresenter] setOnLoadCallback:^(NSArray* data) {
+        UIView* rootView = [[HEMRootViewController rootViewControllerForKeyWindow] view];
+        [[weakSelf handHoldingPresenter] showIfNeededIn:rootView
+                                     withCollectionView:[weakSelf collectionView]];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -111,6 +123,8 @@
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
     [insightVC setTransitioningDelegate:transition];
     [self presentViewController:insightVC animated:YES completion:nil];
+    
+    [[self handHoldingPresenter] didCompleteHandHolding];
 }
 
 - (void)presenter:(HEMInsightsFeedPresenter *)presenter

@@ -21,6 +21,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^HEMInsightsPresenterCompletion)(void);
+typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 
 @protocol HEMInsightsFeedPresenterDelegate <NSObject>
 
@@ -36,11 +37,11 @@ typedef void(^HEMInsightsPresenterCompletion)(void);
 @interface HEMInsightsFeedPresenter : HEMPresenter
 
 @property (nonatomic, weak, nullable) id<HEMInsightsFeedPresenterDelegate> delegate;
+@property (nonatomic, copy, nullable) HEMInsightsFeedDataLoadedBlock onLoadCallback;
 
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
-                                  unreadService:(HEMUnreadAlertService*)unreadService
-                             handHoldingService:(HEMHandHoldingService*)handHoldingService;
+                                  unreadService:(HEMUnreadAlertService*)unreadService;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 

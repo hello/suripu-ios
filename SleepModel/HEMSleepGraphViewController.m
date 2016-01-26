@@ -36,13 +36,21 @@
 #import "HEMOnboardingService.h"
 #import "HEMAccountService.h"
 #import "HEMTimelineService.h"
+#import "HEMTimelineHandHoldingPresenter.h"
+#import "HEMHandHoldingService.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
 CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
-@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
-                                           HEMSleepGraphActionDelegate, AVAudioPlayerDelegate, HEMTapDelegate>
+@interface HEMSleepGraphViewController () <
+    UICollectionViewDelegateFlowLayout,
+    UIGestureRecognizerDelegate,
+    HEMSleepGraphActionDelegate,
+    AVAudioPlayerDelegate,
+    HEMTapDelegate,
+    HEMTimelineHandHoldingDelegate
+>
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
@@ -66,6 +74,8 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) NSTimer *playbackProgressTimer;
 @property (nonatomic, strong) HEMTimelineService* timelineService;
+@property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
+@property (nonatomic, weak) HEMTimelineHandHoldingPresenter* handHoldingPresenter;
 
 @end
 
@@ -84,7 +94,8 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureTimelineService];
+    [self configureServices];
+    [self configurePresenters];
     [self configureCollectionView];
     [self configureTransitions];
 
@@ -125,8 +136,23 @@ static BOOL hasLoadedBefore = NO;
     [self setVisible:NO];
 }
 
-- (void)configureTimelineService {
+- (void)configureServices {
     [self setTimelineService:[HEMTimelineService new]];
+    [self setHandHoldingService:[HEMHandHoldingService new]];
+}
+
+- (void)configurePresenters {
+    UIView *containerView = [[self containerViewController] view];
+    HEMTimelineHandHoldingPresenter* hhPresenter
+        = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
+    [hhPresenter setDelegate:self];
+    [hhPresenter bindWithTimelineContainerView:containerView];
+    
+    // must bind with top bar after data is loaded.  Refactor this once timeline
+    // is in full VSPER architecture
+    
+    [self setHandHoldingPresenter:hhPresenter];
+    [self addPresenter:hhPresenter];
 }
 
 - (void)showTutorial {
@@ -229,6 +255,12 @@ static BOOL hasLoadedBefore = NO;
     [_audioPlayer stop];
     [_playbackProgressTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Hand holding delegate
+
+- (BOOL)isTimelineFullyVisibleFor:(HEMTimelineHandHoldingPresenter *)presenter {
+    return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
 }
 
 #pragma mark Initial load animation

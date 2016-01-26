@@ -185,6 +185,7 @@
 		BF6952581C52FB8F000A8E85 /* HEMHandHoldingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952571C52FB8F000A8E85 /* HEMHandHoldingService.m */; };
 		BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF69525E1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m */; };
 		BF6952631C570424000A8E85 /* HEMSensorHandHoldingPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952621C570424000A8E85 /* HEMSensorHandHoldingPresenter.m */; };
+		BF6952671C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952661C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m */; };
 		BF6A55841B44B979009CA820 /* HEMActionSheetTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */; };
 		BF6E3A9A1A2D27450019C110 /* HEMActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A991A2D27450019C110 /* HEMActionView.m */; };
 		BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9C1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m */; };
@@ -691,6 +692,8 @@
 		BF69525E1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsHandHoldingPresenter.m; sourceTree = "<group>"; };
 		BF6952611C570424000A8E85 /* HEMSensorHandHoldingPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorHandHoldingPresenter.h; sourceTree = "<group>"; };
 		BF6952621C570424000A8E85 /* HEMSensorHandHoldingPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorHandHoldingPresenter.m; sourceTree = "<group>"; };
+		BF6952651C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineHandHoldingPresenter.h; sourceTree = "<group>"; };
+		BF6952661C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineHandHoldingPresenter.m; sourceTree = "<group>"; };
 		BF6A55821B44B979009CA820 /* HEMActionSheetTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionSheetTitleView.h; sourceTree = "<group>"; };
 		BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMActionSheetTitleView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BF6E3A981A2D27450019C110 /* HEMActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionView.h; sourceTree = "<group>"; };
@@ -1495,6 +1498,7 @@
 				8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */,
 				8AA8D92619ABACC100349FD0 /* Cells */,
 				8AA8D93119ABDC8B00349FD0 /* Layouts */,
+				BF6952641C570C83000A8E85 /* Presenters */,
 				BF71BD9F1C481D7700919D0F /* Services */,
 				8A660130199EBDDE007E6167 /* View Controllers */,
 				8A660135199EBEB8007E6167 /* Views */,
@@ -1864,6 +1868,15 @@
 			children = (
 				BF6952611C570424000A8E85 /* HEMSensorHandHoldingPresenter.h */,
 				BF6952621C570424000A8E85 /* HEMSensorHandHoldingPresenter.m */,
+			);
+			name = Presenters;
+			sourceTree = "<group>";
+		};
+		BF6952641C570C83000A8E85 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BF6952651C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.h */,
+				BF6952661C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -2883,6 +2896,7 @@
 				BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */,
 				8A576F121A79B12200287398 /* HEMTutorial.m in Sources */,
 				BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */,
+				BF6952671C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m in Sources */,
 				BF539CD21C0F737D000F77AA /* HEMPresenter.m in Sources */,
 				BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */,
 				BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */,

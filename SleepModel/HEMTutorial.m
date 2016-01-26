@@ -23,12 +23,6 @@
 
 @implementation HEMTutorial
 
-static NSString* const HEMTutorialHHInsightTap = @"HandholdingInsightTap";
-static NSString* const HEMTutorialHHInsightDaySwitchCounter = @"HandholdingInsightDaySwitchCounter";
-static NSInteger const HEMTutorialHHInsightTapMinDaysChecked = 1;
-
-static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbing";
-
 static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTimelineDaySwitchCounter";
 static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
 static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
@@ -334,8 +328,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTrendsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHSensorScrubbing];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHInsightTap];
 }
 
 @end

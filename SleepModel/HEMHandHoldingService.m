@@ -116,16 +116,17 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
 }
 
 - (void)completed:(HEMHandHolding)tutorial {
-    NSString* tutorialName = [self stringValueFor:tutorial];
-    
-    if (tutorialName) {
-        [self tutorialRecordKeeper][tutorialName] = @YES;
+    if (![self isComplete:tutorial]) {
+        NSString* tutorialName = [self stringValueFor:tutorial];
         
-        SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-        [prefs setPersistentPreference:[self tutorialRecordKeeper]
-                                forKey:HEMHandHoldingServicePrefName];
+        if (tutorialName) {
+            [self tutorialRecordKeeper][tutorialName] = @YES;
+            
+            SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+            [prefs setPersistentPreference:[self tutorialRecordKeeper]
+                                    forKey:HEMHandHoldingServicePrefName];
+        }
     }
-
 }
 
 - (void)reset {

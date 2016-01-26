@@ -31,17 +31,6 @@
  */
 + (BOOL)showHandholdingForTimelineZoomIfNeededIn:(UIView*)view atTarget:(CGPoint)target;
 
-/**
- * Present the handholding UI to illustrate how to scrub through sensor history /
- * detail values inside a sensor history view
- * 
- * @param view: the view to show the tutorial on
- * @param graphFrame: frame of the graph where the scrubbing would take place, relative
- *                    to the view that the tutorial will be presented over
- * @return YES if shown, NO otherwise
- */
-+ (BOOL)showHandholdingForSensorScrubbingIfNeededIn:(UIView*)view relativeToGraphFrame:(CGRect)graphFrame;
-
 #pragma mark - Dialogs
 
 /**

@@ -120,39 +120,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [handholdingView showInView:view];
 }
 
-#pragma mark Sensor
-
-+ (BOOL)showHandholdingForSensorScrubbingIfNeededIn:(UIView*)view
-                               relativeToGraphFrame:(CGRect)graphFrame {
-    if (![self shouldShowTutorialForKey:HEMTutorialHHSensorScrubbing]) {
-        return NO;
-    }
-    
-    CGFloat gesturePadding = 20.0f;
-    CGFloat halfGestureSize = HEMHandholdingGestureSize / 2.0f;
-    CGFloat gestureCenterY = CGRectGetMinY(graphFrame) + gesturePadding + halfGestureSize;
-    CGFloat gestureEndCenterX = CGRectGetMaxX(graphFrame) - gesturePadding - halfGestureSize;
-    CGPoint startPoint = CGPointMake(gesturePadding + halfGestureSize, gestureCenterY);
-    CGPoint endPoint = CGPointMake(gestureEndCenterX, gestureCenterY);
-    
-    [self showHandholdingForSensorScrubbingIn:view from:startPoint to:endPoint];
-    [self markTutorialViewed:HEMTutorialHHSensorScrubbing];
-    return YES;
-}
-
-+ (void)showHandholdingForSensorScrubbingIn:(UIView*)view
-                                       from:(CGPoint)start
-                                         to:(CGPoint)end {
-    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
-    [handholdingView setGestureStartCenter:start];
-    [handholdingView setGestureEndCenter:end];
-    
-    [handholdingView setMessage:NSLocalizedString(@"handholding.message.sensor-scrubbing", nil)];
-    [handholdingView setAnchor:HEMHHDialogAnchorTop];
-    
-    [handholdingView showInView:view];
-}
-
 #pragma mark - Dialogs
 
 + (void)showTutorialForTimelineIfNeeded

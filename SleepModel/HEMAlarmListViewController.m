@@ -300,6 +300,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
                                                if (error) {
                                                    alarm.on = !on;
                                                    sender.on = !on;
+                                                   [SENAnalytics trackError:error];
                                                } else {
                                                    [SENAnalytics trackAlarmToggle:alarm];
                                                }

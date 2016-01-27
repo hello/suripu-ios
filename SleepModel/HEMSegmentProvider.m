@@ -46,10 +46,10 @@ static NSString* const HEMSegmentTraitCountryCode = @"Country Code";
         NSString* deviceModel = [UIDevice currentDeviceModel];
         NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
         NSString* iOSVersion = [[UIDevice currentDevice] systemVersion];
-        _defaultTraits = @{HEMSegmentTraitAppVersionName : appVersion,
-                           HEMSegmentTraitDeviceModelName : deviceModel,
-                           HEMSegmentTraitOSVersionName : iOSVersion,
-                           HEMSegmentTraitCountryCode : countryCode};
+        _defaultTraits = @{HEMSegmentTraitAppVersionName : appVersion ?: @"undefined",
+                           HEMSegmentTraitDeviceModelName : deviceModel ?: @"undefined",
+                           HEMSegmentTraitOSVersionName : iOSVersion ?: @"undefined",
+                           HEMSegmentTraitCountryCode : countryCode ?: @"undefined"};
     }
     return _defaultTraits;
 }

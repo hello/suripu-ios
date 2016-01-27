@@ -18,6 +18,7 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 @property (nonatomic, strong) HEMHintGestureView* gestureView;
 @property (nonatomic, strong) HEMHintMessageView* messageView;
 @property (nonatomic, assign, getter=isDismissing) BOOL dismissing;
+@property (nonatomic, copy) HEMHandHoldingDismissal dismissal;
 
 @end
 
@@ -41,7 +42,9 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 
 #pragma mark - View set up and display
 
-- (void)showInView:(UIView*)view {
+- (void)showInView:(UIView*)view dismissAction:(HEMHandHoldingDismissal)dismissal {
+    [self setDismissal:dismissal];
+    
     CGFloat halfGestureSize = HEMHandholdingGestureSize / 2;
     CGRect gestureFrame = CGRectZero;
     gestureFrame.size = CGSizeMake(HEMHandholdingGestureSize, HEMHandholdingGestureSize);
@@ -71,7 +74,7 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
                                                   constrainedToWidth:CGRectGetWidth(bounds)]];
     
     [[[self messageView] dismissButton] addTarget:self
-                                           action:@selector(animateOut)
+                                           action:@selector(dismissFromButton)
                                  forControlEvents:UIControlEventTouchUpInside];
     
     CGRect messageViewFrame = [[self messageView] frame];
@@ -86,6 +89,15 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     [[self messageView] setFrame:messageViewFrame];
     
     [self addSubview:[self messageView]];
+}
+
+#pragma mark - Actions
+
+- (void)dismissFromButton {
+    if ([self dismissal]) {
+        [self dismissal] ();
+    }
+    [self animateOut];
 }
 
 #pragma mark - Animations

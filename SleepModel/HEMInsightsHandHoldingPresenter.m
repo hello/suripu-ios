@@ -73,7 +73,11 @@
                     [handholdingView setMessage:NSLocalizedString(@"handholding.message.insight-tap", nil)];
                     [handholdingView setAnchor:HEMHHDialogAnchorBottom];
                     
-                    [handholdingView showInView:containerView];
+                    __weak typeof(self) weakSelf = self;
+                    [handholdingView showInView:containerView dismissAction:^{
+                        [weakSelf didCompleteHandHolding];
+                    }];
+                    
                 } else {
                     DDLogVerbose(@"did not find first insight cell to show handholding");
                 }

@@ -66,7 +66,10 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
         [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-open", nil)];
         [handholdingView setAnchor:HEMHHDialogAnchorBottom];
         
-        [handholdingView showInView:containerView];
+        __weak typeof(self) weakSelf = self;
+        [handholdingView showInView:containerView dismissAction:^{
+            [weakSelf didOpenTimeline]; // kind of, but same thing
+        }];
         [handholdingView setTag:HEMTimelineHandHoldingViewTag];
     }
 }
@@ -86,7 +89,10 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
     [handholdingView setAnchor:HEMHHDialogAnchorBottom];
     [handholdingView setTag:HEMTimelineHandHoldingViewTag];
     
-    [handholdingView showInView:containerView];
+    __weak typeof(self) weakSelf = self;
+    [handholdingView showInView:containerView dismissAction:^{
+        [[weakSelf service] completed:HEMHandHoldingTimelineSwipe];
+    }];
 }
 
 - (void)showTimelineZoomTutorial {
@@ -106,7 +112,10 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
         [handholdingView setAnchor:HEMHHDialogAnchorBottom];
         [handholdingView setTag:HEMTimelineHandHoldingViewTag];
         
-        [handholdingView showInView:containerView];
+        __weak typeof(self) weakSelf = self;
+        [handholdingView showInView:containerView dismissAction:^{
+            [weakSelf didZoomOutOnTimeline];
+        }];
     }
 }
 

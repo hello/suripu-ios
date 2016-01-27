@@ -10,27 +10,6 @@
 
 @interface HEMTutorial : NSObject
 
-#pragma mark - Handholding
-
-/**
- * Present the handholding UI to illustrate how to switch days in the Timeline,
- * if not previously shown and meets requirements
- *
- * @param view: the view to show the tutorial in
- * @return YES if shown / needed, NO otherwise
- */
-+ (BOOL)showHandholdingForTimelineDaySwitchIfNeededIn:(UIView*)view;
-
-/**
- * Present the handholding UI to illustrate how to zoom out of the timeline for
- * faster day switching
- *
- * @param view: the view to show the tutorial in
- * @param target: the location for the tap target
- * @return YES if shown / needed, NO otherwise
- */
-+ (BOOL)showHandholdingForTimelineZoomIfNeededIn:(UIView*)view atTarget:(CGPoint)target;
-
 #pragma mark - Dialogs
 
 /**

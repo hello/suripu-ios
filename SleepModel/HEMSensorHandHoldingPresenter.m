@@ -50,7 +50,10 @@
     [handholdingView setMessage:NSLocalizedString(@"handholding.message.sensor-scrubbing", nil)];
     [handholdingView setAnchor:HEMHHDialogAnchorTop];
     
-    [handholdingView showInView:view];
+    __weak typeof(self) weakSelf = self;
+    [handholdingView showInView:view dismissAction:^{
+        [weakSelf didCompleteSrubbingHandHolding];
+    }];
     [self setCurrentHandHoldingView:handholdingView];
 }
 

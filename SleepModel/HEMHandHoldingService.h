@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, HEMHandHolding) {
 
 @interface HEMHandHoldingService : SENService
 
+- (BOOL)isComplete:(HEMHandHolding)tutorial;
 - (BOOL)shouldShow:(HEMHandHolding)tutorial;
 - (void)completed:(HEMHandHolding)tutorial;
 - (void)reset;

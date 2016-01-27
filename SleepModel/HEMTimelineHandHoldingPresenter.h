@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol HEMTimelineHandHoldingDelegate <NSObject>
 
 - (BOOL)isTimelineFullyVisibleFor:(HEMTimelineHandHoldingPresenter*)presenter;
+- (HEMTimelineTopBarCollectionReusableView*)timelineTopBarForPresenter:(HEMTimelineHandHoldingPresenter*)presenter;
+- (UIView*)timelineContainerViewForPresenter:(HEMTimelineHandHoldingPresenter*)presenter;
 
 @end
 
@@ -25,11 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<HEMTimelineHandHoldingDelegate> delegate;
 
 - (instancetype)initWithHandHoldingService:(HEMHandHoldingService*)handHoldingService;
-- (void)bindWithTimelineContainerView:(UIView*)containerView;
-- (void)bindWithTimelineTopBar:(HEMTimelineTopBarCollectionReusableView*)topBar;
 - (void)showIfNeeded;
 - (void)didOpenTimeline;
-- (void)didSwipeOnTimeline;
 - (void)didZoomOutOnTimeline;
 
 @end

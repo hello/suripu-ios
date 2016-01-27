@@ -65,6 +65,8 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, weak) IBOutlet UIView *errorViewsContainerView;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 @property (nonatomic, assign, getter=isDismissing) BOOL dismissing;
+@property (nonatomic, assign, getter=isCheckingForTutorials) BOOL checkingForTutorials;
+@property (nonatomic, assign, getter=isLoaded) BOOL loaded;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
@@ -122,7 +124,6 @@ static BOOL hasLoadedBefore = NO;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self setVisible:YES];
-    [self showTutorial];
     [self checkIfInitialAnimationNeeded];
 }
 
@@ -142,52 +143,37 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)configurePresenters {
-    UIView *containerView = [[self containerViewController] view];
     HEMTimelineHandHoldingPresenter* hhPresenter
         = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
     [hhPresenter setDelegate:self];
-    [hhPresenter bindWithTimelineContainerView:containerView];
-    
-    // must bind with top bar after data is loaded.  Refactor this once timeline
-    // is in full VSPER architecture
     
     [self setHandHoldingPresenter:hhPresenter];
     [self addPresenter:hhPresenter];
 }
 
 - (void)showTutorial {
-    if (![HEMTutorial shouldShowTutorialForTimeline]) {
-        if (![self showHandholdingForSwitchingDays]) {
-            [self showHandholdingForZoom];
-        }
+    if ([self isCheckingForTutorials]) {
         return;
     }
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0) {
-          return;
-      }
-      [HEMTutorial showTutorialForTimelineIfNeeded];
+    
+    [self setCheckingForTutorials:YES];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    CGFloat const DISPLAY_DELAY = 1.0f;
+    int64_t delayInSecs = (int64_t)(DISPLAY_DELAY * NSEC_PER_SEC);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayInSecs), dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf isViewFullyVisible]) {
+            if ([[strongSelf dataSource] numberOfSleepSegments] > 0
+                && [HEMTutorial shouldShowTutorialForTimeline]) {
+                [HEMTutorial showTutorialForTimelineIfNeeded];
+            } else {
+                [[strongSelf handHoldingPresenter] showIfNeeded];
+            }
+        }
+        [strongSelf setCheckingForTutorials:NO];
     });
-}
-
-- (BOOL)showHandholdingForSwitchingDays {
-    if ([self isViewFullyVisible] && [[self collectionView] contentOffset].y == 0.0f) {
-        UIView *view = [[self containerViewController] view];
-        return [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
-    }
-    return NO;
-}
-
-- (BOOL)showHandholdingForZoom {
-    if ([self isViewFullyVisible]) {
-        UIView *view = [[self containerViewController] view];
-        CGPoint target = CGPointZero;
-        target.x = CGRectGetWidth([[self view] bounds]) / 2;
-        target.y = HEMTimelineTopBarCellHeight / 2;
-        return [HEMTutorial showHandholdingForTimelineZoomIfNeededIn:view atTarget:target];
-    }
-    return NO;
 }
 
 - (void)registerForNotifications {
@@ -260,7 +246,16 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark - Hand holding delegate
 
 - (BOOL)isTimelineFullyVisibleFor:(HEMTimelineHandHoldingPresenter *)presenter {
-    return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
+    return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible]
+        && [[self dataSource] topBarView];
+}
+
+- (HEMTimelineTopBarCollectionReusableView*)timelineTopBarForPresenter:(HEMTimelineHandHoldingPresenter*)presenter {
+    return [[self dataSource] topBarView];
+}
+
+- (UIView*)timelineContainerViewForPresenter:(HEMTimelineHandHoldingPresenter *)presenter {
+    return [[self containerViewController] view];
 }
 
 #pragma mark Initial load animation
@@ -693,6 +688,7 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark - Top Bar
 
 - (void)didTapDrawerButton:(UIButton *)button {
+    [[self handHoldingPresenter] didOpenTimeline];
     HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root toggleSettingsDrawer];
 }
@@ -714,6 +710,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)didTapDateButton:(UIButton *)sender {
+    [[self handHoldingPresenter] didZoomOutOnTimeline];
+    
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
     self.historyViewController.transitioningDelegate = self.zoomAnimationDelegate;
@@ -895,9 +893,10 @@ static BOOL hasLoadedBefore = NO;
 
     __weak typeof(self) weakSelf = self;
     [self.dataSource reloadData:^(NSError *error) {
-      __strong typeof(weakSelf) strongSelf = weakSelf;
-      [strongSelf updateAppUsageIfNeeded];
-      [strongSelf updateLayoutWithError:error];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf updateAppUsageIfNeeded];
+        [strongSelf updateLayoutWithError:error];
+        [strongSelf showTutorial];
     }];
     [self updateLayoutWithError:nil];
 }

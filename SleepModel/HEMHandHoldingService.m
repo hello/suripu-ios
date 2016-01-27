@@ -173,7 +173,8 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
         return NO;
     }
     HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
-    return [appUsage usageWithin:HEMAppUsageIntervalLast31Days] >= HEMHandHoldingTimelineZoomMinViews;
+    NSInteger timelinesShown = [appUsage usageWithin:HEMAppUsageIntervalLast31Days];
+    return timelinesShown >= HEMHandHoldingTimelineZoomMinViews;
 }
 
 - (BOOL)shouldShow:(HEMHandHolding)tutorial {

@@ -9,14 +9,16 @@
 #import "HEMPresenter.h"
 
 @class HEMTrendsService;
+@class HEMSubNavigationView;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HEMTrendsScopeSelectorPresenter : HEMPresenter
+@interface HEMTrendsSubNavPresenter : HEMPresenter
 
 - (instancetype)initWithTrendsService:(HEMTrendsService*)trendsService;
-- (void)bindWithSelectorContainer:(UIView*)containerView
-             withHeightConstraint:(NSLayoutConstraint*)heightConstraint;
+- (void)bindWithSubNav:(HEMSubNavigationView*)subNav
+  withHeightConstraint:(NSLayoutConstraint*)heightConstraint;
+- (void)bindWithCollectionView:(UICollectionView*)collectionView;
 
 @end
 

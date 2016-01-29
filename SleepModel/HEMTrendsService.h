@@ -12,11 +12,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, NSError* _Nullable error);
+typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrendsTimeScale scale, NSError* _Nullable error);
 
 @interface HEMTrendsService : SENService
 
 - (void)refreshTrendsFor:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion;
+- (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale;
 
 @end
 

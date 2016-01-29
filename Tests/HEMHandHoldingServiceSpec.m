@@ -174,35 +174,12 @@ describe(@"HEMHandHoldingService", ^{
     
     describe(@"-shouldShowTimelineSwipe", ^{
         
-        context(@"the open timeline tutorial has not been completed, but meets reqs", ^{
+        context(@"meets requirements", ^{
             
             __block HEMHandHoldingService* service = nil;
             
             beforeEach(^{
                 service = [HEMHandHoldingService new];
-                [service stub:@selector(isComplete:) andReturn:[KWValue valueWithBool:NO]];
-                [service stub:@selector(isFirstAppUsage:atLeast:) andReturn:[KWValue valueWithBool:YES]];
-            });
-            
-            afterEach(^{
-                [service clearStubs];
-                service = nil;
-            });
-            
-            it(@"should return NO, even if it meets requirements", ^{
-                BOOL show = [service shouldShowTimelineSwipe];
-                [[@(show) should] beNo];
-            });
-            
-        });
-        
-        context(@"the open timeline tutorial has been completed and meets reqs", ^{
-            
-            __block HEMHandHoldingService* service = nil;
-            
-            beforeEach(^{
-                service = [HEMHandHoldingService new];
-                [service stub:@selector(isComplete:) andReturn:[KWValue valueWithBool:YES]];
                 [service stub:@selector(isFirstAppUsage:atLeast:) andReturn:[KWValue valueWithBool:YES]];
             });
             
@@ -218,13 +195,12 @@ describe(@"HEMHandHoldingService", ^{
             
         });
         
-        context(@"the open timeline tutorial has been completed, but does not meet reqs", ^{
+        context(@"requirements not met", ^{
             
             __block HEMHandHoldingService* service = nil;
             
             beforeEach(^{
                 service = [HEMHandHoldingService new];
-                [service stub:@selector(isComplete:) andReturn:[KWValue valueWithBool:YES]];
                 [service stub:@selector(isFirstAppUsage:atLeast:) andReturn:[KWValue valueWithBool:NO]];
             });
             
@@ -244,35 +220,13 @@ describe(@"HEMHandHoldingService", ^{
     
     describe(@"-shouldShowTimelineZoom", ^{
         
-        context(@"timeline open and swipe tutorial has not been completed", ^{
-            
-            __block HEMHandHoldingService* service = nil;
-            
-            beforeEach(^{
-                service = [HEMHandHoldingService new];
-                [service stub:@selector(isComplete:) andReturn:[KWValue valueWithBool:NO]];
-            });
-            
-            afterEach(^{
-                [service clearStubs];
-                service = nil;
-            });
-            
-            it(@"should return NO", ^{
-                BOOL show = [service shouldShowTimelineZoom];
-                [[@(show) should] beNo];
-            });
-            
-        });
-        
-        context(@"pre-requites met, but not enough timelines shown yet", ^{
+        context(@"not enough timelines shown yet", ^{
             
             __block HEMHandHoldingService* service = nil;
             __block HEMAppUsage* fakeUsage = nil;
             
             beforeEach(^{
                 service = [HEMHandHoldingService new];
-                [service stub:@selector(isComplete:) andReturn:[KWValue valueWithBool:YES]];
                 
                 fakeUsage = [HEMAppUsage new];
                 [fakeUsage stub:@selector(usageWithin:) andReturn:[KWValue valueWithInteger:1]];
@@ -282,7 +236,6 @@ describe(@"HEMHandHoldingService", ^{
             
             afterEach(^{
                 [fakeUsage clearStubs];
-                [service clearStubs];
                 service = nil;
                 fakeUsage = nil;
                 [HEMAppUsage clearStubs];
@@ -295,14 +248,13 @@ describe(@"HEMHandHoldingService", ^{
             
         });
         
-        context(@"pre-requites met and have seen tons of timeslines", ^{
+        context(@"seen tons of timeslines", ^{
             
             __block HEMHandHoldingService* service = nil;
             __block HEMAppUsage* fakeUsage = nil;
             
             beforeEach(^{
                 service = [HEMHandHoldingService new];
-                [service stub:@selector(isComplete:) andReturn:[KWValue valueWithBool:YES]];
                 
                 fakeUsage = [HEMAppUsage new];
                 [fakeUsage stub:@selector(usageWithin:) andReturn:[KWValue valueWithInteger:1000]];
@@ -312,7 +264,6 @@ describe(@"HEMHandHoldingService", ^{
             
             afterEach(^{
                 [fakeUsage clearStubs];
-                [service clearStubs];
                 service = nil;
                 fakeUsage = nil;
                 [HEMAppUsage clearStubs];

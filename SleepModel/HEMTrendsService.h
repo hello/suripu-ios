@@ -16,7 +16,27 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
 
 @interface HEMTrendsService : SENService
 
+/**
+ * @discussion
+ *
+ * Refreshing the trends is guarded with a cache check to prevent too many requests
+ * being fired uncessarily.  If cache has expired, or it was never set, it does not
+ * exists, it will automatically grab the latest data from the API
+ *
+ * @param timeScale: the time scale for the trends to pull
+ * @param completion: the block to call when data has been retrieved
+ */
 - (void)refreshTrendsFor:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion;
+
+/**
+ * @discussion
+ *
+ * Check the cache to see if there are any trends that was previously pulled
+ * available now.
+ *
+ * @param timeScale: the time scale for the trends
+ * @return cached trends if any
+ */
 - (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale;
 
 @end

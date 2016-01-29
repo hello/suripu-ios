@@ -16,6 +16,7 @@ NSString* const HEMAppUsageSystemAlertShown = @"system.alert";
 NSString* const HEMAppUsageAppLaunched = @"app.launched";
 NSString* const HEMAppUsageTimelineShownWithData = @"timeline.with.data";
 NSString* const HEMAppUsageAppReviewPromptCompleted = @"app.review.prompt.completed";
+NSString* const HEMAppUsageInsightsShownWithData = @"insights.with.data";
 
 // days to keep counts of usage for
 static NSUInteger const HEMAppUsageRollingDays = 31;

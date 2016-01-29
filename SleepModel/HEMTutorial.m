@@ -23,173 +23,12 @@
 
 @implementation HEMTutorial
 
-static NSString* const HEMTutorialHHInsightTap = @"HandholdingInsightTap";
-static NSString* const HEMTutorialHHInsightDaySwitchCounter = @"HandholdingInsightDaySwitchCounter";
-static NSInteger const HEMTutorialHHInsightTapMinDaysChecked = 1;
-
-static NSString* const HEMTutorialHHSensorScrubbing = @"HandholdingSensorScrubbing";
-
-static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTimelineDaySwitchCounter";
-static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
-static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
-static CGFloat const HEMTutorialHHTimelineDaysGestureXStart = 45.0f;
-static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 2;
-
-static NSString* const HEMTutorialHHTimelineZoom = @"HandholdingTimelineZoom";
-static NSUInteger const HEMTutorialHHTimelineZoomMinTimelinesViewed = 5;
-
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialTrendsKey = @"HEMTutorialTrends";
 static CGFloat const HEMTutorialDelay = 0.5f;
-
-#pragma mark - Handholding
-
-#pragma mark Insights
-
-+ (BOOL)shouldShowInsightTapTutorial {
-    BOOL shouldShow = [self shouldShowTutorialForKey:HEMTutorialHHInsightTap];
-    if (shouldShow) {
-        [self setHandholdingFirstChecked:HEMTutorialHHInsightDaySwitchCounter];
-        SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-        NSDate* firstCheckedDate = [preferences persistentPreferenceForKey:HEMTutorialHHInsightDaySwitchCounter];
-        shouldShow = [firstCheckedDate daysElapsed] >= HEMTutorialHHInsightTapMinDaysChecked;
-    }
-    return shouldShow;
-}
-
-+ (void)cancelInsightTapTutorial {
-    [self markTutorialViewed:HEMTutorialHHInsightTap];
-}
-
-+ (BOOL)showHandholdingForInsightCardIfNeededIn:(UIView*)view atPoint:(CGPoint)point {
-    if (![self shouldShowInsightTapTutorial]) {
-        return NO;
-    }
-    
-    [self showHandholdingForInsightCardIn:view atPoint:point];
-    [self markTutorialViewed:HEMTutorialHHInsightTap];
-    return YES;
-}
-
-+ (void)showHandholdingForInsightCardIn:(UIView*)view atPoint:(CGPoint)point {
-    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
-    [handholdingView setGestureStartCenter:point];
-    [handholdingView setGestureEndCenter:point];
-    
-    [handholdingView setMessage:NSLocalizedString(@"handholding.message.insight-tap", nil)];
-    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
-    
-    [handholdingView showInView:view];
-}
-
-#pragma mark Timeline
-
-+ (BOOL)showHandholdingForTimelineDaySwitchIfNeededIn:(UIView*)view {
-    if ([self shouldShowHandholdingForTimelineDaySwitch]) {
-        [self showHandholdingForTimelineDaySwitchIn:view];
-        [self markTutorialViewed:HEMTutorialHHTimelineDaySwitch];
-        return YES;
-    }
-    [self setHandholdingFirstChecked:HEMTutorialHHTimelineDaySwitchCounter];
-    return NO;
-}
-
-+ (void)showHandholdingForTimelineDaySwitchIn:(UIView*)view {
-    CGFloat constraint = CGRectGetWidth([view bounds]);
-    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
-    [handholdingView setGestureStartCenter:CGPointMake(HEMTutorialHHTimelineDaysGestureXStart,
-                                                       HEMTutorialHHTimelineDaysGestureY)];
-    [handholdingView setGestureEndCenter:CGPointMake(constraint - HEMTutorialHHTimelineDaysGestureXStart,
-                                                     HEMTutorialHHTimelineDaysGestureY)];
-    [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-switch-days", nil)];
-    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
-    
-    [handholdingView showInView:view];
-}
-
-+ (BOOL)shouldShowHandholdingForTimelineDaySwitch {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    if (![self shouldShowTutorialForKey:HEMTutorialHHTimelineDaySwitch]
-        || [self shouldShowTutorialForTimeline]) {
-        return NO;
-    }
-    
-    NSDate* firstCheckedDate = [preferences persistentPreferenceForKey:HEMTutorialHHTimelineDaySwitchCounter];
-    return [firstCheckedDate daysElapsed] >= HEMTutorialHHTimelineDaysMinDaysChecked;
-}
-
-+ (void)setHandholdingFirstChecked:(NSString*)key {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    NSDate* date = [preferences persistentPreferenceForKey:key];
-    if (!date) {
-        [preferences setPersistentPreference:[NSDate date] forKey:key];
-    }
-}
-
-+ (BOOL)showHandholdingForTimelineZoomIfNeededIn:(UIView*)view atTarget:(CGPoint)target {
-    if ([self shouldShowHandholdingForTimelineZoom]) {
-        [self showHandholdingForTimelineZoomIn:view atTarget:target];
-        [self markTutorialViewed:HEMTutorialHHTimelineZoom];
-        return YES;
-    }
-    return NO;
-}
-
-+ (BOOL)shouldShowHandholdingForTimelineZoom {
-    if (![self shouldShowTutorialForKey:HEMTutorialHHTimelineZoom]) {
-        return NO;
-    }
-    
-    HEMAppUsage* timelineUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
-    return [timelineUsage usageWithin:HEMAppUsageIntervalLast31Days] >= HEMTutorialHHTimelineZoomMinTimelinesViewed;
-}
-
-+ (void)showHandholdingForTimelineZoomIn:(UIView*)view atTarget:(CGPoint)target {
-    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
-    [handholdingView setGestureStartCenter:target];
-    [handholdingView setGestureEndCenter:target];
-    
-    [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-zoom", nil)];
-    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
-    
-    [handholdingView showInView:view];
-}
-
-#pragma mark Sensor
-
-+ (BOOL)showHandholdingForSensorScrubbingIfNeededIn:(UIView*)view
-                               relativeToGraphFrame:(CGRect)graphFrame {
-    if (![self shouldShowTutorialForKey:HEMTutorialHHSensorScrubbing]) {
-        return NO;
-    }
-    
-    CGFloat gesturePadding = 20.0f;
-    CGFloat halfGestureSize = HEMHandholdingGestureSize / 2.0f;
-    CGFloat gestureCenterY = CGRectGetMinY(graphFrame) + gesturePadding + halfGestureSize;
-    CGFloat gestureEndCenterX = CGRectGetMaxX(graphFrame) - gesturePadding - halfGestureSize;
-    CGPoint startPoint = CGPointMake(gesturePadding + halfGestureSize, gestureCenterY);
-    CGPoint endPoint = CGPointMake(gestureEndCenterX, gestureCenterY);
-    
-    [self showHandholdingForSensorScrubbingIn:view from:startPoint to:endPoint];
-    [self markTutorialViewed:HEMTutorialHHSensorScrubbing];
-    return YES;
-}
-
-+ (void)showHandholdingForSensorScrubbingIn:(UIView*)view
-                                       from:(CGPoint)start
-                                         to:(CGPoint)end {
-    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
-    [handholdingView setGestureStartCenter:start];
-    [handholdingView setGestureEndCenter:end];
-    
-    [handholdingView setMessage:NSLocalizedString(@"handholding.message.sensor-scrubbing", nil)];
-    [handholdingView setAnchor:HEMHHDialogAnchorTop];
-    
-    [handholdingView showInView:view];
-}
 
 #pragma mark - Dialogs
 
@@ -403,10 +242,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTrendsKey];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHTimelineZoom];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHSensorScrubbing];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialHHInsightTap];
 }
 
 @end

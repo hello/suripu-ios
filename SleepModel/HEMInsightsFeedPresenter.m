@@ -25,8 +25,8 @@
 #import "HEMTextCollectionViewCell.h"
 #import "HEMMarkdown.h"
 #import "HEMURLImageView.h"
-#import "HEMTutorial.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAppUsage.h"
 
 static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
@@ -43,16 +43,15 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 @property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
 @property (strong, nonatomic) NSCache* heightCache;
 @property (strong, nonatomic) NSCache* attributedBodyCache;
-@property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (strong, nonatomic) NSError* dataError;
 
 @end
 
 @implementation HEMInsightsFeedPresenter
 
-- (nonnull instancetype)initWithInsightsService:(nonnull HEMInsightsService*)insightsService
-                               questionsService:(nonnull HEMQuestionsService*)questionsService
-                                  unreadService:(nonnull HEMUnreadAlertService*)unreadService {
+- (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
+                               questionsService:(HEMQuestionsService*)questionsService
+                                  unreadService:(HEMUnreadAlertService*)unreadService {
     
     self = [super init];
     if (self) {
@@ -138,6 +137,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
                 }
             }];
+            [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageInsightsShownWithData];
         } else if (insightsError && questionsError ) { // if error from both requests
             [strongSelf setDataError:insightsError ?: questionsError];
         }
@@ -162,48 +162,18 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     [self setData:combinedData];
     [self setQuestions:questions];
     [[self collectionView] reloadData];
-    [self showInsightTapTutorialIfNeeded];
-}
-
-#pragma mark - Tutorial
-
-- (void)showInsightTapTutorialIfNeeded {
-    if (![self tutorialContainerView] || ![HEMTutorial shouldShowInsightTapTutorial]) {
-        return;
-    }
     
-    NSInteger insightIndex = [[self questions] count] > 0 ? 1 : 0;
-    NSInteger numberOfItems = [[self collectionView] numberOfItemsInSection:0];
-    if (numberOfItems >= insightIndex) {
-        int64_t delay = (int64_t)(1.0f * NSEC_PER_SEC);
-        __weak typeof(self) weakSelf = self;
-        
-        // must dispatch after a delay due to rendering of the cells and also
-        // because we want a slight delay anyways
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-            if ([weakSelf isVisible]) {
-                NSIndexPath* path = [NSIndexPath indexPathForItem:insightIndex inSection:0];
-                UICollectionViewCell* firstInsightCell = [[weakSelf collectionView] cellForItemAtIndexPath:path];
-                CGRect frame = [firstInsightCell convertRect:[firstInsightCell bounds] toView:[weakSelf tutorialContainerView]];
-                CGPoint midPoint = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
-                [HEMTutorial showHandholdingForInsightCardIfNeededIn:[weakSelf tutorialContainerView] atPoint:midPoint];
-            }
-        });
-
+    if ([self onLoadCallback]) {
+        [self onLoadCallback] (combinedData);
     }
+
 }
 
 #pragma mark - Presenter events
 
 - (void)didAppear {
     [super didAppear];
-    [self setVisible:YES];
     [self refresh];
-}
-
-- (void)willDisappear {
-    [super willDisappear];
-    [self setVisible:NO];
 }
 
 - (void)didComeBackFromBackground {
@@ -384,7 +354,6 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     // skip questions as those interactions are handled through button events
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     if (insight) {
-        [HEMTutorial cancelInsightTapTutorial];
         HEMInsightCollectionViewCell* cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
         [[self delegate] presenter:self showInsight:insight fromCell:cell];
     }

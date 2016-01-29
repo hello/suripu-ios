@@ -13,6 +13,8 @@ typedef NS_ENUM(NSUInteger, HEMHHDialogAnchor) {
     HEMHHDialogAnchorBottom = 2,
 };
 
+typedef void(^HEMHandHoldingDismissal)(void);
+
 extern CGFloat const HEMHandholdingGestureSize;
 
 @interface HEMHandholdingView : UIView
@@ -51,7 +53,11 @@ extern CGFloat const HEMHandholdingGestureSize;
  * @method showInView:
  *
  * Show this handholding view inside the view specified.
+ *
+ * @param view: the view to attach itself to
+ * @param dismissal: the block to call if user taps on the dimiss button, but not
+ *                   if user simply taps out of this view via gesture
  */
-- (void)showInView:(UIView*)view;
+- (void)showInView:(UIView*)view dismissAction:(HEMHandHoldingDismissal)dismissal;
 
 @end

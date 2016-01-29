@@ -3,6 +3,7 @@
 
 @class SENTimelineSegment;
 @class HEMSleepSummaryCollectionViewCell;
+@class HEMTimelineTopBarCollectionReusableView;
 
 @protocol HEMSleepGraphActionDelegate <NSObject>
 
@@ -17,6 +18,8 @@
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
+
+@property (nonatomic, weak, readonly) HEMTimelineTopBarCollectionReusableView *topBarView;
 
 + (NSString *)localizedNameForSleepEventType:(NSString *)eventType;
 

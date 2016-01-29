@@ -14,6 +14,7 @@
 @interface HEMPresenter()
 
 @property (nullable, nonatomic, weak) HEMNavigationShadowView* shadowView;
+@property (nonatomic, assign, getter=isVisible) BOOL visible;
 
 @end
 
@@ -52,9 +53,13 @@
 }
 
 - (void)willAppear {}
-- (void)didAppear {}
+- (void)didAppear {
+    [self setVisible:YES];
+}
 
-- (void)willDisappear {}
+- (void)willDisappear {
+    [self setVisible:NO];
+}
 - (void)didDisappear {}
 
 - (void)didRelayout {}

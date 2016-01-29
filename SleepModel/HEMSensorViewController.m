@@ -15,6 +15,8 @@
 #import "HEMSensorValueFormatter.h"
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
+#import "HEMSensorHandHoldingPresenter.h"
+#import "HEMHandHoldingService.h"
 
 typedef NS_ENUM(NSInteger, HEMSensorLoadState) {
     HEMSensorLoadStateLoading = 0,
@@ -51,6 +53,10 @@ typedef NS_ENUM(NSInteger, HEMSensorLoadState) {
 @property (nonatomic) CGPoint oldScrollOffset;
 @property (nonatomic, assign) HEMSensorLoadState hourlyDataLoadState;
 @property (nonatomic, assign) HEMSensorLoadState dailyDataLoadState;
+
+@property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
+@property (nonatomic, weak)   HEMSensorHandHoldingPresenter* handHoldingPresenter;
+
 @end
 
 @implementation HEMSensorViewController
@@ -68,6 +74,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [self configureGraphView];
     [self configureSensorValueViews];
     [[self scrollView] setDelegate:self];
+    [self configurePresenters];
+    
     NSString* sensorName = [[self sensor] localizedName] ?: @"";
     [SENAnalytics track:kHEMAnalyticsEventSensor
              properties:@{kHEMAnalyticsEventPropSensorName : sensorName}];
@@ -96,6 +104,15 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [self showTutorialIfNeeded];
 }
 
+- (void)configurePresenters {
+    HEMHandHoldingService* hhService = [HEMHandHoldingService new];
+    HEMSensorHandHoldingPresenter* hhPresenter = [[HEMSensorHandHoldingPresenter alloc] initWithService:hhService];
+    
+    [self setHandHoldingService:hhService];
+    [self setHandHoldingPresenter:hhPresenter];
+    [self addPresenter:hhPresenter];
+}
+
 - (BOOL)haveDataToShow {
     return [[self hourlyDataSeries] count] > 0 || [[self dailyDataSeries] count] > 0;
 }
@@ -103,11 +120,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 - (void)showTutorialIfNeeded {
     if (![HEMTutorial showTutorialIfNeededForSensorNamed:self.sensor.name]) {
         if ([self haveDataToShow]) {
-            UIView* view = [self view];
-            CGRect relativeFrame = [[self graphView] convertRect:[[self graphView] bounds]
-                                                          toView:view];
-            [HEMTutorial showHandholdingForSensorScrubbingIfNeededIn:view
-                                                relativeToGraphFrame:relativeFrame];
+            [[self handHoldingPresenter] showIfNeededIn:[self view] withGraphView:[self graphView]];
         }
     }
 }
@@ -539,6 +552,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     self.statusMessageLabel.attributedText = statusMessage;
 
     [self updateValueLabelWithValue:dataPoint.value];
+    [[self handHoldingPresenter] didCompleteSrubbingHandHolding];
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {

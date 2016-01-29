@@ -17,6 +17,7 @@ extern NSString* const HEMAppUsageSystemAlertShown;
 extern NSString* const HEMAppUsageAppLaunched;
 extern NSString* const HEMAppUsageTimelineShownWithData;
 extern NSString* const HEMAppUsageAppReviewPromptCompleted;
+extern NSString* const HEMAppUsageInsightsShownWithData;
 
 typedef NS_ENUM(NSUInteger, HEMAppUsageInterval) {
     HEMAppUsageIntervalLast7Days,

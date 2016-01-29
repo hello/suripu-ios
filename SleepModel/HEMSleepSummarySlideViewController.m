@@ -16,11 +16,13 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMRootViewController.h"
+#import "HEMHandHoldingService.h"
 
 @interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
+@property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
 
 @end
 
@@ -68,6 +70,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    HEMHandHoldingService* hhService = [HEMHandHoldingService new];
+    if (![hhService isComplete:HEMHandHoldingTimelineSwipe]) {
+        [self setHandHoldingService:[HEMHandHoldingService new]];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -126,6 +134,12 @@
         CGRect slice = CGRectMake(width - sliceWidth, 0, sliceWidth, CGRectGetHeight(controller.view.bounds));
         UIImage* pattern = [controller.view snapshotOfRect:slice];
         self.view.backgroundColor = [UIColor colorWithPatternImage:pattern];
+        
+        if ([self handHoldingService]) {
+            [[self handHoldingService] completed:HEMHandHoldingTimelineSwipe];
+            [self setHandHoldingService:nil]; // don't need it anymore
+        }
+        
     }
     return YES;
 }

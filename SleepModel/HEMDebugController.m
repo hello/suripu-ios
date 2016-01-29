@@ -24,6 +24,7 @@
 #import "HEMDebugInfoDataSource.h"
 #import "HEMSelectHostViewController.h"
 #import "HEMConfig.h"
+#import "HEMHandHoldingService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -245,6 +246,8 @@
 - (void)addResetTutorialsOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
+        HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
+        [handHoldingService reset];
         [HEMTutorial resetTutorials];
         [weakSelf setSupportOptionController:nil];
     }];

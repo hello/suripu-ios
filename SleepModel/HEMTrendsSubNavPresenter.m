@@ -13,6 +13,8 @@
 #import "HEMTrendsService.h"
 #import "HEMStyle.h"
 
+static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
+
 @interface HEMTrendsSubNavPresenter()
 
 @property (nonatomic, weak) HEMTrendsService* trendsService;
@@ -86,7 +88,7 @@
     __weak typeof(self) weakSelf = self;
     [[self trendsService] refreshTrendsFor:[self selectedScale] completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([[trends availableTimeScales] count] > 0) {
+        if ([[trends availableTimeScales] count] >= HEMTrendsSubNavMinimumOptions) {
             [[strongSelf heightConstraint] setConstant:[strongSelf originalSelectorHeight]];
 
             for (NSNumber* timeScaleNumber in [trends availableTimeScales]) {

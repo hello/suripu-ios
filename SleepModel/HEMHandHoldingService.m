@@ -161,17 +161,20 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
                          atLeast:HEMHandHoldingInsightTapMinDaysChecked];
 }
 
+/**
+ * @discussion
+ * Timeline open should only be shown on the first day of oboarding
+ */
+- (BOOL)shouldShowTimelineOpen {
+    return ![self isFirstAppUsage:HEMAppUsageTimelineShownWithData atLeast:1];
+}
+
 - (BOOL)shouldShowTimelineSwipe {
-    return [self isComplete:HEMHandHoldingTimelineOpen]
-        && [self isFirstAppUsage:HEMAppUsageTimelineShownWithData
+    return [self isFirstAppUsage:HEMAppUsageTimelineShownWithData
                          atLeast:HEMHandHoldingTimelineSwipeMinDaysChecked];
 }
 
 - (BOOL)shouldShowTimelineZoom {
-    if (![self isComplete:HEMHandHoldingTimelineOpen]
-        || ![self isComplete:HEMHandHoldingTimelineSwipe]) {
-        return NO;
-    }
     HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
     NSInteger timelinesShown = [appUsage usageWithin:HEMAppUsageIntervalLast31Days];
     return timelinesShown >= HEMHandHoldingTimelineZoomMinViews;
@@ -185,12 +188,13 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
     switch (tutorial) {
         case HEMHandHoldingInsightTap:
             return [self shouldShowInsightTap];
+        case HEMHandHoldingTimelineOpen:
+            return [self shouldShowTimelineOpen];
         case HEMHandHoldingTimelineSwipe:
             return [self shouldShowTimelineSwipe];
         case HEMHandHoldingTimelineZoom:
             return [self shouldShowTimelineZoom];
         case HEMHandHoldingSensorScrubbing:
-        case HEMHandHoldingTimelineOpen:
         default:
             return YES;
     }

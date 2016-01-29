@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0.0
+
+New:
+
+* Added a hand holding tutorial to open the Timeline
+
 ## 1.2.2.2
 
 New:

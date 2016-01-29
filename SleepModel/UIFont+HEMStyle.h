@@ -211,6 +211,11 @@
 + (UIFont*)timelineMessageBoldFont;
 
 /**
+ *  Font for the v2 Trends scope selector text
+ */
++ (UIFont*)trendsScopeSelectorTextFont;
+
+/**
  *  Font for time scopes in trends view
  */
 + (UIFont*)trendOptionFont;

@@ -3681,7 +3681,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SGI-8T-ZVx">
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SGI-8T-ZVx">
                                 <rect key="frame" x="0.0" y="67" width="600" height="477"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yR9-IH-qIm" customClass="HEMCardFlowLayout">
@@ -3692,7 +3692,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="overTime" id="guW-fA-0W9" userLabel="empty" customClass="HEMEmptyTrendCollectionViewCell">
-                                        <rect key="frame" x="12" y="64" width="576" height="248"/>
+                                        <rect key="frame" x="12" y="20" width="576" height="248"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="248"/>
@@ -3729,7 +3729,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="trendGraph" id="AoB-W3-581" userLabel="graph" customClass="HEMTrendCollectionViewCell">
-                                        <rect key="frame" x="12" y="322" width="576" height="255"/>
+                                        <rect key="frame" x="12" y="278" width="576" height="255"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="255"/>
@@ -3834,7 +3834,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="soM-Nd-KFN" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="8" y="587" width="584" height="94"/>
+                                        <rect key="frame" x="8" y="543" width="584" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
@@ -4144,6 +4144,70 @@
             </objects>
             <point key="canvasLocation" x="1253" y="-2392"/>
         </scene>
+        <!--TrendsV2 View Controller-->
+        <scene sceneID="19w-Ie-ESz">
+            <objects>
+                <viewController id="pOE-Ti-TEf" customClass="HEMTrendsV2ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zWU-nz-NyE"/>
+                        <viewControllerLayoutGuide type="bottom" id="1vk-CA-SwR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s1K-2D-AIN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Vg-hK-Haj">
+                                <rect key="frame" x="0.0" y="64" width="600" height="46"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="V3J-Mh-l3N"/>
+                                </constraints>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A5Q-ZJ-M02">
+                                <rect key="frame" x="0.0" y="110" width="600" height="490"/>
+                                <color key="backgroundColor" red="0.92549019607843142" green="0.92941176470588238" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VPM-JX-4b1">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dvX-6p-TYC">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8Vg-hK-Haj" firstAttribute="top" secondItem="zWU-nz-NyE" secondAttribute="bottom" id="5n4-gt-tpZ"/>
+                            <constraint firstAttribute="trailing" secondItem="8Vg-hK-Haj" secondAttribute="trailing" id="G3j-zD-1un"/>
+                            <constraint firstItem="A5Q-ZJ-M02" firstAttribute="top" secondItem="8Vg-hK-Haj" secondAttribute="bottom" id="Kyl-UY-RBd"/>
+                            <constraint firstItem="A5Q-ZJ-M02" firstAttribute="leading" secondItem="s1K-2D-AIN" secondAttribute="leading" id="ViH-tl-o5u"/>
+                            <constraint firstItem="1vk-CA-SwR" firstAttribute="top" secondItem="A5Q-ZJ-M02" secondAttribute="bottom" id="ctX-de-aJz"/>
+                            <constraint firstAttribute="trailing" secondItem="A5Q-ZJ-M02" secondAttribute="trailing" id="dS9-Jv-J73"/>
+                            <constraint firstItem="8Vg-hK-Haj" firstAttribute="leading" secondItem="s1K-2D-AIN" secondAttribute="leading" id="fWq-hN-61m"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Pfb-ml-k93"/>
+                    <connections>
+                        <outlet property="collectionView" destination="A5Q-ZJ-M02" id="GCU-fZ-qyB"/>
+                        <outlet property="scopeSelectorContainer" destination="8Vg-hK-Haj" id="Yhq-eL-gTH"/>
+                        <outlet property="selectorHeightConstraint" destination="V3J-Mh-l3N" id="wGV-DP-PIr"/>
+                        <outlet property="view" destination="s1K-2D-AIN" id="aP5-4Q-zL9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OWd-VL-BF6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3469" y="-2209"/>
+        </scene>
         <!--Alarm List Navigation Controller-->
         <scene sceneID="BgO-Cf-n7y">
             <objects>
@@ -4175,7 +4239,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="dvl-ut-646" kind="relationship" relationship="rootViewController" id="C61-iR-Ccx"/>
+                        <segue destination="pOE-Ti-TEf" kind="relationship" relationship="rootViewController" id="2P4-wG-e7b"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NB7-dv-21k" userLabel="First Responder" sceneMemberID="firstResponder"/>

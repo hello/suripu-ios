@@ -125,6 +125,8 @@
 + (UIColor *)lightTintColor;
 + (UIColor *)trendTextColor;
 + (UIColor *)cardBorderColor;
++ (UIColor *)trendsScopeSelectorActiveTextColor;
++ (UIColor *)trendsScopeSelectorInactiveTextColor;
 + (UIColor *)trendGraphBottomColor;
 + (UIColor *)trendGraphTopColor;
 + (UIColor *)switchOffBackgroundColor;

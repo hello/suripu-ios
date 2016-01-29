@@ -580,6 +580,9 @@
 
 // trends
 "trends.title" = "Trends";
+"trends.scope.week" = "Week";
+"trends.scope.month" = "Month";
+"trends.scope.quarter" = "Quarter";
 "trends.not-enough-data.message" = "Your trends will appear here after a week of sleep.";
 "trends.loading.error.message" = "There was a problem displaying your trends. Please try again.";
 

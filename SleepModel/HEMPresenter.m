@@ -23,10 +23,18 @@
 - (nonnull instancetype)init {
     self = [super init];
     if (self) {
+        [self listenForAppEvents];
         [self listenForNetworkChanges];
         [self listenForAuthChanges];
     }
     return self;
+}
+
+- (void)listenForAppEvents {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(lowMemory)
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification
+                                               object:nil];
 }
 
 - (void)listenForNetworkChanges {
@@ -51,6 +59,8 @@
 - (void)didScrollContentIn:(UIScrollView*)scrollView {
     [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
 }
+
+- (void)lowMemory {}
 
 - (void)willAppear {}
 - (void)didAppear {

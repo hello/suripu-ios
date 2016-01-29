@@ -15,6 +15,8 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
 
 @interface HEMTrendsService()
 
+// caches required to prevent too uneccesary requests from being fired when data
+// is rarely changed.  Expiration time interval can probably be higher.
 @property (nonatomic, strong) NSCache* cachedTrendsByScale;
 @property (nonatomic, strong) NSCache* cachedLastPullByScale;
 
@@ -28,6 +30,11 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
         [self setCachedTrendsByScale:[NSCache new]];
     }
     return self;
+}
+
+- (void)serviceReceivedMemoryWarning {
+    [[self cachedLastPullByScale] removeAllObjects];
+    [[self cachedTrendsByScale] removeAllObjects];
 }
 
 - (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale {

@@ -216,6 +216,11 @@
 + (UIFont*)trendsScopeSelectorTextFont;
 
 /**
+ *  Font for the v2 Trends graph titles
+ */
++ (UIFont*)trendsTitleFont;
+
+/**
  *  Font for time scopes in trends view
  */
 + (UIFont*)trendOptionFont;

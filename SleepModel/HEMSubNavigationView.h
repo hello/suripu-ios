@@ -10,6 +10,8 @@
 
 @interface HEMSubNavigationView : UIView
 
+@property (nonatomic, assign) NSInteger selectedControlTag;
+
 - (void)addControl:(UIControl*)control;
 
 @end

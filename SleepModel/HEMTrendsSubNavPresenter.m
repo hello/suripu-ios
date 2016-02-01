@@ -98,6 +98,7 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
             }
             
             [[strongSelf subNav] setNeedsDisplay];
+            [[strongSelf collectionView] reloadData];
         }
     }];
 }

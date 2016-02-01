@@ -206,6 +206,12 @@ static UIColor *_tintColor = nil;
 + (UIColor *)lightTintColor {
     return [UIColor colorWithHex:0x4CC1FC alpha:1.f];
 }
++ (UIColor *)trendsTitleDividerColor {
+    return [UIColor colorWithHex:0x596980 alpha:1.0f];
+}
++ (UIColor *)trendsTitleColor {
+    return [UIColor colorWithHex:0x162B48 alpha:1.0f];
+}
 + (UIColor *)trendsScopeSelectorActiveTextColor {
     return [UIColor colorWithRed:22.0f/255.0f
                            green:43.0f/255.0f

@@ -9,6 +9,7 @@
 #import "HEMTrendsV2ViewController.h"
 #import "HEMTrendsSubNavPresenter.h"
 #import "HEMTrendsTabPresenter.h"
+#import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsService.h"
 #import "HEMSubNavigationView.h"
 
@@ -25,6 +26,8 @@
 
 - (id)initWithCoder:(NSCoder*)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
+        HEMTrendsService* service = [HEMTrendsService new];
+        [self setTrendsService:service];
         // required to be done on init since view will not be initially loaded
         // when the back view is set up
         HEMTrendsTabPresenter* tabPresenter = [HEMTrendsTabPresenter new];
@@ -36,19 +39,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureScopeSelectorPresenter];
+    [self configureSubNavPresenter];
+    [self configureGraphsPresenter];
 }
 
-- (void)configureScopeSelectorPresenter {
-    HEMTrendsService* service = [HEMTrendsService new];
+- (void)configureSubNavPresenter {
     HEMTrendsSubNavPresenter* subNavPresenter
-        = [[HEMTrendsSubNavPresenter alloc] initWithTrendsService:service];
+        = [[HEMTrendsSubNavPresenter alloc] initWithTrendsService:[self trendsService]];
     [subNavPresenter bindWithSubNav:[self subNav]
                withHeightConstraint:[self subNavHeightConstraint]];
     [subNavPresenter bindWithCollectionView:[self collectionView]];
-    
     [self addPresenter:subNavPresenter];
-    [self setTrendsService:service];
+}
+
+- (void)configureGraphsPresenter {
+    HEMTrendsGraphsPresenter* graphsPresenter
+        = [[HEMTrendsGraphsPresenter alloc] initWithTrendsService:[self trendsService]];
+    [graphsPresenter bindWithCollectionView:[self collectionView]];
+    [graphsPresenter bindWithSubNav:[self subNav]];
+    [self addPresenter:graphsPresenter];
 }
 
 @end

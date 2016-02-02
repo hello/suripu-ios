@@ -4186,16 +4186,27 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQF-gO-Y8W">
+                                                    <rect key="frame" x="20" y="55" width="536" height="1"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="uCx-hd-E5e"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="pAx-UB-pZK" firstAttribute="top" secondItem="dvX-6p-TYC" secondAttribute="topMargin" constant="10" id="3aX-Yn-UMd"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="tQF-gO-Y8W" secondAttribute="trailing" constant="12" id="KK4-QM-IxT"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="pAx-UB-pZK" secondAttribute="trailing" constant="12" id="SCt-J3-rtm"/>
+                                            <constraint firstItem="tQF-gO-Y8W" firstAttribute="top" secondItem="pAx-UB-pZK" secondAttribute="bottom" constant="12" id="ZkL-BH-7i4"/>
                                             <constraint firstItem="pAx-UB-pZK" firstAttribute="leading" secondItem="dvX-6p-TYC" secondAttribute="leadingMargin" constant="12" id="aJp-FR-pYd"/>
+                                            <constraint firstItem="tQF-gO-Y8W" firstAttribute="leading" secondItem="dvX-6p-TYC" secondAttribute="leadingMargin" constant="12" id="gv8-wU-gkK"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="titleLabel" destination="pAx-UB-pZK" id="BHH-45-WfQ"/>
+                                            <outlet property="titleSeparator" destination="tQF-gO-Y8W" id="wBv-5h-dmu"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bar" id="fLr-1g-w0i" customClass="HEMTrendsBarGraphCell">
@@ -4211,16 +4222,27 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EUR-yj-6kn">
+                                                    <rect key="frame" x="20" y="55" width="536" height="1"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="ysa-9d-Bas"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="trailingMargin" secondItem="EUR-yj-6kn" secondAttribute="trailing" constant="12" id="1gh-DJ-ayU"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="noR-bj-tWe" secondAttribute="trailing" constant="12" id="4CK-F5-mDD"/>
+                                            <constraint firstItem="EUR-yj-6kn" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leadingMargin" constant="12" id="fxA-4k-ycW"/>
                                             <constraint firstItem="noR-bj-tWe" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leadingMargin" constant="12" id="ogX-gf-o97"/>
                                             <constraint firstItem="noR-bj-tWe" firstAttribute="top" secondItem="fLr-1g-w0i" secondAttribute="topMargin" constant="10" id="vEu-kd-fuV"/>
+                                            <constraint firstItem="EUR-yj-6kn" firstAttribute="top" secondItem="noR-bj-tWe" secondAttribute="bottom" constant="12" id="vTG-ea-sLc"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="titleLabel" destination="noR-bj-tWe" id="a9z-uj-q6j"/>
+                                            <outlet property="titleSeparator" destination="EUR-yj-6kn" id="FPU-lE-HDl"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bubbles" id="gAC-Iz-Ivh" customClass="HEMTrendsBubbleViewCell">
@@ -4236,16 +4258,27 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mu-K0-2F4">
+                                                    <rect key="frame" x="20" y="55" width="536" height="1"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="dmQ-QO-qm4"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="trailingMargin" secondItem="1mu-K0-2F4" secondAttribute="trailing" constant="12" id="2BY-4n-vYc"/>
                                             <constraint firstItem="xoL-f8-tah" firstAttribute="leading" secondItem="gAC-Iz-Ivh" secondAttribute="leadingMargin" constant="12" id="4om-Ta-xKM"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="xoL-f8-tah" secondAttribute="trailing" constant="12" id="PJV-ID-pSA"/>
+                                            <constraint firstItem="1mu-K0-2F4" firstAttribute="leading" secondItem="gAC-Iz-Ivh" secondAttribute="leadingMargin" constant="12" id="fd1-xd-Rqq"/>
+                                            <constraint firstItem="1mu-K0-2F4" firstAttribute="top" secondItem="xoL-f8-tah" secondAttribute="bottom" constant="12" id="t0u-Lh-CUY"/>
                                             <constraint firstItem="xoL-f8-tah" firstAttribute="top" secondItem="gAC-Iz-Ivh" secondAttribute="topMargin" constant="10" id="v1X-k2-SqE"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="titleLabel" destination="xoL-f8-tah" id="15W-2c-6Ss"/>
+                                            <outlet property="titleSeparator" destination="1mu-K0-2F4" id="82A-hI-4NQ"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -9,8 +9,11 @@
 #import "HEMTrendsBaseCell.h"
 #import "HEMStyle.h"
 
-static CGFloat const HEMTrendsBaseCellTitleDividerYOffset = 48.0f;
-static CGFloat const HEMTrendsBaseCellTitleDividerHeight = 1.0f;
+@interface HEMTrendsBaseCell()
+
+
+
+@end
 
 @implementation HEMTrendsBaseCell
 
@@ -18,23 +21,8 @@ static CGFloat const HEMTrendsBaseCellTitleDividerHeight = 1.0f;
     [super awakeFromNib];
     [[self titleLabel] setFont:[UIFont trendsTitleFont]];
     [[self titleLabel] setTextColor:[UIColor trendsTitleColor]];
+    [[self titleSeparator] setBackgroundColor:[UIColor trendsTitleDividerColor]];
 }
 
-- (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    
-    UIColor* lineColor = [UIColor trendsTitleDividerColor];
-    
-    CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);
-    CGContextSetLineWidth(context, HEMTrendsBaseCellTitleDividerHeight);
-    
-    CGFloat y = HEMTrendsBaseCellTitleDividerYOffset;
-    CGContextMoveToPoint(context, 0.0f, y);
-    CGContextAddLineToPoint(context, CGRectGetWidth([self bounds]), y);
-    CGContextStrokePath(context);
-    
-    CGContextRestoreGState(context);
-}
 
 @end

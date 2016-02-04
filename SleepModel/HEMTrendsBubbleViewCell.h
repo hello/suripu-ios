@@ -8,7 +8,11 @@
 
 #import "HEMTrendsBaseCell.h"
 
+@class HEMTrendsSleepDepthView;
+
 @interface HEMTrendsBubbleViewCell : HEMTrendsBaseCell
+
+@property (weak, nonatomic) IBOutlet HEMTrendsSleepDepthView *mainContentView;
 
 + (CGFloat)height;
 

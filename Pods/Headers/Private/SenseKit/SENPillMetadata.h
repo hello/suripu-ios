@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENPillMetadata.h
+../../../SenseKit/Pod/Classes/Model/SENPillMetadata.h

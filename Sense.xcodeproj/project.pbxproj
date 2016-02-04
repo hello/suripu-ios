@@ -187,6 +187,7 @@
 		BF5BACFF1C5C266900347185 /* HEMTrendsBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACFE1C5C266900347185 /* HEMTrendsBaseCell.m */; };
 		BF5BAD021C5FE02100347185 /* HEMTrendsBarGraphCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAD011C5FE02100347185 /* HEMTrendsBarGraphCell.m */; };
 		BF5BAD051C600C1300347185 /* HEMTrendsBubbleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAD041C600C1300347185 /* HEMTrendsBubbleViewCell.m */; };
+		BF5BAD081C6169BF00347185 /* HEMTrendsCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAD071C6169BF00347185 /* HEMTrendsCircleView.m */; };
 		BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */; };
 		BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */; };
 		BF645D971A9FB3A70051C120 /* HEMTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF645D961A9FB3A70051C120 /* HEMTransitionDelegate.m */; };
@@ -323,6 +324,7 @@
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
+		BFE00D421C62805D00A84976 /* HEMTrendsSleepDepthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE00D411C62805D00A84976 /* HEMTrendsSleepDepthView.m */; };
 		BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */; };
 		BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
@@ -705,6 +707,8 @@
 		BF5BAD011C5FE02100347185 /* HEMTrendsBarGraphCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsBarGraphCell.m; sourceTree = "<group>"; };
 		BF5BAD031C600C1300347185 /* HEMTrendsBubbleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsBubbleViewCell.h; sourceTree = "<group>"; };
 		BF5BAD041C600C1300347185 /* HEMTrendsBubbleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsBubbleViewCell.m; sourceTree = "<group>"; };
+		BF5BAD061C6169BF00347185 /* HEMTrendsCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsCircleView.h; sourceTree = "<group>"; };
+		BF5BAD071C6169BF00347185 /* HEMTrendsCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsCircleView.m; sourceTree = "<group>"; };
 		BF5D53291A26749F0090DD6A /* HEMActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActivityIndicatorView.h; sourceTree = "<group>"; };
 		BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActivityIndicatorView.m; sourceTree = "<group>"; };
 		BF62150C1AB8C1C80047A518 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -954,6 +958,8 @@
 		BFDFCE9D1B72884B000DA303 /* HEMSensorValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorValueFormatter.h; sourceTree = "<group>"; };
 		BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatter.m; sourceTree = "<group>"; };
 		BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatterSpec.m; sourceTree = "<group>"; };
+		BFE00D401C62805D00A84976 /* HEMTrendsSleepDepthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsSleepDepthView.h; sourceTree = "<group>"; };
+		BFE00D411C62805D00A84976 /* HEMTrendsSleepDepthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsSleepDepthView.m; sourceTree = "<group>"; };
 		BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseRequiredCollectionViewCell.h; sourceTree = "<group>"; };
 		BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseRequiredCollectionViewCell.m; sourceTree = "<group>"; };
 		BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
@@ -1205,6 +1211,10 @@
 				BF5BAD011C5FE02100347185 /* HEMTrendsBarGraphCell.m */,
 				BF5BAD031C600C1300347185 /* HEMTrendsBubbleViewCell.h */,
 				BF5BAD041C600C1300347185 /* HEMTrendsBubbleViewCell.m */,
+				BF5BAD061C6169BF00347185 /* HEMTrendsCircleView.h */,
+				BF5BAD071C6169BF00347185 /* HEMTrendsCircleView.m */,
+				BFE00D401C62805D00A84976 /* HEMTrendsSleepDepthView.h */,
+				BFE00D411C62805D00A84976 /* HEMTrendsSleepDepthView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2963,9 +2973,11 @@
 				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */,
+				BF5BAD081C6169BF00347185 /* HEMTrendsCircleView.m in Sources */,
 				BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */,
 				8A0350FD1B2CAAD60077E6E6 /* HEMTimelineSummaryTitleLabel.m in Sources */,
 				BF83399F1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m in Sources */,
+				BFE00D421C62805D00A84976 /* HEMTrendsSleepDepthView.m in Sources */,
 				BF5BACFC1C5C24AA00347185 /* HEMTrendsCalendarViewCell.m in Sources */,
 				BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,

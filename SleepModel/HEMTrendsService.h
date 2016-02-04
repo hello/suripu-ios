@@ -39,6 +39,22 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  */
 - (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale;
 
+/**
+ * @discussion
+ * 
+ * Convenience method to determine / extract the light, medium, and deep sleep
+ * percentages from the trends graph data, if applicable
+ *
+ * @param lightPercentage: a pointer to the address to hold the light sleep value
+ * @param mediumPercentage: a pointer to the address to hold the medium sleep value
+ * @param deepPercentage: a pointer to the address to hold the deep sleep value
+ * @param graph: the graph data
+ */
+- (void)sleepDepthLightPercentage:(CGFloat*)lightPercentage
+                 mediumPercentage:(CGFloat*)mediumPercentage
+                   deepPercentage:(CGFloat*)deepPercentage
+                         forGraph:(SENTrendsGraph*)graph;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -79,4 +79,18 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
     }];
 }
 
+- (void)sleepDepthLightPercentage:(CGFloat*)lightPercentage
+                 mediumPercentage:(CGFloat*)mediumPercentage
+                   deepPercentage:(CGFloat*)deepPercentage
+                         forGraph:(SENTrendsGraph*)graph {
+    if ([graph dataType] == SENTrendsDataTypePercent) {
+        SENTrendsGraphSection* section = [[graph sections] firstObject];
+        if ([[section values] count] == 3) {
+            *lightPercentage = [[[section values] firstObject] CGFloatValue];
+            *mediumPercentage = [[section values][1] CGFloatValue];
+            *deepPercentage = [[[section values] lastObject] CGFloatValue];
+        }
+    }
+}
+
 @end

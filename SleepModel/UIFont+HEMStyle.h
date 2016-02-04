@@ -216,6 +216,11 @@
 + (UIFont*)trendsScopeSelectorTextFont;
 
 /**
+ *  Font for the v2 Trends sleep depth percentage values
+ */
++ (UIFont*)trendSleepDepthValueFontWithSize:(CGFloat)size;
+
+/**
  *  Font for the v2 Trends graph titles
  */
 + (UIFont*)trendsTitleFont;
@@ -229,6 +234,11 @@
  *  Font for the footer labels in trend graphs
  */
 + (UIFont*)trendBottomLabelFont;
+
+/**
+ *  Font for the sleep depth titles
+ */
++ (UIFont*)trendSleepDepthTitleFont;
 
 /**
  *  Font to display the answers for questions

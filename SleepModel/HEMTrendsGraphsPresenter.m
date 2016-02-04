@@ -13,6 +13,7 @@
 #import "HEMTrendsBarGraphCell.h"
 #import "HEMTrendsBubbleViewCell.h"
 #import "HEMSubNavigationView.h"
+#import "HEMTrendsSleepDepthView.h"
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
 
@@ -74,6 +75,10 @@
     return [HEMTrendsBarGraphCell heightWithAverages:[[graph annotations] count] > 0];
 }
 
+- (CGFloat)heightForBubbleGraphWithData:(SENTrendsGraph*)graph {
+    return [HEMTrendsBubbleViewCell height];
+}
+
 #pragma mark - Configuring Cells
 
 - (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -92,7 +97,16 @@
 }
 
 - (void)configureBubblesCell:(HEMTrendsBubbleViewCell*)bubbleCell forTrendsGraph:(SENTrendsGraph*)graph {
+    CGFloat light, medium, deep = 0.0f;
+    [[self trendService] sleepDepthLightPercentage:&light mediumPercentage:&medium deepPercentage:&deep forGraph:graph];
+    
     [[bubbleCell titleLabel] setText:[graph title]];
+    
+    HEMTrendsSleepDepthView* contentView = [bubbleCell mainContentView];
+    [contentView setLightPercentage:light localizedTitle:NSLocalizedString(@"trends.sleep-depth.light", nil)];
+    [contentView setMediumPercentage:medium localizedTitle:NSLocalizedString(@"trends.sleep-depth.medium", nil)];
+    [contentView setDeepPercentage:deep localizedTitle:NSLocalizedString(@"trends.sleep-depth.deep", nil)];
+    [contentView render];
 }
 
 #pragma mark - UICollectionView Data Source
@@ -114,7 +128,7 @@
             itemSize.height = [self heightForCalendarViewForGraphData:graph];
             break;
         case SENTrendsDisplayTypeBubble: {
-            itemSize.height = [HEMTrendsBubbleViewCell height];
+            itemSize.height = [self heightForBubbleGraphWithData:graph];
             break;
         }
         case SENTrendsDisplayTypeBar:

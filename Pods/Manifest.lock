@@ -90,7 +90,7 @@ DEPENDENCIES:
   - MSDynamicsDrawerViewController (= 1.5.1)
   - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
   - Nocilla
-  - SenseKit (from `../SenseKit`)
+  - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
   - SpinKit (~> 1.2.0)
@@ -111,7 +111,7 @@ EXTERNAL SOURCES:
   NAPickerView:
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :path: ../SenseKit
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
   SVWebViewController:
@@ -128,7 +128,7 @@ CHECKOUT OPTIONS:
     :commit: a11c168e490c98e3270c633d894f987bdae1580b
     :git: git@github.com:hello/BEMSimpleLineGraph.git
   Bugsnag:
-    :commit: 175b618ef2b9755db56fd6b4a0eafaade4f1f32a
+    :commit: d60b6ec1ab20eaa4c19a0f360f31401bfd46076b
     :git: https://github.com/bugsnag/bugsnag-cocoa.git
   LGBluetooth:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
@@ -136,6 +136,9 @@ CHECKOUT OPTIONS:
   NAPickerView:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
+  SenseKit:
+    :commit: 8afe45c3e816b2d6611d15a6ffe8699e5081eb4b
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
     :git: git@github.com:hello/protobuf-objc.git

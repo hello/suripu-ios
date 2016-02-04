@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENSerializable.h
+../../../SenseKit/Pod/Classes/Model/SENSerializable.h

@@ -7,13 +7,17 @@
 //
 
 #import "HEMTrendsBubbleViewCell.h"
+#import "HEMTrendsSleepDepthView.h"
+#import "HEMStyle.h"
+#import "HEMScreenUtils.h"
 
-static CGFloat const HEMTrendsBubbleBaseHeight = 240.0f;
+static CGFloat const HEMTrendsBubbleCellHeightCoefficient = 0.369f;
 
 @implementation HEMTrendsBubbleViewCell
 
 + (CGFloat)height {
-    return HEMTrendsBubbleBaseHeight;
+    CGRect windowBounds = HEMKeyWindowBounds();
+    return ceilCGFloat(CGRectGetHeight(windowBounds) * HEMTrendsBubbleCellHeightCoefficient);
 }
 
 @end

@@ -44,4 +44,10 @@
                                radius:3.0f];
 }
 
++ (NSShadow*)shadowForTrendsSleepDepthCircles {
+    return [self shadowStyleWithColor:[UIColor colorWithWhite:0.0f alpha:0.1f]
+                               offset:CGSizeMake(0, 2.0f)
+                               radius:2.0f];
+}
+
 @end

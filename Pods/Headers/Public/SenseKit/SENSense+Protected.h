@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENSense+Protected.h
+../../../SenseKit/Pod/Classes/Model/SENSense+Protected.h

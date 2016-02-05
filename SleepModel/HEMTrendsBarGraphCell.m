@@ -113,20 +113,40 @@ static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
 }
 
 - (void)renderXTitles {
-    CGFloat startingX = 0.0f;
-    CGFloat labelSpacing = 0.0f;
-    CGFloat maxLabelWidth = MAXFLOAT;
-    if ([[self xTitles] count] == [[self combinedPoints] count]) {
-        labelSpacing = [self barSpacing];
-        maxLabelWidth = [self barWidth];
+    [[self xAxisView] clear];
+    
+    if ([[self displayPoints] count] == 1
+        && [[[self displayPoints] firstObject] count] == [[self xTitles] count]) { // 1 section
+        
+        CGFloat nextX = 0.0f;
+        for (NSAttributedString* title in [self xTitles]) {
+            [[self xAxisView] addLabelWithText:title atX:nextX maxLabelWidth:[self barWidth]];
+            nextX += [self barSpacing] + [self barWidth];
+        }
     } else {
-        // TODO: handle this!
+        NSInteger numberOfSections = [[self displayPoints] count];
+        NSInteger minBarCount = numberOfSections > 2 ? 5 : 3;
+        NSInteger sectionBarCount = 0;
+        CGFloat viewWidth = CGRectGetMaxX([[self xAxisView] bounds]);
+        CGFloat lastTitleX = viewWidth;
+        for (NSInteger idx = numberOfSections - 1; idx >= 0; idx--) {
+            NSArray* sectionOfPoints = [self displayPoints][idx];
+            sectionBarCount = [sectionOfPoints count];
+            
+            CGFloat spacing = ((sectionBarCount - 1) * [self barSpacing]);
+            CGFloat distance = (sectionBarCount * [self barWidth]) + spacing;
+            lastTitleX -= distance;
+            
+            if (sectionBarCount >= minBarCount
+                && idx < [[self xTitles] count]
+                && lastTitleX >= 0.0f) {
+                NSAttributedString* title = [self xTitles][idx];
+                [[self xAxisView] addLabelWithText:title
+                                               atX:lastTitleX
+                                     maxLabelWidth:MAXFLOAT];
+            }
+        }
     }
-         
-    [[self xAxisView] showLabelsFromX:startingX
-                withAttributedStrings:[self xTitles]
-                         labelSpacing:labelSpacing
-                        maxLabelWidth:maxLabelWidth];
 }
 
 - (void)renderBars {

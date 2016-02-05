@@ -18,15 +18,24 @@
   withAttributedStrings:(NSArray<NSAttributedString*>*)strings
            labelSpacing:(CGFloat)labelSpacing
           maxLabelWidth:(CGFloat)maxLabelWidth {
-    
-    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
     CGFloat xOrigin = start;
     for (NSAttributedString* string in strings) {
         UILabel* xLabel = [self labelWithText:string atXOrigin:xOrigin maxWidth:maxLabelWidth];
         [self addSubview:xLabel];
         xOrigin = CGRectGetMaxX([xLabel frame]) + labelSpacing;
     }
+}
+
+- (void)clear {
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+- (void)addLabelWithText:(NSAttributedString*)text
+                     atX:(CGFloat)xOrigin
+           maxLabelWidth:(CGFloat)maxLabelWidth {
+    [self addSubview:[self labelWithText:text
+                               atXOrigin:xOrigin
+                                maxWidth:maxLabelWidth]];
 }
 
 - (UILabel*)labelWithText:(NSAttributedString*)text

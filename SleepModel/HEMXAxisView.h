@@ -15,4 +15,10 @@
            labelSpacing:(CGFloat)labelSpacing
           maxLabelWidth:(CGFloat)maxLabelWidth;
 
+- (void)clear;
+
+- (void)addLabelWithText:(NSAttributedString*)text
+                     atX:(CGFloat)xOrigin
+           maxLabelWidth:(CGFloat)maxLabelWidth;
+
 @end

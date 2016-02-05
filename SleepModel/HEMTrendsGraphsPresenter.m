@@ -100,17 +100,15 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return [[NSAttributedString alloc] initWithString:string attributes:attributes];
 }
 
-- (NSArray<NSAttributedString*>*)attributedGraphTitlesFrom:(SENTrendsGraphSection*)graphSection {
-    NSInteger titleCount = [[graphSection titles] count];
-    NSTextAlignment alignment = NSTextAlignmentCenter;
-    if (titleCount < 3) {
-        alignment = NSTextAlignmentLeft;
+- (NSArray<NSAttributedString*>*)barGraphTitlesFrom:(SENTrendsGraph*)graph {
+    NSMutableArray* titles = [NSMutableArray arrayWithCapacity:[[graph sections] count]];
+    for (SENTrendsGraphSection* section in [graph sections]) {
+        for (NSString* title in [section titles]) {
+            [titles addObject:[self attributedXAxisTextFromString:title
+                                                        alignment:NSTextAlignmentCenter]];
+        }
     }
-    NSMutableArray* attributedTitles = [NSMutableArray arrayWithCapacity:titleCount];
-    for (NSString* title in [graphSection titles]) {
-        [attributedTitles addObject:[self attributedXAxisTextFromString:title alignment:alignment]];
-    }
-    return attributedTitles;
+    return titles;
 }
 
 - (NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)segmentedDataPointsFrom:(SENTrendsGraph*)graph {
@@ -175,8 +173,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         }
     }
     
-    SENTrendsGraphSection* section = [[graph sections] firstObject];
-    NSArray<NSAttributedString*>* attributedTitles = [self attributedGraphTitlesFrom:section];
+    NSArray<NSAttributedString*>* attributedTitles = [self barGraphTitlesFrom:graph];
     NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
     [[barCell titleLabel] setText:[graph title]];
     [barCell setHighlightedBarColor:[UIColor sleepStateSoundColor]];

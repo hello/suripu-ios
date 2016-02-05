@@ -588,6 +588,7 @@
 "trends.sleep-depth.light" = "light";
 "trends.sleep-depth.medium" = "medium";
 "trends.sleep-depth.deep" = "deep";
+"trends.sleep-duration.average.format" = "%.2fh";
 
 // actions
 "actions.cancel" = "Cancel";

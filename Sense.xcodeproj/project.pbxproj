@@ -335,6 +335,7 @@
 		BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */; };
 		BFF14C2B1C63E47500AD3773 /* HEMXAxisView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF14C2A1C63E47500AD3773 /* HEMXAxisView.m */; };
 		BFF14C2E1C64178F00AD3773 /* HEMBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF14C2D1C64178F00AD3773 /* HEMBarChartView.m */; };
+		BFF14C311C642B6A00AD3773 /* HEMTrendsAverageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF14C301C642B6A00AD3773 /* HEMTrendsAverageView.m */; };
 		BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */; };
 		BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4461A5CD60300B11643 /* HEMDeviceCollectionViewCell.m */; };
 		BFF3B44A1A5DB5DE00B11643 /* HEMNoDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4491A5DB5DD00B11643 /* HEMNoDeviceCollectionViewCell.m */; };
@@ -979,6 +980,8 @@
 		BFF14C2A1C63E47500AD3773 /* HEMXAxisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMXAxisView.m; sourceTree = "<group>"; };
 		BFF14C2C1C64178F00AD3773 /* HEMBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBarChartView.h; sourceTree = "<group>"; };
 		BFF14C2D1C64178F00AD3773 /* HEMBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBarChartView.m; sourceTree = "<group>"; };
+		BFF14C2F1C642B6A00AD3773 /* HEMTrendsAverageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsAverageView.h; sourceTree = "<group>"; };
+		BFF14C301C642B6A00AD3773 /* HEMTrendsAverageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsAverageView.m; sourceTree = "<group>"; };
 		BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTableViewCell.h; sourceTree = "<group>"; };
 		BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsTableViewCell.m; sourceTree = "<group>"; };
 		BFF3B4451A5CD60300B11643 /* HEMDeviceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1225,6 +1228,8 @@
 				BFF14C2A1C63E47500AD3773 /* HEMXAxisView.m */,
 				BFF14C2C1C64178F00AD3773 /* HEMBarChartView.h */,
 				BFF14C2D1C64178F00AD3773 /* HEMBarChartView.m */,
+				BFF14C2F1C642B6A00AD3773 /* HEMTrendsAverageView.h */,
+				BFF14C301C642B6A00AD3773 /* HEMTrendsAverageView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3108,6 +3113,7 @@
 				BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */,
 				8AB82DE11B2BFB7B002D769D /* HEMTimelineMessageContainerView.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */,
+				BFF14C311C642B6A00AD3773 /* HEMTrendsAverageView.m in Sources */,
 				BF71BDA21C481E0A00919D0F /* HEMTimelineService.m in Sources */,
 				BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */,
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,

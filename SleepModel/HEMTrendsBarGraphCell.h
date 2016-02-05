@@ -13,8 +13,12 @@
 @property (nonatomic, strong) UIColor* highlightedBarColor;
 @property (nonatomic, strong) UIColor* normalBarColor;
 @property (nonatomic, assign) CGFloat maxValue;
+@property (nonatomic, strong) UIColor* averageValueColor;
+@property (nonatomic, strong) UIColor* averageTitleColor;
 
 + (CGFloat)heightWithAverages:(BOOL)averages;
+- (void)setAverageTitles:(NSArray<NSString*>*)titles
+                  values:(NSArray<NSString*>*)values;
 - (void)setAttributedXAxisValues:(NSArray<NSAttributedString*>*)xValues
                       dataPoints:(NSArray<NSNumber*>*)dataPoints
           highlightDataAtIndices:(NSArray<NSNumber*>*)highlightedIndices

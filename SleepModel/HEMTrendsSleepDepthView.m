@@ -14,7 +14,7 @@
 
 static CGFloat const HEMTrendsBubbleMinOverlap = 14.0f;
 static CGFloat const HEMTrendsBubbleMinHeightRatio = 0.32f;
-static CGFloat const HEMTrendsBubbleAnimationDuration = 0.3f;
+static CGFloat const HEMTrendsBubbleAnimationDuration = 0.2f;
 static CGFloat const HEMTrendsBubbleValueFontSizeRatio = 0.33f;
 static CGFloat const HEMTrendsBubbleUnitFontSizeRatio = 0.17f;
 

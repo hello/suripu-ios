@@ -270,7 +270,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
                                                     <rect key="frame" x="64" y="18" width="93" height="20"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
@@ -4232,16 +4232,83 @@
                                                         <constraint firstAttribute="height" constant="14" id="hL6-Jh-db0"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qh2-dW-COs" customClass="HEMBarChartView">
+                                                <view contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qh2-dW-COs" customClass="HEMBarChartView">
                                                     <rect key="frame" x="20" y="101" width="536" height="112"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NPL-ES-Dl6">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NPL-ES-Dl6" customClass="HEMTrendsAverageView">
                                                     <rect key="frame" x="20" y="233" width="536" height="52"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" text="WEEKDAYS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHI-xb-5VV">
+                                                            <rect key="frame" x="0.0" y="0.0" width="177" height="10"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.12h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7g-wz-lO4">
+                                                            <rect key="frame" x="0.0" y="13" width="177" height="39"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="28"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.12h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb7-rP-Q8V">
+                                                            <rect key="frame" x="181" y="13" width="177" height="39"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="28"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" text="AVERAGE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9CM-kQ-hfI">
+                                                            <rect key="frame" x="356" y="0.0" width="177" height="10"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.12h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="con-lu-eNe">
+                                                            <rect key="frame" x="358" y="13" width="177" height="39"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="28"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" text="WEEKENDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wX2-rJ-VG8">
+                                                            <rect key="frame" x="181" y="0.0" width="177" height="10"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
+                                                        <constraint firstItem="rb7-rP-Q8V" firstAttribute="top" secondItem="wX2-rJ-VG8" secondAttribute="bottom" constant="4" id="0OX-VQ-TSK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="9CM-kQ-hfI" secondAttribute="trailing" constant="3" id="1fQ-7S-Iue"/>
+                                                        <constraint firstItem="AHI-xb-5VV" firstAttribute="leading" secondItem="NPL-ES-Dl6" secondAttribute="leading" id="3oD-Bh-Gcv"/>
+                                                        <constraint firstItem="rb7-rP-Q8V" firstAttribute="centerX" secondItem="NPL-ES-Dl6" secondAttribute="centerX" constant="1" id="5Tp-jT-XQb"/>
+                                                        <constraint firstItem="X7g-wz-lO4" firstAttribute="width" secondItem="NPL-ES-Dl6" secondAttribute="width" multiplier="0.33" id="8mK-4f-uEg"/>
+                                                        <constraint firstAttribute="bottom" secondItem="rb7-rP-Q8V" secondAttribute="bottom" id="A2a-EB-K5l"/>
+                                                        <constraint firstAttribute="trailing" secondItem="con-lu-eNe" secondAttribute="trailing" constant="1" id="EJH-3F-v4C"/>
                                                         <constraint firstAttribute="height" constant="52" id="SSG-0u-0Vy"/>
+                                                        <constraint firstItem="con-lu-eNe" firstAttribute="top" secondItem="9CM-kQ-hfI" secondAttribute="bottom" constant="4" id="W6p-4M-x9G"/>
+                                                        <constraint firstItem="wX2-rJ-VG8" firstAttribute="centerX" secondItem="NPL-ES-Dl6" secondAttribute="centerX" constant="1" id="YXN-Bq-3kW"/>
+                                                        <constraint firstItem="wX2-rJ-VG8" firstAttribute="width" secondItem="NPL-ES-Dl6" secondAttribute="width" multiplier="0.33" id="ZcX-zM-kDc"/>
+                                                        <constraint firstItem="wX2-rJ-VG8" firstAttribute="top" secondItem="NPL-ES-Dl6" secondAttribute="top" id="ZdV-QU-Aw8"/>
+                                                        <constraint firstAttribute="bottom" secondItem="X7g-wz-lO4" secondAttribute="bottom" id="e1U-bG-tLg"/>
+                                                        <constraint firstItem="AHI-xb-5VV" firstAttribute="top" secondItem="NPL-ES-Dl6" secondAttribute="top" id="etb-HP-xs1"/>
+                                                        <constraint firstItem="9CM-kQ-hfI" firstAttribute="width" secondItem="NPL-ES-Dl6" secondAttribute="width" multiplier="0.33" id="hGc-qI-c48"/>
+                                                        <constraint firstItem="9CM-kQ-hfI" firstAttribute="top" secondItem="NPL-ES-Dl6" secondAttribute="top" id="i5k-t5-D9U"/>
+                                                        <constraint firstItem="X7g-wz-lO4" firstAttribute="top" secondItem="AHI-xb-5VV" secondAttribute="bottom" constant="4" id="ilX-ew-25U"/>
+                                                        <constraint firstAttribute="bottom" secondItem="con-lu-eNe" secondAttribute="bottom" id="lF7-F1-vIp"/>
+                                                        <constraint firstItem="con-lu-eNe" firstAttribute="width" secondItem="NPL-ES-Dl6" secondAttribute="width" multiplier="0.33" id="o2V-0w-x37"/>
+                                                        <constraint firstItem="AHI-xb-5VV" firstAttribute="width" secondItem="NPL-ES-Dl6" secondAttribute="width" multiplier="0.33" id="os2-Gh-Tbw"/>
+                                                        <constraint firstItem="X7g-wz-lO4" firstAttribute="leading" secondItem="NPL-ES-Dl6" secondAttribute="leading" id="qei-wv-rl1"/>
+                                                        <constraint firstItem="rb7-rP-Q8V" firstAttribute="width" secondItem="NPL-ES-Dl6" secondAttribute="width" multiplier="0.33" id="uR9-rH-HdY"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outlet property="average1TitleLabel" destination="AHI-xb-5VV" id="kLg-p8-X3w"/>
+                                                        <outlet property="average1ValueLabel" destination="X7g-wz-lO4" id="qq8-EZ-fAu"/>
+                                                        <outlet property="average2TitleLabel" destination="wX2-rJ-VG8" id="cUQ-MR-vON"/>
+                                                        <outlet property="average2ValueLabel" destination="rb7-rP-Q8V" id="Tq9-ul-P1E"/>
+                                                        <outlet property="average3TitleLabel" destination="9CM-kQ-hfI" id="hml-Zh-VJV"/>
+                                                        <outlet property="average3ValueLabel" destination="con-lu-eNe" id="XPS-Ce-bnV"/>
+                                                    </connections>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -4250,7 +4317,7 @@
                                             <constraint firstItem="NPL-ES-Dl6" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="0y3-P0-u3c"/>
                                             <constraint firstItem="x6Q-Dw-dY5" firstAttribute="top" secondItem="EUR-yj-6kn" secondAttribute="bottom" constant="8" id="7su-34-lVR"/>
                                             <constraint firstItem="EUR-yj-6kn" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="8cl-cm-liu"/>
-                                            <constraint firstItem="qh2-dW-COs" firstAttribute="bottom" secondItem="NPL-ES-Dl6" secondAttribute="top" constant="-20" id="H3b-cf-AXv"/>
+                                            <constraint firstItem="NPL-ES-Dl6" firstAttribute="top" secondItem="qh2-dW-COs" secondAttribute="bottom" constant="20" id="H3b-cf-AXv"/>
                                             <constraint firstAttribute="bottom" secondItem="NPL-ES-Dl6" secondAttribute="bottom" constant="20" id="Hnf-o4-bXX"/>
                                             <constraint firstItem="noR-bj-tWe" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="Prf-qI-bTm"/>
                                             <constraint firstAttribute="trailing" secondItem="NPL-ES-Dl6" secondAttribute="trailing" constant="20" id="Qza-It-AAo"/>
@@ -4268,6 +4335,7 @@
                                         <connections>
                                             <outlet property="averagesBottomConstraint" destination="H3b-cf-AXv" id="nOX-B0-hb1"/>
                                             <outlet property="averagesHeightConstraint" destination="SSG-0u-0Vy" id="zkG-t1-3g2"/>
+                                            <outlet property="averagesView" destination="NPL-ES-Dl6" id="6v6-0B-Vuh"/>
                                             <outlet property="barChartView" destination="qh2-dW-COs" id="CMd-0O-6f2"/>
                                             <outlet property="titleLabel" destination="noR-bj-tWe" id="a9z-uj-q6j"/>
                                             <outlet property="titleSeparator" destination="EUR-yj-6kn" id="FPU-lE-HDl"/>

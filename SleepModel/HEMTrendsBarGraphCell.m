@@ -9,6 +9,7 @@
 #import "HEMTrendsBarGraphCell.h"
 #import "HEMXAxisView.h"
 #import "HEMBarChartView.h"
+#import "HEMTrendsAverageView.h"
 
 static CGFloat const HEMTrendsBarGraphBaseHeight = 233.0f;
 static CGFloat const HEMTrendsBarGraphAveragesHeight = 52.0f;
@@ -18,6 +19,7 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
 
 @property (weak, nonatomic) IBOutlet HEMBarChartView *barChartView;
 @property (weak, nonatomic) IBOutlet HEMXAxisView *xAxisView;
+@property (weak, nonatomic) IBOutlet HEMTrendsAverageView *averagesView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
 
@@ -39,6 +41,33 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
                 + HEMTrendsBarGraphAveragesBotMargin;
     }
     return height;
+}
+
+- (void)setAverageTitles:(NSArray<NSString*>*)titles
+                  values:(NSArray<NSString*>*)values {
+    
+    if (!titles || !values || [titles count] != [values count] || [titles count] != 3) {
+        [[self averagesHeightConstraint] setConstant:0.0f];
+        [[self averagesBottomConstraint] setConstant:0.0f];
+    } else {
+        [[self averagesHeightConstraint] setConstant:HEMTrendsBarGraphAveragesHeight];
+        [[self averagesBottomConstraint] setConstant:HEMTrendsBarGraphAveragesBotMargin];
+        
+        [[[self averagesView] average1TitleLabel] setTextColor:[self averageTitleColor]];
+        [[[self averagesView] average2TitleLabel] setTextColor:[self averageTitleColor]];
+        [[[self averagesView] average3TitleLabel] setTextColor:[self averageTitleColor]];
+        [[[self averagesView] average1ValueLabel] setTextColor:[self averageValueColor]];
+        [[[self averagesView] average2ValueLabel] setTextColor:[self averageValueColor]];
+        [[[self averagesView] average3ValueLabel] setTextColor:[self averageValueColor]];
+        
+        [[[self averagesView] average1TitleLabel] setText:[titles firstObject]];
+        [[[self averagesView] average2TitleLabel] setText:titles[1]];
+        [[[self averagesView] average3TitleLabel] setText:[titles lastObject]];
+        
+        [[[self averagesView] average1ValueLabel] setText:[values firstObject]];
+        [[[self averagesView] average2ValueLabel] setText:values[1]];
+        [[[self averagesView] average3ValueLabel] setText:[values lastObject]];
+    }
 }
 
 - (void)setAttributedXAxisValues:(NSArray<NSAttributedString*>*)xValues

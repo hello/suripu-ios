@@ -22,6 +22,7 @@
 static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
 static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;
 static CGFloat const HEMTrendsGraphBarQuarterBarSpacing = 0.0f;
+static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 @interface HEMTrendsGraphsPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -62,7 +63,7 @@ static CGFloat const HEMTrendsGraphBarQuarterBarSpacing = 0.0f;
 }
 
 - (CGFloat)heightForCalendarViewForGraphData:(SENTrendsGraph*)graph {
-    BOOL averages = [[graph annotations] count] > 0;
+    BOOL averages = [[graph annotations] count] == HEMTrendsGraphAverageRequirement;
     switch ([[self subNav] selectedControlTag]) {
         case SENTrendsTimeScaleWeek:
         case SENTrendsTimeScaleMonth:{
@@ -142,11 +143,30 @@ static CGFloat const HEMTrendsGraphBarQuarterBarSpacing = 0.0f;
             break;
     }
     
+    NSMutableArray<NSString*>* averageTitles = nil;
+    NSMutableArray<NSString*>* averageValues = nil;
+    NSInteger annotationCount = [[graph annotations] count];
+    if (annotationCount > 0) {
+        averageTitles = [NSMutableArray arrayWithCapacity:annotationCount];
+        averageValues = [NSMutableArray arrayWithCapacity:annotationCount];
+        NSString* averageValueFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
+        for (SENTrendsAnnotation* annotation in [graph annotations]) {
+            if ([annotation title]) {
+                [averageTitles addObject:[annotation title]];
+            }
+            CGFloat averageValue = [[annotation value] CGFloatValue];
+            [averageValues addObject:[NSString stringWithFormat:averageValueFormat, averageValue]];
+        }
+    }
+    
     SENTrendsGraphSection* section = [[graph sections] firstObject];
     NSArray<NSAttributedString*>* attributedTitles = [self attributedGraphTitlesFrom:section];
     [barCell setHighlightedBarColor:[UIColor sleepStateSoundColor]];
-    [barCell setNormalBarColor:[UIColor sleepStateMediumColor]];
+    [barCell setNormalBarColor:[UIColor sleepStateLightColor]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
+    [barCell setAverageTitleColor:[UIColor trendXAxisLabelColor]];
+    [barCell setAverageValueColor:[UIColor sleepStateSoundColor]];
+    [barCell setAverageTitles:averageTitles values:averageValues];
     [barCell setAttributedXAxisValues:attributedTitles
                            dataPoints:[section values]
                highlightDataAtIndices:[section highlightedValues]

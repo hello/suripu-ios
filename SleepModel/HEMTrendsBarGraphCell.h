@@ -18,6 +18,8 @@
 @property (nonatomic, assign) CGFloat minValue;
 @property (nonatomic, strong) UIColor* averageValueColor;
 @property (nonatomic, strong) UIColor* averageTitleColor;
+@property (nonatomic, copy)   NSString* highlightLabelTextFormat;
+@property (nonatomic, strong) UIFont* highlightTextFont;
 
 + (CGFloat)heightWithAverages:(BOOL)averages;
 - (void)setAverageTitles:(NSArray<NSString*>*)titles

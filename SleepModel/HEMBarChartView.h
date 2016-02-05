@@ -10,6 +10,10 @@
 
 @class HEMTrendsDisplayPoint;
 
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void(^HEMBarChartAnimCompletion)(NSInteger minIndex, NSInteger maxIndex);
+
 @interface HEMBarChartView : UIView
 
 @property (nonatomic, strong) UIColor* normalBarColor;
@@ -19,6 +23,10 @@
 @property (nonatomic, assign) CGFloat maxValue;
 @property (nonatomic, assign) CGFloat minValue;
 
-- (void)updateBarChartWith:(NSArray<HEMTrendsDisplayPoint*>*)values;
+- (void)updateBarChartWith:(NSArray<HEMTrendsDisplayPoint*>*)values
+                completion:(HEMBarChartAnimCompletion)completion;
+- (CGRect)frameOfBarAtIndex:(NSInteger)index relativeTo:(UIView*)view;
 
 @end
+
+NS_ASSUME_NONNULL_END

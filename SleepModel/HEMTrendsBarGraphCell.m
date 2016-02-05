@@ -15,6 +15,11 @@
 static CGFloat const HEMTrendsBarGraphBaseHeight = 233.0f;
 static CGFloat const HEMTrendsBarGraphAveragesHeight = 52.0f;
 static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
+static CGFloat const HEMTrendsBarHighlightLabelWidth = 35.0f;
+static CGFloat const HEMTrendsBarHighlightLabelHeight = 20.0f;
+static CGFloat const HEMTrendsBarHighlightLabelCornerRadius = 2.0f;
+static CGFloat const HEMTrendsBarHighlightLabelSpacing = 2.0f;
+static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
 
 @interface HEMTrendsBarGraphCell()
 
@@ -31,6 +36,7 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
 @property (copy, nonatomic) NSArray<NSArray<NSString*>*>* highlightedTitles;
 @property (assign, nonatomic) CGFloat barWidth;
 @property (assign, nonatomic) CGFloat barSpacing;
+@property (strong, nonatomic) NSMutableArray<UILabel*>* highlightLabels;
 
 @end
 
@@ -124,13 +130,58 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
 }
 
 - (void)renderBars {
+    [[self highlightLabels] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [[self barChartView] setMaxValue:[self maxValue]];
     [[self barChartView] setMinValue:[self minValue]];
     [[self barChartView] setHighlightedBarColor:[self highlightedBarColor]];
     [[self barChartView] setNormalBarColor:[self normalBarColor]];
     [[self barChartView] setBarSpacing:[self barSpacing]];
     [[self barChartView] setBarWidth:[self barWidth]];
-    [[self barChartView] updateBarChartWith:[self combinedPoints]];
+    [[self barChartView] updateBarChartWith:[self combinedPoints] completion:^(NSInteger minIndex, NSInteger maxIndex) {
+        [self showHighlightLabelAtIndex:minIndex];
+        [self showHighlightLabelAtIndex:maxIndex];
+    }];
+}
+
+- (void)showHighlightLabelAtIndex:(NSInteger)index {
+    CGRect frame = [[self barChartView] frameOfBarAtIndex:index relativeTo:[self contentView]];
+    if (!CGRectIsEmpty(frame)) {
+        HEMTrendsDisplayPoint* displayPoint = [self combinedPoints][index];
+        CGFloat halfHeight = (HEMTrendsBarHighlightLabelHeight / 2);
+        CGFloat centerY = CGRectGetMinY(frame) - halfHeight - HEMTrendsBarHighlightLabelSpacing;
+        CGPoint center = CGPointMake(CGRectGetMidX(frame), centerY);
+        UILabel* label = [self highlightLabelWith:displayPoint withCenter:center];
+        [[self contentView] addSubview:label];
+        [UIView animateWithDuration:HEMTrendsBarCellAnimeDuration animations:^{
+            [label setAlpha:1.0f];
+        }];
+        
+        if (![self highlightLabels]) {
+            [self setHighlightLabels:[NSMutableArray arrayWithCapacity:2]];
+        }
+        [[self highlightLabels] addObject:label];
+    }
+}
+
+- (UILabel*)highlightLabelWith:(HEMTrendsDisplayPoint*)displayPoint withCenter:(CGPoint)center {
+    CGRect labelFrame = CGRectZero;
+    labelFrame.size = CGSizeMake(HEMTrendsBarHighlightLabelWidth, HEMTrendsBarHighlightLabelHeight);
+    
+    CGFloat value = [[displayPoint value] CGFloatValue];
+    NSString* text = [NSString stringWithFormat:[self highlightLabelTextFormat], value];
+    
+    UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
+    [label setBackgroundColor:[self highlightedBarColor]];
+    [label setTextColor:[UIColor whiteColor]];
+    [label setFont:[self highlightTextFont]];
+    [label setText:text];
+    [label setAlpha:0.0f];
+    [label setCenter:center];
+    [[label layer] setCornerRadius:HEMTrendsBarHighlightLabelCornerRadius];
+    [label setClipsToBounds:YES];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    
+    return label;
 }
 
 @end

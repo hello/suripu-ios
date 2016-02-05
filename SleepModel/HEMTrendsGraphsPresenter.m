@@ -132,6 +132,19 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return displayPoints;
 }
 
+- (CGFloat)barSpacingForTimeScale:(SENTrendsTimeScale)timeScale {
+    switch (timeScale) {
+        case SENTrendsTimeScaleWeek:
+            return HEMTrendsGraphBarWeekBarSpacing;
+        case SENTrendsTimeScaleMonth:
+            return HEMTrendsGraphBarMonthBarSpacing;
+        case SENTrendsTimeScaleQuarter:
+        case SENTrendsTimeScaleUnknown:
+        default:
+            return HEMTrendsGraphBarQuarterBarSpacing;
+    }
+}
+
 #pragma mark - Configuring Cells
 
 - (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -146,41 +159,26 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (void)configureBarCell:(HEMTrendsBarGraphCell*)barCell forTrendsGraph:(SENTrendsGraph*)graph {
-    [[barCell titleLabel] setText:[graph title]];
-
-    CGFloat xSpacing = 0.0f;
-    switch ([graph timeScale]) {
-        case SENTrendsTimeScaleWeek:
-            xSpacing = HEMTrendsGraphBarWeekBarSpacing;
-            break;
-        case SENTrendsTimeScaleMonth:
-            xSpacing = HEMTrendsGraphBarMonthBarSpacing;
-            break;
-        case SENTrendsTimeScaleQuarter:
-        case SENTrendsTimeScaleUnknown:
-        default:
-            xSpacing = HEMTrendsGraphBarQuarterBarSpacing;
-            break;
-    }
-    
     NSMutableArray<NSString*>* averageTitles = nil;
     NSMutableArray<NSString*>* averageValues = nil;
     NSInteger annotationCount = [[graph annotations] count];
     if (annotationCount > 0) {
         averageTitles = [NSMutableArray arrayWithCapacity:annotationCount];
         averageValues = [NSMutableArray arrayWithCapacity:annotationCount];
-        NSString* averageValueFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
+        NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
         for (SENTrendsAnnotation* annotation in [graph annotations]) {
             if ([annotation title]) {
                 [averageTitles addObject:[annotation title]];
             }
             CGFloat averageValue = [[annotation value] CGFloatValue];
-            [averageValues addObject:[NSString stringWithFormat:averageValueFormat, averageValue]];
+            [averageValues addObject:[NSString stringWithFormat:avgFormat, averageValue]];
         }
     }
     
     SENTrendsGraphSection* section = [[graph sections] firstObject];
     NSArray<NSAttributedString*>* attributedTitles = [self attributedGraphTitlesFrom:section];
+    NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
+    [[barCell titleLabel] setText:[graph title]];
     [barCell setHighlightedBarColor:[UIColor sleepStateSoundColor]];
     [barCell setNormalBarColor:[UIColor sleepStateLightColor]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
@@ -188,9 +186,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [barCell setAverageTitleColor:[UIColor trendXAxisLabelColor]];
     [barCell setAverageValueColor:[UIColor sleepStateSoundColor]];
     [barCell setAverageTitles:averageTitles values:averageValues];
+    [barCell setHighlightLabelTextFormat:highlightFormat];
+    [barCell setHighlightTextFont:[UIFont trendsHighlightLabelFont]];
     [barCell updateGraphWithTitles:attributedTitles
                      displayPoints:[self segmentedDataPointsFrom:graph]
-                           spacing:xSpacing];
+                           spacing:[self barSpacingForTimeScale:[graph timeScale]]];
 }
 
 - (void)configureBubblesCell:(HEMTrendsBubbleViewCell*)bubbleCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -262,6 +262,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
                                                      forIndexPath:indexPath];
 }
 
+#pragma mark - UICollectionView Delegate
+
 - (void)collectionView:(UICollectionView *)collectionView
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -276,7 +278,5 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     }
     
 }
-
-#pragma mark - UICollectionView Delegate
 
 @end

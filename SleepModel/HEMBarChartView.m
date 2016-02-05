@@ -48,15 +48,22 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
     [self setClipsToBounds:YES];
 }
 
-- (void)updateBarChartWith:(NSArray<HEMTrendsDisplayPoint*>*)values {
+- (void)updateBarChartWith:(NSArray<HEMTrendsDisplayPoint*>*)values
+                completion:(HEMBarChartAnimCompletion)completion {
     [self setValues:values];
     [self removeCurrentBarsIfNeeded:^{
-        [self renderUpdatedValues];
-        [self animateBarsIn];
+        NSInteger minIndex = -1;
+        NSInteger maxIndex = -1;
+        [self renderUpdatedValues:&minIndex maxBarOrigin:&maxIndex];
+        [self animateBarsIn:^(BOOL finished) {
+            if (completion) {
+                completion (minIndex, maxIndex);
+            }
+        }];
     }];
 }
 
-- (void)renderUpdatedValues {
+- (void)renderUpdatedValues:(NSInteger*)minIndex maxBarOrigin:(NSInteger*)maxIndex {
     CGFloat fullHeight = CGRectGetHeight([self bounds]);
     CGRect barFrame = CGRectZero;
     barFrame.size.width = [self barWidth];
@@ -64,6 +71,8 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
     
     UIColor* barColor = nil;
     NSInteger index = 0;
+    CGFloat minYOrigin = fullHeight;
+    CGFloat maxYOrigin = 0.0f;
     
     for (HEMTrendsDisplayPoint* point in [self values]) {
         CGFloat value = [[point value] CGFloatValue];
@@ -82,6 +91,18 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
             barFrame.size.height = height;
         }
         
+        if ([point highlighted]) {
+            CGFloat expectedY = fullHeight - CGRectGetHeight(barFrame);
+            if (expectedY <= minYOrigin) {
+                minYOrigin = expectedY;
+                *minIndex = index;
+            }
+            if (expectedY >= maxYOrigin) {
+                maxYOrigin = expectedY;
+                *maxIndex = index;
+            }
+        }
+        
         UIView* bar = [[UIView alloc] initWithFrame:barFrame];
         [bar setBackgroundColor:barColor];
         [self addSubview:bar];
@@ -90,7 +111,7 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
     }
 }
 
-- (void)animateBarsIn {
+- (void)animateBarsIn:(void(^)(BOOL finished))completion {
     CGFloat fullHeight = CGRectGetHeight([self bounds]);
     [UIView animateWithDuration:HEMBarChartAnimeDuration animations:^{
         for (UIView* subview in [self subviews]) {
@@ -98,7 +119,7 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
             barFrame.origin.y = fullHeight - CGRectGetHeight(barFrame);
             [subview setFrame:barFrame];
         }
-    }];
+    } completion:completion];
 }
 
 - (void)removeCurrentBarsIfNeeded:(void(^)(void))completion {
@@ -118,6 +139,15 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
             completion ();
         }];
     }
+}
+
+- (CGRect)frameOfBarAtIndex:(NSInteger)index relativeTo:(UIView*)view {
+    CGRect frame = CGRectZero;
+    if (index >= 0 && index < [[self subviews] count]) {
+        UIView* subview = [self subviews][index];
+        frame = [subview convertRect:[subview bounds] toView:view];
+    }
+    return frame;
 }
 
 @end

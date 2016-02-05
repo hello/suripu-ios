@@ -226,6 +226,11 @@
 + (UIFont*)trendXAxisLabelFont;
 
 /**
+ *  Font used for v2 trends highlilght labels
+ */
++ (UIFont*)trendsHighlightLabelFont;
+
+/**
  *  Font for the v2 Trends graph titles
  */
 + (UIFont*)trendsTitleFont;

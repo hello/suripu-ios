@@ -32,11 +32,6 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
     return self;
 }
 
-- (void)serviceReceivedMemoryWarning {
-    [[self cachedLastPullByScale] removeAllObjects];
-    [[self cachedTrendsByScale] removeAllObjects];
-}
-
 - (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale {
     if (timeScale == SENTrendsTimeScaleUnknown) {
         return nil;

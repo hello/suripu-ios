@@ -8,20 +8,22 @@
 
 #import "HEMTrendsBaseCell.h"
 
+@class  HEMTrendsDisplayPoint;
+
 @interface HEMTrendsBarGraphCell : HEMTrendsBaseCell
 
 @property (nonatomic, strong) UIColor* highlightedBarColor;
 @property (nonatomic, strong) UIColor* normalBarColor;
 @property (nonatomic, assign) CGFloat maxValue;
+@property (nonatomic, assign) CGFloat minValue;
 @property (nonatomic, strong) UIColor* averageValueColor;
 @property (nonatomic, strong) UIColor* averageTitleColor;
 
 + (CGFloat)heightWithAverages:(BOOL)averages;
 - (void)setAverageTitles:(NSArray<NSString*>*)titles
                   values:(NSArray<NSString*>*)values;
-- (void)setAttributedXAxisValues:(NSArray<NSAttributedString*>*)xValues
-                      dataPoints:(NSArray<NSNumber*>*)dataPoints
-          highlightDataAtIndices:(NSArray<NSNumber*>*)highlightedIndices
-                         spacing:(CGFloat)spacing;
+- (void)updateGraphWithTitles:(NSArray<NSAttributedString*>*)titles
+                displayPoints:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)displayPoints
+                      spacing:(CGFloat)spacing;
 
 @end

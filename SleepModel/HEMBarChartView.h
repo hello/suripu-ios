@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMTrendsDisplayPoint;
+
 @interface HEMBarChartView : UIView
 
 @property (nonatomic, strong) UIColor* normalBarColor;
@@ -15,8 +17,8 @@
 @property (nonatomic, assign) CGFloat barSpacing;
 @property (nonatomic, assign) CGFloat barWidth;
 @property (nonatomic, assign) CGFloat maxValue;
+@property (nonatomic, assign) CGFloat minValue;
 
-- (void)updateBarChartWith:(NSArray<NSNumber*>*)values
-        highlightedIndices:(NSArray<NSNumber*>*)highlightedIndices;
+- (void)updateBarChartWith:(NSArray<HEMTrendsDisplayPoint*>*)values;
 
 @end

@@ -7,14 +7,14 @@
 //
 
 #import "HEMBarChartView.h"
+#import "HEMTrendsDisplayPoint.h"
 
 static CGFloat const HEMBarChartAnimeDuration = 0.2f;
 static CGFloat const HEMBarChartBaseLine = 4.0f;
 
 @interface HEMBarChartView()
 
-@property (nonatomic, strong) NSArray<NSNumber*>* values;
-@property (nonatomic, strong) NSArray<NSNumber*>* highlightedIndices;
+@property (nonatomic, strong) NSArray<HEMTrendsDisplayPoint*>* values;
 
 @end
 
@@ -48,10 +48,8 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
     [self setClipsToBounds:YES];
 }
 
-- (void)updateBarChartWith:(NSArray<NSNumber*>*)values
-        highlightedIndices:(NSArray<NSNumber*>*)highlightedIndices {
+- (void)updateBarChartWith:(NSArray<HEMTrendsDisplayPoint*>*)values {
     [self setValues:values];
-    [self setHighlightedIndices:highlightedIndices];
     [self removeCurrentBarsIfNeeded:^{
         [self renderUpdatedValues];
         [self animateBarsIn];
@@ -67,18 +65,19 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
     UIColor* barColor = nil;
     NSInteger index = 0;
     
-    for (NSNumber* value in [self values]) {
-        BOOL highlight = [[self highlightedIndices] containsObject:@(index)];
-        barColor = highlight ? [self highlightedBarColor] : [self normalBarColor];
+    for (HEMTrendsDisplayPoint* point in [self values]) {
+        CGFloat value = [[point value] CGFloatValue];
+        
+        barColor = [point highlighted] ? [self highlightedBarColor] : [self normalBarColor];
         
         barFrame.origin.x = (index * ([self barWidth] + [self barSpacing]));
         
-        if ([value CGFloatValue] == [self maxValue]) {
+        if (value == [self maxValue]) {
             barFrame.size.height = fullHeight;
-        } else if ([value CGFloatValue] == 0.0f) {
+        } else if (value == 0.0f) {
             barFrame.size.height = HEMBarChartBaseLine;
         } else {
-            CGFloat ratio = [value CGFloatValue] / [self maxValue];
+            CGFloat ratio = value / [self maxValue];
             CGFloat height = ratio * fullHeight;
             barFrame.size.height = height;
         }

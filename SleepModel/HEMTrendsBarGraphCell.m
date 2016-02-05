@@ -10,6 +10,7 @@
 #import "HEMXAxisView.h"
 #import "HEMBarChartView.h"
 #import "HEMTrendsAverageView.h"
+#import "HEMTrendsDisplayPoint.h"
 
 static CGFloat const HEMTrendsBarGraphBaseHeight = 233.0f;
 static CGFloat const HEMTrendsBarGraphAveragesHeight = 52.0f;
@@ -24,8 +25,10 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
 
 @property (copy, nonatomic) NSArray<NSAttributedString*>* xTitles;
-@property (copy, nonatomic) NSArray<NSNumber*>* dataPoints;
-@property (copy, nonatomic) NSArray<NSNumber*>* highlightedIndices;
+@property (copy, nonatomic) NSArray<NSArray<HEMTrendsDisplayPoint*>*>* displayPoints;
+@property (strong, nonatomic) NSArray<HEMTrendsDisplayPoint*>* combinedPoints;
+@property (copy, nonatomic) NSArray<NSArray<NSNumber*>*>* highlightedIndices;
+@property (copy, nonatomic) NSArray<NSArray<NSString*>*>* highlightedTitles;
 @property (assign, nonatomic) CGFloat barWidth;
 @property (assign, nonatomic) CGFloat barSpacing;
 
@@ -70,15 +73,20 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
     }
 }
 
-- (void)setAttributedXAxisValues:(NSArray<NSAttributedString*>*)xValues
-                      dataPoints:(NSArray<NSNumber*>*)dataPoints
-          highlightDataAtIndices:(NSArray<NSNumber*>*)highlightedIndices
-                         spacing:(CGFloat)spacing {
+- (void)updateGraphWithTitles:(NSArray<NSAttributedString*>*)titles
+                displayPoints:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)displayPoints
+                      spacing:(CGFloat)spacing {
+    // combine all the sections in to 1 continguous array since the chart view
+    // does not care where it stops
+    NSMutableArray* combinedPoints = [NSMutableArray arrayWithCapacity:90];
+    for (NSArray* dataPoints in displayPoints) {
+        [combinedPoints addObjectsFromArray:dataPoints];
+    }
     
-    [self setXTitles:xValues];
+    [self setXTitles:titles];
+    [self setDisplayPoints:displayPoints];
+    [self setCombinedPoints:combinedPoints];
     [self setBarSpacing:spacing];
-    [self setDataPoints:dataPoints];
-    [self setHighlightedIndices:highlightedIndices];
     [self calculateBarWidth];
     [self renderXTitles];
     [self renderBars];
@@ -94,7 +102,7 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
         maxWidth = CGRectGetWidth([[self xAxisView] bounds]);
     }
     
-    NSInteger count = [[self dataPoints] count];
+    NSInteger count = [[self combinedPoints] count];
     [self setBarWidth:(maxWidth - ((count - 1) * [self barSpacing])) / count];
 }
 
@@ -102,13 +110,11 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
     CGFloat startingX = 0.0f;
     CGFloat labelSpacing = 0.0f;
     CGFloat maxLabelWidth = MAXFLOAT;
-    if ([[self xTitles] count] == 7) { // TODO: server bug.  titles = 7 != value count
-//    if ([[self xTitles] count] == [[self dataPoints] count]) {
-        // titles should just match bar width
+    if ([[self xTitles] count] == [[self combinedPoints] count]) {
         labelSpacing = [self barSpacing];
         maxLabelWidth = [self barWidth];
     } else {
-        
+        // TODO: handle this!
     }
          
     [[self xAxisView] showLabelsFromX:startingX
@@ -119,12 +125,12 @@ static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
 
 - (void)renderBars {
     [[self barChartView] setMaxValue:[self maxValue]];
+    [[self barChartView] setMinValue:[self minValue]];
     [[self barChartView] setHighlightedBarColor:[self highlightedBarColor]];
     [[self barChartView] setNormalBarColor:[self normalBarColor]];
     [[self barChartView] setBarSpacing:[self barSpacing]];
     [[self barChartView] setBarWidth:[self barWidth]];
-    [[self barChartView] updateBarChartWith:[self dataPoints]
-                         highlightedIndices:[self highlightedIndices]];
+    [[self barChartView] updateBarChartWith:[self combinedPoints]];
 }
 
 @end

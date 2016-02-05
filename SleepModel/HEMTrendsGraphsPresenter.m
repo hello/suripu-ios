@@ -18,6 +18,7 @@
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
+#import "HEMTrendsDisplayPoint.h"
 
 static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
 static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;
@@ -112,6 +113,25 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return attributedTitles;
 }
 
+- (NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)segmentedDataPointsFrom:(SENTrendsGraph*)graph {
+    NSInteger sections = [[graph sections] count];
+    NSMutableArray* displayPoints = [NSMutableArray arrayWithCapacity:sections];
+    NSMutableArray* sectionOfPoints = nil;
+    // FIXME: find a better way or possibly move this on the a bg thread
+    for (SENTrendsGraphSection* section in [graph sections]) {
+        sectionOfPoints = [NSMutableArray arrayWithCapacity:[[section values] count]];
+        NSInteger index = 0;
+        for (NSNumber* dataPoint in [section values]) {
+            BOOL highlighted = [[section highlightedValues] containsObject:@(index)];
+            [sectionOfPoints addObject:[[HEMTrendsDisplayPoint alloc] initWithValue:dataPoint
+                                                                        highlighted:highlighted]];
+            index++;
+        }
+        [displayPoints addObject:sectionOfPoints];
+    }
+    return displayPoints;
+}
+
 #pragma mark - Configuring Cells
 
 - (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -164,13 +184,13 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [barCell setHighlightedBarColor:[UIColor sleepStateSoundColor]];
     [barCell setNormalBarColor:[UIColor sleepStateLightColor]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
+    [barCell setMinValue:[[graph minValue] CGFloatValue]];
     [barCell setAverageTitleColor:[UIColor trendXAxisLabelColor]];
     [barCell setAverageValueColor:[UIColor sleepStateSoundColor]];
     [barCell setAverageTitles:averageTitles values:averageValues];
-    [barCell setAttributedXAxisValues:attributedTitles
-                           dataPoints:[section values]
-               highlightDataAtIndices:[section highlightedValues]
-                              spacing:xSpacing];
+    [barCell updateGraphWithTitles:attributedTitles
+                     displayPoints:[self segmentedDataPointsFrom:graph]
+                           spacing:xSpacing];
 }
 
 - (void)configureBubblesCell:(HEMTrendsBubbleViewCell*)bubbleCell forTrendsGraph:(SENTrendsGraph*)graph {

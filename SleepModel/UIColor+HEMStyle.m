@@ -311,6 +311,12 @@ static UIColor *_tintColor = nil;
 + (UIColor *)alarmClockViewBackgroundColor {
     return [UIColor colorWithHex:0xF9F9FA alpha:1.0f];
 }
++ (UIColor *)trendXAxisLabelColor {
+    return [UIColor colorWithRed:185.0f/255.0f
+                           green:191.0f/255.0f
+                            blue:200.0f/255.0f
+                           alpha:1.0f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors

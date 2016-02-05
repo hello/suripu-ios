@@ -270,7 +270,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delete alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-Ib-MLI">
                                                     <rect key="frame" x="64" y="18" width="93" height="20"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
@@ -2545,8 +2545,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
-                                                    <rect key="frame" x="16" y="35" width="552" height="24"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
+                                                    <rect key="frame" x="16" y="36" width="552" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2994,17 +2994,7 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="olX-fO-NV6">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                             </collectionView>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4A5-3K-je3" customClass="HEMPopupMaskView">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
@@ -4213,10 +4203,10 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bar" id="fLr-1g-w0i" customClass="HEMTrendsBarGraphCell">
-                                        <rect key="frame" x="12" y="250" width="576" height="240"/>
+                                        <rect key="frame" x="12" y="250" width="576" height="305"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="576" height="240"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="576" height="305"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Duration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="noR-bj-tWe">
@@ -4235,24 +4225,57 @@
                                                         <constraint firstAttribute="height" constant="1" id="ysa-9d-Bas"/>
                                                     </constraints>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x6Q-Dw-dY5" customClass="HEMXAxisView">
+                                                    <rect key="frame" x="20" y="57" width="536" height="14"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="hL6-Jh-db0"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qh2-dW-COs" customClass="HEMBarChartView">
+                                                    <rect key="frame" x="20" y="101" width="536" height="112"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NPL-ES-Dl6">
+                                                    <rect key="frame" x="20" y="233" width="536" height="52"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="52" id="SSG-0u-0Vy"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="NPL-ES-Dl6" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="0y3-P0-u3c"/>
+                                            <constraint firstItem="x6Q-Dw-dY5" firstAttribute="top" secondItem="EUR-yj-6kn" secondAttribute="bottom" constant="8" id="7su-34-lVR"/>
                                             <constraint firstItem="EUR-yj-6kn" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="8cl-cm-liu"/>
+                                            <constraint firstItem="qh2-dW-COs" firstAttribute="bottom" secondItem="NPL-ES-Dl6" secondAttribute="top" constant="-20" id="H3b-cf-AXv"/>
+                                            <constraint firstAttribute="bottom" secondItem="NPL-ES-Dl6" secondAttribute="bottom" constant="20" id="Hnf-o4-bXX"/>
                                             <constraint firstItem="noR-bj-tWe" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="Prf-qI-bTm"/>
+                                            <constraint firstAttribute="trailing" secondItem="NPL-ES-Dl6" secondAttribute="trailing" constant="20" id="Qza-It-AAo"/>
                                             <constraint firstAttribute="trailing" secondItem="EUR-yj-6kn" secondAttribute="trailing" constant="20" id="WcB-Dm-gIY"/>
+                                            <constraint firstAttribute="trailing" secondItem="qh2-dW-COs" secondAttribute="trailing" constant="20" id="XgD-J9-ktr"/>
                                             <constraint firstItem="noR-bj-tWe" firstAttribute="top" secondItem="fLr-1g-w0i" secondAttribute="topMargin" constant="-8" id="azN-a6-aoX"/>
+                                            <constraint firstItem="qh2-dW-COs" firstAttribute="top" secondItem="EUR-yj-6kn" secondAttribute="bottom" constant="52" id="fKH-NZ-6TP"/>
+                                            <constraint firstItem="qh2-dW-COs" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="ghX-P7-OPd"/>
+                                            <constraint firstItem="x6Q-Dw-dY5" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="uC6-5N-kJE"/>
                                             <constraint firstAttribute="trailing" secondItem="noR-bj-tWe" secondAttribute="trailing" constant="20" id="vLu-HD-riw"/>
                                             <constraint firstItem="EUR-yj-6kn" firstAttribute="top" secondItem="noR-bj-tWe" secondAttribute="bottom" id="vPY-Up-RwP"/>
+                                            <constraint firstAttribute="trailing" secondItem="x6Q-Dw-dY5" secondAttribute="trailing" constant="20" id="wBB-eU-e9k"/>
                                         </constraints>
+                                        <size key="customSize" width="576" height="305"/>
                                         <connections>
+                                            <outlet property="averagesBottomConstraint" destination="H3b-cf-AXv" id="nOX-B0-hb1"/>
+                                            <outlet property="averagesHeightConstraint" destination="SSG-0u-0Vy" id="zkG-t1-3g2"/>
+                                            <outlet property="barChartView" destination="qh2-dW-COs" id="CMd-0O-6f2"/>
                                             <outlet property="titleLabel" destination="noR-bj-tWe" id="a9z-uj-q6j"/>
                                             <outlet property="titleSeparator" destination="EUR-yj-6kn" id="FPU-lE-HDl"/>
+                                            <outlet property="xAxisView" destination="x6Q-Dw-dY5" id="vTL-BD-L3K"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bubbles" id="ezb-Ns-XUB" customClass="HEMTrendsBubbleViewCell">
-                                        <rect key="frame" x="12" y="500" width="576" height="246"/>
+                                        <rect key="frame" x="12" y="565" width="576" height="246"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="246"/>
@@ -4595,8 +4618,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="veS-gA-se1">
-                                                    <rect key="frame" x="64" y="1" width="504" height="54"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="veS-gA-se1">
+                                                    <rect key="frame" x="64" y="1" width="512" height="54"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>

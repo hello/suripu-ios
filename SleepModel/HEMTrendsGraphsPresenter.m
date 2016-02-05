@@ -11,11 +11,17 @@
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsCalendarViewCell.h"
 #import "HEMTrendsBarGraphCell.h"
+#import "HEMXAxisView.h"
 #import "HEMTrendsBubbleViewCell.h"
 #import "HEMSubNavigationView.h"
 #import "HEMTrendsSleepDepthView.h"
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
+#import "HEMStyle.h"
+
+static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
+static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;
+static CGFloat const HEMTrendsGraphBarQuarterBarSpacing = 0.0f;
 
 @interface HEMTrendsGraphsPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -79,6 +85,32 @@
     return [HEMTrendsBubbleViewCell height];
 }
 
+- (NSAttributedString*)attributedXAxisTextFromString:(NSString*)string
+                                           alignment:(NSTextAlignment)alignment {
+    NSMutableParagraphStyle* paraStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [paraStyle setAlignment:alignment];
+    
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendXAxisLabelFont],
+                                 NSForegroundColorAttributeName : [UIColor trendXAxisLabelColor],
+                                 NSKernAttributeName : @1,
+                                 NSParagraphStyleAttributeName : paraStyle};
+    
+    return [[NSAttributedString alloc] initWithString:string attributes:attributes];
+}
+
+- (NSArray<NSAttributedString*>*)attributedGraphTitlesFrom:(SENTrendsGraphSection*)graphSection {
+    NSInteger titleCount = [[graphSection titles] count];
+    NSTextAlignment alignment = NSTextAlignmentCenter;
+    if (titleCount < 3) {
+        alignment = NSTextAlignmentLeft;
+    }
+    NSMutableArray* attributedTitles = [NSMutableArray arrayWithCapacity:titleCount];
+    for (NSString* title in [graphSection titles]) {
+        [attributedTitles addObject:[self attributedXAxisTextFromString:title alignment:alignment]];
+    }
+    return attributedTitles;
+}
+
 #pragma mark - Configuring Cells
 
 - (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -94,6 +126,31 @@
 
 - (void)configureBarCell:(HEMTrendsBarGraphCell*)barCell forTrendsGraph:(SENTrendsGraph*)graph {
     [[barCell titleLabel] setText:[graph title]];
+
+    CGFloat xSpacing = 0.0f;
+    switch ([graph timeScale]) {
+        case SENTrendsTimeScaleWeek:
+            xSpacing = HEMTrendsGraphBarWeekBarSpacing;
+            break;
+        case SENTrendsTimeScaleMonth:
+            xSpacing = HEMTrendsGraphBarMonthBarSpacing;
+            break;
+        case SENTrendsTimeScaleQuarter:
+        case SENTrendsTimeScaleUnknown:
+        default:
+            xSpacing = HEMTrendsGraphBarQuarterBarSpacing;
+            break;
+    }
+    
+    SENTrendsGraphSection* section = [[graph sections] firstObject];
+    NSArray<NSAttributedString*>* attributedTitles = [self attributedGraphTitlesFrom:section];
+    [barCell setHighlightedBarColor:[UIColor sleepStateSoundColor]];
+    [barCell setNormalBarColor:[UIColor sleepStateMediumColor]];
+    [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
+    [barCell setAttributedXAxisValues:attributedTitles
+                           dataPoints:[section values]
+               highlightDataAtIndices:[section highlightedValues]
+                              spacing:xSpacing];
 }
 
 - (void)configureBubblesCell:(HEMTrendsBubbleViewCell*)bubbleCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -144,42 +201,40 @@
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionViewCell* cell = nil;
     NSString* reuseId = nil;
     SENTrendsGraph* graph  = [self selectedTrendsGraphAtIndexPath:indexPath];
+    
     switch ([graph displayType]) {
-        case SENTrendsDisplayTypeBubble: {
+        case SENTrendsDisplayTypeBubble:
             reuseId = [HEMMainStoryboard bubblesReuseIdentifier];
-            HEMTrendsBubbleViewCell* bubbleCell =
-                [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                          forIndexPath:indexPath];
-            [self configureBubblesCell:bubbleCell forTrendsGraph:graph];
-            cell = bubbleCell;
             break;
-        }
-        case SENTrendsDisplayTypeBar: {
+        case SENTrendsDisplayTypeBar:
             reuseId = [HEMMainStoryboard barReuseIdentifier];
-            HEMTrendsBarGraphCell* barCell =
-                [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                          forIndexPath:indexPath];
-            [self configureBarCell:barCell forTrendsGraph:graph];
-            cell = barCell;
             break;
-        }
         case SENTrendsDisplayTypeOverview:
         case SENTrendsDisplayTypeGrid:
-        default: {
+        default:
             reuseId = [HEMMainStoryboard calendarReuseIdentifier];
-            HEMTrendsCalendarViewCell* calendarCell =
-                [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                          forIndexPath:indexPath];
-            [self configureCalendarCell:calendarCell forTrendsGraph:graph];
-            cell = calendarCell;
             break;
-        }
     }
     
-    return cell;
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                     forIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SENTrendsGraph* graph  = [self selectedTrendsGraphAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[HEMTrendsCalendarViewCell class]]) {
+        [self configureCalendarCell:(id)cell forTrendsGraph:graph];
+    } else if ([cell isKindOfClass:[HEMTrendsBarGraphCell class]]) {
+        [self configureBarCell:(id)cell forTrendsGraph:graph];
+    } else if ([cell isKindOfClass:[HEMTrendsBubbleViewCell class]]) {
+        [self configureBubblesCell:(id)cell forTrendsGraph:graph];
+    }
+    
 }
 
 #pragma mark - UICollectionView Delegate

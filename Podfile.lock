@@ -128,7 +128,7 @@ CHECKOUT OPTIONS:
     :commit: a11c168e490c98e3270c633d894f987bdae1580b
     :git: git@github.com:hello/BEMSimpleLineGraph.git
   Bugsnag:
-    :commit: d60b6ec1ab20eaa4c19a0f360f31401bfd46076b
+    :commit: 3dfb63cd8779e01f47412d82baf44441fe425ae1
     :git: https://github.com/bugsnag/bugsnag-cocoa.git
   LGBluetooth:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad

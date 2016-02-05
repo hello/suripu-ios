@@ -221,6 +221,11 @@
 + (UIFont*)trendSleepDepthValueFontWithSize:(CGFloat)size;
 
 /**
+ *  Font used for v2 Trends x axis title labels
+ */
++ (UIFont*)trendXAxisLabelFont;
+
+/**
  *  Font for the v2 Trends graph titles
  */
 + (UIFont*)trendsTitleFont;

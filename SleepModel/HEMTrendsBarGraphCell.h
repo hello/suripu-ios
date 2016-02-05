@@ -10,6 +10,14 @@
 
 @interface HEMTrendsBarGraphCell : HEMTrendsBaseCell
 
+@property (nonatomic, strong) UIColor* highlightedBarColor;
+@property (nonatomic, strong) UIColor* normalBarColor;
+@property (nonatomic, assign) CGFloat maxValue;
+
 + (CGFloat)heightWithAverages:(BOOL)averages;
+- (void)setAttributedXAxisValues:(NSArray<NSAttributedString*>*)xValues
+                      dataPoints:(NSArray<NSNumber*>*)dataPoints
+          highlightDataAtIndices:(NSArray<NSNumber*>*)highlightedIndices
+                         spacing:(CGFloat)spacing;
 
 @end

@@ -5,7 +5,7 @@
 //  Created by Delisa Mason on 11/3/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENSensor.h>
+
 #import "UIFont+HEMStyle.h"
 
 @implementation UIFont (HEMStyle)
@@ -429,6 +429,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)trendOptionFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
+}
+
++ (UIFont*)trendXAxisLabelFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:10.0f];
 }
 
 + (UIFont*)trendBottomLabelFont

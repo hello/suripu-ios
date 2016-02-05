@@ -9,12 +9,6 @@
 #import "HEMTrendsBaseCell.h"
 #import "HEMStyle.h"
 
-@interface HEMTrendsBaseCell()
-
-
-
-@end
-
 @implementation HEMTrendsBaseCell
 
 - (void)awakeFromNib {

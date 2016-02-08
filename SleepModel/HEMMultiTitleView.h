@@ -1,5 +1,5 @@
 //
-//  HEMXAxisView.h
+//  HEMMultiTitleView.h
 //  Sense
 //
 //  Created by Jimmy Lu on 2/4/16.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMXAxisView : UIView
+@interface HEMMultiTitleView : UIView
 
 - (void)clear;
 

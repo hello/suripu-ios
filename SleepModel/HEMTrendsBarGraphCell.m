@@ -7,7 +7,7 @@
 //
 
 #import "HEMTrendsBarGraphCell.h"
-#import "HEMXAxisView.h"
+#import "HEMMultiTitleView.h"
 #import "HEMBarChartView.h"
 #import "HEMTrendsAverageView.h"
 #import "HEMTrendsDisplayPoint.h"
@@ -28,7 +28,7 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 @interface HEMTrendsBarGraphCell()
 
 @property (weak, nonatomic) IBOutlet HEMBarChartView *barChartView;
-@property (weak, nonatomic) IBOutlet HEMXAxisView *xAxisView;
+@property (weak, nonatomic) IBOutlet HEMMultiTitleView *multiTitleView;
 @property (weak, nonatomic) IBOutlet HEMTrendsAverageView *averagesView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
@@ -107,10 +107,10 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
     // check xAxisWidth, but any subviews can do.  If subview is bigger than cell
     // then it means the cell has not properly resized the subviews yet, which we
     // depend on so call layout manually
-    CGFloat maxWidth = CGRectGetWidth([[self xAxisView] bounds]);
+    CGFloat maxWidth = CGRectGetWidth([[self multiTitleView] bounds]);
     if (maxWidth > CGRectGetWidth([self bounds])) {
         [self layoutIfNeeded];
-        maxWidth = CGRectGetWidth([[self xAxisView] bounds]);
+        maxWidth = CGRectGetWidth([[self multiTitleView] bounds]);
     }
     
     NSInteger count = [[self combinedPoints] count];
@@ -118,7 +118,7 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 }
 
 - (void)renderXTitles {
-    [[self xAxisView] clear];
+    [[self multiTitleView] clear];
     [self clearDashLines];
     
     if ([[self displayPoints] count] == 1
@@ -126,15 +126,15 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
         
         CGFloat nextX = 0.0f;
         for (NSAttributedString* title in [self xTitles]) {
-            [[self xAxisView] addLabelWithText:title atX:nextX maxLabelWidth:[self barWidth]];
+            [[self multiTitleView] addLabelWithText:title atX:nextX maxLabelWidth:[self barWidth]];
             nextX += [self barSpacing] + [self barWidth];
         }
     } else {
-        CGFloat minTitleX = CGRectGetMinX([[self xAxisView] frame]);
+        CGFloat minTitleX = CGRectGetMinX([[self multiTitleView] frame]);
         NSInteger numberOfSections = [[self displayPoints] count];
         NSInteger minBarCount = numberOfSections > 2 ? 5 : 3;
         NSInteger sectionBarCount = 0;
-        CGFloat viewWidth = CGRectGetMaxX([[self xAxisView] bounds]);
+        CGFloat viewWidth = CGRectGetMaxX([[self multiTitleView] bounds]);
         CGFloat lastTitleX = viewWidth;
         for (NSInteger idx = numberOfSections - 1; idx >= 0; idx--) {
             NSArray* sectionOfPoints = [self displayPoints][idx];
@@ -154,9 +154,9 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
                     [self addDashLineForSectionAtX:dashLineX];
                 }
                 
-                [[self xAxisView] addLabelWithText:title
-                                               atX:lastTitleX + HEMTrendsBarDashLineSpacing
-                                     maxLabelWidth:MAXFLOAT];
+                [[self multiTitleView] addLabelWithText:title
+                                                    atX:lastTitleX + HEMTrendsBarDashLineSpacing
+                                          maxLabelWidth:MAXFLOAT];
             }
         }
     }
@@ -169,7 +169,7 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 
 - (void)addDashLineForSectionAtX:(CGFloat)x {
     CGFloat maxGraphY = CGRectGetMaxY([[self barChartView] frame]);
-    CGFloat y = CGRectGetMinY([[self xAxisView] frame]);
+    CGFloat y = CGRectGetMinY([[self multiTitleView] frame]);
     CGRect frame = CGRectZero;
     frame.origin.x = ceilCGFloat(x);
     frame.origin.y = y + HEMTrendsBarDashLineYOffset;

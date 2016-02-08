@@ -1,18 +1,18 @@
 //
-//  HEMXAxisView.m
+//  HEMMultiTitleView.m
 //  Sense
 //
 //  Created by Jimmy Lu on 2/4/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-#import "HEMXAxisView.h"
+#import "HEMMultiTitleView.h"
 
-@interface HEMXAxisView()
+@interface HEMMultiTitleView()
 
 @end
 
-@implementation HEMXAxisView
+@implementation HEMMultiTitleView
 
 - (void)clear {
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];

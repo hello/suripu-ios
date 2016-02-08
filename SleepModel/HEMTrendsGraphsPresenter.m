@@ -11,7 +11,7 @@
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsCalendarViewCell.h"
 #import "HEMTrendsBarGraphCell.h"
-#import "HEMXAxisView.h"
+#import "HEMMultiTitleView.h"
 #import "HEMTrendsBubbleViewCell.h"
 #import "HEMSubNavigationView.h"
 #import "HEMTrendsSleepDepthView.h"

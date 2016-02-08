@@ -173,6 +173,7 @@
 		BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
 		BF52946C1C652C8000D931B7 /* HEMTrendsDisplayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = BF52946B1C652C8000D931B7 /* HEMTrendsDisplayPoint.m */; };
 		BF52946F1C6929C200D931B7 /* HEMDashLine.m in Sources */ = {isa = PBXBuildFile; fileRef = BF52946E1C6929C200D931B7 /* HEMDashLine.m */; };
+		BF5294721C6945BA00D931B7 /* HEMTrendsCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5294711C6945BA00D931B7 /* HEMTrendsCalendarView.m */; };
 		BF539CC01C0D292C000F77AA /* HEMInsightsService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CBF1C0D292C000F77AA /* HEMInsightsService.m */; };
 		BF539CC41C0D3558000F77AA /* HEMQuestionsService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CC31C0D3558000F77AA /* HEMQuestionsService.m */; };
 		BF539CC71C0D38BA000F77AA /* HEMInsightsFeedPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CC61C0D38BA000F77AA /* HEMInsightsFeedPresenter.m */; };
@@ -683,6 +684,8 @@
 		BF52946B1C652C8000D931B7 /* HEMTrendsDisplayPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsDisplayPoint.m; sourceTree = "<group>"; };
 		BF52946D1C6929C200D931B7 /* HEMDashLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDashLine.h; sourceTree = "<group>"; };
 		BF52946E1C6929C200D931B7 /* HEMDashLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDashLine.m; sourceTree = "<group>"; };
+		BF5294701C6945BA00D931B7 /* HEMTrendsCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsCalendarView.h; sourceTree = "<group>"; };
+		BF5294711C6945BA00D931B7 /* HEMTrendsCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsCalendarView.m; sourceTree = "<group>"; };
 		BF539CBE1C0D292C000F77AA /* HEMInsightsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightsService.h; sourceTree = "<group>"; };
 		BF539CBF1C0D292C000F77AA /* HEMInsightsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsService.m; sourceTree = "<group>"; };
 		BF539CC21C0D3558000F77AA /* HEMQuestionsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMQuestionsService.h; sourceTree = "<group>"; };
@@ -1238,6 +1241,8 @@
 				BFF14C301C642B6A00AD3773 /* HEMTrendsAverageView.m */,
 				BF52946D1C6929C200D931B7 /* HEMDashLine.h */,
 				BF52946E1C6929C200D931B7 /* HEMDashLine.m */,
+				BF5294701C6945BA00D931B7 /* HEMTrendsCalendarView.h */,
+				BF5294711C6945BA00D931B7 /* HEMTrendsCalendarView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3148,6 +3153,7 @@
 				8AA1E62F1A899C0100590EB6 /* HEMTimelineFeedbackViewController.m in Sources */,
 				8AC3C2E21A3C8CC90074A87F /* HEMSnazzBarButton.m in Sources */,
 				BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */,
+				BF5294721C6945BA00D931B7 /* HEMTrendsCalendarView.m in Sources */,
 				BF257EE71A1D1C2600DAF923 /* HEMAlertViewController.m in Sources */,
 				8A4B669E19F6CE4400445883 /* HEMActionSheetViewController.m in Sources */,
 				BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */,

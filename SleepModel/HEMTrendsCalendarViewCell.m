@@ -7,35 +7,41 @@
 //
 
 #import "HEMTrendsCalendarViewCell.h"
+#import "HEMTrendsCalendarView.h"
+#import "HEMTrendsAverageView.h"
 #import "HEMStyle.h"
 
-static CGFloat const HEMTrendsCalendarViewCellBaseHeight = 90.0f;
-static CGFloat const HEMTrendsCalendarMonthRowSpacing = 15.0f;
-static CGFloat const HEMTrendsCalendarMonthRowHeight = 32.0f;
-static CGFloat const HEMTrendsCalendarAveragesHeight = 77.0f;
-static CGFloat const HEMTrendsCalendarMultiMonthHeight = 270.0f;
+static CGFloat const HEMTrendsCalendarCellTitleHeightWithSeparator = 49.0f;
+static CGFloat const HEMTrendsCalendarCellTitleSeparatorBotMargin = 8.0f;
+static CGFloat const HEMTrendsCalendarAveragesHeight = 52.0f;
+static CGFloat const HEMTrendsCalendarAveragesBottom = 20.0f;
+static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
 
 @interface HEMTrendsCalendarViewCell()
+
+@property (weak, nonatomic) IBOutlet HEMTrendsCalendarView *calendarView;
+@property (weak, nonatomic) IBOutlet HEMTrendsAverageView *averagesView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
 
 @end
 
 @implementation HEMTrendsCalendarViewCell
 
-+ (CGFloat)heightForMonthWithNumberOfRows:(NSInteger)rows showAverages:(BOOL)averages {
-    CGFloat totalHeight = HEMTrendsCalendarViewCellBaseHeight;
-    CGFloat rowSpacing = rows > 0 ? ((rows - 1) * HEMTrendsCalendarMonthRowSpacing) : 0.0f;
-    totalHeight = totalHeight + (rows * HEMTrendsCalendarMonthRowHeight) + rowSpacing;
-    if (averages) {
-        totalHeight = totalHeight + HEMTrendsCalendarAveragesHeight;
-    }
-    return totalHeight;
++ (CGFloat)heightForAveragesView {
+    return HEMTrendsCalendarAveragesHeight + HEMTrendsCalendarAveragesBottom;
 }
 
-+ (CGFloat)heightForMultiMonthWithAverages:(BOOL)averages {
-    CGFloat totalHeight = HEMTrendsCalendarViewCellBaseHeight + HEMTrendsCalendarMultiMonthHeight;
-    if (averages) {
-        totalHeight = totalHeight + HEMTrendsCalendarAveragesHeight;
++ (CGFloat)heightForNumberOfDays:(NSInteger)days withAverages:(BOOL)showAverages {
+    CGFloat totalHeight = HEMTrendsCalendarCellTitleHeightWithSeparator;
+    totalHeight += HEMTrendsCalendarCellTitleSeparatorBotMargin;
+    totalHeight += [HEMTrendsCalendarView heightWithDays:days];
+    totalHeight += HEMTrendsCalendarBotMargin;
+    
+    if (showAverages) {
+        totalHeight += [self heightForAveragesView];
     }
+    
     return totalHeight;
 }
 

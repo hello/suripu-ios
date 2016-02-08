@@ -65,18 +65,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (CGFloat)heightForCalendarViewForGraphData:(SENTrendsGraph*)graph {
     BOOL averages = [[graph annotations] count] == HEMTrendsGraphAverageRequirement;
-    switch ([[self subNav] selectedControlTag]) {
-        case SENTrendsTimeScaleWeek:
-        case SENTrendsTimeScaleMonth:{
-            NSInteger rows = [[graph sections] count];
-            return [HEMTrendsCalendarViewCell heightForMonthWithNumberOfRows:rows
-                                                                showAverages:averages];
-        }
-        case SENTrendsTimeScaleQuarter:
-            return [HEMTrendsCalendarViewCell heightForMultiMonthWithAverages:averages];
-        default:
-            return 0.0f;
+    NSInteger days = 0;
+    for (SENTrendsGraphSection* section in [graph sections]) {
+        days += [[section values] count];
     }
+    return [HEMTrendsCalendarViewCell heightForNumberOfDays:days withAverages:averages];
 }
 
 - (CGFloat)heightForBarGraphWithData:(SENTrendsGraph*)graph {
@@ -146,13 +139,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 #pragma mark - Configuring Cells
 
 - (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
-    HEMTrendsCalendarType cellType = HEMTrendsCalendarTypeMonth;
-    if ([graph timeScale] == SENTrendsTimeScaleQuarter) {
-        cellType = HEMTrendsCalendarTypeQuarter;
-    }
-    [calendarCell setAverages:[[graph annotations] count] > 0];
-    [calendarCell setRows:[[graph sections] count]];
-    [calendarCell setType:cellType];
     [[calendarCell titleLabel] setText:[graph title]];
 }
 

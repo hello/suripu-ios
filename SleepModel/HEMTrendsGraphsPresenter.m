@@ -182,6 +182,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [barCell setMinValue:[[graph minValue] CGFloatValue]];
     [barCell setAverageTitleColor:[UIColor trendXAxisLabelColor]];
     [barCell setAverageValueColor:[UIColor sleepStateSoundColor]];
+    [barCell setDashLineColor:[UIColor trendsSectionDashLineColor]];
     [barCell setAverageTitles:averageTitles values:averageValues];
     [barCell setHighlightLabelTextFormat:highlightFormat];
     [barCell setHighlightTextFont:[UIFont trendsHighlightLabelFont]];

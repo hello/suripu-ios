@@ -157,6 +157,7 @@
 + (UIColor *)borderColor;
 + (UIColor *)alarmClockViewBackgroundColor;
 + (UIColor *)trendXAxisLabelColor;
++ (UIColor *)trendsSectionDashLineColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (NSArray*)roomCheckValueGradientColorRefs;
 

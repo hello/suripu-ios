@@ -11,6 +11,7 @@
 #import "HEMBarChartView.h"
 #import "HEMTrendsAverageView.h"
 #import "HEMTrendsDisplayPoint.h"
+#import "HEMDashLine.h"
 
 static CGFloat const HEMTrendsBarGraphBaseHeight = 233.0f;
 static CGFloat const HEMTrendsBarGraphAveragesHeight = 52.0f;
@@ -20,6 +21,9 @@ static CGFloat const HEMTrendsBarHighlightLabelHeight = 20.0f;
 static CGFloat const HEMTrendsBarHighlightLabelCornerRadius = 2.0f;
 static CGFloat const HEMTrendsBarHighlightLabelSpacing = 2.0f;
 static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
+static CGFloat const HEMTrendsBarDashLineWidth = 1.0f;
+static CGFloat const HEMTrendsBarDashLineSpacing = 4.0f;
+static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 
 @interface HEMTrendsBarGraphCell()
 
@@ -37,6 +41,7 @@ static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
 @property (assign, nonatomic) CGFloat barWidth;
 @property (assign, nonatomic) CGFloat barSpacing;
 @property (strong, nonatomic) NSMutableArray<UILabel*>* highlightLabels;
+@property (strong, nonatomic) NSMutableArray<UIView*>* dashLines;
 
 @end
 
@@ -114,6 +119,7 @@ static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
 
 - (void)renderXTitles {
     [[self xAxisView] clear];
+    [self clearDashLines];
     
     if ([[self displayPoints] count] == 1
         && [[[self displayPoints] firstObject] count] == [[self xTitles] count]) { // 1 section
@@ -124,6 +130,7 @@ static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
             nextX += [self barSpacing] + [self barWidth];
         }
     } else {
+        CGFloat minTitleX = CGRectGetMinX([[self xAxisView] frame]);
         NSInteger numberOfSections = [[self displayPoints] count];
         NSInteger minBarCount = numberOfSections > 2 ? 5 : 3;
         NSInteger sectionBarCount = 0;
@@ -141,12 +148,43 @@ static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
                 && idx < [[self xTitles] count]
                 && lastTitleX >= 0.0f) {
                 NSAttributedString* title = [self xTitles][idx];
+                
+                CGFloat dashLineX = lastTitleX + minTitleX;
+                if (dashLineX > [self barWidth] + minTitleX) {
+                    [self addDashLineForSectionAtX:dashLineX];
+                }
+                
                 [[self xAxisView] addLabelWithText:title
-                                               atX:lastTitleX
+                                               atX:lastTitleX + HEMTrendsBarDashLineSpacing
                                      maxLabelWidth:MAXFLOAT];
             }
         }
     }
+}
+
+- (void)clearDashLines {
+    [[self dashLines] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [[self dashLines] removeAllObjects];
+}
+
+- (void)addDashLineForSectionAtX:(CGFloat)x {
+    CGFloat maxGraphY = CGRectGetMaxY([[self barChartView] frame]);
+    CGFloat y = CGRectGetMinY([[self xAxisView] frame]);
+    CGRect frame = CGRectZero;
+    frame.origin.x = ceilCGFloat(x);
+    frame.origin.y = y + HEMTrendsBarDashLineYOffset;
+    frame.size.width = HEMTrendsBarDashLineWidth;
+    frame.size.height = maxGraphY - y - HEMTrendsBarDashLineYOffset;
+    
+    if (![self dashLines]) {
+        [self setDashLines:[NSMutableArray arrayWithCapacity:[[self displayPoints] count]]];
+    }
+    
+    HEMDashLine* dashLine = [[HEMDashLine alloc] initWithFrame:frame];
+    [dashLine setDashColor:[self dashLineColor]];
+    
+    [[self contentView] addSubview:dashLine];
+    [[self dashLines] addObject:dashLine];
 }
 
 - (void)renderBars {

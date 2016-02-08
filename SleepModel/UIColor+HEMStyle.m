@@ -317,6 +317,9 @@ static UIColor *_tintColor = nil;
                             blue:200.0f/255.0f
                            alpha:1.0f];
 }
++ (UIColor *)trendsSectionDashLineColor {
+    return [UIColor colorWithWhite:0.0f alpha:0.1f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UIColor* averageTitleColor;
 @property (nonatomic, copy)   NSString* highlightLabelTextFormat;
 @property (nonatomic, strong) UIFont* highlightTextFont;
+@property (nonatomic, strong) UIColor* dashLineColor;
 
 + (CGFloat)heightWithAverages:(BOOL)averages;
 - (void)setAverageTitles:(NSArray<NSString*>*)titles

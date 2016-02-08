@@ -14,18 +14,6 @@
 
 @implementation HEMXAxisView
 
-- (void)showLabelsFromX:(CGFloat)start
-  withAttributedStrings:(NSArray<NSAttributedString*>*)strings
-           labelSpacing:(CGFloat)labelSpacing
-          maxLabelWidth:(CGFloat)maxLabelWidth {
-    CGFloat xOrigin = start;
-    for (NSAttributedString* string in strings) {
-        UILabel* xLabel = [self labelWithText:string atXOrigin:xOrigin maxWidth:maxLabelWidth];
-        [self addSubview:xLabel];
-        xOrigin = CGRectGetMaxX([xLabel frame]) + labelSpacing;
-    }
-}
-
 - (void)clear {
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }

@@ -10,11 +10,6 @@
 
 @interface HEMXAxisView : UIView
 
-- (void)showLabelsFromX:(CGFloat)start
-  withAttributedStrings:(NSArray<NSAttributedString*>*)strings
-           labelSpacing:(CGFloat)labelSpacing
-          maxLabelWidth:(CGFloat)maxLabelWidth;
-
 - (void)clear;
 
 - (void)addLabelWithText:(NSAttributedString*)text

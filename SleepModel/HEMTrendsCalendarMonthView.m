@@ -35,7 +35,7 @@ static NSInteger const HEMTrendsCalMonthMaxRows = 5;
         daysItCanDisplayInCurrentRow = HEMTrendsCalMonthDaysInWeek;
     }
     
-    CGFloat rowsNeeded = (days - daysItCanDisplayInCurrentRow) / HEMTrendsCalMonthDaysInWeek;
+    CGFloat rowsNeeded = ((days - daysItCanDisplayInCurrentRow) / HEMTrendsCalMonthDaysInWeek) + 1;
     return roundCGFloat(rowsNeeded + 0.5f);
 }
 

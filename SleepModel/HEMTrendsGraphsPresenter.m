@@ -63,13 +63,16 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return [trends graphs][[indexPath row]];
 }
 
-- (CGFloat)heightForCalendarViewForGraphData:(SENTrendsGraph*)graph {
+- (CGFloat)heightForCalendarViewForGraphData:(SENTrendsGraph*)graph itemWidth:(CGFloat)itemWidth {
     BOOL averages = [[graph annotations] count] == HEMTrendsGraphAverageRequirement;
     NSInteger days = 0;
     for (SENTrendsGraphSection* section in [graph sections]) {
         days += [[section values] count];
     }
-    return [HEMTrendsCalendarViewCell heightForNumberOfDays:days withAverages:averages];
+    
+    return [HEMTrendsCalendarViewCell heightForNumberOfDays:days
+                                               withAverages:averages
+                                                   maxWidth:itemWidth];
 }
 
 - (CGFloat)heightForBarGraphWithData:(SENTrendsGraph*)graph {
@@ -104,6 +107,20 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return titles;
 }
 
+- (NSArray<NSArray<NSAttributedString*>*>*)sectionTitlesFrom:(SENTrendsGraph*)graph {
+    NSMutableArray* titles = [NSMutableArray arrayWithCapacity:[[graph sections] count]];
+    NSMutableArray* sectionTitles = nil;
+    for (SENTrendsGraphSection* section in [graph sections]) {
+        sectionTitles = [NSMutableArray arrayWithCapacity:[[section titles] count]];
+        for (NSString* title in [section titles]) {
+            [sectionTitles addObject:[self attributedXAxisTextFromString:title
+                                                               alignment:NSTextAlignmentCenter]];
+        }
+        [titles addObject:sectionTitles];
+    }
+    return titles;
+}
+
 - (NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)segmentedDataPointsFrom:(SENTrendsGraph*)graph {
     NSInteger sections = [[graph sections] count];
     NSMutableArray* displayPoints = [NSMutableArray arrayWithCapacity:sections];
@@ -123,6 +140,28 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return displayPoints;
 }
 
+- (void)averagesFromGraph:(SENTrendsGraph*)graph
+                   titles:(NSArray<NSString*>**)titles
+                   values:(NSArray<NSString*>**)values {
+    NSMutableArray<NSString*>* averageTitles = nil;
+    NSMutableArray<NSString*>* averageValues = nil;
+    NSInteger annotationCount = [[graph annotations] count];
+    if (annotationCount > 0) {
+        averageTitles = [NSMutableArray arrayWithCapacity:annotationCount];
+        averageValues = [NSMutableArray arrayWithCapacity:annotationCount];
+        NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
+        for (SENTrendsAnnotation* annotation in [graph annotations]) {
+            if ([annotation title]) {
+                [averageTitles addObject:[annotation title]];
+            }
+            CGFloat averageValue = [[annotation value] CGFloatValue];
+            [averageValues addObject:[NSString stringWithFormat:avgFormat, averageValue]];
+        }
+    }
+    *titles = averageTitles;
+    *values = averageValues;
+}
+
 - (CGFloat)barSpacingForTimeScale:(SENTrendsTimeScale)timeScale {
     switch (timeScale) {
         case SENTrendsTimeScaleWeek:
@@ -140,24 +179,20 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
     [[calendarCell titleLabel] setText:[graph title]];
+    [calendarCell setSectionTitles:[self sectionTitlesFrom:graph]];
+    
+    NSArray<NSString*>* averageTitles = nil;
+    NSArray<NSString*>* averageValues = nil;
+    [self averagesFromGraph:graph titles:&averageTitles values:&averageValues];
+    [calendarCell setAverageTitles:averageTitles values:averageValues];
+    [calendarCell setAverageTitleColor:[UIColor trendXAxisLabelColor]];
+    [calendarCell setAverageValueColor:[UIColor sleepStateSoundColor]];
 }
 
 - (void)configureBarCell:(HEMTrendsBarGraphCell*)barCell forTrendsGraph:(SENTrendsGraph*)graph {
-    NSMutableArray<NSString*>* averageTitles = nil;
-    NSMutableArray<NSString*>* averageValues = nil;
-    NSInteger annotationCount = [[graph annotations] count];
-    if (annotationCount > 0) {
-        averageTitles = [NSMutableArray arrayWithCapacity:annotationCount];
-        averageValues = [NSMutableArray arrayWithCapacity:annotationCount];
-        NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
-        for (SENTrendsAnnotation* annotation in [graph annotations]) {
-            if ([annotation title]) {
-                [averageTitles addObject:[annotation title]];
-            }
-            CGFloat averageValue = [[annotation value] CGFloatValue];
-            [averageValues addObject:[NSString stringWithFormat:avgFormat, averageValue]];
-        }
-    }
+    NSArray<NSString*>* averageTitles = nil;
+    NSArray<NSString*>* averageValues = nil;
+    [self averagesFromGraph:graph titles:&averageTitles values:&averageValues];
     
     NSArray<NSAttributedString*>* attributedTitles = [self barGraphTitlesFrom:graph];
     NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
@@ -206,7 +241,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     switch ([graph displayType]) {
         case SENTrendsDisplayTypeOverview:
         case SENTrendsDisplayTypeGrid:
-            itemSize.height = [self heightForCalendarViewForGraphData:graph];
+            itemSize.height = [self heightForCalendarViewForGraphData:graph itemWidth:itemSize.width];
             break;
         case SENTrendsDisplayTypeBubble: {
             itemSize.height = [self heightForBubbleGraphWithData:graph];

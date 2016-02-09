@@ -15,14 +15,12 @@ static CGFloat const HEMTrendsCalendarCellTitleHeightWithSeparator = 49.0f;
 static CGFloat const HEMTrendsCalendarCellTitleSeparatorBotMargin = 8.0f;
 static CGFloat const HEMTrendsCalendarAveragesHeight = 52.0f;
 static CGFloat const HEMTrendsCalendarAveragesBottom = 20.0f;
+static CGFloat const HEMTrendsCalendarHorzMargin = 20.0f;
 static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
 
 @interface HEMTrendsCalendarViewCell()
 
 @property (weak, nonatomic) IBOutlet HEMTrendsCalendarView *calendarView;
-@property (weak, nonatomic) IBOutlet HEMTrendsAverageView *averagesView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
 
 @end
 
@@ -32,10 +30,14 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
     return HEMTrendsCalendarAveragesHeight + HEMTrendsCalendarAveragesBottom;
 }
 
-+ (CGFloat)heightForNumberOfDays:(NSInteger)days withAverages:(BOOL)showAverages {
++ (CGFloat)heightForNumberOfDays:(NSInteger)days
+                    withAverages:(BOOL)showAverages
+                        maxWidth:(CGFloat)width {
+    
+    CGFloat contentWidth = width - (HEMTrendsCalendarHorzMargin * 2);
     CGFloat totalHeight = HEMTrendsCalendarCellTitleHeightWithSeparator;
     totalHeight += HEMTrendsCalendarCellTitleSeparatorBotMargin;
-    totalHeight += [HEMTrendsCalendarView heightWithDays:days];
+    totalHeight += [HEMTrendsCalendarView heightWithDays:days maxWidth:contentWidth];
     totalHeight += HEMTrendsCalendarBotMargin;
     
     if (showAverages) {
@@ -43,6 +45,17 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
     }
     
     return totalHeight;
+}
+
+- (void)layoutSubviewsIfNeeded {
+    if (CGRectGetWidth([self bounds]) < CGRectGetWidth([[self calendarView] bounds])) {
+        [self layoutIfNeeded];
+    }
+}
+
+- (void)setSectionTitles:(NSArray<NSArray<NSAttributedString*>*>*)sectionTitles {
+    [self layoutSubviewsIfNeeded];
+    [[self calendarView] updateTitlesWith:sectionTitles];
 }
 
 @end

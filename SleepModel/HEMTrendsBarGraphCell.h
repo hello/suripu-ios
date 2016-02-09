@@ -16,8 +16,6 @@
 @property (nonatomic, strong) UIColor* normalBarColor;
 @property (nonatomic, assign) CGFloat maxValue;
 @property (nonatomic, assign) CGFloat minValue;
-@property (nonatomic, strong) UIColor* averageValueColor;
-@property (nonatomic, strong) UIColor* averageTitleColor;
 @property (nonatomic, copy)   NSString* highlightLabelTextFormat;
 @property (nonatomic, strong) UIFont* highlightTextFont;
 @property (nonatomic, strong) UIColor* dashLineColor;

@@ -29,9 +29,6 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 
 @property (weak, nonatomic) IBOutlet HEMBarChartView *barChartView;
 @property (weak, nonatomic) IBOutlet HEMMultiTitleView *multiTitleView;
-@property (weak, nonatomic) IBOutlet HEMTrendsAverageView *averagesView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
 
 @property (copy, nonatomic) NSArray<NSAttributedString*>* xTitles;
 @property (copy, nonatomic) NSArray<NSArray<HEMTrendsDisplayPoint*>*>* displayPoints;

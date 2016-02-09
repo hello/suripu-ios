@@ -4212,7 +4212,7 @@
                                             <constraint firstAttribute="trailing" secondItem="UjL-WL-aI3" secondAttribute="trailing" constant="20" id="maE-u4-fNy"/>
                                             <constraint firstAttribute="trailing" secondItem="j93-4w-LIJ" secondAttribute="trailing" constant="20" id="pkP-Ss-Cpr"/>
                                             <constraint firstItem="j93-4w-LIJ" firstAttribute="top" secondItem="405-0y-UGl" secondAttribute="bottom" constant="8" id="qtC-nM-qcF"/>
-                                            <constraint firstItem="UjL-WL-aI3" firstAttribute="top" secondItem="j93-4w-LIJ" secondAttribute="bottom" constant="18" id="skp-1y-VaL"/>
+                                            <constraint firstItem="UjL-WL-aI3" firstAttribute="top" secondItem="j93-4w-LIJ" secondAttribute="bottom" priority="750" constant="18" id="skp-1y-VaL"/>
                                             <constraint firstItem="405-0y-UGl" firstAttribute="top" secondItem="vgd-wP-pzh" secondAttribute="bottom" id="y58-Xg-AAB"/>
                                         </constraints>
                                         <size key="customSize" width="576" height="250"/>

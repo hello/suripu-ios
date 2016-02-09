@@ -10,6 +10,8 @@
 
 @interface HEMTrendsCalendarView : UIView
 
-+ (CGFloat)heightWithDays:(NSInteger)days;
++ (CGFloat)heightWithDays:(NSInteger)days maxWidth:(CGFloat)maxWidth;
+
+- (void)updateTitlesWith:(NSArray<NSArray<NSAttributedString*>*>*)attributedTitles;
 
 @end

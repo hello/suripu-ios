@@ -11,6 +11,10 @@
 
 @interface HEMTrendsCalendarViewCell : HEMTrendsBaseCell
 
-+ (CGFloat)heightForNumberOfDays:(NSInteger)days withAverages:(BOOL)showAverages;
++ (CGFloat)heightForNumberOfDays:(NSInteger)days
+                    withAverages:(BOOL)showAverages
+                        maxWidth:(CGFloat)width;
+
+- (void)setSectionTitles:(NSArray<NSArray<NSAttributedString*>*>*)sectionTitles;
 
 @end

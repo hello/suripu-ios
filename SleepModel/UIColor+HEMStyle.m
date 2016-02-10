@@ -311,14 +311,20 @@ static UIColor *_tintColor = nil;
 + (UIColor *)alarmClockViewBackgroundColor {
     return [UIColor colorWithHex:0xF9F9FA alpha:1.0f];
 }
-+ (UIColor *)trendXAxisLabelColor {
-    return [UIColor colorWithRed:185.0f/255.0f
-                           green:191.0f/255.0f
-                            blue:200.0f/255.0f
-                           alpha:1.0f];
-}
 + (UIColor *)trendsSectionDashLineColor {
     return [UIColor colorWithWhite:0.0f alpha:0.1f];
+}
++ (UIColor *)emptyCircleColor {
+    return [UIColor colorWithHex:0xF8F8F9 alpha:1.0f];
+}
++ (UIColor *)emptyCircleBorderColor {
+    return [UIColor colorWithHex:0xEDEEF0 alpha:0.5f];
+}
++ (UIColor *)trendsAverageTitleColor {
+    return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];
+}
++ (UIColor *)trendsSubtitleColor {
+    return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

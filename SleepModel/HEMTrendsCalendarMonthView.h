@@ -9,12 +9,20 @@
 #import <UIKit/UIKit.h>
 
 extern CGFloat const HEMTrendsCalMonthDaySpacing;
+extern NSInteger const HEMTrendsCalMonthDaysInWeek;
+
+@class HEMTrendsDisplayPoint;
 
 @interface HEMTrendsCalendarMonthView : UIView
 
++ (CGFloat)heightForMonthInQuarter:(NSDate*)month maxWidth:(CGFloat)maxWidth;
 + (CGFloat)heightForMonthWithRows:(NSInteger)rows maxWidth:(CGFloat)maxWidth;
-+ (CGFloat)sizeForEachDayWithWidth:(CGFloat)width;
-+ (NSInteger)rowsForDays:(NSInteger)days;
-+ (NSInteger)monthsForRows:(NSInteger)rows;
++ (CGFloat)sizeForEachDayInMonthWithWidth:(CGFloat)width;
+
+- (void)showCurrentMonthWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values
+                            titles:(NSArray<NSAttributedString*>*)localizedTitles;
+- (void)showMonthInQuarterWithValues:(NSArray<HEMTrendsDisplayPoint*>*)values
+                              titles:(NSAttributedString*)localizedMonthText
+                            forMonth:(NSDate*)month;
 
 @end

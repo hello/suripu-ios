@@ -18,12 +18,12 @@
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
-- (void)addLabelWithText:(NSAttributedString*)text
-                     atX:(CGFloat)xOrigin
-           maxLabelWidth:(CGFloat)maxLabelWidth {
-    [self addSubview:[self labelWithText:text
-                               atXOrigin:xOrigin
-                                maxWidth:maxLabelWidth]];
+- (CGFloat)addLabelWithText:(NSAttributedString*)text
+                        atX:(CGFloat)xOrigin
+              maxLabelWidth:(CGFloat)maxLabelWidth {
+    UILabel* label = [self labelWithText:text atXOrigin:xOrigin maxWidth:maxLabelWidth];
+    [self addSubview:label];
+    return CGRectGetMaxX([label frame]);
 }
 
 - (UILabel*)labelWithText:(NSAttributedString*)text

@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 2/5/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import <SenseKit/SENCondition.h>
 #import "HEMTrendsDisplayPoint.h"
 
 @interface HEMTrendsDisplayPoint()

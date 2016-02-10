@@ -8,13 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "HEMTrendsBaseCell.h"
+#import "HEMTrendsCalendarView.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@class HEMTrendsDisplayPoint;
 
 @interface HEMTrendsCalendarViewCell : HEMTrendsBaseCell
 
-+ (CGFloat)heightForNumberOfDays:(NSInteger)days
-                    withAverages:(BOOL)showAverages
-                        maxWidth:(CGFloat)width;
+@property (nonatomic, assign) HEMTrendsCalendarType type;
 
-- (void)setSectionTitles:(NSArray<NSArray<NSAttributedString*>*>*)sectionTitles;
++ (CGFloat)heightWithNumberOfSections:(NSInteger)sections
+                              forType:(HEMTrendsCalendarType)type
+                         withAverages:(BOOL)averages
+                                width:(CGFloat)width;
+
+- (void)setSectionTitles:(NSArray<NSAttributedString*>*)sectionTitles
+                  scores:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)scores;
 
 @end
+
+NS_ASSUME_NONNULL_END

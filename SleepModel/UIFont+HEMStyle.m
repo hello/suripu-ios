@@ -448,6 +448,18 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:10.f];
 }
 
++ (UIFont*)trendScoreFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:12.0f];
+}
+
++ (UIFont*)trendAverageTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:10.0f];
+}
+
++ (UIFont*)trendAverageValueFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernUltraLight size:28.0f];
+}
+
 + (UIFont*)trendSleepDepthValueFontWithSize:(CGFloat)size {
     return [UIFont fontWithName:HEMFontFamilyNameModernUltraLight size:size];
 }

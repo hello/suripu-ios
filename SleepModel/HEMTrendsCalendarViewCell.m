@@ -9,6 +9,7 @@
 #import "HEMTrendsCalendarViewCell.h"
 #import "HEMTrendsCalendarView.h"
 #import "HEMTrendsAverageView.h"
+#import "HEMTrendsDisplayPoint.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMTrendsCalendarCellTitleHeightWithSeparator = 49.0f;
@@ -30,17 +31,20 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
     return HEMTrendsCalendarAveragesHeight + HEMTrendsCalendarAveragesBottom;
 }
 
-+ (CGFloat)heightForNumberOfDays:(NSInteger)days
-                    withAverages:(BOOL)showAverages
-                        maxWidth:(CGFloat)width {
++ (CGFloat)heightWithNumberOfSections:(NSInteger)sections
+                              forType:(HEMTrendsCalendarType)type
+                         withAverages:(BOOL)averages
+                                width:(CGFloat)width {
     
     CGFloat contentWidth = width - (HEMTrendsCalendarHorzMargin * 2);
     CGFloat totalHeight = HEMTrendsCalendarCellTitleHeightWithSeparator;
     totalHeight += HEMTrendsCalendarCellTitleSeparatorBotMargin;
-    totalHeight += [HEMTrendsCalendarView heightWithDays:days maxWidth:contentWidth];
+    totalHeight += [HEMTrendsCalendarView heightWithSections:sections
+                                                     forType:type
+                                                    maxWidth:contentWidth];
     totalHeight += HEMTrendsCalendarBotMargin;
     
-    if (showAverages) {
+    if (averages) {
         totalHeight += [self heightForAveragesView];
     }
     
@@ -53,9 +57,11 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
     }
 }
 
-- (void)setSectionTitles:(NSArray<NSArray<NSAttributedString*>*>*)sectionTitles {
+- (void)setSectionTitles:(NSArray<NSAttributedString*>*)sectionTitles
+                  scores:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)scores {
     [self layoutSubviewsIfNeeded];
-    [[self calendarView] updateTitlesWith:sectionTitles];
+    [[self calendarView] setType:[self type]];
+    [[self calendarView] updateWithValues:scores titles:sectionTitles];
 }
 
 @end

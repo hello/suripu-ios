@@ -156,9 +156,12 @@
 + (UIColor *)insightAboutTextColor;
 + (UIColor *)borderColor;
 + (UIColor *)alarmClockViewBackgroundColor;
-+ (UIColor *)trendXAxisLabelColor;
 + (UIColor *)trendsSectionDashLineColor;
++ (UIColor *)emptyCircleColor;
++ (UIColor *)emptyCircleBorderColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
++ (UIColor *)trendsAverageTitleColor;
++ (UIColor *)trendsSubtitleColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
 
 @end

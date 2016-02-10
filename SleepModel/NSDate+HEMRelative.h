@@ -54,6 +54,14 @@
 
 - (BOOL)isOnSameDay:(NSDate *)otherDate;
 
+- (NSDate*)previousMonth;
+
+- (NSDate*)nextMonth;
+
+- (BOOL)isCurrentMonth;
+
+- (NSDate*)monthsFromNow:(NSInteger)months;
+
 /**
  *  Checks if the current time is the early morning hours of 'today'
  *

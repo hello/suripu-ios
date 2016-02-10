@@ -9,6 +9,7 @@
 #import "SENService.h"
 
 @class SENTrends;
+@class HEMTrendsDisplayPoint;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -54,6 +55,27 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
                  mediumPercentage:(CGFloat*)mediumPercentage
                    deepPercentage:(CGFloat*)deepPercentage
                          forGraph:(SENTrendsGraph*)graph;
+
+/**
+ * @discussion
+ *
+ * Convenience method to translate graph data to display data points.
+ *
+ * @param graph: the graph data
+ * @return segmented display points
+ */
+- (NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)segmentedDataPointsFrom:(SENTrendsGraph*)graph;
+
+/**
+ * @discussion
+ *
+ * Reference the graph's condition ranges to determine the condition of the
+ * specified value
+ *
+ * @param value: the value to check
+ * @return graph that is displaying the value
+ */
+- (SENCondition)conditionForValue:(NSNumber*)value inGraph:(SENTrendsGraph*)graph;
 
 @end
 

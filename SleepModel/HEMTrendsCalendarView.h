@@ -8,10 +8,27 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMTrendsDisplayPoint;
+
+NS_ASSUME_NONNULL_BEGIN
+
+typedef NS_ENUM(NSUInteger, HEMTrendsCalendarType) {
+    HEMTrendsCalendarTypeWeek = 1,
+    HEMTrendsCalendarTypeMonth,
+    HEMTrendsCalendarTypeQuarter
+};
+
 @interface HEMTrendsCalendarView : UIView
 
-+ (CGFloat)heightWithDays:(NSInteger)days maxWidth:(CGFloat)maxWidth;
+@property (nonatomic, assign) HEMTrendsCalendarType type;
 
-- (void)updateTitlesWith:(NSArray<NSArray<NSAttributedString*>*>*)attributedTitles;
++ (CGFloat)heightWithSections:(NSInteger)sections
+                      forType:(HEMTrendsCalendarType)type
+                     maxWidth:(CGFloat)maxWidth;
+
+- (void)updateWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values
+                  titles:(NSArray<NSAttributedString*>*)attributedTitles;
 
 @end
+
+NS_ASSUME_NONNULL_END

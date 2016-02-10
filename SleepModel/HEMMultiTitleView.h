@@ -12,8 +12,8 @@
 
 - (void)clear;
 
-- (void)addLabelWithText:(NSAttributedString*)text
-                     atX:(CGFloat)xOrigin
-           maxLabelWidth:(CGFloat)maxLabelWidth;
+- (CGFloat)addLabelWithText:(NSAttributedString*)text
+                        atX:(CGFloat)xOrigin
+              maxLabelWidth:(CGFloat)maxLabelWidth;
 
 @end

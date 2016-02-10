@@ -18,10 +18,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *averagesHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
 
-@property (nonatomic, strong) UIColor* averageValueColor;
-@property (nonatomic, strong) UIColor* averageTitleColor;
-
-- (void)setAverageTitles:(NSArray<NSString*>*)titles
-                  values:(NSArray<NSString*>*)values;
+- (void)setAverageTitles:(NSArray<NSAttributedString*>*)titles
+                  values:(NSArray<NSAttributedString*>*)values;
 
 @end

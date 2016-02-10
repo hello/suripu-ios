@@ -18,7 +18,6 @@
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
-#import "HEMTrendsDisplayPoint.h"
 
 static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
 static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;
@@ -65,14 +64,16 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (CGFloat)heightForCalendarViewForGraphData:(SENTrendsGraph*)graph itemWidth:(CGFloat)itemWidth {
     BOOL averages = [[graph annotations] count] == HEMTrendsGraphAverageRequirement;
-    NSInteger days = 0;
-    for (SENTrendsGraphSection* section in [graph sections]) {
-        days += [[section values] count];
+    
+    HEMTrendsCalendarType type = HEMTrendsCalendarTypeMonth;
+    if ([graph timeScale] == SENTrendsTimeScaleQuarter) {
+        type = HEMTrendsCalendarTypeQuarter;
     }
     
-    return [HEMTrendsCalendarViewCell heightForNumberOfDays:days
-                                               withAverages:averages
-                                                   maxWidth:itemWidth];
+    return [HEMTrendsCalendarViewCell heightWithNumberOfSections:[[graph sections] count]
+                                                         forType:type
+                                                    withAverages:averages
+                                                           width:itemWidth];
 }
 
 - (CGFloat)heightForBarGraphWithData:(SENTrendsGraph*)graph {
@@ -89,14 +90,14 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [paraStyle setAlignment:alignment];
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendXAxisLabelFont],
-                                 NSForegroundColorAttributeName : [UIColor trendXAxisLabelColor],
+                                 NSForegroundColorAttributeName : [UIColor trendsSubtitleColor],
                                  NSKernAttributeName : @1,
                                  NSParagraphStyleAttributeName : paraStyle};
     
     return [[NSAttributedString alloc] initWithString:string attributes:attributes];
 }
 
-- (NSArray<NSAttributedString*>*)barGraphTitlesFrom:(SENTrendsGraph*)graph {
+- (NSArray<NSAttributedString*>*)graphTitlesFrom:(SENTrendsGraph*)graph {
     NSMutableArray* titles = [NSMutableArray arrayWithCapacity:[[graph sections] count]];
     for (SENTrendsGraphSection* section in [graph sections]) {
         for (NSString* title in [section titles]) {
@@ -107,55 +108,65 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return titles;
 }
 
-- (NSArray<NSArray<NSAttributedString*>*>*)sectionTitlesFrom:(SENTrendsGraph*)graph {
-    NSMutableArray* titles = [NSMutableArray arrayWithCapacity:[[graph sections] count]];
-    NSMutableArray* sectionTitles = nil;
-    for (SENTrendsGraphSection* section in [graph sections]) {
-        sectionTitles = [NSMutableArray arrayWithCapacity:[[section titles] count]];
-        for (NSString* title in [section titles]) {
-            [sectionTitles addObject:[self attributedXAxisTextFromString:title
-                                                               alignment:NSTextAlignmentCenter]];
-        }
-        [titles addObject:sectionTitles];
+- (NSAttributedString*)attributedTitleFromAnnotation:(SENTrendsAnnotation*)annotation {
+    NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor trendsAverageTitleColor],
+                                 NSFontAttributeName : [UIFont trendAverageTitleFont]};
+    NSString* title = [annotation title];
+    if (!title) {
+        title = NSLocalizedString(@"empty-data", nil);
     }
-    return titles;
+    return [[NSAttributedString alloc] initWithString:title
+                                           attributes:attributes];
 }
 
-- (NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)segmentedDataPointsFrom:(SENTrendsGraph*)graph {
-    NSInteger sections = [[graph sections] count];
-    NSMutableArray* displayPoints = [NSMutableArray arrayWithCapacity:sections];
-    NSMutableArray* sectionOfPoints = nil;
-    // FIXME: find a better way or possibly move this on the a bg thread
-    for (SENTrendsGraphSection* section in [graph sections]) {
-        sectionOfPoints = [NSMutableArray arrayWithCapacity:[[section values] count]];
-        NSInteger index = 0;
-        for (NSNumber* dataPoint in [section values]) {
-            BOOL highlighted = [[section highlightedValues] containsObject:@(index)];
-            [sectionOfPoints addObject:[[HEMTrendsDisplayPoint alloc] initWithValue:dataPoint
-                                                                        highlighted:highlighted]];
-            index++;
-        }
-        [displayPoints addObject:sectionOfPoints];
+- (NSAttributedString*)attributedScoreFromAnnotation:(SENTrendsAnnotation*)annotation
+                                             inGraph:(SENTrendsGraph*)graph{
+    SENCondition condition = [[self trendService] conditionForValue:[annotation value] inGraph:graph];
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendAverageValueFont],
+                                 NSForegroundColorAttributeName : [UIColor colorForCondition:condition]};
+    NSInteger averageValue = [[annotation value] integerValue];
+    NSString* valueText = nil;
+    if (averageValue >= 0) {
+        valueText = [NSString stringWithFormat:@"%ld", (long)averageValue];
+    } else {
+        valueText = NSLocalizedString(@"empty-data", nil);
     }
-    return displayPoints;
+    return [[NSAttributedString alloc] initWithString:valueText attributes:attributes];
+}
+
+- (NSAttributedString*)attributedSleepDurationFromAnnotation:(SENTrendsAnnotation*)annotation {
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendAverageValueFont],
+                                 NSForegroundColorAttributeName : [UIColor sleepStateSoundColor]};
+    CGFloat averageValue = [[annotation value] CGFloatValue];
+    NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
+    NSString* valueText = [NSString stringWithFormat:avgFormat, averageValue];
+    return [[NSAttributedString alloc] initWithString:valueText attributes:attributes];
 }
 
 - (void)averagesFromGraph:(SENTrendsGraph*)graph
-                   titles:(NSArray<NSString*>**)titles
-                   values:(NSArray<NSString*>**)values {
-    NSMutableArray<NSString*>* averageTitles = nil;
-    NSMutableArray<NSString*>* averageValues = nil;
+                   titles:(NSArray<NSAttributedString*>**)titles
+                   values:(NSArray<NSAttributedString*>**)values {
+    
+    NSMutableArray<NSAttributedString*>* averageTitles = nil;
+    NSMutableArray<NSAttributedString*>* averageValues = nil;
     NSInteger annotationCount = [[graph annotations] count];
     if (annotationCount > 0) {
         averageTitles = [NSMutableArray arrayWithCapacity:annotationCount];
         averageValues = [NSMutableArray arrayWithCapacity:annotationCount];
-        NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
         for (SENTrendsAnnotation* annotation in [graph annotations]) {
-            if ([annotation title]) {
-                [averageTitles addObject:[annotation title]];
+            [averageTitles addObject:[self attributedTitleFromAnnotation:annotation]];
+            switch ([graph displayType]) {
+                case SENTrendsDisplayTypeGrid:
+                case SENTrendsDisplayTypeOverview:
+                    [averageValues addObject:[self attributedScoreFromAnnotation:annotation inGraph:graph]];
+                    break;
+                case SENTrendsDisplayTypeBar:
+                    [averageValues addObject:[self attributedSleepDurationFromAnnotation:annotation]];
+                    break;
+                default:
+                    break;
             }
-            CGFloat averageValue = [[annotation value] CGFloatValue];
-            [averageValues addObject:[NSString stringWithFormat:avgFormat, averageValue]];
+            
         }
     }
     *titles = averageTitles;
@@ -177,38 +188,43 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 #pragma mark - Configuring Cells
 
-- (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
-    [[calendarCell titleLabel] setText:[graph title]];
-    [calendarCell setSectionTitles:[self sectionTitlesFrom:graph]];
-    
-    NSArray<NSString*>* averageTitles = nil;
-    NSArray<NSString*>* averageValues = nil;
+- (void)setAveragesIn:(HEMTrendsBaseCell*)cell fromGraph:(SENTrendsGraph*)graph {
+    NSArray<NSAttributedString*>* averageTitles = nil;
+    NSArray<NSAttributedString*>* averageValues = nil;
     [self averagesFromGraph:graph titles:&averageTitles values:&averageValues];
-    [calendarCell setAverageTitles:averageTitles values:averageValues];
-    [calendarCell setAverageTitleColor:[UIColor trendXAxisLabelColor]];
-    [calendarCell setAverageValueColor:[UIColor sleepStateSoundColor]];
+    [cell setAverageTitles:averageTitles values:averageValues];
+}
+
+- (void)configureCalendarCell:(HEMTrendsCalendarViewCell*)calendarCell forTrendsGraph:(SENTrendsGraph*)graph {
+    [self setAveragesIn:calendarCell fromGraph:graph];
+    
+    HEMTrendsCalendarType type = HEMTrendsCalendarTypeMonth;
+    if ([graph timeScale] == SENTrendsTimeScaleQuarter) {
+        type = HEMTrendsCalendarTypeQuarter;
+    }
+    [calendarCell setType:type];
+    [[calendarCell titleLabel] setText:[graph title]];
+    
+    // type must be set first!
+    [calendarCell setSectionTitles:[self graphTitlesFrom:graph]
+                            scores:[[self trendService] segmentedDataPointsFrom:graph]];
 }
 
 - (void)configureBarCell:(HEMTrendsBarGraphCell*)barCell forTrendsGraph:(SENTrendsGraph*)graph {
-    NSArray<NSString*>* averageTitles = nil;
-    NSArray<NSString*>* averageValues = nil;
-    [self averagesFromGraph:graph titles:&averageTitles values:&averageValues];
+    [self setAveragesIn:barCell fromGraph:graph];
     
-    NSArray<NSAttributedString*>* attributedTitles = [self barGraphTitlesFrom:graph];
+    NSArray<NSAttributedString*>* attributedTitles = [self graphTitlesFrom:graph];
     NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
     [[barCell titleLabel] setText:[graph title]];
     [barCell setHighlightedBarColor:[UIColor sleepStateSoundColor]];
     [barCell setNormalBarColor:[UIColor sleepStateLightColor]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
     [barCell setMinValue:[[graph minValue] CGFloatValue]];
-    [barCell setAverageTitleColor:[UIColor trendXAxisLabelColor]];
-    [barCell setAverageValueColor:[UIColor sleepStateSoundColor]];
     [barCell setDashLineColor:[UIColor trendsSectionDashLineColor]];
-    [barCell setAverageTitles:averageTitles values:averageValues];
     [barCell setHighlightLabelTextFormat:highlightFormat];
     [barCell setHighlightTextFont:[UIFont trendsHighlightLabelFont]];
     [barCell updateGraphWithTitles:attributedTitles
-                     displayPoints:[self segmentedDataPointsFrom:graph]
+                     displayPoints:[[self trendService] segmentedDataPointsFrom:graph]
                            spacing:[self barSpacingForTimeScale:[graph timeScale]]];
 }
 

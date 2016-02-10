@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SenseKit/SENCondition.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign, readonly) BOOL highlighted;
 @property (nonatomic, strong, readonly) NSNumber* value;
+@property (nonatomic, assign) SENCondition condition;
 
 - (instancetype)initWithValue:(NSNumber*)value highlighted:(BOOL)highlighted;
 

@@ -204,6 +204,7 @@
 		BF6952671C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952661C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m */; };
 		BF6A55841B44B979009CA820 /* HEMActionSheetTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */; };
 		BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */; };
+		BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */; };
 		BF6E3A9A1A2D27450019C110 /* HEMActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A991A2D27450019C110 /* HEMActionView.m */; };
 		BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9C1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m */; };
 		BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9F1A2E51290019C110 /* HEMSingleResponseCell.m */; };
@@ -747,6 +748,8 @@
 		BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMActionSheetTitleView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BF6D9B701C6966BD00774322 /* HEMTrendsCalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsCalendarMonthView.h; sourceTree = "<group>"; };
 		BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsCalendarMonthView.m; sourceTree = "<group>"; };
+		BF6D9B731C6A689100774322 /* HEMTrendsScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsScoreLabel.h; sourceTree = "<group>"; };
+		BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsScoreLabel.m; sourceTree = "<group>"; };
 		BF6E3A981A2D27450019C110 /* HEMActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionView.h; sourceTree = "<group>"; };
 		BF6E3A991A2D27450019C110 /* HEMActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMActionView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BF6E3A9B1A2E442F0019C110 /* HEMSleepQuestionsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionsDataSource.h; sourceTree = "<group>"; };
@@ -1248,6 +1251,8 @@
 				BF5294711C6945BA00D931B7 /* HEMTrendsCalendarView.m */,
 				BF6D9B701C6966BD00774322 /* HEMTrendsCalendarMonthView.h */,
 				BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */,
+				BF6D9B731C6A689100774322 /* HEMTrendsScoreLabel.h */,
+				BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3123,6 +3128,7 @@
 				BF5BACEA1C5AE0EA00347185 /* HEMTrendsService.m in Sources */,
 				BF78E9941B21199B0015949F /* HEMSupportViewController.m in Sources */,
 				8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */,
+				BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */,
 				8ADE06071B2A4DE100976654 /* HEMTimelineContainerViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
 				BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */,

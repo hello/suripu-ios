@@ -211,6 +211,16 @@
 + (UIFont*)timelineMessageBoldFont;
 
 /**
+ *  Font used to display average titles in Trends v2
+ */
++ (UIFont*)trendAverageTitleFont;
+
+/**
+ *  Font used to display average values in Trends v2
+ */
++ (UIFont*)trendAverageValueFont;
+
+/**
  *  Font for the v2 Trends scope selector text
  */
 + (UIFont*)trendsScopeSelectorTextFont;
@@ -249,6 +259,11 @@
  *  Font for the sleep depth titles
  */
 + (UIFont*)trendSleepDepthTitleFont;
+
+/**
+ *  Font for the sleep scores in trends v2
+ */
++ (UIFont*)trendScoreFont;
 
 /**
  *  Font to display the answers for questions

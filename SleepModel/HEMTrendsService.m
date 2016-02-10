@@ -7,9 +7,11 @@
 //
 #import <SenseKit/SENAPITrends.h>
 #import <SenseKit/SENTrends.h>
+#import <SenseKit/SENConditionRange.h>
 #import <SenseKit/SENService+Protected.h>
 
 #import "HEMTrendsService.h"
+#import "HEMTrendsDisplayPoint.h"
 
 static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
 
@@ -86,6 +88,44 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
             *deepPercentage = [[[section values] lastObject] CGFloatValue];
         }
     }
+}
+
+- (SENCondition)conditionForValue:(NSNumber*)value inGraph:(SENTrendsGraph*)graph {
+    NSArray<SENConditionRange*>* ranges = [graph conditionRanges];
+    SENCondition condition = SENConditionUnknown;
+    if (value) {
+        for (SENConditionRange* range in ranges) {
+            NSComparisonResult minResult = [value compare:[range minValue]];
+            NSComparisonResult maxResult = [value compare:[range maxValue]];
+            if ((minResult == NSOrderedDescending || minResult == NSOrderedSame)
+                && (maxResult == NSOrderedAscending || maxResult == NSOrderedSame)) {
+                condition = [range condition];
+                break;
+            }
+        }
+    }
+    return condition;
+}
+
+- (NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)segmentedDataPointsFrom:(SENTrendsGraph*)graph {
+    NSInteger sections = [[graph sections] count];
+    NSMutableArray* displayPoints = [NSMutableArray arrayWithCapacity:sections];
+    NSMutableArray* sectionOfPoints = nil;
+    // FIXME: find a better way or possibly move this on the a bg thread
+    for (SENTrendsGraphSection* section in [graph sections]) {
+        sectionOfPoints = [NSMutableArray arrayWithCapacity:[[section values] count]];
+        NSInteger index = 0;
+        for (NSNumber* dataPoint in [section values]) {
+            BOOL highlighted = [[section highlightedValues] containsObject:@(index)];
+            HEMTrendsDisplayPoint* point = [[HEMTrendsDisplayPoint alloc] initWithValue:dataPoint
+                                                                            highlighted:highlighted];
+            [point setCondition:[self conditionForValue:dataPoint inGraph:graph]];
+            [sectionOfPoints addObject:point];
+            index++;
+        }
+        [displayPoints addObject:sectionOfPoints];
+    }
+    return displayPoints;
 }
 
 @end

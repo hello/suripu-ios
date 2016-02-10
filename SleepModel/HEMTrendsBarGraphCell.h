@@ -21,8 +21,6 @@
 @property (nonatomic, strong) UIColor* dashLineColor;
 
 + (CGFloat)heightWithAverages:(BOOL)averages;
-- (void)setAverageTitles:(NSArray<NSString*>*)titles
-                  values:(NSArray<NSString*>*)values;
 - (void)updateGraphWithTitles:(NSArray<NSAttributedString*>*)titles
                 displayPoints:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)displayPoints
                       spacing:(CGFloat)spacing;

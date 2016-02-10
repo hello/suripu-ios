@@ -84,13 +84,14 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return [HEMTrendsBubbleViewCell height];
 }
 
-- (NSAttributedString*)attributedXAxisTextFromString:(NSString*)string
-                                           alignment:(NSTextAlignment)alignment {
+- (NSAttributedString*)attributedSubtitleTextFromString:(NSString*)string
+                                            highlighted:(BOOL)highlighted {
     NSMutableParagraphStyle* paraStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    [paraStyle setAlignment:alignment];
+    [paraStyle setAlignment:NSTextAlignmentCenter];
     
+    UIColor* textColor = highlighted ? [UIColor blackColor] : [UIColor trendsSubtitleColor];
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendXAxisLabelFont],
-                                 NSForegroundColorAttributeName : [UIColor trendsSubtitleColor],
+                                 NSForegroundColorAttributeName : textColor,
                                  NSKernAttributeName : @1,
                                  NSParagraphStyleAttributeName : paraStyle};
     
@@ -101,8 +102,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     NSMutableArray* titles = [NSMutableArray arrayWithCapacity:[[graph sections] count]];
     for (SENTrendsGraphSection* section in [graph sections]) {
         for (NSString* title in [section titles]) {
-            [titles addObject:[self attributedXAxisTextFromString:title
-                                                        alignment:NSTextAlignmentCenter]];
+            BOOL highlighted = [[section highlightedTitles] containsObject:title];
+            [titles addObject:[self attributedSubtitleTextFromString:title highlighted:highlighted]];
         }
     }
     return titles;

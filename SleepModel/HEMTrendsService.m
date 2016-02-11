@@ -30,6 +30,7 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
     self = [super init];
     if (self) {
         [self setCachedTrendsByScale:[NSCache new]];
+        [self setCachedLastPullByScale:[NSCache new]];
     }
     return self;
 }

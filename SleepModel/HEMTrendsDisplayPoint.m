@@ -31,4 +31,22 @@
             [self value], @([self highlighted])];
 }
 
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[HEMTrendsDisplayPoint class]]) {
+        return NO;
+    }
+    
+    HEMTrendsDisplayPoint* other = object;
+    return ((![self value] && ![other value]) || [[self value] isEqual:[other value]])
+        && [self highlighted] == [other highlighted]
+        && [self condition] == [other condition];
+}
+
+- (NSUInteger)hash {
+    NSUInteger prime = 7;
+    NSUInteger result = prime + [[self value] hash];
+    result = prime * result + [self condition];
+    return result;
+}
+
 @end

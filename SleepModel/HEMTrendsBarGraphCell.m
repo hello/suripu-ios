@@ -57,6 +57,13 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 - (void)updateGraphWithTitles:(NSArray<NSAttributedString*>*)titles
                 displayPoints:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)displayPoints
                       spacing:(CGFloat)spacing {
+    
+    if (titles
+        && [[self xTitles] isEqualToArray:titles]
+        && displayPoints
+        && [[self displayPoints] isEqualToArray:displayPoints]) {
+        return; // nothing to update since it's already done
+    }
     // combine all the sections in to 1 continguous array since the chart view
     // does not care where it stops
     NSMutableArray* combinedPoints = [NSMutableArray arrayWithCapacity:90];

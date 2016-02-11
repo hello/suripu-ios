@@ -106,6 +106,8 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     __weak typeof(self) weakSelf = self;
     [[self trendsService] refreshTrendsFor:[self selectedScale] completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showLoading:NO];
+        
         if ([[trends availableTimeScales] count] >= HEMTrendsSubNavMinimumOptions) {
             [[strongSelf heightConstraint] setConstant:[strongSelf originalSelectorHeight]];
 
@@ -114,7 +116,7 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
                 UIButton* button = [strongSelf scopeButtonForTimeScale:timeScale];
                 [[strongSelf subNav] addControl:button];
             }
-            [strongSelf showLoading:NO];
+
             [[strongSelf subNav] setNeedsDisplay];
             [[strongSelf collectionView] reloadData];
         }

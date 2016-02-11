@@ -22,6 +22,8 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
 @interface HEMTrendsCalendarViewCell()
 
 @property (weak, nonatomic) IBOutlet HEMTrendsCalendarView *calendarView;
+@property (strong, nonatomic) NSArray<NSAttributedString*>*sectionTitles;
+@property (strong, nonatomic) NSArray<NSArray<HEMTrendsDisplayPoint*>*>* scores;
 
 @end
 
@@ -59,7 +61,17 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
 
 - (void)setSectionTitles:(NSArray<NSAttributedString*>*)sectionTitles
                   scores:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)scores {
+    
+    if (sectionTitles
+        && [[self sectionTitles] isEqualToArray:sectionTitles]
+        && scores
+        && [[self scores] isEqualToArray:scores]) {
+        return;
+    }
+    
     [self layoutSubviewsIfNeeded];
+    [self setSectionTitles:sectionTitles];
+    [self setScores:scores];
     [[self calendarView] setType:[self type]];
     [[self calendarView] updateWithValues:scores titles:sectionTitles];
 }

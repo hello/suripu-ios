@@ -44,14 +44,10 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
     NSNumber* timeScaleKey = @(timeScale);
     NSDate* lastPulled = [[self cachedLastPullByScale] objectForKey:timeScaleKey];
     BOOL expired = fabs([lastPulled timeIntervalSinceNow]) > HEMTrendsServiceCacheExpirationInSecs;
-    if (!lastPulled || expired) {
-        if (expired) {
-            [[self cachedTrendsByScale] removeObjectForKey:timeScaleKey];
-            DDLogVerbose(@"removing expired cached trends");
-        } else {
-            cachedTrends = [[self cachedTrendsByScale] objectForKey:timeScaleKey];
-            DDLogVerbose(@"returning cached trends %@", cachedTrends);
-        }
+    if (expired) {
+        [[self cachedTrendsByScale] removeObjectForKey:timeScaleKey];
+    } else {
+        cachedTrends = [[self cachedTrendsByScale] objectForKey:timeScaleKey];
     }
     return cachedTrends;
 }

@@ -353,5 +353,12 @@ static UIColor *_tintColor = nil;
     return @[(id)[UIColor whiteColor].CGColor,
              (id)[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
 }
++ (NSArray*)loadingIndicatorColorRefs {
+    return @[(id)[[UIColor clearColor] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.25f] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.5f] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.25f] CGColor],
+             (id)[[UIColor clearColor] CGColor]];
+}
 
 @end

@@ -12,6 +12,15 @@
 
 static CGFloat const HEMTrendsAveragesHeight = 52.0f;
 static CGFloat const HEMTrendsAveragesBotMargin = 20.0f;
+static CGFloat const HEMTrendsCellLoadingAlpha = 0.5f;
+static CGFloat const HEMTrendsCellLoadingAnimeDuration = 1.0f;
+
+@interface HEMTrendsBaseCell()
+
+@property (nonatomic, strong) UIView* loadingOverlay;
+@property (nonatomic, strong) CAGradientLayer* indicatorLayer;
+
+@end
 
 @implementation HEMTrendsBaseCell
 
@@ -20,6 +29,7 @@ static CGFloat const HEMTrendsAveragesBotMargin = 20.0f;
     [[self titleLabel] setFont:[UIFont trendsTitleFont]];
     [[self titleLabel] setTextColor:[UIColor trendsTitleColor]];
     [[self titleSeparator] setBackgroundColor:[UIColor trendsTitleDividerColor]];
+    [[[self titleSeparator] layer] setMasksToBounds:YES];
     [self setUserInteractionEnabled:NO];
 }
 
@@ -40,6 +50,64 @@ static CGFloat const HEMTrendsAveragesBotMargin = 20.0f;
         [[[self averagesView] average1ValueLabel] setAttributedText:[values firstObject]];
         [[[self averagesView] average2ValueLabel] setAttributedText:values[1]];
         [[[self averagesView] average3ValueLabel] setAttributedText:[values lastObject]];
+    }
+}
+
+- (CAGradientLayer*)indicatorLayer {
+    if (!_indicatorLayer) {
+        CGRect layerFrame = CGRectZero;
+        layerFrame.size.height = CGRectGetHeight([[self titleSeparator] bounds]);
+        layerFrame.size.width = CGRectGetWidth([[self titleSeparator] bounds]) / 3.0f;
+        layerFrame.origin.x = -CGRectGetWidth(layerFrame);
+        
+        CAGradientLayer* layer = [CAGradientLayer layer];
+        [layer setFrame:layerFrame];
+        [layer setColors:[UIColor loadingIndicatorColorRefs]];
+        [layer setBackgroundColor:[[UIColor clearColor] CGColor]];
+        [layer setStartPoint:CGPointMake(0, 0.5f)];
+        [layer setEndPoint:CGPointMake(1, 0.5f)];
+        [layer setCornerRadius:CGRectGetHeight(layerFrame) / 2];
+        
+        _indicatorLayer = layer;
+    }
+    return _indicatorLayer;
+}
+
+- (UIView*)loadingOverlay {
+    if (!_loadingOverlay) {
+        UIColor* bgColor = [UIColor colorWithWhite:1.0f alpha:HEMTrendsCellLoadingAlpha];
+        UIView* overlay = [UIView new];
+        [overlay setBackgroundColor:bgColor];
+        _loadingOverlay = overlay;
+    }
+    return _loadingOverlay;
+}
+
+- (void)startLoadingAnimation {
+    CGFloat fullWidth = CGRectGetWidth([[self titleSeparator] bounds]);
+    CGFloat width = CGRectGetWidth([[self indicatorLayer] bounds]);
+    CGPoint startPosition = CGPointMake(-width, 0.0f);
+    CGPoint endPosition = CGPointMake(fullWidth, 0.0f);
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setFromValue:[NSValue valueWithCGPoint:startPosition]];
+    [animation setToValue:[NSValue valueWithCGPoint:endPosition]];
+    [animation setDuration:HEMTrendsCellLoadingAnimeDuration];
+    [animation setRepeatCount:MAXFLOAT];
+    [[self indicatorLayer] setPosition:endPosition];
+    [[self indicatorLayer] addAnimation:animation forKey:@"position"];
+}
+
+- (void)setLoading:(BOOL)loading {
+    if (loading) {
+        [[self loadingOverlay] setFrame:[self bounds]];
+        [[self contentView] addSubview:[self loadingOverlay]];
+        [[self contentView] bringSubviewToFront:[self titleSeparator]];
+        [[[self titleSeparator] layer] addSublayer:[self indicatorLayer]];
+        [self startLoadingAnimation];
+    } else {
+        [[self loadingOverlay] removeFromSuperview];
+        [[self indicatorLayer] removeAllAnimations];
+        [[self indicatorLayer] removeFromSuperlayer];
     }
 }
 

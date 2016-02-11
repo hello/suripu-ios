@@ -29,6 +29,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 @property (nonatomic, weak) HEMTrendsService* trendService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, assign) HEMSubNavigationView* subNav;
+@property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 
 @end
 
@@ -38,6 +39,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     self = [super init];
     if (self) {
         _trendService = trendService;
+        [self listenForTrendsDataEvents];
     }
     return self;
 }
@@ -52,8 +54,37 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [self setSubNav:subNav];
 }
 
+#pragma mark - Notifications
+
+- (void)listenForTrendsDataEvents {
+    if ([self trendService]) {
+        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self
+                   selector:@selector(trendsDataChange:)
+                       name:nil
+                     object:[self trendService]];
+    }
+}
+
+- (void)trendsDataChange:(NSNotification*)note {
+    NSString* noteName = [note name];
+    if ([noteName isEqualToString:HEMTrendsServiceNotificationWillRefresh]) {
+        DDLogVerbose(@"trends data is refreshing");
+        [self setRefreshing:YES];
+    } else if ([noteName isEqualToString:HEMTrendsServiceNotificationDidRefresh]
+               || [noteName isEqualToString:HEMTrendsServiceNotificationHitCache]) {
+        [self setRefreshing:NO];
+    }
+    [[self collectionView] reloadData];
+}
+
+#pragma mark -
+
 - (SENTrends*)selectedTrends {
     SENTrendsTimeScale currentTimeScale = [[self subNav] selectedControlTag];
+    if ([self isRefreshing]) {
+        currentTimeScale = [[self subNav] previousControlTag];
+    }
     return [[self trendService] cachedTrendsForTimeScale:currentTimeScale];
 }
 
@@ -309,6 +340,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if ([cell isKindOfClass:[HEMTrendsBaseCell class]]) {
+        HEMTrendsBaseCell* baseCell = (id)cell;
+        [baseCell setLoading:[self isRefreshing]];
+    }
+    
     SENTrendsGraph* graph  = [self selectedTrendsGraphAtIndexPath:indexPath];
     if ([cell isKindOfClass:[HEMTrendsCalendarViewCell class]]) {
         [self configureCalendarCell:(id)cell forTrendsGraph:graph];
@@ -318,6 +354,16 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         [self configureBubblesCell:(id)cell forTrendsGraph:graph];
     }
     
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (_collectionView) {
+        [_collectionView setDataSource:nil];
+        [_collectionView setDelegate:nil];
+    }
 }
 
 @end

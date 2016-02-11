@@ -15,12 +15,19 @@
 
 static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
 
+NSString* const HEMTrendsServiceNotificationWillRefresh = @"willRefresh";;
+NSString* const HEMTrendsServiceNotificationDidRefresh = @"didRefresh";
+NSString* const HEMTrendsServiceNotificationHitCache = @"cacheHit";
+NSString* const HEMTrendsServiceNotificationInfoError = @"error";
+
 @interface HEMTrendsService()
 
 // caches required to prevent too uneccesary requests from being fired when data
-// is rarely changed.  Expiration time interval can probably be higher.
-@property (nonatomic, strong) NSCache* cachedTrendsByScale;
-@property (nonatomic, strong) NSCache* cachedLastPullByScale;
+// is rarely changed.  Expiration time interval can probably be higher.  Not using
+// NSCache because it's volatile and will cause data to be evicted in situations
+// other than memory warnings
+@property (nonatomic, strong) NSMutableDictionary<NSNumber*, SENTrends*>* cachedTrendsByScale;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber*, NSDate*>* cachedLastPullByScale;
 
 @end
 
@@ -29,10 +36,22 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self setCachedTrendsByScale:[NSCache new]];
-        [self setCachedLastPullByScale:[NSCache new]];
+        [self setCachedTrendsByScale:[NSMutableDictionary dictionary]];
+        [self setCachedLastPullByScale:[NSMutableDictionary dictionary]];
     }
     return self;
+}
+
+- (void)notify:(NSString*)name error:(NSError*)error {
+    NSDictionary* info = nil;
+    if (error) {
+        info = @{HEMTrendsServiceNotificationInfoError : error};
+    }
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    NSNotification* notification = [NSNotification notificationWithName:name
+                                                                 object:self
+                                                               userInfo:info];
+    [center postNotification:notification];
 }
 
 - (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale {
@@ -44,9 +63,7 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
     NSNumber* timeScaleKey = @(timeScale);
     NSDate* lastPulled = [[self cachedLastPullByScale] objectForKey:timeScaleKey];
     BOOL expired = fabs([lastPulled timeIntervalSinceNow]) > HEMTrendsServiceCacheExpirationInSecs;
-    if (expired) {
-        [[self cachedTrendsByScale] removeObjectForKey:timeScaleKey];
-    } else {
+    if (!expired) {
         cachedTrends = [[self cachedTrendsByScale] objectForKey:timeScaleKey];
     }
     return cachedTrends;
@@ -55,9 +72,14 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
 - (void)refreshTrendsFor:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion {
     SENTrends* cachedTrends = [self cachedTrendsForTimeScale:timeScale];
     if (cachedTrends) {
-        completion (cachedTrends, timeScale, nil);
+        [self notify:HEMTrendsServiceNotificationHitCache error:nil];
+        if (completion) {
+            completion (cachedTrends, timeScale, nil);
+        }
         return;
     }
+    
+    [self notify:HEMTrendsServiceNotificationWillRefresh error:nil];
     
     __weak typeof(self) weakSelf = self;
     [SENAPITrends trendsForTimeScale:timeScale completion:^(id data, NSError *error) {
@@ -69,7 +91,12 @@ static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
             [[strongSelf cachedTrendsByScale] setObject:data forKey:timeScaleKey];
             [[strongSelf cachedLastPullByScale] setObject:[NSDate date] forKey:timeScaleKey];
         }
-        completion (data, timeScale, error);
+        [strongSelf notify:HEMTrendsServiceNotificationDidRefresh error:error];
+        
+        if (completion) {
+            completion (data, timeScale, error);
+        }
+        
     }];
 }
 

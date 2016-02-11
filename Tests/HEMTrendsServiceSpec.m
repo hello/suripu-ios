@@ -14,8 +14,8 @@
 
 @interface HEMTrendsService()
 
-@property (nonatomic, strong) NSCache* cachedTrendsByScale;
-@property (nonatomic, strong) NSCache* cachedLastPullByScale;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber*, SENTrends*>* cachedTrendsByScale;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber*, NSDate*>* cachedLastPullByScale;
 
 @end
 

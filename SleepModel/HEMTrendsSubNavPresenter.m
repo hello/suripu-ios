@@ -129,19 +129,8 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     SENTrendsTimeScale timeScale = [button tag];
     if (timeScale != [self selectedScale]) {
         [self setSelectedScale:timeScale];
-        [self updateDataForSelectedScale];
-        DDLogVerbose(@"refresh and aniamte!");
+        [[self trendsService] refreshTrendsFor:[self selectedScale] completion:nil];
     }
-}
-
-- (void)updateDataForSelectedScale {
-    __weak typeof(self) weakSelf = self;
-    [[self trendsService] refreshTrendsFor:[self selectedScale] completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([strongSelf selectedScale] == scale) {
-            [[strongSelf collectionView] reloadData];
-        }
-    }];
 }
 
 @end

@@ -14,6 +14,7 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 @interface HEMSubNavigationView()
 
 @property (nonatomic, assign) NSInteger controlCount;
+@property (nonatomic, assign) NSInteger previousControlTag;
 
 @end
 
@@ -84,6 +85,7 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 }
 
 - (void)select:(UIControl*)control {
+    [self setPreviousControlTag:[self selectedControlTag]];
     [self setSelectedControlTag:[control tag]];
     for (UIView* subview in [self subviews]) {
         if ([subview isKindOfClass:[UIControl class]]) {

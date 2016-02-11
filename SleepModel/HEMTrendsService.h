@@ -13,6 +13,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSString* const HEMTrendsServiceNotificationWillRefresh;
+extern NSString* const HEMTrendsServiceNotificationDidRefresh;
+extern NSString* const HEMTrendsServiceNotificationHitCache;
+extern NSString* const HEMTrendsServiceNotificationInfoError;
+
 typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrendsTimeScale scale, NSError* _Nullable error);
 
 @interface HEMTrendsService : SENService
@@ -27,7 +32,7 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  * @param timeScale: the time scale for the trends to pull
  * @param completion: the block to call when data has been retrieved
  */
-- (void)refreshTrendsFor:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion;
+- (void)refreshTrendsFor:(SENTrendsTimeScale)timeScale completion:(nullable HEMTrendsServiceDataHandler)completion;
 
 /**
  * @discussion

@@ -68,6 +68,10 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
     }
 }
 
+- (BOOL)hasControls {
+    return [self controlCount] > 0;
+}
+
 - (void)addControl:(UIControl*)control {
     [control addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
     [self setControlCount:[self controlCount] + 1];

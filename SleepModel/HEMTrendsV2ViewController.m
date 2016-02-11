@@ -12,6 +12,7 @@
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsService.h"
 #import "HEMSubNavigationView.h"
+#import "HEMActivityIndicatorView.h"
 
 @interface HEMTrendsV2ViewController()
 
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet HEMSubNavigationView *subNav;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subNavHeightConstraint;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *loadingIndicator;
 
 @end
 
@@ -46,6 +48,7 @@
 - (void)configureSubNavPresenter {
     HEMTrendsSubNavPresenter* subNavPresenter
         = [[HEMTrendsSubNavPresenter alloc] initWithTrendsService:[self trendsService]];
+    [subNavPresenter bindWithLoadingIndicator:[self loadingIndicator]];
     [subNavPresenter bindWithSubNav:[self subNav]
                withHeightConstraint:[self subNavHeightConstraint]];
     [subNavPresenter bindWithCollectionView:[self collectionView]];

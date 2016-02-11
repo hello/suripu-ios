@@ -10,6 +10,7 @@
 
 @class HEMTrendsService;
 @class HEMSubNavigationView;
+@class HEMActivityIndicatorView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithSubNav:(HEMSubNavigationView*)subNav
   withHeightConstraint:(NSLayoutConstraint*)heightConstraint;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
+- (void)bindWithLoadingIndicator:(HEMActivityIndicatorView*)loadingIndicator;
 
 @end
 

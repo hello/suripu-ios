@@ -90,7 +90,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [paraStyle setAlignment:NSTextAlignmentCenter];
     
     UIColor* textColor = highlighted ? [UIColor blackColor] : [UIColor trendsSubtitleColor];
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendXAxisLabelFont],
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendSubtitleLabelFont],
                                  NSForegroundColorAttributeName : textColor,
                                  NSKernAttributeName : @1,
                                  NSParagraphStyleAttributeName : paraStyle};
@@ -141,7 +141,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     CGFloat averageValue = [[annotation value] CGFloatValue];
     NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
     NSString* valueText = [NSString stringWithFormat:avgFormat, averageValue];
-    return [[NSAttributedString alloc] initWithString:valueText attributes:attributes];
+    NSMutableAttributedString* attrValue = [[NSMutableAttributedString alloc] initWithString:valueText
+                                                                                  attributes:attributes];
+    NSRange unitRange = NSMakeRange([valueText length] - 1, 1);
+    [attrValue addAttribute:NSFontAttributeName value:[UIFont trendAverageValueHourFont] range:unitRange];
+    return attrValue;
 }
 
 - (void)averagesFromGraph:(SENTrendsGraph*)graph
@@ -217,8 +221,9 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     NSArray<NSAttributedString*>* attributedTitles = [self graphTitlesFrom:graph];
     NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
     [[barCell titleLabel] setText:[graph title]];
-    [barCell setHighlightedBarColor:[UIColor sleepStateSoundColor]];
-    [barCell setNormalBarColor:[UIColor sleepStateLightColor]];
+    [barCell setHighlightLabelColor:[UIColor sleepStateSoundColor]];
+    [barCell setHighlightedBarColor:[UIColor trendsHighlightedSleepDurationColor]];
+    [barCell setNormalBarColor:[UIColor trendsSleepDurationBarColor]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
     [barCell setMinValue:[[graph minValue] CGFloatValue]];
     [barCell setDashLineColor:[UIColor trendsSectionDashLineColor]];

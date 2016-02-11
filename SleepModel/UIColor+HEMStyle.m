@@ -210,7 +210,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x596980 alpha:0.1f];
 }
 + (UIColor *)trendsTitleColor {
-    return [UIColor colorWithHex:0x162B48 alpha:1.0f];
+    return [UIColor colorWithHex:0x596980 alpha:0.7f];
 }
 + (UIColor *)trendsScopeSelectorActiveTextColor {
     return [UIColor colorWithRed:22.0f/255.0f
@@ -323,8 +323,23 @@ static UIColor *_tintColor = nil;
 + (UIColor *)trendsAverageTitleColor {
     return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];
 }
++ (UIColor *)trendsHighlightedSleepDurationColor {
+    return [UIColor colorWithHex:0x009CFF alpha:0.6f];
+}
++ (UIColor *)trendsSleepDurationBarColor {
+    return [UIColor colorWithHex:0x009CFF alpha:0.25f];
+}
 + (UIColor *)trendsSubtitleColor {
-    return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];
+    return [UIColor colorWithHex:0x596980 alpha:0.4f];
+}
++ (UIColor *)trendsSleepDepthDeepColor {
+    return [UIColor colorWithHex:0x009CFF alpha:1.0f];
+}
++ (UIColor *)trendsSleepDepthMediumColor {
+    return [UIColor colorWithHex:0x40B6FF alpha:1.0f];
+}
++ (UIColor *)trendsSleepDepthLightColor {
+    return [UIColor colorWithHex:0x80CEFF alpha:1.0f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

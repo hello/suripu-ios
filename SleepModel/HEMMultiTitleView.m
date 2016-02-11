@@ -8,10 +8,6 @@
 
 #import "HEMMultiTitleView.h"
 
-@interface HEMMultiTitleView()
-
-@end
-
 @implementation HEMMultiTitleView
 
 - (void)clear {

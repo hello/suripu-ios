@@ -7,6 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "HEMScreenUtils.h"
 
 @implementation UIFont (HEMStyle)
 
@@ -431,8 +432,8 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
 }
 
-+ (UIFont*)trendXAxisLabelFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:10.0f];
++ (UIFont*)trendSubtitleLabelFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:9.0f];
 }
 
 + (UIFont*)trendsHighlightLabelFont {
@@ -457,11 +458,15 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont*)trendAverageValueFont {
-    return [UIFont fontWithName:HEMFontFamilyNameModernUltraLight size:28.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:28.0f];
+}
+
++ (UIFont*)trendAverageValueHourFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:20.0f];
 }
 
 + (UIFont*)trendSleepDepthValueFontWithSize:(CGFloat)size {
-    return [UIFont fontWithName:HEMFontFamilyNameModernUltraLight size:size];
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:size];
 }
 
 + (UIFont*)timeZoneNameFont

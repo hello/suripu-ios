@@ -16,7 +16,7 @@
 #import "HEMTrendsScoreLabel.h"
 #import "HEMStyle.h"
 
-CGFloat const HEMTrendsCalMonthDaySpacing = 15.0f;
+CGFloat const HEMTrendsCalMonthDaySpacing = 14.0f;
 CGFloat const HEMTrendsCalMonthDaySpacingForQuarter = 10.0f;
 NSInteger const HEMTrendsCalMonthDaysInWeek = 7;
 static CGFloat const HEMTrendsCalMonthTitleHeight = 13.0f;

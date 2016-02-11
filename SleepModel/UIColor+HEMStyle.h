@@ -161,7 +161,12 @@
 + (UIColor *)emptyCircleBorderColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
 + (UIColor *)trendsAverageTitleColor;
++ (UIColor *)trendsHighlightedSleepDurationColor;
++ (UIColor *)trendsSleepDurationBarColor;
 + (UIColor *)trendsSubtitleColor;
++ (UIColor *)trendsSleepDepthDeepColor;
++ (UIColor *)trendsSleepDepthMediumColor;
++ (UIColor *)trendsSleepDepthLightColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
 
 @end

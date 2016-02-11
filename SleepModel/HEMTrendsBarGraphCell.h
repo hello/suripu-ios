@@ -13,6 +13,7 @@
 @interface HEMTrendsBarGraphCell : HEMTrendsBaseCell
 
 @property (nonatomic, strong) UIColor* highlightedBarColor;
+@property (nonatomic, strong) UIColor* highlightLabelColor;
 @property (nonatomic, strong) UIColor* normalBarColor;
 @property (nonatomic, assign) CGFloat maxValue;
 @property (nonatomic, assign) CGFloat minValue;

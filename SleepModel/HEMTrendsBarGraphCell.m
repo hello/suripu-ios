@@ -13,7 +13,7 @@
 #import "HEMTrendsDisplayPoint.h"
 #import "HEMDashLine.h"
 
-static CGFloat const HEMTrendsBarGraphBaseHeight = 233.0f;
+static CGFloat const HEMTrendsBarGraphBaseHeight = 243.0f;
 static CGFloat const HEMTrendsBarGraphAveragesHeight = 52.0f;
 static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
 static CGFloat const HEMTrendsBarHighlightLabelWidth = 35.0f;
@@ -199,7 +199,7 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
     NSString* text = [NSString stringWithFormat:[self highlightLabelTextFormat], value];
     
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
-    [label setBackgroundColor:[self highlightedBarColor]];
+    [label setBackgroundColor:[self highlightLabelColor]];
     [label setTextColor:[UIColor whiteColor]];
     [label setFont:[self highlightTextFont]];
     [label setText:text];

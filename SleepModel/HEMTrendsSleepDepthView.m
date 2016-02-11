@@ -82,7 +82,7 @@ static CGFloat const HEMTrendsBubbleUnitFontSizeRatio = 0.17f;
     UIFont* percentFont = [UIFont trendSleepDepthValueFontWithSize:percentSize];
     NSNumber* baselineOffset = @(2 * (percentSize / 3.0f));
     NSDictionary* percentAttributes = @{NSFontAttributeName : percentFont,
-                                        NSForegroundColorAttributeName : [UIColor whiteColor],
+                                        NSForegroundColorAttributeName : [UIColor colorWithWhite:1.0f alpha:0.7f],
                                         NSBaselineOffsetAttributeName : baselineOffset};
     
     NSAttributedString* attributedPercent
@@ -109,11 +109,11 @@ static CGFloat const HEMTrendsBubbleUnitFontSizeRatio = 0.17f;
                          }];
     } else {
         [self setLightBubble:[self bubbleViewWithPercentage:[self lightPercentage]
-                                                   andColor:[UIColor sleepStateLightColor]]];
+                                                   andColor:[UIColor trendsSleepDepthLightColor]]];
         [self setMediumBubble:[self bubbleViewWithPercentage:[self mediumPercentage]
-                                                    andColor:[UIColor sleepStateMediumColor]]];
+                                                    andColor:[UIColor trendsSleepDepthMediumColor]]];
         [self setDeepBubble:[self bubbleViewWithPercentage:[self deepPercentage]
-                                                  andColor:[UIColor sleepStateSoundColor]]];
+                                                  andColor:[UIColor trendsSleepDepthDeepColor]]];
         
         [self addSubview:[self lightBubble]];
         [self addSubview:[self deepBubble]];

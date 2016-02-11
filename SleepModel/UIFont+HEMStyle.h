@@ -221,6 +221,11 @@
 + (UIFont*)trendAverageValueFont;
 
 /**
+ *  Font used to display the 'h' in averages for trends v2
+ */
++ (UIFont*)trendAverageValueHourFont;
+
+/**
  *  Font for the v2 Trends scope selector text
  */
 + (UIFont*)trendsScopeSelectorTextFont;
@@ -233,7 +238,7 @@
 /**
  *  Font used for v2 Trends x axis title labels
  */
-+ (UIFont*)trendXAxisLabelFont;
++ (UIFont*)trendSubtitleLabelFont;
 
 /**
  *  Font used for v2 trends highlilght labels

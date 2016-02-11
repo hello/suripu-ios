@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.0.1
+
+New:
+
+* Sub nav for Trends
+* Sleep score Trends view
+* Sleep duration Trends view
+* Sleep depth Trends view
+* Sleep duration Trends view animates between time scale selection
+* Using new Trends v2 API for data
+
 ## 1.3.0.0
 
 New:

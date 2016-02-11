@@ -58,20 +58,19 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
     if (timeScale == SENTrendsTimeScaleUnknown) {
         return nil;
     }
-    
-    SENTrends* cachedTrends = nil;
+    NSNumber* timeScaleKey = @(timeScale);
+    return [[self cachedTrendsByScale] objectForKey:timeScaleKey];
+}
+
+- (BOOL)isCachedTrendsExpiredFor:(SENTrendsTimeScale)timeScale {
     NSNumber* timeScaleKey = @(timeScale);
     NSDate* lastPulled = [[self cachedLastPullByScale] objectForKey:timeScaleKey];
-    BOOL expired = fabs([lastPulled timeIntervalSinceNow]) > HEMTrendsServiceCacheExpirationInSecs;
-    if (!expired) {
-        cachedTrends = [[self cachedTrendsByScale] objectForKey:timeScaleKey];
-    }
-    return cachedTrends;
+    return fabs([lastPulled timeIntervalSinceNow]) > HEMTrendsServiceCacheExpirationInSecs;
 }
 
 - (void)refreshTrendsFor:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion {
     SENTrends* cachedTrends = [self cachedTrendsForTimeScale:timeScale];
-    if (cachedTrends) {
+    if (![self isCachedTrendsExpiredFor:timeScale] && cachedTrends) {
         [self notify:HEMTrendsServiceNotificationHitCache error:nil];
         if (completion) {
             completion (cachedTrends, timeScale, nil);

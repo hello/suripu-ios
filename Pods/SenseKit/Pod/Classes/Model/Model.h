@@ -20,6 +20,8 @@
 #import "SENPillMetadata.h"
 #import "SENDevicePairingInfo.h"
 #import "SENRemoteImage.h"
+#import "SENTrends.h"
+#import "SENTrendsGraph.h"
 
 void SENClearModel();
 

@@ -8,6 +8,7 @@
 
 #import "SENAPITrends.h"
 #import "SENTrend.h"
+#import "SENTrends.h"
 
 @implementation SENAPITrends
 
@@ -19,6 +20,7 @@ static NSString* const SENAPITrendsDataType = @"data_type";
 static NSString* const SENAPITrendsSleepScoreType = @"sleep_score";
 static NSString* const SENAPITrendsSleepDurationType = @"sleep_duration";
 
+static NSString* const SENAPITrendsEndpoint = @"v2/trends";
 
 + (void)defaultTrendsListWithCompletion:(SENAPIDataBlock)completion
 {
@@ -64,6 +66,18 @@ static NSString* const SENAPITrendsSleepDurationType = @"sleep_duration";
             [trends addObject:trend];
     }
     return trends;
+}
+
++ (void)trendsForTimeScale:(SENTrendsTimeScale)timeScale completion:(SENAPIDataBlock)completion {
+    NSString* scalePath = SENTrendsTimeScaleValueFromEnum(timeScale);
+    NSString* endpoint = [SENAPITrendsEndpoint stringByAppendingPathComponent:scalePath];
+    [SENAPIClient GET:endpoint parameters:nil completion:^(id data, NSError *error) {
+        SENTrends* trends = nil;
+        if ([data isKindOfClass:[NSDictionary class]] && !error) {
+            trends = [[SENTrends alloc] initWithDictionary:data];
+        }
+        completion (trends, error);
+    }];
 }
 
 @end

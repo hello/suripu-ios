@@ -80,7 +80,7 @@ static UIColor *_tintColor = nil;
     _sleepStateMediumColor = [UIColor colorWithRed:0.447 green:0.788 blue:1 alpha:1];
     _sleepStateSoundColor = [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];
     _sleepStateAwakeColor = [UIColor colorWithRed:0.32 green:0.356 blue:0.8 alpha:0];
-    _conditionUnknownColor = [UIColor colorWithRed:0.787 green:0.787 blue:0.787 alpha:1];
+    _conditionUnknownColor = [UIColor colorWithRed:0.824f green:0.824f blue:0.824f alpha:1];
 }
 
 + (UIColor *)tintColor {
@@ -206,6 +206,24 @@ static UIColor *_tintColor = nil;
 + (UIColor *)lightTintColor {
     return [UIColor colorWithHex:0x4CC1FC alpha:1.f];
 }
++ (UIColor *)trendsTitleDividerColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.1f];
+}
++ (UIColor *)trendsTitleColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.7f];
+}
++ (UIColor *)trendsScopeSelectorActiveTextColor {
+    return [UIColor colorWithRed:22.0f/255.0f
+                           green:43.0f/255.0f
+                            blue:72.0f/255.0f
+                           alpha:1.0f];
+}
++ (UIColor *)trendsScopeSelectorInactiveTextColor {
+    return [UIColor colorWithRed:176.0f/255.0f
+                           green:181.0f/255.0f
+                            blue:190.0f/255.0f
+                           alpha:1.0f];
+}
 + (UIColor *)trendTextColor {
     return [UIColor colorWithHex:0x999999 alpha:1.f];
 }
@@ -292,6 +310,36 @@ static UIColor *_tintColor = nil;
 }
 + (UIColor *)alarmClockViewBackgroundColor {
     return [UIColor colorWithHex:0xF9F9FA alpha:1.0f];
+}
++ (UIColor *)trendsSectionDashLineColor {
+    return [UIColor colorWithWhite:0.0f alpha:0.1f];
+}
++ (UIColor *)emptyCircleColor {
+    return [UIColor colorWithHex:0xF8F8F9 alpha:1.0f];
+}
++ (UIColor *)emptyCircleBorderColor {
+    return [UIColor colorWithHex:0xEDEEF0 alpha:0.5f];
+}
++ (UIColor *)trendsAverageTitleColor {
+    return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];
+}
++ (UIColor *)trendsHighlightedSleepDurationColor {
+    return [UIColor colorWithHex:0x009CFF alpha:0.6f];
+}
++ (UIColor *)trendsSleepDurationBarColor {
+    return [UIColor colorWithHex:0x009CFF alpha:0.25f];
+}
++ (UIColor *)trendsSubtitleColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.4f];
+}
++ (UIColor *)trendsSleepDepthDeepColor {
+    return [UIColor colorWithHex:0x009CFF alpha:1.0f];
+}
++ (UIColor *)trendsSleepDepthMediumColor {
+    return [UIColor colorWithHex:0x40B6FF alpha:1.0f];
+}
++ (UIColor *)trendsSleepDepthLightColor {
+    return [UIColor colorWithHex:0x80CEFF alpha:1.0f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

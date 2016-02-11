@@ -5,8 +5,9 @@
 //  Created by Delisa Mason on 11/3/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENSensor.h>
+
 #import "UIFont+HEMStyle.h"
+#import "HEMScreenUtils.h"
 
 @implementation UIFont (HEMStyle)
 
@@ -418,14 +419,54 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
++ (UIFont*)trendsTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:16.0f];
+}
+
++ (UIFont*)trendsScopeSelectorTextFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:12.0f];
+}
+
 + (UIFont*)trendOptionFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
 }
 
++ (UIFont*)trendSubtitleLabelFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:9.0f];
+}
+
++ (UIFont*)trendsHighlightLabelFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:12.0f];
+}
+
 + (UIFont*)trendBottomLabelFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
+}
+
++ (UIFont*)trendSleepDepthTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:10.f];
+}
+
++ (UIFont*)trendScoreFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:12.0f];
+}
+
++ (UIFont*)trendAverageTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:10.0f];
+}
+
++ (UIFont*)trendAverageValueFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:28.0f];
+}
+
++ (UIFont*)trendAverageValueHourFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:20.0f];
+}
+
++ (UIFont*)trendSleepDepthValueFontWithSize:(CGFloat)size {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:size];
 }
 
 + (UIFont*)timeZoneNameFont

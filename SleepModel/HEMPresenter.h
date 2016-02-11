@@ -109,6 +109,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)userDidSignOut;
 
+/*
+ * @discussion
+ *
+ * Subclasses should override this to react to lower memory warnings if neccessary
+ */
+- (void)lowMemory;
+
 @end
 
 NS_ASSUME_NONNULL_END

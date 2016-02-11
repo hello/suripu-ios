@@ -27,8 +27,11 @@ static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableVi
 static NSString *const _HEMalarmSoundCell = @"alarmSoundCell";
 static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
+static NSString *const _HEMbar = @"bar";
 static NSString *const _HEMbreakdownController = @"breakdownController";
 static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
+static NSString *const _HEMbubbles = @"bubbles";
+static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdetail = @"detail";
@@ -104,7 +107,10 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatCellReuseIdentifier { return _HEMalarmRepeatCell; }
 +(NSString *)alarmSoundCellReuseIdentifier { return _HEMalarmSoundCell; }
 +(NSString *)alarmSwitchCellReuseIdentifier { return _HEMalarmSwitchCell; }
++(NSString *)barReuseIdentifier { return _HEMbar; }
 +(NSString *)breakdownLineCellReuseIdentifier { return _HEMbreakdownLineCell; }
++(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
++(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }

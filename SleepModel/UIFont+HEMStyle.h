@@ -211,6 +211,46 @@
 + (UIFont*)timelineMessageBoldFont;
 
 /**
+ *  Font used to display average titles in Trends v2
+ */
++ (UIFont*)trendAverageTitleFont;
+
+/**
+ *  Font used to display average values in Trends v2
+ */
++ (UIFont*)trendAverageValueFont;
+
+/**
+ *  Font used to display the 'h' in averages for trends v2
+ */
++ (UIFont*)trendAverageValueHourFont;
+
+/**
+ *  Font for the v2 Trends scope selector text
+ */
++ (UIFont*)trendsScopeSelectorTextFont;
+
+/**
+ *  Font for the v2 Trends sleep depth percentage values
+ */
++ (UIFont*)trendSleepDepthValueFontWithSize:(CGFloat)size;
+
+/**
+ *  Font used for v2 Trends x axis title labels
+ */
++ (UIFont*)trendSubtitleLabelFont;
+
+/**
+ *  Font used for v2 trends highlilght labels
+ */
++ (UIFont*)trendsHighlightLabelFont;
+
+/**
+ *  Font for the v2 Trends graph titles
+ */
++ (UIFont*)trendsTitleFont;
+
+/**
  *  Font for time scopes in trends view
  */
 + (UIFont*)trendOptionFont;
@@ -219,6 +259,16 @@
  *  Font for the footer labels in trend graphs
  */
 + (UIFont*)trendBottomLabelFont;
+
+/**
+ *  Font for the sleep depth titles
+ */
++ (UIFont*)trendSleepDepthTitleFont;
+
+/**
+ *  Font for the sleep scores in trends v2
+ */
++ (UIFont*)trendScoreFont;
 
 /**
  *  Font to display the answers for questions

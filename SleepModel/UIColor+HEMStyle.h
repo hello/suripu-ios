@@ -125,6 +125,10 @@
 + (UIColor *)lightTintColor;
 + (UIColor *)trendTextColor;
 + (UIColor *)cardBorderColor;
++ (UIColor *)trendsTitleDividerColor;
++ (UIColor *)trendsTitleColor;
++ (UIColor *)trendsScopeSelectorActiveTextColor;
++ (UIColor *)trendsScopeSelectorInactiveTextColor;
 + (UIColor *)trendGraphBottomColor;
 + (UIColor *)trendGraphTopColor;
 + (UIColor *)switchOffBackgroundColor;
@@ -152,7 +156,17 @@
 + (UIColor *)insightAboutTextColor;
 + (UIColor *)borderColor;
 + (UIColor *)alarmClockViewBackgroundColor;
++ (UIColor *)trendsSectionDashLineColor;
++ (UIColor *)emptyCircleColor;
++ (UIColor *)emptyCircleBorderColor;
 + (NSArray *)timelineSelectedGradientColorRefs;
++ (UIColor *)trendsAverageTitleColor;
++ (UIColor *)trendsHighlightedSleepDurationColor;
++ (UIColor *)trendsSleepDurationBarColor;
++ (UIColor *)trendsSubtitleColor;
++ (UIColor *)trendsSleepDepthDeepColor;
++ (UIColor *)trendsSleepDepthMediumColor;
++ (UIColor *)trendsSleepDepthLightColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
 
 @end

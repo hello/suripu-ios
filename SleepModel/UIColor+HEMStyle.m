@@ -80,7 +80,7 @@ static UIColor *_tintColor = nil;
     _sleepStateMediumColor = [UIColor colorWithRed:0.447 green:0.788 blue:1 alpha:1];
     _sleepStateSoundColor = [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];
     _sleepStateAwakeColor = [UIColor colorWithRed:0.32 green:0.356 blue:0.8 alpha:0];
-    _conditionUnknownColor = [UIColor colorWithRed:0.787 green:0.787 blue:0.787 alpha:1];
+    _conditionUnknownColor = [UIColor colorWithRed:0.824f green:0.824f blue:0.824f alpha:1];
 }
 
 + (UIColor *)tintColor {

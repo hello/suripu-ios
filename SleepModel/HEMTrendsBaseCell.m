@@ -20,6 +20,7 @@ static CGFloat const HEMTrendsAveragesBotMargin = 20.0f;
     [[self titleLabel] setFont:[UIFont trendsTitleFont]];
     [[self titleLabel] setTextColor:[UIColor trendsTitleColor]];
     [[self titleSeparator] setBackgroundColor:[UIColor trendsTitleDividerColor]];
+    [self setUserInteractionEnabled:NO];
 }
 
 - (void)setAverageTitles:(NSArray<NSAttributedString*>*)titles

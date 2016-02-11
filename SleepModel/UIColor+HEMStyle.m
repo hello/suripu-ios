@@ -341,6 +341,18 @@ static UIColor *_tintColor = nil;
 + (UIColor *)trendsSleepDepthLightColor {
     return [UIColor colorWithHex:0x80CEFF alpha:1.0f];
 }
++ (UIColor *)partialDataTitleColor {
+    return [UIColor colorWithRed:22.0f/255.0f
+                           green:43.0f/255.0f
+                            blue:72.0f/255.0f
+                           alpha:1.0f];
+}
++ (UIColor *)partialDataMessageColor {
+    return [UIColor colorWithRed:175.0f/255.0f
+                           green:181.0f/255.0f
+                            blue:190.0f/255.0f
+                           alpha:1.0f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors

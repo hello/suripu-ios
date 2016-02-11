@@ -602,10 +602,23 @@
  */
 + (UIFont*)timelineActionConfirmationSubtitleFont;
 
+#pragma mark - Partial data states
+
+/**
+ * Font used to display the title for partial data states
+ */
++ (UIFont*)partialDataMessageFont;
+
+/**
+ * Font used to display the message for partial data states
+ */
++ (UIFont*)partialDataTitleFont;
+
 #pragma mark - Empty state font
 
 /**
  * Font used for the text in the empty state views
+ * @deprecated use partialDataMessageFont instead
  */
 + (UIFont*)emptyStateDescriptionFont;
 

@@ -654,6 +654,16 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
+#pragma mark - Partial data states
+
++ (UIFont*)partialDataMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
+}
+
++ (UIFont*)partialDataTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:16.0f];
+}
+
 #pragma mark - Empty / Error States
 
 + (UIFont*)emptyStateDescriptionFont {

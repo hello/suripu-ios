@@ -590,6 +590,8 @@
 "trends.sleep-depth.deep" = "deep";
 "trends.sleep-duration.average.format" = "%.2fh";
 "trends.sleep-duration.highlight.format" = "%.1fh";
+"trends.no-data.title" = "Welcome to Trends";
+"trends.no-data.message" = "Sense will collect your trends overtime and will live here when there's more data.";
 
 // actions
 "actions.cancel" = "Cancel";

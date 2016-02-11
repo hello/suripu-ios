@@ -52,6 +52,7 @@
 +(NSString *)calendarReuseIdentifier;
 +(NSString *)barReuseIdentifier;
 +(NSString *)bubblesReuseIdentifier;
++(NSString *)messageReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)fieldCellReuseIdentifier;

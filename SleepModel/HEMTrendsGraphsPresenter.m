@@ -8,6 +8,8 @@
 #import <SenseKit/SENTrends.h>
 #import <SenseKit/SENTrendsGraph.h>
 
+#import "NSString+HEMUtils.h"
+
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsCalendarViewCell.h"
 #import "HEMTrendsBarGraphCell.h"
@@ -15,6 +17,7 @@
 #import "HEMTrendsBubbleViewCell.h"
 #import "HEMSubNavigationView.h"
 #import "HEMTrendsSleepDepthView.h"
+#import "HEMTextCollectionViewCell.h"
 #import "HEMTrendsMessageCell.h"
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
@@ -31,6 +34,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, assign) HEMSubNavigationView* subNav;
 @property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
+@property (nonatomic, assign, getter=hasDataError) BOOL dataError;
 
 @end
 
@@ -69,13 +73,18 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (void)trendsDataChange:(NSNotification*)note {
     NSString* noteName = [note name];
+    [self setDataError:NO];
+    
     if ([noteName isEqualToString:HEMTrendsServiceNotificationWillRefresh]) {
         DDLogVerbose(@"trends data is refreshing");
         [self setRefreshing:YES];
     } else if ([noteName isEqualToString:HEMTrendsServiceNotificationDidRefresh]
                || [noteName isEqualToString:HEMTrendsServiceNotificationHitCache]) {
+        NSError* error = [note userInfo][HEMTrendsServiceNotificationInfoError];
         [self setRefreshing:NO];
+        [self setDataError:error != nil];
     }
+    
     [[self collectionView] reloadData];
 }
 
@@ -98,6 +107,26 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     SENTrends* trends = [self selectedTrends];
     NSInteger index = [indexPath row];
     return index < [[trends graphs] count] ? [trends graphs][index] : nil;
+}
+
+- (void)partialDataTitle:(NSAttributedString**)attributedTitle
+                 message:(NSAttributedString**)attributedMessage
+                   image:(UIImage**)partialDataImage
+               forTrends:(SENTrends*)trends {
+    
+    NSString* title = nil, *message = nil;
+    UIImage* image = nil;
+    if (!trends) {
+        title = NSLocalizedString(@"trends.no-data.title", nil);
+        message = NSLocalizedString(@"trends.no-data.message", nil);
+        image = [UIImage imageNamed:@"partialTrends"];
+    }
+    *attributedTitle = [self attributedPartialDataTitleWithText:title];
+    *attributedMessage = [self attributedPartialDataMessageWithText:message];
+    
+    if (partialDataImage) {
+        *partialDataImage = image;
+    }
 }
 
 #pragma mark - Height Calculations
@@ -132,24 +161,12 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
                                        withWidth:itemWidth];
 }
 
-- (void)partialDataTitle:(NSAttributedString**)attributedTitle
-                 message:(NSAttributedString**)attributedMessage
-                   image:(UIImage**)partialDataImage
-               forTrends:(SENTrends*)trends {
-    
-    NSString* title = nil, *message = nil;
-    UIImage* image = nil;
-    if (!trends) {
-        title = NSLocalizedString(@"trends.no-data.title", nil);
-        message = NSLocalizedString(@"trends.no-data.message", nil);
-        image = [UIImage imageNamed:@"partialTrends"];
-    }
-    *attributedTitle = [self attributedPartialDataTitleWithText:title];
-    *attributedMessage = [self attributedPartialDataMessageWithText:message];
-    
-    if (partialDataImage) {
-        *partialDataImage = image;
-    }
+- (CGFloat)heightForErrorMessageWithItemWidth:(CGFloat)itemWidth {
+    NSString* message = NSLocalizedString(@"trends.loading.error.message", nil);
+    UIFont* font = [UIFont errorStateDescriptionFont];
+    CGFloat maxWidth = itemWidth - (HEMStyleCardErrorTextHorzMargin * 2);
+    CGFloat textHeight = [message heightBoundedByWidth:maxWidth usingFont:font];
+    return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
 }
 
 #pragma mark - Attributed Text
@@ -354,6 +371,13 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [[messageCell messageLabel] setAttributedText:attributedMessage];
 }
 
+- (void)configureErrorCell:(HEMTextCollectionViewCell*)textCell {
+    [[textCell textLabel] setText:NSLocalizedString(@"trends.loading.error.message", nil)];
+    [textCell setBackgroundColor:[UIColor whiteColor]];
+    [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [textCell displayAsACard:YES];
+}
+
 #pragma mark - UICollectionView Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -387,9 +411,13 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
             itemSize.height = [self heightForBarGraphWithData:graph];
             break;
         case SENTrendsDisplayTypeUnknown:
-        default: // no data
-            itemSize.height = [self heightForPartialDataCellWithTrends:[self selectedTrends]
-                                                             itemWidth:itemSize.width];
+        default: // no data or error
+            if ([self hasDataError]) {
+                itemSize.height = [self heightForErrorMessageWithItemWidth:itemSize.width];
+            } else {
+                itemSize.height = [self heightForPartialDataCellWithTrends:[self selectedTrends]
+                                                                 itemWidth:itemSize.width];
+            }
             break;
     }
 
@@ -415,7 +443,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
             break;
         case SENTrendsDisplayTypeUnknown:
         default: // no data
-            reuseId = [HEMMainStoryboard messageReuseIdentifier];
+            if ([self hasDataError]) {
+                reuseId = [HEMMainStoryboard errorReuseIdentifier];
+            } else {
+                reuseId = [HEMMainStoryboard messageReuseIdentifier];
+            }
             break;
     }
     
@@ -445,6 +477,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         }
     } else if ([cell isKindOfClass:[HEMTrendsMessageCell class]]) {
         [self configureMessageCell:(id)cell forTrends:[self selectedTrends]];
+    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) { // error
+        [self configureErrorCell:(id)cell];
     }
     
 }

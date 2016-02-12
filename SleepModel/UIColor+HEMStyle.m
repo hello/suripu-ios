@@ -212,6 +212,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)trendsTitleColor {
     return [UIColor colorWithHex:0x596980 alpha:0.7f];
 }
++ (UIColor *)barChartBorderColor {
+    return [UIColor colorWithHex:0x596980 alpha:1.0f];
+}
 + (UIColor *)trendsScopeSelectorActiveTextColor {
     return [UIColor colorWithRed:22.0f/255.0f
                            green:43.0f/255.0f

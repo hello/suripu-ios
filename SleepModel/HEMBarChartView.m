@@ -10,7 +10,7 @@
 #import "HEMTrendsDisplayPoint.h"
 
 static CGFloat const HEMBarChartAnimeDuration = 0.2f;
-static CGFloat const HEMBarChartBaseLine = 4.0f;
+static CGFloat const HEMBarChartBaseLine = 0.0f;
 
 @interface HEMBarChartView()
 
@@ -83,7 +83,7 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
         
         if (value == [self maxValue]) {
             barFrame.size.height = fullHeight;
-        } else if (value == 0.0f) {
+        } else if (value == -1) {
             barFrame.size.height = HEMBarChartBaseLine;
         } else {
             CGFloat ratio = value / [self maxValue];

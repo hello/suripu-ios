@@ -725,6 +725,7 @@
 // app review questions
 "app-review.question.1" = "Are you enjoying Sense?";
 "app-review.question.2" = "Great. Would you mind leaving us a rating on the App Store?";
+"app-review.question.2.amazon" = "Great. Would you mind leaving us a rating on Amazon?";
 "app-review.question.3" = "Would you like to let us know how we can improve your experience?";
 "app-review.question.answer.love-it" = "Yes, I love it";
 "app-review.question.answer.not-really" = "Not really";

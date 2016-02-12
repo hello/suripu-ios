@@ -100,6 +100,8 @@
 	<string>${SENSE_API_URL}</string>
 	<key>SenseAppReviewURL</key>
 	<string>${SENSE_APP_REVIEW_URL}</string>
+	<key>SenseAmazonReviewURL</key>
+	<string>${SENSE_AMAZON_REVIEW_URL}</string>
 	<key>SenseClientId</key>
 	<string>${SENSE_CLIENT_ID}</string>
 	<key>SensePasswordResetURL</key>

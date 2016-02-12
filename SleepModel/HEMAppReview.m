@@ -19,22 +19,23 @@
 
 @implementation HEMAppReview
 
-NSUInteger const HEMAppPromptReviewThreshold = 60;
-NSUInteger const HEMMinimumAppLaunches = 4;
-NSUInteger const HEMSystemAlertShownThreshold = 30;
-NSUInteger const HEMMinimumTimelineViews = 10;
-NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
-NSString* const HEMLocalizedKeyQuestion1 = @"app-review.question.1";
-NSString* const HEMLocalizedKeyQuestion2 = @"app-review.question.2";
-NSString* const HEMLocalizedKeyQuestion3 = @"app-review.question.3";
-NSString* const HEMLocalizedKeyAnswerHelp = @"app-review.question.answer.help";
-NSString* const HEMLocalizedKeyAnswerLoveIt = @"app-review.question.answer.love-it";
-NSString* const HEMLocalizedKeyAnswerNotReally = @"app-review.question.answer.not-really";
-NSString* const HEMLocalizedKeyAnswerSure = @"app-review.question.answer.sure";
-NSString* const HEMLocalizedKeyAnswerRate = @"app-review.question.answer.rate-it";
-NSString* const HEMLocalizedKeyAnswerNotNow = @"app-review.question.answer.not-now";
-NSString* const HEMLocalizedKeyAnswerDoNotAsk = @"app-review.question.answer.dont-ask-again";
-NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-thanks";
+static NSUInteger const HEMAppPromptReviewThreshold = 60;
+static NSUInteger const HEMMinimumAppLaunches = 4;
+static NSUInteger const HEMSystemAlertShownThreshold = 30;
+static NSUInteger const HEMMinimumTimelineViews = 10;
+static NSString* const HEMAmazonReview = @"app.review.amazon";
+static NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
+static NSString* const HEMLocalizedKeyQuestion1 = @"app-review.question.1";
+static NSString* const HEMLocalizedKeyQuestion2 = @"app-review.question.2";
+static NSString* const HEMLocalizedKeyQuestion3 = @"app-review.question.3";
+static NSString* const HEMLocalizedKeyAnswerHelp = @"app-review.question.answer.help";
+static NSString* const HEMLocalizedKeyAnswerLoveIt = @"app-review.question.answer.love-it";
+static NSString* const HEMLocalizedKeyAnswerNotReally = @"app-review.question.answer.not-really";
+static NSString* const HEMLocalizedKeyAnswerSure = @"app-review.question.answer.sure";
+static NSString* const HEMLocalizedKeyAnswerRate = @"app-review.question.answer.rate-it";
+static NSString* const HEMLocalizedKeyAnswerNotNow = @"app-review.question.answer.not-now";
+static NSString* const HEMLocalizedKeyAnswerDoNotAsk = @"app-review.question.answer.dont-ask-again";
+static NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-thanks";
 
 #pragma mark - Conditions for app review
 
@@ -57,7 +58,12 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
             [self hasSenseAndPillPaired:^(BOOL hasPairedDevices) {
                 HEMAppReviewQuestion* question = nil;
                 if (hasPairedDevices) {
-                    question = [self appReviewQuestion];
+                    HEMAppReviewType type = HEMAppReviewTypeAppStore;
+                    if ([self isEligibleToReviewOnAmazon]
+                        && ![self hasBeenAskedToReviewOnAmazon]) {
+                        type = HEMAppReviewTypeAmazon;
+                    }
+                    question = [self appReviewQuestion:type];
                 }
                 completion (question);
             }];
@@ -104,6 +110,16 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
     return !lastUpdated || [lastUpdated daysElapsed] > HEMSystemAlertShownThreshold;
 }
 
++ (BOOL)hasBeenAskedToReviewOnAmazon {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    return [[localPrefs persistentPreferenceForKey:HEMAmazonReview] boolValue];
+}
+
++ (BOOL)isEligibleToReviewOnAmazon {
+    NSString* countryCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+    return [[countryCode uppercaseString] isEqualToString:@"US"];
+}
+
 + (BOOL)hasStatedToStopAsking {
     SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
     return [[localPrefs persistentPreferenceForKey:HEMNoMoreAsking] boolValue];
@@ -121,14 +137,14 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
 
 #pragma mark - Questions
 
-+ (HEMAppReviewQuestion*)appReviewQuestion {
++ (HEMAppReviewQuestion*)appReviewQuestion:(HEMAppReviewType)reviewType {
     NSString* firstQuestionText = NSLocalizedString(HEMLocalizedKeyQuestion1, nil);
     NSArray* firstQuestionAnswers = [self answersForQuestion:firstQuestionText];
     
     HEMAppReviewQuestion* conditionalQuestion = nil;
     NSMutableDictionary* conditionalQuestions = [NSMutableDictionary dictionary];
     for (HEMAppReviewAnswer* answer in firstQuestionAnswers) {
-        conditionalQuestion = [self nextQuestionForAnswer:answer];
+        conditionalQuestion = [self nextQuestionForAnswer:answer reviewType:reviewType];
         if (conditionalQuestion) {
             conditionalQuestions[[answer answerId]] = conditionalQuestion;
         }
@@ -139,16 +155,26 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
                                  conditionalQuestions:conditionalQuestions];
 }
 
-+ (HEMAppReviewQuestion*)nextQuestionForAnswer:(HEMAppReviewAnswer*)answer {
++ (HEMAppReviewQuestion*)nextQuestionForAnswer:(HEMAppReviewAnswer*)answer
+                                    reviewType:(HEMAppReviewType)reviewType {
+    
     if ([answer action] != HEMAppReviewAnswerActionEnjoySense
         && [answer action] != HEMAppReviewAnswerActionDoNotEnjoySense) {
         return nil;
     }
     
     NSString* nextQuestion = nil;
-    
+
     if ([answer action] == HEMAppReviewAnswerActionEnjoySense) {
-        nextQuestion = NSLocalizedString(@"app-review.question.2", nil);
+        switch (reviewType) {
+            case HEMAppReviewTypeAmazon:
+                nextQuestion = NSLocalizedString(@"app-review.question.2.amazon", nil);
+                break;
+            case HEMAppReviewTypeAppStore:
+            default:
+                nextQuestion = NSLocalizedString(@"app-review.question.2", nil);
+                break;
+        }
     } else {
         nextQuestion = NSLocalizedString(@"app-review.question.3", nil);
     }
@@ -157,6 +183,7 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
     HEMAppReviewQuestion* question = [[HEMAppReviewQuestion alloc] initQuestion:nextQuestion
                                                                         choices:nextAnswers
                                                            conditionalQuestions:nil];
+    [question setReviewType:reviewType];
     
     return question;
 }
@@ -234,8 +261,24 @@ NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-
     [localPrefs setPersistentPreference:@(YES) forKey:HEMNoMoreAsking];
 }
 
-+ (void)rateApp {
-    NSString* url = [HEMConfig stringForConfig:HEMConfAppReviewURL];
++ (void)stopAskingToReviewOnAmazon {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    [localPrefs setPersistentPreference:@(YES) forKey:HEMAmazonReview];
+}
+
++ (void)rateApp:(HEMAppReviewType)reviewType {
+    NSString* url = nil;
+    switch (reviewType) {
+        case HEMAppReviewTypeAmazon:
+            url = [HEMConfig stringForConfig:HEMConfAmazonReviewURL];
+            [self stopAskingToReviewOnAmazon];
+            break;
+        case HEMAppReviewTypeAppStore:
+        default:
+            url = [HEMConfig stringForConfig:HEMConfAppReviewURL];
+            break;
+    }
+    
     if (url) {
         [HEMAppUsage incrementUsageForIdentifier:[self appVersion]];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];

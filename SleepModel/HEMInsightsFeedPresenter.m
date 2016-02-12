@@ -388,23 +388,29 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 #pragma mark - Actions
 
-- (void)removeQuestionFromData:(nonnull SENQuestion*)question {
+- (BOOL)removeQuestionFromData:(nonnull SENQuestion*)question {
     NSMutableArray* mutableData = [[self data] mutableCopy];
+    NSInteger dataCount = [mutableData count];
     [mutableData removeObject:question];
     [self setData:mutableData];
     
     NSMutableArray* mutableQuestions = [[self questions] mutableCopy];
     [mutableQuestions removeObject:question];
     [self setQuestions:mutableQuestions];
+    
+    return dataCount > [[self data] count];
 }
 
 - (void)removeQuestion:(nonnull SENQuestion*)question atIndexPath:(nonnull NSIndexPath*)indexPath {
-    [[self collectionView] performBatchUpdates:^{
-        [self removeQuestionFromData:question];
-        [[self collectionView] deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:^(BOOL finished) {
-        [[self collectionView] reloadData];
-    }];
+    id questionObj = [self objectAtIndexPath:indexPath];
+    if ([questionObj isKindOfClass:[SENQuestion class]]) {
+        BOOL removed = [self removeQuestionFromData:question];
+        if (removed) {
+            [[self collectionView] deleteItemsAtIndexPaths:@[indexPath]];
+        } else {
+            [[self collectionView] reloadData];
+        }
+    }
 }
 
 - (void)skipQuestion:(UIButton*)skipButton {

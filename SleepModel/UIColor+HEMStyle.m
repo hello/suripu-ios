@@ -73,9 +73,9 @@ static UIColor *_tintColor = nil;
 
 + (void)initialize {
     _tintColor = [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];
-    _conditionWarningColor = [UIColor colorWithRed:0.996 green:0.796 blue:0.184 alpha:1];
+    _conditionWarningColor = [UIColor colorWithRed:1.0f green:0.733f blue:0.2f alpha:1];
     _conditionIdealColor = [UIColor colorWithRed:0.188 green:0.839 blue:0.671 alpha:1];
-    _conditionAlertColor = [UIColor colorWithRed:0.992 green:0.592 blue:0.329 alpha:1];
+    _conditionAlertColor = [UIColor colorWithRed:1.0f green:0.502f blue:0.4f alpha:1];
     _sleepStateLightColor = [UIColor colorWithRed:0.647 green:0.867 blue:1 alpha:1];
     _sleepStateMediumColor = [UIColor colorWithRed:0.447 green:0.788 blue:1 alpha:1];
     _sleepStateSoundColor = [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];

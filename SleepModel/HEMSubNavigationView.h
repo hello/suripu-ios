@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HEMSubNavigationView : UIView
 
 @property (nonatomic, assign) NSInteger selectedControlTag;
+@property (nonatomic, assign, readonly) NSInteger previousControlTag;
 
 - (void)addControl:(UIControl*)control;
 - (BOOL)hasControls;

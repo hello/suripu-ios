@@ -41,8 +41,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureSubNavPresenter];
     [self configureGraphsPresenter];
+    [self configureSubNavPresenter]; // must come after graphs
 }
 
 - (void)configureSubNavPresenter {

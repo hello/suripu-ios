@@ -167,6 +167,10 @@
 + (UIColor *)trendsSleepDepthDeepColor;
 + (UIColor *)trendsSleepDepthMediumColor;
 + (UIColor *)trendsSleepDepthLightColor;
++ (UIColor *)partialDataMessageColor;
++ (UIColor *)partialDataTitleColor;
++ (UIColor *)barChartBorderColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
++ (NSArray*)loadingIndicatorColorRefs;
 
 @end

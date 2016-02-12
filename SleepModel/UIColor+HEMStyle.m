@@ -212,6 +212,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)trendsTitleColor {
     return [UIColor colorWithHex:0x596980 alpha:0.7f];
 }
++ (UIColor *)barChartBorderColor {
+    return [UIColor colorWithHex:0x596980 alpha:1.0f];
+}
 + (UIColor *)trendsScopeSelectorActiveTextColor {
     return [UIColor colorWithRed:22.0f/255.0f
                            green:43.0f/255.0f
@@ -341,6 +344,18 @@ static UIColor *_tintColor = nil;
 + (UIColor *)trendsSleepDepthLightColor {
     return [UIColor colorWithHex:0x80CEFF alpha:1.0f];
 }
++ (UIColor *)partialDataTitleColor {
+    return [UIColor colorWithRed:22.0f/255.0f
+                           green:43.0f/255.0f
+                            blue:72.0f/255.0f
+                           alpha:1.0f];
+}
++ (UIColor *)partialDataMessageColor {
+    return [UIColor colorWithRed:175.0f/255.0f
+                           green:181.0f/255.0f
+                            blue:190.0f/255.0f
+                           alpha:1.0f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors
@@ -352,6 +367,13 @@ static UIColor *_tintColor = nil;
     // locations matches the colors
     return @[(id)[UIColor whiteColor].CGColor,
              (id)[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
+}
++ (NSArray*)loadingIndicatorColorRefs {
+    return @[(id)[[UIColor clearColor] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.25f] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.5f] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.25f] CGColor],
+             (id)[[UIColor clearColor] CGColor]];
 }
 
 @end

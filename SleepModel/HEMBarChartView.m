@@ -8,9 +8,12 @@
 
 #import "HEMBarChartView.h"
 #import "HEMTrendsDisplayPoint.h"
+#import "HEMStyle.h"
 
 static CGFloat const HEMBarChartAnimeDuration = 0.2f;
-static CGFloat const HEMBarChartBaseLine = 4.0f;
+static CGFloat const HEMBarChartBaseLine = 0.0f;
+static CGFloat const HEMBarChartBorderWidth = 0.5f;
+static CGFloat const HEMBarChartMinimumBarHeight = 40.0f;
 
 @interface HEMBarChartView()
 
@@ -42,6 +45,23 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
         [self setDefaults];
     }
     return self;
+}
+
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    
+    UIColor* lineColor = [UIColor barChartBorderColor];
+    
+    CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);
+    CGContextSetLineWidth(context, HEMBarChartBorderWidth);
+    
+    CGFloat y = CGRectGetHeight([self bounds]) - (HEMBarChartBorderWidth / 2.0f);
+    CGContextMoveToPoint(context, 0.0f, y);
+    CGContextAddLineToPoint(context, CGRectGetWidth([self bounds]), y);
+    CGContextStrokePath(context);
+    
+    CGContextRestoreGState(context);
 }
 
 - (void)setDefaults {
@@ -83,11 +103,14 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
         
         if (value == [self maxValue]) {
             barFrame.size.height = fullHeight;
-        } else if (value == 0.0f) {
+        } else if (value == [self minValue]) {
+            barFrame.size.height = HEMBarChartMinimumBarHeight;
+        } else if (value == -1) {
             barFrame.size.height = HEMBarChartBaseLine;
         } else {
+            CGFloat availableHeight = fullHeight - HEMBarChartMinimumBarHeight;
             CGFloat ratio = value / [self maxValue];
-            CGFloat height = ratio * fullHeight;
+            CGFloat height = HEMBarChartMinimumBarHeight + (ratio * availableHeight);
             barFrame.size.height = height;
         }
         
@@ -103,12 +126,30 @@ static CGFloat const HEMBarChartBaseLine = 4.0f;
             }
         }
         
-        UIView* bar = [[UIView alloc] initWithFrame:barFrame];
-        [bar setBackgroundColor:barColor];
-        [self addSubview:bar];
+        [self addSubview:[self barWithFrame:barFrame withColor:barColor]];
         
         index++;
     }
+}
+
+// TODO: round the corners of the top corners, but need to set the radii to be
+// a ratio of the bar's width
+- (UIView*)barWithFrame:(CGRect)frame withColor:(UIColor*)color {
+    UIView* bar = [[UIView alloc] initWithFrame:frame];
+    [bar setBackgroundColor:color];
+
+//    UIRectCorner corners = UIRectCornerTopLeft | UIRectCornerTopRight;
+//    CGSize radii = CGSizeMake(HEMBarChartBarCornerRadii, HEMBarChartBarCornerRadii);
+//    CAShapeLayer* maskLayer = [CAShapeLayer layer];
+//    CGRect maskRect = CGRectZero;
+//    maskRect.size = frame.size;
+//    [maskLayer setPath:[[UIBezierPath bezierPathWithRoundedRect:maskRect
+//                                              byRoundingCorners:corners
+//                                                    cornerRadii:radii] CGPath]];
+//    
+//    [[bar layer] setMask:maskLayer];
+//    [self setClipsToBounds:YES];
+    return bar;
 }
 
 - (void)animateBarsIn:(void(^)(BOOL finished))completion {

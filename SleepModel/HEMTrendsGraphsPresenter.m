@@ -8,6 +8,8 @@
 #import <SenseKit/SENTrends.h>
 #import <SenseKit/SENTrendsGraph.h>
 
+#import "NSString+HEMUtils.h"
+
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsCalendarViewCell.h"
 #import "HEMTrendsBarGraphCell.h"
@@ -15,6 +17,8 @@
 #import "HEMTrendsBubbleViewCell.h"
 #import "HEMSubNavigationView.h"
 #import "HEMTrendsSleepDepthView.h"
+#import "HEMTextCollectionViewCell.h"
+#import "HEMTrendsMessageCell.h"
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
@@ -29,6 +33,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 @property (nonatomic, weak) HEMTrendsService* trendService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, assign) HEMSubNavigationView* subNav;
+@property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
+@property (nonatomic, assign, getter=hasDataError) BOOL dataError;
 
 @end
 
@@ -38,6 +44,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     self = [super init];
     if (self) {
         _trendService = trendService;
+        [self listenForTrendsDataEvents];
     }
     return self;
 }
@@ -52,15 +59,77 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [self setSubNav:subNav];
 }
 
+#pragma mark - Notifications
+
+- (void)listenForTrendsDataEvents {
+    if ([self trendService]) {
+        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self
+                   selector:@selector(trendsDataChange:)
+                       name:nil
+                     object:[self trendService]];
+    }
+}
+
+- (void)trendsDataChange:(NSNotification*)note {
+    NSString* noteName = [note name];
+    [self setDataError:NO];
+    
+    if ([noteName isEqualToString:HEMTrendsServiceNotificationWillRefresh]) {
+        DDLogVerbose(@"trends data is refreshing");
+        [self setRefreshing:YES];
+    } else if ([noteName isEqualToString:HEMTrendsServiceNotificationDidRefresh]
+               || [noteName isEqualToString:HEMTrendsServiceNotificationHitCache]) {
+        NSError* error = [note userInfo][HEMTrendsServiceNotificationInfoError];
+        [self setRefreshing:NO];
+        [self setDataError:error != nil];
+    }
+    
+    [[self collectionView] reloadData];
+}
+
+#pragma mark - Data
+
+- (BOOL)areTrendsBeAvailable {
+    return [self selectedTrends]
+        && [[self subNav] hasControls];
+}
+
 - (SENTrends*)selectedTrends {
     SENTrendsTimeScale currentTimeScale = [[self subNav] selectedControlTag];
+    if ([self isRefreshing]) {
+        currentTimeScale = [[self subNav] previousControlTag];
+    }
     return [[self trendService] cachedTrendsForTimeScale:currentTimeScale];
 }
 
 - (SENTrendsGraph*)selectedTrendsGraphAtIndexPath:(NSIndexPath*)indexPath {
-    SENTrends* trends  = [self selectedTrends];
-    return [trends graphs][[indexPath row]];
+    SENTrends* trends = [self selectedTrends];
+    NSInteger index = [indexPath row];
+    return index < [[trends graphs] count] ? [trends graphs][index] : nil;
 }
+
+- (void)partialDataTitle:(NSAttributedString**)attributedTitle
+                 message:(NSAttributedString**)attributedMessage
+                   image:(UIImage**)partialDataImage
+               forTrends:(SENTrends*)trends {
+    
+    NSString* title = nil, *message = nil;
+    UIImage* image = nil;
+    if (!trends) {
+        title = NSLocalizedString(@"trends.no-data.title", nil);
+        message = NSLocalizedString(@"trends.no-data.message", nil);
+        image = [UIImage imageNamed:@"partialTrends"];
+    }
+    *attributedTitle = [self attributedPartialDataTitleWithText:title];
+    *attributedMessage = [self attributedPartialDataMessageWithText:message];
+    
+    if (partialDataImage) {
+        *partialDataImage = image;
+    }
+}
+
+#pragma mark - Height Calculations
 
 - (CGFloat)heightForCalendarViewForGraphData:(SENTrendsGraph*)graph itemWidth:(CGFloat)itemWidth {
     BOOL averages = [[graph annotations] count] == HEMTrendsGraphAverageRequirement;
@@ -82,6 +151,52 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (CGFloat)heightForBubbleGraphWithData:(SENTrendsGraph*)graph {
     return [HEMTrendsBubbleViewCell height];
+}
+
+- (CGFloat)heightForPartialDataCellWithTrends:(SENTrends*)trends itemWidth:(CGFloat)itemWidth {
+    NSAttributedString* attributedTitle = nil, *attributedMessage = nil;
+    [self partialDataTitle:&attributedTitle message:&attributedMessage image:NULL forTrends:trends];
+    return [HEMTrendsMessageCell heightWithTitle:attributedTitle
+                                         message:attributedMessage
+                                       withWidth:itemWidth];
+}
+
+- (CGFloat)heightForErrorMessageWithItemWidth:(CGFloat)itemWidth {
+    NSString* message = NSLocalizedString(@"trends.loading.error.message", nil);
+    UIFont* font = [UIFont errorStateDescriptionFont];
+    CGFloat maxWidth = itemWidth - (HEMStyleCardErrorTextHorzMargin * 2);
+    CGFloat textHeight = [message heightBoundedByWidth:maxWidth usingFont:font];
+    return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+}
+
+#pragma mark - Attributed Text
+
+- (NSAttributedString*)attributedPartialDataTitleWithText:(NSString*)text {
+    if (!text) {
+        return nil;
+    }
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setLineHeightMultiple:1.25f];
+    [style setAlignment:NSTextAlignmentCenter];
+    
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataTitleFont],
+                                 NSForegroundColorAttributeName : [UIColor partialDataTitleColor],
+                                 NSParagraphStyleAttributeName : style};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (NSAttributedString*)attributedPartialDataMessageWithText:(NSString*)message {
+    if (!message) {
+        return nil;
+    }
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setLineHeightMultiple:1.29f];
+    [style setAlignment:NSTextAlignmentCenter];
+    
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataMessageFont],
+                                 NSForegroundColorAttributeName : [UIColor partialDataMessageColor],
+                                 NSParagraphStyleAttributeName : style};
+    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
 - (NSAttributedString*)attributedSubtitleTextFromString:(NSString*)string
@@ -247,10 +362,33 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [contentView render];
 }
 
+- (void)configureMessageCell:(HEMTrendsMessageCell*)messageCell forTrends:(SENTrends*)trends {
+    UIImage* partialDataImage = nil;
+    NSAttributedString* attributedTitle = nil, *attributedMessage = nil;
+    [self partialDataTitle:&attributedTitle message:&attributedMessage image:&partialDataImage forTrends:trends];
+    [[messageCell imageView] setImage:partialDataImage];
+    [[messageCell titleLabel] setAttributedText:attributedTitle];
+    [[messageCell messageLabel] setAttributedText:attributedMessage];
+}
+
+- (void)configureErrorCell:(HEMTextCollectionViewCell*)textCell {
+    [[textCell textLabel] setText:NSLocalizedString(@"trends.loading.error.message", nil)];
+    [textCell setBackgroundColor:[UIColor whiteColor]];
+    [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [textCell displayAsACard:YES];
+}
+
 #pragma mark - UICollectionView Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [[[self selectedTrends] graphs] count];
+    SENTrends* trends = [self selectedTrends];
+    NSInteger items = 0;
+    if (![self isRefreshing] && ![self areTrendsBeAvailable]) {
+        items = 1;
+    } else if (trends) {
+        items = [[trends graphs] count];
+    }
+    return items;
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
@@ -272,7 +410,14 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         case SENTrendsDisplayTypeBar:
             itemSize.height = [self heightForBarGraphWithData:graph];
             break;
-        default:
+        case SENTrendsDisplayTypeUnknown:
+        default: // no data or error
+            if ([self hasDataError]) {
+                itemSize.height = [self heightForErrorMessageWithItemWidth:itemSize.width];
+            } else {
+                itemSize.height = [self heightForPartialDataCellWithTrends:[self selectedTrends]
+                                                                 itemWidth:itemSize.width];
+            }
             break;
     }
 
@@ -294,8 +439,15 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
             break;
         case SENTrendsDisplayTypeOverview:
         case SENTrendsDisplayTypeGrid:
-        default:
             reuseId = [HEMMainStoryboard calendarReuseIdentifier];
+            break;
+        case SENTrendsDisplayTypeUnknown:
+        default: // no data
+            if ([self hasDataError]) {
+                reuseId = [HEMMainStoryboard errorReuseIdentifier];
+            } else {
+                reuseId = [HEMMainStoryboard messageReuseIdentifier];
+            }
             break;
     }
     
@@ -310,14 +462,35 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     
     SENTrendsGraph* graph  = [self selectedTrendsGraphAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[HEMTrendsCalendarViewCell class]]) {
-        [self configureCalendarCell:(id)cell forTrendsGraph:graph];
-    } else if ([cell isKindOfClass:[HEMTrendsBarGraphCell class]]) {
-        [self configureBarCell:(id)cell forTrendsGraph:graph];
-    } else if ([cell isKindOfClass:[HEMTrendsBubbleViewCell class]]) {
-        [self configureBubblesCell:(id)cell forTrendsGraph:graph];
+    
+    if ([cell isKindOfClass:[HEMTrendsBaseCell class]]) {
+        HEMTrendsBaseCell* baseCell = (id)cell;
+        [baseCell setLoading:[self isRefreshing]];
+        
+        
+        if ([cell isKindOfClass:[HEMTrendsCalendarViewCell class]]) {
+            [self configureCalendarCell:(id)cell forTrendsGraph:graph];
+        } else if ([cell isKindOfClass:[HEMTrendsBarGraphCell class]]) {
+            [self configureBarCell:(id)cell forTrendsGraph:graph];
+        } else if ([cell isKindOfClass:[HEMTrendsBubbleViewCell class]]) {
+            [self configureBubblesCell:(id)cell forTrendsGraph:graph];
+        }
+    } else if ([cell isKindOfClass:[HEMTrendsMessageCell class]]) {
+        [self configureMessageCell:(id)cell forTrends:[self selectedTrends]];
+    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) { // error
+        [self configureErrorCell:(id)cell];
     }
     
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (_collectionView) {
+        [_collectionView setDataSource:nil];
+        [_collectionView setDelegate:nil];
+    }
 }
 
 @end

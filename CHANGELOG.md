@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0.2
+
+New:
+
+* Days with no data will not show a bar in the Trends bar graph
+* Loading state when changing time scale when cache not found
+* No content state updated
+
+Fixes:
+
+* Graphs no longer disappear when cache expires or memory warnings eats it up
+
 ## 1.3.0.1
 
 New:

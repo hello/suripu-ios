@@ -17,6 +17,7 @@
 @property (nonatomic, weak) IBOutlet HEMTrendsAverageView *averagesView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *averagesHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *averagesBottomConstraint;
+@property (nonatomic, assign, getter=isLoading) BOOL loading;
 
 - (void)setAverageTitles:(NSArray<NSAttributedString*>*)titles
                   values:(NSArray<NSAttributedString*>*)values;

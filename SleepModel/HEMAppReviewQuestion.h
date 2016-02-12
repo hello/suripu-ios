@@ -10,7 +10,14 @@
 
 @class HEMAppReviewAnswer;
 
+typedef NS_ENUM(NSUInteger, HEMAppReviewType) {
+    HEMAppReviewTypeAppStore = 1,
+    HEMAppReviewTypeAmazon
+};
+
 @interface HEMAppReviewQuestion : SENQuestion
+
+@property (nonatomic, assign) HEMAppReviewType reviewType;
 
 /**
  * Convenience method to determine the question identifier based on the question

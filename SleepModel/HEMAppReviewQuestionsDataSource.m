@@ -161,7 +161,7 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
             [self listenToForAppComingBackToForeground];
             [self sendAppFeedback];
             [SENAnalytics track:HEMAnalyticsEventAppReviewRate];
-            [HEMAppReview rateApp];
+            [HEMAppReview rateApp:[[self currentReviewQuestion] reviewType]];
             return YES;
         }
         case HEMAppReviewAnswerActionSendFeedback: {

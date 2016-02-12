@@ -3492,6 +3492,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
+				SENSE_AMAZON_REVIEW_URL = "https://www.amazon.com/review/create-review?ie=UTF8&asin=B016XBL2RE&channel=awUDPv3&ref_=cm_cr_dp_aw_wr_but#";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_CLIENT_ID = iphone_pill;
@@ -3527,6 +3528,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
+				SENSE_AMAZON_REVIEW_URL = "https://www.amazon.com/review/create-review?ie=UTF8&asin=B016XBL2RE&channel=awUDPv3&ref_=cm_cr_dp_aw_wr_but#";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
 				SENSE_API_URL = "https://api.hello.is";
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
@@ -3705,6 +3707,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
+				SENSE_AMAZON_REVIEW_URL = "https://www.amazon.com/review/create-review?ie=UTF8&asin=B016XBL2RE&channel=awUDPv3&ref_=cm_cr_dp_aw_wr_but#";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = (
@@ -3832,6 +3835,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
+				SENSE_AMAZON_REVIEW_URL = "https://www.amazon.com/review/create-review?ie=UTF8&asin=B016XBL2RE&channel=awUDPv3&ref_=cm_cr_dp_aw_wr_but#";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
 				TARGETED_DEVICE_FAMILY = 1;

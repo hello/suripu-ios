@@ -27,6 +27,7 @@ static NSString* const HEMAmazonReview = @"app.review.amazon";
 static NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 static NSString* const HEMLocalizedKeyQuestion1 = @"app-review.question.1";
 static NSString* const HEMLocalizedKeyQuestion2 = @"app-review.question.2";
+static NSString* const HEMLocalizedKeyQuestion2Amazon = @"app-review.question.2.amazon";
 static NSString* const HEMLocalizedKeyQuestion3 = @"app-review.question.3";
 static NSString* const HEMLocalizedKeyAnswerHelp = @"app-review.question.answer.help";
 static NSString* const HEMLocalizedKeyAnswerLoveIt = @"app-review.question.answer.love-it";
@@ -195,7 +196,8 @@ static NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.ans
     NSNumber* questionId = [HEMAppReviewQuestion questionIdForText:question];
     if ([question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion1, nil)]) {
         answers = [self answersForFirstQuestionWithId:questionId];
-    } else if ([question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion2, nil)]) {
+    } else if ([question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion2, nil)]
+               || [question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion2Amazon, nil)]) {
         answers = [self answersForSecondQuestionWithId:questionId];
     } else  if ([question isEqualToString:NSLocalizedString(HEMLocalizedKeyQuestion3, nil)]) {
         answers = [self answersForThirdQuestionWithId:questionId];

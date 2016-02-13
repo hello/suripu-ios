@@ -14,6 +14,7 @@
 #import "HEMTrendsDisplayPoint.h"
 
 static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
+static CGFloat const HEMTrendsServiceDaysUntilMoreTrends = 7;
 
 NSString* const HEMTrendsServiceNotificationWillRefresh = @"willRefresh";;
 NSString* const HEMTrendsServiceNotificationDidRefresh = @"didRefresh";
@@ -149,6 +150,19 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
         [displayPoints addObject:sectionOfPoints];
     }
     return displayPoints;
+}
+
+- (NSInteger)daysUntilMoreTrends:(SENTrends*)currentTrends {
+    NSInteger daysLeft = 0;
+    if ([[currentTrends availableTimeScales] count] < 2) {
+        SENTrendsGraph* firstGraph = [[currentTrends graphs] firstObject];
+        NSInteger daysOfUse = 0;
+        for (SENTrendsGraphSection* section in [firstGraph sections]) {
+            daysOfUse += [[section values] count];
+        }
+        daysLeft = MAX(0, HEMTrendsServiceDaysUntilMoreTrends - daysOfUse);
+    }
+    return daysLeft;
 }
 
 @end

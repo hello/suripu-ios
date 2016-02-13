@@ -9,6 +9,7 @@
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/API.h>
 #import <SenseKit/Model.h>
+#import <SenseKit/SENConditionRange.h>
 #import "HEMTrendsService.h"
 #import "NSDate+HEMRelative.h"
 
@@ -22,6 +23,146 @@
 SPEC_BEGIN(HEMTrendsServiceSpec)
 
 describe(@"HEMTrendsService", ^{
+    
+    describe(@"-daysUntilMoreTrends:", ^{
+        
+        context(@"there are more than 1 available time scales", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrends* trends = nil;
+            __block NSArray<NSNumber*>* timeScales;
+            __block NSInteger daysToMore = 7;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                timeScales = @[@1, @2];
+                trends = [SENTrends new];
+                [trends stub:@selector(availableTimeScales) andReturn:timeScales];
+                daysToMore = [service daysUntilMoreTrends:trends];
+            });
+            
+            afterEach(^{
+                service = nil;
+                trends = nil;
+                daysToMore = 7;
+            });
+            
+            it(@"should return 0", ^{
+                [[@(daysToMore) should] equal:@0];
+            });
+            
+        });
+        
+        context(@"no trends", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block NSInteger daysToMore = 0;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                daysToMore = [service daysUntilMoreTrends:nil];
+            });
+            
+            afterEach(^{
+                service = nil;
+                daysToMore = 0;
+            });
+            
+            it(@"should return 7", ^{
+                [[@(daysToMore) should] equal:@7];
+            });
+            
+        });
+        
+        context(@"trends with no available time scales and 1 day of data", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrends* trends = nil;
+            __block SENTrendsGraph* graph = nil;
+            __block SENTrendsGraphSection* section = nil;
+            __block NSInteger daysToMore = 0;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                trends = [SENTrends new];
+                graph = [SENTrendsGraph new];
+                section = [SENTrendsGraphSection new];
+                [section stub:@selector(values) andReturn:@[@1]];
+                [graph stub:@selector(sections) andReturn:@[section]];
+                [trends stub:@selector(graphs) andReturn:@[graph]];
+                daysToMore = [service daysUntilMoreTrends:trends];
+            });
+            
+            afterEach(^{
+                service = nil;
+                trends = nil;
+                graph = nil;
+                section = nil;
+                daysToMore = 0;
+            });
+            
+            it(@"should return 6", ^{
+                [[@(daysToMore) should] equal:@6];
+            });
+            
+        });
+        
+    });
+    
+    describe(@"-conditionForValue:inGraph:", ^{
+        
+        __block NSDictionary* alertScoreRange = nil;
+        __block NSDictionary* warnScoreRange = nil;
+        __block NSDictionary* idealScoreRange = nil;
+        
+        beforeEach(^{
+            alertScoreRange = @{@"condition" : @"ALERT",
+                                @"max_value" : @59,
+                                @"min_value" : @0};
+            warnScoreRange = @{@"condition" : @"WARNING",
+                               @"max_value" : @79,
+                               @"min_value" : @60};
+            idealScoreRange = @{@"condition" : @"IDEAL",
+                                @"max_value" : @100,
+                                @"min_value" : @80};
+        });
+        
+        afterEach(^{
+            alertScoreRange = nil;
+            warnScoreRange = nil;
+            idealScoreRange = nil;
+        });
+        
+        context(@"sleep score value is 79", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrendsGraph* graph = nil;
+            __block NSArray<SENConditionRange*>* ranges = nil;
+            __block SENCondition condition = SENConditionUnknown;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                graph = [SENTrendsGraph new];
+                ranges = @[[[SENConditionRange alloc] initWithDictionary:alertScoreRange],
+                           [[SENConditionRange alloc] initWithDictionary:warnScoreRange],
+                           [[SENConditionRange alloc] initWithDictionary:idealScoreRange]];
+                [graph stub:@selector(conditionRanges) andReturn:ranges];
+                condition = [service conditionForValue:@79 inGraph:graph];
+            });
+            
+            afterEach(^{
+                service = nil;
+                graph = nil;
+                ranges = nil;
+            });
+            
+            it(@"should return warning condition", ^{
+                [[@(condition) should] equal:@(SENConditionWarning)];
+            });
+            
+        });
+        
+    });
     
     describe(@"-refreshTrendsFor:completion:", ^{
         

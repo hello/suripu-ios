@@ -160,7 +160,15 @@ static NSString* const HEMAppReviewFeedbackTopic = @"feedback";
         case HEMAppReviewAnswerActionRateTheApp: {
             [self listenToForAppComingBackToForeground];
             [self sendAppFeedback];
-            [SENAnalytics track:HEMAnalyticsEventAppReviewRate];
+            switch ([[self currentReviewQuestion] reviewType]) {
+                case HEMAppReviewTypeAmazon:
+                    [SENAnalytics track:HEMAnalyticsEventAppReviewRateOnAmazon];
+                    break;
+                case HEMAppReviewTypeAppStore:
+                default:
+                    [SENAnalytics track:HEMAnalyticsEventAppReviewRate];
+                    break;
+            }
             [HEMAppReview rateApp:[[self currentReviewQuestion] reviewType]];
             return YES;
         }

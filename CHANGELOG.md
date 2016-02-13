@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.0.3
+
+New:
+
+* Trends shows a countdown message for first week of use
+* Deleted old Trends code
+* Deleted old Trends welcome card
+* Point app review prompt to Amazon once time, when in US
+
+Fixes:
+
+* Prevent crasher when skipping question in Insights feed
+
 ## 1.3.0.2
 
 New:

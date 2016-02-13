@@ -194,6 +194,7 @@ extern NSString* const HEMAnalyticsEventAppReviewEnjoySense;
 extern NSString* const HEMAnalyticsEventAppReviewDoNotEnjoySense;
 extern NSString* const HEMAnalyticsEventAppReviewHelp;
 extern NSString* const HEMAnalyticsEventAppReviewRate;
+extern NSString* const HEMAnalyticsEventAppReviewRateOnAmazon;
 extern NSString* const HEMAnalyticsEventAppReviewRateNoAsk;
 extern NSString* const HEMAnalyticsEventAppReviewFeedback;
 extern NSString* const HEMAnalyticsEventAppReviewDone;

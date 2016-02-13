@@ -23,6 +23,91 @@ SPEC_BEGIN(HEMTrendsServiceSpec)
 
 describe(@"HEMTrendsService", ^{
     
+    describe(@"-daysUntilMoreTrends:", ^{
+        
+        context(@"there are more than 1 available time scales", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrends* trends = nil;
+            __block NSArray<NSNumber*>* timeScales;
+            __block NSInteger daysToMore = 7;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                timeScales = @[@1, @2];
+                trends = [SENTrends new];
+                [trends stub:@selector(availableTimeScales) andReturn:timeScales];
+                daysToMore = [service daysUntilMoreTrends:trends];
+            });
+            
+            afterEach(^{
+                service = nil;
+                trends = nil;
+                daysToMore = 7;
+            });
+            
+            it(@"should return 0", ^{
+                [[@(daysToMore) should] equal:@0];
+            });
+            
+        });
+        
+        context(@"no trends", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block NSInteger daysToMore = 0;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                daysToMore = [service daysUntilMoreTrends:nil];
+            });
+            
+            afterEach(^{
+                service = nil;
+                daysToMore = 0;
+            });
+            
+            it(@"should return 7", ^{
+                [[@(daysToMore) should] equal:@7];
+            });
+            
+        });
+        
+        context(@"trends with no available time scales and 1 day of data", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrends* trends = nil;
+            __block SENTrendsGraph* graph = nil;
+            __block SENTrendsGraphSection* section = nil;
+            __block NSInteger daysToMore = 0;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                trends = [SENTrends new];
+                graph = [SENTrendsGraph new];
+                section = [SENTrendsGraphSection new];
+                [section stub:@selector(values) andReturn:@[@1]];
+                [graph stub:@selector(sections) andReturn:@[section]];
+                [trends stub:@selector(graphs) andReturn:@[graph]];
+                daysToMore = [service daysUntilMoreTrends:trends];
+            });
+            
+            afterEach(^{
+                service = nil;
+                trends = nil;
+                graph = nil;
+                section = nil;
+                daysToMore = 0;
+            });
+            
+            it(@"should return 6", ^{
+                [[@(daysToMore) should] equal:@6];
+            });
+            
+        });
+        
+    });
+    
     describe(@"-refreshTrendsFor:completion:", ^{
         
         __block HEMTrendsService* service = nil;

@@ -591,7 +591,10 @@
 "trends.sleep-duration.average.format" = "%.2fh";
 "trends.sleep-duration.highlight.format" = "%.1fh";
 "trends.no-data.title" = "Welcome to Trends";
-"trends.no-data.message" = "Sense will collect your trends overtime and will live here when there's more data.";
+"trends.no-data.message" = "Once Sense has collected enough data, you’ll see how your sleep is changing over time here.";
+"trends.not-enough-data.title" = "Keep Checking Back";
+"trends.not-enough-data.message.format" = "Trends get better as Sense collects more data. Check back in %@ %@ for more.";
+"trends.days" = "days";
 
 // actions
 "actions.cancel" = "Cancel";

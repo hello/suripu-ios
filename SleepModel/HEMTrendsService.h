@@ -82,6 +82,17 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  */
 - (SENCondition)conditionForValue:(NSNumber*)value inGraph:(SENTrendsGraph*)graph;
 
+/**
+ * @discussion
+ *
+ * Number of days until more trends will appear.  More specifically, month and
+ * quarter scales.
+ *
+ * @param currentTrends: trends currently used to display the data, if any
+ * @return days until more trends
+ */
+- (NSInteger)daysUntilMoreTrends:(nullable SENTrends*)currentTrends;
+
 @end
 
 NS_ASSUME_NONNULL_END

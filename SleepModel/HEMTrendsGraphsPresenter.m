@@ -9,6 +9,7 @@
 #import <SenseKit/SENTrendsGraph.h>
 
 #import "NSString+HEMUtils.h"
+#import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsCalendarViewCell.h"
@@ -90,6 +91,10 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 #pragma mark - Data
 
+- (BOOL)showTrendsMessage {
+    return [[self trendService] daysUntilMoreTrends:[self selectedTrends]] > 0;
+}
+
 - (BOOL)areTrendsBeAvailable {
     return [self selectedTrends]
         && [[self subNav] hasControls];
@@ -104,9 +109,12 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (SENTrendsGraph*)selectedTrendsGraphAtIndexPath:(NSIndexPath*)indexPath {
-    SENTrends* trends = [self selectedTrends];
     NSInteger index = [indexPath row];
-    return index < [[trends graphs] count] ? [trends graphs][index] : nil;
+    if ([self showTrendsMessage]) {
+        index--; // adjust to accommodate for trends message
+    }
+    SENTrends* trends = [self selectedTrends];
+    return index >=0 && index < [[trends graphs] count] ? [trends graphs][index] : nil;
 }
 
 - (void)partialDataTitle:(NSAttributedString**)attributedTitle
@@ -115,17 +123,24 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
                forTrends:(SENTrends*)trends {
     
     NSString* title = nil, *message = nil;
-    UIImage* image = nil;
+    
     if (!trends) {
         title = NSLocalizedString(@"trends.no-data.title", nil);
         message = NSLocalizedString(@"trends.no-data.message", nil);
-        image = [UIImage imageNamed:@"partialTrends"];
+        *attributedMessage = [self attributedPartialDataMessageWithText:message];
+    } else {
+        title = NSLocalizedString(@"trends.not-enough-data.title", nil);
+        
+        NSInteger daysToMore = [[self trendService] daysUntilMoreTrends:trends];
+        NSString* messageFormat = NSLocalizedString(@"trends.not-enough-data.message.format", nil);
+        *attributedMessage = [self attributedPartialDataMessageWithFormat:messageFormat
+                                                              andDaysLeft:daysToMore];
     }
+    
     *attributedTitle = [self attributedPartialDataTitleWithText:title];
-    *attributedMessage = [self attributedPartialDataMessageWithText:message];
     
     if (partialDataImage) {
-        *partialDataImage = image;
+        *partialDataImage = [UIImage imageNamed:@"partialTrends"];
     }
 }
 
@@ -185,18 +200,57 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-- (NSAttributedString*)attributedPartialDataMessageWithText:(NSString*)message {
-    if (!message) {
-        return nil;
-    }
+- (NSDictionary*)attributesForPartialDataMessageWithColor:(UIColor*)color {
     NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [style setLineHeightMultiple:1.29f];
     [style setAlignment:NSTextAlignmentCenter];
     
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataMessageFont],
-                                 NSForegroundColorAttributeName : [UIColor partialDataMessageColor],
-                                 NSParagraphStyleAttributeName : style};
+    return @{NSFontAttributeName : [UIFont partialDataMessageFont],
+             NSForegroundColorAttributeName : color,
+             NSParagraphStyleAttributeName : style};
+}
+
+- (NSAttributedString*)attributedPartialDataMessageWithText:(NSString*)message {
+    if (!message) {
+        return nil;
+    }
+    UIColor* textColor = [UIColor partialDataMessageColor];
+    NSDictionary* attributes = [self attributesForPartialDataMessageWithColor:textColor];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
+}
+
+- (NSAttributedString*)attributedPartialDataMessageWithFormat:(NSString*)format
+                                                  andDaysLeft:(NSInteger)daysLeft {
+    if (!format) {
+        return nil;
+    }
+    
+    UIColor* boldColor = [UIColor partialDataMessageBoldColor];
+    UIColor* regColor = [UIColor partialDataMessageColor];
+    NSDictionary* boldAttr = [self attributesForPartialDataMessageWithColor:boldColor];
+    NSDictionary* regAttr = [self attributesForPartialDataMessageWithColor:regColor];
+    UIFont* regFont = regAttr[NSFontAttributeName];
+    NSParagraphStyle* para = regAttr[NSParagraphStyleAttributeName];
+    
+    NSString* dayNumberText = [NSString stringWithFormat:@"%ld", (long)daysLeft];
+    NSAttributedString* boldNumber = [[NSAttributedString alloc] initWithString:dayNumberText
+                                                                     attributes:boldAttr];
+    
+    NSString* daysText = NSLocalizedString(@"trends.days", nil);
+    NSAttributedString* boldDays = [[NSAttributedString alloc] initWithString:daysText
+                                                                   attributes:boldAttr];
+    
+    NSArray* args = @[boldNumber, boldDays];
+    NSMutableAttributedString* message
+        = [[NSMutableAttributedString alloc] initWithFormat:format
+                                                       args:args
+                                                  baseColor:regColor
+                                                   baseFont:regFont];
+    [message addAttribute:NSParagraphStyleAttributeName
+                    value:para
+                    range:NSMakeRange(0, [message length])];
+    
+    return message;
 }
 
 - (NSAttributedString*)attributedSubtitleTextFromString:(NSString*)string
@@ -383,10 +437,9 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     SENTrends* trends = [self selectedTrends];
     NSInteger items = 0;
-    if (![self isRefreshing] && ![self areTrendsBeAvailable]) {
-        items = 1;
-    } else if (trends) {
-        items = [[trends graphs] count];
+    if (![self isRefreshing]) {
+        items = [self showTrendsMessage] ? 1 : 0;
+        items += [[trends graphs] count];
     }
     return items;
 }

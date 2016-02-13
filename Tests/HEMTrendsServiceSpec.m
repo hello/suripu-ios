@@ -9,6 +9,7 @@
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/API.h>
 #import <SenseKit/Model.h>
+#import <SenseKit/SENConditionRange.h>
 #import "HEMTrendsService.h"
 #import "NSDate+HEMRelative.h"
 
@@ -102,6 +103,61 @@ describe(@"HEMTrendsService", ^{
             
             it(@"should return 6", ^{
                 [[@(daysToMore) should] equal:@6];
+            });
+            
+        });
+        
+    });
+    
+    describe(@"-conditionForValue:inGraph:", ^{
+        
+        __block NSDictionary* alertScoreRange = nil;
+        __block NSDictionary* warnScoreRange = nil;
+        __block NSDictionary* idealScoreRange = nil;
+        
+        beforeEach(^{
+            alertScoreRange = @{@"condition" : @"ALERT",
+                                @"max_value" : @59,
+                                @"min_value" : @0};
+            warnScoreRange = @{@"condition" : @"WARNING",
+                               @"max_value" : @79,
+                               @"min_value" : @60};
+            idealScoreRange = @{@"condition" : @"IDEAL",
+                                @"max_value" : @100,
+                                @"min_value" : @80};
+        });
+        
+        afterEach(^{
+            alertScoreRange = nil;
+            warnScoreRange = nil;
+            idealScoreRange = nil;
+        });
+        
+        context(@"sleep score value is 79", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrendsGraph* graph = nil;
+            __block NSArray<SENConditionRange*>* ranges = nil;
+            __block SENCondition condition = SENConditionUnknown;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                graph = [SENTrendsGraph new];
+                ranges = @[[[SENConditionRange alloc] initWithDictionary:alertScoreRange],
+                           [[SENConditionRange alloc] initWithDictionary:warnScoreRange],
+                           [[SENConditionRange alloc] initWithDictionary:idealScoreRange]];
+                [graph stub:@selector(conditionRanges) andReturn:ranges];
+                condition = [service conditionForValue:@79 inGraph:graph];
+            });
+            
+            afterEach(^{
+                service = nil;
+                graph = nil;
+                ranges = nil;
+            });
+            
+            it(@"should return warning condition", ^{
+                [[@(condition) should] equal:@(SENConditionWarning)];
             });
             
         });

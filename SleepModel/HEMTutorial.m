@@ -27,7 +27,6 @@ static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
-static NSString* const HEMTutorialTrendsKey = @"HEMTutorialTrends";
 static CGFloat const HEMTutorialDelay = 0.5f;
 
 #pragma mark - Dialogs
@@ -83,18 +82,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
         [self delayBlock:^{
             [self showTutorialForAlarmsFrom:controller];
             [self markTutorialViewed:HEMTutorialAlarmsKey];
-        }];
-    }
-}
-
-+ (void)showTutorialForTrendsIfNeeded
-{
-    if ([self shouldShowTutorialForKey:HEMTutorialTrendsKey]) {
-        [self delayBlock:^{
-            if ([self showTutorialForTrends]) {
-                [self markTutorialViewed:HEMTutorialTrendsKey];
-            }
-            
         }];
     }
 }
@@ -194,15 +181,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
-+ (BOOL)showTutorialForTrends
-{
-    HEMTutorialContent* tutorial =
-    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.trends.title", nil)
-                                         text:NSLocalizedString(@"tutorial.trends.message", nil)
-                                        image:[UIImage imageNamed:@"welcome_dialog_trends"]];
-    return [self showTutorialWithContent:@[tutorial]];
-}
-
 + (void)showTutorialForPillColor {
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.pill-color.title", nil)
@@ -241,7 +219,6 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTimelineKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialTrendsKey];
 }
 
 @end

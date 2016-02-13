@@ -22,7 +22,6 @@
             <string>AvenirNext-Light</string>
             <string>AvenirNext-Light</string>
             <string>AvenirNext-Light</string>
-            <string>AvenirNext-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -3660,232 +3659,6 @@
             </objects>
             <point key="canvasLocation" x="2750" y="-10"/>
         </scene>
-        <!--Trends View Controller-->
-        <scene sceneID="0wk-MV-rXg">
-            <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="dvl-ut-646" customClass="HEMTrendsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="tI0-Lz-X3V"/>
-                        <viewControllerLayoutGuide type="bottom" id="UtJ-3J-Jha"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jdC-gn-VDp">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SGI-8T-ZVx">
-                                <rect key="frame" x="0.0" y="67" width="600" height="477"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yR9-IH-qIm" customClass="HEMCardFlowLayout">
-                                    <size key="itemSize" width="576" height="235"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="overTime" id="guW-fA-0W9" userLabel="empty" customClass="HEMEmptyTrendCollectionViewCell">
-                                        <rect key="frame" x="12" y="20" width="576" height="248"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="576" height="248"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyStateTrends" translatesAutoresizingMaskIntoConstraints="NO" id="5j7-Lc-pYu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="576" height="180"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="180" id="ny1-cb-epz"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your trends appear after a week of sleep." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qC-jO-Gfz">
-                                                    <rect key="frame" x="40" y="204" width="496" height="20"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" constant="32" id="1C4-ne-gWx"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="9qC-jO-Gfz" secondAttribute="trailing" constant="32" id="OBD-Dj-LWi"/>
-                                            <constraint firstItem="5j7-Lc-pYu" firstAttribute="top" secondItem="guW-fA-0W9" secondAttribute="topMargin" constant="-8" id="OSq-UU-7m8"/>
-                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="top" secondItem="guW-fA-0W9" secondAttribute="topMargin" constant="196" id="WV3-r3-Dww"/>
-                                            <constraint firstItem="5j7-Lc-pYu" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" constant="-8" id="e3g-AV-yC9"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="5j7-Lc-pYu" secondAttribute="trailing" constant="-8" id="zcb-3U-rZD"/>
-                                        </constraints>
-                                        <size key="customSize" width="576" height="248"/>
-                                        <connections>
-                                            <outlet property="detailLabel" destination="9qC-jO-Gfz" id="w0C-Si-NUb"/>
-                                            <outlet property="illustrationView" destination="5j7-Lc-pYu" id="53s-Cc-74V"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="trendGraph" id="AoB-W3-581" userLabel="graph" customClass="HEMTrendCollectionViewCell">
-                                        <rect key="frame" x="12" y="278" width="576" height="255"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="576" height="255"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SLEEP SCORE OVER TIME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVd-Hi-XJW">
-                                                    <rect key="frame" x="14" y="76" width="548" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="OcU-PF-hAP"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
-                                                    <color key="textColor" red="0.5296475887298584" green="0.52963173389434814" blue="0.52964073419570923" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jl4-Bk-rKU" userLabel="bar graph view" customClass="HEMBarGraphView">
-                                                    <rect key="frame" x="0.0" y="120" width="576" height="135"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="135" id="ngO-Wr-g4F"/>
-                                                    </constraints>
-                                                </view>
-                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mz2-Dc-hJA" userLabel="line graph container">
-                                                    <rect key="frame" x="0.0" y="134" width="576" height="121"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NlD-7X-U68" customClass="BEMSimpleLineGraphView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="576" height="121"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        </view>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstItem="NlD-7X-U68" firstAttribute="top" secondItem="Mz2-Dc-hJA" secondAttribute="top" id="Gbh-mL-Kw3"/>
-                                                        <constraint firstAttribute="leading" secondItem="NlD-7X-U68" secondAttribute="leading" id="b9t-G1-odI"/>
-                                                        <constraint firstItem="NlD-7X-U68" firstAttribute="trailing" secondItem="Mz2-Dc-hJA" secondAttribute="trailing" id="dnc-OE-Hrb"/>
-                                                        <constraint firstAttribute="bottom" secondItem="NlD-7X-U68" secondAttribute="bottom" id="vxb-F9-hbT"/>
-                                                    </constraints>
-                                                </view>
-                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHF-JM-qCz" userLabel="overlay view" customClass="HEMGraphSectionOverlayView">
-                                                    <rect key="frame" x="0.0" y="120" width="576" height="135"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="GkP-h4-wTp" userLabel="scope picker" customClass="HEMScopePickerView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="576" height="52"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="emg-VO-eRc" userLabel="scope picker border">
-                                                            <rect key="frame" x="0.0" y="51" width="576" height="1"/>
-                                                            <color key="backgroundColor" red="0.95081578038674031" green="0.95081578038674031" blue="0.95081578038674031" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="1" id="4vE-X1-tCo"/>
-                                                            </constraints>
-                                                        </view>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="emg-VO-eRc" secondAttribute="bottom" id="SAL-uc-bGs"/>
-                                                        <constraint firstItem="emg-VO-eRc" firstAttribute="leading" secondItem="GkP-h4-wTp" secondAttribute="leading" id="lZ2-Mx-usl"/>
-                                                        <constraint firstAttribute="trailing" secondItem="emg-VO-eRc" secondAttribute="trailing" id="viy-Ej-KMO"/>
-                                                    </constraints>
-                                                </view>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-ZL-kDz">
-                                                    <rect key="frame" x="230" y="165" width="117" height="21"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="jl4-Bk-rKU" secondAttribute="trailing" id="3dY-7D-eYD"/>
-                                            <constraint firstItem="Mz2-Dc-hJA" firstAttribute="top" secondItem="bHF-JM-qCz" secondAttribute="top" constant="14" id="9Jv-1Q-Wdt"/>
-                                            <constraint firstItem="RQ0-ZL-kDz" firstAttribute="centerX" secondItem="jl4-Bk-rKU" secondAttribute="centerX" id="AL2-nc-Qdk"/>
-                                            <constraint firstItem="bHF-JM-qCz" firstAttribute="trailing" secondItem="jl4-Bk-rKU" secondAttribute="trailing" id="BT3-w7-BEE"/>
-                                            <constraint firstItem="jl4-Bk-rKU" firstAttribute="leading" secondItem="AoB-W3-581" secondAttribute="leading" id="Eif-Af-W77"/>
-                                            <constraint firstItem="jl4-Bk-rKU" firstAttribute="top" secondItem="uVd-Hi-XJW" secondAttribute="bottom" constant="24" id="FC0-id-RSF"/>
-                                            <constraint firstAttribute="trailing" secondItem="GkP-h4-wTp" secondAttribute="trailing" id="FWQ-E0-FFr"/>
-                                            <constraint firstItem="Mz2-Dc-hJA" firstAttribute="leading" secondItem="jl4-Bk-rKU" secondAttribute="leading" id="Laq-sd-gsx"/>
-                                            <constraint firstItem="bHF-JM-qCz" firstAttribute="leading" secondItem="jl4-Bk-rKU" secondAttribute="leading" id="MZo-Qm-g2e"/>
-                                            <constraint firstItem="Mz2-Dc-hJA" firstAttribute="trailing" secondItem="jl4-Bk-rKU" secondAttribute="trailing" id="U0m-0Y-ibW"/>
-                                            <constraint firstItem="bHF-JM-qCz" firstAttribute="top" secondItem="jl4-Bk-rKU" secondAttribute="top" id="WgP-QS-36m"/>
-                                            <constraint firstItem="Mz2-Dc-hJA" firstAttribute="bottom" secondItem="jl4-Bk-rKU" secondAttribute="bottom" id="YxF-bs-C0O"/>
-                                            <constraint firstItem="uVd-Hi-XJW" firstAttribute="leading" secondItem="AoB-W3-581" secondAttribute="leading" constant="14" id="ZNp-ey-TCX"/>
-                                            <constraint firstItem="RQ0-ZL-kDz" firstAttribute="centerY" secondItem="jl4-Bk-rKU" secondAttribute="centerY" constant="-12" id="aMr-XR-2EJ"/>
-                                            <constraint firstItem="bHF-JM-qCz" firstAttribute="bottom" secondItem="jl4-Bk-rKU" secondAttribute="bottom" id="dkW-v7-wNI"/>
-                                            <constraint firstItem="uVd-Hi-XJW" firstAttribute="top" secondItem="GkP-h4-wTp" secondAttribute="bottom" constant="24" id="eOb-N0-k7S"/>
-                                            <constraint firstItem="GkP-h4-wTp" firstAttribute="top" secondItem="AoB-W3-581" secondAttribute="top" id="fYh-vF-u1z"/>
-                                            <constraint firstItem="GkP-h4-wTp" firstAttribute="leading" secondItem="AoB-W3-581" secondAttribute="leading" id="yfG-Cd-Fmb"/>
-                                            <constraint firstAttribute="bottom" secondItem="jl4-Bk-rKU" secondAttribute="bottom" id="z36-tq-XCW"/>
-                                            <constraint firstAttribute="trailing" secondItem="uVd-Hi-XJW" secondAttribute="trailing" constant="14" id="zlv-XM-gKC"/>
-                                        </constraints>
-                                        <size key="customSize" width="576" height="255"/>
-                                        <connections>
-                                            <outlet property="barGraphView" destination="jl4-Bk-rKU" id="2MK-jd-uFw"/>
-                                            <outlet property="graphLeftConstraint" destination="b9t-G1-odI" id="Icb-k2-5lt"/>
-                                            <outlet property="graphRightConstraint" destination="dnc-OE-Hrb" id="Mgg-7L-20e"/>
-                                            <outlet property="lineGraphView" destination="NlD-7X-U68" id="dxM-VN-tb9"/>
-                                            <outlet property="overlayView" destination="bHF-JM-qCz" id="01l-3r-F8F"/>
-                                            <outlet property="scopePickerView" destination="GkP-h4-wTp" id="Dlw-jg-Nfa"/>
-                                            <outlet property="statusLabel" destination="RQ0-ZL-kDz" id="NpJ-tA-VbU"/>
-                                            <outlet property="titleLabel" destination="uVd-Hi-XJW" id="kRl-Uf-9bH"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="soM-Nd-KFN" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="8" y="543" width="584" height="94"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9U-pX-upj">
-                                                    <rect key="frame" x="16" y="36" width="552" height="21"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
-                                                    <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="g9U-pX-upj" firstAttribute="leading" secondItem="soM-Nd-KFN" secondAttribute="leading" constant="16" id="1aZ-Z9-BUb"/>
-                                            <constraint firstAttribute="centerY" secondItem="g9U-pX-upj" secondAttribute="centerY" id="HMJ-4h-khD"/>
-                                            <constraint firstItem="g9U-pX-upj" firstAttribute="trailing" secondItem="soM-Nd-KFN" secondAttribute="trailing" constant="-16" id="K6F-wk-OcT"/>
-                                        </constraints>
-                                        <size key="customSize" width="584" height="94"/>
-                                        <connections>
-                                            <outlet property="textLabel" destination="g9U-pX-upj" id="5x9-bV-VGp"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="dvl-ut-646" id="jV2-uh-3TV"/>
-                                    <outlet property="delegate" destination="dvl-ut-646" id="RQ2-0m-Tgh"/>
-                                </connections>
-                            </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="08e-Zm-mKn" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="280" y="280" width="40" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="A60-0g-dFl"/>
-                                    <constraint firstAttribute="width" constant="40" id="MCg-oK-5XN"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="UtJ-3J-Jha" firstAttribute="top" secondItem="SGI-8T-ZVx" secondAttribute="bottom" constant="56" id="2ts-RR-ar1"/>
-                            <constraint firstItem="08e-Zm-mKn" firstAttribute="centerX" secondItem="jdC-gn-VDp" secondAttribute="centerX" id="3Ea-vo-Mmg"/>
-                            <constraint firstAttribute="trailing" secondItem="SGI-8T-ZVx" secondAttribute="trailing" id="5Zc-Vh-f83"/>
-                            <constraint firstItem="SGI-8T-ZVx" firstAttribute="leading" secondItem="jdC-gn-VDp" secondAttribute="leading" id="7Ml-MA-i9J"/>
-                            <constraint firstItem="08e-Zm-mKn" firstAttribute="centerY" secondItem="jdC-gn-VDp" secondAttribute="centerY" id="h7a-Os-S6s"/>
-                            <constraint firstItem="SGI-8T-ZVx" firstAttribute="top" secondItem="tI0-Lz-X3V" secondAttribute="top" constant="3" id="mY5-kP-sTr"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="E35-zG-rcT"/>
-                    <connections>
-                        <outlet property="collectionView" destination="SGI-8T-ZVx" id="C2E-AN-SMg"/>
-                        <outlet property="loadingIndicator" destination="08e-Zm-mKn" id="voK-jC-MTQ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XFy-Nv-a7F" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3469" y="-728"/>
-        </scene>
         <!--Insight Feed View Controller-->
         <scene sceneID="ga7-Mh-3od">
             <objects>
@@ -4590,7 +4363,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OWd-VL-BF6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3469" y="-2209"/>
+            <point key="canvasLocation" x="3562" y="-728"/>
         </scene>
         <!--Alarm List Navigation Controller-->
         <scene sceneID="BgO-Cf-n7y">
@@ -4909,7 +4682,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="EmptyStateTrends" width="359" height="180"/>
         <image name="accessory" width="8" height="15"/>
         <image name="accessoryBlue" width="10" height="18"/>
         <image name="alarmDeleteIcon" width="19" height="19"/>

@@ -40,11 +40,6 @@
 + (void)showTutorialForSensorNamed:(NSString*)sensorName;
 
 /**
- *  Present the tutorial for trends if not previously viewed
- */
-+ (void)showTutorialForTrendsIfNeeded;
-
-/**
  * Present the tutorial for alarms if not previously viewed
  * @param controller: the alarm controller to show tutorial on top of
  */

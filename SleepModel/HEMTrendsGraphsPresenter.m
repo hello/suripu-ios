@@ -291,10 +291,10 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (NSAttributedString*)attributedScoreFromAnnotation:(SENTrendsAnnotation*)annotation
                                              inGraph:(SENTrendsGraph*)graph{
-    SENCondition condition = [[self trendService] conditionForValue:[annotation value] inGraph:graph];
+    NSInteger averageValue = [[annotation value] integerValue];
+    SENCondition condition = [[self trendService] conditionForValue:@(averageValue) inGraph:graph];
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendAverageValueFont],
                                  NSForegroundColorAttributeName : [UIColor colorForCondition:condition]};
-    NSInteger averageValue = [[annotation value] integerValue];
     NSString* valueText = nil;
     if (averageValue >= 0) {
         valueText = [NSString stringWithFormat:@"%ld", (long)averageValue];

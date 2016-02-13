@@ -9,7 +9,6 @@
 #import "SENSensor.h"
 #import "SENTimeline.h"
 #import "SENSound.h"
-#import "SENTrend.h"
 #import "SENPreference.h"
 #import "SENLocalPreferences.h"
 #import "SENSupportTopic.h"

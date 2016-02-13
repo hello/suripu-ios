@@ -32,7 +32,8 @@
   "requires_arc": true,
   "public_header_files": [
     "Source/Bugsnag/*.h",
-    "KSCrash/Source/KSCrash/Reporting/Filters/KSCrashReportFilter.h"
+    "KSCrash/Source/KSCrash/Reporting/Filters/KSCrashReportFilter.h",
+    "KSCrash/Source/KSCrash/Recording/KKSCrashReportWriter.h"
   ],
   "subspecs": [
     {

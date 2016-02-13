@@ -52,9 +52,4 @@
  */
 - (void) notify:(NSException *)exception withData:(NSDictionary*)metaData atSeverity:(NSString*)severity atDepth:(NSUInteger) depth;
 
-/**
- *  Write breadcrumbs to the cached metadata for error reports
- */
-- (void) serializeBreadcrumbs;
-
 @end

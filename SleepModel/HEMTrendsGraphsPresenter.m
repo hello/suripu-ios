@@ -437,8 +437,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
     SENTrends* trends = [self selectedTrends];
-    NSInteger items = [self showTrendsMessage] ? 1 : 0;;
-    items += [[trends graphs] count];
+    NSInteger items = 0;
+    if ([[self trendService] dataHasBeenLoaded]) {
+        items = [self showTrendsMessage] ? 1 : 0;
+        items += [[trends graphs] count];
+    }
     return items;
 }
 

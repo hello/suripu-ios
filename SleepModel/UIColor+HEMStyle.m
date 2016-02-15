@@ -318,10 +318,10 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithWhite:0.0f alpha:0.1f];
 }
 + (UIColor *)emptyCircleColor {
-    return [UIColor colorWithHex:0xF8F8F9 alpha:1.0f];
+    return [UIColor colorWithHex:0xFFFFFF alpha:1.0f];
 }
 + (UIColor *)emptyCircleBorderColor {
-    return [UIColor colorWithHex:0xEDEEF0 alpha:0.5f];
+    return [UIColor colorWithHex:0xEDEEF0 alpha:1.0f];
 }
 + (UIColor *)trendsAverageTitleColor {
     return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];

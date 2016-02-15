@@ -136,22 +136,30 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
         row = values[rIndex];
         labelFrame.origin.y = (rIndex * scoreSizeWithSpacing) + titleWithSpacing;
         
-        NSInteger columns = [row count];
-        for (NSInteger cIndex = columns - 1; cIndex >= 0; cIndex--) {
+        NSInteger valueIndex = [row count] - 1;
+        NSInteger columns = HEMTrendsCalMonthDaysInWeek;
+        NSInteger maxCIndex = columns - 1;
+        for (NSInteger cIndex = maxCIndex; cIndex >= 0; cIndex--) {
+            
+            NSInteger indexOffset = HEMTrendsCalMonthDaysInWeek - columns;
             
             if (lastRowIndex == rIndex) {
                 labelFrame.origin.x = cIndex * scoreSizeWithSpacing;
             } else {
-                NSInteger indexOffset = HEMTrendsCalMonthDaysInWeek - columns;
                 labelFrame.origin.x = (cIndex + indexOffset) * scoreSizeWithSpacing;
             }
             
             point = nil;
-            if (cIndex < [row count]) {
-                point = row[cIndex];
+            if (valueIndex >= 0
+                && ((rIndex > 0
+                     && valueIndex == cIndex)
+                || (rIndex == 0))) {
+                point = row[valueIndex];
+                valueIndex--;
             }
             
-            HEMTrendsScoreLabel* scoreLabel = [self scoreLabelForDataPoint:point withFrame:labelFrame];
+            HEMTrendsScoreLabel* scoreLabel = [self scoreLabelForDataPoint:point
+                                                                 withFrame:labelFrame];
             if (point) {
                 [scoreLabel setTextAlignment:NSTextAlignmentCenter];
                 [scoreLabel setTextColor:[UIColor whiteColor]];

@@ -32,6 +32,8 @@ static CGFloat const HEMTrendsBubbleUnitFontSizeRatio = 0.17f;
 @property (copy, nonatomic) NSAttributedString* mediumTitle;
 @property (copy, nonatomic) NSAttributedString* deepTitle;
 
+@property (assign, nonatomic, getter=isLaidOut) BOOL laidOut;
+
 @end
 
 @implementation HEMTrendsSleepDepthView
@@ -142,45 +144,55 @@ static CGFloat const HEMTrendsBubbleUnitFontSizeRatio = 0.17f;
 
 - (void)updateBubbleLayout {
     // remember, width and height is the same (circle) so they are interchangeable
-    CGFloat lightWidth = CGRectGetWidth([[self lightBubble] bounds]);
     CGFloat mediumWidth = CGRectGetWidth([[self mediumBubble] bounds]);
-    CGFloat deepWidth = CGRectGetWidth([[self deepBubble] bounds]);
     CGFloat containerHeight = CGRectGetHeight([self bounds]);
     CGFloat containerWidth = CGRectGetWidth([self bounds]);
     
-    CGRect bubbleBounds = [[self lightBubble] bounds];
-    CGFloat radius = CGRectGetWidth(bubbleBounds) / 2.0f;
-    bubbleBounds.size = [self sizeForBubbleWithPercentage:[self lightPercentage]];
-    [[self lightBubble] setBounds:bubbleBounds];
-    [[self lightBubble] setCenter:CGPointMake(radius, ((containerHeight - lightWidth) / 2) + radius)];
+    CGRect bubbleFrame = [[self lightBubble] frame];
+    CGFloat radius = CGRectGetWidth(bubbleFrame) / 2.0f;
+    bubbleFrame.size = [self sizeForBubbleWithPercentage:[self lightPercentage]];
+    bubbleFrame.origin.x = 0.0f;
+    bubbleFrame.origin.y = (containerHeight - CGRectGetHeight(bubbleFrame)) / 2.0f;
+    [[[self lightBubble] layer] setAnchorPoint:CGPointMake(0.0f, 0.5f)];
+    [[self lightBubble] setFrame:bubbleFrame];
     
-    bubbleBounds = [[self deepBubble] bounds];
-    bubbleBounds.size = [self sizeForBubbleWithPercentage:[self deepPercentage]];
-    radius = CGRectGetWidth(bubbleBounds) / 2.0f;
-    CGPoint center = CGPointZero;
-    center.x = (containerWidth - CGRectGetWidth(bubbleBounds)) + radius;
-    center.y = ((containerHeight - deepWidth) / 2) + radius;
-    [[self deepBubble] setBounds:bubbleBounds];
-    [[self deepBubble] setCenter:center];
+    bubbleFrame = [[self deepBubble] frame];
+    bubbleFrame.size = [self sizeForBubbleWithPercentage:[self deepPercentage]];
+    radius = CGRectGetWidth(bubbleFrame) / 2.0f;
+    bubbleFrame.origin.x = containerWidth - CGRectGetWidth(bubbleFrame);
+    bubbleFrame.origin.y = (containerHeight - CGRectGetHeight(bubbleFrame)) / 2.0f;
+    [[[self deepBubble] layer] setAnchorPoint:CGPointMake(1.0f, 0.5f)];
+    [[self deepBubble] setFrame:bubbleFrame];
     
     CGFloat maxLightX = CGRectGetMaxX([[self lightBubble] frame]);
     CGFloat minDeepX = CGRectGetMinX([[self deepBubble] frame]);
     CGFloat distanceBetweenLightAndDeep = minDeepX - maxLightX;
     CGFloat centerMediumX = maxLightX + (distanceBetweenLightAndDeep / 2);
     
-    bubbleBounds = [[self mediumBubble] bounds];
-    bubbleBounds.size = [self sizeForBubbleWithPercentage:[self mediumPercentage]];
-    radius = CGRectGetWidth(bubbleBounds) / 2.0f;
-    center.x = centerMediumX - (CGRectGetWidth(bubbleBounds) / 2) + radius;
-    center.y = ((containerHeight - mediumWidth) / 2) + radius;
-    [[self mediumBubble] setBounds:bubbleBounds];
-    [[self mediumBubble] setCenter:center];
+    bubbleFrame = [[self mediumBubble] frame];
+    bubbleFrame.size = [self sizeForBubbleWithPercentage:[self mediumPercentage]];
+    radius = CGRectGetWidth(bubbleFrame) / 2.0f;
+    bubbleFrame.origin.x = centerMediumX - (CGRectGetWidth(bubbleFrame) / 2);
+    bubbleFrame.origin.y = (containerHeight - mediumWidth) / 2;
+    [[self mediumBubble] setFrame:bubbleFrame];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self updateBubbleLayout];
-    [self updateText];
+    if (![self isLaidOut]) {
+        [self updateBubbleLayout];
+        [self updateText];
+        [self setLaidOut:YES];
+    } else {
+        [UIView animateWithDuration:0.33f
+                              delay:0.0f
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             [self updateBubbleLayout];
+                             [self updateText];
+                         }
+                         completion:nil];
+    }
 }
 
 @end

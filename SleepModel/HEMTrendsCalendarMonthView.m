@@ -115,11 +115,8 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
 }
 
 - (void)removeAllDayLabels {
-    for (UIView* subview in [self subviews]) {
-        if ([subview isKindOfClass:[HEMTrendsScoreLabel class]]) {
-            [subview removeFromSuperview];
-        }
-    }
+    [[self scoreLabels] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [[self scoreLabels] removeAllObjects];
 }
 
 - (void)showCurrentMonthWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values

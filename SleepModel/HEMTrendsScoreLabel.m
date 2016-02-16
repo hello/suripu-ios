@@ -14,6 +14,14 @@ static CGFloat const HEMTrendsScoreHighlightWidth = 2.5f;
 
 @implementation HEMTrendsScoreLabel
 
+- (void)reuse {
+    [self setScoreBorderColor:nil];
+    [self setScoreColor:nil];
+    [self setText:nil];
+    [self setAttributedText:nil];
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
     UIColor* fillColor = [self scoreColor];
     if (!fillColor) {

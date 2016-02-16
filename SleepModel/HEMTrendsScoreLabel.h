@@ -13,4 +13,6 @@
 @property (nonatomic, strong) UIColor* scoreColor;
 @property (nonatomic, strong) UIColor* scoreBorderColor;
 
+- (void)reuse;
+
 @end

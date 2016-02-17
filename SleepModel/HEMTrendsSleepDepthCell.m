@@ -15,6 +15,8 @@
 
 static CGFloat const HEMTrendsSleepDepthHeight = 240.0f;
 static CGFloat const HEMTrendsSleepDepthMinWidthCoef = 0.3f;
+static CGFloat const HEMTrendsSleepDepthValueFontSizeCoef = 0.33f;
+static CGFloat const HEMTrendsSleepDepthUnitFontSizeCoef = 0.167f;
 
 @interface HEMTrendsSleepDepthCell()
 
@@ -61,6 +63,35 @@ static CGFloat const HEMTrendsSleepDepthMinWidthCoef = 0.3f;
     return roundCGFloat(value);
 }
 
+- (CGFloat)valueFontSizeForBubbleSize:(CGFloat)size {
+    return ceilCGFloat(size * HEMTrendsSleepDepthValueFontSizeCoef);
+}
+
+- (CGFloat)unitFontSizeForBubbleSize:(CGFloat)size {
+    return ceilCGFloat(size * HEMTrendsSleepDepthUnitFontSizeCoef);
+}
+
+- (void)updateBubbleFontSizesForBubbleSize:(CGFloat)lightSize
+                                mediumSize:(CGFloat)mediumSize
+                                  deepSize:(CGFloat)deepSize {
+    
+    CGFloat lightValueSize = [self valueFontSizeForBubbleSize:lightSize];
+    CGFloat mediumValueSize = [self valueFontSizeForBubbleSize:mediumSize];
+    CGFloat deepValueSize = [self valueFontSizeForBubbleSize:deepSize];
+    
+    CGFloat lightUnitSize = [self unitFontSizeForBubbleSize:lightSize];
+    CGFloat mediumUnitSize = [self unitFontSizeForBubbleSize:mediumSize];
+    CGFloat deepUnitSize = [self unitFontSizeForBubbleSize:deepSize];
+    
+    [[[self lightBubbleView] valueLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:lightValueSize]];
+    [[[self mediumBubbleView] valueLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:mediumValueSize]];
+    [[[self deepBubbleView] valueLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:deepValueSize]];
+    
+    [[[self lightBubbleView] unitLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:lightUnitSize]];
+    [[[self mediumBubbleView] unitLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:mediumUnitSize]];
+    [[[self deepBubbleView] unitLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:deepUnitSize]];
+}
+
 - (void)updateLightPercentage:(CGFloat)lightPercentage
              mediumPercentage:(CGFloat)mediumPercentage
                deepPercentage:(CGFloat)deepPercentage {
@@ -75,6 +106,10 @@ static CGFloat const HEMTrendsSleepDepthMinWidthCoef = 0.3f;
     CGFloat spaceForMedium = width - lightWidth - deepWidth;
     CGFloat mediumWidth = MAX(minWidth, MIN(height, mediumPercentage * width));
     CGFloat overlap = absCGFloat((mediumWidth - spaceForMedium) / 2.0f);
+    
+    [self updateBubbleFontSizesForBubbleSize:lightWidth
+                                  mediumSize:mediumWidth
+                                    deepSize:deepWidth];
     
     [[self lightWidthConstraint] setConstant:lightWidth];
     [[self deepWidthConstraint] setConstant:deepWidth];

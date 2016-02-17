@@ -41,7 +41,8 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 }
 
 - (void)addShadowView {
-    HEMNavigationShadowView* shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:self];
+    HEMNavigationShadowView* shadowView
+        = [[HEMNavigationShadowView alloc] initWithNavigationBar:self];
     [self addSubview:shadowView];
     [self setShadowView:shadowView];
     [self setClipsToBounds:NO];
@@ -54,7 +55,8 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
     separatorFrame.size.height = HEMSubNavigationViewBorderHeight;
     
     UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
-    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
+                                    | UIViewAutoresizingFlexibleTopMargin];
     [separator setBackgroundColor:[UIColor borderColor]];
     
     [self addSubview:separator];

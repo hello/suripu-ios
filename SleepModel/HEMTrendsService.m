@@ -29,6 +29,7 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
 // other than memory warnings
 @property (nonatomic, strong) NSMutableDictionary<NSNumber*, SENTrends*>* cachedTrendsByScale;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber*, NSDate*>* cachedLastPullByScale;
+@property (nonatomic, assign, getter=dataHasBeenLoaded) BOOL loaded;
 
 @end
 
@@ -84,6 +85,8 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
     __weak typeof(self) weakSelf = self;
     [SENAPITrends trendsForTimeScale:timeScale completion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setLoaded:YES];
+        
         if (error) {
             [SENAnalytics trackError:error];
         } else if ([data isKindOfClass:[SENTrends class]]) {
@@ -163,10 +166,6 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
         daysLeft = MAX(0, HEMTrendsServiceDaysUntilMoreTrends - daysOfUse);
     }
     return daysLeft;
-}
-
-- (BOOL)dataHasBeenLoaded {
-    return [[self cachedLastPullByScale] count] > 0;
 }
 
 @end

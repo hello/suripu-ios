@@ -64,7 +64,6 @@
 static UIColor *_conditionWarningColor = nil;
 static UIColor *_conditionIdealColor = nil;
 static UIColor *_conditionAlertColor = nil;
-static UIColor *_conditionUnknownColor = nil;
 static UIColor *_sleepStateLightColor = nil;
 static UIColor *_sleepStateMediumColor = nil;
 static UIColor *_sleepStateSoundColor = nil;
@@ -80,7 +79,6 @@ static UIColor *_tintColor = nil;
     _sleepStateMediumColor = [UIColor colorWithRed:0.447 green:0.788 blue:1 alpha:1];
     _sleepStateSoundColor = [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];
     _sleepStateAwakeColor = [UIColor colorWithRed:0.32 green:0.356 blue:0.8 alpha:0];
-    _conditionUnknownColor = [UIColor colorWithRed:0.824f green:0.824f blue:0.824f alpha:1];
 }
 
 + (UIColor *)tintColor {
@@ -96,7 +94,7 @@ static UIColor *_tintColor = nil;
     return _conditionAlertColor;
 }
 + (UIColor *)conditionUnknownColor {
-    return _conditionUnknownColor;
+    return [UIColor colorWithHex:0xDFE1E6 alpha:1.0f];
 }
 + (UIColor *)sleepStateLightColor {
     return _sleepStateLightColor;
@@ -213,7 +211,7 @@ static UIColor *_tintColor = nil;
     return [UIColor colorWithHex:0x596980 alpha:0.7f];
 }
 + (UIColor *)barChartBorderColor {
-    return [UIColor colorWithHex:0x596980 alpha:1.0f];
+    return [UIColor colorWithHex:0x596980 alpha:0.15f];
 }
 + (UIColor *)trendsScopeSelectorActiveTextColor {
     return [UIColor colorWithRed:22.0f/255.0f

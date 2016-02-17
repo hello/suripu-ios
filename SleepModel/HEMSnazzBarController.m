@@ -38,7 +38,6 @@ CGFloat const HEMSnazzBarHeight = 64.0f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[self contentView] setScrollEnabled:NO]; // disable for now
     [self notifyControllerAppearanceAtIndexIfNeeded:self.selectedIndex];
 }
 
@@ -106,6 +105,8 @@ CGFloat const HEMSnazzBarHeight = 64.0f;
         [UIView animateWithDuration:HEMSnazzBarAnimationDuration animations:animations];
     else
         animations();
+    
+    self.contentView.scrollEnabled = !hidden;
 }
 
 - (void)showPartialBarWithRatio:(CGFloat)ratio {

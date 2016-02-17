@@ -12,7 +12,7 @@
 
 static CGFloat const HEMBarChartAnimeDuration = 0.2f;
 static CGFloat const HEMBarChartBaseLine = 0.0f;
-static CGFloat const HEMBarChartBorderWidth = 0.5f;
+static CGFloat const HEMBarChartBorderWidth = 1.0f;
 static CGFloat const HEMBarChartMinimumBarHeight = 40.0f;
 
 @interface HEMBarChartView()

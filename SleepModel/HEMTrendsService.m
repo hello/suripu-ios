@@ -168,4 +168,9 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
     return daysLeft;
 }
 
+- (BOOL)isReturningUser:(SENTrends*)currentTrends {
+    return [[currentTrends availableTimeScales] count] > 0
+        && [[currentTrends graphs] count] == 0;
+}
+
 @end

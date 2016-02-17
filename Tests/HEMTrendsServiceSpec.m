@@ -24,6 +24,56 @@ SPEC_BEGIN(HEMTrendsServiceSpec)
 
 describe(@"HEMTrendsService", ^{
     
+    describe(@"-isReturningUser:", ^{
+        
+        context(@"available time scales returned, but no graphs", ^{
+            
+            __block SENTrends* trends = nil;
+            __block NSArray<NSNumber*>* timeScales;
+            __block BOOL returning = NO;
+            
+            beforeEach(^{
+                trends = [SENTrends new];
+                timeScales = @[@1, @2];
+                [trends stub:@selector(availableTimeScales) andReturn:timeScales];
+                
+                HEMTrendsService* service = [HEMTrendsService new];
+                returning = [service isReturningUser:trends];
+            });
+            
+            afterEach(^{
+                trends = nil;
+                timeScales = nil;
+                returning = YES;
+            });
+            
+            it(@"should return YES", ^{
+                [[@(returning) should] beYes];
+            });
+            
+        });
+        
+        context(@"no trends", ^{
+            
+            __block BOOL returning = NO;
+            
+            beforeEach(^{
+                HEMTrendsService* service = [HEMTrendsService new];
+                returning = [service isReturningUser:nil];
+            });
+            
+            afterEach(^{
+                returning = YES;
+            });
+            
+            it(@"should return NO", ^{
+                [[@(returning) should] beNo];
+            });
+            
+        });
+        
+    });
+    
     describe(@"-daysUntilMoreTrends:", ^{
         
         context(@"there are more than 1 available time scales", ^{

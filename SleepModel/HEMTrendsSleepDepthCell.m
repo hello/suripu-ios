@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 2/16/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <UICountingLabel/UICountingLabel.h>
 
 #import "HEMTrendsSleepDepthCell.h"
 #import "HEMScreenUtils.h"
@@ -55,10 +56,9 @@ static CGFloat const HEMTrendsSleepDepthMinWidthCoef = 0.3f;
     return screenWidth * HEMTrendsSleepDepthMinWidthCoef;
 }
 
-- (NSString*)valueForPercentage:(CGFloat)percentage {
+- (CGFloat)valueForPercentage:(CGFloat)percentage {
     CGFloat value = percentage * 100.0f;
-    long displayValue = roundCGFloat(value);
-    return [NSString stringWithFormat:@"%ld", displayValue];
+    return roundCGFloat(value);
 }
 
 - (void)updateLightPercentage:(CGFloat)lightPercentage
@@ -66,10 +66,6 @@ static CGFloat const HEMTrendsSleepDepthMinWidthCoef = 0.3f;
                deepPercentage:(CGFloat)deepPercentage {
     
     BOOL laidOutSubviews = [self layoutSubviewsIfNeeded];
-
-    [[[self lightBubbleView] valueLabel] setText:[self valueForPercentage:lightPercentage]];
-    [[[self mediumBubbleView] valueLabel] setText:[self valueForPercentage:mediumPercentage]];
-    [[[self deepBubbleView] valueLabel] setText:[self valueForPercentage:deepPercentage]];
     
     CGFloat height = CGRectGetHeight([[self mainContentView] bounds]);
     CGFloat width = CGRectGetWidth([[self mainContentView] bounds]);
@@ -92,10 +88,21 @@ static CGFloat const HEMTrendsSleepDepthMinWidthCoef = 0.3f;
         [[self deepBubbleView] setNeedsDisplay];
     };
     
+    CGFloat lightValue = [self valueForPercentage:lightPercentage];
+    CGFloat mediumValue = [self valueForPercentage:mediumPercentage];
+    CGFloat deepValue = [self valueForPercentage:deepPercentage];
+    
     if (laidOutSubviews) {
         update();
+        [[[self lightBubbleView] valueLabel] countFromZeroTo:lightValue];
+        [[[self mediumBubbleView] valueLabel] countFromZeroTo:mediumValue];
+        [[[self deepBubbleView] valueLabel] countFromZeroTo:deepValue];
     } else {
-        [UIView animateWithDuration:0.33f animations:update];
+        CGFloat const duration = 0.33f;
+        [UIView animateWithDuration:duration animations:update];
+        [[[self lightBubbleView] valueLabel] countFromCurrentValueTo:lightValue withDuration:duration];
+        [[[self mediumBubbleView] valueLabel] countFromCurrentValueTo:mediumValue withDuration:duration];
+        [[[self deepBubbleView] valueLabel] countFromCurrentValueTo:deepValue withDuration:duration];
     }
     
 

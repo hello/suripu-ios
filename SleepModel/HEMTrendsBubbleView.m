@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 2/16/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import <UICountingLabel/UICountingLabel.h>
 #import "HEMTrendsBubbleView.h"
 #import "HEMStyle.h"
 
@@ -16,6 +16,7 @@
     [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
     [[self valueLabel] setTextColor:[UIColor whiteColor]];
     [[self valueLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:35.0f]];
+    [[self valueLabel] setFormat:@"%.0f"];
     
     [[self unitLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:23.0f]];
     [[self unitLabel] setBackgroundColor:[UIColor clearColor]];

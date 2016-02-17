@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class UICountingLabel;
+
 @interface HEMTrendsBubbleView : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel* valueLabel;
+@property (weak, nonatomic) IBOutlet UICountingLabel* valueLabel;
 @property (weak, nonatomic) IBOutlet UILabel* nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (strong, nonatomic) UIColor* bubbleColor;

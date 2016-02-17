@@ -118,8 +118,41 @@ describe(@"HEMTrendsService", ^{
                 daysToMore = 0;
             });
             
-            it(@"should return 7", ^{
-                [[@(daysToMore) should] equal:@7];
+            it(@"should return 0", ^{
+                [[@(daysToMore) should] equal:@0];
+            });
+            
+        });
+        
+        context(@"trends with available time scales, but returned 3 graphs", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrends* trends = nil;
+            __block SENTrendsGraph* graph = nil;
+            __block SENTrendsGraphSection* section = nil;
+            __block NSInteger daysToMore = 0;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                trends = [SENTrends new];
+                graph = [SENTrendsGraph new];
+                section = [SENTrendsGraphSection new];
+                [section stub:@selector(values) andReturn:@[@1]];
+                [graph stub:@selector(sections) andReturn:@[section]];
+                [trends stub:@selector(graphs) andReturn:@[graph, graph, graph]];
+                daysToMore = [service daysUntilMoreTrends:trends];
+            });
+            
+            afterEach(^{
+                service = nil;
+                trends = nil;
+                graph = nil;
+                section = nil;
+                daysToMore = 0;
+            });
+            
+            it(@"should return 0", ^{
+                [[@(daysToMore) should] equal:@0];
             });
             
         });

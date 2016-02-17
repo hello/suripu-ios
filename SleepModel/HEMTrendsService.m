@@ -157,13 +157,16 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
 
 - (NSInteger)daysUntilMoreTrends:(SENTrends*)currentTrends {
     NSInteger daysLeft = 0;
-    if ([[currentTrends availableTimeScales] count] < 2) {
+    if ([[currentTrends availableTimeScales] count] < 2
+        && [[currentTrends graphs] count] == 1) {
+        
         SENTrendsGraph* firstGraph = [[currentTrends graphs] firstObject];
         NSInteger daysOfUse = 0;
         for (SENTrendsGraphSection* section in [firstGraph sections]) {
             daysOfUse += [[section values] count];
         }
         daysLeft = MAX(0, HEMTrendsServiceDaysUntilMoreTrends - daysOfUse);
+        
     }
     return daysLeft;
 }

@@ -93,6 +93,11 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  */
 - (NSInteger)daysUntilMoreTrends:(nullable SENTrends*)currentTrends;
 
+/**
+ * @return YES if data has been loaded at least once before
+ */
+- (BOOL)dataHasBeenLoaded;
+
 @end
 
 NS_ASSUME_NONNULL_END

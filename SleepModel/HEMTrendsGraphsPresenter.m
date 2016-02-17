@@ -15,9 +15,8 @@
 #import "HEMTrendsCalendarViewCell.h"
 #import "HEMTrendsBarGraphCell.h"
 #import "HEMMultiTitleView.h"
-#import "HEMTrendsBubbleViewCell.h"
+#import "HEMTrendsSleepDepthCell.h"
 #import "HEMSubNavigationView.h"
-#import "HEMTrendsSleepDepthView.h"
 #import "HEMTextCollectionViewCell.h"
 #import "HEMTrendsMessageCell.h"
 #import "HEMTrendsService.h"
@@ -58,6 +57,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (void)bindWithSubNav:(HEMSubNavigationView*)subNav {
     [self setSubNav:subNav];
+    [self bindWithShadowView:[subNav shadowView]];
 }
 
 #pragma mark - Notifications
@@ -165,7 +165,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (CGFloat)heightForBubbleGraphWithData:(SENTrendsGraph*)graph {
-    return [HEMTrendsBubbleViewCell height];
+    return [HEMTrendsSleepDepthCell height];
 }
 
 - (CGFloat)heightForPartialDataCellWithTrends:(SENTrends*)trends itemWidth:(CGFloat)itemWidth {
@@ -403,17 +403,15 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
                            spacing:[self barSpacingForTimeScale:[graph timeScale]]];
 }
 
-- (void)configureBubblesCell:(HEMTrendsBubbleViewCell*)bubbleCell forTrendsGraph:(SENTrendsGraph*)graph {
+- (void)configureSleepDepthCell:(HEMTrendsSleepDepthCell*)sleepDepthCell
+                 forTrendsGraph:(SENTrendsGraph*)graph {
     CGFloat light, medium, deep = 0.0f;
     [[self trendService] sleepDepthLightPercentage:&light mediumPercentage:&medium deepPercentage:&deep forGraph:graph];
     
-    [[bubbleCell titleLabel] setText:[graph title]];
-    
-    HEMTrendsSleepDepthView* contentView = [bubbleCell mainContentView];
-    [contentView setLightPercentage:light localizedTitle:NSLocalizedString(@"trends.sleep-depth.light", nil)];
-    [contentView setMediumPercentage:medium localizedTitle:NSLocalizedString(@"trends.sleep-depth.medium", nil)];
-    [contentView setDeepPercentage:deep localizedTitle:NSLocalizedString(@"trends.sleep-depth.deep", nil)];
-    [contentView render];
+    [[sleepDepthCell titleLabel] setText:[graph title]];
+    [sleepDepthCell updateLightPercentage:light
+                         mediumPercentage:medium
+                           deepPercentage:deep];
 }
 
 - (void)configureMessageCell:(HEMTrendsMessageCell*)messageCell forTrends:(SENTrends*)trends {
@@ -434,10 +432,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 #pragma mark - UICollectionView Data Source
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
     SENTrends* trends = [self selectedTrends];
     NSInteger items = 0;
-    if (![self isRefreshing]) {
+    if ([[self trendService] dataHasBeenLoaded]) {
         items = [self showTrendsMessage] ? 1 : 0;
         items += [[trends graphs] count];
     }
@@ -525,8 +524,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
             [self configureCalendarCell:(id)cell forTrendsGraph:graph];
         } else if ([cell isKindOfClass:[HEMTrendsBarGraphCell class]]) {
             [self configureBarCell:(id)cell forTrendsGraph:graph];
-        } else if ([cell isKindOfClass:[HEMTrendsBubbleViewCell class]]) {
-            [self configureBubblesCell:(id)cell forTrendsGraph:graph];
+        } else if ([cell isKindOfClass:[HEMTrendsSleepDepthCell class]]) {
+            [self configureSleepDepthCell:(id)cell forTrendsGraph:graph];
         }
     } else if ([cell isKindOfClass:[HEMTrendsMessageCell class]]) {
         [self configureMessageCell:(id)cell forTrends:[self selectedTrends]];
@@ -534,6 +533,10 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         [self configureErrorCell:(id)cell];
     }
     
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
 }
 
 #pragma mark - Clean up

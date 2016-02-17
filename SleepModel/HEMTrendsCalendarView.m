@@ -18,7 +18,7 @@ static CGFloat const HEMTrendsCalendarMonthVertSpacing = 32.0f;
 
 @interface HEMTrendsCalendarView()
 
-@property (nonatomic, strong) NSMutableArray<HEMTrendsCalendarMonthView*>* monthViews;
+@property (nonatomic, weak) HEMTrendsCalendarMonthView* currentMonthView;
 
 @end
 
@@ -64,29 +64,37 @@ static CGFloat const HEMTrendsCalendarMonthVertSpacing = 32.0f;
     return calendar;
 }
 
-- (void)clearMonthData {
-    [[self monthViews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [[self monthViews] removeAllObjects];
-}
-
 - (void)updateWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values
                   titles:(NSArray<NSAttributedString*>*)attributedTitles {
-    if (![self monthViews]) {
-        [self setMonthViews:[NSMutableArray arrayWithCapacity:[values count]]];
-    }
-    [[self monthViews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     if ([self type] == HEMTrendsCalendarTypeMonth) {
+        [self clearAllMonthViews];
         [self renderMonthWithValues:values titles:attributedTitles];
     } else {
+        [self clearCurrentMonth];
         [self renderQuarterWithValues:values titles:attributedTitles];
+    }
+}
+
+- (void)clearCurrentMonth {
+    [[self currentMonthView] removeFromSuperview];
+    [self setCurrentMonthView:nil];
+}
+
+- (void)clearAllMonthViews {
+    NSMutableArray* subviews = [[self subviews] mutableCopy];
+    for (UIView* subview in subviews) {
+        if ([subview isKindOfClass:[HEMTrendsCalendarMonthView class]]) {
+            [subview removeFromSuperview];
+        }
     }
 }
 
 - (void)renderQuarterWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values
                          titles:(NSArray<NSAttributedString*>*)attributedTitles {
     
-    NSDate* monthDate = [NSDate date];
+    NSDate* currentMonth = [NSDate date];
+    NSDate* monthDate = currentMonth;
     NSDate* month = [monthDate monthsFromNow:-([values count] - 1)];
     CGFloat fullWidth = CGRectGetWidth([self bounds]);
     CGFloat monthWidth = (fullWidth / 2) - (HEMTrendsCalendarMonthHorzSpacing / 2);
@@ -105,7 +113,9 @@ static CGFloat const HEMTrendsCalendarMonthVertSpacing = 32.0f;
         [monthView showMonthInQuarterWithValues:monthData titles:title forMonth:month];
         
         [self addSubview:monthView];
-        [[self monthViews] addObject:monthView];
+        if (month == currentMonth) {
+            [self setCurrentMonthView:monthView];
+        }
         
         month = [month nextMonth];
         BOOL nextRow = ++sectionIndex % 2 == 0;
@@ -138,10 +148,17 @@ static CGFloat const HEMTrendsCalendarMonthVertSpacing = 32.0f;
     frame.size.height = [HEMTrendsCalendarMonthView heightForMonthWithRows:[values count]
                                                                   maxWidth:fullWidth];
     
-    HEMTrendsCalendarMonthView* monthView = [[HEMTrendsCalendarMonthView alloc] initWithFrame:frame];
+    HEMTrendsCalendarMonthView* monthView = nil;
+    if (![self currentMonthView]) {
+        monthView = [HEMTrendsCalendarMonthView new];
+    } else {
+        monthView = [self currentMonthView];
+    }
+    
+    [monthView setFrame:frame];
     [monthView showCurrentMonthWithValues:values titles:localizedTitles];
     [self addSubview:monthView];
-    [[self monthViews] addObject:monthView];
+    [self setCurrentMonthView:monthView];
 }
 
 @end

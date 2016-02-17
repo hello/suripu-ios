@@ -26,6 +26,8 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
 
 @property (nonatomic, weak) HEMMultiTitleView* titleView;
 @property (nonatomic, copy) NSArray<NSAttributedString*>* localizedTitles;
+@property (nonatomic, strong) NSMutableArray* scoreLabels;
+@property (nonatomic, strong) NSMutableArray* reuseLabels;
 
 @end
 
@@ -72,6 +74,7 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        _scoreLabels = [NSMutableArray array];
         [self setBackgroundColor:[UIColor whiteColor]];
         [self configureTitleView];
     }
@@ -105,17 +108,21 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     }
 }
 
-- (void)removeDayLabels {
-    for (UIView* subview in [self subviews]) {
-        if ([subview isKindOfClass:[HEMTrendsScoreLabel class]]) {
-            [subview removeFromSuperview];
-        }
-    }
+- (void)prepareForReuse {
+    [[self scoreLabels] makeObjectsPerformSelector:@selector(reuse)];
+    [self setReuseLabels:[[self scoreLabels] mutableCopy]];
+    [[self scoreLabels] removeAllObjects];
+}
+
+- (void)removeAllDayLabels {
+    [[self scoreLabels] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [[self scoreLabels] removeAllObjects];
 }
 
 - (void)showCurrentMonthWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values
                             titles:(NSArray<NSAttributedString*>*)localizedTitles {
-    [self removeDayLabels];
+
+    [self prepareForReuse];
     
     CGFloat fullWidth = CGRectGetWidth([self bounds]);
     CGFloat scoreSize = [[self class] sizeForEachDayInMonthWithWidth:fullWidth];
@@ -136,19 +143,26 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
         row = values[rIndex];
         labelFrame.origin.y = (rIndex * scoreSizeWithSpacing) + titleWithSpacing;
         
-        NSInteger columns = [row count];
-        for (NSInteger cIndex = columns - 1; cIndex >= 0; cIndex--) {
+        NSInteger valueIndex = [row count] - 1;
+        NSInteger columns = HEMTrendsCalMonthDaysInWeek;
+        NSInteger maxCIndex = columns - 1;
+        for (NSInteger cIndex = maxCIndex; cIndex >= 0; cIndex--) {
+            
+            NSInteger indexOffset = HEMTrendsCalMonthDaysInWeek - columns;
             
             if (lastRowIndex == rIndex) {
                 labelFrame.origin.x = cIndex * scoreSizeWithSpacing;
             } else {
-                NSInteger indexOffset = HEMTrendsCalMonthDaysInWeek - columns;
                 labelFrame.origin.x = (cIndex + indexOffset) * scoreSizeWithSpacing;
             }
             
             point = nil;
-            if (cIndex < [row count]) {
-                point = row[cIndex];
+            if (valueIndex >= 0
+                && ((rIndex > 0
+                     && valueIndex == cIndex)
+                || (rIndex == 0))) {
+                point = row[valueIndex];
+                valueIndex--;
             }
             
             HEMTrendsScoreLabel* scoreLabel = [self scoreLabelForDataPoint:point withFrame:labelFrame];
@@ -167,12 +181,14 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
             labelFrame.origin.x -= scoreSizeWithSpacing;
         }
     }
+    
+    [self animateIn];
 }
 
 - (void)showMonthInQuarterWithValues:(NSArray<HEMTrendsDisplayPoint*>*)values
                               titles:(NSAttributedString*)localizedMonthText
                             forMonth:(NSDate*)month {
-    [self removeDayLabels];
+    [self removeAllDayLabels];
     
     NSArray<NSAttributedString*>* titles = nil;
     if (localizedMonthText) {
@@ -209,11 +225,13 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     NSInteger dayToStartCounting = isCurrentMonth ? 1 : (daysInMonth - [values count] + 1);
     NSInteger valueIndex = 0;
     HEMTrendsDisplayPoint* point = nil;
+    
     for (NSInteger day = 1; day <= daysInMonth; day++) {
         point = nil;
         if (day >= dayToStartCounting && valueIndex < [values count]) {
             point = values[valueIndex++];
         }
+        
         [self addSubview:[self scoreLabelForDataPoint:point withFrame:labelFrame]];
         
         weekday++;
@@ -226,18 +244,46 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
             labelFrame.origin.x += scoreSizeWithSpacing;
         }
     }
+    
+    [self animateIn];
+}
+
+- (void)animateIn {
+    [UIView animateWithDuration:0.33f animations:^{
+        for (HEMTrendsScoreLabel* label in [self scoreLabels]) {
+            [label setAlpha:1.0f];
+        }
+        for (HEMTrendsScoreLabel* reuseLabel in [self reuseLabels]) {
+            [reuseLabel setAlpha:0.0f];
+        }
+    } completion:^(BOOL finished) {
+        [[self reuseLabels] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self setReuseLabels:nil];
+    }];
 }
 
 - (HEMTrendsScoreLabel*)scoreLabelForDataPoint:(HEMTrendsDisplayPoint*)dataPoint
                                      withFrame:(CGRect)frame {
-    HEMTrendsScoreLabel* scoreLabel = [[HEMTrendsScoreLabel alloc] initWithFrame:frame];
+
+    HEMTrendsScoreLabel* scoreLabel = [[self reuseLabels] lastObject];
+    if (!scoreLabel) {
+        scoreLabel = [HEMTrendsScoreLabel new];
+        [scoreLabel setAlpha:0.0f];
+    } else {
+        [[self reuseLabels] removeLastObject];
+    }
+    [[self scoreLabels] addObject:scoreLabel];
+    
+    [scoreLabel setFrame:frame];
     [scoreLabel setBackgroundColor:[UIColor whiteColor]];
+    
     if (dataPoint) {
         UIColor* color = [UIColor colorForCondition:[dataPoint condition]];
         [scoreLabel setScoreColor:color];
         [scoreLabel setScoreBorderColor:color];
         [scoreLabel setHighlighted:[dataPoint highlighted]];
     }
+    
     return scoreLabel;
 }
 

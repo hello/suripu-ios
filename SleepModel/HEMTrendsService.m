@@ -165,4 +165,8 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
     return daysLeft;
 }
 
+- (BOOL)dataHasBeenLoaded {
+    return [[self cachedLastPullByScale] count] > 0;
+}
+
 @end

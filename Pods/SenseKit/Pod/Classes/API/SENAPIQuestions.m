@@ -82,7 +82,10 @@ static NSString* const kSENAPIQuestionTypeCheckbox = @"CHECKBOX";
     if ([response isKindOfClass:[NSArray class]]) {
         for (id responseObj in response) {
             if ([responseObj isKindOfClass:[NSDictionary class]]) {
-                [questions addObject:[self questionFromDict:responseObj]];
+                SENQuestion* question = [self questionFromDict:responseObj];
+                if (question) {
+                    [questions addObject:question];
+                }
             }
         }
     }

@@ -13,9 +13,11 @@
 
 #import <NotificationCenter/NotificationCenter.h>
 
+#import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
+
 #import "HEMTodayViewController.h"
 #import "HEMTodayTableViewCell.h"
-#import "HEMStyle.h"
 
 static NSString* const HEMAPIPlistKey = @"SenseApiUrl";
 static NSString* const HEMClientIdPlistKey = @"SenseClientId";

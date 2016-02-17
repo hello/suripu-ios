@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0.6
+
+New:
+
+* Added a welcome back state in Trends for users who have not used Sense for
+  a few days
+
+Fixes:
+
+* Timeline open gesture will not fire if use quickly opened the Timeline right
+  before it fired
+* Design tweaks
+* Quickly tapping between Trends time scales will not cause overlapping titles
+
 ## 1.3.0.5
 
 Fixes:

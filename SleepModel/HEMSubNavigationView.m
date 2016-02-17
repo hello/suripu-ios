@@ -80,6 +80,12 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
             controlIndex++;
         }
     }
+    
+    CGRect shadowFrame = [[self shadowView] frame];
+    shadowFrame.size.width = fullWidth;
+    shadowFrame.origin.y = fullHeight;
+    shadowFrame.origin.x = 0.0f;
+    [[self shadowView] setFrame:shadowFrame];
 }
 
 - (BOOL)hasControls {

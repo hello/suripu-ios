@@ -9,6 +9,12 @@
 #import "HEMNavigationShadowView.h"
 #import "HEMStyle.h"
 
+@interface HEMNavigationShadowView()
+
+@property (nonatomic, weak) UIImageView* shadowImageView;
+
+@end
+
 @implementation HEMNavigationShadowView
 
 - (instancetype)initWithNavigationBar:(UIView*)navBar {
@@ -45,12 +51,14 @@
 - (void)configure {
     UIImage* image = [UIImage imageNamed:@"topShadow"];
     UIImageView* shadowView = [[UIImageView alloc] initWithImage:image];
-    [shadowView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [shadowView setContentMode:UIViewContentModeScaleAspectFill];
+    [shadowView setAutoresizingMask:UIViewAutoresizingFlexibleWidth
+                                    | UIViewAutoresizingFlexibleTopMargin];
     [shadowView setFrame:[self bounds]];
     [self addSubview:shadowView];
     [self setAlpha:0.0f];
-    [self setAutoresizesSubviews:UIViewAutoresizingFlexibleWidth];
     [self setTopOffset:HEMStyleSectionTopMargin];
+    [self setShadowImageView:shadowView];
 }
 
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset {
@@ -58,6 +66,16 @@
     CGFloat alpha = MAX(0.0f, MIN(1.0f, diff / 10.0f));
     [self setAlpha:alpha];
     [[self superview] bringSubviewToFront:self];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGFloat myWidth = CGRectGetWidth([self bounds]);
+    CGRect shadowFrame = [[self shadowImageView] frame];
+    shadowFrame.size.width = myWidth;
+    shadowFrame.origin.x = 0.0f;
+    [[self shadowImageView] setFrame:shadowFrame];
 }
 
 @end

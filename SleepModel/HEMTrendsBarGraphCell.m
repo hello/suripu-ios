@@ -15,7 +15,7 @@
 
 static CGFloat const HEMTrendsBarGraphBaseHeight = 243.0f;
 static CGFloat const HEMTrendsBarGraphAveragesHeight = 52.0f;
-static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 20.0f;
+static CGFloat const HEMTrendsBarGraphAveragesBotMargin = 15.0f;
 static CGFloat const HEMTrendsBarHighlightLabelWidth = 35.0f;
 static CGFloat const HEMTrendsBarHighlightLabelHeight = 20.0f;
 static CGFloat const HEMTrendsBarHighlightLabelCornerRadius = 2.0f;

@@ -24,6 +24,56 @@ SPEC_BEGIN(HEMTrendsServiceSpec)
 
 describe(@"HEMTrendsService", ^{
     
+    describe(@"-isReturningUser:", ^{
+        
+        context(@"available time scales returned, but no graphs", ^{
+            
+            __block SENTrends* trends = nil;
+            __block NSArray<NSNumber*>* timeScales;
+            __block BOOL returning = NO;
+            
+            beforeEach(^{
+                trends = [SENTrends new];
+                timeScales = @[@1, @2];
+                [trends stub:@selector(availableTimeScales) andReturn:timeScales];
+                
+                HEMTrendsService* service = [HEMTrendsService new];
+                returning = [service isReturningUser:trends];
+            });
+            
+            afterEach(^{
+                trends = nil;
+                timeScales = nil;
+                returning = YES;
+            });
+            
+            it(@"should return YES", ^{
+                [[@(returning) should] beYes];
+            });
+            
+        });
+        
+        context(@"no trends", ^{
+            
+            __block BOOL returning = NO;
+            
+            beforeEach(^{
+                HEMTrendsService* service = [HEMTrendsService new];
+                returning = [service isReturningUser:nil];
+            });
+            
+            afterEach(^{
+                returning = YES;
+            });
+            
+            it(@"should return NO", ^{
+                [[@(returning) should] beNo];
+            });
+            
+        });
+        
+    });
+    
     describe(@"-daysUntilMoreTrends:", ^{
         
         context(@"there are more than 1 available time scales", ^{
@@ -68,8 +118,41 @@ describe(@"HEMTrendsService", ^{
                 daysToMore = 0;
             });
             
-            it(@"should return 7", ^{
-                [[@(daysToMore) should] equal:@7];
+            it(@"should return 0", ^{
+                [[@(daysToMore) should] equal:@0];
+            });
+            
+        });
+        
+        context(@"trends with available time scales, but returned 3 graphs", ^{
+            
+            __block HEMTrendsService* service = nil;
+            __block SENTrends* trends = nil;
+            __block SENTrendsGraph* graph = nil;
+            __block SENTrendsGraphSection* section = nil;
+            __block NSInteger daysToMore = 0;
+            
+            beforeEach(^{
+                service = [HEMTrendsService new];
+                trends = [SENTrends new];
+                graph = [SENTrendsGraph new];
+                section = [SENTrendsGraphSection new];
+                [section stub:@selector(values) andReturn:@[@1]];
+                [graph stub:@selector(sections) andReturn:@[section]];
+                [trends stub:@selector(graphs) andReturn:@[graph, graph, graph]];
+                daysToMore = [service daysUntilMoreTrends:trends];
+            });
+            
+            afterEach(^{
+                service = nil;
+                trends = nil;
+                graph = nil;
+                section = nil;
+                daysToMore = 0;
+            });
+            
+            it(@"should return 0", ^{
+                [[@(daysToMore) should] equal:@0];
             });
             
         });

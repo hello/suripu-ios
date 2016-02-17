@@ -15,6 +15,7 @@
 
 static CGFloat const HEMTrendsServiceCacheExpirationInSecs = 300.0f;
 static CGFloat const HEMTrendsServiceDaysUntilMoreTrends = 7;
+static CGFloat const HEMTrendsServiceHighlightMinBarValue = 0.05f;
 
 NSString* const HEMTrendsServiceNotificationWillRefresh = @"willRefresh";;
 NSString* const HEMTrendsServiceNotificationDidRefresh = @"didRefresh";
@@ -144,6 +145,11 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
         NSInteger index = 0;
         for (NSNumber* dataPoint in [section values]) {
             BOOL highlighted = [[section highlightedValues] containsObject:@(index)];
+            if (highlighted
+                && [graph displayType] == SENTrendsDisplayTypeBar
+                && [dataPoint CGFloatValue] < HEMTrendsServiceHighlightMinBarValue) {
+                highlighted = NO;
+            }
             HEMTrendsDisplayPoint* point = [[HEMTrendsDisplayPoint alloc] initWithValue:dataPoint
                                                                             highlighted:highlighted];
             [point setCondition:[self conditionForValue:dataPoint inGraph:graph]];
@@ -157,15 +163,23 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
 
 - (NSInteger)daysUntilMoreTrends:(SENTrends*)currentTrends {
     NSInteger daysLeft = 0;
-    if ([[currentTrends availableTimeScales] count] < 2) {
+    if ([[currentTrends availableTimeScales] count] < 2
+        && [[currentTrends graphs] count] == 1) {
+        
         SENTrendsGraph* firstGraph = [[currentTrends graphs] firstObject];
         NSInteger daysOfUse = 0;
         for (SENTrendsGraphSection* section in [firstGraph sections]) {
             daysOfUse += [[section values] count];
         }
         daysLeft = MAX(0, HEMTrendsServiceDaysUntilMoreTrends - daysOfUse);
+        
     }
     return daysLeft;
+}
+
+- (BOOL)isReturningUser:(SENTrends*)currentTrends {
+    return [[currentTrends availableTimeScales] count] > 0
+        && [[currentTrends graphs] count] == 0;
 }
 
 @end

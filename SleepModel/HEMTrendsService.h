@@ -98,6 +98,13 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  */
 - (BOOL)dataHasBeenLoaded;
 
+/**
+ * @return YES if current trends represents a data gap, aka user returned after
+ *         several days of not using Sense and thus does not have enough data
+ *         to render any graphs
+ */
+- (BOOL)isReturningUser:(nullable SENTrends*)currentTrends;
+
 @end
 
 NS_ASSUME_NONNULL_END

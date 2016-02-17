@@ -65,12 +65,15 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
         
         [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-open", nil)];
         [handholdingView setAnchor:HEMHHDialogAnchorBottom];
-        
-        __weak typeof(self) weakSelf = self;
-        [handholdingView showInView:containerView dismissAction:^{
-            [weakSelf didOpenTimeline]; // kind of, but same thing
-        }];
         [handholdingView setTag:HEMTimelineHandHoldingViewTag];
+
+        // right before show it, check to see if timeline got opened
+        if (![[self service] isComplete:HEMHandHoldingTimelineOpen]) {
+            __weak typeof(self) weakSelf = self;
+            [handholdingView showInView:containerView dismissAction:^{
+                [weakSelf didOpenTimeline]; // kind of, but same thing
+            }];
+        }
     }
 }
 
@@ -120,6 +123,12 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
 }
 
 - (void)didOpenTimeline {
+    UIView* containerView = [[self delegate] timelineContainerViewForPresenter:self];
+    UIView* existingView = [containerView viewWithTag:HEMTimelineHandHoldingViewTag];
+    if ([existingView isKindOfClass:[HEMHandholdingView class]]) {
+        HEMHandholdingView* hhView = (id)existingView;
+        [hhView removeFromSuperview];
+    }
     [[self service] completed:HEMHandHoldingTimelineOpen];
 }
 

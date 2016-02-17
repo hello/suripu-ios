@@ -594,6 +594,8 @@
 "trends.no-data.message" = "Once Sense has collected enough data, you’ll see how your sleep is changing over time here.";
 "trends.not-enough-data.title" = "Keep Checking Back";
 "trends.not-enough-data.message.format" = "Trends get better as Sense collects more data. Check back in %@ %@ for more.";
+"trends.returning-user.title" = "Welcome Back";
+"trends.returning-user.message" = "We’re collecting the data needed to show your Trends. Check back soon for more.";
 "trends.days" = "days";
 
 // actions

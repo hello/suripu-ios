@@ -1,5 +1,16 @@
 # Changelog
 
+New:
+
+* Trends sleep duration / depth view animates
+* Removed back view swiping
+* Added shadow to subnav
+
+Fixes:
+
+* Prevent crasher if questions returned from API does not provide text or id
+* Prevent crasher in current conditions view when sensor value is -1 or null
+
 ## 1.3.0.3
 
 New:

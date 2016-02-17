@@ -57,6 +57,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (void)bindWithSubNav:(HEMSubNavigationView*)subNav {
     [self setSubNav:subNav];
+    [self bindWithShadowView:[subNav shadowView]];
 }
 
 #pragma mark - Notifications
@@ -532,6 +533,10 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         [self configureErrorCell:(id)cell];
     }
     
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
 }
 
 #pragma mark - Clean up

@@ -7,6 +7,7 @@
 //
 
 #import "HEMSubNavigationView.h"
+#import "HEMNavigationShadowView.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
@@ -15,6 +16,7 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 
 @property (nonatomic, assign) NSInteger controlCount;
 @property (nonatomic, assign) NSInteger previousControlTag;
+@property (nonatomic, weak) HEMNavigationShadowView* shadowView;
 
 @end
 
@@ -24,6 +26,7 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self addSeparator];
+        [self addShadowView];
     }
     return self;
 }
@@ -32,8 +35,16 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
     self = [super initWithFrame:frame];
     if (self) {
         [self addSeparator];
+        [self addShadowView];
     }
     return self;
+}
+
+- (void)addShadowView {
+    HEMNavigationShadowView* shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:self];
+    [self addSubview:shadowView];
+    [self setShadowView:shadowView];
+    [self setClipsToBounds:NO];
 }
 
 - (void)addSeparator {

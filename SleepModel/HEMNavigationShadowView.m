@@ -49,6 +49,7 @@
     [shadowView setFrame:[self bounds]];
     [self addSubview:shadowView];
     [self setAlpha:0.0f];
+    [self setAutoresizesSubviews:UIViewAutoresizingFlexibleWidth];
     [self setTopOffset:HEMStyleSectionTopMargin];
 }
 

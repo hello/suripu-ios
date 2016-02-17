@@ -454,7 +454,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     NSMutableAttributedString *composite = nil;
     NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
     
-    if (!valueText) {
+    if (valueText) {
         composite = [[NSMutableAttributedString alloc] initWithString:valueText
                                                            attributes:baseAttributes];
         

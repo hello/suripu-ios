@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0.5
+
+Fixes:
+
+* Design tweaks
+* No trends card not showing
+* Separator showing in the subnav when there are no subnav shown
+
+## 1.3.0.4
+
 New:
 
 * Trends sleep duration / depth view animates

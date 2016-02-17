@@ -239,6 +239,9 @@
 		BF8339A21C18E05600BFD0F4 /* HEMNavigationShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339A11C18E05600BFD0F4 /* HEMNavigationShadowView.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
+		BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
+		BF896D4C1C74227E0095D37D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
+		BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7D800D1A3F952000B0BFD7 /* UIColor+HEMStyle.m */; };
 		BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */; };
 		BF8A0DDB1BEACC58006B3B70 /* HEMNoAlarmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A0DDA1BEACC58006B3B70 /* HEMNoAlarmCell.m */; };
 		BF8C09131C2376C5005AB5A7 /* HEMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C09121C2376C5005AB5A7 /* HEMGradient.m */; };
@@ -807,6 +810,7 @@
 		BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportUtil.m; sourceTree = "<group>"; };
 		BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRootViewController.h; sourceTree = "<group>"; };
 		BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRootViewController.m; sourceTree = "<group>"; };
+		BF896D4A1C7422720095D37D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trends.xcassets; sourceTree = "<group>"; };
 		BF8A0DD91BEACC58006B3B70 /* HEMNoAlarmCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNoAlarmCell.h; sourceTree = "<group>"; };
 		BF8A0DDA1BEACC58006B3B70 /* HEMNoAlarmCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNoAlarmCell.m; sourceTree = "<group>"; };
@@ -1035,6 +1039,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF896D4C1C74227E0095D37D /* Foundation.framework in Frameworks */,
+				BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */,
 				BFC0E8831C0CE01400C6DFC7 /* MessageUI.framework in Frameworks */,
 				BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */,
 				BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */,
@@ -1069,6 +1075,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF896D4A1C7422720095D37D /* CoreFoundation.framework */,
 				BF62150C1AB8C1C80047A518 /* libicucore.dylib */,
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
 				BF7F1BDF19E30DCC0028F799 /* libPods.a */,
@@ -2711,8 +2718,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF7F1BD819E304050028F799 /* Build configuration list for PBXNativeTarget "SenseWidget" */;
 			buildPhases = (
-				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC519E304050028F799 /* Frameworks */,
+				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC619E304050028F799 /* Resources */,
 			);
 			buildRules = (
@@ -3262,6 +3269,7 @@
 				8A7214441A1EC710008B59C4 /* HEMTodayTableViewCell.m in Sources */,
 				BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */,
 				8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
+				BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@
 static CGFloat const HEMTrendsCalendarCellTitleHeightWithSeparator = 49.0f;
 static CGFloat const HEMTrendsCalendarCellTitleSeparatorBotMargin = 8.0f;
 static CGFloat const HEMTrendsCalendarAveragesHeight = 52.0f;
-static CGFloat const HEMTrendsCalendarAveragesBottom = 20.0f;
+static CGFloat const HEMTrendsCalendarAveragesBottom = 15.0f;
 static CGFloat const HEMTrendsCalendarHorzMargin = 20.0f;
 static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
 

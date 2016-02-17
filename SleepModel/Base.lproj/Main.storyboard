@@ -3937,10 +3937,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calendar" id="xzu-6h-5tU" customClass="HEMTrendsCalendarViewCell">
-                                        <rect key="frame" x="12" y="64" width="576" height="250"/>
+                                        <rect key="frame" x="12" y="64" width="576" height="245"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="576" height="250"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="576" height="245"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgd-wP-pzh">
@@ -4046,7 +4046,7 @@
                                             <constraint firstItem="UjL-WL-aI3" firstAttribute="leading" secondItem="xzu-6h-5tU" secondAttribute="leading" constant="20" id="9JF-WU-AQd"/>
                                             <constraint firstItem="vgd-wP-pzh" firstAttribute="leading" secondItem="xzu-6h-5tU" secondAttribute="leading" constant="20" id="CrY-z1-AgA"/>
                                             <constraint firstAttribute="trailing" secondItem="405-0y-UGl" secondAttribute="trailing" constant="20" id="NgF-YS-noK"/>
-                                            <constraint firstAttribute="bottom" secondItem="UjL-WL-aI3" secondAttribute="bottom" constant="20" id="X4D-JQ-EoC"/>
+                                            <constraint firstAttribute="bottom" secondItem="UjL-WL-aI3" secondAttribute="bottom" constant="15" id="X4D-JQ-EoC"/>
                                             <constraint firstItem="405-0y-UGl" firstAttribute="leading" secondItem="xzu-6h-5tU" secondAttribute="leading" constant="20" id="bJs-5o-tSm"/>
                                             <constraint firstItem="vgd-wP-pzh" firstAttribute="top" secondItem="xzu-6h-5tU" secondAttribute="top" id="iBA-8Y-oED"/>
                                             <constraint firstAttribute="trailing" secondItem="UjL-WL-aI3" secondAttribute="trailing" constant="20" id="maE-u4-fNy"/>
@@ -4055,7 +4055,7 @@
                                             <constraint firstItem="UjL-WL-aI3" firstAttribute="top" secondItem="j93-4w-LIJ" secondAttribute="bottom" priority="750" constant="18" id="skp-1y-VaL"/>
                                             <constraint firstItem="405-0y-UGl" firstAttribute="top" secondItem="vgd-wP-pzh" secondAttribute="bottom" id="y58-Xg-AAB"/>
                                         </constraints>
-                                        <size key="customSize" width="576" height="250"/>
+                                        <size key="customSize" width="576" height="245"/>
                                         <connections>
                                             <outlet property="averagesBottomConstraint" destination="X4D-JQ-EoC" id="6a3-9n-0yY"/>
                                             <outlet property="averagesHeightConstraint" destination="nz2-n6-KRa" id="pLM-Ys-6bd"/>
@@ -4066,10 +4066,10 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bar" id="fLr-1g-w0i" customClass="HEMTrendsBarGraphCell">
-                                        <rect key="frame" x="12" y="324" width="576" height="305"/>
+                                        <rect key="frame" x="12" y="319" width="576" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="576" height="305"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="576" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Duration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="noR-bj-tWe">
@@ -4103,37 +4103,37 @@
                                                     <rect key="frame" x="20" y="233" width="536" height="52"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" text="WEEKDAYS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHI-xb-5VV">
-                                                            <rect key="frame" x="0.0" y="0.0" width="177" height="10"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="177" height="9.5"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.12h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7g-wz-lO4">
-                                                            <rect key="frame" x="0.0" y="14" width="177" height="39"/>
+                                                            <rect key="frame" x="0.0" y="13.5" width="177" height="38.5"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="28"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.12h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb7-rP-Q8V">
-                                                            <rect key="frame" x="181" y="14" width="177" height="39"/>
+                                                            <rect key="frame" x="181" y="13.5" width="177" height="38.5"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="28"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" text="AVERAGE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9CM-kQ-hfI">
-                                                            <rect key="frame" x="356" y="0.0" width="177" height="10"/>
+                                                            <rect key="frame" x="356" y="0.0" width="177" height="9.5"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.12h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="con-lu-eNe">
-                                                            <rect key="frame" x="358" y="14" width="177" height="39"/>
+                                                            <rect key="frame" x="358" y="13.5" width="177" height="38.5"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="28"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" text="WEEKENDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wX2-rJ-VG8">
-                                                            <rect key="frame" x="181" y="0.0" width="177" height="10"/>
+                                                            <rect key="frame" x="181" y="0.0" width="177" height="9.5"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -4181,7 +4181,7 @@
                                             <constraint firstItem="x6Q-Dw-dY5" firstAttribute="top" secondItem="EUR-yj-6kn" secondAttribute="bottom" constant="8" id="7su-34-lVR"/>
                                             <constraint firstItem="EUR-yj-6kn" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="8cl-cm-liu"/>
                                             <constraint firstItem="NPL-ES-Dl6" firstAttribute="top" secondItem="qh2-dW-COs" secondAttribute="bottom" constant="20" id="H3b-cf-AXv"/>
-                                            <constraint firstAttribute="bottom" secondItem="NPL-ES-Dl6" secondAttribute="bottom" constant="20" id="Hnf-o4-bXX"/>
+                                            <constraint firstAttribute="bottom" secondItem="NPL-ES-Dl6" secondAttribute="bottom" constant="15" id="Hnf-o4-bXX"/>
                                             <constraint firstItem="noR-bj-tWe" firstAttribute="leading" secondItem="fLr-1g-w0i" secondAttribute="leading" constant="20" id="Prf-qI-bTm"/>
                                             <constraint firstAttribute="trailing" secondItem="NPL-ES-Dl6" secondAttribute="trailing" constant="20" id="Qza-It-AAo"/>
                                             <constraint firstAttribute="trailing" secondItem="EUR-yj-6kn" secondAttribute="trailing" constant="20" id="WcB-Dm-gIY"/>
@@ -4194,7 +4194,7 @@
                                             <constraint firstItem="EUR-yj-6kn" firstAttribute="top" secondItem="noR-bj-tWe" secondAttribute="bottom" id="vPY-Up-RwP"/>
                                             <constraint firstAttribute="trailing" secondItem="x6Q-Dw-dY5" secondAttribute="trailing" constant="20" id="wBB-eU-e9k"/>
                                         </constraints>
-                                        <size key="customSize" width="576" height="305"/>
+                                        <size key="customSize" width="576" height="300"/>
                                         <connections>
                                             <outlet property="averagesBottomConstraint" destination="H3b-cf-AXv" id="nOX-B0-hb1"/>
                                             <outlet property="averagesHeightConstraint" destination="SSG-0u-0Vy" id="zkG-t1-3g2"/>
@@ -4206,7 +4206,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bubbles" id="ezb-Ns-XUB" customClass="HEMTrendsSleepDepthCell">
-                                        <rect key="frame" x="12" y="639" width="576" height="246"/>
+                                        <rect key="frame" x="12" y="629" width="576" height="246"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="246"/>
@@ -4389,7 +4389,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="message" id="AhZ-st-TVc" customClass="HEMTrendsMessageCell">
-                                        <rect key="frame" x="12" y="895" width="576" height="238"/>
+                                        <rect key="frame" x="12" y="885" width="576" height="238"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="238"/>
@@ -4435,7 +4435,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="1LJ-TR-2zH" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="8" y="1143" width="584" height="94"/>
+                                        <rect key="frame" x="8" y="1133" width="584" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>

@@ -10,7 +10,7 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMTrendsScoreBorderWidth = 1.0f;
-static CGFloat const HEMTrendsScoreHighlightWidth = 2.5f;
+static CGFloat const HEMTrendsScoreHighlightWidth = 4.0f;
 
 @implementation HEMTrendsScoreLabel
 
@@ -33,8 +33,8 @@ static CGFloat const HEMTrendsScoreHighlightWidth = 2.5f;
         borderColor = [UIColor emptyCircleBorderColor];
     }
     
-    CGFloat borderInset = HEMTrendsScoreBorderWidth;
-    CGFloat highlightInset = [self isHighlighted] ? HEMTrendsScoreHighlightWidth : 0.0f;
+    CGFloat borderInset = HEMTrendsScoreBorderWidth / 2.0f;
+    CGFloat highlightInset = [self isHighlighted] ? (HEMTrendsScoreHighlightWidth / 2.0f) : 0.0f;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     CGContextSetStrokeColorWithColor(context, [borderColor CGColor]);

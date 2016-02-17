@@ -96,6 +96,7 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
                width:(CGFloat)width {
     
     if (!(localizedTitles && [[self localizedTitles] isEqualToArray:localizedTitles])) {
+        [[self titleView] clear];
         [self setLocalizedTitles:localizedTitles];
         CGFloat x = 0.0f;
         for (NSAttributedString* title in localizedTitles) {

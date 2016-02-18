@@ -416,22 +416,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     if (question) {
         // optimistically skip the question
         [self removeQuestion:question atIndexPath:path];
-        
-        __weak typeof(self) weakSelf = self;
-        [[self questionsService] skipQuestion:question completion:^(NSArray<SENQuestion *> * _Nullable questions, NSError * _Nullable error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            if (!error) {
-                [strongSelf setQuestions:questions];
-                if ([questions count] > 0) {
-                    NSMutableArray* mutableData = [[strongSelf data] mutableCopy];
-                    [mutableData insertObject:questions[0] atIndex:0];
-                    [strongSelf setData:mutableData];
-                    [[strongSelf collectionView] reloadData];
-                }
-            }
-
-        }];
+        [[self questionsService] skipQuestion:question completion:nil];
     }
 }
 

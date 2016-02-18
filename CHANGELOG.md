@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0.8
+
+Fixes:
+
+* Prevent multiple questions from showing up in the feed when a race condition
+  is encountered from skipping a question while data is refreshing
+
 ## 1.3.0.7
 
 Fixes:

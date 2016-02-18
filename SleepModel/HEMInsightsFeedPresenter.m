@@ -389,13 +389,10 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 #pragma mark - Actions
 
 - (BOOL)removeQuestionFromData:(nonnull SENQuestion*)question {
-    DDLogVerbose(@"removing question with id %@", [question questionId]);
     NSMutableArray* mutableData = [[self data] mutableCopy];
-    DDLogVerbose(@"data before removal %ld", [mutableData count]);
     NSInteger dataCount = [mutableData count];
     [mutableData removeObject:question];
     [self setData:mutableData];
-    DDLogVerbose(@"data after removal %ld", [[self data] count]);
     
     NSMutableArray* mutableQuestions = [[self questions] mutableCopy];
     [mutableQuestions removeObject:question];

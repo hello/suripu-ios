@@ -92,13 +92,9 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 #pragma mark - Data
 
 - (BOOL)showTrendsMessage {
-    return [[self trendService] isReturningUser:[self selectedTrends]]
+    return [self selectedTrends] == nil
+        || [[self trendService] isReturningUser:[self selectedTrends]]
         || [[self trendService] daysUntilMoreTrends:[self selectedTrends]] > 0;
-}
-
-- (BOOL)areTrendsBeAvailable {
-    return [self selectedTrends]
-        && [[self subNav] hasControls];
 }
 
 - (SENTrends*)selectedTrends {

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0.7
+
+Fixes:
+
+* Fixed issue where the Welcome to Trends state is not displayed
+
 ## 1.3.0.6
 
 New:

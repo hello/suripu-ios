@@ -92,7 +92,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 #pragma mark - Data
 
 - (BOOL)showTrendsMessage {
-    return [self selectedTrends] == nil
+    return [[self trendService] isEmpty:[self selectedTrends]]
         || [[self trendService] isReturningUser:[self selectedTrends]]
         || [[self trendService] daysUntilMoreTrends:[self selectedTrends]] > 0;
 }
@@ -121,7 +121,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     
     NSString* title = nil, *message = nil;
     
-    if (!trends) {
+    if ([[self trendService] isEmpty:trends]) {
         title = NSLocalizedString(@"trends.no-data.title", nil);
         message = NSLocalizedString(@"trends.no-data.message", nil);
         *attributedMessage = [self attributedPartialDataMessageWithText:message];

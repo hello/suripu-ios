@@ -105,6 +105,13 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  */
 - (BOOL)isReturningUser:(nullable SENTrends*)currentTrends;
 
+/**
+ * @param trends: the trends to check if it's empty
+ * @return YES if trends are empty / not available.  NO if there is something to
+ *         display
+ */
+- (BOOL)isEmpty:(SENTrends*)trends;
+
 @end
 
 NS_ASSUME_NONNULL_END

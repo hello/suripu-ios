@@ -185,4 +185,9 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
         && [[currentTrends graphs] count] == 0;
 }
 
+- (BOOL)isEmpty:(SENTrends*)trends {
+    return [[trends availableTimeScales] count] == 0
+        && [[trends graphs] count] == 0;
+}
+
 @end

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0.10
+
+Fixes:
+
+* Welcome trends card not shown
+
 ## 1.3.0.9
 
 Fixes:

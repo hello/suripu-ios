@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0.9
+
+Fixes:
+
+* Trends count down not triggered
+
 ## 1.3.0.8
 
 Fixes:

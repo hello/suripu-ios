@@ -59,6 +59,9 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
 
 - (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale {
     if (timeScale == SENTrendsTimeScaleUnknown) {
+        if ([[self cachedTrendsByScale] count] == 1) { // return what we got
+            return [[[self cachedTrendsByScale] allValues] firstObject];
+        }
         return nil;
     }
     NSNumber* timeScaleKey = @(timeScale);

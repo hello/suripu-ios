@@ -134,6 +134,8 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     
     NSInteger rows = [values count];
     NSInteger lastRowIndex = rows - 1;
+    NSDate* previousDay = [[NSDate date] previousDay];
+    NSInteger previousDayOfWeek = [previousDay dayOfWeek];
     
     CGRect labelFrame = CGRectZero;
     labelFrame.size = CGSizeMake(scoreSize, scoreSize);
@@ -166,7 +168,7 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
                      && valueIndex == cIndex)
                      || (rIndex == 0
                          && rows == 1
-                         && cIndex <= columns - [row count])
+                         && cIndex < previousDayOfWeek)
                     || (rIndex == 0 && rows > 1))) {
                 point = row[valueIndex];
                 valueIndex--;

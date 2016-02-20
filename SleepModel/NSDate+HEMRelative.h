@@ -52,6 +52,8 @@
 
 - (NSDate*)previousDay;
 
+- (NSInteger)dayOfWeek;
+
 - (BOOL)isOnSameDay:(NSDate *)otherDate;
 
 - (NSDate*)previousMonth;

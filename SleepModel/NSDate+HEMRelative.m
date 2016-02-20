@@ -90,6 +90,11 @@
     return [self monthsFromNow:1];
 }
 
+- (NSInteger)dayOfWeek {
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    return [calendar component:NSCalendarUnitWeekday fromDate:self];
+}
+
 - (BOOL)isCurrentMonth {
     NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     NSCalendarUnit flags = (NSCalendarUnitYear | NSCalendarUnitMonth);

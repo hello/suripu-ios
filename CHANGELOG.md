@@ -1,5 +1,9 @@
 # Changelog
 
+Fixes:
+
+* Fixes issue with calendar view when only 1 section is available
+
 ## 1.3.0.10
 
 Fixes:

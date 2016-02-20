@@ -174,7 +174,7 @@
 "settings.personal.info.gender" = "Gender";
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
-"settings.account.enhanced-audio" = "Enhanced audio";
+"settings.account.enhanced-audio" = "Enhanced Audio";
 "settings.account.healthkit" = "Sync with Health";
 "settings.account.push-conditions" = "Poor conditions";
 "settings.account.push-score" = "Sleep Score";
@@ -597,6 +597,7 @@
 "trends.returning-user.title" = "Welcome Back";
 "trends.returning-user.message" = "We’re collecting the data needed to show your Trends. Check back soon for more.";
 "trends.days" = "days";
+"trends.day" = "day";
 
 // actions
 "actions.cancel" = "Cancel";

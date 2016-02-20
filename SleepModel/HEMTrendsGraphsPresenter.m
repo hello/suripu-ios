@@ -237,7 +237,12 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     NSAttributedString* boldNumber = [[NSAttributedString alloc] initWithString:dayNumberText
                                                                      attributes:boldAttr];
     
-    NSString* daysText = NSLocalizedString(@"trends.days", nil);
+    NSString* daysText = nil;
+    if (daysLeft == 1) {
+        daysText = NSLocalizedString(@"trends.day", nil);
+    } else {
+        daysText = NSLocalizedString(@"trends.days", nil);
+    }
     NSAttributedString* boldDays = [[NSAttributedString alloc] initWithString:daysText
                                                                    attributes:boldAttr];
     

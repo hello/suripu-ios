@@ -597,6 +597,7 @@
 "trends.returning-user.title" = "Welcome Back";
 "trends.returning-user.message" = "We’re collecting the data needed to show your Trends. Check back soon for more.";
 "trends.days" = "days";
+"trends.day" = "day";
 
 // actions
 "actions.cancel" = "Cancel";

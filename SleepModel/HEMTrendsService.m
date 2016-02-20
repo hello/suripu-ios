@@ -138,6 +138,34 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
     return condition;
 }
 
+- (BOOL)shouldHighlight:(SENTrendsGraphSection*)section
+                inGraph:(SENTrendsGraph*)graph
+                atIndex:(NSInteger)index
+                forData:(NSNumber*)data {
+    BOOL highlighted = [[section highlightedValues] containsObject:@(index)];
+    switch ([graph displayType]) {
+        case SENTrendsDisplayTypeBar: {
+            if (highlighted
+                && [data CGFloatValue] < HEMTrendsServiceHighlightMinBarValue) {
+                highlighted = NO;
+            }
+            break;
+        }
+        case SENTrendsDisplayTypeGrid: { // FIXME: fix me!
+            if (!highlighted
+                && [[section values] count] - 1 == index
+                && [[graph sections] count] == 1
+                && [graph timeScale] == SENTrendsTimeScaleWeek) {
+                highlighted = YES;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    return highlighted;
+}
+
 - (NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)segmentedDataPointsFrom:(SENTrendsGraph*)graph {
     NSInteger sections = [[graph sections] count];
     NSMutableArray* displayPoints = [NSMutableArray arrayWithCapacity:sections];
@@ -147,14 +175,13 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
         sectionOfPoints = [NSMutableArray arrayWithCapacity:[[section values] count]];
         NSInteger index = 0;
         for (NSNumber* dataPoint in [section values]) {
-            BOOL highlighted = [[section highlightedValues] containsObject:@(index)];
-            if (highlighted
-                && [graph displayType] == SENTrendsDisplayTypeBar
-                && [dataPoint CGFloatValue] < HEMTrendsServiceHighlightMinBarValue) {
-                highlighted = NO;
-            }
-            HEMTrendsDisplayPoint* point = [[HEMTrendsDisplayPoint alloc] initWithValue:dataPoint
-                                                                            highlighted:highlighted];
+            BOOL highlighted = [self shouldHighlight:section
+                                             inGraph:graph
+                                             atIndex:index
+                                             forData:dataPoint];
+            HEMTrendsDisplayPoint* point =
+                [[HEMTrendsDisplayPoint alloc] initWithValue:dataPoint
+                                                 highlighted:highlighted];
             [point setCondition:[self conditionForValue:dataPoint inGraph:graph]];
             [sectionOfPoints addObject:point];
             index++;

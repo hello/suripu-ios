@@ -158,15 +158,22 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
             }
             
             point = nil;
+            // FIXME: fix this!  Server actually pads all 7 days with nulls, but
+            // that gets stripped out by the client in the SENAPIClient, which
+            // forces us to work around this, but it should be done better!
             if (valueIndex >= 0
                 && ((rIndex > 0
                      && valueIndex == cIndex)
-                || (rIndex == 0))) {
+                     || (rIndex == 0
+                         && rows == 1
+                         && cIndex <= columns - [row count])
+                    || (rIndex == 0 && rows > 1))) {
                 point = row[valueIndex];
                 valueIndex--;
             }
             
-            HEMTrendsScoreLabel* scoreLabel = [self scoreLabelForDataPoint:point withFrame:labelFrame];
+            HEMTrendsScoreLabel* scoreLabel = [self scoreLabelForDataPoint:point
+                                                                 withFrame:labelFrame];
             if (point) {
                 [scoreLabel setTextAlignment:NSTextAlignmentCenter];
                 [scoreLabel setTextColor:[UIColor whiteColor]];

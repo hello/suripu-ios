@@ -9,7 +9,6 @@
 #import "SENSensor.h"
 #import "SENTimeline.h"
 #import "SENSound.h"
-#import "SENTrend.h"
 #import "SENPreference.h"
 #import "SENLocalPreferences.h"
 #import "SENSupportTopic.h"
@@ -20,6 +19,8 @@
 #import "SENPillMetadata.h"
 #import "SENDevicePairingInfo.h"
 #import "SENRemoteImage.h"
+#import "SENTrends.h"
+#import "SENTrendsGraph.h"
 
 void SENClearModel();
 

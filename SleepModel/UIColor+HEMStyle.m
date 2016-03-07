@@ -64,7 +64,6 @@
 static UIColor *_conditionWarningColor = nil;
 static UIColor *_conditionIdealColor = nil;
 static UIColor *_conditionAlertColor = nil;
-static UIColor *_conditionUnknownColor = nil;
 static UIColor *_sleepStateLightColor = nil;
 static UIColor *_sleepStateMediumColor = nil;
 static UIColor *_sleepStateSoundColor = nil;
@@ -73,14 +72,13 @@ static UIColor *_tintColor = nil;
 
 + (void)initialize {
     _tintColor = [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];
-    _conditionWarningColor = [UIColor colorWithRed:0.996 green:0.796 blue:0.184 alpha:1];
+    _conditionWarningColor = [UIColor colorWithRed:1.0f green:0.733f blue:0.2f alpha:1];
     _conditionIdealColor = [UIColor colorWithRed:0.188 green:0.839 blue:0.671 alpha:1];
-    _conditionAlertColor = [UIColor colorWithRed:0.992 green:0.592 blue:0.329 alpha:1];
+    _conditionAlertColor = [UIColor colorWithRed:1.0f green:0.502f blue:0.4f alpha:1];
     _sleepStateLightColor = [UIColor colorWithRed:0.647 green:0.867 blue:1 alpha:1];
     _sleepStateMediumColor = [UIColor colorWithRed:0.447 green:0.788 blue:1 alpha:1];
     _sleepStateSoundColor = [UIColor colorWithRed:0 green:0.612 blue:1 alpha:1];
     _sleepStateAwakeColor = [UIColor colorWithRed:0.32 green:0.356 blue:0.8 alpha:0];
-    _conditionUnknownColor = [UIColor colorWithRed:0.787 green:0.787 blue:0.787 alpha:1];
 }
 
 + (UIColor *)tintColor {
@@ -96,7 +94,7 @@ static UIColor *_tintColor = nil;
     return _conditionAlertColor;
 }
 + (UIColor *)conditionUnknownColor {
-    return _conditionUnknownColor;
+    return [UIColor colorWithHex:0xDFE1E6 alpha:1.0f];
 }
 + (UIColor *)sleepStateLightColor {
     return _sleepStateLightColor;
@@ -206,6 +204,27 @@ static UIColor *_tintColor = nil;
 + (UIColor *)lightTintColor {
     return [UIColor colorWithHex:0x4CC1FC alpha:1.f];
 }
++ (UIColor *)trendsTitleDividerColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.1f];
+}
++ (UIColor *)trendsTitleColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.7f];
+}
++ (UIColor *)barChartBorderColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.15f];
+}
++ (UIColor *)trendsScopeSelectorActiveTextColor {
+    return [UIColor colorWithRed:22.0f/255.0f
+                           green:43.0f/255.0f
+                            blue:72.0f/255.0f
+                           alpha:1.0f];
+}
++ (UIColor *)trendsScopeSelectorInactiveTextColor {
+    return [UIColor colorWithRed:176.0f/255.0f
+                           green:181.0f/255.0f
+                            blue:190.0f/255.0f
+                           alpha:1.0f];
+}
 + (UIColor *)trendTextColor {
     return [UIColor colorWithHex:0x999999 alpha:1.f];
 }
@@ -293,6 +312,54 @@ static UIColor *_tintColor = nil;
 + (UIColor *)alarmClockViewBackgroundColor {
     return [UIColor colorWithHex:0xF9F9FA alpha:1.0f];
 }
++ (UIColor *)trendsSectionDashLineColor {
+    return [UIColor colorWithWhite:0.0f alpha:0.1f];
+}
++ (UIColor *)emptyCircleColor {
+    return [UIColor colorWithHex:0xFFFFFF alpha:1.0f];
+}
++ (UIColor *)emptyCircleBorderColor {
+    return [UIColor colorWithHex:0xEDEEF0 alpha:1.0f];
+}
++ (UIColor *)trendsAverageTitleColor {
+    return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];
+}
++ (UIColor *)trendsHighlightedSleepDurationColor {
+    return [UIColor colorWithHex:0x009CFF alpha:0.6f];
+}
++ (UIColor *)trendsSleepDurationBarColor {
+    return [UIColor colorWithHex:0x009CFF alpha:0.25f];
+}
++ (UIColor *)trendsSubtitleColor {
+    return [UIColor colorWithHex:0x596980 alpha:0.4f];
+}
++ (UIColor *)trendsSleepDepthDeepColor {
+    return [UIColor colorWithHex:0x009CFF alpha:1.0f];
+}
++ (UIColor *)trendsSleepDepthMediumColor {
+    return [UIColor colorWithHex:0x40B6FF alpha:1.0f];
+}
++ (UIColor *)trendsSleepDepthLightColor {
+    return [UIColor colorWithHex:0x80CEFF alpha:1.0f];
+}
++ (UIColor *)partialDataTitleColor {
+    return [UIColor colorWithRed:22.0f/255.0f
+                           green:43.0f/255.0f
+                            blue:72.0f/255.0f
+                           alpha:1.0f];
+}
++ (UIColor *)partialDataMessageColor {
+    return [UIColor colorWithRed:175.0f/255.0f
+                           green:181.0f/255.0f
+                            blue:190.0f/255.0f
+                           alpha:1.0f];
+}
++ (UIColor *)partialDataMessageBoldColor {
+    return [UIColor colorWithRed:22.0f/255.0f
+                           green:43.0f/255.0f
+                            blue:72.0f/255.0f
+                           alpha:1.0f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors
@@ -304,6 +371,13 @@ static UIColor *_tintColor = nil;
     // locations matches the colors
     return @[(id)[UIColor whiteColor].CGColor,
              (id)[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
+}
++ (NSArray*)loadingIndicatorColorRefs {
+    return @[(id)[[UIColor clearColor] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.25f] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.5f] CGColor],
+             (id)[[UIColor colorWithWhite:0.0f alpha:0.25f] CGColor],
+             (id)[[UIColor clearColor] CGColor]];
 }
 
 @end

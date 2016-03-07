@@ -83,7 +83,7 @@ DEPENDENCIES:
   - Analytics (= 3.0.3)
   - AttributedMarkdown (from `git@github.com:hello/AttributedMarkdown.git`)
   - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`)
-  - Bugsnag (from `https://github.com/bugsnag/bugsnag-cocoa.git`)
+  - Bugsnag (~> 4.1.0)
   - CGFloatType (~> 1.3.1)
   - Kiwi
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
@@ -104,8 +104,6 @@ EXTERNAL SOURCES:
     :git: git@github.com:hello/AttributedMarkdown.git
   BEMSimpleLineGraph:
     :git: git@github.com:hello/BEMSimpleLineGraph.git
-  Bugsnag:
-    :git: https://github.com/bugsnag/bugsnag-cocoa.git
   LGBluetooth:
     :git: git@github.com:hello/LGBluetooth.git
   NAPickerView:
@@ -127,9 +125,6 @@ CHECKOUT OPTIONS:
   BEMSimpleLineGraph:
     :commit: a11c168e490c98e3270c633d894f987bdae1580b
     :git: git@github.com:hello/BEMSimpleLineGraph.git
-  Bugsnag:
-    :commit: 175b618ef2b9755db56fd6b4a0eafaade4f1f32a
-    :git: https://github.com/bugsnag/bugsnag-cocoa.git
   LGBluetooth:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
     :git: git@github.com:hello/LGBluetooth.git
@@ -137,7 +132,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 68dfe9e6bf1898de99e8730a665ac23e66147211
+    :commit: 741b0c1473c2ee75e1deaa353fb08ce6f5e3d47c
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073

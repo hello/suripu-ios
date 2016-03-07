@@ -1,5 +1,111 @@
 # Changelog
 
+Fixes:
+
+* Fixes issue with calendar view when only 1 section is available
+
+## 1.3.0.10
+
+Fixes:
+
+* Welcome trends card not shown
+
+## 1.3.0.9
+
+Fixes:
+
+* Trends count down not triggered
+
+## 1.3.0.8
+
+Fixes:
+
+* Prevent multiple questions from showing up in the feed when a race condition
+  is encountered from skipping a question while data is refreshing
+
+## 1.3.0.7
+
+Fixes:
+
+* Fixed issue where the Welcome to Trends state is not displayed
+
+## 1.3.0.6
+
+New:
+
+* Added a welcome back state in Trends for users who have not used Sense for
+  a few days
+
+Fixes:
+
+* Timeline open gesture will not fire if use quickly opened the Timeline right
+  before it fired
+* Design tweaks
+* Quickly tapping between Trends time scales will not cause overlapping titles
+
+## 1.3.0.5
+
+Fixes:
+
+* Design tweaks
+* No trends card not showing
+* Separator showing in the subnav when there are no subnav shown
+
+## 1.3.0.4
+
+New:
+
+* Trends sleep duration / depth view animates
+* Removed back view swiping
+* Added shadow to subnav
+
+Fixes:
+
+* Prevent crasher if questions returned from API does not provide text or id
+* Prevent crasher in current conditions view when sensor value is -1 or null
+
+## 1.3.0.3
+
+New:
+
+* Trends shows a countdown message for first week of use
+* Deleted old Trends code
+* Deleted old Trends welcome card
+* Point app review prompt to Amazon once time, when in US
+
+Fixes:
+
+* Prevent crasher when skipping question in Insights feed
+
+## 1.3.0.2
+
+New:
+
+* Days with no data will not show a bar in the Trends bar graph
+* Loading state when changing time scale when cache not found
+* No content state updated
+
+Fixes:
+
+* Graphs no longer disappear when cache expires or memory warnings eats it up
+
+## 1.3.0.1
+
+New:
+
+* Sub nav for Trends
+* Sleep score Trends view
+* Sleep duration Trends view
+* Sleep depth Trends view
+* Sleep duration Trends view animates between time scale selection
+* Using new Trends v2 API for data
+
+## 1.3.0.0
+
+New:
+
+* Added a hand holding tutorial to open the Timeline
+
 ## 1.2.2.2
 
 New:

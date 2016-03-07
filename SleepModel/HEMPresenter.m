@@ -14,6 +14,7 @@
 @interface HEMPresenter()
 
 @property (nullable, nonatomic, weak) HEMNavigationShadowView* shadowView;
+@property (nonatomic, assign, getter=isVisible) BOOL visible;
 
 @end
 
@@ -22,10 +23,18 @@
 - (nonnull instancetype)init {
     self = [super init];
     if (self) {
+        [self listenForAppEvents];
         [self listenForNetworkChanges];
         [self listenForAuthChanges];
     }
     return self;
+}
+
+- (void)listenForAppEvents {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(lowMemory)
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification
+                                               object:nil];
 }
 
 - (void)listenForNetworkChanges {
@@ -51,10 +60,16 @@
     [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
 }
 
-- (void)willAppear {}
-- (void)didAppear {}
+- (void)lowMemory {}
 
-- (void)willDisappear {}
+- (void)willAppear {}
+- (void)didAppear {
+    [self setVisible:YES];
+}
+
+- (void)willDisappear {
+    [self setVisible:NO];
+}
 - (void)didDisappear {}
 
 - (void)didRelayout {}

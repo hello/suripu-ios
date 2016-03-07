@@ -174,7 +174,7 @@
 "settings.personal.info.gender" = "Gender";
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
-"settings.account.enhanced-audio" = "Enhanced audio";
+"settings.account.enhanced-audio" = "Enhanced Audio";
 "settings.account.healthkit" = "Sync with Health";
 "settings.account.push-conditions" = "Poor conditions";
 "settings.account.push-score" = "Sleep Score";
@@ -580,8 +580,24 @@
 
 // trends
 "trends.title" = "Trends";
+"trends.scope.week" = "Week";
+"trends.scope.month" = "Month";
+"trends.scope.quarter" = "Quarter";
 "trends.not-enough-data.message" = "Your trends will appear here after a week of sleep.";
 "trends.loading.error.message" = "There was a problem displaying your trends. Please try again.";
+"trends.sleep-depth.light" = "light";
+"trends.sleep-depth.medium" = "medium";
+"trends.sleep-depth.deep" = "deep";
+"trends.sleep-duration.average.format" = "%.2fh";
+"trends.sleep-duration.highlight.format" = "%.1fh";
+"trends.no-data.title" = "Welcome to Trends";
+"trends.no-data.message" = "Once Sense has collected enough data, you’ll see how your sleep is changing over time here.";
+"trends.not-enough-data.title" = "Keep Checking Back";
+"trends.not-enough-data.message.format" = "Trends get better as Sense collects more data. Check back in %@ %@ for more.";
+"trends.returning-user.title" = "Welcome Back";
+"trends.returning-user.message" = "We’re collecting the data needed to show your Trends. Check back soon for more.";
+"trends.days" = "days";
+"trends.day" = "day";
 
 // actions
 "actions.cancel" = "Cancel";
@@ -674,9 +690,6 @@
 "tutorial.alarm-smart.title" = "Smart Alarm";
 "tutorial.alarm-smart.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle, up to 30 minutes before your requested wake-up time, making sure you wake up refreshed and at the right time for you.";
 
-"tutorial.trends.title" = "Trends";
-"tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";
-
 "tutorial.sensors.title" = "Current conditions";
 "tutorial.sensors.message" = "Here you'll see the current conditions in your bedroom: temperature, humidity, air quality, light, and noise.\n\nThese values update as Sense uploads new data. So as the conditions in your room change, it may take a few moments for them to be reflected here.\n\nTap a card to see more details.";
 
@@ -710,10 +723,12 @@
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 "handholding.message.sensor-scrubbing" = "Press and hold graphs to see historical data.";
 "handholding.message.insight-tap" = "Tap on a card to learn more.";
+"handholding.message.timeline-open" = "To explore more now, tap the menu icon.";
 
 // app review questions
 "app-review.question.1" = "Are you enjoying Sense?";
 "app-review.question.2" = "Great. Would you mind leaving us a rating on the App Store?";
+"app-review.question.2.amazon" = "Great. Would you mind leaving us a rating on Amazon?";
 "app-review.question.3" = "Would you like to let us know how we can improve your experience?";
 "app-review.question.answer.love-it" = "Yes, I love it";
 "app-review.question.answer.not-really" = "Not really";

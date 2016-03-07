@@ -43,12 +43,16 @@
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)sensorGraphCellReuseIdentifier;
++(NSString *)errorReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)overTimeReuseIdentifier;
 +(NSString *)trendGraphReuseIdentifier;
-+(NSString *)errorReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
++(NSString *)calendarReuseIdentifier;
++(NSString *)barReuseIdentifier;
++(NSString *)bubblesReuseIdentifier;
++(NSString *)messageReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)fieldCellReuseIdentifier;

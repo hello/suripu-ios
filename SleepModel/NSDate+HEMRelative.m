@@ -82,6 +82,34 @@
     return [self daysFromNow:-1];
 }
 
+- (NSDate*)previousMonth {
+    return [self monthsFromNow:-1];
+}
+
+- (NSDate*)nextMonth {
+    return [self monthsFromNow:1];
+}
+
+- (NSInteger)dayOfWeek {
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    return [calendar component:NSCalendarUnitWeekday fromDate:self];
+}
+
+- (BOOL)isCurrentMonth {
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSCalendarUnit flags = (NSCalendarUnitYear | NSCalendarUnitMonth);
+    NSDateComponents *components = [calendar components:flags fromDate:self];
+    NSDateComponents *otherComponents = [calendar components:flags fromDate:[NSDate date]];
+    return ([components month] == [otherComponents month] && [components year] == [otherComponents year]);
+}
+
+- (NSDate*)monthsFromNow:(NSInteger)months {
+    NSCalendar* calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents* components = [NSDateComponents new];
+    components.month = months;
+    return [calendar dateByAddingComponents:components toDate:self options:0];
+}
+
 - (NSDate*)daysFromNow:(NSInteger)days {
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSDateComponents* components = [NSDateComponents new];

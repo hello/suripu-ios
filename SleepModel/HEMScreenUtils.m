@@ -10,6 +10,7 @@
 
 CGFloat const HEMIPhone4Height = 480.0f;
 CGFloat const HEMIPhone5Height = 568.0f;
+CGFloat const HEMIphone6Height = 667.0f;
 
 BOOL HEMIsIPhone4Family() {
     CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
@@ -19,6 +20,11 @@ BOOL HEMIsIPhone4Family() {
 BOOL HEMIsIPhone5Family() {
     CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     return screenHeight == HEMIPhone5Height;
+}
+
+BOOL HEMIsIPhone6() {
+    CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    return screenHeight == HEMIphone6Height;
 }
 
 CGRect HEMKeyWindowBounds() {

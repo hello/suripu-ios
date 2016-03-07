@@ -34,6 +34,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSShadow*)shadowForButtonContainer;
 
+/**
+ * @return shadow around the trends sleep depth circles
+ */
++ (NSShadow*)shadowForTrendsSleepDepthCircles;
+
 @end
 
 NS_ASSUME_NONNULL_END

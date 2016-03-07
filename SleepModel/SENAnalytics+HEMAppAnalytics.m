@@ -210,6 +210,7 @@ NSString* const HEMAnalyticsEventAppReviewEnjoySense = @"Enjoy Sense";
 NSString* const HEMAnalyticsEventAppReviewDoNotEnjoySense = @"Do not enjoy Sense";
 NSString* const HEMAnalyticsEventAppReviewHelp = @"Help from app review";
 NSString* const HEMAnalyticsEventAppReviewRate = @"Rate app";
+NSString* const HEMAnalyticsEventAppReviewRateOnAmazon = @"Rate on Amazon";
 NSString* const HEMAnalyticsEventAppReviewRateNoAsk = @"Do not ask to rate app again";
 NSString* const HEMAnalyticsEventAppReviewFeedback = @"Feedback from app review";
 NSString* const HEMAnalyticsEventAppReviewDone = @"App review completed with no action";

@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMPresenter : NSObject
 
+@property (nonatomic, assign, getter=isVisible, readonly) BOOL visible;
+
 /*
  * @discussion
  *
@@ -106,6 +108,13 @@ NS_ASSUME_NONNULL_BEGIN
  * signed out of the application
  */
 - (void)userDidSignOut;
+
+/*
+ * @discussion
+ *
+ * Subclasses should override this to react to lower memory warnings if neccessary
+ */
+- (void)lowMemory;
 
 @end
 

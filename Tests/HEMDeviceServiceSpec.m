@@ -44,6 +44,7 @@ describe(@"HEMDeviceService", ^{
             
             afterEach(^{
                 [oldService clearStubs];
+                oldService = nil;
             });
             
             it(@"should track error", ^{
@@ -79,6 +80,7 @@ describe(@"HEMDeviceService", ^{
             
             afterEach(^{
                 [oldService clearStubs];
+                oldService = nil;
             });
             
             it(@"should not track error", ^{
@@ -176,9 +178,12 @@ describe(@"HEMDeviceService", ^{
         
         context(@"has pill meta data, but no sense", ^{
             __block BOOL showPill = NO;
+            __block SENSenseMetadata* sense = nil;
+            __block SENPairedDevices* devices = nil;
+            __block HEMDeviceService* service = nil;
             
             beforeEach(^{
-                HEMDeviceService* service = [HEMDeviceService new];
+                service = [HEMDeviceService new];
                 
                 SENPillMetadata* pill = [SENPillMetadata new];
                 [pill stub:@selector(uniqueId) andReturn:@"1"];
@@ -192,7 +197,13 @@ describe(@"HEMDeviceService", ^{
             });
             
             afterEach(^{
+                [sense clearStubs];
+                [devices clearStubs];
+                [service clearStubs];
                 showPill = NO;
+                sense = nil;
+                devices = nil;
+                service = nil;
             });
             
             it(@"should return YES", ^{
@@ -202,14 +213,17 @@ describe(@"HEMDeviceService", ^{
         
         context(@"has no pill meta data and has sense meta data", ^{
             __block BOOL showPill = NO;
+            __block SENSenseMetadata* sense = nil;
+            __block SENPairedDevices* devices = nil;
+            __block HEMDeviceService* service = nil;
             
             beforeEach(^{
-                HEMDeviceService* service = [HEMDeviceService new];
+                service = [HEMDeviceService new];
                 
-                SENSenseMetadata* sense = [SENSenseMetadata new];
+                sense = [SENSenseMetadata new];
                 [sense stub:@selector(uniqueId) andReturn:@"1"];
                 
-                SENPairedDevices* devices = [SENPairedDevices new];
+                devices = [SENPairedDevices new];
                 [devices stub:@selector(senseMetadata) andReturn:sense];
                 
                 [service stub:@selector(devices) andReturn:devices];
@@ -218,7 +232,13 @@ describe(@"HEMDeviceService", ^{
             });
             
             afterEach(^{
+                [sense clearStubs];
+                [devices clearStubs];
+                [service clearStubs];
                 showPill = NO;
+                sense = nil;
+                devices = nil;
+                service = nil;
             });
             
             it(@"should return YES", ^{
@@ -229,16 +249,19 @@ describe(@"HEMDeviceService", ^{
         context(@"has no pill meta data and no sense meta data", ^{
             __block BOOL showPill = NO;
             __block SENPairedDevices* devices = nil;
+            __block HEMDeviceService* service = nil;
             
             beforeEach(^{
                 devices = [SENPairedDevices new];
-                HEMDeviceService* service = [HEMDeviceService new];
+                service = [HEMDeviceService new];
                 [service stub:@selector(devices) andReturn:devices];
                 showPill = [service shouldShowPillInfo];
             });
             
             afterEach(^{
                 showPill = NO;
+                [service clearStubs];
+                service = nil;
             });
             
             it(@"should return NO", ^{

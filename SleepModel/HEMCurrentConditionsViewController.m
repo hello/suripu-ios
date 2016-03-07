@@ -452,9 +452,9 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     UIFont* font = [UIFont sensorListValueFontForUnit:sensor.unit];
     NSDictionary *baseAttributes = @{ NSFontAttributeName : font };
     NSMutableAttributedString *composite = nil;
+    NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
     
-    if (sensor.value) {
-        NSString *valueText = [self.sensorValueFormatter stringFromSensor:sensor];
+    if (valueText) {
         composite = [[NSMutableAttributedString alloc] initWithString:valueText
                                                            attributes:baseAttributes];
         

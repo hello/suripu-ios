@@ -27,8 +27,11 @@ static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableVi
 static NSString *const _HEMalarmSoundCell = @"alarmSoundCell";
 static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
+static NSString *const _HEMbar = @"bar";
 static NSString *const _HEMbreakdownController = @"breakdownController";
 static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
+static NSString *const _HEMbubbles = @"bubbles";
+static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdetail = @"detail";
@@ -46,6 +49,7 @@ static NSString *const _HEMinfoViewController = @"infoViewController";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
 static NSString *const _HEMloading = @"loading";
+static NSString *const _HEMmessage = @"message";
 static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoption = @"option";
@@ -104,7 +108,10 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatCellReuseIdentifier { return _HEMalarmRepeatCell; }
 +(NSString *)alarmSoundCellReuseIdentifier { return _HEMalarmSoundCell; }
 +(NSString *)alarmSwitchCellReuseIdentifier { return _HEMalarmSwitchCell; }
++(NSString *)barReuseIdentifier { return _HEMbar; }
 +(NSString *)breakdownLineCellReuseIdentifier { return _HEMbreakdownLineCell; }
++(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
++(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
@@ -116,6 +123,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)loadingReuseIdentifier { return _HEMloading; }
++(NSString *)messageReuseIdentifier { return _HEMmessage; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)optionReuseIdentifier { return _HEMoption; }
 +(NSString *)overTimeReuseIdentifier { return _HEMoverTime; }

@@ -24,8 +24,9 @@
 
 /**
  *  Send the user to the App Store review page
+ *  @param reviewType: the review type set in the HEMAppReviewQuestion
  */
-+ (void)rateApp;
++ (void)rateApp:(HEMAppReviewType)reviewType;
 
 /**
  *  @discussion

@@ -15,7 +15,6 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 @interface HEMSubNavigationView()
 
 @property (nonatomic, assign) NSInteger controlCount;
-@property (nonatomic, assign) NSInteger previousControlTag;
 @property (nonatomic, weak) HEMNavigationShadowView* shadowView;
 
 @end

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HEMSubNavigationView : UIView
 
 @property (nonatomic, assign) NSInteger selectedControlTag;
-@property (nonatomic, assign, readonly) NSInteger previousControlTag;
+@property (nonatomic, assign) NSInteger previousControlTag;
 @property (nonatomic, weak, readonly) HEMNavigationShadowView* shadowView;
 
 - (void)addControl:(UIControl*)control;

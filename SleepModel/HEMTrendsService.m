@@ -31,6 +31,7 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
 @property (nonatomic, strong) NSMutableDictionary<NSNumber*, SENTrends*>* cachedTrendsByScale;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber*, NSDate*>* cachedLastPullByScale;
 @property (nonatomic, assign, getter=dataHasBeenLoaded) BOOL loaded;
+@property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 
 @end
 
@@ -71,10 +72,14 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
 - (BOOL)isCachedTrendsExpiredFor:(SENTrendsTimeScale)timeScale {
     NSNumber* timeScaleKey = @(timeScale);
     NSDate* lastPulled = [[self cachedLastPullByScale] objectForKey:timeScaleKey];
-    return fabs([lastPulled timeIntervalSinceNow]) > HEMTrendsServiceCacheExpirationInSecs;
+    return !lastPulled || fabs([lastPulled timeIntervalSinceNow]) > HEMTrendsServiceCacheExpirationInSecs;
 }
 
-- (void)refreshTrendsFor:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion {
+- (void)expireCache {
+    [[self cachedLastPullByScale] removeAllObjects];
+}
+
+- (void)trendsFor:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion {
     SENTrends* cachedTrends = [self cachedTrendsForTimeScale:timeScale];
     if (![self isCachedTrendsExpiredFor:timeScale] && cachedTrends) {
         [self notify:HEMTrendsServiceNotificationHitCache error:nil];
@@ -84,20 +89,30 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
         return;
     }
     
+    [self reloadTrends:timeScale completion:completion];
+}
+
+- (void)reloadTrends:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion {
     [self notify:HEMTrendsServiceNotificationWillRefresh error:nil];
+    [self setRefreshing:YES];
     
     __weak typeof(self) weakSelf = self;
     [SENAPITrends trendsForTimeScale:timeScale completion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLoaded:YES];
         
+        NSNumber* timeScaleKey = @(timeScale);
+        
         if (error) {
             [SENAnalytics trackError:error];
+            [[strongSelf cachedLastPullByScale] removeAllObjects];
+            [[strongSelf cachedTrendsByScale] removeAllObjects];
         } else if ([data isKindOfClass:[SENTrends class]]) {
-            NSNumber* timeScaleKey = @(timeScale);
             [[strongSelf cachedTrendsByScale] setObject:data forKey:timeScaleKey];
             [[strongSelf cachedLastPullByScale] setObject:[NSDate date] forKey:timeScaleKey];
         }
+        
+        [strongSelf setRefreshing:NO];
         [strongSelf notify:HEMTrendsServiceNotificationDidRefresh error:error];
         
         if (completion) {
@@ -208,12 +223,14 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
 }
 
 - (BOOL)isReturningUser:(SENTrends*)currentTrends {
-    return [[currentTrends availableTimeScales] count] > 0
+    return ![self isRefreshing]
+        && [[currentTrends availableTimeScales] count] > 0
         && [[currentTrends graphs] count] == 0;
 }
 
 - (BOOL)isEmpty:(SENTrends*)trends {
-    return [[trends availableTimeScales] count] == 0
+    return ![self isRefreshing]
+        && [[trends availableTimeScales] count] == 0
         && [[trends graphs] count] == 0;
 }
 

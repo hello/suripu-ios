@@ -51,8 +51,7 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     
     [self setSubNav:subNav];
     [self setHeightConstraint:heightConstraint];
-    
-    [self configureSelectorWithData];
+    [self loadTrends:nil];
 }
 
 - (void)bindWithCollectionView:(UICollectionView *)collectionView {
@@ -91,8 +90,8 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
 }
 
 - (void)showLoading:(BOOL)loading {
-    // only show indicator on first load
-    if (loading && ![[self subNav] hasControls]) {
+    SENTrends* trends = [[self trendsService] cachedTrendsForTimeScale:[self selectedScale]];
+    if (loading && [[trends graphs] count] == 0) {
         [[self loadingIndicator] start];
         [[self loadingIndicator] setHidden:NO];
     } else if ([[self loadingIndicator] isAnimating]){
@@ -101,26 +100,34 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     }
 }
 
-- (void)configureSelectorWithData {
+- (void)loadTrends:(void(^)(void))beforeDataLoadedHandler {
     [self showLoading:YES];
+    
     __weak typeof(self) weakSelf = self;
-    [[self trendsService] refreshTrendsFor:[self selectedScale] completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+    void(^update)(SENTrends * trends, SENTrendsTimeScale scale, NSError * error) = ^(SENTrends * trends, SENTrendsTimeScale scale, NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (beforeDataLoadedHandler) {
+            beforeDataLoadedHandler ();
+        }
+        
         [strongSelf showLoading:NO];
         
         if ([[trends availableTimeScales] count] >= HEMTrendsSubNavMinimumOptions) {
             [[strongSelf heightConstraint] setConstant:[strongSelf originalSelectorHeight]];
-
+            
             for (NSNumber* timeScaleNumber in [trends availableTimeScales]) {
                 SENTrendsTimeScale timeScale = [timeScaleNumber integerValue];
                 UIButton* button = [strongSelf scopeButtonForTimeScale:timeScale];
                 [[strongSelf subNav] addControl:button];
             }
-
-            [[strongSelf subNav] setNeedsDisplay];
-            [[strongSelf collectionView] reloadData];
         }
-    }];
+        
+        [[strongSelf subNav] setNeedsDisplay];
+        [[strongSelf collectionView] reloadData];
+    };
+    
+    [[self trendsService] reloadTrends:[self selectedScale] completion:update];
+    
 }
 
 #pragma mark - Scope Selection
@@ -129,8 +136,18 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     SENTrendsTimeScale timeScale = [button tag];
     if (timeScale != [self selectedScale]) {
         [self setSelectedScale:timeScale];
-        [[self trendsService] refreshTrendsFor:[self selectedScale] completion:nil];
+        [[self trendsService] trendsFor:[self selectedScale] completion:nil];
     }
+}
+
+#pragma mark - Presenter events
+
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    // reset the previous control tag to avoid loading something previously
+    // selected
+    [[self subNav] setPreviousControlTag:[[self subNav] selectedControlTag]];
+    [self loadTrends:nil];
 }
 
 @end

@@ -109,6 +109,13 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     
 }
 
+- (void)reloadCurrentTrends {
+    if (![[self trendsService] isRefreshing]) {
+        [[self subNav] setPreviousControlTag:[[self subNav] selectedControlTag]];
+        [self loadTrends:nil];
+    }
+}
+
 #pragma mark - Scope Selection
 
 - (void)changeScope:(UIButton*)button {
@@ -123,22 +130,12 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
 
 - (void)didComeBackFromBackground {
     [super didComeBackFromBackground];
-    // reset the previous control tag to avoid loading something previously
-    // selected
-    [[self subNav] setPreviousControlTag:[[self subNav] selectedControlTag]];
-    [self loadTrends:nil];
+    [self reloadCurrentTrends];
 }
 
 - (void)didGainConnectivity {
     [super didGainConnectivity];
-    // reset the previous control tag to avoid loading something previously
-    // selected, but we need to guard against it being already refreshing
-    // since this is a typical case when coming back from background, which
-    // is also handled
-    if (![[self trendsService] isRefreshing]) {
-        [[self subNav] setPreviousControlTag:[[self subNav] selectedControlTag]];
-        [self loadTrends:nil];
-    }
+    [self reloadCurrentTrends];
 }
 
 @end

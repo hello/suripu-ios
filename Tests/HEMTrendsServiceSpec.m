@@ -269,7 +269,7 @@ describe(@"HEMTrendsService", ^{
                 
                 timeScaleRequested = SENTrendsTimeScaleWeek;
                 
-                [service refreshTrendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+                [service trendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
                     response = trends;
                     apiError = error;
                     timeScaleReturned = scale;
@@ -322,7 +322,7 @@ describe(@"HEMTrendsService", ^{
                 
                 timeScaleRequested = SENTrendsTimeScaleWeek;
                 
-                [service refreshTrendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+                [service trendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
                     response = trends;
                     apiError = error;
                     timeScaleReturned = scale;
@@ -380,7 +380,7 @@ describe(@"HEMTrendsService", ^{
                 
                 timeScaleRequested = SENTrendsTimeScaleWeek;
                 
-                [service refreshTrendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+                [service trendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
                     response = trends;
                     apiError = error;
                     timeScaleReturned = scale;

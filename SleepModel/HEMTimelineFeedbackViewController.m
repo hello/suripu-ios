@@ -13,6 +13,7 @@
 #import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
+#import "HEMTimelineService.h"
 
 NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSuccessNotification";
 
@@ -24,6 +25,7 @@ NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSu
 @property (nonatomic, weak) IBOutlet UIView *buttonContainerView;
 @property (nonatomic, weak) IBOutlet UIButton *cancelButton;
 @property (nonatomic, weak) IBOutlet UIButton *saveButton;
+@property (nonatomic, strong) HEMTimelineService* timelineService;
 @property (nonatomic, strong) NSCalendar* calendar;
 @property (nonatomic, assign, getter=isConfigured) BOOL configured;
 @end
@@ -34,6 +36,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.timelineService = [HEMTimelineService new];
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self configureButtonContainer];
     [SENAnalytics track:HEMAnalyticsEventTimelineAdjustTime];
@@ -122,11 +125,11 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     };
     
     [activityView showInView:[self view] withText:activityText activity:YES completion:^{
-        [SENAPITimeline amendSleepEvent:self.segment
-                         forDateOfSleep:self.dateForNightOfSleep
-                               withHour:@(self.clockView.hour)
-                             andMinutes:@(self.clockView.minute)
-                             completion:completion];
+        [self.timelineService amendTimelineSegment:self.segment
+                                    forDateOfSleep:self.dateForNightOfSleep
+                                          withHour:@(self.clockView.hour)
+                                        andMinutes:@(self.clockView.minute)
+                                        completion:completion];
     }];
 
 }

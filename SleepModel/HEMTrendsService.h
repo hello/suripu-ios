@@ -130,6 +130,12 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  */
 - (BOOL)isEmpty:(SENTrends*)trends;
 
+/**
+ * @discussion
+ * Expire the current cache, if any
+ */
+- (void)expireCache;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -23,6 +23,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMTimelineService.h"
 
 static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
 static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;
@@ -47,6 +48,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     if (self) {
         _trendService = trendService;
         [self listenForTrendsDataEvents];
+        [self listenForTimelineChanges];
     }
     return self;
 }
@@ -66,6 +68,13 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [self setLoadingIndicator:loadingIndicator];
 }
 
+#pragma mark - Presenter events
+
+- (void)didAppear {
+    [super didAppear];
+    [[self collectionView] reloadData];
+}
+
 #pragma mark - Global loading indicator
 
 - (void)showLoading:(BOOL)loading {
@@ -81,6 +90,21 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 #pragma mark - Notifications
+
+- (void)listenForTimelineChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(timelineChanged:)
+                   name:HEMTimelineNotificationTimelineAmended
+                 object:nil];
+}
+
+- (void)timelineChanged:(NSNotification*)note {
+    [[self trendService] expireCache];
+    
+    SENTrendsTimeScale currentTimeScale = [[self subNav] selectedControlTag];
+    [[self trendService] reloadTrends:currentTimeScale completion:nil];
+}
 
 - (void)listenForTrendsDataEvents {
     if ([self trendService]) {

@@ -22,6 +22,7 @@
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
+#import "HEMActivityIndicatorView.h"
 
 static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
 static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;
@@ -33,6 +34,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 @property (nonatomic, weak) HEMTrendsService* trendService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, assign) HEMSubNavigationView* subNav;
+@property (nonatomic, weak) HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 @property (nonatomic, assign, getter=hasDataError) BOOL dataError;
 
@@ -60,6 +62,24 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [self bindWithShadowView:[subNav shadowView]];
 }
 
+- (void)bindWithLoadingIndicator:(HEMActivityIndicatorView*)loadingIndicator {
+    [self setLoadingIndicator:loadingIndicator];
+}
+
+#pragma mark - Global loading indicator
+
+- (void)showLoading:(BOOL)loading {
+    SENTrendsTimeScale currentTimeScale = [[self subNav] selectedControlTag];
+    SENTrends* trends = [[self trendService] cachedTrendsForTimeScale:currentTimeScale];
+    if (loading && [[trends graphs] count] == 0) {
+        [[self loadingIndicator] start];
+        [[self loadingIndicator] setHidden:NO];
+    } else if ([[self loadingIndicator] isAnimating]){
+        [[self loadingIndicator] stop];
+        [[self loadingIndicator] setHidden:YES];
+    }
+}
+
 #pragma mark - Notifications
 
 - (void)listenForTrendsDataEvents {
@@ -79,11 +99,16 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     if ([noteName isEqualToString:HEMTrendsServiceNotificationWillRefresh]) {
         DDLogVerbose(@"trends data is refreshing");
         [self setRefreshing:YES];
+        [self showLoading:YES];
     } else if ([noteName isEqualToString:HEMTrendsServiceNotificationDidRefresh]
                || [noteName isEqualToString:HEMTrendsServiceNotificationHitCache]) {
         NSError* error = [note userInfo][HEMTrendsServiceNotificationInfoError];
         [self setRefreshing:NO];
+        [self showLoading:NO];
         [self setDataError:error != nil];
+    } else {
+        [self setRefreshing:NO];
+        [self showLoading:NO];
     }
     
     [[self collectionView] reloadData];

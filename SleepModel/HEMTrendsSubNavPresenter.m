@@ -11,7 +11,6 @@
 #import "HEMTrendsSubNavPresenter.h"
 #import "HEMSubNavigationView.h"
 #import "HEMTrendsService.h"
-#import "HEMActivityIndicatorView.h"
 #import "HEMStyle.h"
 
 static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
@@ -25,7 +24,6 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
 @property (nonatomic, assign) SENTrendsTimeScale selectedScale;
 @property (nonatomic, assign, getter=isConfigured) BOOL configured;
 @property (nonatomic, weak) UICollectionView* collectionView;
-@property (nonatomic, weak) HEMActivityIndicatorView* loadingIndicator;
 
 @end
 
@@ -58,10 +56,6 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     [self setCollectionView:collectionView];
 }
 
-- (void)bindWithLoadingIndicator:(HEMActivityIndicatorView*)loadingIndicator {
-    [self setLoadingIndicator:loadingIndicator];
-}
-
 - (NSString*)selectorTitleForScale:(SENTrendsTimeScale)timeScale {
     switch (timeScale) {
         case SENTrendsTimeScaleWeek:
@@ -89,28 +83,13 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     return button;
 }
 
-- (void)showLoading:(BOOL)loading {
-    SENTrends* trends = [[self trendsService] cachedTrendsForTimeScale:[self selectedScale]];
-    if (loading && [[trends graphs] count] == 0) {
-        [[self loadingIndicator] start];
-        [[self loadingIndicator] setHidden:NO];
-    } else if ([[self loadingIndicator] isAnimating]){
-        [[self loadingIndicator] stop];
-        [[self loadingIndicator] setHidden:YES];
-    }
-}
-
 - (void)loadTrends:(void(^)(void))beforeDataLoadedHandler {
-    [self showLoading:YES];
-    
     __weak typeof(self) weakSelf = self;
     void(^update)(SENTrends * trends, SENTrendsTimeScale scale, NSError * error) = ^(SENTrends * trends, SENTrendsTimeScale scale, NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (beforeDataLoadedHandler) {
             beforeDataLoadedHandler ();
         }
-        
-        [strongSelf showLoading:NO];
         
         if ([[trends availableTimeScales] count] >= HEMTrendsSubNavMinimumOptions) {
             [[strongSelf heightConstraint] setConstant:[strongSelf originalSelectorHeight]];

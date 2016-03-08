@@ -129,4 +129,16 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     [self loadTrends:nil];
 }
 
+- (void)didGainConnectivity {
+    [super didGainConnectivity];
+    // reset the previous control tag to avoid loading something previously
+    // selected, but we need to guard against it being already refreshing
+    // since this is a typical case when coming back from background, which
+    // is also handled
+    if (![[self trendsService] isRefreshing]) {
+        [[self subNav] setPreviousControlTag:[[self subNav] selectedControlTag]];
+        [self loadTrends:nil];
+    }
+}
+
 @end

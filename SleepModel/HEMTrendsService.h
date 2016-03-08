@@ -25,6 +25,13 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
 /**
  * @discussion
  *
+ * YES if service is currently reloading trends cache from API. NO otherwise
+ */
+@property (nonatomic, assign, getter=isRefreshing, readonly) BOOL refreshing;
+
+/**
+ * @discussion
+ *
  * Retrieve the trends for the selected time scale.  If cache has expired, or it
  * was never set, it does not exists, it will automatically grab the latest data 
  * from the API

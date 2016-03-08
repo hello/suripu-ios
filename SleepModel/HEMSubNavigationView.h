@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addControl:(UIControl*)control;
 - (BOOL)hasControls;
+- (void)reset;
 
 @end
 

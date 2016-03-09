@@ -500,7 +500,7 @@
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";
 "sleep-stat.total_sleep" = "Total sleep";
-"sleep-stat.sound_sleep" = "Sound sleep";
+"sleep-stat.sound_sleep" = "Deep sleep";
 "sleep-stat.fell_asleep" = "Fell asleep";
 "sleep-stat.woke_up" = "Woke up";
 "sleep-stat.temperature" = "Temperature";
@@ -544,7 +544,7 @@
 
 "sleep-stat.accessibility.sleep-state.light.format" = "Light sleep, %ld minutes, sleep depth %ld";
 "sleep-stat.accessibility.sleep-state.medium.format" = "Medium sleep, %ld minutes, sleep depth %ld";
-"sleep-stat.accessibility.sleep-state.deep.format" = "Sound sleep, %ld minutes, sleep depth %ld";
+"sleep-stat.accessibility.sleep-state.deep.format" = "Deep sleep, %ld minutes, sleep depth %ld";
 "sleep-stat.accessibility.sleep-state.awake.format" = "Awake, %ld minutes";
 
 // remove below once we want to display the duration again.

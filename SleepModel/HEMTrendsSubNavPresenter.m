@@ -11,7 +11,6 @@
 #import "HEMTrendsSubNavPresenter.h"
 #import "HEMSubNavigationView.h"
 #import "HEMTrendsService.h"
-#import "HEMActivityIndicatorView.h"
 #import "HEMStyle.h"
 
 static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
@@ -25,7 +24,6 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
 @property (nonatomic, assign) SENTrendsTimeScale selectedScale;
 @property (nonatomic, assign, getter=isConfigured) BOOL configured;
 @property (nonatomic, weak) UICollectionView* collectionView;
-@property (nonatomic, weak) HEMActivityIndicatorView* loadingIndicator;
 
 @end
 
@@ -51,16 +49,11 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     
     [self setSubNav:subNav];
     [self setHeightConstraint:heightConstraint];
-    
-    [self configureSelectorWithData];
+    [self loadTrends:nil];
 }
 
 - (void)bindWithCollectionView:(UICollectionView *)collectionView {
     [self setCollectionView:collectionView];
-}
-
-- (void)bindWithLoadingIndicator:(HEMActivityIndicatorView*)loadingIndicator {
-    [self setLoadingIndicator:loadingIndicator];
 }
 
 - (NSString*)selectorTitleForScale:(SENTrendsTimeScale)timeScale {
@@ -90,37 +83,37 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     return button;
 }
 
-- (void)showLoading:(BOOL)loading {
-    // only show indicator on first load
-    if (loading && ![[self subNav] hasControls]) {
-        [[self loadingIndicator] start];
-        [[self loadingIndicator] setHidden:NO];
-    } else if ([[self loadingIndicator] isAnimating]){
-        [[self loadingIndicator] stop];
-        [[self loadingIndicator] setHidden:YES];
-    }
-}
-
-- (void)configureSelectorWithData {
-    [self showLoading:YES];
+- (void)loadTrends:(void(^)(void))beforeDataLoadedHandler {
     __weak typeof(self) weakSelf = self;
-    [[self trendsService] refreshTrendsFor:[self selectedScale] completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+    void(^update)(SENTrends * trends, SENTrendsTimeScale scale, NSError * error) = ^(SENTrends * trends, SENTrendsTimeScale scale, NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf showLoading:NO];
+        if (beforeDataLoadedHandler) {
+            beforeDataLoadedHandler ();
+        }
         
         if ([[trends availableTimeScales] count] >= HEMTrendsSubNavMinimumOptions) {
             [[strongSelf heightConstraint] setConstant:[strongSelf originalSelectorHeight]];
-
+            
             for (NSNumber* timeScaleNumber in [trends availableTimeScales]) {
                 SENTrendsTimeScale timeScale = [timeScaleNumber integerValue];
                 UIButton* button = [strongSelf scopeButtonForTimeScale:timeScale];
                 [[strongSelf subNav] addControl:button];
             }
-
-            [[strongSelf subNav] setNeedsDisplay];
-            [[strongSelf collectionView] reloadData];
         }
-    }];
+        
+        [[strongSelf subNav] setNeedsDisplay];
+        [[strongSelf collectionView] reloadData];
+    };
+    
+    [[self trendsService] reloadTrends:[self selectedScale] completion:update];
+    
+}
+
+- (void)reloadCurrentTrends {
+    if (![[self trendsService] isRefreshing]) {
+        [[self subNav] setPreviousControlTag:[[self subNav] selectedControlTag]];
+        [self loadTrends:nil];
+    }
 }
 
 #pragma mark - Scope Selection
@@ -129,8 +122,20 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     SENTrendsTimeScale timeScale = [button tag];
     if (timeScale != [self selectedScale]) {
         [self setSelectedScale:timeScale];
-        [[self trendsService] refreshTrendsFor:[self selectedScale] completion:nil];
+        [[self trendsService] trendsFor:[self selectedScale] completion:nil];
     }
+}
+
+#pragma mark - Presenter events
+
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self reloadCurrentTrends];
+}
+
+- (void)didGainConnectivity {
+    [super didGainConnectivity];
+    [self reloadCurrentTrends];
 }
 
 @end

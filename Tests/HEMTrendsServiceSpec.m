@@ -18,6 +18,9 @@
 @property (nonatomic, strong) NSMutableDictionary<NSNumber*, SENTrends*>* cachedTrendsByScale;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber*, NSDate*>* cachedLastPullByScale;
 
+- (void)reloadTrends:(SENTrendsTimeScale)timeScale completion:(HEMTrendsServiceDataHandler)completion;
+- (BOOL)isCachedTrendsExpiredFor:(SENTrendsTimeScale)timeScale;
+
 @end
 
 SPEC_BEGIN(HEMTrendsServiceSpec)
@@ -247,7 +250,7 @@ describe(@"HEMTrendsService", ^{
         
     });
     
-    describe(@"-refreshTrendsFor:completion:", ^{
+    describe(@"-trendsFor:completion:", ^{
         
         __block HEMTrendsService* service = nil;
         __block id response = nil;
@@ -269,7 +272,7 @@ describe(@"HEMTrendsService", ^{
                 
                 timeScaleRequested = SENTrendsTimeScaleWeek;
                 
-                [service refreshTrendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+                [service trendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
                     response = trends;
                     apiError = error;
                     timeScaleReturned = scale;
@@ -322,7 +325,7 @@ describe(@"HEMTrendsService", ^{
                 
                 timeScaleRequested = SENTrendsTimeScaleWeek;
                 
-                [service refreshTrendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+                [service trendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
                     response = trends;
                     apiError = error;
                     timeScaleReturned = scale;
@@ -361,7 +364,7 @@ describe(@"HEMTrendsService", ^{
             
         });
         
-        context(@"cache found", ^{
+        context(@"cache found, not expired", ^{
             
             __block SENTrends* trends = nil;
             __block BOOL calledAPI = NO;
@@ -369,18 +372,19 @@ describe(@"HEMTrendsService", ^{
             beforeEach(^{
                 trends = [SENTrends new];
                 service = [HEMTrendsService new];
-                [service stub:@selector(cachedTrendsForTimeScale:) andReturn:trends];
+                timeScaleRequested = SENTrendsTimeScaleWeek;
                 
-                [SENAPITrends stub:@selector(trendsForTimeScale:completion:) withBlock:^id(NSArray *params) {
-                    SENAPIDataBlock cb = [params lastObject];
+                [service stub:@selector(cachedTrendsForTimeScale:) andReturn:trends];
+                [service stub:@selector(isCachedTrendsExpiredFor:) andReturn:[KWValue valueWithBool:NO]];
+                
+                [service stub:@selector(reloadTrends:completion:) withBlock:^id(NSArray *params) {
+                    HEMTrendsServiceDataHandler cb = [params lastObject];
                     calledAPI = YES;
-                    cb ([SENTrends new], nil);
+                    cb ([SENTrends new], timeScaleRequested, nil);
                     return nil;
                 }];
                 
-                timeScaleRequested = SENTrendsTimeScaleWeek;
-                
-                [service refreshTrendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
+                [service trendsFor:timeScaleRequested completion:^(SENTrends * _Nullable trends, SENTrendsTimeScale scale, NSError * _Nullable error) {
                     response = trends;
                     apiError = error;
                     timeScaleReturned = scale;

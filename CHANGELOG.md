@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.3.1.0
+
+Fixes:
+
+* Fixes the issue where the month calendar view for Trends does not have the
+  sleep scores aligned to the right days of the week when there is not enough
+  data to fill the month
+* Fixes the issue where Trends will not refresh to reflect changes made to the
+  Timeline during the same session
+* Fixes the issue where the cache is not reloaded when coming back from the bg
+  and thus not handling cases when network connectivity changes
+* Update Zendesk SDK to fix their UI issue encountered when submitting a long
+  ticket
+
+
+## 1.3.0.11
+
+
 Fixes:
 
 * Fixes issue with calendar view when only 1 section is available

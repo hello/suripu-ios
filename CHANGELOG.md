@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.1.1
+
+New:
+
+* A new debug option to launch a preliminary prototype of the Sleep Sounds player
+
+Fixes:
+
+* The term 'sound sleep' has been changed to 'deep sleep' in the Timeline breakdown
+
 ## 1.3.1.0
 
 Fixes:

@@ -221,6 +221,7 @@
 "debug.led.option.activity" = "Activity";
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
+"debug.option.sleep-sounds" = "Sleep Sounds";
 "debug.host.action.custom-url" = "Custom";
 "debug.host.section.api" = "API Hosts";
 "debug.host.section.nonsense" = "Nonsense Hosts";
@@ -746,3 +747,6 @@
 "video.url.onboarding.pairing-mode" = "https://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
 "video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
+
+// sleep sounds
+"sleep-sounds.volume.high" = "High";

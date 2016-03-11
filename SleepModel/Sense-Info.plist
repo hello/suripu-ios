@@ -112,6 +112,8 @@
 	<string>${SENSE_CRASH_REPORT_TOKEN}</string>
 	<key>SenseZendeskToken</key>
 	<string>${SENSE_ZENDESK_TOKEN}</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>SenseEnvironment</key>
 	<string>${SENSE_ENV}</string>
 	<key>SenseZendeskURL</key>

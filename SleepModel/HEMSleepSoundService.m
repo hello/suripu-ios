@@ -63,15 +63,15 @@ static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 2.0f;
 - (void)fireRequest:(SENSleepSoundRequest*)request
          completion:(HEMSleepSoundsRequestHandler)completion {
     [self setCurrentRequest:request];
+    [self setCurrentRequestCallback:completion];
     
     __weak typeof(self) weakSelf = self;
     [SENAPISleepSounds executeRequest:request completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [SENAnalytics trackError:error];
-            completion (error);
+            [strongSelf respondToCurrentRequest:error];
         } else {
-            [strongSelf setCurrentRequestCallback:completion];
             [strongSelf scheduleRequestStatusTimer];
             [strongSelf checkStatusForCurrentRequest];
         }
@@ -124,7 +124,9 @@ static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 2.0f;
             } else if ([strongSelf isRequest:[strongSelf currentRequest] successful:data]) {
                 [strongSelf respondToCurrentRequest:nil];
             } else {
-                [strongSelf checkStatusForCurrentRequest];
+                if ([strongSelf currentRequest]) {
+                    [strongSelf checkStatusForCurrentRequest];
+                }
             }
         }];
     });

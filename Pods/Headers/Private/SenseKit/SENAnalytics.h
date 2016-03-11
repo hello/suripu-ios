@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Analytics/SENAnalytics.h
+../../../SenseKit/Pod/Classes/Analytics/SENAnalytics.h

@@ -161,6 +161,8 @@
 		BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
 		BF412EA01C90F7B6009514A1 /* HEMSleepSoundService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */; };
+		BF412EA41C91098F009514A1 /* HEMSleepSoundConfigurationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412EA31C91098F009514A1 /* HEMSleepSoundConfigurationCell.m */; };
+		BF412EA81C920095009514A1 /* HEMSleepSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412EA71C920095009514A1 /* HEMSleepSoundViewController.m */; };
 		BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF44734F1A6341F600389ECE /* HEMOnboardingController.m */; };
 		BF48274D1C4F060F005EDEB5 /* HEMHealthKitService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF48274C1C4F060F005EDEB5 /* HEMHealthKitService.m */; };
 		BF4827501C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF48274F1C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m */; };
@@ -177,6 +179,8 @@
 		BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */; };
 		BF5592421C21048D00FC7849 /* HEMInsightTabPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5592411C21048D00FC7849 /* HEMInsightTabPresenter.m */; };
 		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
+		BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */; };
+		BF5BACA41C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACA31C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m */; };
 		BF5BACE51C5AE09A00347185 /* HEMTrendsV2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACE41C5AE09A00347185 /* HEMTrendsV2ViewController.m */; };
 		BF5BACEA1C5AE0EA00347185 /* HEMTrendsService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACE91C5AE0EA00347185 /* HEMTrendsService.m */; };
 		BF5BACF01C5AEAC600347185 /* HEMTrendsSubNavPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACEF1C5AEAC600347185 /* HEMTrendsSubNavPresenter.m */; };
@@ -666,6 +670,10 @@
 		BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+HEMUtils.m"; sourceTree = "<group>"; };
 		BF412E9E1C90F7B6009514A1 /* HEMSleepSoundService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundService.h; sourceTree = "<group>"; };
 		BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundService.m; sourceTree = "<group>"; };
+		BF412EA21C91098F009514A1 /* HEMSleepSoundConfigurationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundConfigurationCell.h; sourceTree = "<group>"; };
+		BF412EA31C91098F009514A1 /* HEMSleepSoundConfigurationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundConfigurationCell.m; sourceTree = "<group>"; };
+		BF412EA61C920095009514A1 /* HEMSleepSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundViewController.h; sourceTree = "<group>"; };
+		BF412EA71C920095009514A1 /* HEMSleepSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundViewController.m; sourceTree = "<group>"; };
 		BF44734E1A6341F600389ECE /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
 		BF44734F1A6341F600389ECE /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
 		BF48274B1C4F060F005EDEB5 /* HEMHealthKitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHealthKitService.h; sourceTree = "<group>"; };
@@ -694,6 +702,9 @@
 		BF5592411C21048D00FC7849 /* HEMInsightTabPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightTabPresenter.m; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
+		BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SleepSounds.xcassets; sourceTree = "<group>"; };
+		BF5BACA21C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundPlayerPresenter.h; sourceTree = "<group>"; };
+		BF5BACA31C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundPlayerPresenter.m; sourceTree = "<group>"; };
 		BF5BACE31C5AE09A00347185 /* HEMTrendsV2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsV2ViewController.h; sourceTree = "<group>"; };
 		BF5BACE41C5AE09A00347185 /* HEMTrendsV2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsV2ViewController.m; sourceTree = "<group>"; };
 		BF5BACE81C5AE0EA00347185 /* HEMTrendsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsService.h; sourceTree = "<group>"; };
@@ -1820,7 +1831,11 @@
 		BF412E9C1C90F792009514A1 /* Sleep Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */,
+				BF5BACA11C920365001E77F6 /* Presenters */,
 				BF412E9D1C90F79B009514A1 /* Services */,
+				BF412EA11C910942009514A1 /* Views */,
+				BF412EA51C92004E009514A1 /* View Controllers */,
 			);
 			name = "Sleep Sounds";
 			sourceTree = "<group>";
@@ -1832,6 +1847,24 @@
 				BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */,
 			);
 			name = Services;
+			sourceTree = "<group>";
+		};
+		BF412EA11C910942009514A1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BF412EA21C91098F009514A1 /* HEMSleepSoundConfigurationCell.h */,
+				BF412EA31C91098F009514A1 /* HEMSleepSoundConfigurationCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BF412EA51C92004E009514A1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BF412EA61C920095009514A1 /* HEMSleepSoundViewController.h */,
+				BF412EA71C920095009514A1 /* HEMSleepSoundViewController.m */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		BF48274A1C4F05EB005EDEB5 /* HealthKit */ = {
@@ -1945,6 +1978,15 @@
 				BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */,
 			);
 			name = Insights;
+			sourceTree = "<group>";
+		};
+		BF5BACA11C920365001E77F6 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BF5BACA21C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.h */,
+				BF5BACA31C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m */,
+			);
+			name = Presenters;
 			sourceTree = "<group>";
 		};
 		BF5BACE61C5AE0B900347185 /* Presenters */ = {
@@ -2838,6 +2880,7 @@
 				BFCB89501BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf in Resources */,
 				8AD331261BB0836700DFF95A /* Alarm.xcassets in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */,
 				BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */,
 				8AD3312A1BB08D5300DFF95A /* Sensors.xcassets in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
@@ -3172,6 +3215,7 @@
 				BF71BDA21C481E0A00919D0F /* HEMTimelineService.m in Sources */,
 				BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */,
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
+				BF412EA81C920095009514A1 /* HEMSleepSoundViewController.m in Sources */,
 				BFA540F21BCEFDF1007AF607 /* NSBundle+HEMUtils.m in Sources */,
 				BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */,
 				8AA1E6171A895EF200590EB6 /* HEMNotificationSettingsViewController.m in Sources */,
@@ -3179,6 +3223,7 @@
 				BF6952541C52D3FD000A8E85 /* HEMSwitchControl.m in Sources */,
 				BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */,
 				BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */,
+				BF412EA41C91098F009514A1 /* HEMSleepSoundConfigurationCell.m in Sources */,
 				BF5BACF01C5AEAC600347185 /* HEMTrendsSubNavPresenter.m in Sources */,
 				8AA1E62F1A899C0100590EB6 /* HEMTimelineFeedbackViewController.m in Sources */,
 				8AC3C2E21A3C8CC90074A87F /* HEMSnazzBarButton.m in Sources */,
@@ -3229,6 +3274,7 @@
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,
 				BF539CC41C0D3558000F77AA /* HEMQuestionsService.m in Sources */,
 				8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */,
+				BF5BACA41C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m in Sources */,
 				BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */,
 				BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */,
 				BF83398C1C12277B00BFD0F4 /* HEMInsightPresenter.m in Sources */,

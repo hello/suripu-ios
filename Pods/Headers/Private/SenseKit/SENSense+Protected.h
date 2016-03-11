@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/BLE/SENSense+Protected.h
+../../../SenseKit/Pod/Classes/BLE/SENSense+Protected.h

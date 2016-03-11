@@ -53,7 +53,6 @@ static NSString *const _HEMmessage = @"message";
 static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoption = @"option";
-static NSString *const _HEMoverTime = @"overTime";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpickSound = @"pickSound";
 static NSString *const _HEMpill = @"pill";
@@ -62,6 +61,7 @@ static NSString *const _HEMquestion = @"question";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
+static NSString *const _HEMsettings = @"settings";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
 static NSString *const _HEMsettingsNavController = @"settingsNavController";
@@ -72,6 +72,7 @@ static NSString *const _HEMsleepGraphController = @"sleepGraphController";
 static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
 static NSString *const _HEMsleepInsight = @"sleepInsight";
 static NSString *const _HEMsleepQuestions = @"sleepQuestions";
+static NSString *const _HEMsleepSound = @"sleepSound";
 static NSString *const _HEMsummary = @"summary";
 static NSString *const _HEMsummaryViewCell = @"summaryViewCell";
 static NSString *const _HEMsupportCell = @"supportCell";
@@ -85,7 +86,6 @@ static NSString *const _HEMtimezone = @"timezone";
 static NSString *const _HEMtitle = @"title";
 static NSString *const _HEMtopicCell = @"topicCell";
 static NSString *const _HEMtopics = @"topics";
-static NSString *const _HEMtrendGraph = @"trendGraph";
 static NSString *const _HEMtrends = @"trends";
 static NSString *const _HEMtutorialViewController = @"tutorialViewController";
 static NSString *const _HEMunitCell = @"unitCell";
@@ -126,11 +126,11 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)messageReuseIdentifier { return _HEMmessage; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)optionReuseIdentifier { return _HEMoption; }
-+(NSString *)overTimeReuseIdentifier { return _HEMoverTime; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
++(NSString *)settingsReuseIdentifier { return _HEMsettings; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }
 +(NSString *)singleReuseIdentifier { return _HEMsingle; }
@@ -141,7 +141,6 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)timezoneReuseIdentifier { return _HEMtimezone; }
 +(NSString *)titleReuseIdentifier { return _HEMtitle; }
 +(NSString *)topicCellReuseIdentifier { return _HEMtopicCell; }
-+(NSString *)trendGraphReuseIdentifier { return _HEMtrendGraph; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 +(NSString *)warningReuseIdentifier { return _HEMwarning; }
 
@@ -180,6 +179,7 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateSleepHistoryController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepHistoryController]; }
 +(id)instantiateSleepInsightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepInsight]; }
 +(id)instantiateSleepQuestionsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestions]; }
++(id)instantiateSleepSoundViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepSound]; }
 +(id)instantiateSupportTopicsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsupportTopicsViewController]; }
 +(id)instantiateTimeZoneNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneNavViewController]; }
 +(id)instantiateTimeZoneViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneViewController]; }

@@ -5,7 +5,6 @@
 #import "SENAnswer.h"
 #import "SENInsight.h"
 #import "SENQuestion.h"
-#import "SENSense.h"
 #import "SENSensor.h"
 #import "SENTimeline.h"
 #import "SENSound.h"
@@ -21,6 +20,9 @@
 #import "SENRemoteImage.h"
 #import "SENTrends.h"
 #import "SENTrendsGraph.h"
+#import "SENSleepSoundDurations.h"
+#import "SENSleepSounds.h"
+#import "SENSleepSoundStatus.h"
 
 void SENClearModel();
 

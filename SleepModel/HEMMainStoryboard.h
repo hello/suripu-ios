@@ -45,10 +45,9 @@
 +(NSString *)sensorGraphCellReuseIdentifier;
 +(NSString *)errorReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
-+(NSString *)overTimeReuseIdentifier;
-+(NSString *)trendGraphReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
++(NSString *)settingsReuseIdentifier;
 +(NSString *)calendarReuseIdentifier;
 +(NSString *)barReuseIdentifier;
 +(NSString *)bubblesReuseIdentifier;
@@ -92,6 +91,7 @@
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
++(id)instantiateSleepSoundViewController;
 +(id)instantiateSupportTopicsViewController;
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;

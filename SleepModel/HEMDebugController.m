@@ -16,6 +16,7 @@
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMSettingsNavigationController.h"
 #import "HEMMainStoryboard.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMTutorial.h"
@@ -25,6 +26,7 @@
 #import "HEMSelectHostViewController.h"
 #import "HEMConfig.h"
 #import "HEMHandHoldingService.h"
+#import "HEMSleepSoundViewController.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -32,6 +34,7 @@
 @property (strong, nonatomic) HEMActionSheetViewController* supportOptionController;
 @property (strong, nonatomic) HEMActionSheetViewController* ledOptionController;
 @property (weak,   nonatomic) UIViewController* roomCheckViewController;
+@property (weak,   nonatomic) UIViewController* sleepSoundsViewController;
 @property (assign, nonatomic) UIModalPresentationStyle origPresentationStyle;
 
 @end
@@ -86,6 +89,7 @@
     [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
+    [self addSleepSoundsOptionTo:sheet];
     [self addDebugInfoOptionTo:sheet];
     [self addChangeServerOptionToSheet:sheet];
     [self addCancelOptionTo:sheet];
@@ -241,6 +245,25 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
 }
 
+#pragma mark Sleep Sounds
+
+- (void)addSleepSoundsOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.sleep-sounds", nil) action:^{
+        [weakSelf showSleepSoundsController];
+        [weakSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showSleepSoundsController {
+    HEMSleepSoundViewController* vc = [HEMMainStoryboard instantiateSleepSoundViewController];
+    [vc setCancellable:YES];
+    [vc setTitle:NSLocalizedString(@"debug.option.sleep-sounds", nil)];
+    HEMSettingsNavigationController* nav = [[HEMSettingsNavigationController alloc] initWithRootViewController:vc];
+    [self showController:nav animated:YES completion:nil];
+    [self setSleepSoundsViewController:nav];
+}
+
 #pragma mark Tutorials
 
 - (void)addResetTutorialsOptionTo:(HEMActionSheetViewController*)sheet {
@@ -270,6 +293,17 @@
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError *)error {
     [[controller presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Common Actions
+
+- (void)dismissController:(id)sender {
+    [[self presentingController] dismissViewControllerAnimated:YES completion:^{
+        [self setSupportOptionController:nil];
+        [self setSleepSoundsViewController:nil];
+        [self setRoomCheckViewController:nil];
+        [self setLedOptionController:nil];
+    }];
 }
 
 @end

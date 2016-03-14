@@ -78,8 +78,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 #pragma mark - Global loading indicator
 
 - (void)showLoading:(BOOL)loading {
-    SENTrendsTimeScale currentTimeScale = [[self subNav] selectedControlTag];
-    SENTrends* trends = [[self trendService] cachedTrendsForTimeScale:currentTimeScale];
+    SENTrends* trends = [[self trendService] cachedTrendsForTimeScale:[self selectedTimeScale]];
     if (loading && [[trends graphs] count] == 0) {
         [[self loadingIndicator] start];
         [[self loadingIndicator] setHidden:NO];
@@ -101,9 +100,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (void)timelineChanged:(NSNotification*)note {
     [[self trendService] expireCache];
-    
-    SENTrendsTimeScale currentTimeScale = [[self subNav] selectedControlTag];
-    [[self trendService] reloadTrends:currentTimeScale completion:nil];
+    [[self trendService] reloadTrends:[self selectedTimeScale] completion:nil];
 }
 
 - (void)listenForTrendsDataEvents {
@@ -140,6 +137,14 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 #pragma mark - Data
 
+- (SENTrendsTimeScale)selectedTimeScale {
+    SENTrendsTimeScale timescale = SENTrendsTimeScaleWeek; // default to week
+    if ([[self subNav] hasControls]) {
+        timescale = [[self subNav] selectedControlTag];
+    }
+    return timescale;
+}
+
 - (BOOL)showTrendsMessage {
     return [[self trendService] isEmpty:[self selectedTrends]]
         || [[self trendService] isReturningUser:[self selectedTrends]]
@@ -147,7 +152,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (SENTrends*)selectedTrends {
-    SENTrendsTimeScale currentTimeScale = [[self subNav] selectedControlTag];
+    SENTrendsTimeScale currentTimeScale = [self selectedTimeScale];
     if ([self isRefreshing]) {
         currentTimeScale = [[self subNav] previousControlTag];
     }

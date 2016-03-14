@@ -231,26 +231,14 @@ describe(@"HEMInsightsService", ^{
     
     describe(@"-isGenericInsight:", ^{
         
-        it(@"should return YES if category is GENERIC", ^{
-            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"GENERIC"}];
+        it(@"should return YES if type is BASIC", ^{
+            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"insight_type" : @"BASIC"}];
             BOOL generic = [service isGenericInsight:insight];
             [[@(generic) should] beYes];
         });
         
-        it(@"should return YES if category is SLEEP_DURATION", ^{
-            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"SLEEP_DURATION"}];
-            BOOL generic = [service isGenericInsight:insight];
-            [[@(generic) should] beYes];
-        });
-        
-        it(@"should return YES if category is sleep_hygiene, lower case", ^{
-            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"sleep_hygiene"}];
-            BOOL generic = [service isGenericInsight:insight];
-            [[@(generic) should] beYes];
-        });
-        
-        it(@"should return NO if category is not one of the generic categories", ^{
-            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"category" : @"not_generic"}];
+        it(@"should return NO if type is not basic", ^{
+            SENInsight* insight = [[SENInsight alloc] initWithDictionary:@{@"insight_type" : @"DEFAULT"}];
             BOOL generic = [service isGenericInsight:insight];
             [[@(generic) should] beNo];
         });

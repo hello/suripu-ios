@@ -43,7 +43,10 @@
     [super viewDidLoad];
     [self configureGraphsPresenter];
     [self configureSubNavPresenter]; // must come after graphs
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [SENAnalytics track:HEMAnalyticsEventTrends];
 }
 

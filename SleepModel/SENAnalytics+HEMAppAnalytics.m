@@ -117,7 +117,6 @@ NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
 NSString* const kHEMAnalyticsEventSettings = @"Settings";
-NSString* const kHEMAnalyticsEventTrends = @"Trends";
 NSString* const kHEMAnalyticsEventCurrentConditions = @"Current Conditions";
 NSString* const kHEMAnalyticsEventFeed = @"Insights";
 NSString* const kHEMAnalyticsEventQuestion = @"Question";

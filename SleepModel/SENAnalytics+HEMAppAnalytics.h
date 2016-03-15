@@ -102,7 +102,6 @@ extern NSString* const kHEMAnalyticsEventAppLaunched;
 extern NSString* const kHEMAnalyticsEventAppClosed;
 extern NSString* const kHEMAnalyticsEventPropEvent;
 extern NSString* const kHEMAnalyticsEventSettings;
-extern NSString* const kHEMAnalyticsEventTrends;
 extern NSString* const kHEMAnalyticsEventCurrentConditions;
 extern NSString* const kHEMAnalyticsEventFeed;
 extern NSString* const kHEMAnalyticsEventQuestion;

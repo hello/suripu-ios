@@ -108,6 +108,7 @@ static NSString* const HEMSegmentTraitCountryCode = @"Country Code";
         [traits addEntriesFromDictionary:properties];
     }
     [segment identify:userId traits:traits];
+    [segment flush];
 }
 
 #pragma mark - Tracking

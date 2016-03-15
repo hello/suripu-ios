@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.1.3
+
+Fixes:
+
+* Flushes right after calling identify in segment
+* Trends analytics event fired when viewed, not just on load
+
 ## 1.3.1.2
 
 New:

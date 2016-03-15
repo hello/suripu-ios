@@ -28,8 +28,7 @@
 - (void)timelineForDate:(NSDate*)date
              completion:(void(^)(SENTimeline* timeline, NSError* error))completion;
 - (void)syncTimelinesToHealthKit:(NSArray*)timelines completion:(void(^)(NSError* error))completion;
-- (HKSample*)asleepSampleFromTimeline:(SENTimeline*)timeline;
-- (HKSample*)inBedSampleFromTimeline:(SENTimeline*)timeline;
+- (HKSample*)sleepSampleForType:(HKCategoryValueSleepAnalysis)type fromTimeline:(SENTimeline*)timeline;
 
 @end
 
@@ -777,7 +776,7 @@ describe(@"HEMHealthKitService", ^{
         
     });
     
-    describe(@"-asleepSampleFromTimeline:", ^{
+    describe(@"-sleepSampleForType:fromTimeline:", ^{
         
         __block HEMHealthKitService* service = nil;
         
@@ -788,147 +787,72 @@ describe(@"HEMHealthKitService", ^{
         it(@"should return nil if timeline does not have sufficient data", ^{
             SENTimeline* timeline = [SENTimeline new];
             [timeline setScoreCondition:SENConditionIncomplete];
-            [timeline setMetrics:@[[SENTimelineMetric new]]];
-            HKSample* sample = [service asleepSampleFromTimeline:timeline];
+            HKSample* sample = [service sleepSampleForType:HKCategoryValueSleepAnalysisAsleep
+                                              fromTimeline:timeline];
             [[sample should] beNil];
         });
         
-        it(@"should return HKSample if timeline contains sufficient data, including sleep and wake metrics", ^{
-            NSTimeInterval nowInSecs = [NSDate timeIntervalSinceReferenceDate];
-            SENTimelineMetric* sleepMetric = [SENTimelineMetric new];
-            [sleepMetric setName:@"fell_asleep"];
-            [sleepMetric setUnit:SENTimelineMetricUnitTimestamp];
-            [sleepMetric setType:SENTimelineMetricTypeFellAsleep];
-            [sleepMetric setValue:@((nowInSecs- 28800) * 1000)];
+        it(@"should return HKSample if timeline contains asleep data", ^{
+            NSDate* startDate = [[NSDate date] dateByAddingTimeInterval:-360];
+            NSDate* endDate = [NSDate date];
             
-            SENTimelineMetric* wakeMetric = [SENTimelineMetric new];
-            [wakeMetric setName:@"woke_up"];
-            [wakeMetric setUnit:SENTimelineMetricUnitTimestamp];
-            [wakeMetric setType:SENTimelineMetricTypeWokeUp];
-            [wakeMetric setValue:@(nowInSecs * 1000)];
+            SENTimelineSegment* asleepSegment = [SENTimelineSegment new];
+            [asleepSegment setType:SENTimelineSegmentTypeFellAsleep];
+            [asleepSegment setDate:startDate];
+            
+            SENTimelineSegment* wokeUpSegment = [SENTimelineSegment new];
+            [wokeUpSegment setType:SENTimelineSegmentTypeWokeUp];
+            [wokeUpSegment setDate:endDate];
             
             SENTimeline* timeline = [SENTimeline new];
             [timeline setScoreCondition:SENConditionIdeal];
-            [timeline setMetrics:@[sleepMetric, wakeMetric]];
-            id sample = [service asleepSampleFromTimeline:timeline];
+            [timeline setSegments:@[asleepSegment, wokeUpSegment]];
+
+            id sample = [service sleepSampleForType:HKCategoryValueSleepAnalysisAsleep
+                                       fromTimeline:timeline];
             [[sample should] beKindOfClass:[HKSample class]];
         });
         
-    });
-    
-    describe(@"-inBedSampleFromTimeline:", ^{
-        
-        context(@"sufficient data for in bed sample", ^{
-           
-            __block HEMHealthKitService* service = nil;
-            __block id sample = nil;
-            __block NSDate* startDate = nil;
-            __block NSDate* endDate = nil;
+        it(@"should return HKSample if timeline contains inBed data", ^{
+            NSDate* startDate = [[NSDate date] dateByAddingTimeInterval:-360];
+            NSDate* endDate = [NSDate date];
             
-            beforeEach(^{
-                service = [HEMHealthKitService new];
-                startDate = [[NSDate date] dateByAddingTimeInterval:-360];
-                endDate = [NSDate date];
-                
-                SENTimelineSegment* inBedSegment = [SENTimelineSegment new];
-                [inBedSegment setType:SENTimelineSegmentTypeGotInBed];
-                [inBedSegment setDate:startDate];
-                
-                SENTimelineSegment* outBedSegment = [SENTimelineSegment new];
-                [outBedSegment setType:SENTimelineSegmentTypeGotOutOfBed];
-                [outBedSegment setDate:endDate];
-                
-                SENTimeline* timeline = [SENTimeline new];
-                [timeline setScoreCondition:SENConditionIdeal];
-                [timeline setSegments:@[inBedSegment, outBedSegment]];
-                
-                sample = [service inBedSampleFromTimeline:timeline];
-            });
+            SENTimelineSegment* inBedSegment = [SENTimelineSegment new];
+            [inBedSegment setType:SENTimelineSegmentTypeGotInBed];
+            [inBedSegment setDate:startDate];
             
-            afterEach(^{
-                service = nil;
-                sample = nil;
-                startDate = nil;
-                endDate = nil;
-            });
+            SENTimelineSegment* outBedSegment = [SENTimelineSegment new];
+            [outBedSegment setType:SENTimelineSegmentTypeGotOutOfBed];
+            [outBedSegment setDate:endDate];
             
-            it(@"should return a sample", ^{
-                [[sample should] beKindOfClass:[HKSample class]];
-            });
+            SENTimeline* timeline = [SENTimeline new];
+            [timeline setScoreCondition:SENConditionIdeal];
+            [timeline setSegments:@[inBedSegment, outBedSegment]];
             
-            it(@"should return a sample with start date same as in bed date", ^{
-                [[[sample startDate] should] equal:startDate];
-            });
-            
-            it(@"should return a sample with end date same as out of bed date", ^{
-                [[[sample endDate] should] equal:endDate];
-            });
-            
+            id sample = [service sleepSampleForType:HKCategoryValueSleepAnalysisInBed
+                                       fromTimeline:timeline];
+            [[sample should] beKindOfClass:[HKSample class]];
         });
         
-        context(@"insufficient segments for in bed sample", ^{
+        it(@"should not return HKSample if timeline contains inBed data, if only asleep data found", ^{
+            NSDate* startDate = [[NSDate date] dateByAddingTimeInterval:-360];
+            NSDate* endDate = [NSDate date];
             
-            __block HEMHealthKitService* service = nil;
-            __block id sample = nil;
+            SENTimelineSegment* asleepSegment = [SENTimelineSegment new];
+            [asleepSegment setType:SENTimelineSegmentTypeFellAsleep];
+            [asleepSegment setDate:startDate];
             
-            beforeEach(^{
-                service = [HEMHealthKitService new];
-                NSDate* startDate = [[NSDate date] dateByAddingTimeInterval:-360];
-                
-                SENTimelineSegment* inBedSegment = [SENTimelineSegment new];
-                [inBedSegment setType:SENTimelineSegmentTypeGotInBed];
-                [inBedSegment setDate:startDate];
-                
-                SENTimeline* timeline = [SENTimeline new];
-                [timeline setScoreCondition:SENConditionIdeal];
-                [timeline setSegments:@[inBedSegment]];
-                
-                sample = [service inBedSampleFromTimeline:timeline];
-            });
+            SENTimelineSegment* wokeUpSegment = [SENTimelineSegment new];
+            [wokeUpSegment setType:SENTimelineSegmentTypeWokeUp];
+            [wokeUpSegment setDate:endDate];
             
-            afterEach(^{
-                service = nil;
-            });
+            SENTimeline* timeline = [SENTimeline new];
+            [timeline setScoreCondition:SENConditionIdeal];
+            [timeline setSegments:@[asleepSegment, wokeUpSegment]];
             
-            it(@"should not return a sample", ^{
-                [[sample should] beNil];
-            });
-            
-        });
-        
-        context(@"timeline condition is unknown for in bed sample", ^{
-            
-            __block HEMHealthKitService* service = nil;
-            __block id sample = nil;
-            
-            beforeEach(^{
-                service = [HEMHealthKitService new];
-                NSDate* startDate = [[NSDate date] dateByAddingTimeInterval:-360];
-                NSDate* endDate = [NSDate date];
-                
-                SENTimelineSegment* inBedSegment = [SENTimelineSegment new];
-                [inBedSegment setType:SENTimelineSegmentTypeGotInBed];
-                [inBedSegment setDate:startDate];
-                
-                SENTimelineSegment* outBedSegment = [SENTimelineSegment new];
-                [outBedSegment setType:SENTimelineSegmentTypeGotOutOfBed];
-                [outBedSegment setDate:endDate];
-                
-                SENTimeline* timeline = [SENTimeline new];
-                [timeline setScoreCondition:SENConditionUnknown];
-                [timeline setSegments:@[inBedSegment, outBedSegment]];
-                
-                sample = [service inBedSampleFromTimeline:timeline];
-            });
-            
-            afterEach(^{
-                service = nil;
-            });
-            
-            it(@"should not return a sample", ^{
-                [[sample should] beNil];
-            });
-            
+            id sample = [service sleepSampleForType:HKCategoryValueSleepAnalysisInBed
+                                       fromTimeline:timeline];
+            [[sample should] beNil];
         });
         
     });

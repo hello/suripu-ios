@@ -261,17 +261,6 @@ static CGFloat const HEMHKServiceBackFillLimit = 3;
 }
 
 - (BOOL)timelineHasSufficientData:(SENTimeline*)timeline {
-    return [self timelineHasSufficientDataForInBedSample:timeline]
-        && [self timelineHasSufficientDataForAsleepSample:timeline];
-}
-
-- (BOOL)timelineHasSufficientDataForAsleepSample:(SENTimeline*)timeline {
-    return [timeline scoreCondition] != SENConditionUnknown
-        && [timeline scoreCondition] != SENConditionIncomplete
-        && [[timeline metrics] count] > 0;
-}
-
-- (BOOL)timelineHasSufficientDataForInBedSample:(SENTimeline*)timeline {
     return [timeline scoreCondition] != SENConditionUnknown
         && [timeline scoreCondition] != SENConditionIncomplete
         && [[timeline segments] count] > 0;
@@ -311,13 +300,14 @@ static CGFloat const HEMHKServiceBackFillLimit = 3;
     
     HKSample* sample = nil;
     NSMutableArray* samples = [NSMutableArray arrayWithCapacity:timelineCount];
+    
     for (SENTimeline* timeline in timelines) {
-        sample = [self inBedSampleFromTimeline:timeline];
+        sample = [self sleepSampleForType:HKCategoryValueSleepAnalysisInBed fromTimeline:timeline];
         if (sample) {
             [samples addObject:sample];
         }
         
-        sample = [self asleepSampleFromTimeline:timeline];
+        sample = [self sleepSampleForType:HKCategoryValueSleepAnalysisAsleep fromTimeline:timeline];
         if (sample) {
             [samples addObject:sample];
         }
@@ -335,89 +325,52 @@ static CGFloat const HEMHKServiceBackFillLimit = 3;
     }];
 }
 
-- (HKSample*)inBedSampleFromTimeline:(SENTimeline*)timeline {
-    if (![self timelineHasSufficientDataForInBedSample:timeline]) {
+- (HKSample*)sleepSampleForType:(HKCategoryValueSleepAnalysis)type fromTimeline:(SENTimeline*)timeline {
+    if (![self timelineHasSufficientData:timeline]) {
         return nil;
     }
-
+    
     HKSample* sample = nil;
-    HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
-    NSDate* inBedDate = nil;
-    NSDate* outOfBedDate = nil;
+    NSDate* endDate = nil;
+    NSDate* startDate = nil;
+    NSString* timeZoneName = nil;
     
     // look for in bed event from the beginning
     for (SENTimelineSegment* segment in [timeline segments]) {
-        if ([segment type] == SENTimelineSegmentTypeGotInBed) {
-            inBedDate = [segment date];
+        if ((type == HKCategoryValueSleepAnalysisAsleep && [segment type] == SENTimelineSegmentTypeFellAsleep)
+            || (type == HKCategoryValueSleepAnalysisInBed && [segment type] == SENTimelineSegmentTypeGotInBed)) {
+            startDate = [segment date];
+            timeZoneName = [[segment timezone] name];
             break;
         }
     }
     
-    if (inBedDate) {
+    if (startDate) {
         // look for out of bed event from the end of the segments to reduce iterations
         for (NSInteger idx = [[timeline segments] count] - 1; idx >= 0; idx--) {
             SENTimelineSegment* segment = [timeline segments][idx];
-            if ([segment type] == SENTimelineSegmentTypeGotOutOfBed) {
-                outOfBedDate = [segment date];
+            if ((type == HKCategoryValueSleepAnalysisAsleep && [segment type] == SENTimelineSegmentTypeWokeUp)
+                || (type == HKCategoryValueSleepAnalysisInBed && [segment type] == SENTimelineSegmentTypeGotOutOfBed)) {
+                endDate = [segment date];
+                if (!timeZoneName) {
+                    timeZoneName = [[segment timezone] name];
+                }
                 break;
             }
         }
     }
     
-    if (inBedDate && outOfBedDate) {
-        DDLogVerbose(@"adding in bed data point");
-        if ([inBedDate compare:outOfBedDate] == NSOrderedAscending) {
-            sample = [HKCategorySample categorySampleWithType:hkSleepCategory
-                                                        value:HKCategoryValueSleepAnalysisInBed
-                                                    startDate:inBedDate
-                                                      endDate:outOfBedDate];
-        } else {
-            DDLogVerbose(@"out of bed time %@ is before in bed time! %@", outOfBedDate, inBedDate);
+    if (startDate && endDate && [startDate compare:endDate] == NSOrderedAscending) {
+        NSDictionary* metadata = nil;
+        if (timeZoneName) {
+            metadata = @{HKMetadataKeyTimeZone : timeZoneName};
         }
-    }
-    
-    return sample;
-}
-
-- (HKSample*)asleepSampleFromTimeline:(SENTimeline*)timeline {
-    if (![self timelineHasSufficientDataForAsleepSample:timeline]) {
-        return nil;
-    }
-    
-    HKSample* sample = nil;
-    HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
-    NSDate* wakeUpDate = nil;
-    NSDate* sleepDate = nil;
-    NSArray* metrics = [timeline metrics];
-    
-    for (SENTimelineMetric* metric in metrics) {
-        CGFloat metricValue = [metric.value doubleValue];
-        
-        if (!sleepDate
-            && metric.type == SENTimelineMetricTypeFellAsleep
-            && metric.unit == SENTimelineMetricUnitTimestamp
-            && metricValue > 0) {
-            sleepDate = SENDateFromNumber(metric.value);
-        }
-        
-        if (sleepDate != nil
-            && metric.type == SENTimelineMetricTypeWokeUp
-            && metric.unit == SENTimelineMetricUnitTimestamp
-            && metricValue > 0) {
-            wakeUpDate = SENDateFromNumber(metric.value);
-        }
-    }
-    
-    if (wakeUpDate != nil && sleepDate != nil) {
-        DDLogVerbose(@"adding asleep data point");
-        if ([wakeUpDate compare:sleepDate] > NSOrderedAscending) {
-            sample = [HKCategorySample categorySampleWithType:hkSleepCategory
-                                                        value:HKCategoryValueSleepAnalysisAsleep
-                                                    startDate:sleepDate
-                                                      endDate:wakeUpDate];
-        } else {
-            DDLogVerbose(@"wake up time %@ is before sleep time %@", wakeUpDate, sleepDate);
-        }
+        HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
+        sample = [HKCategorySample categorySampleWithType:hkSleepCategory
+                                                    value:type
+                                                startDate:startDate
+                                                  endDate:endDate
+                                                 metadata:metadata];
     }
     
     return sample;

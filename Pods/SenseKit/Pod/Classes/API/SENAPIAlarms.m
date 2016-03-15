@@ -77,7 +77,7 @@ static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
 {
     BOOL repeated = alarm.repeatFlags != 0;
     NSMutableDictionary* properties = [NSMutableDictionary new];
-    NSDateComponents* alarmDateComponents = [self dateComponentsForAlarm:alarm];
+    
     properties[@"editable"] = @([alarm isEditable]);
     properties[@"enabled"] = @([alarm isOn]);
     properties[@"sound"] = @{
@@ -87,13 +87,14 @@ static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
     if (alarm.identifier.length > 0)
         properties[@"id"] = alarm.identifier;
 
-    properties[@"hour"] = @(alarmDateComponents.hour);
-    properties[@"minute"] = @(alarmDateComponents.minute);
+    properties[@"hour"] = @(alarm.hour);
+    properties[@"minute"] = @(alarm.minute);
     properties[@"repeated"] = @(repeated);
     properties[@"smart"] = @([alarm isSmartAlarm]);
     properties[@"day_of_week"] = [self repeatDaysForAlarm:alarm];
 
     if (!repeated) {
+        NSDateComponents* alarmDateComponents = [self dateComponentsForAlarm:alarm];
         properties[@"day_of_month"] = @(alarmDateComponents.day);
         properties[@"month"] = @(alarmDateComponents.month);
         properties[@"year"] = @(alarmDateComponents.year);

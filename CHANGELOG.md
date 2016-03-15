@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.3.1.2
+
+New:
+
+* Time zone for sleep sample is now added as metadata for HK, per Apple
+* Added analytics for Trends v2
+* Uses the new insight_type property to determine the appearance of about you section in an insight
+
+Fixes:
+
+* Alarms created / saved between midnight and DST no longer adds / removes an extra hour
+* Auto reload of Trends will not cause an error after Timeline is changed and user has less than 7 days of data
+* Fixed crasher that occurs when viewing the Timeline breakdown if a timeline message is not provided by API
+* Averages in Trends should only show a max of 1 decimal space
+
 ## 1.3.1.1
 
 New:

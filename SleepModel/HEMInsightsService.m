@@ -37,10 +37,7 @@ static NSString* const HEMInsightsServiceCategorySleepHygiene = @"SLEEP_HYGIENE"
 }
 
 - (BOOL)isGenericInsight:(SENInsight*)insight {
-    NSString* category = [[insight category] uppercaseString];
-    return [category isEqualToString:HEMInsightsServiceCategoryGeneric]
-        || [category isEqualToString:HEMInsightsServiceCategorySleepDuration]
-        || [category isEqualToString:HEMInsightsServiceCategorySleepHygiene];
+    return [insight type] == SENInsightTypeBasic;
 }
 
 @end

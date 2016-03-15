@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENAlarm.h>
+#import <SenseKit/Model.h>
 #import <SenseKit/SENAnalyticsLogger.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
@@ -130,6 +130,14 @@ NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
 NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
 NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
+
+// trends
+NSString* const HEMAnalyticsEventTrends = @"Trends";
+NSString* const HEMAnalyticsEventTrendsChangeTimescale = @"Change trends timescale";
+NSString* const HEMAnalyticsEventTrendsPropTimescale = @"timescale";
+NSString* const HEMAnalyticsEventTrendsPropTimescaleWeek = @"week";
+NSString* const HEMAnalyticsEventTrendsPropTimescaleMonth = @"month";
+NSString* const HEMAnalyticsEventTrendsPropTimescaleQuarter = @"quarter";
 
 // tell a friend
 NSString* const HEMAnalyticsEventTellAFriendTapped = @"Tell a friend tapped";
@@ -380,6 +388,26 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 + (void)trackAlarmToggle:(SENAlarm*)alarm {
     NSDictionary* props = [self alarmPropertiesFor:alarm];
     [self track:HEMAnalyticsEventAlarmOnOff properties:props];
+}
+
++ (void)trackTrendsTimescaleChange:(SENTrendsTimeScale)timescale {
+    NSString* value = nil;
+    switch (timescale) {
+        case SENTrendsTimeScaleWeek:
+            value = HEMAnalyticsEventTrendsPropTimescaleWeek;
+            break;
+        case SENTrendsTimeScaleMonth:
+            value = HEMAnalyticsEventTrendsPropTimescaleMonth;
+            break;
+        case SENTrendsTimeScaleQuarter:
+            value = HEMAnalyticsEventTrendsPropTimescaleQuarter;
+            break;
+        default:
+            value = @"unspecified";
+            break;
+    }
+    NSDictionary* props = @{HEMAnalyticsEventTrendsPropTimescale : value};
+    [self track:HEMAnalyticsEventTrendsChangeTimescale properties:props];
 }
 
 @end

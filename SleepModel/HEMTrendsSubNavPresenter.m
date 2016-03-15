@@ -123,6 +123,7 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     if (timeScale != [self selectedScale]) {
         [self setSelectedScale:timeScale];
         [[self trendsService] trendsFor:[self selectedScale] completion:nil];
+        [SENAnalytics trackTrendsTimescaleChange:[self selectedScale]];
     }
 }
 

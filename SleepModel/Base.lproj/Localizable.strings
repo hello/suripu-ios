@@ -589,7 +589,7 @@
 "trends.sleep-depth.light" = "light";
 "trends.sleep-depth.medium" = "medium";
 "trends.sleep-depth.deep" = "deep";
-"trends.sleep-duration.average.format" = "%.2fh";
+"trends.sleep-duration.average.format" = "%.1fh";
 "trends.sleep-duration.highlight.format" = "%.1fh";
 "trends.no-data.title" = "Welcome to Trends";
 "trends.no-data.message" = "Once Sense has collected enough data, you’ll see how your sleep is changing over time here.";

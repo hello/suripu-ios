@@ -15,7 +15,6 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 @interface HEMSubNavigationView()
 
 @property (nonatomic, assign) NSInteger controlCount;
-@property (nonatomic, assign) NSInteger previousControlTag;
 @property (nonatomic, weak) HEMNavigationShadowView* shadowView;
 
 @end
@@ -92,14 +91,28 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
     return [self controlCount] > 0;
 }
 
+- (void)reset {
+    for (UIView* subview in [self subviews]) {
+        if ([subview isKindOfClass:[UIControl class]]) {
+            [subview removeFromSuperview];
+        }
+    }
+    [self setSelectedControlTag:-1];
+    [self setPreviousControlTag:-1];
+    [self setControlCount:0];
+}
+
 - (void)addControl:(UIControl*)control {
-    [control addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
-    [self setControlCount:[self controlCount] + 1];
-    [self addSubview:control];
-    [self setNeedsLayout];
-    
-    if ([control isSelected]) {
-        [self setSelectedControlTag:[control tag]];
+    id existingControl = [self viewWithTag:[control tag]];
+    if (!existingControl) {
+        [control addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
+        [self setControlCount:[self controlCount] + 1];
+        [self addSubview:control];
+        [self setNeedsLayout];
+        
+        if ([control isSelected]) {
+            [self setSelectedControlTag:[control tag]];
+        }
     }
 }
 

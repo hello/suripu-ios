@@ -7,13 +7,16 @@
 //
 
 #import <SenseKit/SENLocalPreferences.h>
-#import <SenseKit/SENAccount.h>
+#import <SenseKit/Model.h>
+#import <SenseKit/SENAPITimeline.h>
 
 #import "HEMTimelineService.h"
 #import "HEMOnboardingService.h"
 #import "NSDate+HEMRelative.h"
 
 static NSString* const HEMTimelineSettingsAccountCreationDate = @"account.creation.date";
+
+NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline.amended";
 
 @implementation HEMTimelineService
 
@@ -51,6 +54,35 @@ static NSString* const HEMTimelineSettingsAccountCreationDate = @"account.creati
     NSDate* createDateWithoutTime = [creationDate dateAtMidnight];
     // if it's ascending or the same, it's the first night of sleep
     return [dateWithoutTime compare:createDateWithoutTime] != NSOrderedDescending;
+}
+
+- (void)notify:(NSString*)name {
+    NSNotification* note = [NSNotification notificationWithName:name object:self];
+    [[NSNotificationCenter defaultCenter] postNotification:note];
+}
+
+- (void)amendTimelineSegment:(SENTimelineSegment*)segment
+              forDateOfSleep:(NSDate*)date
+                    withHour:(NSNumber*)hour
+                  andMinutes:(NSNumber*)minutes
+                  completion:(HEMTimelineServiceUpdateHandler)completion {
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeline amendSleepEvent:segment
+                     forDateOfSleep:date
+                           withHour:hour
+                         andMinutes:minutes
+                         completion:^(id data, NSError *error) {
+                             __strong typeof(weakSelf) strongSelf = weakSelf;
+                             SENTimeline* updatedTimeline = SENObjectOfClass(data, [SENTimeline class]);
+                             if (error) {
+                                 [SENAnalytics trackError:error];
+                             } else {
+                                 [strongSelf notify:HEMTimelineNotificationTimelineAmended];
+                             }
+                             completion (updatedTimeline, error);
+                         }];
+    
 }
 
 @end

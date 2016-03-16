@@ -3,6 +3,11 @@
 
 @class SENRemoteImage;
 
+typedef NS_ENUM(NSUInteger, SENInsightType) {
+    SENInsightTypeDefault = 1,
+    SENInsightTypeBasic
+};
+
 @interface SENInsight : NSObject <NSCoding>
 
 @property (nonatomic, strong, readonly) NSDate* dateCreated;
@@ -10,6 +15,7 @@
 @property (nonatomic, copy, readonly)   NSString* message;
 @property (nonatomic, copy, readonly)   NSString* category;
 @property (nonatomic, copy, readonly)   NSString* categoryName;
+@property (nonatomic, assign, readonly) SENInsightType type;
 @property (nonatomic, copy, readonly)   NSString* infoPreview;
 @property (nonatomic, strong, readonly) SENRemoteImage* remoteImage;
 

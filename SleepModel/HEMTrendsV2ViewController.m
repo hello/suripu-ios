@@ -45,10 +45,14 @@
     [self configureSubNavPresenter]; // must come after graphs
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SENAnalytics track:HEMAnalyticsEventTrends];
+}
+
 - (void)configureSubNavPresenter {
     HEMTrendsSubNavPresenter* subNavPresenter
         = [[HEMTrendsSubNavPresenter alloc] initWithTrendsService:[self trendsService]];
-    [subNavPresenter bindWithLoadingIndicator:[self loadingIndicator]];
     [subNavPresenter bindWithSubNav:[self subNav]
                withHeightConstraint:[self subNavHeightConstraint]];
     [subNavPresenter bindWithCollectionView:[self collectionView]];
@@ -60,6 +64,7 @@
         = [[HEMTrendsGraphsPresenter alloc] initWithTrendsService:[self trendsService]];
     [graphsPresenter bindWithCollectionView:[self collectionView]];
     [graphsPresenter bindWithSubNav:[self subNav]];
+    [graphsPresenter bindWithLoadingIndicator:[self loadingIndicator]];
     [self addPresenter:graphsPresenter];
 }
 

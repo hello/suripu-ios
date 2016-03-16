@@ -9,8 +9,14 @@
 #import "SENService.h"
 
 @class SENAccount;
+@class SENTimeline;
 
 NS_ASSUME_NONNULL_BEGIN
+
+extern NSString* const HEMTimelineNotificationTimelineAmended;
+
+typedef void(^HEMTimelineServiceUpdateHandler)(SENTimeline* _Nullable updatedTimeline,
+                                               NSError* _Nullable error);
 
 @interface HEMTimelineService : SENService
 
@@ -38,6 +44,22 @@ NS_ASSUME_NONNULL_BEGIN
  *         NO otherwise.
  */
 - (BOOL)isFirstNightOfSleep:(NSDate*)date forAccount:(nullable SENAccount*)account;
+
+/**
+ * @discussion
+ * Update the timeline segment for the night of sleep with the new hour and minutes
+ *
+ * @param segment: the timeline segment to update / amend
+ * @param date: the night of sleep the segment belongs to
+ * @param hour: the new hour to change to
+ * @param minutes: the new minutes to change to
+ * @param completion: the block to call when the update is done
+ */
+- (void)amendTimelineSegment:(SENTimelineSegment*)segment
+              forDateOfSleep:(NSDate*)date
+                    withHour:(NSNumber*)hour
+                  andMinutes:(NSNumber*)minutes
+                  completion:(HEMTimelineServiceUpdateHandler)completion;
 
 @end
 

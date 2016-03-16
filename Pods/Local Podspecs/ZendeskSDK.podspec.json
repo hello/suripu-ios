@@ -1,7 +1,7 @@
 {
   "name": "ZendeskSDK",
-  "version": "1.5.2.1",
-  "summary": "Zendesk SDK 1.5.2.1",
+  "version": "1.5.4.1",
+  "summary": "Zendesk SDK 1.5.4.1",
   "homepage": "https://github.com/zendesk/zendesk_sdk_ios",
   "license": {
     "type": "Copyright",
@@ -10,7 +10,7 @@
   "authors": "Zendesk",
   "source": {
     "git": "https://github.com/zendesk/zendesk_sdk_ios.git",
-    "tag": "1.5.2.1"
+    "tag": "1.5.4.1"
   },
   "platforms": {
     "ios": "6.0"
@@ -19,7 +19,8 @@
   "frameworks": [
     "MobileCoreServices",
     "SystemConfiguration",
-    "Security"
+    "Security",
+    "MessageUI"
   ],
   "default_subspecs": [
     "Core",

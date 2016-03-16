@@ -13,17 +13,20 @@ static NSString* const SENInsightImageUri = @"image_url";
 static NSString* const SENInsightInfoPreviewKey = @"info_preview";
 static NSString* const SENInsightMultiDensityImage = @"image";
 static NSString* const SENInsightCategoryName = @"category_name";
+static NSString* const SENInsightParamType = @"insight_type";
+static NSString* const SENInsightTypeValueDefault = @"DEFAULT";
+static NSString* const SENInsightTypeValueBasic = @"BASIC";
 
 @implementation SENInsight
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict
-{
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
     if (self = [super init]) {
         _title = [dict[SENInsightTitleKey] copy];
         _message = [dict[SENInsightMessageKey] copy];
         _category = [dict[SENInsightCategory] copy];
         _infoPreview = [dict[SENInsightInfoPreviewKey] copy];
         _categoryName = [dict[SENInsightCategoryName] copy];
+        _type = [self typeFromString:dict[SENInsightParamType]];
         
         NSNumber* dateMillis = SENObjectOfClass(dict[SENInsightDateCreatedKey], [NSNumber class]);
         if (dateMillis) {
@@ -38,8 +41,7 @@ static NSString* const SENInsightCategoryName = @"category_name";
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
+- (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _title = [aDecoder decodeObjectForKey:SENInsightTitleKey];
         _message = [aDecoder decodeObjectForKey:SENInsightMessageKey];
@@ -48,12 +50,12 @@ static NSString* const SENInsightCategoryName = @"category_name";
         _infoPreview = [aDecoder decodeObjectForKey:SENInsightInfoPreviewKey];
         _remoteImage = [aDecoder decodeObjectForKey:SENInsightMultiDensityImage];
         _categoryName = [aDecoder decodeObjectForKey:SENInsightCategoryName];
+        _type = [self typeFromString:[aDecoder decodeObjectForKey:SENInsightParamType]];
     }
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder {
     if (self.title) [aCoder encodeObject:self.title forKey:SENInsightTitleKey];
     if (self.message) [aCoder encodeObject:self.message forKey:SENInsightMessageKey];
     if (self.dateCreated) [aCoder encodeObject:self.dateCreated forKey:SENInsightDateCreatedKey];
@@ -61,10 +63,10 @@ static NSString* const SENInsightCategoryName = @"category_name";
     if (self.infoPreview) [aCoder encodeObject:self.infoPreview forKey:SENInsightInfoPreviewKey];
     if (self.remoteImage) [aCoder encodeObject:self.remoteImage forKey:SENInsightMultiDensityImage];
     if (self.categoryName) [aCoder encodeObject:self.categoryName forKey:SENInsightCategoryName];
+    [aCoder encodeObject:[self rawTypeFromEnum:self.type] forKey:SENInsightParamType];
 }
 
-- (BOOL)isEqual:(SENInsight*)other
-{
+- (BOOL)isEqual:(SENInsight*)other {
     if (other == self) {
         return YES;
     } else if (![other isKindOfClass:[SENInsight class]]) {
@@ -76,13 +78,32 @@ static NSString* const SENInsightCategoryName = @"category_name";
             && ([self.infoPreview isEqualToString:other.infoPreview] || (!self.infoPreview && !other.infoPreview))
             && ([self.category isEqualToString:other.category] || (!self.category && !other.category))
             && ([self.remoteImage isEqual:other.remoteImage] || (!self.remoteImage && !other.remoteImage))
-            && ([self.categoryName isEqual:other.categoryName] || (!self.categoryName && !other.categoryName));
+            && ([self.categoryName isEqual:other.categoryName] || (!self.categoryName && !other.categoryName))
+            && (self.type == other.type);
     }
 }
 
-- (NSUInteger)hash
-{
-    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash] + [self.infoPreview hash] + [self.remoteImage hash] + [self.categoryName hash];
+- (NSUInteger)hash {
+    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash] + [self.infoPreview hash] + [self.remoteImage hash] + [self.categoryName hash] + self.type;
+}
+
+- (SENInsightType)typeFromString:(NSString*)rawType {
+    NSString* rawTypeUpper = [rawType uppercaseString];
+    SENInsightType type = SENInsightTypeDefault;
+    if ([rawTypeUpper isEqualToString:SENInsightTypeValueBasic]) {
+        type = SENInsightTypeBasic;
+    }
+    return type;
+}
+
+- (NSString*)rawTypeFromEnum:(SENInsightType)type {
+    switch (type) {
+        case SENInsightTypeBasic:
+            return SENInsightTypeValueBasic;
+        case SENInsightTypeDefault:
+        default:
+            return SENInsightTypeValueDefault;
+    }
 }
 
 @end

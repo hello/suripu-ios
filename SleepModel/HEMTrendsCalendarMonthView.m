@@ -120,10 +120,77 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     [[self scoreLabels] removeAllObjects];
 }
 
+// FIXME: fix this!  Server actually pads all 7 days with nulls, but our APIClient
+// code automatically strips out Nulls as if they never existed when parsing the
+// response data in to the corresponding data structure.  The fix should be to update
+// the API client to provide a filter, if needed, when calling the API and Trends
+// logic should be changed to work off of NSNulls AND REMOVE THIS UGLY CODE!
+//
+// The change here is to reduce the risk in a quick patch release.  Will re-work
+// the logic in a bigger release
+- (NSArray<NSArray*>*)padValuesIfNeeded:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values {
+    NSInteger numberOfRows = [values count];
+    NSMutableArray* rows = [NSMutableArray arrayWithCapacity:numberOfRows];
+    NSMutableArray* paddedColumns = nil;
+    NSInteger currentRowIndex = 0;
+    
+    for (NSArray<HEMTrendsDisplayPoint*>* columns in values) {
+        paddedColumns = [NSMutableArray arrayWithCapacity:[columns count]];
+        if ([columns count] == HEMTrendsCalMonthDaysInWeek) {
+            [paddedColumns addObjectsFromArray:columns];
+        } else if (numberOfRows > 1 && currentRowIndex == numberOfRows - 1) { // last row
+            // must add nulls to the end of the array
+            if ([columns count] > 0) {
+                [paddedColumns addObjectsFromArray:columns];
+            }
+            while ([paddedColumns count] < HEMTrendsCalMonthDaysInWeek) {
+                [paddedColumns addObject:[NSNull new]];
+            }
+        } else if (numberOfRows == 1) { // only row
+            // must add nulls in the front and end
+            NSCalendar* calendar = [[self class] calendar];
+            NSInteger weekday = [calendar component:NSCalendarUnitWeekday
+                                           fromDate:[[NSDate date] previousDay]];
+            
+            NSInteger nullsNeededInBack = HEMTrendsCalMonthDaysInWeek - weekday;
+            NSInteger nullsNeededInFront = HEMTrendsCalMonthDaysInWeek - nullsNeededInBack - [columns count];
+            while (nullsNeededInFront > 0) {
+                [paddedColumns addObject:[NSNull new]];
+                nullsNeededInFront--;
+            }
+            
+            if ([columns count] > 0) {
+                [paddedColumns addObjectsFromArray:columns];
+            }
+            
+            while (nullsNeededInBack > 0) {
+                [paddedColumns addObject:[NSNull new]];
+                nullsNeededInBack--;
+            }
+        } else {
+            // must add nulls to the front of the array
+            NSInteger nullsNeeded = HEMTrendsCalMonthDaysInWeek - [columns count];
+            while (nullsNeeded > 0) {
+                [paddedColumns addObject:[NSNull new]];
+                nullsNeeded--;
+            }
+            if ([columns count] > 0) {
+                [paddedColumns addObjectsFromArray:columns];
+            }
+        }
+        [rows addObject:paddedColumns];
+        currentRowIndex++;
+    }
+    
+    return rows;
+}
+
 - (void)showCurrentMonthWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values
                             titles:(NSArray<NSAttributedString*>*)localizedTitles {
 
     [self prepareForReuse];
+    
+    NSArray<NSArray*>* paddedValues = [self padValuesIfNeeded:values];
     
     CGFloat fullWidth = CGRectGetWidth([self bounds]);
     CGFloat scoreSize = [[self class] sizeForEachDayInMonthWithWidth:fullWidth];
@@ -132,55 +199,29 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     
     [self updateTitles:localizedTitles withSpacing:HEMTrendsCalMonthDaySpacing width:scoreSize];
     
-    NSInteger rows = [values count];
-    NSInteger lastRowIndex = rows - 1;
-    NSDate* previousDay = [[NSDate date] previousDay];
-    NSInteger previousDayOfWeek = [previousDay dayOfWeek];
+    NSInteger rows = [paddedValues count];
     
     CGRect labelFrame = CGRectZero;
     labelFrame.size = CGSizeMake(scoreSize, scoreSize);
 
-    NSArray<HEMTrendsDisplayPoint*>* row = nil;
-    HEMTrendsDisplayPoint* point = nil;
+    NSArray* column = nil;
     for (NSInteger rIndex = rows - 1; rIndex >= 0; rIndex--) {
-        row = values[rIndex];
+        column = paddedValues[rIndex];
+        
         labelFrame.origin.y = (rIndex * scoreSizeWithSpacing) + titleWithSpacing;
         
-        NSInteger valueIndex = [row count] - 1;
-        NSInteger columns = HEMTrendsCalMonthDaysInWeek;
-        NSInteger maxCIndex = columns - 1;
-        for (NSInteger cIndex = maxCIndex; cIndex >= 0; cIndex--) {
-            
-            NSInteger indexOffset = HEMTrendsCalMonthDaysInWeek - columns;
-            
-            if (lastRowIndex == rIndex) {
-                labelFrame.origin.x = cIndex * scoreSizeWithSpacing;
-            } else {
-                labelFrame.origin.x = (cIndex + indexOffset) * scoreSizeWithSpacing;
-            }
-            
-            point = nil;
-            // FIXME: fix this!  Server actually pads all 7 days with nulls, but
-            // that gets stripped out by the client in the SENAPIClient, which
-            // forces us to work around this, but it should be done better!
-            if (valueIndex >= 0
-                && ((rIndex > 0
-                     && valueIndex == cIndex)
-                     || (rIndex == 0
-                         && rows == 1
-                         && cIndex < previousDayOfWeek)
-                    || (rIndex == 0 && rows > 1))) {
-                point = row[valueIndex];
-                valueIndex--;
-            }
+        NSInteger cIndex = 0;
+        for (id point in column) {
+            labelFrame.origin.x = cIndex * scoreSizeWithSpacing;
             
             HEMTrendsScoreLabel* scoreLabel = [self scoreLabelForDataPoint:point
                                                                  withFrame:labelFrame];
-            if (point) {
+            if ([point isKindOfClass:[HEMTrendsDisplayPoint class]]) {
+                HEMTrendsDisplayPoint* trendsDisplayPoint = point;
                 [scoreLabel setTextAlignment:NSTextAlignmentCenter];
                 [scoreLabel setTextColor:[UIColor whiteColor]];
                 [scoreLabel setFont:[UIFont trendScoreFont]];
-                NSInteger score = [[point value] integerValue];
+                NSInteger score = [[trendsDisplayPoint value] integerValue];
                 if (score >= 0) {
                     [scoreLabel setText:[NSString stringWithFormat:@"%ld", (long)score]];
                 } else {
@@ -189,6 +230,7 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
             }
             [self addSubview:scoreLabel];
             labelFrame.origin.x -= scoreSizeWithSpacing;
+            cIndex++;
         }
     }
     
@@ -287,7 +329,7 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     [scoreLabel setFrame:frame];
     [scoreLabel setBackgroundColor:[UIColor whiteColor]];
     
-    if (dataPoint) {
+    if ([dataPoint isKindOfClass:[HEMTrendsDisplayPoint class]]) {
         UIColor* color = [UIColor colorForCondition:[dataPoint condition]];
         [scoreLabel setScoreColor:color];
         [scoreLabel setScoreBorderColor:color];

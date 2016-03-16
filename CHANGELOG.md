@@ -1,5 +1,55 @@
 # Changelog
 
+## 1.3.1.3
+
+Fixes:
+
+* Flushes right after calling identify in segment
+* Trends analytics event fired when viewed, not just on load
+
+## 1.3.1.2
+
+New:
+
+* Time zone for sleep sample is now added as metadata for HK, per Apple
+* Added analytics for Trends v2
+* Uses the new insight_type property to determine the appearance of about you section in an insight
+
+Fixes:
+
+* Alarms created / saved between midnight and DST no longer adds / removes an extra hour
+* Auto reload of Trends will not cause an error after Timeline is changed and user has less than 7 days of data
+* Fixed crasher that occurs when viewing the Timeline breakdown if a timeline message is not provided by API
+* Averages in Trends should only show a max of 1 decimal space
+
+## 1.3.1.1
+
+New:
+
+* A new debug option to launch a preliminary prototype of the Sleep Sounds player
+
+Fixes:
+
+* The term 'sound sleep' has been changed to 'deep sleep' in the Timeline breakdown
+
+## 1.3.1.0
+
+Fixes:
+
+* Fixes the issue where the month calendar view for Trends does not have the
+  sleep scores aligned to the right days of the week when there is not enough
+  data to fill the month
+* Fixes the issue where Trends will not refresh to reflect changes made to the
+  Timeline during the same session
+* Fixes the issue where the cache is not reloaded when coming back from the bg
+  and thus not handling cases when network connectivity changes
+* Update Zendesk SDK to fix their UI issue encountered when submitting a long
+  ticket
+
+
+## 1.3.0.11
+
+
 Fixes:
 
 * Fixes issue with calendar view when only 1 section is available

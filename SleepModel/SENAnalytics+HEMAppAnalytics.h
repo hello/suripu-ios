@@ -8,6 +8,7 @@
 
 #import <SenseKit/SENAnalytics.h>
 #import <SenseKit/SENAccount.h>
+#import <SenseKit/SENTrendsGraph.h>
 
 @class  SENAlarm;
 
@@ -101,7 +102,6 @@ extern NSString* const kHEMAnalyticsEventAppLaunched;
 extern NSString* const kHEMAnalyticsEventAppClosed;
 extern NSString* const kHEMAnalyticsEventPropEvent;
 extern NSString* const kHEMAnalyticsEventSettings;
-extern NSString* const kHEMAnalyticsEventTrends;
 extern NSString* const kHEMAnalyticsEventCurrentConditions;
 extern NSString* const kHEMAnalyticsEventFeed;
 extern NSString* const kHEMAnalyticsEventQuestion;
@@ -114,6 +114,14 @@ extern NSString* const kHEMAnalyticsEventPropSensorName;
 extern NSString* const kHEMAnalyticsEventSense;
 extern NSString* const kHEMAnalyticsEventPill;
 extern NSString* const HEMAnalyticsEventHealthSync;
+
+// trends
+extern NSString* const HEMAnalyticsEventTrends;
+extern NSString* const HEMAnalyticsEventTrendsChangeTimescale;
+extern NSString* const HEMAnalyticsEventTrendsPropTimescale;
+extern NSString* const HEMAnalyticsEventTrendsPropTimescaleWeek;
+extern NSString* const HEMAnalyticsEventTrendsPropTimescaleMonth;
+extern NSString* const HEMAnalyticsEventTrendsPropTimescaleQuarter;
 
 // tell a friend
 extern NSString* const HEMAnalyticsEventTellAFriendTapped;
@@ -213,6 +221,7 @@ extern NSString* const HEMAnalyticsEventAppReviewSkip;
 + (void)updateEmail:(NSString*)email;
 + (void)trackAlarmSave:(SENAlarm*)alarm;
 + (void)trackAlarmToggle:(SENAlarm*)alarm;
++ (void)trackTrendsTimescaleChange:(SENTrendsTimeScale)timescale;
 
 @end
 

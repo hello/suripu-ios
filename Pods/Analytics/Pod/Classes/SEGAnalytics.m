@@ -30,7 +30,7 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
     return [[SEGAnalyticsConfiguration alloc] initWithWriteKey:writeKey];
 }
 
-- (id)initWithWriteKey:(NSString *)writeKey
+- (instancetype)initWithWriteKey:(NSString *)writeKey
 {
     if (self = [self init]) {
         self.writeKey = writeKey;
@@ -91,7 +91,7 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
     });
 }
 
-- (id)initWithConfiguration:(SEGAnalyticsConfiguration *)configuration
+- (instancetype)initWithConfiguration:(SEGAnalyticsConfiguration *)configuration
 {
     NSCParameterAssert(configuration != nil);
 
@@ -158,8 +158,9 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
                             };
     });
     SEL selector = NSSelectorFromString(selectorMapping[note.name]);
-    if (selector)
+    if (selector) {
         [self callIntegrationsWithSelector:selector arguments:nil options:nil sync:true];
+    }
 }
 
 #pragma mark - Public API
@@ -427,7 +428,7 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
 
 + (NSString *)version
 {
-    return @"3.0.3";
+    return @"3.0.7";
 }
 
 #pragma mark - Private
@@ -572,7 +573,7 @@ NSString *SEGAnalyticsIntegrationDidStart = @"io.segment.analytics.integration.d
     [self setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:writeKey]];
 }
 
-- (id)initWithWriteKey:(NSString *)writeKey
+- (instancetype)initWithWriteKey:(NSString *)writeKey
 {
     return [self initWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:writeKey]];
 }

@@ -402,12 +402,9 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 }
 
 - (void)removeQuestion:(nonnull SENQuestion*)question atIndexPath:(nonnull NSIndexPath*)indexPath {
-    [[self collectionView] performBatchUpdates:^{
-        [self removeQuestionFromData:question];
+    if ([self removeQuestionFromData:question]) {
         [[self collectionView] deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:^(BOOL finished) {
-        [[self collectionView] reloadData];
-    }];
+    }
 }
 
 - (void)skipQuestion:(UIButton*)skipButton {

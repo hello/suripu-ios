@@ -52,12 +52,6 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     [self configureBackgroundColors];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-}
-
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
@@ -123,13 +117,27 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
     self.pendingDataFetches = [NSMutableSet new];
 
+    NSDate* previousSelectedDate = [[self selectedDate] previousDay];
+    NSDate* nextSelectedDate = [[self selectedDate] nextDay];
     NSDateComponents* components = [NSDateComponents new];
+
     for (NSUInteger i = capacity; i > 0; i--) {
         components.day = -i;
+        SENTimeline* timeline = nil;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today
                                                      options:0];
-        SENTimeline* timeline = [SENTimeline timelineForDate:date];
+        if ([date isOnSameDay:[self selectedDate]]
+            || [date isOnSameDay:previousSelectedDate]
+            || [date isOnSameDay:nextSelectedDate]) {
+            timeline = [SENTimeline timelineForDate:date];
+            // TODO (jimmy:) if timeline is not cached, we need to load it!
+            // currently, if timeline is not loaded, but this is the selected date,
+            // a spinner is forever shown
+        } else {
+            timeline = [SENTimeline new];
+            timeline.date = date;
+        }
         [self.sleepDataSummaries addObject:timeline];
     }
 }
@@ -222,6 +230,10 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     if (timeline) {
         HEMMiniGraphCollectionViewCell* graphCell = (id)cell;
         [self updateCell:graphCell atIndexPath:indexPath];
+        
+        if (![timeline score]) {
+            [self fetchTimelineForResultAtRow:[indexPath row]];
+        }
     }
 }
 

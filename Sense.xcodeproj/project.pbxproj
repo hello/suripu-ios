@@ -156,6 +156,8 @@
 		BF257EE71A1D1C2600DAF923 /* HEMAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE61A1D1C2600DAF923 /* HEMAlertViewController.m */; };
 		BF257EEA1A1D269300DAF923 /* HEMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE91A1D269300DAF923 /* HEMAlertView.m */; };
 		BF287D5F1C9CBB380052F543 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
+		BF287D631C9CBF1F0052F543 /* HEMSensorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF287D621C9CBF1F0052F543 /* HEMSensorService.m */; };
+		BF287D641C9CBF250052F543 /* HEMSensorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF287D621C9CBF1F0052F543 /* HEMSensorService.m */; };
 		BF2AB9391B1938CC0092E9C4 /* HEMFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */; };
 		BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */; };
 		BF2D64341C585C01009AD365 /* HEMHandHoldingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */; };
@@ -660,6 +662,8 @@
 		BF257EE81A1D269300DAF923 /* HEMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlertView.h; sourceTree = "<group>"; };
 		BF257EE91A1D269300DAF923 /* HEMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMAlertView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BF27816C1A0964FF00A8868D /* HEMWiFiConfigurationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMWiFiConfigurationDelegate.h; sourceTree = "<group>"; };
+		BF287D611C9CBF1F0052F543 /* HEMSensorService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorService.h; sourceTree = "<group>"; };
+		BF287D621C9CBF1F0052F543 /* HEMSensorService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorService.m; sourceTree = "<group>"; };
 		BF2AB9371B1938CC0092E9C4 /* HEMFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMFieldTableViewCell.h; sourceTree = "<group>"; };
 		BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMFieldTableViewCell.m; sourceTree = "<group>"; };
 		BF2AB93A1B1940610092E9C4 /* HEMFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMFormViewController.h; sourceTree = "<group>"; };
@@ -1624,6 +1628,7 @@
 			children = (
 				8AD331291BB08D5300DFF95A /* Sensors.xcassets */,
 				BF6952601C57040B000A8E85 /* Presenters */,
+				BF287D601C9CBEE50052F543 /* Services */,
 				8A7214351A1C12E1008B59C4 /* Utilities */,
 				8A66012E199EBD90007E6167 /* View Controllers */,
 				8A660134199EBE9F007E6167 /* Views */,
@@ -1810,6 +1815,15 @@
 				BF4E88EB1A1307C400831380 /* View Controllers */,
 			);
 			name = Insights;
+			sourceTree = "<group>";
+		};
+		BF287D601C9CBEE50052F543 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BF287D611C9CBF1F0052F543 /* HEMSensorService.h */,
+				BF287D621C9CBF1F0052F543 /* HEMSensorService.m */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		BF2D64321C585A06009AD365 /* Tutorial */ = {
@@ -3280,6 +3294,7 @@
 				BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */,
 				BF83398C1C12277B00BFD0F4 /* HEMInsightPresenter.m in Sources */,
 				BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */,
+				BF287D631C9CBF1F0052F543 /* HEMSensorService.m in Sources */,
 				BF48274D1C4F060F005EDEB5 /* HEMHealthKitService.m in Sources */,
 				BFA540ED1BCEF0ED007AF607 /* HEMIntroDescriptionView.m in Sources */,
 				BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */,
@@ -3339,6 +3354,7 @@
 				BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */,
 				8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 				BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */,
+				BF287D641C9CBF250052F543 /* HEMSensorService.m in Sources */,
 				BF287D5F1C9CBB380052F543 /* HEMSensorValueFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

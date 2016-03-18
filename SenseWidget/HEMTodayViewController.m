@@ -19,6 +19,7 @@
 #import "HEMTodayViewController.h"
 #import "HEMTodayTableViewCell.h"
 #import "HEMSensorValueFormatter.h"
+#import "HEMSensorService.h"
 
 static NSString* const HEMAPIPlistKey = @"SenseApiUrl";
 static NSString* const HEMClientIdPlistKey = @"SenseClientId";
@@ -49,6 +50,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (nonatomic, assign) BOOL sensorsChecked;
 @property (nonatomic, strong) NSError* sensorsError;
 @property (nonatomic, strong) HEMSensorValueFormatter* sensorFormatter;
+@property (nonatomic, strong) HEMSensorService* service;
 
 @end
 
@@ -73,6 +75,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 }
 
 - (void)configureContent {
+    [self setService:[HEMSensorService new]];
     [self setSensorFormatter:[HEMSensorValueFormatter new]];
     
     self.tableView.rowHeight = kHEMTodayRowHeight;
@@ -148,9 +151,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 #pragma mark - Sensors
 
 - (void)loadCachedSensors {
-    self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
-        return [obj1.name compare:obj2.name];
-    }];
+    self.sensors = [[self service] sortedCacheSensors];
 }
 
 - (void)listenForSensorUpdates {

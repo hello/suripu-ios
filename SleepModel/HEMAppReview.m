@@ -21,8 +21,8 @@
 
 static NSUInteger const HEMAppPromptReviewThreshold = 60;
 static NSUInteger const HEMMinimumAppLaunches = 4;
-static NSUInteger const HEMSystemAlertShownThreshold = 30;
-static NSUInteger const HEMMinimumTimelineViews = 10;
+static NSUInteger const HEMSystemAlertShownThreshold = 15;
+static NSUInteger const HEMMinimumTimelineViews = 5;
 static NSString* const HEMAmazonReview = @"app.review.amazon";
 static NSString* const HEMNoMoreAsking = @"stop.asking.to.rate.app";
 static NSString* const HEMLocalizedKeyQuestion1 = @"app-review.question.1";

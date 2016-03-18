@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.3.2.0
+
+New:
+
+* App review thresholds updated
+* Error analytics events now captures url of API, if its a connection problem
+* Segment SDK updated
+* Zooming out of Timeline is now significantly faster
+
+Fixes:
+
+* Today extension shows the sensor values in the same order as room conditions view
+* Today extension light and temp values are no longer off by 1
+* Fixed a very low frequency crasher caused by skipping a question in the feed
+
 ## 1.3.1.3
 
 Fixes:

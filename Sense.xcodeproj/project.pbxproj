@@ -155,6 +155,7 @@
 		BF2123F61B66E8B50017D67A /* HEMAppUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2123F51B66E8B50017D67A /* HEMAppUsage.m */; };
 		BF257EE71A1D1C2600DAF923 /* HEMAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE61A1D1C2600DAF923 /* HEMAlertViewController.m */; };
 		BF257EEA1A1D269300DAF923 /* HEMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE91A1D269300DAF923 /* HEMAlertView.m */; };
+		BF287D5F1C9CBB380052F543 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BF2AB9391B1938CC0092E9C4 /* HEMFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */; };
 		BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */; };
 		BF2D64341C585C01009AD365 /* HEMHandHoldingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */; };
@@ -3338,6 +3339,7 @@
 				BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */,
 				8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 				BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */,
+				BF287D5F1C9CBB380052F543 /* HEMSensorValueFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

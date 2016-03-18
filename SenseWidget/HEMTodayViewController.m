@@ -18,6 +18,7 @@
 
 #import "HEMTodayViewController.h"
 #import "HEMTodayTableViewCell.h"
+#import "HEMSensorValueFormatter.h"
 
 static NSString* const HEMAPIPlistKey = @"SenseApiUrl";
 static NSString* const HEMClientIdPlistKey = @"SenseClientId";
@@ -47,6 +48,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (nonatomic, copy)   HEMWidgeUpdateBlock updateBlock;
 @property (nonatomic, assign) BOOL sensorsChecked;
 @property (nonatomic, strong) NSError* sensorsError;
+@property (nonatomic, strong) HEMSensorValueFormatter* sensorFormatter;
 
 @end
 
@@ -71,6 +73,8 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 }
 
 - (void)configureContent {
+    [self setSensorFormatter:[HEMSensorValueFormatter new]];
+    
     self.tableView.rowHeight = kHEMTodayRowHeight;
     
     if ([SENAuthorizationService accessToken] != nil) {
@@ -227,10 +231,20 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)configureConditionsCell:(HEMTodayTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
     SENSensor* sensor = [self sensorAtIndexPath:indexPath];
-    NSString* detail = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
+    NSString* value = [[self sensorFormatter] stringFromSensor:sensor];
+    
+    if (value) {
+        // if AQI, ignore unit, to match room conditions view
+        if (sensor.unit != SENSensorUnitAQI) {
+            value = [value stringByAppendingString:[sensor localizedUnit]];
+        }
+    } else {
+        value = NSLocalizedString(@"empty-data", nil);
+    }
+    
     cell.sensorIconView.image = [self imageForSensor:sensor];
     cell.sensorNameLabel.text = [sensor localizedName];
-    cell.sensorValueLabel.text = detail;
+    cell.sensorValueLabel.text = value;
     cell.sensorValueLabel.textColor = [self colorForSensor:sensor];
 }
 

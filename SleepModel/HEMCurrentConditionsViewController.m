@@ -20,6 +20,7 @@
 #import "HEMRootViewController.h"
 #import "HEMTextCollectionViewCell.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMSensorService.h"
 
 @interface HEMCurrentConditionsViewController () <
     UICollectionViewDataSource,
@@ -39,6 +40,7 @@
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @property (nonatomic, strong) NSDate *lastRefreshDate;
 @property (nonatomic, strong) HEMSensorValueFormatter* sensorValueFormatter;
+@property (nonatomic, strong) HEMSensorService* sensorService;
 @end
 
 @implementation HEMCurrentConditionsViewController
@@ -69,6 +71,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     self.loading = YES;
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
     self.sensorValueFormatter = [[HEMSensorValueFormatter alloc] init];
+    self.sensorService = [HEMSensorService new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -225,7 +228,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (void)updateSensorsFromCache {
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
-    NSArray *cachedSensors = [self sortedCachedSensors];
+    NSArray *cachedSensors = [[self sensorService] sortedCacheSensors];
     if (![self.sensors isEqualToArray:cachedSensors]) {
         self.sensors = cachedSensors;
         [self.collectionView reloadData];
@@ -244,30 +247,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
         [self configureFailureRefreshTimer];
     else
         [self configureRefreshTimer];
-}
-
-- (NSArray *)sortedCachedSensors {
-    return [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor *obj1, SENSensor *obj2) {
-      return [@([self indexForSensor:obj1]) compare:@([self indexForSensor:obj2])];
-    }];
-}
-
-- (NSUInteger)indexForSensor:(SENSensor *)sensor {
-    switch (sensor.unit) {
-        case SENSensorUnitDegreeCentigrade:
-            return 0;
-        case SENSensorUnitPercent:
-            return 1;
-        case SENSensorUnitAQI:
-            return 2;
-        case SENSensorUnitLux:
-            return 3;
-        case SENSensorUnitDecibel:
-            return 4;
-        case SENSensorUnitUnknown:
-        default:
-            return 5;
-    }
 }
 
 - (void)fetchGraphData {

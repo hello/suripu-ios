@@ -14,7 +14,7 @@ pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',
                   :tag => '1.5.4.1'
 pod 'UICountingLabel', '~> 1.2.0'
 pod 'CGFloatType', '~> 1.3.1'
-pod 'Analytics', '3.0.3'
+pod 'Analytics', '3.0.7'
 pod 'Bugsnag', '~> 4.1.0'
 
 # Private

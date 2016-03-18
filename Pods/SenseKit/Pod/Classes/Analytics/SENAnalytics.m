@@ -13,6 +13,7 @@ NSString* const kSENAnalyticsPropConnection = @"connection";
 NSString* const kSENAnalyticsPropCode = @"code";
 NSString* const kSENAnalyticsPropMessage = @"message";
 NSString* const kSENAnalyticsPropDomain = @"domain";
+NSString* const kSENAnalyticsPropUrl = @"url";
 
 @implementation SENAnalytics
 
@@ -70,6 +71,10 @@ static NSMutableDictionary* providers;
         [mutableProps setValue:@([error code]) forKey:kSENAnalyticsPropCode];
         [mutableProps setValue:[error localizedDescription] forKey:kSENAnalyticsPropMessage];
         [mutableProps setValue:[error domain] forKey:kSENAnalyticsPropDomain];
+        if ([[error domain] isEqualToString:NSURLErrorDomain] && [error userInfo]) {
+            NSString* url = [error userInfo][NSURLErrorFailingURLStringErrorKey];
+            [mutableProps setValue:url forKey:kSENAnalyticsPropUrl];
+        }
     }
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
         [provider track:eventName withProperties:mutableProps];

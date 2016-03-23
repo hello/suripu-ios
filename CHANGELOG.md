@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2.1
+
+Note:
+
+* iTC failed to import.  need to bump version
+
 ## 1.3.2.0
 
 New:

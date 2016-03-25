@@ -13,6 +13,7 @@
 #import "HEMSleepSoundConfigurationCell.h"
 #import "HEMSleepSoundService.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
 
@@ -181,9 +182,16 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 - (void)configureSleepSoundConfigurationCell:(HEMSleepSoundConfigurationCell*)cell {
     SENSleepSound* defaultSound = [[self service] defaultSleepSoundFrom:[self availableSounds]];
     SENSleepSoundDuration* defaultDuration = [[self service] defaultDurationFrom:[self availableDurations]];
+    [[cell titleLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
+    [[cell soundLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell soundValueLabel] setText:[defaultSound localizedName]];
+    [[cell soundValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell durationLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell durationValueLabel] setText:[defaultDuration localizedName]];
+    [[cell durationValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell volumeLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell volumeValueLabel] setText:NSLocalizedString(@"sleep-sounds.volume.high", nil)];
+    [[cell volumeValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView

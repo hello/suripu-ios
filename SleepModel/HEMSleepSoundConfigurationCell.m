@@ -7,15 +7,21 @@
 //
 
 #import "HEMSleepSoundConfigurationCell.h"
+#import "HEMStyle.h"
+
+static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
 
 @implementation HEMSleepSoundConfigurationCell
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [[self titleSeparator] setBackgroundColor:[UIColor separatorColor]];
+    [[self soundSeparator] setBackgroundColor:[UIColor separatorColor]];
+    [[self durationSeparator] setBackgroundColor:[UIColor separatorColor]];
+    
+    [[self titleSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
+    [[self soundSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
+    [[self durationSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
 }
-*/
 
 @end

@@ -171,6 +171,8 @@
 + (UIColor *)partialDataMessageBoldColor;
 + (UIColor *)partialDataTitleColor;
 + (UIColor *)barChartBorderColor;
++ (UIColor *)sleepSoundPlayerTitleColor;
++ (UIColor *)sleepSoundPlayerOptionValueColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
 + (NSArray*)loadingIndicatorColorRefs;
 

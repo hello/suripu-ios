@@ -186,12 +186,21 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[cell soundLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell soundValueLabel] setText:[defaultSound localizedName]];
     [[cell soundValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell soundSelectorButton] addTarget:self
+                                   action:@selector(changeSound:)
+                         forControlEvents:UIControlEventTouchUpInside];
     [[cell durationLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell durationValueLabel] setText:[defaultDuration localizedName]];
     [[cell durationValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell durationSelectorButton] addTarget:self
+                                      action:@selector(changeDuration:)
+                            forControlEvents:UIControlEventTouchUpInside];
     [[cell volumeLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell volumeValueLabel] setText:NSLocalizedString(@"sleep-sounds.volume.high", nil)];
     [[cell volumeValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell volumeSelectorButton] addTarget:self
+                                    action:@selector(changeVolume:)
+                          forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -203,6 +212,18 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 #pragma mark - Player Actions
+
+- (void)changeSound:(UIButton*)button {
+    DDLogVerbose(@"change sound");
+}
+
+- (void)changeDuration:(UIButton*)button {
+    DDLogVerbose(@"change duration");
+}
+
+- (void)changeVolume:(UIButton*)button {
+    DDLogVerbose(@"change volume");
+}
 
 - (void)takeAction:(UIButton*)button {
     switch ([self playerState]) {

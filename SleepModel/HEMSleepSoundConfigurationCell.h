@@ -20,6 +20,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView* soundAccessoryView;
 @property (nonatomic, weak) IBOutlet UIView *soundSeparator;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *soundSeparatorHeight;
+@property (weak, nonatomic) IBOutlet UIButton *soundSelectorButton;
 
 @property (nonatomic, weak) IBOutlet UIImageView* durationImageView;
 @property (nonatomic, weak) IBOutlet UILabel* durationLabel;
@@ -27,10 +28,12 @@
 @property (nonatomic, weak) IBOutlet UIImageView* durationAccessoryView;
 @property (nonatomic, weak) IBOutlet UIView *durationSeparator;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *durationSeparatorHeight;
+@property (weak, nonatomic) IBOutlet UIButton *durationSelectorButton;
 
 @property (nonatomic, weak) IBOutlet UIImageView* volumeImageView;
 @property (nonatomic, weak) IBOutlet UILabel* volumeLabel;
 @property (nonatomic, weak) IBOutlet UILabel* volumeValueLabel;
 @property (nonatomic, weak) IBOutlet UIImageView* volumeAccessoryView;
+@property (weak, nonatomic) IBOutlet UIButton *volumeSelectorButton;
 
 @end

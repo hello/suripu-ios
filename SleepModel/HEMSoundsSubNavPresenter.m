@@ -153,6 +153,15 @@ typedef NS_ENUM(NSUInteger, HEMSoundsSubNavOption) {
 
 - (void)changeOption:(UIButton*)optionButton {
     
+    switch ([optionButton tag]) {
+        case HEMSoundsSubNavOptionAlarms:
+            [[self delegate] loadAlarms:[[[self deviceService] devices] hasPairedSense]];
+            break;
+        case HEMSoundsSubNavOptionSleepSounds:
+        default:
+            [[self delegate] loadSleepSounds:[self availableSleepSounds]];
+            break;
+    }
 }
 
 @end

@@ -90,20 +90,32 @@
 
 - (void)showSoundViewOf:(UIViewController*)controller {
     UIViewController* currentVC = [[self childViewControllers] firstObject];
+    if (currentVC == controller) {
+        return;
+    }
+    
+    [[self subNav] setUserInteractionEnabled:NO];
     [self addChildViewController:controller];
+    
+    CGRect frame = [[controller view] frame];
+    frame.size = [[self containerView] bounds].size;
+    [[controller view] setFrame:frame];
     [[self containerView] insertSubview:[controller view] atIndex:0];
     
     if (!currentVC) {
         [controller didMoveToParentViewController:self];
+        [[self subNav] setUserInteractionEnabled:YES];
     } else {
         [currentVC willMoveToParentViewController:nil];
         [UIView transitionFromView:[currentVC view]
                             toView:[controller view]
                           duration:0.5f
-                           options:UIViewAnimationOptionShowHideTransitionViews
+                           options:UIViewAnimationOptionTransitionCrossDissolve
                         completion:^(BOOL finished) {
+                            [[currentVC view] removeFromSuperview];
                             [currentVC removeFromParentViewController];
                             [controller didMoveToParentViewController:self];
+                            [[self subNav] setUserInteractionEnabled:YES];
                         }];
     }
 }

@@ -228,7 +228,7 @@
 /**
  *  Font for the v2 Trends scope selector text
  */
-+ (UIFont*)trendsScopeSelectorTextFont;
++ (UIFont*)subNavTitleTextFont;
 
 /**
  *  Font for the v2 Trends sleep depth percentage values

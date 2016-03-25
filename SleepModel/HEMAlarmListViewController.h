@@ -4,6 +4,8 @@
 
 @interface HEMAlarmListViewController : HEMBaseController
 
+@property (nonatomic, assign) BOOL hasSubNav;
+
 - (IBAction)addNewAlarm:(id)sender;
 
 @end

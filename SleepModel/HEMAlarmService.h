@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^HEMAlarmSoundHandler)(NSArray<SENSound*>* _Nullable sounds, NSError* _Nullable error);
 typedef void(^HEMAlarmUpdateHandler)(NSError* _Nullable error);
+typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _Nullable error);
 
 @interface HEMAlarmService : SENService
 
@@ -26,6 +27,7 @@ typedef void(^HEMAlarmUpdateHandler)(NSError* _Nullable error);
  *                    alarm sounds that can be used when setting an alarm
  */
 - (void)loadAvailableAlarmSounds:(HEMAlarmSoundHandler)completion;
+- (void)refreshAlarms:(HEMAlarmsHandler)completion;
 - (void)updateAlarms:(NSArray<SENAlarm*>*)alarms completion:(HEMAlarmUpdateHandler)completion;
 - (BOOL)isTimeTooSoon:(HEMAlarmCache*)cache;
 - (BOOL)willRingToday:(HEMAlarmCache*)cache;

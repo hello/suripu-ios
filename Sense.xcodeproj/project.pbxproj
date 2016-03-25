@@ -181,6 +181,9 @@
 		BF539CD21C0F737D000F77AA /* HEMPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CD11C0F737D000F77AA /* HEMPresenter.m */; };
 		BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */; };
 		BF5592421C21048D00FC7849 /* HEMInsightTabPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5592411C21048D00FC7849 /* HEMInsightTabPresenter.m */; };
+		BF55D87E1CA484F500379FBF /* HEMSoundsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D87D1CA484F500379FBF /* HEMSoundsContainerViewController.m */; };
+		BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */; };
+		BF55D8841CA48C7F00379FBF /* HEMSoundsSubNavPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8831CA48C7F00379FBF /* HEMSoundsSubNavPresenter.m */; };
 		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
 		BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */; };
 		BF5BACA41C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACA31C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m */; };
@@ -705,6 +708,12 @@
 		BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsServiceSpec.m; sourceTree = "<group>"; };
 		BF5592401C21048D00FC7849 /* HEMInsightTabPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightTabPresenter.h; sourceTree = "<group>"; };
 		BF5592411C21048D00FC7849 /* HEMInsightTabPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightTabPresenter.m; sourceTree = "<group>"; };
+		BF55D87C1CA484F500379FBF /* HEMSoundsContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSoundsContainerViewController.h; sourceTree = "<group>"; };
+		BF55D87D1CA484F500379FBF /* HEMSoundsContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsContainerViewController.m; sourceTree = "<group>"; };
+		BF55D87F1CA48A6E00379FBF /* HEMSoundsTabPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSoundsTabPresenter.h; sourceTree = "<group>"; };
+		BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsTabPresenter.m; sourceTree = "<group>"; };
+		BF55D8821CA48C7F00379FBF /* HEMSoundsSubNavPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSoundsSubNavPresenter.h; sourceTree = "<group>"; };
+		BF55D8831CA48C7F00379FBF /* HEMSoundsSubNavPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsSubNavPresenter.m; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
 		BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SleepSounds.xcassets; sourceTree = "<group>"; };
@@ -1123,7 +1132,6 @@
 				BFBECCE41A15706700335CC6 /* Onboarding.storyboard */,
 				BFC4C2081B90D64100BB7761 /* Action Sheet */,
 				BFF03EC71A536D0C00BD65D4 /* Alerts */,
-				8AC49F8E1981B90600C2BD63 /* Alarm */,
 				BFE3B8F919F5F1D40055B3B6 /* Analytics */,
 				BFABE74E19A2E6C900AB2F0F /* Common */,
 				8AC3C2D91A3C7FBD0074A87F /* Drawer */,
@@ -1138,7 +1146,7 @@
 				8ADF03CA1A719144002B036A /* Root */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
-				BF412E9C1C90F792009514A1 /* Sleep Sounds */,
+				BF55D8791CA4844400379FBF /* Sounds */,
 				BFC3AA0319C2650F0055D308 /* Questions */,
 				8AC49F8F1981B92100C2BD63 /* Timeline */,
 				8AC276A91A3CE54C00B082D9 /* Trends */,
@@ -1993,6 +2001,37 @@
 				BF539CD41C0F80B7000F77AA /* HEMInsightsServiceSpec.m */,
 			);
 			name = Insights;
+			sourceTree = "<group>";
+		};
+		BF55D8791CA4844400379FBF /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				8AC49F8E1981B90600C2BD63 /* Alarm */,
+				BF55D87B1CA4849E00379FBF /* Presenters */,
+				BF412E9C1C90F792009514A1 /* Sleep Sounds */,
+				BF55D87A1CA4846700379FBF /* View Controllers */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		BF55D87A1CA4846700379FBF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BF55D87C1CA484F500379FBF /* HEMSoundsContainerViewController.h */,
+				BF55D87D1CA484F500379FBF /* HEMSoundsContainerViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BF55D87B1CA4849E00379FBF /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BF55D87F1CA48A6E00379FBF /* HEMSoundsTabPresenter.h */,
+				BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */,
+				BF55D8821CA48C7F00379FBF /* HEMSoundsSubNavPresenter.h */,
+				BF55D8831CA48C7F00379FBF /* HEMSoundsSubNavPresenter.m */,
+			);
+			name = Presenters;
 			sourceTree = "<group>";
 		};
 		BF5BACA11C920365001E77F6 /* Presenters */ = {
@@ -3211,6 +3250,8 @@
 				BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */,
+				BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */,
+				BF55D8841CA48C7F00379FBF /* HEMSoundsSubNavPresenter.m in Sources */,
 				BFC458BE1BDAA2CE008EE871 /* HEMGlobalContants.m in Sources */,
 				BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */,
 				8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */,
@@ -3312,6 +3353,7 @@
 				BF9C87D819B6A199003188D4 /* HEMPillPairViewController.m in Sources */,
 				BFB59E101C03A929001BD941 /* HEMTimeZoneService.m in Sources */,
 				BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */,
+				BF55D87E1CA484F500379FBF /* HEMSoundsContainerViewController.m in Sources */,
 				BFC99BC01B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m in Sources */,
 				BF5BACFF1C5C266900347185 /* HEMTrendsBaseCell.m in Sources */,
 			);

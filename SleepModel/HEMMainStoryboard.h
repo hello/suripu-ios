@@ -59,12 +59,14 @@
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
++(NSString *)alarmsSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
 +(NSString *)settingsToSupportSegueIdentifier;
++(NSString *)sleepSoundsSegueIdentifier;
 +(NSString *)timezoneSegueIdentifier;
 +(NSString *)topicsSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
@@ -92,6 +94,8 @@
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
 +(id)instantiateSleepSoundViewController;
++(id)instantiateSoundsContainerViewController;
++(id)instantiateSoundsNavigationViewController;
 +(id)instantiateSupportTopicsViewController;
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;

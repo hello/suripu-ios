@@ -16,7 +16,7 @@
 NSString* const HEMSleepSoundServiceErrorDomain = @"is.hello.sense.sleep-sound";
 
 static CGFloat const HEMSleepSoundServiceRequestTimeoutInSecs = 30.0f;
-static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 2.0f;
+static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 0.5f;
 
 @interface HEMSleepSoundService()
 

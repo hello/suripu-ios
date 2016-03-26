@@ -213,13 +213,13 @@ static UIColor *_tintColor = nil;
 + (UIColor *)barChartBorderColor {
     return [UIColor colorWithHex:0x596980 alpha:0.15f];
 }
-+ (UIColor *)trendsScopeSelectorActiveTextColor {
++ (UIColor *)subNavActiveTitleColor {
     return [UIColor colorWithRed:22.0f/255.0f
                            green:43.0f/255.0f
                             blue:72.0f/255.0f
                            alpha:1.0f];
 }
-+ (UIColor *)trendsScopeSelectorInactiveTextColor {
++ (UIColor *)subNavInactiveTitleColor {
     return [UIColor colorWithRed:176.0f/255.0f
                            green:181.0f/255.0f
                             blue:190.0f/255.0f
@@ -359,6 +359,15 @@ static UIColor *_tintColor = nil;
                            green:43.0f/255.0f
                             blue:72.0f/255.0f
                            alpha:1.0f];
+}
++ (UIColor *)sleepSoundPlayerTitleColor {
+    return [UIColor colorWithHex:0x596980 alpha:1.0f];
+}
++ (UIColor *)sleepSoundPlayerOptionValueColor {
+    return [UIColor colorWithHex:0x8A96A6 alpha:1.0f];
+}
++ (UIColor *)listItemTextColor {
+    return [UIColor colorWithWhite:0.0f alpha:0.7f];
 }
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the

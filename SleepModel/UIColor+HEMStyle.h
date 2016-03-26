@@ -127,8 +127,8 @@
 + (UIColor *)cardBorderColor;
 + (UIColor *)trendsTitleDividerColor;
 + (UIColor *)trendsTitleColor;
-+ (UIColor *)trendsScopeSelectorActiveTextColor;
-+ (UIColor *)trendsScopeSelectorInactiveTextColor;
++ (UIColor *)subNavActiveTitleColor;
++ (UIColor *)subNavInactiveTitleColor;
 + (UIColor *)trendGraphBottomColor;
 + (UIColor *)trendGraphTopColor;
 + (UIColor *)switchOffBackgroundColor;
@@ -171,6 +171,9 @@
 + (UIColor *)partialDataMessageBoldColor;
 + (UIColor *)partialDataTitleColor;
 + (UIColor *)barChartBorderColor;
++ (UIColor *)sleepSoundPlayerTitleColor;
++ (UIColor *)sleepSoundPlayerOptionValueColor;
++ (UIColor *)listItemTextColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
 + (NSArray*)loadingIndicatorColorRefs;
 

@@ -527,7 +527,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+    if (![self hasSubNav]) {
+        [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+    }
 }
 
 #pragma mark - Clean Up

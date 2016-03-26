@@ -52,6 +52,7 @@
 +(NSString *)barReuseIdentifier;
 +(NSString *)bubblesReuseIdentifier;
 +(NSString *)messageReuseIdentifier;
++(NSString *)listItemReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)fieldCellReuseIdentifier;
@@ -59,12 +60,15 @@
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
++(NSString *)alarmsSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
++(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
 +(NSString *)settingsToSupportSegueIdentifier;
++(NSString *)sleepSoundsSegueIdentifier;
 +(NSString *)timezoneSegueIdentifier;
 +(NSString *)topicsSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
@@ -84,6 +88,7 @@
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightFeedViewController;
++(id)instantiateListItemViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;
@@ -92,6 +97,8 @@
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
 +(id)instantiateSleepSoundViewController;
++(id)instantiateSoundsContainerViewController;
++(id)instantiateSoundsNavigationViewController;
 +(id)instantiateSupportTopicsViewController;
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;

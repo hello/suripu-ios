@@ -749,4 +749,11 @@
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
 
 // sleep sounds
+"sleep-sounds.title" = "Sleep sounds";
 "sleep-sounds.volume.high" = "High";
+"sleep-sounds.option.title.sound" = "Sound";
+"sleep-sounds.option.subtitle.sound" = "Select a sleep sound";
+"sleep-sounds.option.title.duration" = "Duration";
+"sleep-sounds.option.subtitle.duration" = "Play sleep sound for";
+"sleep-sounds.option.title.volume" = "Volume";
+"sleep-sounds.option.subtitle.volume" = "Volume control";

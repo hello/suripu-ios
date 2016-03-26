@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.2.2
+
+New:
+
+* Alarm list refactored to include sleep sounds (icon remains as an alarm), if enabled for account
+* Sleep sounds include a rough player (not to visual spec)
+* Ability to choose the sleep sound to play
+* Ability to choose the sleep sound duration
+
+Fixes:
+
+* Loading indicator for the alarms view should not be shown indefinitely occassionally
+
 ## 1.3.2.1
 
 Note:

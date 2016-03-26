@@ -8,15 +8,28 @@
 
 #import "HEMPresenter.h"
 
+@class HEMSleepSoundPlayerPresenter;
 @class HEMSleepSoundService;
+@class SENSleepSound;
+@class SENSleepSounds;
+@class SENSleepSoundDuration;
+@class SENSleepSoundDurations;
 
 NS_ASSUME_NONNULL_BEGIN
-
-@class HEMSleepSoundPlayerPresenter;
 
 @protocol HEMSleepSoundPlayerDelegate <NSObject>
 
 - (void)presentError:(NSError*)error;
+- (void)showAvailableSounds:(NSArray *)sounds
+          selectedSoundName:(NSString*)selectedName
+                  withTitle:(NSString*)title
+                   subTitle:(NSString*)subTitle
+                       from:(HEMSleepSoundPlayerPresenter *)presenter;
+- (void)showAvailableDurations:(NSArray *)durations
+          selectedDurationName:(NSString*)selectedName
+                     withTitle:(NSString*)title
+                      subTitle:(NSString*)subTitle
+                          from:(HEMSleepSoundPlayerPresenter *)presenter;
 
 @end
 
@@ -24,9 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HEMSleepSoundPlayerDelegate> delegate;
 
-- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service;
+- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service
+                           andSleepSounds:(nullable SENSleepSounds*)sleepSounds;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithActionButton:(UIButton*)button;
+- (void)setSelectedSound:(SENSleepSound*)sound;
+- (void)setSelectedDuration:(SENSleepSoundDuration*)duration;
 
 @end
 

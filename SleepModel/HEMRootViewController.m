@@ -43,6 +43,7 @@
 #import "HEMTimeZoneViewController.h"
 #import "HEMTimeZoneAlertService.h"
 #import "HEMSimpleModalTransitionDelegate.h"
+#import "HEMSoundsContainerViewController.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -85,7 +86,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
         [HEMMainStoryboard instantiateCurrentNavController],
         [HEMMainStoryboard instantiateTrendsViewController],
         [HEMMainStoryboard instantiateInsightFeedViewController],
-        [HEMMainStoryboard instantiateAlarmListNavViewController],
+        [HEMMainStoryboard instantiateSoundsNavigationViewController],
         [HEMMainStoryboard instantiateSettingsNavController]
     ];
     barController.selectedIndex = 2;

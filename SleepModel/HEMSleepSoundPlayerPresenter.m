@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 // TODO: remove once we hook everything up.  We should check status upon load
 @property (nonatomic, assign) HEMSleepSoundPlayerState playerState;
+@property (nonatomic, weak) HEMSleepSoundConfigurationCell* configCell;
 
 @end
 
@@ -139,6 +140,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)setPlayerState:(HEMSleepSoundPlayerState)playerState {
     _playerState = playerState;
+    [[self configCell] deactivate:NO];
     [[self actionButton] setEnabled:YES];
     [[self indicatorView] stop];
     [[self indicatorView] removeFromSuperview];
@@ -153,6 +155,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                                  forState:UIControlStateNormal];
             break;
         default: {
+            [[self configCell] deactivate:YES];
             [[self actionButton] setEnabled:NO];
             
             if (![self indicatorView]) {
@@ -240,6 +243,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                                     action:@selector(changeVolume:)
                           forControlEvents:UIControlEventTouchUpInside];
     [[cell volumeAccessoryView] setHidden:YES];
+    
+    [self setConfigCell:cell];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView

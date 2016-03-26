@@ -11,6 +11,12 @@
 
 static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
 
+@interface HEMSleepSoundConfigurationCell()
+
+@property (nonatomic, weak) UIView* overlay;
+
+@end
+
 @implementation HEMSleepSoundConfigurationCell
 
 - (void)awakeFromNib {
@@ -22,6 +28,18 @@ static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
     [[self titleSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     [[self soundSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     [[self durationSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
+}
+
+- (void)deactivate:(BOOL)deactivate {
+    [self setUserInteractionEnabled:!deactivate];
+    if (deactivate) {
+        UIView* overlay = [[UIView alloc] initWithFrame:[self bounds]];
+        [overlay setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+        [[self contentView] addSubview:overlay];
+        [self setOverlay:overlay];
+    } else {
+        [[self overlay] removeFromSuperview];
+    }
 }
 
 @end

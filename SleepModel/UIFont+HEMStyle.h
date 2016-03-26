@@ -627,4 +627,11 @@
  */
 + (UIFont*)errorStateDescriptionFont;
 
+#pragma mark - List Items
+
+/**
+ * Font used by the List Item Presenter when configuring list item cells
+ */
++ (UIFont*)listItemTitleFont;
+
 @end

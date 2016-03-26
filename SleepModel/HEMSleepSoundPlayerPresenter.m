@@ -28,10 +28,13 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, weak) HEMSleepSoundService* service;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) UIButton* actionButton;
+@property (nonatomic, strong) SENSleepSounds* cachedSounds;
 @property (nonatomic, strong) SENSleepSounds* availableSounds;
 @property (nonatomic, strong) SENSleepSoundDurations* availableDurations;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) HEMActivityIndicatorView* indicatorView;
+@property (nonatomic, strong) SENSleepSound* selectedSound;
+@property (nonatomic, strong) SENSleepSoundDuration* selectedDuration;
 
 // TODO: remove once we hook everything up.  We should check status upon load
 @property (nonatomic, assign) HEMSleepSoundPlayerState playerState;
@@ -40,10 +43,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 @implementation HEMSleepSoundPlayerPresenter
 
-- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service {
+- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service
+                           andSleepSounds:(nullable SENSleepSounds*)sleepSounds {
     self = [super init];
     if (self) {
         _service = service;
+        _cachedSounds = sleepSounds;
     }
     return self;
 }
@@ -54,6 +59,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     itemSize.height = HEMSleepSoundConfigCellHeight;
     [layout setItemSize:itemSize];
     
+    [collectionView setAlwaysBounceVertical:YES];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     [self setCollectionView:collectionView];
@@ -100,10 +106,16 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     
     dispatch_group_t dataGroup = dispatch_group_create();
     
-    dispatch_group_enter(dataGroup);
-    [self loadSleepSounds:^{
-        dispatch_group_leave(dataGroup);
-    }];
+    // might have been provided to the presenter already
+    if (![self cachedSounds]) {
+        dispatch_group_enter(dataGroup);
+        [self loadSleepSounds:^{
+            dispatch_group_leave(dataGroup);
+        }];
+    } else {
+        [self setAvailableSounds:[self cachedSounds]];
+        [self setCachedSounds:nil]; // remove the cache
+    }
     
     dispatch_group_enter(dataGroup);
     [self loadSleepSoundDurations:^{
@@ -112,8 +124,16 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     
     __weak typeof(self) weakSelf = self;
     dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
-        [[weakSelf collectionView] reloadData];
-        [weakSelf setLoading:NO];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        HEMSleepSoundService* service = [strongSelf service];
+        if (![strongSelf selectedSound]) {
+            [strongSelf setSelectedSound:[service defaultSleepSoundFrom:[strongSelf availableSounds]]];
+        }
+        if (![strongSelf selectedDuration]) {
+            [strongSelf setSelectedDuration:[service defaultDurationFrom:[strongSelf availableDurations]]];
+        }
+        [[strongSelf collectionView] reloadData];
+        [strongSelf setLoading:NO];
     });
 }
 
@@ -156,6 +176,26 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
 }
 
+- (void)setSelectedSound:(SENSleepSound*)sound {
+    BOOL shouldReload = _selectedSound != nil;
+    if (![[_selectedSound identifier] isEqualToNumber:[sound identifier]]) {
+        _selectedSound = sound;
+        if (shouldReload) {
+            [[self collectionView] reloadData];
+        }
+    }
+}
+
+- (void)setSelectedDuration:(SENSleepSoundDuration*)duration {
+    BOOL shouldReload = _selectedDuration != nil;
+    if (![[_selectedDuration identifier] isEqualToNumber:[duration identifier]]) {
+        _selectedDuration = duration;
+        if (shouldReload) {
+            [[self collectionView] reloadData];
+        }
+    }
+}
+
 #pragma mark - Presenter events
 
 - (void)didAppear {
@@ -180,17 +220,15 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 #pragma mark - UICollectionViewDelegate
 
 - (void)configureSleepSoundConfigurationCell:(HEMSleepSoundConfigurationCell*)cell {
-    SENSleepSound* defaultSound = [[self service] defaultSleepSoundFrom:[self availableSounds]];
-    SENSleepSoundDuration* defaultDuration = [[self service] defaultDurationFrom:[self availableDurations]];
     [[cell titleLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell soundLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
-    [[cell soundValueLabel] setText:[defaultSound localizedName]];
+    [[cell soundValueLabel] setText:[[self selectedSound] localizedName]];
     [[cell soundValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
     [[cell soundSelectorButton] addTarget:self
                                    action:@selector(changeSound:)
                          forControlEvents:UIControlEventTouchUpInside];
     [[cell durationLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
-    [[cell durationValueLabel] setText:[defaultDuration localizedName]];
+    [[cell durationValueLabel] setText:[[self selectedDuration] localizedName]];
     [[cell durationValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
     [[cell durationSelectorButton] addTarget:self
                                       action:@selector(changeDuration:)
@@ -201,6 +239,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[cell volumeSelectorButton] addTarget:self
                                     action:@selector(changeVolume:)
                           forControlEvents:UIControlEventTouchUpInside];
+    [[cell volumeAccessoryView] setHidden:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -215,10 +254,20 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)changeSound:(UIButton*)button {
     DDLogVerbose(@"change sound");
+    [[self delegate] showAvailableSounds:[[self availableSounds] sounds]
+                       selectedSoundName:[[self selectedSound] localizedName]
+                               withTitle:NSLocalizedString(@"sleep-sounds.option.title.sound", nil)
+                                subTitle:NSLocalizedString(@"sleep-sounds.option.subtitle.sound", nil)
+                                    from:self];
 }
 
 - (void)changeDuration:(UIButton*)button {
     DDLogVerbose(@"change duration");
+    [[self delegate] showAvailableDurations:[[self availableDurations] durations]
+                       selectedDurationName:[[self selectedDuration] localizedName]
+                                  withTitle:NSLocalizedString(@"sleep-sounds.option.title.duration", nil)
+                                   subTitle:NSLocalizedString(@"sleep-sounds.option.subtitle.duration", nil)
+                                       from:self];
 }
 
 - (void)changeVolume:(UIButton*)button {
@@ -242,22 +291,23 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     DDLogVerbose(@"attempting to play sound");
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     
-    SENSleepSound* sound = [[self service] defaultSleepSoundFrom:[self availableSounds]];
-    SENSleepSoundDuration* duration = [[self service] defaultDurationFrom:[self availableDurations]];
-    
     __weak typeof(self) weakSelf = self;
-    [[self service] playSound:sound forDuration:duration withVolume:100 completion:^(NSError * _Nullable error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        if (!error) {
-            DDLogVerbose(@"playing sound");
-            [strongSelf setPlayerState:HEMSleepSoundPlayerStatePlaying];
-        } else {
-            DDLogVerbose(@"failed to play sound");
-            [strongSelf setPlayerState:HEMSleepSoundPlayerStateStopped];
-            [[strongSelf delegate] presentError:error];
-        }
-    }];
+    [[self service] playSound:[self selectedSound]
+                  forDuration:[self selectedDuration]
+                   withVolume:80
+                   completion:^(NSError * _Nullable error) {
+                       __strong typeof(weakSelf) strongSelf = weakSelf;
+                    
+                       if (!error) {
+                           DDLogVerbose(@"playing sound");
+                           [strongSelf setPlayerState:HEMSleepSoundPlayerStatePlaying];
+                       } else {
+                           DDLogVerbose(@"failed to play sound");
+                           [strongSelf setPlayerState:HEMSleepSoundPlayerStateStopped];
+                           [[strongSelf delegate] presentError:error];
+                       }
+                       
+                   }];
 }
 
 - (void)stop:(UIButton*)button {

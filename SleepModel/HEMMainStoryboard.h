@@ -52,6 +52,7 @@
 +(NSString *)barReuseIdentifier;
 +(NSString *)bubblesReuseIdentifier;
 +(NSString *)messageReuseIdentifier;
++(NSString *)listItemReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)fieldCellReuseIdentifier;
@@ -61,6 +62,7 @@
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)alarmsSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
++(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
@@ -86,6 +88,7 @@
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightFeedViewController;
++(id)instantiateListItemViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;

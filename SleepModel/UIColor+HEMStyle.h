@@ -173,6 +173,7 @@
 + (UIColor *)barChartBorderColor;
 + (UIColor *)sleepSoundPlayerTitleColor;
 + (UIColor *)sleepSoundPlayerOptionValueColor;
++ (UIColor *)listItemTextColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
 + (NSArray*)loadingIndicatorColorRefs;
 

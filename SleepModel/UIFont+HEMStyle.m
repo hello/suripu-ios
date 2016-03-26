@@ -674,4 +674,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameModernLight size:17.0f];
 }
 
+#pragma mark - List Items
+
++ (UIFont*)listItemTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:16.0f];
+}
+
 @end

@@ -49,6 +49,8 @@ static NSString *const _HEMinfoNavigationController = @"infoNavigationController
 static NSString *const _HEMinfoViewController = @"infoViewController";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
+static NSString *const _HEMlist = @"list";
+static NSString *const _HEMlistItem = @"listItem";
 static NSString *const _HEMloading = @"loading";
 static NSString *const _HEMmessage = @"message";
 static NSString *const _HEMmultiple = @"multiple";
@@ -126,6 +128,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
++(NSString *)listItemReuseIdentifier { return _HEMlistItem; }
 +(NSString *)loadingReuseIdentifier { return _HEMloading; }
 +(NSString *)messageReuseIdentifier { return _HEMmessage; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
@@ -153,6 +156,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
++(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }
 +(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
@@ -178,6 +182,7 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateInfoNavigationController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoNavigationController]; }
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
 +(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
++(id)instantiateListItemViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMlistItem]; }
 +(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
 +(id)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }

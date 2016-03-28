@@ -13,6 +13,7 @@
 #import "HEMSleepSoundConfigurationCell.h"
 #import "HEMSleepSoundService.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMSleepSoundVolume.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
@@ -35,6 +36,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, strong) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, strong) SENSleepSound* selectedSound;
 @property (nonatomic, strong) SENSleepSoundDuration* selectedDuration;
+@property (nonatomic, strong) HEMSleepSoundVolume* selectedVolume;
 
 // TODO: remove once we hook everything up.  We should check status upon load
 @property (nonatomic, assign) HEMSleepSoundPlayerState playerState;
@@ -133,6 +135,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         if (![strongSelf selectedDuration]) {
             [strongSelf setSelectedDuration:[service defaultDurationFrom:[strongSelf availableDurations]]];
         }
+        if (![strongSelf selectedVolume]) {
+            [strongSelf setSelectedVolume:[service defaultVolume]];
+        }
         [[strongSelf collectionView] reloadData];
         [strongSelf setLoading:NO];
     });
@@ -199,10 +204,25 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
 }
 
+- (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume {
+    BOOL shouldReload = _selectedVolume != nil;
+    if (![[_selectedVolume localizedName] isEqualToString:[selectedVolume localizedName]]) {
+        _selectedVolume = selectedVolume;
+        if (shouldReload) {
+            [[self collectionView] reloadData];
+        }
+    }
+}
+
 #pragma mark - Presenter events
 
 - (void)didAppear {
     [super didAppear];
+    [self loadData];
+}
+
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
     [self loadData];
 }
 
@@ -237,12 +257,11 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                                       action:@selector(changeDuration:)
                             forControlEvents:UIControlEventTouchUpInside];
     [[cell volumeLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
-    [[cell volumeValueLabel] setText:NSLocalizedString(@"sleep-sounds.volume.high", nil)];
+    [[cell volumeValueLabel] setText:[[self selectedVolume] localizedName]];
     [[cell volumeValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
     [[cell volumeSelectorButton] addTarget:self
                                     action:@selector(changeVolume:)
                           forControlEvents:UIControlEventTouchUpInside];
-    [[cell volumeAccessoryView] setHidden:YES];
     
     [self setConfigCell:cell];
 }
@@ -277,6 +296,11 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)changeVolume:(UIButton*)button {
     DDLogVerbose(@"change volume");
+    [[self delegate] showVolumeOptions:[[self service] availableVolumeOptions]
+                    selectedVolumeName:[[self selectedVolume] localizedName]
+                             withTitle:NSLocalizedString(@"sleep-sounds.option.title.volume", nil)
+                              subTitle:NSLocalizedString(@"sleep-sounds.option.subtitle.volume", nil)
+                                  from:self];
 }
 
 - (void)takeAction:(UIButton*)button {
@@ -299,7 +323,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     __weak typeof(self) weakSelf = self;
     [[self service] playSound:[self selectedSound]
                   forDuration:[self selectedDuration]
-                   withVolume:80
+                   withVolume:[[self selectedVolume] volume]
                    completion:^(NSError * _Nullable error) {
                        __strong typeof(weakSelf) strongSelf = weakSelf;
                     

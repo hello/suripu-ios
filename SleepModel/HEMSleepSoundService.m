@@ -12,21 +12,39 @@
 #import <SenseKit/SENSleepSounds.h>
 
 #import "HEMSleepSoundService.h"
+#import "HEMSleepSoundVolume.h"
 
 NSString* const HEMSleepSoundServiceErrorDomain = @"is.hello.sense.sleep-sound";
 
 static CGFloat const HEMSleepSoundServiceRequestTimeoutInSecs = 30.0f;
 static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 0.5f;
 
+CGFloat const HEMSleepSoundServiceVolumeHigh = 80.0f;
+CGFloat const HEMSleepSoundServiceVolumeMedium = 50.0f;
+CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
+
 @interface HEMSleepSoundService()
 
 @property (nonatomic, strong) NSTimer* timeout;
 @property (nonatomic, strong) SENSleepSoundRequest* currentRequest;
 @property (nonatomic, copy) HEMSleepSoundsRequestHandler currentRequestCallback;
+@property (nonatomic, strong) NSArray<HEMSleepSoundVolume*>* availableVolumeOptions;
 
 @end
 
 @implementation HEMSleepSoundService
+
+- (NSArray<HEMSleepSoundVolume*>*)availableVolumeOptions {
+    if (!_availableVolumeOptions) {
+        NSString* high = NSLocalizedString(@"sleep-sounds.volume.high", nil);
+        NSString* med = NSLocalizedString(@"sleep-sounds.volume.medium", nil);
+        NSString* low = NSLocalizedString(@"sleep-sounds.volume.low", nil);
+        _availableVolumeOptions = @[[[HEMSleepSoundVolume alloc] initWithName:high volume:HEMSleepSoundServiceVolumeHigh],
+                                    [[HEMSleepSoundVolume alloc] initWithName:med volume:HEMSleepSoundServiceVolumeMedium],
+                                    [[HEMSleepSoundVolume alloc] initWithName:low volume:HEMSleepSoundServiceVolumeLow]];
+    }
+    return _availableVolumeOptions;
+}
 
 - (void)availableSleepSounds:(HEMSleepSoundsDataHandler)completion {
     [SENAPISleepSounds availableSleepSounds:^(id data, NSError *error) {
@@ -52,6 +70,10 @@ static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 0.5f;
 
 - (SENSleepSoundDuration*)defaultDurationFrom:(SENSleepSoundDurations*)available {
     return [[available durations] firstObject];
+}
+
+- (HEMSleepSoundVolume*)defaultVolume {
+    return [[self availableVolumeOptions] firstObject];
 }
 
 - (NSError*)errorWithCode:(HEMSleepSoundServiceError)code {
@@ -122,6 +144,8 @@ static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 0.5f;
                 [SENAnalytics trackError:error];
                 // if there is an error, check again.  might not have one again?
             } else if ([strongSelf isRequest:[strongSelf currentRequest] successful:data]) {
+                [[strongSelf timeout] invalidate];
+                [strongSelf setTimeout:nil];
                 [strongSelf respondToCurrentRequest:nil];
             } else {
                 if ([strongSelf currentRequest]) {
@@ -152,6 +176,7 @@ static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 0.5f;
 }
 
 - (void)requestTimeout {
+    [[self timeout] invalidate];
     [self setTimeout:nil];
     [self respondToCurrentRequest:[self errorWithCode:HEMSleepSoundServiceErrorTimeout]];
 }

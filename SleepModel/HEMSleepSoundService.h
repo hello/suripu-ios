@@ -12,10 +12,14 @@
 @class SENSleepSound;
 @class SENSleepSoundDurations;
 @class SENSleepSoundDuration;
+@class HEMSleepSoundVolume;
 
 NS_ASSUME_NONNULL_BEGIN
 
 extern NSString* const HEMSleepSoundServiceErrorDomain;
+extern CGFloat const HEMSleepSoundServiceVolumeHigh;
+extern CGFloat const HEMSleepSoundServiceVolumeMedium;
+extern CGFloat const HEMSleepSoundServiceVolumeLow;
 
 typedef void(^HEMSleepSoundsDataHandler)(id _Nullable data, NSError* _Nullable error);
 typedef void(^HEMSleepSoundsRequestHandler)(NSError* _Nullable error);
@@ -27,10 +31,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
 
 @interface HEMSleepSoundService : SENService
 
+- (NSArray<HEMSleepSoundVolume*>*)availableVolumeOptions;
 - (void)availableSleepSounds:(HEMSleepSoundsDataHandler)completion;
 - (void)availableDurations:(HEMSleepSoundsDataHandler)completion;
 - (SENSleepSound*)defaultSleepSoundFrom:(SENSleepSounds*)available;
 - (SENSleepSoundDuration*)defaultDurationFrom:(SENSleepSoundDurations*)available;
+- (HEMSleepSoundVolume*)defaultVolume;
 - (void)playSound:(SENSleepSound*)sound
       forDuration:(SENSleepSoundDuration*)duration
        withVolume:(NSInteger)volume

@@ -14,6 +14,7 @@
 @class SENSleepSounds;
 @class SENSleepSoundDuration;
 @class SENSleepSoundDurations;
+@class HEMSleepSoundVolume;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,6 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
                      withTitle:(NSString*)title
                       subTitle:(NSString*)subTitle
                           from:(HEMSleepSoundPlayerPresenter *)presenter;
+- (void)showVolumeOptions:(NSArray *)volumeOptions
+       selectedVolumeName:(NSString*)selectedName
+                withTitle:(NSString*)title
+                 subTitle:(NSString*)subTitle
+                     from:(HEMSleepSoundPlayerPresenter *)presenter;
 
 @end
 
@@ -43,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithActionButton:(UIButton*)button;
 - (void)setSelectedSound:(SENSleepSound*)sound;
 - (void)setSelectedDuration:(SENSleepSoundDuration*)duration;
+- (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume;
 
 @end
 

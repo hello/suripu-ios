@@ -16,6 +16,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSoundsPresenter.h"
 #import "HEMSleepSoundDurationsPresenter.h"
+#import "HEMSleepSoundVolumePresenter.h"
 
 @interface HEMSleepSoundViewController () <HEMSleepSoundPlayerDelegate, HEMListDelegate>
 
@@ -79,12 +80,11 @@
                   withTitle:(NSString*)title
                    subTitle:(NSString*)subTitle
                        from:(HEMSleepSoundPlayerPresenter *)presenter {
-    [self setListTitle:title];
-    [self setListPresenter:[[HEMSleepSoundsPresenter alloc] initWithTitle:subTitle
-                                                                    items:sounds
-                                                         selectedItemName:selectedName]];
-    [[self listPresenter] setDelegate:self];
-    [self performSegueWithIdentifier:[HEMMainStoryboard listSegueIdentifier] sender:self];
+    HEMSleepSoundsPresenter* soundsPresenter =
+        [[HEMSleepSoundsPresenter alloc] initWithTitle:subTitle
+                                                 items:sounds
+                                      selectedItemName:selectedName];
+    [self showListViewControllerWithPresenter:soundsPresenter title:title];
 }
 
 - (void)showAvailableDurations:(NSArray *)durations
@@ -92,10 +92,28 @@
                      withTitle:(NSString*)title
                       subTitle:(NSString*)subTitle
                           from:(HEMSleepSoundPlayerPresenter *)presenter {
+    HEMSleepSoundDurationsPresenter* durationsPresenter
+        = [[HEMSleepSoundDurationsPresenter alloc] initWithTitle:subTitle
+                                                           items:durations
+                                                selectedItemName:selectedName];
+    [self showListViewControllerWithPresenter:durationsPresenter title:title];
+}
+
+- (void)showVolumeOptions:(NSArray *)volumeOptions
+       selectedVolumeName:(NSString*)selectedName
+                withTitle:(NSString*)title
+                 subTitle:(NSString*)subTitle
+                     from:(HEMSleepSoundPlayerPresenter *)presenter {
+    HEMSleepSoundVolumePresenter* volumePresenter
+        = [[HEMSleepSoundVolumePresenter alloc] initWithTitle:subTitle
+                                                        items:volumeOptions
+                                             selectedItemName:selectedName];
+    [self showListViewControllerWithPresenter:volumePresenter title:title];
+}
+
+- (void)showListViewControllerWithPresenter:(HEMListPresenter*)presenter title:(NSString*)title {
     [self setListTitle:title];
-    [self setListPresenter:[[HEMSleepSoundDurationsPresenter alloc] initWithTitle:subTitle
-                                                                            items:durations
-                                                                 selectedItemName:selectedName]];
+    [self setListPresenter:presenter];
     [[self listPresenter] setDelegate:self];
     [self performSegueWithIdentifier:[HEMMainStoryboard listSegueIdentifier] sender:self];
 }
@@ -107,6 +125,8 @@
         [[self playerPresenter] setSelectedSound:item];
     } else if ([presenter isKindOfClass:[HEMSleepSoundDurationsPresenter class]]) {
         [[self playerPresenter] setSelectedDuration:item];
+    } else if ([presenter isKindOfClass:[HEMSleepSoundVolumePresenter class]]) {
+        [[self playerPresenter] setSelectedVolume:item];
     }
     [[self navigationController] popViewControllerAnimated:YES];
 }

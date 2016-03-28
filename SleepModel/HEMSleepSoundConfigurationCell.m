@@ -33,10 +33,12 @@ static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
 - (void)deactivate:(BOOL)deactivate {
     [self setUserInteractionEnabled:!deactivate];
     if (deactivate) {
-        UIView* overlay = [[UIView alloc] initWithFrame:[self bounds]];
-        [overlay setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
-        [[self contentView] addSubview:overlay];
-        [self setOverlay:overlay];
+        if (![self overlay]) {
+            UIView* overlay = [[UIView alloc] initWithFrame:[self bounds]];
+            [overlay setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+            [[self contentView] addSubview:overlay];
+            [self setOverlay:overlay];
+        }
     } else {
         [[self overlay] removeFromSuperview];
     }

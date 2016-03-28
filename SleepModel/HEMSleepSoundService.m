@@ -17,7 +17,8 @@
 NSString* const HEMSleepSoundServiceErrorDomain = @"is.hello.sense.sleep-sound";
 
 static CGFloat const HEMSleepSoundServiceRequestTimeoutInSecs = 30.0f;
-static CGFloat const HEMSleepSoundServiceRequestIntervalInSecs = 0.5f;
+static CGFloat const HEMSleepSoundServiceStatusCheckDelay = 0.175f;
+static CGFloat const HEMSleepSoundServiceRequestBackoff = 2.0f;
 
 CGFloat const HEMSleepSoundServiceVolumeHigh = 80.0f;
 CGFloat const HEMSleepSoundServiceVolumeMedium = 50.0f;
@@ -82,6 +83,11 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
                            userInfo:nil];
 }
 
+- (CGFloat)nextStatusCheckDelay:(NSInteger)attempts {
+    // exponential backoff
+    return pow(HEMSleepSoundServiceRequestBackoff, attempts) * HEMSleepSoundServiceStatusCheckDelay;
+}
+
 - (void)fireRequest:(SENSleepSoundRequest*)request
          completion:(HEMSleepSoundsRequestHandler)completion {
     [self setCurrentRequest:request];
@@ -95,7 +101,7 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
             [strongSelf respondToCurrentRequest:error];
         } else {
             [strongSelf scheduleRequestStatusTimer];
-            [strongSelf checkStatusForCurrentRequest];
+            [strongSelf checkStatusForCurrentRequest:0];
         }
     }];
     
@@ -133,10 +139,12 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
         || ([request isKindOfClass:[SENSleepSoundRequestStop class]] && ![status isPlaying]);
 }
 
-- (void)checkStatusForCurrentRequest {
+- (void)checkStatusForCurrentRequest:(NSInteger)attempt {
     __weak typeof(self) weakSelf = self;
-    CGFloat secs = HEMSleepSoundServiceRequestIntervalInSecs;
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, secs*NSEC_PER_SEC);
+    
+    CGFloat delay = [self nextStatusCheckDelay:attempt];
+    DDLogVerbose(@"checking next request after delay %f", delay);
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay*NSEC_PER_SEC);
     dispatch_after(time, dispatch_get_main_queue(), ^{
         [SENAPISleepSounds checkRequestStatus:^(id data, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -144,12 +152,10 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
                 [SENAnalytics trackError:error];
                 // if there is an error, check again.  might not have one again?
             } else if ([strongSelf isRequest:[strongSelf currentRequest] successful:data]) {
-                [[strongSelf timeout] invalidate];
-                [strongSelf setTimeout:nil];
                 [strongSelf respondToCurrentRequest:nil];
             } else {
                 if ([strongSelf currentRequest]) {
-                    [strongSelf checkStatusForCurrentRequest];
+                    [strongSelf checkStatusForCurrentRequest:attempt + 1];
                 }
             }
         }];
@@ -157,6 +163,8 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 }
 
 - (void)respondToCurrentRequest:(NSError*)error {
+    [[self timeout] invalidate];
+    [self setTimeout:nil];
     if ([self currentRequestCallback]) {
         [self currentRequestCallback] (error);
         [self setCurrentRequestCallback:nil];
@@ -176,8 +184,6 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 }
 
 - (void)requestTimeout {
-    [[self timeout] invalidate];
-    [self setTimeout:nil];
     [self respondToCurrentRequest:[self errorWithCode:HEMSleepSoundServiceErrorTimeout]];
 }
 

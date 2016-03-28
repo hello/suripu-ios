@@ -133,11 +133,12 @@ static NSUInteger const HEMAlarmListLimit = 8;
         return;
     self.addButton.enabled = NO;
     self.noSense = NO;
+    self.loading = YES;
+
     SENServiceDevice *service = [SENServiceDevice sharedService];
     if ([service isInfoLoaded]) {
         [self checkDeviceInfoForSenseAndRefresh];
     } else {
-        self.loading = YES;
         [service loadDeviceInfo:^(NSError *error) {
           if (error) {
               self.noSense = NO;

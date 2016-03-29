@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.2.3
+
+New:
+
+* Sleep sounds now have a volume control
+* Sleep sounds has a temporary playing state
+* Sleep sounds checks the status when loaded, in case it was dismissed / playing
+
+Fixes:
+
+* Loading indicator for the alarms view should not be shown indefinitely, again 
+
 ## 1.3.2.2
 
 New:

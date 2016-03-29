@@ -759,3 +759,5 @@
 "sleep-sounds.option.subtitle.duration" = "Play sleep sound for";
 "sleep-sounds.option.title.volume" = "Volume";
 "sleep-sounds.option.subtitle.volume" = "Volume control";
+"sleep-sounds.title.state.stopped" = "Play a Sound";
+"sleep-sounds.title.state.playing" = "Now Playing";

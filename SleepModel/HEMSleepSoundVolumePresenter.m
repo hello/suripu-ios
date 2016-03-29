@@ -17,9 +17,10 @@
     [super configureCell:cell forItem:item];
     
     HEMSleepSoundVolume* volume = item;
-    BOOL selected = [[volume localizedName] isEqualToString:[self selectedItemName]];
     [[cell itemLabel] setText:[volume localizedName]];
-    [[cell selectionImageView] setHidden:!selected];
+    
+    BOOL selected = [[volume localizedName] isEqualToString:[self selectedItemName]];
+    [cell setSelected:selected];
 }
 
 @end

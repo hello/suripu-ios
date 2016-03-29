@@ -10,4 +10,8 @@
 
 @implementation HEMListItemCell
 
+- (void)setSelected:(BOOL)selected {
+    [[self selectionImageView] setHidden:!selected];
+}
+
 @end

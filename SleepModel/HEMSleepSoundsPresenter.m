@@ -17,9 +17,10 @@
     [super configureCell:cell forItem:item];
     
     SENSleepSound* sound = item;
-    BOOL selected = [[sound localizedName] isEqualToString:[self selectedItemName]];
     [[cell itemLabel] setText:[sound localizedName]];
-    [[cell selectionImageView] setHidden:!selected];
+    
+    BOOL selected = [[sound localizedName] isEqualToString:[self selectedItemName]];
+    [cell setSelected:selected];
 }
 
 @end

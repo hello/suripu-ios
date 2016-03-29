@@ -52,6 +52,13 @@
     [[cell itemLabel] setTextColor:[UIColor listItemTextColor]];
 }
 
+- (void)selectItemAtIndexPath:(NSIndexPath*)indexPathToSelect {
+    for (NSIndexPath* indexPath in [[self tableView] indexPathsForVisibleRows]) {
+        UITableViewCell* cell = [[self tableView] cellForRowAtIndexPath:indexPath];
+        [cell setSelected:[indexPath isEqual:indexPathToSelect]];
+    }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView
@@ -62,7 +69,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self selectItemAtIndexPath:indexPath];
     
     id item = [self items][[indexPath row]];
     NSInteger index = [indexPath row];

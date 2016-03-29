@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, getter=isPlaying, readonly) BOOL playing;
 @property (nonatomic, strong, readonly, nullable) SENSleepSound* sound;
 @property (nonatomic, strong, readonly, nullable) SENSleepSoundDuration* duration;
+@property (nonatomic, strong, readonly, nullable) NSNumber* volume;
 
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 

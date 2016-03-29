@@ -162,6 +162,15 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
     });
 }
 
+- (void)checkCurrentSleepSoundStatus:(HEMSleepSoundsStatusHandler)handler {
+    [SENAPISleepSounds checkRequestStatus:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        handler (data, error);
+    }];
+}
+
 - (void)respondToCurrentRequest:(NSError*)error {
     [[self timeout] invalidate];
     [self setTimeout:nil];

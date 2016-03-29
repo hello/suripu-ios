@@ -23,6 +23,7 @@ extern CGFloat const HEMSleepSoundServiceVolumeLow;
 
 typedef void(^HEMSleepSoundsDataHandler)(id _Nullable data, NSError* _Nullable error);
 typedef void(^HEMSleepSoundsRequestHandler)(NSError* _Nullable error);
+typedef void(^HEMSleepSoundsStatusHandler)(id _Nullable data, NSError* _Nullable error);
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
     HEMSleepSoundServiceErrorInProgress = -1,
@@ -42,6 +43,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
        withVolume:(NSInteger)volume
        completion:(HEMSleepSoundsRequestHandler)completion;
 - (void)stopPlaying:(HEMSleepSoundsRequestHandler)completion;
+- (void)checkCurrentSleepSoundStatus:(HEMSleepSoundsStatusHandler)handler;
 
 @end
 

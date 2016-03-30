@@ -76,10 +76,12 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refreshData];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshData)
                                                  name:SENAPIReachableNotification
                                                object:nil];
+    
     [self.collectionView reloadData];
 }
 
@@ -90,7 +92,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:SENAPIReachableNotification
+                                                  object:nil];
     [self touchUpOutsideAddAlarmButton:nil];
 }
 
@@ -460,6 +464,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 #pragma mark - Clean Up
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
 }

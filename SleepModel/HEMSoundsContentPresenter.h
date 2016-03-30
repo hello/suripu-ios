@@ -14,19 +14,22 @@
 @class HEMActivityIndicatorView;
 @class HEMSubNavigationView;
 @class SENSleepSounds;
+@class HEMSoundsContentPresenter;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol HEMSoundSubNavDelegate <NSObject>
+@protocol HEMSoundContentDelegate <NSObject>
 
-- (void)loadAlarms:(BOOL)hasSensePaired;
-- (void)loadSleepSounds:(SENSleepSounds*)sleepSounds;
+- (void)loadAlarmsFrom:(HEMSoundsContentPresenter*)presenter;
+- (void)loadSleepSounds:(SENSleepSounds*)sleepSounds from:(HEMSoundsContentPresenter*)presenter;
+- (void)pairWithSenseFrom:(HEMSoundsContentPresenter*)presenter;
+- (void)unloadContentControllersFrom:(HEMSoundsContentPresenter*)presenter;
 
 @end
 
-@interface HEMSoundsSubNavPresenter : HEMPresenter
+@interface HEMSoundsContentPresenter : HEMPresenter
 
-@property (nonatomic, weak, nullable) id<HEMSoundSubNavDelegate> delegate;
+@property (nonatomic, weak, nullable) id<HEMSoundContentDelegate> delegate;
 
 - (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)sleepSoundService
                              alarmService:(HEMAlarmService*)alarmService
@@ -35,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
 - (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNavigationView
              withHeightConstraint:(NSLayoutConstraint*)heightConstraint;
+- (void)bindWithErrorCollectionView:(UICollectionView*)collectionView;
+- (void)reload;
 
 @end
 

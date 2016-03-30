@@ -349,8 +349,6 @@
 "alarms.alarm.meridiem.pm" = "PM";
 "alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at the lightest point in your natural sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
 "alarms.no-data" = "There was a problem displaying your alarms. Please try again.";
-"alarms.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to set alarms.";
-"alarms.no-sense.button.title" = "Pair new Sense";
 
 // alarm settings
 "alarm.sound.title" = "Tone";
@@ -748,7 +746,13 @@
 "video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
 
+// sounds
+"sounds.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to enable this feature.";
+"sounds.no-sense.button.title" = "Pair new Sense";
+"sounds.error.message" = "There was a problem loading the content. Please try again.";
+
 // sleep sounds
+"sleep-sounds.error.message" = "There was a problem loading sleep sounds.  Please try again.";
 "sleep-sounds.title" = "Sleep sounds";
 "sleep-sounds.volume.high" = "High";
 "sleep-sounds.volume.medium" = "Medium";

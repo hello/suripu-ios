@@ -9,6 +9,7 @@
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENDeviceMetadata.h>
+#import <SenseKit/SENAPIDevice.h>
 
 #import "HEMDeviceService.h"
 
@@ -26,8 +27,29 @@ NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
     self = [super init];
     if (self) {
         _devices = [[SENServiceDevice sharedService] devices]; // in case already loaded
+        [self listenForDeprecatedServiceNotifications];
     }
     return self;
+}
+
+- (void)listenForDeprecatedServiceNotifications {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(clearDevicesCache)
+                   name:SENServiceDeviceNotificationFactorySettingsRestored
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(clearDevicesCache)
+                   name:SENServiceDeviceNotificationSenseUnpaired
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(clearDevicesCache)
+                   name:SENServiceDeviceNotificationPillUnpaired
+                 object:nil];
+}
+
+- (void)clearDevicesCache {
+    [self setDevices:nil];
 }
 
 - (NSError*)errorWithCode:(HEMDeviceError)code {
@@ -36,25 +58,18 @@ NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
                            userInfo:nil];
 }
 
-- (NSError*)translateOldServiceError:(NSError*)error {
-    if (!error) {
-        return nil;
-    }
-    return [self errorWithCode:[error code]];
-}
-
 - (void)refreshMetadata:(HEMDeviceMetadataHandler)completion {
     __weak typeof(self) weakSelf = self;
-    SENServiceDevice* oldService = [SENServiceDevice sharedService];
-    [oldService loadDeviceInfo:^(NSError *error) {
+    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSError* deviceError = [strongSelf translateOldServiceError:error];
-        if (deviceError) {
-            [SENAnalytics trackError:deviceError];
+        SENPairedDevices* devices = nil;
+        if (error) {
+            [SENAnalytics trackError:error];
         } else {
-            [strongSelf setDevices:[oldService devices]];
+            devices = [[SENServiceDevice sharedService] devices];
+            [strongSelf setDevices:devices];
         }
-        completion ([strongSelf devices], deviceError);
+        completion (devices, error);
     }];
 }
 
@@ -77,6 +92,12 @@ NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
     return [self devices]
         && ([[self devices] hasPairedPill]
             || [[self devices] hasPairedSense]);
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

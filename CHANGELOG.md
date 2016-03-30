@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.2.4
+
+New:
+
+* Sounds view (container for alarms + sleep sounds) now handles error
+* Sleep sounds will display an error if it fails to load initially
+* Alarm error handling refactored so it does not additionally check to see if
+  a Sense is paired
+
 ## 1.3.2.3
 
 New:

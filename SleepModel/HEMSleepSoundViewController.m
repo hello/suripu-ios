@@ -72,7 +72,7 @@
 - (void)presentError:(NSError *)error {
     [HEMAlertViewController showInfoDialogWithTitle:nil
                                             message:[error localizedDescription]
-                                         controller:self];
+                                         controller:[self navigationController]];
 }
 
 - (void)showAvailableSounds:(NSArray *)sounds

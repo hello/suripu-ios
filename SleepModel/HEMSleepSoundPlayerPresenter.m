@@ -9,9 +9,12 @@
 #import <SenseKit/SENSleepSoundDurations.h>
 #import <SenseKit/SENSleepSoundStatus.h>
 
+#import "NSString+HEMUtils.h"
+
 #import "HEMSleepSoundPlayerPresenter.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSoundConfigurationCell.h"
+#import "HEMTextCollectionViewCell.h"
 #import "HEMSleepSoundService.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSleepSoundVolume.h"
@@ -22,10 +25,15 @@ static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
 typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStateStopped = 0,
     HEMSleepSoundPlayerStatePlaying,
-    HEMSleepSoundPlayerStateWaiting
+    HEMSleepSoundPlayerStateWaiting,
+    HEMSleepSoundPlayerStateError
 };
 
-@interface HEMSleepSoundPlayerPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HEMSleepSoundPlayerPresenter() <
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout
+>
 
 @property (nonatomic, weak) HEMSleepSoundService* service;
 @property (nonatomic, weak) UICollectionView* collectionView;
@@ -57,11 +65,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
-    UICollectionViewFlowLayout* layout = (id)[collectionView collectionViewLayout];
-    CGSize itemSize = [layout itemSize];
-    itemSize.height = HEMSleepSoundConfigCellHeight;
-    [layout setItemSize:itemSize];
-    
     [collectionView setAlwaysBounceVertical:YES];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
@@ -69,13 +72,10 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)bindWithActionButton:(UIButton*)button {
-    // TODO: do not auto default to button image.  need to check status
-    [button addTarget:self action:@selector(takeAction:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTintColor:[UIColor whiteColor]];
-    
     CGFloat buttonWidth = CGRectGetWidth([button bounds]);
     [[button layer] setCornerRadius:buttonWidth / 2.0f];
-    
+    [button addTarget:self action:@selector(takeAction:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTintColor:[UIColor whiteColor]];
     [self setActionButton:button];
 }
 
@@ -162,7 +162,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                 [strongSelf setSelectedVolume:[service defaultVolume]];
             }
         } else {
-            [strongSelf setPlayerState:HEMSleepSoundPlayerStateStopped];
+            [strongSelf setPlayerState:HEMSleepSoundPlayerStateError];
         }
         
         [[strongSelf collectionView] reloadData];
@@ -175,10 +175,14 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[self configCell] deactivate:YES];
     [[[self configCell] titleLabel] setText:[self titleForPlayerState:[self playerState]]];
     [[self actionButton] setEnabled:YES];
+    [[self actionButton] setHidden:NO];
     [[self indicatorView] stop];
     [[self indicatorView] removeFromSuperview];
     
     switch (playerState) {
+        case HEMSleepSoundPlayerStateError:
+            [[self actionButton] setHidden:YES];
+            break;
         case HEMSleepSoundPlayerStateStopped:
             [[self configCell] deactivate:NO];
             [[self actionButton] setImage:[UIImage imageNamed:@"sleepSoundPlayIcon"]
@@ -294,8 +298,39 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard settingsReuseIdentifier]
-                                                     forIndexPath:indexPath];
+    NSString* reuseId = nil;
+    switch ([self playerState]) {
+        case HEMSleepSoundPlayerStateError:
+            reuseId = [HEMMainStoryboard errorReuseIdentifier];
+            break;
+        default:
+            reuseId = [HEMMainStoryboard settingsReuseIdentifier];
+            break;
+    }
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+}
+
+#pragma mark - UICollectionView Layout Delegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewFlowLayout* flowLayout = (id)collectionViewLayout;
+    CGSize itemSize = [flowLayout itemSize];
+    switch ([self playerState]) {
+        case HEMSleepSoundPlayerStateError: {
+            NSString* text = NSLocalizedString(@"sleep-sounds.error.message", nil);
+            UIFont* font = [UIFont errorStateDescriptionFont];
+            CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
+            CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
+            itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+            break;
+        }
+        default:
+            itemSize.height = HEMSleepSoundConfigCellHeight;
+            break;
+    }
+    return itemSize;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -325,11 +360,20 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [self setConfigCell:cell];
 }
 
+- (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
+    [[errorCell textLabel] setText:NSLocalizedString(@"sleep-sounds.error.message", nil)];
+    [[errorCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [errorCell displayAsACard:YES];
+    [self setConfigCell:nil];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[HEMSleepSoundConfigurationCell class]]) {
         [self configureSleepSoundConfigurationCell:(id)cell];
+    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
+        [self configureErrorCell:(id)cell];
     }
 }
 

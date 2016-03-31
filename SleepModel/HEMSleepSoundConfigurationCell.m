@@ -10,7 +10,7 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
-static CGFloat const HEMSleepSoundConfAnimDuration = 0.25f;
+static CGFloat const HEMSleepSoundConfAnimDuration = 0.5f;
 
 @interface HEMSleepSoundConfigurationCell()
 
@@ -36,6 +36,8 @@ static CGFloat const HEMSleepSoundConfAnimDuration = 0.25f;
     [[self soundValueLabel] setAlpha:0.0f];
     [[self durationValueLabel] setAlpha:0.0f];
     [[self volumeValueLabel] setAlpha:0.0f];
+    
+    [self deactivate:YES];
 }
 
 - (void)deactivate:(BOOL)deactivate {

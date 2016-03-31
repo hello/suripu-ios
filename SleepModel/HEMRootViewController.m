@@ -538,6 +538,20 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     [self openSettingsDrawer];
     HEMSnazzBarController* controller = [self barController];
+    UIViewController* topVC = [controller selectedViewController];
+    // this is not an ideal way of handling it, but there really isn't
+    // a good place or better way to do it so this is as good as anything?
+    void(^popToRoot)(void) = ^{
+        if ([topVC isKindOfClass:[UINavigationController class]]) {
+            UINavigationController* nav = (id)topVC;
+            [nav popToRootViewControllerAnimated:NO];
+        }
+    };
+    if ([topVC presentedViewController]) {
+        [topVC dismissViewControllerAnimated:NO completion:popToRoot];
+    } else {
+        popToRoot ();
+    }
     [controller setSelectedIndex:tabIndex animated:animated];
 }
 

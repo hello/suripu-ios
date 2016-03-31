@@ -37,7 +37,6 @@
 @property (nonatomic, weak) HEMSoundsContentPresenter* contentPresenter;
 
 @property (nonatomic, strong) HEMAlarmListViewController* alarmVC;
-@property (nonatomic, strong) HEMSleepSoundViewController* sleepSoundVC;
 
 @end
 
@@ -121,11 +120,8 @@
 
 - (void)loadSleepSounds:(SENSleepSounds *)sleepSounds from:(__unused HEMSoundsContentPresenter *)presenter {
     DDLogVerbose(@"show sleep sounds view");
-    if (![self sleepSoundVC]) {
-        HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
-        [self setSleepSoundVC:soundVC];
-    }
-    [self showSoundViewOf:[self sleepSoundVC] completion:nil];
+    HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
+    [self showSoundViewOf:soundVC completion:nil];
 }
 
 - (void)showSoundViewOf:(UIViewController*)controller completion:(void(^)(void))completion {

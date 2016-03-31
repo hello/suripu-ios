@@ -10,10 +10,9 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
+static CGFloat const HEMSleepSoundConfAnimDuration = 0.5f;
 
 @interface HEMSleepSoundConfigurationCell()
-
-@property (nonatomic, weak) UIView* overlay;
 
 @end
 
@@ -28,20 +27,34 @@ static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
     [[self titleSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     [[self soundSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     [[self durationSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
+    
+    [[self overlay] setAlpha:1.0f];
+    [[self soundAccessoryView] setAlpha:0.0f];
+    [[self durationAccessoryView] setAlpha:0.0f];
+    [[self volumeAccessoryView] setAlpha:0.0f];
+    
+    [[self soundValueLabel] setAlpha:0.0f];
+    [[self durationValueLabel] setAlpha:0.0f];
+    [[self volumeValueLabel] setAlpha:0.0f];
+    
+    [self deactivate:YES];
 }
 
 - (void)deactivate:(BOOL)deactivate {
     [self setUserInteractionEnabled:!deactivate];
-    if (deactivate) {
-        if (![self overlay]) {
-            UIView* overlay = [[UIView alloc] initWithFrame:[self bounds]];
-            [overlay setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
-            [[self contentView] addSubview:overlay];
-            [self setOverlay:overlay];
-        }
-    } else {
-        [[self overlay] removeFromSuperview];
-    }
+    [[self overlay] setHidden:NO];
+    
+    [UIView animateWithDuration:HEMSleepSoundConfAnimDuration animations:^{
+        [[self overlay] setAlpha:deactivate ? 1.0f : 0.0f];
+        [[self soundAccessoryView] setAlpha:deactivate ? 0.0f : 1.0f];
+        [[self durationAccessoryView] setAlpha:deactivate ? 0.0f : 1.0f];
+        [[self volumeAccessoryView] setAlpha:deactivate ? 0.0f : 1.0f];
+        [[self soundValueLabel] setAlpha:1.0f];
+        [[self durationValueLabel] setAlpha:1.0f];
+        [[self volumeValueLabel] setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+        [[self overlay] setHidden:!deactivate];
+    }];
 }
 
 @end

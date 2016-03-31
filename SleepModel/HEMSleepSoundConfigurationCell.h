@@ -36,6 +36,8 @@
 @property (nonatomic, weak) IBOutlet UIImageView* volumeAccessoryView;
 @property (nonatomic, weak) IBOutlet UIButton *volumeSelectorButton;
 
+@property (nonatomic, weak) IBOutlet UIView* overlay;
+
 - (void)deactivate:(BOOL)deactivate;
 
 @end

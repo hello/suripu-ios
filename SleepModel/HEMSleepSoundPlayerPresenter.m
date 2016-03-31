@@ -76,8 +76,28 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[button layer] setCornerRadius:buttonWidth / 2.0f];
     [button addTarget:self action:@selector(takeAction:) forControlEvents:UIControlEventTouchUpInside];
     [button setTintColor:[UIColor whiteColor]];
+    [button setImage:nil forState:UIControlStateNormal];
+    
     [self setActionButton:button];
+    [self setIndicatorView:[self activityIndicator]];
 }
+
+#pragma mark - Presenter events
+
+- (void)didAppear {
+    [super didAppear];
+    if (![self isWaitingForOptionChange]) {
+        [self loadData];
+    }
+    [self setWaitingForOptionChange:NO];
+}
+
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self loadData];
+}
+
+#pragma mark -
 
 - (void)loadSleepSounds:(void(^)(void))completion {
     __weak typeof(self) weakSelf = self;
@@ -105,6 +125,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
     
     [self setLoading:YES];
+    [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     
     dispatch_group_t dataGroup = dispatch_group_create();
     
@@ -132,9 +153,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     });
 }
 
-- (void)checkIfAlreadyPlaying {
+- (void)checkIfAlreadyPlaying{
     [self setLoading:YES];
-    [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     
     __weak typeof(self) weakSelf = self;
     [[self service] checkCurrentSleepSoundStatus:^(id  _Nullable data, NSError * _Nullable error) {
@@ -167,40 +187,41 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         
         [[strongSelf collectionView] reloadData];
         [strongSelf setLoading:NO];
+        
     }];
 }
 
 - (void)setPlayerState:(HEMSleepSoundPlayerState)playerState {
     _playerState = playerState;
-    [[self configCell] deactivate:YES];
+
     [[[self configCell] titleLabel] setText:[self titleForPlayerState:[self playerState]]];
     [[self actionButton] setEnabled:YES];
     [[self actionButton] setHidden:NO];
-    [[self indicatorView] stop];
-    [[self indicatorView] removeFromSuperview];
     
     switch (playerState) {
         case HEMSleepSoundPlayerStateError:
+            [[self configCell] deactivate:YES];
+            [[self indicatorView] stop];
+            [[self indicatorView] removeFromSuperview];
             [[self actionButton] setHidden:YES];
             break;
         case HEMSleepSoundPlayerStateStopped:
+            [[self indicatorView] stop];
+            [[self indicatorView] removeFromSuperview];
             [[self configCell] deactivate:NO];
             [[self actionButton] setImage:[UIImage imageNamed:@"sleepSoundPlayIcon"]
                                  forState:UIControlStateNormal];
             break;
         case HEMSleepSoundPlayerStatePlaying:
-            [[[self configCell] contentView] bringSubviewToFront:[[self configCell] titleLabel]];
+            [[self configCell] deactivate:YES];
+            [[self indicatorView] stop];
+            [[self indicatorView] removeFromSuperview];
             [[self actionButton] setImage:[UIImage imageNamed:@"sleepSoundStopIcon"]
                                  forState:UIControlStateNormal];
             break;
         default: {
-            [[[self configCell] contentView] insertSubview:[[self configCell] titleLabel] atIndex:0];
+            [[self configCell] deactivate:YES];
             [[self actionButton] setEnabled:NO];
-            
-            if (![self indicatorView]) {
-                [self setIndicatorView:[self activityIndicator]];
-            }
-
             [[self indicatorView] start];
             [[self actionButton] setImage:nil forState:UIControlStateNormal];
             [[self actionButton] addSubview:[self indicatorView]];
@@ -271,21 +292,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         default:
             return [[[self configCell] titleLabel] text];
     }
-}
-
-#pragma mark - Presenter events
-
-- (void)didAppear {
-    [super didAppear];
-    if (![self isWaitingForOptionChange]) {
-        [self loadData];
-    }
-    [self setWaitingForOptionChange:NO];
-}
-
-- (void)didComeBackFromBackground {
-    [super didComeBackFromBackground];
-    [self loadData];
 }
 
 #pragma mark - UICollectionViewDataSource

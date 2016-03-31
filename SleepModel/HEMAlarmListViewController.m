@@ -42,6 +42,7 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
 @property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
+@property (nonatomic, assign) BOOL launchNewAlarmOnLoad;
 @end
 
 @implementation HEMAlarmListViewController
@@ -137,13 +138,18 @@ static NSUInteger const HEMAlarmListLimit = 8;
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setLoading:NO];
         [strongSelf setLoadingFailed:error != nil];
         [[strongSelf addButton] setEnabled:error == nil];
         if (error) {
+            [strongSelf setLoading:NO];
             [strongSelf displayLoadingError];
+            [strongSelf setLaunchNewAlarmOnLoad:NO];
         } else {
             [strongSelf reloadData];
+            if ([strongSelf launchNewAlarmOnLoad]) {
+                [strongSelf addNewAlarm:nil];
+                [strongSelf setLaunchNewAlarmOnLoad:NO];
+            }
         }
     }];
 }
@@ -225,6 +231,15 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (IBAction)addNewAlarm:(id)sender {
+    if ([self isLoading]) {
+        [self setLaunchNewAlarmOnLoad:YES];
+        return;
+    }
+    
+    if (![[self addButton] isEnabled]) {
+        return;
+    }
+    
     [SENAnalytics track:HEMAnalyticsEventCreateNewAlarm];
     void (^animations)() = ^{
       [UIView addKeyframeWithRelativeStartTime:0

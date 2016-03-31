@@ -223,6 +223,10 @@ NSString* const HEMAnalyticsEventAppReviewFeedback = @"Feedback from app review"
 NSString* const HEMAnalyticsEventAppReviewDone = @"App review completed with no action";
 NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
 
+// force touch events
+NSString* const HEMAnalyticsEventShortcutAlarmNew = @"3D Touch new alarm";
+NSString* const HEMAnalyticsEventShortcutAlarmEdit = @"3D Touch edit alarm";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";

@@ -13,7 +13,7 @@ typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
     HEMRootDrawerTabConditions = 0,
     HEMRootDrawerTabTrends = 1,
     HEMRootDrawerTabInsights = 2,
-    HEMRootDrawerTabAlarms = 3,
+    HEMRootDrawerTabSounds = 3,
     HEMRootDrawerTabSettings = 4
 };
 

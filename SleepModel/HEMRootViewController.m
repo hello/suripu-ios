@@ -44,6 +44,7 @@
 #import "HEMTimeZoneAlertService.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMSoundsContainerViewController.h"
+#import "HEMShortcutService.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -163,6 +164,20 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     [super viewDidEnterBackground];
     [SENAnalytics track:kHEMAnalyticsEventAppClosed];
+}
+
+#pragma mark - 3D Touch Notifications
+
+- (void)reactToShortcut:(NSNotification*)note {
+    NSNumber* action = [note userInfo][HEMShortcutNoteInfoAction];
+    switch ([action unsignedIntegerValue]) {
+        case HEMShortcutActionAlarmNew:
+        case HEMShortcutActionAlarmEdit:
+            [self showSettingsDrawerTabAtIndex:HEMRootDrawerTabSounds animated:YES];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - System Alerts
@@ -321,6 +336,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                selector:@selector(showOnboarding)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(reactToShortcut:)
+                   name:nil
+                 object:[HEMShortcutService sharedService]];
 }
 
 - (BOOL)shouldMonitorSystem {
@@ -519,6 +538,20 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     [self openSettingsDrawer];
     HEMSnazzBarController* controller = [self barController];
+    UIViewController* topVC = [controller selectedViewController];
+    // this is not an ideal way of handling it, but there really isn't
+    // a good place or better way to do it so this is as good as anything?
+    void(^popToRoot)(void) = ^{
+        if ([topVC isKindOfClass:[UINavigationController class]]) {
+            UINavigationController* nav = (id)topVC;
+            [nav popToRootViewControllerAnimated:NO];
+        }
+    };
+    if ([topVC presentedViewController]) {
+        [topVC dismissViewControllerAnimated:NO completion:popToRoot];
+    } else {
+        popToRoot ();
+    }
     [controller setSelectedIndex:tabIndex animated:animated];
 }
 

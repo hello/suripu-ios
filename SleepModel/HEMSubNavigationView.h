@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readonly) HEMNavigationShadowView* shadowView;
 
 - (void)addControl:(UIControl*)control;
+- (void)selectControlWithTag:(NSInteger)tag;
 - (BOOL)hasControls;
 - (void)reset;
 

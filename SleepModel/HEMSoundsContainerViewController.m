@@ -21,6 +21,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMShortcutService.h"
 
 @interface HEMSoundsContainerViewController()<HEMSoundContentDelegate, HEMSensePairingDelegate>
 
@@ -45,19 +46,26 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        HEMSoundsTabPresenter* tabPresenter = [HEMSoundsTabPresenter new];
-        [tabPresenter bindWithTabBarItem:[self tabBarItem]];
-        [self addPresenter:tabPresenter];
+        [self addAndConfigureTabPresenter];
+        // must add here b/c content presenter needs shortcut notifications that
+        // can come from 3D Touch, which triggers notifications on launch
+        [self addContentPresenter];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configurePresenter];
+    [self configureContentPresenter];
 }
 
-- (void)configurePresenter {
+- (void)addAndConfigureTabPresenter {
+    HEMSoundsTabPresenter* tabPresenter = [HEMSoundsTabPresenter new];
+    [tabPresenter bindWithTabBarItem:[self tabBarItem]];
+    [self addPresenter:tabPresenter];
+}
+
+- (void)addContentPresenter {
     [self setSleepSoundsService:[HEMSleepSoundService new]];
     [self setAlarmService:[HEMAlarmService new]];
     [self setDeviceService:[HEMDeviceService new]];
@@ -65,15 +73,19 @@
     HEMSoundsContentPresenter* presenter
         = [[HEMSoundsContentPresenter alloc] initWithSleepSoundService:[self sleepSoundsService]
                                                           alarmService:[self alarmService]
-                                                         deviceService:[self deviceService]];
-    [presenter setDelegate:self];
-    [presenter bindWithActivityIndicator:[self activityIndicator]];
-    [presenter bindWithSubNavigationView:[self subNav]
-                          withHeightConstraint:[self subNavHeightConstraint]];
-    [presenter bindWithErrorCollectionView:[self errorCollectionView]];
+                                                         deviceService:[self deviceService]
+                                                       shortcutService:[HEMShortcutService sharedService]];
     
     [self setContentPresenter:presenter];
     [self addPresenter:presenter];
+}
+
+- (void)configureContentPresenter {
+    [[self contentPresenter] setDelegate:self];
+    [[self contentPresenter] bindWithActivityIndicator:[self activityIndicator]];
+    [[self contentPresenter] bindWithSubNavigationView:[self subNav]
+                                  withHeightConstraint:[self subNavHeightConstraint]];
+    [[self contentPresenter] bindWithErrorCollectionView:[self errorCollectionView]];
 }
 
 #pragma mark - Content Delegate
@@ -94,14 +106,17 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)loadAlarmsFrom:(__unused HEMSoundsContentPresenter *)presenter {
+- (void)loadAlarmsFrom:(__unused HEMSoundsContentPresenter *)presenter thenLaunchNewAlarm:(BOOL)showNewAlarm {
     DDLogVerbose(@"show alarms view");
     if (![self alarmVC]) {
-        HEMAlarmListViewController* alarmList = [HEMMainStoryboard instantiateAlarmListViewController];
-        [alarmList setHasSubNav:[[self subNav] hasControls]];
-        [self setAlarmVC:alarmList];
+        HEMAlarmListViewController* alarmVC = [HEMMainStoryboard instantiateAlarmListViewController];
+        [self setAlarmVC:alarmVC];
     }
-    [self showSoundViewOf:[self alarmVC]];
+    [self showSoundViewOf:[self alarmVC] completion:^{
+        if (showNewAlarm) {
+            [[self alarmVC] addNewAlarm:nil];
+        }
+    }];
 }
 
 - (void)loadSleepSounds:(SENSleepSounds *)sleepSounds from:(__unused HEMSoundsContentPresenter *)presenter {
@@ -110,12 +125,15 @@
         HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
         [self setSleepSoundVC:soundVC];
     }
-    [self showSoundViewOf:[self sleepSoundVC]];
+    [self showSoundViewOf:[self sleepSoundVC] completion:nil];
 }
 
-- (void)showSoundViewOf:(UIViewController*)controller {
+- (void)showSoundViewOf:(UIViewController*)controller completion:(void(^)(void))completion {
     UIViewController* currentVC = [[self childViewControllers] firstObject];
     if (currentVC == controller) {
+        if (completion) {
+            completion ();
+        }
         return;
     }
     
@@ -130,6 +148,9 @@
     if (!currentVC) {
         [controller didMoveToParentViewController:self];
         [[self subNav] setUserInteractionEnabled:YES];
+        if (completion) {
+            completion ();
+        }
     } else {
         [currentVC willMoveToParentViewController:nil];
         [UIView transitionFromView:[currentVC view]
@@ -141,6 +162,9 @@
                             [currentVC removeFromParentViewController];
                             [controller didMoveToParentViewController:self];
                             [[self subNav] setUserInteractionEnabled:YES];
+                            if (completion) {
+                                completion ();
+                            }
                         }];
     }
 }
@@ -173,6 +197,12 @@
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager *)senseManager from:(UIViewController *)controller {
     [self didReturnWithSenseManager:senseManager];
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

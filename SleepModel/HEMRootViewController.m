@@ -44,6 +44,7 @@
 #import "HEMTimeZoneAlertService.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMSoundsContainerViewController.h"
+#import "HEMShortcutService.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -163,6 +164,20 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 {
     [super viewDidEnterBackground];
     [SENAnalytics track:kHEMAnalyticsEventAppClosed];
+}
+
+#pragma mark - 3D Touch Notifications
+
+- (void)reactToShortcut:(NSNotification*)note {
+    NSNumber* action = [note userInfo][HEMShortcutNoteInfoAction];
+    switch ([action unsignedIntegerValue]) {
+        case HEMShortcutActionAlarmNew:
+        case HEMShortcutActionAlarmEdit:
+            [self showSettingsDrawerTabAtIndex:HEMRootDrawerTabSounds animated:YES];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - System Alerts
@@ -321,6 +336,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                selector:@selector(showOnboarding)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(reactToShortcut:)
+                   name:nil
+                 object:[HEMShortcutService sharedService]];
 }
 
 - (BOOL)shouldMonitorSystem {

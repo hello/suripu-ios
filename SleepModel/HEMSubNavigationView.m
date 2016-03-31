@@ -117,12 +117,16 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 }
 
 - (void)select:(UIControl*)control {
+    [self selectControlWithTag:[control tag]];
+}
+
+- (void)selectControlWithTag:(NSInteger)tag {
     [self setPreviousControlTag:[self selectedControlTag]];
-    [self setSelectedControlTag:[control tag]];
+    [self setSelectedControlTag:tag];
     for (UIView* subview in [self subviews]) {
         if ([subview isKindOfClass:[UIControl class]]) {
             UIControl* subControl = (UIControl*) subview;
-            [subControl setSelected:control == subControl];
+            [subControl setSelected:tag == [subControl tag]];
         }
     }
 }

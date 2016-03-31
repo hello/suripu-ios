@@ -11,6 +11,7 @@
 @class HEMSleepSoundService;
 @class HEMAlarmService;
 @class HEMDeviceService;
+@class HEMShortcutService;
 @class HEMActivityIndicatorView;
 @class HEMSubNavigationView;
 @class SENSleepSounds;
@@ -18,9 +19,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, HEMSoundType) {
+    HEMSoundTypeAlarm = 1,
+    HEMSoundTypeSleepSound
+};
+
 @protocol HEMSoundContentDelegate <NSObject>
 
-- (void)loadAlarmsFrom:(HEMSoundsContentPresenter*)presenter;
+- (void)loadAlarmsFrom:(HEMSoundsContentPresenter*)presenter thenLaunchNewAlarm:(BOOL)showNewAlarm;
 - (void)loadSleepSounds:(SENSleepSounds*)sleepSounds from:(HEMSoundsContentPresenter*)presenter;
 - (void)pairWithSenseFrom:(HEMSoundsContentPresenter*)presenter;
 - (void)unloadContentControllersFrom:(HEMSoundsContentPresenter*)presenter;
@@ -33,7 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)sleepSoundService
                              alarmService:(HEMAlarmService*)alarmService
-                            deviceService:(HEMDeviceService*)deviceService;
+                            deviceService:(HEMDeviceService*)deviceService
+                          shortcutService:(HEMShortcutService*)shortcutService;
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
 - (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNavigationView

@@ -23,6 +23,7 @@
 #import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
 #import "HEMActionButton.h"
+#import "HEMShortcutService.h"
 
 typedef NS_ENUM(NSUInteger, HEMSoundsSubNavOption) {
     HEMSoundsSubNavOptionAlarms = 1,
@@ -40,6 +41,7 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
 @property (nonatomic, weak) HEMSleepSoundService* sleepSoundService;
 @property (nonatomic, weak) HEMAlarmService* alarmService;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
+@property (nonatomic, weak) HEMShortcutService* shortcutService;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, weak) HEMSubNavigationView* subNav;
 @property (nonatomic, assign) CGFloat origSubNavHeight;
@@ -47,6 +49,8 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
 @property (nonatomic, strong) SENSleepSounds* availableSleepSounds;
 @property (nonatomic, weak) UICollectionView* errorCollectionView;
 @property (nonatomic, strong) NSError* deviceError;
+@property (nonatomic, strong) NSNumber* pendingShortcutAction;
+@property (nonatomic, assign, getter=isLoaded) BOOL loaded;
 
 @end
 
@@ -54,12 +58,16 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
 
 - (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)sleepSoundService
                              alarmService:(HEMAlarmService*)alarmService
-                            deviceService:(HEMDeviceService*)deviceService {
+                            deviceService:(HEMDeviceService*)deviceService
+                          shortcutService:(HEMShortcutService*)shortcutService {
     self = [super init];
     if (self) {
         _sleepSoundService = sleepSoundService;
         _alarmService = alarmService;
         _deviceService = deviceService;
+        _shortcutService = shortcutService;
+        
+        [self listenForShortcutNotifications];
     }
     return self;
 }
@@ -118,7 +126,53 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
     }
 }
 
+#pragma mark - 3D Touch / Shortcut Support
+
+- (void)listenForShortcutNotifications {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(reactToShortcut:)
+                   name:nil
+                 object:[self shortcutService]];
+}
+
+- (void)reactToShortcut:(NSNotification*)note {
+    NSNumber* action = [note userInfo][HEMShortcutNoteInfoAction];
+    switch ([action unsignedIntegerValue]) {
+        case HEMShortcutActionAlarmNew:
+        case HEMShortcutActionAlarmEdit: {
+            if ([self isLoaded]) {
+                [self showAlarmWithShortcutAction:[action unsignedIntegerValue]];
+            } else {
+                [self setPendingShortcutAction:action];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 #pragma mark -
+
+- (void)showAlarmWithShortcutAction:(HEMShortcutAction)action {
+    if (![[self errorCollectionView] isHidden]) {
+        return;
+    }
+    switch (action) {
+        case HEMShortcutActionAlarmNew:
+            [[self subNav] selectControlWithTag:HEMSoundsSubNavOptionAlarms];
+            [[self delegate] loadAlarmsFrom:self thenLaunchNewAlarm:YES];
+            break;
+        case HEMShortcutActionAlarmEdit: {
+            [[self subNav] selectControlWithTag:HEMSoundsSubNavOptionAlarms];
+            [[self delegate] loadAlarmsFrom:self thenLaunchNewAlarm:NO];
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 - (NSString*)localizedTitleFor:(HEMSoundsSubNavOption)option {
     switch (option) {
@@ -144,7 +198,19 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
     return button;
 }
 
+- (void)configureSubNavIfNeeded {
+    if (![[self subNav] hasControls] && [self availableSleepSounds]) {
+        [[self subNavHeightConstraint] setConstant:[self origSubNavHeight]];
+        
+        [[self subNav] addControl:[self soundButtonFor:HEMSoundsSubNavOptionAlarms selected:YES]];
+        [[self subNav] addControl:[self soundButtonFor:HEMSoundsSubNavOptionSleepSounds selected:NO]];
+        
+        [[self subNav] setNeedsDisplay];
+    }
+}
+
 - (void)stopActivityAndLoad {
+    [self setLoaded:YES];
     [[self activityIndicator] stop];
     [[self activityIndicator] setHidden:YES];
     
@@ -152,25 +218,23 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
         [self displayDeviceError];
     } else if (![[[self deviceService] devices] hasPairedSense]) {
         [self displayNoSenseMessage];
+    } else if ([self pendingShortcutAction]) {
+        [self configureSubNavIfNeeded];
+        [self showAlarmWithShortcutAction:[[self pendingShortcutAction] unsignedIntegerValue]];
     } else {
         [self hideErrorMessage];
         
         if (![[self subNav] hasControls]) {
-            if ([self availableSleepSounds]) {
-                [[self subNavHeightConstraint] setConstant:[self origSubNavHeight]];
-                
-                [[self subNav] addControl:[self soundButtonFor:HEMSoundsSubNavOptionAlarms selected:YES]];
-                [[self subNav] addControl:[self soundButtonFor:HEMSoundsSubNavOptionSleepSounds selected:NO]];
-                
-                [[self subNav] setNeedsDisplay];
-            }
-            [[self delegate] loadAlarmsFrom:self];
+            [self configureSubNavIfNeeded];
+            [[self delegate] loadAlarmsFrom:self thenLaunchNewAlarm:NO];
         } else if ([[self subNav] selectedControlTag] == HEMSoundsSubNavOptionSleepSounds) {
             [[self delegate] loadSleepSounds:[self availableSleepSounds] from:self];
         } else {
-            [[self delegate] loadAlarmsFrom:self];
+            [[self delegate] loadAlarmsFrom:self thenLaunchNewAlarm:NO];
         }
     }
+    
+    [self setPendingShortcutAction:nil];
 }
 
 - (void)loadData {
@@ -292,7 +356,7 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
 - (void)changeOption:(UIButton*)optionButton {
     switch ([optionButton tag]) {
         case HEMSoundsSubNavOptionAlarms:
-            [[self delegate] loadAlarmsFrom:self];
+            [[self delegate] loadAlarmsFrom:self thenLaunchNewAlarm:NO];
             break;
         case HEMSoundsSubNavOptionSleepSounds:
         default:

@@ -10,9 +10,9 @@
 #import "HEMTimelineContainerViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
-#import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMShortcutService.h"
 
 @interface HEMTimelineContainerViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *alarmButton;
@@ -43,8 +43,7 @@ CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
 #pragma mark - Alarm
 
 - (IBAction)alarmButtonTapped:(id)sender {
-    HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:NO];
+    [[HEMShortcutService sharedService] notifyOfAction:HEMShortcutActionAlarmEdit];
 }
 
 - (void)showAlarmButton:(BOOL)isVisible {

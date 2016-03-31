@@ -208,6 +208,10 @@ extern NSString* const HEMAnalyticsEventAppReviewFeedback;
 extern NSString* const HEMAnalyticsEventAppReviewDone;
 extern NSString* const HEMAnalyticsEventAppReviewSkip;
 
+// 3D touch
+extern NSString* const HEMAnalyticsEventShortcutAlarmNew;
+extern NSString* const HEMAnalyticsEventShortcutAlarmEdit;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;

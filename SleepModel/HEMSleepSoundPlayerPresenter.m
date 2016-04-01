@@ -87,6 +87,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 - (void)didAppear {
     [super didAppear];
     if (![self isWaitingForOptionChange]) {
+        [SENAnalytics track:HEMAnalyticsEventSleepSoundView];
         [self loadData];
     }
     [self setWaitingForOptionChange:NO];
@@ -428,8 +429,21 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
 }
 
+- (NSDictionary*)analyticPropertiesForSelectedOptions {
+    NSNumber* soundId = [[self selectedSound] identifier] ?: @(-1);
+    NSNumber* durationId = [[self selectedDuration] identifier] ?: @(-1);
+    NSNumber* volume = @([[self selectedVolume] volume]);
+    NSDictionary* props = @{HEMAnalyticsEventSSPropSoundId : soundId,
+                            HEMAnalyticsEventSSPropDurationId : durationId,
+                            HEMAnalyticsEventSSPropVolume : volume};
+    return props;
+}
+
 - (void)play:(UIButton*)button {
     DDLogVerbose(@"attempting to play sound");
+    [SENAnalytics track:HEMAnalyticsEventSSActionPlay
+             properties:[self analyticPropertiesForSelectedOptions]];
+    
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     
     __weak typeof(self) weakSelf = self;
@@ -453,6 +467,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)stop:(UIButton*)button {
     DDLogVerbose(@"attempting to stop sound");
+    [SENAnalytics track:HEMAnalyticsEventSSActionStop];
+    
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     
     __weak typeof(self) weakSelf = self;

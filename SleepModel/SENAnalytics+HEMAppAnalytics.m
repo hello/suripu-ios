@@ -227,6 +227,14 @@ NSString* const HEMAnalyticsEventAppReviewSkip = @"App review skip";
 NSString* const HEMAnalyticsEventShortcutAlarmNew = @"3D Touch new alarm";
 NSString* const HEMAnalyticsEventShortcutAlarmEdit = @"3D Touch edit alarm";
 
+// sleep sound events
+NSString* const HEMAnalyticsEventSleepSoundView = @"Sleep sounds";
+NSString* const HEMAnalyticsEventSSActionPlay = @"Play sleep sound";
+NSString* const HEMAnalyticsEventSSActionStop = @"Stop sleep sound";
+NSString* const HEMAnalyticsEventSSPropSoundId = @"sound id";
+NSString* const HEMAnalyticsEventSSPropDurationId = @"duration id";
+NSString* const HEMAnalyticsEventSSPropVolume = @"volume";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";

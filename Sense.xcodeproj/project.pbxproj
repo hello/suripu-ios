@@ -216,7 +216,7 @@
 		BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */; };
 		BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */; };
 		BF6D9B781C6C194900774322 /* HEMTrendsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B771C6C194900774322 /* HEMTrendsServiceSpec.m */; };
-		BF6D9B7B1C6D409F00774322 /* HEMTrendsMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B7A1C6D409F00774322 /* HEMTrendsMessageCell.m */; };
+		BF6D9B7B1C6D409F00774322 /* HEMIntroMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B7A1C6D409F00774322 /* HEMIntroMessageCell.m */; };
 		BF6D9B7E1C73EA8A00774322 /* HEMTrendsSleepDepthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B7D1C73EA8A00774322 /* HEMTrendsSleepDepthCell.m */; };
 		BF6D9B811C73EC7E00774322 /* HEMTrendsBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B801C73EC7E00774322 /* HEMTrendsBubbleView.m */; };
 		BF6E3A9A1A2D27450019C110 /* HEMActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A991A2D27450019C110 /* HEMActionView.m */; };
@@ -785,8 +785,8 @@
 		BF6D9B731C6A689100774322 /* HEMTrendsScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsScoreLabel.h; sourceTree = "<group>"; };
 		BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsScoreLabel.m; sourceTree = "<group>"; };
 		BF6D9B771C6C194900774322 /* HEMTrendsServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsServiceSpec.m; sourceTree = "<group>"; };
-		BF6D9B791C6D409F00774322 /* HEMTrendsMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsMessageCell.h; sourceTree = "<group>"; };
-		BF6D9B7A1C6D409F00774322 /* HEMTrendsMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsMessageCell.m; sourceTree = "<group>"; };
+		BF6D9B791C6D409F00774322 /* HEMIntroMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMIntroMessageCell.h; sourceTree = "<group>"; };
+		BF6D9B7A1C6D409F00774322 /* HEMIntroMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMIntroMessageCell.m; sourceTree = "<group>"; };
 		BF6D9B7C1C73EA8A00774322 /* HEMTrendsSleepDepthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsSleepDepthCell.h; sourceTree = "<group>"; };
 		BF6D9B7D1C73EA8A00774322 /* HEMTrendsSleepDepthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsSleepDepthCell.m; sourceTree = "<group>"; };
 		BF6D9B7F1C73EC7E00774322 /* HEMTrendsBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsBubbleView.h; sourceTree = "<group>"; };
@@ -1292,8 +1292,8 @@
 				BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */,
 				BF6D9B731C6A689100774322 /* HEMTrendsScoreLabel.h */,
 				BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */,
-				BF6D9B791C6D409F00774322 /* HEMTrendsMessageCell.h */,
-				BF6D9B7A1C6D409F00774322 /* HEMTrendsMessageCell.m */,
+				BF6D9B791C6D409F00774322 /* HEMIntroMessageCell.h */,
+				BF6D9B7A1C6D409F00774322 /* HEMIntroMessageCell.m */,
 				BF6D9B7C1C73EA8A00774322 /* HEMTrendsSleepDepthCell.h */,
 				BF6D9B7D1C73EA8A00774322 /* HEMTrendsSleepDepthCell.m */,
 				BF6D9B7F1C73EC7E00774322 /* HEMTrendsBubbleView.h */,
@@ -3273,7 +3273,7 @@
 				BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */,
 				BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
-				BF6D9B7B1C6D409F00774322 /* HEMTrendsMessageCell.m in Sources */,
+				BF6D9B7B1C6D409F00774322 /* HEMIntroMessageCell.m in Sources */,
 				BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */,
 				BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */,
 				8A7D800B1A3F7E4A00B0BFD7 /* HEMSensorGraphCollectionViewCell.m in Sources */,

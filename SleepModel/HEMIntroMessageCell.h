@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HEMCardCollectionViewCell.h"
 
-@interface HEMTrendsMessageCell : HEMCardCollectionViewCell
+@interface HEMIntroMessageCell : HEMCardCollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

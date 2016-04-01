@@ -43,8 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HEMSleepSoundPlayerDelegate> delegate;
 
-- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service
-                           andSleepSounds:(nullable SENSleepSounds*)sleepSounds;
+- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithActionButton:(UIButton*)button;
 - (void)setSelectedSound:(SENSleepSound*)sound;

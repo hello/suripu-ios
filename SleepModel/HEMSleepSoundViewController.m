@@ -69,9 +69,9 @@
 
 #pragma mark - Sleep Sound Player Delegate
 
-- (void)presentError:(NSError *)error {
-    [HEMAlertViewController showInfoDialogWithTitle:nil
-                                            message:[error localizedDescription]
+- (void)presentErrorWithTitle:(NSString*)title message:(NSString*)message {
+    [HEMAlertViewController showInfoDialogWithTitle:title
+                                            message:message
                                          controller:[self navigationController]];
 }
 

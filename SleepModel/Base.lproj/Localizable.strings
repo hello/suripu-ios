@@ -765,3 +765,6 @@
 "sleep-sounds.option.subtitle.volume" = "Volume control";
 "sleep-sounds.title.state.stopped" = "Play a Sound";
 "sleep-sounds.title.state.playing" = "Now Playing";
+"sleep-sounds.error.title" = "Sleep sounds";
+"sleep-sounds.error.action-timeout.message" = "Unable to determine the state of the action on Sense.  Please try again.";
+"sleep-sounds.error.action-in-progress.message" = "Waiting for a previous action to be performed.  Please try again.";

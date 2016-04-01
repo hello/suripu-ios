@@ -459,7 +459,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                        } else {
                            DDLogVerbose(@"failed to play sound");
                            [strongSelf setPlayerState:HEMSleepSoundPlayerStateStopped];
-                           [[strongSelf delegate] presentError:error];
+                           [strongSelf requestErrorToBeShown:error];
                        }
                        
                    }];
@@ -481,9 +481,33 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         } else {
             DDLogVerbose(@"failed to stop sound");
             [strongSelf setPlayerState:HEMSleepSoundPlayerStatePlaying];
-            [[strongSelf delegate] presentError:error];
+            [strongSelf requestErrorToBeShown:error];
         }
     }];
+}
+
+#pragma mark - Errors
+
+- (void)requestErrorToBeShown:(NSError*)error {
+    NSString* message = [self translateError:error];
+    NSString* title = NSLocalizedString(@"sleep-sounds.error.title", nil);
+    [[self delegate] presentErrorWithTitle:title message:message];
+}
+
+- (NSString*)translateError:(NSError*)error {
+    NSString* message = nil;
+    if ([[error domain] isEqualToString:HEMSleepSoundServiceErrorDomain]) {
+        switch ([error code]) {
+            case HEMSleepSoundServiceErrorInProgress:
+                message = NSLocalizedString(@"sleep-sounds.error.action-in-progress.message", nil);
+                break;
+            case HEMSleepSoundServiceErrorTimeout:
+                message = NSLocalizedString(@"sleep-sounds.error.action-timeout.message", nil);
+            default:
+                break;
+        }
+    }
+    return message ?: [error localizedDescription];
 }
 
 #pragma mark - Clean up

@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HEMSleepSoundPlayerDelegate <NSObject>
 
-- (void)presentError:(NSError*)error;
+- (void)presentErrorWithTitle:(NSString*)title message:(NSString*)message;
 - (void)showAvailableSounds:(NSArray *)sounds
           selectedSoundName:(NSString*)selectedName
                   withTitle:(NSString*)title

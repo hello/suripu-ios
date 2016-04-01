@@ -127,7 +127,9 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 
 - (void)stopPlaying:(HEMSleepSoundsRequestHandler)completion {
     if ([self currentRequest]) {
-        completion ([self errorWithCode:HEMSleepSoundServiceErrorInProgress]);
+        NSError* error = [self errorWithCode:HEMSleepSoundServiceErrorInProgress];
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+        completion (error);
         return;
     }
     
@@ -193,7 +195,9 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 }
 
 - (void)requestTimeout {
-    [self respondToCurrentRequest:[self errorWithCode:HEMSleepSoundServiceErrorTimeout]];
+    NSError* error = [self errorWithCode:HEMSleepSoundServiceErrorTimeout];
+    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+    [self respondToCurrentRequest:error];
 }
 
 #pragma mark - Clean up

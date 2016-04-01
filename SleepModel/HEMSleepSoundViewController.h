@@ -10,9 +10,11 @@
 #import "HEMBaseController.h"
 
 @class SENSleepSounds;
+@class HEMDeviceService;
 
 @interface HEMSleepSoundViewController : HEMBaseController
 
 @property (nonatomic, assign, getter=isCancellable) BOOL cancellable;
+@property (nonatomic, strong) HEMDeviceService* deviceService;
 
 @end

@@ -121,6 +121,7 @@
 - (void)loadSleepSounds:(__unused SENSleepSounds *)sleepSounds from:(__unused HEMSoundsContentPresenter *)presenter {
     DDLogVerbose(@"show sleep sounds view");
     HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
+    [soundVC setDeviceService:[self deviceService]];
     [self showSoundViewOf:soundVC completion:nil];
 }
 

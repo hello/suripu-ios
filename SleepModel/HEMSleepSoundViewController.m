@@ -39,7 +39,8 @@
 - (void)configurePresenters {
     [self setSleepSoundService:[HEMSleepSoundService new]];
     HEMSleepSoundPlayerPresenter* playerPresenter =
-        [[HEMSleepSoundPlayerPresenter alloc] initWithSleepSoundService:[self sleepSoundService]];
+        [[HEMSleepSoundPlayerPresenter alloc] initWithSleepSoundService:[self sleepSoundService]
+                                                          deviceService:[self deviceService]];
     [playerPresenter bindWithActionButton:[self actionButton]];
     [playerPresenter bindWithCollectionView:[self collectionView]];
     [playerPresenter setDelegate:self];

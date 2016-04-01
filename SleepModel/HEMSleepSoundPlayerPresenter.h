@@ -15,6 +15,7 @@
 @class SENSleepSoundDuration;
 @class SENSleepSoundDurations;
 @class HEMSleepSoundVolume;
+@class HEMDeviceService;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -43,7 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HEMSleepSoundPlayerDelegate> delegate;
 
-- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service;
+- (instancetype)initWithSleepSoundService:(HEMSleepSoundService *)service
+                            deviceService:(nullable HEMDeviceService*)deviceService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithActionButton:(UIButton*)button;
 - (void)setSelectedSound:(SENSleepSound*)sound;

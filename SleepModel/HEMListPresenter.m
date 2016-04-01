@@ -12,6 +12,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMListItemCell.h"
 
+static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
+
 @interface HEMListPresenter()
 
 @property (nonatomic, weak) UITableView* tableView;
@@ -73,7 +75,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     id item = [self items][[indexPath row]];
     NSInteger index = [indexPath row];
-    [[self delegate] didSelectItem:item atIndex:index from:self];
+    
+    [tableView setUserInteractionEnabled:NO];
+    
+    __weak typeof(self) weakSelf = self;
+    int64_t secs = (int64_t)(HEMListPresenterSelectionDelay * NSEC_PER_SEC);
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, secs);
+    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+        [tableView setUserInteractionEnabled:YES];
+        [[weakSelf delegate] didSelectItem:item atIndex:index from:weakSelf];
+    });
 }
 
 #pragma mark - UITableViewDataSource
@@ -102,6 +113,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard listItemReuseIdentifier]];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
 }
 
 @end

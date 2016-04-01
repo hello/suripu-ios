@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.2.5
+
+New:
+
+* Updated copy in error dialogs for sleep sounds
+* Added analytics for Sleep Sounds
+* Smoothed out initial load animation when entering Sleep Sounds view
+
+Fixes:
+
+* Fixed crasher caused when using the 3D Touch new alarm item
+* Launch in to the alarms sub tab within sounds view from all edit alarm shortcuts
+* Various design tweaks from design review
+
 ## 1.3.2.4
 
 New:

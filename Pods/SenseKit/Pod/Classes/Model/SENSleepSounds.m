@@ -57,20 +57,40 @@ static NSString* const SleepSoundParamName = @"name";
 @interface SENSleepSounds()
 
 @property (nonatomic, strong) NSArray<SENSleepSound*>* sounds;
+@property (nonatomic, assign) SENSleepSoundsFeatureState state;
 
 @end
 
 @implementation SENSleepSounds
 
 static NSString* const SleepSoundsParamSounds = @"sounds";
+static NSString* const SleepSoundsParamState = @"state";
+static NSString* const SleepSoundsStateValueOK = @"OK";
+static NSString* const SleepSoundsStateValueNoSounds = @"SOUNDS_NOT_DOWNLOADED";
+static NSString* const SleepSoundsStateValueFWNeeeded = @"SENSE_UPDATE_REQUIRED";
+static NSString* const SleepSoundsStateValueDisabled = @"FEATURE_DISABLED";
 
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary {
     self = [super init];
     if (self) {
         NSArray* rawSounds = SENObjectOfClass(dictionary[SleepSoundsParamSounds], [NSArray class]);
         _sounds = [self parseRawSoundsObject:rawSounds];
+        _state = [self stateFromRawValue:SENObjectOfClass(dictionary[SleepSoundsParamState], [NSString class])];
     }
     return self;
+}
+
+- (SENSleepSoundsFeatureState)stateFromRawValue:(NSString*)rawValue {
+    NSString* uppercase = [rawValue uppercaseString];
+    SENSleepSoundsFeatureState state = SENSleepSoundsFeatureStateDisabled;
+    if ([uppercase isEqualToString:SleepSoundsStateValueNoSounds]) {
+        state = SENSleepSoundsFeatureStateNoSounds;
+    } else if ([uppercase isEqualToString:SleepSoundsStateValueFWNeeeded]){
+        state = SENSleepSoundsFeatureStateFWRequired;
+    } else if ([uppercase isEqualToString:SleepSoundsStateValueOK]) {
+        state = SENSleepSoundsFeatureStateOK;
+    }
+    return state;
 }
 
 - (NSArray<SENSleepSound*>*)parseRawSoundsObject:(NSArray*)rawSounds {

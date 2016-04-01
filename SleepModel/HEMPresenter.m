@@ -60,6 +60,10 @@
     [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
 }
 
+- (BOOL)hasShadowView {
+    return [self shadowView] != nil;
+}
+
 - (void)lowMemory {}
 
 - (void)willAppear {}

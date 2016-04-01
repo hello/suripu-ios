@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HEMPresenter : NSObject
 
 @property (nonatomic, assign, getter=isVisible, readonly) BOOL visible;
+@property (nonatomic, assign, getter=hasShadowView, readonly) BOOL hasShadowView;
 
 /*
  * @discussion

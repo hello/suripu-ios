@@ -118,7 +118,7 @@
     }];
 }
 
-- (void)loadSleepSounds:(SENSleepSounds *)sleepSounds from:(__unused HEMSoundsContentPresenter *)presenter {
+- (void)loadSleepSounds:(__unused SENSleepSounds *)sleepSounds from:(__unused HEMSoundsContentPresenter *)presenter {
     DDLogVerbose(@"show sleep sounds view");
     HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
     [self showSoundViewOf:soundVC completion:nil];

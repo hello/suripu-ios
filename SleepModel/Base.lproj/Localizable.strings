@@ -768,3 +768,9 @@
 "sleep-sounds.error.title" = "Sleep sounds";
 "sleep-sounds.error.action-timeout.message" = "Unable to determine the state of the action on Sense.  Please try again.";
 "sleep-sounds.error.action-in-progress.message" = "Waiting for a previous action to be performed.  Please try again.";
+"sleep-sounds.temp.info.title.no-sounds" = "Updating Sleep Sounds";
+"sleep-sounds.temp.info.message.no-sounds" = "Sleep Sounds will be available once Sense has finished updating.  Note that this may take up to an hour.";
+"sleep-sounds.temp.info.title.fw-update" = "Sense needs to update";
+"sleep-sounds.temp.info.message.fw-update" = "Sense will update automatically when plugged in and connected to Wi-Fi.  This may take a few moments.";
+"sleep-sounds.temp.info.title.offline" = "Sense is offline";
+"sleep-sounds.temp.info.message.offline" = "We haven't received data from your Sense recently.  Make sure Sense is connected to Wi-Fi.";

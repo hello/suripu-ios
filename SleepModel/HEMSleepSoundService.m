@@ -40,9 +40,9 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
         NSString* high = NSLocalizedString(@"sleep-sounds.volume.high", nil);
         NSString* med = NSLocalizedString(@"sleep-sounds.volume.medium", nil);
         NSString* low = NSLocalizedString(@"sleep-sounds.volume.low", nil);
-        _availableVolumeOptions = @[[[HEMSleepSoundVolume alloc] initWithName:high volume:HEMSleepSoundServiceVolumeHigh],
+        _availableVolumeOptions = @[[[HEMSleepSoundVolume alloc] initWithName:low volume:HEMSleepSoundServiceVolumeLow],
                                     [[HEMSleepSoundVolume alloc] initWithName:med volume:HEMSleepSoundServiceVolumeMedium],
-                                    [[HEMSleepSoundVolume alloc] initWithName:low volume:HEMSleepSoundServiceVolumeLow]];
+                                    [[HEMSleepSoundVolume alloc] initWithName:high volume:HEMSleepSoundServiceVolumeHigh]];
     }
     return _availableVolumeOptions;
 }
@@ -74,7 +74,11 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 }
 
 - (HEMSleepSoundVolume*)defaultVolume {
-    return [[self availableVolumeOptions] firstObject];
+    if ([[self availableVolumeOptions] count] == 3) {
+        return [self availableVolumeOptions][1]; // take the middle
+    } else {
+        return [[self availableVolumeOptions] firstObject];
+    }
 }
 
 - (NSError*)errorWithCode:(HEMSleepSoundServiceError)code {

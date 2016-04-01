@@ -11,7 +11,7 @@
 @implementation HEMListItemCell
 
 - (void)setSelected:(BOOL)selected {
-    [[self selectionImageView] setHidden:!selected];
+    [[self selectionImageView] setHighlighted:selected];
 }
 
 @end

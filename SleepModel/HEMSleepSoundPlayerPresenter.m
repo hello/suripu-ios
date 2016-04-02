@@ -25,6 +25,7 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
+static CGFloat const HEMSleepSoundReloadAnimDuration = 0.5f;
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStatePrereqNotMet = 0,
@@ -62,28 +63,13 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 @implementation HEMSleepSoundPlayerPresenter
 
-- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service {
-    self = [super init];
-    if (self) {
-        _service = service;
-        _playerState = HEMSleepSoundPlayerStateWaiting;
-    }
-    return self;
-}
-
 - (instancetype)initWithSleepSoundService:(HEMSleepSoundService *)service
                             deviceService:(HEMDeviceService*)deviceService {
     self = [super init];
     if (self) {
         _service = service;
         _deviceService = deviceService;
-        
-        SENSenseMetadata* senseMetadata = [[deviceService devices] senseMetadata];
-        if ([service isSenseLastSeenGoingToBeAProblem:[senseMetadata lastSeenDate]]) {
-            _playerState = HEMSleepSoundPlayerStateSenseOffline;
-        } else {
-            _playerState = HEMSleepSoundPlayerStateWaiting;
-        }
+        _playerState = HEMSleepSoundPlayerStateWaiting;
     }
     return self;
 }
@@ -176,11 +162,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         [strongSelf setLoading:NO];
         
         if ([strongSelf isSenseOffline]) {
-            [strongSelf setPlayerState:HEMSleepSoundPlayerStateSenseOffline];
-            [[strongSelf collectionView] reloadData];
+            [strongSelf reloadDataWithPlayerState:HEMSleepSoundPlayerStateSenseOffline];
         } else if ([[[strongSelf availableSounds] sounds] count] == 0) {
-            [strongSelf setPlayerState:HEMSleepSoundPlayerStatePrereqNotMet];
-            [[strongSelf collectionView] reloadData];
+            [strongSelf reloadDataWithPlayerState:HEMSleepSoundPlayerStatePrereqNotMet];
         } else {
             [strongSelf checkIfAlreadyPlaying];
         }
@@ -224,6 +208,11 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         [strongSelf setLoading:NO];
         
     }];
+}
+
+- (void)reloadDataWithPlayerState:(HEMSleepSoundPlayerState)state {
+    [self setPlayerState:state];
+    [[self collectionView] reloadData];
 }
 
 - (void)setPlayerState:(HEMSleepSoundPlayerState)playerState {

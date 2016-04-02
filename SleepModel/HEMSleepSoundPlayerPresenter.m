@@ -8,6 +8,8 @@
 #import <SenseKit/SENSleepSounds.h>
 #import <SenseKit/SENSleepSoundDurations.h>
 #import <SenseKit/SENSleepSoundStatus.h>
+#import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENPairedDevices.h>
 
 #import "NSString+HEMUtils.h"
 
@@ -17,6 +19,7 @@
 #import "HEMIntroMessageCell.h"
 #import "HEMTextCollectionViewCell.h"
 #import "HEMSleepSoundService.h"
+#import "HEMDeviceService.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSleepSoundVolume.h"
 #import "HEMStyle.h"
@@ -28,6 +31,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStateStopped,
     HEMSleepSoundPlayerStatePlaying,
     HEMSleepSoundPlayerStateWaiting,
+    HEMSleepSoundPlayerStateSenseOffline,
     HEMSleepSoundPlayerStateError
 };
 
@@ -38,6 +42,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 >
 
 @property (nonatomic, weak) HEMSleepSoundService* service;
+@property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) UIButton* actionButton;
 @property (nonatomic, strong) SENSleepSounds* cachedSounds;
@@ -51,15 +56,18 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, assign) HEMSleepSoundPlayerState playerState;
 @property (nonatomic, weak) HEMSleepSoundConfigurationCell* configCell;
 @property (nonatomic, assign, getter=isWaitingForOptionChange) BOOL waitingForOptionChange;
+@property (nonatomic, assign, getter=isSenseOffline) BOOL senseOffline;
 
 @end
 
 @implementation HEMSleepSoundPlayerPresenter
 
-- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service {
+- (instancetype)initWithSleepSoundService:(HEMSleepSoundService *)service
+                            deviceService:(HEMDeviceService*)deviceService {
     self = [super init];
     if (self) {
         _service = service;
+        _deviceService = deviceService;
         _playerState = HEMSleepSoundPlayerStateWaiting;
     }
     return self;
@@ -78,6 +86,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [button addTarget:self action:@selector(takeAction:) forControlEvents:UIControlEventTouchUpInside];
     [button setTintColor:[UIColor whiteColor]];
     [button setImage:nil forState:UIControlStateNormal];
+    
+    NSShadow* shadow = [NSShadow shadowForCircleActionButton];
+    [[button layer] setShadowRadius:[shadow shadowBlurRadius]];
+    [[button layer] setShadowOffset:[shadow shadowOffset]];
+    [[button layer] setShadowColor:[[shadow shadowColor] CGColor]];
+    [[button layer] setShadowOpacity:0.85f];
     
     [self setActionButton:button];
     [self setIndicatorView:[self activityIndicator]];
@@ -126,6 +140,11 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return;
     }
     
+    // we will assume HEMDeviceService has latest data so we do not have to make even more
+    // API calls ... getting to be wayyy too many
+    SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
+    [self setSenseOffline:[[self service] isSenseLastSeenGoingToBeAProblem:[senseMetadata lastSeenDate]]];
+    
     [self setLoading:YES];
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     
@@ -147,11 +166,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLoading:NO];
         
-        if ([[[strongSelf availableSounds] sounds] count] > 0) {
-            [strongSelf checkIfAlreadyPlaying];
+        if ([strongSelf isSenseOffline]) {
+            [strongSelf reloadDataWithPlayerState:HEMSleepSoundPlayerStateSenseOffline];
+        } else if ([[[strongSelf availableSounds] sounds] count] == 0) {
+            [strongSelf reloadDataWithPlayerState:HEMSleepSoundPlayerStatePrereqNotMet];
         } else {
-            [strongSelf setPlayerState:HEMSleepSoundPlayerStatePrereqNotMet];
-            [[strongSelf collectionView] reloadData];
+            [strongSelf checkIfAlreadyPlaying];
         }
         
     });
@@ -195,6 +215,11 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }];
 }
 
+- (void)reloadDataWithPlayerState:(HEMSleepSoundPlayerState)state {
+    [self setPlayerState:state];
+    [[self collectionView] reloadData];
+}
+
 - (void)setPlayerState:(HEMSleepSoundPlayerState)playerState {
     _playerState = playerState;
 
@@ -202,6 +227,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[self actionButton] setEnabled:YES];
     
     switch (playerState) {
+        case HEMSleepSoundPlayerStateSenseOffline:
         case HEMSleepSoundPlayerStatePrereqNotMet:
             [[self actionButton] setHidden:YES];
             break;
@@ -311,6 +337,10 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
             return [UIImage imageNamed:@"sleepSoundSenseNeedsUpdate"];
         case SENSleepSoundsFeatureStateNoSounds:
             return [UIImage imageNamed:@"sleepSoundSenseDownloading"];
+        case SENSleepSoundsFeatureStateOK:
+            if ([self isSenseOffline]) {
+                return [UIImage imageNamed:@"sleepSoundSenseOffline"];
+            }
         default:
             return nil;
     }
@@ -325,6 +355,11 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
             break;
         case SENSleepSoundsFeatureStateNoSounds:
             title = NSLocalizedString(@"sleep-sounds.temp.info.title.no-sounds", nil);
+            break;
+        case SENSleepSoundsFeatureStateOK:
+            if ([self isSenseOffline]) {
+                title = NSLocalizedString(@"sleep-sounds.temp.info.title.offline", nil);
+            }
             break;
         default:
             break;
@@ -348,6 +383,10 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         case SENSleepSoundsFeatureStateNoSounds:
             message = NSLocalizedString(@"sleep-sounds.temp.info.message.no-sounds", nil);
             break;
+        case SENSleepSoundsFeatureStateOK:
+            if ([self isSenseOffline]) {
+                message = NSLocalizedString(@"sleep-sounds.temp.info.message.offline", nil);
+            }
         default:
             break;
     }
@@ -372,6 +411,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = nil;
     switch ([self playerState]) {
+        case HEMSleepSoundPlayerStateSenseOffline:
         case HEMSleepSoundPlayerStatePrereqNotMet:
             reuseId = [HEMMainStoryboard messageReuseIdentifier];
             break;
@@ -393,6 +433,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     UICollectionViewFlowLayout* flowLayout = (id)collectionViewLayout;
     CGSize itemSize = [flowLayout itemSize];
     switch ([self playerState]) {
+        case HEMSleepSoundPlayerStateSenseOffline:
         case HEMSleepSoundPlayerStatePrereqNotMet: {
             SENSleepSoundsFeatureState state = [[self availableSounds] state];
             NSAttributedString* attrTitle = [self attributedInfoTitleForState:state];

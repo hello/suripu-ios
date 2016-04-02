@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
        completion:(HEMSleepSoundsRequestHandler)completion;
 - (void)stopPlaying:(HEMSleepSoundsRequestHandler)completion;
 - (void)checkCurrentSleepSoundStatus:(HEMSleepSoundsStatusHandler)handler;
+- (BOOL)isSenseLastSeenGoingToBeAProblem:(NSDate*)senseLastSeenDate;
 
 @end
 

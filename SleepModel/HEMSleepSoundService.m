@@ -19,6 +19,7 @@ NSString* const HEMSleepSoundServiceErrorDomain = @"is.hello.sense.sleep-sound";
 static CGFloat const HEMSleepSoundServiceRequestTimeoutInSecs = 30.0f;
 static CGFloat const HEMSleepSoundServiceStatusCheckDelay = 0.2f;
 static CGFloat const HEMSleepSoundServiceRequestBackoff = 2.0f;
+static CGFloat const HEMSleepSoundServiceSenseLastSeeenThreshold = 1800.0f; // 30 minutes
 
 CGFloat const HEMSleepSoundServiceVolumeHigh = 80.0f;
 CGFloat const HEMSleepSoundServiceVolumeMedium = 50.0f;
@@ -185,6 +186,17 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
         [self setCurrentRequestCallback:nil];
         [self setCurrentRequest:nil];
     }
+}
+
+#pragma mark - Sense
+
+- (BOOL)isSenseLastSeenGoingToBeAProblem:(NSDate*)senseLastSeenDate {
+    if (!senseLastSeenDate) {
+        return NO; // if no date, be optimistic.  assume data just not ready
+    }
+    
+    NSTimeInterval timeInSecsSinceNow = [senseLastSeenDate timeIntervalSinceNow];
+    return timeInSecsSinceNow < -HEMSleepSoundServiceSenseLastSeeenThreshold;
 }
 
 #pragma mark - Timeouts

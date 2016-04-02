@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.2.6
+
+New:
+
+* Added a Sense is offline state in Sleep Sounds
+* Added a Downloading sounds state in Sleep Sounds
+* Added a Sense needs an update state in Sleep Sounds
+* Added a shadow to play button, per design review
+* Aligned y position of alarms and sleep sounds player, per design review
+* Added a shadow when scrolling options in Sleep Sound options list
+
 ## 1.3.2.5
 
 New:

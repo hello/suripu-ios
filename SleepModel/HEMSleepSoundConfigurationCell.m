@@ -57,4 +57,25 @@ static CGFloat const HEMSleepSoundConfAnimDuration = 0.5f;
     }];
 }
 
+- (void)setPlaying:(BOOL)playing {
+    [self deactivate:playing];
+    
+    UIView* container = [[self titleLabel] superview];
+    CGFloat height = CGRectGetHeight([container bounds]);
+    [UIView animateWithDuration:HEMSleepSoundConfAnimDuration animations:^{
+        if (playing) {
+            [[self playingLabel] setAlpha:1.0f];
+            [[self playingLabelTopConstraint] setConstant:0.0f];
+            [[self titleTopConstraint] setConstant:height];
+            [[self titleLabel] setAlpha:0.0f];
+        } else {
+            [[self playingLabel] setAlpha:0.0f];
+            [[self playingLabelTopConstraint] setConstant:-height];
+            [[self titleTopConstraint] setConstant:0.0f];
+            [[self titleLabel] setAlpha:1.0f];
+        }
+        [self layoutIfNeeded];
+    }];
+}
+
 @end

@@ -10,7 +10,11 @@
 
 @interface HEMSleepSoundConfigurationCell : HEMCardCollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *playingLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *playingLabelTopConstraint;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
+
 @property (nonatomic, weak) IBOutlet UIView *titleSeparator;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *titleSeparatorHeight;
 
@@ -39,5 +43,6 @@
 @property (nonatomic, weak) IBOutlet UIView* overlay;
 
 - (void)deactivate:(BOOL)deactivate;
+- (void)setPlaying:(BOOL)playing;
 
 @end

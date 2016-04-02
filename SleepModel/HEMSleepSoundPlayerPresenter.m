@@ -223,16 +223,16 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 - (void)setPlayerState:(HEMSleepSoundPlayerState)playerState {
     _playerState = playerState;
 
-    [[[self configCell] titleLabel] setText:[self titleForPlayerState:[self playerState]]];
     [[self actionButton] setEnabled:YES];
     
     switch (playerState) {
         case HEMSleepSoundPlayerStateSenseOffline:
         case HEMSleepSoundPlayerStatePrereqNotMet:
+            [[self configCell] setPlaying:NO];
             [[self actionButton] setHidden:YES];
             break;
         case HEMSleepSoundPlayerStateError:
-            [[self configCell] deactivate:YES];
+            [[self configCell] setPlaying:NO];
             [[self indicatorView] stop];
             [[self indicatorView] removeFromSuperview];
             [[self actionButton] setHidden:YES];
@@ -240,13 +240,13 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         case HEMSleepSoundPlayerStateStopped:
             [[self indicatorView] stop];
             [[self indicatorView] removeFromSuperview];
-            [[self configCell] deactivate:NO];
+            [[self configCell] setPlaying:NO];
             [[self actionButton] setHidden:NO];
             [[self actionButton] setImage:[UIImage imageNamed:@"sleepSoundPlayIcon"]
                                  forState:UIControlStateNormal];
             break;
         case HEMSleepSoundPlayerStatePlaying:
-            [[self configCell] deactivate:YES];
+            [[self configCell] setPlaying:YES];
             [[self indicatorView] stop];
             [[self indicatorView] removeFromSuperview];
             [[self actionButton] setHidden:NO];
@@ -316,17 +316,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         }
     }
     return object;
-}
-
-- (NSString*)titleForPlayerState:(HEMSleepSoundPlayerState)state {
-    switch (state) {
-        case HEMSleepSoundPlayerStateStopped:
-            return NSLocalizedString(@"sleep-sounds.title.state.stopped", nil);
-        case HEMSleepSoundPlayerStatePlaying:
-            return NSLocalizedString(@"sleep-sounds.title.state.playing", nil);
-        default:
-            return [[[self configCell] titleLabel] text];
-    }
 }
 
 #pragma mark - Temporary Sleep Sounds State
@@ -469,19 +458,24 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)configureSleepSoundConfigurationCell:(HEMSleepSoundConfigurationCell*)cell {
     [[cell titleLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
-    [[cell titleLabel] setText:[self titleForPlayerState:[self playerState]]];
+    [[cell titleLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.stopped", nil)];
+    [[cell playingLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.playing", nil)];
+    [[cell playingLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
+
     [[cell soundLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell soundValueLabel] setText:[[self selectedSound] localizedName]];
     [[cell soundValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
     [[cell soundSelectorButton] addTarget:self
                                    action:@selector(changeSound:)
                          forControlEvents:UIControlEventTouchUpInside];
+    
     [[cell durationLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell durationValueLabel] setText:[[self selectedDuration] localizedName]];
     [[cell durationValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
     [[cell durationSelectorButton] addTarget:self
                                       action:@selector(changeDuration:)
                             forControlEvents:UIControlEventTouchUpInside];
+    
     [[cell volumeLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
     [[cell volumeValueLabel] setText:[[self selectedVolume] localizedName]];
     [[cell volumeValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];

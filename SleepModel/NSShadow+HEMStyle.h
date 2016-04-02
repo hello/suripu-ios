@@ -39,6 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSShadow*)shadowForTrendsSleepDepthCircles;
 
+/**
+ * @return shadow around the alarm and sleep sounds action button
+ */
++ (NSShadow*)shadowForCircleActionButton;
+
 @end
 
 NS_ASSUME_NONNULL_END

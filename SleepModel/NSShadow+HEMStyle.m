@@ -50,4 +50,10 @@
                                radius:2.0f];
 }
 
++ (NSShadow*)shadowForCircleActionButton {
+    return [self shadowStyleWithColor:[UIColor colorWithWhite:0 alpha:0.2f]
+                               offset:CGSizeMake(0, 1.f)
+                               radius:2.f];
+}
+
 @end

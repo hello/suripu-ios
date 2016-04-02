@@ -25,7 +25,6 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
-static CGFloat const HEMSleepSoundReloadAnimDuration = 0.5f;
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStatePrereqNotMet = 0,
@@ -87,6 +86,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [button addTarget:self action:@selector(takeAction:) forControlEvents:UIControlEventTouchUpInside];
     [button setTintColor:[UIColor whiteColor]];
     [button setImage:nil forState:UIControlStateNormal];
+    
+    NSShadow* shadow = [NSShadow shadowForCircleActionButton];
+    [[button layer] setShadowRadius:[shadow shadowBlurRadius]];
+    [[button layer] setShadowOffset:[shadow shadowOffset]];
+    [[button layer] setShadowColor:[[shadow shadowColor] CGColor]];
+    [[button layer] setShadowOpacity:0.85f];
     
     [self setActionButton:button];
     [self setIndicatorView:[self activityIndicator]];

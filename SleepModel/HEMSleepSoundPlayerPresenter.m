@@ -115,6 +115,21 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 #pragma mark -
 
+- (void)loadDeviceState:(void(^)(void))completion {
+    [self setSenseOffline:NO];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self deviceService] refreshMetadata:^(SENPairedDevices * _Nullable devices, NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (devices) {
+            NSDate* date = [[devices senseMetadata] lastSeenDate];
+            BOOL senseOk = ![[strongSelf service] isSenseLastSeenGoingToBeAProblem:date];
+            [weakSelf setSenseOffline:!senseOk];
+        }
+        completion ();
+    }];
+}
+
 - (void)loadSleepSounds:(void(^)(void))completion {
     __weak typeof(self) weakSelf = self;
     [[self service] availableSleepSounds:^(id  _Nullable data, NSError * _Nullable error) {
@@ -140,17 +155,16 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return;
     }
     
-    // we will assume HEMDeviceService has latest data so we do not have to make even more
-    // API calls ... getting to be wayyy too many
-    SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
-    [self setSenseOffline:[[self service] isSenseLastSeenGoingToBeAProblem:[senseMetadata lastSeenDate]]];
-    
     [self setLoading:YES];
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     
     dispatch_group_t dataGroup = dispatch_group_create();
-
-    // might have been provided to the presenter already
+    
+    dispatch_group_enter(dataGroup);
+    [self loadDeviceState:^{
+        dispatch_group_leave(dataGroup);
+    }];
+    
     dispatch_group_enter(dataGroup);
     [self loadSleepSounds:^{
         dispatch_group_leave(dataGroup);
@@ -321,37 +335,35 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 #pragma mark - Temporary Sleep Sounds State
 
 - (UIImage*)imageForState:(SENSleepSoundsFeatureState)state {
-    switch (state) {
-        case SENSleepSoundsFeatureStateFWRequired:
-            return [UIImage imageNamed:@"sleepSoundSenseNeedsUpdate"];
-        case SENSleepSoundsFeatureStateNoSounds:
-            return [UIImage imageNamed:@"sleepSoundSenseDownloading"];
-        case SENSleepSoundsFeatureStateOK:
-            if ([self isSenseOffline]) {
-                return [UIImage imageNamed:@"sleepSoundSenseOffline"];
-            }
-        default:
-            return nil;
+    if ([self isSenseOffline]) {
+        return [UIImage imageNamed:@"sleepSoundSenseOffline"];
+    } else {
+        switch (state) {
+            case SENSleepSoundsFeatureStateFWRequired:
+                return [UIImage imageNamed:@"sleepSoundSenseNeedsUpdate"];
+            case SENSleepSoundsFeatureStateNoSounds:
+                return [UIImage imageNamed:@"sleepSoundSenseDownloading"];
+            default:
+                return nil;
+        }
     }
 }
 
 - (NSAttributedString*)attributedInfoTitleForState:(SENSleepSoundsFeatureState)state {
     NSString* title = nil;
-    
-    switch (state) {
-        case SENSleepSoundsFeatureStateFWRequired:
-            title = NSLocalizedString(@"sleep-sounds.temp.info.title.fw-update", nil);
-            break;
-        case SENSleepSoundsFeatureStateNoSounds:
-            title = NSLocalizedString(@"sleep-sounds.temp.info.title.no-sounds", nil);
-            break;
-        case SENSleepSoundsFeatureStateOK:
-            if ([self isSenseOffline]) {
-                title = NSLocalizedString(@"sleep-sounds.temp.info.title.offline", nil);
-            }
-            break;
-        default:
-            break;
+    if ([self isSenseOffline]) {
+        title = NSLocalizedString(@"sleep-sounds.temp.info.title.offline", nil);
+    } else {
+        switch (state) {
+            case SENSleepSoundsFeatureStateFWRequired:
+                title = NSLocalizedString(@"sleep-sounds.temp.info.title.fw-update", nil);
+                break;
+            case SENSleepSoundsFeatureStateNoSounds:
+                title = NSLocalizedString(@"sleep-sounds.temp.info.title.no-sounds", nil);
+                break;
+            default:
+                break;
+        }
     }
     
     if (!title) {
@@ -365,19 +377,19 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (NSAttributedString*)attributedInfoMessageForState:(SENSleepSoundsFeatureState)state {
     NSString* message = nil;
-    switch (state) {
-        case SENSleepSoundsFeatureStateFWRequired:
-            message = NSLocalizedString(@"sleep-sounds.temp.info.message.fw-update", nil);
-            break;
-        case SENSleepSoundsFeatureStateNoSounds:
-            message = NSLocalizedString(@"sleep-sounds.temp.info.message.no-sounds", nil);
-            break;
-        case SENSleepSoundsFeatureStateOK:
-            if ([self isSenseOffline]) {
-                message = NSLocalizedString(@"sleep-sounds.temp.info.message.offline", nil);
-            }
-        default:
-            break;
+    if ([self isSenseOffline]) {
+        message = NSLocalizedString(@"sleep-sounds.temp.info.message.offline", nil);
+    } else {
+        switch (state) {
+            case SENSleepSoundsFeatureStateFWRequired:
+                message = NSLocalizedString(@"sleep-sounds.temp.info.message.fw-update", nil);
+                break;
+            case SENSleepSoundsFeatureStateNoSounds:
+                message = NSLocalizedString(@"sleep-sounds.temp.info.message.no-sounds", nil);
+                break;
+            default:
+                break;
+        }
     }
     
     if (!message) {

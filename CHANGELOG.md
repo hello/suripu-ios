@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.2.7
+
+Fixes:
+
+* Fixed issue that would cause the Sense is offline state in Sleep sounds to not take precedence over other pending states.
+* Fixed issue where the Device cache would be refreshed fast enough, triggering the Sense is offline state to show unintentionally
+
 ## 1.3.2.6
 
 New:

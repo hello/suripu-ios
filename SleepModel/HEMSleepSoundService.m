@@ -14,28 +14,32 @@
 
 #import "HEMSleepSoundService.h"
 #import "HEMSleepSoundVolume.h"
+#import "HEMSleepSoundActionOperation.h"
 
 NSString* const HEMSleepSoundServiceErrorDomain = @"is.hello.sense.sleep-sound";
 
-static CGFloat const HEMSleepSoundServiceRequestTimeoutInSecs = 30.0f;
-static CGFloat const HEMSleepSoundServiceStatusCheckDelay = 0.2f;
-static CGFloat const HEMSleepSoundServiceRequestBackoff = 2.0f;
+static CGFloat const HEMSleepSoundServiceVolumeHigh = 80.0f;
+static CGFloat const HEMSleepSoundServiceVolumeMedium = 50.0f;
+static CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 static CGFloat const HEMSleepSoundServiceSenseLastSeeenThreshold = 1800.0f; // 30 minutes
-
-CGFloat const HEMSleepSoundServiceVolumeHigh = 80.0f;
-CGFloat const HEMSleepSoundServiceVolumeMedium = 50.0f;
-CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 
 @interface HEMSleepSoundService()
 
-@property (nonatomic, strong) NSTimer* timeout;
-@property (nonatomic, strong) SENSleepSoundRequest* currentRequest;
-@property (nonatomic, copy) HEMSleepSoundsRequestHandler currentRequestCallback;
+@property (nonatomic, strong) NSOperationQueue* apiQueue;
 @property (nonatomic, strong) NSArray<HEMSleepSoundVolume*>* availableVolumeOptions;
 
 @end
 
 @implementation HEMSleepSoundService
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _apiQueue = [NSOperationQueue new];
+        [_apiQueue setMaxConcurrentOperationCount:1];
+    }
+    return self;
+}
 
 - (NSArray<HEMSleepSoundVolume*>*)availableVolumeOptions {
     if (!_availableVolumeOptions) {
@@ -47,6 +51,18 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
                                     [[HEMSleepSoundVolume alloc] initWithName:high volume:HEMSleepSoundServiceVolumeHigh]];
     }
     return _availableVolumeOptions;
+}
+
+- (HEMSleepSoundVolume*)volumeObjectForValue:(NSNumber*)value {
+    NSArray<HEMSleepSoundVolume*>* volumes = [self availableVolumeOptions];
+    HEMSleepSoundVolume* object = [self defaultVolume];
+    for (HEMSleepSoundVolume* volume in volumes) {
+        if ([volume volume] == [value CGFloatValue]) {
+            object = volume;
+            break;
+        }
+    }
+    return object;
 }
 
 - (void)currentSleepSoundsState:(HEMSleepSoundsDataHandler)completion {
@@ -98,28 +114,37 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
                            userInfo:nil];
 }
 
-- (CGFloat)nextStatusCheckDelay:(NSInteger)attempts {
-    // exponential backoff
-    return pow(HEMSleepSoundServiceRequestBackoff, attempts) * HEMSleepSoundServiceStatusCheckDelay;
+- (NSError*)translateOperationError:(NSError*)error {
+    NSError* localError = error;
+    if (error) {
+        if ([[error domain] isEqualToString:HEMSleepSoundActionErrorDomain]) {
+            switch ([error code]) {
+                case HEMSleepSoundActionErrorStatusTimeout:
+                    localError = [NSError errorWithDomain:HEMSleepSoundServiceErrorDomain
+                                                     code:HEMSleepSoundServiceErrorTimeout
+                                                 userInfo:nil];
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    return localError;
 }
 
-- (void)fireRequest:(SENSleepSoundRequest*)request
-         completion:(HEMSleepSoundsRequestHandler)completion {
-    [self setCurrentRequest:request];
-    [self setCurrentRequestCallback:completion];
+- (HEMSleepSoundActionOperation*)operationForRequest:(SENSleepSoundRequest*)request
+                                          completion:(HEMSleepSoundsRequestHandler)completion {
+    
+    HEMSleepSoundActionOperation* actionOperation
+        = [[HEMSleepSoundActionOperation alloc] initWithAction:request];
     
     __weak typeof(self) weakSelf = self;
-    [SENAPISleepSounds executeRequest:request completion:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error) {
-            [SENAnalytics trackError:error];
-            [strongSelf respondToCurrentRequest:error];
-        } else {
-            [strongSelf scheduleRequestStatusTimer];
-            [strongSelf checkStatusForCurrentRequest:0];
+    [actionOperation setResultCompletionBlock:^(BOOL cancelled, NSError* _Nullable error) {
+        if (!cancelled) {
+            completion ([weakSelf translateOperationError:error]);
         }
     }];
-    
+    return actionOperation;
 }
 
 - (void)playSound:(SENSleepSound*)sound
@@ -127,75 +152,18 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
        withVolume:(NSInteger)volume
        completion:(HEMSleepSoundsRequestHandler)completion {
     
-    if ([self currentRequest]) {
-        completion ([self errorWithCode:HEMSleepSoundServiceErrorInProgress]);
-        return;
-    }
-    
     NSNumber* volumeValue = @(MIN(MAX(0, volume), 100));
-    SENSleepSoundRequestPlay* request = [[SENSleepSoundRequestPlay alloc] initWithSoundId:[sound identifier]
-                                                                               durationId:[duration identifier]
-                                                                                   volume:volumeValue];
+    SENSleepSoundRequestPlay* request
+        = [[SENSleepSoundRequestPlay alloc] initWithSoundId:[sound identifier]
+                                                 durationId:[duration identifier]
+                                                     volume:volumeValue];
     
-    [self fireRequest:request completion:completion];
+    [[self apiQueue] addOperation:[self operationForRequest:request completion:completion]];
 }
 
 - (void)stopPlaying:(HEMSleepSoundsRequestHandler)completion {
-    if ([self currentRequest]) {
-        NSError* error = [self errorWithCode:HEMSleepSoundServiceErrorInProgress];
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
-        completion (error);
-        return;
-    }
-    
-    [self fireRequest:[SENSleepSoundRequestStop new] completion:completion];
-}
-
-- (BOOL)isRequest:(SENSleepSoundRequest*)request successful:(SENSleepSoundStatus*)status {
-    return ([request isKindOfClass:[SENSleepSoundRequestPlay class]] && [status isPlaying])
-        || ([request isKindOfClass:[SENSleepSoundRequestStop class]] && ![status isPlaying]);
-}
-
-- (void)checkStatusForCurrentRequest:(NSInteger)attempt {
-    __weak typeof(self) weakSelf = self;
-    
-    CGFloat delay = [self nextStatusCheckDelay:attempt];
-    DDLogVerbose(@"checking next request after delay %f", delay);
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay*NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        [SENAPISleepSounds checkRequestStatus:^(id data, NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error) {
-                [SENAnalytics trackError:error];
-                // if there is an error, check again.  might not have one again?
-            } else if ([strongSelf isRequest:[strongSelf currentRequest] successful:data]) {
-                [strongSelf respondToCurrentRequest:nil];
-            } else {
-                if ([strongSelf currentRequest]) {
-                    [strongSelf checkStatusForCurrentRequest:attempt + 1];
-                }
-            }
-        }];
-    });
-}
-
-- (void)checkCurrentSleepSoundStatus:(HEMSleepSoundsStatusHandler)handler {
-    [SENAPISleepSounds checkRequestStatus:^(id data, NSError *error) {
-        if (error) {
-            [SENAnalytics trackError:error];
-        }
-        handler (data, error);
-    }];
-}
-
-- (void)respondToCurrentRequest:(NSError*)error {
-    [[self timeout] invalidate];
-    [self setTimeout:nil];
-    if ([self currentRequestCallback]) {
-        [self currentRequestCallback] (error);
-        [self setCurrentRequestCallback:nil];
-        [self setCurrentRequest:nil];
-    }
+    [[self apiQueue] addOperation:[self operationForRequest:[SENSleepSoundRequestStop new]
+                                                 completion:completion]];
 }
 
 - (BOOL)isEnabled:(SENSleepSoundsState*)soundState {
@@ -212,31 +180,5 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
     NSTimeInterval timeInSecsSinceNow = [senseLastSeenDate timeIntervalSinceNow];
     return timeInSecsSinceNow < -HEMSleepSoundServiceSenseLastSeeenThreshold;
 }
-
-#pragma mark - Timeouts
-
-- (void)scheduleRequestStatusTimer {
-    NSTimer* timeout = [NSTimer scheduledTimerWithTimeInterval:HEMSleepSoundServiceRequestTimeoutInSecs
-                                                        target:self
-                                                      selector:@selector(requestTimeout)
-                                                      userInfo:nil
-                                                       repeats:NO];
-    [self setTimeout:timeout];
-}
-
-- (void)requestTimeout {
-    NSError* error = [self errorWithCode:HEMSleepSoundServiceErrorTimeout];
-    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
-    [self respondToCurrentRequest:error];
-}
-
-#pragma mark - Clean up
-
-- (void)dealloc {
-    if (_timeout) {
-        [_timeout invalidate];
-    }
-}
-
 
 @end

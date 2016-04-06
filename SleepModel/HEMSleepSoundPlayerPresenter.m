@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     } else if ([status isPlaying]) {
         [self setSelectedSound:[status sound]];
         [self setSelectedDuration:[status duration]];
-        [self setSelectedVolume:[self volumeObjectForValue:[status volume]]];
+        [self setSelectedVolume:[[self service] volumeObjectForValue:[status volume]]];
         [self setPlayerState:HEMSleepSoundPlayerStatePlaying];
     } else { // not playing, load
         if (![self selectedSound]) {
@@ -286,18 +286,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
             [[self collectionView] reloadData];
         }
     }
-}
-
-- (HEMSleepSoundVolume*)volumeObjectForValue:(NSNumber*)value {
-    NSArray<HEMSleepSoundVolume*>* volumes = [[self service] availableVolumeOptions];
-    HEMSleepSoundVolume* object = [[self service] defaultVolume];
-    for (HEMSleepSoundVolume* volume in volumes) {
-        if ([volume volume] == [value CGFloatValue]) {
-            object = volume;
-            break;
-        }
-    }
-    return object;
 }
 
 #pragma mark - Temporary Sleep Sounds State

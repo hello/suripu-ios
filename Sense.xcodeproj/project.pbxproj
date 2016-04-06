@@ -165,6 +165,8 @@
 		BF35838F1CB437E100760CD4 /* HEMAudioService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35838E1CB437E100760CD4 /* HEMAudioService.m */; };
 		BF3583921CB441B000760CD4 /* HEMAudioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3583911CB441B000760CD4 /* HEMAudioButton.m */; };
 		BF3583941CB443ED00760CD4 /* Sounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF3583931CB443ED00760CD4 /* Sounds.xcassets */; };
+		BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */; };
+		BF3583A11CB5C03700760CD4 /* HEMSleepSoundActionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
 		BF412EA01C90F7B6009514A1 /* HEMSleepSoundService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */; };
 		BF412EA41C91098F009514A1 /* HEMSleepSoundConfigurationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412EA31C91098F009514A1 /* HEMSleepSoundConfigurationCell.m */; };
@@ -689,6 +691,10 @@
 		BF3583901CB441B000760CD4 /* HEMAudioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAudioButton.h; sourceTree = "<group>"; };
 		BF3583911CB441B000760CD4 /* HEMAudioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAudioButton.m; sourceTree = "<group>"; };
 		BF3583931CB443ED00760CD4 /* Sounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sounds.xcassets; sourceTree = "<group>"; };
+		BF35839C1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundStatusCheckOperation.h; sourceTree = "<group>"; };
+		BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundStatusCheckOperation.m; sourceTree = "<group>"; };
+		BF35839F1CB5C03700760CD4 /* HEMSleepSoundActionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundActionOperation.h; sourceTree = "<group>"; };
+		BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundActionOperation.m; sourceTree = "<group>"; };
 		BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+HEMUtils.h"; sourceTree = "<group>"; };
 		BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+HEMUtils.m"; sourceTree = "<group>"; };
 		BF412E9E1C90F7B6009514A1 /* HEMSleepSoundService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundService.h; sourceTree = "<group>"; };
@@ -1926,6 +1932,10 @@
 			children = (
 				BF412E9E1C90F7B6009514A1 /* HEMSleepSoundService.h */,
 				BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */,
+				BF35839C1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.h */,
+				BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */,
+				BF35839F1CB5C03700760CD4 /* HEMSleepSoundActionOperation.h */,
+				BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -3268,6 +3278,7 @@
 				BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */,
 				BF6952631C570424000A8E85 /* HEMSensorHandHoldingPresenter.m in Sources */,
 				8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */,
+				BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */,
 				BF8C091A1C24BB2C005AB5A7 /* HEMAccountService.m in Sources */,
 				8A50A18A1B548C1A007FDECC /* UIImage+HEMBlurTint.m in Sources */,
 				BF5BACE51C5AE09A00347185 /* HEMTrendsV2ViewController.m in Sources */,
@@ -3321,6 +3332,7 @@
 				BFC4C20B1B90D89500BB7761 /* HEMEmbeddedVideoView.m in Sources */,
 				BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */,
 				BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */,
+				BF3583A11CB5C03700760CD4 /* HEMSleepSoundActionOperation.m in Sources */,
 				BF83399C1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m in Sources */,
 				BFC7D32B1B91118600D40D58 /* HEMVideoCollectionViewCell.m in Sources */,
 				BF8C094B1C3313E5005AB5A7 /* HEMDeviceService.m in Sources */,
@@ -3690,8 +3702,8 @@
 				PROVISIONING_PROFILE = "";
 				SENSE_AMAZON_REVIEW_URL = "https://www.amazon.com/review/create-review?ie=UTF8&asin=B016XBL2RE&channel=awUDPv3&ref_=cm_cr_dp_aw_wr_but#";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
-				SENSE_API_URL = "https://api.hello.is";
-				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
+				SENSE_API_URL = "https://dev-api.hello.is";
+				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORT_TOKEN = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = (

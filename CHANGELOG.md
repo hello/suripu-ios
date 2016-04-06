@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0.8
+
+Note:
+
+* bumping to 1.4.0 since we will release Sleep sounds in this release, but we are keeping the build number to keep track of number of builds for the release
+
+New:
+
+* Added support for sleep sound preview
+
 ## 1.3.2.7
 
 Fixes:

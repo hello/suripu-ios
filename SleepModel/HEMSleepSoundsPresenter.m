@@ -52,9 +52,12 @@
 
 - (void)didDisappear {
     [super didDisappear];
-    if ([self audioPlayer]) {
-        [[self audioPlayer] stop];
-    }
+    [self stop];
+}
+
+- (void)didEnterBackground {
+    [super didEnterBackground];
+    [self stop];
 }
 
 #pragma mark -

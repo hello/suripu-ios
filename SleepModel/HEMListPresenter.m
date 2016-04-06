@@ -58,8 +58,12 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     for (NSIndexPath* indexPath in [[self tableView] indexPathsForVisibleRows]) {
         UITableViewCell* cell = [[self tableView] cellForRowAtIndexPath:indexPath];
         [cell setSelected:[indexPath isEqual:indexPathToSelect]];
+        id item = [self items][[indexPath row]];
+        [self cell:(id)cell isSelected:[cell isSelected] forItem:item];
     }
 }
+
+- (void)cell:(HEMListItemCell*)cell isSelected:(BOOL)selected forItem:(id)item {}
 
 #pragma mark - UITableViewDelegate
 
@@ -85,6 +89,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [tableView setUserInteractionEnabled:YES];
         [[weakSelf delegate] didSelectItem:item atIndex:index from:weakSelf];
     });
+
 }
 
 #pragma mark - UITableViewDataSource

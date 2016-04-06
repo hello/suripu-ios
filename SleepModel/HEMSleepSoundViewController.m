@@ -17,12 +17,14 @@
 #import "HEMSleepSoundsPresenter.h"
 #import "HEMSleepSoundDurationsPresenter.h"
 #import "HEMSleepSoundVolumePresenter.h"
+#import "HEMAudioService.h"
 
 @interface HEMSleepSoundViewController () <HEMSleepSoundPlayerDelegate, HEMListDelegate>
 
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, weak) IBOutlet UIButton* actionButton;
 @property (nonatomic, strong) HEMSleepSoundService* sleepSoundService;
+@property (nonatomic, strong) HEMAudioService* audioService;
 @property (nonatomic, strong) HEMListPresenter* listPresenter;
 @property (nonatomic, weak) HEMSleepSoundPlayerPresenter* playerPresenter;
 @property (nonatomic, copy) NSString* listTitle;
@@ -80,10 +82,16 @@
                   withTitle:(NSString*)title
                    subTitle:(NSString*)subTitle
                        from:(HEMSleepSoundPlayerPresenter *)presenter {
+    if (![self audioService]) {
+        [self setAudioService:[HEMAudioService new]];
+    }
+    
     HEMSleepSoundsPresenter* soundsPresenter =
         [[HEMSleepSoundsPresenter alloc] initWithTitle:subTitle
                                                  items:sounds
-                                      selectedItemName:selectedName];
+                                      selectedItemName:selectedName
+                                          audioService:[self audioService]];
+
     [self showListViewControllerWithPresenter:soundsPresenter title:title];
 }
 
@@ -121,14 +129,21 @@
 #pragma mark - List Delegate
 
 - (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter *)presenter {
+    BOOL dismiss = YES;
+    
     if ([presenter isKindOfClass:[HEMSleepSoundsPresenter class]]) {
         [[self playerPresenter] setSelectedSound:item];
+        dismiss = NO;
     } else if ([presenter isKindOfClass:[HEMSleepSoundDurationsPresenter class]]) {
         [[self playerPresenter] setSelectedDuration:item];
     } else if ([presenter isKindOfClass:[HEMSleepSoundVolumePresenter class]]) {
         [[self playerPresenter] setSelectedVolume:item];
     }
-    [[self navigationController] popViewControllerAnimated:YES];
+    
+    if (dismiss) {
+        [[self navigationController] popViewControllerAnimated:YES];
+    }
+    
 }
 
 #pragma mark - Segues

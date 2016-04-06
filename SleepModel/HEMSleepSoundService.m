@@ -10,6 +10,7 @@
 #import <SenseKit/SENSleepSoundDurations.h>
 #import <SenseKit/SENSleepSoundStatus.h>
 #import <SenseKit/SENSleepSounds.h>
+#import <SenseKit/SENSleepSoundsState.h>
 
 #import "HEMSleepSoundService.h"
 #import "HEMSleepSoundVolume.h"
@@ -46,6 +47,15 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
                                     [[HEMSleepSoundVolume alloc] initWithName:high volume:HEMSleepSoundServiceVolumeHigh]];
     }
     return _availableVolumeOptions;
+}
+
+- (void)currentSleepSoundsState:(HEMSleepSoundsDataHandler)completion {
+    [SENAPISleepSounds sleepSoundsState:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        completion (data, error);
+    }];
 }
 
 - (void)availableSleepSounds:(HEMSleepSoundsDataHandler)completion {
@@ -186,6 +196,10 @@ CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
         [self setCurrentRequestCallback:nil];
         [self setCurrentRequest:nil];
     }
+}
+
+- (BOOL)isEnabled:(SENSleepSoundsState*)soundState {
+    return [[soundState sounds] state] == SENSleepSoundsFeatureStateOK;
 }
 
 #pragma mark - Sense

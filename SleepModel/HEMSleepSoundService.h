@@ -13,6 +13,7 @@
 @class SENSleepSoundDurations;
 @class SENSleepSoundDuration;
 @class HEMSleepSoundVolume;
+@class SENSleepSoundsState;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,6 +34,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
 @interface HEMSleepSoundService : SENService
 
 - (NSArray<HEMSleepSoundVolume*>*)availableVolumeOptions;
+- (void)currentSleepSoundsState:(HEMSleepSoundsDataHandler)completion;
 - (void)availableSleepSounds:(HEMSleepSoundsDataHandler)completion;
 - (void)availableDurations:(HEMSleepSoundsDataHandler)completion;
 - (SENSleepSound*)defaultSleepSoundFrom:(SENSleepSounds*)available;
@@ -45,6 +47,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
 - (void)stopPlaying:(HEMSleepSoundsRequestHandler)completion;
 - (void)checkCurrentSleepSoundStatus:(HEMSleepSoundsStatusHandler)handler;
 - (BOOL)isSenseLastSeenGoingToBeAProblem:(NSDate*)senseLastSeenDate;
+- (BOOL)isEnabled:(SENSleepSoundsState*)soundState;
 
 @end
 

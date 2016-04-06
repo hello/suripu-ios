@@ -32,7 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithTitle:(NSString*)title
                         items:(NSArray*)items
              selectedItemName:(NSString*)selectedItemName;
+
 - (void)bindWithTableView:(UITableView*)tableView;
+
 /**
  * @discussion
  * Subclasses should implement this method.  By default, this does nothing and
@@ -42,6 +44,17 @@ NS_ASSUME_NONNULL_BEGIN
  * @param item: the list item for the cell
  */
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item;
+
+/**
+ * @discussion
+ * Subclasses should implement this method.  By default, this does nothing and
+ * it should be not be manually called
+ *
+ * @param cell: the list item cell
+ * @Param selected: YES if cell should be selected. NO otherwise
+ * @param item: the list item selected
+ */
+- (void)cell:(HEMListItemCell*)cell isSelected:(BOOL)selected forItem:(id)item;
 
 @end
 

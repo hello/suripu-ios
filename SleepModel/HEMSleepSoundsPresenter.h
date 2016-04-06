@@ -8,6 +8,17 @@
 
 #import "HEMListPresenter.h"
 
+@class HEMAudioService;
+
 @interface HEMSleepSoundsPresenter : HEMListPresenter
+
+- (instancetype)initWithTitle:(NSString *)title
+                        items:(NSArray *)items
+             selectedItemName:(NSString*)selectedItemName NS_UNAVAILABLE;
+
+- (instancetype)initWithTitle:(NSString *)title
+                        items:(NSArray *)items
+             selectedItemName:(NSString*)selectedItemName
+                 audioService:(HEMAudioService*)audioService NS_DESIGNATED_INITIALIZER;
 
 @end

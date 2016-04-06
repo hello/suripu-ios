@@ -18,7 +18,7 @@
 #import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
 #import "HEMSimpleModalTransitionDelegate.h"
-#import "HEMAudioSession.h"
+#import "HEMAudioService.h"
 
 typedef NS_ENUM(NSUInteger, HEMWelcomePage) {
     HEMWelcomePageMeetSense = 0,
@@ -45,6 +45,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *introImageHeightConstraint;
 
 @property (weak, nonatomic) HEMMeetSenseView* meetSenseView;
+@property (strong, nonatomic) HEMAudioService* audioService;
 @property (assign, nonatomic) CGFloat previousScrollOffsetX;
 @property (assign, nonatomic) CGFloat origLogInTrailingConstraintConstant;
 @property (weak, nonatomic) UIImageView* currentIntroImageView;
@@ -57,7 +58,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    HEMInitializeAudioSession();
+    [self setAudioService:[HEMAudioService new]];
     [self configureAppearance];
 }
 
@@ -195,17 +196,14 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)playVideo:(UIButton*)videoButton {
     __weak typeof(self) weakSelf = self;
-    HEMActivateAudioSession(YES, ^(NSError *error) {
+    [[self audioService] activateSession:YES completion:^(NSError * _Nullable error) {
         // play regardless of error
         NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
         MPMoviePlayerViewController* videoPlayer
             = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
         [weakSelf presentMoviePlayerViewControllerAnimated:videoPlayer];
         [SENAnalytics track:kHEMAnalyticsEventVideo];
-        if (error) {
-            [SENAnalytics trackError:error];
-        }
-    });
+    }];
 }
 
 // log in and sign up actions are done through segues in the storyboard

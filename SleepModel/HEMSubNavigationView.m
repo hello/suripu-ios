@@ -105,6 +105,7 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 - (void)addControl:(UIControl*)control {
     id existingControl = [self viewWithTag:[control tag]];
     if (!existingControl) {
+        [control setExclusiveTouch:YES];
         [control addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
         [self setControlCount:[self controlCount] + 1];
         [self addSubview:control];

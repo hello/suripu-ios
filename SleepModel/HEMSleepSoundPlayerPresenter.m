@@ -320,6 +320,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (![[_selectedSound identifier] isEqualToNumber:[sound identifier]]) {
         _selectedSound = sound;
         if (shouldReload) {
+            [[self service] saveSelectedSoundSetting:sound];
             [[self collectionView] reloadData];
         }
     }
@@ -330,6 +331,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (![[_selectedDuration identifier] isEqualToNumber:[duration identifier]]) {
         _selectedDuration = duration;
         if (shouldReload) {
+            [[self service] saveSelectedDurationSetting:duration];
             [[self collectionView] reloadData];
         }
     }
@@ -340,6 +342,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (![[_selectedVolume localizedName] isEqualToString:[selectedVolume localizedName]]) {
         _selectedVolume = selectedVolume;
         if (shouldReload) {
+            [[self service] saveSelectedVolumeSetting:selectedVolume];
             [[self collectionView] reloadData];
         }
     }

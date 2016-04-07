@@ -51,6 +51,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
 - (BOOL)isEnabled:(SENSleepSoundsState*)soundState;
 - (void)startMonitoringStatusChange;
 - (void)stopMonitoringStatusChange;
+- (void)saveSelectedSoundSetting:(SENSleepSound*)sound;
+- (void)saveSelectedDurationSetting:(SENSleepSoundDuration*)duration;
+- (void)saveSelectedVolumeSetting:(HEMSleepSoundVolume*)volume;
 
 @end
 

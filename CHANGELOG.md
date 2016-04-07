@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.0.9
+
+New:
+
+* Now using the combined state API to reduce # calls required to load Sleep sounds
+* Sleep sounds now continuously checks the status when in foreground to react to actions taken outside of the app
+
+Fixes:
+
+* Removed double spacing after periods throughout the app
+
 ## 1.4.0.8
 
 Note:

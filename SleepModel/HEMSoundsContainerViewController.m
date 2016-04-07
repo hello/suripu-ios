@@ -105,12 +105,16 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)loadAlarmsFrom:(__unused HEMSoundsContentPresenter *)presenter thenLaunchNewAlarm:(BOOL)showNewAlarm {
+- (void)loadAlarmsFrom:(__unused HEMSoundsContentPresenter *)presenter
+    thenLaunchNewAlarm:(BOOL)showNewAlarm {
     DDLogVerbose(@"show alarms view");
     if (![self alarmVC]) {
         HEMAlarmListViewController* alarmVC = [HEMMainStoryboard instantiateAlarmListViewController];
         [self setAlarmVC:alarmVC];
     }
+    
+    [[self alarmVC] setHasSubNav:[[self subNav] hasControls]];
+    
     [self showSoundViewOf:[self alarmVC] completion:^{
         if (showNewAlarm) {
             [[self alarmVC] addNewAlarm:nil];

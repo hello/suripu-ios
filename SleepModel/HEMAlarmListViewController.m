@@ -166,8 +166,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if ([self.alarms isEqualToArray:cachedAlarms]) {
         if ([self isLoading]) {
             self.loading = NO;
-            [self.collectionView reloadData];
         }
+        [self.collectionView reloadData];
         return;
     }
 

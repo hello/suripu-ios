@@ -10,7 +10,9 @@
 
 @interface HEMSleepSoundConfigurationCell : HEMCardCollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *soundGraphLeftView;
 @property (weak, nonatomic) IBOutlet UILabel *playingLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *soundGraphRightView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *playingLabelTopConstraint;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;

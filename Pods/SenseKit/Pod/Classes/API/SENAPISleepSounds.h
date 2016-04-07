@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)executeRequest:(SENSleepSoundRequest*)request
             completion:(SENAPIErrorBlock)completion;
 + (void)checkRequestStatus:(SENAPIDataBlock)completion;
++ (void)sleepSoundsState:(SENAPIDataBlock)completion;
 
 @end
 

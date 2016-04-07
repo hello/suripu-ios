@@ -193,6 +193,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     
     [self setLoading:YES];
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
+    [[self collectionView] reloadData];
     
     dispatch_group_t dataGroup = dispatch_group_create();
     
@@ -211,8 +212,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLoading:NO];
         [strongSelf configurePlayerStateFromStatus:[[strongSelf soundState] status]];
-        [[strongSelf collectionView] reloadData];
         [strongSelf startMonitoring];
+        [[strongSelf collectionView] reloadData];
     });
 }
 
@@ -225,7 +226,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)configurePlayerStateFromStatus:(SENSleepSoundStatus*)status {
-    if ([self isSenseOffline]) {
+    if (!status) {
+        [self setPlayerState:HEMSleepSoundPlayerStateError];
+    } else if ([self isSenseOffline]) {
         [self reloadDataWithPlayerState:HEMSleepSoundPlayerStateSenseOffline];
     } else if (![[self service] isEnabled:[self soundState]]) {
         [self reloadDataWithPlayerState:HEMSleepSoundPlayerStatePrereqNotMet];

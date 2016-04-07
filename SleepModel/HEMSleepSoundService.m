@@ -11,6 +11,7 @@
 #import <SenseKit/SENSleepSoundStatus.h>
 #import <SenseKit/SENSleepSounds.h>
 #import <SenseKit/SENSleepSoundsState.h>
+#import <SenseKit/SENLocalPreferences.h>
 
 #import "HEMSleepSoundService.h"
 #import "HEMSleepSoundVolume.h"
@@ -24,8 +25,13 @@ NSString* const HEMSleepSoundServiceNotifyInfoStatus = @"status";
 static CGFloat const HEMSleepSoundServiceVolumeHigh = 100.0f;
 static CGFloat const HEMSleepSoundServiceVolumeMedium = 50.0f;
 static CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
+static CGFloat const HEMSleepSoundServiceVolumeAccuracy = 5.0f;
 static CGFloat const HEMSleepSoundServiceSenseLastSeeenThreshold = 1800.0f; // 30 minutes
 static CGFloat const HEMSleepSoundServiceMonitorInterval = 0.5f; // in secs (500 ms)
+
+static NSString* const HEMSleepSoundSettingLastSoundId = @"sleep-sound.soundId";
+static NSString* const HEMSleepSoundSettingLastVolume = @"sleep-sound.volume";
+static NSString* const HEMSleepSoundSettingLastDurationId = @"sleep-sound.durationId";
 
 @interface HEMSleepSoundService()
 
@@ -47,6 +53,41 @@ static CGFloat const HEMSleepSoundServiceMonitorInterval = 0.5f; // in secs (500
     return self;
 }
 
+#pragma mark - local preferences / settings
+
+- (id)lastSavedSoundSettingFor:(NSString*)key {
+    SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+    return [prefs userPreferenceForKey:key];
+}
+
+- (void)saveSoundSetting:(id)setting withKey:(NSString*)key {
+    SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+    [prefs setUserPreference:setting forKey:key];
+}
+
+- (void)saveSelectedSoundSetting:(SENSleepSound*)sound {
+    if ([sound identifier]) {
+        [self saveSoundSetting:[sound identifier]
+                       withKey:HEMSleepSoundSettingLastSoundId];
+    }
+}
+
+- (void)saveSelectedDurationSetting:(SENSleepSoundDuration*)duration {
+    if ([duration identifier]) {
+        [self saveSoundSetting:[duration identifier]
+                       withKey:HEMSleepSoundSettingLastDurationId];
+    }
+}
+
+- (void)saveSelectedVolumeSetting:(HEMSleepSoundVolume*)volume {
+    if (volume) {
+        [self saveSoundSetting:@([volume volume])
+                       withKey:HEMSleepSoundSettingLastVolume];
+    }
+}
+
+#pragma mark -
+
 - (NSArray<HEMSleepSoundVolume*>*)availableVolumeOptions {
     if (!_availableVolumeOptions) {
         NSString* high = NSLocalizedString(@"sleep-sounds.volume.high", nil);
@@ -59,16 +100,30 @@ static CGFloat const HEMSleepSoundServiceMonitorInterval = 0.5f; // in secs (500
     return _availableVolumeOptions;
 }
 
-- (HEMSleepSoundVolume*)volumeObjectForValue:(NSNumber*)value {
+- (HEMSleepSoundVolume*)volumeObjectThatMatches:(NSNumber*)volumeValue {
+    if (!volumeValue) {
+        return nil;
+    }
+    
     NSArray<HEMSleepSoundVolume*>* volumes = [self availableVolumeOptions];
-    HEMSleepSoundVolume* object = [self defaultVolume];
+    HEMSleepSoundVolume* volumeObject = nil;
     for (HEMSleepSoundVolume* volume in volumes) {
-        if ([volume volume] == [value CGFloatValue]) {
-            object = volume;
-            break;
+        CGFloat value = [volumeValue CGFloatValue];
+        // values returned from the server may not be 100% accurate.  We may need
+        // to have this type of logic put on the server and agree on some enums
+        // in the future
+        if (([volume volume] >= value - HEMSleepSoundServiceVolumeAccuracy)
+            || [volume volume] <= value + HEMSleepSoundServiceVolumeAccuracy) {
+            volumeObject = volume;
         }
     }
-    return object;
+    
+    return volumeObject;
+}
+
+- (HEMSleepSoundVolume*)volumeObjectForValue:(NSNumber*)value {
+    HEMSleepSoundVolume* volume = [self volumeObjectThatMatches:value];
+    return volume ?: [self defaultVolume];
 }
 
 - (void)currentSleepSoundsState:(HEMSleepSoundsDataHandler)completion {
@@ -99,19 +154,48 @@ static CGFloat const HEMSleepSoundServiceMonitorInterval = 0.5f; // in secs (500
 }
 
 - (SENSleepSound*)defaultSleepSoundFrom:(SENSleepSounds*)available {
-    return [[available sounds] firstObject];
+    NSString* key = HEMSleepSoundSettingLastSoundId;
+    NSNumber* lastSavedId = [self lastSavedSoundSettingFor:key];
+    SENSleepSound* defaultSound = nil;
+    if (lastSavedId) {
+        for (SENSleepSound* sound in [available sounds]) {
+            if ([[sound identifier] isEqualToNumber:lastSavedId]) {
+                defaultSound = sound;
+                break;
+            }
+        }
+    }
+    return defaultSound ?: [[available sounds] firstObject];
 }
 
 - (SENSleepSoundDuration*)defaultDurationFrom:(SENSleepSoundDurations*)available {
-    return [[available durations] firstObject];
+    NSString* key = HEMSleepSoundSettingLastDurationId;
+    NSNumber* lastSavedId = [self lastSavedSoundSettingFor:key];
+    SENSleepSoundDuration* defaultDuration = nil;
+    if (lastSavedId) {
+        for (SENSleepSoundDuration* duration in [available durations]) {
+            if ([[duration identifier] isEqualToNumber:lastSavedId]) {
+                defaultDuration = duration;
+                break;
+            }
+        }
+    }
+    return defaultDuration ?: [[available durations] firstObject];
 }
 
 - (HEMSleepSoundVolume*)defaultVolume {
-    if ([[self availableVolumeOptions] count] == 3) {
-        return [self availableVolumeOptions][1]; // take the middle
-    } else {
-        return [[self availableVolumeOptions] firstObject];
+    NSString* key = HEMSleepSoundSettingLastVolume;
+    NSNumber* lastSavedVolume = [self lastSavedSoundSettingFor:key];
+    HEMSleepSoundVolume* volume = nil;
+    if (lastSavedVolume) {
+        volume = [self volumeObjectThatMatches:lastSavedVolume];
     }
+    if (!volume) {
+        // take the middle
+        NSInteger mid = [[self availableVolumeOptions] count] / 2;
+        volume = [self availableVolumeOptions][mid];
+    }
+    return volume;
 }
 
 - (NSError*)errorWithCode:(HEMSleepSoundServiceError)code {

@@ -14,15 +14,18 @@
 @class SENSleepSoundDuration;
 @class HEMSleepSoundVolume;
 @class SENSleepSoundsState;
+@class SENSleepSoundStatus;
 
 NS_ASSUME_NONNULL_BEGIN
 
 extern NSString* const HEMSleepSoundServiceErrorDomain;
+extern NSString* const HEMSleepSoundServiceNotifyStatus;
+extern NSString* const HEMSleepSoundServiceNotifyInfoStatus;
 
 typedef void(^HEMSleepSoundsDataHandler)(id _Nullable data, NSError* _Nullable error);
 typedef void(^HEMSleepSoundsRequestHandler)(NSError* _Nullable error);
 typedef void(^HEMSleepSoundsStatusHandler)(id _Nullable data, NSError* _Nullable error);
-typedef void(^HEMSleepSoundStatusUpdateHandler)(void);
+typedef void(^HEMSleepSoundStatusUpdateHandler)(SENSleepSoundStatus* updatedStatus);
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
     HEMSleepSoundServiceErrorInProgress = -1,
@@ -46,6 +49,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
 - (void)stopPlaying:(HEMSleepSoundsRequestHandler)completion;
 - (BOOL)isSenseLastSeenGoingToBeAProblem:(NSDate*)senseLastSeenDate;
 - (BOOL)isEnabled:(SENSleepSoundsState*)soundState;
+- (void)startMonitoringStatusChange;
+- (void)stopMonitoringStatusChange;
 
 @end
 

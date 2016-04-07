@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class SENSleepSoundStatus;
+
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void(^HEMSleepSoundStatusOpCallback)(SENSleepSoundStatus* _Nullable status);
+
 @interface HEMSleepSoundStatusCheckOperation : NSOperation
 
+@property (nonatomic, strong) HEMSleepSoundStatusOpCallback resultCompletionBlock;
+
 @end
+
+NS_ASSUME_NONNULL_END

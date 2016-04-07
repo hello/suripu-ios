@@ -15,18 +15,23 @@
 #import "HEMSleepSoundService.h"
 #import "HEMSleepSoundVolume.h"
 #import "HEMSleepSoundActionOperation.h"
+#import "HEMSleepSoundStatusCheckOperation.h"
 
 NSString* const HEMSleepSoundServiceErrorDomain = @"is.hello.sense.sleep-sound";
+NSString* const HEMSleepSoundServiceNotifyStatus = @"HEMSleepSoundServiceNotifyStatus";
+NSString* const HEMSleepSoundServiceNotifyInfoStatus = @"status";
 
-static CGFloat const HEMSleepSoundServiceVolumeHigh = 80.0f;
+static CGFloat const HEMSleepSoundServiceVolumeHigh = 100.0f;
 static CGFloat const HEMSleepSoundServiceVolumeMedium = 50.0f;
 static CGFloat const HEMSleepSoundServiceVolumeLow = 25.0f;
 static CGFloat const HEMSleepSoundServiceSenseLastSeeenThreshold = 1800.0f; // 30 minutes
+static CGFloat const HEMSleepSoundServiceMonitorInterval = 0.5f; // in secs (500 ms)
 
 @interface HEMSleepSoundService()
 
 @property (nonatomic, strong) NSOperationQueue* apiQueue;
 @property (nonatomic, strong) NSArray<HEMSleepSoundVolume*>* availableVolumeOptions;
+@property (nonatomic, assign) BOOL stopMonitoring;
 
 @end
 
@@ -35,6 +40,7 @@ static CGFloat const HEMSleepSoundServiceSenseLastSeeenThreshold = 1800.0f; // 3
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _stopMonitoring = YES;
         _apiQueue = [NSOperationQueue new];
         [_apiQueue setMaxConcurrentOperationCount:1];
     }
@@ -170,6 +176,73 @@ static CGFloat const HEMSleepSoundServiceSenseLastSeeenThreshold = 1800.0f; // 3
     return [[soundState sounds] state] == SENSleepSoundsFeatureStateOK;
 }
 
+#pragma mark - Monitor
+
+- (void)startMonitoringStatusChange {
+    BOOL started = NO;
+    for (NSOperation* op in [[self apiQueue] operations]) {
+        if ([op isKindOfClass:[HEMSleepSoundStatusCheckOperation class]]) {
+            started = YES;
+            break;
+        }
+    }
+    if (!started) {
+        DDLogVerbose(@"not started yet, start monitoring sleep sound status");
+        [self setStopMonitoring:NO];
+        [self doAnotherCheck];
+    } else {
+        DDLogVerbose(@"sleep sound status monitor already started");
+    }
+}
+
+- (HEMSleepSoundStatusCheckOperation*)statusCheckOp {
+    __weak typeof(self) weakSelf = self;
+    HEMSleepSoundStatusCheckOperation* op = [HEMSleepSoundStatusCheckOperation new];
+    [op setResultCompletionBlock:^(SENSleepSoundStatus* status) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf notifyOfStatus:status];
+        [strongSelf doAnotherCheck];
+    }];
+    return op;
+}
+
+- (void)notifyOfStatus:(SENSleepSoundStatus*)status {
+    if (status) {
+        NSDictionary* info = @{HEMSleepSoundServiceNotifyInfoStatus : status};
+        NSNotification* note
+            = [NSNotification notificationWithName:HEMSleepSoundServiceNotifyStatus
+                                            object:self
+                                          userInfo:info];
+        [[NSNotificationCenter defaultCenter] postNotification:note];
+    }
+}
+
+- (void)doAnotherCheck {
+    if ([self stopMonitoring]) {
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    CGFloat delay = HEMSleepSoundServiceMonitorInterval;
+    DDLogVerbose(@"checking next request after delay %f, op count %ld",
+                 delay,
+                 [[self apiQueue] operationCount]);
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay*NSEC_PER_SEC);
+    dispatch_after(time, dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf apiQueue] addOperation:[strongSelf statusCheckOp]];
+    });
+}
+
+- (void)stopMonitoringStatusChange {
+    [self setStopMonitoring:YES];
+    for (NSOperation* op in [[self apiQueue] operations]) {
+        if ([op isKindOfClass:[HEMSleepSoundStatusCheckOperation class]]) {
+            [op cancel];
+        }
+    }
+}
+
 #pragma mark - Sense
 
 - (BOOL)isSenseLastSeenGoingToBeAProblem:(NSDate*)senseLastSeenDate {
@@ -179,6 +252,14 @@ static CGFloat const HEMSleepSoundServiceSenseLastSeeenThreshold = 1800.0f; // 3
     
     NSTimeInterval timeInSecsSinceNow = [senseLastSeenDate timeIntervalSinceNow];
     return timeInSecsSinceNow < -HEMSleepSoundServiceSenseLastSeeenThreshold;
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    if (_apiQueue) {
+        [_apiQueue cancelAllOperations];
+    }
 }
 
 @end

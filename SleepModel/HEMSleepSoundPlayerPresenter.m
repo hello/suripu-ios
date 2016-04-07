@@ -96,6 +96,51 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [self setIndicatorView:[self activityIndicator]];
 }
 
+#pragma mark - Monitor Player Status
+
+- (void)startMonitoring {
+    switch ([self playerState]) {
+        case HEMSleepSoundPlayerStatePlaying:
+        case HEMSleepSoundPlayerStateStopped:
+        case HEMSleepSoundPlayerStateWaiting: {
+            NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+            [center addObserver:self
+                       selector:@selector(didGetStatusNotification:)
+                           name:HEMSleepSoundServiceNotifyStatus
+                         object:[self service]];
+            [[self service] startMonitoringStatusChange];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)stopMonitoring {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:HEMSleepSoundServiceNotifyInfoStatus object:nil];
+    [[self service] stopMonitoringStatusChange];
+}
+
+- (void)didGetStatusNotification:(NSNotification*)note {
+    SENSleepSoundStatus* status = [note userInfo][HEMSleepSoundServiceNotifyInfoStatus];
+    switch ([self playerState]) {
+        case HEMSleepSoundPlayerStatePlaying:
+            if (![status isPlaying]) {
+                [self configurePlayerStateFromStatus:status];
+                [self setPlayerState:HEMSleepSoundPlayerStateStopped];
+            }
+            break;
+        case HEMSleepSoundPlayerStateStopped:
+            if ([status isPlaying]) {
+                [self configurePlayerStateFromStatus:status];
+                [self setPlayerState:HEMSleepSoundPlayerStatePlaying];
+            }
+        default:
+            break;
+    }
+}
+
 #pragma mark - Presenter events
 
 - (void)didAppear {
@@ -103,8 +148,20 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (![self isWaitingForOptionChange]) {
         [SENAnalytics track:HEMAnalyticsEventSleepSoundView];
         [self loadData];
+    } else {
+        [[self service] startMonitoringStatusChange];
     }
     [self setWaitingForOptionChange:NO];
+}
+
+- (void)didDisappear {
+    [super didDisappear];
+    [self stopMonitoring];
+}
+
+- (void)didEnterBackground {
+    [super didEnterBackground];
+    [self stopMonitoring];
 }
 
 - (void)didComeBackFromBackground {
@@ -153,8 +210,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLoading:NO];
-        [strongSelf configurePlayerState];
+        [strongSelf configurePlayerStateFromStatus:[[strongSelf soundState] status]];
         [[strongSelf collectionView] reloadData];
+        [strongSelf startMonitoring];
     });
 }
 
@@ -166,8 +224,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }];
 }
 
-- (void)configurePlayerState {
-    SENSleepSoundStatus* status = [[self soundState] status];
+- (void)configurePlayerStateFromStatus:(SENSleepSoundStatus*)status {
     if ([self isSenseOffline]) {
         [self reloadDataWithPlayerState:HEMSleepSoundPlayerStateSenseOffline];
     } else if (![[self service] isEnabled:[self soundState]]) {
@@ -606,6 +663,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 #pragma mark - Clean up
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     if (_collectionView) {
         [_collectionView setDelegate:nil];
         [_collectionView setDataSource:nil];

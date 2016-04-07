@@ -17,8 +17,8 @@
 @implementation HEMSoundsTabPresenter
 
 - (void)bindWithTabBarItem:(nonnull UITabBarItem*)tabBarItem {
-    tabBarItem.image = [UIImage imageNamed:@"alarmBarIcon"];
-    tabBarItem.selectedImage = [UIImage imageNamed:@"alarmBarIconActive"];
+    tabBarItem.image = [UIImage imageNamed:@"soundTabIcon"];
+    tabBarItem.selectedImage = [UIImage imageNamed:@"soundTabActiveIcon"];
     [self setTabBarItem:tabBarItem];
 }
 

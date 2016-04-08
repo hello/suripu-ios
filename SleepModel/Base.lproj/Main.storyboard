@@ -2654,7 +2654,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.92549019610000005" green="0.92941176469999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="c1n-ck-PaP" firstAttribute="centerX" secondItem="S2E-t2-8bL" secondAttribute="centerX" id="84t-oB-l1T"/>
                             <constraint firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="P2e-61-uUp"/>
@@ -5003,6 +5003,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j2K-hJ-bI5" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="272" y="272" width="55" height="55"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="izw-fw-qvb"/>
+                                    <constraint firstAttribute="height" constant="55" id="osm-2o-RK8"/>
+                                </constraints>
+                            </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5oa-BE-1Jj">
                                 <rect key="frame" x="0.0" y="110" width="600" height="490"/>
                                 <subviews>
@@ -5012,7 +5020,7 @@
                                         <collectionViewLayout key="collectionViewLayout" id="cil-fM-fPx" customClass="HEMCardFlowLayout"/>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pair" id="XEW-R5-72m" customClass="HEMSenseRequiredCollectionViewCell">
-                                                <rect key="frame" x="8" y="64" width="584" height="352"/>
+                                                <rect key="frame" x="8" y="0.0" width="584" height="352"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="584" height="352"/>
@@ -5062,7 +5070,7 @@
                                                 </connections>
                                             </collectionViewCell>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="f4o-B9-JCL" customClass="HEMTextCollectionViewCell">
-                                                <rect key="frame" x="8" y="426" width="584" height="94"/>
+                                                <rect key="frame" x="8" y="362" width="584" height="94"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
@@ -5091,7 +5099,7 @@
                                         </cells>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.92549019610000005" green="0.92941176469999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="MfO-wI-KXu" firstAttribute="top" secondItem="5oa-BE-1Jj" secondAttribute="top" id="0ux-WF-HEh"/>
                                     <constraint firstItem="MfO-wI-KXu" firstAttribute="leading" secondItem="5oa-BE-1Jj" secondAttribute="leading" id="1kK-7v-3AK"/>
@@ -5106,16 +5114,8 @@
                                     <constraint firstAttribute="height" constant="46" id="ehY-b2-0qO"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j2K-hJ-bI5" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="272" y="272" width="55" height="55"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="55" id="izw-fw-qvb"/>
-                                    <constraint firstAttribute="height" constant="55" id="osm-2o-RK8"/>
-                                </constraints>
-                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.92549019610000005" green="0.92941176469999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="S6R-2O-9T8" firstAttribute="top" secondItem="o5i-ml-e9P" secondAttribute="bottom" id="AdO-g1-Qua"/>
                             <constraint firstAttribute="trailing" secondItem="5oa-BE-1Jj" secondAttribute="trailing" id="LyN-VN-2Md"/>

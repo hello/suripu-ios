@@ -110,18 +110,24 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
                  object:nil];
 }
 
+- (BOOL)shouldReload {
+    return [self deviceError]
+        || ![[[self deviceService] devices] hasPairedSense]
+        || ![self availableSleepSounds];
+}
+
 #pragma mark - Presenter events
 
 - (void)didAppear {
     [super didAppear];
-    if ([self deviceError] || ![[[self deviceService] devices] hasPairedSense]) {
+    if ([self shouldReload]) {
         [self reload];
     }
 }
 
 - (void)didComeBackFromBackground {
     [super didComeBackFromBackground];
-    if ([self deviceError] || ![[[self deviceService] devices] hasPairedSense]) {
+    if ([self shouldReload]) {
         [self reload];
     }
 }
@@ -276,6 +282,7 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
 
 - (void)displayDeviceError {
     if (![[self subNav] hasControls]) {
+        [[self delegate] unloadContentControllersFrom:self];
         [[self errorCollectionView] setHidden:NO];
         [[self errorCollectionView] setDelegate:self];
         [[self errorCollectionView] setDataSource:self];

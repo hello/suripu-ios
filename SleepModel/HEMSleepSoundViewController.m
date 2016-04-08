@@ -18,6 +18,7 @@
 #import "HEMSleepSoundDurationsPresenter.h"
 #import "HEMSleepSoundVolumePresenter.h"
 #import "HEMAudioService.h"
+#import "HEMSubNavigationView.h"
 
 @interface HEMSleepSoundViewController () <HEMSleepSoundPlayerDelegate, HEMListDelegate>
 
@@ -60,6 +61,9 @@
                                                                     target:self
                                                                     action:@selector(dismiss)];
         [[self navigationItem] setLeftBarButtonItem:cancelItem];
+    }
+    if ([[self subNav] hasControls]) {
+        [[self playerPresenter] bindWithShadowView:[[self subNav] shadowView]];
     }
 }
 

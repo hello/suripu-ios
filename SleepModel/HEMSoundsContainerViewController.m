@@ -113,7 +113,7 @@
         [self setAlarmVC:alarmVC];
     }
     
-    [[self alarmVC] setHasSubNav:[[self subNav] hasControls]];
+    [[self alarmVC] setSubNav:[self subNav]];
     
     [self showSoundViewOf:[self alarmVC] completion:^{
         if (showNewAlarm) {
@@ -126,6 +126,7 @@
     DDLogVerbose(@"show sleep sounds view");
     HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
     [soundVC setDeviceService:[self deviceService]];
+    [soundVC setSubNav:[self subNav]];
     [self showSoundViewOf:soundVC completion:nil];
 }
 

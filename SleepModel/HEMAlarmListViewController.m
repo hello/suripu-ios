@@ -22,6 +22,7 @@
 #import "HEMNoAlarmCell.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMSubNavigationView.h"
 
 NS_ENUM(NSUInteger) {
     LoadingStateRowCount = 0,
@@ -166,8 +167,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if ([self.alarms isEqualToArray:cachedAlarms]) {
         if ([self isLoading]) {
             self.loading = NO;
-            [self.collectionView reloadData];
         }
+        [self.collectionView reloadData];
         return;
     }
 
@@ -471,8 +472,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (![self hasSubNav]) {
-        [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
+    CGFloat yOffset = [scrollView contentOffset].y;
+    if (![[self subNav] hasControls]) {
+        [[self shadowView] updateVisibilityWithContentOffset:yOffset];
+    } else {
+        [[[self subNav] shadowView] updateVisibilityWithContentOffset:yOffset];
     }
 }
 

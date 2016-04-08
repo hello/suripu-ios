@@ -105,12 +105,16 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)loadAlarmsFrom:(__unused HEMSoundsContentPresenter *)presenter thenLaunchNewAlarm:(BOOL)showNewAlarm {
+- (void)loadAlarmsFrom:(__unused HEMSoundsContentPresenter *)presenter
+    thenLaunchNewAlarm:(BOOL)showNewAlarm {
     DDLogVerbose(@"show alarms view");
     if (![self alarmVC]) {
         HEMAlarmListViewController* alarmVC = [HEMMainStoryboard instantiateAlarmListViewController];
         [self setAlarmVC:alarmVC];
     }
+    
+    [[self alarmVC] setSubNav:[self subNav]];
+    
     [self showSoundViewOf:[self alarmVC] completion:^{
         if (showNewAlarm) {
             [[self alarmVC] addNewAlarm:nil];
@@ -122,6 +126,7 @@
     DDLogVerbose(@"show sleep sounds view");
     HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
     [soundVC setDeviceService:[self deviceService]];
+    [soundVC setSubNav:[self subNav]];
     [self showSoundViewOf:soundVC completion:nil];
 }
 

@@ -11,10 +11,12 @@
 
 @class SENSleepSounds;
 @class HEMDeviceService;
+@class HEMSubNavigationView;
 
 @interface HEMSleepSoundViewController : HEMBaseController
 
 @property (nonatomic, assign, getter=isCancellable) BOOL cancellable;
 @property (nonatomic, strong) HEMDeviceService* deviceService;
+@property (nonatomic, weak) HEMSubNavigationView* subNav;
 
 @end

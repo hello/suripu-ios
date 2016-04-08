@@ -50,8 +50,8 @@
 
 #pragma mark - Presenter states
 
-- (void)didDisappear {
-    [super didDisappear];
+- (void)willDisappear {
+    [super willDisappear];
     [self stop];
 }
 

@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.4.0.10
+
+New:
+
+* Alarm tab icon is now a generic sounds icon
+* Sleep sounds player now shows an animated playing state
+* Sleep sound options that have changed will now stick / saved + reloaded
+
+Fixes:
+
+* Sounds tab will now update within same session if sleep sounds is feature flipped on
+* Prevent sounds sub nav tabs from being activated simulatenously, causing both UI to load
+* Saving alarms will now properly refresh the view
+* No connect / error state in sleep sounds will properly be displayed
+
 ## 1.4.0.9
 
 New:

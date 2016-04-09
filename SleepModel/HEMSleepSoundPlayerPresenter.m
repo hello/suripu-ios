@@ -23,6 +23,7 @@
 #import "HEMDeviceService.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSleepSoundVolume.h"
+#import "HEMTutorial.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
@@ -42,6 +43,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     UICollectionViewDelegateFlowLayout
 >
 
+@property (nonatomic, weak) UIViewController* tutorialParent;
 @property (nonatomic, weak) HEMSleepSoundService* service;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UICollectionView* collectionView;
@@ -96,6 +98,10 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [self setIndicatorView:[self activityIndicator]];
 }
 
+- (void)bindWithTutorialParent:(UIViewController*)tutorialParent {
+    [self setTutorialParent:tutorialParent];
+}
+
 #pragma mark - Monitor Player Status
 
 - (void)startMonitoring {
@@ -145,12 +151,17 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)didAppear {
     [super didAppear];
+    if ([self tutorialParent]) {
+        [HEMTutorial showTutorialForSleepSoundsIfNeeded];
+    }
+    
     if (![self isWaitingForOptionChange]) {
         [SENAnalytics track:HEMAnalyticsEventSleepSoundView];
         [self loadData];
     } else {
         [[self service] startMonitoringStatusChange];
     }
+    
     [self setWaitingForOptionChange:NO];
 }
 

@@ -774,3 +774,5 @@
 "sleep-sounds.temp.info.message.fw-update" = "Sense will update automatically when plugged in and connected to Wi-Fi. This may take a few moments.";
 "sleep-sounds.temp.info.title.offline" = "Sense is offline";
 "sleep-sounds.temp.info.message.offline" = "We haven't received data from your Sense recently. Make sure Sense is connected to Wi-Fi.";
+"sleep-sounds.welcome.title" = "Sleep Sounds";
+"sleep-sounds.welcome.message" = "Falling asleep to a consistent and calming ambient sound can help you mask nighttime noise, and help you sleep better. Sense makes it easy to start your night off right: choose a custom-designed Sleep Sound, and drift peacefully off to sleep.";

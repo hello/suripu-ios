@@ -27,9 +27,29 @@ static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
+static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
 static CGFloat const HEMTutorialDelay = 0.5f;
 
-#pragma mark - Dialogs
+#pragma mark - Sleep Sounds
+
++ (void)showTutorialForSleepSoundsIfNeeded {
+    if ([self shouldShowTutorialForKey:HEMTutorialSleepSoundsKey]) {
+        [self delayBlock:^{
+            [self showTutorialForSleepSounds];
+            [self markTutorialViewed:HEMTutorialSleepSoundsKey];
+        }];
+    }
+}
+
++ (BOOL)showTutorialForSleepSounds {
+    NSString* title = NSLocalizedString(@"sleep-sounds.welcome.title", nil);
+    NSString* message = NSLocalizedString(@"sleep-sounds.welcome.message", nil);
+    UIImage* image = [UIImage imageNamed:@"sleepSoundsWelcome"];
+    HEMTutorialContent* tutorial = [[HEMTutorialContent alloc] initWithTitle:title text:message image:image];
+    return [self showTutorialWithContent:@[tutorial]];
+}
+
+#pragma mark - Timeline
 
 + (void)showTutorialForTimelineIfNeeded
 {

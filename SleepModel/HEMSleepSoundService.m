@@ -113,8 +113,9 @@ static NSString* const HEMSleepSoundSettingLastDurationId = @"sleep-sound.durati
         // to have this type of logic put on the server and agree on some enums
         // in the future
         if (([volume volume] >= value - HEMSleepSoundServiceVolumeAccuracy)
-            || [volume volume] <= value + HEMSleepSoundServiceVolumeAccuracy) {
+            && [volume volume] <= value + HEMSleepSoundServiceVolumeAccuracy) {
             volumeObject = volume;
+            break;
         }
     }
     

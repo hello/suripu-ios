@@ -50,8 +50,8 @@
 
 #pragma mark - Presenter states
 
-- (void)didDisappear {
-    [super didDisappear];
+- (void)willDisappear {
+    [super willDisappear];
     [self stop];
 }
 
@@ -121,6 +121,7 @@
     
     NSNumber* selectedSoundId = [[self selectedSound] identifier];
     if (selected && ![selectedSoundId isEqualToNumber:[sound identifier]]) {
+        [[self audioPlayer] stop];
         [self setAudioPlayer:nil];
         [self setSelectedSound:sound];
     }
@@ -172,12 +173,19 @@
         return;
     }
     
+    __block SENSleepSound* selectedSound = [self selectedSound];
     [[self audioButton] setAudioState:HEMAudioButtonStateLoading];
     
     __weak typeof(self) weakSelf = self;
     void(^finish)(NSData* data, NSError* error) = ^(NSData* data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error && data) {
+            // check if sound id is still the same as currently selected sound id
+            NSNumber* soundId = [selectedSound identifier];
+            if (![[[strongSelf selectedSound] identifier] isEqualToNumber:soundId]) {
+                return; // skip
+            }
+            
             NSError* error = nil;
             AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithData:data error:&error];
             if (error) {

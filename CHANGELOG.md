@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.0.11
+
+New:
+
+* Sleep sounds welcome card
+
+Fixes:
+
+* Sleep sounds volume setting is correctly saved locally
+* Sleep sound preview will stop immediately if you back out of the view
+* Pairing with Sense from the Sounds tab will not cause the alarms view to be stuck
+* Quickly toggling sleep sound previews will not cause the wrong sound to be played
+
 ## 1.4.0.10
 
 New:

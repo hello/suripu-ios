@@ -46,6 +46,7 @@
                                                           deviceService:[self deviceService]];
     [playerPresenter bindWithActionButton:[self actionButton]];
     [playerPresenter bindWithCollectionView:[self collectionView]];
+    [playerPresenter bindWithTutorialParent:self];
     [playerPresenter setDelegate:self];
     [self addPresenter:playerPresenter];
     

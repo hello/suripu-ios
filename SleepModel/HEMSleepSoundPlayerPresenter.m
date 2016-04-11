@@ -27,6 +27,7 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
+static CGFloat const HEMSleepSoundPlayerLoadAnimeDuration = 0.5f;
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStatePrereqNotMet = 0,
@@ -48,6 +49,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) UIButton* actionButton;
+@property (nonatomic, weak) NSLayoutConstraint* actionBottomConstraint;
+@property (nonatomic, assign) CGFloat origActionBottomDistance;
 @property (nonatomic, strong) SENSleepSoundsState* soundState;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) HEMActivityIndicatorView* indicatorView;
@@ -56,8 +59,10 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, strong) HEMSleepSoundVolume* selectedVolume;
 @property (nonatomic, assign) HEMSleepSoundPlayerState playerState;
 @property (nonatomic, weak) HEMSleepSoundConfigurationCell* configCell;
+@property (nonatomic, weak) HEMActivityIndicatorView* indicator;
 @property (nonatomic, assign, getter=isWaitingForOptionChange) BOOL waitingForOptionChange;
 @property (nonatomic, assign, getter=isSenseOffline) BOOL senseOffline;
+@property (nonatomic, weak) UIView* bgView;
 
 @end
 
@@ -74,14 +79,22 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     return self;
 }
 
+- (void)bindWithBackgroundView:(UIView*)backgroundView {
+    [backgroundView setHidden:NO];
+    [self setBgView:backgroundView];
+}
+
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
+    [collectionView setAlpha:0.0f];
     [collectionView setAlwaysBounceVertical:YES];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     [self setCollectionView:collectionView];
 }
 
-- (void)bindWithActionButton:(UIButton*)button {
+- (void)bindWithActionButton:(UIButton*)button bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    [self setOrigActionBottomDistance:[bottomConstraint constant]];
+
     CGFloat buttonWidth = CGRectGetWidth([button bounds]);
     [[button layer] setCornerRadius:buttonWidth / 2.0f];
     [button addTarget:self action:@selector(takeAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -95,11 +108,18 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[button layer] setShadowOpacity:0.85f];
     
     [self setActionButton:button];
+    [self setActionBottomConstraint:bottomConstraint];
     [self setIndicatorView:[self activityIndicator]];
+    [self hideActionButton];
 }
 
 - (void)bindWithTutorialParent:(UIViewController*)tutorialParent {
     [self setTutorialParent:tutorialParent];
+}
+
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator {
+    [indicator setHidden:YES];
+    [self setIndicator:indicator];
 }
 
 #pragma mark - Monitor Player Status
@@ -182,6 +202,35 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 #pragma mark -
 
+- (void)hideActionButton {
+    CGFloat height = CGRectGetHeight([[self actionButton] bounds]);
+    CGFloat hiddenBottom = absCGFloat([self origActionBottomDistance]) + height;
+    [[self actionBottomConstraint] setConstant:hiddenBottom];
+}
+
+- (void)preparePlayerForDataToBeLoaded {
+    switch ([self playerState]) {
+        case HEMSleepSoundPlayerStateError:
+        case HEMSleepSoundPlayerStatePrereqNotMet:
+        case HEMSleepSoundPlayerStateSenseOffline:
+            [self hideActionButton];
+            [[self indicator] setHidden:NO];
+            [[self collectionView] setAlpha:0.0];
+            break;
+        case HEMSleepSoundPlayerStateWaiting: {
+            [[self indicator] setAlpha:0.0];
+            [[self indicator] start];
+            [[self indicator] setHidden:NO];
+            [UIView animateWithDuration:HEMSleepSoundPlayerLoadAnimeDuration animations:^{
+                [[self indicator] setAlpha:1.0f];
+            }];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 - (void)loadDeviceState:(void(^)(void))completion {
     [self setSenseOffline:NO];
     
@@ -202,6 +251,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return;
     }
     
+    [self preparePlayerForDataToBeLoaded];
     [self setLoading:YES];
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
     [[self collectionView] reloadData];
@@ -266,6 +316,16 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (![self selectedVolume]) {
         [self setSelectedVolume:[[self service] defaultVolume]];
     }
+
+    [[self indicator] stop];
+    [[self indicator] setHidden:YES];
+    [UIView animateWithDuration:HEMSleepSoundPlayerLoadAnimeDuration animations:^{
+        [[self collectionView] setAlpha:1.0f];
+        [[self actionBottomConstraint] setConstant:[self origActionBottomDistance]];
+        [[self actionButton] layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [[self bgView] setHidden:YES];
+    }];
 }
 
 - (void)reloadDataWithPlayerState:(HEMSleepSoundPlayerState)state {

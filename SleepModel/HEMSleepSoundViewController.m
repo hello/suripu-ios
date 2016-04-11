@@ -19,11 +19,15 @@
 #import "HEMSleepSoundVolumePresenter.h"
 #import "HEMAudioService.h"
 #import "HEMSubNavigationView.h"
+#import "HEMActivityIndicatorView.h"
 
 @interface HEMSleepSoundViewController () <HEMSleepSoundPlayerDelegate, HEMListDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *bgLaunchImageView;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, weak) IBOutlet UIButton* actionButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *actionButtonBottomConstraint;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) HEMSleepSoundService* sleepSoundService;
 @property (nonatomic, strong) HEMAudioService* audioService;
 @property (nonatomic, strong) HEMListPresenter* listPresenter;
@@ -44,9 +48,11 @@
     HEMSleepSoundPlayerPresenter* playerPresenter =
         [[HEMSleepSoundPlayerPresenter alloc] initWithSleepSoundService:[self sleepSoundService]
                                                           deviceService:[self deviceService]];
-    [playerPresenter bindWithActionButton:[self actionButton]];
+    [playerPresenter bindWithActionButton:[self actionButton]
+                         bottomConstraint:[self actionButtonBottomConstraint]];
     [playerPresenter bindWithCollectionView:[self collectionView]];
     [playerPresenter bindWithTutorialParent:self];
+    [playerPresenter bindWithActivityIndicator:[self activityIndicator]];
     [playerPresenter setDelegate:self];
     [self addPresenter:playerPresenter];
     

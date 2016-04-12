@@ -16,6 +16,7 @@
 @class SENSleepSoundDurations;
 @class HEMSleepSoundVolume;
 @class HEMDeviceService;
+@class HEMActivityIndicatorView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,8 +48,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSleepSoundService:(HEMSleepSoundService *)service
                             deviceService:(nullable HEMDeviceService*)deviceService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
-- (void)bindWithActionButton:(UIButton*)button;
+- (void)bindWithActionButton:(UIButton*)button bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
 - (void)bindWithTutorialParent:(UIViewController*)tutorialParent;
+- (void)bindWithBackgroundView:(UIView*)backgroundView;
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator;
 - (void)setSelectedSound:(SENSleepSound*)sound;
 - (void)setSelectedDuration:(SENSleepSoundDuration*)duration;
 - (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume;

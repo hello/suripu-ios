@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0.12
+
+New:
+
+* Updated animated transition so that it plays nice with the non-happy path states in sleep sounds
+
+Fixes:
+
+* Fixed the issue where the sleep sounds player will quickly blink in when there is an error encountered when pulling from API
+
 ## 1.4.0.11
 
 New:

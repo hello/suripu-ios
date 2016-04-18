@@ -208,6 +208,18 @@ extern NSString* const HEMAnalyticsEventAppReviewFeedback;
 extern NSString* const HEMAnalyticsEventAppReviewDone;
 extern NSString* const HEMAnalyticsEventAppReviewSkip;
 
+// 3D touch
+extern NSString* const HEMAnalyticsEventShortcutAlarmNew;
+extern NSString* const HEMAnalyticsEventShortcutAlarmEdit;
+
+// sleep sound
+extern NSString* const HEMAnalyticsEventSleepSoundView;
+extern NSString* const HEMAnalyticsEventSSActionPlay;
+extern NSString* const HEMAnalyticsEventSSActionStop;
+extern NSString* const HEMAnalyticsEventSSPropSoundId;
+extern NSString* const HEMAnalyticsEventSSPropDurationId;
+extern NSString* const HEMAnalyticsEventSSPropVolume;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;

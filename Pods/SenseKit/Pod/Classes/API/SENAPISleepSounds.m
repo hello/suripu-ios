@@ -11,6 +11,7 @@
 #import "SENSleepSounds.h"
 #import "SENSleepSoundStatus.h"
 #import "SENSleepSoundRequest.h"
+#import "SENSleepSoundsState.h"
 
 static NSString* const SENAPISleepSoundsResource = @"v2/sleep_sounds";
 static NSString* const SENAPISleepSoundsPathAvailable = @"sounds";
@@ -18,6 +19,7 @@ static NSString* const SENAPISleepSoundsPathDuration = @"durations";
 static NSString* const SENAPISleepSoundsPathStatus = @"status";
 static NSString* const SENAPISleepSoundsPathActionStop = @"stop";
 static NSString* const SENAPISleepSoundsPathActionPlay = @"play";
+static NSString* const SENAPISleepSoundsPathCombined = @"combined_state";
 
 @implementation SENAPISleepSounds
 
@@ -66,6 +68,17 @@ static NSString* const SENAPISleepSoundsPathActionPlay = @"play";
             status = [[SENSleepSoundStatus alloc] initWithDictionary:data];
         }
         completion (status, error);
+    }];
+}
+
++ (void)sleepSoundsState:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPISleepSoundsResource stringByAppendingPathComponent:SENAPISleepSoundsPathCombined];
+    [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
+        SENSleepSoundsState* state = nil;
+        if (!error && [data isKindOfClass:[NSDictionary class]]) {
+            state = [[SENSleepSoundsState alloc] initWithDictionary:data];
+        }
+        completion (state, error);
     }];
 }
 

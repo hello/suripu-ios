@@ -29,7 +29,7 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMAppUsage.h"
-#import "HEMAudioSession.h"
+#import "HEMAudioService.h"
 #import "HEMSupportUtil.h"
 #import "HEMTappableView.h"
 #import "HEMScreenUtils.h"
@@ -78,6 +78,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, strong) HEMTimelineService* timelineService;
 @property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
 @property (nonatomic, weak) HEMTimelineHandHoldingPresenter* handHoldingPresenter;
+@property (nonatomic, strong) HEMAudioService* audioService;
 
 @end
 
@@ -113,7 +114,8 @@ static BOOL hasLoadedBefore = NO;
     if (!hasLoadedBefore) {
         [self prepareForInitialAnimation];
     }
-    HEMInitializeAudioSession();
+    
+    [self setAudioService:[HEMAudioService new]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -334,16 +336,17 @@ static BOOL hasLoadedBefore = NO;
         return;
     if (![self loadAudioForIndexPath:indexPath])
         return;
+    
     __weak typeof(self) weakSelf = self;
-    HEMActivateAudioSession(YES, ^(NSError *error) {
-      __strong typeof(weakSelf) strongSelf = weakSelf;
-      if (error)
-          return;
-      [strongSelf.audioPlayer play];
-      [strongSelf monitorPlaybackProgress];
-      [button setImage:[UIImage imageNamed:@"pauseSound"] forState:UIControlStateNormal];
-      strongSelf.playingButton = button;
-    });
+    [[self audioService] activateSession:YES completion:^(NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error)
+            return;
+        [strongSelf.audioPlayer play];
+        [strongSelf monitorPlaybackProgress];
+        [button setImage:[UIImage imageNamed:@"pauseSound"] forState:UIControlStateNormal];
+        strongSelf.playingButton = button;
+    }];
 }
 
 - (BOOL)loadAudioForIndexPath:(NSIndexPath *)indexPath {

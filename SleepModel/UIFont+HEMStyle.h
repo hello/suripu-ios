@@ -228,7 +228,7 @@
 /**
  *  Font for the v2 Trends scope selector text
  */
-+ (UIFont*)trendsScopeSelectorTextFont;
++ (UIFont*)subNavTitleTextFont;
 
 /**
  *  Font for the v2 Trends sleep depth percentage values
@@ -626,5 +626,12 @@
  * Font used for text displayed when there was a problem retrieving data to load
  */
 + (UIFont*)errorStateDescriptionFont;
+
+#pragma mark - List Items
+
+/**
+ * Font used by the List Item Presenter when configuring list item cells
+ */
++ (UIFont*)listItemTitleFont;
 
 @end

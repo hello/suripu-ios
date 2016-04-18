@@ -29,9 +29,6 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 @property (nonatomic, strong) SENSenseManager* senseManager;
 
 @property (nonatomic, assign, getter=isInfoLoaded) BOOL infoLoaded; // in case it was loaded, but not paired
-@property (nonatomic, assign, getter=isLoadingInfo) BOOL loadingInfo;
-
-@property (nonatomic, readonly) NSMutableArray<void(^)(NSError* error)> *pendingDeviceInfoDoneBlocks;
 
 @end
 
@@ -50,14 +47,6 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     return [self sharedService];
 }
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        _pendingDeviceInfoDoneBlocks = [NSMutableArray arrayWithCapacity:2];
-    }
-    return self;
-}
-
 #pragma mark -
 
 - (void)reset {
@@ -66,7 +55,6 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     [self setDevices:nil];
     [self setSenseManager:nil];
     [self setInfoLoaded:NO];
-    [self setLoadingInfo:NO];
 }
 
 - (NSError*)errorWithType:(SENServiceDeviceError)type {
@@ -110,19 +98,6 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 #pragma mark - Device Info
 
 - (void)loadDeviceInfo:(void(^)(NSError* error))completion {
-    if (completion) {
-        [self.pendingDeviceInfoDoneBlocks addObject:[completion copy]];
-    }
-    
-    if ([self isLoadingInfo]) {
-        return;
-    }
-    
-    // no need to set InfoLoaded to NO here b/c we will not clear the cache unless
-    // caller explicitly calls clear or when response comes back without error.
-    
-    [self setLoadingInfo:YES];
-    
     __weak typeof(self) weakSelf = self;
     [SENAPIDevice getPairedDevices:^(SENPairedDevices* devices, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -130,12 +105,10 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             [strongSelf setDevices:devices];
             [strongSelf setInfoLoaded:YES];
         }
-        [strongSelf setLoadingInfo:NO];
         
-        for (void(^completion)(NSError* error) in strongSelf.pendingDeviceInfoDoneBlocks) {
-            completion(error);
+        if (completion) {
+            completion (error);
         }
-        [strongSelf.pendingDeviceInfoDoneBlocks removeAllObjects];
     }];
 }
 

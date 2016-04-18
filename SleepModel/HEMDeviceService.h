@@ -48,6 +48,7 @@ typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSE
 
 @property (nonatomic, strong, readonly, nullable) SENPairedDevices* devices;
 
+- (void)clearDevicesCache;
 - (void)refreshMetadata:(HEMDeviceMetadataHandler)completion;
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
 

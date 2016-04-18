@@ -1,5 +1,151 @@
 # Changelog
 
+## 1.4.0.12
+
+New:
+
+* Updated animated transition so that it plays nice with the non-happy path states in sleep sounds
+
+Fixes:
+
+* Fixed the issue where the sleep sounds player will quickly blink in when there is an error encountered when pulling from API
+
+## 1.4.0.11
+
+New:
+
+* Sleep sounds welcome card
+
+Fixes:
+
+* Sleep sounds volume setting is correctly saved locally
+* Sleep sound preview will stop immediately if you back out of the view
+* Pairing with Sense from the Sounds tab will not cause the alarms view to be stuck
+* Quickly toggling sleep sound previews will not cause the wrong sound to be played
+
+## 1.4.0.10
+
+New:
+
+* Alarm tab icon is now a generic sounds icon
+* Sleep sounds player now shows an animated playing state
+* Sleep sound options that have changed will now stick / saved + reloaded
+
+Fixes:
+
+* Sounds tab will now update within same session if sleep sounds is feature flipped on
+* Prevent sounds sub nav tabs from being activated simulatenously, causing both UI to load
+* Saving alarms will now properly refresh the view
+* No connect / error state in sleep sounds will properly be displayed
+
+## 1.4.0.9
+
+New:
+
+* Now using the combined state API to reduce # calls required to load Sleep sounds
+* Sleep sounds now continuously checks the status when in foreground to react to actions taken outside of the app
+
+Fixes:
+
+* Removed double spacing after periods throughout the app
+
+## 1.4.0.8
+
+Note:
+
+* bumping to 1.4.0 since we will release Sleep sounds in this release, but we are keeping the build number to keep track of number of builds for the release
+
+New:
+
+* Added support for sleep sound preview
+
+## 1.3.2.7
+
+Fixes:
+
+* Fixed issue that would cause the Sense is offline state in Sleep sounds to not take precedence over other pending states.
+* Fixed issue where the Device cache would be refreshed fast enough, triggering the Sense is offline state to show unintentionally
+
+## 1.3.2.6
+
+New:
+
+* Added a Sense is offline state in Sleep Sounds
+* Added a Downloading sounds state in Sleep Sounds
+* Added a Sense needs an update state in Sleep Sounds
+* Added a shadow to play button, per design review
+* Aligned y position of alarms and sleep sounds player, per design review
+* Added a shadow when scrolling options in Sleep Sound options list
+
+## 1.3.2.5
+
+New:
+
+* Updated copy in error dialogs for sleep sounds
+* Added analytics for Sleep Sounds
+* Smoothed out initial load animation when entering Sleep Sounds view
+
+Fixes:
+
+* Fixed crasher caused when using the 3D Touch new alarm item
+* Launch in to the alarms sub tab within sounds view from all edit alarm shortcuts
+* Various design tweaks from design review
+
+## 1.3.2.4
+
+New:
+
+* Sounds view (container for alarms + sleep sounds) now handles error
+* Sleep sounds will display an error if it fails to load initially
+* Alarm error handling refactored so it does not additionally check to see if
+  a Sense is paired
+
+## 1.3.2.3
+
+New:
+
+* Sleep sounds now have a volume control
+* Sleep sounds has a temporary playing state
+* Sleep sounds checks the status when loaded, in case it was dismissed / playing
+
+Fixes:
+
+* Loading indicator for the alarms view should not be shown indefinitely, again 
+
+## 1.3.2.2
+
+New:
+
+* Alarm list refactored to include sleep sounds (icon remains as an alarm), if enabled for account
+* Sleep sounds include a rough player (not to visual spec)
+* Ability to choose the sleep sound to play
+* Ability to choose the sleep sound duration
+
+Fixes:
+
+* Loading indicator for the alarms view should not be shown indefinitely occassionally
+
+## 1.3.2.1
+
+Note:
+
+* iTC failed to import.  need to bump version
+
+## 1.3.2.0
+
+New:
+
+* App review thresholds updated
+* Error analytics events now captures url of API, if its a connection problem
+* Segment SDK updated
+* Zooming out of Timeline is now significantly faster
+
+Fixes:
+
+* Today extension shows the sensor values in the same order as room conditions view
+* Today extension light and temp values are no longer off by 1
+* Fixed a very low frequency crasher caused by skipping a question in the feed
+
 ## 1.3.1.3
 
 Fixes:

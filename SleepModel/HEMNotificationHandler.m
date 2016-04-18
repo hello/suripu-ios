@@ -100,7 +100,7 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
     } else if ([target isEqualToString:HEMNotificationTargetInsights]) {
         [controller showSettingsDrawerTabAtIndex:HEMRootDrawerTabInsights animated:NO];
     } else if ([target isEqualToString:HEMNotificationTargetAlarms]) {
-        [controller showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:NO];
+        [controller showSettingsDrawerTabAtIndex:HEMRootDrawerTabSounds animated:NO];
     } else if ([target isEqualToString:HEMNotificationTargetSettings]) {
         [controller showSettingsDrawerTabAtIndex:HEMRootDrawerTabSettings animated:NO];
     }

@@ -105,6 +105,7 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 - (void)addControl:(UIControl*)control {
     id existingControl = [self viewWithTag:[control tag]];
     if (!existingControl) {
+        [control setExclusiveTouch:YES];
         [control addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
         [self setControlCount:[self controlCount] + 1];
         [self addSubview:control];
@@ -117,12 +118,16 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 }
 
 - (void)select:(UIControl*)control {
+    [self selectControlWithTag:[control tag]];
+}
+
+- (void)selectControlWithTag:(NSInteger)tag {
     [self setPreviousControlTag:[self selectedControlTag]];
-    [self setSelectedControlTag:[control tag]];
+    [self setSelectedControlTag:tag];
     for (UIView* subview in [self subviews]) {
         if ([subview isKindOfClass:[UIControl class]]) {
             UIControl* subControl = (UIControl*) subview;
-            [subControl setSelected:control == subControl];
+            [subControl setSelected:tag == [subControl tag]];
         }
     }
 }

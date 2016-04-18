@@ -8,15 +8,36 @@
 
 #import "HEMPresenter.h"
 
+@class HEMSleepSoundPlayerPresenter;
 @class HEMSleepSoundService;
+@class SENSleepSound;
+@class SENSleepSounds;
+@class SENSleepSoundDuration;
+@class SENSleepSoundDurations;
+@class HEMSleepSoundVolume;
+@class HEMDeviceService;
+@class HEMActivityIndicatorView;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class HEMSleepSoundPlayerPresenter;
-
 @protocol HEMSleepSoundPlayerDelegate <NSObject>
 
-- (void)presentError:(NSError*)error;
+- (void)presentErrorWithTitle:(NSString*)title message:(NSString*)message;
+- (void)showAvailableSounds:(NSArray *)sounds
+          selectedSoundName:(NSString*)selectedName
+                  withTitle:(NSString*)title
+                   subTitle:(NSString*)subTitle
+                       from:(HEMSleepSoundPlayerPresenter *)presenter;
+- (void)showAvailableDurations:(NSArray *)durations
+          selectedDurationName:(NSString*)selectedName
+                     withTitle:(NSString*)title
+                      subTitle:(NSString*)subTitle
+                          from:(HEMSleepSoundPlayerPresenter *)presenter;
+- (void)showVolumeOptions:(NSArray *)volumeOptions
+       selectedVolumeName:(NSString*)selectedName
+                withTitle:(NSString*)title
+                 subTitle:(NSString*)subTitle
+                     from:(HEMSleepSoundPlayerPresenter *)presenter;
 
 @end
 
@@ -24,9 +45,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HEMSleepSoundPlayerDelegate> delegate;
 
-- (instancetype)initWithSleepSoundService:(HEMSleepSoundService*)service;
+- (instancetype)initWithSleepSoundService:(HEMSleepSoundService *)service
+                            deviceService:(nullable HEMDeviceService*)deviceService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
-- (void)bindWithActionButton:(UIButton*)button;
+- (void)bindWithActionButton:(UIButton*)button bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
+- (void)bindWithTutorialParent:(UIViewController*)tutorialParent;
+- (void)bindWithBackgroundView:(UIView*)backgroundView;
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator;
+- (void)setSelectedSound:(SENSleepSound*)sound;
+- (void)setSelectedDuration:(SENSleepSoundDuration*)duration;
+- (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume;
 
 @end
 

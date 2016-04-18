@@ -54,13 +54,13 @@
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
 "onboarding.health.enable.failure.title" = "Failed to enable Health integration";
 "onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
-"onboarding.health.enable.failure.generic" = "You may have previously denied access.  Go to your Health app, find Sleep Analysis data, Share Data, and edit the data sources to enable Sense.";
+"onboarding.health.enable.failure.generic" = "You may have previously denied access. Go to your Health app, find Sleep Analysis data, Share Data, and edit the data sources to enable Sense.";
 
 // help links
 "help.email.address" = "support@hello.is";
 "help.email.subject" = "Sense Help Request";
 "help.url.support.hyperlink-text" = "https://support.hello.is/";
-"help.url.order-form" = "https://order.hello.is/";
+"help.url.order-form" = "https://store.hello.is/";
 "help.url.support" = "https://support.hello.is/hc/";
 "help.url.slug.turn-on-ble" = "articles/205493335";
 "help.url.slug.pill-pairing" = "articles/204797129";
@@ -197,16 +197,16 @@
 "settings.account.update.failure" = "A value is required for your account.";
 "settings.account.password.current-password-wrong" = "Current password is not recognized.";
 "settings.account.password-too-short" = "Your password is too short. Passwords must be at least six characters.";
-"settings.account.password-insecure" = "New password is too insecure.  Enter a new one and try again.";
-"settings.account.update.account-not-up-to-date" = "A recent modification to your account conflicted with your change.  Try again.";
-"settings.account.update.unknown-failure" = "Unable to update your account at this time.  Try again later.";
+"settings.account.password-insecure" = "New password is too insecure. Enter a new one and try again.";
+"settings.account.update.account-not-up-to-date" = "A recent modification to your account conflicted with your change. Try again.";
+"settings.account.update.unknown-failure" = "Unable to update your account at this time. Try again later.";
 "settings.account.update.email-already-exists" = "The email provided already exists.";
-"settings.account.update.email-invalid" = "The email is invalid.  Check that you entered the correct email and try again.";
-"settings.account.update.name-too-long" = "New name is too long and cannot be accepted.  Try again with a shorter name.";
-"settings.account.update.name-too-short" = "New name is too short.  Try again with longer name.";
+"settings.account.update.email-invalid" = "The email is invalid. Check that you entered the correct email and try again.";
+"settings.account.update.name-too-long" = "New name is too long and cannot be accepted. Try again with a shorter name.";
+"settings.account.update.name-too-short" = "New name is too short. Try again with longer name.";
 "settings.account.error.title.hk" = "Sync with Health";
 "settings.account.error.message.hk-not-supported" = "Apple Health is not supported on your device.";
-"settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app.  You may need to authorize this directly in your Health app then enable this.";
+"settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app. You may need to authorize this directly in your Health app then enable this.";
 
 // support
 "debug.options.title" = "Debug options";
@@ -261,7 +261,7 @@
 "settings.device.button.title.pair-pill" = "PAIR A SLEEP PILL";
 "settings.device.warning.last-seen-generic" = "a while ago";
 "settings.device.error.title" = "Failed to load";
-"settings.device.error.cannot-load-info" = "Unable to load your information.  Make sure you are connected to the internet then return to this screen.";
+"settings.device.error.cannot-load-info" = "Unable to load your information. Make sure you are connected to the internet then return to this screen.";
 "settings.device.footer.format" = "Setting up a %@ for your partner?";
 "settings.device.footer.second-pill" = "second Sleep Pill";
 "settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
@@ -294,7 +294,7 @@
 "settings.sense.advanced.option.factory-reset" = "Factory reset";
 "settings.sense.advanced.option.factory-reset.desc" = "If you want to reset Sense to factory settings, and remove it from this account.";
 "settings.sense.factory-reset.complete.title" = "Power Cycle Sense";
-"settings.sense.factory-reset.complete.confirmation" = "Sense has been successfully restored to factory settings.  Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
+"settings.sense.factory-reset.complete.confirmation" = "Sense has been successfully restored to factory settings. Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.wifi" = "WiFi";
 "settings.sense.unpairing-message" = "Removing Sense";
@@ -306,7 +306,7 @@
 "settings.sense.connecting" = "Connecting over Bluetooth...";
 "settings.sense.connected" = "Connected over Bluetooth.";
 "settings.sense.no-sense-message" = "Make sure Sense is plugged in and nearby and try again.";
-"settings.sense.busy" = "An operation is currently in progress.  Please wait a short time and try again.";
+"settings.sense.busy" = "An operation is currently in progress. Please wait a short time and try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message.format" = "Are you sure you want to put Sense into Pairing Mode? You should use this option only if you have another mobile device you wish to pair with Sense. If you're having trouble, visit %@ for support.";
 "settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
@@ -324,7 +324,7 @@
 "settings.factory-restore.error.general-failure" = "Unable to factory reset your Sense due to an unexpected problem.";
 "settings.factory-restore.error.general-ble-failure" = "Unable to factory reset your Sense due to an unexpected communication problem with Sense. Please Try again.";
 "settings.sense.operation-failed.title" = "Sense operation failed";
-"settings.sense.operation-failed.unexpected-disconnect" = "Sense unexpectedly disconnected.  Make sure you are near Sense and try again.";
+"settings.sense.operation-failed.unexpected-disconnect" = "Sense unexpectedly disconnected. Make sure you are near Sense and try again.";
 
 // Insights / Questions
 "insights.title" = "Insights";
@@ -349,8 +349,6 @@
 "alarms.alarm.meridiem.pm" = "PM";
 "alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at the lightest point in your natural sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
 "alarms.no-data" = "There was a problem displaying your alarms. Please try again.";
-"alarms.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to set alarms.";
-"alarms.no-sense.button.title" = "Pair new Sense";
 
 // alarm settings
 "alarm.sound.title" = "Tone";
@@ -710,7 +708,7 @@
 
 // timezone
 "timezone.alert.message.use-local.format" = "Sense's time zone should be set based on the physical location of your Sense. Usually, that's the same as your phone's time zone. Your phone's current time zone is:  %@.";
-"timezone.suggestion.message" = "Your current time zone based on location of your iOS device.  Select the time zone that corresponds with Sense's location.";
+"timezone.suggestion.message" = "Your current time zone based on location of your iOS device. Select the time zone that corresponds with Sense's location.";
 "timezone.activity.message" = "Updating time zone";
 "timezone.error.title" = "Update failed";
 "timezone.error.message" = "Could not update the time zone at this time. Make sure your device is connected to the internet and try again.";
@@ -748,5 +746,33 @@
 "video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
 
+// sounds
+"sounds.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to enable this feature.";
+"sounds.no-sense.button.title" = "Pair new Sense";
+"sounds.error.message" = "There was a problem loading the content. Please try again.";
+
 // sleep sounds
+"sleep-sounds.error.message" = "There was a problem loading sleep sounds. Please try again.";
+"sleep-sounds.title" = "Sleep sounds";
 "sleep-sounds.volume.high" = "High";
+"sleep-sounds.volume.medium" = "Medium";
+"sleep-sounds.volume.low" = "Low";
+"sleep-sounds.option.title.sound" = "Sound";
+"sleep-sounds.option.subtitle.sound" = "Select a sleep sound";
+"sleep-sounds.option.title.duration" = "Duration";
+"sleep-sounds.option.subtitle.duration" = "Play sleep sound for";
+"sleep-sounds.option.title.volume" = "Volume";
+"sleep-sounds.option.subtitle.volume" = "Volume control";
+"sleep-sounds.title.state.stopped" = "Play a Sound";
+"sleep-sounds.title.state.playing" = "Now Playing";
+"sleep-sounds.error.title" = "Sleep sounds";
+"sleep-sounds.error.action-timeout.message" = "Unable to determine the state of the action on Sense. Please try again.";
+"sleep-sounds.error.action-in-progress.message" = "Waiting for a previous action to be performed. Please try again.";
+"sleep-sounds.temp.info.title.no-sounds" = "Updating Sleep Sounds";
+"sleep-sounds.temp.info.message.no-sounds" = "Sleep Sounds will be available once Sense has finished updating. Note that this may take up to an hour.";
+"sleep-sounds.temp.info.title.fw-update" = "Sense needs to update";
+"sleep-sounds.temp.info.message.fw-update" = "Sense will update automatically when plugged in and connected to Wi-Fi. This may take a few moments.";
+"sleep-sounds.temp.info.title.offline" = "Sense is offline";
+"sleep-sounds.temp.info.message.offline" = "We haven't received data from your Sense recently. Make sure Sense is connected to Wi-Fi.";
+"sleep-sounds.welcome.title" = "Sleep Sounds";
+"sleep-sounds.welcome.message" = "Falling asleep to a consistent and calming ambient sound can help you mask nighttime noise, and help you sleep better. Sense makes it easy to start your night off right: choose a custom-designed Sleep Sound, and drift peacefully off to sleep.";

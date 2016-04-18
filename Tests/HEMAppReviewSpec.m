@@ -153,10 +153,10 @@ describe(@"HEMAppReview", ^{
             
         });
         
-        context(@"has seen 10 timelines with data", ^{
+        context(@"has seen 6 timelines with data", ^{
             
             beforeEach(^{
-                incrementUsage(identifier, 10);
+                incrementUsage(identifier, 6);
             });
             
             it(@"should return YES", ^{
@@ -236,12 +236,12 @@ describe(@"HEMAppReview", ^{
             
         });
         
-        context(@"saw a system alert 31 days ago", ^{
+        context(@"saw a system alert 16 days ago", ^{
 
             beforeEach(^{
                 HEMAppUsage* usage = [HEMAppUsage new];
                 [HEMAppUsage stub:@selector(appUsageForIdentifier:) andReturn:usage];
-                NSDate* daysAgo = [[NSDate date] daysFromNow:-31];
+                NSDate* daysAgo = [[NSDate date] daysFromNow:-16];
                 [usage stub:@selector(updated) andReturn:daysAgo];
             });
             

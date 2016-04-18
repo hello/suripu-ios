@@ -18,7 +18,7 @@
 #import "HEMTrendsSleepDepthCell.h"
 #import "HEMSubNavigationView.h"
 #import "HEMTextCollectionViewCell.h"
-#import "HEMTrendsMessageCell.h"
+#import "HEMIntroMessageCell.h"
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
@@ -226,7 +226,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (CGFloat)heightForPartialDataCellWithTrends:(SENTrends*)trends itemWidth:(CGFloat)itemWidth {
     NSAttributedString* attributedTitle = nil, *attributedMessage = nil;
     [self partialDataTitle:&attributedTitle message:&attributedMessage image:NULL forTrends:trends];
-    return [HEMTrendsMessageCell heightWithTitle:attributedTitle
+    return [HEMIntroMessageCell heightWithTitle:attributedTitle
                                          message:attributedMessage
                                        withWidth:itemWidth];
 }
@@ -474,7 +474,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
                            deepPercentage:deep];
 }
 
-- (void)configureMessageCell:(HEMTrendsMessageCell*)messageCell forTrends:(SENTrends*)trends {
+- (void)configureMessageCell:(HEMIntroMessageCell*)messageCell forTrends:(SENTrends*)trends {
     UIImage* partialDataImage = nil;
     NSAttributedString* attributedTitle = nil, *attributedMessage = nil;
     [self partialDataTitle:&attributedTitle message:&attributedMessage image:&partialDataImage forTrends:trends];
@@ -587,7 +587,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         } else if ([cell isKindOfClass:[HEMTrendsSleepDepthCell class]]) {
             [self configureSleepDepthCell:(id)cell forTrendsGraph:graph];
         }
-    } else if ([cell isKindOfClass:[HEMTrendsMessageCell class]]) {
+    } else if ([cell isKindOfClass:[HEMIntroMessageCell class]]) {
         [self configureMessageCell:(id)cell forTrends:[self selectedTrends]];
     } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) { // error
         [self configureErrorCell:(id)cell];

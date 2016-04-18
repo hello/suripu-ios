@@ -33,6 +33,16 @@ static NSUInteger const HEMAlarmServiceTooSoonMinuteLimit = 2;
     }];
 }
 
+- (void)refreshAlarms:(HEMAlarmsHandler)completion {
+    [SENAPIAlarms alarmsWithCompletion:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        // FIXME: alarms are saved locally through the API call ...
+        completion (data, error);
+    }];
+}
+
 - (void)updateAlarms:(NSArray<SENAlarm*>*)alarms completion:(HEMAlarmUpdateHandler)completion {
     [SENAPIAlarms updateAlarms:alarms completion:^(id data, NSError *error) {
         if (error) {

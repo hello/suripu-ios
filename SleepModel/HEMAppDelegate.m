@@ -22,6 +22,7 @@
 #import "HEMDebugController.h"
 #import "HEMAccountService.h"
 #import "HEMHealthKitService.h"
+#import "HEMShortcutService.h"
 
 @implementation HEMAppDelegate
 
@@ -70,33 +71,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     NSString *shortcutType = shortcutItem.type;
     DDLogDebug(@"incoming shortcut %@", shortcutType);
-    
-    if ([shortcutType isEqualToString:HEMShortcutTypeAddAlarm]) {
-        HEMRootViewController* root = (id)self.window.rootViewController;
-        [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
-        
-        HEMSnazzBarController* controller = (id)root.backController;
-        UINavigationController* nav = (id)[controller selectedViewController];
-        
-        void (^presentController)() = ^{
-            [nav popToRootViewControllerAnimated:NO];
-            HEMAlarmListViewController* controller = (id)nav.topViewController;
-            [controller addNewAlarm:shortcutItem];
-            
-            completionHandler(YES);
-        };
-        if (nav.presentedViewController) {
-            [nav dismissViewControllerAnimated:NO completion:presentController];
-        } else {
-            presentController();
-        }
-    } else if ([shortcutType isEqualToString:HEMShortcutTypeEditAlarms]) {
-        HEMRootViewController* root = (id)self.window.rootViewController;
-        [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
-        completionHandler(YES);
-    } else {
-        completionHandler(NO);
-    }
+    completionHandler([[HEMShortcutService sharedService] canHandle3DTouchType:shortcutType]);
 }
 
 - (void)openDetailViewForSensorNamed:(NSString*)name {

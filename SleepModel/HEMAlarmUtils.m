@@ -157,18 +157,8 @@ NSUInteger const HEMAlarmTooSoonMinuteLimit = 2;
     }
 }
 
-+ (void)refreshAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(NSError*))completion
-{
-    UIBarButtonItem* rightButton = controller.navigationItem.rightBarButtonItem;
-    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    UIBarButtonItem* loadItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
-    controller.navigationItem.rightBarButtonItem = loadItem;
-    [indicatorView startAnimating];
-    __weak typeof(controller) weakController = controller;
++ (void)refreshAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(NSError*))completion {
     [SENAPIAlarms alarmsWithCompletion:^(NSArray* alarms, NSError* error) {
-        __strong typeof(weakController) strongController = weakController;
-        [indicatorView stopAnimating];
-        strongController.navigationItem.rightBarButtonItem = rightButton;
         if (completion)
             completion(error);
     }];

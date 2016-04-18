@@ -12,12 +12,14 @@
 static NSString* const SENSleepSoundStatusParamPlaying = @"playing";
 static NSString* const SENSleepSoundStatusParamSound = @"sound";
 static NSString* const SENSleepSoundStatusParamDuration = @"duration";
+static NSString* const SENSLeepSoundStatusParamVolume = @"volume_percent";
 
 @interface SENSleepSoundStatus()
 
 @property (nonatomic, assign, getter=isPlaying) BOOL playing;
 @property (nonatomic, strong) SENSleepSound* sound;
 @property (nonatomic, strong) SENSleepSoundDuration* duration;
+@property (nonatomic, strong) NSNumber* volume;
 
 @end
 
@@ -37,6 +39,8 @@ static NSString* const SENSleepSoundStatusParamDuration = @"duration";
         if (rawDuration) {
             _duration = [[SENSleepSoundDuration alloc] initWithDictionary:rawDuration];
         }
+        
+        _volume = SENObjectOfClass(dictionary[SENSLeepSoundStatusParamVolume], [NSNumber class]);
     }
     return self;
 }

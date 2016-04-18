@@ -12,6 +12,8 @@
 
 #pragma mark - Dialogs
 
++ (void)showTutorialForSleepSoundsIfNeeded;
+
 /**
  *  Present the timeline tutorial if not previously viewed
  */

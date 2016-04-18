@@ -12,10 +12,11 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 #import "HEMAlertViewController.h"
-#import "HEMAudioSession.h"
+#import "HEMAudioService.h"
 
 @interface HEMAlarmSoundTableViewController () <AVAudioPlayerDelegate>
 @property (nonatomic, strong) NSArray *possibleSleepSounds;
+@property (nonatomic, strong) HEMAudioService* audioService;
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSOperationQueue *loadingQueue;
@@ -33,7 +34,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
     self.lineViewHeightConstraint.constant = 0.5;
-    HEMInitializeAudioSession();
+    self.audioService = [HEMAudioService new];
     [self loadAlarmSounds];
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
 }
@@ -208,9 +209,9 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
 
 - (void)playAudio {
     __weak typeof(self) weakSelf = self;
-    HEMActivateAudioSession(YES, ^(NSError *error) {
+    [[self audioService] activateSession:YES completion:^(NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-
+        
         if (strongSelf.player) {
             strongSelf.player.volume = 1.0f;
             [strongSelf.player play];
@@ -221,7 +222,7 @@ static NSString *const HEMAlarmSoundFormat = @"m4a";
             [strongSelf.tableView reloadData];
             [strongSelf playAudioForSelectedSound];
         }
-    });
+    }];
 }
 
 - (void)stopAudio {

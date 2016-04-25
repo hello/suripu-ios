@@ -107,9 +107,8 @@ static CGFloat const HEMSpinnerNextDuration = 0.15f;
     CGFloat damping = HEMSpinnerDefaultDamping;
     CGFloat duration = HEMSpinnerDefaultDuration / MAX(1, rotations);
     CGFloat velocity = HEMSpinnerDefaultInitialVelocity;
-    BOOL willFinish =
-        [[[self offScreenLabel] text] isEqualToString:targetItem]
-        && (rotations == 0 || [self currentRotation] >= rotations);
+    BOOL willFinish = [[[self offScreenLabel] text] isEqualToString:targetItem]
+                        && (rotations == 0 || [self currentRotation] >= rotations);
     
     if (willFinish) {
         damping = HEMSpinnerEndDamping;

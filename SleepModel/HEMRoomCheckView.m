@@ -400,7 +400,10 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     NSString* digitString = [valueString substringWithRange:NSMakeRange(digitIndex, 1)];
     NSInteger rotations = 0;
     if (digitsCount > 1) {
-        rotations = [[valueString substringToIndex:digitIndex] integerValue];
+        // negative numbers should never happen, but if it does we still want to
+        // rotate the digits based on the values from 0, taking the absolute value
+        // to determine the rotations
+        rotations = absCGFloat([[valueString substringToIndex:digitIndex] integerValue]);
     }
     
     HEMSpinnerView* rotary = [self sensorValueRotaries][digitIndex];

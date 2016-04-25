@@ -26,7 +26,7 @@ static CGFloat const HEMTrendsCellLoadingAnimeDuration = 1.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [[self titleLabel] setFont:[UIFont trendsTitleFont]];
+    [[self titleLabel] setFont:[UIFont cardTitleFont]];
     [[self titleLabel] setTextColor:[UIColor trendsTitleColor]];
     [[self titleSeparator] setBackgroundColor:[UIColor trendsTitleDividerColor]];
     [[[self titleSeparator] layer] setMasksToBounds:YES];

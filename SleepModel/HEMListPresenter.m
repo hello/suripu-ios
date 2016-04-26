@@ -11,13 +11,15 @@
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMListItemCell.h"
+#import "HEMNavigationShadowView.h"
+#import "HEMActivityIndicatorView.h"
 
 static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 @interface HEMListPresenter()
 
 @property (nonatomic, weak) UITableView* tableView;
-@property (nonatomic, copy) NSArray* items;
+@property (nonatomic, weak) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy) NSString* title;
 @property (nonatomic, copy) NSString* selectedItemName;
 
@@ -30,6 +32,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
              selectedItemName:(NSString*)selectedItemName {
     self = [super init];
     if (self) {
+        _hideExtraNavigationBar = YES;
         _title = [title copy];
         _items = [items copy];
         _selectedItemName = [selectedItemName copy];
@@ -37,9 +40,37 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     return self;
 }
 
+- (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
+            withTopConstraint:(NSLayoutConstraint*)topConstraint {
+    
+    if ([self hideExtraNavigationBar]) {
+        CGFloat height = CGRectGetHeight([navigationBar bounds]);
+        [topConstraint setConstant:-height];
+        [navigationBar setHidden:YES];
+    } else {
+        UINavigationItem* topItem = [navigationBar topItem];
+        UIBarButtonItem* backButton = [topItem leftBarButtonItem];
+        [backButton setTarget:self];
+        [backButton setAction:@selector(back:)];
+        
+        HEMNavigationShadowView* shadowView =
+            [[HEMNavigationShadowView alloc] initWithNavigationBar:navigationBar];
+        [shadowView showSeparator:YES];
+        [navigationBar addSubview:shadowView];
+        [self bindWithShadowView:shadowView];
+    }
+}
+
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicatorView {
+    [indicatorView setHidden:YES];
+    [self setIndicatorView:indicatorView];
+}
+
 - (void)bindWithTableView:(UITableView*)tableView {
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
-    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
+                                                               bottomBorder:NO];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
+                                                               bottomBorder:NO];
     
     [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setTableHeaderView:header];
@@ -64,6 +95,14 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 }
 
 - (void)cell:(HEMListItemCell*)cell isSelected:(BOOL)selected forItem:(id)item {}
+
+#pragma mark - Nav Item
+
+- (void)back:(id)sender {
+    if ([[self delegate] respondsToSelector:@selector(goBackFrom:)]) {
+        [[self delegate] goBackFrom:self];
+    }
+}
 
 #pragma mark - UITableViewDelegate
 

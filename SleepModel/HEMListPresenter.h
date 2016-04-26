@@ -9,6 +9,7 @@
 #import "HEMPresenter.h"
 
 @class HEMListItemCell;
+@class HEMActivityIndicatorView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter*)presenter;
 
+@optional
+- (void)goBackFrom:(HEMListPresenter*)presenter;
+
 @end
 
 @interface HEMListPresenter : HEMPresenter <UITableViewDataSource, UITableViewDelegate>
@@ -25,15 +29,22 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<HEMListDelegate> delegate;
 
 @property (nonatomic, weak, readonly) UITableView* tableView;
-@property (nonatomic, copy, readonly) NSArray* items;
+@property (nonatomic, weak, readonly) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, copy, readonly) NSString* selectedItemName;
+@property (nonatomic, copy) NSArray* items;
+@property (nonatomic, assign) BOOL hideExtraNavigationBar; // defaults to YES
 
 - (instancetype)initWithTitle:(NSString*)title
                         items:(NSArray*)items
              selectedItemName:(NSString*)selectedItemName;
 
 - (void)bindWithTableView:(UITableView*)tableView;
+
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicatorView;
+
+- (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
+            withTopConstraint:(NSLayoutConstraint*)topConstraint;
 
 /**
  * @discussion

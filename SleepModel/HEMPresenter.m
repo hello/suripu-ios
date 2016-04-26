@@ -53,7 +53,9 @@
 }
 
 - (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView {
-    [self setShadowView:shadowView];
+    if (![self hasShadowView]) {
+        [self setShadowView:shadowView];
+    }
 }
 
 - (void)didScrollContentIn:(UIScrollView*)scrollView {

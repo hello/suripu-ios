@@ -25,6 +25,7 @@ static NSString *const _HEMalarmRepeat = @"alarmRepeat";
 static NSString *const _HEMalarmRepeatCell = @"alarmRepeatCell";
 static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableViewController";
 static NSString *const _HEMalarmSoundCell = @"alarmSoundCell";
+static NSString *const _HEMalarmSounds = @"alarmSounds";
 static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMalarms = @"alarms";
@@ -154,6 +155,7 @@ static NSString *const _HEMwarning = @"warning";
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
++(NSString *)alarmSoundsSegueIdentifier { return _HEMalarmSounds; }
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }

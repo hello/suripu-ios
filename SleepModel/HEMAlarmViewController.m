@@ -1,18 +1,22 @@
+#import <SenseKit/SENSound.h>
 
 #import "HEMAlarmViewController.h"
 #import "HEMAlertViewController.h"
-#import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
 #import "HEMMainStoryboard.h"
 #import "HEMClockPickerView.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMListItemSelectionViewController.h"
+#import "HEMSettingsNavigationController.h"
 
 #import "HEMAlarmPresenter.h"
+#import "HEMAlarmSoundsPresenter.h"
 #import "HEMAlarmService.h"
+#import "HEMAudioService.h"
 
-@interface HEMAlarmViewController () <HEMAlarmPresenterDelegate>
+@interface HEMAlarmViewController () <HEMAlarmPresenterDelegate, HEMListDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
@@ -22,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
 @property (strong, nonatomic) HEMAlarmService* alarmService;
+@property (strong, nonatomic) HEMAudioService* audioService;
 
 @end
 
@@ -49,14 +54,43 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueIdentifier]]) {
-        HEMAlarmSoundTableViewController *controller = segue.destinationViewController;
-        [controller setAlarmCache:[[self presenter] cache]];
-    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
+    if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
         HEMAlarmRepeatTableViewController *controller = segue.destinationViewController;
         [controller setAlarmCache:[[self presenter] cache]];
         [controller setAlarm:[self alarm]];
+    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmSoundsSegueIdentifier]]) {
+        if (![self audioService]) {
+            [self setAudioService:[HEMAudioService new]];
+        }
+        
+        NSString* title = NSLocalizedString(@"alarm.sound.title", nil);
+        NSString* subtitle = NSLocalizedString(@"alarm.sound.subtitle", nil);
+        NSString* selectedName = [[[self presenter] cache] soundName];
+        HEMAlarmSoundsPresenter* soundsPresenter =
+        [[HEMAlarmSoundsPresenter alloc] initWithNavTitle:title
+                                                 subtitle:subtitle
+                                                    items:nil
+                                         selectedItemName:selectedName
+                                             audioService:[self audioService]
+                                             alarmService:[self alarmService]];
+        [soundsPresenter setHideExtraNavigationBar:NO];
+        [soundsPresenter setDelegate:self];
+        
+        HEMListItemSelectionViewController* listVC = segue.destinationViewController;
+        [listVC setListPresenter:soundsPresenter];
     }
+}
+
+#pragma mark - HEMListDelegate
+
+- (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter *)presenter {
+    SENSound* sound = item;
+    [[[self presenter] cache] setSoundID:[sound identifier]];
+    [[[self presenter] cache] setSoundName:[sound displayName]];
+}
+
+- (void)goBackFrom:(HEMListPresenter *)presenter {
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 #pragma mark - HEMAlarmPresenterDelegate

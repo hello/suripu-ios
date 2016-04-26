@@ -419,7 +419,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont*)trendsTitleFont {
++ (UIFont*)cardTitleFont {
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:16.0f];
 }
 

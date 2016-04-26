@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.1.1
+
+New:
+
+* Updated Alarm tone UI to match that of Sleep Sounds
+
+Fixes:
+
+* Updated Sleep sounds title font to match that of Trend cards
+* Fixed a crasher that can happen if server returns a negative value for sensor values
+
 ## 1.4.0.12
 
 New:

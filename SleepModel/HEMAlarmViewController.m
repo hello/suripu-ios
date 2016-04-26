@@ -2,7 +2,6 @@
 
 #import "HEMAlarmViewController.h"
 #import "HEMAlertViewController.h"
-#import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
 #import "HEMMainStoryboard.h"
@@ -55,10 +54,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueIdentifier]]) {
-        HEMAlarmSoundTableViewController *controller = segue.destinationViewController;
-        [controller setAlarmCache:[[self presenter] cache]];
-    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
+    if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
         HEMAlarmRepeatTableViewController *controller = segue.destinationViewController;
         [controller setAlarmCache:[[self presenter] cache]];
         [controller setAlarm:[self alarm]];

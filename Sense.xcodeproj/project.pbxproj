@@ -67,7 +67,6 @@
 		8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8397A31B683A200079AC24 /* HEMWaveform.m */; };
 		8A8397A71B68480E0079AC24 /* HEMPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8397A61B68480E0079AC24 /* HEMPlayButton.m */; };
 		8A8621671B5D5DC20033F44C /* HEMAppReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8621661B5D5DC20033F44C /* HEMAppReview.m */; };
-		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
 		8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
 		8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9B219635CAE00AFD110 /* HEMCurrentConditionsViewController.m */; };
 		8A91EEF819E46D9900EA6E5F /* HEMAlarmCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A91EEF719E46D9900EA6E5F /* HEMAlarmCache.m */; };
@@ -121,7 +120,6 @@
 		8AF18E2A1BC31A7800EEF412 /* HEMAlertTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF18E291BC31A7800EEF412 /* HEMAlertTextView.m */; };
 		8AF4FA731A14129C00451245 /* HEMAudioCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4FA721A14129C00451245 /* HEMAudioCache.m */; };
 		8AF7BCD01B3880F9000793D7 /* HEMSleepSegmentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AF7BCCF1B3880F9000793D7 /* HEMSleepSegmentCollectionViewCell.xib */; };
-		8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */; };
 		8AFE909A1B9A20C0000D638E /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFE90991B9A20C0000D638E /* Config.m */; };
 		8B15FB5B1C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B15FB5A1C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.m */; };
 		8B1DB6DD1C18AC00006C8AFF /* HEMNonsenseScanService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6DC1C18AC00006C8AFF /* HEMNonsenseScanService.m */; };
@@ -316,6 +314,7 @@
 		BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB6D47519BE16D1004CA11B /* HEMBirthdatePickerView.m */; };
 		BFB7B2071CCEC52E0060999E /* HEMAlarmSoundsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7B2061CCEC52E0060999E /* HEMAlarmSoundsPresenter.m */; };
 		BFB7B20A1CCEC5CF0060999E /* HEMSoundListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7B2091CCEC5CF0060999E /* HEMSoundListPresenter.m */; };
+		BFB7B20D1CCEFC0D0060999E /* HEMAlarmPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7B20C1CCEFC0D0060999E /* HEMAlarmPropertyTableViewCell.m */; };
 		BFB7C3B31B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7C3B21B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m */; };
 		BFB815121BFC0A12009740D0 /* HEMDeviceActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB815111BFC0A12009740D0 /* HEMDeviceActionCell.m */; };
 		BFB815151BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB815141BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m */; };
@@ -520,8 +519,6 @@
 		8A8397B41B6AE5270079AC24 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		8A8621651B5D5DC20033F44C /* HEMAppReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppReview.h; sourceTree = "<group>"; };
 		8A8621661B5D5DC20033F44C /* HEMAppReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReview.m; sourceTree = "<group>"; };
-		8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmSoundTableViewController.h; sourceTree = "<group>"; };
-		8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMAlarmSoundTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8A90F9A719630C3800AFD110 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8A90F9B119635CAE00AFD110 /* HEMCurrentConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMCurrentConditionsViewController.h; sourceTree = "<group>"; };
 		8A90F9B219635CAE00AFD110 /* HEMCurrentConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMCurrentConditionsViewController.m; sourceTree = "<group>"; };
@@ -615,8 +612,6 @@
 		8AF4FA711A14129C00451245 /* HEMAudioCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAudioCache.h; sourceTree = "<group>"; };
 		8AF4FA721A14129C00451245 /* HEMAudioCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAudioCache.m; sourceTree = "<group>"; };
 		8AF7BCCF1B3880F9000793D7 /* HEMSleepSegmentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMSleepSegmentCollectionViewCell.xib; sourceTree = "<group>"; };
-		8AFD8A1C1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmPropertyTableViewCell.h; sourceTree = "<group>"; };
-		8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMAlarmPropertyTableViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8AFE90991B9A20C0000D638E /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		8B15FB591C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTellAFriendItemProvider.h; sourceTree = "<group>"; };
 		8B15FB5A1C0E6EBA007F9C5F /* HEMTellAFriendItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTellAFriendItemProvider.m; sourceTree = "<group>"; };
@@ -970,6 +965,8 @@
 		BFB7B2061CCEC52E0060999E /* HEMAlarmSoundsPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmSoundsPresenter.m; sourceTree = "<group>"; };
 		BFB7B2081CCEC5CF0060999E /* HEMSoundListPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSoundListPresenter.h; sourceTree = "<group>"; };
 		BFB7B2091CCEC5CF0060999E /* HEMSoundListPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundListPresenter.m; sourceTree = "<group>"; };
+		BFB7B20B1CCEFC0D0060999E /* HEMAlarmPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmPropertyTableViewCell.h; sourceTree = "<group>"; };
+		BFB7B20C1CCEFC0D0060999E /* HEMAlarmPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmPropertyTableViewCell.m; sourceTree = "<group>"; };
 		BFB7C3B11B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SENAnalytics+HEMAppAnalytics.h"; sourceTree = "<group>"; };
 		BFB7C3B21B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SENAnalytics+HEMAppAnalytics.m"; sourceTree = "<group>"; };
 		BFB815101BFC0A12009740D0 /* HEMDeviceActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceActionCell.h; sourceTree = "<group>"; };
@@ -1357,8 +1354,6 @@
 				8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */,
 				8AB2684819CCFF9200017818 /* HEMAlarmRepeatTableViewController.h */,
 				8AB2684919CCFF9200017818 /* HEMAlarmRepeatTableViewController.m */,
-				8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */,
-				8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */,
 				6003F5A5195388D20070C39A /* HEMAlarmViewController.h */,
 				6003F5A6195388D20070C39A /* HEMAlarmViewController.m */,
 			);
@@ -1542,12 +1537,12 @@
 		8AB2683619CCFD9600017818 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BFB7B20B1CCEFC0D0060999E /* HEMAlarmPropertyTableViewCell.h */,
+				BFB7B20C1CCEFC0D0060999E /* HEMAlarmPropertyTableViewCell.m */,
 				8AB2683719CCFDB400017818 /* HEMAlarmAddButton.h */,
 				8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */,
 				8A7D80471A421B7300B0BFD7 /* HEMAlarmListCell.h */,
 				8A7D80481A421B7300B0BFD7 /* HEMAlarmListCell.m */,
-				8AFD8A1C1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.h */,
-				8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */,
 				8A91F2A41A44DB3D00F211B4 /* HEMAlarmTableViewCell.h */,
 				8A91F2A51A44DB3D00F211B4 /* HEMAlarmTableViewCell.m */,
 				8AA1E62A1A898EDB00590EB6 /* HEMClockPickerView.h */,
@@ -3205,7 +3200,6 @@
 				BF5BACF91C5C186000347185 /* HEMTrendsGraphsPresenter.m in Sources */,
 				BF045B6E1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m in Sources */,
 				BFF3B45C1A5F03AD00B11643 /* HEMWarningCollectionViewCell.m in Sources */,
-				8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */,
 				BF6995F41CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m in Sources */,
 				BF6D9B811C73EC7E00774322 /* HEMTrendsBubbleView.m in Sources */,
 				8A391FCA1A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m in Sources */,
@@ -3257,6 +3251,7 @@
 				8A9F574519F873110009E50A /* HEMLogUtils.m in Sources */,
 				BFCB99091CA61A4E000D7619 /* HEMSleepSoundDurationsPresenter.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiPasswordViewController.m in Sources */,
+				BFB7B20D1CCEFC0D0060999E /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				BF6995F11CA6086E00C7AA55 /* HEMListItemCell.m in Sources */,
 				BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */,
 				8A576F121A79B12200287398 /* HEMTutorial.m in Sources */,
@@ -3378,7 +3373,6 @@
 				BFF14C311C642B6A00AD3773 /* HEMTrendsAverageView.m in Sources */,
 				BF71BDA21C481E0A00919D0F /* HEMTimelineService.m in Sources */,
 				BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */,
-				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				BF412EA81C920095009514A1 /* HEMSleepSoundViewController.m in Sources */,
 				BFA540F21BCEFDF1007AF607 /* NSBundle+HEMUtils.m in Sources */,
 				BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */,

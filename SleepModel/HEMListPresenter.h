@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readonly) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, copy, readonly) NSString* selectedItemName;
-@property (nonatomic, copy) NSArray* items;
+@property (nonatomic, copy, nullable) NSArray* items;
 @property (nonatomic, assign) BOOL hideExtraNavigationBar; // defaults to YES
 
 - (instancetype)initWithTitle:(NSString*)title

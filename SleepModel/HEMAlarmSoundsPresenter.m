@@ -60,6 +60,7 @@
     [super bindWithActivityIndicator:indicatorView];
     
     [indicatorView setHidden:![self isLoading]];
+    [[self tableView] setHidden:[self isLoading]];
     
     if ([self isLoading]) {
         [indicatorView start];
@@ -99,6 +100,7 @@
     } else {
         [[self indicatorView] stop];
     }
+    [[self tableView] setHidden:loading];
     [[self indicatorView] setHidden:!loading];
 }
 

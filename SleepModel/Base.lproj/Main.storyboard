@@ -3413,109 +3413,6 @@
             </objects>
             <point key="canvasLocation" x="498.75" y="745.77464788732391"/>
         </scene>
-        <!--Repeat-->
-        <scene sceneID="Jr9-eZ-JPM">
-            <objects>
-                <viewController storyboardIdentifier="alarmRepeatTableViewController" title="Repeat" id="8jA-eI-sZN" customClass="HEMAlarmRepeatTableViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="TBo-4n-ncn"/>
-                        <viewControllerLayoutGuide type="bottom" id="VY0-ba-AHA"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ko0-dE-IRe">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBu-WJ-ri0">
-                                <rect key="frame" x="4" y="36" width="592" height="44"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
-                                    <color key="textColor" red="0.29999999999999999" green="0.29999999999999999" blue="0.29999999999999999" alpha="1" colorSpace="deviceRGB"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="Repeat" id="5aC-dV-btn">
-                                        <barButtonItem key="leftBarButtonItem" image="backIcon" id="7jG-DL-sGY">
-                                            <connections>
-                                                <action selector="goBack:" destination="8jA-eI-sZN" id="Raq-Tr-fdd"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0G5-E1-bt9">
-                                <rect key="frame" x="20" y="80" width="560" height="1"/>
-                                <color key="backgroundColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="deviceRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="BRK-UM-x2R"/>
-                                </constraints>
-                            </view>
-                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="loU-4I-Xby">
-                                <rect key="frame" x="108" y="81" width="600" height="519"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="deviceRGB"/>
-                                <inset key="separatorInset" minX="36" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmChoiceCell" id="V3Y-xC-iI6" customClass="HEMAlarmPropertyTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="600" height="64"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V3Y-xC-iI6" id="SWu-Qg-qkM">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Highlights" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mwy-Tn-sKT">
-                                                    <rect key="frame" x="20" y="21" width="73" height="22"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="6Ib-P3-wd3">
-                                                    <rect key="frame" x="560" y="24" width="20" height="15"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="6Ib-P3-wd3" secondAttribute="centerY" id="0zz-Y6-6r2"/>
-                                                <constraint firstAttribute="trailing" secondItem="6Ib-P3-wd3" secondAttribute="trailing" constant="20" id="dIF-8Y-QNJ"/>
-                                                <constraint firstItem="Mwy-Tn-sKT" firstAttribute="leading" secondItem="SWu-Qg-qkM" secondAttribute="leading" constant="20" id="l7R-xF-khK"/>
-                                                <constraint firstAttribute="centerY" secondItem="Mwy-Tn-sKT" secondAttribute="centerY" constant="-0.5" id="skm-nC-Jqb"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <outlet property="disclosureImageView" destination="6Ib-P3-wd3" id="x1P-Is-8bf"/>
-                                            <outlet property="titleLabel" destination="Mwy-Tn-sKT" id="FEX-ct-AoD"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="8jA-eI-sZN" id="EFz-Pe-vD5"/>
-                                    <outlet property="delegate" destination="8jA-eI-sZN" id="kwT-IR-F14"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="oBu-WJ-ri0" secondAttribute="trailing" constant="-16" id="4wx-ed-FCl"/>
-                            <constraint firstItem="loU-4I-Xby" firstAttribute="top" secondItem="oBu-WJ-ri0" secondAttribute="bottom" constant="1" id="6gv-CM-qBD"/>
-                            <constraint firstItem="loU-4I-Xby" firstAttribute="leading" secondItem="Ko0-dE-IRe" secondAttribute="leading" id="7Jb-hO-aID"/>
-                            <constraint firstAttribute="trailing" secondItem="0G5-E1-bt9" secondAttribute="trailing" constant="20" id="ERm-18-6bq"/>
-                            <constraint firstItem="oBu-WJ-ri0" firstAttribute="leading" secondItem="Ko0-dE-IRe" secondAttribute="leadingMargin" constant="-16" id="NoV-2C-InU"/>
-                            <constraint firstItem="oBu-WJ-ri0" firstAttribute="top" secondItem="TBo-4n-ncn" secondAttribute="bottom" constant="16" id="Q88-dW-yzN"/>
-                            <constraint firstItem="0G5-E1-bt9" firstAttribute="leading" secondItem="Ko0-dE-IRe" secondAttribute="leading" constant="20" id="ckV-Vt-rXJ"/>
-                            <constraint firstItem="oBu-WJ-ri0" firstAttribute="bottom" secondItem="0G5-E1-bt9" secondAttribute="top" id="pYO-9K-E79"/>
-                            <constraint firstItem="VY0-ba-AHA" firstAttribute="top" secondItem="loU-4I-Xby" secondAttribute="bottom" id="qjc-r6-NcI"/>
-                            <constraint firstAttribute="trailing" secondItem="loU-4I-Xby" secondAttribute="trailing" id="tq9-iq-u8u"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Repeat" id="YXH-5w-vkJ"/>
-                    <connections>
-                        <outlet property="lineViewHeightConstraint" destination="BRK-UM-x2R" id="LxY-cn-3li"/>
-                        <outlet property="tableView" destination="loU-4I-Xby" id="GSk-Sf-P8L"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MtU-KT-Hgn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4434" y="378"/>
-        </scene>
         <!--Alarm Navigation Controller-->
         <scene sceneID="DWr-yB-iBh">
             <objects>
@@ -4855,11 +4752,7 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem id="kEi-ZR-9wT">
-                                        <barButtonItem key="leftBarButtonItem" image="backIcon" id="l48-cs-Mb7">
-                                            <connections>
-                                                <action selector="goBack:" destination="8jA-eI-sZN" id="Pjn-VK-syt"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <barButtonItem key="leftBarButtonItem" image="backIcon" id="l48-cs-Mb7"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -5374,7 +5267,6 @@
         <image name="backIcon" width="10" height="18"/>
         <image name="bottomShadow" width="375" height="4"/>
         <image name="cardLoadingState" width="375" height="144"/>
-        <image name="checkmark" width="20" height="15"/>
         <image name="durationIcon" width="32" height="32"/>
         <image name="emptyStateAlarm" width="359" height="180"/>
         <image name="escape button" width="32" height="32"/>

@@ -2,7 +2,6 @@
 
 #import "HEMAlarmViewController.h"
 #import "HEMAlertViewController.h"
-#import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
 #import "HEMMainStoryboard.h"
 #import "HEMClockPickerView.h"

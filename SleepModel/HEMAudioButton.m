@@ -8,8 +8,10 @@
 
 #import "HEMAudioButton.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMStyle.h"
 
-static CGFloat const HEMAudioButtonImageRightOffset = 4.0f;
+static CGFloat const HEMAudioButtonImageRightInset = 4.0f;
+static CGFloat const HEMAudioButtonTitleLeftInset = 8.0f;
 
 @interface HEMAudioButton()
 
@@ -44,8 +46,17 @@ static CGFloat const HEMAudioButtonImageRightOffset = 4.0f;
 }
 
 - (void)configureDefaults {
-    [self setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, HEMAudioButtonImageRightOffset)];
-    [self setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    [self setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, HEMAudioButtonImageRightInset)];
+    [[self titleLabel] setFont:[UIFont audioPreviewButtonTitleFont]];
+    [self setTitleColor:[UIColor audioPreviewButtonTitleColor] forState:UIControlStateNormal];
+    [self setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, HEMAudioButtonTitleLeftInset, 0.0f, 0.0f)];
+    [self putIconToTheRightOfTitle];
+}
+
+- (void)putIconToTheRightOfTitle {
+    [self setTransform:CGAffineTransformMakeScale(-1.0f, 1.0f)];
+    [[self titleLabel] setTransform:CGAffineTransformMakeScale(-1.0f, 1.0f)];
+    [[self imageView] setTransform:CGAffineTransformMakeScale(-1.0f, 1.0f)];
 }
 
 - (HEMActivityIndicatorView*)loadingView {
@@ -81,21 +92,37 @@ static CGFloat const HEMAudioButtonImageRightOffset = 4.0f;
             [self layoutIndicatorIfNeeded];
             [[self loadingView] start];
             [[self loadingView] setHidden:NO];
-            [self setImage:nil forState:UIControlStateNormal];
+            [[self imageView] setHidden:YES];
             break;
         case HEMAudioButtonStatePlaying:
             [[self loadingView] removeFromSuperview];
             [[self loadingView] setHidden:YES];
+            [[self imageView] setHidden:NO];
+            [self setTitle:[NSLocalizedString(@"sounds.audio.stop", nil) uppercaseString]
+                  forState:UIControlStateNormal];
             [self setImage:[UIImage imageNamed:@"miniStopButton"]
                   forState:UIControlStateNormal];
+            [self adjustSize];
             break;
         default:
             [[self loadingView] removeFromSuperview];
             [[self loadingView] setHidden:YES];
+            [[self imageView] setHidden:NO];
+            [self setTitle:[NSLocalizedString(@"sounds.audio.preview", nil) uppercaseString]
+                  forState:UIControlStateNormal];
             [self setImage:[UIImage imageNamed:@"miniPlayButton"]
                   forState:UIControlStateNormal];
+            [self adjustSize];
             break;
     }
+
+}
+
+- (void)adjustSize {
+    [self sizeToFit];
+    CGRect frame = [self frame];
+    frame.size.width += HEMAudioButtonTitleLeftInset;
+    [self setFrame:frame];
 }
 
 @end

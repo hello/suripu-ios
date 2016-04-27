@@ -752,6 +752,8 @@
 "sounds.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to enable this feature.";
 "sounds.no-sense.button.title" = "Pair new Sense";
 "sounds.error.message" = "There was a problem loading the content. Please try again.";
+"sounds.audio.preview" = "Preview";
+"sounds.audio.stop" = "Stop";
 
 // sleep sounds
 "sleep-sounds.error.message" = "There was a problem loading sleep sounds. Please try again.";

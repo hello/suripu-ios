@@ -96,15 +96,11 @@ static CGFloat const HEMSoundPreviewFadeInterval = 5.0f;
     return state;
 }
 
-- (HEMAudioButton*)audioButtonWithSize:(CGSize)size {
+- (HEMAudioButton*)newAudioButton {
     HEMAudioButton* button = [HEMAudioButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self
                action:@selector(toggleAudio:)
      forControlEvents:UIControlEventTouchUpInside];
-    
-    CGRect buttonFrame = [button frame];
-    buttonFrame.size = size;
-    [button setFrame:buttonFrame];
     [button setAudioState:HEMAudioButtonStateStopped];
     return button;
 }
@@ -116,9 +112,7 @@ static CGFloat const HEMSoundPreviewFadeInterval = 5.0f;
     NSString* selectedUrl = [self selectedPreviewUrl];
     BOOL selected = [self item:item matchesCurrentPreviewUrl:selectedUrl];
     if (![cell accessoryView]) {
-        CGFloat cellHeight = CGRectGetHeight([cell bounds]);
-        CGSize size = CGSizeMake(cellHeight, cellHeight);
-        HEMAudioButton* audioButton = [self audioButtonWithSize:size];
+        HEMAudioButton* audioButton = [self newAudioButton];
         [audioButton setAudioState:[self stateBasedOnPlayer]];
         [cell setAccessoryView:audioButton];
     }

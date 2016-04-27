@@ -5,12 +5,14 @@
 //  Created by Jimmy Lu on 4/25/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-#import <AVFoundation/AVFoundation.h>
+#import "AVAudioPlayer+HEMVolumeControl.h"
 
 #import "HEMSoundListPresenter.h"
 #import "HEMAudioService.h"
 #import "HEMAudioButton.h"
 #import "HEMListItemCell.h"
+
+static CGFloat const HEMSoundPreviewFadeInterval = 5.0f;
 
 @interface HEMSoundListPresenter()
 
@@ -197,8 +199,7 @@
             if (error) {
                 [SENAnalytics trackError:error];
                 [selectedAudioButton setAudioState:HEMAudioButtonStateStopped];
-            } else if ([player play]) {
-                [player setVolume:1.0f];
+            } else if ([player playWithVolumeFadeOver:HEMSoundPreviewFadeInterval]) {
                 [player setNumberOfLoops:-1]; // indefinitely
                 [selectedAudioButton setAudioState:HEMAudioButtonStatePlaying];
                 [strongSelf setAudioPlayer:player];
@@ -223,8 +224,7 @@
 }
 
 - (void)replay {
-    [[self audioPlayer] setVolume:1.0f];
-    [[self audioPlayer] play];
+    [[self audioPlayer] playWithVolumeFadeOver:HEMSoundPreviewFadeInterval];
     [[self selectedAudioButton] setAudioState:HEMAudioButtonStatePlaying];
     [self listenForAudioNotifications];
 }

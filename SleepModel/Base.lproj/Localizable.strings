@@ -354,6 +354,7 @@
 "alarm.sound.title" = "Tone";
 "alarm.sound.subtitle" = "Select an alarm tone";
 "alarm.repeat.title" = "Repeat";
+"alarm.repeat.subtitle" = "Repeat alarm";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
 "alarm.smart.title" = "Smart Alarm";

@@ -38,6 +38,7 @@ typedef void(^HEMAlarmAction)(void);
 @interface HEMAlarmPresenter : HEMPresenter
 
 @property (nonatomic, strong, readonly) HEMAlarmCache* cache;
+@property (nonatomic, weak, readonly) SENAlarm* alarm;
 @property (nonatomic, weak, nullable) id<HEMAlarmPresenterDelegate> delegate;
 
 - (instancetype)initWithAlarm:(nullable SENAlarm*)alarm

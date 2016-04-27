@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 12/30/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import <SenseKit/SENAlarm.h>
 
 #import "SENService.h"
 
@@ -33,6 +34,9 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
 - (BOOL)willRingToday:(HEMAlarmCache*)cache;
 - (NSString*)localizedTextForRepeatFlags:(NSUInteger)alarmRepeatFlags;
 - (void)copyCache:(HEMAlarmCache*)cache to:(SENAlarm*)alarm;
+- (BOOL)canAddRepeatDay:(SENAlarmRepeatDays)day
+                     to:(HEMAlarmCache*)alarmCache
+              excluding:(SENAlarm*)excludedAlarm;
 
 @end
 

@@ -15,29 +15,39 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class HEMListPresenter;
 
+@protocol HEMListPresenterDelegate <NSObject>
+
+- (void)presentErrorWithTitle:(NSString*)title
+                      message:(NSString*)message
+                         from:(HEMListPresenter*)presenter;
+
+@end
+
 @protocol HEMListDelegate <NSObject>
 
 - (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter*)presenter;
 
 @optional
 - (void)goBackFrom:(HEMListPresenter*)presenter;
+- (void)didDeselectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter*)presenter;
 
 @end
 
 @interface HEMListPresenter : HEMPresenter <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) id<HEMListDelegate> delegate;
+@property (nonatomic, weak) id<HEMListPresenterDelegate> presenterDelegate;
 
 @property (nonatomic, weak, readonly) UITableView* tableView;
-@property (nonatomic, weak, readonly) HEMActivityIndicatorView* indicatorView;
+@property (nonatomic, weak, readonly, nullable) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy, readonly) NSString* title;
-@property (nonatomic, copy, readonly) NSString* selectedItemName;
+@property (nonatomic, copy, nullable) NSArray* selectedItemNames;
 @property (nonatomic, copy, nullable) NSArray* items;
 @property (nonatomic, assign) BOOL hideExtraNavigationBar; // defaults to YES
 
 - (instancetype)initWithTitle:(NSString*)title
-                        items:(NSArray*)items
-             selectedItemName:(NSString*)selectedItemName;
+                        items:(nullable NSArray*)items
+            selectedItemNames:(nullable NSArray*)selectedItemNames;
 
 - (void)bindWithTableView:(UITableView*)tableView;
 
@@ -45,6 +55,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
             withTopConstraint:(NSLayoutConstraint*)topConstraint;
+
+/**
+ * @discussion
+ * This should not be called directly, except by sub classes that require content
+ * to be first asynchronously loaded before items can be displayed.  In such case,
+ * this method should be called as soon as items are loaded in to cache
+ */
+- (void)preSelectItems;
 
 /**
  * @discussion
@@ -58,14 +76,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @discussion
- * Subclasses should implement this method.  By default, this does nothing and
- * it should be not be manually called
+ * Subclasses should implement this method to update the cell with the selection
+ * state, if something more is required than simply having the cell be selected
  *
- * @param cell: the list item cell
- * @Param selected: YES if cell should be selected. NO otherwise
- * @param item: the list item selected
+ * @parm cell: the cell to update
+ * @param item: the list item for the cell
+ * @param selected: YES if selected, NO otherwise
  */
-- (void)cell:(HEMListItemCell*)cell isSelected:(BOOL)selected forItem:(id)item;
+- (void)updateCell:(UITableViewCell*)cell withItem:(id)item selected:(BOOL)selected;
+
+/**
+ * @discussion
+ * Subclasses should implement this method to determine the index of an item with
+ * the given name
+ *
+ * @param name: the display name of the item
+ * @return the index of the item that matches the provided name
+ */
+- (NSInteger)indexOfItemWithName:(NSString*)name;
 
 @end
 

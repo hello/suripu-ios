@@ -14,7 +14,7 @@
 
 - (instancetype)initWithTitle:(NSString *)title
                         items:(NSArray *)items
-             selectedItemName:(NSString*)selectedItemName NS_UNAVAILABLE;
+            selectedItemNames:(NSArray*)selectedItemNames NS_UNAVAILABLE;
 
 - (instancetype)initWithTitle:(NSString *)title
                         items:(NSArray *)items

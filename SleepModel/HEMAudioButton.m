@@ -12,6 +12,7 @@
 
 static CGFloat const HEMAudioButtonImageRightInset = 4.0f;
 static CGFloat const HEMAudioButtonTitleLeftInset = 8.0f;
+static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
 
 @interface HEMAudioButton()
 
@@ -64,7 +65,9 @@ static CGFloat const HEMAudioButtonTitleLeftInset = 8.0f;
         UIImage* playIcon = [UIImage imageNamed:@"miniPlayButton"];
         CGRect loadingFrame = CGRectZero;
         loadingFrame.size = playIcon.size;
-        _loadingView = [[HEMActivityIndicatorView alloc] initWithFrame:loadingFrame];
+        UIImage* loadingIndicator = [UIImage imageNamed:@"smallLoaderGray"];
+        _loadingView = [[HEMActivityIndicatorView alloc] initWithImage:loadingIndicator
+                                                              andFrame:loadingFrame];
         [_loadingView setHidden:YES];
     }
     return _loadingView;
@@ -93,8 +96,10 @@ static CGFloat const HEMAudioButtonTitleLeftInset = 8.0f;
             [[self loadingView] start];
             [[self loadingView] setHidden:NO];
             [[self imageView] setHidden:YES];
+            [self fadeLabel:0.0f];
             break;
         case HEMAudioButtonStatePlaying:
+            [self fadeLabel:1.0f];
             [[self loadingView] removeFromSuperview];
             [[self loadingView] setHidden:YES];
             [[self imageView] setHidden:NO];
@@ -105,6 +110,7 @@ static CGFloat const HEMAudioButtonTitleLeftInset = 8.0f;
             [self adjustSize];
             break;
         default:
+            [self fadeLabel:1.0f];
             [[self loadingView] removeFromSuperview];
             [[self loadingView] setHidden:YES];
             [[self imageView] setHidden:NO];
@@ -116,6 +122,14 @@ static CGFloat const HEMAudioButtonTitleLeftInset = 8.0f;
             break;
     }
 
+}
+    
+- (void)fadeLabel:(CGFloat)alpha {
+    if ([[self titleLabel] alpha] != alpha) {
+        [UIView animateWithDuration:HEMAudioButtonAnimeLabelFadeDuration animations:^{
+            [[self titleLabel] setAlpha:alpha];
+        }];
+    }
 }
 
 - (void)adjustSize {

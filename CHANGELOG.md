@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.1.2
+
+New:
+
+* Updated alarm repeat days UI to match that of Sleep Sounds
+
+Fixes:
+
+* Really fix the sleep sounds title font mismatch
+
 ## 1.4.1.1
 
 New:

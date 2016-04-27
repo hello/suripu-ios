@@ -141,6 +141,45 @@ static NSUInteger const HEMAlarmServiceTooSoonMinuteLimit = 2;
     }
 }
 
+- (BOOL)canAddRepeatDay:(SENAlarmRepeatDays)day
+                     to:(HEMAlarmCache*)alarmCache
+              excluding:(SENAlarm*)excludedAlarm {
+    
+    if (![alarmCache isSmart]) {
+        return YES;
+    }
+    
+    SENAlarmRepeatDays daysInUse = 0;
+    
+    for (SENAlarm* alarm in [SENAlarm savedAlarms]) {
+        if ([alarm isEqual:excludedAlarm]
+            || ![alarm isSmartAlarm]
+            || ![alarm isOn]) {
+            continue;
+        }
+        
+        if ([alarm isRepeated]) {
+            daysInUse |= [alarm repeatFlags];
+        } else {
+            daysInUse |= [self dayForNonRepeatingAlarmWithHour:[alarm hour]
+                                                        minute:[alarm minute]];
+        }
+    }
+    
+    return (daysInUse & day) == 0; // not in use
+}
+
+- (SENAlarmRepeatDays)dayForNonRepeatingAlarmWithHour:(NSUInteger)hour minute:(NSUInteger)minute {
+    // TODO: really need to fix up alarm code so that nextRingDate is pulled out
+    // and reused without having to create an object and then deleting it!
+    SENAlarm* dummyAlarm = [SENAlarm new];
+    dummyAlarm.minute = minute;
+    dummyAlarm.hour = hour;
+    NSDate* fireDate = [dummyAlarm nextRingDate];
+    [dummyAlarm delete];
+    return [self alarmRepeatDayForDate:fireDate];
+}
+
 - (void)copyCache:(HEMAlarmCache*)cache to:(SENAlarm*)alarm {
     [alarm setSmartAlarm:[cache isSmart]];
     [alarm setMinute:[cache minute]];

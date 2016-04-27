@@ -114,7 +114,7 @@
     HEMSleepSoundDurationsPresenter* durationsPresenter
         = [[HEMSleepSoundDurationsPresenter alloc] initWithTitle:subTitle
                                                            items:durations
-                                                selectedItemName:selectedName];
+                                               selectedItemNames:@[selectedName]];
     [self showListViewControllerWithPresenter:durationsPresenter title:title];
 }
 
@@ -126,7 +126,7 @@
     HEMSleepSoundVolumePresenter* volumePresenter
         = [[HEMSleepSoundVolumePresenter alloc] initWithTitle:subTitle
                                                         items:volumeOptions
-                                             selectedItemName:selectedName];
+                                            selectedItemNames:@[selectedName]];
     [self showListViewControllerWithPresenter:volumePresenter title:title];
 }
 

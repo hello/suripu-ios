@@ -15,6 +15,7 @@
 @interface HEMSleepSoundsPresenter()
 
 @property (nonatomic, weak) SENSleepSound* selectedSound;
+@property (nonatomic, copy) NSString* selectedSoundName;
 
 @end
 
@@ -37,15 +38,31 @@
 }
 
 - (void)configureSelectedSound {
-    for (SENSleepSound* sound in [self items]) {
-        if ([[sound localizedName] isEqualToString:[self selectedItemName]]) {
-            [self setSelectedSound:sound];
-            break;
+    NSString* selectedName = [[self selectedItemNames] firstObject];
+    if (selectedName) {
+        for (SENSleepSound* sound in [self items]) {
+            if ([[sound localizedName] isEqualToString:selectedName]) {
+                [self setSelectedSound:sound];
+                break;
+            }
         }
     }
 }
 
 #pragma mark - HEMSoundListPresenter Overrides
+
+- (NSInteger)indexOfItemWithName:(NSString*)name {
+    NSInteger index = -1;
+    NSInteger itemIndex = 0;
+    for (SENSleepSound* sound in [self items]) {
+        if ([[sound localizedName] isEqualToString:name]) {
+            index = itemIndex;
+            break;
+        }
+        itemIndex++;
+    }
+    return index;
+}
 
 - (NSString*)selectedPreviewUrl {
     return [[self selectedSound] previewURL];
@@ -54,6 +71,13 @@
 - (BOOL)item:(id)item matchesCurrentPreviewUrl:(NSString *)currentUrl {
     SENSleepSound* sound = item;
     return [currentUrl isEqualToString:[sound previewURL]];
+}
+
+- (void)updateCell:(UITableViewCell *)cell withItem:(id)item selected:(BOOL)selected {
+    [super updateCell:cell withItem:item selected:selected];
+    if (selected) {
+        [self setSelectedSound:item];
+    }
 }
 
 #pragma mark -
@@ -67,16 +91,6 @@
     NSNumber* selectedSoundId = [[self selectedSound] identifier];
     BOOL selected = [selectedSoundId isEqualToNumber:[sound identifier]];
     [cell setSelected:selected];
-}
-
-- (void)cell:(HEMListItemCell *)cell isSelected:(BOOL)selected forItem:(id)item {
-    [super cell:cell isSelected:selected forItem:item];
-
-    SENSleepSound* sound = item;
-    NSNumber* selectedSoundId = [[self selectedSound] identifier];
-    if (selected && ![selectedSoundId isEqualToNumber:[sound identifier]]) {
-        [self setSelectedSound:sound];
-    }
 }
 
 @end

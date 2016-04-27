@@ -14,7 +14,6 @@
 
 @interface HEMSoundListPresenter()
 
-@property (nonatomic, strong) HEMAudioButton* audioButton; // only one can be seen
 @property (nonatomic, strong) AVAudioPlayer* audioPlayer;
 @property (nonatomic, weak) HEMAudioService* audioService;
 @property (nonatomic, assign) BOOL loadingSound;
@@ -27,7 +26,7 @@
                         items:(NSArray *)items
              selectedItemName:(NSString*)selectedItemName
                  audioService:(HEMAudioService*)audioService {
-    self = [super initWithTitle:title items:items selectedItemName:selectedItemName];
+    self = [super initWithTitle:title items:items selectedItemNames:@[selectedItemName]];
     if (self) {
         _audioService = audioService;
     }
@@ -56,7 +55,31 @@
     return NO;
 }
 
+- (void)updateCell:(UITableViewCell *)cell withItem:(id)item selected:(BOOL)selected {
+    [super updateCell:cell withItem:item selected:selected];
+    NSString* prevSelectedUrl = [self selectedPreviewUrl];
+    BOOL prevSelected = [self item:item matchesCurrentPreviewUrl:prevSelectedUrl];
+    
+    if (selected && !prevSelected) {
+        [self clearAudio];
+    }
+    
+    HEMAudioButton* button = (id) [cell accessoryView];
+    [button setHidden:!selected];
+    [button setAudioState:[self stateBasedOnPlayer]];
+}
+
 #pragma mark - Audio Buttons
+
+- (HEMAudioButton*)selectedAudioButton {
+    HEMAudioButton* button = nil;
+    NSIndexPath* path = [[self tableView] indexPathForSelectedRow];
+    if (path) {
+        UITableViewCell* cell = [[self tableView] cellForRowAtIndexPath:path];
+        button = (id) [cell accessoryView];
+    }
+    return button;
+}
 
 - (void)clearAudio {
     [[self audioPlayer] stop];
@@ -72,19 +95,16 @@
 }
 
 - (HEMAudioButton*)audioButtonWithSize:(CGSize)size {
-    if (![self audioButton]) {
-        HEMAudioButton* button = [HEMAudioButton buttonWithType:UIButtonTypeCustom];
-        [button addTarget:self
-                   action:@selector(toggleAudio:)
-         forControlEvents:UIControlEventTouchUpInside];
-        [self setAudioButton:button];
-    }
+    HEMAudioButton* button = [HEMAudioButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self
+               action:@selector(toggleAudio:)
+     forControlEvents:UIControlEventTouchUpInside];
     
-    CGRect buttonFrame = CGRectZero;
+    CGRect buttonFrame = [button frame];
     buttonFrame.size = size;
-    [[self audioButton] setFrame:buttonFrame];
-    [[self audioButton] setAudioState:HEMAudioButtonStateStopped];
-    return [self audioButton];
+    [button setFrame:buttonFrame];
+    [button setAudioState:HEMAudioButtonStateStopped];
+    return button;
 }
 
 - (void)configureCell:(HEMListItemCell *)cell forItem:(id)item {
@@ -93,35 +113,14 @@
     
     NSString* selectedUrl = [self selectedPreviewUrl];
     BOOL selected = [self item:item matchesCurrentPreviewUrl:selectedUrl];
-    
-    [self updateAudioButtonStateForCell:cell selected:selected forItem:item];
-}
-
-- (void)cell:(HEMListItemCell *)cell isSelected:(BOOL)selected forItem:(id)item {
-    [super cell:cell isSelected:selected forItem:item];
-    
-    NSString* prevSelectedUrl = [self selectedPreviewUrl];
-    BOOL prevSelected = [self item:item matchesCurrentPreviewUrl:prevSelectedUrl];
-    
-    if (selected && !prevSelected) {
-        [self clearAudio];
-    }
-    
-    [self updateAudioButtonStateForCell:cell selected:selected forItem:item];
-}
-
-- (void)updateAudioButtonStateForCell:(HEMListItemCell*)cell
-                             selected:(BOOL)selected forItem:(id)item {
-    if ([self selectedPreviewUrl] > 0 && selected) {
+    if (![cell accessoryView]) {
         CGFloat cellHeight = CGRectGetHeight([cell bounds]);
         CGSize size = CGSizeMake(cellHeight, cellHeight);
         HEMAudioButton* audioButton = [self audioButtonWithSize:size];
         [audioButton setAudioState:[self stateBasedOnPlayer]];
         [cell setAccessoryView:audioButton];
-    } else {
-        [[self audioButton] removeFromSuperview];
-        [cell setAccessoryView:nil];
     }
+    [[cell accessoryView] setHidden:!selected];
 }
 
 #pragma mark - Audio Notifications
@@ -175,10 +174,12 @@
         return;
     }
     
-    __block NSString* selectedPreviewUrl = [[self selectedPreviewUrl] copy];
-    [[self audioButton] setAudioState:HEMAudioButtonStateLoading];
+    HEMAudioButton* selectedAudioButton = [self selectedAudioButton];
+    [selectedAudioButton setAudioState:HEMAudioButtonStateLoading];
     
+    __block NSString* selectedPreviewUrl = [[self selectedPreviewUrl] copy];
     __weak typeof(self) weakSelf = self;
+    
     void(^finish)(NSData* data, NSError* error) = ^(NSData* data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error && data) {
@@ -190,20 +191,23 @@
             
             NSError* error = nil;
             AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithData:data error:&error];
+            
+            HEMAudioButton* selectedAudioButton = [strongSelf selectedAudioButton];
+            
             if (error) {
                 [SENAnalytics trackError:error];
-                [[strongSelf audioButton] setAudioState:HEMAudioButtonStateStopped];
+                [selectedAudioButton setAudioState:HEMAudioButtonStateStopped];
             } else if ([player play]) {
                 [player setVolume:1.0f];
                 [player setNumberOfLoops:-1]; // indefinitely
-                [[strongSelf audioButton] setAudioState:HEMAudioButtonStatePlaying];
+                [selectedAudioButton setAudioState:HEMAudioButtonStatePlaying];
                 [strongSelf setAudioPlayer:player];
                 [strongSelf listenForAudioNotifications];
             } else {
-                [[strongSelf audioButton] setAudioState:HEMAudioButtonStateStopped];
+                [selectedAudioButton setAudioState:HEMAudioButtonStateStopped];
             }
         } else {
-            [[strongSelf audioButton] setAudioState:HEMAudioButtonStateStopped];
+            [selectedAudioButton setAudioState:HEMAudioButtonStateStopped];
         }
     };
     [[self audioService] downloadAudioFileWithURL:selectedPreviewUrl
@@ -214,14 +218,14 @@
 - (void)stop {
     [[self audioPlayer] stop];
     [[self audioPlayer] setCurrentTime:0.0f];
-    [[self audioButton] setAudioState:HEMAudioButtonStateStopped];
+    [[self selectedAudioButton] setAudioState:HEMAudioButtonStateStopped];
     [self stopListeningForAudioNotifications];
 }
 
 - (void)replay {
     [[self audioPlayer] setVolume:1.0f];
     [[self audioPlayer] play];
-    [[self audioButton] setAudioState:HEMAudioButtonStatePlaying];
+    [[self selectedAudioButton] setAudioState:HEMAudioButtonStatePlaying];
     [self listenForAudioNotifications];
 }
 

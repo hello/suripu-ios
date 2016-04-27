@@ -10,8 +10,18 @@
 
 @implementation HEMListItemCell
 
+- (void)awakeFromNib {
+    [[self selectionImageView] setUserInteractionEnabled:NO];
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+}
+
 - (void)setSelected:(BOOL)selected {
     [[self selectionImageView] setHighlighted:selected];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    DDLogVerbose(@"laying out");
 }
 
 @end

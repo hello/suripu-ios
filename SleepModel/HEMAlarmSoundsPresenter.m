@@ -87,6 +87,7 @@
             [strongSelf setItems:sortedSounds];
             [strongSelf configureSelectedSound];
             [[strongSelf tableView] reloadData];
+            [strongSelf preSelectItems];
         }
         
     }];
@@ -105,15 +106,31 @@
 }
 
 - (void)configureSelectedSound {
-    for (SENSound* sound in [self items]) {
-        if ([[sound displayName] isEqualToString:[self selectedItemName]]) {
-            [self setSelectedSound:sound];
-            break;
+    NSString* selectedName = [[self selectedItemNames] firstObject];
+    if (selectedName) {
+        for (SENSound* sound in [self items]) {
+            if ([[sound displayName] isEqualToString:selectedName]) {
+                [self setSelectedSound:sound];
+                break;
+            }
         }
     }
 }
 
 #pragma mark - HEMSoundListPresenter Overrides
+
+- (NSInteger)indexOfItemWithName:(NSString*)name {
+    NSInteger index = -1;
+    NSInteger itemIndex = 0;
+    for (SENSound* sound in [self items]) {
+        if ([[sound displayName] isEqualToString:name]) {
+            index = itemIndex;
+            break;
+        }
+        itemIndex++;
+    }
+    return index;
+}
 
 - (NSString*)selectedPreviewUrl {
     return [[self selectedSound] URLPath];
@@ -122,6 +139,13 @@
 - (BOOL)item:(id)item matchesCurrentPreviewUrl:(NSString *)currentUrl {
     SENSound* sound = item;
     return [currentUrl isEqualToString:[sound URLPath]];
+}
+
+- (void)updateCell:(UITableViewCell *)cell withItem:(id)item selected:(BOOL)selected {
+    [super updateCell:cell withItem:item selected:selected];
+    if (selected) {
+        [self setSelectedSound:item];
+    }
 }
 
 #pragma mark -
@@ -135,16 +159,6 @@
     NSString* selectedName = [[self selectedSound] displayName];
     BOOL selected = [selectedName isEqualToString:[sound displayName]];
     [cell setSelected:selected];
-}
-
-- (void)cell:(HEMListItemCell *)cell isSelected:(BOOL)selected forItem:(id)item {
-    [super cell:cell isSelected:selected forItem:item];
-    
-    SENSound* sound = item;
-    NSString* selectedName = [[self selectedSound] displayName];
-    if (selected && ![selectedName isEqualToString:[sound displayName]]) {
-        [self setSelectedSound:sound];
-    }
 }
 
 @end

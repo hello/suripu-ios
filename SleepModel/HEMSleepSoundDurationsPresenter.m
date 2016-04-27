@@ -13,6 +13,19 @@
 
 @implementation HEMSleepSoundDurationsPresenter
 
+- (NSInteger)indexOfItemWithName:(NSString*)name {
+    NSInteger index = -1;
+    NSInteger durationIndex = 0;
+    for (SENSleepSoundDuration* duration in [self items]) {
+        if ([[duration localizedName] isEqualToString:name]) {
+            index = durationIndex;
+            break;
+        }
+        durationIndex++;
+    }
+    return index;
+}
+
 - (void)configureCell:(HEMListItemCell *)cell forItem:(id)item {
     [super configureCell:cell forItem:item];
     
@@ -20,7 +33,8 @@
     
     [[cell itemLabel] setText:[duration localizedName]];
     
-    BOOL selected = [[duration localizedName] isEqualToString:[self selectedItemName]];
+    NSString* selectedName = [[self selectedItemNames] firstObject];
+    BOOL selected = [[duration localizedName] isEqualToString:selectedName];
     [cell setSelected:selected];
 }
 

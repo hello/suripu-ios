@@ -369,6 +369,9 @@ static UIColor *_tintColor = nil;
 + (UIColor *)listItemTextColor {
     return [UIColor colorWithWhite:0.0f alpha:0.7f];
 }
++ (UIColor *)audioPreviewButtonTitleColor {
+    return [UIColor colorWithHex:0x8A96A6 alpha:1.0f];
+}
 + (NSArray *)timelineSelectedGradientColorRefs {
     // if you change the values, you should check the references to ensure the
     // locations matches the colors

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.1.3
+
+New:
+
+* Updated copy for error messages for Sleep Sounds
+* Added a "preview" label next to the sound preview button
+* Updated preview button assets
+* Debug option for forgetting welcome dialogs now apply to Sleep Sounds
+* Fade in sound previews on device with a duration of 5s
+* Tracking errors when Sleep Sound operations time out
+
 ## 1.4.1.2
 
 New:

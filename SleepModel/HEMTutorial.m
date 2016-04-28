@@ -239,6 +239,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTimelineKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialSleepSoundsKey];
 }
 
 @end

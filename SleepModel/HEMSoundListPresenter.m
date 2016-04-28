@@ -5,12 +5,14 @@
 //  Created by Jimmy Lu on 4/25/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-#import <AVFoundation/AVFoundation.h>
+#import "AVAudioPlayer+HEMVolumeControl.h"
 
 #import "HEMSoundListPresenter.h"
 #import "HEMAudioService.h"
 #import "HEMAudioButton.h"
 #import "HEMListItemCell.h"
+
+static CGFloat const HEMSoundPreviewFadeInterval = 5.0f;
 
 @interface HEMSoundListPresenter()
 
@@ -94,15 +96,11 @@
     return state;
 }
 
-- (HEMAudioButton*)audioButtonWithSize:(CGSize)size {
+- (HEMAudioButton*)newAudioButton {
     HEMAudioButton* button = [HEMAudioButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self
                action:@selector(toggleAudio:)
      forControlEvents:UIControlEventTouchUpInside];
-    
-    CGRect buttonFrame = [button frame];
-    buttonFrame.size = size;
-    [button setFrame:buttonFrame];
     [button setAudioState:HEMAudioButtonStateStopped];
     return button;
 }
@@ -114,9 +112,7 @@
     NSString* selectedUrl = [self selectedPreviewUrl];
     BOOL selected = [self item:item matchesCurrentPreviewUrl:selectedUrl];
     if (![cell accessoryView]) {
-        CGFloat cellHeight = CGRectGetHeight([cell bounds]);
-        CGSize size = CGSizeMake(cellHeight, cellHeight);
-        HEMAudioButton* audioButton = [self audioButtonWithSize:size];
+        HEMAudioButton* audioButton = [self newAudioButton];
         [audioButton setAudioState:[self stateBasedOnPlayer]];
         [cell setAccessoryView:audioButton];
     }
@@ -197,8 +193,7 @@
             if (error) {
                 [SENAnalytics trackError:error];
                 [selectedAudioButton setAudioState:HEMAudioButtonStateStopped];
-            } else if ([player play]) {
-                [player setVolume:1.0f];
+            } else if ([player playWithVolumeFadeOver:HEMSoundPreviewFadeInterval]) {
                 [player setNumberOfLoops:-1]; // indefinitely
                 [selectedAudioButton setAudioState:HEMAudioButtonStatePlaying];
                 [strongSelf setAudioPlayer:player];
@@ -223,8 +218,7 @@
 }
 
 - (void)replay {
-    [[self audioPlayer] setVolume:1.0f];
-    [[self audioPlayer] play];
+    [[self audioPlayer] playWithVolumeFadeOver:HEMSoundPreviewFadeInterval];
     [[self selectedAudioButton] setAudioState:HEMAudioButtonStatePlaying];
     [self listenForAudioNotifications];
 }

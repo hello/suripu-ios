@@ -232,7 +232,11 @@ static NSString* const HEMSleepSoundSettingLastDurationId = @"sleep-sound.durati
     __weak typeof(self) weakSelf = self;
     [actionOperation setResultCompletionBlock:^(BOOL cancelled, NSError* _Nullable error) {
         if (!cancelled) {
-            completion ([weakSelf translateOperationError:error]);
+            NSError* translatedError = [weakSelf translateOperationError:error];
+            if (translatedError) {
+                [SENAnalytics trackError:translatedError];
+            }
+            completion (translatedError);
         }
     }];
     return actionOperation;

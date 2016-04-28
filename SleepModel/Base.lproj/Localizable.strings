@@ -752,9 +752,11 @@
 "sounds.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to enable this feature.";
 "sounds.no-sense.button.title" = "Pair new Sense";
 "sounds.error.message" = "There was a problem loading the content. Please try again.";
+"sounds.audio.preview" = "Preview";
+"sounds.audio.stop" = "Stop";
 
 // sleep sounds
-"sleep-sounds.error.message" = "There was a problem loading sleep sounds. Please try again.";
+"sleep-sounds.error.message" = "There was a problem loading Sleep Sounds. Please try again.";
 "sleep-sounds.title" = "Sleep sounds";
 "sleep-sounds.volume.high" = "High";
 "sleep-sounds.volume.medium" = "Medium";
@@ -768,8 +770,7 @@
 "sleep-sounds.title.state.stopped" = "Play a Sound";
 "sleep-sounds.title.state.playing" = "Now Playing";
 "sleep-sounds.error.title" = "Sleep sounds";
-"sleep-sounds.error.action-timeout.message" = "Unable to determine the state of the action on Sense. Please try again.";
-"sleep-sounds.error.action-in-progress.message" = "Waiting for a previous action to be performed. Please try again.";
+"sleep-sounds.error.action-timeout.message" = "There was a problem establishing a connection with your Sense. Please ensure your Sense is connected to the internet and try again.";
 "sleep-sounds.temp.info.title.no-sounds" = "Updating Sleep Sounds";
 "sleep-sounds.temp.info.message.no-sounds" = "Sleep Sounds will be available once Sense has finished updating. Note that this may take up to an hour.";
 "sleep-sounds.temp.info.title.fw-update" = "Sense needs to update";

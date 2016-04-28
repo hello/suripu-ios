@@ -314,6 +314,7 @@
 		BFB7B2071CCEC52E0060999E /* HEMAlarmSoundsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7B2061CCEC52E0060999E /* HEMAlarmSoundsPresenter.m */; };
 		BFB7B20A1CCEC5CF0060999E /* HEMSoundListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7B2091CCEC5CF0060999E /* HEMSoundListPresenter.m */; };
 		BFB7B2101CCFE9E40060999E /* HEMAlarmRepeatDaysPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7B20F1CCFE9E40060999E /* HEMAlarmRepeatDaysPresenter.m */; };
+		BFB7B2171CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7B2161CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.m */; };
 		BFB7C3B31B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7C3B21B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m */; };
 		BFB815121BFC0A12009740D0 /* HEMDeviceActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB815111BFC0A12009740D0 /* HEMDeviceActionCell.m */; };
 		BFB815151BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB815141BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m */; };
@@ -964,6 +965,8 @@
 		BFB7B2091CCEC5CF0060999E /* HEMSoundListPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundListPresenter.m; sourceTree = "<group>"; };
 		BFB7B20E1CCFE9E40060999E /* HEMAlarmRepeatDaysPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmRepeatDaysPresenter.h; sourceTree = "<group>"; };
 		BFB7B20F1CCFE9E40060999E /* HEMAlarmRepeatDaysPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmRepeatDaysPresenter.m; sourceTree = "<group>"; };
+		BFB7B2151CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAudioPlayer+HEMVolumeControl.h"; sourceTree = "<group>"; };
+		BFB7B2161CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAudioPlayer+HEMVolumeControl.m"; sourceTree = "<group>"; };
 		BFB7C3B11B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SENAnalytics+HEMAppAnalytics.h"; sourceTree = "<group>"; };
 		BFB7C3B21B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SENAnalytics+HEMAppAnalytics.m"; sourceTree = "<group>"; };
 		BFB815101BFC0A12009740D0 /* HEMDeviceActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceActionCell.h; sourceTree = "<group>"; };
@@ -2072,6 +2075,7 @@
 			children = (
 				BF3583931CB443ED00760CD4 /* Sounds.xcassets */,
 				8AC49F8E1981B90600C2BD63 /* Alarm */,
+				BFB7B2111CD137180060999E /* Categories */,
 				BF55D87B1CA4849E00379FBF /* Presenters */,
 				BF3583951CB4444900760CD4 /* Services */,
 				BF412E9C1C90F792009514A1 /* Sleep Sounds */,
@@ -2739,6 +2743,15 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		BFB7B2111CD137180060999E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				BFB7B2151CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.h */,
+				BFB7B2161CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		BFB8151D1BFCFC15009740D0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -3245,6 +3258,7 @@
 				8A9F574519F873110009E50A /* HEMLogUtils.m in Sources */,
 				BFCB99091CA61A4E000D7619 /* HEMSleepSoundDurationsPresenter.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiPasswordViewController.m in Sources */,
+				BFB7B2171CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.m in Sources */,
 				BF6995F11CA6086E00C7AA55 /* HEMListItemCell.m in Sources */,
 				BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */,
 				8A576F121A79B12200287398 /* HEMTutorial.m in Sources */,

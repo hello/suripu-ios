@@ -725,9 +725,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     NSString* message = nil;
     if ([[error domain] isEqualToString:HEMSleepSoundServiceErrorDomain]) {
         switch ([error code]) {
-            case HEMSleepSoundServiceErrorInProgress:
-                message = NSLocalizedString(@"sleep-sounds.error.action-in-progress.message", nil);
-                break;
             case HEMSleepSoundServiceErrorTimeout:
                 message = NSLocalizedString(@"sleep-sounds.error.action-timeout.message", nil);
             default:

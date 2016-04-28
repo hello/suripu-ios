@@ -636,4 +636,11 @@
  */
 + (UIFont*)cardTitleFont;
 
+#pragma mark - Audio Preview Button
+
+/**
+ * Font used for the audio preview button for sleep sounds and alarm tones.
+ */
++ (UIFont*)audioPreviewButtonTitleFont;
+
 @end

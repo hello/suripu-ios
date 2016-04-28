@@ -28,8 +28,7 @@ typedef void(^HEMSleepSoundsStatusHandler)(id _Nullable data, NSError* _Nullable
 typedef void(^HEMSleepSoundStatusUpdateHandler)(SENSleepSoundStatus* updatedStatus);
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundServiceError) {
-    HEMSleepSoundServiceErrorInProgress = -1,
-    HEMSleepSoundServiceErrorTimeout = -2
+    HEMSleepSoundServiceErrorTimeout = -1
 };
 
 @interface HEMSleepSoundService : SENService

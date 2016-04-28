@@ -33,8 +33,6 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 @property (copy, nonatomic) NSArray<NSAttributedString*>* xTitles;
 @property (copy, nonatomic) NSArray<NSArray<HEMTrendsDisplayPoint*>*>* displayPoints;
 @property (strong, nonatomic) NSArray<HEMTrendsDisplayPoint*>* combinedPoints;
-@property (copy, nonatomic) NSArray<NSArray<NSNumber*>*>* highlightedIndices;
-@property (copy, nonatomic) NSArray<NSArray<NSString*>*>* highlightedTitles;
 @property (assign, nonatomic) CGFloat barWidth;
 @property (assign, nonatomic) CGFloat barSpacing;
 @property (strong, nonatomic) NSMutableArray<UILabel*>* highlightLabels;

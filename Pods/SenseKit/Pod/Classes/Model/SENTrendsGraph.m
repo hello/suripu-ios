@@ -82,7 +82,7 @@ NSString* SENTrendsTimeScaleValueFromEnum(SENTrendsTimeScale timeScale) {
 @property (nonatomic, strong) NSArray<NSNumber*>* values;
 @property (nonatomic, strong) NSArray<NSString*>* titles;
 @property (nonatomic, strong) NSArray<NSNumber*>* highlightedValues;
-@property (nonatomic, strong) NSArray<NSString*>* highlightedTitles;
+@property (nonatomic, strong) NSNumber* highlightedTitleIndex;
 
 @end
 
@@ -94,7 +94,7 @@ NSString* SENTrendsTimeScaleValueFromEnum(SENTrendsTimeScale timeScale) {
         _values = SENObjectOfClass(dictionary[SENTrendsGraphSectionValues], [NSArray class]);
         _titles = SENObjectOfClass(dictionary[SENTrendsGraphSectionTitles], [NSArray class]);
         _highlightedValues = SENObjectOfClass(dictionary[SENTrendsGraphSectionHighlightedValues], [NSArray class]);
-        _highlightedTitles = SENObjectOfClass(dictionary[SENTrendsGraphSectionHighlightedTitle], [NSArray class]);
+        _highlightedTitleIndex = SENObjectOfClass(dictionary[SENTrendsGraphSectionHighlightedTitle], [NSNumber class]);
     }
     return self;
 }
@@ -108,7 +108,7 @@ NSString* SENTrendsTimeScaleValueFromEnum(SENTrendsTimeScale timeScale) {
     return ((![self values] && ![other values]) || [[self values] isEqual:[other values]])
     && ((![self titles] && ![other titles]) || [[self titles] isEqual:[other titles]])
     && ((![self highlightedValues] && ![other highlightedValues]) || [[self highlightedValues] isEqual:[other highlightedValues]])
-    && ((![self highlightedTitles] && ![other highlightedTitles]) || [[self highlightedTitles] isEqual:[other highlightedTitles]]);
+    && ((![self highlightedTitleIndex] && ![other highlightedTitleIndex]) || [[self highlightedTitleIndex] isEqualToNumber:[other highlightedTitleIndex]]);
 }
 
 - (NSUInteger)hash {
@@ -116,7 +116,7 @@ NSString* SENTrendsTimeScaleValueFromEnum(SENTrendsTimeScale timeScale) {
     NSUInteger result = prime + [[self values] hash];
     result = prime * result + [[self titles] hash];
     result = prime * result + [[self highlightedValues] hash];
-    result = prime * result + [[self highlightedTitles] hash];
+    result = prime * result + [[self highlightedTitleIndex] hash];
     return result;
 }
 

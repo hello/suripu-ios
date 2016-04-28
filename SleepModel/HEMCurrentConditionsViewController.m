@@ -372,6 +372,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 - (void)openDetailViewForSensorNamed:(NSString *)name {
     for (SENSensor *sensor in self.sensors) {
         if ([sensor.name isEqualToString:name]) {
+            [self.navigationController popToRootViewControllerAnimated:NO];
             [self openDetailViewForSensor:sensor];
             return;
         }

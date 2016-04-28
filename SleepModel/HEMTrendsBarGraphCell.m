@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 2/1/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "NSString+HEMUtils.h"
 
 #import "HEMTrendsBarGraphCell.h"
 #import "HEMMultiTitleView.h"
@@ -20,6 +21,7 @@ static CGFloat const HEMTrendsBarHighlightLabelWidth = 35.0f;
 static CGFloat const HEMTrendsBarHighlightLabelHeight = 20.0f;
 static CGFloat const HEMTrendsBarHighlightLabelCornerRadius = 2.0f;
 static CGFloat const HEMTrendsBarHighlightLabelSpacing = 2.0f;
+static CGFloat const HEMTrendsBarHighlightLabelPadding = 5.0f;
 static CGFloat const HEMTrendsBarCellAnimeDuration = 0.2f;
 static CGFloat const HEMTrendsBarDashLineWidth = 1.0f;
 static CGFloat const HEMTrendsBarDashLineSpacing = 4.0f;
@@ -197,11 +199,17 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 }
 
 - (UILabel*)highlightLabelWith:(HEMTrendsDisplayPoint*)displayPoint withCenter:(CGPoint)center {
-    CGRect labelFrame = CGRectZero;
-    labelFrame.size = CGSizeMake(HEMTrendsBarHighlightLabelWidth, HEMTrendsBarHighlightLabelHeight);
-    
     CGFloat value = [[displayPoint value] CGFloatValue];
     NSString* text = [NSString stringWithFormat:[self highlightLabelTextFormat], value];
+    
+    NSDictionary* attributes = @{NSFontAttributeName : [self highlightTextFont]};
+    CGFloat textWidth = [text sizeBoundedByHeight:HEMTrendsBarHighlightLabelHeight
+                                       attributes:attributes].width;
+    CGFloat preferredWidth = textWidth + (HEMTrendsBarHighlightLabelPadding * 2);
+    CGFloat labelWidth = MIN(HEMTrendsBarHighlightLabelWidth, preferredWidth);
+    
+    CGRect labelFrame = CGRectZero;
+    labelFrame.size = CGSizeMake(labelWidth, HEMTrendsBarHighlightLabelHeight);
     
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setBackgroundColor:[self highlightLabelColor]];

@@ -176,6 +176,7 @@
 + (UIColor *)sleepSoundPlayerOptionValueColor;
 + (UIColor *)listItemTextColor;
 + (UIColor *)audioPreviewButtonTitleColor;
++ (UIColor *)touchIndicatorColor;
 + (NSArray*)roomCheckValueGradientColorRefs;
 + (NSArray*)loadingIndicatorColorRefs;
 

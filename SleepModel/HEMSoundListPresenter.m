@@ -107,7 +107,6 @@ static CGFloat const HEMSoundPreviewFadeInterval = 5.0f;
 
 - (void)configureCell:(HEMListItemCell *)cell forItem:(id)item {
     [super configureCell:cell forItem:item];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     NSString* selectedUrl = [self selectedPreviewUrl];
     BOOL selected = [self item:item matchesCurrentPreviewUrl:selectedUrl];

@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.4.1.4
+
+New:
+
+* Highlighting Trends titles when server says so
+* Round the top corners of Trends sleep duration bars
+* Add padding to bar graph highlighted label when possible
+
+Fixes:
+
+* Increase # of steps when fading volume up when playing sound previews
+* Fixes an issue that can cause the application to crash when launching in to sensor detail
+* Fixes an issue that can cause the application to crash when dismissing gesture tutorial implicitly
+* Adjusted the Alarm tone and repeat UI navigation bar height
+* Fixes the insight feed image flicker
+* Fixes occassional reload of insight image when tapping in to an insight
+
 ## 1.4.1.3
 
 New:

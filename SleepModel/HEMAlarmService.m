@@ -49,7 +49,9 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
         if (error) {
             [SENAnalytics trackError:error];
         }
-        completion (error);
+        if (completion) {
+            completion (error);
+        }
     }];
 }
 

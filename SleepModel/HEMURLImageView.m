@@ -86,7 +86,22 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
 }
 
 - (void)setImageWithURL:(NSString *)url withTimeout:(NSTimeInterval)timeout {
+    [self setImageWithURL:url withTimeout:timeout completion:nil];
+}
+
+- (void)setImageWithURL:(NSString *)url completion:(HEMURLImageCallback)completion {
+    [self setImageWithURL:url
+              withTimeout:HEMURLImageRequestDefaultTimeout
+               completion:completion];
+}
+
+- (void)setImageWithURL:(nullable NSString *)url
+            withTimeout:(NSTimeInterval)timeout
+             completion:(nullable HEMURLImageCallback)completion {
     if ([[self currentImageURL] isEqualToString:url] && [self image]) {
+        if (completion) {
+            completion ([self image], url, nil);
+        }
         return;
     }
     
@@ -97,6 +112,9 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     [self cancelImageDownload];
     
     if ([url length] == 0.0f) {
+        if (completion) {
+            completion (nil, url, nil);
+        }
         return;
     }
     
@@ -104,7 +122,11 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     NSURLRequest* request = [NSURLRequest requestWithURL:imageURL
                                              cachePolicy:NSURLRequestReturnCacheDataElseLoad
                                          timeoutInterval:timeout];
-    
+    [self downloadAndLoadImageFrom:request completion:completion];
+}
+
+- (void)downloadAndLoadImageFrom:(NSURLRequest*)request
+                      completion:(HEMURLImageCallback)completion {
     if ([self indicateActivity]) {
         [self showActivity:YES];
     }
@@ -112,18 +134,24 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setResponseSerializer:[AFImageResponseSerializer serializer]];
     
+    __block NSString* url = [[request URL] absoluteString];
     __weak typeof(self) weakSelf = self;
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, UIImage* image) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setImage:image];
         [strongSelf setCurrentImageURL:url];
         [strongSelf showActivity:NO];
+        if (completion) {
+            completion (image, url, nil);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // not sure what design wants to show in this case, but i have asked
         // and they said not to worry about it for now and just don't show
         // anything
-        DDLogVerbose(@"failed to load image with url %@, with error %@", url, error);
         [weakSelf showActivity:NO];
+        if (completion) {
+            completion (nil, url, error);
+        }
     }];
     
     [self setUrlOperation:operation];

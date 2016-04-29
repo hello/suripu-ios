@@ -43,6 +43,8 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 @property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
 @property (strong, nonatomic) NSCache* heightCache;
 @property (strong, nonatomic) NSCache* attributedBodyCache;
+// imageCache is needed for scroll performance and to reduce image flickering
+@property (strong, nonatomic) NSCache* imageCache;
 @property (strong, nonatomic) NSError* dataError;
 
 @end
@@ -60,6 +62,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         _unreadService = unreadService;
         _heightCache = [NSCache new];
         _attributedBodyCache = [NSCache new];
+        _imageCache = [NSCache new];
     }
     return self;
 }
@@ -184,6 +187,13 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 - (void)didScrollContentIn:(UIScrollView *)scrollView {
     [super didScrollContentIn:scrollView];
     [self updateInsightImageParallax];
+}
+
+- (void)lowMemory {
+    [super lowMemory];
+    [[self imageCache] removeAllObjects];
+    [[self heightCache] removeAllObjects];
+    [[self attributedBodyCache] removeAllObjects];
 }
 
 #pragma mark - UICollectionView
@@ -327,18 +337,10 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     
     if ([cell isKindOfClass:[HEMQuestionCell class]]) {
         HEMQuestionCell* qCell = (HEMQuestionCell*)cell;
-        [[qCell questionLabel] setAttributedText:attrBody];
-        [[qCell answerButton] addTarget:self action:@selector(answerQuestion:) forControlEvents:UIControlEventTouchUpInside];
-        [[qCell skipButton] addTarget:self action:@selector(skipQuestion:) forControlEvents:UIControlEventTouchUpInside];
-        [[qCell answerButton] setTag:[indexPath row]];
-        [[qCell skipButton] setTag:[indexPath row]];
+        [self configureQuestionCell:qCell forIndexPath:indexPath withBody:attrBody];
     } else if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]) {
         HEMInsightCollectionViewCell* iCell = (id)cell;
-        [[iCell messageLabel] setAttributedText:attrBody];
-        [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
-        [[iCell uriImageView] setImageWithURL:[self insightImageUriForCellAtIndexPath:indexPath]];
-        [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
-        [self updateInsightImageOffsetOn:iCell];
+        [self configureInsightCell:iCell forIndexPath:indexPath withBody:attrBody];
     } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
         if ([self dataError]) {
             HEMTextCollectionViewCell* textCell = (id)cell;
@@ -348,6 +350,47 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         }
     }
     
+}
+
+- (void)configureQuestionCell:(HEMQuestionCell*)qCell
+                 forIndexPath:(NSIndexPath*)indexPath
+                     withBody:(NSAttributedString*)body {
+    [[qCell questionLabel] setAttributedText:body];
+    [[qCell answerButton] addTarget:self action:@selector(answerQuestion:) forControlEvents:UIControlEventTouchUpInside];
+    [[qCell skipButton] addTarget:self action:@selector(skipQuestion:) forControlEvents:UIControlEventTouchUpInside];
+    [[qCell answerButton] setTag:[indexPath row]];
+    [[qCell skipButton] setTag:[indexPath row]];
+}
+
+- (void)configureInsightCell:(HEMInsightCollectionViewCell*)iCell
+                forIndexPath:(NSIndexPath*)indexPath
+                    withBody:(NSAttributedString*)body{
+    [[iCell messageLabel] setAttributedText:body];
+    [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
+    
+    NSString* url = [self insightImageUriForCellAtIndexPath:indexPath];
+    UIImage* cachedImage = nil;
+    
+    if (url) {
+        cachedImage = [[self imageCache] objectForKey:url];
+    }
+    
+    if (cachedImage) {
+        [[iCell uriImageView] setImage:cachedImage];
+    } else { // even if there's no url, just set it to clear the image
+        __weak typeof(self) weakSelf = self;
+        [[iCell uriImageView] setImageWithURL:url completion:^(UIImage * image, NSString * url, NSError * error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error];
+            } else if (image && url) {
+                [[strongSelf imageCache] setObject:image forKey:url];
+            }
+        }];
+    }
+    
+    [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
+    [self updateInsightImageOffsetOn:iCell];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

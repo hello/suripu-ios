@@ -24,10 +24,6 @@
 #import "HEMHealthKitService.h"
 #import "HEMShortcutService.h"
 
-typedef NS_ENUM(NSInteger, HEMAppDelegateError) {
-    HEMAppDelegateErrorInvalidState = -1
-};
-
 @implementation HEMAppDelegate
 
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
@@ -35,8 +31,6 @@ static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 
 static NSString* const HEMShortcutTypeAddAlarm = @"is.hello.sense.shortcut.addalarm";
 static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.editalarms";
-
-static NSString* const HEMAppErrorDomain = @"is.hello.app";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     // order matters
@@ -89,28 +83,16 @@ static NSString* const HEMAppErrorDomain = @"is.hello.app";
     HEMSnazzBarController* controller = (id)root.backController;
     UIViewController* visibleController = (id)[controller selectedViewController];
 
-    void (^presentController)() = ^{
-        UIViewController* topController = visibleController;
-        if ([topController isKindOfClass:[UINavigationController class]]) {
-            UINavigationController* nav = (id)topController;
-            topController = nav.topViewController;
-        }
-        if ([topController isKindOfClass:[HEMCurrentConditionsViewController class]]) {
-            HEMCurrentConditionsViewController* currentConditionsVC = (id)topController;
-            [currentConditionsVC openDetailViewForSensorNamed:name];
-        } else {
-            NSString* clazz = NSStringFromClass([topController class]);
-            NSDictionary* info = @{NSLocalizedDescriptionKey : clazz};
-            [SENAnalytics trackError:[NSError errorWithDomain:HEMAppErrorDomain
-                                                         code:HEMAppDelegateErrorInvalidState
-                                                     userInfo:info]
-                       withEventName:kHEMAnalyticsEventWarning];
+    void (^popToRoot)() = ^{
+        if ([visibleController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController* nav = (id)visibleController;
+            [nav popToRootViewControllerAnimated:NO];
         }
     };
     if (visibleController.presentedViewController) {
-        [visibleController dismissViewControllerAnimated:NO completion:presentController];
+        [visibleController dismissViewControllerAnimated:NO completion:popToRoot];
     } else {
-        presentController();
+        popToRoot();
     }
 }
 

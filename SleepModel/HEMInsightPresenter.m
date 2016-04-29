@@ -308,6 +308,30 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
     
 }
 
+/**
+ * @discussion
+ * Note that this method is doing I/O from whatever thread it is on, which is
+ * usually the main thread, which is typically a no-no, but since it should
+ * only be done once for the view, I think it's ok to prevent random, slow,
+ * asynchronous call to load the image by url
+ *
+ * @return cached image, if any
+ */
+- (UIImage*)cachedImageFor:(SENRemoteImage*)remoteImage {
+    NSString* url = [remoteImage uriForCurrentDevice];
+    UIImage* cachedImage = nil;
+    if (url) {
+        NSURL* urlObject = [NSURL URLWithString:url];
+        NSURLRequest* request = [NSURLRequest requestWithURL:urlObject];
+        NSURLCache* cache = [NSURLCache sharedURLCache];
+        NSCachedURLResponse* cachedResponse = [cache cachedResponseForRequest:request];
+        if ([cachedResponse data]) {
+            cachedImage = [UIImage imageWithData:[cachedResponse data]];
+        }
+    }
+    return cachedImage;
+}
+
 #pragma mark End of helpers
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -353,9 +377,16 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
     switch ([indexPath row]) {
         case HEMInsightRowImage: {
             HEMImageCollectionViewCell* imageCell = (id)cell;
-            SENRemoteImage* remoteImage = [[self insight] remoteImage];
             [[imageCell urlImageView] setBackgroundColor:[UIColor backgroundColorForRemoteImageView]];
-            [[imageCell urlImageView] setImageWithURL:[remoteImage uriForCurrentDevice]];
+            
+            SENRemoteImage* remoteImage = [[self insight] remoteImage];
+            UIImage* cachedImage = [self cachedImageFor:remoteImage];
+            if (cachedImage) {
+                [[imageCell urlImageView] setImage:cachedImage];
+            } else {
+                [[imageCell urlImageView] setImageWithURL:[remoteImage uriForCurrentDevice]];
+            }
+            
             break;
         }
         case HEMInsightRowTitleOrLoading:

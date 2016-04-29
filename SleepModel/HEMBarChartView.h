@@ -29,4 +29,10 @@ typedef void(^HEMBarChartAnimCompletion)(NSInteger minIndex, NSInteger maxIndex)
 
 @end
 
+@interface HEMBar : UIView
+
+@property (nonatomic, strong) UIColor* barColor;
+
+@end
+
 NS_ASSUME_NONNULL_END

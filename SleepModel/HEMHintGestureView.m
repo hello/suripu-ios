@@ -72,20 +72,26 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
 }
 
 - (void)fade:(CGFloat)alpha then:(void(^)(BOOL finished))completion {
+    __weak typeof(self) weakSelf = self;
     [self animate:^{
-        [self setAlpha:alpha];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setAlpha:alpha];
     } completion:completion];
 }
 
 - (void)move:(CGPoint)centerPoint then:(void(^)(BOOL finished))completion {
+    __weak typeof(self) weakSelf = self;
     [self animate:^{
-        [self setCenter:centerPoint];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setCenter:centerPoint];
     } completion:completion];
 }
 
 - (void)scale:(CGFloat)scale then:(void(^)(BOOL finished))completion {
+    __weak typeof(self) weakSelf = self;
     [self animate:^{
-        [self setTransform:CGAffineTransformMakeScale(scale, scale)];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setTransform:CGAffineTransformMakeScale(scale, scale)];
     } completion:completion];
 }
 

@@ -324,6 +324,12 @@ static UIColor *_tintColor = nil;
 + (UIColor *)trendsAverageTitleColor {
     return [UIColor colorWithHex:0xB9BFC8 alpha:1.0f];
 }
++ (UIColor *)trendsHighlightedTitleColor {
+    return [UIColor colorWithRed:141.0f/255.0f
+                           green:149.0f/255.0f
+                            blue:149.0f/255.0f
+                           alpha:1.0f];
+}
 + (UIColor *)trendsHighlightedSleepDurationColor {
     return [UIColor colorWithHex:0x009CFF alpha:0.6f];
 }

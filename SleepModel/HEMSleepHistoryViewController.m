@@ -400,4 +400,11 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     }];
 }
 
+- (void)dealloc {
+    if (_historyCollectionView) {
+        [_historyCollectionView setDelegate:nil];
+        [_historyCollectionView setDataSource:nil];
+    }
+}
+
 @end

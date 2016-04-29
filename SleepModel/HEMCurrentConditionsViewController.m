@@ -363,16 +363,17 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     [self configureSensorCell:cell forItemAtIndexPath:indexPath];
 }
 
-- (void)openDetailViewForSensor:(SENSensor *)sensor {
+- (void)openDetailViewForSensor:(SENSensor *)sensor animated:(BOOL)animated {
     HEMSensorViewController *controller = [HEMMainStoryboard instantiateSensorViewController];
     controller.sensor = sensor;
-    [self.navigationController pushViewController:controller animated:YES];
+    [self.navigationController pushViewController:controller animated:animated];
 }
 
 - (void)openDetailViewForSensorNamed:(NSString *)name {
     for (SENSensor *sensor in self.sensors) {
         if ([sensor.name isEqualToString:name]) {
-            [self openDetailViewForSensor:sensor];
+            [self.navigationController popToRootViewControllerAnimated:NO];
+            [self openDetailViewForSensor:sensor animated:NO];
             return;
         }
     }
@@ -488,7 +489,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.sensors.count > indexPath.row)
-        [self openDetailViewForSensor:self.sensors[indexPath.item]];
+        [self openDetailViewForSensor:self.sensors[indexPath.item] animated:YES];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

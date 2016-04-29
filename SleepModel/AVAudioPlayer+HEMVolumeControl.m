@@ -8,7 +8,7 @@
 
 #import "AVAudioPlayer+HEMVolumeControl.h"
 
-static CGFloat const HEMVolumeControlFadeSteps = 20;
+static CGFloat const HEMVolumeControlFadeSteps = 100;
 
 @implementation AVAudioPlayer (HEMVolumeControl)
 

@@ -318,7 +318,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     NSMutableParagraphStyle* paraStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [paraStyle setAlignment:NSTextAlignmentCenter];
     
-    UIColor* textColor = highlighted ? [UIColor blackColor] : [UIColor trendsSubtitleColor];
+    UIColor* textColor = highlighted ? [UIColor trendsHighlightedTitleColor] : [UIColor trendsSubtitleColor];
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendSubtitleLabelFont],
                                  NSForegroundColorAttributeName : textColor,
                                  NSKernAttributeName : @1,
@@ -330,9 +330,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (NSArray<NSAttributedString*>*)graphTitlesFrom:(SENTrendsGraph*)graph {
     NSMutableArray* titles = [NSMutableArray arrayWithCapacity:[[graph sections] count]];
     for (SENTrendsGraphSection* section in [graph sections]) {
+        NSInteger titleIndex = 0;
         for (NSString* title in [section titles]) {
-            BOOL highlighted = [[section highlightedTitles] containsObject:title];
+            BOOL highlighted = [[section highlightedTitleIndex] isEqualToNumber:@(titleIndex)];
             [titles addObject:[self attributedSubtitleTextFromString:title highlighted:highlighted]];
+            titleIndex++;
         }
     }
     return titles;

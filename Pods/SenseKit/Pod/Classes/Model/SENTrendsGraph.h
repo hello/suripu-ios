@@ -44,7 +44,7 @@ NSString* SENTrendsTimeScaleValueFromEnum(SENTrendsTimeScale timeScale);
 @property (nonatomic, strong, readonly, nullable) NSArray<NSNumber*>* values;
 @property (nonatomic, strong, readonly, nullable) NSArray<NSString*>* titles;
 @property (nonatomic, strong, readonly, nullable) NSArray<NSNumber*>* highlightedValues;
-@property (nonatomic, strong, readonly, nullable) NSArray<NSString*>* highlightedTitles;
+@property (nonatomic, strong, readonly, nullable) NSNumber* highlightedTitleIndex;
 
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 

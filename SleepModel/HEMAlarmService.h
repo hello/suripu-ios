@@ -37,6 +37,7 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
 - (BOOL)canAddRepeatDay:(SENAlarmRepeatDays)day
                      to:(HEMAlarmCache*)alarmCache
               excluding:(SENAlarm*)excludedAlarm;
+- (BOOL)canCreateMoreAlarms;
 
 @end
 

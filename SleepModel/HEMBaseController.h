@@ -10,6 +10,7 @@
 #import "HEMNavigationShadowView.h"
 
 @class HEMPresenter;
+@class HEMRootViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSArray<HEMPresenter*>* presenters;
 
 - (void)addPresenter:(HEMPresenter*)presenter;
+
+/**
+ * @return the root view controller
+ */
+- (UIViewController*)rootViewController;
 
 /**
  * @discussion

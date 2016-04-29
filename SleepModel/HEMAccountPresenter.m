@@ -70,6 +70,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 @property (nonatomic, weak) HEMHealthKitService* healthKitService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
+@property (nonatomic, weak) UISwitch* activatedSwitch;
 
 @end
 
@@ -255,6 +256,8 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 #pragma mark - Preference Actions
 
 - (void)togglePreferenceSwitch:(UISwitch*)control {
+    [self setActivatedSwitch:control];
+    
     switch ([control tag]) {
         case HEMPreferencesRowEnhancedAudio: {
             __weak typeof(self) weakSelf = self;
@@ -277,13 +280,13 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     }
 }
 
-// TODO: move this in to a HEMHealthKitService, when we move SENServiceHealthKit
 - (void)enableHealthKit:(BOOL)enable {
     if (enable) {
         if (![[self healthKitService] isSupported]) {
             NSString* title = NSLocalizedString(@"settings.account.error.title.hk", nil);
             NSString* message = NSLocalizedString(@"settings.account.error.message.hk-not-supported", nil);
             [[self delegate] showErrorTitle:title message:message from:self];
+            [[self activatedSwitch] setOn:NO animated:YES];
         } else {
             __weak typeof(self) weakSelf = self;
             [[self healthKitService] requestAuthorization:^(NSError *error) {
@@ -294,6 +297,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
                     NSString* title = NSLocalizedString(@"settings.account.error.title.hk", nil);
                     NSString* message = NSLocalizedString(@"settings.account.error.message.hk-request-failed", nil);
                     [[strongSelf delegate] showErrorTitle:title message:message from:strongSelf];
+                    [[strongSelf activatedSwitch] setOn:NO animated:YES];
                 }
             }];
         }

@@ -125,7 +125,6 @@
     [super configureCell:cell forItem:item];
     [[cell itemLabel] setText:item];
     [cell setSelected:[self isItemSelected:item]];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 }
 
 @end

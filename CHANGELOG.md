@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.1.5
+
+New:
+
+* Added a generic tap indicator to list item views
+
+Fixes:
+
+* Timeline feedback action sheet no longer shows a gap for 6 plus phones
+* If denying HK from settings, the toggle switch will return to being off
+* Tapping through from today extension brings you to current conditions
+* Fixed the logic around adding alarms over the specified limit
+
 ## 1.4.1.4
 
 New:

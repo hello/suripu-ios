@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HEMPresenter : NSObject
 
 @property (nonatomic, assign, getter=isVisible, readonly) BOOL visible;
-@property (nonatomic, assign, getter=hasShadowView, readonly) BOOL hasShadowView;
+@property (nonatomic, weak, readonly) HEMNavigationShadowView* shadowView;
 
 /*
  * @discussion
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Throughout the app, we want to show a shadow on the top most part of the view
  * when the content in the main view is scrolled "underneath".  To avoid code
  * duplication, use this method to bind with the shadow view, and call 
- * updateAppearanceOnScroll:
+ * didScrollContentIn:
  */
 - (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView;
 

@@ -369,16 +369,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     [self.navigationController pushViewController:controller animated:animated];
 }
 
-- (void)openDetailViewForSensorNamed:(NSString *)name {
-    for (SENSensor *sensor in self.sensors) {
-        if ([sensor.name isEqualToString:name]) {
-            [self.navigationController popToRootViewControllerAnimated:NO];
-            [self openDetailViewForSensor:sensor animated:NO];
-            return;
-        }
-    }
-}
-
 #pragma mark UICollectionViewDatasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

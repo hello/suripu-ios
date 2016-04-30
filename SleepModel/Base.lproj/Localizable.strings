@@ -222,6 +222,7 @@
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.sleep-sounds" = "Sleep Sounds";
+"debug.option.clear-alarms" = "Remove all alarms";
 "debug.host.action.custom-url" = "Custom";
 "debug.host.section.api" = "API Hosts";
 "debug.host.section.nonsense" = "Nonsense Hosts";
@@ -349,6 +350,8 @@
 "alarms.alarm.meridiem.pm" = "PM";
 "alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at the lightest point in your natural sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
 "alarms.no-data" = "There was a problem displaying your alarms. Please try again.";
+"alarms.error.title.limit-reached" = "Alarm limit reached";
+"alarms.error.message.limit-reached" = "You've created the maximum number of alarms. Delete an alarm before attempting to create a new one, or edit an existing alarm.";
 
 // alarm settings
 "alarm.sound.title" = "Tone";

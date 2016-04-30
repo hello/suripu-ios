@@ -12,6 +12,7 @@
 #import "HEMAlarmCache.h"
 
 static NSUInteger const HEMAlarmServiceTooSoonMinuteLimit = 2;
+static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 
 @interface HEMAlarmService()
 
@@ -48,7 +49,9 @@ static NSUInteger const HEMAlarmServiceTooSoonMinuteLimit = 2;
         if (error) {
             [SENAnalytics trackError:error];
         }
-        completion (error);
+        if (completion) {
+            completion (error);
+        }
     }];
 }
 
@@ -151,7 +154,8 @@ static NSUInteger const HEMAlarmServiceTooSoonMinuteLimit = 2;
     
     SENAlarmRepeatDays daysInUse = 0;
     
-    for (SENAlarm* alarm in [SENAlarm savedAlarms]) {
+    NSArray* alarms = [SENAlarm savedAlarms];
+    for (SENAlarm* alarm in alarms) {
         if ([alarm isEqual:excludedAlarm]
             || ![alarm isSmartAlarm]
             || ![alarm isOn]) {
@@ -189,6 +193,11 @@ static NSUInteger const HEMAlarmServiceTooSoonMinuteLimit = 2;
     [alarm setSoundID:[cache soundID]];
     [alarm setOn:[cache isOn]];
     [alarm save];
+}
+
+- (BOOL)canCreateMoreAlarms {
+    NSArray* alarms = [SENAlarm savedAlarms];
+    return [alarms count] < HEMAlarmServiceMaxAlarmLimit;
 }
 
 @end

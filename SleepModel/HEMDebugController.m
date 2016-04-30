@@ -9,6 +9,7 @@
 
 #import <SenseKit/API.h>
 #import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENAlarm.h>
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
@@ -27,6 +28,7 @@
 #import "HEMConfig.h"
 #import "HEMHandHoldingService.h"
 #import "HEMSleepSoundViewController.h"
+#import "HEMAlarmService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -90,6 +92,7 @@
     [self addRoomCheckOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
     [self addSleepSoundsOptionTo:sheet];
+    [self addRemoveAllAlarmsOptionTo:sheet];
     [self addDebugInfoOptionTo:sheet];
     [self addChangeServerOptionToSheet:sheet];
     [self addCancelOptionTo:sheet];
@@ -262,6 +265,17 @@
     HEMSettingsNavigationController* nav = [[HEMSettingsNavigationController alloc] initWithRootViewController:vc];
     [self showController:nav animated:YES completion:nil];
     [self setSleepSoundsViewController:nav];
+}
+
+#pragma mark - Alarms
+
+- (void)addRemoveAllAlarmsOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.clear-alarms", nil) action:^{
+        HEMAlarmService* service = [HEMAlarmService new];
+        [service updateAlarms:@[] completion:nil];
+        [weakSelf setSupportOptionController:nil];
+    }];
 }
 
 #pragma mark Tutorials

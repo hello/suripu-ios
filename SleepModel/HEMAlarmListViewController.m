@@ -23,6 +23,8 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMSubNavigationView.h"
+#import "HEMAlarmService.h"
+#import "HEMSupportUtil.h"
 
 NS_ENUM(NSUInteger) {
     LoadingStateRowCount = 0,
@@ -44,6 +46,7 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
 @property (nonatomic, assign) BOOL launchNewAlarmOnLoad;
+@property (nonatomic, strong) HEMAlarmService* alarmService;
 @end
 
 @implementation HEMAlarmListViewController
@@ -55,7 +58,6 @@ static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static CGFloat const HEMAlarmNoAlarmHorzMargin = 40.0f;
 static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
-static NSUInteger const HEMAlarmListLimit = 8;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -70,6 +72,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [super viewDidLoad];
     self.alarmSaveTransitionDelegate = [HEMSimpleModalTransitionDelegate new];
     self.alarmSaveTransitionDelegate.wantsStatusBar = YES;
+    
+    [self setAlarmService:[HEMAlarmService new]];
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];
@@ -89,6 +93,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    CGFloat offset = [[self collectionView] contentOffset].y;
+    // if there is a subnav, we need to update the visibility in case the neighbor
+    // updated the shared shadowview
+    [[[self subNav] shadowView] updateVisibilityWithContentOffset:offset];
     [SENAnalytics track:kHEMAnalyticsEventAlarms];
 }
 
@@ -117,7 +125,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self.addButton addTarget:self
                        action:@selector(touchUpOutsideAddAlarmButton:)
              forControlEvents:UIControlEventTouchUpOutside];
-    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
 }
 
 - (void)configureDateFormatters {
@@ -140,12 +147,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLoadingFailed:error != nil];
-        [[strongSelf addButton] setEnabled:error == nil];
         if (error) {
+            [SENAnalytics trackError:error];
             [strongSelf setLoading:NO];
             [strongSelf displayLoadingError];
             [strongSelf setLaunchNewAlarmOnLoad:NO];
         } else {
+            [[strongSelf addButton] setEnabled:YES];
             [strongSelf reloadData];
             if ([strongSelf launchNewAlarmOnLoad]) {
                 [strongSelf addNewAlarm:nil];
@@ -175,7 +183,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.loading = NO;
     self.alarms = cachedAlarms;
     self.addButton.hidden = self.alarms.count == 0;
-    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
     [self.collectionView reloadData];
 }
 
@@ -210,6 +217,17 @@ static NSUInteger const HEMAlarmListLimit = 8;
     }
 }
 
+#pragma mark - Errors
+
+- (void)showErrorMessageWithTitle:(NSString*)title
+                       andMessage:(NSString*)message {
+    HEMAlertViewController* dialogVC =
+        [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [dialogVC setViewToShowThrough:[[self rootViewController] view]];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC showFrom:self];
+}
+
 #pragma mark - Actions
 
 - (void)touchDownAddAlarmButton:(id)sender {
@@ -238,6 +256,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
     }
     
     if (![[self addButton] isEnabled]) {
+        return;
+    }
+    
+    if (![[self alarmService] canCreateMoreAlarms]) {
+        NSString* message = NSLocalizedString(@"alarms.error.message.limit-reached", nil);
+        NSString* title = NSLocalizedString(@"alarms.error.title.limit-reached", nil);
+        [self showErrorMessageWithTitle:title andMessage:message];
         return;
     }
     

@@ -183,6 +183,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
     
     [self setWaitingForOptionChange:NO];
+    [self didScrollContentIn:[self collectionView]];
 }
 
 - (void)didDisappear {

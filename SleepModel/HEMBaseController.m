@@ -10,6 +10,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMScreenUtils.h"
+#import "HEMRootViewController.h"
 #import "HEMPresenter.h"
 
 @interface HEMBaseController()
@@ -76,6 +77,10 @@
 
 - (void)viewDidEnterBackground {
     [[self presenters] makeObjectsPerformSelector:@selector(didEnterBackground)];
+}
+
+- (UIViewController*)rootViewController {
+    return [HEMRootViewController rootViewControllerForKeyWindow];
 }
 
 #pragma mark - Shadows

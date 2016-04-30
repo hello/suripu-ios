@@ -143,6 +143,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     id item = [self items][[indexPath row]];
     
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if ([cell isKindOfClass:[HEMListItemCell class]]) {
+        HEMListItemCell* listCell = (id)cell;
+        [listCell flashTouchIndicator];
+    }
+    
     [self updateCell:cell withItem:item selected:YES];
     
     if (![tableView allowsMultipleSelection]) {

@@ -37,7 +37,6 @@ typedef NS_ENUM(NSInteger, HEMSensorLoadState) {
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* selectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* selectionLeftConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint* tinySeparatorConstraint;
 
 @property (strong, nonatomic) NSArray* hourlyDataSeries;
 @property (strong, nonatomic) NSArray* dailyDataSeries;
@@ -192,7 +191,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     static CGFloat const HEMSensorBarButtonSpace = 8.f;
     if (self.navigationItem.rightBarButtonItems.count > 1)
         return;
-    self.tinySeparatorConstraint.constant = 0.5f;
     UIImage* image = [UIImage imageNamed:@"infoIconSmall"];
     UIButton* buttonView = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);

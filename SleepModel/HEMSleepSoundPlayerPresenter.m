@@ -287,6 +287,19 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }];
 }
 
+- (void)configurePlayerWithSavedState {
+    // sound
+    SENSleepSounds* sounds = [[self soundState] sounds];
+    SENSleepSound* defaultSound = [[self service] defaultSleepSoundFrom:sounds];
+    [self setSelectedSound:defaultSound save:NO];
+    // duration
+    SENSleepSoundDurations* durations = [[self soundState] durations];
+    SENSleepSoundDuration* defaultDuration = [[self service] defaultDurationFrom:durations];
+    [self setSelectedDuration:defaultDuration save:NO];
+    // volume
+    [self setSelectedVolume:[[self service] defaultVolume] save:NO];
+}
+
 - (void)configurePlayerStateFromStatus:(SENSleepSoundStatus*)status {
     if (!status) {
         [self setPlayerState:HEMSleepSoundPlayerStateError];
@@ -295,27 +308,13 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     } else if (![[self service] isEnabled:[self soundState]]) {
         [self reloadDataWithPlayerState:HEMSleepSoundPlayerStatePrereqNotMet];
     } else if ([status isPlaying]) {
-        [self setSelectedSound:[status sound]];
-        [self setSelectedDuration:[status duration]];
-        [self setSelectedVolume:[[self service] volumeObjectForValue:[status volume]]];
+        [self setSelectedSound:[status sound] save:NO];
+        [self setSelectedDuration:[status duration] save:NO];
+        [self setSelectedVolume:[[self service] volumeObjectForValue:[status volume]] save:NO];
         [self setPlayerState:HEMSleepSoundPlayerStatePlaying];
-    } else { // not playing, load
-        if (![self selectedSound]) {
-            SENSleepSounds* sounds = [[self soundState] sounds];
-            SENSleepSound* defaultSound = [[self service] defaultSleepSoundFrom:sounds];
-            [self setSelectedSound:defaultSound];
-        }
-        if (![self selectedDuration]) {
-            SENSleepSoundDurations* durations = [[self soundState] durations];
-            SENSleepSoundDuration* defaultDuration = [[self service] defaultDurationFrom:durations];
-            [self setSelectedDuration:defaultDuration];
-        }
+    } else { // not playing, load what has been saved
+        [self configurePlayerWithSavedState];
         [self setPlayerState:HEMSleepSoundPlayerStateStopped];
-    }
-    
-    // volume is not returned in the status :(
-    if (![self selectedVolume]) {
-        [self setSelectedVolume:[[self service] defaultVolume]];
     }
 
     [[self indicator] stop];
@@ -390,34 +389,40 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                                                   andFrame:indicatorFrame];
 }
 
-- (void)setSelectedSound:(SENSleepSound*)sound {
+- (void)setSelectedSound:(SENSleepSound*)sound save:(BOOL)save {
     BOOL shouldReload = _selectedSound != nil;
     if (![[_selectedSound identifier] isEqualToNumber:[sound identifier]]) {
         _selectedSound = sound;
         if (shouldReload) {
-            [[self service] saveSelectedSoundSetting:sound];
+            if (save) {
+                [[self service] saveSelectedSoundSetting:sound];
+            }
             [[self collectionView] reloadData];
         }
     }
 }
 
-- (void)setSelectedDuration:(SENSleepSoundDuration*)duration {
+- (void)setSelectedDuration:(SENSleepSoundDuration*)duration save:(BOOL)save {
     BOOL shouldReload = _selectedDuration != nil;
     if (![[_selectedDuration identifier] isEqualToNumber:[duration identifier]]) {
         _selectedDuration = duration;
         if (shouldReload) {
-            [[self service] saveSelectedDurationSetting:duration];
+            if (save) {
+                [[self service] saveSelectedDurationSetting:duration];
+            }
             [[self collectionView] reloadData];
         }
     }
 }
 
-- (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume {
+- (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume save:(BOOL)save {
     BOOL shouldReload = _selectedVolume != nil;
     if (![[_selectedVolume localizedName] isEqualToString:[selectedVolume localizedName]]) {
         _selectedVolume = selectedVolume;
         if (shouldReload) {
-            [[self service] saveSelectedVolumeSetting:selectedVolume];
+            if (save) {
+                [[self service] saveSelectedVolumeSetting:selectedVolume];
+            }
             [[self collectionView] reloadData];
         }
     }
@@ -705,6 +710,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         
         if (!error) {
             DDLogVerbose(@"stopped sound");
+            [strongSelf configurePlayerWithSavedState];
             [strongSelf setPlayerState:HEMSleepSoundPlayerStateStopped];
         } else {
             DDLogVerbose(@"failed to stop sound");

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.1.6
+
+New:
+
+* If Sleep sounds player was launched in to a playing state, the options will revert to your last saved settings when stopped
+
+Fixes:
+
+* Fixed an issue that would prevent the user from viewing the Timeline on their account creation date if created before 3AM, but after midnight
+* Fixed an issue with the Timeline gesture tutorial where the gesture would not be shown or is misaligned
+* Updated copy for the HK error message if user denies access to their data
+* Fixed the issue for iPhone 6plus users where the sensor history graph would not be anchored to the bottom of the screen
+
 ## 1.4.1.5
 
 New:

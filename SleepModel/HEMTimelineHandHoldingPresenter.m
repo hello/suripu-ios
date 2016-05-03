@@ -51,11 +51,13 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
     UIView* containerView = [[self delegate] timelineContainerViewForPresenter:self];
     UIButton* menuButton = [[[self delegate] timelineTopBarForPresenter:self] drawerButton];
     UIImage* icon = [menuButton imageForState:UIControlStateNormal];
-    CGRect menuFrame = [menuButton convertRect:[menuButton bounds] toView:containerView];
     
-    if (!CGRectIsEmpty(menuFrame)) {
-        CGFloat targetX = CGRectGetMinX(menuFrame) + icon.size.width;
-        CGFloat targetY = CGRectGetMidY(menuFrame);
+    if (!CGRectIsEmpty([menuButton frame])) {
+        // not using convertRect / covertPoint with container view as the menuButton
+        // might be in transition when this is calculated, causing it to not show up
+        // in the right area
+        CGFloat targetX = CGRectGetMinX([menuButton frame]) + icon.size.width;
+        CGFloat targetY = CGRectGetMidY([menuButton frame]);
         CGPoint midPoint = CGPointMake(targetX, targetY);
         
         HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];

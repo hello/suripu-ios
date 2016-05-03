@@ -22,6 +22,16 @@ typedef void(^HEMTimelineServiceUpdateHandler)(SENTimeline* _Nullable updatedTim
 
 /**
  * @discussion
+ * Use this with care as it igores the date's actual day and only considers the
+ * time of the date
+ *
+ * @return YES if the date is within the logic of determining if the date is still
+ *         considered the previous day.
+ */
+- (BOOL)isWithinPreviousDayWindow:(NSDate*)date;
+
+/**
+ * @discussion
  * Determine whether an account may have timelines to view before the date specified.
  *
  * @param date: the date of sleep, usually

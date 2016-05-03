@@ -143,12 +143,12 @@
     BOOL dismiss = YES;
     
     if ([presenter isKindOfClass:[HEMSleepSoundsPresenter class]]) {
-        [[self playerPresenter] setSelectedSound:item];
+        [[self playerPresenter] setSelectedSound:item save:YES];
         dismiss = NO;
     } else if ([presenter isKindOfClass:[HEMSleepSoundDurationsPresenter class]]) {
-        [[self playerPresenter] setSelectedDuration:item];
+        [[self playerPresenter] setSelectedDuration:item save:YES];
     } else if ([presenter isKindOfClass:[HEMSleepSoundVolumePresenter class]]) {
-        [[self playerPresenter] setSelectedVolume:item];
+        [[self playerPresenter] setSelectedVolume:item save:YES];
     }
     
     if (dismiss) {

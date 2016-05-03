@@ -206,7 +206,7 @@
 "settings.account.update.name-too-short" = "New name is too short. Try again with longer name.";
 "settings.account.error.title.hk" = "Sync with Health";
 "settings.account.error.message.hk-not-supported" = "Apple Health is not supported on your device.";
-"settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app. You may need to authorize this directly in your Health app then enable this.";
+"settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app. You may need to authorize this directly in your Health app to enable this.";
 
 // support
 "debug.options.title" = "Debug options";

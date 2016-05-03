@@ -52,9 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithTutorialParent:(UIViewController*)tutorialParent;
 - (void)bindWithBackgroundView:(UIView*)backgroundView;
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator;
-- (void)setSelectedSound:(SENSleepSound*)sound;
-- (void)setSelectedDuration:(SENSleepSoundDuration*)duration;
-- (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume;
+- (void)setSelectedSound:(SENSleepSound*)sound save:(BOOL)save;
+- (void)setSelectedDuration:(SENSleepSoundDuration*)duration save:(BOOL)save;
+- (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume save:(BOOL)save;
 
 @end
 

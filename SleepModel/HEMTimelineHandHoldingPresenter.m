@@ -53,6 +53,9 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
     UIImage* icon = [menuButton imageForState:UIControlStateNormal];
     
     if (!CGRectIsEmpty([menuButton frame])) {
+        // not using convertRect / covertPoint with container view as the menuButton
+        // might be in transition when this is calculated, causing it to not show up
+        // in the right area
         CGFloat targetX = CGRectGetMinX([menuButton frame]) + icon.size.width;
         CGFloat targetY = CGRectGetMidY([menuButton frame]);
         CGPoint midPoint = CGPointMake(targetX, targetY);

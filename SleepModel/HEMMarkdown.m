@@ -23,22 +23,22 @@
         @(EMPH) : @{
             NSFontAttributeName : [UIFont backViewBoldFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor blackColor]
+            NSForegroundColorAttributeName : [UIColor boldTextColor]
         },
         @(STRONG) : @{
             NSFontAttributeName : [UIFont backViewBoldFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor blackColor]
+            NSForegroundColorAttributeName : [UIColor boldTextColor]
         },
         @(BULLETLIST) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor textColor]
+            NSForegroundColorAttributeName : [UIColor detailTextColor]
         },
         @(PARA) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor textColor]
+            NSForegroundColorAttributeName : [UIColor detailTextColor]
         }
     };
 }

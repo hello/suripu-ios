@@ -56,6 +56,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
+    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [self setCollectionView:collectionView];
 }
 
@@ -250,7 +251,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [style setAlignment:NSTextAlignmentCenter];
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataTitleFont],
-                                 NSForegroundColorAttributeName : [UIColor partialDataTitleColor],
+                                 NSForegroundColorAttributeName : [UIColor textColor],
                                  NSParagraphStyleAttributeName : style};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -269,7 +270,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     if (!message) {
         return nil;
     }
-    UIColor* textColor = [UIColor partialDataMessageColor];
+    UIColor* textColor = [UIColor lowImportanceTextColor];
     NSDictionary* attributes = [self attributesForPartialDataMessageWithColor:textColor];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
@@ -280,8 +281,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         return nil;
     }
     
-    UIColor* boldColor = [UIColor partialDataMessageBoldColor];
-    UIColor* regColor = [UIColor partialDataMessageColor];
+    UIColor* boldColor = [UIColor boldTextColor];
+    UIColor* regColor = [UIColor lowImportanceTextColor];
     NSDictionary* boldAttr = [self attributesForPartialDataMessageWithColor:boldColor];
     NSDictionary* regAttr = [self attributesForPartialDataMessageWithColor:regColor];
     UIFont* regFont = regAttr[NSFontAttributeName];
@@ -318,7 +319,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     NSMutableParagraphStyle* paraStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [paraStyle setAlignment:NSTextAlignmentCenter];
     
-    UIColor* textColor = highlighted ? [UIColor trendsHighlightedTitleColor] : [UIColor trendsSubtitleColor];
+    UIColor* textColor = highlighted ? [UIColor grey5] : [UIColor lowImportanceTextColor];
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendSubtitleLabelFont],
                                  NSForegroundColorAttributeName : textColor,
                                  NSKernAttributeName : @1,
@@ -341,7 +342,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (NSAttributedString*)attributedTitleFromAnnotation:(SENTrendsAnnotation*)annotation {
-    NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor trendsAverageTitleColor],
+    NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor lowImportanceTextColor],
                                  NSFontAttributeName : [UIFont trendAverageTitleFont]};
     NSString* title = [annotation title];
     if (!title) {
@@ -367,8 +368,9 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (NSAttributedString*)attributedSleepDurationFromAnnotation:(SENTrendsAnnotation*)annotation {
+    UIColor* color = [UIColor colorForSleepState:SENTimelineSegmentSleepStateSound];
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendAverageValueFont],
-                                 NSForegroundColorAttributeName : [UIColor sleepStateSoundColor]};
+                                 NSForegroundColorAttributeName : color};
     CGFloat averageValue = [[annotation value] CGFloatValue];
     NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
     NSString* valueText = [NSString stringWithFormat:avgFormat, averageValue];
@@ -451,13 +453,14 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     
     NSArray<NSAttributedString*>* attributedTitles = [self graphTitlesFrom:graph];
     NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
+    UIColor* highlightLabelColor = [UIColor colorForSleepState:SENTimelineSegmentSleepStateSound];
     [[barCell titleLabel] setText:[graph title]];
-    [barCell setHighlightLabelColor:[UIColor sleepStateSoundColor]];
-    [barCell setHighlightedBarColor:[UIColor trendsHighlightedSleepDurationColor]];
-    [barCell setNormalBarColor:[UIColor trendsSleepDurationBarColor]];
+    [barCell setHighlightLabelColor:highlightLabelColor];
+    [barCell setHighlightedBarColor:[[UIColor blue6] colorWithAlphaComponent:0.6f]];
+    [barCell setNormalBarColor:[UIColor blue3]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
     [barCell setMinValue:[[graph minValue] CGFloatValue]];
-    [barCell setDashLineColor:[UIColor trendsSectionDashLineColor]];
+    [barCell setDashLineColor:[UIColor grey1]];
     [barCell setHighlightLabelTextFormat:highlightFormat];
     [barCell setHighlightTextFont:[UIFont trendsHighlightLabelFont]];
     [barCell updateGraphWithTitles:attributedTitles

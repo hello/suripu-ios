@@ -83,7 +83,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item {
     [[cell itemLabel] setFont:[UIFont listItemTitleFont]];
-    [[cell itemLabel] setTextColor:[UIColor listItemTextColor]];
+    [[cell itemLabel] setTextColor:[UIColor textColor]];
 }
 
 - (NSInteger)indexOfItemWithName:(NSString*)name {

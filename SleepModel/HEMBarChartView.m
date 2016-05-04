@@ -52,7 +52,7 @@ static CGFloat const HEMBarChartBarCornerRadiusRatio = 10.0f;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
-    UIColor* lineColor = [UIColor barChartBorderColor];
+    UIColor* lineColor = [[UIColor grey6] colorWithAlphaComponent:0.15f];
     
     CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);
     CGContextSetLineWidth(context, HEMBarChartBorderWidth);

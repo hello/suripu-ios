@@ -56,10 +56,7 @@ static NSInteger const HEMRulerSegmentLongSegmentInterval = 5;
                        atIndex:(NSInteger)index
                    longSegment:(BOOL)longSegment {
     
-    UIColor* lineColor
-        = longSegment
-        ? [UIColor rulerSegmentDarkColor]
-        : [UIColor rulerSegmentLightColor];
+    UIColor* lineColor = longSegment ? [UIColor grey3] : [UIColor grey2];
     
     CGFloat width = CGRectGetWidth([self bounds]);
     CGFloat height = CGRectGetHeight([self bounds]);

@@ -18,12 +18,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationBar] setTintColor:[UIColor backViewTintColor]];
+    [[self navigationBar] setTintColor:[UIColor navigationBarColor]];
     UIFont* titleFont = HEMIsIPhone4Family()
         ? [UIFont iPhone4SSettingsTitleFont]
         : [UIFont settingsTitleFont];
     [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor backViewNavTitleColor],
+        NSForegroundColorAttributeName : [UIColor grey6],
         NSFontAttributeName : titleFont
     }];
     

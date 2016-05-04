@@ -177,8 +177,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     mask.frame = self.graphView.bounds;
     mask.colors = @[(id)[UIColor whiteColor].CGColor,
                     (id)[UIColor whiteColor].CGColor,
-                    (id)[UIColor backViewBackgroundColor].CGColor,
-                    (id)[UIColor backViewBackgroundColor].CGColor];
+                    (id)[UIColor backgroundColor].CGColor,
+                    (id)[UIColor backgroundColor].CGColor];
     mask.startPoint = CGPointMake(0, 0.5);
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
@@ -523,7 +523,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [style setAlignment:NSTextAlignmentCenter];
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont sensorGraphNoDataFont],
-                                 NSForegroundColorAttributeName : [UIColor sensorGraphNoDataColor],
+                                 NSForegroundColorAttributeName : [UIColor detailTextColor],
                                  NSParagraphStyleAttributeName : style};
 
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];

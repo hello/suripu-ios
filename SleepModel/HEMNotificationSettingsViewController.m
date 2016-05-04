@@ -42,7 +42,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
     [[self tableView] setSeparatorColor:[UIColor separatorColor]];
-    [[self tableView] setBackgroundColor:[UIColor backViewBackgroundColor]];
+    [[self tableView] setBackgroundColor:[UIColor backgroundColor]];
 }
 
 - (void)reload {
@@ -129,7 +129,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [cell setBackgroundColor:[UIColor whiteColor]];
     [cell setAccessoryView:preferenceSwitch];
     [[cell textLabel] setText:[self titleAtIndexPath:indexPath]];
-    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[cell textLabel] setTextColor:[UIColor textColor]];
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
 }
 

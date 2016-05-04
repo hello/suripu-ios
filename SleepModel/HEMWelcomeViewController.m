@@ -106,7 +106,7 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     
     // initial page / screen in the content
     HEMMeetSenseView* meetSense = [HEMMeetSenseView createMeetSenseViewWithFrame:contentBounds];
-    [[meetSense videoButton] setTitleColor:[UIColor welcomeVideoButtonColor] forState:UIControlStateNormal];
+    [[meetSense videoButton] setTitleColor:[UIColor grey4] forState:UIControlStateNormal];
     [[meetSense videoButton] addTarget:self
                                 action:@selector(playVideo:)
                       forControlEvents:UIControlEventTouchUpInside];

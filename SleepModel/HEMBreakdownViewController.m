@@ -47,7 +47,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     if (self = [super initWithCoder:aDecoder]) {
         // use same tint as the tutorial dialogs
         _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow]
-                                .view blurredSnapshotWithTint:[UIColor tutorialBackgroundColor]];
+                                .view blurredSnapshotWithTint:[UIColor lightSeeThroughBackgroundColor]];
     }
     return self;
 }

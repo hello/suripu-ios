@@ -94,7 +94,7 @@ CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
 
 - (void)setHighlighted:(BOOL)highlighted {
     if (highlighted) {
-        self.cornerView.backgroundColor = [UIColor timelineSelectedBackgroundColor];
+        self.cornerView.backgroundColor = [UIColor timelineBackgroundColor];
         [self setShadowVisible:NO];
     } else {
         [self setShadowVisible:YES];

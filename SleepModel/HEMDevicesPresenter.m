@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
     [collectionView setAlwaysBounceVertical:YES];
-    [collectionView setBackgroundColor:[UIColor backViewBackgroundColor]];
+    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [self setCollectionView:collectionView];
     [self refresh];
 }
@@ -135,7 +135,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
         NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
         NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
         NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
-        UIColor* color = [UIColor backViewTextColor];
+        UIColor* color = [UIColor textColor];
         UIFont* font = [UIFont settingsHelpFont];
         
         NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];

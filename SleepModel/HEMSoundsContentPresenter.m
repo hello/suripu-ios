@@ -90,6 +90,7 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
 }
 
 - (void)bindWithErrorCollectionView:(UICollectionView*)collectionView {
+    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [self setErrorCollectionView:collectionView];
     [self listenForDeviceChanges];
 }

@@ -29,7 +29,7 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
 - (void)awakeFromNib {
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
-    self.backgroundColor = [UIColor timelineGradientColor];
+    self.backgroundColor = [UIColor timelineBackgroundColor];
     self.barLineGradient = [HEMGradient gradientForTimelineSleepSegment];
 }
 

@@ -33,12 +33,12 @@
         @(BULLETLIST) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor backViewTextColor]
+            NSForegroundColorAttributeName : [UIColor textColor]
         },
         @(PARA) : @{
             NSFontAttributeName : [UIFont backViewTextFont],
             NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor backViewTextColor]
+            NSForegroundColorAttributeName : [UIColor textColor]
         }
     };
 }
@@ -62,12 +62,12 @@
              @(PARA) : @{
                      NSFontAttributeName : [UIFont insightSummaryFont],
                      NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor insightSummaryMessageColor]
+                     NSForegroundColorAttributeName : [UIColor detailTextColor]
                      },
              @(BULLETLIST) : @{
                      NSFontAttributeName : [UIFont insightSummaryFont],
                      NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor insightSummaryMessageColor]
+                     NSForegroundColorAttributeName : [UIColor detailTextColor]
                      }
              };
 }

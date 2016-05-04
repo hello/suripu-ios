@@ -49,7 +49,7 @@ static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
 - (void)configureDefaults {
     [self setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, HEMAudioButtonImageRightInset)];
     [[self titleLabel] setFont:[UIFont audioPreviewButtonTitleFont]];
-    [self setTitleColor:[UIColor audioPreviewButtonTitleColor] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor lowImportanceTextColor] forState:UIControlStateNormal];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, HEMAudioButtonTitleLeftInset, 0.0f, 0.0f)];
     [self putIconToTheRightOfTitle];
 }

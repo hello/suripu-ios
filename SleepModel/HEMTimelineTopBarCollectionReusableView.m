@@ -81,7 +81,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
     if (isOpen) {
         titleConstant = HEMCenterTitleDrawerOpenTop;
         drawerConstant = HEMDrawerButtonOpenTop;
-        titleTextColor = [UIColor barButtonDisabledColor];
+        titleTextColor = [UIColor disabledColor];
         accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.menu-close", nil);
         self.dateButton.isAccessibilityElement = NO;
     } else {

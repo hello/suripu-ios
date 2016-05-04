@@ -42,8 +42,8 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     self.playButton.hidden = !display;
     [self.contentContainerView showWaveformViews:display];
     if (display) {
-        self.waveformStoppedView.image = [waveform waveformImageWithColor:[UIColor timelineWaveformColor]];
-        self.waveformPlayingView.image = [waveform waveformImageWithColor:[UIColor timelineAccentColor]];
+        self.waveformStoppedView.image = [waveform waveformImageWithColor:[UIColor grey3]];
+        self.waveformPlayingView.image = [waveform waveformImageWithColor:[UIColor orange6]];
     }
     [self layoutContainerViews];
 }

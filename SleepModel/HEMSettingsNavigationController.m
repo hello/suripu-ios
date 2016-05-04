@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self view] setBackgroundColor:[UIColor backViewBackgroundColor]];
+    [[self view] setBackgroundColor:[UIColor backgroundColor]];
     
     [self configureNavigationBar];
     
@@ -32,7 +32,7 @@
 }
 
 - (void)configureNavigationBar {
-    [[self navigationBar] setBarTintColor:[UIColor backViewTintColor]];
+    [[self navigationBar] setBarTintColor:[UIColor navigationBarColor]];
     [[self navigationBar] setTranslucent:NO];
     [[self navigationBar] setClipsToBounds:NO];
     [[self navigationBar] setShadowImage:[UIImage imageNamed:@"navBorder"]];
@@ -40,7 +40,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     self.interactivePopGestureRecognizer.enabled = NO;
-    [[viewController view] setBackgroundColor:[UIColor backViewBackgroundColor]];
+    [[viewController view] setBackgroundColor:[UIColor backgroundColor]];
     [super pushViewController:viewController animated:animated];
     [self updateTopBarVisibilityAnimated:animated];
     [self updatePaneVisibilityAnimated:animated];

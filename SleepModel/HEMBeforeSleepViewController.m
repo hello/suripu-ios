@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
     NSString* description = NSLocalizedString(localizedKey, nil);
     return [[NSAttributedString alloc] initWithString:description
                                            attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
-                                                        NSForegroundColorAttributeName : [UIColor onboardingDescriptionColor]}];
+                                                        NSForegroundColorAttributeName : [UIColor grey6]}];
 }
 
 
@@ -170,7 +170,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
 
     [[self dots] setNumberOfPages:HEMBeforeSleepNumberOfScreens];
     [[self dots] setCurrentPageIndicatorTintColor:[UIColor tintColor]];
-    [[self dots] setPageIndicatorTintColor:[UIColor pageControlTintColor]];
+    [[self dots] setPageIndicatorTintColor:[UIColor grey2]];
     [[self dots] setUserInteractionEnabled:NO];
     [[self dots] setCurrentPage:0];
 }
@@ -184,7 +184,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
     [label setBackgroundColor:[scrollView backgroundColor]];
     [label setText:text];
     [label setFont:[UIFont onboardingTitleFont]];
-    [label setTextColor:[UIColor onboardingTitleColor]];
+    [label setTextColor:[UIColor grey7]];
     [label setNumberOfLines:0];
     
     CGRect labelFrame = [self frameForLabel:label withMaxWidth:maxWidth];

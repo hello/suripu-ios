@@ -45,7 +45,7 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
     self.layer.cornerRadius = 3;
     self.backgroundColor = [UIColor tintColor];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor actionButtonTextColor]
+    [self setTitleColor:[UIColor whiteColor]
                forState:UIControlStateDisabled];
     [self.titleLabel setFont:[UIFont primaryButtonFont]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];

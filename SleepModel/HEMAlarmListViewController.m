@@ -346,6 +346,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
     layout.sectionInset = sectionInsets;
     self.collectionView.hidden = YES;
+    self.collectionView.backgroundColor = [UIColor backgroundColor];
 }
 
 #pragma mark UICollectionViewDatasource

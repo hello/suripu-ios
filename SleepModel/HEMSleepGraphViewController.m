@@ -38,6 +38,7 @@
 #import "HEMTimelineService.h"
 #import "HEMTimelineHandHoldingPresenter.h"
 #import "HEMHandHoldingService.h"
+#import "HEMStyle.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -97,6 +98,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [self configureServices];
     [self configurePresenters];
     [self configureCollectionView];
@@ -865,6 +867,7 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark - UICollectionView
 
 - (void)configureCollectionView {
+    self.collectionView.backgroundColor = [UIColor timelineBackgroundColor];
     self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
     self.collectionView.delegate = self;
 }

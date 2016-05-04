@@ -25,12 +25,12 @@ static CGFloat const HEMTrendsScoreHighlightWidth = 4.0f;
 - (void)drawRect:(CGRect)rect {
     UIColor* fillColor = [self scoreColor];
     if (!fillColor) {
-        fillColor = [UIColor emptyCircleColor];
+        fillColor = [UIColor whiteColor];
     }
     
     UIColor* borderColor = [self scoreBorderColor];
     if (!borderColor) {
-        borderColor = [UIColor emptyCircleBorderColor];
+        borderColor = [UIColor borderColor];
     }
     
     CGFloat borderInset = HEMTrendsScoreBorderWidth / 2.0f;

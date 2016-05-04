@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
     [[self unitTableView] setTableFooterView:footer];
     [[self unitTableView] setDataSource:self];
     [[self unitTableView] setDelegate:self];
-    [[self unitTableView] setBackgroundColor:[UIColor backViewBackgroundColor]];
+    [[self unitTableView] setBackgroundColor:[UIColor backgroundColor]];
 }
 
 - (NSString*)sectionTitleForSection:(NSInteger)section {
@@ -112,7 +112,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [cell setAccessorySelection:NO];
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[cell textLabel] setTextColor:[UIColor textColor]];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     switch ([indexPath section]) {

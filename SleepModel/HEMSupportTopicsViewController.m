@@ -120,7 +120,7 @@
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setText:[[self dataSource] displayNameForRowAtIndexPath:indexPath]];
-    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[cell textLabel] setTextColor:[UIColor textColor]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

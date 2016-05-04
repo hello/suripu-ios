@@ -245,14 +245,25 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     self.graphView.alwaysDisplayDots = NO;
 }
 
-- (void)configureSensorValueViews
-{
+- (void)configureSensorValueViews {
+    UIColor* color = [UIColor colorForCondition:self.sensor.condition];
+    self.graphView.colorTouchInputLine = color;
+    self.graphView.colorLine = color;
+    self.graphView.alphaLine = 0.7;
+    self.graphView.colorPoint = color;
+    self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
+    
+    [self showSensorDetails];
+    [self.graphView reloadGraph];
+}
+
+- (void)showSensorDetails {
     UIColor* color = [UIColor colorForCondition:self.sensor.condition];
     NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessage];
-
+    
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
-
+    
     self.valueLabel.font = [UIFont sensorValueFontForUnit:self.sensor.unit];
     self.unitLabel.font = [UIFont sensorUnitFontForUnit:self.sensor.unit];
     
@@ -271,12 +282,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     }
     
     self.statusMessageLabel.attributedText = statusMessage;
-    self.graphView.colorTouchInputLine = color;
-    self.graphView.colorLine = color;
-    self.graphView.alphaLine = 0.7;
-    self.graphView.colorPoint = color;
-    self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
-    [self.graphView reloadGraph];
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
@@ -554,7 +559,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
-    [self configureSensorValueViews];
+    [self showSensorDetails];
     self.panning = NO;
     self.scrollView.contentOffset = self.oldScrollOffset;
     self.oldScrollOffset = CGPointZero;

@@ -84,7 +84,7 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
 - (void)configureAppearance {
     id supportCellAppearance = [ZDKSupportTableViewCell appearance];
     [supportCellAppearance setTitleLabelFont:[UIFont settingsTableCellFont]];
-    [supportCellAppearance setTitleLabelColor:[UIColor settingsCellTitleTextColor]];
+    [supportCellAppearance setTitleLabelColor:[UIColor textColor]];
     [supportCellAppearance setBackgroundColor:[UIColor whiteColor]];
 }
 

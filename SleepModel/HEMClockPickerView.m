@@ -93,7 +93,7 @@ static NSUInteger const HEMClock12HourCount = 12;
     _hourPickerView.overlayColor = [UIColor clearColor];
     _hourPickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
       cell.textView.font = [UIFont alarmSelectedNumberFont];
-      cell.textView.textColor = [UIColor backViewTextColor];
+      cell.textView.textColor = [UIColor textColor];
       cell.textView.textAlignment = NSTextAlignmentCenter;
       cell.textView.backgroundColor = [UIColor clearColor];
       cell.textView.text = item;
@@ -118,7 +118,7 @@ static NSUInteger const HEMClock12HourCount = 12;
            [UIView animateWithDuration:0.2f
                             animations:^{
                                 cell.textView.transform = CGAffineTransformIdentity;
-                                cell.textView.textColor = [UIColor backViewTextColor];
+                                cell.textView.textColor = [UIColor textColor];
                             }];
        }
     };
@@ -150,7 +150,7 @@ static NSUInteger const HEMClock12HourCount = 12;
     _minutePickerView.overlayColor = [UIColor clearColor];
     _minutePickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
       cell.textView.font = [UIFont alarmSelectedNumberFont];
-      cell.textView.textColor = [UIColor backViewTextColor];
+      cell.textView.textColor = [UIColor textColor];
       cell.textView.textAlignment = NSTextAlignmentCenter;
       cell.textView.backgroundColor = [UIColor clearColor];
       cell.textView.text = item;
@@ -175,7 +175,7 @@ static NSUInteger const HEMClock12HourCount = 12;
           [UIView animateWithDuration:0.2f
                            animations:^{
                              cell.textView.transform = CGAffineTransformIdentity;
-                             cell.textView.textColor = [UIColor backViewTextColor];
+                             cell.textView.textColor = [UIColor textColor];
                            }];
       }
     };
@@ -197,7 +197,7 @@ static NSUInteger const HEMClock12HourCount = 12;
     _meridiemPickerView.overlayColor = [UIColor clearColor];
     _meridiemPickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
       cell.textView.font = [UIFont alarmMeridiemFont];
-      cell.textView.textColor = [UIColor backViewTextColor];
+      cell.textView.textColor = [UIColor textColor];
       cell.textView.textAlignment = NSTextAlignmentCenter;
       cell.textView.backgroundColor = [UIColor clearColor];
       cell.textView.text = item;
@@ -211,7 +211,7 @@ static NSUInteger const HEMClock12HourCount = 12;
       [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
     };
     _meridiemPickerView.unhighlightBlock = ^(NALabelCell *cell) {
-      cell.textView.textColor = [UIColor backViewTextColor];
+      cell.textView.textColor = [UIColor textColor];
     };
     [_meridiemPickerView setIndex:0];
     [self addSubview:_meridiemPickerView];

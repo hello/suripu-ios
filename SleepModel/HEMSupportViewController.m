@@ -67,7 +67,6 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
-    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
     [[self tableView] setBackgroundColor:[UIColor clearColor]];
 }
 
@@ -125,7 +124,7 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
-    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[cell textLabel] setTextColor:[UIColor textColor]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

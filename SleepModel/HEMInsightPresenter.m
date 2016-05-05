@@ -212,7 +212,7 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
     if (!_attributedAbout) {
         NSString* about = [NSLocalizedString(@"insight.about", nil) uppercaseString];
         NSDictionary* attributes = @{NSFontAttributeName : [UIFont insightAboutFont],
-                                     NSForegroundColorAttributeName : [UIColor insightAboutTextColor]};
+                                     NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
         _attributedAbout = [[NSAttributedString alloc] initWithString:about attributes:attributes];
     }
     return _attributedAbout;
@@ -377,7 +377,7 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
     switch ([indexPath row]) {
         case HEMInsightRowImage: {
             HEMImageCollectionViewCell* imageCell = (id)cell;
-            [[imageCell urlImageView] setBackgroundColor:[UIColor backgroundColorForRemoteImageView]];
+            [[imageCell urlImageView] setBackgroundColor:[UIColor backgroundColor]];
             
             SENRemoteImage* remoteImage = [[self insight] remoteImage];
             UIImage* cachedImage = [self cachedImageFor:remoteImage];

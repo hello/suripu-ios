@@ -96,7 +96,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
     } else {
         [[self retryButton] setBackgroundColor:[UIColor tintColor]];
-        [[self retryButton] setTitleColor:[UIColor actionButtonTextColor]
+        [[self retryButton] setTitleColor:[UIColor whiteColor]
                                  forState:UIControlStateNormal];
         [[self retryButton] stopActivity];
     }

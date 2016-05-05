@@ -55,7 +55,7 @@ CGFloat const HEMSnazzBarHeight = 64.0f;
     self.contentView.pagingEnabled = YES;
     self.contentView.showsHorizontalScrollIndicator = NO;
     self.contentView.showsVerticalScrollIndicator = NO;
-    self.contentView.backgroundColor = [UIColor backViewBackgroundColor];
+    self.contentView.backgroundColor = [UIColor backgroundColor];
     self.contentView.delegate = self;
     
     [self updateContentSize];

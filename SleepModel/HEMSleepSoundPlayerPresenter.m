@@ -89,6 +89,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [collectionView setAlwaysBounceVertical:YES];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
+    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [self setCollectionView:collectionView];
 }
 
@@ -467,7 +468,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataTitleFont],
-                                 NSForegroundColorAttributeName : [UIColor partialDataTitleColor]};
+                                 NSForegroundColorAttributeName : [UIColor textColor]};
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 
@@ -492,7 +493,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return nil;
     }
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataMessageFont],
-                                 NSForegroundColorAttributeName : [UIColor partialDataMessageColor]};
+                                 NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -565,28 +566,28 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)configureSleepSoundConfigurationCell:(HEMSleepSoundConfigurationCell*)cell {
-    [[cell titleLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
+    [[cell titleLabel] setTextColor:[UIColor textColor]];
     [[cell titleLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.stopped", nil)];
     [[cell playingLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.playing", nil)];
-    [[cell playingLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
+    [[cell playingLabel] setTextColor:[UIColor textColor]];
 
-    [[cell soundLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
+    [[cell soundLabel] setTextColor:[UIColor textColor]];
     [[cell soundValueLabel] setText:[[self selectedSound] localizedName]];
-    [[cell soundValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell soundValueLabel] setTextColor:[UIColor detailTextColor]];
     [[cell soundSelectorButton] addTarget:self
                                    action:@selector(changeSound:)
                          forControlEvents:UIControlEventTouchUpInside];
     
-    [[cell durationLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
+    [[cell durationLabel] setTextColor:[UIColor textColor]];
     [[cell durationValueLabel] setText:[[self selectedDuration] localizedName]];
-    [[cell durationValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell durationValueLabel] setTextColor:[UIColor detailTextColor]];
     [[cell durationSelectorButton] addTarget:self
                                       action:@selector(changeDuration:)
                             forControlEvents:UIControlEventTouchUpInside];
     
-    [[cell volumeLabel] setTextColor:[UIColor sleepSoundPlayerTitleColor]];
+    [[cell volumeLabel] setTextColor:[UIColor textColor]];
     [[cell volumeValueLabel] setText:[[self selectedVolume] localizedName]];
-    [[cell volumeValueLabel] setTextColor:[UIColor sleepSoundPlayerOptionValueColor]];
+    [[cell volumeValueLabel] setTextColor:[UIColor detailTextColor]];
     [[cell volumeSelectorButton] addTarget:self
                                     action:@selector(changeVolume:)
                           forControlEvents:UIControlEventTouchUpInside];

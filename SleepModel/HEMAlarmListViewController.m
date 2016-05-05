@@ -31,6 +31,8 @@ NS_ENUM(NSUInteger) {
     EmptyStateRowCount = 1,
 };
 
+static CGFloat const HEMAlarmLoadAnimeDuration = 0.5f;
+
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
 
@@ -47,6 +49,9 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
 @property (nonatomic, assign) BOOL launchNewAlarmOnLoad;
 @property (nonatomic, strong) HEMAlarmService* alarmService;
+@property (nonatomic, assign) CGFloat origAddButtonBottomValue;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addButtonBottomConstraint;
+@property (strong, nonatomic) HEMActivityIndicatorView* addButtonIndicator;
 @end
 
 @implementation HEMAlarmListViewController
@@ -113,6 +118,13 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     [self refreshData];
 }
 
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+    [super didMoveToParentViewController:parent];
+    if (!parent) {
+        [self hideAddButton];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     if (![self isViewLoaded] || !self.view.window) {
         self.alarms = nil;
@@ -121,10 +133,19 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 }
 
 - (void)configureAddButton {
+    CGFloat origConstant = [[self addButtonBottomConstraint] constant];
+    [self setOrigAddButtonBottomValue:origConstant];
+    
+    [self.addButton setEnabled:YES];
+    [[self addButton] setTitle:@"" forState:UIControlStateDisabled];
     [self.addButton addTarget:self action:@selector(touchDownAddAlarmButton:) forControlEvents:UIControlEventTouchDown];
     [self.addButton addTarget:self
                        action:@selector(touchUpOutsideAddAlarmButton:)
              forControlEvents:UIControlEventTouchUpOutside];
+    
+    // hide the button initially
+    [self hideAddButton];
+    [self setAddButtonIndicator:[self activityIndicator]];
 }
 
 - (void)configureDateFormatters {
@@ -136,12 +157,24 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     self.meridiemFormatter.dateFormat = @"a";
 }
 
+- (HEMActivityIndicatorView*)activityIndicator {
+    CGSize buttonSize = [[self addButton] bounds].size;
+    UIImage* indicatorImage = [UIImage imageNamed:@"loaderWhite"];
+    CGRect indicatorFrame = CGRectZero;
+    indicatorFrame.size = indicatorImage.size;
+    indicatorFrame.origin.x = (buttonSize.width - indicatorImage.size.width) / 2.f;
+    indicatorFrame.origin.y = (buttonSize.height - indicatorImage.size.height) / 2.f;
+    return [[HEMActivityIndicatorView alloc] initWithImage:indicatorImage
+                                                  andFrame:indicatorFrame];
+}
+
 - (void)refreshData {
     if ([self isLoading])
         return;
-    
-    self.addButton.enabled = NO;
+
     self.loading = !self.alarms; // only show indicator if there's no alarms at all
+    
+    [self showAddButtonAsLoading:YES];
     
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError *error) {
@@ -153,7 +186,6 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
             [strongSelf displayLoadingError];
             [strongSelf setLaunchNewAlarmOnLoad:NO];
         } else {
-            [[strongSelf addButton] setEnabled:YES];
             [strongSelf reloadData];
             if ([strongSelf launchNewAlarmOnLoad]) {
                 [strongSelf addNewAlarm:nil];
@@ -163,14 +195,45 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     }];
 }
 
+- (void)hideAddButton {
+    CGFloat height = CGRectGetHeight([[self addButton] bounds]);
+    CGFloat hiddenBottom = absCGFloat([self origAddButtonBottomValue]) + height;
+    [[self addButtonBottomConstraint] setConstant:hiddenBottom];
+}
+
+- (void)showAddButton {
+    [self showAddButtonAsLoading:NO];
+    
+    if ([[self addButtonBottomConstraint] constant] != [self origAddButtonBottomValue]) {
+        [UIView animateWithDuration:HEMAlarmLoadAnimeDuration animations:^{
+            [[self addButtonBottomConstraint] setConstant:[self origAddButtonBottomValue]];
+            [[self addButton] layoutIfNeeded];
+        }];
+    }
+}
+
+- (void)showAddButtonAsLoading:(BOOL)loading {
+    if (loading) {
+        [[self addButton] setEnabled:NO];
+        [[self addButton] addSubview:[self addButtonIndicator]];
+        [[self addButtonIndicator] start];
+    } else {
+        [[self addButton] setEnabled:YES];
+        [[self addButtonIndicator] stop];
+        [[self addButtonIndicator] removeFromSuperview];
+    }
+}
+
 - (void)displayLoadingError {
     [self setLoadingFailed:YES];
-    [[self addButton] setEnabled:NO];
+    [self hideAddButton];
     [self setAlarms:nil];
     [[self collectionView] reloadData];
 }
 
 - (void)reloadData {
+    [self showAddButton];
+    
     NSArray *cachedAlarms = [self sortedCachedAlarms];
     if ([self.alarms isEqualToArray:cachedAlarms]) {
         if ([self isLoading]) {
@@ -182,7 +245,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 
     self.loading = NO;
     self.alarms = cachedAlarms;
-    self.addButton.hidden = self.alarms.count == 0;
+    [[self addButton] setHidden:[[self alarms] count] == 0];
     [self.collectionView reloadData];
 }
 
@@ -346,6 +409,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
     layout.sectionInset = sectionInsets;
     self.collectionView.hidden = YES;
+    self.collectionView.backgroundColor = [UIColor backgroundColor];
 }
 
 #pragma mark UICollectionViewDatasource

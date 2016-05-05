@@ -50,6 +50,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 @property (weak,   nonatomic) CAGradientLayer* topGradientLayer;
 @property (weak,   nonatomic) CAGradientLayer* botGradientLayer;
 @property (assign, nonatomic) CGFloat gradientHeight;
+@property (strong, nonatomic) NSArray* gradientColorRefs;
 
 @end
 
@@ -86,8 +87,16 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     return gradientLayer;
 }
 
+- (NSArray*)gradientColorRefs {
+    if (!_gradientColorRefs) {
+        _gradientColorRefs = @[(id)[UIColor whiteColor].CGColor,
+                               (id)[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
+    }
+    return _gradientColorRefs;
+}
+
 - (void)addTopGradientTo:(UIView*)view {
-    NSArray* colors = [UIColor roomCheckValueGradientColorRefs];
+    NSArray* colors = [self gradientColorRefs];
     CGFloat topWidth = CGRectGetWidth([[self sensorValueContainer] bounds]);
     CGFloat containerHeight = CGRectGetHeight([[self sensorValueContainer] bounds]);
     CAGradientLayer* layer = [self gradientLayerWithWidth:topWidth
@@ -99,7 +108,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 }
 
 - (void)addBotGradientTo:(UIView*)view {
-    NSArray* colors = [[[UIColor roomCheckValueGradientColorRefs] reverseObjectEnumerator] allObjects];
+    NSArray* colors = [[[self gradientColorRefs] reverseObjectEnumerator] allObjects];
     CGFloat topWidth = CGRectGetWidth([[self sensorValueContainer] bounds]);
     CGFloat containerHeight = CGRectGetHeight([[self sensorValueContainer] bounds]);
     

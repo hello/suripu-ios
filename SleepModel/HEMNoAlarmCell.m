@@ -26,7 +26,7 @@
     [super awakeFromNib];
     
     [[self detailLabel] setFont:[UIFont emptyStateDescriptionFont]];
-    [[self detailLabel] setTextColor:[UIColor emptyStateDescriptionColor]];
+    [[self detailLabel] setTextColor:[UIColor detailTextColor]];
     
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
         CGFloat const MARGIN = 20.0f;

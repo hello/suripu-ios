@@ -47,7 +47,7 @@ static CGFloat const HEMGraphLabelBottomOffset = 9.f;
 - (void)__initializeLayout {
     _boldLastElement = YES;
     _showSeparatorLines = NO;
-    _topLabelColor = [UIColor backViewTextColor];
+    _topLabelColor = [UIColor textColor];
     _bottomLabelColor = [UIColor colorWithRed:0.72 green:0.72 blue:0.72 alpha:1];
     _topLabelFont = [UIFont sensorGraphHeadingFont];
     _topLabelBoldFont = [UIFont sensorGraphHeadingBoldFont];

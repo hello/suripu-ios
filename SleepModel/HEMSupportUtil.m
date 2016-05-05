@@ -109,7 +109,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
         [[SVModalWebViewController alloc] initWithAddress:urlString];
 
     UINavigationBar* navBar = [webViewController navigationBar];
-    [navBar setBarTintColor:[UIColor backViewTintColor]];
+    [navBar setBarTintColor:[UIColor navigationBarColor]];
     [navBar setTranslucent:NO];
     // show default shadow / divider
     [navBar setClipsToBounds:NO];

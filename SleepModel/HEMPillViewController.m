@@ -205,7 +205,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
         view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                   withReuseIdentifier:HEMPillHeaderReuseId
                                                          forIndexPath:indexPath];
-        [view setBackgroundColor:[UIColor backViewBackgroundColor]];
+        [view setBackgroundColor:[UIColor backgroundColor]];
     }
     
     return view;

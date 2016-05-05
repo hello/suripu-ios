@@ -42,7 +42,7 @@
     if ([text length] == 0) return;
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont textfieldPlaceholderFont],
-                                 NSForegroundColorAttributeName : [UIColor textfieldPlaceholderColor]};
+                                 NSForegroundColorAttributeName : [UIColor grey3]};
     NSAttributedString* attributedPlaceHolder =
         [[NSAttributedString alloc] initWithString:text attributes:attributes];
     

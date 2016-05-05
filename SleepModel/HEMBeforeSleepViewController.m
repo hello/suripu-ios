@@ -137,7 +137,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
     NSString* description = NSLocalizedString(localizedKey, nil);
     return [[NSAttributedString alloc] initWithString:description
                                            attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
-                                                        NSForegroundColorAttributeName : [UIColor grey6]}];
+                                                        NSForegroundColorAttributeName : [UIColor grey5]}];
 }
 
 

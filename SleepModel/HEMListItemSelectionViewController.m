@@ -9,9 +9,16 @@
 #import "HEMListItemSelectionViewController.h"
 #import "HEMListPresenter.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMActivityIndicatorView.h"
 
-@interface HEMListItemSelectionViewController()
+@interface HEMListItemSelectionViewController() <HEMListPresenterDelegate>
 
+// FIXME: this extra navigation bar is a workaround for the mess that is
+// the alarm code.  Once we rewrite the alarm code, we should consider
+// removing this
+@property (weak, nonatomic) IBOutlet UINavigationBar *extraNavigationBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationBarTopConstraint;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (nonatomic, assign, getter=isFullyConfigured) BOOL fullyConfigured;
 
 @end
@@ -33,7 +40,19 @@
 
 - (void)configurePresenter {
     [[self listPresenter] bindWithTableView:[self tableView]];
+    [[self listPresenter] bindWithNavigationBar:[self extraNavigationBar]
+                              withTopConstraint:[self navigationBarTopConstraint]];
+    [[self listPresenter] bindWithActivityIndicator:[self activityIndicator]];
+    [[self listPresenter] setPresenterDelegate:self];
     [self addPresenter:[self listPresenter]];
+}
+
+#pragma mark - Presenter Delegate
+
+- (void)presentErrorWithTitle:(NSString *)title
+                      message:(NSString *)message
+                         from:(HEMListPresenter *)presenter {
+    [self showMessageDialog:message title:title];
 }
 
 @end

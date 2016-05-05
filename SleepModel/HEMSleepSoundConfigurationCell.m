@@ -22,6 +22,10 @@ static CGFloat const HEMSleepSoundGraphMinScale = 0.3f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    [[self titleLabel] setFont:[UIFont cardTitleFont]];
+    [[self playingLabel] setFont:[UIFont cardTitleFont]];
+    
     [[self titleSeparator] setBackgroundColor:[UIColor separatorColor]];
     [[self soundSeparator] setBackgroundColor:[UIColor separatorColor]];
     [[self durationSeparator] setBackgroundColor:[UIColor separatorColor]];

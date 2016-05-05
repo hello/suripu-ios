@@ -120,7 +120,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 - (void)addTitleLabelWithText:(NSString*)title {
     UILabel* label = [[UILabel alloc] initWithFrame:[self titleFrame]];
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextColor:[UIColor actionViewTitleTextColor]];
+    [label setTextColor:[UIColor grey4]];
     [label setFont:[UIFont actionViewTitleFont]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
@@ -170,7 +170,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     [container setTranslatesAutoresizingMaskIntoConstraints:YES];
     
     NSString* cancelText = [NSLocalizedString(@"actions.skip", nil) uppercaseString];
-    UIColor * cancelColor = [UIColor actionViewCancelButtonTextColor];
+    UIColor * cancelColor = [UIColor grey4];
     UIButton* cancelButton = [self actionButtonWithText:cancelText color:cancelColor andXOrigin:0.0f];
     [container addSubview:cancelButton];
     
@@ -207,7 +207,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     if (![[self okButton] isHidden]) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
-        CGContextSetStrokeColorWithColor(context, [[UIColor buttonDividerColor] CGColor]);
+        CGContextSetStrokeColorWithColor(context, [[UIColor separatorColor] CGColor]);
         CGContextSetLineWidth(context, HEMActionButtonDividerWidth);
         
         // add a line at the middle of the view, at the bottom where the button container is

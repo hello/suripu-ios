@@ -17,7 +17,7 @@
     
     UIView* selectedView = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
     [selectedView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [selectedView setBackgroundColor:[UIColor questionAnswerSelectedBgColor]];
+    [selectedView setBackgroundColor:[UIColor blue2]];
     [self setSelectedBackgroundView:selectedView];
 }
 

@@ -419,7 +419,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont*)trendsTitleFont {
++ (UIFont*)cardTitleFont {
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:16.0f];
 }
 
@@ -678,6 +678,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)listItemTitleFont {
     return [UIFont fontWithName:HEMFontFamilyNameModernLight size:16.0f];
+}
+
+#pragma mark - Audio Preview Button
+
++ (UIFont*)audioPreviewButtonTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:10.0f];
 }
 
 @end

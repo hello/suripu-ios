@@ -90,7 +90,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
 }
 
 - (void)drawRect:(CGRect)rect {
-    UIColor* lineColor = [UIColor actionSheetSeparatorColor];
+    UIColor* lineColor = [UIColor separatorColor];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);

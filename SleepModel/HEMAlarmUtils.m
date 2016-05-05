@@ -78,68 +78,6 @@ NSUInteger const HEMAlarmTooSoonMinuteLimit = 2;
     return NO;
 }
 
-+ (BOOL)areRepeatDaysValid:(SENAlarmRepeatDays)repeatDays
-             forSmartAlarm:(SENAlarm*)alarm presentingControllerForErrors:(UIViewController*)controller
-{
-    if ([HEMAlarmUtils daysInUse:repeatDays excludingAlarm:alarm]) {
-        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
-                                                message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
-                                             controller:controller];
-        return NO;
-    }
-    return YES;
-}
-
-/**
- *  Checks whether repeating days are in use by an enabled smart alarm
- *
- *  @param days          days of week
- *  @param excludedAlarm an alarm to allow to use a particular day
- *
- *  @return YES if the day is in use by an alarm other than excludedAlarm
- */
-+ (BOOL)daysInUse:(SENAlarmRepeatDays)day excludingAlarm:(SENAlarm*)excludedAlarm
-{
-    SENAlarmRepeatDays daysInUse = 0;
-    for (SENAlarm* alarm in [SENAlarm savedAlarms]) {
-        if ([alarm isEqual:excludedAlarm])
-            continue;
-        else if  (![alarm isSmartAlarm])
-            continue;
-        else if (![alarm isOn])
-            continue;
-        daysInUse |= [self repeatDaysForAlarm:alarm];
-    }
-
-    return (daysInUse & day) != 0;
-}
-
-+ (SENAlarmRepeatDays)repeatDaysForAlarmCache:(HEMAlarmCache*)alarm
-{
-    if ([alarm isRepeated])
-        return alarm.repeatFlags;
-    else
-        return [HEMAlarmUtils fireDayForNonRepeatingAlarmWithHour:alarm.hour minute:alarm.minute];
-}
-
-+ (SENAlarmRepeatDays)repeatDaysForAlarm:(SENAlarm*)alarm
-{
-    if ([alarm isRepeated])
-        return alarm.repeatFlags;
-    else
-        return [HEMAlarmUtils fireDayForNonRepeatingAlarmWithHour:alarm.hour minute:alarm.minute];
-}
-
-+ (SENAlarmRepeatDays)fireDayForNonRepeatingAlarmWithHour:(NSUInteger)hour minute:(NSUInteger)minute
-{
-    SENAlarm* dummyAlarm = [SENAlarm new];
-    dummyAlarm.minute = minute;
-    dummyAlarm.hour = hour;
-    NSDate* fireDate = [dummyAlarm nextRingDate];
-    [dummyAlarm delete];
-    return [self alarmRepeatDayForDate:fireDate];
-}
-
 + (SENAlarmRepeatDays)alarmRepeatDayForDate:(NSDate*)date
 {
     NSCalendar* calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];

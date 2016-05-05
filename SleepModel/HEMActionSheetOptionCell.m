@@ -107,7 +107,7 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 
 - (void)configureSelectedBackground {
     UIView* view = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
-    [view setBackgroundColor:[UIColor actionSheetSelectedColor]];
+    [view setBackgroundColor:[UIColor lightBackgroundColor]];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [self setSelectedBackgroundView:view];
 }

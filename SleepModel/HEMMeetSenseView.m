@@ -43,10 +43,10 @@
 - (void)configureAppearance {
     [[self titleLabel] setText:NSLocalizedString(@"welcome.title", nil)];
     [[self titleLabel] setFont:[UIFont welcomeTitleFont]];
-    [[self titleLabel] setTextColor:[UIColor welcomeTitleColor]];
+    [[self titleLabel] setTextColor:[UIColor blackColor]];
     
     [[[self videoButton] titleLabel] setFont:[UIFont welcomeVideoButtonFont]];
-    [[self videoButton] setTitleColor:[UIColor welcomeVideoButtonColor]
+    [[self videoButton] setTitleColor:[UIColor grey4]
                              forState:UIControlStateNormal];
     
     NSString* description = NSLocalizedString(@"welcome.description", nil);
@@ -74,7 +74,7 @@
     [style setLineHeightMultiple:1.2f];
     
     return @{NSFontAttributeName : [UIFont welcomeDescriptionFont],
-             NSForegroundColorAttributeName : [UIColor welcomeDescriptionColor],
+             NSForegroundColorAttributeName : [UIColor grey4],
              NSParagraphStyleAttributeName : style};
 }
 

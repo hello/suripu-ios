@@ -1,5 +1,101 @@
 # Changelog
 
+## 1.4.1.8
+
+Fixes:
+
+* Fix colors for onboarding description being too close to the title
+* Fix color for Trends and Sleep sounds card title
+* Fix color for Trends dash line in bar chart
+* Fix issue with the tap state on Timeline events to have more contrast with background
+
+## 1.4.1.7
+
+New:
+
+* Consolidated the colors used inside the app to reduce number of shades of a color used
+* Animate the alarm add button like sleep sounds to make it consistent
+* Overriding the User-Agent header to something that is standard between Android and iOS
+
+Fixes:
+
+* Fixed the added delay after releasing the touch event from the sensor history graph
+
+## 1.4.1.6
+
+New:
+
+* If Sleep sounds player was launched in to a playing state, the options will revert to your last saved settings when stopped
+
+Fixes:
+
+* Fixed an issue that would prevent the user from viewing the Timeline on their account creation date if created before 3AM, but after midnight
+* Fixed an issue with the Timeline gesture tutorial where the gesture would not be shown or is misaligned
+* Updated copy for the HK error message if user denies access to their data
+* Fixed the issue for iPhone 6plus users where the sensor history graph would not be anchored to the bottom of the screen
+
+## 1.4.1.5
+
+New:
+
+* Added a generic tap indicator to list item views
+
+Fixes:
+
+* Timeline feedback action sheet no longer shows a gap for 6 plus phones
+* If denying HK from settings, the toggle switch will return to being off
+* Tapping through from today extension brings you to current conditions
+* Fixed the logic around adding alarms over the specified limit
+
+## 1.4.1.4
+
+New:
+
+* Highlighting Trends titles when server says so
+* Round the top corners of Trends sleep duration bars
+* Add padding to bar graph highlighted label when possible
+
+Fixes:
+
+* Increase # of steps when fading volume up when playing sound previews
+* Fixes an issue that can cause the application to crash when launching in to sensor detail
+* Fixes an issue that can cause the application to crash when dismissing gesture tutorial implicitly
+* Adjusted the Alarm tone and repeat UI navigation bar height
+* Fixes the insight feed image flicker
+* Fixes occassional reload of insight image when tapping in to an insight
+
+## 1.4.1.3
+
+New:
+
+* Updated copy for error messages for Sleep Sounds
+* Added a "preview" label next to the sound preview button
+* Updated preview button assets
+* Debug option for forgetting welcome dialogs now apply to Sleep Sounds
+* Fade in sound previews on device with a duration of 5s
+* Tracking errors when Sleep Sound operations time out
+
+## 1.4.1.2
+
+New:
+
+* Updated alarm repeat days UI to match that of Sleep Sounds
+
+Fixes:
+
+* Really fix the sleep sounds title font mismatch
+
+## 1.4.1.1
+
+New:
+
+* Updated Alarm tone UI to match that of Sleep Sounds
+
+Fixes:
+
+* Updated Sleep sounds title font to match that of Trend cards
+* Fixed a crasher that can happen if server returns a negative value for sensor values
+
 ## 1.4.0.12
 
 New:

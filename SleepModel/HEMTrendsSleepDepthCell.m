@@ -36,13 +36,13 @@ static CGFloat const HEMTrendsSleepDepthUnitFontSizeCoef = 0.167f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     [[[self lightBubbleView] nameLabel] setText:[NSLocalizedString(@"trends.sleep-depth.light", nil) uppercaseString]];
-    [[self lightBubbleView] setBubbleColor:[UIColor trendsSleepDepthLightColor]];
+    [[self lightBubbleView] setBubbleColor:[UIColor colorForSleepState:SENTimelineSegmentSleepStateLight]];
     
     [[[self mediumBubbleView] nameLabel] setText:[NSLocalizedString(@"trends.sleep-depth.medium", nil) uppercaseString]];
-    [[self mediumBubbleView] setBubbleColor:[UIColor trendsSleepDepthMediumColor]];
+    [[self mediumBubbleView] setBubbleColor:[UIColor colorForSleepState:SENTimelineSegmentSleepStateMedium]];
     
     [[[self deepBubbleView] nameLabel] setText:[NSLocalizedString(@"trends.sleep-depth.deep", nil) uppercaseString]];
-    [[self deepBubbleView] setBubbleColor:[UIColor trendsSleepDepthDeepColor]];
+    [[self deepBubbleView] setBubbleColor:[UIColor colorForSleepState:SENTimelineSegmentSleepStateSound]];
 }
 
 - (BOOL)layoutSubviewsIfNeeded {

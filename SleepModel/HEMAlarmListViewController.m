@@ -23,11 +23,15 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMSubNavigationView.h"
+#import "HEMAlarmService.h"
+#import "HEMSupportUtil.h"
 
 NS_ENUM(NSUInteger) {
     LoadingStateRowCount = 0,
     EmptyStateRowCount = 1,
 };
+
+static CGFloat const HEMAlarmLoadAnimeDuration = 0.5f;
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
@@ -44,6 +48,10 @@ NS_ENUM(NSUInteger) {
 @property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
 @property (nonatomic, assign) BOOL launchNewAlarmOnLoad;
+@property (nonatomic, strong) HEMAlarmService* alarmService;
+@property (nonatomic, assign) CGFloat origAddButtonBottomValue;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addButtonBottomConstraint;
+@property (strong, nonatomic) HEMActivityIndicatorView* addButtonIndicator;
 @end
 
 @implementation HEMAlarmListViewController
@@ -55,7 +63,6 @@ static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static CGFloat const HEMAlarmNoAlarmHorzMargin = 40.0f;
 static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
-static NSUInteger const HEMAlarmListLimit = 8;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -70,6 +77,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [super viewDidLoad];
     self.alarmSaveTransitionDelegate = [HEMSimpleModalTransitionDelegate new];
     self.alarmSaveTransitionDelegate.wantsStatusBar = YES;
+    
+    [self setAlarmService:[HEMAlarmService new]];
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];
@@ -89,6 +98,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    CGFloat offset = [[self collectionView] contentOffset].y;
+    // if there is a subnav, we need to update the visibility in case the neighbor
+    // updated the shared shadowview
+    [[[self subNav] shadowView] updateVisibilityWithContentOffset:offset];
     [SENAnalytics track:kHEMAnalyticsEventAlarms];
 }
 
@@ -105,6 +118,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self refreshData];
 }
 
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+    [super didMoveToParentViewController:parent];
+    if (!parent) {
+        [self hideAddButton];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     if (![self isViewLoaded] || !self.view.window) {
         self.alarms = nil;
@@ -113,11 +133,19 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (void)configureAddButton {
+    CGFloat origConstant = [[self addButtonBottomConstraint] constant];
+    [self setOrigAddButtonBottomValue:origConstant];
+    
+    [self.addButton setEnabled:YES];
+    [[self addButton] setTitle:@"" forState:UIControlStateDisabled];
     [self.addButton addTarget:self action:@selector(touchDownAddAlarmButton:) forControlEvents:UIControlEventTouchDown];
     [self.addButton addTarget:self
                        action:@selector(touchUpOutsideAddAlarmButton:)
              forControlEvents:UIControlEventTouchUpOutside];
-    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
+    
+    // hide the button initially
+    [self hideAddButton];
+    [self setAddButtonIndicator:[self activityIndicator]];
 }
 
 - (void)configureDateFormatters {
@@ -129,19 +157,31 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.meridiemFormatter.dateFormat = @"a";
 }
 
+- (HEMActivityIndicatorView*)activityIndicator {
+    CGSize buttonSize = [[self addButton] bounds].size;
+    UIImage* indicatorImage = [UIImage imageNamed:@"loaderWhite"];
+    CGRect indicatorFrame = CGRectZero;
+    indicatorFrame.size = indicatorImage.size;
+    indicatorFrame.origin.x = (buttonSize.width - indicatorImage.size.width) / 2.f;
+    indicatorFrame.origin.y = (buttonSize.height - indicatorImage.size.height) / 2.f;
+    return [[HEMActivityIndicatorView alloc] initWithImage:indicatorImage
+                                                  andFrame:indicatorFrame];
+}
+
 - (void)refreshData {
     if ([self isLoading])
         return;
-    
-    self.addButton.enabled = NO;
+
     self.loading = !self.alarms; // only show indicator if there's no alarms at all
+    
+    [self showAddButtonAsLoading:YES];
     
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLoadingFailed:error != nil];
-        [[strongSelf addButton] setEnabled:error == nil];
         if (error) {
+            [SENAnalytics trackError:error];
             [strongSelf setLoading:NO];
             [strongSelf displayLoadingError];
             [strongSelf setLaunchNewAlarmOnLoad:NO];
@@ -155,14 +195,45 @@ static NSUInteger const HEMAlarmListLimit = 8;
     }];
 }
 
+- (void)hideAddButton {
+    CGFloat height = CGRectGetHeight([[self addButton] bounds]);
+    CGFloat hiddenBottom = absCGFloat([self origAddButtonBottomValue]) + height;
+    [[self addButtonBottomConstraint] setConstant:hiddenBottom];
+}
+
+- (void)showAddButton {
+    [self showAddButtonAsLoading:NO];
+    
+    if ([[self addButtonBottomConstraint] constant] != [self origAddButtonBottomValue]) {
+        [UIView animateWithDuration:HEMAlarmLoadAnimeDuration animations:^{
+            [[self addButtonBottomConstraint] setConstant:[self origAddButtonBottomValue]];
+            [[self addButton] layoutIfNeeded];
+        }];
+    }
+}
+
+- (void)showAddButtonAsLoading:(BOOL)loading {
+    if (loading) {
+        [[self addButton] setEnabled:NO];
+        [[self addButton] addSubview:[self addButtonIndicator]];
+        [[self addButtonIndicator] start];
+    } else {
+        [[self addButton] setEnabled:YES];
+        [[self addButtonIndicator] stop];
+        [[self addButtonIndicator] removeFromSuperview];
+    }
+}
+
 - (void)displayLoadingError {
     [self setLoadingFailed:YES];
-    [[self addButton] setEnabled:NO];
+    [self hideAddButton];
     [self setAlarms:nil];
     [[self collectionView] reloadData];
 }
 
 - (void)reloadData {
+    [self showAddButton];
+    
     NSArray *cachedAlarms = [self sortedCachedAlarms];
     if ([self.alarms isEqualToArray:cachedAlarms]) {
         if ([self isLoading]) {
@@ -174,8 +245,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
     self.loading = NO;
     self.alarms = cachedAlarms;
-    self.addButton.hidden = self.alarms.count == 0;
-    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
+    [[self addButton] setHidden:[[self alarms] count] == 0];
     [self.collectionView reloadData];
 }
 
@@ -210,6 +280,17 @@ static NSUInteger const HEMAlarmListLimit = 8;
     }
 }
 
+#pragma mark - Errors
+
+- (void)showErrorMessageWithTitle:(NSString*)title
+                       andMessage:(NSString*)message {
+    HEMAlertViewController* dialogVC =
+        [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [dialogVC setViewToShowThrough:[[self rootViewController] view]];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC showFrom:self];
+}
+
 #pragma mark - Actions
 
 - (void)touchDownAddAlarmButton:(id)sender {
@@ -238,6 +319,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
     }
     
     if (![[self addButton] isEnabled]) {
+        return;
+    }
+    
+    if (![[self alarmService] canCreateMoreAlarms]) {
+        NSString* message = NSLocalizedString(@"alarms.error.message.limit-reached", nil);
+        NSString* title = NSLocalizedString(@"alarms.error.title.limit-reached", nil);
+        [self showErrorMessageWithTitle:title andMessage:message];
         return;
     }
     
@@ -321,6 +409,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
     layout.sectionInset = sectionInsets;
     self.collectionView.hidden = YES;
+    self.collectionView.backgroundColor = [UIColor backgroundColor];
 }
 
 #pragma mark UICollectionViewDatasource

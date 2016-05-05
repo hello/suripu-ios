@@ -4,5 +4,4 @@
 
 @interface HEMCurrentConditionsViewController : HEMBaseController
 
-- (void)openDetailViewForSensorNamed:(NSString *)name;
 @end

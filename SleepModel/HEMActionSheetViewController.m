@@ -66,7 +66,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 -(void)setDefaults {
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    [[self optionTableView] setSeparatorColor:[UIColor actionSheetSeparatorColor]];
+    [[self optionTableView] setSeparatorColor:[UIColor separatorColor]];
     [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
 }
 
@@ -245,7 +245,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     self.shadedOverlayView.isAccessibilityElement = YES;
     self.shadedOverlayView.accessibilityTraits = UIAccessibilityTraitButton;
     self.shadedOverlayView.accessibilityValue = NSLocalizedString(@"actions.cancel", nil);
-    self.shadedOverlayView.backgroundColor = [UIColor alertBackgroundColor];
+    self.shadedOverlayView.backgroundColor = [UIColor seeThroughBackgroundColor];
 }
 
 - (void)configureTableViewHeader {

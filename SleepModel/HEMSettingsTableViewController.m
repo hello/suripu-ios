@@ -69,8 +69,6 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     
     // footer
     [[self settingsTableView] setTableFooterView:[self versionFooterView]];
-    
-    [[self settingsTableView] setSeparatorColor:[UIColor separatorColor]];
 }
 
 - (UIView*)versionFooterView {
@@ -87,7 +85,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     UILabel *versionLabel = [[UILabel alloc] init];
     [versionLabel setText:versionText];
     [versionLabel setFont:[UIFont settingsHelpFont]];
-    [versionLabel setTextColor:[UIColor backViewTextColor]];
+    [versionLabel setTextColor:[UIColor textColor]];
     [versionLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
     [versionLabel sizeToFit];
 

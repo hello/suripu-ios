@@ -37,12 +37,12 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setTimelineService:[HEMTimelineService new]];
     self.historyCollectionView.delegate = nil;
     [self configureDateFormatters];
     [self configureCollectionView];
     [self loadData];
     self.historyCollectionView.delegate = self;
-    [self setTimelineService:[HEMTimelineService new]];
     [SENAnalytics track:HEMAnalyticsEventTimelineZoomOut];
 }
 
@@ -99,19 +99,24 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 {
     NSUInteger capacity = HEMSleepDataCapacity;
     NSDate* today = [[NSDate date] dateAtMidnight];
-    if ([[today previousDay] shouldCountAsPreviousDay])
+    if ([[today previousDay] shouldCountAsPreviousDay]) {
         today = [today previousDay];
+    }
     
     HEMAccountService* accountService = [HEMAccountService sharedService];
     HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
     SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
 
-    if (![[self timelineService] canViewTimelinesBefore:today forAccount:account]) {
+    if ([account createdAt]) {
         NSDateComponents *difference = [self.calendar components:NSCalendarUnitDay
                                                         fromDate:[account createdAt]
                                                           toDate:today
                                                          options:0];
-        capacity = MIN(MAX(1, difference.day + 1), HEMSleepDataCapacity);
+        NSInteger days = difference.day + 1;
+        if ([[self timelineService] isWithinPreviousDayWindow:[account createdAt]]) {
+            days++;
+        }
+        capacity = MIN(MAX(1, days), HEMSleepDataCapacity);
     }
     
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:capacity];
@@ -398,6 +403,13 @@ static NSUInteger const HEMSleepDataCapacity = 400;
             [strongSelf updateCell:graphCell atIndexPath:indexPath];
         }
     }];
+}
+
+- (void)dealloc {
+    if (_historyCollectionView) {
+        [_historyCollectionView setDelegate:nil];
+        [_historyCollectionView setDataSource:nil];
+    }
 }
 
 @end

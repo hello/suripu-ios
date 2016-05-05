@@ -11,15 +11,17 @@
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMListItemCell.h"
+#import "HEMNavigationShadowView.h"
+#import "HEMActivityIndicatorView.h"
 
 static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 @interface HEMListPresenter()
 
 @property (nonatomic, weak) UITableView* tableView;
-@property (nonatomic, copy) NSArray* items;
+@property (nonatomic, weak) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy) NSString* title;
-@property (nonatomic, copy) NSString* selectedItemName;
+@property (nonatomic, assign, getter=isPreSelected) BOOL preSelected;
 
 @end
 
@@ -27,43 +29,105 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 - (instancetype)initWithTitle:(NSString *)title
                         items:(NSArray *)items
-             selectedItemName:(NSString*)selectedItemName {
+            selectedItemNames:(NSArray*)selectedItemNames {
     self = [super init];
     if (self) {
+        _hideExtraNavigationBar = YES;
         _title = [title copy];
         _items = [items copy];
-        _selectedItemName = [selectedItemName copy];
+        _selectedItemNames = [selectedItemNames copy];
     }
     return self;
 }
 
-- (void)bindWithTableView:(UITableView*)tableView {
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
-    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+- (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
+            withTopConstraint:(NSLayoutConstraint*)topConstraint {
     
-    [tableView setSeparatorColor:[UIColor separatorColor]];
+    if ([self hideExtraNavigationBar]) {
+        CGFloat height = CGRectGetHeight([navigationBar bounds]);
+        [topConstraint setConstant:-height];
+        [navigationBar setHidden:YES];
+    } else {
+        UINavigationItem* topItem = [navigationBar topItem];
+        UIBarButtonItem* backButton = [topItem leftBarButtonItem];
+        [backButton setTarget:self];
+        [backButton setAction:@selector(back:)];
+        
+        HEMNavigationShadowView* shadowView =
+            [[HEMNavigationShadowView alloc] initWithNavigationBar:navigationBar];
+        [shadowView showSeparator:YES];
+        [navigationBar addSubview:shadowView];
+        [self bindWithShadowView:shadowView];
+    }
+}
+
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicatorView {
+    [indicatorView setHidden:YES];
+    [self setIndicatorView:indicatorView];
+}
+
+- (void)bindWithTableView:(UITableView*)tableView {
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
+                                                               bottomBorder:NO];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
+                                                               bottomBorder:NO];
+    
     [tableView setTableHeaderView:header];
     [tableView setTableFooterView:footer];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
+    
     [self setTableView:tableView];
 }
 
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item {
     [[cell itemLabel] setFont:[UIFont listItemTitleFont]];
-    [[cell itemLabel] setTextColor:[UIColor listItemTextColor]];
+    [[cell itemLabel] setTextColor:[UIColor textColor]];
 }
 
-- (void)selectItemAtIndexPath:(NSIndexPath*)indexPathToSelect {
-    for (NSIndexPath* indexPath in [[self tableView] indexPathsForVisibleRows]) {
-        UITableViewCell* cell = [[self tableView] cellForRowAtIndexPath:indexPath];
-        [cell setSelected:[indexPath isEqual:indexPathToSelect]];
-        id item = [self items][[indexPath row]];
-        [self cell:(id)cell isSelected:[cell isSelected] forItem:item];
+- (NSInteger)indexOfItemWithName:(NSString*)name {
+    return -1;
+}
+
+- (void)updateCell:(HEMListItemCell*)cell withItem:(id)item selected:(BOOL)selected {
+    [cell setSelected:selected];
+}
+
+#pragma mark - Presenter Events
+
+- (void)didAppear {
+    [super didAppear];
+    [self preSelectItems];
+}
+
+- (void)preSelectItems {
+    if ([self isPreSelected]) {
+        return;
+    }
+    
+    BOOL hasSelectedItems = [[self selectedItemNames] count] > 0;
+    BOOL withinRange = [[self selectedItemNames] count] <= [[self items] count];
+    if (hasSelectedItems && withinRange) {
+        for (NSString* itemName in [self selectedItemNames]) {
+            NSInteger index = [self indexOfItemWithName:itemName];
+            if (index >= 0) {
+                NSIndexPath* path = [NSIndexPath indexPathForRow:index inSection:0];
+                [[self tableView] selectRowAtIndexPath:path
+                                              animated:NO
+                                        scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+        [self setPreSelected:YES];
     }
 }
 
-- (void)cell:(HEMListItemCell*)cell isSelected:(BOOL)selected forItem:(id)item {}
+#pragma mark - Nav Item
+
+- (void)back:(id)sender {
+    if ([[self delegate] respondsToSelector:@selector(goBackFrom:)]) {
+        [[self delegate] goBackFrom:self];
+    }
+}
 
 #pragma mark - UITableViewDelegate
 
@@ -75,21 +139,43 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self selectItemAtIndexPath:indexPath];
-    
     id item = [self items][[indexPath row]];
-    NSInteger index = [indexPath row];
     
-    [tableView setUserInteractionEnabled:NO];
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     
-    __weak typeof(self) weakSelf = self;
-    int64_t secs = (int64_t)(HEMListPresenterSelectionDelay * NSEC_PER_SEC);
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, secs);
-    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
-        [tableView setUserInteractionEnabled:YES];
-        [[weakSelf delegate] didSelectItem:item atIndex:index from:weakSelf];
-    });
+    if ([cell isKindOfClass:[HEMListItemCell class]]) {
+        HEMListItemCell* listCell = (id)cell;
+        [listCell flashTouchIndicator];
+    }
+    
+    [self updateCell:cell withItem:item selected:YES];
+    
+    if (![tableView allowsMultipleSelection]) {
+        
+        // add a delay to let delegate now selection has been made so dismissal
+        // of the controller can be done
+        [tableView setUserInteractionEnabled:NO];
+        __weak typeof(self) weakSelf = self;
+        int64_t secs = (int64_t)(HEMListPresenterSelectionDelay * NSEC_PER_SEC);
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, secs);
+        dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+            NSInteger index = [indexPath row];
+            [tableView setUserInteractionEnabled:YES];
+            [[weakSelf delegate] didSelectItem:item atIndex:index from:weakSelf];
+        });
+    }
+}
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id item = [self items][[indexPath row]];
+    
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    [self updateCell:cell withItem:item selected:NO];
+    
+    if ([[self delegate] respondsToSelector:@selector(didDeselectItem:atIndex:from:)]) {
+        NSInteger index = [indexPath row];
+        [[self delegate] didDeselectItem:item atIndex:index from:self];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -122,6 +208,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self didScrollContentIn:scrollView];
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    if (_tableView) {
+        [_tableView setDelegate:nil];
+        [_tableView setDataSource:nil];
+    }
 }
 
 @end

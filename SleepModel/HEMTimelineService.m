@@ -14,6 +14,7 @@
 #import "HEMOnboardingService.h"
 #import "NSDate+HEMRelative.h"
 
+static CGFloat const HEMTimelineNextDayHour = 3; // hour of day (3am)
 static NSString* const HEMTimelineSettingsAccountCreationDate = @"account.creation.date";
 
 NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline.amended";
@@ -33,6 +34,12 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
     return creationDate;
 }
 
+- (BOOL)isWithinPreviousDayWindow:(NSDate*)date {
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents* components = [calendar components:NSCalendarUnitHour fromDate:date];
+    return [components hour] < HEMTimelineNextDayHour;
+}
+
 - (BOOL)canViewTimelinesBefore:(NSDate*)date forAccount:(SENAccount*)account {
     if (!account) {
         // if account was not loaded / available, fallback to allowing user to
@@ -42,7 +49,15 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
     NSDate* creationDate = [self accountCreationDateFrom:account];
     NSDate* dateWithoutTime = [date dateAtMidnight];
     NSDate* createDateWithoutTime = [creationDate dateAtMidnight];
-    return [createDateWithoutTime compare:dateWithoutTime] == NSOrderedAscending;
+    BOOL creationWithinPreviousDayWindow = [self isWithinPreviousDayWindow:creationDate];
+    NSComparisonResult dateComparison = [createDateWithoutTime compare:dateWithoutTime];
+    // if the date is greater than the account creation date OR the dates are the
+    // same, but the creation date lands within the previous day window AND days
+    // elapsed has been more than 1 day
+    return dateComparison == NSOrderedAscending
+        || (creationWithinPreviousDayWindow
+            && [dateWithoutTime daysElapsed] > 0
+            && dateComparison == NSOrderedSame);
 }
 
 - (BOOL)isFirstNightOfSleep:(NSDate*)date forAccount:(SENAccount*)account {

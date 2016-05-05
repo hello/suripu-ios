@@ -209,7 +209,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         city = [self sortedCityNames][[indexPath row]];
     }
     
-    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[cell textLabel] setTextColor:[UIColor textColor]];
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setText:city];
     [cell setTag:[indexPath row]];

@@ -6,15 +6,15 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-#import "HEMListPresenter.h"
+#import "HEMSoundListPresenter.h"
 
 @class HEMAudioService;
 
-@interface HEMSleepSoundsPresenter : HEMListPresenter
+@interface HEMSleepSoundsPresenter : HEMSoundListPresenter
 
 - (instancetype)initWithTitle:(NSString *)title
                         items:(NSArray *)items
-             selectedItemName:(NSString*)selectedItemName NS_UNAVAILABLE;
+            selectedItemNames:(NSArray*)selectedItemNames NS_UNAVAILABLE;
 
 - (instancetype)initWithTitle:(NSString *)title
                         items:(NSArray *)items

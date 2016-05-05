@@ -28,6 +28,7 @@
 
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
+static NSString* const HEMApiUserAgentFormat = @"%@/%@ Platform/iOS OS/%@";
 
 static NSString* const HEMShortcutTypeAddAlarm = @"is.hello.sense.shortcut.addalarm";
 static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.editalarms";
@@ -81,17 +82,18 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     HEMRootViewController* root = (id)self.window.rootViewController;
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:NO];
     HEMSnazzBarController* controller = (id)root.backController;
-    UINavigationController* nav = (id)[controller selectedViewController];
+    UIViewController* visibleController = (id)[controller selectedViewController];
 
-    void (^presentController)() = ^{
-        [nav popToRootViewControllerAnimated:NO];
-        HEMCurrentConditionsViewController* controller = (id)nav.topViewController;
-        [controller openDetailViewForSensorNamed:name];
+    void (^popToRoot)() = ^{
+        if ([visibleController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController* nav = (id)visibleController;
+            [nav popToRootViewControllerAnimated:NO];
+        }
     };
-    if (nav.presentedViewController) {
-        [nav dismissViewControllerAnimated:NO completion:presentController];
+    if (visibleController.presentedViewController) {
+        [visibleController dismissViewControllerAnimated:NO completion:popToRoot];
     } else {
-        presentController();
+        popToRoot();
     }
 }
 
@@ -156,10 +158,18 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 }
 
 - (void)configureAPI {
+    // User-Agent should be in the format: Sense/<App version> Platform/<iOS> OS/<Version>
+    UIDevice* device = [UIDevice currentDevice];
+    NSBundle* bundle = [NSBundle mainBundle];
+    NSString* appName = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString* version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString* osVersion = [device systemVersion];
+    NSString* userAgent = [NSString stringWithFormat:HEMApiUserAgentFormat, appName, version, osVersion];
     NSString* path = [HEMConfig stringForConfig:HEMConfAPIURL];
     NSString* clientID = [HEMConfig stringForConfig:HEMConfClientId];
-    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    
     [SENAPIClient setBaseURLFromPath:path];
+    [SENAPIClient setValue:userAgent forHTTPHeaderField:@"User-Agent"];
     [SENAPIClient setValue:version forHTTPHeaderField:HEMApiXVersionHeader];
     [SENAuthorizationService setClientAppID:clientID];
     [SENAuthorizationService authorizeRequestsFromKeychain];
@@ -234,6 +244,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         NSFontAttributeName : [UIFont navButtonTitleFont],
         NSForegroundColorAttributeName : [UIColor tintColor]
     } forState:UIControlStateNormal];
+    
+    [UIColor applyDefaultColorAppearances];
 }
 
 - (void)createAndShowWindow {

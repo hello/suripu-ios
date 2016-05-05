@@ -104,7 +104,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
     [messageStyle setAlignment:NSTextAlignmentCenter];
     NSDictionary* messageAttributes = @{
                                         NSFontAttributeName : [UIFont systemAlertMessageFont],
-                                        NSForegroundColorAttributeName : [UIColor deviceAlertMessageColor],
+                                        NSForegroundColorAttributeName : [UIColor textColor],
                                         NSParagraphStyleAttributeName : messageStyle};
     
     NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message

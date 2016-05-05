@@ -246,11 +246,6 @@
 + (UIFont*)trendsHighlightLabelFont;
 
 /**
- *  Font for the v2 Trends graph titles
- */
-+ (UIFont*)trendsTitleFont;
-
-/**
  *  Font for time scopes in trends view
  */
 + (UIFont*)trendOptionFont;
@@ -633,5 +628,19 @@
  * Font used by the List Item Presenter when configuring list item cells
  */
 + (UIFont*)listItemTitleFont;
+
+#pragma mark - Common card fonts
+
+/**
+ * Font used in the title on a card.  See Trends or Sleep Sounds
+ */
++ (UIFont*)cardTitleFont;
+
+#pragma mark - Audio Preview Button
+
+/**
+ * Font used for the audio preview button for sleep sounds and alarm tones.
+ */
++ (UIFont*)audioPreviewButtonTitleFont;
 
 @end

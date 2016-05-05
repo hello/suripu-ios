@@ -35,11 +35,11 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
     [self addSeparator];
 
     [[self titleLabel] setFont:[UIFont settingsTableCellFont]];
-    [[self titleLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[self titleLabel] setTextColor:[UIColor textColor]];
     [[self titleLabel] setBackgroundColor:[UIColor clearColor]];
 
     [[self valueLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    [[self valueLabel] setTextColor:[UIColor settingsValueTextColor]];
+    [[self valueLabel] setTextColor:[UIColor detailTextColor]];
     [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
     [[self valueLabel] setTextAlignment:NSTextAlignmentRight];
 }
@@ -124,9 +124,10 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
     if (isVisible) {
         NSShadow *shadow = [NSShadow shadowForBackViewCards];
         layer.shadowOffset = shadow.shadowOffset;
-        layer.shadowOpacity = 1.f;
+        layer.shadowOpacity = 0.3f;
         layer.shadowRadius = shadow.shadowBlurRadius;
         layer.shadowColor = [shadow.shadowColor CGColor];
+        layer.borderColor = [[UIColor borderColor] CGColor];
     } else { layer.shadowOpacity = 0; }
 }
 

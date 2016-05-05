@@ -206,7 +206,7 @@
 "settings.account.update.name-too-short" = "New name is too short. Try again with longer name.";
 "settings.account.error.title.hk" = "Sync with Health";
 "settings.account.error.message.hk-not-supported" = "Apple Health is not supported on your device.";
-"settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app. You may need to authorize this directly in your Health app then enable this.";
+"settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app. You may need to authorize this directly in your Health app to enable this.";
 
 // support
 "debug.options.title" = "Debug options";
@@ -222,6 +222,7 @@
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.sleep-sounds" = "Sleep Sounds";
+"debug.option.clear-alarms" = "Remove all alarms";
 "debug.host.action.custom-url" = "Custom";
 "debug.host.section.api" = "API Hosts";
 "debug.host.section.nonsense" = "Nonsense Hosts";
@@ -349,10 +350,14 @@
 "alarms.alarm.meridiem.pm" = "PM";
 "alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at the lightest point in your natural sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
 "alarms.no-data" = "There was a problem displaying your alarms. Please try again.";
+"alarms.error.title.limit-reached" = "Alarm limit reached";
+"alarms.error.message.limit-reached" = "You've created the maximum number of alarms. Delete an alarm before attempting to create a new one, or edit an existing alarm.";
 
 // alarm settings
 "alarm.sound.title" = "Tone";
+"alarm.sound.subtitle" = "Select an alarm tone";
 "alarm.repeat.title" = "Repeat";
+"alarm.repeat.subtitle" = "Repeat alarm";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
 "alarm.smart.title" = "Smart Alarm";
@@ -750,9 +755,11 @@
 "sounds.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to enable this feature.";
 "sounds.no-sense.button.title" = "Pair new Sense";
 "sounds.error.message" = "There was a problem loading the content. Please try again.";
+"sounds.audio.preview" = "Preview";
+"sounds.audio.stop" = "Stop";
 
 // sleep sounds
-"sleep-sounds.error.message" = "There was a problem loading sleep sounds. Please try again.";
+"sleep-sounds.error.message" = "There was a problem loading Sleep Sounds. Please try again.";
 "sleep-sounds.title" = "Sleep sounds";
 "sleep-sounds.volume.high" = "High";
 "sleep-sounds.volume.medium" = "Medium";
@@ -766,8 +773,7 @@
 "sleep-sounds.title.state.stopped" = "Play a Sound";
 "sleep-sounds.title.state.playing" = "Now Playing";
 "sleep-sounds.error.title" = "Sleep sounds";
-"sleep-sounds.error.action-timeout.message" = "Unable to determine the state of the action on Sense. Please try again.";
-"sleep-sounds.error.action-in-progress.message" = "Waiting for a previous action to be performed. Please try again.";
+"sleep-sounds.error.action-timeout.message" = "There was a problem establishing a connection with your Sense. Please ensure your Sense is connected to the internet and try again.";
 "sleep-sounds.temp.info.title.no-sounds" = "Updating Sleep Sounds";
 "sleep-sounds.temp.info.message.no-sounds" = "Sleep Sounds will be available once Sense has finished updating. Note that this may take up to an hour.";
 "sleep-sounds.temp.info.title.fw-update" = "Sense needs to update";

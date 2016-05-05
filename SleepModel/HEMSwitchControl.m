@@ -15,7 +15,7 @@
 
 - (void)awakeFromNib {
     self.onTintColor = [UIColor tintColor];
-    self.backgroundColor = [UIColor switchOffBackgroundColor];
+    self.backgroundColor = [UIColor grey1];
     self.layer.cornerRadius = ceilf(CGRectGetHeight(self.bounds) / 2);
 }
 

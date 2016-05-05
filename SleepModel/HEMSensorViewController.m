@@ -37,7 +37,6 @@ typedef NS_ENUM(NSInteger, HEMSensorLoadState) {
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* selectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* selectionLeftConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint* tinySeparatorConstraint;
 
 @property (strong, nonatomic) NSArray* hourlyDataSeries;
 @property (strong, nonatomic) NSArray* dailyDataSeries;
@@ -178,8 +177,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     mask.frame = self.graphView.bounds;
     mask.colors = @[(id)[UIColor whiteColor].CGColor,
                     (id)[UIColor whiteColor].CGColor,
-                    (id)[UIColor backViewBackgroundColor].CGColor,
-                    (id)[UIColor backViewBackgroundColor].CGColor];
+                    (id)[UIColor backgroundColor].CGColor,
+                    (id)[UIColor backgroundColor].CGColor];
     mask.startPoint = CGPointMake(0, 0.5);
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
@@ -192,7 +191,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     static CGFloat const HEMSensorBarButtonSpace = 8.f;
     if (self.navigationItem.rightBarButtonItems.count > 1)
         return;
-    self.tinySeparatorConstraint.constant = 0.5f;
     UIImage* image = [UIImage imageNamed:@"infoIconSmall"];
     UIButton* buttonView = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
@@ -247,14 +245,25 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     self.graphView.alwaysDisplayDots = NO;
 }
 
-- (void)configureSensorValueViews
-{
+- (void)configureSensorValueViews {
+    UIColor* color = [UIColor colorForCondition:self.sensor.condition];
+    self.graphView.colorTouchInputLine = color;
+    self.graphView.colorLine = color;
+    self.graphView.alphaLine = 0.7;
+    self.graphView.colorPoint = color;
+    self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
+    
+    [self showSensorDetails];
+    [self.graphView reloadGraph];
+}
+
+- (void)showSensorDetails {
     UIColor* color = [UIColor colorForCondition:self.sensor.condition];
     NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessage];
-
+    
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
-
+    
     self.valueLabel.font = [UIFont sensorValueFontForUnit:self.sensor.unit];
     self.unitLabel.font = [UIFont sensorUnitFontForUnit:self.sensor.unit];
     
@@ -273,12 +282,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     }
     
     self.statusMessageLabel.attributedText = statusMessage;
-    self.graphView.colorTouchInputLine = color;
-    self.graphView.colorLine = color;
-    self.graphView.alphaLine = 0.7;
-    self.graphView.colorPoint = color;
-    self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
-    [self.graphView reloadGraph];
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
@@ -525,7 +528,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [style setAlignment:NSTextAlignmentCenter];
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont sensorGraphNoDataFont],
-                                 NSForegroundColorAttributeName : [UIColor sensorGraphNoDataColor],
+                                 NSForegroundColorAttributeName : [UIColor detailTextColor],
                                  NSParagraphStyleAttributeName : style};
 
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
@@ -556,7 +559,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
-    [self configureSensorValueViews];
+    [self showSensorDetails];
     self.panning = NO;
     self.scrollView.contentOffset = self.oldScrollOffset;
     self.oldScrollOffset = CGPointZero;

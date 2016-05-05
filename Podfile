@@ -7,7 +7,6 @@ ENV['COCOAPODS_DISABLE_STATS'] = '1'
 # UI
 pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'UIImageEffects', '~> 0.0.1'
-pod 'SpinKit', '~> 1.2.0'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 pod 'MSDynamicsDrawerViewController', '1.5.1'
 pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git',

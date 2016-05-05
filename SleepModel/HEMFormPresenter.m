@@ -25,7 +25,7 @@
 @implementation HEMFormPresenter
 
 - (void)bindWithSaveItem:(UIBarButtonItem*)saveItem {
-    UIColor* disabledColor = [UIColor barButtonDisabledColor];
+    UIColor* disabledColor = [UIColor disabledColor];
     NSDictionary* attributes = @{NSForegroundColorAttributeName : disabledColor};
     [saveItem setTitleTextAttributes:attributes
                                          forState:UIControlStateDisabled];

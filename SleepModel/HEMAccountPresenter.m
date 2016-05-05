@@ -70,6 +70,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 @property (nonatomic, weak) HEMHealthKitService* healthKitService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
+@property (nonatomic, weak) UISwitch* activatedSwitch;
 
 @end
 
@@ -92,7 +93,6 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     [tableView setTableFooterView:footerView];
     [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView setBackgroundView:nil];
-    [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView setSectionFooterHeight:0.0f];
@@ -230,7 +230,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     if (!_enhancedAudioNote) {
         NSString* note = NSLocalizedString(@"settings.enhanced-audio.desc", nil);
         NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsHelpFont],
-                                     NSForegroundColorAttributeName : [UIColor settingsCellTitleTextColor]};
+                                     NSForegroundColorAttributeName : [UIColor textColor]};
         _enhancedAudioNote = [[NSAttributedString alloc] initWithString:note attributes:attributes];
     }
     return _enhancedAudioNote;
@@ -255,6 +255,8 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 #pragma mark - Preference Actions
 
 - (void)togglePreferenceSwitch:(UISwitch*)control {
+    [self setActivatedSwitch:control];
+    
     switch ([control tag]) {
         case HEMPreferencesRowEnhancedAudio: {
             __weak typeof(self) weakSelf = self;
@@ -277,13 +279,13 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     }
 }
 
-// TODO: move this in to a HEMHealthKitService, when we move SENServiceHealthKit
 - (void)enableHealthKit:(BOOL)enable {
     if (enable) {
         if (![[self healthKitService] isSupported]) {
             NSString* title = NSLocalizedString(@"settings.account.error.title.hk", nil);
             NSString* message = NSLocalizedString(@"settings.account.error.message.hk-not-supported", nil);
             [[self delegate] showErrorTitle:title message:message from:self];
+            [[self activatedSwitch] setOn:NO animated:YES];
         } else {
             __weak typeof(self) weakSelf = self;
             [[self healthKitService] requestAuthorization:^(NSError *error) {
@@ -294,6 +296,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
                     NSString* title = NSLocalizedString(@"settings.account.error.title.hk", nil);
                     NSString* message = NSLocalizedString(@"settings.account.error.message.hk-request-failed", nil);
                     [[strongSelf delegate] showErrorTitle:title message:message from:strongSelf];
+                    [[strongSelf activatedSwitch] setOn:NO animated:YES];
                 }
             }];
         }
@@ -374,9 +377,9 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor settingsCellTitleTextColor]];
+    [[cell textLabel] setTextColor:[UIColor textColor]];
     
-    [[cell detailTextLabel] setTextColor:[UIColor settingsValueTextColor]];
+    [[cell detailTextLabel] setTextColor:[UIColor detailTextColor]];
     [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     [[cell detailTextLabel] setText:nil];
     

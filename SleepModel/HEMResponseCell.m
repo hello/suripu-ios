@@ -32,10 +32,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
-    UIColor* color
-        = selected
-        ? [UIColor questionAnswerSelectedTextColor]
-        : [UIColor tintColor];
+    UIColor* color = selected ? [UIColor blue2] : [UIColor tintColor];
     [[self answerLabel] setTextColor:color];
 }
 

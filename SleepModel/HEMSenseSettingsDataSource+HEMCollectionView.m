@@ -136,7 +136,7 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
         view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                   withReuseIdentifier:HEMSenseSettingsHeaderReuseId
                                                          forIndexPath:indexPath];
-        [view setBackgroundColor:[UIColor backViewBackgroundColor]];
+        [view setBackgroundColor:[UIColor backgroundColor]];
     }
     
     return view;

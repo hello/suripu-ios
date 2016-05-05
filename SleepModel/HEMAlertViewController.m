@@ -89,10 +89,10 @@
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         imageView.translatesAutoresizingMaskIntoConstraints = YES;
-        imageView.image = [[self viewToShowThrough] snapshotWithTint:[UIColor alertBackgroundColor]];
+        imageView.image = [[self viewToShowThrough] snapshotWithTint:[UIColor seeThroughBackgroundColor]];
         [[self view] insertSubview:imageView atIndex:0];
     } else {
-        [[self view] setBackgroundColor:[UIColor alertBackgroundColor]];
+        [[self view] setBackgroundColor:[UIColor seeThroughBackgroundColor]];
     }
 }
 

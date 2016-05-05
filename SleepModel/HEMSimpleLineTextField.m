@@ -19,7 +19,7 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
         [self setBorderStyle:UITextBorderStyleNone];
         [self setTintColor:[UIColor tintColor]];
         [self setFont:[UIFont textfieldTextFont]];
-        [self setTextColor:[UIColor textfieldTextColor]];
+        [self setTextColor:[UIColor grey6]];
         [self setFocus:NO];
     }
     return self;
@@ -60,10 +60,7 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
 }
 
 - (void)setFocus:(BOOL)focus {
-    UIColor* placeholderColor
-        = [self isFirstResponder]
-        ? [UIColor textfieldPlaceholderFocusedColor]
-        : [UIColor textfieldPlaceholderColor];
+    UIColor* placeholderColor = [self isFirstResponder] ? [UIColor grey2] : [UIColor grey3];
     
     NSDictionary* placeHolderAttrs = @{
         NSFontAttributeName : [UIFont textfieldPlaceholderFont],

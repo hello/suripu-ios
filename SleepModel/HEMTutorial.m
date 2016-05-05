@@ -108,7 +108,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
     UIImage* snapshot = [[controller view] snapshot];
-    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor tutorialBackgroundColor]];
+    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor lightSeeThroughBackgroundColor]];
     
     HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
     [tutorialVC setTutorials:content];
@@ -239,6 +239,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTimelineKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
+    [prefs setPersistentPreference:@NO forKey:HEMTutorialSleepSoundsKey];
 }
 
 @end

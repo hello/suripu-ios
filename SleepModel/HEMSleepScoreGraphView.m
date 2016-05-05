@@ -49,7 +49,7 @@ CGFloat const arcOffsetY = 80.f;
                                                         clockwise:YES];
     self.backgroundLayer.path = arcPath.CGPath;
     self.backgroundLayer.fillColor = fillColor.CGColor;
-    self.backgroundLayer.strokeColor = [UIColor sleepScoreOvalColor].CGColor;
+    self.backgroundLayer.strokeColor = [UIColor borderColor].CGColor;
     self.backgroundLayer.lineWidth = 1.f;
     self.backgroundLayer.frame = self.bounds;
     self.loadingLayer.fillColor = fillColor.CGColor;
@@ -133,9 +133,9 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (CAAnimation *)strokeColorAnimationWithScoreEndValue:(CGFloat)value {
-    CGColorRef alertColor = [UIColor conditionAlertColor].CGColor;
-    CGColorRef warningColor = [UIColor conditionWarningColor].CGColor;
-    CGColorRef idealColor = [UIColor conditionIdealColor].CGColor;
+    CGColorRef alertColor = [UIColor colorForCondition:SENConditionAlert].CGColor;
+    CGColorRef warningColor = [UIColor colorForCondition:SENConditionWarning].CGColor;
+    CGColorRef idealColor = [UIColor colorForCondition:SENConditionIdeal].CGColor;
     NSMutableArray *values = [NSMutableArray arrayWithObjects:(__bridge id)alertColor, nil];
     CGColorRef targetColor = [UIColor colorForCondition:self.condition].CGColor;
     BOOL targetIsAlert = CGColorEqualToColor(targetColor, alertColor);
@@ -157,11 +157,11 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (void)animateScoreLabelTo:(CGFloat)value {
-    self.scoreValueLabel.textColor = [UIColor conditionAlertColor];
+    self.scoreValueLabel.textColor = [UIColor colorForCondition:SENConditionAlert];
     self.scoreValueLabel.alpha = 1.f;
     UIColor *targetColor = [UIColor colorForCondition:self.condition];
-    UIColor *idealColor = [UIColor conditionIdealColor];
-    UIColor *warnColor = [UIColor conditionWarningColor];
+    UIColor *idealColor = [UIColor colorForCondition:SENConditionIdeal];
+    UIColor *warnColor = [UIColor colorForCondition:SENConditionWarning];
     if (![targetColor isEqual:self.scoreValueLabel.textColor]) {
         int64_t delay = (int64_t)((HEMSleepScoreAnimationDuration / 3) * NSEC_PER_SEC);
         __weak typeof(self) weakSelf = self;

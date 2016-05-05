@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 12/30/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import <SenseKit/SENAlarm.h>
 
 #import "SENService.h"
 
@@ -28,11 +29,16 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
  */
 - (void)loadAvailableAlarmSounds:(HEMAlarmSoundHandler)completion;
 - (void)refreshAlarms:(HEMAlarmsHandler)completion;
-- (void)updateAlarms:(NSArray<SENAlarm*>*)alarms completion:(HEMAlarmUpdateHandler)completion;
+- (void)updateAlarms:(NSArray<SENAlarm*>*)alarms
+          completion:(nullable HEMAlarmUpdateHandler)completion;
 - (BOOL)isTimeTooSoon:(HEMAlarmCache*)cache;
 - (BOOL)willRingToday:(HEMAlarmCache*)cache;
 - (NSString*)localizedTextForRepeatFlags:(NSUInteger)alarmRepeatFlags;
 - (void)copyCache:(HEMAlarmCache*)cache to:(SENAlarm*)alarm;
+- (BOOL)canAddRepeatDay:(SENAlarmRepeatDays)day
+                     to:(HEMAlarmCache*)alarmCache
+              excluding:(SENAlarm*)excludedAlarm;
+- (BOOL)canCreateMoreAlarms;
 
 @end
 

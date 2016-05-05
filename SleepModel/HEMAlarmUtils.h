@@ -74,7 +74,4 @@ extern NSUInteger const HEMAlarmTooSoonMinuteLimit;
 + (void)refreshAlarmsFromPresentingController:(UIViewController*)controller
                                    completion:(void (^)(NSError*))completion;
 
-+ (BOOL)areRepeatDaysValid:(SENAlarmRepeatDays)repeatDays
-             forSmartAlarm:(SENAlarm*)alarm presentingControllerForErrors:(UIViewController*)controller;
-
 @end

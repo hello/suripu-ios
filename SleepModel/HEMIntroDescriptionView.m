@@ -32,7 +32,7 @@
     HEMIntroDescriptionView* view = [NSBundle loadNibWithOwner:self];
     [view setFrame:frame];
     [[view titleLabel] setFont:[UIFont welcomeIntroTitleFont]];
-    [[view titleLabel] setTextColor:[UIColor welcomeIntroDescriptionColor]];
+    [[view titleLabel] setTextColor:[UIColor grey6]];
     [[view titleLabel] setText:title];
 
     NSAttributedString* attrDesc = [[NSAttributedString alloc] initWithString:description
@@ -47,7 +47,7 @@
     [style setLineHeightMultiple:1.2f];
     
     return @{NSFontAttributeName : [UIFont welcomeIntroDescriptionFont],
-             NSForegroundColorAttributeName : [UIColor welcomeIntroDescriptionColor],
+             NSForegroundColorAttributeName : [UIColor grey6],
              NSParagraphStyleAttributeName : style};
 }
 

@@ -43,7 +43,7 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
     borderFrame.origin.y = yOrigin;
     borderFrame.size.height = HEMSettingsHeaderFooterBorderHeight;
     UIView* border = [[UIView alloc] initWithFrame:borderFrame];
-    [border setBackgroundColor:[UIColor headerFooterDividerColor]];
+    [border setBackgroundColor:[UIColor separatorColor]];
     [border setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     return border;
 }
@@ -65,7 +65,7 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 
 - (void)setTitle:(NSString*)title {
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsSectionHeaderFont],
-                                 NSForegroundColorAttributeName : [UIColor settingsSectionHeaderTextColor]};
+                                 NSForegroundColorAttributeName : [UIColor grey4]};
     NSAttributedString* attrTitle = [[NSAttributedString alloc] initWithString:title attributes:attributes];
     [self setAttributedTitle:attrTitle];
 }

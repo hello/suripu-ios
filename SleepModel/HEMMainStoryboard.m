@@ -13,7 +13,6 @@ static NSString *const _HEMabout = @"about";
 static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMaction = @"action";
 static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
-static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListEmptyCell = @"alarmListEmptyCell";
@@ -23,8 +22,8 @@ static NSString *const _HEMalarmListViewController = @"alarmListViewController";
 static NSString *const _HEMalarmNavController = @"alarmNavController";
 static NSString *const _HEMalarmRepeat = @"alarmRepeat";
 static NSString *const _HEMalarmRepeatCell = @"alarmRepeatCell";
-static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableViewController";
 static NSString *const _HEMalarmSoundCell = @"alarmSoundCell";
+static NSString *const _HEMalarmSounds = @"alarmSounds";
 static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMalarms = @"alarms";
@@ -57,7 +56,6 @@ static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoption = @"option";
 static NSString *const _HEMpair = @"pair";
-static NSString *const _HEMpickSound = @"pickSound";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
@@ -106,7 +104,6 @@ static NSString *const _HEMwarning = @"warning";
 /** Cell Reuse Identifiers */
 +(NSString *)aboutReuseIdentifier { return _HEMabout; }
 +(NSString *)actionReuseIdentifier { return _HEMaction; }
-+(NSString *)alarmChoiceCellReuseIdentifier { return _HEMalarmChoiceCell; }
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
 +(NSString *)alarmListEmptyCellReuseIdentifier { return _HEMalarmListEmptyCell; }
@@ -154,11 +151,11 @@ static NSString *const _HEMwarning = @"warning";
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
++(NSString *)alarmSoundsSegueIdentifier { return _HEMalarmSounds; }
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }
-+(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
 +(NSString *)settingsToSupportSegueIdentifier { return _HEMsettingsToSupport; }
@@ -174,7 +171,6 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateAlarmListNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListNavViewController]; }
 +(id)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }
 +(id)instantiateAlarmNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmNavController]; }
-+(id)instantiateAlarmRepeatTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmRepeatTableViewController]; }
 +(id)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
 +(id)instantiateBreakdownController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }

@@ -12,6 +12,10 @@
 
 @interface UIColor (HEMStyle)
 
+#pragma mark - Appearances
+
++ (void)applyDefaultColorAppearances;
+
 #pragma mark - Standard Hello Colors from Style Guide
 
 #pragma mark Greys

@@ -72,7 +72,6 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
                                                                bottomBorder:NO];
     
-    [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setTableHeaderView:header];
     [tableView setTableFooterView:footer];
     [tableView setDelegate:self];

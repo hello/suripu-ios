@@ -244,6 +244,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         NSFontAttributeName : [UIFont navButtonTitleFont],
         NSForegroundColorAttributeName : [UIColor tintColor]
     } forState:UIControlStateNormal];
+    
+    [UIColor applyDefaultColorAppearances];
 }
 
 - (void)createAndShowWindow {

@@ -18,6 +18,13 @@
                            alpha:alpha];
 }
 
+#pragma mark - Appearance 
+
++ (void)applyDefaultColorAppearances {
+    [[UITableView appearance] setSeparatorColor:[self grey3]];
+    [[UILabel appearance] setTintColor:[self textColor]];
+}
+
 #pragma mark - Standard Hello Colors from Style Guide
 
 #pragma mark Greys
@@ -287,7 +294,7 @@
 #pragma mark - Background colors
 
 + (UIColor *)backgroundColor {
-    return [self grey2];
+    return [UIColor colorWithHex:0xEBEDF0 alpha:1.f];
 }
 
 + (UIColor *)lightBackgroundColor {
@@ -333,7 +340,7 @@
 #pragma mark - Card colors
 
 + (UIColor *)cardBorderColor {
-    return [UIColor grey2];
+    return [self colorWithHex:0xE5E5E5 alpha:1.f];
 }
 
 #pragma mark - Common colors
@@ -351,7 +358,7 @@
     return [self grey2];
 }
 + (UIColor *)touchIndicatorColor {
-    return [self grey3];
+    return [self grey1];
 }
 + (NSArray*)loadingIndicatorColorRefs {
     return @[(id)[[UIColor clearColor] CGColor],

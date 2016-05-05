@@ -67,7 +67,6 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
-    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
     [[self tableView] setBackgroundColor:[UIColor clearColor]];
 }
 

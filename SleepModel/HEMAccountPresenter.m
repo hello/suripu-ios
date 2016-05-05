@@ -93,7 +93,6 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     [tableView setTableFooterView:footerView];
     [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView setBackgroundView:nil];
-    [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView setSectionFooterHeight:0.0f];

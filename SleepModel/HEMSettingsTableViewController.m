@@ -69,8 +69,6 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     
     // footer
     [[self settingsTableView] setTableFooterView:[self versionFooterView]];
-    
-    [[self settingsTableView] setSeparatorColor:[UIColor separatorColor]];
 }
 
 - (UIView*)versionFooterView {

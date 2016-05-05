@@ -33,7 +33,7 @@
     [super viewDidLoad];
 
     [self setSelectedColor:[[UIColor tintColor] colorWithAlphaComponent:0.05f]];
-    [self setSelectedBorderColor:[[UIColor tintColor] colorWithAlphaComponent:0.4f]];
+    [self setSelectedBorderColor:[UIColor tintColor]];
     [self configureButtons];
     [self configureGenderSelectors];
     [self trackAnalyticsEvent:HEMAnalyticsEventGender];
@@ -53,9 +53,11 @@
 }
 
 - (void)configureGenderSelectors {
-    [[self selectorDivider] setBackgroundColor:[UIColor separatorColor]];
+    UIColor* separatorColor = [[UIColor separatorColor] colorWithAlphaComponent:0.5f];
+    
+    [[self selectorDivider] setBackgroundColor:separatorColor];
     [[[self selectorContainer] layer] setBorderWidth:1.0f];
-    [[[self selectorContainer] layer] setBorderColor:[[UIColor separatorColor] CGColor]];
+    [[[self selectorContainer] layer] setBorderColor:[separatorColor CGColor]];
     
     [[[self femaleSelectorButton] layer] setBorderWidth:0.0f];
     [[[self femaleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];

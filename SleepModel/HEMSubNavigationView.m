@@ -56,7 +56,7 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
     UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
     [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
                                     | UIViewAutoresizingFlexibleTopMargin];
-    [separator setBackgroundColor:[UIColor borderColor]];
+    [separator setBackgroundColor:[UIColor separatorColor]];
     
     [self addSubview:separator];
 }

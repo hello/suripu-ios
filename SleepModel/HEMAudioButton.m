@@ -133,9 +133,13 @@ static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
 }
 
 - (void)adjustSize {
-    [self sizeToFit];
     CGRect frame = [self frame];
-    frame.size.width += HEMAudioButtonTitleLeftInset;
+    
+    CGSize sizeConstraint = CGSizeMake(MAXFLOAT, CGRectGetHeight(frame));
+    CGFloat sizedWidth = [self sizeThatFits:sizeConstraint].width;
+    
+    frame.size.width = sizedWidth + HEMAudioButtonTitleLeftInset;
+    
     [self setFrame:frame];
 }
 

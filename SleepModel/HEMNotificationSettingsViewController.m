@@ -41,8 +41,6 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
-    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
-    [[self tableView] setBackgroundColor:[UIColor backgroundColor]];
 }
 
 - (void)reload {

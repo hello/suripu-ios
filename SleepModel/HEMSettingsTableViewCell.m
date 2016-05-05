@@ -124,9 +124,10 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
     if (isVisible) {
         NSShadow *shadow = [NSShadow shadowForBackViewCards];
         layer.shadowOffset = shadow.shadowOffset;
-        layer.shadowOpacity = 1.f;
+        layer.shadowOpacity = 0.3f;
         layer.shadowRadius = shadow.shadowBlurRadius;
         layer.shadowColor = [shadow.shadowColor CGColor];
+        layer.borderColor = [[UIColor borderColor] CGColor];
     } else { layer.shadowOpacity = 0; }
 }
 

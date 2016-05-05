@@ -29,7 +29,7 @@ CGFloat const miniScoreBaseHeight = 72.f;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* sleepScoreOvalColor = [UIColor grey3];
+    UIColor* sleepScoreOvalColor = [UIColor borderColor];
 
     //// Variable Declarations
     UIColor* sleepScoreColor = [UIColor colorForSleepScore:sleepScore];

@@ -134,6 +134,11 @@
 + (UIColor *)backgroundColor;
 + (UIColor *)lightBackgroundColor;
 
+#pragma mark - Card colors
+
++ (UIColor *)cardBorderColor;
++ (UIColor *)cardTitleColor;
+
 #pragma mark - Common colors
 
 /**
@@ -165,7 +170,6 @@
 + (UIColor *)subNavActiveTitleColor;
 + (UIColor *)subNavInactiveTitleColor;
 + (UIColor *)separatorColor;
-+ (UIColor *)cardBorderColor;
 + (UIColor *)borderColor;
 + (UIColor *)touchIndicatorColor;;
 + (NSArray*)loadingIndicatorColorRefs;

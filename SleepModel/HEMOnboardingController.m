@@ -160,7 +160,7 @@
 
 - (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
     UIFont* font = [UIFont onboardingDescriptionFont];
-    UIColor* color = [UIColor grey6];
+    UIColor* color = [UIColor grey5];
     
     // avoid overriding any substrings that may already have attributes set
     [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])

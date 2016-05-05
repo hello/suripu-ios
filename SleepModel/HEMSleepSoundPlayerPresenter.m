@@ -468,7 +468,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
     
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataTitleFont],
-                                 NSForegroundColorAttributeName : [UIColor textColor]};
+                                 NSForegroundColorAttributeName : [UIColor grey5]};
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 
@@ -566,28 +566,32 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)configureSleepSoundConfigurationCell:(HEMSleepSoundConfigurationCell*)cell {
-    [[cell titleLabel] setTextColor:[UIColor textColor]];
+    UIColor* titleColor = [UIColor cardTitleColor];
+    UIColor* typeColor = [UIColor cardTitleColor];
+    UIColor* valueColor = [UIColor detailTextColor];
+    
+    [[cell titleLabel] setTextColor:titleColor];
     [[cell titleLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.stopped", nil)];
     [[cell playingLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.playing", nil)];
-    [[cell playingLabel] setTextColor:[UIColor textColor]];
-
-    [[cell soundLabel] setTextColor:[UIColor textColor]];
+    [[cell playingLabel] setTextColor:titleColor];
+    
+    [[cell soundLabel] setTextColor:typeColor];
     [[cell soundValueLabel] setText:[[self selectedSound] localizedName]];
-    [[cell soundValueLabel] setTextColor:[UIColor detailTextColor]];
+    [[cell soundValueLabel] setTextColor:valueColor];
     [[cell soundSelectorButton] addTarget:self
                                    action:@selector(changeSound:)
                          forControlEvents:UIControlEventTouchUpInside];
     
-    [[cell durationLabel] setTextColor:[UIColor textColor]];
+    [[cell durationLabel] setTextColor:typeColor];
     [[cell durationValueLabel] setText:[[self selectedDuration] localizedName]];
-    [[cell durationValueLabel] setTextColor:[UIColor detailTextColor]];
+    [[cell durationValueLabel] setTextColor:valueColor];
     [[cell durationSelectorButton] addTarget:self
                                       action:@selector(changeDuration:)
                             forControlEvents:UIControlEventTouchUpInside];
     
-    [[cell volumeLabel] setTextColor:[UIColor textColor]];
+    [[cell volumeLabel] setTextColor:typeColor];
     [[cell volumeValueLabel] setText:[[self selectedVolume] localizedName]];
-    [[cell volumeValueLabel] setTextColor:[UIColor detailTextColor]];
+    [[cell volumeValueLabel] setTextColor:valueColor];
     [[cell volumeSelectorButton] addTarget:self
                                     action:@selector(changeVolume:)
                           forControlEvents:UIControlEventTouchUpInside];

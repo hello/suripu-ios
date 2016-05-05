@@ -342,6 +342,15 @@
 + (UIColor *)cardBorderColor {
     return [self colorWithHex:0xE5E5E5 alpha:1.f];
 }
++ (UIColor *)cardTitleColor {
+    return [self grey5];
+}
+
+#pragma mark - Separators / Lines
+
++ (UIColor *)separatorColor {
+    return [self grey2];
+}
 
 #pragma mark - Common colors
 
@@ -350,9 +359,6 @@
 }
 + (UIColor *)disabledColor {
     return [self grey4];
-}
-+ (UIColor *)separatorColor {
-    return [self grey2];
 }
 + (UIColor *)borderColor {
     return [self grey2];

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.1.8
+
+Fixes:
+
+* Fix colors for onboarding description being too close to the title
+* Fix color for Trends and Sleep sounds card title
+* Fix color for Trends dash line in bar chart
+* Fix issue with the tap state on Timeline events to have more contrast with background
+
 ## 1.4.1.7
 
 New:

@@ -106,14 +106,14 @@
         [[self titleHeightConstraint] setConstant:0.0f];
         [[self titleLabel] setHidden:YES];
     } else {
-        [[self titleLabel] setTextColor:[UIColor grey7]];
+        [[self titleLabel] setTextColor:[UIColor boldTextColor]];
         [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     }
 }
 
 - (void)configureDescription {
     if ([self descriptionLabel] != nil) {
-        UIColor* color = [UIColor grey6];
+        UIColor* color = [UIColor grey5];
         UIFont* font = [UIFont onboardingDescriptionFont];
         NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
         
@@ -160,7 +160,7 @@
 
 - (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
     UIFont* font = [UIFont onboardingDescriptionFont];
-    UIColor* color = [UIColor grey6];
+    UIColor* color = [UIColor grey5];
     
     // avoid overriding any substrings that may already have attributes set
     [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])

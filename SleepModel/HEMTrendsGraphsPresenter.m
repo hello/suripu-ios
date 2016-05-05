@@ -460,7 +460,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [barCell setNormalBarColor:[UIColor blue3]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
     [barCell setMinValue:[[graph minValue] CGFloatValue]];
-    [barCell setDashLineColor:[UIColor grey1]];
+    [barCell setDashLineColor:[UIColor separatorColor]];
     [barCell setHighlightLabelTextFormat:highlightFormat];
     [barCell setHighlightTextFont:[UIFont trendsHighlightLabelFont]];
     [barCell updateGraphWithTitles:attributedTitles

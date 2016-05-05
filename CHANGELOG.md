@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.4.1.7
+
+New:
+
+* Consolidated the colors used inside the app to reduce number of shades of a color used
+* Animate the alarm add button like sleep sounds to make it consistent
+* Overriding the User-Agent header to something that is standard between Android and iOS
+
+Fixes:
+
+* Fixed the added delay after releasing the touch event from the sensor history graph
+
 ## 1.4.1.6
 
 New:

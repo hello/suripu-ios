@@ -60,7 +60,7 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
 }
 
 - (void)setFocus:(BOOL)focus {
-    UIColor* placeholderColor = [self isFirstResponder] ? [UIColor grey2] : [UIColor grey3];
+    UIColor* placeholderColor = [self isFirstResponder] ? [UIColor grey3] : [UIColor grey4];
     
     NSDictionary* placeHolderAttrs = @{
         NSFontAttributeName : [UIFont textfieldPlaceholderFont],

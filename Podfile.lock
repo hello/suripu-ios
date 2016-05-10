@@ -1,24 +1,18 @@
 PODS:
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
-    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Analytics (3.0.7)
   - AttributedMarkdown (0.9.2)
@@ -51,7 +45,7 @@ PODS:
   - SenseKit/Analytics (0.1.0):
     - CocoaLumberjack (~> 2.0.0)
   - SenseKit/API (0.1.0):
-    - AFNetworking (~> 2.6.0)
+    - AFNetworking (~> 3.1.0)
     - FXKeychain (~> 1.5.1)
     - NSJSONSerialization-NSNullRemoval (~> 1.0.0)
   - SenseKit/BLE (0.1.0):
@@ -130,7 +124,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 0efce1269d79d25fc39ec02e636e25f6ae65af3a
+    :commit: 20efd97f0bccbd50b73ce60aa64da3223bcb37b8
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -143,7 +137,7 @@ CHECKOUT OPTIONS:
     :tag: 1.5.4.1
 
 SPEC CHECKSUMS:
-  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
   AttributedMarkdown: ac5060667280be8cc8ee33a46c73e4ec6b17ca1a
   BEMSimpleLineGraph: 5999b2da02b6e935121608cfc58f6c369e06bde8
@@ -157,7 +151,7 @@ SPEC CHECKSUMS:
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
-  SenseKit: 5a346e4cf1eb67dee4a34706f8a21114529d7f64
+  SenseKit: dcc809e4474e7a84ed9c95b4a176abb862f61198
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1

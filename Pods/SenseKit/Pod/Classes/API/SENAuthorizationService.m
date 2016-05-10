@@ -1,7 +1,5 @@
 
 #import <AFNetworking/AFHTTPSessionManager.h>
-#import <AFNetworking/AFHTTPRequestOperation.h>
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <FXKeychain/FXKeychain.h>
 
 #import "SENAuthorizationService.h"
@@ -23,6 +21,7 @@ static NSString* const SENAuthorizationServiceAccountIdKey = @"account_id";
 static NSString* const SENAuthorizationServiceAccessTokenKey = @"access_token";
 static NSInteger const SENAuthorizationServiceDeauthorizationCode = 401;
 static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authorization";
+static NSString* const SENAuthorizationServiceContentType = @"application/x-www-form-urlencoded";
 
 + (FXKeychain*)keychain {
     static FXKeychain* keychain = nil;
@@ -69,15 +68,17 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
                        callback:block];
 }
 
-+ (AFHTTPRequestSerializer*)requestSerializer
-{
-    static AFHTTPRequestSerializer* serializer;
++ (AFHTTPSessionManager*)sessionManager {
+    static AFHTTPSessionManager* manager;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        serializer = [[AFHTTPRequestSerializer alloc] init];
-        [serializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        AFHTTPRequestSerializer* serializer = [AFHTTPRequestSerializer new];
+        [serializer setValue:SENAuthorizationServiceContentType forHTTPHeaderField:@"Content-Type"];
+        
+        manager = [AFHTTPSessionManager manager];
+        [manager setRequestSerializer:serializer];
     });
-    return serializer;
+    return manager;
 }
 
 + (void)deauthorize
@@ -142,18 +143,23 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
                               @"password" : password ?: @"" };
     
     NSURL* url = [[SENAPIClient baseURL] URLByAppendingPathComponent:SENAuthorizationServiceTokenPath];
-    NSMutableURLRequest* request = [[self requestSerializer] requestWithMethod:@"POST" URLString:[url absoluteString] parameters:params error:nil];
     
-    AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation* operation, id responseObject) {
-        NSDictionary* response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-        if (block)
-            block(response, operation.error);
-    } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-        if (block)
+    AFHTTPSessionManager* manager = [self sessionManager];
+    [manager POST:[url absoluteString] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary* response = nil;
+        if ([responseObject isKindOfClass:[NSData class]]) {
+            response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        } else if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            response = responseObject;
+        } // else, ignore the response
+        if (block) {
+            block(response, nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (block) {
             block(nil, error);
+        }
     }];
-    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
 }
 
 + (id)authorizationHeaderValue

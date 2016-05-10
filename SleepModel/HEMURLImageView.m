@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 2/6/15.
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
-#import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/UIKit+AFNetworking.h>
 #import "HEMURLImageView.h"
 #import "HEMActivityIndicatorView.h"
 
@@ -14,7 +14,7 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
 
 @interface HEMURLImageView()
 
-@property (nonatomic, strong) AFHTTPRequestOperation* urlOperation;
+@property (nonatomic, strong) AFImageDownloadReceipt* downloadReceipt;
 @property (nonatomic, copy)   NSString* currentImageURL;
 @property (nonatomic, weak)   HEMActivityIndicatorView* activityIndicator;
 
@@ -131,31 +131,30 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
         [self showActivity:YES];
     }
     
-    AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setResponseSerializer:[AFImageResponseSerializer serializer]];
-    
     __block NSString* url = [[request URL] absoluteString];
     __weak typeof(self) weakSelf = self;
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, UIImage* image) {
+    
+    AFImageDownloader* downloader = [AFImageDownloader defaultInstance];
+    [downloader downloadImageForURLRequest:request success:^(NSURLRequest * request, NSHTTPURLResponse * response, UIImage * responseObject) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setImage:image];
+        [strongSelf setImage:responseObject];
         [strongSelf setCurrentImageURL:url];
         [strongSelf showActivity:NO];
+        [strongSelf setDownloadReceipt:nil];
         if (completion) {
-            completion (image, url, nil);
+            completion (responseObject, url, nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         // not sure what design wants to show in this case, but i have asked
         // and they said not to worry about it for now and just don't show
         // anything
-        [weakSelf showActivity:NO];
+        [strongSelf showActivity:NO];
+        [strongSelf setDownloadReceipt:nil];
         if (completion) {
             completion (nil, url, error);
         }
     }];
-    
-    [self setUrlOperation:operation];
-    [[self urlOperation] start];
 }
 
 - (void)showActivity:(BOOL)show {
@@ -175,8 +174,9 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
 }
 
 - (void)cancelImageDownload {
-    if ([self urlOperation] != nil) {
-        [[self urlOperation] cancel];
+    if ([self downloadReceipt]) {
+        [[AFImageDownloader defaultInstance] cancelTaskForImageDownloadReceipt:[self downloadReceipt]];
+        [self setDownloadReceipt:nil];
     }
 }
 

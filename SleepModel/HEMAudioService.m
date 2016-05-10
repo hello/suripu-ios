@@ -65,32 +65,29 @@ NSString* const HEMAudioServiceErrorDomain = @"is.hello.app.audio";
 - (void)downloadAudioFileWithURL:(NSString*)urlString completion:(HEMAudioDownloadHandler)completion {
     // if there are anything pending, don't let it block new call, so cancel the
     // download.  if we want to, in the future, decide to queue up a bunch of
-    // downloads, we can modify this
+    // downloads, we can modify this.  This will also prevent the wrong file from
+    // being played, which is important
     [[self soundFileDownloadQueue] cancelAllOperations];
+    
+    if ([urlString length] == 0) {
+        NSDictionary* info = @{NSLocalizedDescriptionKey : urlString ? : @"url is undefined"};
+        NSError* error = [NSError errorWithDomain:HEMAudioServiceErrorDomain
+                                             code:HEMAudioServiceErrorInvalidURL
+                                         userInfo:info];
+        [SENAnalytics trackError:error];
+        completion (nil, error);
+        return;
+    }
+    
     [[self soundFileDownloadQueue] addOperationWithBlock:^{
-        NSError* error = nil;
-        NSData* data = nil;
-
-        if (!urlString) {
-            NSDictionary* info = @{NSLocalizedDescriptionKey : urlString ? : @"url is undefined"};
-            error = [NSError errorWithDomain:HEMAudioServiceErrorDomain
-                                        code:HEMAudioServiceErrorInvalidURL
-                                    userInfo:info];
+        AFHTTPSessionManager* downloader = [AFHTTPSessionManager manager];
+        [downloader setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+        [downloader GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            completion (responseObject, nil);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [SENAnalytics trackError:error];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion (data, error);
-            });
-        } else {
-            AFHTTPSessionManager* downloader = [AFHTTPSessionManager manager];
-            [downloader setResponseSerializer:[AFHTTPResponseSerializer serializer]];
-            [downloader GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                completion (responseObject, nil);
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                [SENAnalytics trackError:error];
-                completion (nil, error);
-            }];
-        }
-        
+            completion (nil, error);
+        }];
     }];
 }
 

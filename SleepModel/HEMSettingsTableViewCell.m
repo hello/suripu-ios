@@ -67,17 +67,20 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
     return CGRectGetMinX([[self titleLabel] frame]);
 }
 
+- (void)relayoutSeparator {
+    CGFloat x = [self separatorIndentation];
+    CGRect separatorFrame = CGRectZero;
+    separatorFrame.origin.x = x;
+    separatorFrame.origin.y = CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize;
+    separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
+    separatorFrame.size.height = HEMSettingsCellSeparatorSize;
+    [[self separator] setFrame:separatorFrame];
+}
+
 - (void)addSeparator {
     if (![self separator]) {
-        CGFloat x = [self separatorIndentation];
-        CGRect separatorFrame = CGRectZero;
-        separatorFrame.origin.x = x;
-        separatorFrame.origin.y = CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize;
-        separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
-        separatorFrame.size.height = HEMSettingsCellSeparatorSize;
-        UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectZero];
         [separator setBackgroundColor:[UIColor separatorColor]];
-        [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
         [self setSeparator:separator];
         [[self contentView] addSubview:separator];
     }
@@ -92,12 +95,7 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-
-    CGFloat x = [self separatorIndentation];
-    CGRect separatorFrame = [[self separator] frame];
-    separatorFrame.origin.x = x;
-    separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
-    [[self separator] setFrame:separatorFrame];
+    [self relayoutSeparator];
 }
 
 - (void)roundContentLayerCorners:(UIRectCorner)corners {

@@ -74,8 +74,11 @@
                     [handholdingView setAnchor:HEMHHDialogAnchorBottom];
                     
                     __weak typeof(self) weakSelf = self;
-                    [handholdingView showInView:containerView dismissAction:^{
-                        [weakSelf didCompleteHandHolding];
+                    [handholdingView showInView:containerView fromContentView:collectionView dismissAction:^(BOOL shown) {
+                        __strong typeof(weakSelf) strongSelf = self;
+                        if (shown) {
+                            [strongSelf didCompleteHandHolding];
+                        }
                     }];
                     
                 } else {

@@ -150,6 +150,7 @@ static BOOL hasLoadedBefore = NO;
     HEMTimelineHandHoldingPresenter* hhPresenter
         = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
     [hhPresenter setDelegate:self];
+    [hhPresenter bindWithContentView:[self collectionView]];
     
     [self setHandHoldingPresenter:hhPresenter];
     [self addPresenter:hhPresenter];

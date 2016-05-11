@@ -51,8 +51,11 @@
     [handholdingView setAnchor:HEMHHDialogAnchorTop];
     
     __weak typeof(self) weakSelf = self;
-    [handholdingView showInView:view dismissAction:^{
-        [weakSelf didCompleteSrubbingHandHolding];
+    [handholdingView showInView:view fromContentView:graphView dismissAction:^(BOOL shown) {
+        __strong typeof(weakSelf) strongSelf = self;
+        if (shown) {
+            [strongSelf didCompleteSrubbingHandHolding];
+        }
     }];
     [self setCurrentHandHoldingView:handholdingView];
 }

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.4.2.1
+
+New:
+
+* Increased timeout to 70s when setting WiFi over BLE on Sense
+* Upgraded AFNetworking to 3.1.0 and ensured connection goes through Session Manager
+
+Fixes:
+
+* Fixes the disappearing dividers in the setting screen when pushing the screen off the viewport
+* Adjusted grey scale of placeholder text for custom text fields
+
 ## 1.4.1.8
 
 Fixes:

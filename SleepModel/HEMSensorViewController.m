@@ -161,8 +161,9 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 
 - (void)showTutorial
 {
-    if ([self isViewLoaded] && self.view.window)
+    if ([self isFullyVisibleInWindow]) {
         [HEMTutorial showTutorialForSensorNamed:self.sensor.name];
+    }
 }
 
 #pragma mark - Configuration

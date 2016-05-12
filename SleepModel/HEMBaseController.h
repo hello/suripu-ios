@@ -40,6 +40,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (UIView*)backgroundViewForAlerts;
 
+/**
+ * @return YES if the view of this view controller is fully visible within the
+ *         the current window.  No otherwise, even if only 1 pt is out of the
+ *         viewport
+ */
+- (BOOL)isFullyVisibleInWindow;
+
 @end
 
 NS_ASSUME_NONNULL_END

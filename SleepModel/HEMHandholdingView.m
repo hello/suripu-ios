@@ -40,9 +40,29 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     return onMessage;
 }
 
+- (BOOL)isContentViewStillVisible:(UIView*)contentView {
+    UIWindow* window = [[[UIApplication sharedApplication] windows] firstObject];
+    CGRect contentFrame = [contentView convertRect:[contentView bounds] toView:window];
+    CGRect windowFrame = [window frame];
+    BOOL contentIsFullyInWindow = CGRectContainsRect(windowFrame, contentFrame);
+    return ![contentView isHidden]
+        && [contentView superview]
+        && contentIsFullyInWindow;
+}
+
 #pragma mark - View set up and display
 
-- (void)showInView:(UIView*)view dismissAction:(HEMHandHoldingDismissal)dismissal {
+- (void)showInView:(UIView*)view
+   fromContentView:(UIView*)contentView
+     dismissAction:(HEMHandHoldingDismissal)dismissal {
+    
+    if (![self isContentViewStillVisible:contentView]) {
+        if (dismissal) {
+            dismissal (NO);
+        }
+        return;
+    }
+    
     [self setDismissal:dismissal];
     
     CGFloat halfGestureSize = HEMHandholdingGestureSize / 2;
@@ -95,7 +115,7 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 
 - (void)dismissFromButton {
     if ([self dismissal]) {
-        [self dismissal] ();
+        [self dismissal] (YES);
     }
     [self animateOut];
 }

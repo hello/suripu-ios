@@ -117,6 +117,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)lowMemory;
 
+/**
+ * @param view: view to check the visibility on
+ * @return YES if view is fully visible in the viewport of the window.  No otherwise
+ */
+- (BOOL)isViewFullyVisible:(UIView*)view;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -161,8 +161,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 130;
     HEMSnazzBarController* snazzVC = [rootVC barController];
     if ([[snazzVC selectedViewController] isEqual:self.parentViewController]
         && self.sensors.count > 0
-        && self.isViewLoaded
-        && self.view.window) {
+        && [self isFullyVisibleInWindow]) {
             [HEMTutorial showTutorialForSensorsIfNeeded];
     }
 }

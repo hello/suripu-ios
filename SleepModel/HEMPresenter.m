@@ -87,6 +87,13 @@
 
 - (void)userDidSignOut {}
 
+- (BOOL)isViewFullyVisible:(UIView*)view {
+    UIView* window = [[[UIApplication sharedApplication] windows] firstObject];
+    CGRect windowFrame = [window frame];
+    CGRect viewFrame = [view convertRect:[view bounds] toView:window];
+    return CGRectContainsRect(windowFrame, viewFrame);
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

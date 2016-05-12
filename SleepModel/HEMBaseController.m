@@ -137,6 +137,15 @@
     [constraint setConstant:constant + diff];
 }
 
+#pragma mark - Convenience
+
+- (BOOL)isFullyVisibleInWindow {
+    UIWindow* window = [[[UIApplication sharedApplication] windows] firstObject];
+    CGRect windowFrame = [window frame];
+    CGRect myViewFrame = [[self view] convertRect:[[self view] bounds] toView:window];
+    return CGRectContainsRect(windowFrame, myViewFrame);
+}
+
 #pragma mark - alerts
 
 - (UIView*)backgroundViewForAlerts {

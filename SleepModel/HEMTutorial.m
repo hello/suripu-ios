@@ -28,16 +28,14 @@ static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
-static CGFloat const HEMTutorialDelay = 0.5f;
+static CGFloat const HEMTutorialDelay = 0.25f;
 
 #pragma mark - Sleep Sounds
 
 + (void)showTutorialForSleepSoundsIfNeeded {
     if ([self shouldShowTutorialForKey:HEMTutorialSleepSoundsKey]) {
-        [self delayBlock:^{
-            [self showTutorialForSleepSounds];
-            [self markTutorialViewed:HEMTutorialSleepSoundsKey];
-        }];
+        [self showTutorialForSleepSounds];
+        [self markTutorialViewed:HEMTutorialSleepSoundsKey];
     }
 }
 
@@ -68,11 +66,9 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 + (void)showTutorialForSensorsIfNeeded
 {
     if ([self shouldShowTutorialForKey:HEMTutorialSensorsKey]) {
-        [self delayBlock:^{
-            if ([self showTutorialForSensors]) {
-                [self markTutorialViewed:HEMTutorialSensorsKey];
-            }
-        }];
+        if ([self showTutorialForSensors]) {
+            [self markTutorialViewed:HEMTutorialSensorsKey];
+        }
     }
 }
 
@@ -87,10 +83,8 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 {
     NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
     if ([self shouldShowTutorialForKey:key]) {
-        [self delayBlock:^{
-            [self showTutorialForSensorNamed:sensorName];
-            [self markTutorialViewed:key];
-        }];
+        [self showTutorialForSensorNamed:sensorName];
+        [self markTutorialViewed:key];
         return YES;
     }
     return NO;
@@ -99,10 +93,8 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 + (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
 {
     if ([self shouldShowTutorialForKey:HEMTutorialAlarmsKey]) {
-        [self delayBlock:^{
-            [self showTutorialForAlarmsFrom:controller];
-            [self markTutorialViewed:HEMTutorialAlarmsKey];
-        }];
+        [self showTutorialForAlarmsFrom:controller];
+        [self markTutorialViewed:HEMTutorialAlarmsKey];
     }
 }
 

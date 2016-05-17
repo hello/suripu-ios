@@ -56,6 +56,7 @@ static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoption = @"option";
 static NSString *const _HEMpair = @"pair";
+static NSString *const _HEMphotoHeader = @"photoHeader";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
@@ -131,6 +132,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)optionReuseIdentifier { return _HEMoption; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
++(NSString *)photoHeaderReuseIdentifier { return _HEMphotoHeader; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }

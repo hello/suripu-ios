@@ -51,7 +51,6 @@
 +(id)instantiateSenseColorsViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
-+(id)instantiateSignUpViewController;
 +(id)instantiateWeightPickerViewController;
 +(id)instantiateWelcomeViewController;
 +(id)instantiateWifiPickerViewController;

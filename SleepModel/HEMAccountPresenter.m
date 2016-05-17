@@ -26,6 +26,7 @@
 #import "HEMEmailChangePresenter.h"
 #import "HEMPasswordChangePresenter.h"
 #import "HEMHealthKitService.h"
+#import "HEMBasicTableViewCell.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
@@ -87,9 +88,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
-    UIView* headerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
     UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
-    [tableView setTableHeaderView:headerView];
     [tableView setTableFooterView:footerView];
     [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView setBackgroundView:nil];
@@ -140,24 +139,25 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 
 #pragma mark - TableView Helpers
 
-- (void)accountIcon:(UIImage**)icon title:(NSString**)title value:(NSString**)value atRow:(NSInteger)row {
+- (void)accountIcon:(UIImage**)icon title:(NSString**)title atRow:(NSInteger)row {
     SENAccount* account = [[self accountService] account];
     switch (row) {
         default:
-        case HEMAccountRowName:
-            *title = NSLocalizedString(@"settings.account.name", nil);
+        case HEMAccountRowName: {
+            NSString* fName = [account firstName] ?: @"";
+            NSString* lName = [account lastName] ?: @"";
+            NSString* fullName = [NSString stringWithFormat:@"%@ %@", fName, lName];
+            *title = [fullName length] > 0 ? fullName : NSLocalizedString(@"settings.account.name", nil);
             *icon = [UIImage imageNamed:@"settingsNameIcon"];
-            *value = [account name];
             break;
+        }
         case HEMAccountRowEmail:
-            *title = NSLocalizedString(@"settings.account.email", nil);
+            *title = [account email] ?: NSLocalizedString(@"settings.account.email", nil);
             *icon = [UIImage imageNamed:@"settingsEmailIcon"];
-            *value = [account email];
             break;
         case HEMAccountRowPassword:
             *title = NSLocalizedString(@"settings.account.password", nil);
             *icon = [UIImage imageNamed:@"settingsPasswordIcon"];
-            *value = NSLocalizedString(@"settings.account.password", nil);
             break;
     }
 }
@@ -387,6 +387,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell setAccessoryView:nil];
     
     NSInteger row = [indexPath row];
+    NSInteger rows = 1;
     UIImage* icon = nil;
     NSString* title = nil;
     NSString* value = nil;
@@ -394,28 +395,39 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch ([indexPath section]) {
         default:
-        case HEMAccountSectionAccount:
-            [self accountIcon:&icon title:&title value:&value atRow:row];
+        case HEMAccountSectionAccount: {
+            [self accountIcon:&icon title:&title atRow:row];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            rows = HEMAccountRowCount;
             break;
+        }
         case HEMAccountSectionDemographics:
             [self demographicsIcon:&icon title:&title value:&value atRow:row];
+            rows = HEMDemographicsRowCount;
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             break;
         case HEMAccountSectionPreferences: {
             [self preferencesIcon:&icon title:&title enabled:&booleanValue atRow:row];
             UISwitch* control = [self preferenceSwitch:booleanValue forRow:row];
             [cell setAccessoryView:control];
+            rows = HEMPreferencesRowCount;
             break;
         }
         case HEMAccountSectionSignOut:
             [self signOutIcon:&icon title:&title];
             [[cell textLabel] setTextColor:[UIColor redColor]];
+            rows = HEMSignOutRowCount;
             break;
     }
     
     [[cell textLabel] setText:title];
     [[cell imageView] setImage:icon];
     [[cell detailTextLabel] setText:value];
+    
+    if ([cell isKindOfClass:[HEMBasicTableViewCell class]]) {
+        HEMBasicTableViewCell* basicCell = (id) cell;
+        [basicCell showSeparator:row != rows - 1];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

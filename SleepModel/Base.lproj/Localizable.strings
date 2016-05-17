@@ -82,6 +82,7 @@
 "help.url.slug.sense-no-internet" = "articles/205493285";
 "help.url.slug.no-data-recorded" = "articles/205706435";
 "help.url.slug.not-enough-data-recorded" = "articles/204994629";
+"help.url.slug.facebook-import" = "articles/210329423";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -649,6 +650,8 @@
 "account.error.invalid-last-name" = "Last name is required";
 "account.error.invalid-email" = "Email is invalid";
 "account.error.invalid-password" = "Password is required";
+"account.error.facebook-access.title" = "Autofill from Facebook failed";
+"account.error.facebook-access" = "Unable to obtain your profile information from Facebook";
 
 // notifications
 "notifications.actions.ok" = "Okay";

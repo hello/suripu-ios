@@ -360,6 +360,7 @@
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
+		BFE375E01CEB98640029EE66 /* HEMFacebookService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375DF1CEB98640029EE66 /* HEMFacebookService.m */; };
 		BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */; };
 		BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
@@ -1053,6 +1054,8 @@
 		BFDFCE9D1B72884B000DA303 /* HEMSensorValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorValueFormatter.h; sourceTree = "<group>"; };
 		BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatter.m; sourceTree = "<group>"; };
 		BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatterSpec.m; sourceTree = "<group>"; };
+		BFE375DE1CEB98640029EE66 /* HEMFacebookService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMFacebookService.h; sourceTree = "<group>"; };
+		BFE375DF1CEB98640029EE66 /* HEMFacebookService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMFacebookService.m; sourceTree = "<group>"; };
 		BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseRequiredCollectionViewCell.h; sourceTree = "<group>"; };
 		BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseRequiredCollectionViewCell.m; sourceTree = "<group>"; };
 		BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
@@ -1199,6 +1202,7 @@
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
 				BF3583881CAC8F0D00760CD4 /* Shortcuts */,
+				BFE375DC1CEB982A0029EE66 /* Social */,
 				BF55D8791CA4844400379FBF /* Sounds */,
 				BFC3AA0319C2650F0055D308 /* Questions */,
 				8AC49F8F1981B92100C2BD63 /* Timeline */,
@@ -2879,6 +2883,23 @@
 			name = Sensors;
 			sourceTree = "<group>";
 		};
+		BFE375DC1CEB982A0029EE66 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				BFE375DD1CEB98350029EE66 /* Services */,
+			);
+			name = Social;
+			sourceTree = "<group>";
+		};
+		BFE375DD1CEB98350029EE66 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BFE375DE1CEB98640029EE66 /* HEMFacebookService.h */,
+				BFE375DF1CEB98640029EE66 /* HEMFacebookService.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		BFE3B8F919F5F1D40055B3B6 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -3273,6 +3294,7 @@
 				BFB59E151C03B98E001BD941 /* UITableViewCell+HEMSettings.m in Sources */,
 				BF52946F1C6929C200D931B7 /* HEMDashLine.m in Sources */,
 				BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */,
+				BFE375E01CEB98640029EE66 /* HEMFacebookService.m in Sources */,
 				BF8C092A1C28E52D005AB5A7 /* HEMNameChangePresenter.m in Sources */,
 				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,

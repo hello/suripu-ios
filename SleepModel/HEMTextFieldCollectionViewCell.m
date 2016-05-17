@@ -56,4 +56,8 @@
                                                           toPosition:cursorPosition]];
 }
 
+- (void)update {
+    [[self titledTextField] update];
+}
+
 @end

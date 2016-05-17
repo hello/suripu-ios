@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMProfileImageView;
+
 @interface HEMNewProfileCollectionViewCell : UICollectionViewCell
+
+@property (weak, nonatomic) IBOutlet HEMProfileImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UIButton *fbAutofillButton;
+@property (weak, nonatomic) IBOutlet UIButton *fbInfoButton;
 
 @end

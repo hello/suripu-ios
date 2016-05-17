@@ -10,11 +10,13 @@
 
 @class HEMNewAccountPresenter;
 @class HEMOnboardingService;
+@class HEMFacebookService;
 
 @protocol HEMNewAccountPresenterDelegate
 
 - (void)showError:(NSString*)errorMessage title:(NSString*)title from:(HEMNewAccountPresenter*)presenter;
 - (void)proceedFrom:(HEMNewAccountPresenter*)presenter;
+- (void)showSupportPageWithSlug:(NSString*)slug;
 
 @end
 
@@ -22,12 +24,15 @@
 
 @property (nonatomic, weak) id<HEMNewAccountPresenterDelegate> delegate;
 
-- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService;
+- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
+                          facebookService:(HEMFacebookService*)fbService;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView
            andBottomConstraint:(NSLayoutConstraint*)bottomConstraint;
 
 - (void)bindWithNextButton:(UIButton*)button;
+
+- (void)bindWithControllerToLaunchFacebook:(UIViewController*)controller;
 
 - (void)bindWithActivityContainerView:(UIView*)activityContainerView;
 

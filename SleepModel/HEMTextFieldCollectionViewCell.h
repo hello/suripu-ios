@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPlaceholderText:(NSString*)placeholderText;
 - (void)setSecure:(BOOL)secure;
 - (UITextField*)textField;
+- (void)update;
 
 @end
 

@@ -4,6 +4,9 @@ platform :ios, '8.0'
 
 ENV['COCOAPODS_DISABLE_STATS'] = '1'
 
+# Integrations
+pod 'FBSDKLoginKit', '~> 4.11.0'
+
 # UI
 pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'UIImageEffects', '~> 0.0.1'

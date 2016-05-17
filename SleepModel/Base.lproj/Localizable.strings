@@ -650,6 +650,8 @@
 "account.error.invalid-last-name" = "Last name is required";
 "account.error.invalid-email" = "Email is invalid";
 "account.error.invalid-password" = "Password is required";
+"account.error.facebook-access.title" = "Autofill from Facebook failed";
+"account.error.facebook-access" = "Unable to obtain your profile information from Facebook";
 
 // notifications
 "notifications.actions.ok" = "Okay";

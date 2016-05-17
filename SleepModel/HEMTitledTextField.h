@@ -12,4 +12,6 @@
 
 @property (nonatomic, weak) IBOutlet UITextField* textField;
 
+- (void)update;
+
 @end

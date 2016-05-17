@@ -30,9 +30,21 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>sense</string>
+                <string>fb372438546161587</string>
 			</array>
 		</dict>
 	</array>
+    <key>FacebookAppID</key>
+    <string>372438546161587</string>
+    <key>FacebookDisplayName</key>
+    <string>Hello</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>1.4.2.2</string>
 	<key>LSRequiresIPhoneOS</key>

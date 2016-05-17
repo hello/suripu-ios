@@ -35,11 +35,14 @@
     
 }
 
-#pragma mark - Text field delegate
+- (void)update {
+    [self updatePlaceholderText:[[self textField] isFocused]];
+}
 
-- (void)textField:(HEMSimpleLineTextField *)textField didGainFocus:(BOOL)focus {
-    if ([textField placeholder] && ![[self placeholderText] isEqualToString:[textField placeholder]]) {
-        [self setPlaceholderText:[textField placeholder]];
+- (void)updatePlaceholderText:(BOOL)focus {
+    NSString* placeholderText = [[self textField] placeholder];
+    if ([[self textField] placeholder] && ![[self placeholderText] isEqualToString:placeholderText]) {
+        [self setPlaceholderText:[[self textField] placeholder]];
     }
     BOOL showTitle = focus || [[[self textField] text] length] > 0;
     if (showTitle) {
@@ -50,6 +53,12 @@
         [[self titleLabel] setHidden:YES];
         [[self textField] setPlaceholder:[self placeholderText]];
     }
+}
+
+#pragma mark - Text field delegate
+
+- (void)textField:(HEMSimpleLineTextField *)textField didGainFocus:(BOOL)focus {
+    [self updatePlaceholderText:focus];
 }
 
 @end

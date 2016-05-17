@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMURLImageView.h"
 
-@interface HEMProfileImageView : UIImageView
+@interface HEMProfileImageView : HEMURLImageView
 
 @end

@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 5/12/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 #import "NSString+HEMUtils.h"
 
@@ -14,6 +15,8 @@
 #import "HEMNewProfileCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingService.h"
+#import "HEMFacebookService.h"
+#import "HEMProfileImageView.h"
 
 static CGFloat const HEMNewAccountPresenterPhotoHeight = 226.0f;
 static CGFloat const HEMNewAccountPresenterFieldHeight = 72.0f;
@@ -36,6 +39,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     UITextFieldDelegate
 >
 
+@property (nonatomic, weak) UIViewController* controller;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) NSLayoutConstraint* bottomConstraint;
 @property (nonatomic, assign) CGFloat origBottomConstraint;
@@ -44,20 +48,29 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 @property (nonatomic, weak) UIView* activityContainerView;
 @property (nonatomic, strong) SENAccount* tempAccount;
 @property (nonatomic, copy) NSString* password;
+@property (nonatomic, copy) NSString* fbPhotoUrl;
+@property (nonatomic, strong) UIImage* photo;
 @property (nonatomic, weak) HEMOnboardingService* onbService;
+@property (nonatomic, weak) HEMFacebookService* fbService;
 @property (nonatomic, assign) HEMNewAccountRow rowWithError;
 
 @end
 
 @implementation HEMNewAccountPresenter
 
-- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService {
+- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
+                          facebookService:(HEMFacebookService*)fbService {
     self = [super init];
     if (self) {
         _onbService = onbService;
+        _fbService = fbService;
         _tempAccount = [SENAccount new];
     }
     return self;
+}
+
+- (void)bindWithControllerToLaunchFacebook:(UIViewController*)controller {
+    [self setController:controller];
 }
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView
@@ -115,6 +128,24 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 
 - (void)showFBInfo {
     [[self delegate] showSupportPageWithSlug:NSLocalizedString(@"help.url.slug.facebook-import", nil)];
+}
+
+- (void)autofillFromFB {
+    __weak typeof(self) weakSelf = self;
+    [[self fbService] profileFrom:[self controller] completion:^(SENAccount* account, NSString* photoUrl, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            NSString* title = NSLocalizedString(@"account.error.facebook-access.title", nil);
+            NSString* message = NSLocalizedString(@"account.error.facebook-access", nil);
+            [[strongSelf delegate] showError:message title:title from:strongSelf];
+        } else {
+            [[strongSelf tempAccount] setEmail:[account email]];
+            [[strongSelf tempAccount] setLastName:[account lastName]];
+            [[strongSelf tempAccount] setFirstName:[account firstName]];
+            [strongSelf setFbPhotoUrl:photoUrl];
+            [[strongSelf collectionView] reloadData];
+        }
+    }];
 }
 
 - (void)next:(id)sender {
@@ -284,10 +315,25 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     [[profilePhotoCell fbInfoButton] addTarget:self
                                         action:@selector(showFBInfo)
                               forControlEvents:UIControlEventTouchUpInside];
+    [[profilePhotoCell fbAutofillButton] addTarget:self
+                                            action:@selector(autofillFromFB)
+                                  forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([self fbPhotoUrl]) {
+        __weak typeof(self) weakSelf = self;
+        [[profilePhotoCell profileImageView] setImageWithURL:[self fbPhotoUrl] completion:^(UIImage * image, NSString * url, NSError * error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([url isEqualToString:[strongSelf fbPhotoUrl]]) {
+                [strongSelf setPhoto:image];
+            }
+        }];
+    }
+    
 }
 
 - (void)configureTextFieldCell:(HEMTextFieldCollectionViewCell*)cell atIndex:(NSInteger)index {
     NSString* placeholderText = nil;
+    NSString* value = nil;
     BOOL secure = NO;
     UIReturnKeyType returnKeyType = UIReturnKeyNext;
     UIKeyboardType keyboardType = UIKeyboardTypeAlphabet;
@@ -296,27 +342,33 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
         default:
         case HEMNewAccountRowFirstName:
             placeholderText = NSLocalizedString(@"onboarding.account.firstname", nil);
+            value = [[self tempAccount] firstName];
             break;
         case HEMNewAccountRowLastName:
             placeholderText = NSLocalizedString(@"onboarding.account.lastname", nil);
+            value = [[self tempAccount] lastName];
             break;
         case HEMNewAccountRowEmail:
             placeholderText = NSLocalizedString(@"onboarding.account.email", nil);
             keyboardType = UIKeyboardTypeEmailAddress;
+            value = [[self tempAccount] email];
             break;
         case HEMNewAccountRowPassword:
             placeholderText = NSLocalizedString(@"onboarding.account.password", nil);
             secure = YES;
             returnKeyType = UIReturnKeyDone;
+            value = [self password];
             break;
     }
     
     [cell setPlaceholderText:placeholderText];
     [cell setSecure:secure];
+    [[cell textField] setText:value];
     [[cell textField] setTag:index];
     [[cell textField] setDelegate:self];
     [[cell textField] setReturnKeyType:returnKeyType];
     [[cell textField] setKeyboardType:keyboardType];
+    [cell update];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -388,8 +440,6 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
         finish();
     }
 }
-
-#pragma mark
 
 #pragma mark - Clean up
 

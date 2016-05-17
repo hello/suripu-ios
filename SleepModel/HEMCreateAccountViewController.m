@@ -13,12 +13,14 @@
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"
+#import "HEMFacebookService.h"
 
 @interface HEMCreateAccountViewController () <HEMNewAccountPresenterDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *nextButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (strong, nonatomic) HEMFacebookService* fbService;
 
 @end
 
@@ -31,13 +33,18 @@
 }
 
 - (void)configurePresenters {
+    HEMFacebookService* fbService = [HEMFacebookService new];
     HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
-    HEMNewAccountPresenter* presenter = [[HEMNewAccountPresenter alloc] initWithOnboardingService:onbService];
+    HEMNewAccountPresenter* presenter =
+        [[HEMNewAccountPresenter alloc] initWithOnboardingService:onbService
+                                                  facebookService:fbService];
+    
     [presenter bindWithCollectionView:[self collectionView]
                   andBottomConstraint:[self bottomConstraint]];
     [presenter bindWithNextButton:[self nextButton]];
     [presenter bindWithActivityContainerView:[[self navigationController] view]];
     [presenter setDelegate:self];
+    [self setFbService:fbService];
     [self addPresenter:presenter];
 }
 

@@ -12,6 +12,7 @@
 #import "HEMOnboardingService.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMCreateAccountViewController () <HEMNewAccountPresenterDelegate>
 
@@ -50,6 +51,10 @@
 }
 
 #pragma mark - Presenter Delegate
+
+- (void)showSupportPageWithSlug:(NSString*)slug {
+    [HEMSupportUtil openHelpToPage:slug fromController:self];
+}
 
 - (void)showError:(NSString *)errorMessage
             title:(NSString *)title

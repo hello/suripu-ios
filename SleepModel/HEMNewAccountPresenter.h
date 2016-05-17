@@ -15,6 +15,7 @@
 
 - (void)showError:(NSString*)errorMessage title:(NSString*)title from:(HEMNewAccountPresenter*)presenter;
 - (void)proceedFrom:(HEMNewAccountPresenter*)presenter;
+- (void)showSupportPageWithSlug:(NSString*)slug;
 
 @end
 

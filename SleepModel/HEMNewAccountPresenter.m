@@ -113,6 +113,10 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 
 #pragma mark - Actions
 
+- (void)showFBInfo {
+    [[self delegate] showSupportPageWithSlug:NSLocalizedString(@"help.url.slug.facebook-import", nil)];
+}
+
 - (void)next:(id)sender {
     NSString* errorMessage = nil;
     if (![[self onbService] isFirstNameValid:[[self tempAccount] firstName]]) {
@@ -237,6 +241,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     
     switch ([indexPath row]) {
         case HEMNewAccountRowProfilePicture:
+            [self configurePhotoCell:(id)cell];
             break;
         default:
             [self configureTextFieldCell:(id)cell atIndex:[indexPath row]];
@@ -274,6 +279,12 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 }
 
 #pragma mark - Displaying Cells
+
+- (void)configurePhotoCell:(HEMNewProfileCollectionViewCell*)profilePhotoCell {
+    [[profilePhotoCell fbInfoButton] addTarget:self
+                                        action:@selector(showFBInfo)
+                              forControlEvents:UIControlEventTouchUpInside];
+}
 
 - (void)configureTextFieldCell:(HEMTextFieldCollectionViewCell*)cell atIndex:(NSInteger)index {
     NSString* placeholderText = nil;
@@ -377,6 +388,8 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
         finish();
     }
 }
+
+#pragma mark
 
 #pragma mark - Clean up
 

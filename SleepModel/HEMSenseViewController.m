@@ -14,7 +14,6 @@
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMAlertViewController.h"
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMWifiPickerViewController.h"

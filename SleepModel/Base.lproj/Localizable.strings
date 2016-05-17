@@ -55,6 +55,10 @@
 "onboarding.health.enable.failure.title" = "Failed to enable Health integration";
 "onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
 "onboarding.health.enable.failure.generic" = "You may have previously denied access. Go to your Health app, find Sleep Analysis data, Share Data, and edit the data sources to enable Sense.";
+"onboarding.account.firstname" = "First name";
+"onboarding.account.lastname" = "Last name";
+"onboarding.account.email" = "Email address";
+"onboarding.account.password" = "Password";
 
 // help links
 "help.email.address" = "support@hello.is";
@@ -641,6 +645,10 @@
 "account.update.error.missing-account-info" = "Unable to update your password because your account information is out of sync.";
 "account.update.error.email" = "Unable to update your email.";
 "account.update.error.not-supported" = "This is not supported on your device or iOS version";
+"account.error.invalid-first-name" = "First name is required";
+"account.error.invalid-last-name" = "Last name is required";
+"account.error.invalid-email" = "Email is invalid";
+"account.error.invalid-password" = "Password is required";
 
 // notifications
 "notifications.actions.ok" = "Okay";

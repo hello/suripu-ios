@@ -35,6 +35,27 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
 @property (nonatomic, copy, readwrite)   NSString* name;
 
 /**
+ * @property firstName
+ *
+ * The first name of the user that this account belongs to
+ */
+@property (nonatomic, copy, readwrite)   NSString* firstName;
+
+/**
+ * @property lastName
+ *
+ * The last name of the user that this account belongs to
+ */
+@property (nonatomic, copy, readwrite)   NSString* lastName;
+
+/**
+ * @property timeZone
+ *
+ * The time zone name upon account creation
+ */
+@property (nonatomic, copy, readwrite)   NSString* timeZone;
+
+/**
  * @property name
  *
  * The email address that the user wants to use.  Email address is

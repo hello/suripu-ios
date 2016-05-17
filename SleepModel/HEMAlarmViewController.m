@@ -6,7 +6,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMClockPickerView.h"
 #import "HEMSimpleModalTransitionDelegate.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMListItemSelectionViewController.h"
 #import "HEMSettingsNavigationController.h"
 

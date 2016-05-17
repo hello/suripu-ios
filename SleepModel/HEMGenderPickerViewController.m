@@ -5,7 +5,6 @@
 
 #import "HEMGenderPickerViewController.h"
 #import "HEMOnboardingService.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "UIColor+HEMStyle.h"

@@ -12,7 +12,6 @@
 #import "HEMRootViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAlertViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMFormViewController.h"
 #import "HEMHealthKitService.h"
 

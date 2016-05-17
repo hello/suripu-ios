@@ -10,7 +10,6 @@
 #import "HEMLocationCenter.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMBluetoothUtils.h"
 
 @interface HEMLocationFinderViewController ()

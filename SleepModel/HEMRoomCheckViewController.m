@@ -17,7 +17,6 @@
 #import "HEMActionButton.h"
 #import "HEMRoomCheckView.h"
 #import "HEMMarkdown.h"
-#import "HEMBaseController+Protected.h"
 
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 

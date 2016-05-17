@@ -7,7 +7,6 @@
 //
 
 #import "HEMHealthViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMHealthKitService.h"
 

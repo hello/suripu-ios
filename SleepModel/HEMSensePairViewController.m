@@ -13,7 +13,6 @@
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMOnboardingService.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMSupportUtil.h"

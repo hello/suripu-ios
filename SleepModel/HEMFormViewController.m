@@ -8,7 +8,6 @@
 
 #import "HEMFormViewController.h"
 #import "HEMFormPresenter.h"
-#import "HEMBaseController+Protected.h"
 
 @interface HEMFormViewController () <HEMFormDelegate>
 

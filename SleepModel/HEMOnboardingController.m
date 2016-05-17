@@ -14,7 +14,6 @@
 #import "UIColor+HEMStyle.h"
 
 #import "HEMOnboardingController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMSupportUtil.h"
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingService.h"

@@ -13,7 +13,6 @@
 #import "UIColor+HEMStyle.h"
 
 #import "HEMOnboardAlarmViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmViewController.h"
 #import "HEMOnboardingStoryboard.h"

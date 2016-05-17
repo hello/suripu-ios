@@ -124,7 +124,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 9eb27f321d25dcc1e944ef9cc1c8f103c10f17c5
+    :commit: 14eaeca005236a52a1d19127efab2fa99a0e6471
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073

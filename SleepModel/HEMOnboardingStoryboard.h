@@ -10,6 +10,8 @@
 +(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
++(NSString *)photoReuseIdentifier;
++(NSString *)textfieldReuseIdentifier;
 +(NSString *)networkReuseIdentifier;
 +(NSString *)pillSetupTextCellReuseIdentifier;
 +(NSString *)pillSetupVideoCellReuseIdentifier;

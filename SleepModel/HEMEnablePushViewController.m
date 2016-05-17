@@ -14,7 +14,6 @@
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMNotificationHandler.h"
-#import "HEMBaseController+Protected.h"
 
 @interface HEMEnablePushViewController()
 

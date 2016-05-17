@@ -5,15 +5,11 @@
 #import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMSimpleLineHeight = 1.0f;
-
-@interface HEMSimpleLineTextField ()
-
-@end
+static CGFloat const HEMSimpleLinePlaceholderHeight = 16.0f;
 
 @implementation HEMSimpleLineTextField
 
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
+- (id)initWithCoder:(NSCoder*)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         self.backgroundColor = [UIColor clearColor];
         [self setBorderStyle:UITextBorderStyleNone];
@@ -66,12 +62,17 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
         NSFontAttributeName : [UIFont textfieldPlaceholderFont],
         NSForegroundColorAttributeName : placeholderColor
     };
-    NSAttributedString* attrText
-    = [[NSAttributedString alloc] initWithString:[self placeholder]
-                                      attributes:placeHolderAttrs];
     
-    [self setAttributedPlaceholder:attrText];
+    if ([self placeholder]) {
+        NSAttributedString* attrText
+            = [[NSAttributedString alloc] initWithString:[self placeholder]
+                                              attributes:placeHolderAttrs];
+        
+        [self setAttributedPlaceholder:attrText];
+    }
+    
     [self setNeedsDisplay];
+    [[self textFieldDelegate] textField:self didGainFocus:focus];
 }
 
 @end

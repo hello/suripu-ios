@@ -179,6 +179,24 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 - (void)updateCurrentAccount:(void(^)(NSError* error))completion;
 
 /**
+ * @method createAccount:withPassword:onAccountCreation:completion:
+ *
+ * @discussion
+ * Create a new account with the required pieces of information, calling back once
+ * the account has been created and then again upon total completion
+ *
+ * @param tempAccount:         temp account with name and email set
+ * @param password:            the password to be used for the account
+ * @param accountCreatedBlock: block to call upon account creation, but before the
+ *                             account is authorized for use
+ * @param completion:          the block to invoke when all is done
+ */
+- (void)createAccount:(SENAccount*)tempAccount
+         withPassword:(NSString*)password
+    onAccountCreation:(void(^)(SENAccount* account))accountCreatedBlock
+           completion:(void(^)(SENAccount* account, NSError* error))completion;
+
+/**
  * @method createAccountWithName:email:pass:onAccountCreation:completion:
  *
  * @discussion
@@ -339,5 +357,17 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * flow can be dismissed
  */
 - (void)notifyOfOnboardingCompletion;
+
+/**
+ * @param tempAccount: the temp account to be created with properties filled in
+ * @param password: the password for the account
+ * @return YES if the parameters meets the required fields requirements
+ */
+- (BOOL)hasRequiredFields:(SENAccount*)tempAccount password:(NSString*)password;
+
+- (BOOL)isFirstNameValid:(NSString*)firstName;
+- (BOOL)isLastNameValid:(NSString*)lastName;
+- (BOOL)isEmailValid:(NSString*)email;
+- (BOOL)isPasswordValid:(NSString*)password;
 
 @end

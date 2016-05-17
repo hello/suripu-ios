@@ -10,7 +10,6 @@
 #import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMBeforeSleepViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"

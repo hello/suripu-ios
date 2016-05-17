@@ -13,7 +13,6 @@
 #import "HEMStyle.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMVideoCollectionViewCell.h"

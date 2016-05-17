@@ -15,8 +15,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMSettingsHeaderFooterView.h"
+#import "HEMBaseController.h"
 
 typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
     HEMTimeZoneSectionCurrent = 0,

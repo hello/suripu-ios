@@ -5,7 +5,6 @@
 #import "HEMAuthenticationViewController.h"
 #import "HEMActionButton.h"
 #import "UIColor+HEMStyle.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMActivityCoverView.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSupportUtil.h"

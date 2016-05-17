@@ -13,7 +13,6 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMPillPairViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSettingsTableViewController.h"

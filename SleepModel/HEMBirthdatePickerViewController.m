@@ -8,7 +8,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerView.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HEMAccountUpdateDelegate.h"
 

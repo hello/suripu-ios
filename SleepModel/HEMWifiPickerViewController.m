@@ -11,7 +11,6 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMWifiPickerViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMWiFiDataSource.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMWifiPasswordViewController.h"

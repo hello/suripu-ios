@@ -15,7 +15,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingService.h"
 #import "HEMWifiUtils.h"

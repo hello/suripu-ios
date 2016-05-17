@@ -152,4 +152,26 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
                      }];
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+    if (highlighted && [self isEnabled]) {
+        [self setBackgroundColor:[UIColor blue7]];
+    } else {
+        [self updateNormalBackgroundColor];
+    }
+    [super setHighlighted:highlighted];
+}
+
+- (void)updateNormalBackgroundColor {
+    if ([self isEnabled]) {
+        [self setBackgroundColor:[UIColor tintColor]];
+    } else {
+        [self setBackgroundColor:[UIColor grey2]];
+    }
+}
+
+- (void)setEnabled:(BOOL)enabled {
+    [super setEnabled:enabled];
+    [self updateNormalBackgroundColor];
+}
+
 @end

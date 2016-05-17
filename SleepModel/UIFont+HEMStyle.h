@@ -387,6 +387,11 @@
 + (UIFont*)deviceCellWarningMessageFont;
 
 /**
+ * Font used to display the title of a text field
+ */
++ (UIFont*)textfieldTitleFont;
+
+/**
  * Font used for the placeholder text within an UITextField
  */
 + (UIFont*)textfieldPlaceholderFont;

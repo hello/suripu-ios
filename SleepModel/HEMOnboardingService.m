@@ -17,6 +17,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "NSBundle+HEMUtils.h"
+#import "NSString+HEMUtils.h"
 
 #import "HEMOnboardingService.h"
 
@@ -297,6 +298,73 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
             }
         }];
     }
+}
+
+- (BOOL)hasRequiredFields:(SENAccount*)tempAccount password:(NSString*)password {
+    // last name is optional
+    return [[[tempAccount firstName] trim] length] > 0
+        && [[[tempAccount email] trim] length] > 0
+        && [password length] > 0;
+}
+
+- (BOOL)isFirstNameValid:(NSString*)firstName {
+    return [[firstName trim] length] > 0;
+}
+
+- (BOOL)isLastNameValid:(NSString*)lastName {
+    return YES; // it's optional
+}
+
+- (BOOL)isEmailValid:(NSString*)email {
+    return [[email trim] isValidEmail];
+}
+
+- (BOOL)isPasswordValid:(NSString*)password {
+    return [password length] > 0;
+}
+
+- (void)createAccount:(SENAccount*)tempAccount
+         withPassword:(NSString*)password
+    onAccountCreation:(void(^)(SENAccount* account))accountCreatedBlock
+           completion:(void(^)(SENAccount* account, NSError* error))completion {
+    __weak typeof(self) weakSelf = self;
+    // change once we hook up to API
+    NSString* name = [NSString stringWithFormat:@"%@ %@", [tempAccount firstName], [tempAccount lastName]];
+    [SENAPIAccount createAccountWithName:name
+                            emailAddress:[tempAccount email]
+                                password:password
+                              completion:^(SENAccount* account, NSError* error) {
+                                  __strong typeof(weakSelf) strongSelf = weakSelf;
+                                  
+                                  if (!error) {
+                                      if (account) {
+                                          [strongSelf setCurrentAccount:account];
+                                          
+                                          if (accountCreatedBlock) {
+                                              accountCreatedBlock(account);
+                                          }
+                                          
+                                          [strongSelf authenticateUser:[tempAccount email]
+                                                                  pass:password
+                                                                 retry:YES
+                                                            completion:^(NSError *error) {
+                                                                if (completion) {
+                                                                    if (!error) {
+                                                                        [strongSelf pushDefaultPreferences];
+                                                                    }
+                                                                    completion (account, error);
+                                                                }
+                                                            }];
+                                          return;
+                                      }
+                                  }
+                                  
+                                  if (completion) {
+                                      NSString* localizedMessage = [self localizedMessageFromAccountError:error];
+                                      completion (nil, [strongSelf errorWithCode:HEMOnboardingErrorAccountCreationFailed
+                                                                          reason:localizedMessage]);
+                                  }
+                              }];
 }
 
 - (void)createAccountWithName:(NSString*)name

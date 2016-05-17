@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.2.2
+
+New:
+
+* Updated account creation screen, but profile picture and fb integration is still not implemented
+* Updated text field visual design
+
 ## 1.4.2.1
 
 New:

@@ -11,8 +11,6 @@
 #import "UIColor+HEMStyle.h"
 
 #import "HEMWelcomeViewController.h"
-#import "HEMSignUpViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMMeetSenseView.h"
 #import "HEMIntroDescriptionView.h"
 #import "HEMRootViewController.h"

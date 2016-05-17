@@ -12,7 +12,6 @@
 #import "HEMSupportTopicsViewController.h"
 #import "HEMZendeskService.h"
 #import "HEMMainStoryboard.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMAlertViewController.h"
 #import "HEMSupportTopicDataSource.h"
 #import "HEMActivityCoverView.h"

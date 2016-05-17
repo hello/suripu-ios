@@ -11,7 +11,6 @@
 #import "HEMSensePairingModeViewController.h"
 #import "HEMActionButton.h"
 #import "HEMEmbeddedVideoView.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMScreenUtils.h"
 
 @interface HEMSensePairingModeViewController()

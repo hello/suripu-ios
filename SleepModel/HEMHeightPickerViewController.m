@@ -7,7 +7,6 @@
 #import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMRulerView.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMMathUtil.h"

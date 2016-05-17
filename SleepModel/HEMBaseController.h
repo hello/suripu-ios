@@ -49,4 +49,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface HEMBaseController (Subclass)
+
+- (void)enableBackButton:(BOOL)enable;
+- (void)adjustConstraintsForIPhone4;
+- (void)adjustConstraintsForIphone5;
+- (void)updateConstraint:(NSLayoutConstraint*)constraint withDiff:(CGFloat)diff;
+- (void)showMessageDialog:(NSString*)message title:(NSString*)title;
+- (void)showMessageDialog:(NSString*)message
+                    title:(NSString*)title
+                    image:(UIImage*)image
+             withHelpPage:(NSString*)helpPage;
+- (void)viewDidBecomeActive;
+- (void)viewDidEnterBackground;
+
+@end
+
 NS_ASSUME_NONNULL_END

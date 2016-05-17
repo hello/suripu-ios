@@ -23,6 +23,7 @@ static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMnotificationToAudio = @"notificationToAudio";
+static NSString *const _HEMphoto = @"photo";
 static NSString *const _HEMpillDescription = @"pillDescription";
 static NSString *const _HEMpillPair = @"pillPair";
 static NSString *const _HEMpillSetupTextCell = @"pillSetupTextCell";
@@ -38,6 +39,7 @@ static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsignUpViewController = @"signUpViewController";
 static NSString *const _HEMsignupToNoBle = @"signupToNoBle";
 static NSString *const _HEMskipPillPairSegue = @"skipPillPairSegue";
+static NSString *const _HEMtextfield = @"textfield";
 static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMweightToHealthKit = @"weightToHealthKit";
@@ -55,8 +57,10 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 
 /** Cell Reuse Identifiers */
 +(NSString *)networkReuseIdentifier { return _HEMnetwork; }
++(NSString *)photoReuseIdentifier { return _HEMphoto; }
 +(NSString *)pillSetupTextCellReuseIdentifier { return _HEMpillSetupTextCell; }
 +(NSString *)pillSetupVideoCellReuseIdentifier { return _HEMpillSetupVideoCell; }
++(NSString *)textfieldReuseIdentifier { return _HEMtextfield; }
 
 /** Segue Identifiers */
 +(NSString *)audioToSetupSegueIdentifier { return _HEMaudioToSetup; }

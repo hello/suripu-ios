@@ -45,8 +45,7 @@
             [SENAnalytics trackError:error];
             completion (nil, nil, error);
         } else if (!cancelled) {
-            NSDictionary* params = @{@"fields" : @"first_name,last_name,email,picture.type(large)",
-                                     @"type" : @"large"};
+            NSDictionary* params = @{@"fields" : @"first_name,last_name,email,picture.type(large)"};
             FBSDKGraphRequest* request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me"
                                                                            parameters:params];
             [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {

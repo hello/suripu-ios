@@ -11,7 +11,10 @@
 
 /** Cell Reuse Identifiers */
 +(NSString *)photoReuseIdentifier;
-+(NSString *)textfieldReuseIdentifier;
++(NSString *)firstNameReuseIdentifier;
++(NSString *)lastNameReuseIdentifier;
++(NSString *)emailReuseIdentifier;
++(NSString *)passwordReuseIdentifier;
 +(NSString *)networkReuseIdentifier;
 +(NSString *)pillSetupTextCellReuseIdentifier;
 +(NSString *)pillSetupVideoCellReuseIdentifier;

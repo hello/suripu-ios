@@ -24,6 +24,8 @@ static CGFloat const HEMNewProfileButtonBorderWidth = 1.0f;
     [buttonLayer setCornerRadius:HEMNewProfileButtonCornerRadius];
     [buttonLayer setBorderColor:[[UIColor borderColor] CGColor]];
     [buttonLayer setBorderWidth:HEMNewProfileButtonBorderWidth];
+    
+    [[self fbAutofillButton] setAdjustsImageWhenHighlighted:NO];
 }
 
 @end

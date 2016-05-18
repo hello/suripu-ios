@@ -5,7 +5,6 @@
 #import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMSimpleLineHeight = 1.0f;
-static CGFloat const HEMSimpleLinePlaceholderHeight = 16.0f;
 
 @implementation HEMSimpleLineTextField
 

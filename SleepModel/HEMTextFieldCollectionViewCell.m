@@ -29,6 +29,7 @@
 - (void)setSecure:(BOOL)secure {
     [[self textField] setSecureTextEntry:secure];
     [[self revealSecretButton] setHidden:!secure];
+    [[self revealSecretButton] setSelected:!secure];
     
     if (secure) {
         [[self revealSecretButton] addTarget:self

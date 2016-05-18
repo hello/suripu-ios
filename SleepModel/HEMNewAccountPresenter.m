@@ -256,30 +256,41 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     return HEMNewAccountRowCount;
 }
 
+- (UICollectionViewCell*)cellWithIdentifier:(NSString*)identifier atIndexPath:(NSIndexPath*)path {
+    UICollectionViewCell* cell = [[self collectionView] dequeueReusableCellWithReuseIdentifier:identifier
+                                                                                  forIndexPath:path];
+    
+    if ([path row] == HEMNewAccountRowProfilePicture) {
+        [self configurePhotoCell:(id)cell];
+    } else {
+        [self configureTextFieldCell:(id)cell atIndex:[path row]];
+    }
+
+    return cell;
+}
+
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = nil;
     switch ([indexPath row]) {
+        default:
         case HEMNewAccountRowProfilePicture:
             reuseId = [HEMOnboardingStoryboard photoReuseIdentifier];
             break;
-        default:
-            reuseId = [HEMOnboardingStoryboard textfieldReuseIdentifier];
+        case HEMNewAccountRowFirstName:
+            reuseId = [HEMOnboardingStoryboard firstNameReuseIdentifier];
+            break;
+        case HEMNewAccountRowLastName:
+            reuseId = [HEMOnboardingStoryboard lastNameReuseIdentifier];
+            break;
+        case HEMNewAccountRowEmail:
+            reuseId = [HEMOnboardingStoryboard emailReuseIdentifier];
+            break;
+        case HEMNewAccountRowPassword:
+            reuseId = [HEMOnboardingStoryboard passwordReuseIdentifier];
             break;
     }
     
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                           forIndexPath:indexPath];
-    
-    switch ([indexPath row]) {
-        case HEMNewAccountRowProfilePicture:
-            [self configurePhotoCell:(id)cell];
-            break;
-        default:
-            [self configureTextFieldCell:(id)cell atIndex:[indexPath row]];
-            break;
-    }
-    
-    return cell;
+    return [self cellWithIdentifier:reuseId atIndexPath:indexPath];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

@@ -25,7 +25,6 @@
 +(NSString *)aboutReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
-+(NSString *)photoHeaderReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;
 +(NSString *)signoutReuseIdentifier;

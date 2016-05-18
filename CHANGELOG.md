@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.4.2.3
+
+New:
+
+* Account creation screen supports autofilling with facebook account
+* Account creation screen launches support page about facebook integration
+
+Fixes:
+
+* Toggling the show/hide on password field no longer causes font to revert to System font (iOS bug)
+* Account creation screen will no longer reuse fields to prevent data changes
+
 ## 1.4.2.2
 
 New:

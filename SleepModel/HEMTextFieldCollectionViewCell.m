@@ -8,6 +8,7 @@
 
 #import "HEMTextFieldCollectionViewCell.h"
 #import "HEMTitledTextField.h"
+#import "HEMStyle.h"
 
 @interface HEMTextFieldCollectionViewCell()
 
@@ -51,6 +52,12 @@
     [textField setSelectedTextRange:[textField textRangeFromPosition:cursorPosition
                                                           toPosition:cursorPosition]];
     [textField setSecureTextEntry:!reveal];
+    
+    if (reveal) {
+        // http://stackoverflow.com/questions/35293379/uitextfield-securetextentry-toggle-set-incorrect-font
+        [textField setFont:nil];
+        [textField setFont:[UIFont textfieldTextFont]];
+    }
     
     cursorPosition = [textField endOfDocument];
     [textField setSelectedTextRange:[textField textRangeFromPosition:cursorPosition

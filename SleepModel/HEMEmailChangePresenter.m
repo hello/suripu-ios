@@ -25,6 +25,10 @@
     return self;
 }
 
+- (UIKeyboardType)keyboardTypeForFieldInRow:(NSInteger)row {
+    return UIKeyboardTypeEmailAddress;
+}
+
 - (NSUInteger)numberOfFields {
     return 1;
 }
@@ -32,10 +36,6 @@
 - (NSString*)existingTextForFieldInRow:(NSInteger)row {
     SENAccount* account = [[self accountService] account];
     return [account email];
-}
-
-- (UIImage*)iconForFieldInRow:(NSInteger)row {
-    return [UIImage imageNamed:@"settingsEmailIcon"];
 }
 
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row {

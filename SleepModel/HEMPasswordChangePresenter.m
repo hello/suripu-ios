@@ -33,10 +33,6 @@
     return 3;
 }
 
-- (UIImage*)iconForFieldInRow:(NSInteger)row {
-    return [UIImage imageNamed:@"settingsPasswordIcon"];
-}
-
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row {
     switch (row) {
         case 0:

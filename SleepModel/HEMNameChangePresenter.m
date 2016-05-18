@@ -34,10 +34,6 @@
     return [account name];
 }
 
-- (UIImage*)iconForFieldInRow:(NSInteger)row {
-    return [UIImage imageNamed:@"settingsNameIcon"];
-}
-
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row {
     return NSLocalizedString(@"settings.account.name.placeholder", nil);
 }

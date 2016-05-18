@@ -11,7 +11,7 @@
 
 @interface HEMFormViewController () <HEMFormDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *formTableview;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButtonItem;
 
 @end
@@ -24,7 +24,7 @@
 }
 
 - (void)configurePresenter {
-    [[self presenter] bindWithTableView:[self formTableview]];
+    [[self presenter] bindWithCollectionView:[self collectionView]];
     [[self presenter] bindWithSaveItem:[self saveButtonItem]];
     [[self presenter] setTitle:[self title]];
     [[self presenter] setDelegate:self];

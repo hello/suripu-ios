@@ -5,18 +5,28 @@
 //  Created by Jimmy Lu on 12/21/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import "NSString+HEMUtils.h"
 
 #import "HEMFormPresenter.h"
-#import "HEMSettingsHeaderFooterView.h"
-#import "HEMFieldTableViewCell.h"
+#import "HEMTextFieldCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMTitledTextField.h"
 #import "HEMStyle.h"
 
-@interface HEMFormPresenter() <UITableViewDataSource, UITableViewDelegate, HEMFieldTableViewCellDelegate>
+static CGFloat const HEMFormCellHeight = 72.0f;
+static CGFloat const HEMFormCellSideMargins = 24.0f;
+static CGFloat const HEMFormAutoScrollDuration = 0.15f;
 
-@property (nonatomic, weak) UITableView* tableView;
+@interface HEMFormPresenter() <
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout,
+    UITextFieldDelegate
+>
+
+@property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) UIBarButtonItem* saveItem;
 @property (nonatomic, strong) NSMutableDictionary* formContent;
 
@@ -35,39 +45,19 @@
     [self setSaveItem:saveItem];
 }
 
-- (void)bindWithTableView:(UITableView*)tableView {
+- (void)bindWithCollectionView:(UICollectionView*)collectionView {
     [self setFormContent:[NSMutableDictionary dictionary]];
     
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
-    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
-    [tableView setTableHeaderView:header];
-    [tableView setTableFooterView:footer];
-    [tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeInteractive];
-    [tableView setDelegate:self];
-    [tableView setDataSource:self];
-    [self setTableView:tableView];
-}
-
-- (void)forceFirstResponderToBeAtRowAtIndex:(NSInteger)index {
-    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    HEMFieldTableViewCell* cell = (id)[[self tableView] cellForRowAtIndexPath:indexPath];
-    [cell becomeFirstResponder];
-}
-
-#pragma mark - Presenter events
-
-- (void)didAppear {
-    [super didAppear];
-    [self forceFirstResponderToBeAtRowAtIndex:0];
+    [collectionView setBackgroundColor:[UIColor whiteColor]];
+    [collectionView setDataSource:self];
+    [collectionView setDelegate:self];
+    
+    [self setCollectionView:collectionView];
 }
 
 #pragma mark - Placeholders
 
 - (NSString*)existingTextForFieldInRow:(NSInteger)row {
-    return nil;
-}
-
-- (UIImage*)iconForFieldInRow:(NSInteger)row {
     return nil;
 }
 
@@ -89,7 +79,7 @@
 
 - (void)save {
     if ([[self saveItem] isEnabled]) {
-        [[self tableView] endEditing:NO];
+        [[self collectionView] endEditing:NO];
         
         __weak typeof(self) weakSelf = self;
         
@@ -114,75 +104,131 @@
     }
 }
 
-#pragma mark - Table View
+#pragma mark - UICollectionView
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self didScrollContentIn:scrollView];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewFlowLayout* verticalLayout = (id)collectionViewLayout;
+    CGSize itemSize = [verticalLayout itemSize];
+    itemSize.width = CGRectGetWidth([collectionView bounds]) - (HEMFormCellSideMargins * 2);
+    itemSize.height = HEMFormCellHeight;
+    return itemSize;
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard fieldReuseIdentifier]
+                                                     forIndexPath:indexPath];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self numberOfFields];
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard fieldCellReuseIdentifier]];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     NSInteger row = [indexPath row];
+    HEMTextFieldCollectionViewCell* fieldCell = (id) cell;
+    UITextField* textField = [fieldCell textField];
+
+    NSString* placeholderText = [self placeHolderTextForFieldInRow:row];
+    [fieldCell setPlaceholderText:[self placeHolderTextForFieldInRow:row]];
     
-    HEMFieldTableViewCell* fieldCell = (id)cell;
-    [fieldCell setDelegate:self];
-    [fieldCell setTag:row];
+    NSString* currentText = [[self formContent] objectForKey:placeholderText];
+    [textField setText:currentText ?: [self existingTextForFieldInRow:row]];
     
-    [[fieldCell imageView] setImage:[self iconForFieldInRow:row]];
-    
-    NSString* placeHolderText = [self placeHolderTextForFieldInRow:row];
-    [fieldCell setPlaceHolder:placeHolderText];
-    
-    NSString* currentText = [[self formContent] objectForKey:placeHolderText];
-    [fieldCell setDefaultText: currentText ?: [self existingTextForFieldInRow:row]];
-    
-    [fieldCell setKeyboardType:[self keyboardTypeForFieldInRow:row]];
-    [fieldCell setSecure:[self isFieldSecureInRow:row]];
-    
-    // update appearance of the cell
     BOOL firstRow = [indexPath row] == 0;
     BOOL lastRow = [indexPath row] == [self numberOfFields] - 1;
-    
     if (firstRow && lastRow) {
-        [fieldCell setKeyboardReturnKeyType:UIReturnKeyDone];
+        [textField setReturnKeyType:UIReturnKeyDone];
     } else if (firstRow) {
-        [fieldCell setKeyboardReturnKeyType:UIReturnKeyNext];
+        [textField setReturnKeyType:UIReturnKeyNext];
     } else if (lastRow) {
-        [fieldCell setKeyboardReturnKeyType:UIReturnKeyDone];
+        [textField setReturnKeyType:UIReturnKeyDone];
     } else {
-        [fieldCell setKeyboardReturnKeyType:UIReturnKeyNext];
+        [textField setReturnKeyType:UIReturnKeyNext];
     }
+
+    [textField setDelegate:self];
+    [textField setTag:row];
+    [textField setKeyboardType:[self keyboardTypeForFieldInRow:row]];
+    [fieldCell setSecure:[self isFieldSecureInRow:row]];
+    [fieldCell update];
 }
 
-#pragma mark - HEMFieldTableViewCellDelegate
+#pragma mark - UITextFieldDelegate
 
-- (void)didTapOnKeyboardReturnKeyFrom:(HEMFieldTableViewCell *)cell {
-    BOOL lastRow = [cell tag] == [self numberOfFields] - 1;
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    NSInteger row = [textField tag];
+    BOOL lastRow = row == [self numberOfFields] - 1;
+    
     if (lastRow) {
         [self save];
     } else {
-        NSInteger nextIndex = ([cell tag] + 1) % [self numberOfFields];
-        [self forceFirstResponderToBeAtRowAtIndex:nextIndex];
+        [self putFocusOnTextFieldAtRow:row + 1];
     }
+    
+    return YES;
 }
 
-- (void)didChangeTextTo:(NSString *)text from:(HEMFieldTableViewCell *)cell {
-    [[self formContent] setValue:([text length] > 0 ? text : nil) forKey:[cell placeHolderText]];
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    [self updateValuesFromTextField:textField withText:nil];
+    return YES;
+}
+
+- (void)updateValuesFromTextField:(UITextField*)textField withText:(NSString*)text {
+    NSInteger row = [textField tag];
+    NSString* placeholderText = [self placeHolderTextForFieldInRow:row];
+    NSString* contentInField = [[textField text] trim];
+    NSString* formValue = text ?: contentInField;
+    [[self formContent] setValue:([formValue length] > 0 ? formValue : nil) forKey:placeholderText];
     [[self saveItem] setEnabled:[[self formContent] count] == [self numberOfFields]];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString* currenText = [textField text];
+    NSString* changedText = [currenText stringByReplacingCharactersInRange:range withString:string];
+    [self updateValuesFromTextField:textField withText:changedText];
+    return YES;
+}
+
+- (void)putFocusOnTextFieldAtRow:(NSInteger)row {
+    NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:0];
+    __block UICollectionViewCell* cell = [[self collectionView] cellForItemAtIndexPath:path];
+    
+    void(^finish)(void) = ^{
+        if ([cell isKindOfClass:[HEMTextFieldCollectionViewCell class]]) {
+            HEMTextFieldCollectionViewCell* textFieldCell = (id)cell;
+            [[textFieldCell textField] becomeFirstResponder];
+        }
+    };
+    
+    if (!cell) {
+        [UIView animateWithDuration:HEMFormAutoScrollDuration animations:^{
+            [[self collectionView] scrollToItemAtIndexPath:path
+                                          atScrollPosition:UICollectionViewScrollPositionBottom
+                                                  animated:NO];
+        } completion:^(BOOL finished) {
+            cell = [[self collectionView] cellForItemAtIndexPath:path];
+            finish ();
+        }];
+    } else {
+        finish();
+    }
 }
 
 #pragma mark - Clean up
 
 - (void)dealloc {
-    [_tableView setDataSource:nil];
-    [_tableView setDelegate:nil];
+    [_collectionView setDataSource:nil];
+    [_collectionView setDelegate:nil];
 }
 
 @end

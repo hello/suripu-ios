@@ -54,7 +54,7 @@
 +(NSString *)listItemReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)breakdownLineCellReuseIdentifier;
-+(NSString *)fieldCellReuseIdentifier;
++(NSString *)fieldReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;

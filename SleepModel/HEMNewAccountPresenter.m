@@ -131,6 +131,8 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 }
 
 - (void)autofillFromFB {
+    [[self collectionView] endEditing:NO];
+    
     __weak typeof(self) weakSelf = self;
     [[self fbService] profileFrom:[self controller] completion:^(SENAccount* account, NSString* photoUrl, NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;

@@ -8,64 +8,25 @@
 
 #import "HEMTextFieldCollectionViewCell.h"
 #import "HEMTitledTextField.h"
+#import "HEMSimpleLineTextField.h"
 #import "HEMStyle.h"
+
+@class HEMSimpleLineTextField;
 
 @interface HEMTextFieldCollectionViewCell()
 
 @property (nonatomic, weak) IBOutlet HEMTitledTextField* titledTextField;
-@property (weak, nonatomic) IBOutlet UIButton *revealSecretButton;
 
 @end
 
 @implementation HEMTextFieldCollectionViewCell
 
 - (void)setPlaceholderText:(NSString*)placeholderText {
-    [[[self titledTextField] textField] setPlaceholder:placeholderText];
+    [[self titledTextField] setPlaceholderText:placeholderText];
 }
 
-- (UITextField*)textField {
+- (HEMSimpleLineTextField*)textField {
     return [[self titledTextField] textField];
-}
-
-- (void)setSecure:(BOOL)secure {
-    [[self textField] setSecureTextEntry:secure];
-    [[self revealSecretButton] setHidden:!secure];
-    [[self revealSecretButton] setSelected:!secure];
-    
-    if (secure) {
-        [[self revealSecretButton] addTarget:self
-                                      action:@selector(reveal)
-                            forControlEvents:UIControlEventTouchUpInside];
-    }
-}
-
-- (void)reveal {
-    BOOL reveal = ![[self revealSecretButton] isSelected];
-    [[self revealSecretButton] setSelected:reveal];
-    
-    UITextField* textField = [self textField];
-    UITextPosition* cursorPosition = [textField beginningOfDocument];
-    
-    // must move the cursor back and forth, otherwise cursor is at a position that
-    // appears to have added whitespace, but there really isn't due to size of dots
-    // and actual character size
-    [textField setSelectedTextRange:[textField textRangeFromPosition:cursorPosition
-                                                          toPosition:cursorPosition]];
-    [textField setSecureTextEntry:!reveal];
-    
-    if (reveal) {
-        // http://stackoverflow.com/questions/35293379/uitextfield-securetextentry-toggle-set-incorrect-font
-        [textField setFont:nil];
-        [textField setFont:[UIFont textfieldTextFont]];
-    }
-    
-    cursorPosition = [textField endOfDocument];
-    [textField setSelectedTextRange:[textField textRangeFromPosition:cursorPosition
-                                                          toPosition:cursorPosition]];
-}
-
-- (void)update {
-    [[self titledTextField] update];
 }
 
 @end

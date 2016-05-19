@@ -5255,32 +5255,17 @@
                                                         <outlet property="titleLabel" destination="MLB-Ui-Dpx" id="LU5-1G-ieC"/>
                                                     </connections>
                                                 </view>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n0-6a-2mg">
-                                                    <rect key="frame" x="530" y="6" width="22" height="48"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="Ex2-HP-j2h"/>
-                                                    </constraints>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="6"/>
-                                                    <state key="normal" image="secretEye"/>
-                                                    <state key="selected" image="secretEyeHighlighted"/>
-                                                    <state key="highlighted" image="secretEyeHighlighted"/>
-                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="8n0-6a-2mg" firstAttribute="top" secondItem="9pl-By-OEb" secondAttribute="top" constant="6" id="1pu-Aq-vKM"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="xQd-1V-Vgj" secondAttribute="bottom" constant="8" id="4bC-IY-S58"/>
                                             <constraint firstAttribute="trailing" secondItem="xQd-1V-Vgj" secondAttribute="trailing" id="6Q7-XR-2GN"/>
-                                            <constraint firstAttribute="trailing" secondItem="8n0-6a-2mg" secondAttribute="trailing" id="Vyf-2R-eoP"/>
                                             <constraint firstItem="xQd-1V-Vgj" firstAttribute="top" secondItem="9pl-By-OEb" secondAttribute="top" constant="6" id="hcu-De-hPW"/>
                                             <constraint firstItem="xQd-1V-Vgj" firstAttribute="leading" secondItem="9pl-By-OEb" secondAttribute="leading" id="pgo-F4-6MM"/>
-                                            <constraint firstItem="8n0-6a-2mg" firstAttribute="height" secondItem="xQd-1V-Vgj" secondAttribute="height" constant="-2" id="yhh-RU-ItH"/>
                                         </constraints>
                                         <size key="customSize" width="552" height="72"/>
                                         <connections>
-                                            <outlet property="revealSecretButton" destination="8n0-6a-2mg" id="IPe-C6-BXS"/>
                                             <outlet property="titledTextField" destination="xQd-1V-Vgj" id="EdQ-m9-Ojh"/>
                                         </connections>
                                     </collectionViewCell>
@@ -5334,8 +5319,6 @@
         <image name="noSense" width="359" height="180"/>
         <image name="questions_check" width="20" height="15"/>
         <image name="questions_circle" width="21" height="21"/>
-        <image name="secretEye" width="22" height="16"/>
-        <image name="secretEyeHighlighted" width="22" height="16"/>
         <image name="settingsToggleIconActive" width="22" height="22"/>
         <image name="settingsToggleIconInactive" width="22" height="22"/>
         <image name="sleepSoundIcon" width="32" height="32"/>

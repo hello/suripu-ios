@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMSimpleLineTextField;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMTextFieldCollectionViewCell : UICollectionViewCell
 
 - (void)setPlaceholderText:(NSString*)placeholderText;
-- (void)setSecure:(BOOL)secure;
-- (UITextField*)textField;
-- (void)update;
+- (HEMSimpleLineTextField*)textField;
 
 @end
 

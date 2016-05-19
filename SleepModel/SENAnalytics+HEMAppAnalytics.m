@@ -256,7 +256,7 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 }
 
 + (NSDictionary*)propertiesFromAccount:(nonnull SENAccount*)account {
-    NSString* name = [account name] ?: @"";
+    NSString* name = [account fullName];
     NSString* email = [account email] ?: @"";
     NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
     NSDate* createDate = [account createdAt] ?: [NSDate date];
@@ -273,7 +273,7 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     // track required? for segment after alias and identify
     [self track:HEMAnalyticsEventAccountCreated];
     [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
-                                     HEMAnalyticsEventPropName : [account name] ?: @""}];
+                                     HEMAnalyticsEventPropName : [account fullName] ?: @""}];
 }
 
 + (void)trackUserSession:(nullable SENAccount*)account {
@@ -299,7 +299,7 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     }
     
     [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
-                                     HEMAnalyticsEventPropName : [account name] ?: @""}];
+                                     HEMAnalyticsEventPropName : [account fullName] ?: @""}];
 }
 
 + (void)trackErrorWithMessage:(NSString*)message {

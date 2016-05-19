@@ -714,32 +714,17 @@
                                                         <outlet property="titleLabel" destination="BH5-rI-hUk" id="KK9-AT-3Ga"/>
                                                     </connections>
                                                 </view>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pT7-8L-LFq">
-                                                    <rect key="frame" x="530" y="6" width="22" height="48"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="y6u-3J-cFx"/>
-                                                    </constraints>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="6"/>
-                                                    <state key="normal" image="secretEye"/>
-                                                    <state key="selected" image="secretEyeHighlighted"/>
-                                                    <state key="highlighted" image="secretEyeHighlighted"/>
-                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="pT7-8L-LFq" firstAttribute="top" secondItem="imT-1h-81J" secondAttribute="top" constant="6" id="6wa-RY-Kdg"/>
                                             <constraint firstItem="r4L-wq-DrE" firstAttribute="top" secondItem="imT-1h-81J" secondAttribute="top" constant="6" id="7qG-o9-0og"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="r4L-wq-DrE" secondAttribute="bottom" constant="8" id="8Bi-C8-jRE"/>
-                                            <constraint firstAttribute="trailing" secondItem="pT7-8L-LFq" secondAttribute="trailing" id="BzU-wr-hg2"/>
                                             <constraint firstAttribute="trailing" secondItem="r4L-wq-DrE" secondAttribute="trailing" id="U44-Oh-z53"/>
-                                            <constraint firstItem="pT7-8L-LFq" firstAttribute="height" secondItem="r4L-wq-DrE" secondAttribute="height" constant="-2" id="WGO-4o-Iej"/>
                                             <constraint firstItem="r4L-wq-DrE" firstAttribute="leading" secondItem="imT-1h-81J" secondAttribute="leading" id="swf-3K-OY7"/>
                                         </constraints>
                                         <size key="customSize" width="552" height="72"/>
                                         <connections>
-                                            <outlet property="revealSecretButton" destination="pT7-8L-LFq" id="YMC-D0-Xth"/>
                                             <outlet property="titledTextField" destination="r4L-wq-DrE" id="bBc-Ht-HyD"/>
                                         </connections>
                                     </collectionViewCell>

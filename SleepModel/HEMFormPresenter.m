@@ -13,6 +13,7 @@
 #import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTitledTextField.h"
+#import "HEMSimpleLineTextField.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMFormCellHeight = 72.0f;
@@ -55,6 +56,14 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     [self setCollectionView:collectionView];
 }
 
+#pragma mark - Presenter events
+
+- (void)didAppear {
+    [super didAppear];
+    // TODO: handle keyboard
+    [self putFocusOnTextFieldAtRow:0]; // first field
+}
+
 #pragma mark - Placeholders
 
 - (NSString*)existingTextForFieldInRow:(NSInteger)row {
@@ -71,6 +80,10 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
 
 - (BOOL)isFieldSecureInRow:(NSInteger)row {
     return NO;
+}
+
+- (BOOL)canEnableSave:(NSDictionary*)formContent {
+    return [formContent count] == [self numberOfFields];
 }
 
 - (void)saveContent:(NSDictionary*)content completion:(HEMFormSaveHandler)completion {
@@ -136,7 +149,7 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     
     NSInteger row = [indexPath row];
     HEMTextFieldCollectionViewCell* fieldCell = (id) cell;
-    UITextField* textField = [fieldCell textField];
+    HEMSimpleLineTextField* textField = [fieldCell textField];
 
     NSString* placeholderText = [self placeHolderTextForFieldInRow:row];
     [fieldCell setPlaceholderText:[self placeHolderTextForFieldInRow:row]];
@@ -156,11 +169,10 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
         [textField setReturnKeyType:UIReturnKeyNext];
     }
 
+    [textField setSecurityEnabled:[self isFieldSecureInRow:row]];
     [textField setDelegate:self];
     [textField setTag:row];
     [textField setKeyboardType:[self keyboardTypeForFieldInRow:row]];
-    [fieldCell setSecure:[self isFieldSecureInRow:row]];
-    [fieldCell update];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -189,7 +201,7 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     NSString* contentInField = [[textField text] trim];
     NSString* formValue = text ?: contentInField;
     [[self formContent] setValue:([formValue length] > 0 ? formValue : nil) forKey:placeholderText];
-    [[self saveItem] setEnabled:[[self formContent] count] == [self numberOfFields]];
+    [[self saveItem] setEnabled:[self canEnableSave:[self formContent]]];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {

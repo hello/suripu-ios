@@ -37,6 +37,7 @@ typedef void(^HEMFormSaveHandler)(NSString* _Nullable errorMessage);
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row;
 - (UIKeyboardType)keyboardTypeForFieldInRow:(NSInteger)row;
 - (BOOL)isFieldSecureInRow:(NSInteger)row;
+- (BOOL)canEnableSave:(NSDictionary*)formContent;
 - (void)saveContent:(NSDictionary*)content completion:(HEMFormSaveHandler)completion;
 
 @end

@@ -245,15 +245,21 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
     }];
 }
 
-- (void)updateName:(NSString*)name completion:(nullable HEMAccountUpdateHandler)completion {
-    NSString* oldName = [[self account] name];
-    [[self account] setName:name];
+- (void)updateFirstName:(NSString*)firstName
+               lastName:(NSString*)lastName
+             completion:(HEMAccountUpdateHandler)completion {
+    NSString* oldFirstName = [[self account] firstName];
+    NSString* oldLastName = [[self account] lastName];
+    [[self account] setFirstName:firstName];
+    [[self account] setLastName:lastName];
     
     __weak typeof(self) weakSelf = self;
     [self updateAccount:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         NSError* serviceError = [weakSelf translateUpdateAPIError:error];
         if (serviceError) {
-            [[weakSelf account] setName:oldName];
+            [[strongSelf account] setFirstName:oldFirstName];
+            [[strongSelf account] setLastName:oldLastName];
             [SENAnalytics trackError:serviceError];
         }
         if (completion) {

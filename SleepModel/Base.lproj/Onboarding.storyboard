@@ -519,32 +519,17 @@
                                                         <outlet property="titleLabel" destination="nwH-ou-6vr" id="KBX-lK-7Np"/>
                                                     </connections>
                                                 </view>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xc-bA-uLb">
-                                                    <rect key="frame" x="530" y="6" width="22" height="48"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="NC3-p0-HSm"/>
-                                                    </constraints>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="6"/>
-                                                    <state key="normal" image="secretEye"/>
-                                                    <state key="selected" image="secretEyeHighlighted"/>
-                                                    <state key="highlighted" image="secretEyeHighlighted"/>
-                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="Hf3-tH-1f7" firstAttribute="leading" secondItem="Y3p-6F-EMA" secondAttribute="leading" id="15h-io-A1n"/>
-                                            <constraint firstItem="4xc-bA-uLb" firstAttribute="height" secondItem="Hf3-tH-1f7" secondAttribute="height" constant="-2" id="4lR-Rx-bp5"/>
-                                            <constraint firstItem="4xc-bA-uLb" firstAttribute="top" secondItem="Y3p-6F-EMA" secondAttribute="top" constant="6" id="N3x-yh-gZ3"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="Hf3-tH-1f7" secondAttribute="bottom" constant="8" id="Qdy-4w-KgF"/>
-                                            <constraint firstAttribute="trailing" secondItem="4xc-bA-uLb" secondAttribute="trailing" id="qkB-Yo-zj4"/>
                                             <constraint firstItem="Hf3-tH-1f7" firstAttribute="top" secondItem="Y3p-6F-EMA" secondAttribute="top" constant="6" id="tdS-IO-sYU"/>
                                             <constraint firstAttribute="trailing" secondItem="Hf3-tH-1f7" secondAttribute="trailing" id="ztQ-TZ-LZY"/>
                                         </constraints>
                                         <size key="customSize" width="552" height="72"/>
                                         <connections>
-                                            <outlet property="revealSecretButton" destination="4xc-bA-uLb" id="Olo-SK-THA"/>
                                             <outlet property="titledTextField" destination="Hf3-tH-1f7" id="lX8-PR-CWc"/>
                                         </connections>
                                     </collectionViewCell>
@@ -584,32 +569,17 @@
                                                         <outlet property="titleLabel" destination="IyL-6a-OJb" id="RP3-XQ-kfE"/>
                                                     </connections>
                                                 </view>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1T-Nf-4Yg">
-                                                    <rect key="frame" x="530" y="6" width="22" height="48"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="NnM-pz-MDI"/>
-                                                    </constraints>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="6"/>
-                                                    <state key="normal" image="secretEye"/>
-                                                    <state key="selected" image="secretEyeHighlighted"/>
-                                                    <state key="highlighted" image="secretEyeHighlighted"/>
-                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="qKC-QX-NKn" firstAttribute="top" secondItem="kx4-wH-Vh7" secondAttribute="top" constant="6" id="4FI-Tw-6EH"/>
-                                            <constraint firstItem="j1T-Nf-4Yg" firstAttribute="height" secondItem="qKC-QX-NKn" secondAttribute="height" constant="-2" id="8yM-to-RDV"/>
                                             <constraint firstAttribute="trailing" secondItem="qKC-QX-NKn" secondAttribute="trailing" id="G45-Dp-5an"/>
-                                            <constraint firstItem="j1T-Nf-4Yg" firstAttribute="top" secondItem="kx4-wH-Vh7" secondAttribute="top" constant="6" id="XbE-ir-H28"/>
                                             <constraint firstItem="qKC-QX-NKn" firstAttribute="leading" secondItem="kx4-wH-Vh7" secondAttribute="leading" id="jp9-oC-4sy"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="qKC-QX-NKn" secondAttribute="bottom" constant="8" id="qTU-Wo-m2V"/>
-                                            <constraint firstAttribute="trailing" secondItem="j1T-Nf-4Yg" secondAttribute="trailing" id="v4t-Zf-PFc"/>
                                         </constraints>
                                         <size key="customSize" width="552" height="72"/>
                                         <connections>
-                                            <outlet property="revealSecretButton" destination="j1T-Nf-4Yg" id="NCS-bJ-wKF"/>
                                             <outlet property="titledTextField" destination="qKC-QX-NKn" id="YAE-ni-cdM"/>
                                         </connections>
                                     </collectionViewCell>
@@ -649,32 +619,17 @@
                                                         <outlet property="titleLabel" destination="PWW-yg-gfi" id="6Ea-ks-2C5"/>
                                                     </connections>
                                                 </view>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBh-aw-GKo">
-                                                    <rect key="frame" x="530" y="6" width="22" height="48"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="peK-xt-hrc"/>
-                                                    </constraints>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="6"/>
-                                                    <state key="normal" image="secretEye"/>
-                                                    <state key="selected" image="secretEyeHighlighted"/>
-                                                    <state key="highlighted" image="secretEyeHighlighted"/>
-                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="dBh-aw-GKo" secondAttribute="trailing" id="8oZ-F9-1pY"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="2TS-dO-Qgl" secondAttribute="bottom" constant="8" id="Lmp-ho-VKN"/>
-                                            <constraint firstItem="dBh-aw-GKo" firstAttribute="top" secondItem="6Ub-9B-V0m" secondAttribute="top" constant="6" id="Qu0-f7-QDG"/>
-                                            <constraint firstItem="dBh-aw-GKo" firstAttribute="height" secondItem="2TS-dO-Qgl" secondAttribute="height" constant="-2" id="aOJ-yl-if6"/>
                                             <constraint firstAttribute="trailing" secondItem="2TS-dO-Qgl" secondAttribute="trailing" id="kQg-v7-gSD"/>
                                             <constraint firstItem="2TS-dO-Qgl" firstAttribute="leading" secondItem="6Ub-9B-V0m" secondAttribute="leading" id="qu2-Yk-Fn0"/>
                                             <constraint firstItem="2TS-dO-Qgl" firstAttribute="top" secondItem="6Ub-9B-V0m" secondAttribute="top" constant="6" id="xHl-4A-XnK"/>
                                         </constraints>
                                         <size key="customSize" width="552" height="72"/>
                                         <connections>
-                                            <outlet property="revealSecretButton" destination="dBh-aw-GKo" id="Lxs-Eb-Ic7"/>
                                             <outlet property="titledTextField" destination="2TS-dO-Qgl" id="BSE-vX-wKg"/>
                                         </connections>
                                     </collectionViewCell>
@@ -3133,8 +3088,6 @@ Flip the switch to On</string>
         <image name="male" width="75" height="72"/>
         <image name="map" width="320" height="218"/>
         <image name="sampleNotification" width="320" height="186"/>
-        <image name="secretEye" width="22" height="16"/>
-        <image name="secretEyeHighlighted" width="22" height="16"/>
         <image name="sense" width="186" height="183"/>
         <image name="senseAppIcon" width="32" height="32"/>
         <image name="senseBackground" width="320" height="210"/>

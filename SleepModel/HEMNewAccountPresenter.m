@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 @property (nonatomic, weak) HEMOnboardingService* onbService;
 @property (nonatomic, weak) HEMFacebookService* fbService;
 @property (nonatomic, assign) HEMNewAccountRow rowWithError;
+@property (nonatomic, assign) BOOL autofilled;
 
 @end
 
@@ -142,6 +143,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
             NSString* message = NSLocalizedString(@"account.error.facebook-access", nil);
             [[strongSelf delegate] showError:message title:title from:strongSelf];
         } else {
+            [strongSelf setAutofilled:YES];
             [[strongSelf tempAccount] setEmail:[account email]];
             [[strongSelf tempAccount] setLastName:[account lastName]];
             [[strongSelf tempAccount] setFirstName:[account firstName]];
@@ -338,6 +340,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     [[profilePhotoCell fbAutofillButton] addTarget:self
                                             action:@selector(autofillFromFB)
                                   forControlEvents:UIControlEventTouchUpInside];
+    [[profilePhotoCell fbAutofillButton] setSelected:[self autofilled]];
     
     if ([self fbPhotoUrl]) {
         __weak typeof(self) weakSelf = self;

@@ -25,7 +25,8 @@ static CGFloat const HEMNewProfileButtonBorderWidth = 1.0f;
     [buttonLayer setBorderColor:[[UIColor borderColor] CGColor]];
     [buttonLayer setBorderWidth:HEMNewProfileButtonBorderWidth];
     
-    [[self fbAutofillButton] setAdjustsImageWhenHighlighted:NO];
+    [[self fbAutofillButton] setTitleColor:[UIColor grey3] forState:UIControlStateHighlighted];
+    [[self fbAutofillButton] setTitleColor:[UIColor grey3] forState:UIControlStateSelected];
 }
 
 @end

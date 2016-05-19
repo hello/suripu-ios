@@ -42,7 +42,6 @@ NSString* SENAccountGenderToString(SENAccountGender gender) {
 
 @implementation SENAccount
 
-NSString* const SENAccountPropertyName = @"name";
 NSString* const SENAccountPropertyFName = @"firstname";
 NSString* const SENAccountPropertyLName = @"lastname";
 NSString* const SENAccountPropertyTimeZone = @"time_zone";
@@ -64,7 +63,6 @@ NSString* const SENAccountPropertyCreated = @"created";
     if (self = [super init]) {
         _accountId = SENObjectOfClass(data[SENAccountPropertyId], [NSString class]);
         _lastModified = SENObjectOfClass(data[SENAccountPropertyLastModified], [NSNumber class]);
-        _name = SENObjectOfClass(data[SENAccountPropertyName], [NSString class]);
         _lastName = SENObjectOfClass(data[SENAccountPropertyLName], [NSString class]);
         _firstName = SENObjectOfClass(data[SENAccountPropertyFName], [NSString class]);
         _gender = SENAccountGenderFromString(SENObjectOfClass(data[SENAccountPropertyGender], [NSString class]));
@@ -94,6 +92,13 @@ NSString* const SENAccountPropertyCreated = @"created";
     return self;
 }
 
+- (NSString*)timeZone {
+    if (!_timeZone) {
+        _timeZone = [[[NSTimeZone localTimeZone] name] copy];
+    }
+    return _timeZone;
+}
+
 - (void)setBirthdate:(NSString *)birthdate {
     _birthdate = birthdate;
     [self setDobDate:nil];
@@ -101,7 +106,6 @@ NSString* const SENAccountPropertyCreated = @"created";
 
 - (NSDictionary *)dictionaryValue {
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
-    [params setValue:self.name forKey:SENAccountPropertyName];
     [params setValue:self.firstName forKey:SENAccountPropertyFName];
     [params setValue:self.lastName forKey:SENAccountPropertyLName];
     [params setValue:self.email forKey:SENAccountPropertyEmailAddress];
@@ -112,8 +116,10 @@ NSString* const SENAccountPropertyCreated = @"created";
     [params setValue:self.lastModified forKey:SENAccountPropertyLastModified];
     [params setValue:self.latitude forKey:SENAccountPropertyValueLatitude];
     [params setValue:self.longitude forKey:SENAccountPropertyValueLongitude];
-    [params setValue:SENDateMillisecondsSince1970(self.createdAt) forKey:SENAccountPropertyCreated];
     [params setValue:self.timeZone forKey:SENAccountPropertyTimeZone];
+    if (self.createdAt) {
+        [params setValue:SENDateMillisecondsSince1970(self.createdAt) forKey:SENAccountPropertyCreated];
+    }
     return params;
 }
 
@@ -172,6 +178,12 @@ NSString* const SENAccountPropertyCreated = @"created";
                     fromDate:[formatter dateFromString:[self birthdate]]];
     
     return components;
+}
+
+- (NSString*)fullName {
+    NSString* firstName = [self firstName] ?: @"";
+    NSString* lastName = [self lastName] ?: @"";
+    return [NSString stringWithFormat:@"%@ %@", firstName, lastName];
 }
 
 @end

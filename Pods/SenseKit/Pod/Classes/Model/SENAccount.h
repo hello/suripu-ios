@@ -28,13 +28,6 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
 @property (nonatomic, copy, readonly)    NSNumber* lastModified;
 
 /**
- * @property name
- *
- * The name of the user that this account belongs to
- */
-@property (nonatomic, copy, readwrite)   NSString* name;
-
-/**
  * @property firstName
  *
  * The first name of the user that this account belongs to
@@ -147,5 +140,10 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
  * @return localized birthdate as NSString given the preferred date style
  */
 - (NSString*)localizedBirthdateWithStyle:(NSDateFormatterStyle)style;
+
+/**
+ * @return full name for the account
+ */
+- (NSString*)fullName;
 
 @end

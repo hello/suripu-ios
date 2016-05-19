@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.4.2.4
+
+New:
+
+* Integrated with new account registration and update APIs
+* sending time zone id to server on registration and account updates
+* updated name change screen for first and last name, with new field types
+* updated email change screen to use new field type
+* updated password change screen to use new field type
+
+Design tweaks:
+
+* tapping in the photo area in registration screen will dismiss the keyboard
+* No textfield placeholder text, but placeholder label is always visible
+* When textfield is focused, password is visible.  When not focused, becomes secure
+* Increase tap target on "secret eye"
+
 ## 1.4.2.3
 
 New:

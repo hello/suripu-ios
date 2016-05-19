@@ -17,6 +17,7 @@
 #import "HEMOnboardingService.h"
 #import "HEMFacebookService.h"
 #import "HEMProfileImageView.h"
+#import "HEMSimpleLineTextField.h"
 
 static CGFloat const HEMNewAccountPresenterPhotoHeight = 226.0f;
 static CGFloat const HEMNewAccountPresenterFieldHeight = 72.0f;
@@ -87,8 +88,8 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
                    name:UIKeyboardWillShowNotification
                  object:nil];
     [center addObserver:self
-               selector:@selector(didHideKeyboard:)
-                   name:UIKeyboardDidHideNotification
+               selector:@selector(willHideKeyboard:)
+                   name:UIKeyboardWillHideNotification
                  object:nil];
 }
 
@@ -223,7 +224,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     }];
 }
 
-- (void)didHideKeyboard:(NSNotification*)note {
+- (void)willHideKeyboard:(NSNotification*)note {
     [[self bottomConstraint] setConstant:[self origBottomConstraint]];
     [[self collectionView] updateConstraintsIfNeeded];
 }
@@ -293,6 +294,12 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     }
     
     return [self cellWithIdentifier:reuseId atIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([indexPath row] == HEMNewAccountRowProfilePicture) {
+        [collectionView endEditing:NO];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -375,13 +382,12 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     }
     
     [cell setPlaceholderText:placeholderText];
-    [cell setSecure:secure];
+    [[cell textField] setSecurityEnabled:secure];
     [[cell textField] setText:value];
     [[cell textField] setTag:index];
     [[cell textField] setDelegate:self];
     [[cell textField] setReturnKeyType:returnKeyType];
     [[cell textField] setKeyboardType:keyboardType];
-    [cell update];
 }
 
 #pragma mark - UITextFieldDelegate

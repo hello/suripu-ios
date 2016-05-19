@@ -58,7 +58,9 @@ typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
 - (void)updateGender:(SENAccountGender)gender completion:(nullable HEMAccountUpdateHandler)completion;
 - (void)updateHeight:(NSNumber*)height completion:(nullable HEMAccountUpdateHandler)completion;
 - (void)updateWeight:(NSNumber*)weight completion:(nullable HEMAccountUpdateHandler)completion;
-- (void)updateName:(NSString*)name completion:(nullable HEMAccountUpdateHandler)completion;
+- (void)updateFirstName:(NSString*)firstName
+               lastName:(NSString*)lastName
+             completion:(HEMAccountUpdateHandler)completion;
 - (void)updateEmail:(NSString*)email completion:(nullable HEMAccountUpdateHandler)completion;
 - (void)updatePassword:(NSString*)currentPassword
            newPassword:(NSString*)newPassword

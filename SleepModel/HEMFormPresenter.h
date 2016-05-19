@@ -29,15 +29,15 @@ typedef void(^HEMFormSaveHandler)(NSString* _Nullable errorMessage);
 @property (copy, nonatomic) NSString* title;
 @property (weak, nonatomic) id<HEMFormDelegate> delegate;
 
-- (void)bindWithTableView:(UITableView*)tableView;
+- (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithSaveItem:(UIBarButtonItem*)saveItem;
 
 // for subclasses to override
 - (NSString*)existingTextForFieldInRow:(NSInteger)row;
-- (UIImage*)iconForFieldInRow:(NSInteger)row;
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row;
 - (UIKeyboardType)keyboardTypeForFieldInRow:(NSInteger)row;
 - (BOOL)isFieldSecureInRow:(NSInteger)row;
+- (BOOL)canEnableSave:(NSDictionary*)formContent;
 - (void)saveContent:(NSDictionary*)content completion:(HEMFormSaveHandler)completion;
 
 @end

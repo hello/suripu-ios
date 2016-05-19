@@ -107,11 +107,11 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
     if (!account) {
         [[HEMAccountService sharedService] refresh:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
             if (account) {
-                setIdentity([account email], [account name]);
+                setIdentity([account email], [account fullName]);
             }
         }];
     } else {
-        setIdentity([account email], [account name]);
+        setIdentity([account email], [account fullName]);
     }
 
 }

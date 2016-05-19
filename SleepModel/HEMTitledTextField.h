@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMSimpleLineTextField;
+
 @interface HEMTitledTextField : UIView
 
-@property (nonatomic, weak) IBOutlet UITextField* textField;
-
-- (void)update;
+@property (nonatomic, weak) IBOutlet HEMSimpleLineTextField* textField;
+@property (nonatomic, copy) NSString* placeholderText;
 
 @end

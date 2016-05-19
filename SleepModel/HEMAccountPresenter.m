@@ -144,9 +144,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     switch (row) {
         default:
         case HEMAccountRowName: {
-            NSString* fName = [account firstName] ?: @"";
-            NSString* lName = [account lastName] ?: @"";
-            NSString* fullName = [NSString stringWithFormat:@"%@ %@", fName, lName];
+            NSString* fullName = [account fullName];
             *title = [fullName length] > 0 ? fullName : NSLocalizedString(@"settings.account.name", nil);
             *icon = [UIImage imageNamed:@"settingsNameIcon"];
             break;

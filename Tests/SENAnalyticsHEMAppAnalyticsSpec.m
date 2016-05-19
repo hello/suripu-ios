@@ -47,9 +47,7 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
             });
             
             it(@"should track with account full name", ^{
-                NSString* fname = propertiesOnCreation[@"firstname"];
-                NSString* lname = propertiesOnCreation[@"lastname"];
-                NSString* name = [NSString stringWithFormat:@"%@ %@", fname, lname];
+                NSString* name = propertiesOnCreation[@"name"];
                 [[name should] equal:[account fullName]];
             });
             

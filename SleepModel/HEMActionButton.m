@@ -44,7 +44,6 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 - (void)setDefaults {
     self.layer.cornerRadius = 3;
-    self.backgroundColor = [UIColor tintColor];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor whiteColor]
                forState:UIControlStateDisabled];
@@ -52,7 +51,8 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
     
     [self setBackgroundColors:[NSMutableDictionary new]];
-    [self backgroundColors][@(UIControlStateHighlighted)] = [UIColor blue7];
+    [self setBackgroundColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [self setBackgroundColor:[UIColor blue7] forState:UIControlStateHighlighted];
 }
 
 - (void)addActivityView {

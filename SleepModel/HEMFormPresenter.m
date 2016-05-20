@@ -30,6 +30,8 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) UIBarButtonItem* saveItem;
 @property (nonatomic, strong) NSMutableDictionary* formContent;
+@property (nonatomic, assign) CGFloat origBottomMargin;
+@property (nonatomic, weak) NSLayoutConstraint* bottomConstraint;
 
 @end
 
@@ -46,14 +48,37 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     [self setSaveItem:saveItem];
 }
 
-- (void)bindWithCollectionView:(UICollectionView*)collectionView {
+- (void)bindWithCollectionView:(UICollectionView*)collectionView
+              bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [self setFormContent:[NSMutableDictionary dictionary]];
     
     [collectionView setBackgroundColor:[UIColor whiteColor]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(willShowKeyboard:)
+                   name:UIKeyboardWillShowNotification
+                 object:nil];
+    
+    [self setOrigBottomMargin:[bottomConstraint constant]];
+    [self setBottomConstraint:bottomConstraint];
     [self setCollectionView:collectionView];
+}
+
+#pragma mark - Keyboard events
+
+- (void)willShowKeyboard:(NSNotification*)note {
+    NSValue* keyboardFrameVal = [[note userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
+    NSNumber* duration = [[note userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    CGRect keyboardFrame = [keyboardFrameVal CGRectValue];
+    CGFloat reduceBottom = CGRectGetHeight(keyboardFrame) + [self origBottomMargin];
+    [[self bottomConstraint] setConstant:reduceBottom];
+    
+    [UIView animateWithDuration:[duration CGFloatValue] animations:^{
+        [[[self collectionView] superview] layoutIfNeeded];
+    }];
 }
 
 #pragma mark - Presenter events
@@ -239,6 +264,7 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
 #pragma mark - Clean up
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_collectionView setDataSource:nil];
     [_collectionView setDelegate:nil];
 }

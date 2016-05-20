@@ -29,7 +29,8 @@ typedef void(^HEMFormSaveHandler)(NSString* _Nullable errorMessage);
 @property (copy, nonatomic) NSString* title;
 @property (weak, nonatomic) id<HEMFormDelegate> delegate;
 
-- (void)bindWithCollectionView:(UICollectionView*)collectionView;
+- (void)bindWithCollectionView:(UICollectionView*)collectionView
+              bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
 - (void)bindWithSaveItem:(UIBarButtonItem*)saveItem;
 
 // for subclasses to override

@@ -18,10 +18,13 @@
 #import "HEMFacebookService.h"
 #import "HEMProfileImageView.h"
 #import "HEMSimpleLineTextField.h"
+#import "HEMActionButton.h"
+#import "HEMStyle.h"
 
 static CGFloat const HEMNewAccountPresenterPhotoHeight = 226.0f;
 static CGFloat const HEMNewAccountPresenterFieldHeight = 72.0f;
 static CGFloat const HEMNewAccountPresenterCellMargin = 24.0f;
+static CGFloat const HEMNewAccountPresenterAutoScrollTopMargin = 15.0f;
 static CGFloat const HEMNewAccountPresenterScrollDuration = 0.25f;
 
 typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
@@ -31,6 +34,11 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     HEMNewAccountRowEmail,
     HEMNewAccountRowPassword,
     HEMNewAccountRowCount
+};
+
+typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
+    HEMNewAccountButtonTypeNext = 1,
+    HEMNewAccountButtonTypeDone
 };
 
 @interface HEMNewAccountPresenter() <
@@ -44,7 +52,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) NSLayoutConstraint* bottomConstraint;
 @property (nonatomic, assign) CGFloat origBottomConstraint;
-@property (nonatomic, weak) UIButton* nextButton;
+@property (nonatomic, weak) HEMActionButton* nextButton;
 @property (nonatomic, strong) HEMActivityCoverView* activityView;
 @property (nonatomic, weak) UIView* activityContainerView;
 @property (nonatomic, strong) SENAccount* tempAccount;
@@ -54,6 +62,8 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 @property (nonatomic, weak) HEMOnboardingService* onbService;
 @property (nonatomic, weak) HEMFacebookService* fbService;
 @property (nonatomic, assign) HEMNewAccountRow rowWithError;
+@property (nonatomic, assign) BOOL autofilled;
+@property (nonatomic, assign) NSInteger rowWithFocus;
 
 @end
 
@@ -97,12 +107,14 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     [self setActivityContainerView:activityContainerView];
 }
 
-- (void)bindWithNextButton:(UIButton*)button {
-    [button setEnabled:NO];
+- (void)bindWithNextButton:(HEMActionButton*)button {
+    [button setEnabled:YES];
     [button addTarget:self
                action:@selector(next:)
      forControlEvents:UIControlEventTouchUpInside];
+    
     [self setNextButton:button];
+    [self updateToNextButton];
 }
 
 #pragma mark - Presenter Events
@@ -142,6 +154,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
             NSString* message = NSLocalizedString(@"account.error.facebook-access", nil);
             [[strongSelf delegate] showError:message title:title from:strongSelf];
         } else {
+            [strongSelf setAutofilled:YES];
             [[strongSelf tempAccount] setEmail:[account email]];
             [[strongSelf tempAccount] setLastName:[account lastName]];
             [[strongSelf tempAccount] setFirstName:[account firstName]];
@@ -152,6 +165,13 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 }
 
 - (void)next:(id)sender {
+    if ([sender isKindOfClass:[UIButton class]]
+        && [(UIButton*)sender tag] == HEMNewAccountButtonTypeNext
+        && [self rowWithFocus] >= HEMNewAccountRowFirstName) {
+        [self putFocusOnTextFieldAtRow:[self rowWithFocus] + 1];
+        return;
+    }
+    
     NSString* errorMessage = nil;
     if (![[self onbService] isFirstNameValid:[[self tempAccount] firstName]]) {
         errorMessage = NSLocalizedString(@"account.error.invalid-first-name", nil);
@@ -227,6 +247,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 - (void)willHideKeyboard:(NSNotification*)note {
     [[self bottomConstraint] setConstant:[self origBottomConstraint]];
     [[self collectionView] updateConstraintsIfNeeded];
+    [self setRowWithFocus:0];
 }
 
 #pragma mark - Activity
@@ -338,6 +359,7 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     [[profilePhotoCell fbAutofillButton] addTarget:self
                                             action:@selector(autofillFromFB)
                                   forControlEvents:UIControlEventTouchUpInside];
+    [[profilePhotoCell fbAutofillButton] setSelected:[self autofilled]];
     
     if ([self fbPhotoUrl]) {
         __weak typeof(self) weakSelf = self;
@@ -390,7 +412,56 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     [[cell textField] setKeyboardType:keyboardType];
 }
 
+#pragma mark - Displaying Next Button
+
+- (void)updateToNextButton {
+    [[self nextButton] setBackgroundColor:[UIColor grey3] forState:UIControlStateNormal];
+    [[self nextButton] setBackgroundColor:[UIColor grey4] forState:UIControlStateHighlighted];
+    [[self nextButton] setTitle:[NSLocalizedString(@"actions.next", nil) uppercaseString]
+                       forState:UIControlStateNormal];
+    [[self nextButton] layoutIfNeeded];
+    [[self nextButton] setTag:HEMNewAccountButtonTypeNext];
+}
+
+- (void)updateToDoneButton {
+    [[self nextButton] setBackgroundColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [[self nextButton] setBackgroundColor:[UIColor blue7] forState:UIControlStateHighlighted];
+    [[self nextButton] setTitle:[NSLocalizedString(@"actions.done", nil) uppercaseString]
+                       forState:UIControlStateNormal];
+    [[self nextButton] layoutIfNeeded];
+    [[self nextButton] setTag:HEMNewAccountButtonTypeDone];
+}
+
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    switch ([textField tag]) {
+        case HEMNewAccountRowFirstName: {
+            NSIndexPath* namePath = [NSIndexPath indexPathForRow:[textField tag]
+                                                       inSection:0];
+            UICollectionViewCell* textCell =
+                (id) [[self collectionView] cellForItemAtIndexPath:namePath];
+            CGFloat topOfCell = CGRectGetMinY([textCell frame]);
+            CGPoint topWithMargin = CGPointMake(0.0f, topOfCell - HEMNewAccountPresenterAutoScrollTopMargin);
+            [[self collectionView] setContentOffset:topWithMargin animated:YES];
+            
+            // update big next button
+            [self updateToNextButton];
+            break;
+        }
+        case HEMNewAccountRowLastName:
+        case HEMNewAccountRowEmail:
+            [self updateToNextButton];
+            break;
+        case HEMNewAccountRowPassword:
+            [self updateToDoneButton];
+            break;
+        default:
+            break;
+    }
+    [self setRowWithFocus:[textField tag]];
+    return YES;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {
@@ -431,7 +502,6 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
     NSString* currenText = [textField text];
     NSString* changedText = [currenText stringByReplacingCharactersInRange:range withString:string];
     [self updateValuesFromTextField:textField withText:changedText];
-    [[self nextButton] setEnabled:[[self onbService] hasRequiredFields:[self tempAccount] password:[self password]]];
     return YES;
 }
              

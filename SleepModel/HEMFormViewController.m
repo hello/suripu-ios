@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButtonItem;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -24,7 +25,8 @@
 }
 
 - (void)configurePresenter {
-    [[self presenter] bindWithCollectionView:[self collectionView]];
+    [[self presenter] bindWithCollectionView:[self collectionView]
+                            bottomConstraint:[self bottomConstraint]];
     [[self presenter] bindWithSaveItem:[self saveButtonItem]];
     [[self presenter] setTitle:[self title]];
     [[self presenter] setDelegate:self];

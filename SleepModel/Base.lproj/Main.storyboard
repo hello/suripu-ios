@@ -5289,6 +5289,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Save" id="Q98-bT-B0G"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomConstraint" destination="NAL-uQ-yDv" id="ign-4V-7gN"/>
                         <outlet property="collectionView" destination="vog-8l-d9M" id="Y7T-8W-t1v"/>
                         <outlet property="saveButtonItem" destination="Q98-bT-B0G" id="bP8-EZ-2uc"/>
                         <outlet property="view" destination="9HH-4m-4Dw" id="927-th-WJ7"/>

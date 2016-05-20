@@ -10,21 +10,24 @@
 #import "HEMSupportUtil.h"
 #import "HEMConfig.h"
 #import "HEMAccountService.h"
+#import "HEMTitledTextField.h"
+#import "HEMSimpleLineTextField.h"
 
 NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNotificationDidSignIn";
 
 @interface HEMAuthenticationViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField* usernameField;
-@property (weak, nonatomic) IBOutlet UITextField* passwordField;
+@property (weak, nonatomic) IBOutlet HEMTitledTextField *emailField;
+@property (weak, nonatomic) IBOutlet HEMTitledTextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPassButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *logInButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginButtonTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonBottomConstraint;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic) BOOL signingIn;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
+@property (assign, nonatomic) CGFloat origBottomMargin;
 
 @end
 
@@ -35,8 +38,52 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 
     [self configureForgotPassword];
     [self showBackButtonAsCancelWithSelector:@selector(cancel:)];
+    [self configureFields];
+    [self listenForKeyboardNotifications];
     
     [SENAnalytics track:kHEMAnalyticsEventSignInStart];
+}
+
+- (void)listenForKeyboardNotifications {
+    [self setOrigBottomMargin:[[self buttonBottomConstraint] constant]];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(willShowKeyboard:)
+                   name:UIKeyboardWillShowNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(willHideKeyboard:)
+                   name:UIKeyboardWillHideNotification
+                 object:nil];
+}
+
+- (void)willShowKeyboard:(NSNotification*)note {
+    NSValue* keyboardFrameVal = [[note userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
+    NSNumber* duration = [[note userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    CGRect keyboardFrame = [keyboardFrameVal CGRectValue];
+    
+    CGFloat reduceBottom = CGRectGetHeight(keyboardFrame) + [self origBottomMargin];
+    [[self buttonBottomConstraint] setConstant:reduceBottom];
+    
+    [UIView animateWithDuration:[duration CGFloatValue] animations:^{
+        [[[self logInButton] superview] layoutIfNeeded];
+    }];
+}
+
+- (void)willHideKeyboard:(NSNotification*)note {
+    [[self buttonBottomConstraint] setConstant:[self origBottomMargin]];
+    [[self logInButton] updateConstraintsIfNeeded];
+}
+
+- (void)configureFields {
+    NSString* emailPlaceholder = NSLocalizedString(@"onboarding.account.email", nil);
+    [[self emailField] setPlaceholderText:emailPlaceholder];
+    [[[self emailField] textField] setDelegate:self];
+    
+    NSString* passwordPlaceholder = NSLocalizedString(@"onboarding.account.password", nil);
+    [[self passwordField] setPlaceholderText:passwordPlaceholder];
+    [[[self passwordField] textField] setSecurityEnabled:YES];
+    [[[self passwordField] textField] setDelegate:self];
 }
 
 - (void)configureForgotPassword {
@@ -50,7 +97,8 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 - (void)adjustConstraintsForIPhone4 {
     [super adjustConstraintsForIPhone4];
     [self setTitle:nil]; // removing title per design for iphone 4s
-    [self updateConstraint:[self emailTopConstraint] withDiff:-40.0f];
+    [self setOrigBottomMargin:10.0f];
+    [self updateConstraint:[self emailTopConstraint] withDiff:-60.0f];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -63,22 +111,24 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
     // for an email?  This doesn't happen in sign up controller b/c the field
     // that is given focus to after appearance does not have the same keyboard type
     if (![self isLoaded]) {
-        [[self usernameField] becomeFirstResponder];
+        [[[self emailField] textField] becomeFirstResponder];
         [self setLoaded:YES];
     } else {
-        [[self passwordField] becomeFirstResponder];
+        [[[self passwordField] textField] becomeFirstResponder];
     }
 }
 
-- (BOOL)validateInputValues
-{
-    return self.usernameField.text.length > 0 && self.passwordField.text.length > 0;
+- (BOOL)validateInputValues {
+    // let api reject invalid emails
+    BOOL emailIsValid = [[[[self emailField] textField] text] length] > 0;
+    BOOL passIsValid = [[[[self passwordField] textField] text] length] > 0;
+    return emailIsValid && passIsValid;
 }
 
 - (void)enableControls:(BOOL)enable {
     [[self forgotPassButton] setEnabled:enable];
-    [[self usernameField] setEnabled:enable];
-    [[self passwordField] setEnabled:enable];
+    [[[self emailField] textField] setEnabled:enable];
+    [[[self passwordField] textField] setEnabled:enable];
 }
 
 - (void)showActivity:(void(^)(void))completion {
@@ -109,8 +159,8 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
         [self setSigningIn:YES];
         
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        NSString* username = [[self usernameField] text];
-        NSString* password = [[self passwordField] text];
+        NSString* username = [[[self emailField] textField] text];
+        NSString* password = [[[self passwordField] textField] text];
         
         __weak typeof(self) weakSelf = self;
         [service authenticateUser:username pass:password retry:YES completion:^(NSError *error) {
@@ -163,10 +213,9 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField*)textField
-{
-    if ([textField isEqual:self.usernameField]) {
-        [self.passwordField becomeFirstResponder];
+- (BOOL)textFieldShouldReturn:(UITextField*)textField {
+    if ([textField isEqual:[[self emailField] textField]]) {
+        [[self.passwordField textField] becomeFirstResponder];
     } else {
         [textField resignFirstResponder];
         if ([self validateInputValues]) {
@@ -176,6 +225,12 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
     }
 
     return YES;
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

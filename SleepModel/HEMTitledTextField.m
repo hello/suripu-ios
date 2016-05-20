@@ -10,7 +10,7 @@
 #import "HEMSimpleLineTextField.h"
 #import "HEMStyle.h"
 
-@interface HEMTitledTextField() <HEMSimpleLineTextFieldDelegate>
+@interface HEMTitledTextField()
 
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 

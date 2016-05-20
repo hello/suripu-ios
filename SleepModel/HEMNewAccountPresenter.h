@@ -11,6 +11,7 @@
 @class HEMNewAccountPresenter;
 @class HEMOnboardingService;
 @class HEMFacebookService;
+@class HEMActionButton;
 
 @protocol HEMNewAccountPresenterDelegate
 
@@ -30,7 +31,7 @@
 - (void)bindWithCollectionView:(UICollectionView*)collectionView
            andBottomConstraint:(NSLayoutConstraint*)bottomConstraint;
 
-- (void)bindWithNextButton:(UIButton*)button;
+- (void)bindWithNextButton:(HEMActionButton*)button;
 
 - (void)bindWithControllerToLaunchFacebook:(UIViewController*)controller;
 

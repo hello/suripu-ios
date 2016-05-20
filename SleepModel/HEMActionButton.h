@@ -27,4 +27,13 @@
  */
 - (BOOL)isShowingActivity;
 
+/**
+ * @discussion
+ * Supports only highlighted, selected and disabled states
+ *
+ * @param backgroundColor: the color to show for that particular state
+ * @param state: the button state
+ */
+- (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state;
+
 @end

@@ -142,6 +142,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     // http://stackoverflow.com/questions/35293379/uitextfield-securetextentry-toggle-set-incorrect-font
     [self setFont:nil];
     [self setFont:[UIFont textfieldTextFont]];
+    [self layoutIfNeeded];
     
     cursorPosition = [self endOfDocument];
     [self setSelectedTextRange:[self textRangeFromPosition:cursorPosition
@@ -151,6 +152,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
 - (void)hideText {
     [[self revealSecretButton] setSelected:NO];
     [self setSecureTextEntry:YES];
+    [self layoutIfNeeded];
 }
 
 @end

@@ -22,6 +22,7 @@
 static CGFloat const HEMNewAccountPresenterPhotoHeight = 226.0f;
 static CGFloat const HEMNewAccountPresenterFieldHeight = 72.0f;
 static CGFloat const HEMNewAccountPresenterCellMargin = 24.0f;
+static CGFloat const HEMNewAccountPresenterAutoScrollTopMargin = 15.0f;
 static CGFloat const HEMNewAccountPresenterScrollDuration = 0.25f;
 
 typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
@@ -394,6 +395,24 @@ typedef NS_ENUM(NSInteger, HEMNewAccountRow) {
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    switch ([textField tag]) {
+        case HEMNewAccountRowFirstName: {
+            NSIndexPath* namePath = [NSIndexPath indexPathForRow:[textField tag]
+                                                       inSection:0];
+            UICollectionViewCell* textCell =
+                (id) [[self collectionView] cellForItemAtIndexPath:namePath];
+            CGFloat topOfCell = CGRectGetMinY([textCell frame]);
+            CGPoint topWithMargin = CGPointMake(0.0f, topOfCell - HEMNewAccountPresenterAutoScrollTopMargin);
+            [[self collectionView] setContentOffset:topWithMargin animated:YES];
+            break;
+        }
+        default:
+            break;
+    }
+    return YES;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {

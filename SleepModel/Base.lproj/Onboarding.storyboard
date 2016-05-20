@@ -479,7 +479,7 @@
                                                         <constraint firstAttribute="height" constant="104" id="tXP-M3-eeC"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X28-UO-vKP">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X28-UO-vKP" customClass="HEMFbAutofillButton">
                                                     <rect key="frame" x="157" y="159" width="238" height="48"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="48" id="jhY-cs-ueX"/>

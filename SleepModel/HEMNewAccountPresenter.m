@@ -233,7 +233,10 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
             if ([strongSelf photo]) {
                 [[strongSelf photo] jpegDataWithCompression:HEMAccountPhotoDefaultCompression completion:^(NSData * _Nullable data) {
                     if (data) {
-                        [[strongSelf acctService] uploadProfileJpegPhoto:data progress:nil completion:nil];
+                        void(^cleanup)(SENRemoteImage * remoteImage, NSError * error) = ^(SENRemoteImage * remoteImage, NSError * error) {
+                            [strongSelf removePhoto]; // no longer needed, remove from memory
+                        };
+                        [[strongSelf acctService] uploadProfileJpegPhoto:data progress:nil completion:cleanup];
                     } else {
                         [SENAnalytics trackWarningWithMessage:@"new account photo compression failed"];
                     }

@@ -11,6 +11,7 @@
 @class HEMNewAccountPresenter;
 @class HEMOnboardingService;
 @class HEMFacebookService;
+@class HEMAccountService;
 @class HEMActionButton;
 
 @protocol HEMNewAccountPresenterDelegate
@@ -26,7 +27,8 @@
 @property (nonatomic, weak) id<HEMNewAccountPresenterDelegate> delegate;
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
-                          facebookService:(HEMFacebookService*)fbService;
+                          facebookService:(HEMFacebookService*)fbService
+                           accountService:(HEMAccountService*)accountService;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView
            andBottomConstraint:(NSLayoutConstraint*)bottomConstraint;

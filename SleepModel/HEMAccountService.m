@@ -9,6 +9,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAPIPreferences.h>
+#import <SenseKit/SENAPIPhoto.h>
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAccount.h>
 
@@ -17,6 +18,9 @@
 #import "NSString+HEMUtils.h"
 
 NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
+CGFloat const HEMAccountPhotoDefaultCompression = 0.7f;
+
+static NSString* const HEMAccountPhotoExt = @"jpg";
 
 @interface HEMAccountService()
 
@@ -431,6 +435,35 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
 
 - (void)didSignOut {
     [self setAccount:nil];
+}
+
+#pragma mark - Photos
+
+- (void)uploadProfileJpegPhoto:(NSData*)data
+                      progress:(HEMAccountProgressHandler)progress
+                    completion:(HEMAccountPhotoHandler)completion {
+    [SENAPIPhoto uploadProfilePhoto:data
+                               type:SENAPIPhotoTypeJpeg
+                           progress:progress
+                         completion:^(id data, NSError *error) {
+                            if (error) {
+                                [SENAnalytics trackError:error];
+                            }
+                            if (completion) {
+                                completion (data, error);
+                            }
+                        }];
+}
+
+- (void)removeProfilePhoto:(HEMAccountUpdateHandler)completion {
+    [SENAPIPhoto deleteProfilePhoto:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        if (completion) {
+            completion (error);
+        }
+    }];
 }
 
 @end

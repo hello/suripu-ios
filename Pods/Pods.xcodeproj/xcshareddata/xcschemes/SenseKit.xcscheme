@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4EE7E6C2CF0532F7436CCF80"
+               BlueprintIdentifier = "6CC0B4FA472070E1BFE79C3C"
                BuildableName = "libSenseKit.a"
                BlueprintName = "SenseKit"
                ReferencedContainer = "container:Pods.xcodeproj">

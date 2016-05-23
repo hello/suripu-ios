@@ -8,6 +8,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 #import "NSString+HEMUtils.h"
+#import "UIImage+HEMCompression.h"
 
 #import "HEMNewAccountPresenter.h"
 #import "HEMOnboardingStoryboard.h"
@@ -16,6 +17,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingService.h"
 #import "HEMFacebookService.h"
+#import "HEMAccountService.h"
 #import "HEMProfileImageView.h"
 #import "HEMSimpleLineTextField.h"
 #import "HEMActionButton.h"
@@ -61,6 +63,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 @property (nonatomic, strong) UIImage* photo;
 @property (nonatomic, weak) HEMOnboardingService* onbService;
 @property (nonatomic, weak) HEMFacebookService* fbService;
+@property (nonatomic, weak) HEMAccountService* acctService;
 @property (nonatomic, assign) HEMNewAccountRow rowWithError;
 @property (nonatomic, assign) BOOL autofilled;
 @property (nonatomic, assign) NSInteger rowWithFocus;
@@ -70,11 +73,13 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 @implementation HEMNewAccountPresenter
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
-                          facebookService:(HEMFacebookService*)fbService {
+                          facebookService:(HEMFacebookService*)fbService
+                           accountService:(HEMAccountService*)accountService {
     self = [super init];
     if (self) {
         _onbService = onbService;
         _fbService = fbService;
+        _acctService = accountService;
         _tempAccount = [SENAccount new];
     }
     return self;
@@ -154,7 +159,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
             NSString* message = NSLocalizedString(@"account.error.facebook-access", nil);
             [[strongSelf delegate] showError:message title:title from:strongSelf];
         } else {
-            [strongSelf setAutofilled:YES];
+            [strongSelf setAutofilled:account && photoUrl];
             [[strongSelf tempAccount] setEmail:[account email]];
             [[strongSelf tempAccount] setLastName:[account lastName]];
             [[strongSelf tempAccount] setFirstName:[account firstName]];
@@ -220,6 +225,15 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
                 return;
             }
             
+            if ([strongSelf photo]) {
+                [[strongSelf photo] jpegDataWithCompression:HEMAccountPhotoDefaultCompression completion:^(NSData * _Nullable data) {
+                    if (data) {
+                        [[strongSelf acctService] uploadProfileJpegPhoto:data progress:nil completion:nil];
+                    } else {
+                        [SENAnalytics trackWarningWithMessage:@"new account photo compression failed"];
+                    }
+                }];
+            }
             [[strongSelf delegate] proceedFrom:strongSelf];
         };
         

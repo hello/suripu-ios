@@ -14,6 +14,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"
 #import "HEMFacebookService.h"
+#import "HEMAccountService.h"
 
 @interface HEMCreateAccountViewController () <HEMNewAccountPresenterDelegate>
 
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *nextButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (strong, nonatomic) HEMFacebookService* fbService;
+@property (strong, nonatomic) HEMAccountService* accountService;
 
 @end
 
@@ -33,11 +35,13 @@
 }
 
 - (void)configurePresenters {
+    HEMAccountService* accountService = [HEMAccountService new];
     HEMFacebookService* fbService = [HEMFacebookService new];
     HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
     HEMNewAccountPresenter* presenter =
         [[HEMNewAccountPresenter alloc] initWithOnboardingService:onbService
-                                                  facebookService:fbService];
+                                                  facebookService:fbService
+                                                   accountService:accountService];
     
     [presenter bindWithCollectionView:[self collectionView]
                   andBottomConstraint:[self bottomConstraint]];
@@ -45,6 +49,7 @@
     [presenter bindWithActivityContainerView:[[self navigationController] view]];
     [presenter setDelegate:self];
     [self setFbService:fbService];
+    [self setAccountService:accountService];
     [self addPresenter:presenter];
 }
 

@@ -14,3 +14,4 @@
 #import "SENAuthorizationService.h"
 #import "SENAPISupport.h"
 #import "SENAPISleepSounds.h"
+#import "SENAPIPhoto.h"

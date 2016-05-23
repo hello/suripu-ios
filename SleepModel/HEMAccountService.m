@@ -18,7 +18,7 @@
 #import "NSString+HEMUtils.h"
 
 NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
-CGFloat const HEMAccountPhotoDefaultCompression = 0.7f;
+CGFloat const HEMAccountPhotoDefaultCompression = 0.8f;
 
 static NSString* const HEMAccountPhotoExt = @"jpg";
 
@@ -446,13 +446,14 @@ static NSString* const HEMAccountPhotoExt = @"jpg";
                                type:SENAPIPhotoTypeJpeg
                            progress:progress
                          completion:^(id data, NSError *error) {
-                            if (error) {
-                                [SENAnalytics trackError:error];
-                            }
-                            if (completion) {
-                                completion (data, error);
-                            }
-                        }];
+                             DDLogVerbose(@"photo data %@", data);
+                             if (error) {
+                                 [SENAnalytics trackError:error];
+                             }
+                             if (completion) {
+                                 completion (data, error);
+                             }
+                         }];
 }
 
 - (void)removeProfilePhoto:(HEMAccountUpdateHandler)completion {

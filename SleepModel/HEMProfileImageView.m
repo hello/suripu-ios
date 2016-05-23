@@ -26,6 +26,8 @@
     [mask setFillRule:kCAFillRuleEvenOdd];
     [mask setFillColor:[[UIColor whiteColor] CGColor]];
     [[self layer] addSublayer:mask];
+    
+    [self setClipsToBounds:YES];
 }
 
 @end

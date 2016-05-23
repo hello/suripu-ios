@@ -90,4 +90,12 @@
     [self performSegueWithIdentifier:segueId sender:self];
 }
 
+- (void)showController:(UIViewController *)controller from:(HEMNewAccountPresenter *)presenter {
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

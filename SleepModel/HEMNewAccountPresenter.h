@@ -19,6 +19,8 @@
 - (void)showError:(NSString*)errorMessage title:(NSString*)title from:(HEMNewAccountPresenter*)presenter;
 - (void)proceedFrom:(HEMNewAccountPresenter*)presenter;
 - (void)showSupportPageWithSlug:(NSString*)slug;
+- (void)showController:(UIViewController*)controller from:(HEMNewAccountPresenter*)presenter;
+- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter;
 
 @end
 

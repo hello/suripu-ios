@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet HEMProfileImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UIButton *fbAutofillButton;
 @property (weak, nonatomic) IBOutlet UIButton *fbInfoButton;
+@property (weak, nonatomic) IBOutlet UIButton *photoChangeButton;
 
 @end

@@ -625,6 +625,9 @@
 "actions.save" = "Save";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";
+"actions.import.from.fb" = "Import from Facebook";
+"actions.take.photo" = "Take Photo";
+"actions.camera-roll" = "Open Camera Roll";
 "status.success" = "Done";
 
 // action sheet
@@ -652,6 +655,8 @@
 "account.error.invalid-password" = "Password is required";
 "account.error.facebook-access.title" = "Autofill from Facebook failed";
 "account.error.facebook-access" = "Unable to obtain your profile information from Facebook";
+"account.error.import-photo-from-fb.title" = "Import photo from Facebook";
+"account.error.import-photo-from-fb" = "We were unable to import your photo from Facebook";
 
 // notifications
 "notifications.actions.ok" = "Okay";

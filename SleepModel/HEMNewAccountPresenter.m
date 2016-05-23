@@ -47,7 +47,9 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout,
-    UITextFieldDelegate
+    UITextFieldDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate
 >
 
 @property (nonatomic, weak) UIViewController* controller;
@@ -67,6 +69,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 @property (nonatomic, assign) HEMNewAccountRow rowWithError;
 @property (nonatomic, assign) BOOL autofilled;
 @property (nonatomic, assign) NSInteger rowWithFocus;
+@property (nonatomic, strong) UIAlertController* photoOptionVC;
 
 @end
 
@@ -142,7 +145,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     }
 }
 
-#pragma mark - Actions
+#pragma mark - Facebook Actions
 
 - (void)showFBInfo {
     [[self delegate] showSupportPageWithSlug:NSLocalizedString(@"help.url.slug.facebook-import", nil)];
@@ -168,6 +171,8 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
         }
     }];
 }
+
+#pragma mark - Next
 
 - (void)next:(id)sender {
     if ([sender isKindOfClass:[UIButton class]]
@@ -374,6 +379,11 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
                                             action:@selector(autofillFromFB)
                                   forControlEvents:UIControlEventTouchUpInside];
     [[profilePhotoCell fbAutofillButton] setSelected:[self autofilled]];
+    [[profilePhotoCell photoChangeButton] addTarget:self
+                                             action:@selector(showPhotoOptions)
+                                   forControlEvents:UIControlEventTouchUpInside];
+    
+    [[profilePhotoCell profileImageView] setContentMode:UIViewContentModeScaleAspectFill];
     
     if ([self fbPhotoUrl]) {
         __weak typeof(self) weakSelf = self;
@@ -381,10 +391,12 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if ([url isEqualToString:[strongSelf fbPhotoUrl]]) {
                 [strongSelf setPhoto:image];
+                [strongSelf setFbPhotoUrl:nil];
             }
         }];
+    } else if ([self photo]) {
+        [[profilePhotoCell profileImageView] setImage:[self photo]];
     }
-    
 }
 
 - (void)configureTextFieldCell:(HEMTextFieldCollectionViewCell*)cell atIndex:(NSInteger)index {
@@ -542,6 +554,104 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     } else {
         finish();
     }
+}
+
+#pragma mark - Photo Options
+
+- (UIAlertAction*)actionWithText:(NSString*)text cancel:(BOOL)cancel action:(void(^)(void))actionBlock {
+    UIAlertActionStyle style = cancel ? UIAlertActionStyleCancel : UIAlertActionStyleDefault;
+    return [UIAlertAction actionWithTitle:text style:style handler:^(UIAlertAction * _Nonnull action) {
+        actionBlock();
+    }];
+}
+
+- (void)importPhotoFromFacebook {
+    __weak typeof(self) weakSelf = self;
+    [[self fbService] profileFrom:[self controller] completion:^(SENAccount* account, NSString* photoUrl, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            NSString* title = NSLocalizedString(@"account.error.import-photo-from-fb.title", nil);
+            NSString* message = NSLocalizedString(@"account.error.import-photo-from-fb", nil);
+            [[strongSelf delegate] showError:message title:title from:strongSelf];
+        } else {
+            [strongSelf setFbPhotoUrl:photoUrl];
+            [[strongSelf collectionView] reloadData];
+        }
+    }];
+}
+
+- (void)photoFromDevice:(BOOL)camera {
+    UIImagePickerController* photoPicker = [UIImagePickerController new];
+    [photoPicker setAllowsEditing:YES];
+    [photoPicker setDelegate:self];
+    
+    if (camera) {
+        [photoPicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        [photoPicker setShowsCameraControls:YES];
+        
+        if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
+            [photoPicker setCameraDevice:UIImagePickerControllerCameraDeviceFront];
+        } else {
+            [photoPicker setCameraDevice:UIImagePickerControllerCameraDeviceRear];
+        }
+    } else {
+        [photoPicker setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+    }
+    
+    [[self delegate] showController:photoPicker from:self];
+}
+
+- (void)showPhotoOptions {
+    UIAlertController* alertVC =
+        [UIAlertController alertControllerWithTitle:nil
+                                            message:nil
+                                     preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+    [alertVC addAction:[self actionWithText:cancelText cancel:YES action:^{
+        // do nothing for now
+    }]];
+    
+    NSString* facebook = NSLocalizedString(@"actions.import.from.fb", nil);
+    [alertVC addAction:[self actionWithText:facebook cancel:NO action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf importPhotoFromFacebook];
+    }]];
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        NSString* camera = NSLocalizedString(@"actions.take.photo", nil);
+        [alertVC addAction:[self actionWithText:camera cancel:NO action:^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf photoFromDevice:YES];
+        }]];
+    }
+    
+    NSString* cameraRoll = NSLocalizedString(@"actions.camera-roll", nil);
+    [alertVC addAction:[self actionWithText:cameraRoll cancel:NO action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf photoFromDevice:NO];
+    }]];
+    
+    [self setPhotoOptionVC:alertVC];
+    [[self delegate] showController:alertVC from:self];
+}
+
+#pragma mark - Camera
+         
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage* photo = info[UIImagePickerControllerEditedImage];
+    if (!photo) {
+        photo = info[UIImagePickerControllerOriginalImage];
+    }
+    [self setPhoto:photo];
+    [[self collectionView] reloadData];
+    [[self delegate] dismissViewControllerFrom:self];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [[self delegate] dismissViewControllerFrom:self];
 }
 
 #pragma mark - Clean up

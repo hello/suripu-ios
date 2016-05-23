@@ -30,4 +30,9 @@
     [self setClipsToBounds:YES];
 }
 
+- (void)clearPhoto {
+    [self setImageWithURL:nil];
+    [self setImage:[UIImage imageNamed:@"defaultAvatar"]];
+}
+
 @end

@@ -628,6 +628,7 @@
 "actions.import.from.fb" = "Import from Facebook";
 "actions.take.photo" = "Take Photo";
 "actions.camera-roll" = "Open Camera Roll";
+"actions.remove-photo" = "Remove Photo";
 "status.success" = "Done";
 
 // action sheet

@@ -396,6 +396,8 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
         }];
     } else if ([self photo]) {
         [[profilePhotoCell profileImageView] setImage:[self photo]];
+    } else {
+        [[profilePhotoCell profileImageView] clearPhoto];
     }
 }
 
@@ -558,8 +560,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 
 #pragma mark - Photo Options
 
-- (UIAlertAction*)actionWithText:(NSString*)text cancel:(BOOL)cancel action:(void(^)(void))actionBlock {
-    UIAlertActionStyle style = cancel ? UIAlertActionStyleCancel : UIAlertActionStyleDefault;
+- (UIAlertAction*)actionWithText:(NSString*)text style:(UIAlertActionStyle)style action:(void(^)(void))actionBlock {
     return [UIAlertAction actionWithTitle:text style:style handler:^(UIAlertAction * _Nonnull action) {
         actionBlock();
     }];
@@ -601,6 +602,12 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     [[self delegate] showController:photoPicker from:self];
 }
 
+- (void)removePhoto {
+    [self setPhoto:nil];
+    [self setFbPhotoUrl:nil];
+    [[self collectionView] reloadData];
+}
+
 - (void)showPhotoOptions {
     UIAlertController* alertVC =
         [UIAlertController alertControllerWithTitle:nil
@@ -610,26 +617,34 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     __weak typeof(self) weakSelf = self;
     
     NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
-    [alertVC addAction:[self actionWithText:cancelText cancel:YES action:^{
+    [alertVC addAction:[self actionWithText:cancelText style:UIAlertActionStyleCancel action:^{
         // do nothing for now
     }]];
     
+    if ([self photo]) {
+        NSString* remove = NSLocalizedString(@"actions.remove-photo", nil);
+        [alertVC addAction:[self actionWithText:remove style:UIAlertActionStyleDestructive action:^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf removePhoto];
+        }]];
+    }
+    
     NSString* facebook = NSLocalizedString(@"actions.import.from.fb", nil);
-    [alertVC addAction:[self actionWithText:facebook cancel:NO action:^{
+    [alertVC addAction:[self actionWithText:facebook style:UIAlertActionStyleDefault action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf importPhotoFromFacebook];
     }]];
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         NSString* camera = NSLocalizedString(@"actions.take.photo", nil);
-        [alertVC addAction:[self actionWithText:camera cancel:NO action:^{
+        [alertVC addAction:[self actionWithText:camera style:UIAlertActionStyleDefault action:^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf photoFromDevice:YES];
         }]];
     }
     
     NSString* cameraRoll = NSLocalizedString(@"actions.camera-roll", nil);
-    [alertVC addAction:[self actionWithText:cameraRoll cancel:NO action:^{
+    [alertVC addAction:[self actionWithText:cameraRoll style:UIAlertActionStyleDefault action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf photoFromDevice:NO];
     }]];

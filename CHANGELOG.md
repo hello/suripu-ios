@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.4.2.5
+
+New:
+
+* Update new sign in screen to match new account creation screen VX
+* Account creation screen supports facebook photo import
+* Account creation screen supports photo using camera
+* Account creation screen supports photo using camera roll
+* Account creation screen allows user to remove selected photo, before creation
+* Integrate with server photo API
+* Design review tweaks
+
+Fixes:
+
+* FB info button no longer overlap autofill button on smaller devices
+
 ## 1.4.2.4
 
 New:

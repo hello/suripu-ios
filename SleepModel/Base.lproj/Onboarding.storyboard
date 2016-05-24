@@ -494,17 +494,18 @@
                                                     <state key="selected" image="fbIconGrey"/>
                                                     <state key="highlighted" image="fbIconGrey"/>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PaR-sq-rrx">
-                                                    <rect key="frame" x="304" y="99" width="24" height="24"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="24" id="BZe-rj-WBC"/>
-                                                        <constraint firstAttribute="width" constant="24" id="wlq-7o-myu"/>
-                                                    </constraints>
-                                                    <state key="normal" image="addIconSmall"/>
-                                                </button>
                                                 <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EkR-B2-pxN">
                                                     <rect key="frame" x="528" y="171" width="24" height="24"/>
                                                     <state key="normal" image="infoIconSmallGrey"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PaR-sq-rrx">
+                                                    <rect key="frame" x="278" y="73" width="50" height="50"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="BZe-rj-WBC"/>
+                                                        <constraint firstAttribute="width" constant="50" id="wlq-7o-myu"/>
+                                                    </constraints>
+                                                    <state key="normal" image="addIconSmall"/>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -525,6 +526,7 @@
                                         <connections>
                                             <outlet property="fbAutofillButton" destination="X28-UO-vKP" id="qjA-RV-jrL"/>
                                             <outlet property="fbInfoButton" destination="EkR-B2-pxN" id="dp4-Wy-hL4"/>
+                                            <outlet property="photoChangeButton" destination="PaR-sq-rrx" id="idb-Nw-Uor"/>
                                             <outlet property="profileImageView" destination="Wyc-T1-9UA" id="zPe-YY-nDg"/>
                                         </connections>
                                     </collectionViewCell>

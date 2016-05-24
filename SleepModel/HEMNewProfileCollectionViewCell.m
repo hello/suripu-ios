@@ -7,7 +7,6 @@
 //
 
 #import "HEMNewProfileCollectionViewCell.h"
-#import "HEMStyle.h"
 
 @implementation HEMNewProfileCollectionViewCell
 

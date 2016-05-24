@@ -11,6 +11,7 @@
 @class HEMNewAccountPresenter;
 @class HEMOnboardingService;
 @class HEMFacebookService;
+@class HEMAccountService;
 @class HEMActionButton;
 
 @protocol HEMNewAccountPresenterDelegate
@@ -18,6 +19,8 @@
 - (void)showError:(NSString*)errorMessage title:(NSString*)title from:(HEMNewAccountPresenter*)presenter;
 - (void)proceedFrom:(HEMNewAccountPresenter*)presenter;
 - (void)showSupportPageWithSlug:(NSString*)slug;
+- (void)showController:(UIViewController*)controller from:(HEMNewAccountPresenter*)presenter;
+- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter;
 
 @end
 
@@ -26,7 +29,8 @@
 @property (nonatomic, weak) id<HEMNewAccountPresenterDelegate> delegate;
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
-                          facebookService:(HEMFacebookService*)fbService;
+                          facebookService:(HEMFacebookService*)fbService
+                           accountService:(HEMAccountService*)accountService;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView
            andBottomConstraint:(NSLayoutConstraint*)bottomConstraint;

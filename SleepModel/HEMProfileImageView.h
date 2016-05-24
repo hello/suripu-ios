@@ -11,4 +11,6 @@
 
 @interface HEMProfileImageView : HEMURLImageView
 
+- (void)clearPhoto;
+
 @end

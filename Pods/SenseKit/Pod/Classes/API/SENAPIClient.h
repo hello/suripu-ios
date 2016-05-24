@@ -3,6 +3,7 @@
 
 typedef void (^SENAPIDataBlock)(id data, NSError* error);
 typedef void (^SENAPIErrorBlock)(NSError* error);
+typedef void (^SENAPIProgressBlock)(NSProgress* progress);
 
 /**
  *  Notification sent when Sense API is changed to reachable
@@ -104,5 +105,24 @@ extern NSString* const SENAPIUnreachableNotification;
  *  @param completionBlock block invoked at completion
  */
 + (void)DELETE:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completionBlock;
+
+/**
+ *  Convenience helper to upload a file
+ *
+ *  @param data: the data of the file
+ *  @param name: the name of the file
+ *  @param fileName: the file name for the file
+ *  @param mimeType: the content-type of the file
+ *  @param progress: progress callback, if required
+ *  @param completion: block to call upon completion
+ */
++ (void)UPLOAD:(NSData*)data
+          name:(NSString*)name
+      fileName:(NSString*)fileName
+      mimeType:(NSString*)mimeType
+         toURL:(NSString*)urlString
+    parameters:(id)parameters
+      progress:(SENAPIProgressBlock)progress
+    completion:(SENAPIDataBlock)completion;
 
 @end

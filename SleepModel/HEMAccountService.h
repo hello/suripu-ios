@@ -10,6 +10,7 @@
 #import "SENPreference.h"
 
 @class SENAccount;
+@class SENRemoteImage;
 
 typedef struct {
     CGFloat feet;
@@ -20,6 +21,7 @@ typedef struct {
 NS_ASSUME_NONNULL_BEGIN
 
 extern NSString* const HEMAccountServiceDomain;
+extern CGFloat const HEMAccountPhotoDefaultCompression;
 
 typedef NS_ENUM(NSInteger, HEMAccountServiceError) {
     HEMAccountServiceErrorUnknown = 0,
@@ -38,6 +40,8 @@ typedef NS_ENUM(NSInteger, HEMAccountServiceError) {
 
 typedef void(^HEMAccountHandler)(SENAccount* _Nullable account, NSDictionary<NSNumber*, SENPreference*>* _Nullable preferences);
 typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
+typedef void(^HEMAccountProgressHandler)(NSProgress* _Nullable progress);
+typedef void(^HEMAccountPhotoHandler)(SENRemoteImage* _Nullable remoteImage, NSError* _Nullable error);
 
 @interface HEMAccountService : SENService
 
@@ -65,6 +69,10 @@ typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
 - (void)updatePassword:(NSString*)currentPassword
            newPassword:(NSString*)newPassword
             completion:(nullable HEMAccountUpdateHandler)completion;
+- (void)uploadProfileJpegPhoto:(NSData*)data
+                      progress:(nullable HEMAccountProgressHandler)progress
+                    completion:(nullable HEMAccountPhotoHandler)completion;
+- (void)removeProfilePhoto:(nullable HEMAccountUpdateHandler)completion;
 
 @end
 

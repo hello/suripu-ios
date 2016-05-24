@@ -8,6 +8,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 #import "NSString+HEMUtils.h"
+#import "UIImage+HEMCompression.h"
 
 #import "HEMNewAccountPresenter.h"
 #import "HEMOnboardingStoryboard.h"
@@ -16,6 +17,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingService.h"
 #import "HEMFacebookService.h"
+#import "HEMAccountService.h"
 #import "HEMProfileImageView.h"
 #import "HEMSimpleLineTextField.h"
 #import "HEMActionButton.h"
@@ -45,7 +47,9 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout,
-    UITextFieldDelegate
+    UITextFieldDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate
 >
 
 @property (nonatomic, weak) UIViewController* controller;
@@ -61,20 +65,24 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 @property (nonatomic, strong) UIImage* photo;
 @property (nonatomic, weak) HEMOnboardingService* onbService;
 @property (nonatomic, weak) HEMFacebookService* fbService;
+@property (nonatomic, weak) HEMAccountService* acctService;
 @property (nonatomic, assign) HEMNewAccountRow rowWithError;
 @property (nonatomic, assign) BOOL autofilled;
 @property (nonatomic, assign) NSInteger rowWithFocus;
+@property (nonatomic, strong) UIAlertController* photoOptionVC;
 
 @end
 
 @implementation HEMNewAccountPresenter
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
-                          facebookService:(HEMFacebookService*)fbService {
+                          facebookService:(HEMFacebookService*)fbService
+                           accountService:(HEMAccountService*)accountService {
     self = [super init];
     if (self) {
         _onbService = onbService;
         _fbService = fbService;
+        _acctService = accountService;
         _tempAccount = [SENAccount new];
     }
     return self;
@@ -137,7 +145,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     }
 }
 
-#pragma mark - Actions
+#pragma mark - Facebook Actions
 
 - (void)showFBInfo {
     [[self delegate] showSupportPageWithSlug:NSLocalizedString(@"help.url.slug.facebook-import", nil)];
@@ -154,7 +162,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
             NSString* message = NSLocalizedString(@"account.error.facebook-access", nil);
             [[strongSelf delegate] showError:message title:title from:strongSelf];
         } else {
-            [strongSelf setAutofilled:YES];
+            [strongSelf setAutofilled:account && photoUrl];
             [[strongSelf tempAccount] setEmail:[account email]];
             [[strongSelf tempAccount] setLastName:[account lastName]];
             [[strongSelf tempAccount] setFirstName:[account firstName]];
@@ -163,6 +171,8 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
         }
     }];
 }
+
+#pragma mark - Next
 
 - (void)next:(id)sender {
     if ([sender isKindOfClass:[UIButton class]]
@@ -220,6 +230,18 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
                 return;
             }
             
+            if ([strongSelf photo]) {
+                [[strongSelf photo] jpegDataWithCompression:HEMAccountPhotoDefaultCompression completion:^(NSData * _Nullable data) {
+                    if (data) {
+                        void(^cleanup)(SENRemoteImage * remoteImage, NSError * error) = ^(SENRemoteImage * remoteImage, NSError * error) {
+                            [strongSelf removePhoto]; // no longer needed, remove from memory
+                        };
+                        [[strongSelf acctService] uploadProfileJpegPhoto:data progress:nil completion:cleanup];
+                    } else {
+                        [SENAnalytics trackWarningWithMessage:@"new account photo compression failed"];
+                    }
+                }];
+            }
             [[strongSelf delegate] proceedFrom:strongSelf];
         };
         
@@ -360,6 +382,11 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
                                             action:@selector(autofillFromFB)
                                   forControlEvents:UIControlEventTouchUpInside];
     [[profilePhotoCell fbAutofillButton] setSelected:[self autofilled]];
+    [[profilePhotoCell photoChangeButton] addTarget:self
+                                             action:@selector(showPhotoOptions)
+                                   forControlEvents:UIControlEventTouchUpInside];
+    
+    [[profilePhotoCell profileImageView] setContentMode:UIViewContentModeScaleAspectFill];
     
     if ([self fbPhotoUrl]) {
         __weak typeof(self) weakSelf = self;
@@ -367,10 +394,14 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if ([url isEqualToString:[strongSelf fbPhotoUrl]]) {
                 [strongSelf setPhoto:image];
+                [strongSelf setFbPhotoUrl:nil];
             }
         }];
+    } else if ([self photo]) {
+        [[profilePhotoCell profileImageView] setImage:[self photo]];
+    } else {
+        [[profilePhotoCell profileImageView] clearPhoto];
     }
-    
 }
 
 - (void)configureTextFieldCell:(HEMTextFieldCollectionViewCell*)cell atIndex:(NSInteger)index {
@@ -528,6 +559,117 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     } else {
         finish();
     }
+}
+
+#pragma mark - Photo Options
+
+- (UIAlertAction*)actionWithText:(NSString*)text style:(UIAlertActionStyle)style action:(void(^)(void))actionBlock {
+    return [UIAlertAction actionWithTitle:text style:style handler:^(UIAlertAction * _Nonnull action) {
+        actionBlock();
+    }];
+}
+
+- (void)importPhotoFromFacebook {
+    __weak typeof(self) weakSelf = self;
+    [[self fbService] profileFrom:[self controller] completion:^(SENAccount* account, NSString* photoUrl, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            NSString* title = NSLocalizedString(@"account.error.import-photo-from-fb.title", nil);
+            NSString* message = NSLocalizedString(@"account.error.import-photo-from-fb", nil);
+            [[strongSelf delegate] showError:message title:title from:strongSelf];
+        } else {
+            [strongSelf setFbPhotoUrl:photoUrl];
+            [[strongSelf collectionView] reloadData];
+        }
+    }];
+}
+
+- (void)photoFromDevice:(BOOL)camera {
+    UIImagePickerController* photoPicker = [UIImagePickerController new];
+    [photoPicker setAllowsEditing:YES];
+    [photoPicker setDelegate:self];
+    
+    if (camera) {
+        [photoPicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        [photoPicker setShowsCameraControls:YES];
+        
+        if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
+            [photoPicker setCameraDevice:UIImagePickerControllerCameraDeviceFront];
+        } else {
+            [photoPicker setCameraDevice:UIImagePickerControllerCameraDeviceRear];
+        }
+    } else {
+        [photoPicker setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+    }
+    
+    [[self delegate] showController:photoPicker from:self];
+}
+
+- (void)removePhoto {
+    [self setPhoto:nil];
+    [self setFbPhotoUrl:nil];
+    [[self collectionView] reloadData];
+}
+
+- (void)showPhotoOptions {
+    UIAlertController* alertVC =
+        [UIAlertController alertControllerWithTitle:nil
+                                            message:nil
+                                     preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+    [alertVC addAction:[self actionWithText:cancelText style:UIAlertActionStyleCancel action:^{
+        // do nothing for now
+    }]];
+    
+    if ([self photo]) {
+        NSString* remove = NSLocalizedString(@"actions.remove-photo", nil);
+        [alertVC addAction:[self actionWithText:remove style:UIAlertActionStyleDestructive action:^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf removePhoto];
+        }]];
+    }
+    
+    NSString* facebook = NSLocalizedString(@"actions.import.from.fb", nil);
+    [alertVC addAction:[self actionWithText:facebook style:UIAlertActionStyleDefault action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf importPhotoFromFacebook];
+    }]];
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        NSString* camera = NSLocalizedString(@"actions.take.photo", nil);
+        [alertVC addAction:[self actionWithText:camera style:UIAlertActionStyleDefault action:^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf photoFromDevice:YES];
+        }]];
+    }
+    
+    NSString* cameraRoll = NSLocalizedString(@"actions.camera-roll", nil);
+    [alertVC addAction:[self actionWithText:cameraRoll style:UIAlertActionStyleDefault action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf photoFromDevice:NO];
+    }]];
+    
+    [self setPhotoOptionVC:alertVC];
+    [[self delegate] showController:alertVC from:self];
+}
+
+#pragma mark - Camera
+         
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage* photo = info[UIImagePickerControllerEditedImage];
+    if (!photo) {
+        photo = info[UIImagePickerControllerOriginalImage];
+    }
+    [self setPhoto:photo];
+    [[self collectionView] reloadData];
+    [[self delegate] dismissViewControllerFrom:self];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [[self delegate] dismissViewControllerFrom:self];
 }
 
 #pragma mark - Clean up

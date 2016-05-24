@@ -170,16 +170,15 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 /// @name Making HTTP Requests
 ///---------------------------
 
-+ (void)GET:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
-{
-    [[self HTTPSessionManager] GET:[self urlEncode:URLString] parameters:parameters
++ (void)GET:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion {
+    [[self HTTPSessionManager] GET:[self urlEncode:URLString] parameters:parameters progress:nil
                            success:SENAPIClientRequestSuccessBlock(completion)
                            failure:SENAPIClientRequestFailureBlock(completion)];
 }
 
 + (void)POST:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
 {
-    [[self HTTPSessionManager] POST:[self urlEncode:URLString] parameters:parameters
+    [[self HTTPSessionManager] POST:[self urlEncode:URLString] parameters:parameters progress:nil
                             success:SENAPIClientRequestSuccessBlock(completion)
                             failure:SENAPIClientRequestFailureBlock(completion)];
 }
@@ -204,5 +203,35 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
                              success:SENAPIClientRequestSuccessBlock(completion)
                              failure:SENAPIClientRequestFailureBlock(completion)];
 }
+
+///---------------------------
+/// @name FILE UPLOADS
+///---------------------------
+
++ (void)UPLOAD:(NSData*)data
+          name:(NSString*)name
+      fileName:(NSString*)fileName
+      mimeType:(NSString*)mimeType
+         toURL:(NSString*)urlString
+    parameters:(id)parameters
+      progress:(SENAPIProgressBlock)progress
+    completion:(SENAPIDataBlock)completion {
+    
+    void(^construction)(id<AFMultipartFormData> formData) = ^(id<AFMultipartFormData> formData) {
+        if (mimeType) {
+            [formData appendPartWithFileData:data name:name fileName:fileName mimeType:mimeType];
+        } else {
+            [formData appendPartWithFormData:data name:name];
+        }
+    };
+
+    [[self HTTPSessionManager] POST:urlString
+                         parameters:parameters
+          constructingBodyWithBlock:construction
+                           progress:progress
+                            success:SENAPIClientRequestSuccessBlock(completion)
+                            failure:SENAPIClientRequestFailureBlock(completion)];
+}
+                                                            
 
 @end

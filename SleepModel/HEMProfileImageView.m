@@ -26,6 +26,13 @@
     [mask setFillRule:kCAFillRuleEvenOdd];
     [mask setFillColor:[[UIColor whiteColor] CGColor]];
     [[self layer] addSublayer:mask];
+    
+    [self setClipsToBounds:YES];
+}
+
+- (void)clearPhoto {
+    [self setImageWithURL:nil];
+    [self setImage:[UIImage imageNamed:@"defaultAvatar"]];
 }
 
 @end

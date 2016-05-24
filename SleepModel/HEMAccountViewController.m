@@ -14,11 +14,13 @@
 #import "HEMAlertViewController.h"
 #import "HEMFormViewController.h"
 #import "HEMHealthKitService.h"
+#import "HEMFacebookService.h"
 
 @interface HEMAccountViewController () <HEMAccountDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
 @property (weak, nonatomic) HEMPresenter* accountPresenter;
+@property (strong, nonatomic) HEMFacebookService* facebookService;
 
 @end
 
@@ -31,13 +33,16 @@
 }
 
 - (void)configurePresenter {
+    HEMFacebookService* facebookService = [HEMFacebookService new];
     HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:[HEMAccountService sharedService]
+                                                                         facebookService:facebookService
                                                                         healthKitService:[HEMHealthKitService sharedService]];
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];
     
     [self setAccountPresenter:presenter];
     [self addPresenter:presenter];
+    [self setFacebookService:facebookService];
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
@@ -50,6 +55,10 @@
 }
 
 #pragma mark - HEMAccountDelegate
+
+- (UIViewController*)mainControllerFor:(HEMAccountPresenter*)presenter {
+    return self;
+}
 
 - (void)showErrorTitle:(NSString *)title
                message:(NSString *)message
@@ -74,7 +83,9 @@
 
 - (void)presentViewController:(UIViewController *)controller from:(HEMAccountPresenter *)presenter {
     UIViewController* controllerToPresenter = controller;
-    if ([controller isKindOfClass:[HEMFormViewController class]]) {
+    if ([controller isKindOfClass:[UIAlertController class]]) {
+        [[self rootViewController] presentViewController:controllerToPresenter animated:YES completion:nil];
+    } else if ([controller isKindOfClass:[HEMFormViewController class]]) {
         [[self navigationController] pushViewController:controller animated:YES];
     } else if (![controller isKindOfClass:[UINavigationController class]]) {
         controllerToPresenter = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];

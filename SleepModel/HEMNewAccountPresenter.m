@@ -9,6 +9,8 @@
 
 #import "NSString+HEMUtils.h"
 #import "UIImage+HEMCompression.h"
+#import "UIAlertController+HEMPhotoOptions.h"
+#import "UIImagePickerController+HEMProfilePhoto.h"
 
 #import "HEMNewAccountPresenter.h"
 #import "HEMOnboardingStoryboard.h"
@@ -585,23 +587,8 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 }
 
 - (void)photoFromDevice:(BOOL)camera {
-    UIImagePickerController* photoPicker = [UIImagePickerController new];
-    [photoPicker setAllowsEditing:YES];
-    [photoPicker setDelegate:self];
-    
-    if (camera) {
-        [photoPicker setSourceType:UIImagePickerControllerSourceTypeCamera];
-        [photoPicker setShowsCameraControls:YES];
-        
-        if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
-            [photoPicker setCameraDevice:UIImagePickerControllerCameraDeviceFront];
-        } else {
-            [photoPicker setCameraDevice:UIImagePickerControllerCameraDeviceRear];
-        }
-    } else {
-        [photoPicker setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
-    }
-    
+    UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera
+                                                                                 delegate:self];
     [[self delegate] showController:photoPicker from:self];
 }
 
@@ -612,45 +599,31 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 }
 
 - (void)showPhotoOptions {
-    UIAlertController* alertVC =
-        [UIAlertController alertControllerWithTitle:nil
-                                            message:nil
-                                     preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController* alertVC = [UIAlertController photoOptionActionSheet];
     
     __weak typeof(self) weakSelf = self;
     
-    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
-    [alertVC addAction:[self actionWithText:cancelText style:UIAlertActionStyleCancel action:^{
-        // do nothing for now
-    }]];
-    
     if ([self photo]) {
-        NSString* remove = NSLocalizedString(@"actions.remove-photo", nil);
-        [alertVC addAction:[self actionWithText:remove style:UIAlertActionStyleDestructive action:^{
+        [alertVC addRemovePhotoAction:^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf removePhoto];
-        }]];
+        }];
     }
     
-    NSString* facebook = NSLocalizedString(@"actions.import.from.fb", nil);
-    [alertVC addAction:[self actionWithText:facebook style:UIAlertActionStyleDefault action:^{
+    [alertVC addFacebookImportAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf importPhotoFromFacebook];
-    }]];
+    }];
     
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        NSString* camera = NSLocalizedString(@"actions.take.photo", nil);
-        [alertVC addAction:[self actionWithText:camera style:UIAlertActionStyleDefault action:^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf photoFromDevice:YES];
-        }]];
-    }
-    
-    NSString* cameraRoll = NSLocalizedString(@"actions.camera-roll", nil);
-    [alertVC addAction:[self actionWithText:cameraRoll style:UIAlertActionStyleDefault action:^{
+    [alertVC addCameraActionIfSupported:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf photoFromDevice:YES];
+    }];
+
+    [alertVC addCameraRollAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf photoFromDevice:NO];
-    }]];
+    }];
     
     [self setPhotoOptionVC:alertVC];
     [[self delegate] showController:alertVC from:self];

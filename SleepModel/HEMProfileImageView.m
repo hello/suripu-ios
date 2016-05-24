@@ -35,4 +35,8 @@
     [self setImage:[UIImage imageNamed:@"defaultAvatar"]];
 }
 
+- (BOOL)showingProfilePhoto {
+    return [self image] && ![[self image] isEqual:[UIImage imageNamed:@"defaultAvatar"]];
+}
+
 @end

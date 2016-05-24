@@ -1156,8 +1156,13 @@
                                                 <constraint firstAttribute="width" constant="104" id="o37-WY-SWs"/>
                                             </constraints>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uG9-bu-M0f">
-                                            <rect key="frame" x="328" y="106" width="24" height="24"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uG9-bu-M0f">
+                                            <rect key="frame" x="302" y="80" width="50" height="50"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="57P-Sc-SQu"/>
+                                                <constraint firstAttribute="width" constant="50" id="ypf-vw-xW8"/>
+                                            </constraints>
                                             <state key="normal" image="addIconSmall"/>
                                         </button>
                                     </subviews>

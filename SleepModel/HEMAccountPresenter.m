@@ -8,13 +8,17 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENRemoteImage.h>
+
+#import "UIAlertController+HEMPhotoOptions.h"
+#import "UIImagePickerController+HEMProfilePhoto.h"
+#import "UIImage+HEMCompression.h"
 
 #import "HEMAccountPresenter.h"
 #import "HEMAccountService.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
-
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerViewController.h"
 #import "HEMGenderPickerViewController.h"
@@ -27,6 +31,9 @@
 #import "HEMPasswordChangePresenter.h"
 #import "HEMHealthKitService.h"
 #import "HEMBasicTableViewCell.h"
+#import "HEMPhotoHeaderView.h"
+#import "HEMProfileImageView.h"
+#import "HEMFacebookService.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
@@ -65,30 +72,48 @@ typedef NS_ENUM(NSInteger, HEMSignOutRow) {
 static CGFloat const HEMAccountTableCellBaseHeight = 56.0f;
 static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 
-@interface HEMAccountPresenter() <UITableViewDataSource, UITableViewDelegate>
+@interface HEMAccountPresenter() <
+    UITableViewDataSource,
+    UITableViewDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate
+>
 
 @property (nonatomic, weak) HEMAccountService* accountService;
+@property (nonatomic, weak) HEMFacebookService* facebookService;
 @property (nonatomic, weak) HEMHealthKitService* healthKitService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
 @property (nonatomic, weak) UISwitch* activatedSwitch;
+@property (nonatomic, strong) UIAlertController* photoOptionController;
 
 @end
 
 @implementation HEMAccountPresenter
 
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
+                       facebookService:(HEMFacebookService*)facebookService
                       healthKitService:(HEMHealthKitService*)healthKitService {
     self = [super init];
     if (self) {
         _accountService = accountService;
         _healthKitService = healthKitService;
+        _facebookService = facebookService;
     }
     return self;
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
-    UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    UIView* headerView = [tableView tableHeaderView];
+    if ([headerView isKindOfClass:[HEMPhotoHeaderView class]]) {
+        HEMPhotoHeaderView* photoView = (id) headerView;
+        [[photoView addButton] addTarget:self
+                                  action:@selector(showPhotoOptions)
+                        forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES
+                                                                   bottomBorder:NO];
     [tableView setTableFooterView:footerView];
     [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView setBackgroundView:nil];
@@ -135,6 +160,125 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 - (void)didAppear {
     [super didAppear];
     [[self tableView] reloadData];
+}
+
+- (HEMPhotoHeaderView*)photoHeaderView {
+    HEMPhotoHeaderView* photoView = nil;
+    UIView* headerView = [[self tableView] tableHeaderView];
+    if ([headerView isKindOfClass:[HEMPhotoHeaderView class]]) {
+        photoView = (id) headerView;
+    }
+    return photoView;
+}
+
+#pragma mark - Photo
+
+- (BOOL)hasPhotoToRemove {
+    HEMPhotoHeaderView* photoView = [self photoHeaderView];
+    return [[photoView imageView] showingProfilePhoto];
+}
+
+- (void)removePhoto {
+    HEMPhotoHeaderView* photoView = [self photoHeaderView];
+    [[photoView imageView] clearPhoto];
+    [[self accountService] removeProfilePhoto:nil];
+}
+
+- (void)uploadPhoto:(UIImage*)image {
+    __weak typeof(self) weakSelf = self;
+    CGFloat compression = HEMAccountPhotoDefaultCompression;
+    [image jpegDataWithCompression:compression completion:^(NSData * _Nullable data) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (data) {
+            void(^done)(SENRemoteImage* remoteImage, NSError* error) = ^(SENRemoteImage* remoteImage, NSError* error) {
+                
+            };
+            [[strongSelf accountService] uploadProfileJpegPhoto:data progress:nil completion:done];
+        } else {
+            // TODO: show error
+        }
+        
+    }];
+}
+
+- (void)importFromFacebook {
+    __weak typeof(self) weakSelf = self;
+    UIViewController* mainController = [[self delegate] mainControllerFor:self];
+    [[self facebookService] profileFrom:mainController completion:^(SENAccount* account, NSString* photoUrl, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            NSString* title = NSLocalizedString(@"account.error.import-photo-from-fb.title", nil);
+            NSString* message = NSLocalizedString(@"account.error.import-photo-from-fb", nil);
+            [[strongSelf delegate] showErrorTitle:title message:message from:strongSelf];
+        } else if (photoUrl) {
+            HEMPhotoHeaderView* photoView = [strongSelf photoHeaderView];
+            [[photoView imageView] setImageWithURL:photoUrl completion:^(UIImage * image, NSString * url, NSError * error) {
+                if (error) {
+                    [SENAnalytics trackError:error];
+                } else if ([url isEqualToString:photoUrl] && image) {
+                    // upload it
+                    [strongSelf uploadPhoto:image];
+                }
+            }];
+        }
+    }];
+}
+
+- (void)photoFromDevice:(BOOL)camera {
+    UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera
+                                                                                 delegate:self];
+    [[self delegate] presentViewController:photoPicker from:self];
+}
+
+- (void)showPhotoOptions {
+    UIAlertController* alertVC = [UIAlertController photoOptionActionSheet];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    if ([self hasPhotoToRemove]) {
+        [alertVC addRemovePhotoAction:^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf removePhoto];
+        }];
+    }
+    
+    [alertVC addFacebookImportAction:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf importFromFacebook];
+    }];
+    
+    [alertVC addCameraActionIfSupported:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf photoFromDevice:YES];
+    }];
+    
+    [alertVC addCameraRollAction:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf photoFromDevice:NO];
+    }];
+    
+    [self setPhotoOptionController:alertVC];
+    [[self delegate] presentViewController:alertVC from:self];
+}
+
+#pragma mark Camera
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage* photo = info[UIImagePickerControllerEditedImage];
+    if (!photo) {
+        photo = info[UIImagePickerControllerOriginalImage];
+    }
+    
+    HEMPhotoHeaderView* photoView = [self photoHeaderView];
+    [[photoView imageView] setImage:photo];
+    [[self delegate] dismissViewControllerFrom:self];
+    
+    [self uploadPhoto:photo];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [[self delegate] dismissViewControllerFrom:self];
 }
 
 #pragma mark - TableView Helpers

@@ -12,5 +12,6 @@
 @interface HEMProfileImageView : HEMURLImageView
 
 - (void)clearPhoto;
+- (BOOL)showingProfilePhoto;
 
 @end

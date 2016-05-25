@@ -20,6 +20,7 @@ NSString* const SENAPIAccountErrorMessagePasswordInsecure = @"PASSWORD_INSECURE"
 NSString* const SENAPIAccountErrorMessageNameTooLong = @"NAME_TOO_LONG";
 NSString* const SENAPIAccountErrorMessageNameTooShort = @"NAME_TOO_SHORT";
 NSString* const SENAPIAccountErrorMessageEmailInvalid = @"EMAIL_INVALID";
+NSString* const SENAPIAccountQueryParamPhoto = @"photo";
 
 @implementation SENAPIAccount
 
@@ -63,15 +64,33 @@ NSString* const SENAPIAccountErrorMessageEmailInvalid = @"EMAIL_INVALID";
 }
 
 + (void)getAccount:(SENAPIDataBlock)completion {
-    [SENAPIClient GET:SENAPIAccountEndpoint
-           parameters:nil
-           completion:^(id data, NSError *error) {
-               SENAccount* account = nil;
-               if ([data isKindOfClass:[NSDictionary class]]) {
-                   account = [[SENAccount alloc] initWithDictionary:data];
-               }
-               completion(account, error);
-           }];
+    [self getAccountWithQuery:nil completion:completion];
+}
+
++ (void)getAccountWithPhoto:(SENAPIDataBlock)completion {
+    [self getAccountWithQuery:@{SENAPIAccountQueryParamPhoto : @YES} completion:completion];
+}
+
++ (void)getAccountWithQuery:(NSDictionary<NSString*, NSString*>*)queryParams completion:(SENAPIDataBlock)completion {
+    NSMutableString* path = [SENAPIAccountEndpoint mutableCopy];
+    NSInteger index = 0;
+    for (NSString* key in [queryParams allKeys]) {
+        if (index == 0) {
+            [path appendString:@"?"];
+        } else {
+            [path appendString:@"&"];
+        }
+        [path appendFormat:@"%@=%@", key, queryParams[key]];
+        index++;
+    }
+    [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
+        SENAccount* account = nil;
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            account = [[SENAccount alloc] initWithDictionary:data];
+        }
+        completion(account, error);
+    }];
+    
 }
 
 + (void)changePassword:(NSString*)currentPassword

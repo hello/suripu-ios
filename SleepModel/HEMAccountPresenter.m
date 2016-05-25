@@ -8,8 +8,8 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENRemoteImage.h>
 
+#import "SENRemoteImage+HEMDeviceSpecific.h"
 #import "UIAlertController+HEMPhotoOptions.h"
 #import "UIImagePickerController+HEMProfilePhoto.h"
 #import "UIImage+HEMCompression.h"
@@ -122,14 +122,27 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     [tableView setSectionFooterHeight:0.0f];
     
     [self setTableView:tableView];
+    
+    HEMPhotoHeaderView* photoView = [self photoHeaderView];
+    [[photoView addButton] addTarget:self
+                              action:@selector(showPhotoOptions)
+                    forControlEvents:UIControlEventTouchUpInside];
+    
+    SENAccount* account = [[self accountService] account];
+    [[photoView imageView] setImageWithURL:[[account photo] uriForCurrentDevice]];
+    
     [self refresh];
 }
 
 - (void)refresh {
     __weak typeof(self) weakSelf = self;
-    [_accountService refresh:^(SENAccount * _Nonnull account, NSDictionary<NSNumber *,SENPreference *> * _Nonnull preferences) {
-        [[weakSelf tableView] reloadData];
-        [[weakSelf tableView] flashScrollIndicators];
+    [[self accountService] refreshWithPhoto:YES completion:^(SENAccount * account, NSDictionary<NSNumber *,SENPreference *> * preferences) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf tableView] reloadData];
+        [[strongSelf tableView] flashScrollIndicators];
+        
+        NSString* url = [[account photo] uriForCurrentDevice];
+        [[[strongSelf photoHeaderView] imageView] setImageWithURL:url];
     }];
 }
 

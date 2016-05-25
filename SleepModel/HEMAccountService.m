@@ -131,17 +131,30 @@ static NSString* const HEMAccountPhotoExt = @"jpg";
     return serviceError ?: error;
 }
 
-- (void)refresh:(HEMAccountHandler)completion {
+- (void)updateAccountWithPhoto:(BOOL)photo completion:(void(^)(void))completion {
+    NSDictionary* queryParams = nil;
+    if (photo) {
+        queryParams = @{SENAPIAccountQueryParamPhoto : @"true"};
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAccount getAccountWithQuery:queryParams completion:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error];
+        } else {
+            [strongSelf setAccount:data];
+        }
+        completion();
+    }];
+}
+
+- (void)refreshWithPhoto:(BOOL)photo completion:(HEMAccountHandler)completion {
     __weak typeof(self) weakSelf = self;
     dispatch_group_t updateGroup = dispatch_group_create();
     
     dispatch_group_enter(updateGroup);
-    [SENAPIAccount getAccount:^(SENAccount* data, NSError *error) {
-        if (error) {
-            [SENAnalytics trackError:error];
-        } else {
-            [weakSelf setAccount:data];
-        }
+    [self updateAccountWithPhoto:photo completion:^{
         dispatch_group_leave(updateGroup);
     }];
     
@@ -159,6 +172,10 @@ static NSString* const HEMAccountPhotoExt = @"jpg";
     dispatch_group_notify(updateGroup, dispatch_get_main_queue(), ^{
         completion ([weakSelf account], [weakSelf preferences]);
     });
+}
+
+- (void)refresh:(HEMAccountHandler)completion {
+    [self refreshWithPhoto:NO completion:completion];
 }
 
 #pragma mark Updates

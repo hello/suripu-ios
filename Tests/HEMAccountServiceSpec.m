@@ -125,7 +125,7 @@ describe(@"HEMAccountService", ^{
                     return nil;
                 }];
                 
-                [SENAPIAccount stub:@selector(getAccount:) withBlock:^id(NSArray *params) {
+                [SENAPIAccount stub:@selector(getAccountWithQuery:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
                     block (nil, [NSError errorWithDomain:@"t" code:-1 userInfo:nil]);
                     return nil;

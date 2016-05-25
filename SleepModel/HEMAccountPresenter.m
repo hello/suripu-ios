@@ -129,7 +129,10 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
                     forControlEvents:UIControlEventTouchUpInside];
     
     SENAccount* account = [[self accountService] account];
-    [[photoView imageView] setImageWithURL:[[account photo] uriForCurrentDevice]];
+    NSString* url = [[account photo] uriForCurrentDevice];
+    if (url) {
+        [[photoView imageView] setImageWithURL:url];
+    }
     
     [self refresh];
 }
@@ -142,7 +145,10 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
         [[strongSelf tableView] flashScrollIndicators];
         
         NSString* url = [[account photo] uriForCurrentDevice];
-        [[[strongSelf photoHeaderView] imageView] setImageWithURL:url];
+        if (url) {
+            [[[strongSelf photoHeaderView] imageView] setImageWithURL:url];
+        }
+        
     }];
 }
 

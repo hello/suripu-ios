@@ -29,7 +29,7 @@ describe(@"HEMAccountService", ^{
                     return nil;
                 }];
                 
-                [SENAPIAccount stub:@selector(getAccount:) withBlock:^id(NSArray *params) {
+                [SENAPIAccount stub:@selector(getAccountWithQuery:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
                     block ([SENAccount new], nil);
                     return nil;
@@ -77,7 +77,7 @@ describe(@"HEMAccountService", ^{
                     return nil;
                 }];
                 
-                [SENAPIAccount stub:@selector(getAccount:) withBlock:^id(NSArray *params) {
+                [SENAPIAccount stub:@selector(getAccountWithQuery:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
                     block ([SENAccount new], nil);
                     return nil;

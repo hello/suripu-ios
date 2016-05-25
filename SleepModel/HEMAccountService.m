@@ -474,9 +474,15 @@ static NSString* const HEMAccountPhotoExt = @"jpg";
 }
 
 - (void)removeProfilePhoto:(HEMAccountUpdateHandler)completion {
+    SENRemoteImage* oldPhoto = [[self account] photo];
+    [[self account] setPhoto:nil];
+    
+    __weak typeof(self) weakSelf = self;
     [SENAPIPhoto deleteProfilePhoto:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [SENAnalytics trackError:error];
+            [[strongSelf account] setPhoto:oldPhoto];
         }
         if (completion) {
             completion (error);

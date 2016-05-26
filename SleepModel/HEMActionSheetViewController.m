@@ -66,6 +66,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 -(void)setDefaults {
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self setOptionTextAlignment:NSTextAlignmentLeft];
     [[self optionTableView] setSeparatorColor:[UIColor separatorColor]];
     [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
 }
@@ -346,7 +347,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [optionCell setOptionTitle:optionTitle
                      withColor:titleColor
                           icon:iconImage
-                   description:desc];
+                   description:desc
+                 textAlignment:[self optionTextAlignment]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -374,11 +376,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Gestures
 
 - (void)dismiss {
+    [self dismiss:nil];
+}
+
+- (void)dismiss:(void(^)(void))completion {
     [self hide:^(BOOL finished) {
         __block HEMActionSheetCallback dismissBlock = [self dismissAction];
         [self dismissViewControllerAnimated:NO completion:^{
             if (dismissBlock) {
                 dismissBlock();
+            }
+            if (completion) {
+                completion();
             }
         }];
     }];

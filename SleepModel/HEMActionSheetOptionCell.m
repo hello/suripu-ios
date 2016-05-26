@@ -90,11 +90,24 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
              withColor:(UIColor*)titleColor
                   icon:(UIImage*)icon
            description:(NSString*)description {
-    
+    [self setOptionTitle:title
+               withColor:titleColor
+                    icon:icon
+             description:description
+           textAlignment:NSTextAlignmentLeft];
+}
+
+- (void)setOptionTitle:(NSString*)title
+             withColor:(UIColor*)titleColor
+                  icon:(UIImage*)icon
+           description:(NSString*)description
+         textAlignment:(NSTextAlignment)alignment {
     [[self optionTitleLabel] setText:title];
     [[self optionTitleLabel] setTextColor:titleColor];
+    [[self optionTitleLabel] setTextAlignment:alignment];
     [[self iconImageView] setImage:icon];
     [[self optionDescriptionLabel] setText:description];
+    [[self optionDescriptionLabel] setTextAlignment:alignment];
     
     UIFont* titleFont = [[self optionTitleLabel] font];
     CGRect titleFrame = [[self optionTitleLabel] frame];

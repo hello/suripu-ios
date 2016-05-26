@@ -611,6 +611,7 @@
 
 // actions
 "actions.cancel" = "Cancel";
+"actions.close" = "Close";
 "actions.ok" = "Okay";
 "actions.sign-out" = "Sign out";
 "actions.sign-in" = "Log in";
@@ -660,6 +661,9 @@
 "account.error.facebook-access" = "Unable to obtain your profile information from Facebook";
 "account.error.import-photo-from-fb.title" = "Import photo from Facebook";
 "account.error.import-photo-from-fb" = "We were unable to import your photo from Facebook";
+"account.facebook.info.title" = "Connecting with Facebook";
+"account.facebook.info.message.format" = "Connecting your Facebook account allows Sense to autofill your name, email address, and your Facebook profile photo. This does not give Sense permission to post anything to your Facebook.\n\nStill have questions? %@.";
+"account.facebook.info.learn-more" = "Learn more";
 
 // notifications
 "notifications.actions.ok" = "Okay";

@@ -15,6 +15,7 @@ typedef void(^HEMActionSheetCallback)(void);
 @interface HEMActionSheetViewController : UIViewController
 
 @property (nonatomic, assign, readonly) NSUInteger numberOfOptions;
+@property (nonatomic, assign) NSTextAlignment optionTextAlignment;
 
 /**
  * @method addOptionWithTitle:action:
@@ -85,5 +86,15 @@ typedef void(^HEMActionSheetCallback)(void);
  * Show the action sheet
  */
 - (void)show;
+
+/**
+ * @method dismiss:
+ *
+ * @discussion
+ * Dismiss the currently visible action sheet in an animated fashion.  If you do
+ * not care for the animation, simply calling the view controller's method to
+ * dismiss the presented view controller is sufficient
+ */
+- (void)dismiss:(void(^)(void))completion;
 
 @end

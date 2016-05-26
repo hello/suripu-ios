@@ -67,14 +67,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="title" id="o3F-HT-VwD" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="20" y="0.0" width="560" height="50"/>
+                                        <rect key="frame" x="20" y="0.0" width="560" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCB-rL-Lpu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="552" height="50"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCB-rL-Lpu">
+                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -86,81 +86,31 @@
                                             <constraint firstItem="KCB-rL-Lpu" firstAttribute="leading" secondItem="o3F-HT-VwD" secondAttribute="leading" id="4rw-Ku-mfc"/>
                                             <constraint firstAttribute="trailing" secondItem="KCB-rL-Lpu" secondAttribute="trailing" id="BA9-yW-5yE"/>
                                             <constraint firstItem="KCB-rL-Lpu" firstAttribute="top" secondItem="o3F-HT-VwD" secondAttribute="top" id="Q7A-3S-DJo"/>
-                                            <constraint firstAttribute="bottom" secondItem="KCB-rL-Lpu" secondAttribute="bottom" id="vgV-Kl-25P"/>
+                                            <constraint firstAttribute="bottom" secondItem="KCB-rL-Lpu" secondAttribute="bottom" constant="10" id="vgV-Kl-25P"/>
                                         </constraints>
-                                        <size key="customSize" width="560" height="50"/>
+                                        <size key="customSize" width="560" height="60"/>
                                         <connections>
                                             <outlet property="textLabel" destination="KCB-rL-Lpu" id="sFq-8r-SjD"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="password" id="o0q-9W-oOo" customClass="HEMTextFieldCollectionViewCell">
-                                        <rect key="frame" x="20" y="50" width="560" height="72"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="email" id="hCw-Bc-VKl" userLabel="email" customClass="HEMTextFieldCollectionViewCell">
+                                        <rect key="frame" x="20" y="60" width="560" height="72"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kau-zL-ZLJ" customClass="HEMTitledTextField">
-                                                    <rect key="frame" x="0.0" y="6" width="552" height="50"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vRG-lt-ncS" customClass="HEMTitledTextField">
+                                                    <rect key="frame" x="0.0" y="6" width="560" height="50"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Text field placeholder text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBg-Bu-6rD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="552" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text field placeholder text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oo-Jc-yNv">
+                                                            <rect key="frame" x="0.0" y="0.0" width="560" height="17"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GPR-1x-sj6" customClass="HEMSimpleLineTextField">
-                                                            <rect key="frame" x="0.0" y="22" width="552" height="28"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </view>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstItem="WBg-Bu-6rD" firstAttribute="leading" secondItem="kau-zL-ZLJ" secondAttribute="leading" id="BoC-W6-TYD"/>
-                                                        <constraint firstItem="GPR-1x-sj6" firstAttribute="top" secondItem="WBg-Bu-6rD" secondAttribute="bottom" constant="5" id="Nth-Ds-9jc"/>
-                                                        <constraint firstItem="WBg-Bu-6rD" firstAttribute="top" secondItem="kau-zL-ZLJ" secondAttribute="top" id="T2O-B5-p4D"/>
-                                                        <constraint firstAttribute="trailing" secondItem="GPR-1x-sj6" secondAttribute="trailing" id="aHD-Wy-f1N"/>
-                                                        <constraint firstAttribute="bottom" secondItem="GPR-1x-sj6" secondAttribute="bottom" id="arj-5N-fKB"/>
-                                                        <constraint firstItem="GPR-1x-sj6" firstAttribute="leading" secondItem="kau-zL-ZLJ" secondAttribute="leading" id="db3-pR-wji"/>
-                                                        <constraint firstAttribute="trailing" secondItem="WBg-Bu-6rD" secondAttribute="trailing" id="hwF-Aw-MKc"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <outlet property="textField" destination="GPR-1x-sj6" id="8TD-ug-yR1"/>
-                                                        <outlet property="titleLabel" destination="WBg-Bu-6rD" id="IX9-PB-rEz"/>
-                                                    </connections>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="kau-zL-ZLJ" firstAttribute="leading" secondItem="o0q-9W-oOo" secondAttribute="leading" id="8jO-IT-yia"/>
-                                            <constraint firstItem="kau-zL-ZLJ" firstAttribute="top" secondItem="o0q-9W-oOo" secondAttribute="top" constant="6" id="Foc-xZ-q1V"/>
-                                            <constraint firstAttribute="trailing" secondItem="kau-zL-ZLJ" secondAttribute="trailing" id="uD3-8T-VrW"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="kau-zL-ZLJ" secondAttribute="bottom" constant="8" id="zG1-R9-ECN"/>
-                                        </constraints>
-                                        <size key="customSize" width="560" height="72"/>
-                                        <connections>
-                                            <outlet property="titledTextField" destination="kau-zL-ZLJ" id="v2d-vz-fVe"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="email" id="hCw-Bc-VKl" customClass="HEMTextFieldCollectionViewCell">
-                                        <rect key="frame" x="20" y="122" width="560" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="72"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vRG-lt-ncS" customClass="HEMTitledTextField">
-                                                    <rect key="frame" x="0.0" y="6" width="552" height="50"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Text field placeholder text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oo-Jc-yNv">
-                                                            <rect key="frame" x="0.0" y="0.0" width="552" height="17"/>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QEv-wh-Lrn" customClass="HEMSimpleLineTextField">
-                                                            <rect key="frame" x="0.0" y="22" width="552" height="28"/>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QEv-wh-Lrn" customClass="HEMSimpleLineTextField">
+                                                            <rect key="frame" x="0.0" y="22" width="560" height="28"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
                                                     </subviews>
@@ -191,6 +141,56 @@
                                         <size key="customSize" width="560" height="72"/>
                                         <connections>
                                             <outlet property="titledTextField" destination="vRG-lt-ncS" id="7OD-lx-fjC"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="password" id="o0q-9W-oOo" customClass="HEMTextFieldCollectionViewCell">
+                                        <rect key="frame" x="20" y="132" width="560" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kau-zL-ZLJ" customClass="HEMTitledTextField">
+                                                    <rect key="frame" x="0.0" y="6" width="560" height="50"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text field placeholder text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBg-Bu-6rD">
+                                                            <rect key="frame" x="0.0" y="0.0" width="560" height="17"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPR-1x-sj6" customClass="HEMSimpleLineTextField">
+                                                            <rect key="frame" x="0.0" y="22" width="560" height="28"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="WBg-Bu-6rD" firstAttribute="leading" secondItem="kau-zL-ZLJ" secondAttribute="leading" id="BoC-W6-TYD"/>
+                                                        <constraint firstItem="GPR-1x-sj6" firstAttribute="top" secondItem="WBg-Bu-6rD" secondAttribute="bottom" constant="5" id="Nth-Ds-9jc"/>
+                                                        <constraint firstItem="WBg-Bu-6rD" firstAttribute="top" secondItem="kau-zL-ZLJ" secondAttribute="top" id="T2O-B5-p4D"/>
+                                                        <constraint firstAttribute="trailing" secondItem="GPR-1x-sj6" secondAttribute="trailing" id="aHD-Wy-f1N"/>
+                                                        <constraint firstAttribute="bottom" secondItem="GPR-1x-sj6" secondAttribute="bottom" id="arj-5N-fKB"/>
+                                                        <constraint firstItem="GPR-1x-sj6" firstAttribute="leading" secondItem="kau-zL-ZLJ" secondAttribute="leading" id="db3-pR-wji"/>
+                                                        <constraint firstAttribute="trailing" secondItem="WBg-Bu-6rD" secondAttribute="trailing" id="hwF-Aw-MKc"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outlet property="textField" destination="GPR-1x-sj6" id="8TD-ug-yR1"/>
+                                                        <outlet property="titleLabel" destination="WBg-Bu-6rD" id="IX9-PB-rEz"/>
+                                                    </connections>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="kau-zL-ZLJ" firstAttribute="leading" secondItem="o0q-9W-oOo" secondAttribute="leading" id="8jO-IT-yia"/>
+                                            <constraint firstItem="kau-zL-ZLJ" firstAttribute="top" secondItem="o0q-9W-oOo" secondAttribute="top" constant="6" id="Foc-xZ-q1V"/>
+                                            <constraint firstAttribute="trailing" secondItem="kau-zL-ZLJ" secondAttribute="trailing" id="uD3-8T-VrW"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="kau-zL-ZLJ" secondAttribute="bottom" constant="8" id="zG1-R9-ECN"/>
+                                        </constraints>
+                                        <size key="customSize" width="560" height="72"/>
+                                        <connections>
+                                            <outlet property="titledTextField" destination="kau-zL-ZLJ" id="v2d-vz-fVe"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

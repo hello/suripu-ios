@@ -22,7 +22,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet HEMActionButton *logInButton;
-
+@property (weak, nonatomic) HEMSignInFormPresenter* formPresenter;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic) BOOL signingIn;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
@@ -50,11 +50,23 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
     [presenter bindWithActivityContainer:[[self navigationController] view]];
     [presenter setDelegate:self];
     [self addPresenter:presenter];
+    [self setFormPresenter:presenter];
     
     HEMSignInNavBarPresenter* navBarPresenter = [HEMSignInNavBarPresenter new];
     [navBarPresenter setDelegate:self];
     [navBarPresenter bindWithOnboardingController:self];
     [self addPresenter:navBarPresenter];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (![[self formPresenter] shadowView]) {
+        [[self formPresenter] bindWithShadowView:[self shadowView]];
+    }
+}
+
+- (BOOL)wantsShadowView {
+    return YES;
 }
 
 #pragma mark - HEMSignInFormDelegate

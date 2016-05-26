@@ -188,6 +188,10 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
 
 #pragma mark - Collection view
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return HEMSignInFormRowCount;
 }
@@ -283,7 +287,6 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
             [self putFocusOnTextFieldAtRow:row + 1];
             break;
         case HEMSignInFormRowPass:
-            [textField resignFirstResponder];
             [self signInIfValid];
             break;
     }

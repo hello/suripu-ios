@@ -587,8 +587,7 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 }
 
 - (void)photoFromDevice:(BOOL)camera {
-    UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera
-                                                                                 delegate:self];
+    UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera delegate:self];
     [[self delegate] showController:photoPicker from:self];
 }
 

@@ -10,11 +10,12 @@
 +(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
++(NSString *)titleReuseIdentifier;
++(NSString *)passwordReuseIdentifier;
++(NSString *)emailReuseIdentifier;
 +(NSString *)photoReuseIdentifier;
 +(NSString *)firstNameReuseIdentifier;
 +(NSString *)lastNameReuseIdentifier;
-+(NSString *)emailReuseIdentifier;
-+(NSString *)passwordReuseIdentifier;
 +(NSString *)networkReuseIdentifier;
 +(NSString *)pillSetupTextCellReuseIdentifier;
 +(NSString *)pillSetupVideoCellReuseIdentifier;

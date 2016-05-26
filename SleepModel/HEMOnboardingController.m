@@ -25,8 +25,6 @@
 @interface HEMOnboardingController()
 
 @property (strong, nonatomic) HEMActivityCoverView* activityCoverView;
-@property (strong, nonatomic) UIBarButtonItem* leftBarItem;
-@property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL enableBack;
 @property (copy,   nonatomic) NSString* analyticsHelpStep;
 @property (copy,   nonatomic) NSString* helpPage;

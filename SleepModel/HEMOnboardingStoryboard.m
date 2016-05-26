@@ -42,6 +42,7 @@ static NSString *const _HEMsensePairViewController = @"sensePairViewController";
 static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsignupToNoBle = @"signupToNoBle";
 static NSString *const _HEMskipPillPairSegue = @"skipPillPairSegue";
+static NSString *const _HEMtitle = @"title";
 static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMweightToHealthKit = @"weightToHealthKit";
@@ -66,6 +67,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)photoReuseIdentifier { return _HEMphoto; }
 +(NSString *)pillSetupTextCellReuseIdentifier { return _HEMpillSetupTextCell; }
 +(NSString *)pillSetupVideoCellReuseIdentifier { return _HEMpillSetupVideoCell; }
++(NSString *)titleReuseIdentifier { return _HEMtitle; }
 
 /** Segue Identifiers */
 +(NSString *)audioToSetupSegueIdentifier { return _HEMaudioToSetup; }

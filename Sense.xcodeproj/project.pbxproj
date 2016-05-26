@@ -367,6 +367,8 @@
 		BFE375F01CEFE1520029EE66 /* UIImage+HEMCompression.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375EF1CEFE1520029EE66 /* UIImage+HEMCompression.m */; };
 		BFE375FA1CF4CAAD0029EE66 /* UIAlertController+HEMPhotoOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375F91CF4CAAD0029EE66 /* UIAlertController+HEMPhotoOptions.m */; };
 		BFE375FD1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375FC1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.m */; };
+		BFE376031CF646BE0029EE66 /* HEMSignInFormPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376021CF646BE0029EE66 /* HEMSignInFormPresenter.m */; };
+		BFE376061CF654F20029EE66 /* HEMSignInNavBarPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */; };
 		BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */; };
 		BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
@@ -1074,6 +1076,10 @@
 		BFE375F91CF4CAAD0029EE66 /* UIAlertController+HEMPhotoOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+HEMPhotoOptions.m"; sourceTree = "<group>"; };
 		BFE375FB1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+HEMProfilePhoto.h"; sourceTree = "<group>"; };
 		BFE375FC1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+HEMProfilePhoto.m"; sourceTree = "<group>"; };
+		BFE376011CF646BE0029EE66 /* HEMSignInFormPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignInFormPresenter.h; sourceTree = "<group>"; };
+		BFE376021CF646BE0029EE66 /* HEMSignInFormPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignInFormPresenter.m; sourceTree = "<group>"; };
+		BFE376041CF654F20029EE66 /* HEMSignInNavBarPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignInNavBarPresenter.h; sourceTree = "<group>"; };
+		BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignInNavBarPresenter.m; sourceTree = "<group>"; };
 		BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseRequiredCollectionViewCell.h; sourceTree = "<group>"; };
 		BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseRequiredCollectionViewCell.m; sourceTree = "<group>"; };
 		BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
@@ -2458,6 +2464,10 @@
 			children = (
 				BF885F231CE562A500A92F90 /* HEMNewAccountPresenter.h */,
 				BF885F241CE562A500A92F90 /* HEMNewAccountPresenter.m */,
+				BFE376011CF646BE0029EE66 /* HEMSignInFormPresenter.h */,
+				BFE376021CF646BE0029EE66 /* HEMSignInFormPresenter.m */,
+				BFE376041CF654F20029EE66 /* HEMSignInNavBarPresenter.h */,
+				BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3297,6 +3307,7 @@
 				BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8AA157B51A5E194100BF1D4A /* HEMStyledNavigationViewController.m in Sources */,
+				BFE376031CF646BE0029EE66 /* HEMSignInFormPresenter.m in Sources */,
 				BFE375FD1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.m in Sources */,
 				8A7D80231A40EADE00B0BFD7 /* NSString+HEMUtils.m in Sources */,
 				BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */,
@@ -3392,6 +3403,7 @@
 				8ADF03CD1A719185002B036A /* HEMDynamicsStatusStyler.m in Sources */,
 				BF5BACF31C5BE2C800347185 /* HEMTrendsTabPresenter.m in Sources */,
 				8ADE06391B2F521B00976654 /* HEMSplitTextFormatter.m in Sources */,
+				BFE376061CF654F20029EE66 /* HEMSignInNavBarPresenter.m in Sources */,
 				8B45075D1C1794E500359453 /* HEMSelectHostViewController.m in Sources */,
 				8A6FCDE41B0E52AE004EB7ED /* HEMEventBubbleView.m in Sources */,
 				8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */,

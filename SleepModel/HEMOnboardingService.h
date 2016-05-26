@@ -197,26 +197,6 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
            completion:(void(^)(SENAccount* account, NSError* error))completion;
 
 /**
- * @method createAccountWithName:email:pass:onAccountCreation:completion:
- *
- * @discussion
- * Create a new account with the required pieces of information, calling back once
- * the account has been created and then again upon total completion
- *
- * @param name:                name of the user
- * @param email:               the email for the account
- * @param password:            the password to be used for the account
- * @param accountCreatedBlock: block to call upon account creation, but before the
- *                             account is authorized for use
- * @param completion:          the block to invoke when all is done
- */
-- (void)createAccountWithName:(NSString*)name
-                        email:(NSString*)email
-                         pass:(NSString*)password
-            onAccountCreation:(void(^)(SENAccount* account))accountCreatedBlock
-                   completion:(void(^)(SENAccount* account, NSError* error))completion;
-
-/**
  * @method authenticateUser:pass:retry:completion:
  *
  * @discussion
@@ -232,6 +212,12 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
                     pass:(NSString*)password
                    retry:(BOOL)retry
               completion:(void(^)(NSError* error))completion;
+
+/**
+ * @discussion
+ * Should call method upon successfully authenticating the user
+ */
+- (void)finishSignIn;
 
 /**
  * @method localizedMessageFromAccountError:

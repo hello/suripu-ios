@@ -20,6 +20,7 @@
 #import "NSString+HEMUtils.h"
 
 #import "HEMOnboardingService.h"
+#import "HEMNotificationHandler.h"
 
 // notifications
 NSString* const HEMOnboardingNotificationDidChangeSensePairing = @"HEMOnboardingNotificationDidChangeSensePairing";
@@ -82,6 +83,10 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
                                code:code
                            userInfo:userInfo];
 }
+
+#pragma mark - Sign In
+
+
 
 #pragma mark - Sense
 
@@ -381,10 +386,19 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
                                        reason:[self localizedMessageFromAccountError:signInError]];
         }
         
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        
         if (completion) {
             completion (error);
         }
     }];
+}
+
+- (void)finishSignIn {
+    [SENAnalytics track:kHEMAnalyticsEventSignIn];
+    [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
 }
 
 - (void)pushDefaultPreferences {

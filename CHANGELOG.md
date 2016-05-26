@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.2.6
+
+New:
+
+* Account settings now support displaying of the profile photo
+* Account settings support importing photo from facebook
+* Account settings support uploading photo from new photo from camera
+* Account settings support uploading photo from camera roll
+* Account settings support removal of photo
+* Sign In screen is now scrollable and matches sign up screen more closely
+
 ## 1.4.2.5
 
 New:

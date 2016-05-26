@@ -369,6 +369,8 @@
 		BFE375FD1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375FC1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.m */; };
 		BFE376031CF646BE0029EE66 /* HEMSignInFormPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376021CF646BE0029EE66 /* HEMSignInFormPresenter.m */; };
 		BFE376061CF654F20029EE66 /* HEMSignInNavBarPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */; };
+		BFE376091CF78AA00029EE66 /* HEMBreadcrumbService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376081CF78AA00029EE66 /* HEMBreadcrumbService.m */; };
+		BFE3760C1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3760B1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m */; };
 		BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */; };
 		BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
@@ -1080,6 +1082,10 @@
 		BFE376021CF646BE0029EE66 /* HEMSignInFormPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignInFormPresenter.m; sourceTree = "<group>"; };
 		BFE376041CF654F20029EE66 /* HEMSignInNavBarPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignInNavBarPresenter.h; sourceTree = "<group>"; };
 		BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignInNavBarPresenter.m; sourceTree = "<group>"; };
+		BFE376071CF78AA00029EE66 /* HEMBreadcrumbService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBreadcrumbService.h; sourceTree = "<group>"; };
+		BFE376081CF78AA00029EE66 /* HEMBreadcrumbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBreadcrumbService.m; sourceTree = "<group>"; };
+		BFE3760A1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMPresenter+HEMBreadcrumb.h"; sourceTree = "<group>"; };
+		BFE3760B1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HEMPresenter+HEMBreadcrumb.m"; sourceTree = "<group>"; };
 		BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseRequiredCollectionViewCell.h; sourceTree = "<group>"; };
 		BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseRequiredCollectionViewCell.m; sourceTree = "<group>"; };
 		BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
@@ -2065,6 +2071,8 @@
 				BFA884AF1C1A01A200613069 /* HEMDeviceAlertService.m */,
 				BFA884B51C1A30F500613069 /* HEMTimeZoneAlertService.h */,
 				BFA884B61C1A30F500613069 /* HEMTimeZoneAlertService.m */,
+				BFE376071CF78AA00029EE66 /* HEMBreadcrumbService.h */,
+				BFE376081CF78AA00029EE66 /* HEMBreadcrumbService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -2729,6 +2737,8 @@
 			children = (
 				BFA884B21C1A0CAB00613069 /* HEMSystemAlertPresenter.h */,
 				BFA884B31C1A0CAB00613069 /* HEMSystemAlertPresenter.m */,
+				BFE3760A1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.h */,
+				BFE3760B1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3379,6 +3389,7 @@
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
 				8AA1E62C1A898EDB00590EB6 /* HEMClockPickerView.m in Sources */,
 				BF885F1E1CE54D0900A92F90 /* HEMCreateAccountViewController.m in Sources */,
+				BFE3760C1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m in Sources */,
 				BF78E9A21B266C310015949F /* HEMTutorialViewController.m in Sources */,
 				BF645D971A9FB3A70051C120 /* HEMTransitionDelegate.m in Sources */,
 				BF6D9B7E1C73EA8A00774322 /* HEMTrendsSleepDepthCell.m in Sources */,
@@ -3484,6 +3495,7 @@
 				BFB7B21A1CE53EDA0060999E /* HEMTitledTextField.m in Sources */,
 				BF71BDA21C481E0A00919D0F /* HEMTimelineService.m in Sources */,
 				BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */,
+				BFE376091CF78AA00029EE66 /* HEMBreadcrumbService.m in Sources */,
 				BF412EA81C920095009514A1 /* HEMSleepSoundViewController.m in Sources */,
 				BFA540F21BCEFDF1007AF607 /* NSBundle+HEMUtils.m in Sources */,
 				BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */,

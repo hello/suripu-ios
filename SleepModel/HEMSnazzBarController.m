@@ -79,6 +79,16 @@ CGFloat const HEMSnazzBarHeight = 64.0f;
 
 #pragma mark - SnazzBar
 
+- (void)reloadButtonsBarBadges {
+    NSUInteger index = 0;
+    for (UIViewController* viewController in self.viewControllers) {
+        [self.buttonsBar showUnreadIndicator:viewController.tabBarItem.badgeValue != nil
+                                     atIndex:index];
+        
+        index++;
+    }
+}
+
 - (void)reloadButtonsBar {
     [self.buttonsBar removeAllButtons];
     

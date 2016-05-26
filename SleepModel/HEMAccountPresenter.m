@@ -34,6 +34,8 @@
 #import "HEMPhotoHeaderView.h"
 #import "HEMProfileImageView.h"
 #import "HEMFacebookService.h"
+#import "HEMBreadcrumbService.h"
+#import "HEMPresenter+HEMBreadcrumb.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
@@ -82,6 +84,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 @property (nonatomic, weak) HEMAccountService* accountService;
 @property (nonatomic, weak) HEMFacebookService* facebookService;
 @property (nonatomic, weak) HEMHealthKitService* healthKitService;
+@property (nonatomic, weak) HEMBreadcrumbService* breadcrumbService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
 @property (nonatomic, weak) UISwitch* activatedSwitch;
@@ -93,12 +96,14 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
                        facebookService:(HEMFacebookService*)facebookService
-                      healthKitService:(HEMHealthKitService*)healthKitService {
+                      healthKitService:(HEMHealthKitService*)healthKitService
+                     breadcrumbService:(HEMBreadcrumbService*)breadcrumbService {
     self = [super init];
     if (self) {
         _accountService = accountService;
         _healthKitService = healthKitService;
         _facebookService = facebookService;
+        _breadcrumbService = breadcrumbService;
     }
     return self;
 }
@@ -178,6 +183,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 
 - (void)didAppear {
     [super didAppear];
+    [self breadcrumbService:[self breadcrumbService] clearTrailIfEndsIn:HEMBreadcrumbAccount];
     [[self tableView] reloadData];
 }
 

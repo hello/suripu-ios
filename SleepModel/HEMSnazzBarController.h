@@ -63,6 +63,7 @@ extern CGFloat const HEMSnazzBarHeight;
 
 - (void)hideBar:(BOOL)hidden animated:(BOOL)animated;
 - (void)showPartialBarWithRatio:(CGFloat)ratio;
+- (void)reloadButtonsBarBadges;
 
 @property (nonatomic) NSUInteger selectedIndex;
 @property (nonatomic, copy) NSArray *viewControllers;

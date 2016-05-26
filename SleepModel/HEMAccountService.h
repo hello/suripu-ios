@@ -20,6 +20,7 @@ typedef struct {
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSString* const HEMAccountServiceNotificationDidRefresh; // called when the account has been refreshed
 extern NSString* const HEMAccountServiceDomain;
 extern CGFloat const HEMAccountPhotoDefaultCompression;
 

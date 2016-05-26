@@ -62,6 +62,10 @@ NS_ASSUME_NONNULL_BEGIN
              withHelpPage:(NSString*)helpPage;
 - (void)viewDidBecomeActive;
 - (void)viewDidEnterBackground;
+- (BOOL)showIndicatorForCrumb:(NSString*)crumb;
+- (void)clearCrumb:(NSString*)crumb;
+- (void)reloadTopBar;
+- (void)didRefreshAccount;
 
 @end
 

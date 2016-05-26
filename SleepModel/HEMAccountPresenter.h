@@ -12,6 +12,7 @@
 @class HEMHealthKitService;
 @class HEMAccountService;
 @class HEMFacebookService;
+@class HEMBreadcrumbService;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,7 +39,8 @@ typedef void(^HEMAccountSignOutHandler)(void);
 
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
                        facebookService:(HEMFacebookService*)facebookService
-                      healthKitService:(HEMHealthKitService*)healthKitService NS_DESIGNATED_INITIALIZER;
+                      healthKitService:(HEMHealthKitService*)healthKitService
+                     breadcrumbService:(HEMBreadcrumbService*)breadcrumbService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithTableView:(UITableView*)tableView;
 

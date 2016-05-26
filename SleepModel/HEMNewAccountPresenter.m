@@ -11,8 +11,12 @@
 #import "UIImage+HEMCompression.h"
 #import "UIAlertController+HEMPhotoOptions.h"
 #import "UIImagePickerController+HEMProfilePhoto.h"
+#import "NSMutableAttributedString+HEMFormat.h"
+#import "NSAttributedString+HEMUtils.h"
 
 #import "HEMNewAccountPresenter.h"
+#import "HEMMainStoryboard.h"
+#import "HEMActionSheetViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMTextFieldCollectionViewCell.h"
 #import "HEMNewProfileCollectionViewCell.h"
@@ -22,6 +26,7 @@
 #import "HEMAccountService.h"
 #import "HEMProfileImageView.h"
 #import "HEMSimpleLineTextField.h"
+#import "HEMActionSheetTitleView.h"
 #import "HEMActionButton.h"
 #import "HEMStyle.h"
 
@@ -150,7 +155,38 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 #pragma mark - Facebook Actions
 
 - (void)showFBInfo {
-    [[self delegate] showSupportPageWithSlug:NSLocalizedString(@"help.url.slug.facebook-import", nil)];
+    HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
+    
+    // title view
+    NSString* title = NSLocalizedString(@"account.facebook.info.title", nil);
+    NSString* messageFormat = NSLocalizedString(@"account.facebook.info.message.format", nil);
+    NSString* learnMore = NSLocalizedString(@"account.facebook.info.learn-more", nil);
+    NSString* supportSlug = NSLocalizedString(@"help.url.slug.facebook-import", nil);
+    NSAttributedString* attrArg = [[NSAttributedString alloc] initWithString:learnMore];
+    NSArray* args = @[[attrArg hyperlink:supportSlug]];
+    NSMutableAttributedString* attrMessage = [[NSMutableAttributedString alloc] initWithFormat:messageFormat args:args];
+    [attrMessage addAttributes:[HEMActionSheetTitleView defaultDescriptionProperties]
+                         range:NSMakeRange(0, [attrMessage length])];
+    HEMActionSheetTitleView* titleView = [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrMessage];
+    
+    __weak typeof(self) weakSelf = self;
+    __weak typeof(sheet) weakSheet = sheet;
+    [titleView addLinkHandler:^(NSURL *url) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        __strong typeof(weakSheet) strongSheet = weakSheet;
+        [strongSheet dismiss:^{
+            [[strongSelf delegate] showSupportPageWithSlug:[url absoluteString]];
+        }];
+    }];
+    
+    [sheet setCustomTitleView:titleView];
+    
+    // cancel
+    NSString* cancelOption = NSLocalizedString(@"actions.close", nil);
+    [sheet setOptionTextAlignment:NSTextAlignmentCenter];
+    [sheet addOptionWithTitle:cancelOption action:^{}];
+    
+    [[self delegate] showController:sheet from:self];
 }
 
 - (void)autofillFromFB {

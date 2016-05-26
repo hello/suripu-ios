@@ -483,7 +483,8 @@ static BOOL hasLoadedBefore = NO;
 - (UIView *)senseLearnsTitleView {
     NSString *title = NSLocalizedString(@"sleep-event.feedback.action-sheet.title", nil);
     NSString *desc = NSLocalizedString(@"sleep-event.feedback.action-sheet.description", nil);
-    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:desc];
+    NSAttributedString* attrDesc = [HEMActionSheetTitleView attributedDescriptionFromText:desc];
+    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrDesc];
 }
 
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {

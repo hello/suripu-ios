@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^HEMActionSheetTitleLinkHandler)(NSURL* url);
+
 @interface HEMActionSheetTitleView : UIView
 
-- (instancetype)initWithTitle:(NSString*)title andDescription:(NSString*)description;
+- (instancetype)initWithTitle:(NSString*)title andDescription:(NSAttributedString*)description;
++ (NSAttributedString*)attributedDescriptionFromText:(NSString *)text;
++ (NSDictionary*)defaultDescriptionProperties;
+- (void)addLinkHandler:(HEMActionSheetTitleLinkHandler)handler;
 
 @end

@@ -16,14 +16,58 @@ static CGFloat HEMActionSheetTitleVertPadding = 22.0f;
 static CGFloat HEMActionSheetTextSpacing = 12.0f;
 static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
 
+@interface HEMActionSheetTitleView() <UITextViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray* linkHandlers;
+@property (nonatomic, weak) UITextView* descriptionView;
+
+@end
+
 @implementation HEMActionSheetTitleView
 
-- (instancetype)initWithTitle:(NSString*)title andDescription:(NSString*)description {
++ (NSAttributedString*)attributedDescriptionFromText:(NSString *)text {
+    if (!text) {
+        return nil;
+    }
+    return [[NSAttributedString alloc] initWithString:text
+                                           attributes:[self defaultDescriptionProperties]];
+}
+
++ (NSDictionary*)defaultDescriptionProperties {
+    return @{NSFontAttributeName : [UIFont actionSheetTitleViewDescriptionFont],
+             NSForegroundColorAttributeName : [UIColor detailTextColor]};
+}
+
+- (instancetype)initWithTitle:(NSString*)title andDescription:(NSAttributedString*)description {
     self = [super init];
     if (self) {
         [self configureContentWithTitle:title andDescription:description];
     }
     return self;
+}
+
+- (UITextView*)textViewWithText:(NSAttributedString*)text origin:(CGFloat)y {
+    CGFloat screenWidth = CGRectGetWidth(HEMKeyWindowBounds());
+    CGFloat frameWidth = screenWidth - (2 * HEMActionSheetTitleHorzPadding);
+    CGSize constraint = CGSizeMake(frameWidth, MAXFLOAT);
+    
+    UITextView* view = [UITextView new];
+    [view setAttributedText:text];
+    [view setScrollEnabled:NO];
+    [view setEditable:NO];
+    [view setTextContainerInset:UIEdgeInsetsZero];
+    [[view textContainer] setLineFragmentPadding:0.0f];
+    [view setDelegate:self];
+    [view setSelectable:NO];
+
+    CGRect textFrame = CGRectZero;
+    textFrame.size.width = frameWidth;
+    textFrame.size.height = [view sizeThatFits:constraint].height;
+    textFrame.origin.y = y;
+    textFrame.origin.x = HEMActionSheetTitleHorzPadding;
+    [view setFrame:textFrame];
+    
+    return view;
 }
 
 - (UILabel*)labelWithText:(NSString*)text
@@ -50,7 +94,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     return label;
 }
 
-- (void)configureContentWithTitle:(NSString*)title andDescription:(NSString*)description {
+- (void)configureContentWithTitle:(NSString*)title andDescription:(NSAttributedString*)description {
     CGFloat maxY = HEMActionSheetTitleVertPadding;
     CGFloat spacing = 0.0f;
     
@@ -68,16 +112,12 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     }
     
     if (description) {
-
-        UIColor* descColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
-        UIFont* descFont = [UIFont actionSheetTitleViewDescriptionFont];
-        UILabel* descLabel = [self labelWithText:description
-                                         andFont:descFont
-                                        andColor:descColor
-                                       atYOrigin:maxY + spacing];
-        [self addSubview:descLabel];
+        UITextView* textView = [self textViewWithText:description
+                                               origin:maxY + spacing];
+        [self addSubview:textView];
+        [self setDescriptionView:textView];
         
-        maxY = CGRectGetMaxY([descLabel frame]);
+        maxY = CGRectGetMaxY([textView frame]);
     }
     
     CGFloat screenWidth = CGRectGetWidth(HEMKeyWindowBounds());
@@ -104,6 +144,23 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     CGContextStrokePath(context);
     
     CGContextRestoreGState(context);
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    for (HEMActionSheetTitleLinkHandler handler in [self linkHandlers]) {
+        handler (URL);
+    }
+    return NO;
+}
+
+- (void)addLinkHandler:(HEMActionSheetTitleLinkHandler)handler {
+    if (![self linkHandlers]) {
+        [self setLinkHandlers:[NSMutableArray array]];
+    }
+    [[self linkHandlers] addObject:[handler copy]];
+    [[self descriptionView] setSelectable:YES];
 }
 
 @end

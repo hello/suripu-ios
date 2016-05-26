@@ -51,6 +51,7 @@ typedef void(^HEMAccountPhotoHandler)(SENRemoteImage* _Nullable remoteImage, NSE
 + (instancetype)sharedService;
 
 - (void)refresh:(HEMAccountHandler)completion;
+- (void)refreshWithPhoto:(BOOL)photo completion:(HEMAccountHandler)completion;
 - (BOOL)isEnabled:(SENPreferenceType)preferenceType;
 - (void)enablePreference:(BOOL)enable
                  forType:(SENPreferenceType)type

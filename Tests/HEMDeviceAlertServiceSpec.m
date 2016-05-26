@@ -194,12 +194,15 @@ describe(@"HEMDeviceAlertService", ^{
                 beforeEach(^{
                     [senseMetadata stub:@selector(lastSeenDate) andReturn:[NSDate date]];
                     
-                    pillMetadata = [SENPillMetadata new];
-                    [pillMetadata stub:@selector(state) andReturn:[KWValue valueWithInteger:SENPillStateLowBattery]];
+                    pillMetadata = [[SENPillMetadata alloc] initWithDictionary:@{@"state" : @"LOW_BATTERY"}];
                     [pillMetadata stub:@selector(lastSeenDate) andReturn:[NSDate date]];
                     
                     [devices stub:@selector(pillMetadata) andReturn:pillMetadata];
                     [devices stub:@selector(hasPairedPill) andReturn:[KWValue valueWithBool:YES]];
+                    
+                    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                    [localPrefs stub:@selector(userPreferenceForKey:) andReturn:[[NSDate date] previousDay]];
+                    
                     
                     [SENAPIDevice stub:@selector(getPairedDevices:) withBlock:^id(NSArray *params) {
                         SENAPIDataBlock cb = [params lastObject];

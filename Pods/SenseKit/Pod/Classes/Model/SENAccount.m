@@ -56,6 +56,7 @@ NSString* const SENAccountPropertyGender = @"gender";
 NSString* const SENAccountPropertyValueLatitude = @"lat";
 NSString* const SENAccountPropertyValueLongitude = @"long";
 NSString* const SENAccountPropertyCreated = @"created";
+NSString* const SENAccountPropertyProfilePhoto = @"profile_photo";
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
     if (![data isKindOfClass:[NSDictionary class]])
@@ -77,6 +78,11 @@ NSString* const SENAccountPropertyCreated = @"created";
         NSNumber *createdAt = SENObjectOfClass(data[SENAccountPropertyCreated], [NSNumber class]);
         if (createdAt) {
             _createdAt = SENDateFromNumber(createdAt);
+        }
+        
+        NSDictionary* photoObj = SENObjectOfClass(data[SENAccountPropertyProfilePhoto], [NSDictionary class]);
+        if (photoObj) {
+            _photo = [[SENRemoteImage alloc] initWithDictionary:photoObj];
         }
     }
     return self;
@@ -120,6 +126,7 @@ NSString* const SENAccountPropertyCreated = @"created";
     if (self.createdAt) {
         [params setValue:SENDateMillisecondsSince1970(self.createdAt) forKey:SENAccountPropertyCreated];
     }
+    // purposely ignore the photo as it should not be sent back up to the server
     return params;
 }
 

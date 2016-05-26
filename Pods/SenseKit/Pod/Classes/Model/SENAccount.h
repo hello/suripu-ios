@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "SENSerializable.h"
 
+@class SENRemoteImage;
+
 typedef NS_ENUM(NSUInteger, SENAccountGender) {
     SENAccountGenderOther,
     SENAccountGenderMale,
@@ -105,6 +107,8 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
  *  Date on which the account was created
  */
 @property (nonatomic, strong, readwrite) NSDate* createdAt;
+
+@property (nonatomic, strong, readwrite) SENRemoteImage* photo;
 
 /**
  *  Serialized version of the account

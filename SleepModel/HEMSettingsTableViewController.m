@@ -230,9 +230,6 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
         case HEMSettingsAccountSection:
             [self performSegueWithIdentifier:[self segueIdentifierForRow:indexPath.row]
                                       sender:self];
-            if ([indexPath row] == HEMSettingsAccountRowIndex) {
-                [self clearCrumb:HEMBreadcrumbAccount];
-            }
             break;
         case HEMSettingsSupportSection:
             [self performSegueWithIdentifier:[HEMMainStoryboard settingsToSupportSegueIdentifier]

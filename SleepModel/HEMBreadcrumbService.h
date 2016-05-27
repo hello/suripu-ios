@@ -18,6 +18,6 @@ extern NSString* const HEMBreadcrumbAccount;
 + (instancetype)sharedServiceForAccount:(SENAccount*)account;
 - (NSString*)peek;
 - (NSString*)pop;
-- (void)clearIfTrailEndsAt:(NSString*)crumb;
+- (BOOL)clearIfTrailEndsAt:(NSString*)crumb;
 
 @end

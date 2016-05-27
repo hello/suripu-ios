@@ -23,8 +23,8 @@
     }
 }
 
-- (void)breadcrumbService:(HEMBreadcrumbService *)crumbService clearTrailIfEndsIn:(NSString*)crumb {
-    [crumbService clearIfTrailEndsAt:crumb];
+- (BOOL)breadcrumbService:(HEMBreadcrumbService *)crumbService clearTrailIfEndsIn:(NSString*)crumb {
+    return [crumbService clearIfTrailEndsAt:crumb];
 }
 
 @end

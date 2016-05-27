@@ -68,13 +68,7 @@ static NSString* const HEMBreadcrumbAccountNameChange = @"HEMBreadcrumbAccountNa
     // so we don't always have to execute this check the next time
     [prefs setUserPreference:@YES forKey:HEMBreadcrumbAccountNameChange];
     
-    NSDateComponents* launchDateComponents = [NSDateComponents new];
-    [launchDateComponents setYear:2016];
-    [launchDateComponents setMonth:5];
-    [launchDateComponents setDay:26];
-    NSCalendar* calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    NSDate* launchDate = [calendar dateFromComponents:launchDateComponents];
-    
+    NSDate* launchDate = [NSDate dateWithYear:2016 month:5 day:26];
     if ([[[self account] createdAt] compare:launchDate] == NSOrderedAscending) {
         NSMutableArray* crumbs = [NSMutableArray arrayWithCapacity:2];
         // LIFO, so we can pop faster by removing last object
@@ -118,18 +112,23 @@ static NSString* const HEMBreadcrumbAccountNameChange = @"HEMBreadcrumbAccountNa
     return startCrumb;
 }
 
-- (void)clearIfTrailEndsAt:(NSString*)crumb {
+- (BOOL)clearIfTrailEndsAt:(NSString*)crumb {
     NSString* accountId = [[self account] accountId];
     if (!accountId) {
-        return;
+        return NO;
     }
+    
+    BOOL cleared = NO;
     
     NSArray* crumbs = [self crumbsPerAccount][accountId];
     NSString* lastCrumb = [crumbs firstObject];
     if ([lastCrumb isEqualToString:crumb]) {
         [self crumbsPerAccount][accountId] = @[];
         [self saveCrumbs];
+        cleared = YES;
     }
+    
+    return cleared;
 }
 
 @end

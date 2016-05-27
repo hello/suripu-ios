@@ -8,18 +8,22 @@
 
 #import "SENService.h"
 
+@class SENAccount;
+
 typedef NS_ENUM(NSInteger, HEMHandHolding) {
     HEMHandHoldingInsightTap = 1,
     HEMHandHoldingSensorScrubbing,
     HEMHandHoldingTimelineSwipe,
     HEMHandHoldingTimelineZoom,
-    HEMHandHoldingTimelineOpen
+    HEMHandHoldingTimelineOpen,
+    HEMHandHoldingAccountName
 };
 
 @interface HEMHandHoldingService : SENService
 
 - (BOOL)isComplete:(HEMHandHolding)tutorial;
 - (BOOL)shouldShow:(HEMHandHolding)tutorial;
+- (BOOL)shouldShow:(HEMHandHolding)tutorial forAccount:(SENAccount*)account;
 - (void)completed:(HEMHandHolding)tutorial;
 - (void)reset;
 

@@ -14,6 +14,6 @@
 
 - (BOOL)breadcrumbService:(HEMBreadcrumbService*)crumbService shouldShowCrumb:(NSString*)crumb;
 - (void)breadcrumbService:(HEMBreadcrumbService*)crumbService clearCrumb:(NSString*)crumb;
-- (void)breadcrumbService:(HEMBreadcrumbService *)crumbService clearTrailIfEndsIn:(NSString*)crumb;
+- (BOOL)breadcrumbService:(HEMBreadcrumbService *)crumbService clearTrailIfEndsIn:(NSString*)crumb;
 
 @end

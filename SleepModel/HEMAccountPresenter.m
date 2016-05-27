@@ -36,6 +36,8 @@
 #import "HEMFacebookService.h"
 #import "HEMBreadcrumbService.h"
 #import "HEMPresenter+HEMBreadcrumb.h"
+#import "HEMHandHoldingService.h"
+#import "HEMHandholdingView.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
@@ -85,6 +87,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 @property (nonatomic, weak) HEMFacebookService* facebookService;
 @property (nonatomic, weak) HEMHealthKitService* healthKitService;
 @property (nonatomic, weak) HEMBreadcrumbService* breadcrumbService;
+@property (nonatomic, weak) HEMHandHoldingService* handHoldingService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
 @property (nonatomic, weak) UISwitch* activatedSwitch;
@@ -97,13 +100,15 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
                        facebookService:(HEMFacebookService*)facebookService
                       healthKitService:(HEMHealthKitService*)healthKitService
-                     breadcrumbService:(HEMBreadcrumbService*)breadcrumbService {
+                     breadcrumbService:(HEMBreadcrumbService*)breadcrumbService
+                    handHoldingService:(HEMHandHoldingService*)hhService {
     self = [super init];
     if (self) {
         _accountService = accountService;
         _healthKitService = healthKitService;
         _facebookService = facebookService;
         _breadcrumbService = breadcrumbService;
+        _handHoldingService = hhService;
     }
     return self;
 }
@@ -183,8 +188,14 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 
 - (void)didAppear {
     [super didAppear];
-    [self breadcrumbService:[self breadcrumbService] clearTrailIfEndsIn:HEMBreadcrumbAccount];
+    BOOL cleared = [self breadcrumbService:[self breadcrumbService]
+                        clearTrailIfEndsIn:HEMBreadcrumbAccount];
+    
     [[self tableView] reloadData];
+    
+    if (cleared) {
+        [self showAccountNameChangeIndicationIfNeeded];
+    }
 }
 
 - (HEMPhotoHeaderView*)photoHeaderView {
@@ -194,6 +205,34 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
         photoView = (id) headerView;
     }
     return photoView;
+}
+
+#pragma mark - Handhholding
+
+- (void)showAccountNameChangeIndicationIfNeeded {
+    SENAccount* account = [[self accountService] account];
+    if ([[self handHoldingService] shouldShow:HEMHandHoldingAccountName forAccount:account]) {
+        NSIndexPath* namePath = [NSIndexPath indexPathForRow:HEMAccountRowName
+                                                   inSection:HEMAccountSectionAccount];
+        UITableViewCell* nameCell = [[self tableView] cellForRowAtIndexPath:namePath];
+        
+        UIView* containerView = [[self tableView] superview];
+        CGRect iconFrame = [nameCell convertRect:[[nameCell imageView] bounds] toView:containerView];
+        CGPoint midPoint = CGPointMake(CGRectGetMidX(iconFrame), CGRectGetMidY(iconFrame));
+        
+        HEMHandholdingView* handholdingView = [HEMHandholdingView new];
+        [handholdingView setGestureStartCenter:midPoint];
+        [handholdingView setGestureEndCenter:midPoint];
+        
+        [handholdingView setMessage:NSLocalizedString(@"handholding.message.account-name-change", nil)];
+        [handholdingView setAnchor:HEMHHDialogAnchorBottom];
+        
+        __weak typeof(self) weakSelf = self;
+        [handholdingView showInView:containerView fromContentView:[self tableView] dismissAction:^(BOOL shown) {
+            __strong typeof(weakSelf) strongself = weakSelf;
+            [[strongself handHoldingService] completed:HEMHandHoldingAccountName];
+        }];
+    }
 }
 
 #pragma mark - Photo

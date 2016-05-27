@@ -217,7 +217,8 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
         UITableViewCell* nameCell = [[self tableView] cellForRowAtIndexPath:namePath];
         
         UIView* containerView = [[self tableView] superview];
-        CGRect iconFrame = [nameCell convertRect:[[nameCell imageView] bounds] toView:containerView];
+        CGRect iconFrame = [[nameCell imageView] convertRect:[[nameCell imageView] bounds]
+                                                      toView:containerView];
         CGPoint midPoint = CGPointMake(CGRectGetMidX(iconFrame), CGRectGetMidY(iconFrame));
         
         HEMHandholdingView* handholdingView = [HEMHandholdingView new];

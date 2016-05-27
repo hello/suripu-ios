@@ -3834,8 +3834,8 @@
 				PROVISIONING_PROFILE = "";
 				SENSE_AMAZON_REVIEW_URL = "https://www.amazon.com/review/create-review?ie=UTF8&asin=B016XBL2RE&channel=awUDPv3&ref_=cm_cr_dp_aw_wr_but#";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
-				SENSE_API_URL = "https://canary-api.hello.is";
-				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
+				SENSE_API_URL = "https://dev-api.hello.is";
+				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORT_TOKEN = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = (

@@ -95,6 +95,11 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
                completion:completion];
 }
 
+- (void)resetState {
+    [self setImage:nil];
+    [self cancelImageDownload];
+}
+
 - (void)setImageWithURL:(nullable NSString *)url
             withTimeout:(NSTimeInterval)timeout
              completion:(nullable HEMURLImageCallback)completion {
@@ -108,8 +113,7 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     // clear it, in case something is lingering and download takes a little bit
     // of time.  This will prevent it from showing a previous image if one was
     // set previously
-    [self setImage:nil];
-    [self cancelImageDownload];
+    [self resetState];
     
     if ([url length] == 0.0f) {
         if (completion) {

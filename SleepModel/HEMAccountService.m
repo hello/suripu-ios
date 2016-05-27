@@ -460,13 +460,19 @@ CGFloat const HEMAccountPhotoDefaultCompression = 0.8f;
 - (void)uploadProfileJpegPhoto:(NSData*)data
                       progress:(HEMAccountProgressHandler)progress
                     completion:(HEMAccountPhotoHandler)completion {
+    SENRemoteImage* oldPhoto = [[self account] photo];
+    [[self account] setPhoto:nil];
+    
+    __weak typeof(self) weakSelf = self;
     [SENAPIPhoto uploadProfilePhoto:data
                                type:SENAPIPhotoTypeJpeg
                            progress:progress
                          completion:^(id data, NSError *error) {
+                             __strong typeof(weakSelf) strongSelf = weakSelf;
                              DDLogVerbose(@"photo data %@", data);
                              if (error) {
                                  [SENAnalytics trackError:error];
+                                 [[strongSelf account] setPhoto:oldPhoto];
                              }
                              if (completion) {
                                  completion (data, error);

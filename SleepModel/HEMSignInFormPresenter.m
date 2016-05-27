@@ -334,7 +334,7 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
 
 - (void)refreshAccount {
     HEMAccountService* acctService = [HEMAccountService sharedService];
-    [acctService refresh:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
+    [acctService refreshWithPhoto:YES completion:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
         [SENAnalytics trackUserSession:account];
     }];
 }

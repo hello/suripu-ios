@@ -7,7 +7,24 @@
 //
 
 #import "HEMNewProfileCollectionViewCell.h"
+#import "HEMProfileImageView.h"
+
+@interface HEMNewProfileCollectionViewCell() <HEMProfileImageLoadDelegate>
+
+@end
 
 @implementation HEMNewProfileCollectionViewCell
+
+- (void)awakeFromNib {
+    [[self profileImageView] setLoadDelegate:self];
+}
+
+- (void)willLoadImageIn:(HEMProfileImageView *)imageView {
+    [[self photoChangeButton] setHidden:YES];
+}
+
+- (void)didFinishLoadingIn:(HEMProfileImageView *)imageView {
+    [[self photoChangeButton] setHidden:NO];
+}
 
 @end

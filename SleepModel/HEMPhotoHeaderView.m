@@ -7,7 +7,24 @@
 //
 
 #import "HEMPhotoHeaderView.h"
+#import "HEMProfileImageView.h"
+
+@interface HEMPhotoHeaderView() <HEMProfileImageLoadDelegate>
+
+@end
 
 @implementation HEMPhotoHeaderView
+
+- (void)awakeFromNib {
+    [[self imageView] setLoadDelegate:self];
+}
+
+- (void)willLoadImageIn:(HEMProfileImageView *)imageView {
+    [[self addButton] setHidden:YES];
+}
+
+- (void)didFinishLoadingIn:(HEMProfileImageView *)imageView {
+    [[self addButton] setHidden:NO];
+}
 
 @end

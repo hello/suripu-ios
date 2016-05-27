@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.2.8
+
+Fixes:
+
+* Fixed issue where settings breadcrumb is not cleared, within same session of app
+
 ## 1.4.2.7
 
 New:

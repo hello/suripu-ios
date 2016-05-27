@@ -1149,7 +1149,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="156"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="7VR-Oy-aM6" customClass="HEMProfileImageView">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="defaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="7VR-Oy-aM6" customClass="HEMProfileImageView">
                                             <rect key="frame" x="248" y="26" width="104" height="104"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="104" id="jM4-6M-fzE"/>

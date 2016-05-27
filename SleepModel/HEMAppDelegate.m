@@ -115,7 +115,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         // pre fetch account information so that it's readily availble to the user
         // when the account is accessed.  This is per discussion with design and James
         HEMAccountService* acctService = [HEMAccountService sharedService];
-        [acctService refresh:^(SENAccount * _Nonnull account, NSDictionary<NSNumber *,SENPreference *> * _Nonnull preferences) {
+        [acctService refreshWithPhoto:YES completion:^(SENAccount * account, NSDictionary<NSNumber *,SENPreference *> * preferences) {
             [SENAnalytics trackUserSession:account];
         }];
         // write timeline data in to Health app, if enabled and data is available

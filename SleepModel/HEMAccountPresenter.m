@@ -155,10 +155,10 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
         [[strongSelf tableView] flashScrollIndicators];
         
         NSString* url = [[account photo] uriForCurrentDevice];
-        if (url) {
-            [[[strongSelf photoHeaderView] imageView] setImageWithURL:url];
+        HEMProfileImageView* imageView = [[strongSelf photoHeaderView] imageView];
+        if (url && ![[imageView currentImageURL] isEqualToString:url]) {
+            [imageView setImageWithURL:url];
         }
-        
     }];
 }
 

@@ -37,7 +37,7 @@ static CGFloat const HEMProfileImageLoaderSize = 20.0f;
 }
 
 - (void)configureDefaults {
-    [self setClipsToBounds:NO];
+    [self setClipsToBounds:YES];
     [self setBackgroundColor:[UIColor whiteColor]];
     [self setIndicateActivity:YES];
 }

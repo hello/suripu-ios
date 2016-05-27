@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.2.7
+
+New:
+
+* Breadcrumbs, leading user to account settings to change name and photo
+* Tutorial pointing to the account name
+* info button about Facebook autofill now launches as a native modal
+* added photo loading state
+
 ## 1.4.2.6
 
 New:

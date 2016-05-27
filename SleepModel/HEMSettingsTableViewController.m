@@ -10,6 +10,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMLogUtils.h"
 #import "HEMTellAFriendItemProvider.h"
+#import "HEMBreadcrumbService.h"
+#import "HEMAccountService.h"
 
 static CGFloat const HEMSettingsBottomMargin = 10.0f;
 
@@ -54,8 +56,16 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
         self.tabBarItem.title = NSLocalizedString(@"settings.title", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"settingsBarIcon"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"settingsBarIconActive"];
+        
+        [self updateBadge];
     }
     return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self clearCrumb:HEMBreadcrumbSettings];
+    [self updateBadge];
 }
 
 - (void)configureTableView {
@@ -133,6 +143,18 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     [SENAnalytics track:kHEMAnalyticsEventSettings];
 }
 
+- (void)didRefreshAccount {
+    [self updateBadge];
+}
+
+- (void)updateBadge {
+    if (![self isViewLoaded]) {
+        BOOL showBadge = [self showIndicatorForCrumb:HEMBreadcrumbSettings];
+        self.tabBarItem.badgeValue = showBadge ? @"1" : nil;
+        [self reloadTopBar];
+    }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -179,6 +201,14 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
     forRowAtIndexPath:(NSIndexPath *)indexPath {
     HEMSettingsTableViewCell *settingsCell = (HEMSettingsTableViewCell *)cell;
     [[settingsCell titleLabel] setText:[self titleForRowAtIndexPath:indexPath]];
+    
+    if ([indexPath section] == HEMSettingsAccountSection
+        && [indexPath row] == HEMSettingsAccountRowIndex) {
+        BOOL show = [self showIndicatorForCrumb:HEMBreadcrumbAccount];
+        [settingsCell showNewIndicator:show];
+    } else {
+        [settingsCell showNewIndicator:NO];
+    }
 
     NSInteger numberOfRows = [tableView numberOfRowsInSection:[indexPath section]];
 

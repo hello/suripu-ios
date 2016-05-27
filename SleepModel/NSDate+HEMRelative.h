@@ -18,6 +18,11 @@
 + (NSDate*)timelineInitialDate;
 
 /**
+ *  @return a date with year, month and day
+ */
++ (NSDate*)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
+
+/**
  * @return number of days that from today
  */
 - (NSInteger)daysElapsed;

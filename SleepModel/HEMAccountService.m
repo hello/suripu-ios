@@ -17,10 +17,9 @@
 #import "HEMMathUtil.h"
 #import "NSString+HEMUtils.h"
 
+NSString* const HEMAccountServiceNotificationDidRefresh = @"HEMAccountServiceNotificationDidRefresh";
 NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
 CGFloat const HEMAccountPhotoDefaultCompression = 0.8f;
-
-static NSString* const HEMAccountPhotoExt = @"jpg";
 
 @interface HEMAccountService()
 
@@ -171,6 +170,8 @@ static NSString* const HEMAccountPhotoExt = @"jpg";
     
     dispatch_group_notify(updateGroup, dispatch_get_main_queue(), ^{
         completion ([weakSelf account], [weakSelf preferences]);
+        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:HEMAccountServiceNotificationDidRefresh object:nil];
     });
 }
 

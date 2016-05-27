@@ -15,12 +15,15 @@
 #import "HEMFormViewController.h"
 #import "HEMHealthKitService.h"
 #import "HEMFacebookService.h"
+#import "HEMBreadcrumbService.h"
+#import "HEMHandHoldingService.h"
 
 @interface HEMAccountViewController () <HEMAccountDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
 @property (weak, nonatomic) HEMPresenter* accountPresenter;
 @property (strong, nonatomic) HEMFacebookService* facebookService;
+@property (strong, nonatomic) HEMHandHoldingService* handHoldingService;
 
 @end
 
@@ -33,16 +36,23 @@
 }
 
 - (void)configurePresenter {
+    HEMAccountService* accountService = [HEMAccountService sharedService];
+    SENAccount* account = [accountService account];
+    HEMBreadcrumbService* crumbService = [HEMBreadcrumbService sharedServiceForAccount:account];
     HEMFacebookService* facebookService = [HEMFacebookService new];
-    HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:[HEMAccountService sharedService]
+    HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
+    HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:accountService
                                                                          facebookService:facebookService
-                                                                        healthKitService:[HEMHealthKitService sharedService]];
+                                                                        healthKitService:[HEMHealthKitService sharedService]
+                                                                       breadcrumbService:crumbService
+                                                                      handHoldingService:handHoldingService];
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];
     
     [self setAccountPresenter:presenter];
     [self addPresenter:presenter];
     [self setFacebookService:facebookService];
+    [self setHandHoldingService:handHoldingService];
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {

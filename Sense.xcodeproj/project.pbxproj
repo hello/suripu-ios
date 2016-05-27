@@ -3743,11 +3743,11 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
-				SENSE_API_URL = "https://canary-api.hello.is";
+				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_APP_ID = is.hello.sensetest;
 				SENSE_APP_NAME = Sense;
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
-				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
+				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORT_TOKEN = 38c0d427c4ffe5780a3e75d6cfe45ff7;
 				SENSE_ENV = Development;
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";

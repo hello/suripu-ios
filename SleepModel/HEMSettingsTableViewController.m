@@ -148,11 +148,9 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 }
 
 - (void)updateBadge {
-    if (![self isViewLoaded]) {
-        BOOL showBadge = [self showIndicatorForCrumb:HEMBreadcrumbSettings];
-        self.tabBarItem.badgeValue = showBadge ? @"1" : nil;
-        [self reloadTopBar];
-    }
+    BOOL showBadge = [self showIndicatorForCrumb:HEMBreadcrumbSettings];
+    self.tabBarItem.badgeValue = showBadge ? @"1" : nil;
+    [self reloadTopBar];
 }
 
 #pragma mark - UITableViewDelegate

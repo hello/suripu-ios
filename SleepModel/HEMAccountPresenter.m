@@ -195,6 +195,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     
     if (cleared) {
         [self showAccountNameChangeIndicationIfNeeded];
+        [SENAnalytics track:HEMAnalyticsEventBreadcrumbsEnd];
     }
 }
 
@@ -304,22 +305,26 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
         [alertVC addRemovePhotoAction:^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf removePhoto];
+            [SENAnalytics track:HEMAnalyticsEventDeletePhoto];
         }];
     }
     
     [alertVC addFacebookImportAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf importFromFacebook];
+        [SENAnalytics trackPhotoAction:HEMAnalyticsEventPropSourceFacebook onboarding:NO];
     }];
     
     [alertVC addCameraActionIfSupported:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf photoFromDevice:YES];
+        [SENAnalytics trackPhotoAction:HEMAnalyticsEventPropSourceCamera onboarding:NO];
     }];
     
     [alertVC addCameraRollAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf photoFromDevice:NO];
+        [SENAnalytics trackPhotoAction:HEMAnalyticsEventPropSourcePhotoLibrary onboarding:NO];
     }];
     
     [self setPhotoOptionController:alertVC];

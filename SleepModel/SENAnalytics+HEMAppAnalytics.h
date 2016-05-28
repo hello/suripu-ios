@@ -248,6 +248,8 @@ extern NSString* const HEMAnalyticsEventBreadcrumbsEnd;
 + (void)trackAlarmSave:(SENAlarm*)alarm;
 + (void)trackAlarmToggle:(SENAlarm*)alarm;
 + (void)trackTrendsTimescaleChange:(SENTrendsTimeScale)timescale;
++ (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding;
++ (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding;
 
 @end
 

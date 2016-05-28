@@ -90,6 +90,8 @@ typedef NS_ENUM(NSUInteger, HEMNameChangeRow) {
         NSString* errorMessage = nil;
         if (error) {
             errorMessage = [weakSelf errorMessageForError:error];
+        } else {
+            [SENAnalytics track:HEMAnalyticsEventChangeName];
         }
         completion (errorMessage);
     }];

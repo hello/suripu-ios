@@ -435,4 +435,21 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     [self track:HEMAnalyticsEventTrendsChangeTimescale properties:props];
 }
 
+#pragma mark - Photos
+
++ (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding {
+    NSDictionary* props = @{HEMAnalyticsEventPropSource : source ?: @"unknown"};
+    [self track:HEMAnalyticsEventUpdatePhoto properties:props onboarding:onboarding];
+}
+
+#pragma mark - Onboarding convenience
+
++ (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding {
+    NSString* name = event;
+    if (onboarding) {
+        name = [HEMAnalyticsEventOnboardingPrefix stringByAppendingFormat:@" %@", name];
+    }
+    [self track:name properties:props];
+}
+
 @end

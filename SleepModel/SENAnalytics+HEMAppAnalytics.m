@@ -116,19 +116,19 @@ NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
-NSString* const kHEMAnalyticsEventSettings = @"Settings";
 NSString* const kHEMAnalyticsEventCurrentConditions = @"Current Conditions";
 NSString* const kHEMAnalyticsEventFeed = @"Insights";
 NSString* const kHEMAnalyticsEventQuestion = @"Question";
-NSString* const kHEMAnalyticsEventAccount = @"Account";
 NSString* const kHEMAnalyticsEventInsight = @"Insight Detail";
 NSString* const kHEMAnalyticsEventDevices = @"Devices";
-NSString* const kHEMAnalyticsEventUnitsNTime = @"Units/Time";
 NSString* const kHEMAnalyticsEventSensor = @"Sensor History";
 NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
+NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
+NSString* const kHEMAnalyticsEventSettings = @"Settings";
 NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
-NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
+NSString* const kHEMAnalyticsEventUnitsNTime = @"Units/Time";
+NSString* const kHEMAnalyticsEventAccount = @"Account";
 
 // trends
 NSString* const HEMAnalyticsEventTrends = @"Trends";
@@ -234,6 +234,20 @@ NSString* const HEMAnalyticsEventSSActionStop = @"Stop sleep sound";
 NSString* const HEMAnalyticsEventSSPropSoundId = @"sound id";
 NSString* const HEMAnalyticsEventSSPropDurationId = @"duration id";
 NSString* const HEMAnalyticsEventSSPropVolume = @"volume";
+
+// settings
+NSString* const HEMAnalyticsEventChangeName = @"Change Name";
+NSString* const HEMAnalyticsEventChangeEmail = @"Change Email";
+NSString* const HEMAnalyticsEventChangePass = @"Change Password";
+NSString* const HEMAnalyticsEventUpdatePhoto = @"Change Profile Photo";
+NSString* const HEMAnalyticsEventPropSource = @"source";
+NSString* const HEMAnalyticsEventPropSourceFacebook = @"facebook";
+NSString* const HEMAnalyticsEventPropSourceCamera = @"camera";
+NSString* const HEMAnalyticsEventPropSourcePhotoLibrary = @"photo library";
+NSString* const HEMAnalyticsEventDeletePhoto = @"Delete Photo";
+
+// breadcrumbs
+NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs End";
 
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";

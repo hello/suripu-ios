@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.2.9
+
+New:
+
+* Added mixpanel events for the release
+
 ## 1.4.2.8
 
 Fixes:

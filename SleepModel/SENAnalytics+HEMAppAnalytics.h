@@ -220,6 +220,20 @@ extern NSString* const HEMAnalyticsEventSSPropSoundId;
 extern NSString* const HEMAnalyticsEventSSPropDurationId;
 extern NSString* const HEMAnalyticsEventSSPropVolume;
 
+// settings
+extern NSString* const HEMAnalyticsEventChangeName;
+extern NSString* const HEMAnalyticsEventChangeEmail;
+extern NSString* const HEMAnalyticsEventChangePass;
+extern NSString* const HEMAnalyticsEventUpdatePhoto;
+extern NSString* const HEMAnalyticsEventPropSource;
+extern NSString* const HEMAnalyticsEventPropSourceFacebook;
+extern NSString* const HEMAnalyticsEventPropSourceCamera;
+extern NSString* const HEMAnalyticsEventPropSourcePhotoLibrary;
+extern NSString* const HEMAnalyticsEventDeletePhoto;
+
+// breadcrumbs
+extern NSString* const HEMAnalyticsEventBreadcrumbsEnd;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;
@@ -234,6 +248,8 @@ extern NSString* const HEMAnalyticsEventSSPropVolume;
 + (void)trackAlarmSave:(SENAlarm*)alarm;
 + (void)trackAlarmToggle:(SENAlarm*)alarm;
 + (void)trackTrendsTimescaleChange:(SENTrendsTimeScale)timescale;
++ (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding;
++ (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding;
 
 @end
 

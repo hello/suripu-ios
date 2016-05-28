@@ -88,6 +88,8 @@
         NSString* errorMessage = nil;
         if (error) {
             errorMessage = [weakSelf errorMessageForError:error];
+        } else {
+            [SENAnalytics track:HEMAnalyticsEventChangePass];
         }
         completion (errorMessage);
     }];

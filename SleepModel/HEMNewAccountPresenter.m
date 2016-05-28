@@ -642,22 +642,28 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
         [alertVC addRemovePhotoAction:^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf removePhoto];
+            [SENAnalytics track:HEMAnalyticsEventDeletePhoto
+                     properties:nil
+                     onboarding:YES];
         }];
     }
     
     [alertVC addFacebookImportAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf importPhotoFromFacebook];
+        [SENAnalytics trackPhotoAction:HEMAnalyticsEventPropSourceFacebook onboarding:YES];
     }];
     
     [alertVC addCameraActionIfSupported:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf photoFromDevice:YES];
+        [SENAnalytics trackPhotoAction:HEMAnalyticsEventPropSourceCamera onboarding:YES];
     }];
 
     [alertVC addCameraRollAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf photoFromDevice:NO];
+        [SENAnalytics trackPhotoAction:HEMAnalyticsEventPropSourcePhotoLibrary onboarding:YES];
     }];
     
     [self setPhotoOptionVC:alertVC];

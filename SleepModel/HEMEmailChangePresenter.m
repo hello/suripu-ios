@@ -70,6 +70,8 @@
         NSString* errorMessage = nil;
         if (error) {
             errorMessage = [weakSelf errorMessageForError:error];
+        } else {
+            [SENAnalytics track:HEMAnalyticsEventChangeEmail];
         }
         completion (errorMessage);
     }];

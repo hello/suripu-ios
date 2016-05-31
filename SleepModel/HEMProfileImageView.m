@@ -93,6 +93,9 @@ static CGFloat const HEMProfileImageLoaderSize = 20.0f;
         [super downloadAndLoadImageFrom:request completion:^(UIImage* image, NSString* url, NSError* error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf showLoading:NO completion:nil];
+            if (completion) {
+                completion (image, url, error);
+            }
         }];
     }];
 }

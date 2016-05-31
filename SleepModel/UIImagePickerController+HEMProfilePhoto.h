@@ -23,9 +23,8 @@ typedef void(^HEMProfilePhotoAccessHandler)(HEMProfilePhotoAccess access);
 + (instancetype)photoPickerWithCamera:(BOOL)camera
                              delegate:(id<UIImagePickerControllerDelegate, UINavigationControllerDelegate>)delegate;
 
-+ (void)promptForCameraAccessIfNeeded:(HEMProfilePhotoAccessHandler)completion;
-
-+ (HEMProfilePhotoAccess)authorizationForCamera;
++ (void)promptForAccessIfNeededFor:(BOOL)camera completion:(HEMProfilePhotoAccessHandler)completion;
++ (HEMProfilePhotoAccess)authorizationFor:(BOOL)camera;
 
 @end
 

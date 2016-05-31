@@ -6,6 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <AVFoundation/AVFoundation.h>
+#import <Photos/PHPhotoLibrary.h>
 
 #import "UIImagePickerController+HEMProfilePhoto.h"
 
@@ -33,10 +34,27 @@
     return picker;
 }
 
++ (void)promptForAccessIfNeededFor:(BOOL)camera completion:(HEMProfilePhotoAccessHandler)completion {
+    if (camera) {
+        [self promptForCameraAccessIfNeeded:completion];
+    } else {
+        [self promptForCameraRollAccessIfNeeded:completion];
+    }
+}
+
++ (HEMProfilePhotoAccess)authorizationFor:(BOOL)camera {
+    if (camera) {
+        return [self authorizationForCamera];
+    } else {
+        return [self authorizationForCameraRoll];
+    }
+}
+
+#pragma mark - Camera
+
 + (HEMProfilePhotoAccess)authorizationForCamera {
-    NSString* cameraType = AVMediaTypeVideo;
-    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:cameraType]; // yes, video
-    switch (status) {
+    NSString* cameraType = AVMediaTypeVideo; // yes, video
+    switch ([AVCaptureDevice authorizationStatusForMediaType:cameraType]) {
         case AVAuthorizationStatusAuthorized:
             return HEMProfilePhotoAccessAuthorized;
         case AVAuthorizationStatusDenied:
@@ -55,6 +73,38 @@
         case HEMProfilePhotoAccessUnknown: {
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
                 completion (granted ? HEMProfilePhotoAccessAuthorized : HEMProfilePhotoAccessDenied);
+            }];
+            break;
+        }
+        default:
+            completion (access);
+            break;
+    }
+}
+
+#pragma mark - Photo Library
+
++ (HEMProfilePhotoAccess)authorizationForCameraRoll {
+    switch ([PHPhotoLibrary authorizationStatus]) {
+        case PHAuthorizationStatusAuthorized:
+            return HEMProfilePhotoAccessAuthorized;
+        case PHAuthorizationStatusDenied:
+        case PHAuthorizationStatusRestricted:
+            return HEMProfilePhotoAccessDenied;
+        case PHAuthorizationStatusNotDetermined:
+        default:
+            return HEMProfilePhotoAccessUnknown;
+    }
+}
+
++ (void)promptForCameraRollAccessIfNeeded:(HEMProfilePhotoAccessHandler)completion {
+    HEMProfilePhotoAccess access = [self authorizationForCameraRoll];
+    switch (access) {
+        case HEMProfilePhotoAccessUnknown: {
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                completion (status == PHAuthorizationStatusAuthorized ?
+                            HEMProfilePhotoAccessAuthorized :
+                            HEMProfilePhotoAccessDenied);
             }];
             break;
         }

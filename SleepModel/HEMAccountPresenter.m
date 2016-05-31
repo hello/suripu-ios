@@ -291,9 +291,22 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 }
 
 - (void)photoFromDevice:(BOOL)camera {
-    UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera
-                                                                                 delegate:self];
-    [[self delegate] presentViewController:photoPicker from:self];
+    __weak typeof(self) weakSelf = self;
+    void(^show)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera delegate:strongSelf];
+        [[strongSelf delegate] presentViewController:photoPicker from:strongSelf];
+    };
+    
+    // TODO: remove this when we add error dialogs.  For now, if access is known, always show the picker.
+    HEMProfilePhotoAccess currentAccess = [UIImagePickerController authorizationFor:camera];
+    BOOL forceToShow = currentAccess != HEMProfilePhotoAccessUnknown;
+    
+    [UIImagePickerController promptForAccessIfNeededFor:camera completion:^(HEMProfilePhotoAccess access) {
+        if (access == HEMProfilePhotoAccessAuthorized || forceToShow) {
+            show();
+        }
+    }];
 }
 
 - (void)showPhotoOptions {

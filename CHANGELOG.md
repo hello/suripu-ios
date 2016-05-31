@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.2.10
+
+Fixes:
+
+* Fixed an issue that causes the last name to be cleared when editing the first name
+* Fixed an issue with importing photo from Facebook within Settings
+* Prompting for access to camera before the camera is actually shown
+* Prompting for access to the camera roll before the library is actually shown
+
 ## 1.4.2.9
 
 New:

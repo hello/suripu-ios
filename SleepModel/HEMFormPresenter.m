@@ -50,8 +50,7 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView
               bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
-    [self setFormContent:[NSMutableDictionary dictionary]];
-    
+
     [collectionView setBackgroundColor:[UIColor whiteColor]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
@@ -62,9 +61,25 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
                    name:UIKeyboardWillShowNotification
                  object:nil];
     
+    [self prefillFormContent];
     [self setOrigBottomMargin:[bottomConstraint constant]];
     [self setBottomConstraint:bottomConstraint];
     [self setCollectionView:collectionView];
+}
+
+- (void)prefillFormContent {
+    [self setFormContent:[NSMutableDictionary dictionary]];
+    
+    NSInteger numberOfFields = [self numberOfFields];
+    NSString* currentText = nil;
+    NSString* placeholderText = nil;
+    for (NSInteger fieldIdx = 0; fieldIdx < numberOfFields; fieldIdx++) {
+        currentText = [self existingTextForFieldInRow:fieldIdx];
+        placeholderText = [self placeHolderTextForFieldInRow:fieldIdx];
+        if (currentText) {
+            [self formContent][placeholderText] = currentText;
+        }
+    }
 }
 
 #pragma mark - Keyboard events

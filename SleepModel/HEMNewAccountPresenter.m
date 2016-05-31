@@ -623,8 +623,29 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 }
 
 - (void)photoFromDevice:(BOOL)camera {
-    UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera delegate:self];
-    [[self delegate] showController:photoPicker from:self];
+    // TODO: we should somehow reuse this code.  It's pretty much duplicated in
+    // the account presenter
+    __weak typeof(self) weakSelf = self;
+    void(^show)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        UIImagePickerController* photoPicker = [UIImagePickerController photoPickerWithCamera:camera delegate:strongSelf];
+        [[strongSelf delegate] showController:photoPicker from:strongSelf];
+    };
+    
+
+    if (camera) {
+        // check to see if user has never granted access before and if so, do
+        // not show the picker if they deny access
+        HEMProfilePhotoAccess currentAccess = [UIImagePickerController authorizationForCamera];
+        BOOL showAnyways = currentAccess != HEMProfilePhotoAccessUnknown;
+        [UIImagePickerController promptForCameraAccessIfNeeded:^(HEMProfilePhotoAccess access) {
+            if (showAnyways || access == HEMProfilePhotoAccessAuthorized) {
+                show();
+            }
+        }];
+    } else {
+        show();
+    }
 }
 
 - (void)removePhoto {

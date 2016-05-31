@@ -10,10 +10,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, HEMProfilePhotoAccess) {
+    HEMProfilePhotoAccessUnknown = 1,
+    HEMProfilePhotoAccessAuthorized,
+    HEMProfilePhotoAccessDenied
+};
+
+typedef void(^HEMProfilePhotoAccessHandler)(HEMProfilePhotoAccess access);
+
 @interface UIImagePickerController (HEMProfilePhoto)
 
 + (instancetype)photoPickerWithCamera:(BOOL)camera
                              delegate:(id<UIImagePickerControllerDelegate, UINavigationControllerDelegate>)delegate;
+
++ (void)promptForCameraAccessIfNeeded:(HEMProfilePhotoAccessHandler)completion;
+
++ (HEMProfilePhotoAccess)authorizationForCamera;
 
 @end
 

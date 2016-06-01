@@ -10,11 +10,11 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
-static CGFloat const HEMProfileImageLoaderSize = 20.0f;
 
 @interface HEMProfileImageView()
 
-@property (nonatomic, weak) UIView* loadingView;
+@property (nonatomic, weak) UIView* dimmedOverlayView;
+@property (nonatomic, weak) UIImageView* errorView;
 
 @end
 
@@ -33,7 +33,8 @@ static CGFloat const HEMProfileImageLoaderSize = 20.0f;
     [container setAlpha:0.0f];
     
     [self addSubview:container];
-    [self setLoadingView:container];
+    [self setDimmedOverlayView:container];
+    [self addErrorView];
 }
 
 - (void)configureDefaults {
@@ -71,13 +72,32 @@ static CGFloat const HEMProfileImageLoaderSize = 20.0f;
     [self cancelImageDownload];
 }
 
-- (void)showLoading:(BOOL)show completion:(void(^)(void))completion {
+- (void)addErrorView {
+    UIImage* warningIcon = [UIImage imageNamed:@"warningIconWhite"];
+    UIImageView* imageView = [[UIImageView alloc] initWithImage:warningIcon];
+    [imageView setContentMode:UIViewContentModeCenter];
+    [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    [imageView setFrame:[[self dimmedOverlayView] bounds]];
+    [imageView setHidden:YES];
+    [[self dimmedOverlayView] addSubview:imageView];
+    [self setErrorView:imageView];
+}
+
+- (void)showDimmedOverlay:(BOOL)show completion:(void(^)(void))completion {
+    if ((show && [[self dimmedOverlayView] alpha] > 0.999f)
+        || (!show && [[self dimmedOverlayView] alpha] < 0.001f)) { // already in current state
+        if (completion) {
+            completion ();
+        }
+        return;
+    }
+    
     if (show) {
         [[self loadDelegate] willLoadImageIn:self];
     }
     
     [UIView animateWithDuration:HEMProfileImageViewAnimeDuration animations:^{
-        [[self loadingView] setAlpha:show];
+        [[self dimmedOverlayView] setAlpha:show];
     } completion:^(BOOL finished) {
         [[self loadDelegate] didFinishLoadingIn:self];
         if (completion) {
@@ -88,16 +108,29 @@ static CGFloat const HEMProfileImageLoaderSize = 20.0f;
 
 - (void)downloadAndLoadImageFrom:(NSURLRequest*)request
                       completion:(HEMURLImageCallback)completion {
+    [[self errorView] setHidden:YES];
+    
     __weak typeof(self) weakSelf = self;
-    [self showLoading:YES completion:^{
+    [self showDimmedOverlay:YES completion:^{
         [super downloadAndLoadImageFrom:request completion:^(UIImage* image, NSString* url, NSError* error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf showLoading:NO completion:nil];
+            if (!error) {
+                [strongSelf showDimmedOverlay:NO completion:nil];
+            }
+            
+            [[strongSelf errorView] setHidden:!error];
+            
             if (completion) {
                 completion (image, url, error);
             }
         }];
     }];
+}
+
+- (void)setImage:(UIImage *)image {
+    [super setImage:image];
+    [self showDimmedOverlay:NO completion:nil];
+    [[self errorView] setHidden:YES];
 }
 
 @end

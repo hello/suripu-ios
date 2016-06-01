@@ -550,11 +550,11 @@
                                                     <state key="normal" image="infoIconSmallGrey"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PaR-sq-rrx">
-                                                    <rect key="frame" x="278" y="73" width="50" height="50"/>
+                                                    <rect key="frame" x="224" y="19" width="104" height="104"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="BZe-rj-WBC"/>
-                                                        <constraint firstAttribute="width" constant="50" id="wlq-7o-myu"/>
+                                                        <constraint firstAttribute="height" constant="104" id="BZe-rj-WBC"/>
+                                                        <constraint firstAttribute="width" constant="104" id="wlq-7o-myu"/>
                                                     </constraints>
                                                     <state key="normal" image="addIconSmall"/>
                                                 </button>

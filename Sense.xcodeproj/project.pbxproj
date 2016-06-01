@@ -279,7 +279,6 @@
 		BF8C094D1C335386005AB5A7 /* HEMDeviceServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C094C1C335386005AB5A7 /* HEMDeviceServiceSpec.m */; };
 		BF8C09511C345C98005AB5A7 /* HEMAlarmPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C09501C345C98005AB5A7 /* HEMAlarmPresenter.m */; };
 		BF8C09551C345DCA005AB5A7 /* HEMAlarmService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8C09541C345DCA005AB5A7 /* HEMAlarmService.m */; };
-		BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */; };
 		BF8E1AA11A689FB2009E421F /* HEMSenseAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E1AA01A689FB2009E421F /* HEMSenseAudioViewController.m */; };
 		BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */; };
 		BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */; };
@@ -917,8 +916,6 @@
 		BF8C09501C345C98005AB5A7 /* HEMAlarmPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmPresenter.m; sourceTree = "<group>"; };
 		BF8C09531C345DCA005AB5A7 /* HEMAlarmService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmService.h; sourceTree = "<group>"; };
 		BF8C09541C345DCA005AB5A7 /* HEMAlarmService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmService.m; sourceTree = "<group>"; };
-		BF8E1A801A6873A2009E421F /* HEMSensePairingModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairingModeViewController.h; sourceTree = "<group>"; };
-		BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairingModeViewController.m; sourceTree = "<group>"; };
 		BF8E1A9F1A689FB2009E421F /* HEMSenseAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseAudioViewController.h; sourceTree = "<group>"; };
 		BF8E1AA01A689FB2009E421F /* HEMSenseAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseAudioViewController.m; sourceTree = "<group>"; };
 		BF90E2B61A854F6B00816BC1 /* HEMURLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMURLImageView.h; sourceTree = "<group>"; };
@@ -1855,8 +1852,6 @@
 				BF005C6E19FECACC00E68E87 /* HEMWifiPickerViewController.h */,
 				BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */,
 				BFF3B45D1A5F569B00B11643 /* HEMSensePairDelegate.h */,
-				BF8E1A801A6873A2009E421F /* HEMSensePairingModeViewController.h */,
-				BF8E1A811A6873A2009E421F /* HEMSensePairingModeViewController.m */,
 				BF8E1A9F1A689FB2009E421F /* HEMSenseAudioViewController.h */,
 				BF8E1AA01A689FB2009E421F /* HEMSenseAudioViewController.m */,
 			);
@@ -3546,7 +3541,6 @@
 				8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */,
 				BF1C46B11B155B4900AFCB7B /* HEMHealthViewController.m in Sources */,
 				BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */,
-				BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */,
 				BF5592421C21048D00FC7849 /* HEMInsightTabPresenter.m in Sources */,
 				BFA884B01C1A01A200613069 /* HEMDeviceAlertService.m in Sources */,
 				BF8C092D1C29D508005AB5A7 /* HEMEmailChangePresenter.m in Sources */,

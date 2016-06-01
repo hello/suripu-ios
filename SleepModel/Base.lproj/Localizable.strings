@@ -27,8 +27,6 @@
 "sign-up.error.password-too-short" = "Your password is too short. Passwords must be at least six characters.";
 "sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
-"onboarding.sense.pairing-mode.format" = "Before you connect your phone, Sense needs to be put into Pairing Mode.\n\nPlace your hand %@ of Sense for seven seconds, and then remove it.\n\nSense will glow purple when it is in Pairing Mode.";
-"onboarding.sense.pairing-mode.directly-on-top" = "directly on top";
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
 "onboarding.before-sleep.1.title" = "Sense Colors";
@@ -771,7 +769,6 @@
 "video.url.onboarding.pill-pair" = "https://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
 "video.url.alarm" = "https://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
 "video.url.onboarding.pill-setup" = "https://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
-"video.url.onboarding.pairing-mode" = "https://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
 "video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
 

@@ -13,6 +13,8 @@
 
 @interface HEMOnboardingController : HEMBaseController
 
+@property (strong, nonatomic) UIBarButtonItem* leftBarItem;
+@property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;

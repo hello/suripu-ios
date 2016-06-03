@@ -159,10 +159,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
                  object:[SENPreference nameFromType:SENPreferenceTypeTempCelcius]];
 }
 
-- (void)showTutorial
-{
-    if ([self isViewLoaded] && self.view.window)
-        [HEMTutorial showTutorialForSensorNamed:self.sensor.name];
+- (void)showTutorial {
+    [HEMTutorial showTutorialForSensorNamed:self.sensor.name];
 }
 
 #pragma mark - Configuration

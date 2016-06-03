@@ -116,19 +116,19 @@ NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
-NSString* const kHEMAnalyticsEventSettings = @"Settings";
 NSString* const kHEMAnalyticsEventCurrentConditions = @"Current Conditions";
 NSString* const kHEMAnalyticsEventFeed = @"Insights";
 NSString* const kHEMAnalyticsEventQuestion = @"Question";
-NSString* const kHEMAnalyticsEventAccount = @"Account";
 NSString* const kHEMAnalyticsEventInsight = @"Insight Detail";
 NSString* const kHEMAnalyticsEventDevices = @"Devices";
-NSString* const kHEMAnalyticsEventUnitsNTime = @"Units/Time";
 NSString* const kHEMAnalyticsEventSensor = @"Sensor History";
 NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
+NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
+NSString* const kHEMAnalyticsEventSettings = @"Settings";
 NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
-NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
+NSString* const kHEMAnalyticsEventUnitsNTime = @"Units/Time";
+NSString* const kHEMAnalyticsEventAccount = @"Account";
 
 // trends
 NSString* const HEMAnalyticsEventTrends = @"Trends";
@@ -235,6 +235,20 @@ NSString* const HEMAnalyticsEventSSPropSoundId = @"sound id";
 NSString* const HEMAnalyticsEventSSPropDurationId = @"duration id";
 NSString* const HEMAnalyticsEventSSPropVolume = @"volume";
 
+// settings
+NSString* const HEMAnalyticsEventChangeName = @"Change Name";
+NSString* const HEMAnalyticsEventChangeEmail = @"Change Email";
+NSString* const HEMAnalyticsEventChangePass = @"Change Password";
+NSString* const HEMAnalyticsEventUpdatePhoto = @"Change Profile Photo";
+NSString* const HEMAnalyticsEventPropSource = @"source";
+NSString* const HEMAnalyticsEventPropSourceFacebook = @"facebook";
+NSString* const HEMAnalyticsEventPropSourceCamera = @"camera";
+NSString* const HEMAnalyticsEventPropSourcePhotoLibrary = @"photo library";
+NSString* const HEMAnalyticsEventDeletePhoto = @"Delete Photo";
+
+// breadcrumbs
+NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs End";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";
@@ -256,7 +270,7 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 }
 
 + (NSDictionary*)propertiesFromAccount:(nonnull SENAccount*)account {
-    NSString* name = [account name] ?: @"";
+    NSString* name = [account fullName];
     NSString* email = [account email] ?: @"";
     NSString* accountId = [account accountId] ?: [SENAuthorizationService accountIdOfAuthorizedUser];
     NSDate* createDate = [account createdAt] ?: [NSDate date];
@@ -273,7 +287,7 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     // track required? for segment after alias and identify
     [self track:HEMAnalyticsEventAccountCreated];
     [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
-                                     HEMAnalyticsEventPropName : [account name] ?: @""}];
+                                     HEMAnalyticsEventPropName : [account fullName] ?: @""}];
 }
 
 + (void)trackUserSession:(nullable SENAccount*)account {
@@ -299,7 +313,7 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     }
     
     [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
-                                     HEMAnalyticsEventPropName : [account name] ?: @""}];
+                                     HEMAnalyticsEventPropName : [account fullName] ?: @""}];
 }
 
 + (void)trackErrorWithMessage:(NSString*)message {
@@ -419,6 +433,23 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     }
     NSDictionary* props = @{HEMAnalyticsEventTrendsPropTimescale : value};
     [self track:HEMAnalyticsEventTrendsChangeTimescale properties:props];
+}
+
+#pragma mark - Photos
+
++ (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding {
+    NSDictionary* props = @{HEMAnalyticsEventPropSource : source ?: @"unknown"};
+    [self track:HEMAnalyticsEventUpdatePhoto properties:props onboarding:onboarding];
+}
+
+#pragma mark - Onboarding convenience
+
++ (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding {
+    NSString* name = event;
+    if (onboarding) {
+        name = [HEMAnalyticsEventOnboardingPrefix stringByAppendingFormat:@" %@", name];
+    }
+    [self track:name properties:props];
 }
 
 @end

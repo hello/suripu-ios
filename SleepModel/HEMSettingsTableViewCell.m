@@ -22,6 +22,7 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
 @property (nonatomic, weak) CAShapeLayer *contentLayer;
 @property (nonatomic, weak) CAShapeLayer *borderLayer;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
+@property (nonatomic, weak) UIImageView* somethingNewIndicator;
 @end
 
 @implementation HEMSettingsTableViewCell
@@ -67,17 +68,20 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
     return CGRectGetMinX([[self titleLabel] frame]);
 }
 
+- (void)relayoutSeparator {
+    CGFloat x = [self separatorIndentation];
+    CGRect separatorFrame = CGRectZero;
+    separatorFrame.origin.x = x;
+    separatorFrame.origin.y = CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize;
+    separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
+    separatorFrame.size.height = HEMSettingsCellSeparatorSize;
+    [[self separator] setFrame:separatorFrame];
+}
+
 - (void)addSeparator {
     if (![self separator]) {
-        CGFloat x = [self separatorIndentation];
-        CGRect separatorFrame = CGRectZero;
-        separatorFrame.origin.x = x;
-        separatorFrame.origin.y = CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize;
-        separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
-        separatorFrame.size.height = HEMSettingsCellSeparatorSize;
-        UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectZero];
         [separator setBackgroundColor:[UIColor separatorColor]];
-        [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
         [self setSeparator:separator];
         [[self contentView] addSubview:separator];
     }
@@ -92,12 +96,7 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-
-    CGFloat x = [self separatorIndentation];
-    CGRect separatorFrame = [[self separator] frame];
-    separatorFrame.origin.x = x;
-    separatorFrame.size.width = CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x;
-    [[self separator] setFrame:separatorFrame];
+    [self relayoutSeparator];
 }
 
 - (void)roundContentLayerCorners:(UIRectCorner)corners {
@@ -117,6 +116,23 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
     CGPathRef borderPath =
         [[UIBezierPath bezierPathWithRoundedRect:borderFrame byRoundingCorners:corners cornerRadii:cornerRadii] CGPath];
     [[self borderLayer] setPath:borderPath];
+}
+
+- (void)showNewIndicator:(BOOL)show {
+    if (![self somethingNewIndicator]) {
+        UIImage* icon = [UIImage imageNamed:@"unreadIndicator"];
+        CGRect iconFrame = CGRectZero;
+        iconFrame.size = icon.size;
+        iconFrame.origin.y = (CGRectGetHeight([self bounds]) - icon.size.height) / 2.0f;
+        iconFrame.origin.x = HEMSettingsCellMargins - (icon.size.width / 2.0f);
+        
+        UIImageView* iconView = [[UIImageView alloc] initWithFrame:iconFrame];
+        [iconView setImage:icon];
+        
+        [self setSomethingNewIndicator:iconView];
+        [[self contentView] addSubview:iconView];
+    }
+    [[self somethingNewIndicator] setHidden:!show];
 }
 
 - (void)showShadow:(BOOL)isVisible {

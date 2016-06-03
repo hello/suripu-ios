@@ -40,6 +40,33 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (UIView*)backgroundViewForAlerts;
 
+/**
+ * @return YES if the view of this view controller is fully visible within the
+ *         the current window.  No otherwise, even if only 1 pt is out of the
+ *         viewport
+ */
+- (BOOL)isFullyVisibleInWindow;
+
+@end
+
+@interface HEMBaseController (Subclass)
+
+- (void)enableBackButton:(BOOL)enable;
+- (void)adjustConstraintsForIPhone4;
+- (void)adjustConstraintsForIphone5;
+- (void)updateConstraint:(NSLayoutConstraint*)constraint withDiff:(CGFloat)diff;
+- (void)showMessageDialog:(NSString*)message title:(NSString*)title;
+- (void)showMessageDialog:(NSString*)message
+                    title:(NSString*)title
+                    image:(UIImage*)image
+             withHelpPage:(NSString*)helpPage;
+- (void)viewDidBecomeActive;
+- (void)viewDidEnterBackground;
+- (BOOL)showIndicatorForCrumb:(NSString*)crumb;
+- (void)clearCrumb:(NSString*)crumb;
+- (void)reloadTopBar;
+- (void)didRefreshAccount;
+
 @end
 
 NS_ASSUME_NONNULL_END

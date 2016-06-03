@@ -12,14 +12,18 @@
 #import "HEMRootViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAlertViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMFormViewController.h"
 #import "HEMHealthKitService.h"
+#import "HEMFacebookService.h"
+#import "HEMBreadcrumbService.h"
+#import "HEMHandHoldingService.h"
 
 @interface HEMAccountViewController () <HEMAccountDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
 @property (weak, nonatomic) HEMPresenter* accountPresenter;
+@property (strong, nonatomic) HEMFacebookService* facebookService;
+@property (strong, nonatomic) HEMHandHoldingService* handHoldingService;
 
 @end
 
@@ -32,13 +36,23 @@
 }
 
 - (void)configurePresenter {
-    HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:[HEMAccountService sharedService]
-                                                                        healthKitService:[HEMHealthKitService sharedService]];
+    HEMAccountService* accountService = [HEMAccountService sharedService];
+    SENAccount* account = [accountService account];
+    HEMBreadcrumbService* crumbService = [HEMBreadcrumbService sharedServiceForAccount:account];
+    HEMFacebookService* facebookService = [HEMFacebookService new];
+    HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
+    HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:accountService
+                                                                         facebookService:facebookService
+                                                                        healthKitService:[HEMHealthKitService sharedService]
+                                                                       breadcrumbService:crumbService
+                                                                      handHoldingService:handHoldingService];
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];
     
     [self setAccountPresenter:presenter];
     [self addPresenter:presenter];
+    [self setFacebookService:facebookService];
+    [self setHandHoldingService:handHoldingService];
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
@@ -51,6 +65,10 @@
 }
 
 #pragma mark - HEMAccountDelegate
+
+- (UIViewController*)mainControllerFor:(HEMAccountPresenter*)presenter {
+    return self;
+}
 
 - (void)showErrorTitle:(NSString *)title
                message:(NSString *)message
@@ -75,7 +93,9 @@
 
 - (void)presentViewController:(UIViewController *)controller from:(HEMAccountPresenter *)presenter {
     UIViewController* controllerToPresenter = controller;
-    if ([controller isKindOfClass:[HEMFormViewController class]]) {
+    if ([controller isKindOfClass:[UIAlertController class]]) {
+        [[self rootViewController] presentViewController:controllerToPresenter animated:YES completion:nil];
+    } else if ([controller isKindOfClass:[HEMFormViewController class]]) {
         [[self navigationController] pushViewController:controller animated:YES];
     } else if (![controller isKindOfClass:[UINavigationController class]]) {
         controllerToPresenter = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];

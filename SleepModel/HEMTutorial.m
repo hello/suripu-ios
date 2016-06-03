@@ -9,6 +9,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENTimeline.h>
+#import <SenseKit/SENSensor.h>
 
 #import "UIImage+HEMBlurTint.h"
 #import "NSDate+HEMRelative.h"
@@ -28,16 +29,13 @@ static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
 static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
-static CGFloat const HEMTutorialDelay = 0.5f;
 
 #pragma mark - Sleep Sounds
 
 + (void)showTutorialForSleepSoundsIfNeeded {
     if ([self shouldShowTutorialForKey:HEMTutorialSleepSoundsKey]) {
-        [self delayBlock:^{
-            [self showTutorialForSleepSounds];
-            [self markTutorialViewed:HEMTutorialSleepSoundsKey];
-        }];
+        [self showTutorialForSleepSounds];
+        [self markTutorialViewed:HEMTutorialSleepSoundsKey];
     }
 }
 
@@ -68,29 +66,18 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 + (void)showTutorialForSensorsIfNeeded
 {
     if ([self shouldShowTutorialForKey:HEMTutorialSensorsKey]) {
-        [self delayBlock:^{
-            if ([self showTutorialForSensors]) {
-                [self markTutorialViewed:HEMTutorialSensorsKey];
-            }
-        }];
+        if ([self showTutorialForSensors]) {
+            [self markTutorialViewed:HEMTutorialSensorsKey];
+        }
     }
-}
-
-+ (void)delayBlock:(void(^)())block
-{
-    int64_t delta = (int64_t)(HEMTutorialDelay * NSEC_PER_SEC);
-    dispatch_time_t after = dispatch_time(DISPATCH_TIME_NOW, delta);
-    dispatch_after(after, dispatch_get_main_queue(), block);
 }
 
 + (BOOL)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
 {
     NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
     if ([self shouldShowTutorialForKey:key]) {
-        [self delayBlock:^{
-            [self showTutorialForSensorNamed:sensorName];
-            [self markTutorialViewed:key];
-        }];
+        [self showTutorialForSensorNamed:sensorName];
+        [self markTutorialViewed:key];
         return YES;
     }
     return NO;
@@ -99,10 +86,8 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 + (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
 {
     if ([self shouldShowTutorialForKey:HEMTutorialAlarmsKey]) {
-        [self delayBlock:^{
-            [self showTutorialForAlarmsFrom:controller];
-            [self markTutorialViewed:HEMTutorialAlarmsKey];
-        }];
+        [self showTutorialForAlarmsFrom:controller];
+        [self markTutorialViewed:HEMTutorialAlarmsKey];
     }
 }
 
@@ -240,6 +225,11 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSleepSoundsKey];
+    // delete individual sensor keys
+    for (SENSensor* sensor in [SENSensor sensors]) {
+        NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, [sensor name]];
+        [prefs setPersistentPreference:@NO forKey:key];
+    }
 }
 
 @end

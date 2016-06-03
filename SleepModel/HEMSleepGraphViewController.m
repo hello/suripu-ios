@@ -150,6 +150,7 @@ static BOOL hasLoadedBefore = NO;
     HEMTimelineHandHoldingPresenter* hhPresenter
         = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
     [hhPresenter setDelegate:self];
+    [hhPresenter bindWithContentView:[self collectionView]];
     
     [self setHandHoldingPresenter:hhPresenter];
     [self addPresenter:hhPresenter];
@@ -168,7 +169,7 @@ static BOOL hasLoadedBefore = NO;
     int64_t delayInSecs = (int64_t)(DISPLAY_DELAY * NSEC_PER_SEC);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayInSecs), dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([strongSelf isViewFullyVisible]) {
+        if ([strongSelf isFullyVisibleInWindow]) {
             if ([[strongSelf dataSource] numberOfSleepSegments] > 0
                 && [HEMTutorial shouldShowTutorialForTimeline]) {
                 [HEMTutorial showTutorialForTimelineIfNeeded];
@@ -482,7 +483,8 @@ static BOOL hasLoadedBefore = NO;
 - (UIView *)senseLearnsTitleView {
     NSString *title = NSLocalizedString(@"sleep-event.feedback.action-sheet.title", nil);
     NSString *desc = NSLocalizedString(@"sleep-event.feedback.action-sheet.description", nil);
-    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:desc];
+    NSAttributedString* attrDesc = [HEMActionSheetTitleView attributedDescriptionFromText:desc];
+    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrDesc];
 }
 
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
@@ -781,10 +783,6 @@ static BOOL hasLoadedBefore = NO;
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
     return indexPath.section == HEMSleepGraphCollectionViewSegmentSection
            && ![self.dataSource segmentForEventExistsAtIndexPath:indexPath];
-}
-
-- (BOOL)isViewFullyVisible {
-    return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
 }
 
 - (BOOL)shouldAllowRecognizerToReceiveTouch:(UIGestureRecognizer *)recognizer {

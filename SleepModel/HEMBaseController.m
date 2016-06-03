@@ -12,6 +12,9 @@
 #import "HEMScreenUtils.h"
 #import "HEMRootViewController.h"
 #import "HEMPresenter.h"
+#import "HEMBreadcrumbService.h"
+#import "HEMAccountService.h"
+#import "HEMSnazzBarController.h"
 
 @interface HEMBaseController()
 
@@ -22,6 +25,14 @@
 @end
 
 @implementation HEMBaseController
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self listenForAccountEvents];
+    }
+    return self;
+}
 
 #pragma mark - View Controller Lifecycle Events
 
@@ -56,6 +67,18 @@
     [super viewDidLayoutSubviews];
     [[self presenters] makeObjectsPerformSelector:@selector(didRelayout)];
 }
+
+#pragma mark - Account Events
+
+- (void)listenForAccountEvents {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didRefreshAccount)
+                   name:HEMAccountServiceNotificationDidRefresh
+                 object:nil];
+}
+
+- (void)didRefreshAccount {}
 
 #pragma mark - App Events
 
@@ -137,6 +160,15 @@
     [constraint setConstant:constant + diff];
 }
 
+#pragma mark - Convenience
+
+- (BOOL)isFullyVisibleInWindow {
+    UIWindow* window = [[[UIApplication sharedApplication] windows] firstObject];
+    CGRect windowFrame = [window frame];
+    CGRect myViewFrame = [[self view] convertRect:[[self view] bounds] toView:window];
+    return CGRectContainsRect(windowFrame, myViewFrame);
+}
+
 #pragma mark - alerts
 
 - (UIView*)backgroundViewForAlerts {
@@ -188,6 +220,38 @@
         }];
     [dialogVC showFrom:self];
 }
+
+- (BOOL)showIndicatorForCrumb:(NSString*)crumb {
+    SENAccount* account = [[HEMAccountService sharedService] account]; // if not ready, will return NO
+    HEMBreadcrumbService* service = [HEMBreadcrumbService sharedServiceForAccount:account];
+    NSString* topCrumb = [service peek];
+    return [topCrumb isEqualToString:crumb];
+}
+
+- (void)clearCrumb:(NSString*)crumb {
+    SENAccount* account = [[HEMAccountService sharedService] account]; // if not ready, will return NO
+    HEMBreadcrumbService* service = [HEMBreadcrumbService sharedServiceForAccount:account];
+    NSString* peek = [service peek];
+    if ([peek isEqualToString:crumb]) {
+        [service pop];
+    } else {
+        [self clearCrumbTrailIfEndsAt:crumb];
+    }
+}
+
+- (void)clearCrumbTrailIfEndsAt:(NSString*)crumb {
+    SENAccount* account = [[HEMAccountService sharedService] account]; // if not ready, will return NO
+    HEMBreadcrumbService* service = [HEMBreadcrumbService sharedServiceForAccount:account];
+    [service clearIfTrailEndsAt:crumb];
+}
+
+- (void)reloadTopBar {
+    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    HEMSnazzBarController* snazzVC = [rootVC barController];
+    [snazzVC reloadButtonsBarBadges];
+}
+
+#pragma mark - Clean up
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

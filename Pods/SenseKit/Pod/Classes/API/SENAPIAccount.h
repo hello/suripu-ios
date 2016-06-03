@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, SENAPIAccountError) {
 
 extern NSString* const kSENAccountNotificationAccountCreated;
 extern NSString* const SENAPIAccountErrorMessagePasswordTooShort;
+extern NSString* const SENAPIAccountQueryParamPhoto;
 
 @class SENAccount;
 
@@ -22,15 +23,13 @@ extern NSString* const SENAPIAccountErrorMessagePasswordTooShort;
 /**
  *  Create a new account via the Sense API. Does not require authentication.
  *
- *  @param name            full name of the new user
- *  @param emailAddress    email address
- *  @param password        password
+ *  @param account         SENAccount object containing values needed
+ *  @param password        password for the account
  *  @param completionBlock block invoked when asynchonous call completes
  */
-+ (void)createAccountWithName:(NSString*)name
-                 emailAddress:(NSString*)emailAddress
-                     password:(NSString*)password
-                   completion:(SENAPIDataBlock)completionBlock;
++ (void)createAccount:(SENAccount*)account
+         withPassword:(NSString*)password
+           completion:(SENAPIDataBlock)completion;
 
 /**
  * Override the existing account information for the associated user.
@@ -50,6 +49,28 @@ extern NSString* const SENAPIAccountErrorMessagePasswordTooShort;
  * @param completion block invoked when asynchronous call completes
  */
 + (void)getAccount:(SENAPIDataBlock)completion;
+
+/**
+ * Get an instance of a SENAccount object for the currently authorized user.
+ * If the user is not authorized / signed in, the object will be nil.
+ *
+ * The returned SENAccount object will contain a profile photo property, if a
+ * photo exists for the account
+ *
+ * @param completion block invoked when asynchronous call completes
+ */
++ (void)getAccountWithPhoto:(SENAPIDataBlock)completion;
+
+/**
+ * Get an instance of a SENAccount object for the currently authorized user.
+ * If the user is not authorized / signed in, the object will be nil.
+ *
+ * @param queryParams: optional dictionary of key-value pairs to send as query
+ *                     parameters when requesting for the account
+ * @param completion block invoked when asynchronous call completes
+ */
++ (void)getAccountWithQuery:(NSDictionary<NSString*, NSString*>*)queryParams
+                 completion:(SENAPIDataBlock)completion;
 
 /**
  * Change the current password to a password specified.  New password will still

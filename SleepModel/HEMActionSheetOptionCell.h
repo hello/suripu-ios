@@ -19,4 +19,10 @@
                   icon:(UIImage*)icon
            description:(NSString*)description;
 
+- (void)setOptionTitle:(NSString*)title
+             withColor:(UIColor*)titleColor
+                  icon:(UIImage*)icon
+           description:(NSString*)description
+         textAlignment:(NSTextAlignment)alignment;
+
 @end

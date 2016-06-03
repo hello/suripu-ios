@@ -23,6 +23,7 @@
 #import "HEMAccountService.h"
 #import "HEMHealthKitService.h"
 #import "HEMShortcutService.h"
+#import "HEMFacebookService.h"
 
 @implementation HEMAppDelegate
 
@@ -59,11 +60,14 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    NSURLComponents* components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-    for (NSURLQueryItem* item in components.queryItems) {
-        if ([item.name isEqualToString:@"sensor"]) {
-            [self openDetailViewForSensorNamed:item.value];
-            break;
+    HEMFacebookService* fb = [HEMFacebookService new];
+    if (![fb open:application url:url source:sourceApplication annotation:annotation]) {
+        NSURLComponents* components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+        for (NSURLQueryItem* item in components.queryItems) {
+            if ([item.name isEqualToString:@"sensor"]) {
+                [self openDetailViewForSensorNamed:item.value];
+                break;
+            }
         }
     }
     return YES;
@@ -111,7 +115,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         // pre fetch account information so that it's readily availble to the user
         // when the account is accessed.  This is per discussion with design and James
         HEMAccountService* acctService = [HEMAccountService sharedService];
-        [acctService refresh:^(SENAccount * _Nonnull account, NSDictionary<NSNumber *,SENPreference *> * _Nonnull preferences) {
+        [acctService refreshWithPhoto:YES completion:^(SENAccount * account, NSDictionary<NSNumber *,SENPreference *> * preferences) {
             [SENAnalytics trackUserSession:account];
         }];
         // write timeline data in to Health app, if enabled and data is available

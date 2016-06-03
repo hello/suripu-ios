@@ -24,7 +24,7 @@
 static CGFloat const kSENSenseDefaultTimeout = 20.0f;
 static CGFloat const kSENSenseScanTimeout = 10.0f;
 static CGFloat const kSENSenseRescanTimeout = 8.0f;
-static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
+static CGFloat const kSENSenseSetWifiTimeout = 70.0f; // firmware suggestion.  fw times out at 60s
 static CGFloat const kSENSenseScanWifiTimeout = 45.0f; // firmware actually suggests 60, but 45 seems to work consistently
 static CGFloat const kSENSensePillPairTimeout = 45.0f; // firmware timesout at 20, we need this to be longer.
 static CGFloat const kSENSenseLinkAccountTimeout = 45.0f;

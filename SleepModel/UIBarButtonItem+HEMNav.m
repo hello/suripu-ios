@@ -16,7 +16,6 @@
                                   image:(UIImage*)image
                                  target:(id)target
                                  action:(SEL)action {
-    
     UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelButton setTitle:title forState:UIControlStateNormal];
     [cancelButton setImage:image forState:UIControlStateNormal];

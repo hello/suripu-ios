@@ -10,6 +10,12 @@
 +(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
++(NSString *)titleReuseIdentifier;
++(NSString *)passwordReuseIdentifier;
++(NSString *)emailReuseIdentifier;
++(NSString *)photoReuseIdentifier;
++(NSString *)firstNameReuseIdentifier;
++(NSString *)lastNameReuseIdentifier;
 +(NSString *)networkReuseIdentifier;
 +(NSString *)pillSetupTextCellReuseIdentifier;
 +(NSString *)pillSetupVideoCellReuseIdentifier;
@@ -49,7 +55,6 @@
 +(id)instantiateSenseColorsViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
-+(id)instantiateSignUpViewController;
 +(id)instantiateWeightPickerViewController;
 +(id)instantiateWelcomeViewController;
 +(id)instantiateWifiPickerViewController;

@@ -87,6 +87,24 @@ typedef void(^HEMURLImageCallback)(UIImage* _Nullable image, NSString* _Nullable
  */
 - (void)cancelImageDownload;
 
+/**
+ * @discussion
+ * Call to reset the image view in to a default state
+ */
+- (void)resetState;
+
+/**
+ * @discussion
+ * Users of this view should not call this method directly, but instead should
+ * call one of the setImageWithURL: methods.  Sub classes should override this
+ * as needed to receive a call back when the download begins and is complete
+ *
+ * @param request: the download request
+ * @param completion: the block to call upon completion, failure or not
+ */
+- (void)downloadAndLoadImageFrom:(NSURLRequest*)request
+                      completion:(HEMURLImageCallback)completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

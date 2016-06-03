@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<HEMTimelineHandHoldingDelegate> delegate;
 
 - (instancetype)initWithHandHoldingService:(HEMHandHoldingService*)handHoldingService;
+- (void)bindWithContentView:(UIView*)contentView;
 - (void)showIfNeeded;
 - (void)didOpenTimeline;
 - (void)didZoomOutOnTimeline;

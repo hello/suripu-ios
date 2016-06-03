@@ -9,6 +9,12 @@
 #import "HEMNameChangePresenter.h"
 #import "HEMAccountService.h"
 
+typedef NS_ENUM(NSUInteger, HEMNameChangeRow) {
+    HEMNameChangeRowFirstName = 0,
+    HEMNameChangeRowLastName,
+    HEMNameChangeRowCount
+};
+
 @interface HEMNameChangePresenter()
 
 @property (nonatomic, weak) HEMAccountService* accountService;
@@ -26,20 +32,33 @@
 }
 
 - (NSUInteger)numberOfFields {
-    return 1;
+    return HEMNameChangeRowCount;
+}
+
+- (BOOL)canEnableSave:(NSDictionary*)formContent {
+    NSString* firstName = formContent[[self placeHolderTextForFieldInRow:HEMNameChangeRowFirstName]];
+    return [firstName length] > 0;
 }
 
 - (NSString*)existingTextForFieldInRow:(NSInteger)row {
     SENAccount* account = [[self accountService] account];
-    return [account name];
-}
-
-- (UIImage*)iconForFieldInRow:(NSInteger)row {
-    return [UIImage imageNamed:@"settingsNameIcon"];
+    switch (row) {
+        default:
+        case HEMNameChangeRowFirstName:
+            return [account firstName];
+        case HEMNameChangeRowLastName:
+            return [account lastName];
+    }
 }
 
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row {
-    return NSLocalizedString(@"settings.account.name.placeholder", nil);
+    switch (row) {
+        default:
+        case HEMNameChangeRowFirstName:
+            return NSLocalizedString(@"onboarding.account.firstname", nil);
+        case HEMNameChangeRowLastName:
+            return NSLocalizedString(@"onboarding.account.lastname", nil);
+    }
 }
 
 - (NSString*)errorMessageForError:(NSError*)error {
@@ -65,11 +84,14 @@
 
 - (void)saveContent:(NSDictionary*)content completion:(HEMFormSaveHandler)completion {
     __weak typeof(self) weakSelf = self;
-    NSString* updatedName = [content objectForKey:[self placeHolderTextForFieldInRow:0]];
-    [[self accountService] updateName:updatedName completion:^(NSError * _Nullable error) {
+    NSString* firstName = content[[self placeHolderTextForFieldInRow:HEMNameChangeRowFirstName]];
+    NSString* lastName = content[[self placeHolderTextForFieldInRow:HEMNameChangeRowLastName]];
+    [[self accountService] updateFirstName:firstName lastName:lastName completion:^(NSError * _Nullable error) {
         NSString* errorMessage = nil;
         if (error) {
-           errorMessage = [weakSelf errorMessageForError:error];
+            errorMessage = [weakSelf errorMessageForError:error];
+        } else {
+            [SENAnalytics track:HEMAnalyticsEventChangeName];
         }
         completion (errorMessage);
     }];

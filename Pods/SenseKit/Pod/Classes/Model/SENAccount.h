@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "SENSerializable.h"
 
+@class SENRemoteImage;
+
 typedef NS_ENUM(NSUInteger, SENAccountGender) {
     SENAccountGenderOther,
     SENAccountGenderMale,
@@ -28,11 +30,25 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
 @property (nonatomic, copy, readonly)    NSNumber* lastModified;
 
 /**
- * @property name
+ * @property firstName
  *
- * The name of the user that this account belongs to
+ * The first name of the user that this account belongs to
  */
-@property (nonatomic, copy, readwrite)   NSString* name;
+@property (nonatomic, copy, readwrite)   NSString* firstName;
+
+/**
+ * @property lastName
+ *
+ * The last name of the user that this account belongs to
+ */
+@property (nonatomic, copy, readwrite)   NSString* lastName;
+
+/**
+ * @property timeZone
+ *
+ * The time zone name upon account creation
+ */
+@property (nonatomic, copy, readwrite)   NSString* timeZone;
 
 /**
  * @property name
@@ -92,6 +108,8 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
  */
 @property (nonatomic, strong, readwrite) NSDate* createdAt;
 
+@property (nonatomic, strong, readwrite) SENRemoteImage* photo;
+
 /**
  *  Serialized version of the account
  *
@@ -126,5 +144,10 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
  * @return localized birthdate as NSString given the preferred date style
  */
 - (NSString*)localizedBirthdateWithStyle:(NSDateFormatterStyle)style;
+
+/**
+ * @return full name for the account
+ */
+- (NSString*)fullName;
 
 @end

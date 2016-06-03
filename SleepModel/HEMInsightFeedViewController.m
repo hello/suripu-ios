@@ -10,7 +10,6 @@
 #import "UIImage+HEMPixelColor.h"
 
 #import "HEMInsightFeedViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMInsightViewController.h"
 #import "HEMMainStoryboard.h"

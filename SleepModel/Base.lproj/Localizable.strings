@@ -16,6 +16,7 @@
 "welcome.intro.desc.current-conditions" = "Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
 
 // onboarding
+"onboarding.account.sign-in.title" = "Welcome back";
 "sign-up.activity.message" = "Creating your account";
 "sign-up.failed.title" = "Sign up failed";
 "sign-up.error.password-length" = "You must provide a password.";
@@ -55,6 +56,10 @@
 "onboarding.health.enable.failure.title" = "Failed to enable Health integration";
 "onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
 "onboarding.health.enable.failure.generic" = "You may have previously denied access. Go to your Health app, find Sleep Analysis data, Share Data, and edit the data sources to enable Sense.";
+"onboarding.account.firstname" = "First name";
+"onboarding.account.lastname" = "Last name";
+"onboarding.account.email" = "Email address";
+"onboarding.account.password" = "Password";
 
 // help links
 "help.email.address" = "support@hello.is";
@@ -78,6 +83,7 @@
 "help.url.slug.sense-no-internet" = "articles/205493285";
 "help.url.slug.no-data-recorded" = "articles/205706435";
 "help.url.slug.not-enough-data-recorded" = "articles/204994629";
+"help.url.slug.facebook-import" = "articles/210329423";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -605,8 +611,10 @@
 
 // actions
 "actions.cancel" = "Cancel";
+"actions.close" = "Close";
 "actions.ok" = "Okay";
 "actions.sign-out" = "Sign out";
+"actions.sign-in" = "Log in";
 "actions.no" = "No";
 "actions.yes" = "Yes";
 "actions.skip" = "Skip";
@@ -620,6 +628,10 @@
 "actions.save" = "Save";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";
+"actions.import.from.fb" = "Import from Facebook";
+"actions.take.photo" = "Take Photo";
+"actions.camera-roll" = "Open Camera Roll";
+"actions.remove-photo" = "Remove Photo";
 "status.success" = "Done";
 
 // action sheet
@@ -641,6 +653,17 @@
 "account.update.error.missing-account-info" = "Unable to update your password because your account information is out of sync.";
 "account.update.error.email" = "Unable to update your email.";
 "account.update.error.not-supported" = "This is not supported on your device or iOS version";
+"account.error.invalid-first-name" = "First name is required";
+"account.error.invalid-last-name" = "Last name is required";
+"account.error.invalid-email" = "Email is invalid";
+"account.error.invalid-password" = "Password is required";
+"account.error.facebook-access.title" = "Autofill from Facebook failed";
+"account.error.facebook-access" = "Unable to obtain your profile information from Facebook";
+"account.error.import-photo-from-fb.title" = "Import photo from Facebook";
+"account.error.import-photo-from-fb" = "We were unable to import your photo from Facebook";
+"account.facebook.info.title" = "Connecting with Facebook";
+"account.facebook.info.message.format" = "Connecting your Facebook account allows Sense to autofill your name, email address, and your Facebook profile photo. This does not give Sense permission to post anything to your Facebook.\n\nStill have questions? %@.";
+"account.facebook.info.learn-more" = "Learn more";
 
 // notifications
 "notifications.actions.ok" = "Okay";
@@ -728,6 +751,7 @@
 "handholding.message.sensor-scrubbing" = "Press and hold graphs to see historical data.";
 "handholding.message.insight-tap" = "Tap on a card to learn more.";
 "handholding.message.timeline-open" = "To explore more now, tap the menu icon.";
+"handholding.message.account-name-change" = "Verify your name and add a profile photo.";
 
 // app review questions
 "app-review.question.1" = "Are you enjoying Sense?";

@@ -21,7 +21,6 @@
 #import "HEMScreenUtils.h"
 #import "HEMNoAlarmCell.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMSubNavigationView.h"
 #import "HEMAlarmService.h"
 #import "HEMSupportUtil.h"

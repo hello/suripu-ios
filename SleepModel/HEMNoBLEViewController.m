@@ -13,7 +13,6 @@
 #import "HEMNoBLEViewController.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMActionButton.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"
 

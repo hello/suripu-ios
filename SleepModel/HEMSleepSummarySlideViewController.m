@@ -71,10 +71,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    HEMHandHoldingService* hhService = [HEMHandHoldingService new];
-    if (![hhService isComplete:HEMHandHoldingTimelineSwipe]) {
-        [self setHandHoldingService:[HEMHandHoldingService new]];
-    }
+    [self setHandHoldingService:[HEMHandHoldingService new]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
@@ -135,9 +132,8 @@
         UIImage* pattern = [controller.view snapshotOfRect:slice];
         self.view.backgroundColor = [UIColor colorWithPatternImage:pattern];
         
-        if ([self handHoldingService]) {
+        if (![[self handHoldingService] isComplete:HEMHandHoldingTimelineSwipe]) {
             [[self handHoldingService] completed:HEMHandHoldingTimelineSwipe];
-            [self setHandHoldingService:nil]; // don't need it anymore
         }
         
     }

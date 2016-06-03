@@ -25,7 +25,6 @@
 #import "HEMDebugController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
 #import "HEMTimelineContainerViewController.h"

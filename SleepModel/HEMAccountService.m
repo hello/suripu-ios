@@ -9,6 +9,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAPIPreferences.h>
+#import <SenseKit/SENAPIPhoto.h>
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAccount.h>
 
@@ -16,7 +17,9 @@
 #import "HEMMathUtil.h"
 #import "NSString+HEMUtils.h"
 
+NSString* const HEMAccountServiceNotificationDidRefresh = @"HEMAccountServiceNotificationDidRefresh";
 NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
+CGFloat const HEMAccountPhotoDefaultCompression = 0.8f;
 
 @interface HEMAccountService()
 
@@ -127,17 +130,30 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
     return serviceError ?: error;
 }
 
-- (void)refresh:(HEMAccountHandler)completion {
+- (void)updateAccountWithPhoto:(BOOL)photo completion:(void(^)(void))completion {
+    NSDictionary* queryParams = nil;
+    if (photo) {
+        queryParams = @{SENAPIAccountQueryParamPhoto : @"true"};
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAccount getAccountWithQuery:queryParams completion:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error];
+        } else {
+            [strongSelf setAccount:data];
+        }
+        completion();
+    }];
+}
+
+- (void)refreshWithPhoto:(BOOL)photo completion:(HEMAccountHandler)completion {
     __weak typeof(self) weakSelf = self;
     dispatch_group_t updateGroup = dispatch_group_create();
     
     dispatch_group_enter(updateGroup);
-    [SENAPIAccount getAccount:^(SENAccount* data, NSError *error) {
-        if (error) {
-            [SENAnalytics trackError:error];
-        } else {
-            [weakSelf setAccount:data];
-        }
+    [self updateAccountWithPhoto:photo completion:^{
         dispatch_group_leave(updateGroup);
     }];
     
@@ -154,7 +170,13 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
     
     dispatch_group_notify(updateGroup, dispatch_get_main_queue(), ^{
         completion ([weakSelf account], [weakSelf preferences]);
+        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:HEMAccountServiceNotificationDidRefresh object:nil];
     });
+}
+
+- (void)refresh:(HEMAccountHandler)completion {
+    [self refreshWithPhoto:NO completion:completion];
 }
 
 #pragma mark Updates
@@ -245,15 +267,21 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
     }];
 }
 
-- (void)updateName:(NSString*)name completion:(nullable HEMAccountUpdateHandler)completion {
-    NSString* oldName = [[self account] name];
-    [[self account] setName:name];
+- (void)updateFirstName:(NSString*)firstName
+               lastName:(NSString*)lastName
+             completion:(HEMAccountUpdateHandler)completion {
+    NSString* oldFirstName = [[self account] firstName];
+    NSString* oldLastName = [[self account] lastName];
+    [[self account] setFirstName:firstName];
+    [[self account] setLastName:lastName];
     
     __weak typeof(self) weakSelf = self;
     [self updateAccount:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         NSError* serviceError = [weakSelf translateUpdateAPIError:error];
         if (serviceError) {
-            [[weakSelf account] setName:oldName];
+            [[strongSelf account] setFirstName:oldFirstName];
+            [[strongSelf account] setLastName:oldLastName];
             [SENAnalytics trackError:serviceError];
         }
         if (completion) {
@@ -425,6 +453,48 @@ NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
 
 - (void)didSignOut {
     [self setAccount:nil];
+}
+
+#pragma mark - Photos
+
+- (void)uploadProfileJpegPhoto:(NSData*)data
+                      progress:(HEMAccountProgressHandler)progress
+                    completion:(HEMAccountPhotoHandler)completion {
+    SENRemoteImage* oldPhoto = [[self account] photo];
+    [[self account] setPhoto:nil];
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPIPhoto uploadProfilePhoto:data
+                               type:SENAPIPhotoTypeJpeg
+                           progress:progress
+                         completion:^(id data, NSError *error) {
+                             __strong typeof(weakSelf) strongSelf = weakSelf;
+                             DDLogVerbose(@"photo data %@", data);
+                             if (error) {
+                                 [SENAnalytics trackError:error];
+                                 [[strongSelf account] setPhoto:oldPhoto];
+                             }
+                             if (completion) {
+                                 completion (data, error);
+                             }
+                         }];
+}
+
+- (void)removeProfilePhoto:(HEMAccountUpdateHandler)completion {
+    SENRemoteImage* oldPhoto = [[self account] photo];
+    [[self account] setPhoto:nil];
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPIPhoto deleteProfilePhoto:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error];
+            [[strongSelf account] setPhoto:oldPhoto];
+        }
+        if (completion) {
+            completion (error);
+        }
+    }];
 }
 
 @end

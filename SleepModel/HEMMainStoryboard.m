@@ -39,7 +39,7 @@ static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexplanation = @"explanation";
-static NSString *const _HEMfieldCell = @"fieldCell";
+static NSString *const _HEMfield = @"field";
 static NSString *const _HEMformViewController = @"formViewController";
 static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfo = @"info";
@@ -120,7 +120,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
-+(NSString *)fieldCellReuseIdentifier { return _HEMfieldCell; }
++(NSString *)fieldReuseIdentifier { return _HEMfield; }
 +(NSString *)imageReuseIdentifier { return _HEMimage; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }

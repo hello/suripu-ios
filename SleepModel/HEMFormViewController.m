@@ -8,12 +8,12 @@
 
 #import "HEMFormViewController.h"
 #import "HEMFormPresenter.h"
-#import "HEMBaseController+Protected.h"
 
 @interface HEMFormViewController () <HEMFormDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *formTableview;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButtonItem;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -25,7 +25,8 @@
 }
 
 - (void)configurePresenter {
-    [[self presenter] bindWithTableView:[self formTableview]];
+    [[self presenter] bindWithCollectionView:[self collectionView]
+                            bottomConstraint:[self bottomConstraint]];
     [[self presenter] bindWithSaveItem:[self saveButtonItem]];
     [[self presenter] setTitle:[self title]];
     [[self presenter] setDelegate:self];

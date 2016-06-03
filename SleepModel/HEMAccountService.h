@@ -10,6 +10,7 @@
 #import "SENPreference.h"
 
 @class SENAccount;
+@class SENRemoteImage;
 
 typedef struct {
     CGFloat feet;
@@ -19,7 +20,9 @@ typedef struct {
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSString* const HEMAccountServiceNotificationDidRefresh; // called when the account has been refreshed
 extern NSString* const HEMAccountServiceDomain;
+extern CGFloat const HEMAccountPhotoDefaultCompression;
 
 typedef NS_ENUM(NSInteger, HEMAccountServiceError) {
     HEMAccountServiceErrorUnknown = 0,
@@ -38,6 +41,8 @@ typedef NS_ENUM(NSInteger, HEMAccountServiceError) {
 
 typedef void(^HEMAccountHandler)(SENAccount* _Nullable account, NSDictionary<NSNumber*, SENPreference*>* _Nullable preferences);
 typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
+typedef void(^HEMAccountProgressHandler)(NSProgress* _Nullable progress);
+typedef void(^HEMAccountPhotoHandler)(SENRemoteImage* _Nullable remoteImage, NSError* _Nullable error);
 
 @interface HEMAccountService : SENService
 
@@ -47,6 +52,7 @@ typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
 + (instancetype)sharedService;
 
 - (void)refresh:(HEMAccountHandler)completion;
+- (void)refreshWithPhoto:(BOOL)photo completion:(HEMAccountHandler)completion;
 - (BOOL)isEnabled:(SENPreferenceType)preferenceType;
 - (void)enablePreference:(BOOL)enable
                  forType:(SENPreferenceType)type
@@ -58,11 +64,17 @@ typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
 - (void)updateGender:(SENAccountGender)gender completion:(nullable HEMAccountUpdateHandler)completion;
 - (void)updateHeight:(NSNumber*)height completion:(nullable HEMAccountUpdateHandler)completion;
 - (void)updateWeight:(NSNumber*)weight completion:(nullable HEMAccountUpdateHandler)completion;
-- (void)updateName:(NSString*)name completion:(nullable HEMAccountUpdateHandler)completion;
+- (void)updateFirstName:(NSString*)firstName
+               lastName:(NSString*)lastName
+             completion:(HEMAccountUpdateHandler)completion;
 - (void)updateEmail:(NSString*)email completion:(nullable HEMAccountUpdateHandler)completion;
 - (void)updatePassword:(NSString*)currentPassword
            newPassword:(NSString*)newPassword
             completion:(nullable HEMAccountUpdateHandler)completion;
+- (void)uploadProfileJpegPhoto:(NSData*)data
+                      progress:(nullable HEMAccountProgressHandler)progress
+                    completion:(nullable HEMAccountPhotoHandler)completion;
+- (void)removeProfilePhoto:(nullable HEMAccountUpdateHandler)completion;
 
 @end
 

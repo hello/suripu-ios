@@ -16,6 +16,7 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
 @interface HEMTimelineHandHoldingPresenter()
 
 @property (nonatomic, weak) HEMHandHoldingService* service;
+@property (nonatomic, weak) UIView* contentView;
 
 @end
 
@@ -27,6 +28,10 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
         _service = handHoldingService;
     }
     return self;
+}
+
+- (void)bindWithContentView:(UIView*)contentView {
+    [self setContentView:contentView];
 }
 
 - (void)showIfNeeded {
@@ -72,8 +77,11 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
         // right before show it, check to see if timeline got opened
         if (![[self service] isComplete:HEMHandHoldingTimelineOpen]) {
             __weak typeof(self) weakSelf = self;
-            [handholdingView showInView:containerView dismissAction:^{
-                [weakSelf didOpenTimeline]; // kind of, but same thing
+            [handholdingView showInView:containerView fromContentView:[self contentView] dismissAction:^(BOOL shown) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (shown) {
+                    [strongSelf didOpenTimeline]; // kind of, but same thing
+                }
             }];
         }
     }
@@ -95,8 +103,11 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
     [handholdingView setTag:HEMTimelineHandHoldingViewTag];
     
     __weak typeof(self) weakSelf = self;
-    [handholdingView showInView:containerView dismissAction:^{
-        [[weakSelf service] completed:HEMHandHoldingTimelineSwipe];
+    [handholdingView showInView:containerView fromContentView:[self contentView] dismissAction:^(BOOL shown) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (shown) {
+            [[strongSelf service] completed:HEMHandHoldingTimelineSwipe];
+        }
     }];
 }
 
@@ -118,8 +129,11 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
         [handholdingView setTag:HEMTimelineHandHoldingViewTag];
         
         __weak typeof(self) weakSelf = self;
-        [handholdingView showInView:containerView dismissAction:^{
-            [weakSelf didZoomOutOnTimeline];
+        [handholdingView showInView:containerView fromContentView:[self contentView] dismissAction:^(BOOL shown) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (shown) {
+                [strongSelf didZoomOutOnTimeline];
+            }
         }];
     }
 }

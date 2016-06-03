@@ -11,7 +11,6 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMSleepQuestionsViewController.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAnimationUtils.h"

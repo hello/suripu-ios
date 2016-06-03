@@ -11,6 +11,9 @@
 @class HEMAccountPresenter;
 @class HEMHealthKitService;
 @class HEMAccountService;
+@class HEMFacebookService;
+@class HEMBreadcrumbService;
+@class HEMHandHoldingService;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,6 +30,7 @@ typedef void(^HEMAccountSignOutHandler)(void);
 - (void)presentViewController:(UIViewController*)controller
                          from:(HEMAccountPresenter*)presenter;
 - (void)dismissViewControllerFrom:(HEMAccountPresenter*)presenter;
+- (UIViewController*)mainControllerFor:(HEMAccountPresenter*)presenter;
 
 @end
 
@@ -35,7 +39,10 @@ typedef void(^HEMAccountSignOutHandler)(void);
 @property (nonatomic, weak) id<HEMAccountDelegate> delegate;
 
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
-                      healthKitService:(HEMHealthKitService*)healthKitService NS_DESIGNATED_INITIALIZER;
+                       facebookService:(HEMFacebookService*)facebookService
+                      healthKitService:(HEMHealthKitService*)healthKitService
+                     breadcrumbService:(HEMBreadcrumbService*)breadcrumbService
+                    handHoldingService:(HEMHandHoldingService*)hhService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithTableView:(UITableView*)tableView;
 

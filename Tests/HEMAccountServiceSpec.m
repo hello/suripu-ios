@@ -29,7 +29,7 @@ describe(@"HEMAccountService", ^{
                     return nil;
                 }];
                 
-                [SENAPIAccount stub:@selector(getAccount:) withBlock:^id(NSArray *params) {
+                [SENAPIAccount stub:@selector(getAccountWithQuery:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
                     block ([SENAccount new], nil);
                     return nil;
@@ -77,7 +77,7 @@ describe(@"HEMAccountService", ^{
                     return nil;
                 }];
                 
-                [SENAPIAccount stub:@selector(getAccount:) withBlock:^id(NSArray *params) {
+                [SENAPIAccount stub:@selector(getAccountWithQuery:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
                     block ([SENAccount new], nil);
                     return nil;
@@ -125,7 +125,7 @@ describe(@"HEMAccountService", ^{
                     return nil;
                 }];
                 
-                [SENAPIAccount stub:@selector(getAccount:) withBlock:^id(NSArray *params) {
+                [SENAPIAccount stub:@selector(getAccountWithQuery:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
                     block (nil, [NSError errorWithDomain:@"t" code:-1 userInfo:nil]);
                     return nil;
@@ -501,23 +501,26 @@ describe(@"HEMAccountService", ^{
         __block HEMAccountService* service = nil;
         __block NSError* serviceError = nil;
         __block BOOL calledBack = NO;
-        __block NSString* name = nil;
+        __block NSString* fname = nil;
+        __block NSString* lname = nil;
         
-        context(@"successfully updated name", ^{
+        context(@"successfully updated first and last namename", ^{
             
             beforeEach(^{
-                name = @"jimmy";
+                fname = @"jimmy";
+                lname = @"lu";
                 [SENAPIAccount stub:@selector(updateAccount:completionBlock:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock block = [params lastObject];
                     SENAccount* account = [SENAccount new];
-                    [account setName:name];
+                    [account setFirstName:fname];
+                    [account setLastName:fname];
                     block (account, nil);
                     return nil;
                 }];
                 
                 service = [HEMAccountService new];
                 [service stub:@selector(account) andReturn:[SENAccount new]];
-                [service updateName:name completion:^(NSError * _Nullable error) {
+                [service updateFirstName:fname lastName:lname completion:^(NSError * _Nullable error) {
                     calledBack = YES;
                     serviceError = error;
                 }];
@@ -528,7 +531,8 @@ describe(@"HEMAccountService", ^{
                 service = nil;
                 serviceError = nil;
                 calledBack = NO;
-                name = nil;
+                fname = nil;
+                lname = nil;
             });
             
             it(@"should have called back", ^{
@@ -541,7 +545,8 @@ describe(@"HEMAccountService", ^{
             
             it(@"should have cached an account with correct name", ^{
                 SENAccount* account = [service account];
-                [[[account name] should] equal:name];
+                [[[account firstName] should] equal:fname];
+                [[[account lastName] should] equal:lname];
             });
             
         });

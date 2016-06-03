@@ -20,7 +20,6 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMShortcutService.h"
 #import "HEMStyle.h"
 

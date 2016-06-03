@@ -1,5 +1,110 @@
 # Changelog
 
+## 1.4.2.10
+
+Fixes:
+
+* Fixed an issue that causes the last name to be cleared when editing the first name
+* Fixed an issue with importing photo from Facebook within Settings
+* Prompting for access to camera before the camera is actually shown
+* Prompting for access to the camera roll before the library is actually shown
+
+## 1.4.2.9
+
+New:
+
+* Added mixpanel events for the release
+
+## 1.4.2.8
+
+Fixes:
+
+* Fixed issue where settings breadcrumb is not cleared, within same session of app
+
+## 1.4.2.7
+
+New:
+
+* Breadcrumbs, leading user to account settings to change name and photo
+* Tutorial pointing to the account name
+* info button about Facebook autofill now launches as a native modal
+* added photo loading state
+
+## 1.4.2.6
+
+New:
+
+* Account settings now support displaying of the profile photo
+* Account settings support importing photo from facebook
+* Account settings support uploading photo from new photo from camera
+* Account settings support uploading photo from camera roll
+* Account settings support removal of photo
+* Sign In screen is now scrollable and matches sign up screen more closely
+
+## 1.4.2.5
+
+New:
+
+* Update new sign in screen to match new account creation screen VX
+* Account creation screen supports facebook photo import
+* Account creation screen supports photo using camera
+* Account creation screen supports photo using camera roll
+* Account creation screen allows user to remove selected photo, before creation
+* Integrate with server photo API
+* Design review tweaks
+
+Fixes:
+
+* FB info button no longer overlap autofill button on smaller devices
+
+## 1.4.2.4
+
+New:
+
+* Integrated with new account registration and update APIs
+* sending time zone id to server on registration and account updates
+* updated name change screen for first and last name, with new field types
+* updated email change screen to use new field type
+* updated password change screen to use new field type
+
+Design tweaks:
+
+* tapping in the photo area in registration screen will dismiss the keyboard
+* No textfield placeholder text, but placeholder label is always visible
+* When textfield is focused, password is visible.  When not focused, becomes secure
+* Increase tap target on "secret eye"
+
+## 1.4.2.3
+
+New:
+
+* Account creation screen supports autofilling with facebook account
+* Account creation screen launches support page about facebook integration
+
+Fixes:
+
+* Toggling the show/hide on password field no longer causes font to revert to System font (iOS bug)
+* Account creation screen will no longer reuse fields to prevent data changes
+
+## 1.4.2.2
+
+New:
+
+* Updated account creation screen, but profile picture and fb integration is still not implemented
+* Updated text field visual design
+
+## 1.4.2.1
+
+New:
+
+* Increased timeout to 70s when setting WiFi over BLE on Sense
+* Upgraded AFNetworking to 3.1.0 and ensured connection goes through Session Manager
+
+Fixes:
+
+* Fixes the disappearing dividers in the setting screen when pushing the screen off the viewport
+* Adjusted grey scale of placeholder text for custom text fields
+
 ## 1.4.1.8
 
 Fixes:

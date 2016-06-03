@@ -27,6 +27,15 @@
     return [components day];
 }
 
++ (NSDate*)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
+    NSDateComponents* dateComponents = [NSDateComponents new];
+    [dateComponents setYear:2016];
+    [dateComponents setMonth:5];
+    [dateComponents setDay:26];
+    NSCalendar* calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    return [calendar dateFromComponents:dateComponents];
+}
+
 - (NSString*)elapsed {
     long days = [self daysElapsed];
     NSString* elapsed = nil;

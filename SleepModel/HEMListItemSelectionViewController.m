@@ -8,7 +8,6 @@
 
 #import "HEMListItemSelectionViewController.h"
 #import "HEMListPresenter.h"
-#import "HEMBaseController+Protected.h"
 #import "HEMActivityIndicatorView.h"
 
 @interface HEMListItemSelectionViewController() <HEMListPresenterDelegate>

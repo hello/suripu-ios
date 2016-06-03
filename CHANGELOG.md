@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.3.1
+
+New:
+
+* What's New banner that is not currently enabled, unless forced with Debug option
+* Add debug option to force the what's new banner to show
+* Remove redundant pairing mode onboarding screen
+* Increase tap target of photo change button
+* Add an error state for when profile photo fails to load from server
+
 ## 1.4.2.10
 
 Fixes:

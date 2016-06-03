@@ -225,6 +225,7 @@
 "debug.led.option.activity" = "Activity";
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
+"debug.option.force-whats-new" = "Force What's New";
 "debug.option.sleep-sounds" = "Sleep Sounds";
 "debug.option.clear-alarms" = "Remove all alarms";
 "debug.host.action.custom-url" = "Custom";
@@ -803,3 +804,11 @@
 "sleep-sounds.temp.info.message.offline" = "We haven't received data from your Sense recently. Make sure Sense is connected to Wi-Fi.";
 "sleep-sounds.welcome.title" = "Sleep Sounds";
 "sleep-sounds.welcome.message" = "Falling asleep to a consistent and calming ambient sound can help you mask nighttime noise, and help you sleep better. Sense makes it easy to start your night off right: choose a custom-designed Sleep Sound, and drift peacefully off to sleep.";
+
+// whats new (set title and message, if needed)
+"whats.new.title" = "";
+"whats.new.message" = "";
+"whats.new.button.title" = "";
+"whats.new.button.title.debug" = "DOES NOTHING";
+"whats.new.title.debug" = "Don't worry, debug text only";
+"whats.new.message.debug" = "He's so lazy that if there were work in bed, he would rather sleep on the floor.";

@@ -387,6 +387,8 @@
 		BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5B51B335A3300A30429 /* HEMHintGestureView.m */; };
 		BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */; };
 		BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */; };
+		BFFCEFCF1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFCE1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m */; };
+		BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1116,6 +1118,10 @@
 		BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandholdingView.m; sourceTree = "<group>"; };
 		BFF6A5BB1B339CA400A30429 /* HEMHintMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHintMessageView.h; sourceTree = "<group>"; };
 		BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHintMessageView.m; sourceTree = "<group>"; };
+		BFFCEFCD1D00D90400CA0E54 /* HEMWhatsNewHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWhatsNewHeaderView.h; sourceTree = "<group>"; };
+		BFFCEFCE1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWhatsNewHeaderView.m; sourceTree = "<group>"; };
+		BFFCEFD01D00F98B00CA0E54 /* HEMWhatsNewService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWhatsNewService.h; sourceTree = "<group>"; };
+		BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWhatsNewService.m; sourceTree = "<group>"; };
 		C5D02EF68E71A45F5A7AA96C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2042,6 +2048,8 @@
 				BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */,
 				BF8339941C1659D300BFD0F4 /* HEMInsightTransitionView.h */,
 				BF8339951C1659D300BFD0F4 /* HEMInsightTransitionView.m */,
+				BFFCEFCD1D00D90400CA0E54 /* HEMWhatsNewHeaderView.h */,
+				BFFCEFCE1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2232,6 +2240,8 @@
 			children = (
 				BF6952561C52FB8F000A8E85 /* HEMHandHoldingService.h */,
 				BF6952571C52FB8F000A8E85 /* HEMHandHoldingService.m */,
+				BFFCEFD01D00F98B00CA0E54 /* HEMWhatsNewService.h */,
+				BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -3342,6 +3352,7 @@
 				BF52946F1C6929C200D931B7 /* HEMDashLine.m in Sources */,
 				BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */,
 				BFE375E01CEB98640029EE66 /* HEMFacebookService.m in Sources */,
+				BFFCEFCF1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m in Sources */,
 				BF8C092A1C28E52D005AB5A7 /* HEMNameChangePresenter.m in Sources */,
 				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
@@ -3415,6 +3426,7 @@
 				8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */,
 				BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */,
 				BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */,
+				BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */,
 				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,

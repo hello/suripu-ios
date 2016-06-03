@@ -29,6 +29,7 @@
 #import "HEMHandHoldingService.h"
 #import "HEMSleepSoundViewController.h"
 #import "HEMAlarmService.h"
+#import "HEMWhatsNewService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -91,6 +92,7 @@
     [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
+    [self addWhatsNewOptionTo:sheet];
     [self addSleepSoundsOptionTo:sheet];
     [self addRemoveAllAlarmsOptionTo:sheet];
     [self addDebugInfoOptionTo:sheet];
@@ -278,7 +280,17 @@
     }];
 }
 
-#pragma mark Tutorials
+#pragma mark - Whats New
+
+- (void)addWhatsNewOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.force-whats-new", nil) action:^{
+        [HEMWhatsNewService forceToShow];
+        [weakSelf setSupportOptionController:nil];
+    }];
+}
+
+#pragma mark - Tutorials
 
 - (void)addResetTutorialsOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;

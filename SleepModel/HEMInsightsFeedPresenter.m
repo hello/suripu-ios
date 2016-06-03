@@ -27,16 +27,26 @@
 #import "HEMURLImageView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAppUsage.h"
+#import "HEMWhatsNewHeaderView.h"
+#import "HEMCardFlowLayout.h"
+#import "HEMWhatsNewService.h"
+
+static NSString* const HEMInsightsFeedWhatsNewReuseId = @"whatsNew";
 
 static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
-@interface HEMInsightsFeedPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HEMInsightsFeedPresenter() <
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout
+>
 
 @property (strong, nonatomic) NSArray* data;
 @property (strong, nonatomic) NSArray<SENQuestion*>* questions;
 @property (weak, nonatomic) HEMInsightsService* insightsService;
 @property (weak, nonatomic) HEMQuestionsService* questionsService;
 @property (weak, nonatomic) HEMUnreadAlertService* unreadService;
+@property (weak, nonatomic) HEMWhatsNewService* whatsNewService;
 @property (weak, nonatomic) UICollectionView* collectionView;
 @property (weak, nonatomic) UIView* tutorialContainerView;
 @property (weak, nonatomic) UITabBarItem* tabBarItem;
@@ -53,13 +63,15 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
-                                  unreadService:(HEMUnreadAlertService*)unreadService {
+                                  unreadService:(HEMUnreadAlertService*)unreadService
+                                whatsNewService:(HEMWhatsNewService*)whatsNewService {
     
     self = [super init];
     if (self) {
         _insightsService = insightsService;
         _questionsService = questionsService;
         _unreadService = unreadService;
+        _whatsNewService = whatsNewService;
         _heightCache = [NSCache new];
         _attributedBodyCache = [NSCache new];
         _imageCache = [NSCache new];
@@ -303,6 +315,22 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     return [self dataError] ? 1 : [[self data] count];
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath {
+    NSString* reuseId = HEMInsightsFeedWhatsNewReuseId;
+    HEMWhatsNewHeaderView* header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                       withReuseIdentifier:reuseId
+                                                                              forIndexPath:indexPath];
+    [[header dismissButton] addTarget:self
+                               action:@selector(dismissWhatsNew)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [header setTitle:[[self whatsNewService] title] andMessage:[[self whatsNewService] message]];
+    [[header actionButton] setTitle:[[self whatsNewService] buttonTitle] forState:UIControlStateNormal];
+    
+    return header;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -318,7 +346,19 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     }
     
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
-    
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    CGSize headerSize = CGSizeZero;
+    if ([[self whatsNewService] shouldShow]) {
+        NSString* title = [[self whatsNewService] title];
+        NSString* message = [[self whatsNewService] message];
+        CGFloat cellWidth = CGRectGetWidth([collectionView bounds]);
+        CGFloat height = [HEMWhatsNewHeaderView heightWithTitle:title message:message andMaxWidth:cellWidth];
+        headerSize = CGSizeMake(cellWidth, height);
+        DDLogVerbose(@"header size %f %f", headerSize.width, headerSize.height);
+    }
+    return headerSize;
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
@@ -430,6 +470,11 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 }
 
 #pragma mark - Actions
+
+- (void)dismissWhatsNew {
+    [[self whatsNewService] dismiss];
+    [[self collectionView] reloadData];
+}
 
 - (BOOL)removeQuestionFromData:(nonnull SENQuestion*)question {
     NSMutableArray* mutableData = [[self data] mutableCopy];

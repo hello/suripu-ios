@@ -10,6 +10,22 @@
 
 @interface UIFont (HEMStyle)
 
+#pragma mark - Style guide
+
++ (UIFont*)h1;
++ (UIFont*)h2;
++ (UIFont*)h3;
++ (UIFont*)h4;
++ (UIFont*)h5;
++ (UIFont*)h6;
++ (UIFont*)h7;
++ (UIFont*)h7Bold;
++ (UIFont*)h8;
++ (UIFont*)body;
++ (UIFont*)button;
+
+#pragma mark -
+
 /**
  *  Alarm picker view selected number font
  */

@@ -27,8 +27,6 @@
 "sign-up.error.password-too-short" = "Your password is too short. Passwords must be at least six characters.";
 "sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
-"onboarding.sense.pairing-mode.format" = "Before you connect your phone, Sense needs to be put into Pairing Mode.\n\nPlace your hand %@ of Sense for seven seconds, and then remove it.\n\nSense will glow purple when it is in Pairing Mode.";
-"onboarding.sense.pairing-mode.directly-on-top" = "directly on top";
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
 "onboarding.before-sleep.1.title" = "Sense Colors";
@@ -227,6 +225,7 @@
 "debug.led.option.activity" = "Activity";
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
+"debug.option.force-whats-new" = "Force What's New";
 "debug.option.sleep-sounds" = "Sleep Sounds";
 "debug.option.clear-alarms" = "Remove all alarms";
 "debug.host.action.custom-url" = "Custom";
@@ -771,7 +770,6 @@
 "video.url.onboarding.pill-pair" = "https://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
 "video.url.alarm" = "https://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
 "video.url.onboarding.pill-setup" = "https://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
-"video.url.onboarding.pairing-mode" = "https://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
 "video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
 
@@ -806,3 +804,11 @@
 "sleep-sounds.temp.info.message.offline" = "We haven't received data from your Sense recently. Make sure Sense is connected to Wi-Fi.";
 "sleep-sounds.welcome.title" = "Sleep Sounds";
 "sleep-sounds.welcome.message" = "Falling asleep to a consistent and calming ambient sound can help you mask nighttime noise, and help you sleep better. Sense makes it easy to start your night off right: choose a custom-designed Sleep Sound, and drift peacefully off to sleep.";
+
+// whats new (set title and message, if needed)
+"whats.new.title" = "";
+"whats.new.message" = "";
+"whats.new.button.title" = "";
+"whats.new.button.title.debug" = "DOES NOTHING";
+"whats.new.title.debug" = "Don't worry, debug text only";
+"whats.new.message.debug" = "He's so lazy that if there were work in bed, he would rather sleep on the floor.";

@@ -24,6 +24,7 @@
 #import "HEMStyle.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMTimelineService.h"
+#import "HEMCardFlowLayout.h"
 
 static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
 static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;

@@ -81,7 +81,6 @@ NSString* const HEMAnalyticsEventNoBle = @"No BLE";
 NSString* const HEMAnalyticsEventAudio = @"Sense Audio";
 NSString* const HEMAnalyticsEventSleepPill = @"Sleep Pill";
 NSString* const HEMAnalyticsEventPillPlacement = @"Onboarding Pill Placement";
-NSString* const HEMAnalyticsEventPairingMode = @"Pairing Mode Help";
 NSString* const HEMAnalyticsEventSenseColors = @"Onboarding Sense Colors";
 NSString* const HEMAnalyticsEventFirstAlarm = @"Onboarding First Alarm";
 NSString* const HEMAnalyticsEventRoomCheck = @"Onboarding Room Check";

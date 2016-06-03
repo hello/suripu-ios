@@ -14,6 +14,7 @@
 @class HEMInsightsService;
 @class HEMQuestionsService;
 @class HEMUnreadAlertService;
+@class HEMWhatsNewService;
 @class HEMActivityIndicatorView;
 @class HEMInsightCollectionViewCell;
 @class HEMHandHoldingService;
@@ -41,7 +42,8 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
-                                  unreadService:(HEMUnreadAlertService*)unreadService;
+                                  unreadService:(HEMUnreadAlertService*)unreadService
+                                whatsNewService:(HEMWhatsNewService*)whatsNewservice;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 

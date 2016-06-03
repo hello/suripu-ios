@@ -479,6 +479,10 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         return;
     }
     
+    // since there is no method to delete a section header in an animated fashion,
+    // we need to do it ourselves, which basically is to scroll to the first actual
+    // item in the list, then quickly update the content offset back to the top
+    // and reload the view without the header
     [UIView animateWithDuration:0.5f animations:^{
         NSIndexPath* firstItem = [NSIndexPath indexPathForRow:0 inSection:0];
         UICollectionViewCell* firstCell = [[self collectionView] cellForItemAtIndexPath:firstItem];

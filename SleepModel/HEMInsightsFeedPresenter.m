@@ -56,6 +56,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 // imageCache is needed for scroll performance and to reduce image flickering
 @property (strong, nonatomic) NSCache* imageCache;
 @property (strong, nonatomic) NSError* dataError;
+@property (assign, nonatomic) CGFloat whatsNewHeaderHeight;
 
 @end
 
@@ -356,7 +357,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         CGFloat cellWidth = CGRectGetWidth([collectionView bounds]);
         CGFloat height = [HEMWhatsNewHeaderView heightWithTitle:title message:message andMaxWidth:cellWidth];
         headerSize = CGSizeMake(cellWidth, height);
-        DDLogVerbose(@"header size %f %f", headerSize.width, headerSize.height);
+        [self setWhatsNewHeaderHeight:headerSize.height];
     }
     return headerSize;
 }
@@ -473,7 +474,22 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 
 - (void)dismissWhatsNew {
     [[self whatsNewService] dismiss];
-    [[self collectionView] reloadData];
+    if ([[self collectionView] numberOfItemsInSection:0] == 0) {
+        [[self collectionView] reloadData];
+        return;
+    }
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        NSIndexPath* firstItem = [NSIndexPath indexPathForRow:0 inSection:0];
+        UICollectionViewCell* firstCell = [[self collectionView] cellForItemAtIndexPath:firstItem];
+        if (firstCell) {
+            CGPoint offset = CGPointMake(0.0f, [self whatsNewHeaderHeight]);
+            [[self collectionView] setContentOffset:offset];
+        }
+    } completion:^(BOOL finished) {
+        [[self collectionView] setContentOffset:CGPointZero];
+        [[self collectionView] reloadData];
+    }];
 }
 
 - (BOOL)removeQuestionFromData:(nonnull SENQuestion*)question {

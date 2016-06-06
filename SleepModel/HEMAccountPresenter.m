@@ -197,7 +197,9 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     
     if (cleared) {
         [self showAccountNameChangeIndicationIfNeeded];
-        [SENAnalytics track:HEMAnalyticsEventBreadcrumbsEnd];
+        
+        NSDictionary* props = @{HEMAnalyticsEventPropSource : @"account"};
+        [SENAnalytics track:HEMAnalyticsEventBreadcrumbsEnd properties:props];
     }
 }
 

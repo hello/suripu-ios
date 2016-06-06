@@ -631,6 +631,7 @@
 "actions.take.photo" = "Take Photo";
 "actions.camera-roll" = "Open Camera Roll";
 "actions.remove-photo" = "Remove Photo";
+"actions.go-to-settings" = "Go To Settings";
 "status.success" = "Done";
 
 // action sheet
@@ -663,6 +664,10 @@
 "account.facebook.info.title" = "Connecting with Facebook";
 "account.facebook.info.message.format" = "Connecting your Facebook account allows Sense to autofill your name, email address, and your Facebook profile photo. This does not give Sense permission to post anything to your Facebook.\n\nStill have questions? %@.";
 "account.facebook.info.learn-more" = "Learn more";
+"account.photo.enable-camera.title" = "Enable camera access";
+"account.photo.enable-camera.message" = "To take a new photo, you need to grant Sense access to your camera. Enable camera access for Sense in your device settings.";
+"account.photo.enable-camera-roll.title" = "Enable photo access";
+"account.photo.enable-camera-roll.message" = "To select a new profile photo, you need to grant Sense access to your photos. Enable access to photos for Sense in your device settings.";
 
 // notifications
 "notifications.actions.ok" = "Okay";

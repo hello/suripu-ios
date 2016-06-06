@@ -15,6 +15,7 @@
 #import "NSAttributedString+HEMUtils.h"
 
 #import "HEMNewAccountPresenter.h"
+#import "HEMPresenter+HEMPhoto.h"
 #import "HEMMainStoryboard.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMOnboardingStoryboard.h"
@@ -29,6 +30,7 @@
 #import "HEMActionSheetTitleView.h"
 #import "HEMActionButton.h"
 #import "HEMStyle.h"
+#import "HEMAlertViewController.h"
 
 static CGFloat const HEMNewAccountPresenterPhotoHeight = 226.0f;
 static CGFloat const HEMNewAccountPresenterFieldHeight = 72.0f;
@@ -632,13 +634,20 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
         [[strongSelf delegate] showController:photoPicker from:strongSelf];
     };
     
-    // TODO: remove this when we add error dialogs.  For now, if access is known, always show the picker.
+    void(^showSettingsPrompt)(void) =^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        HEMAlertViewController* alert = [strongSelf settingsPromptForCamera:camera];
+        [[strongSelf delegate] showController:alert from:strongSelf];
+    };
+    
     HEMProfilePhotoAccess currentAccess = [UIImagePickerController authorizationFor:camera];
-    BOOL forceToShow = currentAccess != HEMProfilePhotoAccessUnknown;
+    BOOL firstTimePrompt = currentAccess == HEMProfilePhotoAccessUnknown;
     
     [UIImagePickerController promptForAccessIfNeededFor:camera completion:^(HEMProfilePhotoAccess access) {
-        if (access == HEMProfilePhotoAccessAuthorized || forceToShow) {
+        if (access == HEMProfilePhotoAccessAuthorized) {
             show();
+        } else if (access == HEMProfilePhotoAccessDenied && !firstTimePrompt) {
+            showSettingsPrompt();
         }
     }];
 }

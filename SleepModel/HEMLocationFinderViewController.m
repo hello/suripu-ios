@@ -7,19 +7,21 @@
 #import "HEMLocationFinderViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingService.h"
-#import "HEMLocationCenter.h"
+#import "HEMLocationService.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBluetoothUtils.h"
+#import "HEMActivityCoverView.h"
 
 @interface HEMLocationFinderViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mapHeightConstraint;
 
-@property (nonatomic, copy) NSString* locationTxId;
+@property (strong, nonatomic) HEMLocationActivity* locationActivity;
+@property (strong, nonatomic) HEMLocationService* locationService;
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
 
 @end
 
@@ -29,62 +31,69 @@
     [super viewDidLoad];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
-    [self trackAnalyticsEvent:HEMAnalyticsEventLocation]; 
+    [self trackAnalyticsEvent:HEMAnalyticsEventLocation];
 }
 
-- (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self mapHeightConstraint] withDiff:-90.0f];
-}
+- (void)startLocationActivity {
+    NSError* startError = nil;
+    __weak typeof(self) weakSelf = self;
+    self.locationActivity = [[self locationService] startLocationActivity:^(HEMLocation * mostRecentLocation, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
 
-- (void)viewDidEnterBackground {
-    [super viewDidEnterBackground];
-    DDLogVerbose(@"did enter background");
-    if ([self locationTxId]) {
-        [[HEMLocationCenter sharedCenter] stopLocatingFor:[self locationTxId]];
-        [self setLocationTxId:nil];
-        [[self locationButton] setEnabled:YES];
+        if (mostRecentLocation) {
+            SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
+            [account setLatitude:@([mostRecentLocation lat])];
+            [account setLongitude:@([mostRecentLocation lon])];
+            [strongSelf uploadCollectedData:YES];
+            [strongSelf trackPermission:NO error:nil];
+            [strongSelf next];
+        } else if (error) {
+            NSString* title = NSLocalizedString(@"location.error.title", nil);
+            NSString* message = [strongSelf errorMessageForLocationError:error];
+            [strongSelf showMessageDialog:message title:title];
+            [strongSelf trackPermission:NO error:error];
+        }
+        
+        [strongSelf stopLocationActivity:error == nil];
+        
+    } error:&startError];
+    
+    if (startError) {
+        NSString* message = [self errorMessageForLocationError:startError];
+        NSString* title = NSLocalizedString(@"location.error.title", nil);
+        [self showMessageDialog:message title:title];
+    } else if ([self locationActivity]) {
+        UIView* parentView = [[self navigationController] view];
+        NSString* message = NSLocalizedString(@"location.activity.status", nil);
+        [self setActivityView:[HEMActivityCoverView new]];
+        [[self activityView] showInView:parentView withText:message activity:YES completion:nil];
     }
+}
+
+- (void)stopLocationActivity:(BOOL)success {
+    [[self locationService] stopLocationActivity:[self locationActivity]];
+    [self setLocationActivity:nil];
+    
+    NSString* message = success ? NSLocalizedString(@"status.success", nil) : nil;
+    [[self activityView] dismissWithResultText:message
+                               showSuccessMark:success
+                                        remove:YES
+                                    completion:nil];
+    
 }
 
 #pragma mark - Actions
 
 - (IBAction)requestLocation:(id)sender {
-    [[self locationButton] setEnabled:NO];
-    
-    if ([self locationTxId]) {
-        [[HEMLocationCenter sharedCenter] stopLocatingFor:[self locationTxId]];
+    if ([self locationActivity]) {
+        return;
     }
     
-    NSError* error = nil;
-    __weak typeof(self) weakSelf = self;
-    self.locationTxId =
-        [[HEMLocationCenter sharedCenter] locate:&error success:^BOOL(double lat, double lon, double accuracy) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
-            [account setLatitude:@(lat)];
-            [account setLongitude:@(lon)];
-            
-            [[strongSelf locationButton] setEnabled:YES];
-            [strongSelf setLocationTxId:nil];
-            [strongSelf uploadCollectedData:YES];
-            [strongSelf trackPermission:NO error:nil];
-            [strongSelf next];
-            return NO;
-        } failure:^BOOL(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [[strongSelf locationButton] setEnabled:YES];
-            [strongSelf showLocationError:error];
-            [strongSelf setLocationTxId:nil];
-            [strongSelf trackPermission:NO error:error];
-            [SENAnalytics trackError:error];
-            return NO;
-        }];
-    
-    if (error != nil) {
-        [[self locationButton] setEnabled:YES];
-        [self showLocationError:error];
-        [SENAnalytics trackError:error];
+    if (![self locationService]) {
+        [self setLocationService:[HEMLocationService new]];
     }
+    
+    [self startLocationActivity];
 }
 
 - (IBAction)skipRequestingLocation:(id)sender {
@@ -102,7 +111,7 @@
         status = kHEManaltyicsEventStatusSkipped;
     } else if (error == nil) {
         status = kHEManaltyicsEventStatusEnabled;
-    } else if ([error code] == HEMLocationErrorCodeNotAuthorized) {
+    } else if ([error code] == HEMLocationErrorCodeDenied) {
         status = kHEManaltyicsEventStatusDenied;
     } else if ([error code] == HEMLocationErrorCodeNotEnabled) {
         status = kHEManaltyicsEventStatusDisabled;
@@ -115,19 +124,18 @@
 #pragma mark - Alerts
 
 - (NSString*)errorMessageForLocationError:(NSError*)error {
-    NSString* errorMessage = nil;
-    switch ([error code]) {
-        case HEMLocationErrorCodeNotAuthorized:
-        case HEMLocationErrorCodeNotEnabled: {
-            errorMessage = NSLocalizedString(@"location.error.not-enabled", nil);
-            break;
+    if ([[error domain] isEqualToString:HEMLocationErrorDomain]) {
+        switch ([error code]) {
+            case HEMLocationErrorCodeDenied:
+                return NSLocalizedString(@"location.error.denied", nil);
+            case HEMLocationErrorCodeNotEnabled:
+                return NSLocalizedString(@"location.error.not-enabled", nil);
+            default:
+                return nil;
         }
-        default: {
-            errorMessage = NSLocalizedString(@"location.error.weak-signal", nil);
-            break;
-        }
+    } else {
+        return NSLocalizedString(@"location.error.weak-signal", nil);
     }
-    return errorMessage;
 }
 
 - (void)showLocationError:(NSError*)error {
@@ -159,8 +167,8 @@
 #pragma mark - Clean Up
 
 - (void)dealloc {
-    if (_locationTxId) {
-        [[HEMLocationCenter sharedCenter] stopLocatingFor:_locationTxId];
+    if (_locationActivity && _locationService) {
+        [_locationService stopLocationActivity:_locationActivity];
     }
 }
 

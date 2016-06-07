@@ -246,7 +246,7 @@ NSString* const HEMAnalyticsEventPropSourcePhotoLibrary = @"photo library";
 NSString* const HEMAnalyticsEventDeletePhoto = @"Delete Photo";
 
 // breadcrumbs
-NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs End";
+NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";
 
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";

@@ -72,7 +72,9 @@
     switch (access) {
         case HEMProfilePhotoAccessUnknown: {
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-                completion (granted ? HEMProfilePhotoAccessAuthorized : HEMProfilePhotoAccessDenied);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion (granted ? HEMProfilePhotoAccessAuthorized : HEMProfilePhotoAccessDenied);
+                });
             }];
             break;
         }
@@ -102,9 +104,11 @@
     switch (access) {
         case HEMProfilePhotoAccessUnknown: {
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                completion (status == PHAuthorizationStatusAuthorized ?
-                            HEMProfilePhotoAccessAuthorized :
-                            HEMProfilePhotoAccessDenied);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion (status == PHAuthorizationStatusAuthorized ?
+                                HEMProfilePhotoAccessAuthorized :
+                                HEMProfilePhotoAccessDenied);
+                });
             }];
             break;
         }

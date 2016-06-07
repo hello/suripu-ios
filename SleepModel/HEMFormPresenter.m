@@ -60,6 +60,10 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
                selector:@selector(willShowKeyboard:)
                    name:UIKeyboardWillShowNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(willDismissKeyboard:)
+                   name:UIKeyboardWillHideNotification
+                 object:nil];
     
     [self prefillFormContent];
     [self setOrigBottomMargin:[bottomConstraint constant]];
@@ -94,6 +98,10 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     [UIView animateWithDuration:[duration CGFloatValue] animations:^{
         [[[self collectionView] superview] layoutIfNeeded];
     }];
+}
+
+- (void)willDismissKeyboard:(NSNotification*)note {
+    [[self bottomConstraint] setConstant:[self origBottomMargin]];
 }
 
 #pragma mark - Presenter events
@@ -280,8 +288,10 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_collectionView setDataSource:nil];
-    [_collectionView setDelegate:nil];
+    if (_collectionView) {
+        [_collectionView setDataSource:nil];
+        [_collectionView setDelegate:nil];
+    }
 }
 
 @end

@@ -66,14 +66,9 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
        forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
               withReuseIdentifier:HEMDevicesFooterReuseIdentifier];
     
-    UICollectionViewFlowLayout* layout = (id)[collectionView collectionViewLayout];
-    
     UIEdgeInsets insets = UIEdgeInsetsMake(HEMDeviceSectionMargin, 0.0f, HEMDeviceSectionMargin, 0.0f);
+    UICollectionViewFlowLayout* layout = (id)[collectionView collectionViewLayout];
     [layout setSectionInset:insets];
-    
-    CGSize size = [[self attributedFooterText] sizeWithWidth:layout.itemSize.width];
-    size.height += insets.top + insets.bottom;
-    [layout setFooterReferenceSize:size];
     
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
@@ -296,6 +291,20 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
         view = footer;
     }
     return view;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+referenceSizeForFooterInSection:(NSInteger)section {
+    
+    CGFloat maxWidth = CGRectGetWidth([collectionView bounds]) - (HEMDeviceSectionMargin * 2);
+    CGFloat textHeight = [[self attributedFooterText] sizeWithWidth:maxWidth].height;
+    
+    CGSize size = CGSizeZero;
+    size.width = maxWidth;
+    size.height = textHeight + (HEMDeviceSectionMargin * 2);
+    
+    return size;
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView

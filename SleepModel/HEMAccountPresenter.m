@@ -15,6 +15,7 @@
 #import "UIImage+HEMCompression.h"
 
 #import "HEMAccountPresenter.h"
+#import "HEMPresenter+HEMPhoto.h"
 #import "HEMAccountService.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMMainStoryboard.h"
@@ -38,6 +39,7 @@
 #import "HEMPresenter+HEMBreadcrumb.h"
 #import "HEMHandHoldingService.h"
 #import "HEMHandholdingView.h"
+#import "HEMAlertViewController.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
@@ -195,7 +197,9 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     
     if (cleared) {
         [self showAccountNameChangeIndicationIfNeeded];
-        [SENAnalytics track:HEMAnalyticsEventBreadcrumbsEnd];
+        
+        NSDictionary* props = @{HEMAnalyticsEventPropSource : @"account"};
+        [SENAnalytics track:HEMAnalyticsEventBreadcrumbsEnd properties:props];
     }
 }
 
@@ -298,13 +302,20 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
         [[strongSelf delegate] presentViewController:photoPicker from:strongSelf];
     };
     
-    // TODO: remove this when we add error dialogs.  For now, if access is known, always show the picker.
+    void(^showSettingsPrompt)(void) =^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        HEMAlertViewController* alert = [strongSelf settingsPromptForCamera:camera];
+        [[strongSelf delegate] presentViewController:alert from:strongSelf];
+    };
+    
     HEMProfilePhotoAccess currentAccess = [UIImagePickerController authorizationFor:camera];
-    BOOL forceToShow = currentAccess != HEMProfilePhotoAccessUnknown;
+    BOOL firstTimePrompt = currentAccess == HEMProfilePhotoAccessUnknown;
     
     [UIImagePickerController promptForAccessIfNeededFor:camera completion:^(HEMProfilePhotoAccess access) {
-        if (access == HEMProfilePhotoAccessAuthorized || forceToShow) {
+        if (access == HEMProfilePhotoAccessAuthorized) {
             show();
+        } else if (access == HEMProfilePhotoAccessDenied && !firstTimePrompt) {
+            showSettingsPrompt();
         }
     }];
 }

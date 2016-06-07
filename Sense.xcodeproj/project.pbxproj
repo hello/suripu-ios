@@ -389,6 +389,7 @@
 		BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */; };
 		BFFCEFCF1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFCE1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m */; };
 		BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */; };
+		BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1122,6 +1123,8 @@
 		BFFCEFCE1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWhatsNewHeaderView.m; sourceTree = "<group>"; };
 		BFFCEFD01D00F98B00CA0E54 /* HEMWhatsNewService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWhatsNewService.h; sourceTree = "<group>"; };
 		BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWhatsNewService.m; sourceTree = "<group>"; };
+		BFFCEFD31D06116500CA0E54 /* HEMPresenter+HEMPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMPresenter+HEMPhoto.h"; sourceTree = "<group>"; };
+		BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HEMPresenter+HEMPhoto.m"; sourceTree = "<group>"; };
 		C5D02EF68E71A45F5A7AA96C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2120,6 +2123,8 @@
 				BF539CD11C0F737D000F77AA /* HEMPresenter.m */,
 				BF6995EC1CA601BE00C7AA55 /* HEMListPresenter.h */,
 				BF6995ED1CA601BE00C7AA55 /* HEMListPresenter.m */,
+				BFFCEFD31D06116500CA0E54 /* HEMPresenter+HEMPhoto.h */,
+				BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3572,6 +3577,7 @@
 				BF83398C1C12277B00BFD0F4 /* HEMInsightPresenter.m in Sources */,
 				BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */,
 				BF35838F1CB437E100760CD4 /* HEMAudioService.m in Sources */,
+				BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */,
 				BF287D631C9CBF1F0052F543 /* HEMSensorService.m in Sources */,
 				BF6995EE1CA601BE00C7AA55 /* HEMListPresenter.m in Sources */,
 				BF48274D1C4F060F005EDEB5 /* HEMHealthKitService.m in Sources */,

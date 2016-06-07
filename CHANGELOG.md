@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.3.2
+
+New:
+
+* Added a property for the end of the breadcrumbs to describe where user is at, if not obvious
+* Display custom prompt to let user know that access to Camera or Photos was denied, but can be enabled through Settings
+
+Fixes:
+
+* Prevent a crasher if a default alarm sound was not determined before entering the alarm sound list
+* Prevent a crasher that can occur during long polling of sleep sound status due to a deferenced pointer
+* Fixed the second sleep pill text in device settings so it's not cut off on 5s/5/4s running iOS 9
+* Fixed issue that would cause the background of the email and password change screen to be incorrect when keyboard is hidden
+
 ## 1.4.3.1
 
 New:

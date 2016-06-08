@@ -147,9 +147,9 @@
 
 // location
 "location.error.title" = "Unable to set location";
-"location.error.not-enabled" = "Location Service is disabled. You can change this preference inside the Settings app.";
-"location.error.denied" = "You have denied access to, or disabled, Location Service.  You can change this preference inside the Settings app.";
-"location.error.weak-signal" = "We were unable to obtain your location. Try moving to a different location and try again.";
+"location.error.not-enabled" = "Location Services is disabled. You can change this preference inside the Settings app.";
+"location.error.denied" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";
+"location.error.generic" = "We were unable to obtain your location. Please try again.";
 "location.activity.status" = "Locating";
 
 // settings

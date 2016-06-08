@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, HEMLocationErrorCode) {
 
 typedef NS_ENUM(NSUInteger, HEMLocationAuthStatus) {
     HEMLocationAuthStatusUnknown = 1,
+    HEMLocationAuthStatusNotEnabled,
     HEMLocationAuthStatusAuthorized,
     HEMLocationAuthStatusDenied
 };
@@ -34,8 +35,6 @@ typedef NS_ENUM(NSUInteger, HEMLocationAuthStatus) {
 @end
 
 typedef void(^HEMLocationAuthorizationHandler)(HEMLocationAuthStatus status);
-typedef void(^HEMLocationUpdateHandler)(HEMLocation* mostRecentLocation);
-typedef void(^HEMLocationErrorHandler)(NSError* error);
 typedef void(^HEMLocationHandler)(HEMLocation* _Nullable mostRecentLocation, NSError* _Nullable error);
 
 @interface HEMLocationActivity : NSObject
@@ -45,6 +44,7 @@ typedef void(^HEMLocationHandler)(HEMLocation* _Nullable mostRecentLocation, NSE
 @interface HEMLocationService : SENService
 
 - (HEMLocationAuthStatus)authorizationStatus;
+- (void)requestPermission:(HEMLocationAuthorizationHandler)authHandler;
 - (HEMLocationActivity*)startLocationActivity:(HEMLocationHandler)update error:(NSError**)error;
 - (void)stopLocationActivity:(HEMLocationActivity*)activity;
 

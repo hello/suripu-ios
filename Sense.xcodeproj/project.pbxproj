@@ -157,6 +157,7 @@
 		BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */; };
 		BF2D64341C585C01009AD365 /* HEMHandHoldingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */; };
 		BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */; };
+		BF31A5DA1D07AEC20054D82E /* HEMLocationRequestPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */; };
 		BF35838C1CAC8F3600760CD4 /* HEMShortcutService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35838B1CAC8F3600760CD4 /* HEMShortcutService.m */; };
 		BF35838F1CB437E100760CD4 /* HEMAudioService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35838E1CB437E100760CD4 /* HEMAudioService.m */; };
 		BF3583921CB441B000760CD4 /* HEMAudioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3583911CB441B000760CD4 /* HEMAudioButton.m */; };
@@ -695,6 +696,8 @@
 		BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandHoldingServiceSpec.m; sourceTree = "<group>"; };
 		BF2EAD1F1B2F520400C3A6E3 /* HEMSupportTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportTopicsViewController.h; sourceTree = "<group>"; };
 		BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportTopicsViewController.m; sourceTree = "<group>"; };
+		BF31A5D81D07AEC20054D82E /* HEMLocationRequestPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationRequestPresenter.h; sourceTree = "<group>"; };
+		BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationRequestPresenter.m; sourceTree = "<group>"; };
 		BF35838A1CAC8F3600760CD4 /* HEMShortcutService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMShortcutService.h; sourceTree = "<group>"; };
 		BF35838B1CAC8F3600760CD4 /* HEMShortcutService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMShortcutService.m; sourceTree = "<group>"; };
 		BF35838D1CB437E100760CD4 /* HEMAudioService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAudioService.h; sourceTree = "<group>"; };
@@ -2485,6 +2488,8 @@
 				BFE376021CF646BE0029EE66 /* HEMSignInFormPresenter.m */,
 				BFE376041CF654F20029EE66 /* HEMSignInNavBarPresenter.h */,
 				BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */,
+				BF31A5D81D07AEC20054D82E /* HEMLocationRequestPresenter.h */,
+				BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3321,6 +3326,7 @@
 				8AF041FF1B8F84FA0028CA2E /* SENSensorAccessibility.m in Sources */,
 				BF8C091E1C28C3B5005AB5A7 /* HEMAccountUpdateDelegate.m in Sources */,
 				BFB7B20A1CCEC5CF0060999E /* HEMSoundListPresenter.m in Sources */,
+				BF31A5DA1D07AEC20054D82E /* HEMLocationRequestPresenter.m in Sources */,
 				8AC3C2DF1A3C82860074A87F /* HEMSnazzBar.m in Sources */,
 				8AF18E2A1BC31A7800EEF412 /* HEMAlertTextView.m in Sources */,
 				BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */,

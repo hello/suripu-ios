@@ -69,6 +69,7 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
 
 @property (nonatomic, strong) CLLocationManager* locationManager;
 @property (nonatomic, strong) NSMutableArray<HEMLocationActivity*>* activities;
+@property (nonatomic, copy) HEMLocationAuthorizationHandler permissionHandler;
 
 @end
 
@@ -85,6 +86,10 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
 }
 
 - (HEMLocationAuthStatus)authorizationStatus {
+    if (![CLLocationManager locationServicesEnabled]) {
+        return HEMLocationAuthStatusNotEnabled;
+    }
+    
     switch ([CLLocationManager authorizationStatus]) {
         case kCLAuthorizationStatusNotDetermined:
             return HEMLocationAuthStatusUnknown;
@@ -122,6 +127,16 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
         error = [self errorWithCode:HEMLocationErrorCodeDenied];
     }
     return error;
+}
+
+- (void)requestPermission:(HEMLocationAuthorizationHandler)authHandler {
+    HEMLocationAuthStatus status = [self authorizationStatus];
+    if (status == HEMLocationAuthStatusUnknown) {
+        [self setPermissionHandler:authHandler];
+        [[self locationManager] requestWhenInUseAuthorization];
+    } else {
+        authHandler (status);
+    }
 }
 
 - (HEMLocationActivity*)startLocationActivity:(HEMLocationHandler)update error:(NSError**)error {
@@ -173,12 +188,10 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     HEMLocationAuthStatus localStatus = [self authorizationStatus];
-    if (localStatus == HEMLocationAuthStatusDenied && [[self activities] count] > 0) {
-        NSError* error = [self errorWithCode:HEMLocationErrorCodeDenied];
-        [SENAnalytics trackError:error];
-        [self callActivitiesWithLocation:nil error:error];
-    } else if (localStatus == HEMLocationAuthStatusUnknown) {
-        [[self locationManager] requestWhenInUseAuthorization];
+    if ([self permissionHandler] &&
+        (localStatus == HEMLocationAuthStatusDenied || localStatus == HEMLocationAuthStatusAuthorized)) {
+        [self permissionHandler] (localStatus);
+        [self setPermissionHandler:nil];
     }
 }
 

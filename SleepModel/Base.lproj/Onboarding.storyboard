@@ -2345,7 +2345,7 @@ Now let’s set your first Smart Alarm.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="What's your location?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaK-X5-Jnp">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's your location?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaK-X5-Jnp">
                                 <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="VhK-Dg-f7D"/>
@@ -2354,16 +2354,16 @@ Now let’s set your first Smart Alarm.</string>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sense uses your location to know sunrise and sunset times, local weather and more." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sy-ck-jAh">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense uses your location to know sunrise and sunset times, local weather and more." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sy-ck-jAh">
                                 <rect key="frame" x="20" y="68" width="560" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
                                 <rect key="frame" x="0.0" y="109" width="600" height="366"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="f95-cU-0tP"/>
@@ -2373,11 +2373,8 @@ Now let’s set your first Smart Alarm.</string>
                                     <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="skipRequestingLocation:" destination="KXH-dY-O28" eventType="touchUpInside" id="8Yl-rE-iXb"/>
-                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="sSm-FW-Kol"/>
@@ -2387,29 +2384,26 @@ Now let’s set your first Smart Alarm.</string>
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="requestLocation:" destination="KXH-dY-O28" eventType="touchUpInside" id="feE-fg-p0R"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sEE-9r-AQZ" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="-16" id="3Ei-Kh-vjI"/>
+                            <constraint firstItem="sEE-9r-AQZ" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leading" id="3Ei-Kh-vjI"/>
                             <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="20" id="6PV-KD-sNS"/>
                             <constraint firstItem="SVC-vN-68T" firstAttribute="top" secondItem="sEE-9r-AQZ" secondAttribute="bottom" id="6gm-bq-IYx"/>
                             <constraint firstItem="8Sy-ck-jAh" firstAttribute="bottom" secondItem="sEE-9r-AQZ" secondAttribute="top" id="Fj6-bh-L0M"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zaK-X5-Jnp" secondAttribute="trailing" constant="4" id="KC4-j6-LyO"/>
-                            <constraint firstItem="zaK-X5-Jnp" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="LzL-PH-2YH"/>
-                            <constraint firstItem="SVC-vN-68T" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="OMP-vZ-SrT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="SVC-vN-68T" secondAttribute="trailing" constant="4" id="OUp-pS-qaU"/>
+                            <constraint firstAttribute="trailing" secondItem="zaK-X5-Jnp" secondAttribute="trailing" constant="20" id="KC4-j6-LyO"/>
+                            <constraint firstItem="zaK-X5-Jnp" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leading" constant="20" id="LzL-PH-2YH"/>
+                            <constraint firstItem="SVC-vN-68T" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leading" constant="20" id="OMP-vZ-SrT"/>
+                            <constraint firstAttribute="trailing" secondItem="SVC-vN-68T" secondAttribute="trailing" constant="20" id="OUp-pS-qaU"/>
                             <constraint firstItem="zaK-X5-Jnp" firstAttribute="top" secondItem="86E-a5-OJw" secondAttribute="bottom" constant="4" id="Vyz-hE-xZO"/>
-                            <constraint firstItem="8Sy-ck-jAh" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="mdA-zw-LyT"/>
+                            <constraint firstItem="8Sy-ck-jAh" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leading" constant="20" id="mdA-zw-LyT"/>
                             <constraint firstItem="8Sy-ck-jAh" firstAttribute="top" secondItem="zaK-X5-Jnp" secondAttribute="bottom" constant="10" id="oR6-Za-ZOp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8Sy-ck-jAh" secondAttribute="trailing" constant="4" id="qkb-ur-apd"/>
+                            <constraint firstAttribute="trailing" secondItem="8Sy-ck-jAh" secondAttribute="trailing" constant="20" id="qkb-ur-apd"/>
                             <constraint firstItem="Sdf-8C-14E" firstAttribute="bottom" secondItem="SVC-vN-68T" secondAttribute="bottom" constant="77" id="qv3-5M-Q5y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Sdf-8C-14E" secondAttribute="trailing" constant="4" id="yIE-5O-OBH"/>
-                            <constraint firstItem="Sdf-8C-14E" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="yWV-HI-ABv"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sEE-9r-AQZ" secondAttribute="trailing" constant="-16" id="z5t-g3-84c"/>
+                            <constraint firstAttribute="trailing" secondItem="Sdf-8C-14E" secondAttribute="trailing" constant="20" id="yIE-5O-OBH"/>
+                            <constraint firstItem="Sdf-8C-14E" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leading" constant="20" id="yWV-HI-ABv"/>
+                            <constraint firstAttribute="trailing" secondItem="sEE-9r-AQZ" secondAttribute="trailing" id="z5t-g3-84c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="j8Z-os-nU5"/>

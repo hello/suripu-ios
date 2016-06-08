@@ -53,7 +53,7 @@
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
 "onboarding.health.enable.failure.title" = "Failed to enable Health integration";
 "onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
-"onboarding.health.enable.failure.generic" = "You may have previously denied access. Go to your Health app, find Sleep Analysis data, Share Data, and edit the data sources to enable Sense.";
+"onboarding.health.enable.failure.generic" = "You may have previously denied access. Go to your Health app and edit data sources for Sleep Analysis to enable read and write access for Sense.";
 "onboarding.account.firstname" = "First name";
 "onboarding.account.lastname" = "Last name";
 "onboarding.account.email" = "Email address";
@@ -146,9 +146,11 @@
 "wifi.security.open" = "OPEN";
 
 // location
-"location.error.title" = "Unknown Location";
-"location.error.not-enabled" = "You have denied access to, or disabled, Location Services. You can change this preference inside the Settings app.";
-"location.error.weak-signal" = "We were unable to obtain your location. Try moving to a different location and try again.";
+"location.error.title" = "Unable to set location";
+"location.error.not-enabled" = "Location Services is disabled. You can change this preference inside the Settings app.";
+"location.error.denied" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";
+"location.error.generic" = "We were unable to obtain your location. Please try again.";
+"location.activity.status" = "Locating";
 
 // settings
 "settings.title" = "Settings";

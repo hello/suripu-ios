@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.3.3
+
+Fixes:
+
+* Refactored the onboarding location screen to address incorrect error messaging and initial delay
+* Updated copy for HK to specify that write access is needed
+
 ## 1.4.3.2
 
 New:

@@ -60,10 +60,10 @@
     
     [[[self femaleSelectorButton] layer] setBorderWidth:0.0f];
     [[[self femaleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];
-    [[[self femaleSelectorButton] titleLabel] setFont:[UIFont genderButtonTitleFont]];
+    [[[self femaleSelectorButton] titleLabel] setFont:[UIFont h5]];
     [[[self maleSelectorButton] layer] setBorderWidth:0.0f];
     [[[self maleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];
-    [[[self maleSelectorButton] titleLabel] setFont:[UIFont genderButtonTitleFont]];
+    [[[self maleSelectorButton] titleLabel] setFont:[UIFont h5]];
     
     switch ([self defaultGender]) {
         case SENAccountGenderMale:

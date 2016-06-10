@@ -135,7 +135,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
 - (NSAttributedString*)attributedDescriptionWithKey:(NSString*)localizedKey {
     NSString* description = NSLocalizedString(localizedKey, nil);
     return [[NSAttributedString alloc] initWithString:description
-                                           attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
+                                           attributes:@{NSFontAttributeName : [UIFont body],
                                                         NSForegroundColorAttributeName : [UIColor grey5]}];
 }
 
@@ -182,7 +182,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
     UILabel* label = [[UILabel alloc] init];
     [label setBackgroundColor:[scrollView backgroundColor]];
     [label setText:text];
-    [label setFont:[UIFont onboardingTitleFont]];
+    [label setFont:[UIFont h5]];
     [label setTextColor:[UIColor grey7]];
     [label setNumberOfLines:0];
     

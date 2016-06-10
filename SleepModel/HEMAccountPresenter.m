@@ -466,7 +466,7 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     if (!_enhancedAudioNote) {
         NSString* note = NSLocalizedString(@"settings.enhanced-audio.desc", nil);
         NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsHelpFont],
-                                     NSForegroundColorAttributeName : [UIColor textColor]};
+                                     NSForegroundColorAttributeName : [UIColor grey3]};
         _enhancedAudioNote = [[NSAttributedString alloc] initWithString:note attributes:attributes];
     }
     return _enhancedAudioNote;
@@ -613,9 +613,9 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor textColor]];
+    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
     
-    [[cell detailTextLabel] setTextColor:[UIColor detailTextColor]];
+    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
     [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     [[cell detailTextLabel] setText:nil];
     

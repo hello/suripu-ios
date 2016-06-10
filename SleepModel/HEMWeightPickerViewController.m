@@ -2,8 +2,7 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENPreference.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
@@ -43,6 +42,7 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 }
 
 - (void)configureScale {
+    [[self weightLabel] setFont:[UIFont h1]];
     [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMWeightPickerMaxWeight
                                                 direction:HEMRulerDirectionHorizontal]];
     

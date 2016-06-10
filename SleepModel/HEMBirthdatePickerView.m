@@ -78,7 +78,7 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     [[self monthFormatter] setLocale:[NSLocale currentLocale]];
     
     [self setPickerTextColor:[UIColor colorWithWhite:56.0f/255.0f alpha:1.0f]];
-    [self setPickerTextFont:[UIFont birthdatePickerTextFont]];
+    [self setPickerTextFont:[UIFont h5]];
     
     [self setMonthTableView:[self componentTableView]];
     [self addSubview:[self monthTableView]];

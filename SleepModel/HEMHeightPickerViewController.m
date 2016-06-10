@@ -1,14 +1,12 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENPreference.h>
 
-#import "UIFont+HEMStyle.h"
-
 #import "HEMHeightPickerViewController.h"
 #import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMRulerView.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "HEMMathUtil.h"
 #import "HEMAccountUpdateDelegate.h"
 
@@ -54,6 +52,7 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 }
 
 - (void)configureRuler {
+    [[self heightLabel] setFont:[UIFont h1]];
     [self setUseMetric:[SENPreference useMetricUnitForHeight]];
     
     [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMHeightTotalSegments

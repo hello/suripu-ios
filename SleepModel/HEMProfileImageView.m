@@ -44,8 +44,11 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
 }
 
 - (void)applyCircleMask {
+    // make the rect slightly bigger than the bounds to prevent the image from
+    // flashing slightly when loaded on the sides
+    CGRect rect = CGRectInset([self bounds], -2.0f, -2.0f);
     CGFloat radius = CGRectGetHeight([self bounds]) / 2.0f;
-    UIBezierPath* rectPath = [UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:0.0f];
+    UIBezierPath* rectPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:0.0f];
     UIBezierPath* circlePath = [UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:radius];
     [rectPath appendPath:circlePath];
     [rectPath setUsesEvenOddFillRule:YES];

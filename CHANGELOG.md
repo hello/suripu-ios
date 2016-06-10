@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.3.4
+
+New:
+
+* Expanded the Timeline error state messaging to include brief troubleshooting text
+* Updated fonts / colors within settings
+
+Fixes:
+
+* Profile image no longer quickly flashes beyond it's bounds when loading from url
+
 ## 1.4.3.3
 
 Fixes:

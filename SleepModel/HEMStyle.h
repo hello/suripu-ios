@@ -16,3 +16,5 @@ extern CGFloat const HEMStyleCardErrorTextVertMargin;
 extern CGFloat const HEMStyleSectionTopMargin;
 extern CGFloat const HEMStyleDeviceSectionTopMargin;
 extern CGFloat const HEMStyleButtonContainerBorderWidth;
+
+void ApplyHelloStyles (void);

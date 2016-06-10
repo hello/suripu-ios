@@ -311,6 +311,12 @@
 
 #pragma mark - Text colors
 
++ (UIColor *)settingsTextColor {
+    return [self grey6];
+}
++ (UIColor *)settingsDetailTextColor {
+    return [self grey3];
+}
 + (UIColor *)boldTextColor {
     return [self grey7];
 }

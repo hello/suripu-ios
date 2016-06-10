@@ -153,7 +153,6 @@
 		BF287D5F1C9CBB380052F543 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BF287D631C9CBF1F0052F543 /* HEMSensorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF287D621C9CBF1F0052F543 /* HEMSensorService.m */; };
 		BF287D641C9CBF250052F543 /* HEMSensorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF287D621C9CBF1F0052F543 /* HEMSensorService.m */; };
-		BF2AB9391B1938CC0092E9C4 /* HEMFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */; };
 		BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */; };
 		BF2D64341C585C01009AD365 /* HEMHandHoldingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */; };
 		BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */; };
@@ -689,8 +688,6 @@
 		BF27816C1A0964FF00A8868D /* HEMWiFiConfigurationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMWiFiConfigurationDelegate.h; sourceTree = "<group>"; };
 		BF287D611C9CBF1F0052F543 /* HEMSensorService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorService.h; sourceTree = "<group>"; };
 		BF287D621C9CBF1F0052F543 /* HEMSensorService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorService.m; sourceTree = "<group>"; };
-		BF2AB9371B1938CC0092E9C4 /* HEMFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMFieldTableViewCell.h; sourceTree = "<group>"; };
-		BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMFieldTableViewCell.m; sourceTree = "<group>"; };
 		BF2AB93A1B1940610092E9C4 /* HEMFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMFormViewController.h; sourceTree = "<group>"; };
 		BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMFormViewController.m; sourceTree = "<group>"; };
 		BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandHoldingServiceSpec.m; sourceTree = "<group>"; };
@@ -2645,8 +2642,6 @@
 		BF8C093F1C330A8B005AB5A7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BF2AB9371B1938CC0092E9C4 /* HEMFieldTableViewCell.h */,
-				BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */,
 				BFE375E11CEBD1200029EE66 /* HEMPhotoHeaderView.h */,
 				BFE375E21CEBD1200029EE66 /* HEMPhotoHeaderView.m */,
 				BFE375E41CEBDB440029EE66 /* HEMBasicTableViewCell.h */,
@@ -3549,7 +3544,6 @@
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,
 				BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */,
 				BFC99BBA1B69A4C4008F7F0D /* HEMAppReviewQuestion.m in Sources */,
-				BF2AB9391B1938CC0092E9C4 /* HEMFieldTableViewCell.m in Sources */,
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,
 				BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */,

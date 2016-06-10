@@ -20,7 +20,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
         self.backgroundColor = [UIColor clearColor];
         [self setBorderStyle:UITextBorderStyleNone];
         [self setTintColor:[UIColor tintColor]];
-        [self setFont:[UIFont textfieldTextFont]];
+        [self setFont:[UIFont body]];
         [self setTextColor:[UIColor grey6]];
         [self setFocus:NO];
     }
@@ -141,7 +141,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     
     // http://stackoverflow.com/questions/35293379/uitextfield-securetextentry-toggle-set-incorrect-font
     [self setFont:nil];
-    [self setFont:[UIFont textfieldTextFont]];
+    [self setFont:[UIFont body]];
     [self layoutIfNeeded];
     
     cursorPosition = [self endOfDocument];

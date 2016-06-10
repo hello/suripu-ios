@@ -24,9 +24,8 @@
 
 - (void)configureDefaults {
     [[self titleLabel] setTextColor:[UIColor lowImportanceTextColor]];
-    [[self titleLabel] setFont:[UIFont textfieldTitleFont]];
+    [[self titleLabel] setFont:[UIFont h7]];
     [[self titleLabel] setHidden:YES];
-    
 }
 
 - (void)setPlaceholderText:(NSString *)placeholderText {

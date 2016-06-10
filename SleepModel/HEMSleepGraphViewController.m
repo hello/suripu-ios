@@ -64,6 +64,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 @property (nonatomic, weak) IBOutlet UILabel *errorMessageLabel;
 @property (nonatomic, weak) IBOutlet UIButton *errorSupportButton;
 @property (nonatomic, weak) IBOutlet UIView *errorViewsContainerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorImageHeightConstraint;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 @property (nonatomic, assign, getter=isDismissing) BOOL dismissing;
 @property (nonatomic, assign, getter=isCheckingForTutorials) BOOL checkingForTutorials;
@@ -103,6 +104,7 @@ static BOOL hasLoadedBefore = NO;
     [self configurePresenters];
     [self configureCollectionView];
     [self configureTransitions];
+    [self configureErrorProperties];
 
     [self loadData];
 
@@ -118,6 +120,23 @@ static BOOL hasLoadedBefore = NO;
     }
     
     [self setAudioService:[HEMAudioService new]];
+}
+
+- (void)configureErrorProperties {
+    [[self errorTitleLabel] setFont:[UIFont h5]];
+    [[self errorTitleLabel] setTextColor:[UIColor grey6]];
+    
+    [[self errorMessageLabel] setFont:[UIFont body]];
+    [[self errorMessageLabel] setTextColor:[UIColor grey4]];
+    
+    [[[self errorSupportButton] titleLabel] setFont:[UIFont button]];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [super adjustConstraintsForIPhone4];
+    
+    CGFloat height = [[self errorImageHeightConstraint] constant];
+    [[self errorImageHeightConstraint] setConstant:2 * (height / 3.0f)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -933,14 +952,14 @@ static BOOL hasLoadedBefore = NO;
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.none.message", nil);
         self.errorImageView.image = [UIImage imageNamed:@"timelineNoDataIcon"];
-        [self.errorSupportButton setTitle:NSLocalizedString(@"sleep-data.not-enough.contact-support", nil)
+        [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
                                  forState:UIControlStateNormal];
         self.errorSupportButton.hidden = NO;
     } else {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
         self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.not-enough.message", nil);
         self.errorImageView.image = [UIImage imageNamed:@"timelineNotEnoughDataIcon"];
-        [self.errorSupportButton setTitle:NSLocalizedString(@"sleep-data.not-enough.contact-support", nil)
+        [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
                                  forState:UIControlStateNormal];
         self.errorSupportButton.hidden = NO;
     }

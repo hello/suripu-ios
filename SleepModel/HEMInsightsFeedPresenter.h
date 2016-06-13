@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HEMPresenter.h"
+#import "HEMRootViewController.h"
 
 @class HEMInsightsFeedPresenter;
 @class SENInsight;
@@ -32,6 +33,7 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 - (void)presenter:(HEMInsightsFeedPresenter*)presenter
     showQuestions:(NSArray<SENQuestion*>*)questions
        completion:(nullable HEMInsightsPresenterCompletion)completion;
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter showTab:(HEMRootDrawerTab)tab;
 
 @end
 

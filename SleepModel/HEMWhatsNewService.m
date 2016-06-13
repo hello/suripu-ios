@@ -72,4 +72,8 @@ static NSString* const HEMWhatsNewServiceSettingDebug = @"is.hello.sense.whats-n
     return button;
 }
 
+- (HEMWhatsNewLocation)location {
+    return HEMWhatsNewLocationSettings;
+}
+
 @end

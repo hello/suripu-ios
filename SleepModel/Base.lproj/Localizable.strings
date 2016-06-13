@@ -631,7 +631,7 @@
 "actions.edit.wifi" = "Edit WiFi";
 "actions.import.from.fb" = "Import from Facebook";
 "actions.take.photo" = "Take Photo";
-"actions.camera-roll" = "Open Camera Roll";
+"actions.camera-roll" = "Choose from Library";
 "actions.remove-photo" = "Remove Photo";
 "actions.go-to-settings" = "GO TO SETTINGS";
 "status.success" = "Done";

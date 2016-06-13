@@ -25,7 +25,7 @@ typedef void(^HEMProfilePhotoAccessHandler)(HEMProfilePhotoAccess access);
 
 + (void)promptForAccessIfNeededFor:(BOOL)camera completion:(HEMProfilePhotoAccessHandler)completion;
 + (HEMProfilePhotoAccess)authorizationFor:(BOOL)camera;
-+ (BOOL)originalIsPotentiallyAThumbnail:(NSDictionary*)imageInfo;
++ (BOOL)originalIsPotentiallyAThumbnail:(NSDictionary<NSString*, id>*)imageInfo;
 
 @end
 

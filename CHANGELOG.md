@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.3.5
+
+New:
+
+* Debug Whats New action button now takes user to settings tab
+
+Fixes:
+
+* Selecting a large photo from camera roll before it finishes loading will throw an alert to the user instead of uploading a black image.
+
 ## 1.4.3.4
 
 New:

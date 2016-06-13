@@ -698,17 +698,27 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
 #pragma mark - Camera
          
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    UIImage* photo = info[UIImagePickerControllerEditedImage];
-    if (!photo) {
-        photo = info[UIImagePickerControllerOriginalImage];
+    if ([UIImagePickerController originalIsPotentiallyAThumbnail:info]) {
+        [[self delegate] dismissViewControllerFrom:self completion:^{
+            NSString* title = NSLocalizedString(@"account.error.photo-selection.title", nil);
+            NSString* message = NSLocalizedString(@"account.error.photo-selection.message", nil);
+            
+            [[self delegate] showError:message title:title from:self];
+        }];
+    } else {
+        UIImage* original = info[UIImagePickerControllerOriginalImage];
+        UIImage* edited = info[UIImagePickerControllerEditedImage];
+        UIImage* photoToUpload = edited ?: original;
+        
+        [self setPhoto:photoToUpload];
+        [[self collectionView] reloadData];
+        [[self delegate] dismissViewControllerFrom:self completion:nil];
     }
-    [self setPhoto:photo];
-    [[self collectionView] reloadData];
-    [[self delegate] dismissViewControllerFrom:self];
+
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [[self delegate] dismissViewControllerFrom:self];
+    [[self delegate] dismissViewControllerFrom:self completion:nil];
 }
 
 #pragma mark - Clean up

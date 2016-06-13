@@ -101,8 +101,9 @@
     }
 }
 
-- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter
+                       completion:(void(^)(void))completion {
+    [self dismissViewControllerAnimated:YES completion:completion];
 }
 
 @end

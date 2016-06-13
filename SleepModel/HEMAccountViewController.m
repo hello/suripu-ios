@@ -110,8 +110,9 @@
     }
 }
 
-- (void)dismissViewControllerFrom:(HEMAccountPresenter *)presenter {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)dismissViewControllerFrom:(HEMAccountPresenter*)presenter
+                       completion:(void(^)(void))completion {
+    [self dismissViewControllerAnimated:YES completion:completion];
 }
 
 @end

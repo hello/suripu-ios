@@ -118,4 +118,15 @@
     }
 }
 
+#pragma mark - Checks
+
++ (BOOL)originalIsPotentiallyAThumbnail:(NSDictionary<NSString*, id>*)imageInfo {
+    UIImage* original = imageInfo[UIImagePickerControllerOriginalImage];
+    UIImage* edited = imageInfo[UIImagePickerControllerEditedImage];
+    NSValue* croppedRectVal = imageInfo[UIImagePickerControllerCropRect];
+    CGRect croppedRect = [croppedRectVal CGRectValue];
+    return [original size].width < [edited size].width
+        && CGRectGetWidth(croppedRect) > [edited size].width;
+}
+
 @end

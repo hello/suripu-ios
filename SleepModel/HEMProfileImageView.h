@@ -24,5 +24,6 @@
 
 - (void)clearPhoto;
 - (BOOL)showingProfilePhoto;
+- (void)showError;
 
 @end

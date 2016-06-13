@@ -260,10 +260,7 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
     [image jpegDataWithCompression:compression completion:^(NSData * _Nullable data) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (data) {
-            void(^done)(SENRemoteImage* remoteImage, NSError* error) = ^(SENRemoteImage* remoteImage, NSError* error) {
-                
-            };
-            [[strongSelf accountService] uploadProfileJpegPhoto:data progress:nil completion:done];
+            [[strongSelf accountService] uploadProfileJpegPhoto:data progress:nil completion:nil];
         } else {
             // TODO: show error
         }
@@ -359,20 +356,29 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 
 - (void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    UIImage* photo = info[UIImagePickerControllerEditedImage];
-    if (!photo) {
-        photo = info[UIImagePickerControllerOriginalImage];
+    if ([UIImagePickerController originalIsPotentiallyAThumbnail:info]) {
+        [[self delegate] dismissViewControllerFrom:self completion:^{
+            NSString* title = NSLocalizedString(@"account.error.photo-selection.title", nil);
+            NSString* message = NSLocalizedString(@"account.error.photo-selection.message", nil);
+            
+            [[self delegate] showErrorTitle:title message:message from:self];
+        }];
+    } else {
+        UIImage* original = info[UIImagePickerControllerOriginalImage];
+        UIImage* edited = info[UIImagePickerControllerEditedImage];
+        UIImage* photoToUpload = edited ?: original;
+        
+        HEMPhotoHeaderView* photoView = [self photoHeaderView];
+        [[photoView imageView] setImage:photoToUpload];
+     
+        [[self delegate] dismissViewControllerFrom:self completion:nil];
+        [self uploadPhoto:photoToUpload];
     }
-    
-    HEMPhotoHeaderView* photoView = [self photoHeaderView];
-    [[photoView imageView] setImage:photo];
-    [[self delegate] dismissViewControllerFrom:self];
-    
-    [self uploadPhoto:photo];
+
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [[self delegate] dismissViewControllerFrom:self];
+    [[self delegate] dismissViewControllerFrom:self completion:nil];
 }
 
 #pragma mark - TableView Helpers
@@ -763,7 +769,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         } else {
             [[strongSelf tableView] reloadData];
         }
-        [[strongSelf delegate] dismissViewControllerFrom:strongSelf];
+        [[strongSelf delegate] dismissViewControllerFrom:strongSelf completion:nil];
     };
 }
 
@@ -776,7 +782,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[weakSelf accountService] updateBirthdate:[tempAccount birthdate]
                                         completion:[weakSelf accountUpdateHandler]];
     } cancel:^{
-        [[weakSelf delegate] dismissViewControllerFrom:weakSelf];
+        [[weakSelf delegate] dismissViewControllerFrom:weakSelf completion:nil];
     }];
      
     HEMBirthdatePickerViewController* vc = [HEMOnboardingStoryboard instantiateDobViewController];
@@ -803,7 +809,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[weakSelf accountService] updateGender:[tempAccount gender]
                                      completion:[weakSelf accountUpdateHandler]];
     } cancel:^{
-        [[weakSelf delegate] dismissViewControllerFrom:weakSelf];
+        [[weakSelf delegate] dismissViewControllerFrom:weakSelf completion:nil];
     }];
     
     SENAccount* account = [[self accountService] account];
@@ -823,7 +829,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[weakSelf accountService] updateHeight:[tempAccount height]
                                      completion:[weakSelf accountUpdateHandler]];
     } cancel:^{
-        [[weakSelf delegate] dismissViewControllerFrom:weakSelf];
+        [[weakSelf delegate] dismissViewControllerFrom:weakSelf completion:nil];
     }];
     
     SENAccount* account = [[self accountService] account];
@@ -843,7 +849,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[weakSelf accountService] updateWeight:[tempAccount weight]
                                      completion:[weakSelf accountUpdateHandler]];
     } cancel:^{
-        [[weakSelf delegate] dismissViewControllerFrom:weakSelf];
+        [[weakSelf delegate] dismissViewControllerFrom:weakSelf completion:nil];
     }];
     
     SENAccount* account = [[self accountService] account];

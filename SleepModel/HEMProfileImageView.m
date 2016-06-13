@@ -136,4 +136,9 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
     [[self errorView] setHidden:YES];
 }
 
+- (void)showError {
+    [self showDimmedOverlay:YES completion:nil];
+    [[self errorView] setHidden:NO];
+}
+
 @end

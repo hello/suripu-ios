@@ -670,6 +670,8 @@
 "account.photo.enable-camera.message" = "To take a new photo, you need to grant Sense access to your camera. Enable camera access for Sense in your device settings.";
 "account.photo.enable-camera-roll.title" = "Enable photo access";
 "account.photo.enable-camera-roll.message" = "To select a new profile photo, you need to grant Sense access to your photos. Enable access to photos for Sense in your device settings.";
+"account.error.photo-selection.title" = "Error processing selected photo";
+"account.error.photo-selection.message" = "The photo selected may not have finished loading. Please try again.";
 
 // notifications
 "notifications.actions.ok" = "Okay";

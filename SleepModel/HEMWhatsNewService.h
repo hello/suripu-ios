@@ -8,6 +8,11 @@
 
 #import "SENService.h"
 
+typedef NS_ENUM(NSUInteger, HEMWhatsNewLocation) {
+    HEMWhatsNewLocationNone,
+    HEMWhatsNewLocationSettings
+};
+
 @interface HEMWhatsNewService : SENService
 
 + (void)forceToShow;
@@ -17,5 +22,6 @@
 - (NSString*)title;
 - (NSString*)message;
 - (NSString*)buttonTitle;
+- (HEMWhatsNewLocation)location;
 
 @end

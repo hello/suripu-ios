@@ -30,6 +30,7 @@
 #import "HEMHandHoldingService.h"
 #import "HEMInsightsHandHoldingPresenter.h"
 #import "HEMWhatsNewService.h"
+#import "HEMRootViewController.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -164,6 +165,14 @@
             completion ();
         }
     }];
+}
+
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter showTab:(HEMRootDrawerTab)tab {
+    UIViewController* controller = [self rootViewController];
+    if ([controller isKindOfClass:[HEMRootViewController class]]) {
+        HEMRootViewController* rootVC = (id) controller;
+        [rootVC showSettingsDrawerTabAtIndex:tab animated:YES];
+    }
 }
 
 #pragma mark - Clean Up

@@ -328,6 +328,9 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
                      forControlEvents:UIControlEventTouchUpInside];
     [header setTitle:[[self whatsNewService] title] andMessage:[[self whatsNewService] message]];
     [[header actionButton] setTitle:[[self whatsNewService] buttonTitle] forState:UIControlStateNormal];
+    [[header actionButton] addTarget:self
+                              action:@selector(showWhatsNew)
+                    forControlEvents:UIControlEventTouchUpInside];
     
     return header;
 }
@@ -471,6 +474,25 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 }
 
 #pragma mark - Actions
+
+- (void)showWhatsNew {
+    HEMWhatsNewLocation loc = [[self whatsNewService] location];
+    switch (loc) {
+        case HEMWhatsNewLocationSettings:
+            [[self delegate] presenter:self showTab:HEMRootDrawerTabSettings];
+            break;
+        case HEMWhatsNewLocationNone:
+        default:
+            break;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    int64_t delay = (int64_t)(1.0f * NSEC_PER_SEC);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf dismissWhatsNew];
+    });
+}
 
 - (void)dismissWhatsNew {
     [[self whatsNewService] dismiss];

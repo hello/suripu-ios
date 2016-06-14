@@ -39,6 +39,10 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 @property (nonatomic, weak) HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 @property (nonatomic, assign, getter=hasDataError) BOOL dataError;
+@property (nonatomic, assign) NSInteger currentGraphCount;
+@property (nonatomic, weak) HEMTrendsCalendarViewCell* sleepScoreCell;
+@property (nonatomic, weak) HEMTrendsBarGraphCell* sleepDurationCell;
+@property (nonatomic, weak) HEMTrendsSleepDepthCell* sleepDepthCell;
 
 @end
 
@@ -48,6 +52,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     self = [super init];
     if (self) {
         _trendService = trendService;
+        _currentGraphCount = 0;
         [self listenForTrendsDataEvents];
         [self listenForTimelineChanges];
     }
@@ -80,8 +85,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 #pragma mark - Global loading indicator
 
 - (void)showLoading:(BOOL)loading {
-    SENTrends* trends = [[self trendService] cachedTrendsForTimeScale:[self selectedTimeScale]];
-    if (loading && [[trends graphs] count] == 0) {
+    NSInteger items = [[self collectionView] numberOfItemsInSection:0];
+    if (loading && items == 0) {
         [[self loadingIndicator] start];
         [[self loadingIndicator] setHidden:NO];
     } else if ([[self loadingIndicator] isAnimating]){
@@ -134,7 +139,44 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         [self showLoading:NO];
     }
     
-    [[self collectionView] reloadData];
+    if ([self isRefreshing]) {
+        [[self collectionView] reloadData];
+    } else {
+        NSInteger graphs = [[[self selectedTrends] graphs] count];
+        if (graphs == [self currentGraphCount] && [self currentGraphCount] > 0) {
+            [[self collectionView] performBatchUpdates:^{
+                [self updateCellsWithSelectedTrends];
+            } completion:nil];
+        } else {
+            [self setCurrentGraphCount:graphs];
+            [[self collectionView] reloadData];
+        }
+    }
+
+}
+
+- (void)updateCellsWithSelectedTrends {
+    for (SENTrendsGraph* graph in [[self selectedTrends] graphs]) {
+        switch ([graph dataType]) {
+            case SENTrendsDataTypeScore:
+                if ([self sleepScoreCell]) {
+                    [self configureCalendarCell:[self sleepScoreCell] forTrendsGraph:graph];
+                }
+                break;
+            case SENTrendsDataTypeHour:
+                if ([self sleepDurationCell]) {
+                    [self configureBarCell:[self sleepDurationCell] forTrendsGraph:graph];
+                }
+                break;
+            case SENTrendsDataTypePercent:
+                if ([self sleepDepthCell]) {
+                    [self configureSleepDepthCell:[self sleepDepthCell] forTrendsGraph:graph];
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 #pragma mark - Data
@@ -447,6 +489,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     // type must be set first!
     [calendarCell setSectionTitles:[self graphTitlesFrom:graph]
                             scores:[[self trendService] segmentedDataPointsFrom:graph]];
+    [calendarCell setLoading:NO];
 }
 
 - (void)configureBarCell:(HEMTrendsBarGraphCell*)barCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -467,6 +510,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [barCell updateGraphWithTitles:attributedTitles
                      displayPoints:[[self trendService] segmentedDataPointsFrom:graph]
                            spacing:[self barSpacingForTimeScale:[graph timeScale]]];
+    [barCell setLoading:NO];
 }
 
 - (void)configureSleepDepthCell:(HEMTrendsSleepDepthCell*)sleepDepthCell
@@ -478,6 +522,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [sleepDepthCell updateLightPercentage:light
                          mediumPercentage:medium
                            deepPercentage:deep];
+    [sleepDepthCell setLoading:NO];
 }
 
 - (void)configureMessageCell:(HEMIntroMessageCell*)messageCell forTrends:(SENTrends*)trends {
@@ -585,12 +630,14 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         HEMTrendsBaseCell* baseCell = (id)cell;
         [baseCell setLoading:[self isRefreshing]];
         
-        
         if ([cell isKindOfClass:[HEMTrendsCalendarViewCell class]]) {
+            [self setSleepScoreCell:(id)cell];
             [self configureCalendarCell:(id)cell forTrendsGraph:graph];
         } else if ([cell isKindOfClass:[HEMTrendsBarGraphCell class]]) {
+            [self setSleepDurationCell:(id)cell];
             [self configureBarCell:(id)cell forTrendsGraph:graph];
         } else if ([cell isKindOfClass:[HEMTrendsSleepDepthCell class]]) {
+            [self setSleepDepthCell:(id)cell];
             [self configureSleepDepthCell:(id)cell forTrendsGraph:graph];
         }
     } else if ([cell isKindOfClass:[HEMIntroMessageCell class]]) {

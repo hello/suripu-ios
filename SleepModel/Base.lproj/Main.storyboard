@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -3671,11 +3671,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ilp-h8-uDj">
-                                            <rect key="frame" x="544" y="16" width="40" height="40"/>
+                                            <rect key="frame" x="544" y="0.0" width="56" height="56"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="FzR-r2-AG9"/>
-                                                <constraint firstAttribute="width" constant="40" id="RlB-e4-eu6"/>
+                                                <constraint firstAttribute="height" constant="56" id="FzR-r2-AG9"/>
+                                                <constraint firstAttribute="width" constant="56" id="RlB-e4-eu6"/>
                                             </constraints>
+                                            <inset key="contentEdgeInsets" minX="0.0" minY="16" maxX="16" maxY="0.0"/>
                                             <state key="normal" image="closeXGrey"/>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVC-n2-ldE">
@@ -3716,10 +3717,10 @@
                                         <constraint firstItem="4uY-4Z-bMV" firstAttribute="leading" secondItem="90x-h7-XTY" secondAttribute="leading" id="pQZ-2m-wjg"/>
                                         <constraint firstItem="sXG-fV-mXA" firstAttribute="leading" secondItem="90x-h7-XTY" secondAttribute="leading" id="qYR-Qk-e5J"/>
                                         <constraint firstItem="eVC-n2-ldE" firstAttribute="top" secondItem="90x-h7-XTY" secondAttribute="top" constant="48" id="rv5-3l-UOR"/>
-                                        <constraint firstItem="ilp-h8-uDj" firstAttribute="top" secondItem="90x-h7-XTY" secondAttribute="top" constant="16" id="tnA-13-f4d"/>
+                                        <constraint firstItem="ilp-h8-uDj" firstAttribute="top" secondItem="90x-h7-XTY" secondAttribute="top" id="tnA-13-f4d"/>
                                         <constraint firstItem="eVC-n2-ldE" firstAttribute="leading" secondItem="90x-h7-XTY" secondAttribute="leading" constant="24" id="uC6-aL-nrl"/>
                                         <constraint firstAttribute="bottom" secondItem="sXG-fV-mXA" secondAttribute="bottom" constant="16" id="w8q-nR-xju"/>
-                                        <constraint firstAttribute="trailing" secondItem="ilp-h8-uDj" secondAttribute="trailing" constant="16" id="yfu-FP-vBg"/>
+                                        <constraint firstAttribute="trailing" secondItem="ilp-h8-uDj" secondAttribute="trailing" id="yfu-FP-vBg"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="actionButton" destination="sXG-fV-mXA" id="F16-N9-F6r"/>

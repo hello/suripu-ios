@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.3.6
+
+New:
+
+* Trends calendar / sleep score graph now animates the height change
+
+Fixes:
+
+* HK entitlement was somehow not working.  Toggling the setting on / off in the project seem to have fixed it.
+
 ## 1.4.3.5
 
 New:

@@ -327,6 +327,7 @@
 		BFB815231BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB815221BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m */; };
 		BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */; };
 		BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFBECCE41A15706700335CC6 /* Onboarding.storyboard */; };
+		BFBEFA871D10D4630060908A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBEFA861D10D4630060908A /* HealthKit.framework */; };
 		BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */; };
 		BFC0E8831C0CE01400C6DFC7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4B669A19F6C9E900445883 /* MessageUI.framework */; };
 		BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */; };
@@ -1009,6 +1010,7 @@
 		BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMathUtil.m; sourceTree = "<group>"; };
 		BFBECCE31A15706700335CC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		BFBECCE61A15707100335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		BFBEFA861D10D4630060908A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+HEMMapping.h"; sourceTree = "<group>"; };
 		BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+HEMMapping.m"; sourceTree = "<group>"; };
 		BFC3AA0E19C27A610055D308 /* HEMSleepQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionsViewController.h; sourceTree = "<group>"; };
@@ -1138,6 +1140,7 @@
 				BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
+				BFBEFA871D10D4630060908A /* HealthKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				2C9F8D0D8F5CADF2E5DAA470 /* libPods.a in Frameworks */,
 			);
@@ -1194,6 +1197,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFBEFA861D10D4630060908A /* HealthKit.framework */,
 				BF896D4A1C7422720095D37D /* CoreFoundation.framework */,
 				BF62150C1AB8C1C80047A518 /* libicucore.dylib */,
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
@@ -3091,7 +3095,7 @@
 								enabled = 1;
 							};
 							com.apple.HealthKit = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};

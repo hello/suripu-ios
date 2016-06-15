@@ -34,10 +34,14 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1.4.3.6</string>
 	<key>FacebookAppID</key>
 	<string>372438546161587</string>
 	<key>FacebookDisplayName</key>
 	<string>Hello</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -45,8 +49,6 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>1.4.3.5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -106,28 +108,26 @@
 	<string>Your location is needed for Sense to better understand your sleep environment.</string>
 	<key>SenseAllowSupportOptions</key>
 	<string>${SENSE_SUPPORT_OPTIONS}</string>
+	<key>SenseAmazonReviewURL</key>
+	<string>${SENSE_AMAZON_REVIEW_URL}</string>
 	<key>SenseAnalyticsToken</key>
 	<string>${SENSE_ANALYTICS_TOKEN}</string>
 	<key>SenseApiUrl</key>
 	<string>${SENSE_API_URL}</string>
 	<key>SenseAppReviewURL</key>
 	<string>${SENSE_APP_REVIEW_URL}</string>
-	<key>SenseAmazonReviewURL</key>
-	<string>${SENSE_AMAZON_REVIEW_URL}</string>
 	<key>SenseClientId</key>
 	<string>${SENSE_CLIENT_ID}</string>
+	<key>SenseCrashReportToken</key>
+	<string>${SENSE_CRASH_REPORT_TOKEN}</string>
+	<key>SenseEnvironment</key>
+	<string>${SENSE_ENV}</string>
 	<key>SensePasswordResetURL</key>
 	<string>${SENSE_PASSWORD_RESET_URL}</string>
 	<key>SenseZendeskClientId</key>
 	<string>${SENSE_ZENDESK_CLIENT_ID}</string>
-	<key>SenseCrashReportToken</key>
-	<string>${SENSE_CRASH_REPORT_TOKEN}</string>
 	<key>SenseZendeskToken</key>
 	<string>${SENSE_ZENDESK_TOKEN}</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>SenseEnvironment</key>
-	<string>${SENSE_ENV}</string>
 	<key>SenseZendeskURL</key>
 	<string>${SENSE_ZENDESK_URL}</string>
 	<key>UIAppFonts</key>
@@ -166,6 +166,7 @@
 	<array>
 		<string>armv7</string>
 		<string>bluetooth-le</string>
+		<string>healthkit</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>

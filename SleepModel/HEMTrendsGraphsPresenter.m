@@ -160,16 +160,19 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         switch ([graph dataType]) {
             case SENTrendsDataTypeScore:
                 if ([self sleepScoreCell]) {
+                    [[self sleepScoreCell] setLoading:NO];
                     [self configureCalendarCell:[self sleepScoreCell] forTrendsGraph:graph];
                 }
                 break;
             case SENTrendsDataTypeHour:
                 if ([self sleepDurationCell]) {
+                    [[self sleepDurationCell] setLoading:NO];
                     [self configureBarCell:[self sleepDurationCell] forTrendsGraph:graph];
                 }
                 break;
             case SENTrendsDataTypePercent:
                 if ([self sleepDepthCell]) {
+                    [[self sleepDepthCell] setLoading:NO];
                     [self configureSleepDepthCell:[self sleepDepthCell] forTrendsGraph:graph];
                 }
                 break;
@@ -489,7 +492,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     // type must be set first!
     [calendarCell setSectionTitles:[self graphTitlesFrom:graph]
                             scores:[[self trendService] segmentedDataPointsFrom:graph]];
-    [calendarCell setLoading:NO];
 }
 
 - (void)configureBarCell:(HEMTrendsBarGraphCell*)barCell forTrendsGraph:(SENTrendsGraph*)graph {
@@ -510,7 +512,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [barCell updateGraphWithTitles:attributedTitles
                      displayPoints:[[self trendService] segmentedDataPointsFrom:graph]
                            spacing:[self barSpacingForTimeScale:[graph timeScale]]];
-    [barCell setLoading:NO];
 }
 
 - (void)configureSleepDepthCell:(HEMTrendsSleepDepthCell*)sleepDepthCell
@@ -522,7 +523,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [sleepDepthCell updateLightPercentage:light
                          mediumPercentage:medium
                            deepPercentage:deep];
-    [sleepDepthCell setLoading:NO];
 }
 
 - (void)configureMessageCell:(HEMIntroMessageCell*)messageCell forTrends:(SENTrends*)trends {

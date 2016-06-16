@@ -27,8 +27,6 @@
 "sign-up.error.password-too-short" = "Your password is too short. Passwords must be at least six characters.";
 "sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
-"onboarding.sense.pairing-mode.format" = "Before you connect your phone, Sense needs to be put into Pairing Mode.\n\nPlace your hand %@ of Sense for seven seconds, and then remove it.\n\nSense will glow purple when it is in Pairing Mode.";
-"onboarding.sense.pairing-mode.directly-on-top" = "directly on top";
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
 "onboarding.before-sleep.1.title" = "Sense Colors";
@@ -53,9 +51,9 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep and staying asleep.";
 "onboarding.pill-setup.title" = "Attach Sleep Pill to your pillow";
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
-"onboarding.health.enable.failure.title" = "Failed to enable Health integration";
+"onboarding.health.enable.failure.title" = "Unable to sync with Health​";
 "onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
-"onboarding.health.enable.failure.generic" = "You may have previously denied access. Go to your Health app, find Sleep Analysis data, Share Data, and edit the data sources to enable Sense.";
+"onboarding.health.enable.failure.generic" = "Sense requires write access to provide Sleep Analysis data to the Health app. If you’d like to enable this, you’ll need to do so in Sources within the Health App.";
 "onboarding.account.firstname" = "First name";
 "onboarding.account.lastname" = "Last name";
 "onboarding.account.email" = "Email address";
@@ -148,9 +146,11 @@
 "wifi.security.open" = "OPEN";
 
 // location
-"location.error.title" = "Unknown Location";
-"location.error.not-enabled" = "You have denied access to, or disabled, Location Services. You can change this preference inside the Settings app.";
-"location.error.weak-signal" = "We were unable to obtain your location. Try moving to a different location and try again.";
+"location.error.title" = "Unable to set location";
+"location.error.not-enabled" = "Location Services is disabled. You can change this preference inside the Settings app.";
+"location.error.denied" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";
+"location.error.generic" = "We were unable to obtain your location. Please try again.";
+"location.activity.status" = "Locating";
 
 // settings
 "settings.title" = "Settings";
@@ -227,6 +227,7 @@
 "debug.led.option.activity" = "Activity";
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
+"debug.option.force-whats-new" = "Force What's New";
 "debug.option.sleep-sounds" = "Sleep Sounds";
 "debug.option.clear-alarms" = "Remove all alarms";
 "debug.host.action.custom-url" = "Custom";
@@ -461,12 +462,12 @@
 "timeline.accessibility-value.summary-score.format" = "%ld, condition %@";
 
 // missing data
-"sleep-data.first-night.title" = "See you in the morning";
-"sleep-data.first-night.message" = "In the morning, you'll see your first Sleep Timeline here. There are no modes to set — Sense will automatically know when you go to bed. All you need to do is sleep.";
-"sleep-data.none.title" = "No Sleep Timeline";
-"sleep-data.none.message" = "There was no sleep data recorded for this night.";
-"sleep-data.not-enough.title" = "No Sleep Timeline";
-"sleep-data.not-enough.message" = "Some sleep data was recorded, but not enough to generate a Sleep Timeline for this night.";
+"sleep-data.first-night.title" = "Have a good night";
+"sleep-data.first-night.message" = "In the morning, you'll see your first Sleep Timeline here.\n\nYou don't need to do anything to let Sense know that you're ready for bed. All you need to do now is sleep.";
+"sleep-data.none.title" = "No sleep data recorded";
+"sleep-data.none.message" = "This is normal if you were out of town, or away from your bed.\n\nOtherwise, you may want to check your Sleep Pill's battery level, and make sure that Sense is connected to the internet.";
+"sleep-data.not-enough.title" = "Not enough motion data";
+"sleep-data.not-enough.message" = "If your Sleep Pill is not attached properly, it may not register enough motion data to generate a Timeline.\n\nTap below for detailed instructions on how to clip your Sleep Pill to your pillow.";
 "sleep-data.error.title" = "There was an error";
 "sleep-data.error.message" = "There was a problem retrieving your Sleep Timeline. Please try again in a few moments.";
 "sleep-data.not-enough.contact-support" = "Learn more";
@@ -630,8 +631,9 @@
 "actions.edit.wifi" = "Edit WiFi";
 "actions.import.from.fb" = "Import from Facebook";
 "actions.take.photo" = "Take Photo";
-"actions.camera-roll" = "Open Camera Roll";
+"actions.camera-roll" = "Choose from Library";
 "actions.remove-photo" = "Remove Photo";
+"actions.go-to-settings" = "GO TO SETTINGS";
 "status.success" = "Done";
 
 // action sheet
@@ -664,6 +666,12 @@
 "account.facebook.info.title" = "Connecting with Facebook";
 "account.facebook.info.message.format" = "Connecting your Facebook account allows Sense to autofill your name, email address, and your Facebook profile photo. This does not give Sense permission to post anything to your Facebook.\n\nStill have questions? %@.";
 "account.facebook.info.learn-more" = "Learn more";
+"account.photo.enable-camera.title" = "Enable camera access";
+"account.photo.enable-camera.message" = "To take a new photo, you need to grant Sense access to your camera. Enable camera access for Sense in your device settings.";
+"account.photo.enable-camera-roll.title" = "Enable photo access";
+"account.photo.enable-camera-roll.message" = "To select a new profile photo, you need to grant Sense access to your photos. Enable access to photos for Sense in your device settings.";
+"account.error.photo-selection.title" = "Error processing photo";
+"account.error.photo-selection.message" = "Your photo may not have finished loading prior to selecting it. Please try again.";
 
 // notifications
 "notifications.actions.ok" = "Okay";
@@ -771,7 +779,6 @@
 "video.url.onboarding.pill-pair" = "https://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x.mp4";
 "video.url.alarm" = "https://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
 "video.url.onboarding.pill-setup" = "https://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
-"video.url.onboarding.pairing-mode" = "https://hellocdn.net/mobile/sense/onboarding/pairing_mode@2x.mp4";
 "video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
 
@@ -806,3 +813,11 @@
 "sleep-sounds.temp.info.message.offline" = "We haven't received data from your Sense recently. Make sure Sense is connected to Wi-Fi.";
 "sleep-sounds.welcome.title" = "Sleep Sounds";
 "sleep-sounds.welcome.message" = "Falling asleep to a consistent and calming ambient sound can help you mask nighttime noise, and help you sleep better. Sense makes it easy to start your night off right: choose a custom-designed Sleep Sound, and drift peacefully off to sleep.";
+
+// whats new (set title and message, if needed)
+"whats.new.title" = "";
+"whats.new.message" = "";
+"whats.new.button.title" = "";
+"whats.new.button.title.debug" = "LEARN MORE";
+"whats.new.title.debug" = "Don't worry, debug text only";
+"whats.new.message.debug" = "He's so lazy that if there were work in bed, he would rather sleep on the floor.";

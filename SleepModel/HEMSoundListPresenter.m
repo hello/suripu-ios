@@ -28,7 +28,8 @@ static CGFloat const HEMSoundPreviewFadeInterval = 5.0f;
                         items:(NSArray *)items
              selectedItemName:(NSString*)selectedItemName
                  audioService:(HEMAudioService*)audioService {
-    self = [super initWithTitle:title items:items selectedItemNames:@[selectedItemName]];
+    NSArray* selections = selectedItemName ? @[selectedItemName] : nil;
+    self = [super initWithTitle:title items:items selectedItemNames:selections];
     if (self) {
         _audioService = audioService;
     }

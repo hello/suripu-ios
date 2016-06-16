@@ -17,6 +17,7 @@
 #import "HEMFacebookService.h"
 #import "HEMBreadcrumbService.h"
 #import "HEMHandHoldingService.h"
+#import "HEMAlertViewController.h"
 
 @interface HEMAccountViewController () <HEMAccountDelegate>
 
@@ -97,6 +98,10 @@
         [[self rootViewController] presentViewController:controllerToPresenter animated:YES completion:nil];
     } else if ([controller isKindOfClass:[HEMFormViewController class]]) {
         [[self navigationController] pushViewController:controller animated:YES];
+    } else if ([controller isKindOfClass:[HEMAlertViewController class]]) {
+        HEMAlertViewController* alertVC = (id) controller;
+        [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
+        [alertVC showFrom:[self rootViewController]];
     } else if (![controller isKindOfClass:[UINavigationController class]]) {
         controllerToPresenter = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
         [self presentViewController:controllerToPresenter animated:YES completion:nil];
@@ -105,8 +110,9 @@
     }
 }
 
-- (void)dismissViewControllerFrom:(HEMAccountPresenter *)presenter {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)dismissViewControllerFrom:(HEMAccountPresenter*)presenter
+                       completion:(void(^)(void))completion {
+    [self dismissViewControllerAnimated:YES completion:completion];
 }
 
 @end

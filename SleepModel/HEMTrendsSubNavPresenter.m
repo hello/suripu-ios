@@ -79,7 +79,6 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     [button setTitleColor:[UIColor subNavInactiveTitleColor] forState:UIControlStateNormal];
     [button setSelected:timeScale == [self selectedScale]];
     [button setTag:timeScale];
-    [button addTarget:self action:@selector(changeScope:) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
 
@@ -98,6 +97,12 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
                 SENTrendsTimeScale timeScale = [timeScaleNumber integerValue];
                 UIButton* button = [strongSelf scopeButtonForTimeScale:timeScale];
                 [[strongSelf subNav] addControl:button];
+                
+                // must add target after adding the control to the subnav to ensure
+                // order of when events are fired
+                [button addTarget:self
+                           action:@selector(changeScope:)
+                 forControlEvents:UIControlEventTouchUpInside];
             }
         }
         

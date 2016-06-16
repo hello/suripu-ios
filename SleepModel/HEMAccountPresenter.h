@@ -29,7 +29,8 @@ typedef void(^HEMAccountSignOutHandler)(void);
                            from:(HEMAccountPresenter*)presenter;
 - (void)presentViewController:(UIViewController*)controller
                          from:(HEMAccountPresenter*)presenter;
-- (void)dismissViewControllerFrom:(HEMAccountPresenter*)presenter;
+- (void)dismissViewControllerFrom:(HEMAccountPresenter*)presenter
+                       completion:(void(^)(void))completion;
 - (UIViewController*)mainControllerFor:(HEMAccountPresenter*)presenter;
 
 @end

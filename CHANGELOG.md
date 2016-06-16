@@ -1,5 +1,81 @@
 # Changelog
 
+## 1.4.3.8
+
+Fixes:
+
+* Timeline shows the proper state for the signed in account, post onboarding and signing out/in to different account in same session
+* Increased contrast / grey scale for enhanced audio note in account settings, per design
+
+## 1.4.3.7
+
+Fixes:
+
+* Updated HK copy, again
+* Fix crasher that occurred when dismissing tutorials by tapping on the X button for the timeline open tutorial
+
+## 1.4.3.6
+
+New:
+
+* Trends calendar / sleep score graph now animates the height change
+
+Fixes:
+
+* HK entitlement was somehow not working.  Toggling the setting on / off in the project seem to have fixed it.
+
+## 1.4.3.5
+
+New:
+
+* Debug Whats New action button now takes user to settings tab
+
+Fixes:
+
+* Selecting a large photo from camera roll before it finishes loading will throw an alert to the user instead of uploading a black image.
+
+## 1.4.3.4
+
+New:
+
+* Expanded the Timeline error state messaging to include brief troubleshooting text
+* Updated fonts / colors within settings
+
+Fixes:
+
+* Profile image no longer quickly flashes beyond it's bounds when loading from url
+
+## 1.4.3.3
+
+Fixes:
+
+* Refactored the onboarding location screen to address incorrect error messaging and initial delay
+* Updated copy for HK to specify that write access is needed
+
+## 1.4.3.2
+
+New:
+
+* Added a property for the end of the breadcrumbs to describe where user is at, if not obvious
+* Display custom prompt to let user know that access to Camera or Photos was denied, but can be enabled through Settings
+
+Fixes:
+
+* Prevent a crasher if a default alarm sound was not determined before entering the alarm sound list
+* Prevent a crasher that can occur during long polling of sleep sound status due to a deferenced pointer
+* Fixed the second sleep pill text in device settings so it's not cut off on 5s/5/4s running iOS 9
+* Fixed issue that would cause the background of the email and password change screen to be incorrect when keyboard is hidden
+
+## 1.4.3.1
+
+New:
+
+* What's New banner that is not currently enabled, unless forced with Debug option
+* Add debug option to force the what's new banner to show
+* Remove redundant pairing mode onboarding screen
+* Increase tap target of photo change button
+* Add an error state for when profile photo fails to load from server
+
 ## 1.4.2.10
 
 Fixes:

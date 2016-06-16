@@ -235,21 +235,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 
 - (void)configureAppearance {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
-    UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[HEMStyledNavigationViewController class], nil];
-    [appearance setBackgroundImage:[[UIImage alloc] init]
-                    forBarPosition:UIBarPositionAny
-                        barMetrics:UIBarMetricsDefault];
-    [appearance setShadowImage:[[UIImage alloc] init]];
-    [appearance setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor blackColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{
-        NSFontAttributeName : [UIFont navButtonTitleFont],
-        NSForegroundColorAttributeName : [UIColor tintColor]
-    } forState:UIControlStateNormal];
-    
-    [UIColor applyDefaultColorAppearances];
+    ApplyHelloStyles();
 }
 
 - (void)createAndShowWindow {
@@ -276,7 +262,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [HEMAudioCache clearCache];
     [SENAnalytics reset:nil];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
-    [[HEMOnboardingService sharedService] resetOnboardingCheckpoint];
+    [[HEMOnboardingService sharedService] reset];
     [[SENServiceDevice sharedService] reset];
 }
 

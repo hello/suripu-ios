@@ -156,6 +156,8 @@
  * Default text color
  */
 + (UIColor *)textColor;
++ (UIColor *)settingsTextColor;
++ (UIColor *)settingsDetailTextColor;
 
 /**
  * Text color for detail / value text, typically within a list / table view

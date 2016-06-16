@@ -230,7 +230,7 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
 
 - (void)displayTitleInCell:(HEMTextCollectionViewCell*)textCell {
     [[textCell textLabel] setText:NSLocalizedString(@"onboarding.account.sign-in.title", nil)];
-    [[textCell textLabel] setFont:[UIFont onboardingTitleFont]];
+    [[textCell textLabel] setFont:[UIFont h5]];
     [[textCell textLabel] setTextColor:[UIColor boldTextColor]];
 }
 

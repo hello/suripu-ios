@@ -99,7 +99,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     if (_attributedTitle == nil) {
         _attributedTitle =
             [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.title", nil)
-                                            attributes:@{NSFontAttributeName : [UIFont onboardingTitleFont],
+                                            attributes:@{NSFontAttributeName : [UIFont h5],
                                                          NSForegroundColorAttributeName : [UIColor boldTextColor]}];
     }
     return _attributedTitle;
@@ -111,7 +111,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         [style setLineHeightMultiple:1.1f];
         _attributedDescription =
             [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.description", nil)
-                                            attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
+                                            attributes:@{NSFontAttributeName : [UIFont body],
                                                          NSForegroundColorAttributeName : [UIColor grey5],
                                                          NSParagraphStyleAttributeName : style}];
     }

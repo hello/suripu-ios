@@ -10,6 +10,34 @@
 
 @interface UIFont (HEMStyle)
 
+#pragma mark - Style guide
+
++ (UIFont*)h1;
++ (UIFont*)h2;
++ (UIFont*)h3;
++ (UIFont*)h4;
++ (UIFont*)h5;
++ (UIFont*)h6;
++ (UIFont*)h7;
++ (UIFont*)h7Bold;
++ (UIFont*)h8;
++ (UIFont*)body;
++ (UIFont*)button;
+
+#pragma mark - Common fonts
+
+/**
+ *  Font for settings table cell titles
+ */
++ (UIFont*)settingsTableCellFont;
+
+/**
+ *  Font for settings detail items, like sensor value and next alarm time
+ */
++ (UIFont*)settingsTableCellDetailFont;
+
+#pragma mark -
+
 /**
  *  Alarm picker view selected number font
  */
@@ -68,17 +96,6 @@
  *  Font for current sensor value and sleep score
  */
 + (UIFont*)largeNumberFont;
-
-/**
- *  Font for settings table cell titles
- */
-+ (UIFont*)settingsTableCellFont;
-
-/**
- *  Font for settings detail items, like sensor value and
- *  next alarm time
- */
-+ (UIFont*)settingsTableCellDetailFont;
 
 /**
  *  Navigation item title font
@@ -286,11 +303,6 @@
 + (UIFont*)singleComponentPickerViewFont;
 
 /**
- * Font to be used in a HEMBirthdatePickerView
- */
-+ (UIFont*)birthdatePickerTextFont;
-
-/**
  * Font to be used to display the in-app browser title
  */
 + (UIFont*)inAppBrowserTitleFont;
@@ -387,19 +399,9 @@
 + (UIFont*)deviceCellWarningMessageFont;
 
 /**
- * Font used to display the title of a text field
- */
-+ (UIFont*)textfieldTitleFont;
-
-/**
  * Font used for the placeholder text within an UITextField
  */
 + (UIFont*)textfieldPlaceholderFont;
-
-/**
- * Font used for the text within an UITextField
- */
-+ (UIFont*)textfieldTextFont;
 
 /**
  * Font used for the text to display TimeZone names
@@ -481,39 +483,6 @@
  * onboarding.  Example use would be the selected security type of wifi
  */
 + (UIFont*)onboardingFieldRightViewFont;
-
-/**
- * Font used for onboarding screen titles
- */
-+ (UIFont*)onboardingTitleFont;
-
-/**
- * Large Font used for onboarding screen titles
- */
-+ (UIFont*)onboardingTitleLargeFont;
-
-/**
- * Font to be used during onboarding screens where a description of the current
- * step is shown
- */
-+ (UIFont*)onboardingDescriptionFont;
-
-/**
- * Large Font to be used during onboarding screens where a description of the 
- * current step is shown
- */
-+ (UIFont*)onboardingDescriptionLargeFont;
-
-/**
- * Font to be used during onboarding screens where a description of the current
- * step is shown and certain words / phrases are required to be bold
- */
-+ (UIFont*)onboardingDescriptionBoldFont;
-
-/**
- * Font used for the gender selectors during onboarding / settings
- */
-+ (UIFont*)genderButtonTitleFont;
 
 /**
  * Font used to display the help button title during onboarding

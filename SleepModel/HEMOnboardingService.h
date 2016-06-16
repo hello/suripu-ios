@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 
 @interface HEMOnboardingService : SENService
 
-@property (nonatomic, copy,   readonly) NSArray* nearbySensesFound;;
+@property (nonatomic, copy,   readonly) NSArray* nearbySensesFound;
 @property (nonatomic, strong, readonly) SENAccount* currentAccount;
 @property (nonatomic, strong, readonly) SENSenseManager* currentSenseManager;
 
@@ -307,6 +307,13 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * @see clear
  */
 - (void)clearAll;
+
+/**
+ * @discussion
+ * Resets the shared instance to be reuse, if user signs out and starts onboarding
+ * again.  should be called upon sign out
+ */
+- (void)reset;
 
 /**
  * @method markOnboardingAsComplete:

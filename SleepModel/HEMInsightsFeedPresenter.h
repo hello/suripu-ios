@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "HEMPresenter.h"
+#import "HEMRootViewController.h"
 
 @class HEMInsightsFeedPresenter;
 @class SENInsight;
 @class HEMInsightsService;
 @class HEMQuestionsService;
 @class HEMUnreadAlertService;
+@class HEMWhatsNewService;
 @class HEMActivityIndicatorView;
 @class HEMInsightCollectionViewCell;
 @class HEMHandHoldingService;
@@ -31,6 +33,7 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 - (void)presenter:(HEMInsightsFeedPresenter*)presenter
     showQuestions:(NSArray<SENQuestion*>*)questions
        completion:(nullable HEMInsightsPresenterCompletion)completion;
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter showTab:(HEMRootDrawerTab)tab;
 
 @end
 
@@ -41,7 +44,8 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
-                                  unreadService:(HEMUnreadAlertService*)unreadService;
+                                  unreadService:(HEMUnreadAlertService*)unreadService
+                                whatsNewService:(HEMWhatsNewService*)whatsNewservice;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 

@@ -46,7 +46,6 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseIconHeightConstraint;
 
-@property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (strong, nonatomic) SENSenseManager* senseManager;
 @property (assign, nonatomic) HEMSensePairState currentState;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
@@ -124,6 +123,11 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     // restart the scanning
     [self setCurrentState:HEMSensePairStateNotStarted];
     [self executeNextStep];
+}
+
+- (IBAction)showPairingModeHelp:(id)sender {
+    NSString* slug = NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil);
+    [HEMSupportUtil openHelpToPage:slug fromController:self];
 }
 
 #pragma mark - Scanning

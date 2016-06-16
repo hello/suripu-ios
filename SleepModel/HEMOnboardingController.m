@@ -104,14 +104,14 @@
         [[self titleLabel] setHidden:YES];
     } else {
         [[self titleLabel] setTextColor:[UIColor boldTextColor]];
-        [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+        [[self titleLabel] setFont:[UIFont h5]];
     }
 }
 
 - (void)configureDescription {
     if ([self descriptionLabel] != nil) {
         UIColor* color = [UIColor grey5];
-        UIFont* font = [UIFont onboardingDescriptionFont];
+        UIFont* font = [UIFont body];
         NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
         
         if ([attrDesc length] > 0) {
@@ -156,7 +156,7 @@
 #pragma mark - Attributes
 
 - (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
-    UIFont* font = [UIFont onboardingDescriptionFont];
+    UIFont* font = [UIFont body];
     UIColor* color = [UIColor grey5];
     
     // avoid overriding any substrings that may already have attributes set
@@ -183,13 +183,15 @@
 }
 
 - (NSAttributedString*)boldAttributedText:(NSString *)text withColor:(UIColor*)color {
-    UIFont* font = [UIFont onboardingDescriptionBoldFont];
+    UIFont* font = [UIFont body];
     
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     [attributes setValue:font forKey:NSFontAttributeName];
     
-    if (color != nil) {
+    if (color) {
         [attributes setValue:color forKey:NSForegroundColorAttributeName];
+    } else {
+        [attributes setValue:[UIColor grey6] forKey:NSForegroundColorAttributeName];
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];

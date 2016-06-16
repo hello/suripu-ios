@@ -20,7 +20,8 @@
 - (void)proceedFrom:(HEMNewAccountPresenter*)presenter;
 - (void)showSupportPageWithSlug:(NSString*)slug;
 - (void)showController:(UIViewController*)controller from:(HEMNewAccountPresenter*)presenter;
-- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter;
+- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter
+                       completion:(void(^)(void))completion;
 
 @end
 

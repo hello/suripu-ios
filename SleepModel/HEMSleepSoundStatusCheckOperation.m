@@ -71,7 +71,7 @@
     
     __weak typeof(self) weakSelf = self; // probably won't need it, but just in case
     [SENAPISleepSounds checkRequestStatus:^(id data, NSError *error) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setStatus:data];
         [strongSelf setCompleted:YES];
     }];

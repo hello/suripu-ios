@@ -7,6 +7,7 @@
 //
 
 #import "HEMCreateAccountViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMNewAccountPresenter.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingService.h"
@@ -91,11 +92,18 @@
 }
 
 - (void)showController:(UIViewController *)controller from:(HEMNewAccountPresenter *)presenter {
-    [self presentViewController:controller animated:YES completion:nil];
+    if ([controller isKindOfClass:[HEMAlertViewController class]]) {
+        HEMAlertViewController* alertVC = (id) controller;
+        [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
+        [alertVC showFrom:self];
+    } else {
+        [self presentViewController:controller animated:YES completion:nil];
+    }
 }
 
-- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)dismissViewControllerFrom:(HEMNewAccountPresenter*)presenter
+                       completion:(void(^)(void))completion {
+    [self dismissViewControllerAnimated:YES completion:completion];
 }
 
 @end

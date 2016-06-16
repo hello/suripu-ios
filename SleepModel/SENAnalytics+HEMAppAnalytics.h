@@ -68,7 +68,6 @@ extern NSString* const HEMAnalyticsEventNoBle;
 extern NSString* const HEMAnalyticsEventAudio;
 extern NSString* const HEMAnalyticsEventSleepPill;
 extern NSString* const HEMAnalyticsEventPillPlacement;
-extern NSString* const HEMAnalyticsEventPairingMode;
 extern NSString* const HEMAnalyticsEventSenseColors;
 extern NSString* const HEMAnalyticsEventFirstAlarm;
 extern NSString* const HEMAnalyticsEventRoomCheck;

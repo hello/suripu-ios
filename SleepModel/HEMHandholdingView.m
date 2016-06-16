@@ -35,7 +35,7 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     BOOL onMessage = CGRectContainsPoint([[self messageView] frame], point);
     if (!onMessage) {
-        [self animateOut];
+        [self animateOut:nil];
     }
     return onMessage;
 }
@@ -114,10 +114,11 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 #pragma mark - Actions
 
 - (void)dismissFromButton {
-    if ([self dismissal]) {
-        [self dismissal] (YES);
-    }
-    [self animateOut];
+    [self animateOut:^{
+        if ([self dismissal]) {
+            [self dismissal] (YES);
+        }
+    }];
 }
 
 #pragma mark - Animations
@@ -147,8 +148,11 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
                      }];
 }
 
-- (void)animateOut {
+- (void)animateOut:(void(^)(void))completion {
     if ([self isDismissing]) {
+        if (completion) {
+            completion ();
+        }
         return;
     }
     
@@ -156,6 +160,9 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     [[self gestureView] endAnimation];
     
     if (![self messageView]) {
+        if (completion) {
+            completion ();
+        }
         return;
     }
     
@@ -176,6 +183,9 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
                      }
                      completion:^(BOOL finished) {
                          [self removeFromSuperview];
+                         if (completion) {
+                             completion ();
+                         }
                      }];
 }
 

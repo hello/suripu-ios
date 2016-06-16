@@ -11,8 +11,8 @@
 
 /** Cell Reuse Identifiers */
 +(NSString *)titleReuseIdentifier;
-+(NSString *)passwordReuseIdentifier;
 +(NSString *)emailReuseIdentifier;
++(NSString *)passwordReuseIdentifier;
 +(NSString *)photoReuseIdentifier;
 +(NSString *)firstNameReuseIdentifier;
 +(NSString *)lastNameReuseIdentifier;

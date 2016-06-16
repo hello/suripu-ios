@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.3.7
+
+Fixes:
+
+* Updated HK copy, again
+* Fix crasher that occurred when dismissing tutorials by tapping on the X button for the timeline open tutorial
+
 ## 1.4.3.6
 
 New:

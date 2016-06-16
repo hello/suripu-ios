@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.3.8
+
+Fixes:
+
+* Timeline shows the proper state for the signed in account, post onboarding and signing out/in to different account in same session
+* Increased contrast / grey scale for enhanced audio note in account settings, per design
+
 ## 1.4.3.7
 
 Fixes:

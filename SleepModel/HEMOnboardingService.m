@@ -61,6 +61,12 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     return service;
 }
 
+- (void)reset {
+    [self clearAll];
+    [self setCurrentAccount:nil];
+    [self resetOnboardingCheckpoint];
+}
+
 - (void)clear {
     [self stopPreScanning];
     [SENSenseManager stopScan]; // if one is still scanning for some reason
@@ -83,10 +89,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
                                code:code
                            userInfo:userInfo];
 }
-
-#pragma mark - Sign In
-
-
 
 #pragma mark - Sense
 

@@ -262,7 +262,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [HEMAudioCache clearCache];
     [SENAnalytics reset:nil];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
-    [[HEMOnboardingService sharedService] resetOnboardingCheckpoint];
+    [[HEMOnboardingService sharedService] reset];
     [[SENServiceDevice sharedService] reset];
 }
 

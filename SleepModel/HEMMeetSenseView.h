@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface HEMMeetSenseView : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *videoButton;
@@ -17,6 +19,8 @@
  * @param frame: the frame for the view
  * @return a new instance of the view
  */
-+ (nonnull instancetype)createMeetSenseViewWithFrame:(CGRect)frame;
++ (instancetype)createMeetSenseViewWithFrame:(CGRect)frame;
 
 @end
+
+NS_ASSUME_NONNULL_END

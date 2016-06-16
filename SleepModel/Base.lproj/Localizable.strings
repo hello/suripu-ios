@@ -51,9 +51,9 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep and staying asleep.";
 "onboarding.pill-setup.title" = "Attach Sleep Pill to your pillow";
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
-"onboarding.health.enable.failure.title" = "Failed to enable Health integration";
+"onboarding.health.enable.failure.title" = "Unable to sync with Health​";
 "onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
-"onboarding.health.enable.failure.generic" = "You may have previously denied access. Go to your Health app and edit data sources for Sleep Analysis to enable read and write access for Sense.";
+"onboarding.health.enable.failure.generic" = "Sense requires write access to provide Sleep Analysis data to the Health app. If you’d like to enable this, you’ll need to do so in Sources within the Health App.";
 "onboarding.account.firstname" = "First name";
 "onboarding.account.lastname" = "Last name";
 "onboarding.account.email" = "Email address";

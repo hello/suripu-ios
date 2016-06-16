@@ -472,7 +472,7 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     if (!_enhancedAudioNote) {
         NSString* note = NSLocalizedString(@"settings.enhanced-audio.desc", nil);
         NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsHelpFont],
-                                     NSForegroundColorAttributeName : [UIColor grey3]};
+                                     NSForegroundColorAttributeName : [UIColor grey4]};
         _enhancedAudioNote = [[NSAttributedString alloc] initWithString:note attributes:attributes];
     }
     return _enhancedAudioNote;

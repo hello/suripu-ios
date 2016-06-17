@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.3.9
+
+Misc:
+
+* Removed a required device capability that was mysteriously added
+
 ## 1.4.3.8
 
 Fixes:

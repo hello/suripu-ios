@@ -9,7 +9,8 @@ abstract_target 'SenseApp' do
     pod 'AttributedMarkdown', :git => 'git@github.com:hello/AttributedMarkdown.git', :inhibit_warnings => true
     pod 'CGFloatType', '~> 1.3.1'
     pod 'SORelativeDateTransformer', '~> 1.1.10'
-     
+    
+    # the actual Sense iOS app
     target 'Sense' do
         pod 'FBSDKLoginKit', '~> 4.11.0'
         pod 'FBSDKCoreKit', '~> 4.11.0'
@@ -24,10 +25,12 @@ abstract_target 'SenseApp' do
         pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git'
     end
     
+    # the Sense iOS today extension
     target 'SenseWidget' do
         
     end
     
+    # tests for the app
     target 'Tests' do
         inherit! :search_paths
         pod 'Kiwi'

@@ -42,7 +42,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
-@property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
 @property (assign, nonatomic, getter=hasScanned) BOOL scanned;
 

@@ -438,7 +438,10 @@
 		1CEC3006712323A3E96169F0 /* Pods-SenseApp-Sense.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.dev.xcconfig"; sourceTree = "<group>"; };
 		31D4922B927AF772E36F931E /* Pods-SenseApp-SenseWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		42C60B323F845B8B1AE5D040 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51B51DC077F782DA2C745EDE /* Pods-Tests-settings-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-Tests-settings-metadata.plist"; path = "SleepModel/Settings.bundle/Pods-Tests-settings-metadata.plist"; sourceTree = "<group>"; };
 		541055DBD085814436590F0F /* Pods-SenseApp-Sense.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.beta.xcconfig"; sourceTree = "<group>"; };
+		5D9E25C1EE12F44D07C7C4DB /* Pods-SenseApp-SenseWidget-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-SenseApp-SenseWidget-metadata.plist"; path = "Pods/Pods-SenseApp-SenseWidget-metadata.plist"; sourceTree = "<group>"; };
+		5FA2F1FC2FDE3FB5B5D6F84A /* Pods-SenseApp-Sense-settings-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-SenseApp-Sense-settings-metadata.plist"; path = "SleepModel/Settings.bundle/Pods-SenseApp-Sense-settings-metadata.plist"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -649,6 +652,7 @@
 		8B45075F1C17951F00359453 /* HEMSelectHostPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostPresenter.m; sourceTree = "<group>"; };
 		8B8F5FA51BF661EB00665D30 /* HEMAlarmUtilsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmUtilsSpec.m; sourceTree = "<group>"; };
 		90D7E66DC574E0BA5B3413BC /* libPods-SenseApp-SenseWidget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SenseApp-SenseWidget.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4670284F9B55AE006E24FE9 /* Pods-Tests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-Tests-metadata.plist"; path = "Pods/Pods-Tests-metadata.plist"; sourceTree = "<group>"; };
 		A5A74F473190037EEDFEBF72 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		AAA1431DCC9B925A41AD6C09 /* Pods-SenseApp-SenseWidget.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.beta.xcconfig"; sourceTree = "<group>"; };
 		ACB856CF6AC11A9F98542C57 /* libPods-SenseApp-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SenseApp-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1142,8 +1146,10 @@
 		BFFCEFD71D074F6800CA0E54 /* HEMLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationService.h; sourceTree = "<group>"; };
 		BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationService.m; sourceTree = "<group>"; };
 		CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.dev.xcconfig"; sourceTree = "<group>"; };
+		D74A26F92C37BF82DE7529E2 /* Pods-SenseApp-SenseWidget-settings-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-SenseApp-SenseWidget-settings-metadata.plist"; path = "SleepModel/Settings.bundle/Pods-SenseApp-SenseWidget-settings-metadata.plist"; sourceTree = "<group>"; };
 		DC02F45E18D78A3EDEFEA4DD /* Pods-SenseApp-SenseWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.release.xcconfig"; sourceTree = "<group>"; };
 		F9D438E5B09228652705E760 /* Pods-SenseApp-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.dev.xcconfig"; sourceTree = "<group>"; };
+		FE42CA26012EAAED9827D275 /* Pods-SenseApp-Sense-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-SenseApp-Sense-metadata.plist"; path = "Pods/Pods-SenseApp-Sense-metadata.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1845,6 +1851,12 @@
 				A5A74F473190037EEDFEBF72 /* Pods-Tests.release.xcconfig */,
 				B8401EBD13F630F0782660EB /* Pods-Tests.beta.xcconfig */,
 				CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */,
+				FE42CA26012EAAED9827D275 /* Pods-SenseApp-Sense-metadata.plist */,
+				5FA2F1FC2FDE3FB5B5D6F84A /* Pods-SenseApp-Sense-settings-metadata.plist */,
+				5D9E25C1EE12F44D07C7C4DB /* Pods-SenseApp-SenseWidget-metadata.plist */,
+				D74A26F92C37BF82DE7529E2 /* Pods-SenseApp-SenseWidget-settings-metadata.plist */,
+				A4670284F9B55AE006E24FE9 /* Pods-Tests-metadata.plist */,
+				51B51DC077F782DA2C745EDE /* Pods-Tests-settings-metadata.plist */,
 			);
 			name = Pods;
 			sourceTree = "<group>";

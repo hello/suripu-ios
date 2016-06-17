@@ -35,7 +35,6 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView *videoView;
 
-@property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 @property (assign, nonatomic) NSUInteger pairAttempts;

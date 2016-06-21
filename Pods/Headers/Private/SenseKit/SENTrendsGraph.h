@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENTrendsGraph.h
+../../../SenseKit/Pod/Classes/Model/SENTrendsGraph.h

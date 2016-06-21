@@ -11,9 +11,14 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"v1/alarms/%.0f";
 
 static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
     return ^(NSArray* data, NSError* error) {
-        NSArray* alarms = nil;
+        NSMutableArray* alarms = nil;
         if (data && [data isKindOfClass:[NSArray class]]) {
-            alarms = [SENAlarm updateSavedAlarmsWithData:data];
+            alarms = [NSMutableArray arrayWithCapacity:[data count]];
+            NSDictionary* alarmDict = nil;
+            for (id alarmObj in data) {
+                alarmDict = SENObjectOfClass(alarmObj, [NSDictionary class]);
+                [alarms addObject:[[SENAlarm alloc] initWithDictionary:alarmDict]];
+            }
         }
 
         if (completion)
@@ -107,7 +112,8 @@ static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
 {
     NSCalendarUnit flags = (NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay);
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    return [calendar components:flags fromDate:[alarm nextRingDate]];
+    NSDate* nextRingDate = [SENAlarm nextRingDateWithHour:[alarm hour] minute:[alarm minute]];
+    return [calendar components:flags fromDate:nextRingDate];
 }
 
 + (NSArray*)repeatDaysForAlarm:(SENAlarm*)alarm

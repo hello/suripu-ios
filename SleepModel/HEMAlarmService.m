@@ -62,7 +62,9 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     [SENAPIAlarms alarmsWithCompletion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf handleAlarmResponse:data error:error];
-        completion (data, error);
+        if (completion) {
+            completion (data, error);
+        }
     }];
 }
 

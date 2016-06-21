@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENDeviceMetadata.h
+../../../SenseKit/Pod/Classes/Model/SENDeviceMetadata.h

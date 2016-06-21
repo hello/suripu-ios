@@ -31,7 +31,7 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
  *                    alarm sounds that can be used when setting an alarm
  */
 - (void)loadAvailableAlarmSounds:(HEMAlarmSoundHandler)completion;
-- (void)refreshAlarms:(HEMAlarmsHandler)completion;
+- (void)refreshAlarms:(nullable HEMAlarmsHandler)completion;
 - (void)updateAlarms:(NSArray<SENAlarm*>*)alarms
           completion:(nullable HEMAlarmUpdateHandler)completion;
 - (BOOL)isTimeTooSoon:(HEMAlarmCache*)cache;

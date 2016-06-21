@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENLocalPreferences.h
+../../../SenseKit/Pod/Classes/Model/SENLocalPreferences.h

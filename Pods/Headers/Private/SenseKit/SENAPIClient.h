@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/API/SENAPIClient.h
+../../../SenseKit/Pod/Classes/API/SENAPIClient.h

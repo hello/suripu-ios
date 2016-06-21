@@ -51,9 +51,13 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
         _cache = [HEMAlarmCache new];
         _originalAlarm = [HEMAlarmCache new];
         
-        if (alarm) {
-            [_cache cacheValuesFromAlarm:alarm];
-            [_originalAlarm cacheValuesFromAlarm:alarm];
+        if (_alarm) {
+            [_cache cacheValuesFromAlarm:_alarm];
+            [_originalAlarm cacheValuesFromAlarm:_alarm];
+        }
+        
+        if (![_service hasLoadedAlarms]) {
+            [_service refreshAlarms:nil];
         }
         
     }
@@ -138,7 +142,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     NSMutableArray* updatedAlarms = nil;
     NSArray* alarms = [[self service] alarms];
     if (![[self alarm] isSaved]) {
-        updatedAlarms = [alarms mutableCopy];
+        updatedAlarms = alarms ? [alarms mutableCopy] : [NSMutableArray array];
         [updatedAlarms addObject:[self alarm]];
     }
     

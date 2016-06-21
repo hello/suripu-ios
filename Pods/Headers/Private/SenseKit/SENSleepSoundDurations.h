@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENSleepSoundDurations.h
+../../../SenseKit/Pod/Classes/Model/SENSleepSoundDurations.h

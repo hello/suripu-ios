@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENRemoteImage.h
+../../../SenseKit/Pod/Classes/Model/SENRemoteImage.h

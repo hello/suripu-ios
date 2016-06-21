@@ -95,7 +95,7 @@ DEPENDENCIES:
   - MSDynamicsDrawerViewController (= 1.5.1)
   - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
   - Nocilla
-  - SenseKit (from `../SenseKit`)
+  - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
@@ -113,7 +113,7 @@ EXTERNAL SOURCES:
   NAPickerView:
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :path: "../SenseKit"
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
   SVWebViewController:
@@ -135,6 +135,9 @@ CHECKOUT OPTIONS:
   NAPickerView:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
+  SenseKit:
+    :commit: 29b3748e9d06ddb2f958abce13adbd2b144ec55f
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
     :git: git@github.com:hello/protobuf-objc.git
@@ -171,6 +174,6 @@ SPEC CHECKSUMS:
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
 
-PODFILE CHECKSUM: 9a33a67ee4c29826eea6dfd1cc78ae7c33a3c864
+PODFILE CHECKSUM: 9e98f8d35cf60de1af744d427b629dcf92eb2bb9
 
 COCOAPODS: 1.0.1

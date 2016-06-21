@@ -94,6 +94,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)didComeBackFromBackground;
 
+/**
+ * @discussion
+ *
+ * View controllers should call this method when the controller moved to a parent
+ */
+- (void)didMoveToParent;
+
+/**
+ * @discussion
+ *
+ * View controllers should call this method when the controller is moved off of
+ * the parent view controller
+ */
+- (void)wasRemovedFromParent;
+
 /*
  * @discussion
  *

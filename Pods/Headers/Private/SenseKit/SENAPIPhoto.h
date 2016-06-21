@@ -1,1 +1,1 @@
-../../../SenseKit/Pod/Classes/API/SENAPIPhoto.h
+../../../../../SenseKit/Pod/Classes/API/SENAPIPhoto.h

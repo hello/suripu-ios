@@ -11,6 +11,7 @@
 
 @class SENSound;
 @class HEMAlarmCache;
+@class SENAlarm;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,8 @@ typedef void(^HEMAlarmUpdateHandler)(NSError* _Nullable error);
 typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _Nullable error);
 
 @interface HEMAlarmService : SENService
+
+@property (nonatomic, strong, readonly) NSArray<SENAlarm*>* alarms;
 
 /**
  * @discussion
@@ -32,13 +35,17 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
 - (void)updateAlarms:(NSArray<SENAlarm*>*)alarms
           completion:(nullable HEMAlarmUpdateHandler)completion;
 - (BOOL)isTimeTooSoon:(HEMAlarmCache*)cache;
+- (BOOL)isAlarmTimeTooSoon:(SENAlarm *)alarm;
 - (BOOL)willRingToday:(HEMAlarmCache*)cache;
+- (BOOL)willAlarmRingToday:(SENAlarm*)alarm;
 - (NSString*)localizedTextForRepeatFlags:(NSUInteger)alarmRepeatFlags;
 - (void)copyCache:(HEMAlarmCache*)cache to:(SENAlarm*)alarm;
 - (BOOL)canAddRepeatDay:(SENAlarmRepeatDays)day
                      to:(HEMAlarmCache*)alarmCache
               excluding:(SENAlarm*)excludedAlarm;
 - (BOOL)canCreateMoreAlarms;
+- (BOOL)useMilitaryTimeFormat;
+- (BOOL)hasLoadedAlarms;
 
 @end
 

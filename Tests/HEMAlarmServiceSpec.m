@@ -1,25 +1,37 @@
 //
-//  HEMAlarmUtilsSpec.m
+//  HEMAlarmServiceSpec.m
 //  Sense
 //
-//  Created by Kevin MacWhinnie on 11/13/15.
-//  Copyright © 2015 Hello. All rights reserved.
+//  Created by Jimmy Lu on 6/21/16.
+//  Copyright © 2016 Hello. All rights reserved.
 //
 
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/SENAlarm.h>
-#import "HEMAlarmUtils.h"
+#import "HEMAlarmService.h"
 
-SPEC_BEGIN(HEMAlarmUtilsSpec)
+@interface HEMAlarmService()
 
-describe(@"HEMAlarmUtils", ^{
+- (BOOL)isTimeTooSoonWithHour:(NSUInteger)alarmHour andMinute:(NSUInteger)alarmMinute;
+- (BOOL)willRingTodayWithHour:(NSUInteger)hour minute:(NSUInteger)minute repeat:(SENAlarmRepeatDays)repeat;
+- (SENAlarmRepeatDays)alarmRepeatDayForDate:(NSDate*)date;
+
+@end
+
+SPEC_BEGIN(HEMAlarmServiceSpec)
+
+describe(@"HEMAlarmService", ^{
     
-    describe(@"+timeIsTooSoonByHour:minute:", ^{
+    describe(@"-isTimeTooSoonWithHour:andMinute:", ^{
+        
         const NSUInteger hour = 11;
         const NSUInteger minute = 10;
         __block NSDate *baseDate;
+        __block HEMAlarmService* service;
         
         beforeEach(^{
+            service = [HEMAlarmService new];
+            
             NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
             NSDateComponents *dateComponents = [NSDateComponents new];
             dateComponents.year = 2015;
@@ -37,13 +49,13 @@ describe(@"HEMAlarmUtils", ^{
         });
         
         it(@"should return true for now", ^{
-            BOOL tooSoon = [HEMAlarmUtils timeIsTooSoonByHour:hour minute:minute];
+            BOOL tooSoon = [service isTimeTooSoonWithHour:hour andMinute:minute];
             [[@(tooSoon) should] equal:@YES];
         });
         
         it(@"should return true for the next n minutes", ^{
-            for (NSUInteger offset = 1; offset <= HEMAlarmTooSoonMinuteLimit; offset++) {
-                BOOL tooSoon = [HEMAlarmUtils timeIsTooSoonByHour:hour minute:minute + offset];
+            for (NSUInteger offset = 1; offset <= 2; offset++) {
+                BOOL tooSoon = [service isTimeTooSoonWithHour:hour andMinute:minute + offset];
                 [[@(tooSoon) should] equal:@YES];
             }
         });
@@ -60,28 +72,33 @@ describe(@"HEMAlarmUtils", ^{
             baseDate = [calendar dateFromComponents:dateComponents];
             [NSDate stub:@selector(date) andReturn:baseDate];
             
-            [[@([HEMAlarmUtils timeIsTooSoonByHour:11 minute:58]) should] equal:@NO];
-            [[@([HEMAlarmUtils timeIsTooSoonByHour:11 minute:59]) should] equal:@YES];
-            [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:0]) should] equal:@YES];
-            [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:1]) should] equal:@YES];
-            [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:2]) should] equal:@NO];
-            [[@([HEMAlarmUtils timeIsTooSoonByHour:12 minute:59]) should] equal:@NO];
+            [[@([service isTimeTooSoonWithHour:11 andMinute:58]) should] equal:@NO];
+            [[@([service isTimeTooSoonWithHour:11 andMinute:59]) should] equal:@YES];
+            [[@([service isTimeTooSoonWithHour:12 andMinute:0]) should] equal:@YES];
+            [[@([service isTimeTooSoonWithHour:12 andMinute:1]) should] equal:@YES];
+            [[@([service isTimeTooSoonWithHour:12 andMinute:2]) should] equal:@NO];
+            [[@([service isTimeTooSoonWithHour:12 andMinute:59]) should] equal:@NO];
         });
         
         it(@"should return false for times before now", ^{
-            BOOL tooSoon = [HEMAlarmUtils timeIsTooSoonByHour:hour minute:minute - 1];
+            BOOL tooSoon = [service isTimeTooSoonWithHour:hour andMinute:minute - 1];
             [[@(tooSoon) should] equal:@NO];
         });
         
         it(@"should return false for times after n minutes", ^{
-            NSUInteger additional = (HEMAlarmTooSoonMinuteLimit + 1);
-            BOOL tooSoon = [HEMAlarmUtils timeIsTooSoonByHour:hour minute:minute + additional];
+            NSUInteger additional = (2 + 1);
+            BOOL tooSoon = [service isTimeTooSoonWithHour:hour andMinute:minute + additional];
             [[@(tooSoon) should] equal:@NO];
         });
+        
     });
     
-    describe(@"+repeatTextForUnitFlags:", ^{
+    describe(@"-localizedTextForRepeatFlags:", ^{
+        
+        __block HEMAlarmService* service = nil;
+        
         beforeEach(^{
+            service = [HEMAlarmService new];
             NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
             [NSLocale stub:@selector(currentLocale) andReturn:locale];
         });
@@ -92,7 +109,7 @@ describe(@"HEMAlarmUtils", ^{
         
         it(@"should return none", ^{
             NSUInteger unitFlags = 0;
-            NSString *repeatText = [HEMAlarmUtils repeatTextForUnitFlags:unitFlags];
+            NSString *repeatText = [service localizedTextForRepeatFlags:unitFlags];
             [[repeatText should] equal:@"Not repeating"];
         });
         
@@ -102,14 +119,14 @@ describe(@"HEMAlarmUtils", ^{
                                     SENAlarmRepeatWednesday |
                                     SENAlarmRepeatThursday |
                                     SENAlarmRepeatFriday);
-            NSString *repeatText = [HEMAlarmUtils repeatTextForUnitFlags:unitFlags];
+            NSString *repeatText = [service localizedTextForRepeatFlags:unitFlags];
             [[repeatText should] equal:@"Weekdays"];
         });
         
         it(@"should return weekends", ^{
             NSUInteger unitFlags = (SENAlarmRepeatSunday |
                                     SENAlarmRepeatSaturday);
-            NSString *repeatText = [HEMAlarmUtils repeatTextForUnitFlags:unitFlags];
+            NSString *repeatText = [service localizedTextForRepeatFlags:unitFlags];
             [[repeatText should] equal:@"Weekends"];
         });
         
@@ -121,18 +138,18 @@ describe(@"HEMAlarmUtils", ^{
                                     SENAlarmRepeatThursday |
                                     SENAlarmRepeatFriday |
                                     SENAlarmRepeatSaturday);
-            NSString *repeatText = [HEMAlarmUtils repeatTextForUnitFlags:unitFlags];
+            NSString *repeatText = [service localizedTextForRepeatFlags:unitFlags];
             [[repeatText should] equal:@"Everyday"];
         });
         
         it(@"should return short day name", ^{
-            [[[HEMAlarmUtils repeatTextForUnitFlags:SENAlarmRepeatSunday] should] equal:@"Sun"];
-            [[[HEMAlarmUtils repeatTextForUnitFlags:SENAlarmRepeatMonday] should] equal:@"Mon"];
-            [[[HEMAlarmUtils repeatTextForUnitFlags:SENAlarmRepeatTuesday] should] equal:@"Tue"];
-            [[[HEMAlarmUtils repeatTextForUnitFlags:SENAlarmRepeatWednesday] should] equal:@"Wed"];
-            [[[HEMAlarmUtils repeatTextForUnitFlags:SENAlarmRepeatThursday] should] equal:@"Thu"];
-            [[[HEMAlarmUtils repeatTextForUnitFlags:SENAlarmRepeatFriday] should] equal:@"Fri"];
-            [[[HEMAlarmUtils repeatTextForUnitFlags:SENAlarmRepeatSaturday] should] equal:@"Sat"];
+            [[[service localizedTextForRepeatFlags:SENAlarmRepeatSunday] should] equal:@"Sun"];
+            [[[service localizedTextForRepeatFlags:SENAlarmRepeatMonday] should] equal:@"Mon"];
+            [[[service localizedTextForRepeatFlags:SENAlarmRepeatTuesday] should] equal:@"Tue"];
+            [[[service localizedTextForRepeatFlags:SENAlarmRepeatWednesday] should] equal:@"Wed"];
+            [[[service localizedTextForRepeatFlags:SENAlarmRepeatThursday] should] equal:@"Thu"];
+            [[[service localizedTextForRepeatFlags:SENAlarmRepeatFriday] should] equal:@"Fri"];
+            [[[service localizedTextForRepeatFlags:SENAlarmRepeatSaturday] should] equal:@"Sat"];
         });
         
         it(@"should return day names", ^{
@@ -140,18 +157,21 @@ describe(@"HEMAlarmUtils", ^{
                                     SENAlarmRepeatTuesday |
                                     SENAlarmRepeatThursday |
                                     SENAlarmRepeatSaturday);
-            NSString *repeatText = [HEMAlarmUtils repeatTextForUnitFlags:unitFlags];
+            NSString *repeatText = [service localizedTextForRepeatFlags:unitFlags];
             [[repeatText should] equal:@"Sun Tue Thu Sat"];
         });
+        
     });
     
-    describe(@"+willRingTodayWithHour:minute:repeatDays:", ^{
+    describe(@"-willRingTodayWithHour:minute:repeat:", ^{
         const NSUInteger hour = 11;
         const NSUInteger minute = 10;
         __block NSDate *baseDate;
         __block SENAlarmRepeatDays baseDateDay;
+        __block HEMAlarmService* service;
         
         beforeEach(^{
+            service = [HEMAlarmService new];
             NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
             NSDateComponents *dateComponents = [NSDateComponents new];
             dateComponents.year = 2015;
@@ -161,7 +181,7 @@ describe(@"HEMAlarmUtils", ^{
             dateComponents.minute = minute;
             dateComponents.timeZone = [NSTimeZone defaultTimeZone];
             baseDate = [calendar dateFromComponents:dateComponents];
-            baseDateDay = [HEMAlarmUtils alarmRepeatDayForDate:baseDate];
+            baseDateDay = [service alarmRepeatDayForDate:baseDate];
             [NSDate stub:@selector(date) andReturn:baseDate];
         });
         
@@ -170,27 +190,27 @@ describe(@"HEMAlarmUtils", ^{
         });
         
         it(@"should return true for now with no repeat days", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute repeatDays:0];
+            BOOL willRing = [service willRingTodayWithHour:hour minute:minute repeat:0];
             [[@(willRing) should] equal:@YES];
         });
         
         it(@"should return true for short times after now with no repeat days", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute + 10 repeatDays:0];
+            BOOL willRing = [service willRingTodayWithHour:hour minute:minute + 10 repeat:0];
             [[@(willRing) should] equal:@YES];
         });
         
         it(@"should return true for long times after now with no repeat days", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour + 2 minute:minute repeatDays:0];
+            BOOL willRing = [service willRingTodayWithHour:hour + 2 minute:minute repeat:0];
             [[@(willRing) should] equal:@YES];
         });
         
         it(@"should return false for short times before now with no repeat days", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute - 10 repeatDays:0];
+            BOOL willRing = [service willRingTodayWithHour:hour minute:minute - 10 repeat:0];
             [[@(willRing) should] equal:@NO];
         });
         
         it(@"should return false for long times before now with no repeat days", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour - 2 minute:minute repeatDays:0];
+            BOOL willRing = [service willRingTodayWithHour:hour - 2 minute:minute repeat:0];
             [[@(willRing) should] equal:@NO];
         });
         
@@ -204,38 +224,39 @@ describe(@"HEMAlarmUtils", ^{
                                        SENAlarmRepeatSaturday);
             days &= ~baseDateDay;
             
-            [[@([HEMAlarmUtils willRingTodayWithHour:hour minute:minute repeatDays:days]) should] equal:@NO];
-            [[@([HEMAlarmUtils willRingTodayWithHour:hour minute:minute + 10 repeatDays:days]) should] equal:@NO];
-            [[@([HEMAlarmUtils willRingTodayWithHour:hour + 2 minute:minute repeatDays:days]) should] equal:@NO];
-            [[@([HEMAlarmUtils willRingTodayWithHour:hour minute:minute - 10 repeatDays:days]) should] equal:@NO];
-            [[@([HEMAlarmUtils willRingTodayWithHour:hour - 2 minute:minute repeatDays:days]) should] equal:@NO];
+            [[@([service willRingTodayWithHour:hour minute:minute repeat:days]) should] equal:@NO];
+            [[@([service willRingTodayWithHour:hour minute:minute + 10 repeat:days]) should] equal:@NO];
+            [[@([service willRingTodayWithHour:hour + 2 minute:minute repeat:days]) should] equal:@NO];
+            [[@([service willRingTodayWithHour:hour minute:minute - 10 repeat:days]) should] equal:@NO];
+            [[@([service willRingTodayWithHour:hour - 2 minute:minute repeat:days]) should] equal:@NO];
         });
         
         it(@"should return true for now with repeat days containing today", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute repeatDays:baseDateDay];
+            BOOL willRing = [service willRingTodayWithHour:hour minute:minute repeat:baseDateDay];
             [[@(willRing) should] equal:@YES];
         });
         
         it(@"should return true for short times after now with repeat days containing today", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute + 10 repeatDays:baseDateDay];
+            BOOL willRing = [service willRingTodayWithHour:hour minute:minute + 10 repeat:baseDateDay];
             [[@(willRing) should] equal:@YES];
         });
         
         it(@"should return true for long times after now with repeat days containing today", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour + 2 minute:minute repeatDays:baseDateDay];
+            BOOL willRing = [service willRingTodayWithHour:hour + 2 minute:minute repeat:baseDateDay];
             [[@(willRing) should] equal:@YES];
         });
         
         it(@"should return false for short times before now with repeat days containing today", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour minute:minute - 10 repeatDays:baseDateDay];
+            BOOL willRing = [service willRingTodayWithHour:hour minute:minute - 10 repeat:baseDateDay];
             [[@(willRing) should] equal:@NO];
         });
         
         it(@"should return false for long times before now with repeat days containing today", ^{
-            BOOL willRing = [HEMAlarmUtils willRingTodayWithHour:hour - 2 minute:minute repeatDays:baseDateDay];
+            BOOL willRing = [service willRingTodayWithHour:hour - 2 minute:minute repeat:baseDateDay];
             [[@(willRing) should] equal:@NO];
         });
     });
+    
 });
 
 SPEC_END

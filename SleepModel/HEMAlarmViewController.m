@@ -24,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
-@property (strong, nonatomic) HEMAlarmService* alarmService;
 @property (strong, nonatomic) HEMAudioService* audioService;
 
 @end
@@ -37,9 +36,11 @@
 }
 
 - (void)configurePresenter {
-    HEMAlarmService* service = [HEMAlarmService new];
+    if (![self alarmService]) {
+        [self setAlarmService:[HEMAlarmService new]];
+    }
     HEMAlarmPresenter* presenter = [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
-                                                               alarmService:service];
+                                                               alarmService:[self alarmService]];
     [presenter setDelegate:self];
     [presenter bindWithTutorialPresentingController:self];
     [presenter bindWithButtonContainer:[self buttonContainer]
@@ -50,7 +51,6 @@
     
     [self setPresenter:presenter];
     [self addPresenter:presenter];
-    [self setAlarmService:service];
 }
 
 - (void)prepareForRepeatDaysSegue:(UIStoryboardSegue*)segue {

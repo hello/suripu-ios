@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENAPIAlarms.h>
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENPreference.h>
 
 #import "HEMAlarmService.h"
 #import "HEMAlarmCache.h"
@@ -17,6 +18,7 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 @interface HEMAlarmService()
 
 @property (nonatomic, strong) NSArray<SENSound*>* sounds;
+@property (nonatomic, strong) NSArray<SENAlarm*>* alarms;
 
 @end
 
@@ -34,21 +36,43 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     }];
 }
 
+- (NSArray *)sortAlarms:(NSArray*)alarms {
+    return [alarms sortedArrayUsingComparator:^NSComparisonResult(SENAlarm *obj1, SENAlarm *obj2) {
+        NSNumber *alarmValue1 = @(obj1.hour * 60 + obj1.minute);
+        NSNumber *alarmValue2 = @(obj2.hour * 60 + obj2.minute);
+        NSComparisonResult result = [alarmValue1 compare:alarmValue2];
+        if (result == NSOrderedSame)
+            result = [@(obj1.repeatFlags) compare:@(obj2.repeatFlags)];
+        return result;
+    }];
+}
+
+- (void)handleAlarmResponse:(id)data error:(NSError*)error {
+    if (error) {
+        [SENAnalytics trackError:error];
+    } else if ([data isKindOfClass:[NSArray class]]) {
+        [self setAlarms:[self sortAlarms:data]];
+    } else {
+        [self setAlarms:@[]];
+    }
+}
+
 - (void)refreshAlarms:(HEMAlarmsHandler)completion {
+    __weak typeof(self) weakSelf = self;
     [SENAPIAlarms alarmsWithCompletion:^(id data, NSError *error) {
-        if (error) {
-            [SENAnalytics trackError:error];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf handleAlarmResponse:data error:error];
+        if (completion) {
+            completion (data, error);
         }
-        // FIXME: alarms are saved locally through the API call ...
-        completion (data, error);
     }];
 }
 
 - (void)updateAlarms:(NSArray<SENAlarm*>*)alarms completion:(HEMAlarmUpdateHandler)completion {
+    __weak typeof(self) weakSelf = self;
     [SENAPIAlarms updateAlarms:alarms completion:^(id data, NSError *error) {
-        if (error) {
-            [SENAnalytics trackError:error];
-        }
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf handleAlarmResponse:data error:error];
         if (completion) {
             completion (error);
         }
@@ -58,7 +82,16 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 - (BOOL)isTimeTooSoon:(HEMAlarmCache*)cache {
     NSUInteger alarmHour = [cache hour];
     NSUInteger alarmMinute = [cache minute];
-    
+    return [self isTimeTooSoonWithHour:alarmHour andMinute:alarmMinute];
+}
+
+- (BOOL)isAlarmTimeTooSoon:(SENAlarm *)alarm {
+    NSUInteger alarmHour = [alarm hour];
+    NSUInteger alarmMinute = [alarm minute];
+    return [self isTimeTooSoonWithHour:alarmHour andMinute:alarmMinute];
+}
+
+- (BOOL)isTimeTooSoonWithHour:(NSUInteger)alarmHour andMinute:(NSUInteger)alarmMinute {
     NSDate* now = [NSDate date];
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSCalendarUnit units = (NSCalendarUnitHour | NSCalendarUnitMinute);
@@ -80,9 +113,20 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     NSUInteger hour = [cache hour];
     NSUInteger minute = [cache minute];
     SENAlarmRepeatDays repeats = [cache repeatFlags];
+    return [self willRingTodayWithHour:hour minute:minute repeat:repeats];
+}
+
+- (BOOL)willAlarmRingToday:(SENAlarm*)alarm {
+    NSUInteger hour = [alarm hour];
+    NSUInteger minute = [alarm minute];
+    SENAlarmRepeatDays repeats = [alarm repeatFlags];
+    return [self willRingTodayWithHour:hour minute:minute repeat:repeats];
+}
+
+- (BOOL)willRingTodayWithHour:(NSUInteger)hour minute:(NSUInteger)minute repeat:(SENAlarmRepeatDays)repeat {
     SENAlarmRepeatDays today = [self alarmRepeatDayForDate:[NSDate date]];
     
-    if (repeats == 0 || (repeats & today) == today) {
+    if (repeat == 0 || (repeat & today) == today) {
         NSDate *now = [NSDate date];
         NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
         NSCalendarUnit units = (NSCalendarUnitHour | NSCalendarUnitMinute);
@@ -153,9 +197,8 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     }
     
     SENAlarmRepeatDays daysInUse = 0;
-    
-    NSArray* alarms = [SENAlarm savedAlarms];
-    for (SENAlarm* alarm in alarms) {
+
+    for (SENAlarm* alarm in [self alarms]) {
         if ([alarm isEqual:excludedAlarm]
             || ![alarm isSmartAlarm]
             || ![alarm isOn]) {
@@ -174,13 +217,7 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 }
 
 - (SENAlarmRepeatDays)dayForNonRepeatingAlarmWithHour:(NSUInteger)hour minute:(NSUInteger)minute {
-    // TODO: really need to fix up alarm code so that nextRingDate is pulled out
-    // and reused without having to create an object and then deleting it!
-    SENAlarm* dummyAlarm = [SENAlarm new];
-    dummyAlarm.minute = minute;
-    dummyAlarm.hour = hour;
-    NSDate* fireDate = [dummyAlarm nextRingDate];
-    [dummyAlarm delete];
+    NSDate* fireDate = [SENAlarm nextRingDateWithHour:hour minute:minute];
     return [self alarmRepeatDayForDate:fireDate];
 }
 
@@ -192,12 +229,18 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     [alarm setSoundName:[cache soundName]];
     [alarm setSoundID:[cache soundID]];
     [alarm setOn:[cache isOn]];
-    [alarm save];
 }
 
 - (BOOL)canCreateMoreAlarms {
-    NSArray* alarms = [SENAlarm savedAlarms];
-    return [alarms count] < HEMAlarmServiceMaxAlarmLimit;
+    return [[self alarms] count] < HEMAlarmServiceMaxAlarmLimit;
+}
+
+- (BOOL)useMilitaryTimeFormat {
+    return [SENPreference timeFormat] == SENTimeFormat24Hour;
+}
+
+- (BOOL)hasLoadedAlarms {
+    return [self alarms] != nil;
 }
 
 @end

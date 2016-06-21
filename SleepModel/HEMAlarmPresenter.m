@@ -51,9 +51,13 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
         _cache = [HEMAlarmCache new];
         _originalAlarm = [HEMAlarmCache new];
         
-        if (alarm) {
-            [_cache cacheValuesFromAlarm:alarm];
-            [_originalAlarm cacheValuesFromAlarm:alarm];
+        if (_alarm) {
+            [_cache cacheValuesFromAlarm:_alarm];
+            [_originalAlarm cacheValuesFromAlarm:_alarm];
+        }
+        
+        if (![_service hasLoadedAlarms]) {
+            [_service refreshAlarms:nil];
         }
         
     }
@@ -66,8 +70,10 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [tableView setBackgroundColor:[UIColor clearColor]];
     
     if (![[self alarm] isSaved]) {
+        // remove the height allocated for the delete button
         CGFloat currentConstant = [heightConstraint constant];
-        [heightConstraint setConstant:currentConstant - [tableView rowHeight]];
+        CGFloat rowHeight = [tableView rowHeight];
+        [heightConstraint setConstant:currentConstant - rowHeight];
     }
     
     [self setTableView:tableView];
@@ -133,19 +139,21 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [[self cache] setOn:YES];
     [[self service] copyCache:[self cache] to:[self alarm]];
     
+    NSMutableArray* updatedAlarms = nil;
+    NSArray* alarms = [[self service] alarms];
+    if (![[self alarm] isSaved]) {
+        updatedAlarms = alarms ? [alarms mutableCopy] : [NSMutableArray array];
+        [updatedAlarms addObject:[self alarm]];
+    }
+    
     __weak typeof(self) weakSelf = self;
-    [[self service] updateAlarms:[SENAlarm savedAlarms] completion:^(NSError * _Nullable error) {
+    [[self service] updateAlarms:updatedAlarms ?: alarms completion:^(NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             NSString* title = NSLocalizedString(@"alarm.save-error.title", nil);
             NSString* message = [error localizedDescription];
-            [[weakSelf delegate] showErrorWithTitle:title message:message from:weakSelf];
-            
-            if ([[strongSelf alarm] isSaved]) {
-                [[strongSelf alarm] delete];
-            } else {
-                [[strongSelf service] copyCache:[strongSelf originalAlarm] to:[strongSelf alarm]];
-            }
+            [[strongSelf delegate] showErrorWithTitle:title message:message from:strongSelf];
+            [[strongSelf service] copyCache:[strongSelf originalAlarm] to:[strongSelf alarm]];
         } else {
             [SENAnalytics trackAlarmSave:[strongSelf alarm]];
             NSString* message = NSLocalizedString(@"actions.saved", nil);
@@ -161,13 +169,12 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     __weak typeof(self) weakSelf = self;
     [[self delegate] showConfirmationDialogWithTitle:title message:message action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [[strongSelf alarm] delete]; // removes from local storage, not actual data
-        [[strongSelf service] updateAlarms:[SENAlarm savedAlarms] completion:^(NSError * _Nullable error) {
-            if (error) {
-                [[strongSelf alarm] save];
-            } else {
+        NSMutableArray* alarms = [[[strongSelf service] alarms] mutableCopy];
+        [alarms removeObject:[strongSelf alarm]];
+        [[strongSelf service] updateAlarms:alarms completion:^(NSError * _Nullable error) {
+            if (!error) {
                 [SENAnalytics track:HEMAnalyticsEventDeleteAlarm];
-                [[strongSelf delegate] dismissWithMessage:nil saved:NO from:strongSelf];
+                [[strongSelf delegate] dismissWithMessage:nil saved:YES from:strongSelf];
             }
         }];
     } from:self];

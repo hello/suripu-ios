@@ -75,25 +75,30 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
+- (void)addNewAlarm {
+    SENAlarm *alarm = [SENAlarm createDefaultAlarm];
+    [self presentViewControllerForAlarm:alarm];
+}
+
 #pragma mark - Shortcuts
 
 - (void)addNewAlarmFromShortcut {
     if ([[self alarmsPresenter] isLoading]) {
         [self setLaunchNewAlarmOnLoad:YES];
+    } else {
+        [self addNewAlarm];
     }
 }
 
 #pragma mark - HEMAlarmListPresenterDelegate
 
 - (void)addNewAlarmFromPresenter:(HEMAlarmListPresenter*)presenter {
-    SENAlarm *alarm = [SENAlarm createDefaultAlarm];
-    [self presentViewControllerForAlarm:alarm];
+    [self addNewAlarm];
 }
 
 - (void)didFinishLoadingDataFrom:(HEMAlarmListPresenter *)presenter {
     if ([self launchNewAlarmOnLoad]) {
-        SENAlarm *alarm = [SENAlarm createDefaultAlarm];
-        [self presentViewControllerForAlarm:alarm];
+        [self addNewAlarm];
         [self setLaunchNewAlarmOnLoad:NO];
     }
 }

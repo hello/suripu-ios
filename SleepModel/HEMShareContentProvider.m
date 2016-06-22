@@ -41,7 +41,7 @@ static NSString* const HEMShareContentTextFormatKey = @"share.text.format.";
             NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:[self itemToShare]];
             NSMutableAttributedString* shareText =
                 [[NSMutableAttributedString alloc] initWithFormat:textFormat args:@[attributedString]];
-            return shareText;
+            return [shareText string];
         }
     }
     return [self itemToShare];

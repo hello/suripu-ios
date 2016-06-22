@@ -548,7 +548,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     
     __weak typeof(self) weakSelf = self;
     [shareVC setCompletionWithItemsHandler:^(NSString * activityType, BOOL completed, NSArray * returnedItems, NSError * activityError){
-        if (!completed) {
+        // facebook sharing has it's own posted confirmation
+        if (!completed || [activityType isEqualToString:UIActivityTypePostToFacebook]) {
             return;
         }
         
@@ -557,6 +558,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         HEMConfirmationLayout layout = HEMConfirmationLayoutVertical;
         if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
             text = NSLocalizedString(@"status.copied", nil);
+            
             layout = HEMConfirmationLayoutHorizontal;
         }
         

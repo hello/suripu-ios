@@ -38,7 +38,7 @@ static CGFloat const HEMInsightCellBaseHeight = 235.0f;
     [[self dateLabel] setTextColor:[UIColor lowImportanceTextColor]];
     [[self dateLabel] setFont:[UIFont h7]];
     [[self categoryLabel] setTextColor:[UIColor grey6]];
-    [[self categoryLabel] setFont:[UIFont h7]];
+    [[self categoryLabel] setFont:[UIFont h7Bold]];
     [[self messageLabel] setTextColor:[UIColor detailTextColor]];
     [[self separator] setBackgroundColor:[UIColor separatorColor]];
     [[self imageContainer] setBackgroundColor:[UIColor backgroundColor]];

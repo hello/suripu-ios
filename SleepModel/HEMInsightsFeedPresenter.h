@@ -37,6 +37,9 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 - (void)presenter:(HEMInsightsFeedPresenter*)presenter showTab:(HEMRootDrawerTab)tab;
 - (UIView*)activityContainerViewFor:(HEMInsightsFeedPresenter*)presenter;
 - (void)presenter:(HEMInsightsFeedPresenter *)presenter showController:(UIViewController*)controller;
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+   showErrorTitle:(NSString*)title
+          message:(NSString*)message;
 
 @end
 

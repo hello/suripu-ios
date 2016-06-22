@@ -829,4 +829,6 @@
 "whats.new.message.debug" = "He's so lazy that if there were work in bed, he would rather sleep on the floor.";
 
 // sharing
+"share.error.no-link.title" = "Unable to share Insight";
+"share.error.no-link.message" = "Sense was unable to generate a shareable Insight. Please try again in a few moments.";
 "share.text.format.insight" = "See how i'm improving my sleep with insights from Sense. %@ #MySense";

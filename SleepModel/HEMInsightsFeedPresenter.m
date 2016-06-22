@@ -531,10 +531,17 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
                     [strongSelf showShareOptionsWithUrl:url forType:[shareable shareType]];
                 } else {
                     // TODO: show an error
+                    void(^showError)(void) = ^(void){
+                        NSString* title = NSLocalizedString(@"share.error.no-link.title", nil);
+                        NSString* message = NSLocalizedString(@"share.error.no-link.message", nil);
+                        [[strongSelf delegate] presenter:strongSelf
+                                          showErrorTitle:title
+                                                 message:message];
+                    };
                     [[strongSelf shareActivityCover] dismissWithResultText:nil
                                                            showSuccessMark:NO
                                                                     remove:YES
-                                                                completion:nil];
+                                                                completion:showError];
                 }
             }];
         }

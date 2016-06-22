@@ -187,6 +187,12 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+   showErrorTitle:(NSString*)title
+          message:(NSString*)message {
+    [self showMessageDialog:message title:title];
+}
+
 #pragma mark - Clean Up
 
 - (void)dealloc {

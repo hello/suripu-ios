@@ -16,6 +16,8 @@
 @property (nonatomic, strong, readonly) HEMActivityIndicatorView* indicator;
 @property (nonatomic, assign, readonly, getter=isShowing) BOOL showing;
 
++ (instancetype)transparentCoverView;
+
 /**
  * @method
  * Show this activity view inside the specified view.  If you want to display this

@@ -15,6 +15,7 @@
 @class HEMInsightsService;
 @class HEMQuestionsService;
 @class HEMUnreadAlertService;
+@class HEMShareService;
 @class HEMWhatsNewService;
 @class HEMActivityIndicatorView;
 @class HEMInsightCollectionViewCell;
@@ -34,6 +35,8 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
     showQuestions:(NSArray<SENQuestion*>*)questions
        completion:(nullable HEMInsightsPresenterCompletion)completion;
 - (void)presenter:(HEMInsightsFeedPresenter*)presenter showTab:(HEMRootDrawerTab)tab;
+- (UIView*)activityContainerViewFor:(HEMInsightsFeedPresenter*)presenter;
+- (void)presenter:(HEMInsightsFeedPresenter *)presenter showController:(UIViewController*)controller;
 
 @end
 
@@ -45,7 +48,8 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
                                   unreadService:(HEMUnreadAlertService*)unreadService
-                                whatsNewService:(HEMWhatsNewService*)whatsNewservice;
+                                whatsNewService:(HEMWhatsNewService*)whatsNewservice
+                                   shareService:(HEMShareService*)shareService;
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 

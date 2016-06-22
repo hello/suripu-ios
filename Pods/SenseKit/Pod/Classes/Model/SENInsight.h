@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "SENShareable.h"
 
 @class SENRemoteImage;
 
@@ -8,7 +9,7 @@ typedef NS_ENUM(NSUInteger, SENInsightType) {
     SENInsightTypeBasic
 };
 
-@interface SENInsight : NSObject <NSCoding>
+@interface SENInsight : NSObject <NSCoding, SENShareable>
 
 @property (nonatomic, strong, readonly) NSDate* dateCreated;
 @property (nonatomic, copy, readonly)   NSString* title;
@@ -18,6 +19,7 @@ typedef NS_ENUM(NSUInteger, SENInsightType) {
 @property (nonatomic, assign, readonly) SENInsightType type;
 @property (nonatomic, copy, readonly)   NSString* infoPreview;
 @property (nonatomic, strong, readonly) SENRemoteImage* remoteImage;
+@property (nonatomic, copy, readonly)   NSString* identifier;
 
 - (instancetype)initWithDictionary:(NSDictionary*)dict;
 

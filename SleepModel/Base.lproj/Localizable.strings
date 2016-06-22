@@ -825,3 +825,6 @@
 "whats.new.button.title.debug" = "LEARN MORE";
 "whats.new.title.debug" = "Don't worry, debug text only";
 "whats.new.message.debug" = "He's so lazy that if there were work in bed, he would rather sleep on the floor.";
+
+// sharing
+"share.text.format.insight" = "Check out my insight\n%@";

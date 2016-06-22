@@ -29,8 +29,32 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 @implementation HEMActivityCoverView
 
++ (instancetype)transparentCoverView {
+    UIImage* image = [UIImage imageNamed:@"loaderWhite"];
+    
+    CGRect activityFrame = CGRectZero;
+    activityFrame.size = image.size;
+    
+    HEMActivityIndicatorView* indicator =
+        [[HEMActivityIndicatorView alloc] initWithImage:image
+                                               andFrame:activityFrame];
+    HEMActivityCoverView* cover = [[HEMActivityCoverView alloc] initWithActivityIndicator:indicator];
+    [cover setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.2f]];
+    
+    return cover;
+}
+
 - (id)init {
     return [self initWithFrame:HEMKeyWindowBounds()];
+}
+
+- (instancetype)initWithActivityIndicator:(HEMActivityIndicatorView*)indicator {
+    self = [super initWithFrame:HEMKeyWindowBounds()];
+    if (self) {
+        _indicator = indicator;
+        [self setup];
+    }
+    return self;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -51,7 +75,11 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 - (void)setup {
     [self setBackgroundColor:[UIColor whiteColor]];
-    [self addActivityIndicator];
+    if (![self indicator]) {
+        [self addActivityIndicator];
+    } else {
+        [self addSubview:[self indicator]];
+    }
     [self addLabel];
 }
 

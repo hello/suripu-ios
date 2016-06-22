@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.4.4.1
+
+New:
+
+* Changed layout of Insight card to include share button
+* Share insight with native options
+* Show confirmation when shared / copied
+
+Fixes:
+
+* Removed local storage for alarms to fix issue with restores from backup
+
 ## 1.4.3.9
 
 Misc:

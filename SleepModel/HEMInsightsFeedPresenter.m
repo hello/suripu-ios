@@ -572,6 +572,10 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
             return;
         }
         
+        if (activityError) {
+            [SENAnalytics trackError:activityError];
+        }
+        
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSString* text = NSLocalizedString(@"status.shared", nil);
         HEMConfirmationLayout layout = HEMConfirmationLayoutVertical;

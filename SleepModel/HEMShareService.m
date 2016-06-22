@@ -21,4 +21,9 @@
     }];
 }
 
+- (BOOL)isShareable:(id)shareable {
+    return [shareable conformsToProtocol:@protocol(SENShareable)]
+        && [(id<SENShareable>)shareable identifier] != nil;
+}
+
 @end

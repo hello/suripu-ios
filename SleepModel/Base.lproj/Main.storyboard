@@ -3549,8 +3549,11 @@
                                                         <constraint firstAttribute="height" constant="1" id="Cja-uo-NZA"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oh9-XJ-e4p">
+                                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oh9-XJ-e4p">
                                                     <rect key="frame" x="16" y="189" width="544" height="46"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="46" id="626-k8-uzU"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                     <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
@@ -3566,10 +3569,9 @@
                                             <constraint firstItem="obI-fk-z4W" firstAttribute="leading" secondItem="Ioe-As-pln" secondAttribute="leading" constant="16" id="79p-At-b1n"/>
                                             <constraint firstAttribute="trailing" secondItem="BiA-EQ-FvD" secondAttribute="trailing" constant="16" id="JvE-Kj-Wq3"/>
                                             <constraint firstItem="WPn-VE-Ody" firstAttribute="bottom" secondItem="jBz-YF-H8a" secondAttribute="top" constant="-16" id="Lnp-oi-cR0"/>
+                                            <constraint firstItem="obI-fk-z4W" firstAttribute="bottom" secondItem="Oh9-XJ-e4p" secondAttribute="top" id="P17-5z-Q3u"/>
+                                            <constraint firstAttribute="bottom" secondItem="Oh9-XJ-e4p" secondAttribute="bottom" id="P3q-dh-oil"/>
                                             <constraint firstItem="Sz1-aQ-HOl" firstAttribute="bottom" secondItem="BiA-EQ-FvD" secondAttribute="top" constant="-12" id="RGJ-3I-CR3"/>
-                                            <constraint firstItem="Oh9-XJ-e4p" firstAttribute="top" secondItem="obI-fk-z4W" secondAttribute="bottom" id="YaT-jL-RFH"/>
-                                            <constraint firstAttribute="bottom" secondItem="obI-fk-z4W" secondAttribute="bottom" constant="46" id="aS7-kx-KKD"/>
-                                            <constraint firstAttribute="bottom" secondItem="Oh9-XJ-e4p" secondAttribute="bottom" id="bHj-QB-IKf"/>
                                             <constraint firstItem="Oh9-XJ-e4p" firstAttribute="leading" secondItem="Ioe-As-pln" secondAttribute="leading" constant="16" id="cOF-qW-pTz"/>
                                             <constraint firstAttribute="trailing" secondItem="Sz1-aQ-HOl" secondAttribute="trailing" constant="16" id="dSp-v5-0IF"/>
                                             <constraint firstItem="WPn-VE-Ody" firstAttribute="top" secondItem="Ioe-As-pln" secondAttribute="top" id="db7-gK-0i8"/>
@@ -3592,6 +3594,7 @@
                                             <outlet property="messageLabel" destination="BiA-EQ-FvD" id="dDi-qL-sqw"/>
                                             <outlet property="separator" destination="obI-fk-z4W" id="bt3-L2-gMj"/>
                                             <outlet property="shareButton" destination="Oh9-XJ-e4p" id="JPl-E2-NCi"/>
+                                            <outlet property="shareButtonHeightConstraint" destination="626-k8-uzU" id="2b0-mf-jZn"/>
                                             <outlet property="uriImageView" destination="rq6-DJ-Adv" id="suV-5a-Zqw"/>
                                         </connections>
                                     </collectionViewCell>

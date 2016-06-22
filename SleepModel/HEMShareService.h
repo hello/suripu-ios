@@ -14,5 +14,6 @@ typedef void(^HEMShareUrlHandler)(NSString* url, NSError* error);
 @interface HEMShareService : SENService
 
 - (void)shareUrlFor:(id<SENShareable>)shareable completion:(HEMShareUrlHandler)completion;
+- (BOOL)isShareable:(id)shareable;
 
 @end

@@ -16,21 +16,27 @@
 CGFloat const HEMInsightCellMessagePadding = 20.0f;
 
 static CGFloat const HEMInsightCellBaseHeight = 235.0f;
+static CGFloat const HEMInsightCellShareButtonHeight = 46.0f;
 
 @interface HEMInsightCollectionViewCell()
 
 @property (weak, nonatomic) IBOutlet UIView *separator;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonHeightConstraint;
 
 @end
 
 @implementation HEMInsightCollectionViewCell
 
 + (CGFloat)contentHeightWithMessage:(NSAttributedString*)message
-                            inWidth:(CGFloat)contentWidth {
+                            inWidth:(CGFloat)contentWidth
+                          shareable:(BOOL)shareable {
     CGFloat maxWidth = contentWidth - (HEMInsightCellMessagePadding * 2);
     CGFloat textHeight = [message sizeWithWidth:maxWidth].height;
-    CGFloat baseHeight = HEMInsightCellBaseHeight;
-    return textHeight + baseHeight;
+    CGFloat totalHeight = textHeight + HEMInsightCellBaseHeight;
+    if (!shareable) {
+        totalHeight -= HEMInsightCellShareButtonHeight;
+    }
+    return totalHeight;
 }
 
 - (void)awakeFromNib {
@@ -57,6 +63,15 @@ static CGFloat const HEMInsightCellBaseHeight = 235.0f;
     [[self dateLabel] setText:nil];
     [[self categoryLabel] setAttributedText:nil];
     [[self dateLabel] setText:nil];
+}
+
+- (void)enableShare:(BOOL)enable {
+    [[self shareButton] setHidden:!enable];
+    [[self separator] setHidden:!enable];
+    
+    CGFloat height = enable ? HEMInsightCellShareButtonHeight : 0.0f;
+    [[self shareButtonHeightConstraint] setConstant:height];
+    [self layoutIfNeeded];
 }
 
 @end

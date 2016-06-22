@@ -303,12 +303,20 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         calculatedHeight = [HEMQuestionCell heightForCellWithQuestion:attributedBody cellWidth:width];
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:attributedBody inWidth:width];
+        BOOL shareable = [[self shareService] isShareable:dataObj];
+        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:attributedBody
+                                                                          inWidth:width
+                                                                        shareable:shareable];
     }
     
     [[self heightCache] setObject:@(calculatedHeight) forKey:cacheKey];
     return calculatedHeight;
     
+}
+
+- (BOOL)isItemShareableAtIndexPath:(NSIndexPath*)indexPath {
+    id object = [self objectAtIndexPath:indexPath];
+    return [[self shareService] isShareable:object];
 }
 
 - (NSString*)insightImageUriForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -422,6 +430,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 - (void)configureInsightCell:(HEMInsightCollectionViewCell*)iCell
                 forIndexPath:(NSIndexPath*)indexPath
                     withBody:(NSAttributedString*)body{
+    
     [[iCell messageLabel] setAttributedText:body];
     [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
     
@@ -447,12 +456,15 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     }
     
     [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
+    
     [[iCell shareButton] setTitle:[NSLocalizedString(@"actions.share", nil) uppercaseString]
                          forState:UIControlStateNormal];
     [[iCell shareButton] addTarget:self
                             action:@selector(shareInsight:)
                   forControlEvents:UIControlEventTouchUpInside];
     [[iCell shareButton] setTag:[indexPath row]];
+    [iCell enableShare:[self isItemShareableAtIndexPath:indexPath]];
+
     [self updateInsightImageOffsetOn:iCell];
 }
 

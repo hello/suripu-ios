@@ -33,6 +33,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMShareService.h"
 #import "HEMShareContentProvider.h"
+#import "HEMConfirmationView.h"
 
 static NSString* const HEMInsightsFeedWhatsNewReuseId = @"whatsNew";
 
@@ -544,6 +545,25 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     UIActivityViewController* shareVC =
         [[UIActivityViewController alloc] initWithActivityItems:@[insightShareContent]
                                           applicationActivities:nil];
+    
+    __weak typeof(self) weakSelf = self;
+    [shareVC setCompletionWithItemsHandler:^(NSString * activityType, BOOL completed, NSArray * returnedItems, NSError * activityError){
+        if (!completed) {
+            return;
+        }
+        
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSString* text = NSLocalizedString(@"status.shared", nil);
+        HEMConfirmationLayout layout = HEMConfirmationLayoutVertical;
+        if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
+            text = NSLocalizedString(@"status.copied", nil);
+            layout = HEMConfirmationLayoutHorizontal;
+        }
+        
+        UIView* containerView = [[strongSelf collectionView] superview];
+        HEMConfirmationView* confirmView = [[HEMConfirmationView alloc] initWithText:text layout:layout];
+        [confirmView showInView:containerView];
+    }];
     
     [[self delegate] presenter:self showController:shareVC];
 }

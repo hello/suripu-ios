@@ -148,6 +148,7 @@
 		BF2123F61B66E8B50017D67A /* HEMAppUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2123F51B66E8B50017D67A /* HEMAppUsage.m */; };
 		BF238DE31D1A126600F6E62C /* HEMShareService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE21D1A126600F6E62C /* HEMShareService.m */; };
 		BF238DE71D1A15FC00F6E62C /* HEMShareContentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE61D1A15FC00F6E62C /* HEMShareContentProvider.m */; };
+		BF238DEA1D1B254100F6E62C /* HEMConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE91D1B254100F6E62C /* HEMConfirmationView.m */; };
 		BF257EE71A1D1C2600DAF923 /* HEMAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE61A1D1C2600DAF923 /* HEMAlertViewController.m */; };
 		BF257EEA1A1D269300DAF923 /* HEMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE91A1D269300DAF923 /* HEMAlertView.m */; };
 		BF287D5F1C9CBB380052F543 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
@@ -694,6 +695,8 @@
 		BF238DE21D1A126600F6E62C /* HEMShareService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMShareService.m; sourceTree = "<group>"; };
 		BF238DE51D1A15FC00F6E62C /* HEMShareContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMShareContentProvider.h; sourceTree = "<group>"; };
 		BF238DE61D1A15FC00F6E62C /* HEMShareContentProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMShareContentProvider.m; sourceTree = "<group>"; };
+		BF238DE81D1B254100F6E62C /* HEMConfirmationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMConfirmationView.h; sourceTree = "<group>"; };
+		BF238DE91D1B254100F6E62C /* HEMConfirmationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfirmationView.m; sourceTree = "<group>"; };
 		BF257EE51A1D1C2600DAF923 /* HEMAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlertViewController.h; sourceTree = "<group>"; };
 		BF257EE61A1D1C2600DAF923 /* HEMAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlertViewController.m; sourceTree = "<group>"; };
 		BF257EE81A1D269300DAF923 /* HEMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlertView.h; sourceTree = "<group>"; };
@@ -2455,6 +2458,8 @@
 				BF6995F01CA6086E00C7AA55 /* HEMListItemCell.m */,
 				BFB7B2181CE53EDA0060999E /* HEMTitledTextField.h */,
 				BFB7B2191CE53EDA0060999E /* HEMTitledTextField.m */,
+				BF238DE81D1B254100F6E62C /* HEMConfirmationView.h */,
+				BF238DE91D1B254100F6E62C /* HEMConfirmationView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3680,6 +3685,7 @@
 				BFB815151BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m in Sources */,
 				BF78E9A91B2763CA0015949F /* HEMTutorialDataSource.m in Sources */,
 				8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
+				BF238DEA1D1B254100F6E62C /* HEMConfirmationView.m in Sources */,
 				8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */,
 				BF1C46B11B155B4900AFCB7B /* HEMHealthViewController.m in Sources */,
 				BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */,

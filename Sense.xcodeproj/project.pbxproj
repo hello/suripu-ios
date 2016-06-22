@@ -386,6 +386,7 @@
 		BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */; };
 		BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */; };
 		BFF93EA31D19AD080038419A /* HEMAlarmServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF93EA21D19AD080038419A /* HEMAlarmServiceSpec.m */; };
+		BFF93EA61D19EA540038419A /* Social.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFF93EA51D19EA540038419A /* Social.xcassets */; };
 		BFFCEFCF1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFCE1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m */; };
 		BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */; };
 		BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */; };
@@ -1123,6 +1124,7 @@
 		BFF6A5BB1B339CA400A30429 /* HEMHintMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHintMessageView.h; sourceTree = "<group>"; };
 		BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHintMessageView.m; sourceTree = "<group>"; };
 		BFF93EA21D19AD080038419A /* HEMAlarmServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmServiceSpec.m; sourceTree = "<group>"; };
+		BFF93EA51D19EA540038419A /* Social.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Social.xcassets; sourceTree = "<group>"; };
 		BFFCEFCD1D00D90400CA0E54 /* HEMWhatsNewHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWhatsNewHeaderView.h; sourceTree = "<group>"; };
 		BFFCEFCE1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWhatsNewHeaderView.m; sourceTree = "<group>"; };
 		BFFCEFD01D00F98B00CA0E54 /* HEMWhatsNewService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWhatsNewService.h; sourceTree = "<group>"; };
@@ -2946,6 +2948,7 @@
 		BFE375DC1CEB982A0029EE66 /* Social */ = {
 			isa = PBXGroup;
 			children = (
+				BFF93EA51D19EA540038419A /* Social.xcassets */,
 				BFE375DD1CEB98350029EE66 /* Services */,
 			);
 			name = Social;
@@ -3167,6 +3170,7 @@
 				BFCB894E1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf in Resources */,
 				8AD331281BB08C4300DFF95A /* Drawer.xcassets in Resources */,
 				BFA540E71BCDC326007AF607 /* HEMMeetSenseView.xib in Resources */,
+				BFF93EA61D19EA540038419A /* Social.xcassets in Resources */,
 				8A1743BC19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib in Resources */,
 				BFA540EF1BCEF10A007AF607 /* HEMIntroDescriptionView.xib in Resources */,
 				8AD3312E1BB08DCB00DFF95A /* Questions.xcassets in Resources */,

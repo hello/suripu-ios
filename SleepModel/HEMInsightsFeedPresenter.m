@@ -224,7 +224,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     
     if ([dataObj isKindOfClass:[SENInsight class]]) {
         SENInsight* insight = (SENInsight*)dataObj;
-        date = [[[insight dateCreated] elapsed] uppercaseString];
+        date = [[insight dateCreated] elapsed];
     }
     
     return date;
@@ -434,6 +434,12 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     }
     
     [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
+    [[iCell shareButton] setTitle:[NSLocalizedString(@"actions.share", nil) uppercaseString]
+                         forState:UIControlStateNormal];
+    [[iCell shareButton] addTarget:self
+                            action:@selector(shareInsight:)
+                  forControlEvents:UIControlEventTouchUpInside];
+    [[iCell shareButton] setTag:[indexPath row]];
     [self updateInsightImageOffsetOn:iCell];
 }
 
@@ -474,6 +480,10 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 }
 
 #pragma mark - Actions
+
+- (void)shareInsight:(UIButton*)shareButton {
+    
+}
 
 - (void)showWhatsNew {
     HEMWhatsNewLocation loc = [[self whatsNewService] location];

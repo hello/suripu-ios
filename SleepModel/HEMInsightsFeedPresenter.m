@@ -530,7 +530,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
                     [[strongSelf shareUrlCache] setObject:url forKey:[shareable identifier]];
                     [strongSelf showShareOptionsWithUrl:url forType:[shareable shareType]];
                 } else {
-                    // TODO: show an error
                     void(^showError)(void) = ^(void){
                         NSString* title = NSLocalizedString(@"share.error.no-link.title", nil);
                         NSString* message = NSLocalizedString(@"share.error.no-link.message", nil);

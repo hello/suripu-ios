@@ -635,6 +635,9 @@
 "actions.remove-photo" = "Remove Photo";
 "actions.go-to-settings" = "GO TO SETTINGS";
 "status.success" = "Done";
+"actions.share" = "Share";
+"status.shared" = "Shared";
+"status.copied" = "Copied";
 
 // action sheet
 "action-sheet.accessibility.did-appear" = "Open options";
@@ -688,12 +691,15 @@
 
 // SORelativeDateTransformer
 "date.elapsed.today" = "TODAY";
+"date.elapsed.yesterday" = "YESTERDAY";
 "date.elapsed.day.format" = "%ld day ago";
-"date.elapsed.days.format" = "%ld days ago";
-"date.elapsed.week.format" = "%ld week ago";
-"date.elapsed.weeks.format" = "%ld weeks ago";
-"date.elapsed.year.format" = "%ld year ago";
-"date.elapsed.years.format" = "%ld years ago";
+"date.elapsed.days.format" = "%ldd ago";
+"date.elapsed.week.format" = "%ldw ago";
+"date.elapsed.weeks.format" = "%ldw ago";
+"date.elapsed.month.format" = "%ldm ago";
+"date.elapsed.months.format" = "%ldm ago";
+"date.elapsed.year.format" = "%ldy ago";
+"date.elapsed.years.format" = "%ldy ago";
 
 // alerts
 "alerts.no-internet.title" = "No Connection";
@@ -821,3 +827,8 @@
 "whats.new.button.title.debug" = "LEARN MORE";
 "whats.new.title.debug" = "Don't worry, debug text only";
 "whats.new.message.debug" = "He's so lazy that if there were work in bed, he would rather sleep on the floor.";
+
+// sharing
+"share.error.no-link.title" = "Unable to share Insight";
+"share.error.no-link.message" = "Sense was unable to generate a shareable Insight. Please try again in a few moments.";
+"share.text.format.insight" = "See how i'm improving my sleep with insights from Sense. %@ #MySense";

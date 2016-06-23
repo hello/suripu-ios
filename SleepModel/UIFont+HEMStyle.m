@@ -71,6 +71,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:15.0f];
 }
 
++ (UIFont*)bodyBold {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:15.0f];
+}
+
 + (UIFont*)button {
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
@@ -122,11 +126,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)insightSummaryBoldFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
-}
-
-+ (UIFont*)insightSummaryFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
 + (UIFont*)insightTitleFont

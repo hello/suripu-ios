@@ -1,0 +1,1 @@
+../../../SenseKit/Pod/Classes/API/SENAPIShare.h

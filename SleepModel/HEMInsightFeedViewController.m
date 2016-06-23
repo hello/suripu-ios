@@ -31,6 +31,7 @@
 #import "HEMInsightsHandHoldingPresenter.h"
 #import "HEMWhatsNewService.h"
 #import "HEMRootViewController.h"
+#import "HEMShareService.h"
 
 @interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
 
@@ -44,6 +45,7 @@
 @property (strong, nonatomic) HEMUnreadAlertService* unreadService;
 @property (strong, nonatomic) HEMHandHoldingService* handHoldingService;
 @property (strong, nonatomic) HEMWhatsNewService* whatsNewService;
+@property (strong, nonatomic) HEMShareService* shareService;
 
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> insightTransition;
 @property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> questionsTransition;
@@ -59,6 +61,7 @@
         _unreadService = [HEMUnreadAlertService new];
         _handHoldingService = [HEMHandHoldingService new];
         _whatsNewService = [HEMWhatsNewService new];
+        _shareService = [HEMShareService new];
         
         HEMInsightsHandHoldingPresenter* hhPresenter
             = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:_handHoldingService];
@@ -69,7 +72,8 @@
             = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
                                                        questionsService:_questionsService
                                                           unreadService:_unreadService
-                                                        whatsNewService:_whatsNewService];
+                                                        whatsNewService:_whatsNewService
+                                                           shareService:_shareService];
         // weak ref so we can bind collection view, activity and set delegate when view is loaded
         _feedPresenter = feedPresenter;
         [self addPresenter:feedPresenter];
@@ -173,6 +177,20 @@
         HEMRootViewController* rootVC = (id) controller;
         [rootVC showSettingsDrawerTabAtIndex:tab animated:YES];
     }
+}
+
+- (UIView*)activityContainerViewFor:(HEMInsightsFeedPresenter*)presenter {
+    return [[self rootViewController] view];
+}
+
+- (void)presenter:(HEMInsightsFeedPresenter *)presenter showController:(UIViewController*)controller {
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+   showErrorTitle:(NSString*)title
+          message:(NSString*)message {
+    [self showMessageDialog:message title:title];
 }
 
 #pragma mark - Clean Up

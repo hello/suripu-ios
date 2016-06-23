@@ -24,9 +24,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
 + (CGFloat)contentHeightWithMessage:(NSAttributedString*)message
-                            inWidth:(CGFloat)contentWidth;
+                            inWidth:(CGFloat)contentWidth
+                          shareable:(BOOL)shareable;
+
+- (void)enableShare:(BOOL)enable;
 
 @end
 

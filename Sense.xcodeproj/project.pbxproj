@@ -123,6 +123,7 @@
 		8B1DB6E31C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6E21C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m */; };
 		8B45075D1C1794E500359453 /* HEMSelectHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */; };
 		97136BE209E8E8D757BD50DE /* libPods-SenseApp-SenseWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90D7E66DC574E0BA5B3413BC /* libPods-SenseApp-SenseWidget.a */; };
+		B13CC08B9E0FE47B29BBF099 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F08A6C3146D4DF0E95A307B9 /* libPods-Tests.a */; };
 		BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */; };
 		BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C7219FED17800E68E87 /* HEMWiFiDataSource.m */; };
 		BF037C011B7C178D00E1638D /* HEMTappableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF037C001B7C178D00E1638D /* HEMTappableView.m */; };
@@ -1142,6 +1143,7 @@
 		BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationService.m; sourceTree = "<group>"; };
 		CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.dev.xcconfig"; sourceTree = "<group>"; };
 		DC02F45E18D78A3EDEFEA4DD /* Pods-SenseApp-SenseWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.release.xcconfig"; sourceTree = "<group>"; };
+		F08A6C3146D4DF0E95A307B9 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1165,6 +1167,7 @@
 			files = (
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
+				B13CC08B9E0FE47B29BBF099 /* libPods-Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1218,6 +1221,7 @@
 				BF7F1BC919E304050028F799 /* NotificationCenter.framework */,
 				0AE1619C6D4536DB0E5E87CD /* libPods-SenseApp-Sense.a */,
 				90D7E66DC574E0BA5B3413BC /* libPods-SenseApp-SenseWidget.a */,
+				F08A6C3146D4DF0E95A307B9 /* libPods-Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3099,6 +3103,7 @@
 				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC619E304050028F799 /* Resources */,
 				A2F1547E55EFF33A441781F6 /* [CP] Copy Pods Resources */,
+				048AFBF0DB20D16A06E74A22 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3238,6 +3243,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		048AFBF0DB20D16A06E74A22 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		08C43C9BD54FB5EBE6EF75A4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

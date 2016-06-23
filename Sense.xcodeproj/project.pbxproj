@@ -3103,7 +3103,6 @@
 				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC619E304050028F799 /* Resources */,
 				A2F1547E55EFF33A441781F6 /* [CP] Copy Pods Resources */,
-				048AFBF0DB20D16A06E74A22 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3243,21 +3242,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		048AFBF0DB20D16A06E74A22 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		08C43C9BD54FB5EBE6EF75A4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

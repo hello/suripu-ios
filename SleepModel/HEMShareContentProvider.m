@@ -47,6 +47,10 @@ static NSString* const HEMShareContentTextFormatKey = @"share.text.format.";
     return [self itemToShare];
 }
 
+- (NSString*)activityViewController:(UIActivityViewController *)activityViewController subjectForActivityType:(NSString *)activityType {
+    return NSLocalizedString(@"share.email.subject", nil);
+}
+
 - (UIImage *)activityViewController:(UIActivityViewController *)activityViewController
       thumbnailImageForActivityType:(nullable NSString *)activityType
                       suggestedSize:(CGSize)size {

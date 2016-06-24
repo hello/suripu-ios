@@ -56,7 +56,6 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 }
 
 - (void)addActivityView {
-    // TODO (jimmy): we should animate a border around the circle instead, similar to the sleep number view
     if ([self activityView] == nil) {
         [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
         [[self activityView] setHidesWhenStopped:YES];

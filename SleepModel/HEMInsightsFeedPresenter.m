@@ -9,6 +9,7 @@
 
 #import <SenseKit/Model.h>
 #import "SENRemoteImage+HEMDeviceSpecific.h"
+#import "UIActivityViewController+HEMSharing.h"
 
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
@@ -34,6 +35,7 @@
 #import "HEMShareService.h"
 #import "HEMShareContentProvider.h"
 #import "HEMConfirmationView.h"
+#import "HEMShareButton.h"
 
 static NSString* const HEMInsightsFeedWhatsNewReuseId = @"whatsNew";
 
@@ -314,11 +316,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     
 }
 
-- (BOOL)isItemShareableAtIndexPath:(NSIndexPath*)indexPath {
-    id object = [self objectAtIndexPath:indexPath];
-    return [[self shareService] isShareable:object];
-}
-
 - (NSString*)insightImageUriForCellAtIndexPath:(NSIndexPath*)indexPath {
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     SENRemoteImage* remoteImage = [insight remoteImage];
@@ -463,7 +460,14 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
                             action:@selector(shareInsight:)
                   forControlEvents:UIControlEventTouchUpInside];
     [[iCell shareButton] setTag:[indexPath row]];
-    [iCell enableShare:[self isItemShareableAtIndexPath:indexPath]];
+    
+    id shareable = [self objectAtIndexPath:indexPath];
+    if ([[self shareService] isShareable:shareable]) {
+        [iCell enableShare:YES];
+        [[iCell shareButton] setShareable:shareable];
+    } else {
+        [iCell enableShare:NO];
+    }
 
     [self updateInsightImageOffsetOn:iCell];
 }
@@ -506,17 +510,12 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 
 #pragma mark - Actions
 
-- (void)shareInsight:(UIButton*)shareButton {
-    DDLogVerbose(@"sharing");
-    NSInteger row = [shareButton tag];
-    NSIndexPath* insightPath = [NSIndexPath indexPathForRow:row inSection:0];
-    id object = [self objectAtIndexPath:insightPath];
-    if ([object conformsToProtocol:@protocol(SENShareable)]) {
-        id<SENShareable> shareable = object;
-        
+- (void)shareInsight:(HEMShareButton*)shareButton {
+    id<SENShareable> shareable = [shareButton shareable];
+    if (shareable) {
         NSString* shareUrl = [[self shareUrlCache] objectForKey:[shareable identifier]];
         if (shareUrl) {
-            [self showShareOptionsWithUrl:shareUrl forType:[object shareType]];
+            [self showShareOptionsWithUrl:shareUrl forType:[shareable shareType]];
         } else {
             UIView* containerView = [[self delegate] activityContainerViewFor:self];
             HEMActivityCoverView* coverView = [HEMActivityCoverView transparentCoverView];
@@ -530,7 +529,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
                     [[strongSelf shareUrlCache] setObject:url forKey:[shareable identifier]];
                     [strongSelf showShareOptionsWithUrl:url forType:[shareable shareType]];
                 } else {
-                    // TODO: show an error
                     void(^showError)(void) = ^(void){
                         NSString* title = NSLocalizedString(@"share.error.no-link.title", nil);
                         NSString* message = NSLocalizedString(@"share.error.no-link.message", nil);
@@ -545,9 +543,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
                 }
             }];
         }
-
-    } else {
-        [SENAnalytics trackWarningWithMessage:@"share object is not shareable"];
     }
 
 }
@@ -558,37 +553,10 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         [self setShareActivityCover:nil];
     }];
     
-    HEMShareContentProvider* insightShareContent =
-        [[HEMShareContentProvider alloc] initWithItemToShare:url forType:type];
-    
-    UIActivityViewController* shareVC =
-        [[UIActivityViewController alloc] initWithActivityItems:@[insightShareContent]
-                                          applicationActivities:nil];
-    
-    __weak typeof(self) weakSelf = self;
-    [shareVC setCompletionWithItemsHandler:^(NSString * activityType, BOOL completed, NSArray * returnedItems, NSError * activityError){
-        // facebook sharing has it's own posted confirmation
-        if (!completed || [activityType isEqualToString:UIActivityTypePostToFacebook]) {
-            return;
-        }
-        
-        if (activityError) {
-            [SENAnalytics trackError:activityError];
-        }
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSString* text = NSLocalizedString(@"status.shared", nil);
-        HEMConfirmationLayout layout = HEMConfirmationLayoutVertical;
-        if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-            text = NSLocalizedString(@"status.copied", nil);
-            
-            layout = HEMConfirmationLayoutHorizontal;
-        }
-        
-        UIView* containerView = [[strongSelf collectionView] superview];
-        HEMConfirmationView* confirmView = [[HEMConfirmationView alloc] initWithText:text layout:layout];
-        [confirmView showInView:containerView];
-    }];
+    UIView* containerView = [[self collectionView] superview];
+    UIActivityViewController* shareVC = [UIActivityViewController share:url
+                                                                 ofType:type
+                                                               fromView:containerView];
     
     [[self delegate] presenter:self showController:shareVC];
 }

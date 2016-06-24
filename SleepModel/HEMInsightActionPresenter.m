@@ -140,6 +140,11 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
 
 - (void)shareInsight {
     DDLogVerbose(@"sharing insight");
+    
+    NSDictionary* props = @{HEMAnalyticsPropCategory : [[self insight] category] ?: @"",
+                            kHEMAnalyticsEventPropType : [[self insight] shareType] ?: @""};
+    [SENAnalytics track:HEMAnalyticsEventShare properties:props];
+    
     UIView* containerView = [[self buttonContainer] superview];
     HEMActivityCoverView* coverView = [HEMActivityCoverView transparentCoverView];
     [coverView showInView:containerView activity:YES completion:nil];
@@ -166,9 +171,6 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
     }];
 }
 
-// TODO: consolidate logic with HEMInsightsFeedPresenter, or any sharing logic
-// recommend adding common presenter delegate and potentially making a category
-// for presenter to show sharing options
 - (void)showShareOptionsWithUrl:(NSString*)url forType:(NSString*)type {
     [[self activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
         [self setActivityView:nil];
@@ -178,6 +180,7 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
     UIActivityViewController* shareVC = [UIActivityViewController share:url
                                                                  ofType:type
                                                                fromView:containerView];
+    
     [[self delegate] presentController:shareVC fromPresenter:self];
 }
 

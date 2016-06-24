@@ -245,6 +245,11 @@ NSString* const HEMAnalyticsEventPropSourceCamera = @"camera";
 NSString* const HEMAnalyticsEventPropSourcePhotoLibrary = @"photo library";
 NSString* const HEMAnalyticsEventDeletePhoto = @"Delete Photo";
 
+// share
+NSString* const HEMAnalyticsEventShare = @"Share";
+NSString* const HEMAnalyticsEventShareComplete = @"Share completed";
+NSString* const HEMAnalyticsPropCategory = @"category";
+
 // breadcrumbs
 NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";
 

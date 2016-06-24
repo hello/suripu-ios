@@ -831,5 +831,5 @@
 // sharing
 "share.error.no-link.title" = "Unable to share Insight";
 "share.error.no-link.message" = "Sense was unable to generate a shareable Insight. Please try again in a few moments.";
-"share.email.subject" = "Check out my sleep Insights from Sense";
+"share.email.subject.insight" = "Check out my sleep Insights from Sense";
 "share.text.format.insight" = "See how I'm improving my sleep with Insights from Sense. %@ #MySense";

@@ -2,6 +2,7 @@
 #import <SenseKit/SenseKit.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
+#import "UIActivityViewController+HEMSharing.h"
 
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
@@ -729,8 +730,9 @@ static BOOL hasLoadedBefore = NO;
             message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score,
                                                  [[self dataSource] dateTitle]];
         }
-        UIActivityViewController *activityController =
-            [[UIActivityViewController alloc] initWithActivityItems:@[ message ] applicationActivities:nil];
+        
+        UIActivityViewController* activityController
+            = [UIActivityViewController share:message ofType:@"timeline" fromView:[self view]];
         [self presentViewController:activityController animated:YES completion:nil];
     }
 }

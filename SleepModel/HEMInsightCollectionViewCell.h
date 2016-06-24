@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HEMCardCollectionViewCell.h"
+#import "HEMShareButton.h"
 
 @class HEMURLImageView;
 
@@ -24,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet HEMShareButton *shareButton;
 
 + (CGFloat)contentHeightWithMessage:(NSAttributedString*)message
                             inWidth:(CGFloat)contentWidth

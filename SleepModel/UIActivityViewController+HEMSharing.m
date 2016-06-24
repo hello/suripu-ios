@@ -20,9 +20,8 @@
     
     __weak typeof(view) weakContainer = view;
     [controller setCompletionWithItemsHandler:^(NSString * activityType, BOOL completed, NSArray * returnedItems, NSError * activityError){
-        // facebook sharing has it's own posted confirmation
         __strong typeof(weakContainer) strongContainer = weakContainer;
-        if (!completed || [activityType isEqualToString:UIActivityTypePostToFacebook]) {
+        if (!completed) {
             return;
         }
         
@@ -30,16 +29,20 @@
             [SENAnalytics trackError:activityError];
         }
         
-        NSString* text = NSLocalizedString(@"status.shared", nil);
+        NSString* text = nil;
         HEMConfirmationLayout layout = HEMConfirmationLayoutVertical;
         if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
             text = NSLocalizedString(@"status.copied", nil);
-            
             layout = HEMConfirmationLayoutHorizontal;
+        } else if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
+            text = NSLocalizedString(@"status.shared", nil);
         }
         
-        HEMConfirmationView* confirmView = [[HEMConfirmationView alloc] initWithText:text layout:layout];
-        [confirmView showInView:strongContainer];
+        if (text) {
+            HEMConfirmationView* confirmView =
+                [[HEMConfirmationView alloc] initWithText:text layout:layout];
+            [confirmView showInView:strongContainer];
+        }
     }];
     
     return controller;

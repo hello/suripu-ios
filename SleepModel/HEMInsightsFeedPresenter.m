@@ -35,6 +35,7 @@
 #import "HEMShareService.h"
 #import "HEMShareContentProvider.h"
 #import "HEMConfirmationView.h"
+#import "HEMShareButton.h"
 
 static NSString* const HEMInsightsFeedWhatsNewReuseId = @"whatsNew";
 
@@ -315,11 +316,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     
 }
 
-- (BOOL)isItemShareableAtIndexPath:(NSIndexPath*)indexPath {
-    id object = [self objectAtIndexPath:indexPath];
-    return [[self shareService] isShareable:object];
-}
-
 - (NSString*)insightImageUriForCellAtIndexPath:(NSIndexPath*)indexPath {
     SENInsight* insight = SENObjectOfClass([self objectAtIndexPath:indexPath], [SENInsight class]);
     SENRemoteImage* remoteImage = [insight remoteImage];
@@ -464,7 +460,14 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
                             action:@selector(shareInsight:)
                   forControlEvents:UIControlEventTouchUpInside];
     [[iCell shareButton] setTag:[indexPath row]];
-    [iCell enableShare:[self isItemShareableAtIndexPath:indexPath]];
+    
+    id shareable = [self objectAtIndexPath:indexPath];
+    if ([[self shareService] isShareable:shareable]) {
+        [iCell enableShare:YES];
+        [[iCell shareButton] setShareable:shareable];
+    } else {
+        [iCell enableShare:NO];
+    }
 
     [self updateInsightImageOffsetOn:iCell];
 }
@@ -507,17 +510,12 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 
 #pragma mark - Actions
 
-- (void)shareInsight:(UIButton*)shareButton {
-    DDLogVerbose(@"sharing");
-    NSInteger row = [shareButton tag];
-    NSIndexPath* insightPath = [NSIndexPath indexPathForRow:row inSection:0];
-    id object = [self objectAtIndexPath:insightPath];
-    if ([object conformsToProtocol:@protocol(SENShareable)]) {
-        id<SENShareable> shareable = object;
-        
+- (void)shareInsight:(HEMShareButton*)shareButton {
+    id<SENShareable> shareable = [shareButton shareable];
+    if (shareable) {
         NSString* shareUrl = [[self shareUrlCache] objectForKey:[shareable identifier]];
         if (shareUrl) {
-            [self showShareOptionsWithUrl:shareUrl forType:[object shareType]];
+            [self showShareOptionsWithUrl:shareUrl forType:[shareable shareType]];
         } else {
             UIView* containerView = [[self delegate] activityContainerViewFor:self];
             HEMActivityCoverView* coverView = [HEMActivityCoverView transparentCoverView];
@@ -545,9 +543,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
                 }
             }];
         }
-
-    } else {
-        [SENAnalytics trackWarningWithMessage:@"share object is not shareable"];
     }
 
 }

@@ -10,6 +10,7 @@
 #import "NSMutableAttributedString+HEMFormat.h"
 
 static NSString* const HEMShareContentTextFormatKey = @"share.text.format.";
+static NSString* const HEMShareContentSubjectKey = @"share.email.subject.";
 
 @interface HEMShareContentProvider()
 
@@ -48,7 +49,9 @@ static NSString* const HEMShareContentTextFormatKey = @"share.text.format.";
 }
 
 - (NSString*)activityViewController:(UIActivityViewController *)activityViewController subjectForActivityType:(NSString *)activityType {
-    return NSLocalizedString(@"share.email.subject", nil);
+    NSString* key = [HEMShareContentSubjectKey stringByAppendingString:[self type]];
+    NSString* text = NSLocalizedString(key, nil);
+    return [text isEqualToString:key] ? nil : text;
 }
 
 - (UIImage *)activityViewController:(UIActivityViewController *)activityViewController

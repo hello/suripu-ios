@@ -176,7 +176,7 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
     [[self bottomConstraint] setConstant:reduceBottom];
     
     [UIView animateWithDuration:[duration CGFloatValue] animations:^{
-        [[self collectionView] layoutIfNeeded];
+        [[self actionButton] layoutIfNeeded];
     }];
 }
 

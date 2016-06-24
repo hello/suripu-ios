@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.4.2
+
+New:
+
+* Reuse confirmations for Timeline / Sleep Score sharing
+* Add share button, when shareable, to the Insight detail screen
+* Add a subject line for sharing Insights through the Mail app
+
+Fixes:
+
+* No longer showing a shared conformation for anything else besides Twitter
+* Fixed capalization on the text that surround the Insights share url
+
 ## 1.4.4.1
 
 New:

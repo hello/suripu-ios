@@ -150,6 +150,7 @@
 		BF238DE71D1A15FC00F6E62C /* HEMShareContentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE61D1A15FC00F6E62C /* HEMShareContentProvider.m */; };
 		BF238DEA1D1B254100F6E62C /* HEMConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE91D1B254100F6E62C /* HEMConfirmationView.m */; };
 		BF238DF41D1C634400F6E62C /* HEMInsightActionPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DF31D1C634400F6E62C /* HEMInsightActionPresenter.m */; };
+		BF238DF81D1CAD0A00F6E62C /* UIActivityViewController+HEMSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DF71D1CAD0A00F6E62C /* UIActivityViewController+HEMSharing.m */; };
 		BF257EE71A1D1C2600DAF923 /* HEMAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE61A1D1C2600DAF923 /* HEMAlertViewController.m */; };
 		BF257EEA1A1D269300DAF923 /* HEMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE91A1D269300DAF923 /* HEMAlertView.m */; };
 		BF287D5F1C9CBB380052F543 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
@@ -699,6 +700,8 @@
 		BF238DE91D1B254100F6E62C /* HEMConfirmationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfirmationView.m; sourceTree = "<group>"; };
 		BF238DF21D1C634400F6E62C /* HEMInsightActionPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightActionPresenter.h; sourceTree = "<group>"; };
 		BF238DF31D1C634400F6E62C /* HEMInsightActionPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightActionPresenter.m; sourceTree = "<group>"; };
+		BF238DF61D1CAD0A00F6E62C /* UIActivityViewController+HEMSharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+HEMSharing.h"; sourceTree = "<group>"; };
+		BF238DF71D1CAD0A00F6E62C /* UIActivityViewController+HEMSharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+HEMSharing.m"; sourceTree = "<group>"; };
 		BF257EE51A1D1C2600DAF923 /* HEMAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlertViewController.h; sourceTree = "<group>"; };
 		BF257EE61A1D1C2600DAF923 /* HEMAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlertViewController.m; sourceTree = "<group>"; };
 		BF257EE81A1D269300DAF923 /* HEMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlertView.h; sourceTree = "<group>"; };
@@ -1942,6 +1945,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		BF238DF51D1CACD100F6E62C /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BF238DF61D1CAD0A00F6E62C /* UIActivityViewController+HEMSharing.h */,
+				BF238DF71D1CAD0A00F6E62C /* UIActivityViewController+HEMSharing.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		BF287D601C9CBEE50052F543 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -2976,6 +2988,7 @@
 				BFF93EA51D19EA540038419A /* Social.xcassets */,
 				BF238DE41D1A15EA00F6E62C /* Model */,
 				BFE375DD1CEB98350029EE66 /* Services */,
+				BF238DF51D1CACD100F6E62C /* View Controllers */,
 			);
 			name = Social;
 			sourceTree = "<group>";
@@ -3503,6 +3516,7 @@
 				BFF14C2E1C64178F00AD3773 /* HEMBarChartView.m in Sources */,
 				BFE375E61CEBDB440029EE66 /* HEMBasicTableViewCell.m in Sources */,
 				BF539CD21C0F737D000F77AA /* HEMPresenter.m in Sources */,
+				BF238DF81D1CAD0A00F6E62C /* UIActivityViewController+HEMSharing.m in Sources */,
 				BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */,
 				BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,

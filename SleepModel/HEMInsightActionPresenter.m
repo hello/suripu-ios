@@ -7,6 +7,8 @@
 //
 #import <SenseKit/SENInsight.h>
 
+#import "UIActivityViewController+HEMSharing.h"
+
 #import "HEMInsightActionPresenter.h"
 #import "HEMActivityCoverView.h"
 #import "HEMShareContentProvider.h"
@@ -123,6 +125,10 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
         [[self shareButtonLeadingConstraint] setConstant:shareWidth];
         [[self buttonContainer] layoutIfNeeded];
         [[self shareButton] setHidden:YES];
+        
+        // close button becomes primary
+        [[self closeButton] setTitleColor:[UIColor tintColor]
+                                 forState:UIControlStateNormal];
     }
 }
 
@@ -168,36 +174,10 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
         [self setActivityView:nil];
     }];
     
-    HEMShareContentProvider* insightShareContent = [[HEMShareContentProvider alloc] initWithItemToShare:url forType:type];
-    
-    UIActivityViewController* shareVC =
-    [[UIActivityViewController alloc] initWithActivityItems:@[insightShareContent]
-                                      applicationActivities:nil];
-    
-    __weak typeof(self) weakSelf = self;
-    [shareVC setCompletionWithItemsHandler:^(NSString * activityType, BOOL completed, NSArray * returnedItems, NSError * activityError){
-        // facebook sharing has it's own posted confirmation
-        if (!completed || [activityType isEqualToString:UIActivityTypePostToFacebook]) {
-            return;
-        }
-        
-        if (activityError) {
-            [SENAnalytics trackError:activityError];
-        }
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSString* text = NSLocalizedString(@"status.shared", nil);
-        HEMConfirmationLayout layout = HEMConfirmationLayoutVertical;
-        if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-            text = NSLocalizedString(@"status.copied", nil);
-            layout = HEMConfirmationLayoutHorizontal;
-        }
-        
-        UIView* containerView = [[strongSelf buttonContainer] superview];
-        HEMConfirmationView* confirmView = [[HEMConfirmationView alloc] initWithText:text layout:layout];
-        [confirmView showInView:containerView];
-    }];
-    
+    UIView* containerView = [[self buttonContainer] superview];
+    UIActivityViewController* shareVC = [UIActivityViewController share:url
+                                                                 ofType:type
+                                                               fromView:containerView];
     [[self delegate] presentController:shareVC fromPresenter:self];
 }
 

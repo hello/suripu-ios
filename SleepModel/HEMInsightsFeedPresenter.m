@@ -9,6 +9,7 @@
 
 #import <SenseKit/Model.h>
 #import "SENRemoteImage+HEMDeviceSpecific.h"
+#import "UIActivityViewController+HEMSharing.h"
 
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
@@ -557,37 +558,10 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         [self setShareActivityCover:nil];
     }];
     
-    HEMShareContentProvider* insightShareContent =
-        [[HEMShareContentProvider alloc] initWithItemToShare:url forType:type];
-    
-    UIActivityViewController* shareVC =
-        [[UIActivityViewController alloc] initWithActivityItems:@[insightShareContent]
-                                          applicationActivities:nil];
-    
-    __weak typeof(self) weakSelf = self;
-    [shareVC setCompletionWithItemsHandler:^(NSString * activityType, BOOL completed, NSArray * returnedItems, NSError * activityError){
-        // facebook sharing has it's own posted confirmation
-        if (!completed || [activityType isEqualToString:UIActivityTypePostToFacebook]) {
-            return;
-        }
-        
-        if (activityError) {
-            [SENAnalytics trackError:activityError];
-        }
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSString* text = NSLocalizedString(@"status.shared", nil);
-        HEMConfirmationLayout layout = HEMConfirmationLayoutVertical;
-        if ([activityType isEqualToString:UIActivityTypeCopyToPasteboard]) {
-            text = NSLocalizedString(@"status.copied", nil);
-            
-            layout = HEMConfirmationLayoutHorizontal;
-        }
-        
-        UIView* containerView = [[strongSelf collectionView] superview];
-        HEMConfirmationView* confirmView = [[HEMConfirmationView alloc] initWithText:text layout:layout];
-        [confirmView showInView:containerView];
-    }];
+    UIView* containerView = [[self collectionView] superview];
+    UIActivityViewController* shareVC = [UIActivityViewController share:url
+                                                                 ofType:type
+                                                               fromView:containerView];
     
     [[self delegate] presenter:self showController:shareVC];
 }

@@ -28,9 +28,6 @@ static NSString* const HEMConfigAllowSupportOptions = @"SenseAllowSupportOptions
 static NSString* const HEMConfigZendeskTokenPlistKey = @"SenseZendeskToken";
 static NSString* const HEMConfigZendeskURLPlistKey = @"SenseZendeskURL";
 static NSString* const HEMConfigZendeskClientIdPlistKey = @"SenseZendeskClientId";
-
-static NSString* const HEMConfigAmazonReviewsResource = @"AmazonReviews";
-
 @implementation HEMConfig
 
 + (NSString*)stringForConfig:(HEMConf)config {

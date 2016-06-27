@@ -22,6 +22,8 @@
 + (BOOL)meetsMinimumRequiredTimelineViews;
 + (BOOL)meetsMinimumRequiredAppLaunches;
 + (BOOL)isWithinSystemAlertThreshold;
++ (NSDictionary*)amazonReviewLinks;
++ (NSString*)amazonReviewLink;
 + (NSString*)appVersion;
 
 @end
@@ -47,6 +49,22 @@ describe(@"HEMAppReview", ^{
 
     afterEach(^{
         [[NSFileManager defaultManager] removeItemAtPath:databasePath error:nil];
+    });
+    
+    describe(@"+amazonReviewLinks", ^{
+        
+        it(@"should return US and UK sites", ^{
+            NSDictionary* links = [HEMAppReview amazonReviewLinks];
+            [[[links valueForKey:@"US"] should] beNonNil];
+            [[[links valueForKey:@"GB"] should] beNonNil];
+        });
+        
+        it(@"should return a link to the uk site if country code is GB", ^{
+            NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_GB"];
+            [NSLocale stub:@selector(currentLocale) andReturn:locale];
+            NSString* link = [HEMAppReview amazonReviewLink];
+            [[link should] equal:@"https://www.amazon.co.uk/review/create-review?asin=B016XBL2RE"];
+        });
     });
 
     describe(@"+hasAppReviewURL", ^{

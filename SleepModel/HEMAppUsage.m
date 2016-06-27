@@ -36,6 +36,10 @@ static NSString* const HEMAppUsageKeyRollingCount = @"rollingCount";
 
 @implementation HEMAppUsage
 
++ (void)reset {
+    [SENKeyedArchiver removeAllObjectsInCollection:NSStringFromClass([self class])];
+}
+
 + (HEMAppUsage*)appUsageForIdentifier:(NSString *)identifier {
     if (!identifier) {
         return nil;

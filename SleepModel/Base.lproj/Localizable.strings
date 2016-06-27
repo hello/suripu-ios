@@ -221,6 +221,7 @@
 "debug.option.led" = "LED";
 "debug.option.led.title" = "LED options";
 "debug.option.debug.info" = "Debug info";
+"debug.option.force.appreview" = "Force app review";
 "debug.led.option.pair" = "Pair";
 "debug.led.option.off" = "Off";
 "debug.led.option.success" = "Success";

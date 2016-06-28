@@ -43,6 +43,9 @@
                 [[HEMConfirmationView alloc] initWithText:text layout:layout];
             [confirmView showInView:strongContainer];
         }
+        
+        NSDictionary* props = @{kHEMAnalyticsEventPropType : type ?: @""};
+        [SENAnalytics track:HEMAnalyticsEventShareComplete properties:props];
     }];
     
     return controller;

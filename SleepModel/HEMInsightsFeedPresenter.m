@@ -513,6 +513,15 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 - (void)shareInsight:(HEMShareButton*)shareButton {
     id<SENShareable> shareable = [shareButton shareable];
     if (shareable) {
+        NSString* category = nil;
+        if ([shareable isKindOfClass:[SENInsight class]]) {
+            SENInsight* insight = (id)shareable;
+            category = [insight category];
+        }
+        NSDictionary* props = @{HEMAnalyticsPropCategory : category ?: @"",
+                                kHEMAnalyticsEventPropType : [shareable shareType] ?: @""};
+        [SENAnalytics track:HEMAnalyticsEventShare properties:props];
+        
         NSString* shareUrl = [[self shareUrlCache] objectForKey:[shareable identifier]];
         if (shareUrl) {
             [self showShareOptionsWithUrl:shareUrl forType:[shareable shareType]];

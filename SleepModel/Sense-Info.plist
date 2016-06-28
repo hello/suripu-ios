@@ -108,8 +108,6 @@
 	<string>Your location is needed for Sense to better understand your sleep environment.</string>
 	<key>SenseAllowSupportOptions</key>
 	<string>${SENSE_SUPPORT_OPTIONS}</string>
-	<key>SenseAmazonReviewURL</key>
-	<string>${SENSE_AMAZON_REVIEW_URL}</string>
 	<key>SenseAnalyticsToken</key>
 	<string>${SENSE_ANALYTICS_TOKEN}</string>
 	<key>SenseApiUrl</key>

@@ -442,12 +442,12 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         [[iCell uriImageView] setImage:cachedImage];
     } else { // even if there's no url, just set it to clear the image
         __weak typeof(self) weakSelf = self;
-        [[iCell uriImageView] setImageWithURL:url completion:^(UIImage * image, NSString * url, NSError * error) {
+        [[iCell uriImageView] setImageWithURL:url completion:^(UIImage * image, NSString * imageUrl, NSError * error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
                 [SENAnalytics trackError:error];
-            } else if (image && url) {
-                [[strongSelf imageCache] setObject:image forKey:url];
+            } else if (image && imageUrl) {
+                [[strongSelf imageCache] setObject:image forKey:imageUrl];
             }
         }];
     }

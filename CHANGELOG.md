@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.4.3
+
+New:
+
+* Routing app reviews to Amazon UK for UK region
+* Added analytics for sharing
+
+Fixes:
+
+* Fixes the alignment of the close / share button when controller is shown above insight
+
 ## 1.4.4.2
 
 New:

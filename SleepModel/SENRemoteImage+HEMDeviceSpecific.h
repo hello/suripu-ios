@@ -14,6 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString*)uriForCurrentDevice;
 
+/**
+ * @discussion
+ * Note that this method is doing I/O from whatever thread it is on, which is
+ * usually the main thread, which is typically a no-no.
+ *
+ * @return cached image, if any
+ */
+- (UIImage*)locallyCachedImageForCurrentDevice;
+
 @end
 
 NS_ASSUME_NONNULL_END

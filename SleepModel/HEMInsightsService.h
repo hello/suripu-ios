@@ -39,6 +39,9 @@ typedef void(^HEMInsightHandler)(SENInsightInfo* _Nullable insight, NSError* _Nu
  */
 - (BOOL)isGenericInsight:(SENInsight*)insight;
 
+- (id)cachedImageForUrl:(NSString*)insightImageUrl;
+- (void)cacheImage:(id)image forInsightUrl:(NSString*)url;
+
 @end
 
 NS_ASSUME_NONNULL_END

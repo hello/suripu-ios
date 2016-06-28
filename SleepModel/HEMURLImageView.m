@@ -141,12 +141,13 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     AFImageDownloader* downloader = [AFImageDownloader defaultInstance];
     [downloader downloadImageForURLRequest:request success:^(NSURLRequest * request, NSHTTPURLResponse * response, UIImage * responseObject) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSString* imageUrl = [[request URL] absoluteString];
         [strongSelf setImage:responseObject];
-        [strongSelf setCurrentImageURL:url];
+        [strongSelf setCurrentImageURL:imageUrl];
         [strongSelf showActivity:NO];
         [strongSelf setDownloadReceipt:nil];
         if (completion) {
-            completion (responseObject, url, nil);
+            completion (responseObject, imageUrl, nil);
         }
     } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;

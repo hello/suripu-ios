@@ -135,7 +135,6 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
         [self showActivity:YES];
     }
     
-    __block NSString* url = [[request URL] absoluteString];
     __weak typeof(self) weakSelf = self;
     
     AFImageDownloader* downloader = [AFImageDownloader defaultInstance];
@@ -154,10 +153,11 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
         // not sure what design wants to show in this case, but i have asked
         // and they said not to worry about it for now and just don't show
         // anything
+        NSString* imageUrl = [[request URL] absoluteString];
         [strongSelf showActivity:NO];
         [strongSelf setDownloadReceipt:nil];
         if (completion) {
-            completion (nil, url, error);
+            completion (nil, imageUrl, error);
         }
     }];
 }

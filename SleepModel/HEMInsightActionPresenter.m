@@ -65,15 +65,22 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
 
 - (void)willDisappear {
     [super willDisappear];
-    [[self shareButtonTrailingConstraint] setActive:NO];
-    [[self shareButtonLeadingConstraint] setActive:NO];
+    
+    // prevent autoconstraint breakage
+    if ([[self shareButton] isHidden]) {
+        [[self shareButtonTrailingConstraint] setActive:NO];
+        [[self shareButtonLeadingConstraint] setActive:NO];
+    }
 }
 
 - (void)didDisappear {
     [super didDisappear];
     
-    CGFloat containerHeight = CGRectGetHeight([[self buttonContainer] bounds]);
-    [[self buttonContainerBottomConstraint] setConstant:-containerHeight];
+    // prevent autoconstraint breakage
+    if ([[self shareButton] isHidden]) {
+        CGFloat containerHeight = CGRectGetHeight([[self buttonContainer] bounds]);
+        [[self buttonContainerBottomConstraint] setConstant:-containerHeight];
+    }
 }
 
 #pragma mark - Bindings

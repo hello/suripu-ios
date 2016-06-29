@@ -38,6 +38,8 @@ static NSString* const HEMLocalizedKeyAnswerNotNow = @"app-review.question.answe
 static NSString* const HEMLocalizedKeyAnswerDoNotAsk = @"app-review.question.answer.dont-ask-again";
 static NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-thanks";
 
+static NSString* const HEMAmazonReviewResourceName = @"AmazonReviews";
+
 #pragma mark - Conditions for app review
 
 + (void)shouldAskUserToRateTheApp:(void(^)(HEMAppReviewQuestion* question))completion {
@@ -117,8 +119,23 @@ static NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.ans
 }
 
 + (BOOL)isEligibleToReviewOnAmazon {
+    return [self amazonReviewLink] != nil;
+}
+
++ (NSString*)amazonReviewLink {
     NSString* countryCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
-    return [[countryCode uppercaseString] isEqualToString:@"US"];
+    return [[self amazonReviewLinks] valueForKey:[countryCode uppercaseString]];
+}
+
++ (NSDictionary*)amazonReviewLinks {
+    static NSDictionary* linksByCode = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *path = [[NSBundle mainBundle] pathForResource:HEMAmazonReviewResourceName
+                                                         ofType:@"plist"];
+        linksByCode = [NSDictionary dictionaryWithContentsOfFile:path];
+    });
+    return linksByCode;
 }
 
 + (BOOL)hasStatedToStopAsking {
@@ -272,7 +289,7 @@ static NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.ans
     NSString* url = nil;
     switch (reviewType) {
         case HEMAppReviewTypeAmazon:
-            url = [HEMConfig stringForConfig:HEMConfAmazonReviewURL];
+            url = [self amazonReviewLink];
             [self stopAskingToReviewOnAmazon];
             break;
         case HEMAppReviewTypeAppStore:

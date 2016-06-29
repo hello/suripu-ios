@@ -50,24 +50,24 @@
     style.alignment = NSTextAlignmentLeft;
     return @{
              @(EMPH) : @{
-                     NSFontAttributeName : [UIFont insightSummaryBoldFont],
+                     NSFontAttributeName : [UIFont bodyBold],
                      NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor blackColor]
+                     NSForegroundColorAttributeName : [UIColor grey6]
                      },
              @(STRONG) : @{
-                     NSFontAttributeName : [UIFont insightSummaryBoldFont],
+                     NSFontAttributeName : [UIFont bodyBold],
                      NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor blackColor]
+                     NSForegroundColorAttributeName : [UIColor grey6]
                      },
              @(PARA) : @{
-                     NSFontAttributeName : [UIFont insightSummaryFont],
+                     NSFontAttributeName : [UIFont body],
                      NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor detailTextColor]
+                     NSForegroundColorAttributeName : [UIColor grey5]
                      },
              @(BULLETLIST) : @{
-                     NSFontAttributeName : [UIFont insightSummaryFont],
+                     NSFontAttributeName : [UIFont body],
                      NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor detailTextColor]
+                     NSForegroundColorAttributeName : [UIColor grey5]
                      }
              };
 }

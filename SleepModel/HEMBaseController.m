@@ -68,6 +68,15 @@
     [[self presenters] makeObjectsPerformSelector:@selector(didRelayout)];
 }
 
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+    [super didMoveToParentViewController:parent];
+    if (parent) {
+        [[self presenters] makeObjectsPerformSelector:@selector(didMoveToParent)];
+    } else {
+        [[self presenters] makeObjectsPerformSelector:@selector(wasRemovedFromParent)];
+    }
+}
+
 #pragma mark - Account Events
 
 - (void)listenForAccountEvents {

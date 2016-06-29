@@ -21,7 +21,7 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
             __block NSString* accountIdCreated = nil;
             __block NSDictionary* propertiesOnCreation = nil;
             
-            beforeAll(^{
+            beforeEach(^{
                 [SENAnalytics stub:@selector(userWithId:didSignUpWithProperties:) withBlock:^id(NSArray *params) {
                     accountIdCreated = [params firstObject];
                     propertiesOnCreation = [params lastObject];
@@ -35,7 +35,7 @@ describe(@"SENAnalytics+HEMAppAnalytics", ^{
                 [SENAnalytics trackSignUpOfNewAccount:account];
             });
             
-            afterAll(^{
+            afterEach(^{
                 account = nil;
                 accountIdCreated = nil;
                 propertiesOnCreation = nil;

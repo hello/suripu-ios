@@ -10,6 +10,6 @@
 @property (nonatomic, weak) HEMSubNavigationView* subNav;
 @property (nonatomic, strong) HEMDeviceService* deviceService;
 
-- (IBAction)addNewAlarm:(id)sender;
+- (void)addNewAlarmFromShortcut;
 
 @end

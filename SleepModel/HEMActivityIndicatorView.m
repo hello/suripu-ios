@@ -46,6 +46,7 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 }
 
 - (void)setup {
+    [self setUserInteractionEnabled:NO];
     [self setBackgroundColor:[UIColor clearColor]];
     
     UIImageView* indicator = [[UIImageView alloc] initWithImage:[self indicatorImage]];

@@ -9,6 +9,7 @@
 
 #import <SenseKit/Model.h>
 #import "SENRemoteImage+HEMDeviceSpecific.h"
+#import "UIActivityViewController+HEMSharing.h"
 
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
@@ -30,10 +31,16 @@
 #import "HEMWhatsNewHeaderView.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMWhatsNewService.h"
+#import "HEMActivityCoverView.h"
+#import "HEMShareService.h"
+#import "HEMShareContentProvider.h"
+#import "HEMConfirmationView.h"
+#import "HEMShareButton.h"
 
 static NSString* const HEMInsightsFeedWhatsNewReuseId = @"whatsNew";
 
 static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
+static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 
 @interface HEMInsightsFeedPresenter() <
     UICollectionViewDataSource,
@@ -47,15 +54,18 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 @property (weak, nonatomic) HEMQuestionsService* questionsService;
 @property (weak, nonatomic) HEMUnreadAlertService* unreadService;
 @property (weak, nonatomic) HEMWhatsNewService* whatsNewService;
+@property (weak, nonatomic) HEMShareService* shareService;
 @property (weak, nonatomic) UICollectionView* collectionView;
 @property (weak, nonatomic) UIView* tutorialContainerView;
 @property (weak, nonatomic) UITabBarItem* tabBarItem;
 @property (weak, nonatomic) HEMActivityIndicatorView* activityIndicator;
+@property (weak, nonatomic) HEMActivityCoverView* shareActivityCover;
 @property (strong, nonatomic) NSCache* heightCache;
 @property (strong, nonatomic) NSCache* attributedBodyCache;
 // imageCache is needed for scroll performance and to reduce image flickering
 @property (strong, nonatomic) NSCache* imageCache;
 @property (strong, nonatomic) NSError* dataError;
+@property (strong, nonatomic) NSCache* shareUrlCache;
 @property (assign, nonatomic) CGFloat whatsNewHeaderHeight;
 
 @end
@@ -65,7 +75,8 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 - (nonnull instancetype)initWithInsightsService:(HEMInsightsService*)insightsService
                                questionsService:(HEMQuestionsService*)questionsService
                                   unreadService:(HEMUnreadAlertService*)unreadService
-                                whatsNewService:(HEMWhatsNewService*)whatsNewService {
+                                whatsNewService:(HEMWhatsNewService*)whatsNewService
+                                   shareService:(HEMShareService*)shareService {
     
     self = [super init];
     if (self) {
@@ -73,9 +84,13 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         _questionsService = questionsService;
         _unreadService = unreadService;
         _whatsNewService = whatsNewService;
+        _shareService = shareService;
         _heightCache = [NSCache new];
         _attributedBodyCache = [NSCache new];
         _imageCache = [NSCache new];
+        _shareUrlCache = [NSCache new];
+        
+        [_shareUrlCache setCountLimit:HEMInsightsFeedShareUrlCacheLimit];
     }
     return self;
 }
@@ -224,7 +239,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     
     if ([dataObj isKindOfClass:[SENInsight class]]) {
         SENInsight* insight = (SENInsight*)dataObj;
-        date = [[[insight dateCreated] elapsed] uppercaseString];
+        date = [[insight dateCreated] elapsed];
     }
     
     return date;
@@ -290,7 +305,10 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         calculatedHeight = [HEMQuestionCell heightForCellWithQuestion:attributedBody cellWidth:width];
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:attributedBody inWidth:width];
+        BOOL shareable = [[self shareService] isShareable:dataObj];
+        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:attributedBody
+                                                                          inWidth:width
+                                                                        shareable:shareable];
     }
     
     [[self heightCache] setObject:@(calculatedHeight) forKey:cacheKey];
@@ -409,6 +427,7 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 - (void)configureInsightCell:(HEMInsightCollectionViewCell*)iCell
                 forIndexPath:(NSIndexPath*)indexPath
                     withBody:(NSAttributedString*)body{
+    
     [[iCell messageLabel] setAttributedText:body];
     [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
     
@@ -423,17 +442,33 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
         [[iCell uriImageView] setImage:cachedImage];
     } else { // even if there's no url, just set it to clear the image
         __weak typeof(self) weakSelf = self;
-        [[iCell uriImageView] setImageWithURL:url completion:^(UIImage * image, NSString * url, NSError * error) {
+        [[iCell uriImageView] setImageWithURL:url completion:^(UIImage * image, NSString * imageUrl, NSError * error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
                 [SENAnalytics trackError:error];
-            } else if (image && url) {
-                [[strongSelf imageCache] setObject:image forKey:url];
+            } else if (image && imageUrl) {
+                [[strongSelf imageCache] setObject:image forKey:imageUrl];
             }
         }];
     }
     
     [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
+    
+    [[iCell shareButton] setTitle:[NSLocalizedString(@"actions.share", nil) uppercaseString]
+                         forState:UIControlStateNormal];
+    [[iCell shareButton] addTarget:self
+                            action:@selector(shareInsight:)
+                  forControlEvents:UIControlEventTouchUpInside];
+    [[iCell shareButton] setTag:[indexPath row]];
+    
+    id shareable = [self objectAtIndexPath:indexPath];
+    if ([[self shareService] isShareable:shareable]) {
+        [iCell enableShare:YES];
+        [[iCell shareButton] setShareable:shareable];
+    } else {
+        [iCell enableShare:NO];
+    }
+
     [self updateInsightImageOffsetOn:iCell];
 }
 
@@ -474,6 +509,66 @@ static CGFloat const HEMInsightsFeedImageParallaxMultipler = 2.0f;
 }
 
 #pragma mark - Actions
+
+- (void)shareInsight:(HEMShareButton*)shareButton {
+    id<SENShareable> shareable = [shareButton shareable];
+    if (shareable) {
+        NSString* category = nil;
+        if ([shareable isKindOfClass:[SENInsight class]]) {
+            SENInsight* insight = (id)shareable;
+            category = [insight category];
+        }
+        NSDictionary* props = @{HEMAnalyticsPropCategory : category ?: @"",
+                                kHEMAnalyticsEventPropType : [shareable shareType] ?: @""};
+        [SENAnalytics track:HEMAnalyticsEventShare properties:props];
+        
+        NSString* shareUrl = [[self shareUrlCache] objectForKey:[shareable identifier]];
+        if (shareUrl) {
+            [self showShareOptionsWithUrl:shareUrl forType:[shareable shareType]];
+        } else {
+            UIView* containerView = [[self delegate] activityContainerViewFor:self];
+            HEMActivityCoverView* coverView = [HEMActivityCoverView transparentCoverView];
+            [coverView showInView:containerView activity:YES completion:nil];
+            [self setShareActivityCover:coverView];
+            
+            __weak typeof(self) weakSelf = self;
+            [[self shareService] shareUrlFor:shareable completion:^(NSString *url, NSError *error) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (url) {
+                    [[strongSelf shareUrlCache] setObject:url forKey:[shareable identifier]];
+                    [strongSelf showShareOptionsWithUrl:url forType:[shareable shareType]];
+                } else {
+                    void(^showError)(void) = ^(void){
+                        NSString* title = NSLocalizedString(@"share.error.no-link.title", nil);
+                        NSString* message = NSLocalizedString(@"share.error.no-link.message", nil);
+                        [[strongSelf delegate] presenter:strongSelf
+                                          showErrorTitle:title
+                                                 message:message];
+                    };
+                    [[strongSelf shareActivityCover] dismissWithResultText:nil
+                                                           showSuccessMark:NO
+                                                                    remove:YES
+                                                                completion:showError];
+                }
+            }];
+        }
+    }
+
+}
+
+- (void)showShareOptionsWithUrl:(NSString*)url forType:(NSString*)type {
+    DDLogVerbose(@"show a share sheet for %@", url);
+    [[self shareActivityCover] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+        [self setShareActivityCover:nil];
+    }];
+    
+    UIView* containerView = [[self collectionView] superview];
+    UIActivityViewController* shareVC = [UIActivityViewController share:url
+                                                                 ofType:type
+                                                               fromView:containerView];
+    
+    [[self delegate] presenter:self showController:shareVC];
+}
 
 - (void)showWhatsNew {
     HEMWhatsNewLocation loc = [[self whatsNewService] location];

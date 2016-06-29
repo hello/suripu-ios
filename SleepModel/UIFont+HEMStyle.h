@@ -22,6 +22,7 @@
 + (UIFont*)h7Bold;
 + (UIFont*)h8;
 + (UIFont*)body;
++ (UIFont*)bodyBold;
 + (UIFont*)button;
 
 #pragma mark - Common fonts
@@ -66,11 +67,6 @@
  *  Font for insight detail summary text that is in bold
  */
 + (UIFont*)insightSummaryBoldFont;
-
-/**
- *  Font for insight detail summary text
- */
-+ (UIFont*)insightSummaryFont;
 
 /**
  *  Font for section and insight headings

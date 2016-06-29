@@ -82,6 +82,8 @@
 
 - (void)didEnterBackground {}
 - (void)didComeBackFromBackground {}
+- (void)didMoveToParent {}
+- (void)wasRemovedFromParent {}
 
 - (void)didGainConnectivity {}
 

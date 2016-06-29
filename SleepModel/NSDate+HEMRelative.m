@@ -47,15 +47,21 @@
         long value = days;
         
         if (days < 2) {
-            format = NSLocalizedString(@"date.elapsed.day.format", nil);
+            elapsed = NSLocalizedString(@"date.elapsed.yesterday", nil);
         } else if (days < 7) {
             format = NSLocalizedString(@"date.elapsed.days.format", nil);
         } else if (days == 7) {
             format = NSLocalizedString(@"date.elapsed.week.format", nil);
             value = 1;
-        } else if (days < 365) {
+        } else if (days < 15) {
             format = NSLocalizedString(@"date.elapsed.weeks.format", nil);
             value = (long)ceilf(days/7.0f);
+        } else if (days < 31) {
+            format = NSLocalizedString(@"date.elapsed.month.format", nil);
+            value = 1;
+        } else if (days < 365) {
+            format = NSLocalizedString(@"date.elapsed.months.format", nil);
+            value = (long)ceilf(days/30.0f);
         } else if (days == 365) {
             format = NSLocalizedString(@"date.elapsed.year.format", nil);
             value = 1;
@@ -64,7 +70,9 @@
             value = (long)ceilf(days/365.0f);
         }
         
-        elapsed = [NSString stringWithFormat:format, value];
+        if (!elapsed && format) {
+            elapsed = [NSString stringWithFormat:format, value];
+        }
     }
     
     return elapsed;

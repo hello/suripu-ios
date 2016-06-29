@@ -19,11 +19,14 @@ struct SENAlarmTime {
 @interface SENAlarm : NSObject <NSCoding>
 
 /**
- *  Cached alarm
+ * Determine when the date for which the alarm should ring, given the hour and
+ * minute units
  *
- *  @return the alarms
+ * @param hour: the hour for the alarm
+ * @param minute: the minute for the alarm
+ * @return the next ring date
  */
-+ (NSArray*)savedAlarms;
++ (NSDate*)nextRingDateWithHour:(NSUInteger)hour minute:(NSUInteger)minute;
 
 /**
  *  Create a new alarm using the default settings
@@ -31,19 +34,6 @@ struct SENAlarmTime {
  *  @return an alarm
  */
 + (SENAlarm*)createDefaultAlarm;
-
-/**
- *  Remove all cached alarms
- */
-+ (void)clearSavedAlarms;
-
-/**
- *  Replace existing saved alarms with new ones created from
- *  NSDictionary data
- *
- *  @param data an array of NSDictionary objects representing alarms
- */
-+ (NSArray*)updateSavedAlarmsWithData:(NSArray*)data;
 
 /**
  *  Presents a time in a locale-specific representation
@@ -64,35 +54,11 @@ struct SENAlarmTime {
 - (instancetype)initWithDictionary:(NSDictionary*)dict;
 
 /**
- *  The next date and time at which this alarm will fire
- *
- *  @return a date
- */
-- (NSDate*)nextRingDate;
-
-/**
- *  Persists the alarm
- */
-- (void)save;
-
-/**
- *  Removes the alarm from the persistent store
- */
-- (void)delete;
-
-/**
  *  Presents the alarm time in a locale-specific representation
  *
  *  @return a string representing the alarm wake time
  */
 - (NSString*)localizedValue;
-
-/**
- *  Check whether the alarm has ever been persisted
- *
- *  @return YES if an alarm with a matching identifier is present in the data store
- */
-- (BOOL)isSaved;
 
 /**
  *  Compares alarm property values
@@ -118,7 +84,8 @@ struct SENAlarmTime {
 - (BOOL)isRepeatedOn:(SENAlarmRepeatDays)days;
 
 @property (nonatomic, getter=isOn) BOOL on;
-@property (nonatomic, readonly, getter=isEditable) BOOL editable;
+@property (nonatomic, readonly, assign, getter=isSaved) BOOL saved;
+@property (nonatomic, readonly, assign, getter=isEditable) BOOL editable;
 @property (nonatomic, getter=isSmartAlarm) BOOL smartAlarm;
 @property (nonatomic) NSUInteger hour;
 @property (nonatomic) NSUInteger minute;

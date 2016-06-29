@@ -136,7 +136,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 1cdfd20f77edceae4a1caa7752c42beda31159f7
+    :commit: cb15d84b4e691f3632db3624476f6583ce3db876
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -174,4 +174,6 @@ SPEC CHECKSUMS:
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
 
-COCOAPODS: 0.38.2
+PODFILE CHECKSUM: 9e98f8d35cf60de1af744d427b629dcf92eb2bb9
+
+COCOAPODS: 1.0.1

@@ -31,6 +31,14 @@ typedef NS_ENUM(NSUInteger, HEMAppUsageInterval) {
 @property (nonatomic, strong, readonly) NSDate* updated;
 
 /**
+ * @method reset
+ *
+ * @discussion
+ * Clear all usages stored from this
+ */
++ (void)reset;
+
+/**
  * @method appUsageForIdentifier:
  *
  * @discussion

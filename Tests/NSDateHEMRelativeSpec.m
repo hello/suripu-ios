@@ -29,7 +29,7 @@ describe(@"NSDateHEMRelative", ^{
             
         });
         
-        it(@"should be 1 day ago", ^{
+        it(@"should be yesterday", ^{
             
             NSDate* today = [NSDate date];
             NSInteger daysDiff = 1;
@@ -40,8 +40,8 @@ describe(@"NSDateHEMRelative", ^{
             NSDate* oneDayAgo = [calendar dateByAddingComponents:diff toDate:today options:0];
             NSString* elapsed = [oneDayAgo elapsed];
             
-            NSString* format = NSLocalizedString(@"date.elapsed.day.format", nil);
-            [[elapsed should] equal:[NSString stringWithFormat:format, daysDiff]];
+            NSString* yesterday = NSLocalizedString(@"date.elapsed.yesterday", nil);
+            [[elapsed should] equal:yesterday];
             
         });
         
@@ -76,7 +76,7 @@ describe(@"NSDateHEMRelative", ^{
             
         });
         
-        it(@"should be weeks ago, plural", ^{
+        it(@"should be 1 month ago", ^{
             
             NSDate* today = [NSDate date];
             
@@ -86,8 +86,8 @@ describe(@"NSDateHEMRelative", ^{
             NSDate* twentyDaysAgo = [calendar dateByAddingComponents:diff toDate:today options:0];
             NSString* elapsed = [twentyDaysAgo elapsed];
             
-            NSString* format = NSLocalizedString(@"date.elapsed.weeks.format", nil);
-            [[elapsed should] equal:[NSString stringWithFormat:format, 3]];
+            NSString* format = NSLocalizedString(@"date.elapsed.month.format", nil);
+            [[elapsed should] equal:[NSString stringWithFormat:format, 1]];
             
         });
         

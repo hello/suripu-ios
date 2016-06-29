@@ -233,6 +233,11 @@ extern NSString* const HEMAnalyticsEventDeletePhoto;
 // breadcrumbs
 extern NSString* const HEMAnalyticsEventBreadcrumbsEnd;
 
+// share
+extern NSString* const HEMAnalyticsEventShare;
+extern NSString* const HEMAnalyticsEventShareComplete;
+extern NSString* const HEMAnalyticsPropCategory;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;

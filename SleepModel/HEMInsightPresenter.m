@@ -56,9 +56,7 @@ static CGFloat const HEMInsightCellAboutTopMargin = 36.0f;
 
 static CGFloat const HEMInsightCellTextHorizontalMargin = 24.0f;
 static CGFloat const HEMInsightCellHeightImage = 178.66f; // keep aspect ratio relatively the same as insight card
-static CGFloat const HEMInsightCloseButtonAnimation = 0.5f;
 static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
-static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
 
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -71,9 +69,7 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
 @property (nonatomic, strong) NSAttributedString* attributedDetail;
 @property (nonatomic, strong) NSAttributedString* attributedAbout;
-@property (nonatomic, weak) UIButton* closeButton;
 @property (nonatomic, weak) UIImageView* buttonShadow;
-@property (nonatomic, weak) NSLayoutConstraint* closeBottomConstraint;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) UIColor* imageColor;
 
@@ -97,23 +93,6 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
     [[self collectionView] setDelegate:self];
     [[self collectionView] setDataSource:self];
     [self loadInfo];
-}
-
-- (void)bindWithCloseButton:(UIButton*)button
-           bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
-    [[button layer] setBorderColor:[[UIColor borderColor] CGColor]];
-    [[button layer] setBorderWidth:HEMInsightCloseButtonBorderWidth];
-    
-    [button setBackgroundColor:[UIColor whiteColor]];
-    [[button titleLabel] setFont:[UIFont insightDismissButtonFont]];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [button addTarget:self
-               action:@selector(closeInsight)
-     forControlEvents:UIControlEventTouchUpInside];
-    [self setCloseButton:button];
-  
-    [bottomConstraint setConstant:-CGRectGetHeight([button bounds])];
-    [self setCloseBottomConstraint:bottomConstraint];
 }
 
 - (void)bindWithButtonShadow:(UIImageView*)buttonShadow {
@@ -145,12 +124,6 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
     }];
 }
 
-#pragma mark - Actions
-
-- (void)closeInsight {
-    [[self actionDelegate] closeInsightFromPresenter:self];
-}
-
 #pragma mark - Presenter events
 
 - (void)willAppear {
@@ -161,19 +134,7 @@ static CGFloat const HEMInsightCloseButtonBorderWidth = 0.5f;
 
 - (void)didAppear {
     [super didAppear];
-    
-    [[self closeBottomConstraint] setConstant:0.0f];
-    [UIView animateWithDuration:HEMInsightCloseButtonAnimation animations:^{
-        [[self closeButton] layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        [self updateCloseButtonShadowOpacity];
-    }];
-    
-}
-
-- (void)didDisappear {
-    [super didDisappear];
-    [[self closeBottomConstraint] setConstant:-CGRectGetHeight([[self closeButton] bounds])];
+    [self updateCloseButtonShadowOpacity];
 }
 
 - (void)didRelayout {

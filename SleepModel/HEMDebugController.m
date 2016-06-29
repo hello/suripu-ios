@@ -30,6 +30,7 @@
 #import "HEMSleepSoundViewController.h"
 #import "HEMAlarmService.h"
 #import "HEMWhatsNewService.h"
+#import "HEMAppUsage.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -93,6 +94,7 @@
     [self addRoomCheckOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
     [self addWhatsNewOptionTo:sheet];
+    [self addForceAppReviewPrompt:sheet];
     [self addSleepSoundsOptionTo:sheet];
     [self addRemoveAllAlarmsOptionTo:sheet];
     [self addDebugInfoOptionTo:sheet];
@@ -124,6 +126,25 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf showDebugInfo];
         [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)addForceAppReviewPrompt:(HEMActionSheetViewController*)sheet {
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.force.appreview", nil) action:^{
+        [HEMAppUsage reset];
+        
+        // add timeline usage
+        HEMAppUsage* timelineUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
+        for(int i = 0; i < 10; i++) {
+            [timelineUsage increment:NO];
+        }
+        [timelineUsage save];
+        
+        HEMAppUsage* appLaunchUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageAppLaunched];
+        for (int i = 0; i < 5; i++) {
+            [appLaunchUsage increment:NO];
+        }
+        [appLaunchUsage save];
     }];
 }
 

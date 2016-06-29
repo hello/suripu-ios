@@ -3,11 +3,13 @@
 #import "Model.h"
 
 // insight constants
+static NSString* const SENInsightShareType = @"insight";
 static NSString* const SENInsightDateCreatedKey = @"timestamp";
 static NSString* const SENInsightTitleKey = @"title";
 static NSString* const SENInsightMessageKey = @"message";
 static NSString* const SENInsightCategory = @"category";
-static NSString* const SENInsightId = @"identifier";
+static NSString* const SENInsightId = @"id";
+static NSString* const SENInsightInfoId = @"identifier";
 static NSString* const SENInsightText = @"text";
 static NSString* const SENInsightImageUri = @"image_url";
 static NSString* const SENInsightInfoPreviewKey = @"info_preview";
@@ -27,6 +29,7 @@ static NSString* const SENInsightTypeValueBasic = @"BASIC";
         _infoPreview = [dict[SENInsightInfoPreviewKey] copy];
         _categoryName = [dict[SENInsightCategoryName] copy];
         _type = [self typeFromString:dict[SENInsightParamType]];
+        _identifier = [dict[SENInsightId] copy];
         
         NSNumber* dateMillis = SENObjectOfClass(dict[SENInsightDateCreatedKey], [NSNumber class]);
         if (dateMillis) {
@@ -106,6 +109,10 @@ static NSString* const SENInsightTypeValueBasic = @"BASIC";
     }
 }
 
+- (NSString*)shareType {
+    return SENInsightShareType;
+}
+
 @end
 
 #pragma mark - Insight Info
@@ -125,7 +132,7 @@ static NSString* const SENInsightTypeValueBasic = @"BASIC";
 - (instancetype)initWithDictionary:(NSDictionary*)dict
 {
     if (self = [super init]) {
-        id identifierObj = dict[SENInsightId];
+        id identifierObj = dict[SENInsightInfoId];
         _identifier = [identifierObj isKindOfClass:[NSNumber class]] ? [identifierObj integerValue] : NSNotFound;
         _category = [dict[SENInsightCategory] copy];
         _info = [dict[SENInsightText] copy];

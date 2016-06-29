@@ -118,7 +118,7 @@
     
     [self showSoundViewOf:[self alarmVC] completion:^{
         if (showNewAlarm) {
-            [[self alarmVC] addNewAlarm:nil];
+            [[self alarmVC] addNewAlarmFromShortcut];
         }
     }];
 }

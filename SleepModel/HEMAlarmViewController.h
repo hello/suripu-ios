@@ -4,6 +4,7 @@
 
 @class SENAlarm;
 @class HEMAlarmViewController;
+@class HEMAlarmService;
 
 @protocol HEMAlarmControllerDelegate <NSObject>
 
@@ -16,6 +17,7 @@
 @interface HEMAlarmViewController : HEMBaseController
 
 @property (nonatomic, strong) SENAlarm* alarm;
+@property (nonatomic, strong) HEMAlarmService* alarmService;
 @property (nonatomic, weak)   id<HEMAlarmControllerDelegate> delegate;
 
 @end

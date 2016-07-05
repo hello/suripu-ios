@@ -1,0 +1,6 @@
+framework module Pods_SenseApp_SenseWidget {
+  umbrella header "Pods-SenseApp-SenseWidget-umbrella.h"
+
+  export *
+  module * { export * }
+}

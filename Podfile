@@ -1,12 +1,14 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
+use_frameworks!
 
 abstract_target 'SenseApp' do
     
     pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
     pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
-    pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
-    #pod 'SenseKit', :path => '../SenseKit'
+    pod 'iOSDFULibrary', :git => 'git@github.com:jimmymlu/IOS-Pods-DFU-Library.git', :branch => 'method-name-compatibility'
+    # pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
+    pod 'SenseKit', :path => '../SenseKit'
     pod 'AttributedMarkdown', :git => 'git@github.com:hello/AttributedMarkdown.git', :inhibit_warnings => true
     pod 'CGFloatType', '~> 1.3.1'
     pod 'SORelativeDateTransformer', '~> 1.1.10'
@@ -33,7 +35,6 @@ abstract_target 'SenseApp' do
     
     # tests for the app
     target 'Tests' do
-        inherit! :search_paths
         pod 'Kiwi'
         pod 'Nocilla'
     end

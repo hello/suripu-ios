@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.4.4
+
+Note:
+
+* Bumping just the version number to make a true RC (for App Store)
+
 ## 1.4.4.3
 
 New:

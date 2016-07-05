@@ -269,30 +269,6 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     
 }
 
-/**
- * @discussion
- * Note that this method is doing I/O from whatever thread it is on, which is
- * usually the main thread, which is typically a no-no, but since it should
- * only be done once for the view, I think it's ok to prevent random, slow,
- * asynchronous call to load the image by url
- *
- * @return cached image, if any
- */
-- (UIImage*)cachedImageFor:(SENRemoteImage*)remoteImage {
-    NSString* url = [remoteImage uriForCurrentDevice];
-    UIImage* cachedImage = nil;
-    if (url) {
-        NSURL* urlObject = [NSURL URLWithString:url];
-        NSURLRequest* request = [NSURLRequest requestWithURL:urlObject];
-        NSURLCache* cache = [NSURLCache sharedURLCache];
-        NSCachedURLResponse* cachedResponse = [cache cachedResponseForRequest:request];
-        if ([cachedResponse data]) {
-            cachedImage = [UIImage imageWithData:[cachedResponse data]];
-        }
-    }
-    return cachedImage;
-}
-
 #pragma mark End of helpers
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -340,12 +316,27 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
             HEMImageCollectionViewCell* imageCell = (id)cell;
             [[imageCell urlImageView] setBackgroundColor:[UIColor backgroundColor]];
             
+
             SENRemoteImage* remoteImage = [[self insight] remoteImage];
-            UIImage* cachedImage = [self cachedImageFor:remoteImage];
+            NSString* imageUrl = [remoteImage uriForCurrentDevice];
+            UIImage* cachedImage = [[self insightsService] cachedImageForUrl:imageUrl]; // in memory
+            
+            if (!cachedImage) { // check disk
+                cachedImage = [remoteImage locallyCachedImageForCurrentDevice];
+            }
+
             if (cachedImage) {
                 [[imageCell urlImageView] setImage:cachedImage];
             } else {
-                [[imageCell urlImageView] setImageWithURL:[remoteImage uriForCurrentDevice]];
+                __weak typeof(self) weakSelf = self;
+                [[imageCell urlImageView] setImageWithURL:imageUrl completion:^(UIImage * image, NSString * url, NSError * error) {
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    if (error) {
+                        [SENAnalytics trackError:error];
+                    } else if (image && url) {
+                        [[strongSelf insightsService] cacheImage:image forInsightUrl:url];
+                    }
+                }];
             }
             
             break;

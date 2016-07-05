@@ -62,8 +62,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 @property (weak, nonatomic) HEMActivityCoverView* shareActivityCover;
 @property (strong, nonatomic) NSCache* heightCache;
 @property (strong, nonatomic) NSCache* attributedBodyCache;
-// imageCache is needed for scroll performance and to reduce image flickering
-@property (strong, nonatomic) NSCache* imageCache;
 @property (strong, nonatomic) NSError* dataError;
 @property (strong, nonatomic) NSCache* shareUrlCache;
 @property (assign, nonatomic) CGFloat whatsNewHeaderHeight;
@@ -87,7 +85,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         _shareService = shareService;
         _heightCache = [NSCache new];
         _attributedBodyCache = [NSCache new];
-        _imageCache = [NSCache new];
         _shareUrlCache = [NSCache new];
         
         [_shareUrlCache setCountLimit:HEMInsightsFeedShareUrlCacheLimit];
@@ -219,7 +216,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 
 - (void)lowMemory {
     [super lowMemory];
-    [[self imageCache] removeAllObjects];
     [[self heightCache] removeAllObjects];
     [[self attributedBodyCache] removeAllObjects];
 }
@@ -435,7 +431,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     UIImage* cachedImage = nil;
     
     if (url) {
-        cachedImage = [[self imageCache] objectForKey:url];
+        cachedImage = [[self insightsService] cachedImageForUrl:url];
     }
     
     if (cachedImage) {
@@ -447,7 +443,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
             if (error) {
                 [SENAnalytics trackError:error];
             } else if (image && imageUrl) {
-                [[strongSelf imageCache] setObject:image forKey:imageUrl];
+                [[strongSelf insightsService] cacheImage:image
+                                           forInsightUrl:imageUrl];
             }
         }];
     }

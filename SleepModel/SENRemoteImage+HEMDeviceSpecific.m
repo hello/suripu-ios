@@ -21,4 +21,19 @@
     return imageUri;
 }
 
+- (UIImage*)locallyCachedImageForCurrentDevice {
+    NSString* url = [self uriForCurrentDevice];
+    UIImage* cachedImage = nil;
+    if (url) {
+        NSURL* urlObject = [NSURL URLWithString:url];
+        NSURLRequest* request = [NSURLRequest requestWithURL:urlObject];
+        NSURLCache* cache = [NSURLCache sharedURLCache];
+        NSCachedURLResponse* cachedResponse = [cache cachedResponseForRequest:request];
+        if ([cachedResponse data]) {
+            cachedImage = [UIImage imageWithData:[cachedResponse data]];
+        }
+    }
+    return cachedImage;
+}
+
 @end

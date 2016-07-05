@@ -10,10 +10,12 @@
 #import "HEMBaseController.h"
 
 @class SENInsight;
+@class HEMInsightsService;
 
 @interface HEMInsightViewController : HEMBaseController
 
 @property (nonatomic, strong) SENInsight* insight;
 @property (nonatomic, strong) UIColor* imageColor;
+@property (nonatomic, strong) HEMInsightsService* insightService;
 
 @end

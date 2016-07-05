@@ -57,6 +57,8 @@ static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoption = @"option";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpill = @"pill";
+static NSString *const _HEMpillDFU = @"pillDFU";
+static NSString *const _HEMpillDFUNav = @"pillDFUNav";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
 static NSString *const _HEMsense = @"sense";
@@ -179,6 +181,8 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
 +(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
 +(id)instantiateListItemViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMlistItem]; }
++(id)instantiatePillDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFU]; }
++(id)instantiatePillDFUNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFUNav]; }
 +(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
 +(id)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }

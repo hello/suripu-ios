@@ -87,6 +87,8 @@
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightFeedViewController;
 +(id)instantiateListItemViewController;
++(id)instantiatePillDFUViewController;
++(id)instantiatePillDFUNavViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;

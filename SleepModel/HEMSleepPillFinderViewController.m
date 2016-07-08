@@ -15,6 +15,8 @@
 #import "HEMPillFinderPresenter.h"
 #import "HEMDeviceService.h"
 #import "HEMMainStoryboard.h"
+#import "HEMActionButton.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMSleepPillFinderViewController () <HEMPillFinderDelegate, HEMPresenterErrorDelegate>
 
@@ -23,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView *videoView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet HEMActionButton *retryButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *helpButton;
 
 @end
 
@@ -45,6 +50,8 @@
                        descriptionLabel:[self descriptionLabel]];
     [finderPresenter bindWithStatusLabel:[self statusLabel]
                             andIndicator:[self activityView]];
+    [finderPresenter bindWithCancelButton:[self cancelButton] helpButton:[self helpButton]];
+    [finderPresenter bindWithRetryButton:[self retryButton]];
     [finderPresenter setFinderDelegate:self];
     [finderPresenter setErrorDelegate:self];
     
@@ -61,6 +68,14 @@
     [dfuController setSleepPillToDfu:pill];
     [dfuController setDeviceService:[self deviceService]];
     [[self navigationController] setViewControllers:@[dfuController] animated:YES];
+}
+
+- (void)showHelpTopic:(NSString*)helpPage from:(HEMPillFinderPresenter*)presenter {
+    [HEMSupportUtil openHelpToPage:helpPage fromController:self];
+}
+
+- (void)cancelFrom:(HEMPillFinderPresenter*)presenter {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - HEMPresenterErrorDelegate

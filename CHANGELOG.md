@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.0.2
+
+Fixes:
+
+* Removed pill battery check from the flow
+* Fixed pill not detected troubleshooting link
+* Fixed caching policy for iOS 9 devices
+
 ## 1.5.0.1
 
 New:

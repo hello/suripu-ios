@@ -7,17 +7,31 @@
 //
 
 #import "HEMSleepPillDfuViewController.h"
-#import "HEMActionButton.h"
 #import "HEMPillDfuPresenter.h"
-#import "HEMDfuService.h"
+#import "HEMDeviceService.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMMainStoryboard.h"
+#import "HEMNoBLEViewController.h"
+#import "HEMSleepPillFinderViewController.h"
+#import "HEMActionButton.h"
+#import "HEMSupportUtil.h"
 
-@interface HEMSleepPillDfuViewController ()
+@class SENSleepPill;
+
+@interface HEMSleepPillDfuViewController () <
+    HEMPresenterErrorDelegate,
+    HEMPillDfuDelegate,
+    HEMNoBLEDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *illustrationImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
-@property (strong, nonatomic) HEMDfuService* dfuService;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *helpButton;
 
 @end
 
@@ -25,23 +39,76 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configurePresenter];
 }
 
 - (void)configurePresenter {
-    HEMDfuService* dfuService = [HEMDfuService new];
+    if (![self deviceService]) {
+        [self setDeviceService:[HEMDeviceService new]];
+    }
     
-    HEMPillDfuPresenter* dfuPresenter = [[HEMPillDfuPresenter alloc] initWithDfuService:dfuService];
-    [dfuPresenter bindWithTitleLabel:[self titleLabel] descriptionLabel:[self descriptionLabel]];
+    HEMPillDfuPresenter* dfuPresenter =
+        [[HEMPillDfuPresenter alloc] initWithDeviceService:[self deviceService]];
+    [dfuPresenter setPillToDfu:[self sleepPillToDfu]];
+    [dfuPresenter bindWithTitleLabel:[self titleLabel]
+                    descriptionLabel:[self descriptionLabel]];
     [dfuPresenter bindWithActionButton:[self continueButton]];
+    [dfuPresenter bindWithProgressView:[self progressView]
+                           statusLabel:[self statusLabel]];
+    [dfuPresenter setErrorDelegate:self];
+    [dfuPresenter setDfuDelegate:self];
+    [dfuPresenter bindWithCancelButton:[self cancelButton]];
+    [dfuPresenter bindWithHelpButton:[self helpButton]];
     
-    [self setDfuService:dfuService];
     [self addPresenter:dfuPresenter];
 }
 
-#pragma mark - Actions
+- (void)next {
+    HEMSleepPillFinderViewController* pillFinderVC =
+        [HEMMainStoryboard instantiatePillFinderViewController];
+    [pillFinderVC setDeviceService:[self deviceService]];
+    [[self navigationController] setViewControllers:@[pillFinderVC] animated:YES];
+}
 
-- (IBAction)cancel:(id)sender {
+#pragma mark - HEMPresenterErrorDelegate
+
+- (void)showErrorWithTitle:(nullable NSString*)title andMessage:(NSString*)message {
+    [self showMessageDialog:message title:title];
+}
+
+#pragma mark - HEMPillDfuDelegate
+
+- (void)bleRequiredToProceedFrom:(HEMPillDfuPresenter*)presenter {
+    HEMNoBLEViewController* bleController = [HEMOnboardingStoryboard instantiateNoBleViewController];
+    [bleController setDelegate:self];
+    [[self navigationController] pushViewController:bleController animated:YES];
+}
+
+- (void)shouldStartScanningForPillFrom:(HEMPillDfuPresenter*)presenter {
+    [self next];
+}
+
+- (UIView*)viewToAttachToWhenFinishedIn:(HEMPillDfuPresenter*)presenter {
+    return [[self navigationController] view];
+}
+
+- (void)didCompleteDfuFrom:(HEMPillDfuPresenter*)presenter {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelDfuFrom:(HEMPillDfuPresenter*)presenter {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showHelpWithSlug:(NSString*)slug fromPresenter:(HEMPillDfuPresenter*)presenter {
+    [SENAnalytics track:kHEMAnalyticsEventOnBHelp properties:nil];
+    [HEMSupportUtil openHelpToPage:slug fromController:self];
+}
+
+#pragma mark - HEMNoBLEDelegate
+
+- (void)bleDetectedFrom:(HEMNoBLEViewController *)controller {
+    [self next];
 }
 
 @end

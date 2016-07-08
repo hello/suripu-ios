@@ -34,7 +34,6 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 
 @implementation HEMNoBLEViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self enableBackButton:NO];
@@ -80,8 +79,12 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 }
 
 - (void)next {
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier]
-                              sender:self];
+    if (![self delegate]) {
+        NSString* nextSegue = [HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier];
+        [self performSegueWithIdentifier:nextSegue sender:self];
+    } else {
+        [[self delegate] bleDetectedFrom:self];
+    }
 }
 
 @end

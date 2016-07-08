@@ -240,18 +240,12 @@
 
 - (void)showHelpButtonForPage:(NSString*)page
          andTrackWithStepName:(NSString*)stepName {
+    
     UIBarButtonItem* item =
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"question-mark", nil)
+    [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"helpIconSmall"]
                                      style:UIBarButtonItemStylePlain
                                     target:self
                                     action:@selector(help:)];
-    [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
-                       forBarMetrics:UIBarMetricsDefault];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor tintColor],
-                                   NSFontAttributeName : [UIFont helpButtonTitleFont]
-                                   }
-                        forState:UIControlStateNormal];
-    
     [[self navigationItem] setRightBarButtonItem:item];
     [self setAnalyticsHelpStep:stepName];
     [self setHelpPage:page];

@@ -75,6 +75,14 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:15.0f];
 }
 
++ (UIFont*)bodySmall {
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:14.0f];
+}
+
++ (UIFont*)bodySmallBold {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
+}
+
 + (UIFont*)button {
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
@@ -584,11 +592,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)onboardingRoomCheckSensorValueFont
 {
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:72.0f];
-}
-
-+ (UIFont*)helpButtonTitleFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
 + (UIFont*)wifiTitleFont

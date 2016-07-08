@@ -12,6 +12,7 @@
 #import "HEMAnimationUtils.h"
 #import "HEMMathUtil.h"
 #import "HEMScreenUtils.h"
+#import "HEMAnimationUtils.h"
 
 static CGFloat kHEMActivityMargins = 30.0f;
 static CGFloat kHEMActivityViewSeparation = 20.0f;

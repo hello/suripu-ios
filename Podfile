@@ -7,11 +7,11 @@ abstract_target 'SenseApp' do
     pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
     pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
     pod 'iOSDFULibrary', :git => 'git@github.com:jimmymlu/IOS-Pods-DFU-Library.git', :branch => 'method-name-compatibility'
-    # pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
-    pod 'SenseKit', :path => '../SenseKit'
+    pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
+    #pod 'SenseKit', :path => '../SenseKit'
     pod 'AttributedMarkdown', :git => 'git@github.com:hello/AttributedMarkdown.git', :inhibit_warnings => true
     pod 'CGFloatType', '~> 1.3.1'
-    pod 'SORelativeDateTransformer', '~> 1.1.10'
+    pod 'SORelativeDateTransformer', :git => 'git@github.com:jrmiddle/SORelativeDateTransformer.git', :commit => '51f53d591b7c19da1fcea5a91e5c044089c99410'
     
     # the actual Sense iOS app
     target 'Sense' do

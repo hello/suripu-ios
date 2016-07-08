@@ -17,12 +17,12 @@ PODS:
   - Analytics (3.0.7)
   - AttributedMarkdown (0.9.2)
   - BEMSimpleLineGraph (3.3)
-  - Bolts (1.7.0):
-    - Bolts/AppLinks (= 1.7.0)
-    - Bolts/Tasks (= 1.7.0)
-  - Bolts/AppLinks (1.7.0):
+  - Bolts (1.8.0):
+    - Bolts/AppLinks (= 1.8.0)
+    - Bolts/Tasks (= 1.8.0)
+  - Bolts/AppLinks (1.8.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.7.0)
+  - Bolts/Tasks (1.8.0)
   - Bugsnag (4.1.0):
     - Bugsnag/no-arc (= 4.1.0)
   - Bugsnag/no-arc (4.1.0)
@@ -102,9 +102,9 @@ DEPENDENCIES:
   - MSDynamicsDrawerViewController (= 1.5.1)
   - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
   - Nocilla
-  - SenseKit (from `../SenseKit`)
+  - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
-  - SORelativeDateTransformer (~> 1.1.10)
+  - SORelativeDateTransformer (from `git@github.com:jrmiddle/SORelativeDateTransformer.git`, commit `51f53d591b7c19da1fcea5a91e5c044089c99410`)
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
   - UICountingLabel (~> 1.2.0)
   - UIImageEffects (~> 0.0.1)
@@ -123,9 +123,12 @@ EXTERNAL SOURCES:
   NAPickerView:
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :path: "../SenseKit"
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
+  SORelativeDateTransformer:
+    :commit: 51f53d591b7c19da1fcea5a91e5c044089c99410
+    :git: git@github.com:jrmiddle/SORelativeDateTransformer.git
   SVWebViewController:
     :git: https://github.com/TransitApp/SVWebViewController.git
   ZendeskSDK:
@@ -148,9 +151,15 @@ CHECKOUT OPTIONS:
   NAPickerView:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
+  SenseKit:
+    :commit: b53a5d5c561f860f99070f9357072a8afb71f339
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
     :git: git@github.com:hello/protobuf-objc.git
+  SORelativeDateTransformer:
+    :commit: 51f53d591b7c19da1fcea5a91e5c044089c99410
+    :git: git@github.com:jrmiddle/SORelativeDateTransformer.git
   SVWebViewController:
     :commit: 9abad6b852b6c2ad19bb3c28532cce53719e2a7f
     :git: https://github.com/TransitApp/SVWebViewController.git
@@ -163,7 +172,7 @@ SPEC CHECKSUMS:
   Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
   AttributedMarkdown: ac5060667280be8cc8ee33a46c73e4ec6b17ca1a
   BEMSimpleLineGraph: 5999b2da02b6e935121608cfc58f6c369e06bde8
-  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
+  Bolts: 127daec4981dab569d07314c198dfcae47f4ce4c
   Bugsnag: 4c3f744efa9d76d9b17fddbc940e881436464cee
   CGFloatType: fa1da294540051a76750092a427b95296bbdc006
   CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
@@ -187,6 +196,6 @@ SPEC CHECKSUMS:
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
   Zip: 670419a5ba9faaf5f24ed3650c4c38b4136e996b
 
-PODFILE CHECKSUM: d33fd2d16822eba28494b5b5a12ee71c6dabff45
+PODFILE CHECKSUM: 94a526f7122c14d442dc069c8f860176cc826f31
 
 COCOAPODS: 1.0.0

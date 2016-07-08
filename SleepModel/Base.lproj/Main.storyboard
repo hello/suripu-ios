@@ -1212,7 +1212,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sleepPillDFU" translatesAutoresizingMaskIntoConstraints="NO" id="5uT-BC-XAm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sleepPillDFU" translatesAutoresizingMaskIntoConstraints="NO" id="5uT-BC-XAm">
                                 <rect key="frame" x="0.0" y="249" width="600" height="200"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyf-Lr-Cng" customClass="HEMActionButton">
@@ -1241,10 +1241,11 @@
                             <constraint firstAttribute="trailing" secondItem="ol0-3b-e5g" secondAttribute="trailing" constant="24" id="C2U-31-ob1"/>
                             <constraint firstAttribute="trailing" secondItem="iKf-lG-EBv" secondAttribute="trailing" constant="24" id="DoD-zg-7gz"/>
                             <constraint firstItem="kIU-nQ-75k" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="24" id="JMV-Fc-XRJ"/>
+                            <constraint firstItem="5uT-BC-XAm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ol0-3b-e5g" secondAttribute="bottom" priority="250" id="KK4-hN-LKQ"/>
                             <constraint firstItem="gya-Oe-arm" firstAttribute="top" secondItem="kIU-nQ-75k" secondAttribute="bottom" constant="40" id="MUU-uJ-c1I"/>
                             <constraint firstItem="ST5-FI-gDl" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="72" id="Pem-35-iAa"/>
                             <constraint firstItem="iKf-lG-EBv" firstAttribute="top" secondItem="aFf-aJ-IAs" secondAttribute="bottom" constant="24" id="WPs-A9-AAU"/>
-                            <constraint firstItem="5uT-BC-XAm" firstAttribute="bottom" secondItem="vyf-Lr-Cng" secondAttribute="top" constant="-71" id="cNh-Rb-ouj"/>
+                            <constraint firstItem="5uT-BC-XAm" firstAttribute="bottom" secondItem="vyf-Lr-Cng" secondAttribute="top" priority="250" constant="-71" id="cNh-Rb-ouj"/>
                             <constraint firstItem="iKf-lG-EBv" firstAttribute="bottom" secondItem="ol0-3b-e5g" secondAttribute="top" constant="-8" id="cV6-rI-26r"/>
                             <constraint firstItem="ST5-FI-gDl" firstAttribute="bottom" secondItem="kIU-nQ-75k" secondAttribute="top" constant="-32" id="duu-gw-7lu"/>
                             <constraint firstItem="iKf-lG-EBv" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="24" id="fZS-Mr-oCc"/>

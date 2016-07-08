@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.5.0.1
+
+New:
+
+* Debug option to show Pill DFU flow
+* Pill DFU update screen
+* Pill Finder / Scan screen
+* Pill DFU progress screen
+* Support to update Sleep Pill via debug url or from server returned url
+
+Fixes:
+
+* Insight body font lowered by 1pt
+* Insight image cached shared between feed and detail to prevent image changing
+
 ## 1.4.4.4
 
 Note:

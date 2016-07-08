@@ -9,6 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "HEMOnboardingController.h"
 
+@class HEMNoBLEViewController;
+
+@protocol HEMNoBLEDelegate <NSObject>
+
+- (void)bleDetectedFrom:(HEMNoBLEViewController*)controller;
+
+@end
+
 @interface HEMNoBLEViewController : HEMOnboardingController
+
+@property (nonatomic, weak) id<HEMNoBLEDelegate> delegate;
 
 @end

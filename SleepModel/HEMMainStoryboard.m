@@ -57,8 +57,12 @@ static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoption = @"option";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpill = @"pill";
+static NSString *const _HEMpillDFU = @"pillDFU";
+static NSString *const _HEMpillDFUNav = @"pillDFUNav";
+static NSString *const _HEMpillFinder = @"pillFinder";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
+static NSString *const _HEMscan = @"scan";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
@@ -157,6 +161,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
++(NSString *)scanSegueIdentifier { return _HEMscan; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
 +(NSString *)settingsToSupportSegueIdentifier { return _HEMsettingsToSupport; }
 +(NSString *)sleepSoundsSegueIdentifier { return _HEMsleepSounds; }
@@ -179,6 +184,9 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
 +(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
 +(id)instantiateListItemViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMlistItem]; }
++(id)instantiatePillDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFU]; }
++(id)instantiatePillDFUNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFUNav]; }
++(id)instantiatePillFinderViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillFinder]; }
 +(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
 +(id)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }

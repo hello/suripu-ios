@@ -12,11 +12,8 @@
 
 #import <LGBluetooth/LGBluetooth.h>
 
-#import "LGCentralManager.h"
-#import "LGPeripheral.h"
-
 #import "SENSenseManager.h"
-#import "SENSense+Protected.h"
+#import "SENSense.h"
 #import "SENSenseMessage.pb.h"
 #import "SENSenseWiFiStatus.h"
 #import "SENLocalPreferences.h"
@@ -39,7 +36,6 @@ static NSString* const kSENSenseCharacteristicInputId = @"BEEB";
 static NSString* const kSENSenseCharacteristicResponseId = @"B00B";
 static NSInteger const kSENSensePacketSize = 20;
 static NSInteger const kSENSenseAppVersion = 0;
-static NSInteger const kSENSenseMaxBleRetries = 10;
 
 typedef BOOL(^SENSenseUpdateBlock)(id response);
 
@@ -130,8 +126,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     LGCentralManager* btManager = [LGCentralManager sharedInstance];
     if (![btManager isCentralReady]) return NO;
     
-    [self stopScan]; // stop a scan if one is already started
-    
     DDLogVerbose(@"scanning for Sense started");
     CBUUID* serviceId = [CBUUID UUIDWithString:kSENSenseServiceID];
     [btManager scanForPeripheralsByInterval:timeout
@@ -155,46 +149,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     return YES;
 }
 
-+ (void)stopScan {
-    if ([[LGCentralManager sharedInstance] isScanning]) {
-        [[LGCentralManager sharedInstance] stopScanForPeripherals];
-        DDLogVerbose(@"scan stopped");
-    }
-}
-
-+ (BOOL)isScanning {
-    return [[LGCentralManager sharedInstance] isScanning];
-}
-
-+ (BOOL)isReady {
-    return [[LGCentralManager sharedInstance] isCentralReady];
-}
-
 + (void)whenBleStateAvailable:(void(^)(BOOL on))block {
-    [self recheckBleStateWithAttempt:0 onCompletion:block];
-}
-
-+ (void)recheckBleStateWithAttempt:(NSUInteger)attempt onCompletion:(void(^)(BOOL on))block {
-    CBCentralManagerState state = [[[LGCentralManager sharedInstance] manager] state];
-    if (state == CBCentralManagerStateUnknown || state == CBCentralManagerStateResetting) {
-        if (attempt < kSENSenseMaxBleRetries) {
-            NSTimeInterval delayInSeconds = 0.2f;
-            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
-                [self recheckBleStateWithAttempt:attempt+1 onCompletion:block];
-            });
-        } else {
-            block (NO);
-        }
-    } else {
-        block (state == CBCentralManagerStatePoweredOn);
-    }
-}
-
-+ (BOOL)canScan {
-    CBCentralManagerState state = [[[LGCentralManager sharedInstance] manager] state];
-    return state != CBCentralManagerStateUnauthorized
-            && state != CBCentralManagerStateUnsupported;
+    [self whenReady:block];
 }
 
 - (instancetype)initWithSense:(SENSense*)sense {
@@ -411,7 +367,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     [self connectThen:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        if (error != nil) {
+        if (error) {
             completion (nil, [strongSelf errorWithCode:SENSenseManagerErrorCodeConnectionFailed
                                            description:@"could not connect to Sense"
                                    fromUnderlyingError:error]);
@@ -419,100 +375,12 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         }
         
         LGPeripheral* peripheral = [[strongSelf sense] peripheral];
-        NSDictionary* characteristics = [strongSelf cachedCharacteristicsWithIds:characteristicIds
-                                                                  fromPeripheral:peripheral
-                                                                    forServiceId:serviceUUID];
-        if ([characteristics count] > 0) {
-            completion (characteristics, nil);
-        } else {
-            [strongSelf usePeripheral:peripheral
-                           toDiscover:characteristicIds
-                     forServiceWithId:serviceUUID
-                           completion:completion];
-        }
+        [strongSelf characteristicsWithIds:characteristicIds
+                           insideServiceId:serviceUUID
+                             forPeripheral:peripheral
+                                completion:completion];
         
     }];
-}
-
-/**
- * @discussion
- * If peripheral contains cached service and characteristics, then use it rather
- * than discovering them through BLE.  If cache does exist and you still try and
- * discover them, CoreBluetooth will not make a callback.
- *
- * @param characteristicIds: a set of characteristicIds that the service broadcasts
- * @param peripheral:        Sense
- * @param serviceUUID:       the service UUID to discover
- *
- * @return dictionary of characteristics by ids, if any
- */
-- (NSDictionary*)cachedCharacteristicsWithIds:(NSSet*)characteristicIds
-                               fromPeripheral:(LGPeripheral*)peripheral
-                                 forServiceId:(NSString*)serviceUUID {
-    
-    NSDictionary* matching = nil;
-    for (LGService* service in [peripheral services]) {
-        if ([[[service UUIDString] uppercaseString] isEqualToString:serviceUUID]) {
-            matching = [self extracCharacteristicsWithIds:characteristicIds
-                                                     from:[service characteristics]];
-            DDLogVerbose(@"using cached Sense service and characteristics");
-            break;
-        }
-    }
-    return matching;
-}
-
-/**
- * @discussion
- * (Re)discover service by id and it's characteristics for the peripheral (Sense)
- *
- * @param peripheral:        Sense
- * @param characteristicIds: a set of characteristicIds that the service broadcasts
- * @param serviceUUID:       the service UUID to discover
- * @param completion:        the block to invoke when done
- */
-- (void)usePeripheral:(LGPeripheral*)peripheral
-           toDiscover:(NSSet*)characteristicIds
-     forServiceWithId:(NSString*)serviceUUID
-           completion:(SENSenseCompletionBlock)completion {
-    DDLogVerbose(@"discovering Sense service");
-    __weak typeof(self) weakSelf = self;
-    CBUUID* serviceId = [CBUUID UUIDWithString:serviceUUID];
-    [peripheral discoverServices:@[serviceId] completion:^(NSArray *services, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        if (error != nil || [services count] != 1) {
-            completion (nil, error?error:[strongSelf errorWithCode:SENSenseManagerErrorCodeUnexpectedResponse
-                                                       description:@"could not discover services"
-                                               fromUnderlyingError:nil]);
-            return;
-        }
-        
-        DDLogVerbose(@"discovering characteristics for service");
-        LGService* lgService = [services firstObject];
-        [lgService discoverCharacteristicsWithCompletion:^(NSArray *characteristics, NSError *error) {
-            if (error != nil) {
-                completion (nil, error);
-                return;
-            }
-            completion ([strongSelf extracCharacteristicsWithIds:characteristicIds
-                                                            from:characteristics], nil);
-        }];
-    }];
-}
-
-- (NSDictionary*)extracCharacteristicsWithIds:(NSSet*)characteristicIds
-                                         from:(NSArray*)allCharacteristics {
-    
-    NSMutableDictionary* characteristics = [NSMutableDictionary dictionary];
-    NSString* uuid = nil;
-    for (LGCharacteristic* characteristic in allCharacteristics) {
-        uuid = [[characteristic UUIDString] uppercaseString];
-        if ([characteristicIds containsObject:uuid]) {
-            [characteristics setValue:characteristic forKey:uuid];
-        }
-    }
-    return characteristics;
 }
 
 - (void)characteristics:(SENSenseCompletionBlock)completion {

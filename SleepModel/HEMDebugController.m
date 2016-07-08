@@ -95,8 +95,8 @@
     [self addResetTutorialsOptionTo:sheet];
     [self addWhatsNewOptionTo:sheet];
     [self addForceAppReviewPrompt:sheet];
-    [self addSleepSoundsOptionTo:sheet];
     [self addRemoveAllAlarmsOptionTo:sheet];
+    [self addPillDfuOptionTo:sheet];
     [self addDebugInfoOptionTo:sheet];
     [self addChangeServerOptionToSheet:sheet];
     [self addCancelOptionTo:sheet];
@@ -271,25 +271,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
 }
 
-#pragma mark Sleep Sounds
-
-- (void)addSleepSoundsOptionTo:(HEMActionSheetViewController*)sheet {
-    __weak typeof(self) weakSelf = self;
-    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.sleep-sounds", nil) action:^{
-        [weakSelf showSleepSoundsController];
-        [weakSelf setSupportOptionController:nil];
-    }];
-}
-
-- (void)showSleepSoundsController {
-    HEMSleepSoundViewController* vc = [HEMMainStoryboard instantiateSleepSoundViewController];
-    [vc setCancellable:YES];
-    [vc setTitle:NSLocalizedString(@"debug.option.sleep-sounds", nil)];
-    HEMSettingsNavigationController* nav = [[HEMSettingsNavigationController alloc] initWithRootViewController:vc];
-    [self showController:nav animated:YES completion:nil];
-    [self setSleepSoundsViewController:nav];
-}
-
 #pragma mark - Alarms
 
 - (void)addRemoveAllAlarmsOptionTo:(HEMActionSheetViewController*)sheet {
@@ -298,6 +279,17 @@
         HEMAlarmService* service = [HEMAlarmService new];
         [service updateAlarms:@[] completion:nil];
         [weakSelf setSupportOptionController:nil];
+    }];
+}
+
+#pragma mark - Dfu
+
+- (void)addPillDfuOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.dfu.pill", nil) action:^{
+        UIViewController* viewController = [HEMMainStoryboard instantiatePillDFUNavViewController];
+        [weakSelf showController:viewController animated:YES completion:nil];
+        [self setSupportOptionController:nil];
     }];
 }
 

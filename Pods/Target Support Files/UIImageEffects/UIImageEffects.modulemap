@@ -1,0 +1,6 @@
+framework module UIImageEffects {
+  umbrella header "UIImageEffects-umbrella.h"
+
+  export *
+  module * { export * }
+}

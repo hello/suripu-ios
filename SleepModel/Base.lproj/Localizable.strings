@@ -82,6 +82,7 @@
 "help.url.slug.no-data-recorded" = "articles/205706435";
 "help.url.slug.not-enough-data-recorded" = "articles/204994629";
 "help.url.slug.facebook-import" = "articles/210329423";
+"help.url.slug.pill-dfu" = "articles/211303163)";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -229,8 +230,8 @@
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.force-whats-new" = "Force What's New";
-"debug.option.sleep-sounds" = "Sleep Sounds";
 "debug.option.clear-alarms" = "Remove all alarms";
+"debug.option.dfu.pill" = "Show Pill DFU";
 "debug.host.action.custom-url" = "Custom";
 "debug.host.section.api" = "API Hosts";
 "debug.host.section.nonsense" = "Nonsense Hosts";
@@ -612,6 +613,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.retry" = "Retry";
 "actions.cancel" = "Cancel";
 "actions.close" = "Close";
 "actions.ok" = "Okay";
@@ -834,3 +836,19 @@
 "share.error.no-link.message" = "Sense was unable to generate a shareable Insight. Please try again in a few moments.";
 "share.email.subject.insight" = "Check out my sleep Insights from Sense";
 "share.text.format.insight" = "See how I'm improving my sleep with Insights from Sense. %@ #MySense";
+
+// dfu
+"dfu.pill.state.not-started" = "Update starting";
+"dfu.pill.state.updating" = "Sleep Pill Updating";
+"dfu.pill.state.validating" = "Validating update";
+"dfu.pill.state.disconnecting" = "Disconnecting";
+"dfu.pill.state.complete" = "Sleep Pill updated";
+"dfu.pill.error.title.update-failed" = "Update failed";
+"dfu.pill.error.update-failed" = "There was a problem updating your Sleep Pill. Please try again.";
+"dfu.pill.connected" = "Sleep Pill connected";
+"dfu.pill.error.title.phone-battery" = "Phone battery low";
+"dfu.pill.error.insufficient-phone-battery" = "Connect your phone to a power source before you continue with this update.";
+"dfu.pill.error.title.pill-battery" = "Replace Sleep Pill battery";
+"dfu.pill.error.insufficient-pill-battery" = "Replace your Sleep Pill battery before you continue with this update.";
+"dfu.pill.error.title.pill-not-found" = "Sleep Pill not detected";
+"dfu.pill.error.pill-not-found" = "Make sure to shake your Sleep Pill quickly for three seconds while holding it close to your mobile device.";

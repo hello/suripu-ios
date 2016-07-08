@@ -23,4 +23,8 @@
     return deviceModel;
 }
 
++ (CGFloat)batteryPercentage {
+    return [[self currentDevice] batteryLevel];
+}
+
 @end

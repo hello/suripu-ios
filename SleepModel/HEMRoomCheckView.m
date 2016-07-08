@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 4/6/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-#import <markdown_peg.h>
+#import "markdown_peg.h"
 
 #import "UIFont+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"

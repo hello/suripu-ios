@@ -1,8 +1,7 @@
 
 #import <AFNetworking/AFHTTPSessionManager.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
-#import <NSJSONSerialization-NSNullRemoval/NSJSONSerialization+RemovingNulls.h>
-
+#import "NSJSONSerialization+RemovingNulls.h"
 #import "SENAPIClient.h"
 #import "SENAuthorizationService.h"
 #import "SENLocalPreferences.h"

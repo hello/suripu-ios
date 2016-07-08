@@ -15,5 +15,6 @@
  *         simply using UIDevice (iPhone7,2 vs. iPhone)
  */
 + (NSString*)currentDeviceModel;
++ (CGFloat)batteryPercentage;
 
 @end

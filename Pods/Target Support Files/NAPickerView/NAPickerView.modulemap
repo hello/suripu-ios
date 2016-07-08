@@ -1,0 +1,6 @@
+framework module NAPickerView {
+  umbrella header "NAPickerView-umbrella.h"
+
+  export *
+  module * { export * }
+}

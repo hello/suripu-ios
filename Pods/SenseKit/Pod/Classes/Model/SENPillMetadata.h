@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, SENPillState) {
 
 @property (nonatomic, assign, readonly) SENPillState state;
 @property (nonatomic, assign, readonly) SENPillColor color;
+@property (nonatomic, copy, readonly) NSString* firmwareUpdateUrl;
 @property (nonatomic, strong, readonly, nullable) NSNumber* batteryLevel;
 
 - (nonnull instancetype)initWithDictionary:(nonnull NSDictionary*)dict;

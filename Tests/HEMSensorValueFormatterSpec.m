@@ -7,7 +7,7 @@
 //
 
 #import <Kiwi/Kiwi.h>
-#import <SenseKit/SenseKit.h>
+#import "SenseKit/SenseKit.h"
 #import "HEMSensorValueFormatter.h"
 
 @interface HEMSensorValueFormatter()

@@ -82,3 +82,64 @@ strip_invalid_archs() {
   fi
 }
 
+
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AttributedMarkdown/AttributedMarkdown.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CGFloatType/CGFloatType.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack/CocoaLumberjack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EVReflection/EVReflection.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FXKeychain/FXKeychain.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/LGBluetooth/LGBluetooth.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NSJSONSerialization-NSNullRemoval/NSJSONSerialization_NSNullRemoval.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SHSProtoBuf/ProtocolBuffers.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SORelativeDateTransformer/SORelativeDateTransformer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SenseKit/SenseKit.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Zip/Zip.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/iOSDFULibrary/iOSDFULibrary.framework"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AttributedMarkdown/AttributedMarkdown.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CGFloatType/CGFloatType.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack/CocoaLumberjack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EVReflection/EVReflection.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FXKeychain/FXKeychain.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/LGBluetooth/LGBluetooth.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NSJSONSerialization-NSNullRemoval/NSJSONSerialization_NSNullRemoval.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SHSProtoBuf/ProtocolBuffers.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SORelativeDateTransformer/SORelativeDateTransformer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SenseKit/SenseKit.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Zip/Zip.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/iOSDFULibrary/iOSDFULibrary.framework"
+fi
+if [[ "$CONFIGURATION" == "Beta" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AttributedMarkdown/AttributedMarkdown.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CGFloatType/CGFloatType.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack/CocoaLumberjack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EVReflection/EVReflection.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FXKeychain/FXKeychain.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/LGBluetooth/LGBluetooth.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NSJSONSerialization-NSNullRemoval/NSJSONSerialization_NSNullRemoval.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SHSProtoBuf/ProtocolBuffers.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SORelativeDateTransformer/SORelativeDateTransformer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SenseKit/SenseKit.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Zip/Zip.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/iOSDFULibrary/iOSDFULibrary.framework"
+fi
+if [[ "$CONFIGURATION" == "Dev" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AttributedMarkdown/AttributedMarkdown.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CGFloatType/CGFloatType.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack/CocoaLumberjack.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/EVReflection/EVReflection.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FXKeychain/FXKeychain.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/LGBluetooth/LGBluetooth.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/NSJSONSerialization-NSNullRemoval/NSJSONSerialization_NSNullRemoval.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SHSProtoBuf/ProtocolBuffers.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SORelativeDateTransformer/SORelativeDateTransformer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SenseKit/SenseKit.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Zip/Zip.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/iOSDFULibrary/iOSDFULibrary.framework"
+fi

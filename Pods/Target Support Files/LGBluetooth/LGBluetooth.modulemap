@@ -1,0 +1,6 @@
+framework module LGBluetooth {
+  umbrella header "LGBluetooth-umbrella.h"
+
+  export *
+  module * { export * }
+}

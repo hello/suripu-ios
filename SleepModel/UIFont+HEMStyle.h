@@ -23,6 +23,8 @@
 + (UIFont*)h8;
 + (UIFont*)body;
 + (UIFont*)bodyBold;
++ (UIFont*)bodySmall;
++ (UIFont*)bodySmallBold;
 + (UIFont*)button;
 
 #pragma mark - Common fonts
@@ -479,11 +481,6 @@
  * onboarding.  Example use would be the selected security type of wifi
  */
 + (UIFont*)onboardingFieldRightViewFont;
-
-/**
- * Font used to display the help button title during onboarding
- */
-+ (UIFont*)helpButtonTitleFont;
 
 /**
  * Font used to diplay scanned wifi ssids

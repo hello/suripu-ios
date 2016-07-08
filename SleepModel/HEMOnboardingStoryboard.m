@@ -24,6 +24,7 @@ static NSString *const _HEMlastName = @"lastName";
 static NSString *const _HEMlocationToPush = @"locationToPush";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
+static NSString *const _HEMnoBle = @"noBle";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMnotificationToAudio = @"notificationToAudio";
 static NSString *const _HEMpassword = @"password";
@@ -97,6 +98,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(id)instantiateDobViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdobViewController]; }
 +(id)instantiateGenderPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgenderPicker]; }
 +(id)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
++(id)instantiateNoBleViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnoBle]; }
 +(id)instantiatePillDescriptionViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDescription]; }
 +(id)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
 +(id)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }

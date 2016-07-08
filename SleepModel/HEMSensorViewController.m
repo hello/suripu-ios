@@ -5,7 +5,7 @@
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENPreference.h>
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
-#import <markdown_peg.h>
+#import "markdown_peg.h"
 
 #import "HEMSensorViewController.h"
 #import "HEMLineGraphDataSource.h"

@@ -48,6 +48,7 @@
 +(id)instantiateDobViewController;
 +(id)instantiateGenderPickerViewController;
 +(id)instantiateHeightPickerViewController;
++(id)instantiateNoBleViewController;
 +(id)instantiatePillDescriptionViewController;
 +(id)instantiatePillPairViewController;
 +(id)instantiateRoomCheckViewController;

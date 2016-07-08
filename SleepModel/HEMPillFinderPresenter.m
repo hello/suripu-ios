@@ -66,7 +66,11 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
             } else {
                 NSString* errorTitle = NSLocalizedString(@"dfu.pill.error.title.pill-not-found", nil);
                 NSString* errorMessage = NSLocalizedString(@"dfu.pill.error.pill-not-found", nil);
-                [[strongSelf errorDelegate] showErrorWithTitle:errorTitle andMessage:errorMessage];
+                NSString* helpSlug = NSLocalizedString(@"help.url.slug.pill-dfu-not-found", nil);
+                [[strongSelf errorDelegate] showErrorWithTitle:errorTitle
+                                                    andMessage:errorMessage
+                                                  withHelpPage:helpSlug
+                                                 fromPresenter:strongSelf];
             }
         }];
     }

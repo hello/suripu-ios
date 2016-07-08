@@ -82,7 +82,8 @@
 "help.url.slug.no-data-recorded" = "articles/205706435";
 "help.url.slug.not-enough-data-recorded" = "articles/204994629";
 "help.url.slug.facebook-import" = "articles/210329423";
-"help.url.slug.pill-dfu" = "articles/211303163)";
+"help.url.slug.pill-dfu" = "articles/211303163";
+"help.url.slug.pill-dfu-not-found" = "articles/211421183";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -848,7 +849,5 @@
 "dfu.pill.connected" = "Sleep Pill connected";
 "dfu.pill.error.title.phone-battery" = "Phone battery low";
 "dfu.pill.error.insufficient-phone-battery" = "Connect your phone to a power source before you continue with this update.";
-"dfu.pill.error.title.pill-battery" = "Replace Sleep Pill battery";
-"dfu.pill.error.insufficient-pill-battery" = "Replace your Sleep Pill battery before you continue with this update.";
 "dfu.pill.error.title.pill-not-found" = "Sleep Pill not detected";
 "dfu.pill.error.pill-not-found" = "Make sure to shake your Sleep Pill quickly for three seconds while holding it close to your mobile device.";

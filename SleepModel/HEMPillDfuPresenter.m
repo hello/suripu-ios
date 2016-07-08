@@ -173,7 +173,10 @@ static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
                 [strongSelf showRetryButton];
                 NSString* title = NSLocalizedString(@"dfu.pill.error.title.update-failed", nil);
                 NSString* message = NSLocalizedString(@"dfu.pill.error.update-failed", nil);
-                [[strongSelf errorDelegate] showErrorWithTitle:title andMessage:message];
+                [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                    andMessage:message
+                                                  withHelpPage:nil
+                                                 fromPresenter:strongSelf];
             }
         }];
     }
@@ -193,6 +196,7 @@ static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
 - (void)checkConditionsWithAttempt:(NSInteger)attempt {
     NSString* errorMessage = nil;
     NSString* title = nil;
+    NSString* helpSlug = nil;
     
     UIDevice* device = [UIDevice currentDevice];
     UIDeviceBatteryState phoneState = [device batteryState];
@@ -201,14 +205,11 @@ static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
         errorMessage = NSLocalizedString(@"dfu.pill.error.insufficient-phone-battery", nil);
     }
     
-    SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
-    if (![[self deviceService] canPillSurviveADfu:pillMetadata]) {
-        title = NSLocalizedString(@"dfu.pill.error.title.pill-battery", nil);
-        errorMessage = NSLocalizedString(@"dfu.pill.error.insufficient-pill-battery", nil);
-    }
-    
     if (errorMessage) {
-        [[self errorDelegate] showErrorWithTitle:title andMessage:errorMessage];
+        [[self errorDelegate] showErrorWithTitle:title
+                                      andMessage:errorMessage
+                                    withHelpPage:helpSlug
+                                   fromPresenter:self];
     } else if (![[self deviceService] isBleStateAvailable]
                && attempt <= HEMPillDfuBLECheckAttempts) {
         [self checkConditionsWithAttempt:attempt + 1];

@@ -75,6 +75,7 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
     [helpButton addTarget:self action:@selector(help) forControlEvents:UIControlEventTouchUpInside];
     [helpButton setHidden:YES];
     [[cancelButton titleLabel] setFont:[UIFont body]];
+    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [cancelButton setHidden:YES];
     [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     [self setHelpButton:helpButton];

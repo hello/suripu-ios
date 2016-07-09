@@ -2,6 +2,10 @@
 
 ## 1.5.0.2
 
+New:
+
+* Added wave / transmission animation
+
 Fixes:
 
 * Removed pill battery check from the flow

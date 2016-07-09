@@ -20,6 +20,7 @@
 
 static NSInteger const HEMPillDfuBLECheckAttempts = 10;
 static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
+static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 
 @interface HEMPillDfuPresenter()
 
@@ -31,6 +32,9 @@ static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
 @property (nonatomic, weak) UIButton* cancelButton;
 @property (nonatomic, weak) UIButton* helpButton;
 @property (nonatomic, weak) UIProgressView* progressView;
+@property (nonatomic, weak) UIImageView* illustrationView;
+@property (nonatomic, strong) CALayer* waveLayer;
+@property (nonatomic, strong) CALayer* illustrationBgLayer;
 @property (nonatomic, assign, getter=isUpdating) BOOL updating;
 
 @end
@@ -74,6 +78,10 @@ static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
     [self setActionButton:actionButton];
 }
 
+- (void)bindWithIllustrationView:(UIImageView*)illustrationView {
+    [self setIllustrationView:illustrationView];
+}
+
 - (void)bindWithProgressView:(UIProgressView*)progressView statusLabel:(UILabel*)statusLabel {
     [progressView setHidden:[self pillToDfu] == nil];
     [progressView setProgress:0.0f];
@@ -113,13 +121,87 @@ static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
     [[self helpButton] setHidden:NO];
 }
 
+#pragma mark - Animation
+
+- (CALayer*)waveLayer {
+    if (!_waveLayer) {
+        CALayer* layer = [CALayer layer];
+        [layer setBackgroundColor:[[UIColor tintColor] CGColor]];
+        [layer setAnchorPoint:CGPointMake(1.0f, 0.5f)];
+        [layer setCornerRadius:50.0f];
+        _waveLayer = layer;
+    }
+    return _waveLayer;
+}
+
+- (CALayer*)illustrationBgLayer {
+    if (!_illustrationBgLayer) {
+        CGColorRef bgColorRef = [[[UIColor grey3] colorWithAlphaComponent:0.5f] CGColor];
+        CALayer* backgroundLayer = [CALayer layer];
+        [backgroundLayer setBackgroundColor:bgColorRef];
+        _illustrationBgLayer = backgroundLayer;
+    }
+    return _illustrationBgLayer;
+}
+
+- (void)startWaveAnimation {
+    CALayer* illustrationLayer = [[self illustrationView] layer];
+    CALayer* parentLayer = [illustrationLayer superlayer];
+    CALayer* backgroundLayer = [self illustrationBgLayer];
+    CALayer* waveLayer = [self waveLayer];
+    
+    [waveLayer setCornerRadius:CGRectGetHeight([illustrationLayer frame]) / 2.0f];
+    [waveLayer setFrame:[illustrationLayer frame]];
+    [parentLayer insertSublayer:waveLayer above:backgroundLayer];
+
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"bounds.size.width"];
+    [animation setFromValue:@0];
+    [animation setToValue:@((CGRectGetWidth([illustrationLayer bounds]) * 3) / 4)];
+    [animation setDuration:HEMPillDfuWaveAnimeDuration];
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+    [animation setRepeatCount:MAXFLOAT];
+    
+    [waveLayer addAnimation:animation forKey:@"bounds.size.width"];
+}
+
+- (void)stopWaveAnimation {
+    [[self waveLayer] removeAllAnimations];
+    [[self waveLayer] removeFromSuperlayer];
+}
+
 #pragma mark - Presenter events
+
+- (void)willAppear {
+    [super willAppear];
+    
+    // must add it here b/c the layers are not initialized on bind
+    CALayer* illustrationLayer = [[self illustrationView] layer];
+    CALayer* parentLayer = [illustrationLayer superlayer];
+    CALayer* backgroundLayer = [self illustrationBgLayer];
+    [backgroundLayer setFrame:[illustrationLayer frame]];
+    [parentLayer insertSublayer:backgroundLayer below:illustrationLayer];
+}
 
 - (void)didAppear {
     [super didAppear];
+    [self startWaveAnimation];
+    
     if ([self pillToDfu] && [[self actionButton] isHidden]) {
         [self startDfu];
     }
+}
+
+- (void)didDisappear {
+    [super didDisappear];
+    [self stopWaveAnimation];
+}
+
+- (void)didRelayout {
+    [super didRelayout];
+    
+    CALayer* illustrationLayer = [[self illustrationView] layer];
+    CALayer* backgroundLayer = [self illustrationBgLayer];
+    [backgroundLayer setFrame:[illustrationLayer frame]];
 }
 
 #pragma mark - DFU States

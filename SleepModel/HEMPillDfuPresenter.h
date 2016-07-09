@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithProgressView:(UIProgressView*)progressView statusLabel:(UILabel*)statusLabel;
 - (void)bindWithCancelButton:(UIButton*)cancelButton;
 - (void)bindWithHelpButton:(UIButton*)helpButton;
+- (void)bindWithIllustrationView:(UIImageView*)illustrationView;
 
 @end
 

@@ -59,6 +59,7 @@
     [dfuPresenter setDfuDelegate:self];
     [dfuPresenter bindWithCancelButton:[self cancelButton]];
     [dfuPresenter bindWithHelpButton:[self helpButton]];
+    [dfuPresenter bindWithIllustrationView:[self illustrationImageView]];
     
     [self addPresenter:dfuPresenter];
 }

@@ -68,7 +68,6 @@ typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSE
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
 - (BOOL)isBleOn;
 - (BOOL)isBleStateAvailable;
-- (BOOL)canPillSurviveADfu:(SENPillMetadata*)pillMetadata;
 - (BOOL)isScanningPill;
 - (void)findNearestPill:(HEMDevicePillHandler)completion;
 - (void)beginPillDfuFor:(SENSleepPill*)sleepPill

@@ -96,7 +96,7 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 - (void)bindWithCancelButton:(UIButton*)cancelButton {
     [[cancelButton titleLabel] setFont:[UIFont body]];
     [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [cancelButton setHidden:[self pillToDfu]];
+    [cancelButton setHidden:[self pillToDfu] != nil];
     [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     [self setCancelButton:cancelButton];
 }

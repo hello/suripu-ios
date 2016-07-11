@@ -59,6 +59,7 @@
     [dfuPresenter setDfuDelegate:self];
     [dfuPresenter bindWithCancelButton:[self cancelButton]];
     [dfuPresenter bindWithHelpButton:[self helpButton]];
+    [dfuPresenter bindWithIllustrationView:[self illustrationImageView]];
     
     [self addPresenter:dfuPresenter];
 }
@@ -72,8 +73,14 @@
 
 #pragma mark - HEMPresenterErrorDelegate
 
-- (void)showErrorWithTitle:(nullable NSString*)title andMessage:(NSString*)message {
-    [self showMessageDialog:message title:title];
+- (void)showErrorWithTitle:(NSString *)title
+                andMessage:(NSString *)message
+              withHelpPage:(NSString *)helpPage
+             fromPresenter:(HEMPresenter *)presenter {
+    [self showMessageDialog:message
+                      title:title
+                      image:nil
+               withHelpPage:helpPage];
 }
 
 #pragma mark - HEMPillDfuDelegate

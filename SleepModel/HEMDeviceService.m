@@ -22,7 +22,6 @@
 
 NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
 
-static CGFloat const HEMPillDfuPillBatteryRequirement = 10.0f;
 static NSInteger const HEMPillDfuPillMinimumRSSI = -70;
 static NSString* const HEMPillDfuBinURL = @"https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
 
@@ -117,10 +116,6 @@ static NSString* const HEMPillDfuBinURL = @"https://s3.amazonaws.com/hello-firmw
     return [self devices]
     && ([[self devices] hasPairedPill]
         || [[self devices] hasPairedSense]);
-}
-
-- (BOOL)canPillSurviveADfu:(SENPillMetadata*)pillMetadata {
-    return [[pillMetadata batteryLevel] floatValue] > HEMPillDfuPillBatteryRequirement;
 }
 
 - (void)findNearestPill:(HEMDevicePillHandler)completion {

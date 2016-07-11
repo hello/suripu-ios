@@ -12,6 +12,8 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMAnimationUtils.h"
+#import "HEMActionButton.h"
+#import "HEMStyle.h"
 
 static CGFloat const HEMPillFinderAnimeDuration = 0.5f;
 static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
@@ -25,6 +27,10 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
 @property (nonatomic, weak) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, weak) HEMEmbeddedVideoView* videoView;
 @property (nonatomic, weak) SENSleepPill* sleepPill;
+@property (nonatomic, weak) HEMActionButton *retryButton;
+@property (nonatomic, weak) UIButton *cancelButton;
+@property (nonatomic, weak) UIButton *helpButton;
+@property (nonatomic, assign) BOOL autoStart;
 
 @end
 
@@ -34,6 +40,7 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
     self = [super init];
     if (self) {
         _deviceService = deviceService;
+        _autoStart = YES;
     }
     return self;
 }
@@ -56,6 +63,36 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
     [self setVideoView:videoView];
 }
 
+- (void)bindWithRetryButton:(HEMActionButton*)retryButton {
+    [retryButton setHidden:YES];
+    [retryButton addTarget:self
+                    action:@selector(retry)
+          forControlEvents:UIControlEventTouchUpInside];
+    [self setRetryButton:retryButton];
+}
+
+- (void)bindWithCancelButton:(UIButton*)cancelButton helpButton:(UIButton*)helpButton {
+    [helpButton addTarget:self action:@selector(help) forControlEvents:UIControlEventTouchUpInside];
+    [helpButton setHidden:YES];
+    [[cancelButton titleLabel] setFont:[UIFont body]];
+    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [cancelButton setHidden:YES];
+    [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
+    [self setHelpButton:helpButton];
+    [self setCancelButton:cancelButton];
+}
+
+- (void)showNavButtons:(BOOL)show {
+    [[self cancelButton] setHidden:!show];
+    [[self helpButton] setHidden:!show];
+}
+
+- (void)showRetryButton:(BOOL)show {
+    [[self retryButton] setHidden:!show];
+    [[self statusLabel] setHidden:show];
+    [[self indicatorView] setHidden:show];
+}
+
 - (void)findNearestPillIfNotFound {
     if (![[self deviceService] isScanningPill] && ![self sleepPill]) {
         __weak typeof(self) weakSelf = self;
@@ -66,7 +103,14 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
             } else {
                 NSString* errorTitle = NSLocalizedString(@"dfu.pill.error.title.pill-not-found", nil);
                 NSString* errorMessage = NSLocalizedString(@"dfu.pill.error.pill-not-found", nil);
-                [[strongSelf errorDelegate] showErrorWithTitle:errorTitle andMessage:errorMessage];
+                NSString* helpSlug = NSLocalizedString(@"help.url.slug.pill-dfu-not-found", nil);
+                [[strongSelf errorDelegate] showErrorWithTitle:errorTitle
+                                                    andMessage:errorMessage
+                                                  withHelpPage:helpSlug
+                                                 fromPresenter:strongSelf];
+                [[strongSelf videoView] stop];
+                [strongSelf showRetryButton:YES];
+                [strongSelf showNavButtons:YES];
             }
         }];
     }
@@ -100,13 +144,35 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
     
 }
 
+#pragma mark - Actions
+
+- (void)retry {
+    [self showNavButtons:NO];
+    [self showRetryButton:NO];
+    [[self videoView] setReady:YES];
+    [[self videoView] playVideoWhenReady];
+    [self findNearestPillIfNotFound];
+}
+
+- (void)help {
+    NSString* helpSlug = NSLocalizedString(@"help.url.slug.pill-dfu-not-found", nil);
+    [[self finderDelegate] showHelpTopic:helpSlug from:self];
+}
+
+- (void)cancel {
+    [[self finderDelegate] cancelFrom:self];
+}
+
 #pragma mark - Presenter Events
 
 - (void)didAppear {
     [super didAppear];
-    [[self videoView] setReady:YES];
-    [[self videoView] playVideoWhenReady];
-    [self findNearestPillIfNotFound];
+    if ([self autoStart]) {
+        [[self videoView] setReady:YES];
+        [[self videoView] playVideoWhenReady];
+        [self findNearestPillIfNotFound];
+        [self setAutoStart:NO];
+    }
 }
 
 @end

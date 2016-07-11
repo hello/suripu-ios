@@ -1346,14 +1346,24 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D7n-sB-zk7" customClass="HEMActionButton">
+                                <rect key="frame" x="24" y="520" width="552" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="iIG-8j-Cyz"/>
+                                </constraints>
+                                <state key="normal" title="RETRY"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8pT-B4-gn2" secondAttribute="trailing" constant="24" id="32d-ZU-K0c"/>
                             <constraint firstItem="xyj-h5-NYr" firstAttribute="bottom" secondItem="ZyL-sh-N1T" secondAttribute="top" constant="-25" id="4H6-TK-CQa"/>
+                            <constraint firstItem="D7n-sB-zk7" firstAttribute="leading" secondItem="uHQ-Mf-6lO" secondAttribute="leading" constant="24" id="8lh-6S-fkw"/>
+                            <constraint firstAttribute="trailing" secondItem="D7n-sB-zk7" secondAttribute="trailing" constant="24" id="CXN-0H-CQh"/>
                             <constraint firstAttribute="trailing" secondItem="YTK-jY-IqC" secondAttribute="trailing" id="FF2-fp-xL1"/>
                             <constraint firstItem="xyj-h5-NYr" firstAttribute="centerX" secondItem="uHQ-Mf-6lO" secondAttribute="centerX" id="N14-oS-J9L"/>
                             <constraint firstItem="8pT-B4-gn2" firstAttribute="bottom" secondItem="4Pc-So-3g4" secondAttribute="top" constant="-8" id="Og9-cK-JcP"/>
+                            <constraint firstItem="zfW-qo-RO4" firstAttribute="top" secondItem="D7n-sB-zk7" secondAttribute="bottom" constant="24" id="PAp-tN-x72"/>
                             <constraint firstItem="YTK-jY-IqC" firstAttribute="top" secondItem="4Pc-So-3g4" secondAttribute="bottom" id="RiK-Fc-NAy"/>
                             <constraint firstItem="YTK-jY-IqC" firstAttribute="leading" secondItem="uHQ-Mf-6lO" secondAttribute="leading" id="SwI-qG-1xE"/>
                             <constraint firstItem="4Pc-So-3g4" firstAttribute="leading" secondItem="uHQ-Mf-6lO" secondAttribute="leading" constant="24" id="Zh2-Xv-HpX"/>
@@ -1366,9 +1376,28 @@
                             <constraint firstItem="8pT-B4-gn2" firstAttribute="leading" secondItem="uHQ-Mf-6lO" secondAttribute="leading" constant="24" id="rVb-Ep-i3s"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="mNO-2X-z1Q">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="lIE-rf-OLj">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8at-Lw-rtw">
+                                <rect key="frame" x="20" y="7" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel"/>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="fXA-Pu-Rba">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DZn-c1-fHy">
+                                <rect key="frame" x="558" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="helpIconSmall"/>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="xyj-h5-NYr" id="sGc-75-3IL"/>
+                        <outlet property="cancelButton" destination="8at-Lw-rtw" id="15T-af-f9O"/>
                         <outlet property="descriptionLabel" destination="4Pc-So-3g4" id="KGt-9m-3KB"/>
+                        <outlet property="helpButton" destination="DZn-c1-fHy" id="E05-7B-pei"/>
+                        <outlet property="retryButton" destination="D7n-sB-zk7" id="hbv-I6-Lol"/>
                         <outlet property="statusLabel" destination="ZyL-sh-N1T" id="TXm-kK-dpz"/>
                         <outlet property="titleLabel" destination="8pT-B4-gn2" id="2dH-Yo-3dq"/>
                         <outlet property="videoView" destination="YTK-jY-IqC" id="DBF-Qw-vhh"/>

@@ -22,7 +22,6 @@
 static NSInteger const HEMPillDfuBLECheckAttempts = 10;
 static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
 static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
-static CGFloat const HEMPillIllustrationBottomFor4s = -6.0f;
 
 @interface HEMPillDfuPresenter()
 
@@ -83,7 +82,7 @@ static CGFloat const HEMPillIllustrationBottomFor4s = -6.0f;
 - (void)bindWithIllustrationView:(UIImageView*)illustrationView
                 bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     if (HEMIsIPhone4Family()) {
-        [bottomConstraint setConstant:HEMPillIllustrationBottomFor4s];
+        [bottomConstraint setConstant:0.0f];
     }
     [self setIllustrationView:illustrationView];
 }

@@ -1229,7 +1229,7 @@
                                 <rect key="frame" x="72" y="498" width="456" height="2"/>
                             </progressView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="251" image="sleepPillDFU" translatesAutoresizingMaskIntoConstraints="NO" id="5uT-BC-XAm">
-                                <rect key="frame" x="0.0" y="189" width="600" height="257"/>
+                                <rect key="frame" x="0.0" y="171" width="600" height="275"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
                         </subviews>
@@ -1241,7 +1241,7 @@
                             <constraint firstItem="5uT-BC-XAm" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" id="BKG-6i-5fL"/>
                             <constraint firstAttribute="trailing" secondItem="ol0-3b-e5g" secondAttribute="trailing" constant="24" id="C2U-31-ob1"/>
                             <constraint firstAttribute="trailing" secondItem="iKf-lG-EBv" secondAttribute="trailing" constant="24" id="DoD-zg-7gz"/>
-                            <constraint firstItem="5uT-BC-XAm" firstAttribute="top" secondItem="ol0-3b-e5g" secondAttribute="bottom" constant="24" id="F89-0v-8Az"/>
+                            <constraint firstItem="5uT-BC-XAm" firstAttribute="top" secondItem="ol0-3b-e5g" secondAttribute="bottom" constant="6" id="F89-0v-8Az"/>
                             <constraint firstItem="kIU-nQ-75k" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="24" id="JMV-Fc-XRJ"/>
                             <constraint firstItem="gya-Oe-arm" firstAttribute="top" secondItem="kIU-nQ-75k" secondAttribute="bottom" constant="40" id="MUU-uJ-c1I"/>
                             <constraint firstItem="ST5-FI-gDl" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="72" id="Pem-35-iAa"/>

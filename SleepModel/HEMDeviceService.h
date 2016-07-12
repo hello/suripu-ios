@@ -73,6 +73,7 @@ typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSE
 - (void)beginPillDfuFor:(SENSleepPill*)sleepPill
                progress:(HEMDeviceDfuProgressHandler)progressBlock
              completion:(HEMDeviceDfuHandler)completion;
+- (BOOL)shouldSuppressPillFirmwareUpdate;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

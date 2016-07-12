@@ -136,6 +136,15 @@
                                     options:0];
 }
 
+- (NSUInteger)hoursElapsed {
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents* components = [calendar components:NSCalendarUnitHour
+                                               fromDate:self
+                                                 toDate:[NSDate date]
+                                                options:NSCalendarMatchStrictly];
+    return [components hour];
+}
+
 - (BOOL)isOnSameDay:(NSDate*)otherDate
 {
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];

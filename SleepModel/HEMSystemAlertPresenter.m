@@ -24,6 +24,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMainStoryboard.h"
+#import "HEMDeviceService.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,
@@ -38,6 +39,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 @property (nonatomic, weak) HEMNetworkAlertService* networkAlertService;
 @property (nonatomic, weak) HEMDeviceAlertService* deviceAlertService;
 @property (nonatomic, weak) HEMTimeZoneAlertService* tzAlertService;
+@property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UIView* alertContainerView;
 @property (nonatomic, weak) HEMActionView* currentActionView;
 
@@ -47,7 +49,8 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 
 - (instancetype)initWithNetworkAlertService:(HEMNetworkAlertService*)networkAlertService
                          deviceAlertService:(HEMDeviceAlertService*)deviceAlertService
-                       timeZoneAlertService:(HEMTimeZoneAlertService*)tzAlertService {
+                       timeZoneAlertService:(HEMTimeZoneAlertService*)tzAlertService
+                              deviceService:(HEMDeviceService*)deviceService {
     self = [super init];
     if (self) {
         _networkAlertService = networkAlertService;
@@ -60,6 +63,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
         }];
         
         _tzAlertService = tzAlertService;
+        _deviceService = deviceService;
         
         _enable = YES;
     }
@@ -236,6 +240,11 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
 
         if (state != HEMDeviceAlertStateNormal && state != HEMDeviceAlertStateUnknown) {
+            if (state == HEMDeviceAlertStatePillFirmwareUpdate
+                && [[strongSelf deviceService] shouldSuppressPillFirmwareUpdate]) {
+                return completion (NO);
+            }
+            
             NSString* title, *message, *cancelTitle, *fixTitle = nil;
             [strongSelf deviceWarningTitle:&title
                                    message:&message
@@ -300,6 +309,10 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
             *warningMessage = NSLocalizedString(@"alerts.device.pill-low-battery.message", nil);
             *fixTitle = NSLocalizedString(@"actions.replace", nil);
             break;
+        case HEMDeviceAlertStatePillFirmwareUpdate:
+            *warningMessage = NSLocalizedString(@"alerts.device.pill-firmware-update", nil);
+            *warningTitle = NSLocalizedString(@"alerts.device.pill-firmware-update.title", nil);
+            *fixTitle = NSLocalizedString(@"actions.update-now", nil);
         default:
             break;
     }
@@ -380,6 +393,9 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
         case HEMDeviceAlertStatePillLowBattery:
             [self showHowToReplacePillBattery];
             break;
+        case HEMDeviceAlertStatePillFirmwareUpdate:
+            [self showPillDFUController];
+            break;
         default:
             break;
     }
@@ -411,6 +427,11 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 }
 
 #pragma mark Pill Problems
+
+- (void)showPillDFUController {
+    UIViewController* viewController = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    [[self delegate] presentViewController:viewController from:self];
+}
 
 - (void)showPillPairController {
     HEMPillPairViewController* pairVC = (id) [HEMOnboardingStoryboard instantiatePillPairViewController];

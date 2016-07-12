@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class LGPeripheral;
+@class CBCentralManager;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,6 +25,24 @@ typedef void(^SENPeripheralResponseCallback)(id _Nullable response, NSError* _Nu
  * This method is a convenient way to not have to repeatedly check the state
  * yourself, but instead invoke your block to tell you if BLE is on or in a
  * different state.
+ *
+ * @param centralManager: the central manager to check
+ * @param completion: the block to invoke when the BLE state can be queried
+ *
+ */
++ (void)whenCentralManager:(CBCentralManager*)centralManager
+                   isReady:(SENPeripheralReadyCallback)completion;
+
+
+/**
+ * @discussion
+ * Some hardware needs to be fired up before you can even see if the device has
+ * BLE turned on.  If it's not fired up, you must check back again in a few ms.
+ * This method is a convenient way to not have to repeatedly check the state
+ * yourself, but instead invoke your block to tell you if BLE is on or in a
+ * different state.
+ *
+ * This uses a shared instance of the CBCentralManager
  *
  * @param completion: the block to invoke when the BLE state can be queried
  *

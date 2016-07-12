@@ -17,6 +17,7 @@
 #import "HEMStyle.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMActivityCoverView.h"
+#import "HEMScreenUtils.h"
 
 static NSInteger const HEMPillDfuBLECheckAttempts = 10;
 static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
@@ -78,7 +79,11 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     [self setActionButton:actionButton];
 }
 
-- (void)bindWithIllustrationView:(UIImageView*)illustrationView {
+- (void)bindWithIllustrationView:(UIImageView*)illustrationView
+                bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    if (HEMIsIPhone4Family()) {
+        [bottomConstraint setConstant:0.0f];
+    }
     [self setIllustrationView:illustrationView];
 }
 
@@ -96,7 +101,7 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 - (void)bindWithCancelButton:(UIButton*)cancelButton {
     [[cancelButton titleLabel] setFont:[UIFont body]];
     [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [cancelButton setHidden:[self pillToDfu]];
+    [cancelButton setHidden:[self pillToDfu] != nil];
     [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     [self setCancelButton:cancelButton];
 }
@@ -145,13 +150,15 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 }
 
 - (void)startWaveAnimation {
+    CALayer* waveLayer = [self waveLayer];
+    [waveLayer removeAllAnimations]; // in case it was paused
+    
     CALayer* illustrationLayer = [[self illustrationView] layer];
     CALayer* parentLayer = [illustrationLayer superlayer];
     CALayer* backgroundLayer = [self illustrationBgLayer];
-    CALayer* waveLayer = [self waveLayer];
-    
+
     [waveLayer setCornerRadius:CGRectGetHeight([illustrationLayer frame]) / 2.0f];
-    [waveLayer setFrame:[illustrationLayer frame]];
+    [waveLayer setFrame:[self illustrationContentFrame]];
     [parentLayer insertSublayer:waveLayer above:backgroundLayer];
 
     CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"bounds.size.width"];
@@ -162,6 +169,8 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     [animation setRepeatCount:MAXFLOAT];
     
     [waveLayer addAnimation:animation forKey:@"bounds.size.width"];
+    
+    DDLogVerbose(@"image height %f, frame height %f", [[self illustrationView] image].size.height, CGRectGetHeight([illustrationLayer frame]));
 }
 
 - (void)stopWaveAnimation {
@@ -169,17 +178,42 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     [[self waveLayer] removeFromSuperlayer];
 }
 
+- (CGRect)illustrationContentFrame {
+    CALayer* illustrationLayer = [[self illustrationView] layer];
+    CGSize imageSize = [[self illustrationView] image].size;
+    CGFloat frameHeight = CGRectGetHeight([illustrationLayer frame]);
+    CGRect contentFrame = [illustrationLayer frame];
+    
+    CGFloat wRatio = CGRectGetWidth(contentFrame) / imageSize.width;
+    contentFrame.size.height = imageSize.height * wRatio;
+    
+    CGFloat currentY = CGRectGetMinY(contentFrame);
+    CGFloat heightDiff = (frameHeight - CGRectGetHeight(contentFrame));
+    contentFrame.origin.y = currentY + (heightDiff / 2.0f);
+    
+    return contentFrame;
+}
+
+- (void)updateIllustrationBgLayerFrame {
+    CALayer* illustrationLayer = [[self illustrationView] layer];
+    CALayer* parentLayer = [illustrationLayer superlayer];
+    CALayer* backgroundLayer = [self illustrationBgLayer];
+    [backgroundLayer setFrame:[self illustrationContentFrame]];
+    [parentLayer insertSublayer:backgroundLayer below:illustrationLayer];
+}
+
 #pragma mark - Presenter events
+
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self startWaveAnimation];
+}
 
 - (void)willAppear {
     [super willAppear];
     
     // must add it here b/c the layers are not initialized on bind
-    CALayer* illustrationLayer = [[self illustrationView] layer];
-    CALayer* parentLayer = [illustrationLayer superlayer];
-    CALayer* backgroundLayer = [self illustrationBgLayer];
-    [backgroundLayer setFrame:[illustrationLayer frame]];
-    [parentLayer insertSublayer:backgroundLayer below:illustrationLayer];
+    [self updateIllustrationBgLayerFrame];
 }
 
 - (void)didAppear {
@@ -198,10 +232,7 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 
 - (void)didRelayout {
     [super didRelayout];
-    
-    CALayer* illustrationLayer = [[self illustrationView] layer];
-    CALayer* backgroundLayer = [self illustrationBgLayer];
-    [backgroundLayer setFrame:[illustrationLayer frame]];
+    [self updateIllustrationBgLayerFrame];
 }
 
 #pragma mark - DFU States
@@ -265,9 +296,9 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 }
 
 - (void)retry {
+    [[self actionButton] setHidden:YES];
     [[self progressView] setHidden:NO];
     [[self statusLabel] setHidden:NO];
-    [[self actionButton] setHidden:YES];
     [self startDfu];
 }
 

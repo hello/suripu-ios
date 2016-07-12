@@ -16,6 +16,8 @@ static CGFloat const SENPeripheralManagerBLECheckRetryDelay = 0.2f;
 
 @interface SENPeripheralManager()
 
+@property (nonatomic, weak) CBCentralManager* tempCentral;
+
 @end
 
 @implementation SENPeripheralManager
@@ -24,12 +26,19 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 #pragma mark - Central availability
 
-+ (void)whenReady:(SENPeripheralReadyCallback)completion {
-    [self whenReadyWithAttempt:1 completion:completion];
++ (void)whenCentralManager:(CBCentralManager*)centralManager isReady:(SENPeripheralReadyCallback)completion {
+    [self whenCentralManager:centralManager withAttempt:1 isReady:completion];
 }
 
-+ (void)whenReadyWithAttempt:(NSInteger)attempt completion:(SENPeripheralReadyCallback)completion {
-    BOOL ready = [self isReady];
++ (void)whenReady:(SENPeripheralReadyCallback)completion {
+    CBCentralManager* centralManager = [[LGCentralManager sharedInstance] manager];
+    [self whenCentralManager:centralManager withAttempt:1 isReady:completion];
+}
+
++ (void)whenCentralManager:(CBCentralManager*)centralManager
+               withAttempt:(NSInteger)attempt
+                   isReady:(SENPeripheralReadyCallback)completion {
+    BOOL ready = [centralManager state] == CBCentralManagerStatePoweredOn;
     if (attempt > SENPeripheralManagerBLECheckRetries || ready) {
         return completion (ready);
     } else {
@@ -38,7 +47,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         int64_t delay =  (int64_t)(SENPeripheralManagerBLECheckRetryDelay * NSEC_PER_SEC);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf whenReadyWithAttempt:nextAttempt completion:completion];
+            [strongSelf whenCentralManager:centralManager withAttempt:nextAttempt isReady:completion];
         });
     }
 }

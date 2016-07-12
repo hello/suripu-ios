@@ -35,8 +35,8 @@
     if (!object || ![object isKindOfClass:[self class]]) return NO;
     
     SENSleepPill* other = object;
-    return [[other peripheral] UUIDString] != nil
-        && [[[self peripheral] UUIDString] isEqualToString:[[other peripheral] UUIDString]];
+    return [other identifier] != nil
+        && [[self identifier] isEqualToString:[other identifier]];
 }
 
 - (NSUInteger)hash {
@@ -45,6 +45,10 @@
 
 - (NSInteger)rssi {
     return [[self peripheral] RSSI];
+}
+
+- (NSString*)identifier {
+    return [[self peripheral] UUIDString];
 }
 
 @end

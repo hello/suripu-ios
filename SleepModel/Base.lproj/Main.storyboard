@@ -1201,20 +1201,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating your Sleep Pill" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKf-lG-EBv">
-                                <rect key="frame" x="24" y="88" width="552" height="28"/>
+                                <rect key="frame" x="24" y="76" width="552" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You'll need to keep the Sense app open for the duration of the update.  This process should take less than two minutes." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ol0-3b-e5g">
-                                <rect key="frame" x="24" y="124" width="552" height="41"/>
+                                <rect key="frame" x="24" y="112" width="552" height="41"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sleepPillDFU" translatesAutoresizingMaskIntoConstraints="NO" id="5uT-BC-XAm">
-                                <rect key="frame" x="0.0" y="249" width="600" height="200"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyf-Lr-Cng" customClass="HEMActionButton">
                                 <rect key="frame" x="24" y="520" width="552" height="56"/>
                                 <constraints>
@@ -1231,6 +1228,10 @@
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ST5-FI-gDl">
                                 <rect key="frame" x="72" y="498" width="456" height="2"/>
                             </progressView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="251" image="sleepPillDFU" translatesAutoresizingMaskIntoConstraints="NO" id="5uT-BC-XAm">
+                                <rect key="frame" x="0.0" y="159" width="600" height="287"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1240,17 +1241,17 @@
                             <constraint firstItem="5uT-BC-XAm" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" id="BKG-6i-5fL"/>
                             <constraint firstAttribute="trailing" secondItem="ol0-3b-e5g" secondAttribute="trailing" constant="24" id="C2U-31-ob1"/>
                             <constraint firstAttribute="trailing" secondItem="iKf-lG-EBv" secondAttribute="trailing" constant="24" id="DoD-zg-7gz"/>
+                            <constraint firstItem="5uT-BC-XAm" firstAttribute="top" secondItem="ol0-3b-e5g" secondAttribute="bottom" constant="6" id="F89-0v-8Az"/>
                             <constraint firstItem="kIU-nQ-75k" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="24" id="JMV-Fc-XRJ"/>
-                            <constraint firstItem="5uT-BC-XAm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ol0-3b-e5g" secondAttribute="bottom" priority="250" id="KK4-hN-LKQ"/>
                             <constraint firstItem="gya-Oe-arm" firstAttribute="top" secondItem="kIU-nQ-75k" secondAttribute="bottom" constant="40" id="MUU-uJ-c1I"/>
                             <constraint firstItem="ST5-FI-gDl" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="72" id="Pem-35-iAa"/>
-                            <constraint firstItem="iKf-lG-EBv" firstAttribute="top" secondItem="aFf-aJ-IAs" secondAttribute="bottom" constant="24" id="WPs-A9-AAU"/>
-                            <constraint firstItem="5uT-BC-XAm" firstAttribute="bottom" secondItem="vyf-Lr-Cng" secondAttribute="top" priority="250" constant="-71" id="cNh-Rb-ouj"/>
+                            <constraint firstItem="iKf-lG-EBv" firstAttribute="top" secondItem="aFf-aJ-IAs" secondAttribute="bottom" constant="12" id="WPs-A9-AAU"/>
                             <constraint firstItem="iKf-lG-EBv" firstAttribute="bottom" secondItem="ol0-3b-e5g" secondAttribute="top" constant="-8" id="cV6-rI-26r"/>
                             <constraint firstItem="ST5-FI-gDl" firstAttribute="bottom" secondItem="kIU-nQ-75k" secondAttribute="top" constant="-32" id="duu-gw-7lu"/>
                             <constraint firstItem="iKf-lG-EBv" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="24" id="fZS-Mr-oCc"/>
                             <constraint firstAttribute="trailing" secondItem="vyf-Lr-Cng" secondAttribute="trailing" constant="24" id="gIX-2d-KiC"/>
                             <constraint firstAttribute="trailing" secondItem="5uT-BC-XAm" secondAttribute="trailing" id="hCc-ka-mAL"/>
+                            <constraint firstItem="ST5-FI-gDl" firstAttribute="top" relation="lessThanOrEqual" secondItem="5uT-BC-XAm" secondAttribute="bottom" priority="751" constant="52" id="iHY-cB-WDx"/>
                             <constraint firstAttribute="trailing" secondItem="ST5-FI-gDl" secondAttribute="trailing" constant="72" id="vY8-NE-TP3"/>
                             <constraint firstItem="vyf-Lr-Cng" firstAttribute="leading" secondItem="wt3-CO-ksN" secondAttribute="leading" constant="24" id="zTd-eo-wcQ"/>
                         </constraints>
@@ -1279,6 +1280,7 @@
                         <outlet property="continueButton" destination="vyf-Lr-Cng" id="E3O-FZ-dih"/>
                         <outlet property="descriptionLabel" destination="ol0-3b-e5g" id="vZQ-9O-N0H"/>
                         <outlet property="helpButton" destination="Ue3-zh-t7I" id="nd8-KZ-568"/>
+                        <outlet property="illustrationBottomConstraint" destination="iHY-cB-WDx" id="uEE-dd-npv"/>
                         <outlet property="illustrationImageView" destination="5uT-BC-XAm" id="HSr-Ja-gxC"/>
                         <outlet property="progressView" destination="ST5-FI-gDl" id="Np1-BA-khc"/>
                         <outlet property="statusLabel" destination="kIU-nQ-75k" id="apK-CU-25q"/>
@@ -1317,7 +1319,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTK-jY-IqC" customClass="HEMEmbeddedVideoView">
                                 <rect key="frame" x="0.0" y="165" width="600" height="294"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BQZ-wE-9SM">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BQZ-wE-9SM">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="294"/>
                                     </imageView>
                                 </subviews>

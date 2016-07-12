@@ -14,6 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, SENSleepPillErrorCode) {
+    SENSleepPillErrorCodeNone = 0,
     SENSleepPillErrorCodeNotSupported = -1,
     SENSleepPillErrorCodeCentralNotReady = -2,
     SENSleepPillErrorCodePillNotfound = -3,
@@ -24,16 +25,18 @@ typedef NS_ENUM(NSInteger, SENSleepPillErrorCode) {
     SENSleepPillErrorCodeDfuEnableFailed = -8,
     SENSleepPillErrorCodeDfuMissingCharacteristic = -9,
     SENSleepPillErrorCodeUnexpectedDisconnect = -10,
-    SENSleepPillErrorCodeRediscoveryFailed = -11
+    SENSleepPillErrorCodeRediscoveryFailed = -11,
+    SENSleepPillErrorCodeTimeout = -12
 };
 
-typedef NS_ENUM(NSUInteger, SENSleepPillDfuState) {
+typedef NS_ENUM(NSInteger, SENSleepPillDfuState) {
     SENSleepPillDfuStateNotStarted = 1,
     SENSleepPillDfuStateConnecting,
     SENSleepPillDfuStateUpdating,
     SENSleepPillDfuStateValidating,
     SENSleepPillDfuStateDisconnecting,
-    SENSleepPillDfuStateCompleted
+    SENSleepPillDfuStateCompleted,
+    SENSleepPillDfuStateError
 };
 
 typedef void(^SENSleepPillResponseHandler)(NSError* _Nullable error);

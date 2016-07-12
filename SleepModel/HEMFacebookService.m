@@ -19,7 +19,7 @@
 }
 
 - (BOOL)hasGrantedProfilePermissions {
-    return [FBSDKAccessToken currentAccessToken];
+    return [FBSDKAccessToken currentAccessToken] != nil;
 }
 
 - (void)loginFrom:(id)controller completion:(HEMFacebookLoginHandler)completion {

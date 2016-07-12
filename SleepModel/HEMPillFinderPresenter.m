@@ -46,6 +46,10 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
 }
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel {
+    [titleLabel setFont:[UIFont h5]];
+    [titleLabel setTextColor:[UIColor grey6]];
+    [descriptionLabel setFont:[UIFont body]];
+    [descriptionLabel setTextColor:[UIColor grey5]];
     [self setTitleLabel:titleLabel];
     [self setDescriptionLabel:descriptionLabel];
 }

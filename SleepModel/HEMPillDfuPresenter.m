@@ -150,10 +150,12 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 }
 
 - (void)startWaveAnimation {
+    CALayer* waveLayer = [self waveLayer];
+    [waveLayer removeAllAnimations]; // in case it was paused
+    
     CALayer* illustrationLayer = [[self illustrationView] layer];
     CALayer* parentLayer = [illustrationLayer superlayer];
     CALayer* backgroundLayer = [self illustrationBgLayer];
-    CALayer* waveLayer = [self waveLayer];
 
     [waveLayer setCornerRadius:CGRectGetHeight([illustrationLayer frame]) / 2.0f];
     [waveLayer setFrame:[self illustrationContentFrame]];
@@ -201,6 +203,11 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 }
 
 #pragma mark - Presenter events
+
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self startWaveAnimation];
+}
 
 - (void)willAppear {
     [super willAppear];
@@ -289,9 +296,9 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 }
 
 - (void)retry {
+    [[self actionButton] setHidden:YES];
     [[self progressView] setHidden:NO];
     [[self statusLabel] setHidden:NO];
-    [[self actionButton] setHidden:YES];
     [self startDfu];
 }
 

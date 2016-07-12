@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.0.3
+
+Fixes:
+
+* Fixed font in connect your pills screen
+* Fixed transimission animation rendering issue
+* Added timeout to ensure retrying on failed dfu does not get stuck
+* Fixed issue where backgrounding the app will permanently stop the transmission animation
+
 ## 1.5.0.2
 
 New:

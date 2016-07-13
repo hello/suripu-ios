@@ -33,7 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDeviceService:(HEMDeviceService*)deviceService;
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel;
 - (void)bindWithActionButton:(UIButton*)actionButton;
-- (void)bindWithProgressView:(UIProgressView*)progressView statusLabel:(UILabel*)statusLabel;
+- (void)bindWithProgressView:(UIProgressView*)progressView
+                 statusLabel:(UILabel*)statusLabel
+      statusBottomConstraint:(NSLayoutConstraint*)bottomConstraint;
 - (void)bindWithCancelButton:(UIButton*)cancelButton;
 - (void)bindWithHelpButton:(UIButton*)helpButton;
 - (void)bindWithIllustrationView:(UIImageView*)illustrationView

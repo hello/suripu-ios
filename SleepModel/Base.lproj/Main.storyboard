@@ -1288,6 +1288,7 @@
                         <outlet property="illustrationImageView" destination="5uT-BC-XAm" id="HSr-Ja-gxC"/>
                         <outlet property="progressView" destination="ST5-FI-gDl" id="Np1-BA-khc"/>
                         <outlet property="statusLabel" destination="kIU-nQ-75k" id="apK-CU-25q"/>
+                        <outlet property="statusLabelBottomConstraint" destination="MUU-uJ-c1I" id="aIa-EA-vpr"/>
                         <outlet property="titleLabel" destination="iKf-lG-EBv" id="K7T-WT-ttj"/>
                         <segue destination="Anl-Dh-kQO" kind="show" identifier="scan" id="dke-JQ-E1a"/>
                     </connections>

@@ -67,6 +67,7 @@
     HEMSleepPillDfuViewController* dfuController = [HEMMainStoryboard instantiatePillDFUViewController];
     [dfuController setSleepPillToDfu:pill];
     [dfuController setDeviceService:[self deviceService]];
+    [dfuController setDelegate:[self delegate]];
     [[self navigationController] setViewControllers:@[dfuController] animated:YES];
 }
 
@@ -75,6 +76,7 @@
 }
 
 - (void)cancelFrom:(HEMPillFinderPresenter*)presenter {
+    [[self delegate] controller:self didCompleteDFU:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

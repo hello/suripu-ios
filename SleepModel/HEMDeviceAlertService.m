@@ -26,6 +26,7 @@ static NSInteger const HEMDeviceAlertMaxLastSeenAlertsInDays = 1;
 static NSString* const HEMDeviceAlertPrefPillLowBatteryLastAlert = @"HEMDeviceAlertPrefPillLowBatteryLastAlert";
 static NSString* const HEMDeviceAlertPrefPillLastSeenLastAlert = @"HEMDeviceAlertPrefPillLastSeenLastAlert";
 static NSString* const HEMDeviceAlertPrefSenseLastSeenLastAlert = @"HEMDeviceAlertPrefSenseLastSeenLastAlert";
+static NSString* const HEMDeviceAlertPrefPillDFUAlert = @"HEMDeviceAlertPrefPillDFUAlert";
 
 @interface HEMDeviceAlertService()
 
@@ -76,6 +77,10 @@ static NSString* const HEMDeviceAlertPrefSenseLastSeenLastAlert = @"HEMDeviceAle
     } else if ([self shouldShowDeviceHasNotBeenSeen:[devices pillMetadata]]) {
         
         return HEMDeviceAlertStatePillNotSeen;
+        
+    } else if ([self shouldShowPillFirmwareUpdate:[devices pillMetadata]]) {
+        
+        return HEMDeviceAlertStatePillFirmwareUpdate;
         
     } else {
         
@@ -131,6 +136,15 @@ static NSString* const HEMDeviceAlertPrefSenseLastSeenLastAlert = @"HEMDeviceAle
     NSDate* lastSeenAlertDate = [localPrefs userPreferenceForKey:lastSeenPrefKey];
     return !lastSeenAlertDate
         || [lastSeenAlertDate daysElapsed] >= HEMDeviceAlertMaxLastSeenAlertsInDays;
+}
+
+- (BOOL)shouldShowPillFirmwareUpdate:(SENDeviceMetadata*)metadata {
+    if (![metadata isKindOfClass:[SENPillMetadata class]]) {
+        return NO;
+    }
+    
+    SENPillMetadata* pillMetadata = (id) metadata;
+    return [pillMetadata firmwareUpdateUrl] != nil;
 }
 
 #pragma mark - Pairing changes

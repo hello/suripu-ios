@@ -44,7 +44,8 @@
             [confirmView showInView:strongContainer];
         }
         
-        NSDictionary* props = @{kHEMAnalyticsEventPropType : type ?: @""};
+        NSDictionary* props = @{kHEMAnalyticsEventPropType : type ?: @"",
+                                HEMAnalyticsPropService : activityType ?: @""};
         [SENAnalytics track:HEMAnalyticsEventShareComplete properties:props];
     }];
     

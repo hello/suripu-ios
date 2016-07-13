@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.0.4
+
+New:
+
+* Added service property for Share Complete event
+* Added phone battery requirement to DFU flow
+* Added system alert for DFU availability
+* Added DFU option inside Pill settings, when available
+* Disable pill updates after completion for 2 hours, due to lag time from next heart beat
+* Added DFU instrumentation
+
 ## 1.5.0.3
 
 Fixes:

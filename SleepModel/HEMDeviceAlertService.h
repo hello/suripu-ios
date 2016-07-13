@@ -17,7 +17,8 @@ typedef NS_ENUM(NSInteger, HEMDeviceAlertState) {
     HEMDeviceAlertStatePillNotPaired,
     HEMDeviceAlertStatePillLowBattery,
     HEMDeviceAlertStateSenseNotSeen,
-    HEMDeviceAlertStatePillNotSeen
+    HEMDeviceAlertStatePillNotSeen,
+    HEMDeviceAlertStatePillFirmwareUpdate
 };
 
 typedef NS_ENUM(NSInteger, HEMDeviceChange) {

@@ -10,6 +10,7 @@
 #import "HEMBaseController.h"
 
 @class HEMPillViewController;
+@class HEMDeviceService;
 
 @protocol HEMPillControllerDelegate <NSObject>
 
@@ -22,5 +23,6 @@
 @interface HEMPillViewController : HEMBaseController
 
 @property (nonatomic, weak) id<HEMPillControllerDelegate> delegate;
+@property (nonatomic, strong) HEMDeviceService* deviceService;
 
 @end

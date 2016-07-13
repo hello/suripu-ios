@@ -19,6 +19,11 @@
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
 
+typedef NS_ENUM(NSInteger, HEMPillDfuErrorCode) {
+    HEMPillDfuErrorCodeLowPhoneBattery = -1
+};
+
+static NSString* const HEMPillDfuErrorDomain = @"is.hello.app.pill.dfu";
 static NSInteger const HEMPillDfuBLECheckAttempts = 10;
 static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
 static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
@@ -267,6 +272,8 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     [[self helpButton] setHidden:YES];
     
     if (![self isUpdating]) {
+        [SENAnalytics track:HEMAnalyticsEventPillDfuOTAStart];
+        
         [[self statusLabel] setText:[self statusForState:HEMDeviceDfuStateNotStarted]];
         [self setUpdating:YES];
         
@@ -312,13 +319,16 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     NSString* helpSlug = nil;
     
     UIDevice* device = [UIDevice currentDevice];
-    UIDeviceBatteryState phoneState = [device batteryState];
-    if (phoneState != UIDeviceBatteryStateCharging && phoneState != UIDeviceBatteryStateFull) {
+    float batteryLevel = [device batteryLevel];
+    if (![[self deviceService] meetsPhoneBatteryRequirementForDFU:batteryLevel]) {
         title = NSLocalizedString(@"dfu.pill.error.title.phone-battery", nil);
         errorMessage = NSLocalizedString(@"dfu.pill.error.insufficient-phone-battery", nil);
     }
     
     if (errorMessage) {
+        [self trackErrorMessage:@"Pill Update Phone Battery Low"
+                           code:HEMPillDfuErrorCodeLowPhoneBattery];
+        
         [[self errorDelegate] showErrorWithTitle:title
                                       andMessage:errorMessage
                                     withHelpPage:helpSlug
@@ -331,6 +341,14 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     } else {
         [[self dfuDelegate] shouldStartScanningForPillFrom:self];
     }
+}
+
+#pragma mark - Errors
+
+- (void)trackErrorMessage:(NSString*)errorMessage code:(HEMPillDfuErrorCode)code {
+    NSDictionary* info = @{NSLocalizedDescriptionKey : errorMessage ?: @""};
+    NSError* error = [NSError errorWithDomain:HEMPillDfuErrorDomain code:code userInfo:info];
+    [SENAnalytics trackError:error];
 }
 
 #pragma mark - Finish

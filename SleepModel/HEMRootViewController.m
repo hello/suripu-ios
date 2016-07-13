@@ -44,6 +44,7 @@
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMSoundsContainerViewController.h"
 #import "HEMShortcutService.h"
+#import "HEMDeviceService.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -61,6 +62,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 @property (nonatomic, strong) HEMDeviceAlertService* deviceAlertService;
 @property (nonatomic, strong) HEMTimeZoneAlertService* tzAlertService;
 @property (nonatomic, strong) HEMNetworkAlertService* networkAlertService;
+@property (nonatomic, strong) HEMDeviceService* deviceService;
 
 @property (nonatomic, strong) id<UIViewControllerTransitioningDelegate> tzViewControllerTransition;
 
@@ -185,11 +187,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     HEMDeviceAlertService* deviceAlertService = [HEMDeviceAlertService new];
     HEMNetworkAlertService*  networkAlertService = [HEMNetworkAlertService new];
     HEMTimeZoneAlertService* tzAlertService = [HEMTimeZoneAlertService new];
+    HEMDeviceService* deviceService = [HEMDeviceService new];
     
     HEMSystemAlertPresenter* sysAlertPresenter
     = [[HEMSystemAlertPresenter alloc] initWithNetworkAlertService:networkAlertService
                                                 deviceAlertService:deviceAlertService
-                                              timeZoneAlertService:tzAlertService];
+                                              timeZoneAlertService:tzAlertService
+                                                     deviceService:deviceService];
     
     [sysAlertPresenter setDelegate:self];
     [sysAlertPresenter bindWithContainerView:[self view]];
@@ -198,6 +202,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [self setDeviceAlertService:deviceAlertService];
     [self setTzAlertService:tzAlertService];
     [self setSystemAlertPresenter:sysAlertPresenter];
+    [self setDeviceService:deviceService];
     
     [self addPresenter:sysAlertPresenter];
 }

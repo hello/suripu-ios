@@ -15,6 +15,7 @@
 #import "HEMActionButton.h"
 #import "HEMStyle.h"
 
+static NSString* const HEMPillFinderErrorDomain = @"is.hello.app.pill";
 static CGFloat const HEMPillFinderAnimeDuration = 0.5f;
 static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
 
@@ -105,6 +106,10 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
             if (sleepPill) {
                 [strongSelf finishWithSleepPill:sleepPill];
             } else {
+                NSDictionary* info = @{NSLocalizedDescriptionKey : @"Pill Update Pill Not Detected"};
+                NSError* error = [NSError errorWithDomain:HEMPillFinderErrorDomain code:-1 userInfo:info];
+                [SENAnalytics trackError:error];
+                
                 NSString* errorTitle = NSLocalizedString(@"dfu.pill.error.title.pill-not-found", nil);
                 NSString* errorMessage = NSLocalizedString(@"dfu.pill.error.pill-not-found", nil);
                 NSString* helpSlug = NSLocalizedString(@"help.url.slug.pill-dfu-not-found", nil);

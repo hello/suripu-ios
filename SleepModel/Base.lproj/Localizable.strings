@@ -291,6 +291,7 @@
 "settings.pill.warning.title.low-battery" = "Low battery";
 "settings.pill.advanced.option.title" = "Advanced";
 "settings.pill.replace-battery.title" = "Replace battery";
+"settings.pill.update-firmware.title" = "Update Sleep Pill firmware";
 "settings.pill.advanced.option.replace-pill" = "Replace this Sleep Pill";
 "settings.pill.advanced.option.replace-pill.desc" = "If you have a new Sleep Pill you want to pair with this account.";
 "settings.sense.warning.summary.last-seen" = "No recent data.";
@@ -614,6 +615,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.update-now" = "Update now";
 "actions.retry" = "Retry";
 "actions.cancel" = "Cancel";
 "actions.close" = "Close";
@@ -719,6 +721,8 @@
 "alerts.device.pill-last-seen.title" = "Sleep Pill";
 "alerts.device.pill-last-seen.message" = "Sleep Pill has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
 "alerts.device.pill-low-battery.message" = "Your Sleep Pill battery is low, and will need to be replaced soon.";
+"alerts.device.pill-firmware-update.title" = "Sleep Pill update";
+"alerts.device.pill-firmware-update" = "An update for your Sleep Pill is available. You can update now, or visit settings to update later.";
 
 // tutorial
 "tutorial.timeline.title1" = "Understanding your sleep";

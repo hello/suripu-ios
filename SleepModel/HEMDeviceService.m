@@ -16,14 +16,19 @@
 #import <SenseKit/SENPillMetadata.h>
 #import <SenseKit/SENSleepPillManager.h>
 #import <SenseKit/SENSleepPill.h>
+#import <SenseKit/SENLocalPreferences.h>
 
 #import "HEMDeviceService.h"
 #import "HEMConfig.h"
+#import "NSDate+HEMRelative.h"
 
 NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
 
 static NSInteger const HEMPillDfuPillMinimumRSSI = -70;
 static NSString* const HEMPillDfuBinURL = @"https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
+static NSString* const HEMPillDfuPrefLastUpdate = @"HEMPillDfuPrefLastUpdate";
+static NSUInteger const HEMPillDfuSuppressionReq = 2; // will not show dfu updates if done within the hour
+static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 @interface HEMDeviceService()
 
@@ -167,7 +172,15 @@ static NSString* const HEMPillDfuBinURL = @"https://s3.amazonaws.com/hello-firmw
         if (progressBlock) {
             progressBlock (progress, [strongSelf deviceDfuStateFromPillDfuState:state]);
         }
-    } completion:completion];
+    } completion:^(NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error];
+        } else {
+            [strongSelf saveLastPillUpdate];
+        }
+        completion (error);
+    }];
 }
 
 - (HEMDeviceDfuState)deviceDfuStateFromPillDfuState:(SENSleepPillDfuState)state {
@@ -185,6 +198,31 @@ static NSString* const HEMPillDfuBinURL = @"https://s3.amazonaws.com/hello-firmw
         default:
             return HEMDeviceDfuStateNotStarted;
     }
+}
+
+- (void)saveLastPillUpdate {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    [localPrefs setUserPreference:[NSDate date] forKey:HEMPillDfuPrefLastUpdate];
+}
+
+- (NSDate*)lastPillFirmwareUpdate {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    return [localPrefs userPreferenceForKey:HEMPillDfuPrefLastUpdate];
+}
+
+- (BOOL)shouldSuppressPillFirmwareUpdate {
+    BOOL suppress = NO;
+    NSDate* date = [self lastPillFirmwareUpdate];
+    if (date) {
+        NSInteger hoursSince = [date hoursElapsed];
+        suppress = hoursSince < HEMPillDfuSuppressionReq;
+        DDLogVerbose(@"hours since last update %ld", (long)hoursSince);
+    }
+    return suppress;
+}
+
+- (BOOL)meetsPhoneBatteryRequirementForDFU:(float)batteryLevel {
+    return batteryLevel > HEMPillDfuMinPhoneBattery;
 }
 
 #pragma mark - Clean up

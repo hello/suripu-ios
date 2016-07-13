@@ -67,6 +67,8 @@
 
 - (BOOL)isCurrentMonth;
 
+- (NSUInteger)hoursElapsed;
+
 - (NSDate*)monthsFromNow:(NSInteger)months;
 
 /**

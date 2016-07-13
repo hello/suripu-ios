@@ -7,6 +7,7 @@
 //
 
 #import "HEMBaseController.h"
+#import "HEMSleepPillDFUDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) HEMDeviceService* deviceService;
 @property (nonatomic, strong) SENSleepPill* sleepPillToDfu;
+@property (nonatomic, weak) id<HEMSleepPillDFUDelegate> delegate;
 
 @end
 

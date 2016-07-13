@@ -41,6 +41,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenter];
+    
+    if (![self sleepPillToDfu]) {
+        [SENAnalytics track:HEMAnalyticsEventPillDfuStart];
+    }
 }
 
 - (void)configurePresenter {
@@ -70,6 +74,7 @@
     HEMSleepPillFinderViewController* pillFinderVC =
         [HEMMainStoryboard instantiatePillFinderViewController];
     [pillFinderVC setDeviceService:[self deviceService]];
+    [pillFinderVC setDelegate:[self delegate]];
     [[self navigationController] setViewControllers:@[pillFinderVC] animated:YES];
 }
 
@@ -102,10 +107,13 @@
 }
 
 - (void)didCompleteDfuFrom:(HEMPillDfuPresenter*)presenter {
+    [[self delegate] controller:self didCompleteDFU:YES];
+    [SENAnalytics track:HEMAnalyticsEventPillDfuDone];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didCancelDfuFrom:(HEMPillDfuPresenter*)presenter {
+    [[self delegate] controller:self didCompleteDFU:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -616,6 +616,7 @@
 
 // actions
 "actions.update-now" = "Update now";
+"actions.update" = "Update";
 "actions.retry" = "Retry";
 "actions.cancel" = "Cancel";
 "actions.close" = "Close";
@@ -851,7 +852,7 @@
 "dfu.pill.error.title.update-failed" = "Update failed";
 "dfu.pill.error.update-failed" = "There was a problem updating your Sleep Pill. Please try again.";
 "dfu.pill.connected" = "Sleep Pill connected";
-"dfu.pill.error.title.phone-battery" = "Phone battery low";
-"dfu.pill.error.insufficient-phone-battery" = "Connect your phone to a power source before you continue with this update.";
+"dfu.pill.error.title.phone-battery" = "Device battery too low";
+"dfu.pill.error.insufficient-phone-battery" = "To continue this update, your mobile device needs to be charged at least 20% or be connected to its charger.";
 "dfu.pill.error.title.pill-not-found" = "Sleep Pill not detected";
 "dfu.pill.error.pill-not-found" = "Make sure to shake your Sleep Pill quickly for three seconds while holding it close to your mobile device.";

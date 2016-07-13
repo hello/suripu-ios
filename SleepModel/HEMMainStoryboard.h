@@ -31,7 +31,8 @@
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)pairReuseIdentifier;
-+(NSString *)deviceReuseIdentifier;
++(NSString *)pillReuseIdentifier;
++(NSString *)senseReuseIdentifier;
 +(NSString *)supportCellReuseIdentifier;
 +(NSString *)topicCellReuseIdentifier;
 +(NSString *)warningReuseIdentifier;

@@ -73,8 +73,8 @@
 }
 
 + (NSDictionary *)attributesForAlertMessageText {
-    return @{ @(PARA) : @{NSFontAttributeName : [UIFont dialogMessageFont],
-                          NSForegroundColorAttributeName : [UIColor blackColor]}};
+    return @{ @(PARA) : @{NSFontAttributeName : [UIFont body],
+                          NSForegroundColorAttributeName : [UIColor grey5]}};
 }
 
 + (NSDictionary *)attributesForTimelineBreakdownTitle {

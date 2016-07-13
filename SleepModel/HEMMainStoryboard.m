@@ -35,7 +35,6 @@ static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdetail = @"detail";
-static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexplanation = @"explanation";
@@ -121,7 +120,6 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
-+(NSString *)deviceReuseIdentifier { return _HEMdevice; }
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldReuseIdentifier { return _HEMfield; }
@@ -135,8 +133,10 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)optionReuseIdentifier { return _HEMoption; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
++(NSString *)pillReuseIdentifier { return _HEMpill; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
++(NSString *)senseReuseIdentifier { return _HEMsense; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
 +(NSString *)settingsReuseIdentifier { return _HEMsettings; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }

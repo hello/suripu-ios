@@ -249,6 +249,7 @@ NSString* const HEMAnalyticsEventDeletePhoto = @"Delete Photo";
 NSString* const HEMAnalyticsEventShare = @"Share";
 NSString* const HEMAnalyticsEventShareComplete = @"Share completed";
 NSString* const HEMAnalyticsPropCategory = @"category";
+NSString* const HEMAnalyticsPropService = @"service";
 
 // breadcrumbs
 NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";

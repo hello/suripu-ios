@@ -242,6 +242,7 @@ extern NSString* const HEMAnalyticsEventPillDfuDone;
 extern NSString* const HEMAnalyticsEventShare;
 extern NSString* const HEMAnalyticsEventShareComplete;
 extern NSString* const HEMAnalyticsPropCategory;
+extern NSString* const HEMAnalyticsPropService;
 
 @interface SENAnalytics (HEMAppAnalytics)
 

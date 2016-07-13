@@ -414,6 +414,13 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         [self setProgressBlock:nil];
         [[self class] stopScan];
     }
+    
+    // FIXME: this is a hacky workaround for the fact that Nordic takes over the
+    // delegate of the CentralManager and never resets it.  Ideally Nordic would
+    // fix this by creating their own central, or reverting their delegate changes.
+    LGCentralManager* centralManager = [LGCentralManager sharedInstance];
+    CBCentralManager* cbCentral = [centralManager manager];
+    [cbCentral setDelegate:centralManager];
 }
 
 #pragma mark Progress

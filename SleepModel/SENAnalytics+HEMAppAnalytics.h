@@ -233,6 +233,11 @@ extern NSString* const HEMAnalyticsEventDeletePhoto;
 // breadcrumbs
 extern NSString* const HEMAnalyticsEventBreadcrumbsEnd;
 
+// dfu
+extern NSString* const HEMAnalyticsEventPillDfuStart;
+extern NSString* const HEMAnalyticsEventPillDfuOTAStart;
+extern NSString* const HEMAnalyticsEventPillDfuDone;
+
 // share
 extern NSString* const HEMAnalyticsEventShare;
 extern NSString* const HEMAnalyticsEventShareComplete;

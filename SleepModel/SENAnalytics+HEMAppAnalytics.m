@@ -253,6 +253,11 @@ NSString* const HEMAnalyticsPropCategory = @"category";
 // breadcrumbs
 NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";
 
+// dfu
+NSString* const HEMAnalyticsEventPillDfuStart = @"Pill Update Start";
+NSString* const HEMAnalyticsEventPillDfuOTAStart = @"Pill Update OTA Start";
+NSString* const HEMAnalyticsEventPillDfuDone = @"Pill Update Complete";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";

@@ -41,6 +41,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenter];
+    
+    if (![self sleepPillToDfu]) {
+        [SENAnalytics track:HEMAnalyticsEventPillDfuStart];
+    }
 }
 
 - (void)configurePresenter {
@@ -104,6 +108,7 @@
 
 - (void)didCompleteDfuFrom:(HEMPillDfuPresenter*)presenter {
     [[self delegate] controller:self didCompleteDFU:YES];
+    [SENAnalytics track:HEMAnalyticsEventPillDfuDone];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

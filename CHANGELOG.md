@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.0.5
+
+New:
+
+* Pill card in device settings supports firmware vers. and firmware update
+
+Fixes:
+
+* BLE operations no longer fail after successful DFU
+* Fix the DFU UI for the 4s
+
 ## 1.5.0.4
 
 New:

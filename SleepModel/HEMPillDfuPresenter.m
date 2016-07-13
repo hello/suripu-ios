@@ -25,8 +25,10 @@ typedef NS_ENUM(NSInteger, HEMPillDfuErrorCode) {
 
 static NSString* const HEMPillDfuErrorDomain = @"is.hello.app.pill.dfu";
 static NSInteger const HEMPillDfuBLECheckAttempts = 10;
+
 static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
 static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
+static CGFloat const HEMPIllDfuStatus4sBottomMargin = 10.0f;
 
 @interface HEMPillDfuPresenter()
 
@@ -39,6 +41,7 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
 @property (nonatomic, weak) UIButton* helpButton;
 @property (nonatomic, weak) UIProgressView* progressView;
 @property (nonatomic, weak) UIImageView* illustrationView;
+@property (nonatomic, weak) NSLayoutConstraint* statusBottomConstraint;
 @property (nonatomic, strong) CALayer* waveLayer;
 @property (nonatomic, strong) CALayer* illustrationBgLayer;
 @property (nonatomic, assign, getter=isUpdating) BOOL updating;
@@ -92,15 +95,23 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     [self setIllustrationView:illustrationView];
 }
 
-- (void)bindWithProgressView:(UIProgressView*)progressView statusLabel:(UILabel*)statusLabel {
+- (void)bindWithProgressView:(UIProgressView*)progressView
+                 statusLabel:(UILabel*)statusLabel
+      statusBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [progressView setHidden:[self pillToDfu] == nil];
     [progressView setProgress:0.0f];
     [progressView setProgressTintColor:[UIColor tintColor]];
     [progressView setTrackTintColor:[[UIColor grey3] colorWithAlphaComponent:0.5f]];
     [statusLabel setHidden:[self pillToDfu] == nil];
     [statusLabel setText:[self statusForState:HEMDeviceDfuStateNotStarted]];
+    
+    if (bottomConstraint) {
+        [bottomConstraint setConstant:HEMPIllDfuStatus4sBottomMargin];
+    }
+    
     [self setProgressView:progressView];
     [self setStatusLabel:statusLabel];
+    [self setStatusBottomConstraint:bottomConstraint];
 }
 
 - (void)bindWithCancelButton:(UIButton*)cancelButton {

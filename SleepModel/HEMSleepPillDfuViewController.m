@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *illustrationImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *illustrationBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusLabelBottomConstraint;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
@@ -59,7 +60,8 @@
                     descriptionLabel:[self descriptionLabel]];
     [dfuPresenter bindWithActionButton:[self continueButton]];
     [dfuPresenter bindWithProgressView:[self progressView]
-                           statusLabel:[self statusLabel]];
+                           statusLabel:[self statusLabel]
+                statusBottomConstraint:[self statusLabelBottomConstraint]];
     [dfuPresenter setErrorDelegate:self];
     [dfuPresenter setDfuDelegate:self];
     [dfuPresenter bindWithCancelButton:[self cancelButton]];

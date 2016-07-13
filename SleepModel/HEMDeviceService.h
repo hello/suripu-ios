@@ -74,6 +74,7 @@ typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSE
                progress:(HEMDeviceDfuProgressHandler)progressBlock
              completion:(HEMDeviceDfuHandler)completion;
 - (BOOL)shouldSuppressPillFirmwareUpdate;
+- (BOOL)meetsPhoneBatteryRequirementForDFU:(float)batteryLevel;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

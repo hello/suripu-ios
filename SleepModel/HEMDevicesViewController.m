@@ -159,6 +159,7 @@
         [senseVC setDelegate:self];
     } else if ([[segue destinationViewController] isKindOfClass:[HEMPillViewController class]]) {
         HEMPillViewController* pillVC = [segue destinationViewController];
+        [pillVC setDeviceService:[self deviceService]];
         [pillVC setDelegate:self];
     }
 }

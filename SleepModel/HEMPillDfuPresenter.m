@@ -321,7 +321,7 @@ static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
     UIDevice* device = [UIDevice currentDevice];
     UIDeviceBatteryState batteryState = [device batteryState];
     
-    if (batteryState != UIDeviceBatteryStateCharging && batteryState == UIDeviceBatteryStateFull) {
+    if (batteryState != UIDeviceBatteryStateCharging && batteryState != UIDeviceBatteryStateFull) {
         float batteryLevel = [device batteryLevel];
         if (![[self deviceService] meetsPhoneBatteryRequirementForDFU:batteryLevel]) {
             title = NSLocalizedString(@"dfu.pill.error.title.phone-battery", nil);

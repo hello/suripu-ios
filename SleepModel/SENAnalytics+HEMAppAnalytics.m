@@ -249,9 +249,15 @@ NSString* const HEMAnalyticsEventDeletePhoto = @"Delete Photo";
 NSString* const HEMAnalyticsEventShare = @"Share";
 NSString* const HEMAnalyticsEventShareComplete = @"Share completed";
 NSString* const HEMAnalyticsPropCategory = @"category";
+NSString* const HEMAnalyticsPropService = @"service";
 
 // breadcrumbs
 NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";
+
+// dfu
+NSString* const HEMAnalyticsEventPillDfuStart = @"Pill Update Start";
+NSString* const HEMAnalyticsEventPillDfuOTAStart = @"Pill Update OTA Start";
+NSString* const HEMAnalyticsEventPillDfuDone = @"Pill Update Complete";
 
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";

@@ -1,5 +1,63 @@
 # Changelog
 
+## 1.5.0.5
+
+New:
+
+* Pill card in device settings supports firmware vers. and firmware update
+
+Fixes:
+
+* BLE operations no longer fail after successful DFU
+* Fix the DFU UI for the 4s
+
+## 1.5.0.4
+
+New:
+
+* Added service property for Share Complete event
+* Added phone battery requirement to DFU flow
+* Added system alert for DFU availability
+* Added DFU option inside Pill settings, when available
+* Disable pill updates after completion for 2 hours, due to lag time from next heart beat
+* Added DFU instrumentation
+
+## 1.5.0.3
+
+Fixes:
+
+* Fixed font in connect your pills screen
+* Fixed transimission animation rendering issue
+* Added timeout to ensure retrying on failed dfu does not get stuck
+* Fixed issue where backgrounding the app will permanently stop the transmission animation
+
+## 1.5.0.2
+
+New:
+
+* Added wave / transmission animation
+
+Fixes:
+
+* Removed pill battery check from the flow
+* Fixed pill not detected troubleshooting link
+* Fixed caching policy for iOS 9 devices
+
+## 1.5.0.1
+
+New:
+
+* Debug option to show Pill DFU flow
+* Pill DFU update screen
+* Pill Finder / Scan screen
+* Pill DFU progress screen
+* Support to update Sleep Pill via debug url or from server returned url
+
+Fixes:
+
+* Insight body font lowered by 1pt
+* Insight image cached shared between feed and detail to prevent image changing
+
 ## 1.4.4.4
 
 Note:

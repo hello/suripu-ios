@@ -19,13 +19,15 @@
 #import "HEMSupportUtil.h"
 #import "HEMDeviceService.h"
 #import "HEMDevicesPresenter.h"
+#import "HEMSleepPillDfuViewController.h"
 
 @interface HEMDevicesViewController() <
     HEMPillPairDelegate,
     HEMSenseControllerDelegate,
     HEMSensePairingDelegate,
     HEMPillControllerDelegate,
-    HEMDevicesPresenterDelegate
+    HEMDevicesPresenterDelegate,
+    HEMSleepPillDFUDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -90,6 +92,22 @@
     HEMPillPairViewController* pairVC = (id) [HEMOnboardingStoryboard instantiatePillPairViewController];
     [pairVC setDelegate:self];
     [self presentPairingViewController:pairVC];
+}
+
+- (void)showFirmwareUpdateFrom:(HEMDevicesPresenter*)presenter {
+    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
+    [dfuVC setDeviceService:[self deviceService]];
+    [dfuVC setDelegate:self];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - HEMSleepPillDFUDelegate
+
+- (void)controller:(UIViewController *)dfuController didCompleteDFU:(BOOL)complete {
+    if (complete) {
+        [[self devicesPresenter] refresh];
+    }
 }
 
 #pragma mark - HEMPillPairDelegate
@@ -159,6 +177,7 @@
         [senseVC setDelegate:self];
     } else if ([[segue destinationViewController] isKindOfClass:[HEMPillViewController class]]) {
         HEMPillViewController* pillVC = [segue destinationViewController];
+        [pillVC setDeviceService:[self deviceService]];
         [pillVC setDelegate:self];
     }
 }

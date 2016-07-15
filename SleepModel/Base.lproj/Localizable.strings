@@ -82,6 +82,8 @@
 "help.url.slug.no-data-recorded" = "articles/205706435";
 "help.url.slug.not-enough-data-recorded" = "articles/204994629";
 "help.url.slug.facebook-import" = "articles/210329423";
+"help.url.slug.pill-dfu" = "articles/211303163";
+"help.url.slug.pill-dfu-not-found" = "articles/211421183";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -229,8 +231,8 @@
 "debug.option.room-check.title" = "Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.force-whats-new" = "Force What's New";
-"debug.option.sleep-sounds" = "Sleep Sounds";
 "debug.option.clear-alarms" = "Remove all alarms";
+"debug.option.dfu.pill" = "Show Pill DFU";
 "debug.host.action.custom-url" = "Custom";
 "debug.host.section.api" = "API Hosts";
 "debug.host.section.nonsense" = "Nonsense Hosts";
@@ -289,6 +291,7 @@
 "settings.pill.warning.title.low-battery" = "Low battery";
 "settings.pill.advanced.option.title" = "Advanced";
 "settings.pill.replace-battery.title" = "Replace battery";
+"settings.pill.update-firmware.title" = "Update Sleep Pill firmware";
 "settings.pill.advanced.option.replace-pill" = "Replace this Sleep Pill";
 "settings.pill.advanced.option.replace-pill.desc" = "If you have a new Sleep Pill you want to pair with this account.";
 "settings.sense.warning.summary.last-seen" = "No recent data.";
@@ -612,6 +615,9 @@
 "trends.day" = "day";
 
 // actions
+"actions.update-now" = "Update now";
+"actions.update" = "Update";
+"actions.retry" = "Retry";
 "actions.cancel" = "Cancel";
 "actions.close" = "Close";
 "actions.ok" = "Okay";
@@ -716,6 +722,8 @@
 "alerts.device.pill-last-seen.title" = "Sleep Pill";
 "alerts.device.pill-last-seen.message" = "Sleep Pill has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
 "alerts.device.pill-low-battery.message" = "Your Sleep Pill battery is low, and will need to be replaced soon.";
+"alerts.device.pill-firmware-update.title" = "Sleep Pill update";
+"alerts.device.pill-firmware-update" = "An update for your Sleep Pill is available. You can update now, or visit settings to update later.";
 
 // tutorial
 "tutorial.timeline.title1" = "Understanding your sleep";
@@ -834,3 +842,17 @@
 "share.error.no-link.message" = "Sense was unable to generate a shareable Insight. Please try again in a few moments.";
 "share.email.subject.insight" = "Check out my sleep Insights from Sense";
 "share.text.format.insight" = "See how I'm improving my sleep with Insights from Sense. %@ #MySense";
+
+// dfu
+"dfu.pill.state.not-started" = "Update starting";
+"dfu.pill.state.updating" = "Sleep Pill Updating";
+"dfu.pill.state.validating" = "Validating update";
+"dfu.pill.state.disconnecting" = "Disconnecting";
+"dfu.pill.state.complete" = "Sleep Pill updated";
+"dfu.pill.error.title.update-failed" = "Update failed";
+"dfu.pill.error.update-failed" = "There was a problem updating your Sleep Pill. Please try again.";
+"dfu.pill.connected" = "Sleep Pill connected";
+"dfu.pill.error.title.phone-battery" = "Device battery too low";
+"dfu.pill.error.insufficient-phone-battery" = "To continue this update, your mobile device needs to be charged at least 20% or be connected to its charger.";
+"dfu.pill.error.title.pill-not-found" = "Sleep Pill not detected";
+"dfu.pill.error.pill-not-found" = "Make sure to shake your Sleep Pill quickly for three seconds while holding it close to your mobile device.";

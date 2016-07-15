@@ -5,9 +5,10 @@
 //  Created by Jimmy Lu on 9/24/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENServiceDevice.h>
+
 #import <SenseKit/SENPillMetadata.h>
 #import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
@@ -22,7 +23,10 @@
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 #import "HEMActionSheetViewController.h"
+#import "HEMSleepPillDfuViewController.h"
 #import "HEMStyle.h"
+#import "HEMDeviceService.h"
+#import "HEMSleepPillDFUDelegate.h"
 
 static NSString* const HEMPillHeaderReuseId = @"sectionHeader";
 
@@ -32,19 +36,23 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
 };
 
 typedef NS_ENUM(NSInteger, HEMPillAction) {
-    HEMPillActionReplaceBattery = 0,
-    HEMPillActionAdvanced = 1
+    HEMPillActionFirmwareUpdate = 0,
+    HEMPillActionReplaceBattery,
+    HEMPillActionAdvanced,
+    HEMPillActionRows
 };
 
 @interface HEMPillViewController() <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
-    UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegateFlowLayout,
+    HEMSleepPillDFUDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (strong, nonatomic) NSMutableOrderedSet* warnings;
+@property (assign, nonatomic, getter=hasFirmwareUpdateAvailable) BOOL firmwareUpdateAvailable;
 
 @end
 
@@ -53,6 +61,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self determineWarnings];
+    [self determinePillUpdateAvailability];
     [self configureCollectionView];
     [SENAnalytics track:kHEMAnalyticsEventPill];
 }
@@ -64,10 +73,9 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 - (void)determineWarnings {
     NSMutableOrderedSet* warnings = [NSMutableOrderedSet new];
-    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
-    SENPillMetadata* pillMetdata = [[deviceService devices] pillMetadata];
+    SENPillMetadata* pillMetdata = [[[self deviceService] devices] pillMetadata];
     
-    if ([deviceService shouldWarnAboutLastSeenForDevice:pillMetdata]) {
+    if ([[self deviceService] shouldWarnAboutLastSeenForDevice:pillMetdata]) {
         [warnings addObject:@(HEMPillWarningLongLastSeen)];
     }
     
@@ -78,6 +86,12 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     [self setWarnings:warnings];
 }
 
+- (void)determinePillUpdateAvailability {
+    SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
+    [self setFirmwareUpdateAvailable:[pillMetadata firmwareUpdateUrl] != nil
+                                        && ![[self deviceService] shouldSuppressPillFirmwareUpdate]];
+}
+
 - (void)configureCollectionView {
     [[self collectionView] setDataSource:self];
     [[self collectionView] setDelegate:self];
@@ -85,7 +99,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 }
 
 - (NSAttributedString*)attributedLongLastSeenMessage {
-    SENPillMetadata* pillMetadata = [[[SENServiceDevice sharedService] devices] pillMetadata];
+    SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
     NSString* format = NSLocalizedString(@"settings.pill.warning.last-seen-format", nil);
     NSString* lastSeen = [[pillMetadata lastSeenDate] timeAgo];
     lastSeen = lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil);
@@ -133,6 +147,10 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
              NSForegroundColorAttributeName : [UIColor blackColor]};
 }
 
+- (NSInteger)adjustedRowFor:(NSInteger)row {
+    return [self hasFirmwareUpdateAvailable] ? row : row + 1;
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -141,7 +159,14 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return section < [[self warnings] count] ? 1 : 2;
+    NSInteger rows = 1;
+    if (section >= [[self warnings] count]) {
+        rows = HEMPillActionRows;
+        if (![self hasFirmwareUpdateAvailable]) {
+            rows--;
+        }
+    }
+    return rows;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
@@ -159,17 +184,21 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
                                                                            forIndexPath:indexPath];
     
     if ([cell isKindOfClass:[HEMDeviceActionCell class]]) {
+        NSInteger adjustedRow = [self adjustedRowFor:row];
         HEMDeviceActionCell* actionCell = (id) cell;
         NSString* text = nil;
         UIImage* icon = nil;
         BOOL showTopSeparator = NO;
         BOOL showSeparator = YES;
         
-        if (row == HEMPillActionReplaceBattery) {
+        if (adjustedRow == HEMPillActionFirmwareUpdate) {
+            icon = [UIImage imageNamed:@"settingsPairingModeIcon"];
+            text = NSLocalizedString(@"settings.pill.update-firmware.title", nil) ;
+            showTopSeparator = YES;
+        } else if (adjustedRow == HEMPillActionReplaceBattery) {
             icon = [UIImage imageNamed:@"settingsBatteryIcon"];
             text = NSLocalizedString(@"settings.pill.replace-battery.title", nil) ;
-            showTopSeparator = YES;
-        } else {
+        } else if (adjustedRow == HEMPillActionAdvanced) {
             icon = [UIImage imageNamed:@"settingsAdvanceIcon"];
             text = NSLocalizedString(@"settings.pill.advanced.option.title", nil);
             showSeparator = NO;
@@ -249,15 +278,17 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger sec = [indexPath section];
     if (sec == [[self warnings] count]) {
-        switch ([indexPath row]) {
+        NSInteger adjustedRow = [self adjustedRowFor:[indexPath row]];
+        switch (adjustedRow) {
+            case HEMPillActionFirmwareUpdate:
+                return [self showPillDfuController];
+                break;
             case HEMPillActionReplaceBattery:
-                [self replaceBattery];
-                break;
+                return [self replaceBattery];
             case HEMPillActionAdvanced:
-                [self showAdvancedOptions];
-                break;
+                return [self showAdvancedOptions];
             default:
-                break;
+                return;
         }
     }
 }
@@ -285,6 +316,15 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     }
 }
 
+- (void)showPillDfuController {
+    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    if ([[nav topViewController] isKindOfClass:[HEMSleepPillDfuViewController class]]) {
+        HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
+        [dfuVC setDelegate:self];
+    }
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 - (void)showAdvancedOptions {
     HEMActionSheetViewController* sheet =
         [HEMMainStoryboard instantiateActionSheetViewController];
@@ -306,6 +346,15 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 - (void)replaceBattery {
     NSString* page = NSLocalizedString(@"help.url.slug.pill-battery", nil);
     [HEMSupportUtil openHelpToPage:page fromController:self];
+}
+
+#pragma mark - HEMSleepPillDFUDelegate
+
+- (void)controller:(UIViewController *)dfuController didCompleteDFU:(BOOL)complete {
+    if (complete) {
+        [self setFirmwareUpdateAvailable:NO];
+        [[self collectionView] reloadData];
+    }
 }
 
 #pragma mark - Unpairing the pill
@@ -386,6 +435,8 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSString* message = NSLocalizedString(@"settings.pill.unpairing-message", nil);
     [[self activityView] showInView:[root view] withText:message activity:YES completion:^{
         __weak typeof(self) weakSelf = self;
+        // TODO: remove depedency to SENServiceDevice so we can remove that class
+        // completely and use HEMDeviceService
         [[SENServiceDevice sharedService] unpairSleepPill:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error != nil) {

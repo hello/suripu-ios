@@ -1,1 +1,0 @@
-../../../../ZendeskSDK/ZendeskProviderSDK.framework/Headers/ZDKUploadProvider.h

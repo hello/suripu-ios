@@ -5,7 +5,7 @@
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAppUnreadStats.h>
-#import <markdown_peg.h>
+#import "markdown_peg.h"
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphViewController.h"

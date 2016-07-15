@@ -1,1 +1,0 @@
-../../../SenseKit/Pod/Classes/Model/SENPillMetadata.h

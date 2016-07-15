@@ -23,6 +23,8 @@
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTutorial.h"
+#import "HEMPillCollectionViewCell.h"
+#import "HEMActionButton.h"
 
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 static CGFloat const HEMDeviceSectionMargin = 15.0f;
@@ -164,7 +166,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 }
 
 - (UIColor*)lastSeenTextColorFor:(SENDeviceMetadata*)deviceMetadata {
-    return [[self deviceService] shouldWarnAboutLastSeenForDevice:deviceMetadata] ? [UIColor redColor] : [UIColor blackColor];
+    return [[self deviceService] shouldWarnAboutLastSeenForDevice:deviceMetadata] ? [UIColor redColor] : [UIColor grey6];
 }
 
 - (NSString*)lastSeenFor:(SENDeviceMetadata*)deviceMetadata {
@@ -213,7 +215,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 
 - (void)wiFiColor:(UIColor**)color icon:(UIImage**)icon {
     if (![self attemptedDataLoad]) {
-        *color = [UIColor blackColor];
+        *color = [UIColor grey6];
         return;
     }
     
@@ -232,13 +234,19 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
             break;
         case SENWiFiConditionFair:
             *icon = [UIImage imageNamed:@"wifiIconMedium"];
-            *color = [UIColor blackColor];
+            *color = [UIColor grey6];
             break;
         case SENWiFiConditionGood:
             *icon = [UIImage imageNamed:@"wifiIconHigh"];
-            *color = [UIColor blackColor];
+            *color = [UIColor grey6];
             break;
     }
+}
+
+- (BOOL)hasPillFirmwareUpdate {
+    SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
+    return [pillMetadata firmwareUpdateUrl] != nil
+        && ![[self deviceService] shouldSuppressPillFirmwareUpdate];
 }
 
 #pragma mark - UICollectionView
@@ -261,8 +269,10 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     
     if (!hasDevice && [self attemptedDataLoad]) {
         reuseId = [HEMMainStoryboard pairReuseIdentifier];
+    } else if ([indexPath row] == HEMDevicesRowPill) {
+        reuseId = [HEMMainStoryboard pillReuseIdentifier];
     } else {
-        reuseId = [HEMMainStoryboard deviceReuseIdentifier];
+        reuseId = [HEMMainStoryboard senseReuseIdentifier];
     }
     
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
@@ -316,7 +326,12 @@ referenceSizeForFooterInSection:(NSInteger)section {
     size.width = CGRectGetWidth([[collectionView superview] bounds]);
     
     if (hasDevice) {
-        size.height = HEMDeviceInfoHeight;
+        if ([indexPath row] == HEMDevicesRowPill) {
+            BOOL hasUpdate = [self hasPillFirmwareUpdate];
+            size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
+        } else {
+            size.height = HEMDeviceInfoHeight;
+        }
     } else {
         size.height = HEMNoDeviceHeight;
     }
@@ -383,8 +398,10 @@ referenceSizeForFooterInSection:(NSInteger)section {
 }
 
 - (void)updateCellForPill:(HEMDeviceCollectionViewCell*)cell {
+    HEMPillCollectionViewCell* pillCell = (id)cell;
     SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
     
+    BOOL hasUpdate = [self hasPillFirmwareUpdate];
     NSString* lastSeen = [self lastSeenFor:pillMetadata];
     UIColor* lastSeenColor = [self lastSeenTextColorFor:pillMetadata];
     NSString* name = NSLocalizedString(@"settings.device.pill", nil);
@@ -393,6 +410,14 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* property1ValueColor =nil;
     NSString* property2Name = NSLocalizedString(@"settings.device.color", nil);
     NSString* property2Value = [self colorStringForDevice:pillMetadata];
+    NSString* firmwareName = NSLocalizedString(@"settings.device.firmware-version", nil);
+    NSString* firmwareVers = [pillMetadata firmwareVersion];
+    UIColor* firmwareColor = hasUpdate ? [UIColor redColor] : [UIColor grey6];
+    NSString* updateButtonText = nil;
+    
+    if (hasUpdate) {
+        updateButtonText = [NSLocalizedString(@"actions.update", nil) uppercaseString];
+    }
     
     switch ([pillMetadata state]) {
         case SENPillStateLowBattery:
@@ -420,6 +445,15 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [[cell property2InfoButton] addTarget:self
                                    action:@selector(showPillColorTutorial)
                          forControlEvents:UIControlEventTouchUpInside];
+    [[pillCell firmwareLabel] setText:firmwareName];
+    [[pillCell firmwareValueLabel] setText:firmwareVers];
+    [[pillCell firmwareValueLabel] setTextColor:firmwareColor];
+    [[pillCell updateButton] setHidden:!hasUpdate];
+    [[pillCell updateButton] setUserInteractionEnabled:hasUpdate];
+    [[pillCell updateButton] addTarget:self
+                                action:@selector(updateFirmware)
+                      forControlEvents:UIControlEventTouchUpInside];
+    [[pillCell updateButton] setTitle:updateButtonText forState:UIControlStateNormal];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -457,6 +491,10 @@ referenceSizeForFooterInSection:(NSInteger)section {
 
 - (void)showPillColorTutorial {
     [HEMTutorial showTutorialForPillColor];
+}
+
+- (void)updateFirmware {
+    [[self delegate] showFirmwareUpdateFrom:self];
 }
 
 #pragma mark - HEMTextFooterDelegate

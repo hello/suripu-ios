@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SENSenseMessage.pb.h"
+#import "SENPeripheralManager.h"
 
 @class SENSense;
 @class LGCentralManager;
@@ -133,7 +134,7 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     SENSenseManagerErrorCodeCannotConnectToSense = -28
 };
 
-@interface SENSenseManager : NSObject
+@interface SENSenseManager : SENPeripheralManager
 
 @property (nonatomic, strong, readonly) SENSense* sense;
 
@@ -175,24 +176,6 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
                      completion:(void(^)(NSArray* senses))completion;
 
 /**
- * Force the scan to stop, if one was started from scanForSens: or
- * scanForSenseWithTimeout:completion:
- */
-+ (void)stopScan;
-
-/**
- * Check to see if manager is currently scanning for senses
- * @return YES if scanning, NO otherwise
- */
-+ (BOOL)isScanning;
-
-/**
- * Check to see if Central is ready to go
- * @return YES if on, NO otherwise
- */
-+ (BOOL)isReady;
-
-/**
  * @method whenBleStateAvailable:
  *
  * @discussion
@@ -202,20 +185,12 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
  * yourself, but instead invoke your block to tell you if BLE is on or in a 
  * different state.
  *
+ * @deprecated: use @method whenReady: instead
+ *
  * @param block: the block to invoke when the BLE state can be queried
  *
  */
 + (void)whenBleStateAvailable:(void(^)(BOOL on))block;
-
-/**
- * Determine, as best as possible, whether if manager can actually start a scan
- * based on whether BLE is supported and enabled.  If the radio is resetting or
- * in some unknown state, this will assume it's still functional and thus can scan,
- * but possibly not yet ready.
- *
- * @return YES if can scan, NO otherwise
- */
-+ (BOOL)canScan;
 
 /**
  * Initialize a manager for the specified Sense object.  You can retrieve

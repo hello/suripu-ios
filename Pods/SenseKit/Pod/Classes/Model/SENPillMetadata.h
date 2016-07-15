@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "SENDeviceMetadata.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, SENPillColor) {
     SENPillColorUnknown = 0,
     SENPillColorBlue = 1,
@@ -25,8 +27,11 @@ typedef NS_ENUM(NSUInteger, SENPillState) {
 
 @property (nonatomic, assign, readonly) SENPillState state;
 @property (nonatomic, assign, readonly) SENPillColor color;
+@property (nonatomic, copy, readonly, nullable) NSString* firmwareUpdateUrl;
 @property (nonatomic, strong, readonly, nullable) NSNumber* batteryLevel;
 
-- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary*)dict;
+- (instancetype)initWithDictionary:(NSDictionary*)dict;
 
 @end
+
+NS_ASSUME_NONNULL_END

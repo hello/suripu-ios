@@ -59,7 +59,8 @@ static NSString* const HEMBreadcrumbAccountNameChange = @"HEMBreadcrumbAccountNa
     }
     
     SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-    BOOL alreadyAdded = [prefs userPreferenceForKey:HEMBreadcrumbAccountNameChange];
+    NSNumber* pref = [prefs userPreferenceForKey:HEMBreadcrumbAccountNameChange];
+    BOOL alreadyAdded = [pref boolValue];
     if (alreadyAdded) {
         return;
     }

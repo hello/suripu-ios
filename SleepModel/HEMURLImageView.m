@@ -124,7 +124,7 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     
     NSURL* imageURL = [NSURL URLWithString:url];
     NSURLRequest* request = [NSURLRequest requestWithURL:imageURL
-                                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
                                          timeoutInterval:timeout];
     [self downloadAndLoadImageFrom:request completion:completion];
 }

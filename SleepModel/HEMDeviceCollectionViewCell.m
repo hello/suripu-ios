@@ -23,13 +23,27 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [[self nameLabel] setTextColor:[UIColor tintColor]];
-    [[self nameLabel] setFont:[UIFont deviceSettingsLabelFont]];
-    [[self lastSeenLabel] setFont:[UIFont deviceSettingsLabelFont]];
-    [[self property1Label] setFont:[UIFont deviceSettingsLabelFont]];
-    [[self property2Label] setFont:[UIFont deviceSettingsLabelFont]];
-    [[self property1ValueLabel] setFont:[UIFont deviceSettingsPropertyValueFont]];
-    [[self property2ValueLabel] setFont:[UIFont deviceSettingsPropertyValueFont]];
+    [[self nameLabel] setTextColor:[UIColor grey6]];
+    [[self nameLabel] setFont:[UIFont body]];
+    
+    [[self lastSeenLabel] setFont:[UIFont body]];
+    [[self lastSeenLabel] setTextColor:[UIColor grey5]];
+    
+    [[self lastSeenValueLabel] setTextColor:[UIColor grey6]];
+    [[self lastSeenValueLabel] setFont:[UIFont body]];
+    
+    [[self property1Label] setFont:[UIFont body]];
+    [[self property1Label] setTextColor:[UIColor grey5]];
+    
+    [[self property2Label] setFont:[UIFont body]];
+    [[self property2Label] setTextColor:[UIColor grey5]];
+    
+    [[self property1ValueLabel] setFont:[UIFont body]];
+    [[self property1ValueLabel] setTextColor:[UIColor grey6]];
+    
+    [[self property2ValueLabel] setFont:[UIFont body]];
+    [[self property2ValueLabel] setTextColor:[UIColor grey6]];
+    [[self accessoryImageView] setImage:[UIImage imageNamed:@"accessory"]];
 }
 
 - (void)prepareForReuse {

@@ -120,13 +120,13 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 - (void)addTitleLabelWithText:(NSString*)title {
     UILabel* label = [[UILabel alloc] initWithFrame:[self titleFrame]];
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextColor:[UIColor grey4]];
+    [label setTextColor:[UIColor grey6]];
     [label setFont:[UIFont actionViewTitleFont]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];
     [label setNumberOfLines:1];
-    [label setText:[title uppercaseString]];
+    [label setText:title];
     
     [self addSubview:label];
     [self setTitleView:label];
@@ -195,7 +195,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
         HEMActionButtonHeight
     };
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [[button titleLabel] setFont:[UIFont actionViewButtonTitleFont]];
+    [[button titleLabel] setFont:[UIFont button]];
     [button setTitle:text forState:UIControlStateNormal];
     [button setTitleColor:color forState:UIControlStateNormal];
     [button setBackgroundColor:[UIColor clearColor]];

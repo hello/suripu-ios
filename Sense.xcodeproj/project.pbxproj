@@ -19,7 +19,6 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6E090B870F13212CDF8553F5 /* libPods-SenseApp-Sense.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE1619C6D4536DB0E5E87CD /* libPods-SenseApp-Sense.a */; };
 		8A03386B1974AFD800BE8327 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8A03386A1974AFD800BE8327 /* Podfile */; };
 		8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */; };
 		8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A033872197DDA9700BE8327 /* HEMActionButton.m */; };
@@ -122,8 +121,7 @@
 		8B1DB6E11C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6E01C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m */; };
 		8B1DB6E31C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1DB6E21C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m */; };
 		8B45075D1C1794E500359453 /* HEMSelectHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */; };
-		97136BE209E8E8D757BD50DE /* libPods-SenseApp-SenseWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90D7E66DC574E0BA5B3413BC /* libPods-SenseApp-SenseWidget.a */; };
-		B13CC08B9E0FE47B29BBF099 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F08A6C3146D4DF0E95A307B9 /* libPods-Tests.a */; };
+		BE2C81EE7EC0C71D0A2A63C4 /* Pods_SenseApp_SenseWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD890070F879EC0621BA6859 /* Pods_SenseApp_SenseWidget.framework */; };
 		BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */; };
 		BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C7219FED17800E68E87 /* HEMWiFiDataSource.m */; };
 		BF037C011B7C178D00E1638D /* HEMTappableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF037C001B7C178D00E1638D /* HEMTappableView.m */; };
@@ -191,6 +189,8 @@
 		BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */; };
 		BF55D8841CA48C7F00379FBF /* HEMSoundsContentPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8831CA48C7F00379FBF /* HEMSoundsContentPresenter.m */; };
 		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
+		BF5B1D1E1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5B1D1D1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m */; };
+		BF5B1D271D2C717500DF1190 /* HEMPillDfuPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5B1D261D2C717500DF1190 /* HEMPillDfuPresenter.m */; };
 		BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */; };
 		BF5BACA41C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACA31C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m */; };
 		BF5BACE51C5AE09A00347185 /* HEMTrendsV2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACE41C5AE09A00347185 /* HEMTrendsV2ViewController.m */; };
@@ -330,6 +330,8 @@
 		BFB815201BFCFC3D009740D0 /* HEMDeviceWarning.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB8151F1BFCFC3D009740D0 /* HEMDeviceWarning.m */; };
 		BFB815231BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB815221BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m */; };
 		BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */; };
+		BFBC78B11D2C8E1200076235 /* HEMSleepPillFinderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBC78B01D2C8E1200076235 /* HEMSleepPillFinderViewController.m */; };
+		BFBC78B41D2C959E00076235 /* HEMPillFinderPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBC78B31D2C959E00076235 /* HEMPillFinderPresenter.m */; };
 		BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFBECCE41A15706700335CC6 /* Onboarding.storyboard */; };
 		BFBEE9121D18AC69007A986B /* HEMAlarmListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBEE9111D18AC69007A986B /* HEMAlarmListPresenter.m */; };
 		BFBEFA871D10D4630060908A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBEFA861D10D4630060908A /* HealthKit.framework */; };
@@ -362,6 +364,7 @@
 		BFD4012C1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD4012B1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m */; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
 		BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */; };
+		BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9F1A71D36C43300BB4E3A /* HEMPillCollectionViewCell.m */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
@@ -398,6 +401,8 @@
 		BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */; };
 		BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */; };
 		BFFCEFD91D074F6800CA0E54 /* HEMLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */; };
+		D2D3EECEBC108EEC403517AD /* Pods_SenseApp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25161F55284E12F52B1E0964 /* Pods_SenseApp_Tests.framework */; };
+		EB784F705A26CD9F419529BF /* Pods_SenseApp_Sense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -439,8 +444,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0AE1619C6D4536DB0E5E87CD /* libPods-SenseApp-Sense.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SenseApp-Sense.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CEC3006712323A3E96169F0 /* Pods-SenseApp-Sense.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.dev.xcconfig"; sourceTree = "<group>"; };
+		25161F55284E12F52B1E0964 /* Pods_SenseApp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31D4922B927AF772E36F931E /* Pods-SenseApp-SenseWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		541055DBD085814436590F0F /* Pods-SenseApp-Sense.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.beta.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sense.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -646,11 +651,14 @@
 		8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostViewController.m; sourceTree = "<group>"; };
 		8B45075E1C17951F00359453 /* HEMSelectHostPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSelectHostPresenter.h; sourceTree = "<group>"; };
 		8B45075F1C17951F00359453 /* HEMSelectHostPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostPresenter.m; sourceTree = "<group>"; };
-		90D7E66DC574E0BA5B3413BC /* libPods-SenseApp-SenseWidget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SenseApp-SenseWidget.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A7FF086E3164E5F301A0EC7 /* Pods-SenseApp-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A5A74F473190037EEDFEBF72 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		A736EFE31A8A304180BEABE8 /* Pods-SenseApp-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		AAA1431DCC9B925A41AD6C09 /* Pods-SenseApp-SenseWidget.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.beta.xcconfig"; sourceTree = "<group>"; };
 		B17615B39D25C4F006BA0C14 /* Pods-SenseApp-Sense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.release.xcconfig"; sourceTree = "<group>"; };
+		B8353AF28D608827B2C9734A /* Pods-SenseApp-Tests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.beta.xcconfig"; sourceTree = "<group>"; };
 		B8401EBD13F630F0782660EB /* Pods-Tests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.beta.xcconfig"; sourceTree = "<group>"; };
+		BD890070F879EC0621BA6859 /* Pods_SenseApp_SenseWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_SenseWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF005C6E19FECACC00E68E87 /* HEMWifiPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiPickerViewController.h; sourceTree = "<group>"; };
 		BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiPickerViewController.m; sourceTree = "<group>"; };
 		BF005C7119FED17800E68E87 /* HEMWiFiDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWiFiDataSource.h; sourceTree = "<group>"; };
@@ -775,6 +783,10 @@
 		BF55D8831CA48C7F00379FBF /* HEMSoundsContentPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsContentPresenter.m; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
+		BF5B1D1C1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepPillDfuViewController.h; sourceTree = "<group>"; };
+		BF5B1D1D1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepPillDfuViewController.m; sourceTree = "<group>"; };
+		BF5B1D251D2C717500DF1190 /* HEMPillDfuPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDfuPresenter.h; sourceTree = "<group>"; };
+		BF5B1D261D2C717500DF1190 /* HEMPillDfuPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDfuPresenter.m; sourceTree = "<group>"; };
 		BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SleepSounds.xcassets; sourceTree = "<group>"; };
 		BF5BACA21C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundPlayerPresenter.h; sourceTree = "<group>"; };
 		BF5BACA31C9203A3001E77F6 /* HEMSleepSoundPlayerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundPlayerPresenter.m; sourceTree = "<group>"; };
@@ -1030,6 +1042,10 @@
 		BFB815221BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HEMSenseSettingsDataSource+HEMCollectionView.m"; sourceTree = "<group>"; };
 		BFB93C7719CB7F89005067D0 /* HEMMathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMathUtil.h; sourceTree = "<group>"; };
 		BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMathUtil.m; sourceTree = "<group>"; };
+		BFBC78AF1D2C8E1200076235 /* HEMSleepPillFinderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepPillFinderViewController.h; sourceTree = "<group>"; };
+		BFBC78B01D2C8E1200076235 /* HEMSleepPillFinderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepPillFinderViewController.m; sourceTree = "<group>"; };
+		BFBC78B21D2C959E00076235 /* HEMPillFinderPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillFinderPresenter.h; sourceTree = "<group>"; };
+		BFBC78B31D2C959E00076235 /* HEMPillFinderPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillFinderPresenter.m; sourceTree = "<group>"; };
 		BFBECCE31A15706700335CC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		BFBECCE61A15707100335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		BFBEE9101D18AC69007A986B /* HEMAlarmListPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmListPresenter.h; sourceTree = "<group>"; };
@@ -1084,6 +1100,9 @@
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
 		BFD9D1FE1BF27E2900948CB7 /* HEMSegmentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSegmentProvider.h; sourceTree = "<group>"; };
 		BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSegmentProvider.m; sourceTree = "<group>"; };
+		BFD9F1A51D35C30C00BB4E3A /* HEMSleepPillDFUDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepPillDFUDelegate.h; sourceTree = "<group>"; };
+		BFD9F1A61D36C43300BB4E3A /* HEMPillCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillCollectionViewCell.h; sourceTree = "<group>"; };
+		BFD9F1A71D36C43300BB4E3A /* HEMPillCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillCollectionViewCell.m; sourceTree = "<group>"; };
 		BFDCA64A1BD6C0D200E9C33F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
@@ -1154,8 +1173,9 @@
 		BFFCEFD71D074F6800CA0E54 /* HEMLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationService.h; sourceTree = "<group>"; };
 		BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationService.m; sourceTree = "<group>"; };
 		CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.dev.xcconfig"; sourceTree = "<group>"; };
+		D772BFE52D2777422290F4B9 /* Pods-SenseApp-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.dev.xcconfig"; sourceTree = "<group>"; };
+		DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Sense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC02F45E18D78A3EDEFEA4DD /* Pods-SenseApp-SenseWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.release.xcconfig"; sourceTree = "<group>"; };
-		F08A6C3146D4DF0E95A307B9 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1169,7 +1189,7 @@
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				BFBEFA871D10D4630060908A /* HealthKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				6E090B870F13212CDF8553F5 /* libPods-SenseApp-Sense.a in Frameworks */,
+				EB784F705A26CD9F419529BF /* Pods_SenseApp_Sense.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1179,7 +1199,7 @@
 			files = (
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				B13CC08B9E0FE47B29BBF099 /* libPods-Tests.a in Frameworks */,
+				D2D3EECEBC108EEC403517AD /* Pods_SenseApp_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1191,7 +1211,7 @@
 				BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */,
 				BFC0E8831C0CE01400C6DFC7 /* MessageUI.framework in Frameworks */,
 				BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */,
-				97136BE209E8E8D757BD50DE /* libPods-SenseApp-SenseWidget.a in Frameworks */,
+				BE2C81EE7EC0C71D0A2A63C4 /* Pods_SenseApp_SenseWidget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1232,9 +1252,9 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				BF7F1BC919E304050028F799 /* NotificationCenter.framework */,
-				0AE1619C6D4536DB0E5E87CD /* libPods-SenseApp-Sense.a */,
-				90D7E66DC574E0BA5B3413BC /* libPods-SenseApp-SenseWidget.a */,
-				F08A6C3146D4DF0E95A307B9 /* libPods-Tests.a */,
+				DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */,
+				BD890070F879EC0621BA6859 /* Pods_SenseApp_SenseWidget.framework */,
+				25161F55284E12F52B1E0964 /* Pods_SenseApp_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1761,19 +1781,8 @@
 			isa = PBXGroup;
 			children = (
 				8AD3312B1BB08D9900DFF95A /* Settings.xcassets */,
-				BFB0FBF119D482E90056FFEC /* HEMSettingsNavigationController.h */,
-				BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */,
-				BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */,
-				BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */,
-				BF98FC341A98017C00AEC04C /* HEMTextFooterCollectionReusableView.h */,
-				BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */,
-				BF20B2201BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.h */,
-				BF20B2211BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m */,
-				BFB815131BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.h */,
-				BFB815141BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m */,
-				BFB59E131C03B98E001BD941 /* UITableViewCell+HEMSettings.h */,
-				BFB59E141C03B98E001BD941 /* UITableViewCell+HEMSettings.m */,
 				BF8C09391C33097C005AB5A7 /* Account */,
+				BF5B1D1F1D2C703B00DF1190 /* Common */,
 				BF8C09341C33085A005AB5A7 /* Devices */,
 				BF8C09421C330C1D005AB5A7 /* Home */,
 				BF8C09401C330B0A005AB5A7 /* Preferences */,
@@ -1837,6 +1846,10 @@
 				A5A74F473190037EEDFEBF72 /* Pods-Tests.release.xcconfig */,
 				B8401EBD13F630F0782660EB /* Pods-Tests.beta.xcconfig */,
 				CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */,
+				A736EFE31A8A304180BEABE8 /* Pods-SenseApp-Tests.debug.xcconfig */,
+				9A7FF086E3164E5F301A0EC7 /* Pods-SenseApp-Tests.release.xcconfig */,
+				B8353AF28D608827B2C9734A /* Pods-SenseApp-Tests.beta.xcconfig */,
+				D772BFE52D2777422290F4B9 /* Pods-SenseApp-Tests.dev.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2228,6 +2241,41 @@
 			name = Presenters;
 			sourceTree = "<group>";
 		};
+		BF5B1D1F1D2C703B00DF1190 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BF5B1D211D2C705800DF1190 /* View Controllers */,
+				BF5B1D201D2C704600DF1190 /* Views */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		BF5B1D201D2C704600DF1190 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */,
+				BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */,
+				BF98FC341A98017C00AEC04C /* HEMTextFooterCollectionReusableView.h */,
+				BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */,
+				BF20B2201BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.h */,
+				BF20B2211BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m */,
+				BFB815131BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.h */,
+				BFB815141BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m */,
+				BFB59E131C03B98E001BD941 /* UITableViewCell+HEMSettings.h */,
+				BFB59E141C03B98E001BD941 /* UITableViewCell+HEMSettings.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BF5B1D211D2C705800DF1190 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BFB0FBF119D482E90056FFEC /* HEMSettingsNavigationController.h */,
+				BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		BF5BACA11C920365001E77F6 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
@@ -2595,6 +2643,10 @@
 				BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */,
 				BF8C09451C330E55005AB5A7 /* HEMDevicesPresenter.h */,
 				BF8C09461C330E55005AB5A7 /* HEMDevicesPresenter.m */,
+				BF5B1D251D2C717500DF1190 /* HEMPillDfuPresenter.h */,
+				BF5B1D261D2C717500DF1190 /* HEMPillDfuPresenter.m */,
+				BFBC78B21D2C959E00076235 /* HEMPillFinderPresenter.h */,
+				BFBC78B31D2C959E00076235 /* HEMPillFinderPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -2611,6 +2663,8 @@
 		BF8C09381C3308FB005AB5A7 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BF5B1D1C1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.h */,
+				BF5B1D1D1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m */,
 				BF62150E1AB8CF730047A518 /* HEMTimeZoneViewController.h */,
 				BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */,
 				BFB0FBD419D243A60056FFEC /* HEMDevicesViewController.h */,
@@ -2619,6 +2673,9 @@
 				BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */,
 				BFB0FBE519D38D790056FFEC /* HEMSenseViewController.h */,
 				BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */,
+				BFBC78AF1D2C8E1200076235 /* HEMSleepPillFinderViewController.h */,
+				BFBC78B01D2C8E1200076235 /* HEMSleepPillFinderViewController.m */,
+				BFD9F1A51D35C30C00BB4E3A /* HEMSleepPillDFUDelegate.h */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2692,6 +2749,8 @@
 				BFF3B4491A5DB5DD00B11643 /* HEMNoDeviceCollectionViewCell.m */,
 				BFF3B45A1A5F03AD00B11643 /* HEMWarningCollectionViewCell.h */,
 				BFF3B45B1A5F03AD00B11643 /* HEMWarningCollectionViewCell.m */,
+				BFD9F1A61D36C43300BB4E3A /* HEMPillCollectionViewCell.h */,
+				BFD9F1A71D36C43300BB4E3A /* HEMPillCollectionViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3087,6 +3146,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "Sense" */;
 			buildPhases = (
+				F80FEDA93B24241BEDC3E54D /* 📦 Check Pods Manifest.lock */,
 				0D54F3C5D999EE85E74DCA2B /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
@@ -3094,8 +3154,8 @@
 				BF7F1BDB19E304050028F799 /* Embed App Extensions */,
 				8B38885B1C17B46B0036250B /* Run Info.plist ATS Update */,
 				67BDAC11372D0D75C46A2047 /* Upload Bugsnag dSYM */,
-				08C43C9BD54FB5EBE6EF75A4 /* [CP] Embed Pods Frameworks */,
-				7462B6115130CE46F8E874D2 /* [CP] Copy Pods Resources */,
+				69DE724F6CF308D19D81AE58 /* 📦 Embed Pods Frameworks */,
+				D6CC4F7EB17986BEA3391B4F /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3112,13 +3172,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
+				48F04F04604B32E4EFDFACF0 /* 📦 Check Pods Manifest.lock */,
 				EC3CA137F7BAA5A9E5FA14C8 /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
 				E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */,
-				54DCA33118C9E682B2A93F76 /* [CP] Embed Pods Frameworks */,
-				189C7EE1D9FD398507A93D09 /* [CP] Copy Pods Resources */,
+				D4E5DC9D08546ECB018504F7 /* 📦 Embed Pods Frameworks */,
+				3CCF9A552A90926B84109857 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3134,11 +3195,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF7F1BD819E304050028F799 /* Build configuration list for PBXNativeTarget "SenseWidget" */;
 			buildPhases = (
+				165DEC586A0060ED1CAE603F /* 📦 Check Pods Manifest.lock */,
 				BCFB48C5F28390136A6D1C87 /* [CP] Check Pods Manifest.lock */,
 				BF7F1BC519E304050028F799 /* Frameworks */,
 				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC619E304050028F799 /* Resources */,
-				A2F1547E55EFF33A441781F6 /* [CP] Copy Pods Resources */,
+				AA89D7715779E4B8D8FC11A9 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3279,21 +3341,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		08C43C9BD54FB5EBE6EF75A4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		0D54F3C5D999EE85E74DCA2B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3309,34 +3356,49 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		189C7EE1D9FD398507A93D09 /* [CP] Copy Pods Resources */ = {
+		165DEC586A0060ED1CAE603F /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tests/Pods-Tests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		54DCA33118C9E682B2A93F76 /* [CP] Embed Pods Frameworks */ = {
+		3CCF9A552A90926B84109857 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tests/Pods-Tests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		48F04F04604B32E4EFDFACF0 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		67BDAC11372D0D75C46A2047 /* Upload Bugsnag dSYM */ = {
@@ -3354,19 +3416,19 @@
 			shellScript = "fork do\n  Process.setsid\n  STDIN.reopen(\"/dev/null\")\n  STDOUT.reopen(\"/dev/null\", \"a\")\n  STDERR.reopen(\"/dev/null\", \"a\")\n\n  require 'shellwords'\n\n  Dir[\"#{ENV[\"DWARF_DSYM_FOLDER_PATH\"]}/*/Contents/Resources/DWARF/*\"].each do |dsym|\n    system(\"curl -F dsym=@#{Shellwords.escape(dsym)} -F projectRoot=#{Shellwords.escape(ENV[\"PROJECT_DIR\"])} https://upload.bugsnag.com/\")\n  end\nend\n";
 			showEnvVarsInLog = 0;
 		};
-		7462B6115130CE46F8E874D2 /* [CP] Copy Pods Resources */ = {
+		69DE724F6CF308D19D81AE58 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8B38885B1C17B46B0036250B /* Run Info.plist ATS Update */ = {
@@ -3383,14 +3445,14 @@
 			shellPath = /bin/sh;
 			shellScript = "# Disables ATS in debug builds. Can't do this with the plist preprocessor unfortuantely.\nINFOPLIST=\"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncase \"${CONFIGURATION}\" in\n\"Release\"|\"Adhoc\")\n/usr/libexec/PlistBuddy -c \"Set :NSAppTransportSecurity:NSAllowsArbitraryLoads NO\" \"${INFOPLIST}\"\n;;\n\"Debug\"|\"Dev\"|\"Beta\")\n/usr/libexec/PlistBuddy -c \"Set :NSAppTransportSecurity:NSAllowsArbitraryLoads YES\" \"${INFOPLIST}\"\n;;\nesac";
 		};
-		A2F1547E55EFF33A441781F6 /* [CP] Copy Pods Resources */ = {
+		AA89D7715779E4B8D8FC11A9 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3411,6 +3473,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D4E5DC9D08546ECB018504F7 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D6CC4F7EB17986BEA3391B4F /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */ = {
@@ -3436,6 +3528,21 @@
 			inputPaths = (
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F80FEDA93B24241BEDC3E54D /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3594,6 +3701,7 @@
 				BF8339891C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
 				BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */,
+				BF5B1D1E1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m in Sources */,
 				BF8C09471C330E55005AB5A7 /* HEMDevicesPresenter.m in Sources */,
 				BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */,
 				BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */,
@@ -3653,6 +3761,7 @@
 				BF0E37971C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m in Sources */,
 				8B1DB6DE1C18B35D006C8AFF /* HEMSelectHostPresenter.m in Sources */,
 				8A7D80491A421B7300B0BFD7 /* HEMAlarmListCell.m in Sources */,
+				BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */,
 				BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */,
 				BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */,
 				8AB82DE11B2BFB7B002D769D /* HEMTimelineMessageContainerView.m in Sources */,
@@ -3692,8 +3801,10 @@
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,
 				BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */,
 				BFE375E31CEBD1200029EE66 /* HEMPhotoHeaderView.m in Sources */,
+				BFBC78B11D2C8E1200076235 /* HEMSleepPillFinderViewController.m in Sources */,
 				BF885F221CE55B7500A92F90 /* HEMProfileImageView.m in Sources */,
 				8B1DB6DD1C18AC00006C8AFF /* HEMNonsenseScanService.m in Sources */,
+				BFBC78B41D2C959E00076235 /* HEMPillFinderPresenter.m in Sources */,
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
 				BFF14C2B1C63E47500AD3773 /* HEMMultiTitleView.m in Sources */,
 				BF8339961C1659D300BFD0F4 /* HEMInsightTransitionView.m in Sources */,
@@ -3703,6 +3814,7 @@
 				BFCB99101CA9D259000D7619 /* HEMSleepSoundVolume.m in Sources */,
 				8A19BF1A1B20D1880025DFA7 /* HEMTimelineLayoutAttributes.m in Sources */,
 				BFB815121BFC0A12009740D0 /* HEMDeviceActionCell.m in Sources */,
+				BF5B1D271D2C717500DF1190 /* HEMPillDfuPresenter.m in Sources */,
 				BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */,
 				BF238DE31D1A126600F6E62C /* HEMShareService.m in Sources */,
 				BFF3B44A1A5DB5DE00B11643 /* HEMNoDeviceCollectionViewCell.m in Sources */,
@@ -3871,6 +3983,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ANALYZER_OBJC_SELF_INIT = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -3881,6 +3995,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -3929,6 +4044,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ANALYZER_OBJC_SELF_INIT = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -3939,6 +4056,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -3987,7 +4105,7 @@
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4024,6 +4142,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
@@ -4050,7 +4169,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4087,6 +4206,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PILL_FIRMWARE_URL = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
@@ -4104,9 +4224,10 @@
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 867FA3D57FC62AA0B0EA2962 /* Pods-Tests.debug.xcconfig */;
+			baseConfigurationReference = A736EFE31A8A304180BEABE8 /* Pods-SenseApp-Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -4157,9 +4278,10 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5A74F473190037EEDFEBF72 /* Pods-Tests.release.xcconfig */;
+			baseConfigurationReference = 9A7FF086E3164E5F301A0EC7 /* Pods-SenseApp-Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -4212,7 +4334,8 @@
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -4263,7 +4386,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				ENABLE_BITCODE = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
@@ -4310,6 +4434,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ANALYZER_OBJC_SELF_INIT = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4320,6 +4446,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -4368,7 +4495,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4405,6 +4532,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
@@ -4420,9 +4548,10 @@
 		};
 		BFCCF5471A69F92200D842F9 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8401EBD13F630F0782660EB /* Pods-Tests.beta.xcconfig */;
+			baseConfigurationReference = B8353AF28D608827B2C9734A /* Pods-SenseApp-Tests.beta.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -4474,7 +4603,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				ENABLE_BITCODE = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
@@ -4521,6 +4651,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ANALYZER_OBJC_SELF_INIT = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4531,6 +4663,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -4579,7 +4712,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4616,6 +4749,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
@@ -4632,9 +4766,10 @@
 		};
 		BFCE1D371AA69C470076E855 /* Dev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */;
+			baseConfigurationReference = D772BFE52D2777422290F4B9 /* Pods-SenseApp-Tests.dev.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -4686,7 +4821,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				ENABLE_BITCODE = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (

@@ -75,6 +75,14 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:15.0f];
 }
 
++ (UIFont*)bodySmall {
+    return [UIFont fontWithName:HEMFontFamilyNameModernRegular size:14.0f];
+}
+
++ (UIFont*)bodySmallBold {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
+}
+
 + (UIFont*)button {
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
@@ -402,17 +410,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)actionViewTitleFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
 }
 
 + (UIFont*)actionViewMessageFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
-}
-
-+ (UIFont*)actionViewButtonTitleFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
 }
 
 + (UIFont*)feedQuestionFont
@@ -433,16 +436,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)systemAlertMessageFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
-}
-
-+ (UIFont*)deviceSettingsLabelFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameModernLight size:16.0f];
-}
-
-+ (UIFont*)deviceSettingsPropertyValueFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:16.0f];
 }
 
 + (UIFont*)deviceCellWarningSummaryFont
@@ -584,11 +577,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)onboardingRoomCheckSensorValueFont
 {
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:72.0f];
-}
-
-+ (UIFont*)helpButtonTitleFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
 + (UIFont*)wifiTitleFont

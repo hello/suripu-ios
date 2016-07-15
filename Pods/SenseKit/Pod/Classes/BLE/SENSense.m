@@ -6,10 +6,8 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 #import <CoreBluetooth/CoreBluetooth.h>
-
 #import "LGPeripheral.h"
-
-#import "SENSense+Protected.h"
+#import "SENSense.h"
 
 @interface SENSense()
 

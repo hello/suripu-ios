@@ -31,7 +31,8 @@
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)pairReuseIdentifier;
-+(NSString *)deviceReuseIdentifier;
++(NSString *)pillReuseIdentifier;
++(NSString *)senseReuseIdentifier;
 +(NSString *)supportCellReuseIdentifier;
 +(NSString *)topicCellReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
@@ -65,6 +66,7 @@
 +(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
++(NSString *)scanSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
 +(NSString *)settingsToSupportSegueIdentifier;
 +(NSString *)sleepSoundsSegueIdentifier;
@@ -87,6 +89,9 @@
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightFeedViewController;
 +(id)instantiateListItemViewController;
++(id)instantiatePillDFUViewController;
++(id)instantiatePillDFUNavViewController;
++(id)instantiatePillFinderViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;

@@ -127,6 +127,7 @@
     
     HEMInsightViewController* insightVC = (id)[HEMMainStoryboard instantiateSleepInsightViewController];
     [insightVC setInsight:insight];
+    [insightVC setInsightService:[self insightsFeedService]];
     [insightVC setImageColor:[[[cell uriImageView] image] colorAtPosition:CGPointMake(1.0f, 1.0f)]];
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
     [insightVC setTransitioningDelegate:transition];

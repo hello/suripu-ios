@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showSenseSettingsFrom:(HEMDevicesPresenter*)presenter;
 - (void)showPillSettingsFrom:(HEMDevicesPresenter*)presenter;
 - (void)pairPillFrom:(HEMDevicesPresenter*)presenter;
+- (void)showFirmwareUpdateFrom:(HEMDevicesPresenter*)presenter;
 
 @end
 

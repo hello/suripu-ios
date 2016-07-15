@@ -17,6 +17,7 @@ static NSString* const SENPillMetadataDictPropStateNormal = @"NORMAL";
 static NSString* const SENPillMetadataDictPropStateLowBattery = @"LOW_BATTERY";
 static NSString* const SENPillMetadataDictPropStateUnknown = @"UNKNOWN";
 static NSString* const SENPillMetadataDictPropBatteryLevel = @"battery_level";
+static NSString* const SENPillMetadataDictPropFirmwareUpdateUrl = @"firmware_update_url";
 
 @interface SENPillMetadata()
 
@@ -37,6 +38,9 @@ static NSString* const SENPillMetadataDictPropBatteryLevel = @"battery_level";
                                                        [NSString class])];
         _batteryLevel = SENObjectOfClass(dict[SENPillMetadataDictPropBatteryLevel],
                                          [NSNumber class]);
+        
+        _firmwareUpdateUrl = SENObjectOfClass(dict[SENPillMetadataDictPropFirmwareUpdateUrl],
+                                              [NSString class]);
     }
     return self;
 }

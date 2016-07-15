@@ -25,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonTrailingConstraint;
 
 @property (strong, nonatomic) HEMShareService* shareService;
-@property (strong, nonatomic) HEMInsightsService* insightService;
 
 @end
 
@@ -38,8 +37,11 @@
 }
 
 - (void)configurePresenters {
-    HEMInsightsService* service = [HEMInsightsService new];
-    HEMInsightPresenter* presenter = [[HEMInsightPresenter alloc] initWithInsightService:service
+    if (![self insightService]) {
+        [self setInsightService:[HEMInsightsService new]];
+    }
+
+    HEMInsightPresenter* presenter = [[HEMInsightPresenter alloc] initWithInsightService:[self insightService]
                                                                               forInsight:[self insight]];
     [presenter bindWithCollectionView:[self contentView] withImageColor:[self imageColor]];
     [presenter bindWithButtonShadow:[self buttonShadow]];
@@ -61,7 +63,6 @@
     [self addPresenter:presenter];
     [self addPresenter:actionPresenter];
     [self setShareService:shareService];
-    [self setInsightService:service];
 }
 
 - (void)closeInsightFromPresenter:(HEMInsightPresenter *)presenter {

@@ -50,22 +50,22 @@
     style.alignment = NSTextAlignmentLeft;
     return @{
              @(EMPH) : @{
-                     NSFontAttributeName : [UIFont bodyBold],
+                     NSFontAttributeName : [UIFont bodySmallBold],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor grey6]
                      },
              @(STRONG) : @{
-                     NSFontAttributeName : [UIFont bodyBold],
+                     NSFontAttributeName : [UIFont bodySmallBold],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor grey6]
                      },
              @(PARA) : @{
-                     NSFontAttributeName : [UIFont body],
+                     NSFontAttributeName : [UIFont bodySmall],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor grey5]
                      },
              @(BULLETLIST) : @{
-                     NSFontAttributeName : [UIFont body],
+                     NSFontAttributeName : [UIFont bodySmall],
                      NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName : [UIColor grey5]
                      }
@@ -73,8 +73,8 @@
 }
 
 + (NSDictionary *)attributesForAlertMessageText {
-    return @{ @(PARA) : @{NSFontAttributeName : [UIFont dialogMessageFont],
-                          NSForegroundColorAttributeName : [UIColor blackColor]}};
+    return @{ @(PARA) : @{NSFontAttributeName : [UIFont body],
+                          NSForegroundColorAttributeName : [UIColor grey5]}};
 }
 
 + (NSDictionary *)attributesForTimelineBreakdownTitle {

@@ -9,13 +9,24 @@
 #import <Foundation/Foundation.h>
 
 @class HEMNavigationShadowView;
+@class HEMPresenter;
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol HEMPresenterErrorDelegate <NSObject>
+
+- (void)showErrorWithTitle:(nullable NSString*)title
+                andMessage:(NSString*)message
+              withHelpPage:(nullable NSString*)helpPage
+             fromPresenter:(HEMPresenter*)presenter;
+
+@end
 
 @interface HEMPresenter : NSObject
 
 @property (nonatomic, assign, getter=isVisible, readonly) BOOL visible;
 @property (nonatomic, weak, readonly) HEMNavigationShadowView* shadowView;
+@property (nonatomic, weak) id<HEMPresenterErrorDelegate> errorDelegate;
 
 /*
  * @discussion

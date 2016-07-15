@@ -10,10 +10,21 @@
 
 @class SENPairedDevices;
 @class SENDeviceMetadata;
+@class SENPillMetadata;
+@class SENSleepPill;
 
 NS_ASSUME_NONNULL_BEGIN
 
 extern NSString* const HEMDeviceServiceErrorDomain;
+
+typedef NS_ENUM(NSInteger, HEMDeviceDfuState) {
+    HEMDeviceDfuStateNotStarted = 1,
+    HEMDeviceDfuStateConnecting,
+    HEMDeviceDfuStateUpdating,
+    HEMDeviceDfuStateValidating,
+    HEMDeviceDfuStateDisconnecting,
+    HEMDeviceDfuStateCompleted
+};
 
 /**
  * @discussion
@@ -29,9 +40,13 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
     HEMDeviceErrorUnpairPillFromSense = -6,
     HEMDeviceErrorUnlinkPillFromAccount = -7,
     HEMDeviceErrorUnlinkSenseFromAccount = -8,
-    HEMDeviceErrorSenseNotMatching = -9
+    HEMDeviceErrorSenseNotMatching = -9,
+    HEMDeviceErrorNoPillFirmwareURL = -10
 };
 
+typedef void(^HEMDevicePillHandler)(SENSleepPill* _Nullable sleepPill, NSError* _Nullable error);
+typedef void(^HEMDeviceDfuHandler)(NSError* _Nullable error);
+typedef void(^HEMDeviceDfuProgressHandler)(CGFloat progress, HEMDeviceDfuState state);
 typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSError* _Nullable error);
 
 /**
@@ -51,6 +66,15 @@ typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSE
 - (void)clearDevicesCache;
 - (void)refreshMetadata:(HEMDeviceMetadataHandler)completion;
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
+- (BOOL)isBleOn;
+- (BOOL)isBleStateAvailable;
+- (BOOL)isScanningPill;
+- (void)findNearestPill:(HEMDevicePillHandler)completion;
+- (void)beginPillDfuFor:(SENSleepPill*)sleepPill
+               progress:(HEMDeviceDfuProgressHandler)progressBlock
+             completion:(HEMDeviceDfuHandler)completion;
+- (BOOL)shouldSuppressPillFirmwareUpdate;
+- (BOOL)meetsPhoneBatteryRequirementForDFU:(float)batteryLevel;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

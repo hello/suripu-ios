@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0.6
+
+Note:
+
+* Bumping version number to create a true RC
+
 ## 1.5.0.5
 
 New:

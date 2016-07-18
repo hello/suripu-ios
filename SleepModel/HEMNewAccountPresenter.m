@@ -186,7 +186,11 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     // cancel
     NSString* cancelOption = NSLocalizedString(@"actions.close", nil);
     [sheet setOptionTextAlignment:NSTextAlignmentCenter];
-    [sheet addOptionWithTitle:cancelOption action:^{}];
+    [sheet addOptionWithTitle:cancelOption
+                   titleColor:[UIColor tintColor]
+                  description:nil
+                    imageName:nil
+                       action:^{}];
     
     [[self delegate] showController:sheet from:self];
 }

@@ -105,7 +105,7 @@ static CGFloat const HEMPIllDfuStatus4sBottomMargin = 10.0f;
     [statusLabel setHidden:[self pillToDfu] == nil];
     [statusLabel setText:[self statusForState:HEMDeviceDfuStateNotStarted]];
     
-    if (bottomConstraint) {
+    if (HEMIsIPhone4Family()) {
         [bottomConstraint setConstant:HEMPIllDfuStatus4sBottomMargin];
     }
     

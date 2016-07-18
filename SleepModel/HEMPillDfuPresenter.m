@@ -149,7 +149,7 @@ static CGFloat const HEMPIllDfuStatus4sBottomMargin = 10.0f;
         CALayer* layer = [CALayer layer];
         [layer setBackgroundColor:[[UIColor tintColor] CGColor]];
         [layer setAnchorPoint:CGPointMake(1.0f, 0.5f)];
-        [layer setCornerRadius:50.0f];
+        [layer setCornerRadius:CGRectGetWidth([[self illustrationView] bounds]) / 4.0f];
         _waveLayer = layer;
     }
     return _waveLayer;
@@ -179,7 +179,7 @@ static CGFloat const HEMPIllDfuStatus4sBottomMargin = 10.0f;
 
     CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"bounds.size.width"];
     [animation setFromValue:@0];
-    [animation setToValue:@((CGRectGetWidth([illustrationLayer bounds]) * 3) / 4)];
+    [animation setToValue:@((CGRectGetWidth([illustrationLayer bounds]) * 4) / 5)];
     [animation setDuration:HEMPillDfuWaveAnimeDuration];
     [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
     [animation setRepeatCount:MAXFLOAT];

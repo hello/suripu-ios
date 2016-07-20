@@ -11,13 +11,14 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMSenseDFUPresenter.h"
 #import "HEMOnboardingService.h"
+#import "HEMAlertViewController.h"
 
 @interface HEMSenseDFUViewController () <HEMSenseDFUDelegate, HEMPresenterErrorDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIButton *laterButton;
 
 @end
 
@@ -40,6 +41,7 @@
     [presenter bindWithUpdateButton:[self continueButton]];
     [presenter bindWithActivityIndicator:[self activityIndicator]
                              statusLabel:[self statusLabel]];
+    [presenter bindWithLaterButton:[self laterButton]];
     [presenter setErrorDelegate:self];
     [presenter setDfuDelegate:self];
     [self addPresenter:presenter];
@@ -55,6 +57,23 @@
 - (void)senseUpdateCompletedFrom:(HEMSenseDFUPresenter *)presenter {
     // TODO: go to voice tutorials
     [self completeOnboarding];
+}
+
+- (void)showConfirmationWithTitle:(NSString*)title
+                          message:(NSString*)message
+                         okAction:(HEMSenseDFUActionCallback)okAction
+                     cancelAction:(HEMSenseDFUActionCallback)cancelAction
+                             from:(HEMSenseDFUPresenter*)presenter {
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title
+                                                                             message:message];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil)
+                           style:HEMAlertViewButtonStyleRoundRect
+                          action:okAction];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil)
+                           style:HEMAlertViewButtonStyleBlueText
+                          action:cancelAction];
+    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
+    [dialogVC showFrom:self];
 }
 
 #pragma mark - Error Delegate

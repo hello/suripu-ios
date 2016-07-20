@@ -1953,6 +1953,25 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bNv-Hf-8QW">
+                                <rect key="frame" x="190" y="471" width="220" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="oHL-EM-Zls"/>
+                                    <constraint firstAttribute="height" constant="40" id="sYT-sa-wTo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="I'll do this later">
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" title=" ">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setAlarmLater:" destination="0qJ-qR-xla" eventType="touchUpInside" id="tJu-Pu-QYh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1962,6 +1981,7 @@
                             <constraint firstItem="G1S-ig-3QH" firstAttribute="centerX" secondItem="xcZ-J1-8Ot" secondAttribute="centerX" id="JEl-mt-cu1"/>
                             <constraint firstItem="8kh-Jt-xIO" firstAttribute="top" secondItem="K3g-bS-8dF" secondAttribute="bottom" constant="4" id="JnB-XO-2l5"/>
                             <constraint firstItem="QY5-eg-gDX" firstAttribute="top" secondItem="ziC-3H-Rps" secondAttribute="bottom" constant="35" id="KYO-71-Dg9"/>
+                            <constraint firstItem="bNv-Hf-8QW" firstAttribute="centerX" secondItem="xcZ-J1-8Ot" secondAttribute="centerX" id="L2u-Nf-BsN"/>
                             <constraint firstItem="ziC-3H-Rps" firstAttribute="centerX" secondItem="xcZ-J1-8Ot" secondAttribute="centerX" id="MGd-CU-HY3"/>
                             <constraint firstItem="S2F-Px-QzS" firstAttribute="centerY" secondItem="xcZ-J1-8Ot" secondAttribute="centerY" constant="10" id="OYc-4g-DAu"/>
                             <constraint firstAttribute="trailing" secondItem="5d5-Gw-aSY" secondAttribute="trailing" constant="20" id="QT8-yC-f2F"/>
@@ -1969,6 +1989,7 @@
                             <constraint firstItem="5d5-Gw-aSY" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" constant="20" id="aub-Ua-9HJ"/>
                             <constraint firstItem="S2F-Px-QzS" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" id="aw6-Hr-Txv"/>
                             <constraint firstItem="8kh-Jt-xIO" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" constant="20" id="bjx-Kt-H4H"/>
+                            <constraint firstItem="bNv-Hf-8QW" firstAttribute="bottom" secondItem="5d5-Gw-aSY" secondAttribute="top" constant="-15" id="c6U-b3-gAQ"/>
                             <constraint firstAttribute="trailing" secondItem="8kh-Jt-xIO" secondAttribute="trailing" constant="20" id="g0x-2z-a4V"/>
                             <constraint firstItem="ziC-3H-Rps" firstAttribute="top" secondItem="6py-Tz-9Zp" secondAttribute="bottom" constant="24" id="m1Z-Ru-RZu"/>
                             <constraint firstItem="y1L-J7-SAd" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" constant="20" id="mSx-FF-RjY"/>
@@ -1981,6 +2002,7 @@
                         <outlet property="continueButton" destination="5d5-Gw-aSY" id="Tr1-hy-xGd"/>
                         <outlet property="descriptionLabel" destination="y1L-J7-SAd" id="SIa-NZ-CiA"/>
                         <outlet property="descriptionTopConstraint" destination="vDS-iV-1Zv" id="Dk2-Qu-4Yb"/>
+                        <outlet property="laterButton" destination="bNv-Hf-8QW" id="5L9-Ck-O3a"/>
                         <outlet property="statusLabel" destination="ziC-3H-Rps" id="PVg-ax-AII"/>
                         <outlet property="titleHeightConstraint" destination="Axj-t1-8Xk" id="6i4-CJ-mUX"/>
                         <outlet property="titleLabel" destination="8kh-Jt-xIO" id="dQe-sQ-TXk"/>

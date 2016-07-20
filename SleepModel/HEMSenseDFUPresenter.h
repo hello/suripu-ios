@@ -14,10 +14,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^HEMSenseDFUActionCallback)(void);
+
 @protocol HEMSenseDFUDelegate <NSObject>
 
 - (void)senseUpdateCompletedFrom:(HEMSenseDFUPresenter*)presenter;
 - (void)senseUpdateLaterFrom:(HEMSenseDFUPresenter*)presenter;
+- (void)showConfirmationWithTitle:(NSString*)title
+                          message:(NSString*)message
+                         okAction:(HEMSenseDFUActionCallback)okAction
+                     cancelAction:(HEMSenseDFUActionCallback)cancelAction
+                             from:(HEMSenseDFUPresenter*)presenter;
 
 @end
 
@@ -29,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithUpdateButton:(UIButton*)updateButton;
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator
                       statusLabel:(UILabel*)statusLabel;
+- (void)bindWithLaterButton:(UIButton*)laterButton;
 
 @end
 

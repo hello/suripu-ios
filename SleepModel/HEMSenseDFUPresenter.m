@@ -18,6 +18,7 @@
 @property (nonatomic, weak) UIButton* updateButton;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, weak) UILabel* statusLabel;
+@property (nonatomic, weak) UIButton* laterButton;
 
 @end
 
@@ -54,6 +55,7 @@
     [[self updateButton] setHidden:updating];
     [[self activityIndicator] setHidden:!updating];
     [[self statusLabel] setHidden:!updating];
+    [[self laterButton] setHidden:updating];
     
     if (updating) {
         [[self activityIndicator] start];
@@ -63,6 +65,14 @@
     // always switch to retry after done
     NSString* retryText = [NSLocalizedString(@"actions.retry", nil) uppercaseString];
     [[self updateButton] setTitle:retryText forState:UIControlStateNormal];
+}
+
+- (void)bindWithLaterButton:(UIButton*)laterButton {
+    [laterButton setHidden:YES];
+    [laterButton addTarget:self
+                    action:@selector(updateLater)
+          forControlEvents:UIControlEventTouchUpInside];
+    [self setLaterButton:laterButton];
 }
 
 #pragma mark - Status
@@ -105,6 +115,17 @@
             [[strongSelf dfuDelegate] senseUpdateCompletedFrom:strongSelf];
         }
     }];
+}
+
+- (void)updateLater {
+    NSString* title = NSLocalizedString(@"onboarding.sense.dfu.later.dialog.title", nil);
+    NSString* message = NSLocalizedString(@"onboarding.sense.dfu.later.dialog.message", nil);
+    
+    __weak typeof(self) weakSelf = self;
+    [[self dfuDelegate] showConfirmationWithTitle:title message:message okAction:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf dfuDelegate] senseUpdateLaterFrom:strongSelf];
+    } cancelAction:nil from:self];
 }
 
 @end

@@ -863,3 +863,5 @@
 "onboarding.sense.dfu.error.generic" = "Sense was unable to update successfully. Please try again.";
 "onboarding.sense.dfu.status.sent" = "Notifying Sense";
 "onboarding.sense.dfu.status.in-progress" = "Sense is updating";
+"onboarding.sense.dfu.later.dialog.title" = "Update later";
+"onboarding.sense.dfu.later.dialog.message" = "Sense will try to update at a later time. You can begin using Sense, but some features may not be available until the update is complete.";

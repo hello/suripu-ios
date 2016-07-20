@@ -71,6 +71,7 @@ NSString* const kHEMAnalyticsEventPropWiFiScan = @"wifi_scan";
 NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";
 NSString* const kHEMAnalyticsEventPropPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventPropPillPlacement = @"pill_placement";
+NSString* const kHEMAnalyticsEventPropSenseDFU = @"sense_ota";
 
 NSString* const HEMAnalyticsEventOnbStart = @"Onboarding Start";
 NSString* const HEMAnalyticsEventAccount = @"Account";

@@ -689,7 +689,6 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 }
 
 - (void)cancelSenseDFUTimeout {
-    DDLogVerbose(@"sense dfu timed out");
     if ([self senseDFUTimer]) {
         [[self senseDFUTimer] invalidate];
         [self setSenseDFUTimer:nil];
@@ -697,6 +696,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 }
 
 - (void)senseDFUTimeout {
+    DDLogVerbose(@"sense dfu timed out");
     if ([self dfuCompletionHandler]) {
         NSString* reason = @"dfu process timed out";
         NSError* error = [self errorWithCode:HEMOnboardingErrorDFUTimeout reason:reason];

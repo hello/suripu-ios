@@ -25,7 +25,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureHelpButton];
     [self configurePresenter];
+}
+
+- (void)configureHelpButton {
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-dfu", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropSenseDFU];
 }
 
 - (void)configurePresenter {

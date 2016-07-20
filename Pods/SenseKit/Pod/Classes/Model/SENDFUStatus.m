@@ -47,7 +47,7 @@ static NSString* const SENDFUStatusError = @"ERROR";
 }
 
 - (BOOL)isRequired {
-    return [self currentState] == SENDFUStatusRequired;
+    return [self currentState] == SENDFUStateRequired;
 }
 
 - (BOOL)isInProgress {

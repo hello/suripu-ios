@@ -42,6 +42,7 @@
 #import "SENConditionRange.h"
 #import "SENDeviceMetadata.h"
 #import "SENDevicePairingInfo.h"
+#import "SENDFUStatus.h"
 #import "SENInsight.h"
 #import "SENKeyedArchiver.h"
 #import "SENLocalPreferences.h"

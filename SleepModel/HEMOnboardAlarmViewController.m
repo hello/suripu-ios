@@ -18,6 +18,11 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingService.h"
 #import "HEMEmbeddedVideoView.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMActivityCoverView.h"
+
+static CGFloat const HEMOnboardAlarmSavedDisplayDuration = 1.0f;
+static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
@@ -72,7 +77,7 @@
 }
 
 - (IBAction)setAlarmLater:(id)sender {
-    [self completeOnboarding];
+    [self next];
 }
 
 #pragma mark - HEMAlarmControllerDelegate
@@ -90,8 +95,38 @@
 
     [[nav view] addSubview:overlay];
     [self dismissViewControllerAnimated:NO completion:^{
-        [self completeOnboarding];
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        if (![service isDFURequiredForSense]) {
+            [self next];
+        } else {
+            HEMActivityCoverView* coverView = [HEMActivityCoverView new];
+            NSString* savedText = NSLocalizedString(@"actions.alarm-saved", nil);
+            [coverView showInView:overlay withText:savedText successMark:YES completion:^{
+                [self next];
+                [UIView animateWithDuration:HEMOnboardAlarmSavedAnimeDuration
+                                      delay:HEMOnboardAlarmSavedDisplayDuration
+                                    options:UIViewAnimationOptionBeginFromCurrentState
+                                 animations:^{
+                                     [overlay setAlpha:0.0f];
+                                 }
+                                 completion:^(BOOL finished) {
+                                     [overlay removeFromSuperview];
+                                 }];
+            }];
+        }
     }];
+}
+
+#pragma mark - Next
+
+- (void)next {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    if (![service isDFURequiredForSense]) {
+        [self completeOnboarding];
+    } else {
+        UIViewController* controller = [HEMOnboardingStoryboard instantiateSenseDFUViewController];
+        [[self navigationController] setViewControllers:@[controller] animated:YES];
+    }
 }
 
 @end

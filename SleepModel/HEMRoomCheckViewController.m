@@ -46,6 +46,9 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [self configureRoomCheckView];
     [self enableBackButton:NO];
     [self trackAnalyticsEvent:HEMAnalyticsEventRoomCheck];
+    
+    // use the time during room check to see if DFU is required for later
+    [[HEMOnboardingService sharedService] checkIfSenseDFUIsRequired];
 }
 
 - (void)configureRoomCheckView {

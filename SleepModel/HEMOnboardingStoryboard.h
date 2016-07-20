@@ -24,6 +24,7 @@
 +(NSString *)audioToSetupSegueIdentifier;
 +(NSString *)beforeSleepToSmartAlarmSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
++(NSString *)dfuSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
 +(NSString *)healthKitToLocationSegueIdentifier;
@@ -54,6 +55,7 @@
 +(id)instantiateRoomCheckViewController;
 +(id)instantiateSenseAudioViewController;
 +(id)instantiateSenseColorsViewController;
++(id)instantiateSenseDFUViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
 +(id)instantiateWeightPickerViewController;

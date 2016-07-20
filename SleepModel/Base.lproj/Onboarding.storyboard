@@ -1788,7 +1788,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set a Smart Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-LV-puG">
-                                <rect key="frame" x="24" y="24" width="552" height="34"/>
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="Nqw-Gt-yvj"/>
                                 </constraints>
@@ -1841,7 +1841,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5s-t3-orP" customClass="HEMActionButton">
-                                <rect key="frame" x="24" y="530" width="552" height="50"/>
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bBF-QE-aBI"/>
                                 </constraints>
@@ -1859,10 +1859,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="bottom" secondItem="XVL-7j-gjt" secondAttribute="top" id="BPi-Kh-w5b"/>
-                            <constraint firstItem="H5s-t3-orP" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="CCG-P5-zIt"/>
-                            <constraint firstItem="JeP-LV-puG" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="G0n-60-GNn"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="H5s-t3-orP" secondAttribute="trailing" constant="4" id="JE2-W7-Rq3"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="JeP-LV-puG" secondAttribute="trailing" constant="4" id="Q97-10-NmW"/>
+                            <constraint firstItem="H5s-t3-orP" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leading" constant="20" id="CCG-P5-zIt"/>
+                            <constraint firstItem="JeP-LV-puG" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leading" constant="20" id="G0n-60-GNn"/>
+                            <constraint firstAttribute="trailing" secondItem="H5s-t3-orP" secondAttribute="trailing" constant="20" id="JE2-W7-Rq3"/>
+                            <constraint firstAttribute="trailing" secondItem="JeP-LV-puG" secondAttribute="trailing" constant="20" id="Q97-10-NmW"/>
                             <constraint firstItem="XVL-7j-gjt" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-20" id="Vgs-uN-K1a"/>
                             <constraint firstAttribute="centerX" secondItem="6FP-vw-B5B" secondAttribute="centerX" id="e4n-j8-07l"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="top" secondItem="JeP-LV-puG" secondAttribute="bottom" constant="10" id="fQT-XM-WlO"/>
@@ -1884,11 +1884,111 @@
                         <outlet property="titleLabel" destination="JeP-LV-puG" id="q2S-e0-zoS"/>
                         <outlet property="videoView" destination="XVL-7j-gjt" id="tbS-Vb-YuS"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
+                        <segue destination="0on-Mh-6AZ" kind="show" identifier="dfu" id="BBN-wL-Nmg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="16559" y="905"/>
+        </scene>
+        <!--SenseDFU View Controller-->
+        <scene sceneID="oof-oH-4Rh">
+            <objects>
+                <viewController storyboardIdentifier="senseDFU" id="0on-Mh-6AZ" customClass="HEMSenseDFUViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="K3g-bS-8dF"/>
+                        <viewControllerLayoutGuide type="bottom" id="QY5-eg-gDX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xcZ-J1-8Ot">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseBackground" translatesAutoresizingMaskIntoConstraints="NO" id="S2F-Px-QzS">
+                                <rect key="frame" x="0.0" y="205" width="600" height="210"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update your Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kh-Jt-xIO">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="Axj-t1-8Xk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Sense needs an update before use.  This will take a few moments." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1L-J7-SAd">
+                                <rect key="frame" x="20" y="68" width="560" height="21"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseUpdate" translatesAutoresizingMaskIntoConstraints="NO" id="G1S-ig-3QH">
+                                <rect key="frame" x="205" y="208" width="190" height="185"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5d5-Gw-aSY" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="526" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="PAr-CW-enx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setAlarmNow:" destination="0qJ-qR-xla" eventType="touchUpInside" id="gDF-QK-HQc"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6py-Tz-9Zp" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="275" y="463" width="50" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="w33-bH-V7P"/>
+                                    <constraint firstAttribute="height" constant="50" id="y0z-S5-6Mu"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading update..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziC-3H-Rps">
+                                <rect key="frame" x="195" y="537" width="210" height="28"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="G1S-ig-3QH" firstAttribute="centerY" secondItem="xcZ-J1-8Ot" secondAttribute="centerY" id="8IN-EN-vrH"/>
+                            <constraint firstItem="6py-Tz-9Zp" firstAttribute="centerX" secondItem="xcZ-J1-8Ot" secondAttribute="centerX" id="CNI-2c-jCI"/>
+                            <constraint firstItem="QY5-eg-gDX" firstAttribute="top" secondItem="5d5-Gw-aSY" secondAttribute="bottom" constant="24" id="HRu-Rd-NyX"/>
+                            <constraint firstItem="G1S-ig-3QH" firstAttribute="centerX" secondItem="xcZ-J1-8Ot" secondAttribute="centerX" id="JEl-mt-cu1"/>
+                            <constraint firstItem="8kh-Jt-xIO" firstAttribute="top" secondItem="K3g-bS-8dF" secondAttribute="bottom" constant="4" id="JnB-XO-2l5"/>
+                            <constraint firstItem="QY5-eg-gDX" firstAttribute="top" secondItem="ziC-3H-Rps" secondAttribute="bottom" constant="35" id="KYO-71-Dg9"/>
+                            <constraint firstItem="ziC-3H-Rps" firstAttribute="centerX" secondItem="xcZ-J1-8Ot" secondAttribute="centerX" id="MGd-CU-HY3"/>
+                            <constraint firstItem="S2F-Px-QzS" firstAttribute="centerY" secondItem="xcZ-J1-8Ot" secondAttribute="centerY" constant="10" id="OYc-4g-DAu"/>
+                            <constraint firstAttribute="trailing" secondItem="5d5-Gw-aSY" secondAttribute="trailing" constant="20" id="QT8-yC-f2F"/>
+                            <constraint firstAttribute="trailing" secondItem="S2F-Px-QzS" secondAttribute="trailing" id="ZCI-F0-T9d"/>
+                            <constraint firstItem="5d5-Gw-aSY" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" constant="20" id="aub-Ua-9HJ"/>
+                            <constraint firstItem="S2F-Px-QzS" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" id="aw6-Hr-Txv"/>
+                            <constraint firstItem="8kh-Jt-xIO" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" constant="20" id="bjx-Kt-H4H"/>
+                            <constraint firstAttribute="trailing" secondItem="8kh-Jt-xIO" secondAttribute="trailing" constant="20" id="g0x-2z-a4V"/>
+                            <constraint firstItem="ziC-3H-Rps" firstAttribute="top" secondItem="6py-Tz-9Zp" secondAttribute="bottom" constant="24" id="m1Z-Ru-RZu"/>
+                            <constraint firstItem="y1L-J7-SAd" firstAttribute="leading" secondItem="xcZ-J1-8Ot" secondAttribute="leading" constant="20" id="mSx-FF-RjY"/>
+                            <constraint firstAttribute="trailing" secondItem="y1L-J7-SAd" secondAttribute="trailing" constant="20" id="sxQ-LK-dWs"/>
+                            <constraint firstItem="y1L-J7-SAd" firstAttribute="top" secondItem="8kh-Jt-xIO" secondAttribute="bottom" constant="10" id="vDS-iV-1Zv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="6py-Tz-9Zp" id="LVV-eU-rAG"/>
+                        <outlet property="continueButton" destination="5d5-Gw-aSY" id="Tr1-hy-xGd"/>
+                        <outlet property="descriptionLabel" destination="y1L-J7-SAd" id="SIa-NZ-CiA"/>
+                        <outlet property="descriptionTopConstraint" destination="vDS-iV-1Zv" id="Dk2-Qu-4Yb"/>
+                        <outlet property="statusLabel" destination="ziC-3H-Rps" id="PVg-ax-AII"/>
+                        <outlet property="titleHeightConstraint" destination="Axj-t1-8Xk" id="6i4-CJ-mUX"/>
+                        <outlet property="titleLabel" destination="8kh-Jt-xIO" id="dQe-sQ-TXk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rFy-4R-NYq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="17320" y="905"/>
         </scene>
         <!--Room Check View Controller-->
         <scene sceneID="XHB-1W-ISz">
@@ -3093,6 +3193,7 @@ Flip the switch to On</string>
         <image name="sensePlacement" width="320" height="198"/>
         <image name="sensePurple" width="187" height="184"/>
         <image name="senseRed" width="186" height="183"/>
+        <image name="senseUpdate" width="190" height="185"/>
         <image name="senseYellow" width="186" height="183"/>
         <image name="settingsAppIcon" width="32" height="32"/>
         <image name="sleepPill" width="320" height="130"/>

@@ -610,7 +610,8 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     }];
 }
 
-- (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUHandler)completion {
+- (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUStatusHandler)update
+                        completion:(HEMOnboardingDFUHandler)completion {
     __weak typeof(self) weakSelf = self;
     [SENAPIDevice forceOTA:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -620,12 +621,12 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
         } else {
             [strongSelf setDfuCompletionHandler:completion];
             [strongSelf scheduleDFUTimeout];
-            [strongSelf checkSenseDFUStatus];
+            [strongSelf checkSenseDFUStatus:update];
         }
     }];
 }
 
-- (void)checkSenseDFUStatus {
+- (void)checkSenseDFUStatus:(HEMOnboardingDFUStatusHandler)update {
     if (![self senseDFUTimer]) {
         return;
     }
@@ -665,9 +666,13 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
                 break;
             }
             default: {
+                if (update) {
+                    update (status);
+                }
+                
                 int64_t delay = (int64_t) (HEMOnboardingSenseDFUCheckInterval * NSEC_PER_SEC);
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-                    [strongSelf checkSenseDFUStatus];
+                    [strongSelf checkSenseDFUStatus:update];
                 });
                 break;
             }

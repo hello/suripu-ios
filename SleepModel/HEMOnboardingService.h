@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class SENSenseWiFiStatus;
+@class SENDFUStatus;
 
 extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
@@ -47,6 +48,7 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 };
 
 typedef void(^HEMOnboardingDFUHandler)(NSError* _Nullable error);
+typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 
 @class SENSense;
 @class SENAccount;
@@ -373,7 +375,8 @@ typedef void(^HEMOnboardingDFUHandler)(NSError* _Nullable error);
 
 - (void)checkIfSenseDFUIsRequired;
 - (BOOL)isDFURequiredForSense;
-- (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUHandler)completion;
+- (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUStatusHandler)update
+                        completion:(HEMOnboardingDFUHandler)completion;
 
 @end
 

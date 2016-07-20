@@ -6,6 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import <SenseKit/SENDFUStatus.h>
+
 #import "HEMSenseDFUPresenter.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMStyle.h"
@@ -63,6 +65,17 @@
     [[self updateButton] setTitle:retryText forState:UIControlStateNormal];
 }
 
+#pragma mark - Status
+
+- (NSString*)textForStatus:(SENDFUStatus*)status {
+    switch ([status currentState]) {
+        case SENDFUStateInProgress:
+            return NSLocalizedString(@"onboarding.sense.dfu.status.in-progress", nil);
+        default:
+            return NSLocalizedString(@"onboarding.sense.dfu.status.sent", nil);
+    }
+}
+
 #pragma mark - Errors
 
 - (void)showUpdateError:(__unused NSError*)error {
@@ -81,7 +94,10 @@
     [self showUpdatingState:YES];
     
     __weak typeof(self) weakSelf = self;
-    [[self onboardingService] forceSenseToUpdateFirmware:^(NSError * error) {
+    [[self onboardingService] forceSenseToUpdateFirmware:^(SENDFUStatus* status) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf statusLabel] setText:[strongSelf textForStatus:status]];
+    } completion:^(NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [strongSelf showUpdateError:error];

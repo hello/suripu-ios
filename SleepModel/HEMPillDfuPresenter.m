@@ -27,8 +27,9 @@ static NSString* const HEMPillDfuErrorDomain = @"is.hello.app.pill.dfu";
 static NSInteger const HEMPillDfuBLECheckAttempts = 10;
 
 static CGFloat const HEMPillDfuSuccessDelay = 2.0f;
-static CGFloat const HEMPillDfuWaveAnimeDuration = 2.0f;
+static CGFloat const HEMPillDfuWaveAnimeDuration = 1.5f;
 static CGFloat const HEMPIllDfuStatus4sBottomMargin = 10.0f;
+static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
 
 @interface HEMPillDfuPresenter()
 
@@ -173,20 +174,29 @@ static CGFloat const HEMPIllDfuStatus4sBottomMargin = 10.0f;
     CALayer* parentLayer = [illustrationLayer superlayer];
     CALayer* backgroundLayer = [self illustrationBgLayer];
 
-    [waveLayer setCornerRadius:CGRectGetHeight([illustrationLayer frame]) / 2.0f];
+    [waveLayer setCornerRadius:CGRectGetHeight([illustrationLayer frame]) / 3.0f];
     [waveLayer setFrame:[self illustrationContentFrame]];
     [parentLayer insertSublayer:waveLayer above:backgroundLayer];
-
-    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"bounds.size.width"];
-    [animation setFromValue:@0];
-    [animation setToValue:@((CGRectGetWidth([illustrationLayer bounds]) * 4) / 5)];
-    [animation setDuration:HEMPillDfuWaveAnimeDuration];
-    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-    [animation setRepeatCount:MAXFLOAT];
     
-    [waveLayer addAnimation:animation forKey:@"bounds.size.width"];
+    CABasicAnimation* expand = [CABasicAnimation animationWithKeyPath:@"bounds.size.width"];
+    [expand setFromValue:@0];
+    [expand setToValue:@((CGRectGetWidth([illustrationLayer bounds]) * 4) / 5)];
+    [expand setDuration:HEMPillDfuWaveAnimeDuration];
+    [expand setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
     
-    DDLogVerbose(@"image height %f, frame height %f", [[self illustrationView] image].size.height, CGRectGetHeight([illustrationLayer frame]));
+    CABasicAnimation* fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    [fade setFromValue:@1];
+    [fade setToValue:@0];
+    [fade setBeginTime:HEMPillDfuWaveAnimeDuration];
+    [fade setDuration:HEMPillDfuWaveAnimeFadeDuration];
+    [fade setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+    
+    CAAnimationGroup* group = [CAAnimationGroup animation];
+    [group setAnimations:@[fade, expand]];
+    [group setRepeatCount:MAXFLOAT];
+    [group setDuration:HEMPillDfuWaveAnimeFadeDuration + HEMPillDfuWaveAnimeDuration];
+    
+    [waveLayer addAnimation:group forKey:@"waveAnimation"];
 }
 
 - (void)stopWaveAnimation {

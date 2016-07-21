@@ -260,6 +260,11 @@ NSString* const HEMAnalyticsEventPillDfuStart = @"Pill Update Start";
 NSString* const HEMAnalyticsEventPillDfuOTAStart = @"Pill Update OTA Start";
 NSString* const HEMAnalyticsEventPillDfuDone = @"Pill Update Complete";
 
+// sense forced ota dfu
+NSString* const HEMAnalyticsEventSenseDFU = @"Sense DFU";
+NSString* const HEMAnalyticsEventSenseDFUBegin = @"Sense DFU begin";
+NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";
@@ -461,6 +466,13 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
         name = [HEMAnalyticsEventOnboardingPrefix stringByAppendingFormat:@" %@", name];
     }
     [self track:name properties:props];
+}
+
+#pragma mark - Sense Forced OTA DFU
+
++ (void)trackSenseUpdate:(SENDFUStatus*)status {
+    [self track:@"Sense DFU status"
+     properties:@{@"status" : @([status currentState])}];
 }
 
 @end

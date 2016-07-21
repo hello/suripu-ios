@@ -28,6 +28,7 @@
     [super viewDidLoad];
     [self configureHelpButton];
     [self configurePresenter];
+    [SENAnalytics track:HEMAnalyticsEventSenseDFU];
 }
 
 - (void)configureHelpButton {

@@ -19,6 +19,7 @@
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, weak) UILabel* statusLabel;
 @property (nonatomic, weak) UIButton* laterButton;
+@property (nonatomic, strong) SENDFUStatus* previousStatus;
 
 @end
 
@@ -103,15 +104,21 @@
 - (void)update {
     [self showUpdatingState:YES];
     
+    [SENAnalytics track:HEMAnalyticsEventSenseDFUBegin];
     __weak typeof(self) weakSelf = self;
     [[self onboardingService] forceSenseToUpdateFirmware:^(SENDFUStatus* status) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([[self previousStatus] currentState] != [status currentState]) {
+            [SENAnalytics trackSenseUpdate:status];
+        }
         [[strongSelf statusLabel] setText:[strongSelf textForStatus:status]];
+        [strongSelf setPreviousStatus:status];
     } completion:^(NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [strongSelf showUpdateError:error];
         } else {
+            [SENAnalytics track:HEMAnalyticsEventSenseDFUEnd];
             [[strongSelf dfuDelegate] senseUpdateCompletedFrom:strongSelf];
         }
     }];

@@ -108,7 +108,7 @@
     __weak typeof(self) weakSelf = self;
     [[self onboardingService] forceSenseToUpdateFirmware:^(SENDFUStatus* status) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([[self previousStatus] currentState] != [status currentState]) {
+        if ([[strongSelf previousStatus] currentState] != [status currentState]) {
             [SENAnalytics trackSenseUpdate:status];
         }
         [[strongSelf statusLabel] setText:[strongSelf textForStatus:status]];

@@ -598,16 +598,18 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 
 - (void)checkIfSenseDFUIsRequired {
     DDLogVerbose(@"checking if sense dfu is required");
-    __weak typeof(self) weakSelf = self;
-    [SENAPIDevice getOTAStatus:^(SENDFUStatus* status, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error) {
-            [SENAnalytics trackError:error];
-        } else {
-            DDLogInfo(@"DFU state is %ld", (long)[status currentState]);
-            [strongSelf setCurrentDFUStatus:status];
-        }
-    }];
+    if (![self currentDFUStatus]) {
+        __weak typeof(self) weakSelf = self;
+        [SENAPIDevice getOTAStatus:^(SENDFUStatus* status, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error];
+            } else {
+                DDLogInfo(@"DFU state is %ld", (long)[status currentState]);
+                [strongSelf setCurrentDFUStatus:status];
+            }
+        }];
+    }
 }
 
 - (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUStatusHandler)update

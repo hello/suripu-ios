@@ -38,6 +38,9 @@ static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
     [self configureVideoView];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
+    
+    [[HEMOnboardingService sharedService] checkIfSenseDFUIsRequired]; // in case RC was not shown
+    
     [self trackAnalyticsEvent:HEMAnalyticsEventFirstAlarm];
 }
 

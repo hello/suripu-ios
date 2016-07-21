@@ -412,9 +412,7 @@ final public class EVReflection {
             }
             appName = (bundle.bundleIdentifier!).characters.split(isSeparator: {$0 == "."}).map({ String($0) }).last ?? ""
         }
-        let cleanAppName = appName
-            .stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-            .stringByReplacingOccurrencesOfString("-", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
+        let cleanAppName = appName.componentsSeparatedByCharactersInSet(illegalCharacterSet).joinWithSeparator("_")
         return cleanAppName
     }
     
@@ -451,9 +449,7 @@ final public class EVReflection {
     
     private static func bundleForClass(forClass: AnyClass, bundle: NSBundle) -> String {
         let appName = (bundle.infoDictionary![kCFBundleNameKey as String] as? String)!.characters.split(isSeparator: {$0 == "."}).map({ String($0) }).last ?? ""
-        let cleanAppName = appName
-            .stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-            .stringByReplacingOccurrencesOfString("-", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
+        let cleanAppName = appName.componentsSeparatedByCharactersInSet(illegalCharacterSet).joinWithSeparator("_")
         return cleanAppName
     }
 
@@ -617,10 +613,10 @@ final public class EVReflection {
             valueType = "\(mi.subjectType)"
         }
         
-        return valueForAnyDetail(parentObject, theValue: theValue, valueType: valueType)
+        return valueForAnyDetail(parentObject, key: key, theValue: theValue, valueType: valueType)
     }
     
-    public class func valueForAnyDetail(parentObject: Any? = nil, theValue: Any, valueType: String) -> (value: AnyObject, type: String, isObject: Bool) {
+    public class func valueForAnyDetail(parentObject: Any? = nil, key: String? = nil, theValue: Any, valueType: String) -> (value: AnyObject, type: String, isObject: Bool) {
         
         if theValue is NSNumber {
             return (theValue as! NSNumber, "NSNumber", false)
@@ -670,6 +666,9 @@ final public class EVReflection {
             }
             // isObject is false to prevent parsing of objects like CKRecord, CKRecordId and other objects.
             return (theValue as! NSObject, valueType, false)
+        }
+        if valueType.hasPrefix("Array<") && parentObject is EVArrayConvertable {
+            return ((parentObject as! EVArrayConvertable).convertArray(key ?? "_unknownKey", array: theValue), valueType, false)
         }
         (parentObject as? EVObject)?.addStatusMessage(.InvalidType, message: "valueForAny unkown type \(valueType) for value: \(theValue).")
         print("ERROR: valueForAny unkown type \(valueType) for value: \(theValue).")

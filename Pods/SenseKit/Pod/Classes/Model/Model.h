@@ -25,6 +25,7 @@
 #import "SENSleepSoundStatus.h"
 #import "SENSleepSoundRequest.h"
 #import "SENSleepSoundsState.h"
+#import "SENDFUStatus.h"
 
 void SENClearModel();
 

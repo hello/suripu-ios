@@ -38,6 +38,9 @@ static NSInteger const HEMOnboardingMaxSenseScanAttempts = 10;
 // settings / preferences
 static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
+static CGFloat const HEMOnboardingSenseDFUTimeout = 150.0f;
+static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
+
 @interface HEMOnboardingService()
 
 @property (nonatomic, assign, getter=isPollingSensorData) BOOL pollingSensorData;
@@ -47,6 +50,9 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 @property (nonatomic, strong) SENAccount* currentAccount;
 @property (nonatomic, strong) SENSenseManager* currentSenseManager;
 @property (nonatomic, assign, getter=shouldStopPreScanningForSenses) BOOL stopPreScanningForSenses;
+@property (nonatomic, strong) SENDFUStatus* currentDFUStatus;
+@property (nonatomic, strong) NSTimer* senseDFUTimer;
+@property (nonatomic, copy)   HEMOnboardingDFUHandler dfuCompletionHandler;
 
 @end
 
@@ -586,6 +592,125 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     // if you call this method, you want to leave onboarding so make sure it's set
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsFinished];
     [self clearAll];
+}
+
+#pragma mark - Force OTA
+
+- (void)checkIfSenseDFUIsRequired {
+    DDLogVerbose(@"checking if sense dfu is required");
+    if (![self currentDFUStatus]) {
+        __weak typeof(self) weakSelf = self;
+        [SENAPIDevice getOTAStatus:^(SENDFUStatus* status, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error];
+            } else {
+                DDLogInfo(@"DFU state is %ld", (long)[status currentState]);
+                [strongSelf setCurrentDFUStatus:status];
+            }
+        }];
+    }
+}
+
+- (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUStatusHandler)update
+                        completion:(HEMOnboardingDFUHandler)completion {
+    __weak typeof(self) weakSelf = self;
+    [SENAPIDevice forceOTA:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error];
+            completion (error);
+        } else {
+            [strongSelf setDfuCompletionHandler:completion];
+            [strongSelf scheduleDFUTimeout];
+            [strongSelf checkSenseDFUStatus:update];
+        }
+    }];
+}
+
+- (void)checkSenseDFUStatus:(HEMOnboardingDFUStatusHandler)update {
+    if (![self senseDFUTimer]) {
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    void(^finish)(NSError* error) = ^(NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf cancelSenseDFUTimeout];
+        
+        if ([strongSelf dfuCompletionHandler]) {
+            [strongSelf dfuCompletionHandler] (error);
+            [strongSelf setDfuCompletionHandler:nil];
+        }
+        
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+    };
+    
+    [SENAPIDevice getOTAStatus:^(SENDFUStatus* status, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            finish (error);
+        }
+        
+        DDLogVerbose(@"current dfu status %ld", (long)[status currentState]);
+        
+        switch ([status currentState]) {
+            case SENDFUStateComplete: {
+                finish(nil);
+                break;
+            }
+            case SENDFUStateError: {
+                NSString* reason = @"sense dfu status check returned error state";
+                finish ([strongSelf errorWithCode:HEMOnboardingErrorDFUStatusError
+                                           reason:reason]);
+                break;
+            }
+            default: {
+                if (update) {
+                    update (status);
+                }
+                
+                int64_t delay = (int64_t) (HEMOnboardingSenseDFUCheckInterval * NSEC_PER_SEC);
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+                    [strongSelf checkSenseDFUStatus:update];
+                });
+                break;
+            }
+        }
+    }];
+}
+
+- (BOOL)isDFURequiredForSense {
+    return [[self currentDFUStatus] isRequired];
+}
+
+- (void)scheduleDFUTimeout {
+    [self cancelSenseDFUTimeout];
+    [self setSenseDFUTimer:[NSTimer scheduledTimerWithTimeInterval:HEMOnboardingSenseDFUTimeout
+                                                            target:self
+                                                          selector:@selector(senseDFUTimeout)
+                                                          userInfo:nil
+                                                           repeats:NO]];
+}
+
+- (void)cancelSenseDFUTimeout {
+    if ([self senseDFUTimer]) {
+        [[self senseDFUTimer] invalidate];
+        [self setSenseDFUTimer:nil];
+    }
+}
+
+- (void)senseDFUTimeout {
+    DDLogVerbose(@"sense dfu timed out");
+    if ([self dfuCompletionHandler]) {
+        NSString* reason = @"dfu process timed out";
+        NSError* error = [self errorWithCode:HEMOnboardingErrorDFUTimeout reason:reason];
+        [self dfuCompletionHandler] (error);
+    }
+    [self setSenseDFUTimer:nil];
+    [self setDfuCompletionHandler:nil];
 }
 
 #pragma mark - Notifications

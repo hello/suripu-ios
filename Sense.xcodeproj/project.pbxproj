@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22FD6CB80B60761AE694D664 /* Pods_SenseApp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97C9247C541175207F6E1DA /* Pods_SenseApp_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -289,6 +290,8 @@
 		BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */; };
 		BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */; };
 		BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */; };
+		BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9826631D3ECDB7009518CA /* HEMSenseDFUViewController.m */; };
+		BF9826671D3ECF89009518CA /* HEMSenseDFUPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9826661D3ECF89009518CA /* HEMSenseDFUPresenter.m */; };
 		BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */; };
 		BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */; };
 		BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC381A9BB29D00AEC04C /* HEMConfig.m */; };
@@ -401,7 +404,6 @@
 		BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */; };
 		BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */; };
 		BFFCEFD91D074F6800CA0E54 /* HEMLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */; };
-		D2D3EECEBC108EEC403517AD /* Pods_SenseApp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25161F55284E12F52B1E0964 /* Pods_SenseApp_Tests.framework */; };
 		EB784F705A26CD9F419529BF /* Pods_SenseApp_Sense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */; };
 /* End PBXBuildFile section */
 
@@ -445,7 +447,6 @@
 
 /* Begin PBXFileReference section */
 		1CEC3006712323A3E96169F0 /* Pods-SenseApp-Sense.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.dev.xcconfig"; sourceTree = "<group>"; };
-		25161F55284E12F52B1E0964 /* Pods_SenseApp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31D4922B927AF772E36F931E /* Pods-SenseApp-SenseWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		541055DBD085814436590F0F /* Pods-SenseApp-Sense.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.beta.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sense.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -467,7 +468,6 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		645CDA400FCEFAF1CE273637 /* Pods-SenseApp-Sense.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.debug.xcconfig"; sourceTree = "<group>"; };
 		6653AD99FE468406DA5C085D /* Pods-SenseApp-SenseWidget.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.dev.xcconfig"; sourceTree = "<group>"; };
-		867FA3D57FC62AA0B0EA2962 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8A03386A1974AFD800BE8327 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8A03386C197DD2D300BE8327 /* HEMSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTableViewController.h; sourceTree = "<group>"; };
 		8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsTableViewController.m; sourceTree = "<group>"; };
@@ -652,12 +652,10 @@
 		8B45075E1C17951F00359453 /* HEMSelectHostPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSelectHostPresenter.h; sourceTree = "<group>"; };
 		8B45075F1C17951F00359453 /* HEMSelectHostPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostPresenter.m; sourceTree = "<group>"; };
 		9A7FF086E3164E5F301A0EC7 /* Pods-SenseApp-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.release.xcconfig"; sourceTree = "<group>"; };
-		A5A74F473190037EEDFEBF72 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A736EFE31A8A304180BEABE8 /* Pods-SenseApp-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		AAA1431DCC9B925A41AD6C09 /* Pods-SenseApp-SenseWidget.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.beta.xcconfig"; sourceTree = "<group>"; };
 		B17615B39D25C4F006BA0C14 /* Pods-SenseApp-Sense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.release.xcconfig"; sourceTree = "<group>"; };
 		B8353AF28D608827B2C9734A /* Pods-SenseApp-Tests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.beta.xcconfig"; sourceTree = "<group>"; };
-		B8401EBD13F630F0782660EB /* Pods-Tests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.beta.xcconfig"; sourceTree = "<group>"; };
 		BD890070F879EC0621BA6859 /* Pods_SenseApp_SenseWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_SenseWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF005C6E19FECACC00E68E87 /* HEMWifiPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiPickerViewController.h; sourceTree = "<group>"; };
 		BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiPickerViewController.m; sourceTree = "<group>"; };
@@ -965,6 +963,10 @@
 		BF9450A81BC316CE00BA0023 /* HEMUnreadAlertService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnreadAlertService.h; sourceTree = "<group>"; };
 		BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnreadAlertService.m; sourceTree = "<group>"; };
 		BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SystemAlerts.xcassets; sourceTree = "<group>"; };
+		BF9826621D3ECDB7009518CA /* HEMSenseDFUViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseDFUViewController.h; sourceTree = "<group>"; };
+		BF9826631D3ECDB7009518CA /* HEMSenseDFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseDFUViewController.m; sourceTree = "<group>"; };
+		BF9826651D3ECF89009518CA /* HEMSenseDFUPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseDFUPresenter.h; sourceTree = "<group>"; };
+		BF9826661D3ECF89009518CA /* HEMSenseDFUPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseDFUPresenter.m; sourceTree = "<group>"; };
 		BF98E4411A422D0B00E3CDEB /* NSDate+HEMRelative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HEMRelative.h"; sourceTree = "<group>"; };
 		BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+HEMRelative.m"; sourceTree = "<group>"; };
 		BF98FC341A98017C00AEC04C /* HEMTextFooterCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTextFooterCollectionReusableView.h; sourceTree = "<group>"; };
@@ -1172,7 +1174,7 @@
 		BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HEMPresenter+HEMPhoto.m"; sourceTree = "<group>"; };
 		BFFCEFD71D074F6800CA0E54 /* HEMLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationService.h; sourceTree = "<group>"; };
 		BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationService.m; sourceTree = "<group>"; };
-		CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.dev.xcconfig"; sourceTree = "<group>"; };
+		C97C9247C541175207F6E1DA /* Pods_SenseApp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D772BFE52D2777422290F4B9 /* Pods-SenseApp-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.dev.xcconfig"; sourceTree = "<group>"; };
 		DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Sense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC02F45E18D78A3EDEFEA4DD /* Pods-SenseApp-SenseWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.release.xcconfig"; sourceTree = "<group>"; };
@@ -1199,7 +1201,7 @@
 			files = (
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				D2D3EECEBC108EEC403517AD /* Pods_SenseApp_Tests.framework in Frameworks */,
+				22FD6CB80B60761AE694D664 /* Pods_SenseApp_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1254,7 +1256,7 @@
 				BF7F1BC919E304050028F799 /* NotificationCenter.framework */,
 				DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */,
 				BD890070F879EC0621BA6859 /* Pods_SenseApp_SenseWidget.framework */,
-				25161F55284E12F52B1E0964 /* Pods_SenseApp_Tests.framework */,
+				C97C9247C541175207F6E1DA /* Pods_SenseApp_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1842,10 +1844,6 @@
 				DC02F45E18D78A3EDEFEA4DD /* Pods-SenseApp-SenseWidget.release.xcconfig */,
 				AAA1431DCC9B925A41AD6C09 /* Pods-SenseApp-SenseWidget.beta.xcconfig */,
 				6653AD99FE468406DA5C085D /* Pods-SenseApp-SenseWidget.dev.xcconfig */,
-				867FA3D57FC62AA0B0EA2962 /* Pods-Tests.debug.xcconfig */,
-				A5A74F473190037EEDFEBF72 /* Pods-Tests.release.xcconfig */,
-				B8401EBD13F630F0782660EB /* Pods-Tests.beta.xcconfig */,
-				CD3086B8FAE67DF6E5F90440 /* Pods-Tests.dev.xcconfig */,
 				A736EFE31A8A304180BEABE8 /* Pods-SenseApp-Tests.debug.xcconfig */,
 				9A7FF086E3164E5F301A0EC7 /* Pods-SenseApp-Tests.release.xcconfig */,
 				B8353AF28D608827B2C9734A /* Pods-SenseApp-Tests.beta.xcconfig */,
@@ -1927,6 +1925,8 @@
 				BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */,
 				BFE872CC1A2F9ADC00494231 /* HEMRoomCheckViewController.h */,
 				BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */,
+				BF9826621D3ECDB7009518CA /* HEMSenseDFUViewController.h */,
+				BF9826631D3ECDB7009518CA /* HEMSenseDFUViewController.m */,
 			);
 			name = "Post Set Up";
 			sourceTree = "<group>";
@@ -2592,6 +2592,8 @@
 				BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */,
 				BF31A5D81D07AEC20054D82E /* HEMLocationRequestPresenter.h */,
 				BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */,
+				BF9826651D3ECF89009518CA /* HEMSenseDFUPresenter.h */,
+				BF9826661D3ECF89009518CA /* HEMSenseDFUPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3201,6 +3203,8 @@
 				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC619E304050028F799 /* Resources */,
 				AA89D7715779E4B8D8FC11A9 /* 📦 Copy Pods Resources */,
+				447A3E6444D26082B8EA76CB /* 📦 Embed Pods Frameworks */,
+				BF47FE2B1D3DB15100660AF7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3386,6 +3390,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		447A3E6444D26082B8EA76CB /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		48F04F04604B32E4EFDFACF0 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3474,6 +3493,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		BF47FE2B1D3DB15100660AF7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\n    rm -fr Frameworks\nfi";
 		};
 		D4E5DC9D08546ECB018504F7 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3793,6 +3825,7 @@
 				8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */,
 				8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */,
 				BFA884B71C1A30F500613069 /* HEMTimeZoneAlertService.m in Sources */,
+				BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,
 				BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */,
@@ -3858,6 +3891,7 @@
 				BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */,
 				8A1743B719A7B471001E3C15 /* HEMSleepGraphViewController.m in Sources */,
 				BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */,
+				BF9826671D3ECF89009518CA /* HEMSenseDFUPresenter.m in Sources */,
 				BFC99BBD1B69AC04008F7F0D /* HEMAppReviewAnswer.m in Sources */,
 				BFAB22DC1AD3613800CCBF8A /* HEMRoomCheckView.m in Sources */,
 				BFE375FA1CF4CAAD0029EE66 /* UIAlertController+HEMPhotoOptions.m in Sources */,

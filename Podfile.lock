@@ -17,12 +17,12 @@ PODS:
   - Analytics (3.0.7)
   - AttributedMarkdown (0.9.2)
   - BEMSimpleLineGraph (3.3)
-  - Bolts (1.8.3):
-    - Bolts/AppLinks (= 1.8.3)
-    - Bolts/Tasks (= 1.8.3)
-  - Bolts/AppLinks (1.8.3):
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
-  - Bolts/Tasks (1.8.3)
+  - Bolts/Tasks (1.8.4)
   - Bugsnag (4.1.0):
     - Bugsnag/no-arc (= 4.1.0)
   - Bugsnag/no-arc (4.1.0)
@@ -35,7 +35,7 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.0.3):
     - CocoaLumberjack/Default
-  - EVReflection (2.38.3)
+  - EVReflection (2.40.0)
   - FBSDKCoreKit (4.11.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.11.0):
@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: a48ba92abbc822eae504f1a0ed9e75b6466ff3e6
+    :commit: 01a944eb7934b7970dcc53e790782c6f3a12e1d3
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -172,11 +172,11 @@ SPEC CHECKSUMS:
   Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
   AttributedMarkdown: ac5060667280be8cc8ee33a46c73e4ec6b17ca1a
   BEMSimpleLineGraph: 5999b2da02b6e935121608cfc58f6c369e06bde8
-  Bolts: 52551f96df2f8aac6b4414347f3f8353a39f1966
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Bugsnag: 4c3f744efa9d76d9b17fddbc940e881436464cee
   CGFloatType: fa1da294540051a76750092a427b95296bbdc006
   CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
-  EVReflection: c2160230031af745751e62b91870d25fe5b4e187
+  EVReflection: 0e8ec81c1f92646aac670b64b3199c02c5c0ae2d
   FBSDKCoreKit: 686ac982723a14ec9ddb85e2f81235d7706c891b
   FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76

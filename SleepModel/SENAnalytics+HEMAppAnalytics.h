@@ -59,6 +59,7 @@ extern NSString* const kHEMAnalyticsEventPropWiFiOther;
 extern NSString* const kHEMAnalyticsEventPropWiFiRSSI;
 extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
+extern NSString* const kHEMAnalyticsEventPropSenseDFU;
 extern NSString* const HEMAnalyticsEventOnbStart;
 extern NSString* const HEMAnalyticsEventHealth;
 extern NSString* const HEMAnalyticsEventAccount;

@@ -16,6 +16,10 @@ static NSString* const SENAPIDeviceInfoPath = @"info";
 static NSString* const SENAPIDeviceSensePath = @"sense";
 static NSString* const SENAPIDevicePillPath = @"pill";
 
+static NSString* const SENAPIDeviceOTAEndpoint = @"v1/ota";
+static NSString* const SENAPIDeviceOTAStatusPath = @"status";
+static NSString* const SENAPIDeviceOTARequestPath = @"request_ota";
+
 @implementation SENAPIDevice
 
 + (void)getPairedDevices:(SENAPIDataBlock)completion {
@@ -84,6 +88,25 @@ static NSString* const SENAPIDevicePillPath = @"pill";
     NSString* sensePath = [SENAPIDeviceEndpoint stringByAppendingPathComponent:SENAPIDeviceSensePath];
     NSString* path = [sensePath stringByAppendingFormat:@"/%@/all", [senseMetadata uniqueId]];
     [SENAPIClient DELETE:path parameters:nil completion:completion];
+}
+
+#pragma mark - OTA
+
++ (void)getOTAStatus:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceOTAEndpoint stringByAppendingPathComponent:SENAPIDeviceOTAStatusPath];
+    [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
+        SENDFUStatus* status = nil;
+        NSDictionary* dict = SENObjectOfClass(data, [NSDictionary class]);
+        if (!error && dict) {
+            status = [[SENDFUStatus alloc] initWithDictionary:dict];
+        }
+        completion (status, error);
+    }];
+}
+
++ (void)forceOTA:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceOTAEndpoint stringByAppendingPathComponent:SENAPIDeviceOTARequestPath];
+    [SENAPIClient POST:path parameters:nil completion:completion];
 }
 
 @end

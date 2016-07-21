@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.5.1.1
+
+New:
+
+* Integrates with new OTA endpoints
+* Checks the server during onboarding to see if forced dfu is required
+* New onboarding screen to trigger DFU of Sense
+* Removed "all you need to do now is sleep" message at end of onboarding flow
+
+Fixes:
+
+* Avoid crasher when animating Trends graphs' height
+* Updated color of action sheet buttons
+* Fixed margins of status label in Pill DFU flow
+* Fixed wave animation inside Pill DFU flow for large devices (6p)
+
 ## 1.5.0.6
 
 Note:

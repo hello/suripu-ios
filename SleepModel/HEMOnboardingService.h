@@ -8,7 +8,10 @@
 #import <SenseKit/SENService.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class SENSenseWiFiStatus;
+@class SENDFUStatus;
 
 extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
@@ -20,7 +23,9 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorAccountCreationFailed = -2,
     HEMOnboardingErrorAuthenticationFailed = -3,
     HEMOnboardingErrorSenseNotInitialized = -4,
-    HEMOnboardingErrorMissingAuthToken = -5
+    HEMOnboardingErrorMissingAuthToken = -5,
+    HEMOnboardingErrorDFUTimeout = -6,
+    HEMOnboardingErrorDFUStatusError = -7
 };
 
 /**
@@ -41,6 +46,9 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
     HEMOnboardingCheckpointPillFinished = 6,
     HEMOnboardingCheckpointSenseColorsFinished = 7
 };
+
+typedef void(^HEMOnboardingDFUHandler)(NSError* _Nullable error);
+typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 
 @class SENSense;
 @class SENAccount;
@@ -356,11 +364,20 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * @param password: the password for the account
  * @return YES if the parameters meets the required fields requirements
  */
-- (BOOL)hasRequiredFields:(SENAccount*)tempAccount password:(NSString*)password;
+- (BOOL)hasRequiredFields:(SENAccount*)tempAccount password:(nullable NSString*)password;
 
-- (BOOL)isFirstNameValid:(NSString*)firstName;
-- (BOOL)isLastNameValid:(NSString*)lastName;
-- (BOOL)isEmailValid:(NSString*)email;
-- (BOOL)isPasswordValid:(NSString*)password;
+- (BOOL)isFirstNameValid:(nullable NSString*)firstName;
+- (BOOL)isLastNameValid:(nullable NSString*)lastName;
+- (BOOL)isEmailValid:(nullable NSString*)email;
+- (BOOL)isPasswordValid:(nullable NSString*)password;
+
+#pragma mark - OTA
+
+- (void)checkIfSenseDFUIsRequired;
+- (BOOL)isDFURequiredForSense;
+- (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUStatusHandler)update
+                        completion:(HEMOnboardingDFUHandler)completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

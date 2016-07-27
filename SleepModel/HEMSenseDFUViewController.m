@@ -51,8 +51,12 @@
 
 #pragma mark - DFU Delegate
 
+- (UIView*)parentContentViewFor:(HEMSenseDFUPresenter*)presenter {
+    return [[self navigationController] view];
+}
+
 - (void)senseUpdateLaterFrom:(HEMSenseDFUPresenter *)presenter {
-    // TODO: conditionally complete onboarding or go to next segue
+    // TODO: conditionally complete onboarding or go to next segue-
     [self completeOnboarding];
 }
 

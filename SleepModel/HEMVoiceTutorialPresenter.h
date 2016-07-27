@@ -20,6 +20,14 @@
 
 @property (nonatomic, weak) id<HEMVoiceTutorialDelegate> delegate;
 
+- (void)bindWithSpeechContainer:(UIView*)speechContainer
+                     titleLabel:(UILabel*)titleLabel
+                   commandLabel:(UILabel*)commandLabel
+        commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
+                     errorLabel:(UILabel*)errorLabel
+          errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint;
+- (void)bindWithTitleLabel:(UILabel*)titleLabel
+          descriptionLabel:(UILabel*)descriptionLabel;
 - (void)bindWithSenseImageView:(UIImageView*)senseImageView
            withWidthConstraint:(NSLayoutConstraint*)widthConstraint
            andHeightConstraint:(NSLayoutConstraint*)heightConstraint;

@@ -12,6 +12,12 @@
 
 @interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *speechContainer;
+@property (weak, nonatomic) IBOutlet UILabel *speechTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *speechCommandLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechCommandBottomConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *speechErrorLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechErrorBottomConstraint;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIButton *laterButton;
 @property (weak, nonatomic) IBOutlet UIImageView *tableImageView;
@@ -32,6 +38,12 @@
 
 - (void)configurePresenter {
     HEMVoiceTutorialPresenter* presenter = [HEMVoiceTutorialPresenter new];
+    [presenter bindWithSpeechContainer:[self speechContainer]
+                            titleLabel:[self speechTitleLabel]
+                          commandLabel:[self speechCommandLabel]
+               commandBottomConstraint:[self speechCommandBottomConstraint]
+                            errorLabel:[self speechErrorLabel]
+                 errorBottomConstraint:[self speechErrorBottomConstraint]];
     [presenter bindWithContinueButton:[self continueButton]];
     [presenter bindWithLaterButton:[self laterButton]
               withBottomConstraint:[self laterButtonBottomConstraint]];
@@ -40,6 +52,8 @@
     [presenter bindWithSenseImageView:[self senseImageView]
                   withWidthConstraint:[self senseWidthConstraint]
                   andHeightConstraint:[self senseHeightConstraint]];
+    [presenter bindWithTitleLabel:[self titleLabel]
+                 descriptionLabel:[self descriptionLabel]];
     [presenter setDelegate:self];
     [self addPresenter:presenter];
 }

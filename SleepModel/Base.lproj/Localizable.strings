@@ -859,3 +859,4 @@
 "onboarding.sense.dfu.status.in-progress" = "Sense is updating";
 "onboarding.sense.dfu.later.dialog.title" = "Update later";
 "onboarding.sense.dfu.later.dialog.message" = "Sense will try to update at a later time. You can begin using Sense, but some features may not be available until the update is complete.";
+"onboarding.sense.dfu.updated" = "Sense updated";

@@ -25,6 +25,7 @@ typedef void(^HEMSenseDFUActionCallback)(void);
                          okAction:(HEMSenseDFUActionCallback)okAction
                      cancelAction:(HEMSenseDFUActionCallback)cancelAction
                              from:(HEMSenseDFUPresenter*)presenter;
+- (UIView*)parentContentViewFor:(HEMSenseDFUPresenter*)presenter;
 
 @end
 

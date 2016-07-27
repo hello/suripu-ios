@@ -1956,6 +1956,43 @@
                                     <constraint firstAttribute="width" constant="86" id="hvV-zP-l94"/>
                                 </constraints>
                             </imageView>
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbD-Ko-if1">
+                                <rect key="frame" x="20" y="24" width="560" height="72"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try it now:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WU3-d8-3iM">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2wy-CI-sng">
+                                        <rect key="frame" x="0.0" y="70" width="560" height="33"/>
+                                        <string key="text">"Hey Sense..
+what's the temperature?"</string>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Sorry, I didn't quite get that, please try again&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64p-At-YID">
+                                        <rect key="frame" x="0.0" y="70" width="560" height="33"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="64p-At-YID" firstAttribute="leading" secondItem="dbD-Ko-if1" secondAttribute="leading" id="MG8-dx-dwo"/>
+                                    <constraint firstAttribute="trailing" secondItem="2wy-CI-sng" secondAttribute="trailing" id="Mn5-Qa-auQ"/>
+                                    <constraint firstItem="WU3-d8-3iM" firstAttribute="top" secondItem="dbD-Ko-if1" secondAttribute="top" id="MrH-0P-jiR"/>
+                                    <constraint firstAttribute="trailing" secondItem="WU3-d8-3iM" secondAttribute="trailing" id="mJy-Ju-m5e"/>
+                                    <constraint firstAttribute="bottom" secondItem="64p-At-YID" secondAttribute="bottom" constant="-31" id="nwo-F2-12i"/>
+                                    <constraint firstAttribute="bottom" secondItem="2wy-CI-sng" secondAttribute="bottom" constant="-31" id="oJ6-KO-Okm"/>
+                                    <constraint firstItem="WU3-d8-3iM" firstAttribute="leading" secondItem="dbD-Ko-if1" secondAttribute="leading" id="wRT-vh-Kxj"/>
+                                    <constraint firstItem="2wy-CI-sng" firstAttribute="leading" secondItem="dbD-Ko-if1" secondAttribute="leading" id="z7Q-HM-xWk"/>
+                                    <constraint firstAttribute="trailing" secondItem="64p-At-YID" secondAttribute="trailing" id="zvS-TX-vKB"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Speak to Sense to set alarms, check the conditions in your room, and more." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fM-9D-bxy">
                                 <rect key="frame" x="20" y="68" width="560" height="21"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
@@ -1967,6 +2004,7 @@
                         <constraints>
                             <constraint firstItem="OUs-LH-K6T" firstAttribute="leading" secondItem="SHe-FT-Hdg" secondAttribute="leading" constant="20" id="97h-rr-vyL"/>
                             <constraint firstItem="zDm-Bg-xLx" firstAttribute="bottom" secondItem="OHD-cz-GEY" secondAttribute="top" constant="2" id="AHf-Ts-qmF"/>
+                            <constraint firstItem="dbD-Ko-if1" firstAttribute="top" secondItem="u1F-k7-Cv6" secondAttribute="bottom" constant="4" id="B9k-rS-yaf"/>
                             <constraint firstItem="mPs-cr-NTh" firstAttribute="top" secondItem="g46-hF-kDb" secondAttribute="bottom" constant="24" id="CjR-V8-bEc"/>
                             <constraint firstItem="pV8-mM-mfD" firstAttribute="centerX" secondItem="SHe-FT-Hdg" secondAttribute="centerX" id="DUU-nG-sb6"/>
                             <constraint firstItem="OUs-LH-K6T" firstAttribute="top" secondItem="u1F-k7-Cv6" secondAttribute="bottom" constant="4" id="ECj-ct-mbR"/>
@@ -1976,10 +2014,13 @@
                             <constraint firstItem="OHD-cz-GEY" firstAttribute="leading" secondItem="SHe-FT-Hdg" secondAttribute="leading" id="P3E-lb-v44"/>
                             <constraint firstItem="2fM-9D-bxy" firstAttribute="trailing" secondItem="SHe-FT-Hdg" secondAttribute="trailing" constant="-20" id="PXx-K5-jfE"/>
                             <constraint firstItem="OHD-cz-GEY" firstAttribute="bottom" secondItem="pV8-mM-mfD" secondAttribute="top" constant="-17" id="Umx-sZ-wrb"/>
+                            <constraint firstItem="dbD-Ko-if1" firstAttribute="bottom" secondItem="zDm-Bg-xLx" secondAttribute="top" constant="-125" id="W45-iJ-V6h"/>
+                            <constraint firstAttribute="trailing" secondItem="dbD-Ko-if1" secondAttribute="trailing" constant="20" id="WsG-JJ-Gsh"/>
                             <constraint firstItem="zDm-Bg-xLx" firstAttribute="centerX" secondItem="SHe-FT-Hdg" secondAttribute="centerX" id="bu4-E8-brO"/>
                             <constraint firstItem="2fM-9D-bxy" firstAttribute="leading" secondItem="SHe-FT-Hdg" secondAttribute="leading" constant="20" id="k4t-nr-j2P"/>
                             <constraint firstItem="mPs-cr-NTh" firstAttribute="top" secondItem="pV8-mM-mfD" secondAttribute="bottom" constant="89" id="oNw-Of-A20"/>
                             <constraint firstAttribute="trailing" secondItem="OUs-LH-K6T" secondAttribute="trailing" constant="-20" id="odl-IB-4nB"/>
+                            <constraint firstItem="dbD-Ko-if1" firstAttribute="leading" secondItem="SHe-FT-Hdg" secondAttribute="leading" constant="20" id="thh-nh-b5I"/>
                             <constraint firstAttribute="trailing" secondItem="OHD-cz-GEY" secondAttribute="trailing" id="y2Z-bA-9Wd"/>
                         </constraints>
                     </view>
@@ -1992,6 +2033,12 @@
                         <outlet property="senseHeightConstraint" destination="f6b-Lm-jtP" id="NKW-v3-vOX"/>
                         <outlet property="senseImageView" destination="zDm-Bg-xLx" id="2P6-Yq-2vd"/>
                         <outlet property="senseWidthConstraint" destination="hvV-zP-l94" id="fGF-3O-53q"/>
+                        <outlet property="speechCommandBottomConstraint" destination="oJ6-KO-Okm" id="MQd-AB-2pV"/>
+                        <outlet property="speechCommandLabel" destination="2wy-CI-sng" id="26d-Xr-686"/>
+                        <outlet property="speechContainer" destination="dbD-Ko-if1" id="2Am-6P-7h8"/>
+                        <outlet property="speechErrorBottomConstraint" destination="nwo-F2-12i" id="IxZ-RO-mGH"/>
+                        <outlet property="speechErrorLabel" destination="64p-At-YID" id="4J3-2n-i3t"/>
+                        <outlet property="speechTitleLabel" destination="WU3-d8-3iM" id="bEl-oq-B4h"/>
                         <outlet property="tableBottomConstraint" destination="Umx-sZ-wrb" id="KMg-ks-Ae7"/>
                         <outlet property="tableImageView" destination="OHD-cz-GEY" id="2wz-FH-0bk"/>
                         <outlet property="titleHeightConstraint" destination="TfW-LT-zLi" id="4CI-Cs-tZT"/>

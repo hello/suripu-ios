@@ -38,6 +38,7 @@
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)skipPillPairSegue;
++(NSString *)voiceTutorialSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)weightToHealthKitSegueIdentifier;
 +(NSString *)weightToLocationSegueIdentifier;
@@ -58,6 +59,7 @@
 +(id)instantiateSenseDFUViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
++(id)instantiateVoiceTutorialViewController;
 +(id)instantiateWeightPickerViewController;
 +(id)instantiateWelcomeViewController;
 +(id)instantiateWifiPickerViewController;

@@ -13,7 +13,6 @@
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
-#import "HEMSupportUtil.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
@@ -36,7 +35,6 @@
 
 @property (weak,   nonatomic) UIViewController*   presentingController;
 @property (strong, nonatomic) HEMActionSheetViewController* supportOptionController;
-@property (strong, nonatomic) HEMActionSheetViewController* ledOptionController;
 @property (weak,   nonatomic) UIViewController* roomCheckViewController;
 @property (weak,   nonatomic) UIViewController* sleepSoundsViewController;
 @property (assign, nonatomic) UIModalPresentationStyle origPresentationStyle;
@@ -89,14 +87,13 @@
         [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setTitle:NSLocalizedString(@"debug.options.title", nil)];
     
-    [self addContactSupportOptionTo:sheet];
-    [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
+    [self addShowVoiceTutorialOptionToSheet:sheet];
+    [self addPillDfuOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
     [self addWhatsNewOptionTo:sheet];
     [self addForceAppReviewPrompt:sheet];
     [self addRemoveAllAlarmsOptionTo:sheet];
-    [self addPillDfuOptionTo:sheet];
     [self addDebugInfoOptionTo:sheet];
     [self addChangeServerOptionToSheet:sheet];
     [self addCancelOptionTo:sheet];
@@ -108,16 +105,6 @@
     }];
     
     [self showController:sheet animated:NO completion:nil];
-}
-
-- (void)addContactSupportOptionTo:(HEMActionSheetViewController*)sheet {
-    __weak typeof(self) weakSelf = self;
-    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.contact-support", nil) action:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [HEMSupportUtil contactSupportFrom:[strongSelf presentingController]
-                              mailDelegate:strongSelf];
-        [strongSelf setSupportOptionController:nil];
-    }];
 }
 
 - (void)addDebugInfoOptionTo:(HEMActionSheetViewController*)sheet {
@@ -157,6 +144,35 @@
     }];
 }
 
+#pragma mark Voice Tutorial
+
+- (void)addShowVoiceTutorialOptionToSheet:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.voice", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showVoiceTutorial];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showVoiceTutorial {
+    UIViewController* voiceVC = [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+    HEMStyledNavigationViewController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:voiceVC];
+    [self showController:nav animated:YES completion:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didEndOnboarding)
+                                                 name:HEMOnboardingNotificationComplete
+                                               object:nil];
+}
+
+- (void)didEndOnboarding {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:HEMOnboardingNotificationComplete
+                                                  object:nil];
+    [[self presentingController] dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark Debug Info
 
 - (void)showDebugInfo {
@@ -176,68 +192,6 @@
     HEMSelectHostViewController *selectHost = [HEMSelectHostViewController new];
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:selectHost];
     [self showController:navigation animated:YES completion:nil];
-}
-
-#pragma mark LED Support
-
-- (void)addLedOptionTo:(HEMActionSheetViewController*)sheet {
-    __weak typeof(self) weakSelf = self;
-    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.led", nil) action:^{
-                           __strong typeof(weakSelf) strongSelf = weakSelf;
-                           [strongSelf showLEDOptions];
-                           [strongSelf setSupportOptionController:nil];
-                       }];
-}
-
-- (void)showLEDOptions {
-    if ([self ledOptionController] != nil) return;
-    
-    HEMActionSheetViewController* sheet =
-        [HEMMainStoryboard instantiateActionSheetViewController];
-    [sheet setTitle:NSLocalizedString(@"debug.option.led.title", nil)];
-    
-    [self addLEDOption:SENSenseLEDStateOff to:sheet];
-    [self addLEDOption:SENSenseLEDStatePair to:sheet];
-    [self addLEDOption:SENSenseLEDStateSuccess to:sheet];
-    [self addLEDOption:SENSenseLEDStateActivity to:sheet];
-    [self addCancelOptionTo:sheet];
-    
-    [self setSupportOptionController:sheet];
-    [self setLedOptionController:sheet];
-    
-    [sheet addDismissAction:^{
-        [self setSupportOptionController:nil];
-        [self setLedOptionController:nil];
-    }];
-    
-    [self showController:sheet animated:NO completion:nil];
-}
-
-- (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMActionSheetViewController*)sheet {
-    NSString* buttonText = nil;
-    switch (ledState) {
-        case SENSenseLEDStatePair:
-            buttonText = NSLocalizedString(@"debug.led.option.pair", nil);
-            break;
-        case SENSenseLEDStateActivity:
-            buttonText = NSLocalizedString(@"debug.led.option.activity", nil);
-            break;
-        case SENSenseLEDStateSuccess:
-            buttonText = NSLocalizedString(@"debug.led.option.success", nil);
-            break;
-        case SENSenseLEDStateOff:
-        default:
-            buttonText = NSLocalizedString(@"debug.led.option.off", nil);
-            break;
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    [sheet addOptionWithTitle:buttonText action:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setLedOptionController:nil];
-        [strongSelf setSupportOptionController:nil];
-        [[[HEMOnboardingService sharedService] currentSenseManager] setLED:ledState completion:nil];
-    }];
 }
 
 #pragma mark Room Check
@@ -322,7 +276,6 @@
     [sheet addOptionWithTitle:NSLocalizedString(@"actions.cancel", nil) action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setSupportOptionController:nil];
-        [strongSelf setLedOptionController:nil];
     }];
 }
 
@@ -341,7 +294,6 @@
         [self setSupportOptionController:nil];
         [self setSleepSoundsViewController:nil];
         [self setRoomCheckViewController:nil];
-        [self setLedOptionController:nil];
     }];
 }
 

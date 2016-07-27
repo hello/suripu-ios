@@ -46,6 +46,7 @@ static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsignupToNoBle = @"signupToNoBle";
 static NSString *const _HEMskipPillPairSegue = @"skipPillPairSegue";
 static NSString *const _HEMtitle = @"title";
+static NSString *const _HEMvoiceTutorial = @"voiceTutorial";
 static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMweightToHealthKit = @"weightToHealthKit";
@@ -90,6 +91,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)sensePairToPillSegueIdentifier { return _HEMsensePairToPill; }
 +(NSString *)signupToNoBleSegueIdentifier { return _HEMsignupToNoBle; }
 +(NSString *)skipPillPairSegue { return _HEMskipPillPairSegue; }
++(NSString *)voiceTutorialSegueIdentifier { return _HEMvoiceTutorial; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
 +(NSString *)weightToHealthKitSegueIdentifier { return _HEMweightToHealthKit; }
 +(NSString *)weightToLocationSegueIdentifier { return _HEMweightToLocation; }
@@ -110,6 +112,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(id)instantiateSenseDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseDFU]; }
 +(id)instantiateSensePairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensePairViewController]; }
 +(id)instantiateSenseSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseSetup]; }
++(id)instantiateVoiceTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMvoiceTutorial]; }
 +(id)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
 +(id)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }
 +(id)instantiateWifiPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiPicker]; }

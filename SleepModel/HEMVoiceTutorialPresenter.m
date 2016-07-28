@@ -8,12 +8,20 @@
 
 #import "HEMVoiceTutorialPresenter.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
 
 static CGFloat const HEMVoiceTutorialInitialSenseScale = 0.6f;
 static CGFloat const HEMVoiceTutorialTableBottomMargin4sScale = 0.25f;
-static CGFloat const HEMVoiceTutorialAnimeDuration = 0.5f;
+static CGFloat const HEMVoiceTutorialAnimeDuration = 0.3f;
 static CGFloat const HEMVoiceTutorialInProgressLaterBottomMargin = 21.0f;
+static CGFloat const HEMVoiceTutorialInProgressTableBottomMargin = 32.0f;
 static CGFloat const HEMVoiceTutorialInProgressTableAlpha = 0.4f;
+static CGFloat const HEMVoiceTutorialInProgressRingAlpha = 0.04f;
+static CGFloat const HEMVoiceTutorialInProgressOuterRingSize = 236.0f;
+static CGFloat const HEMVoiceTutorialInProgressMiddleRingSize = 192.0f;
+static CGFloat const HEMVoiceTutorialInProgressInnerRingSize = 146.0f;
+static CGFloat const HEMVoiceTutorialRingAnimeDelay = 0.1f;
+static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.5f;
 
 @interface HEMVoiceTutorialPresenter()
 
@@ -38,6 +46,10 @@ static CGFloat const HEMVoiceTutorialInProgressTableAlpha = 0.4f;
 @property (nonatomic, assign) CGFloat origLaterBottomMargin;
 @property (nonatomic, assign) CGFloat origTableBottomMargin;
 
+@property (nonatomic, weak) CALayer* outerSenseRing;
+@property (nonatomic, weak) CALayer* middleSenseRing;
+@property (nonatomic, weak) CALayer* innerSenseRing;
+
 @end
 
 @implementation HEMVoiceTutorialPresenter
@@ -50,6 +62,10 @@ static CGFloat const HEMVoiceTutorialInProgressTableAlpha = 0.4f;
           errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint {
     
     [speechContainer setHidden:YES];
+    [commandLabel setFont:[UIFont h4]];
+    [commandLabel setTextColor:[UIColor grey6]];
+    [errorLabel setFont:[UIFont h4]];
+    [errorLabel setTextColor:[UIColor grey6]];
     [self setSpeechContainer:speechContainer];
     [self setSpeechTitleLabel:titleLabel];
     [self setSpeechCommandLabel:commandLabel];
@@ -110,6 +126,87 @@ static CGFloat const HEMVoiceTutorialInProgressTableAlpha = 0.4f;
     [self setContinueButton:button];
 }
 
+#pragma mark - Ring animation
+
+- (CABasicAnimation*)fadeAnimationWithDelay:(CGFloat)delay
+                                       from:(CGFloat)from
+                                         to:(CGFloat)to {
+    CABasicAnimation* fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    [fade setFromValue:@(from)];
+    [fade setToValue:@(to)];
+    [fade setBeginTime:delay];
+    [fade setDuration:HEMVoiceTutorialRingAnimeDuration];
+    [fade setFillMode:kCAFillModeForwards];
+    return fade;
+}
+
+- (CAShapeLayer*)senseRingLayerWithSize:(CGFloat)size
+                        withFadeInDelay:(CGFloat)fadeInDelay
+                        andFadeOutDelay:(CGFloat)fadeOutDelay {
+    
+    CGPoint sensePosition = [[[self senseImageView] layer] position];
+    CGRect ringFrame = CGRectZero;
+    ringFrame.size = CGSizeMake(size, size);
+    
+    CAShapeLayer* ring = [CAShapeLayer layer];
+    [ring setPath:[[UIBezierPath bezierPathWithOvalInRect:ringFrame] CGPath]];
+    [ring setFrame:ringFrame];
+    [ring setPosition:sensePosition];
+    [ring setFillColor:[[UIColor grey4] CGColor]];
+    [ring fillColor];
+    [ring setOpacity:0.0f];
+    
+    CGFloat totalDuration = fadeOutDelay + HEMVoiceTutorialRingAnimeDuration;
+    CGFloat fullAlpha = HEMVoiceTutorialInProgressRingAlpha;
+    
+    CABasicAnimation* fadeIn = [self fadeAnimationWithDelay:fadeInDelay
+                                                       from:0.0f
+                                                         to:fullAlpha];
+    CABasicAnimation* fadeOut = [self fadeAnimationWithDelay:fadeInDelay
+                                                        from:fullAlpha
+                                                          to:0.0f];
+    
+    CAAnimationGroup* group = [CAAnimationGroup animation];
+    [group setAnimations:@[fadeIn, fadeOut]];
+    [group setRepeatCount:MAXFLOAT];
+    [group setDuration:totalDuration];
+    
+    [ring addAnimation:group forKey:@"fade"];
+    
+    return ring;
+}
+
+- (void)animateSenseRings {
+    UIView* ringContainer = [[self senseImageView] superview];
+    CALayer* ringContainerLayer = [ringContainer layer];
+    CALayer* senseLayer = [[self senseImageView] layer];
+    
+    CGFloat fadeInDelay = HEMVoiceTutorialRingAnimeDelay * 3;
+    CGFloat fadeOutDelay = fadeInDelay + HEMVoiceTutorialRingAnimeDuration;
+    CGFloat size = HEMVoiceTutorialInProgressOuterRingSize;
+    CAShapeLayer* ring = [self senseRingLayerWithSize:size
+                                      withFadeInDelay:fadeInDelay
+                                      andFadeOutDelay:fadeOutDelay];
+    [ringContainerLayer insertSublayer:ring below:senseLayer];
+    [self setOuterSenseRing:ring];
+    
+    fadeInDelay = HEMVoiceTutorialRingAnimeDelay * 2;
+    size = HEMVoiceTutorialInProgressMiddleRingSize;
+    ring = [self senseRingLayerWithSize:size
+                        withFadeInDelay:fadeInDelay
+                        andFadeOutDelay:fadeOutDelay];
+    [ringContainerLayer insertSublayer:ring below:senseLayer];
+    [self setMiddleSenseRing:ring];
+    
+    fadeInDelay = HEMVoiceTutorialRingAnimeDelay;
+    size = HEMVoiceTutorialInProgressInnerRingSize;
+    ring = [self senseRingLayerWithSize:size
+                        withFadeInDelay:fadeInDelay
+                        andFadeOutDelay:fadeOutDelay];
+    [ringContainerLayer insertSublayer:ring below:senseLayer];
+    [self setInnerSenseRing:ring];
+}
+
 #pragma mark - Actions
 
 - (void)finish {
@@ -118,7 +215,7 @@ static CGFloat const HEMVoiceTutorialInProgressTableAlpha = 0.4f;
 
 - (void)start {
     [[self speechCommandLabel] sizeToFit];
-    [[self speechErrorLabel] sizeToFit];
+    [[self speechErrorLabel] setHidden:YES];
     [[self continueButton] setHidden:YES];
     [[self titleLabel] setHidden:YES];
     [[self descriptionLabel] setHidden:YES];
@@ -126,18 +223,17 @@ static CGFloat const HEMVoiceTutorialInProgressTableAlpha = 0.4f;
     
     CGSize senseSize = [[self senseImageView] image].size;
     CGFloat laterBottom = HEMVoiceTutorialInProgressLaterBottomMargin;
-    CGFloat commandHeight = CGRectGetHeight([[self speechCommandLabel] bounds]);
-//    CGFloat errorHeight = CGRectGetHeight([[self speechErrorLabel] bounds]);
     
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
-        [[self speechCommandBottomConstraint] setConstant:-commandHeight];
+        [[self speechCommandBottomConstraint] setConstant:0];
         [[self senseWidthConstraint] setConstant:senseSize.width];
         [[self senseHeightConstraint] setConstant:senseSize.height];
         [[self laterButtonBottomConstraint] setConstant:laterBottom];
+        [[self tableBottomConstraint] setConstant:-HEMVoiceTutorialInProgressTableBottomMargin];
         [[self tableImageView] setAlpha:HEMVoiceTutorialInProgressTableAlpha];
         [[[self laterButton] superview] layoutIfNeeded];
     } completion:^(BOOL finished) {
-        
+        [self animateSenseRings];
     }];
 }
 

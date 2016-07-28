@@ -21,7 +21,7 @@ static CGFloat const HEMVoiceTutorialInProgressOuterRingSize = 236.0f;
 static CGFloat const HEMVoiceTutorialInProgressMiddleRingSize = 192.0f;
 static CGFloat const HEMVoiceTutorialInProgressInnerRingSize = 146.0f;
 static CGFloat const HEMVoiceTutorialRingAnimeDelay = 0.1f;
-static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.5f;
+static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
 
 @interface HEMVoiceTutorialPresenter()
 

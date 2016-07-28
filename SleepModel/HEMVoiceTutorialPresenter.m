@@ -126,6 +126,13 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.5f;
     [self setContinueButton:button];
 }
 
+#pragma mark - Presenter Events
+
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self animateSenseRings];
+}
+
 #pragma mark - Ring animation
 
 - (CABasicAnimation*)fadeAnimationWithDelay:(CGFloat)delay
@@ -140,9 +147,7 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.5f;
     return fade;
 }
 
-- (CAShapeLayer*)senseRingLayerWithSize:(CGFloat)size
-                        withFadeInDelay:(CGFloat)fadeInDelay
-                        andFadeOutDelay:(CGFloat)fadeOutDelay {
+- (CAShapeLayer*)senseRingLayerWithSize:(CGFloat)size {
     
     CGPoint sensePosition = [[[self senseImageView] layer] position];
     CGRect ringFrame = CGRectZero;
@@ -155,6 +160,14 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.5f;
     [ring setFillColor:[[UIColor grey4] CGColor]];
     [ring fillColor];
     [ring setOpacity:0.0f];
+    
+    return ring;
+}
+
+- (void)addAnimationTo:(CALayer*)ring
+       withFadeInDelay:(CGFloat)fadeInDelay
+          fadeOutDelay:(CGFloat)fadeOutDelay {
+    [ring removeAllAnimations];
     
     CGFloat totalDuration = fadeOutDelay + HEMVoiceTutorialRingAnimeDuration;
     CGFloat fullAlpha = HEMVoiceTutorialInProgressRingAlpha;
@@ -172,39 +185,47 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.5f;
     [group setDuration:totalDuration];
     
     [ring addAnimation:group forKey:@"fade"];
-    
-    return ring;
 }
 
 - (void)animateSenseRings {
-    UIView* ringContainer = [[self senseImageView] superview];
-    CALayer* ringContainerLayer = [ringContainer layer];
-    CALayer* senseLayer = [[self senseImageView] layer];
+    if (![self outerSenseRing]
+        && ![self middleSenseRing]
+        && ![self innerSenseRing]) {
+        UIView* ringContainer = [[self senseImageView] superview];
+        CALayer* ringContainerLayer = [ringContainer layer];
+        CALayer* senseLayer = [[self senseImageView] layer];
+        
+        CGFloat size = HEMVoiceTutorialInProgressOuterRingSize;
+        CAShapeLayer* ring = [self senseRingLayerWithSize:size];
+        [ringContainerLayer insertSublayer:ring below:senseLayer];
+        [self setOuterSenseRing:ring];
+        
+        size = HEMVoiceTutorialInProgressMiddleRingSize;
+        ring = [self senseRingLayerWithSize:size];
+        [ringContainerLayer insertSublayer:ring below:senseLayer];
+        [self setMiddleSenseRing:ring];
+        
+        size = HEMVoiceTutorialInProgressInnerRingSize;
+        ring = [self senseRingLayerWithSize:size];
+        [ringContainerLayer insertSublayer:ring below:senseLayer];
+        [self setInnerSenseRing:ring];
+    }
     
     CGFloat fadeInDelay = HEMVoiceTutorialRingAnimeDelay * 3;
     CGFloat fadeOutDelay = fadeInDelay + HEMVoiceTutorialRingAnimeDuration;
-    CGFloat size = HEMVoiceTutorialInProgressOuterRingSize;
-    CAShapeLayer* ring = [self senseRingLayerWithSize:size
-                                      withFadeInDelay:fadeInDelay
-                                      andFadeOutDelay:fadeOutDelay];
-    [ringContainerLayer insertSublayer:ring below:senseLayer];
-    [self setOuterSenseRing:ring];
+    [self addAnimationTo:[self outerSenseRing]
+         withFadeInDelay:fadeInDelay
+            fadeOutDelay:fadeOutDelay];
     
     fadeInDelay = HEMVoiceTutorialRingAnimeDelay * 2;
-    size = HEMVoiceTutorialInProgressMiddleRingSize;
-    ring = [self senseRingLayerWithSize:size
-                        withFadeInDelay:fadeInDelay
-                        andFadeOutDelay:fadeOutDelay];
-    [ringContainerLayer insertSublayer:ring below:senseLayer];
-    [self setMiddleSenseRing:ring];
+    [self addAnimationTo:[self middleSenseRing]
+         withFadeInDelay:fadeInDelay
+            fadeOutDelay:fadeOutDelay];
     
     fadeInDelay = HEMVoiceTutorialRingAnimeDelay;
-    size = HEMVoiceTutorialInProgressInnerRingSize;
-    ring = [self senseRingLayerWithSize:size
-                        withFadeInDelay:fadeInDelay
-                        andFadeOutDelay:fadeOutDelay];
-    [ringContainerLayer insertSublayer:ring below:senseLayer];
-    [self setInnerSenseRing:ring];
+    [self addAnimationTo:[self innerSenseRing]
+         withFadeInDelay:fadeInDelay
+            fadeOutDelay:fadeOutDelay];
 }
 
 #pragma mark - Actions

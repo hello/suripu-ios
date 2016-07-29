@@ -5,9 +5,11 @@
 //  Created by Jimmy Lu on 7/26/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <SenseKit/SENSpeechResult.h>
 
 #import "HEMVoiceTutorialPresenter.h"
 #import "HEMScreenUtils.h"
+#import "HEMVoiceService.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMVoiceTutorialInitialSenseScale = 0.6f;
@@ -22,6 +24,7 @@ static CGFloat const HEMVoiceTutorialInProgressMiddleRingSize = 192.0f;
 static CGFloat const HEMVoiceTutorialInProgressInnerRingSize = 146.0f;
 static CGFloat const HEMVoiceTutorialRingAnimeDelay = 0.1f;
 static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
+static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 
 @interface HEMVoiceTutorialPresenter()
 
@@ -46,13 +49,23 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
 @property (nonatomic, assign) CGFloat origLaterBottomMargin;
 @property (nonatomic, assign) CGFloat origTableBottomMargin;
 
-@property (nonatomic, weak) CALayer* outerSenseRing;
-@property (nonatomic, weak) CALayer* middleSenseRing;
-@property (nonatomic, weak) CALayer* innerSenseRing;
+@property (nonatomic, weak) CAShapeLayer* outerSenseRing;
+@property (nonatomic, weak) CAShapeLayer* middleSenseRing;
+@property (nonatomic, weak) CAShapeLayer* innerSenseRing;
+
+@property (nonatomic, weak) HEMVoiceService* voiceService;
 
 @end
 
 @implementation HEMVoiceTutorialPresenter
+
+- (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService {
+    self = [super init];
+    if (self) {
+        _voiceService = voiceService;
+    }
+    return self;
+}
 
 - (void)bindWithSpeechContainer:(UIView*)speechContainer
                      titleLabel:(UILabel*)titleLabel
@@ -211,18 +224,18 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
         [self setInnerSenseRing:ring];
     }
     
-    CGFloat fadeInDelay = HEMVoiceTutorialRingAnimeDelay * 3;
-    CGFloat fadeOutDelay = fadeInDelay + HEMVoiceTutorialRingAnimeDuration;
+    CGFloat fadeInDelay = HEMVoiceTutorialRingAnimeDelay * 2;
+    CGFloat fadeOutDelay = fadeInDelay;
     [self addAnimationTo:[self outerSenseRing]
          withFadeInDelay:fadeInDelay
             fadeOutDelay:fadeOutDelay];
     
-    fadeInDelay = HEMVoiceTutorialRingAnimeDelay * 2;
+    fadeInDelay = HEMVoiceTutorialRingAnimeDelay;
     [self addAnimationTo:[self middleSenseRing]
          withFadeInDelay:fadeInDelay
             fadeOutDelay:fadeOutDelay];
     
-    fadeInDelay = HEMVoiceTutorialRingAnimeDelay;
+    fadeInDelay = 0.0f;
     [self addAnimationTo:[self innerSenseRing]
          withFadeInDelay:fadeInDelay
             fadeOutDelay:fadeOutDelay];
@@ -231,6 +244,14 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
 #pragma mark - Actions
 
 - (void)finish {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [[self innerSenseRing] removeAllAnimations];
+    [[self middleSenseRing] removeAllAnimations];
+    [[self outerSenseRing] removeAllAnimations];
+
+    [[self voiceService] stopListeningForVoiceResult];
+    
     [[self delegate] didFinishTutorialFrom:self];
 }
 
@@ -255,7 +276,151 @@ static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
         [[[self laterButton] superview] layoutIfNeeded];
     } completion:^(BOOL finished) {
         [self animateSenseRings];
+        [self listenForVoiceResult];
     }];
+}
+
+#pragma mark - Listen
+
+- (void)stopListeningForVoiceResult {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:HEMVoiceNotification object:[self voiceService]];
+    [[self voiceService] stopListeningForVoiceResult];
+}
+
+- (void)listenForVoiceResult {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didGetVoiceResult:)
+                   name:HEMVoiceNotification
+                 object:[self voiceService]];
+    [[self voiceService] startListeningForVoiceResult];
+}
+
+- (void)didGetVoiceResult:(NSNotification*)note {
+    SENSpeechResult* result = [note userInfo][HEMVoiceNotificationInfoResult];
+    if (result) {
+        switch ([result status]) {
+            case SENSpeechStatusOk:
+                [self showCorrectResponse];
+                break;
+            default:
+                [self showUnrecognizedResponse];
+                break;
+        }
+        
+    } else {
+        // TODO handle error;
+        NSError* error = [note userInfo][HEMVoiceNotificationInfoError];
+        DDLogWarn(@"got voice result error %@", error);
+    }
+}
+
+#pragma mark - Sense colors
+
+- (void)prepareSenseRingColor:(UIColor*)color {
+    CGColorRef colorRef = [color CGColor];
+    [[self innerSenseRing] setFillColor:colorRef];
+    [[self middleSenseRing] setFillColor:colorRef];
+    [[self outerSenseRing] setFillColor:colorRef];
+}
+
+- (void)updatesenseRingColor {
+    [[self innerSenseRing] fillColor];
+    [[self middleSenseRing] fillColor];
+    [[self outerSenseRing] fillColor];
+}
+
+#pragma mark - Response Handling
+
+- (void)restartListeningForResponse {
+    CGFloat errorHeight = CGRectGetHeight([[self speechErrorLabel] bounds]);
+    [[self speechErrorBottomConstraint] setConstant:-errorHeight];
+    [[self speechCommandBottomConstraint] setConstant:0];
+    
+    [self prepareSenseRingColor:[UIColor grey4]];
+    
+    [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
+        [[self speechCommandLabel] setAlpha:1.0f];
+        [[self speechErrorLabel] setAlpha:0.0f];
+        [self updatesenseRingColor];
+        [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoiceGray"]];
+        [[[self speechCommandLabel] superview] layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [[self speechErrorLabel] setHidden:YES];
+        __strong typeof(self) weakSelf = self;
+        int64_t delay = (int64_t)(HEMVoiceTutorialResponseDuration * NSEC_PER_SEC);
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf listenForVoiceResult];
+        });
+        
+    }];
+}
+
+- (void)showUnrecognizedResponse {
+    [self stopListeningForVoiceResult];
+    
+    [self prepareSenseRingColor:[UIColor red4]];
+    
+    [[self speechErrorLabel] sizeToFit];
+    [[self speechErrorLabel] setHidden:NO];
+    [[self speechErrorLabel] setAlpha:0.0f];
+    [[self speechErrorBottomConstraint] setConstant:0.0f];
+    
+    CGFloat commandHeight = CGRectGetHeight([[self speechCommandLabel] bounds]);
+    [[self speechCommandBottomConstraint] setConstant:-commandHeight];
+    
+    [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
+        [[[self speechCommandLabel] superview] layoutIfNeeded];
+        [[self speechErrorLabel] setAlpha:1.0f];
+        [[self speechCommandLabel] setAlpha:0.0f];
+        [self updatesenseRingColor];
+        [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoiceRed"]];
+    } completion:^(BOOL finished) {
+        __weak typeof(self) weakSelf = self;
+        int64_t delay = (int64_t)(HEMVoiceTutorialResponseDuration * NSEC_PER_SEC);
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf restartListeningForResponse];
+        });
+    }];
+}
+
+- (void)showCorrectResponse {
+    UIColor* successColor = [UIColor tintColor];
+    CGColorRef colorRef = [successColor CGColor];
+    [[self innerSenseRing] setFillColor:colorRef];
+    [[self middleSenseRing] setFillColor:colorRef];
+    [[self outerSenseRing] setFillColor:colorRef];
+    
+    [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
+        [[self innerSenseRing] fillColor];
+        [[self middleSenseRing] fillColor];
+        [[self outerSenseRing] fillColor];
+        [[self speechCommandLabel] setTextColor:successColor];
+        [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoiceBlue"]];
+    } completion:^(BOOL finished) {
+        __weak typeof(self) weakSelf = self;
+        int64_t delay = (int64_t)(HEMVoiceTutorialResponseDuration * NSEC_PER_SEC);
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf finish];
+        });
+    }];
+    
+}
+
+#pragma mark - clean up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (_voiceService) {
+        [_voiceService stopListeningForVoiceResult];
+    }
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "HEMPresenter.h"
 
 @class HEMVoiceTutorialPresenter;
+@class HEMVoiceService;
 
 @protocol HEMVoiceTutorialDelegate <NSObject>
 
@@ -20,6 +21,8 @@
 
 @property (nonatomic, weak) id<HEMVoiceTutorialDelegate> delegate;
 
+- (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithSpeechContainer:(UIView*)speechContainer
                      titleLabel:(UILabel*)titleLabel
                    commandLabel:(UILabel*)commandLabel

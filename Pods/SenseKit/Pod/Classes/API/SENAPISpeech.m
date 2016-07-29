@@ -14,7 +14,7 @@ static NSString* const SENAPISpeechOnboarding = @"onboarding";
 @implementation SENAPISpeech
 
 + (void)getRecentVoiceCommands:(SENAPIDataBlock)completion {
-    NSString* path = [SENAPISpeechResource stringByAppendingString:SENAPISpeechOnboarding];
+    NSString* path = [SENAPISpeechResource stringByAppendingPathComponent:SENAPISpeechOnboarding];
     [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
         NSMutableArray* results = nil;
         if (!error && [data isKindOfClass:[NSArray class]]) {

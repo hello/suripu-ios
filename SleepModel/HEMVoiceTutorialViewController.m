@@ -9,6 +9,7 @@
 #import "HEMVoiceTutorialViewController.h"
 #import "HEMActionButton.h"
 #import "HEMVoiceTutorialPresenter.h"
+#import "HEMVoiceService.h"
 
 @interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate>
 
@@ -26,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *laterButtonBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseWidthConstraint;
+@property (strong, nonatomic) HEMVoiceService* voiceService;
+
 @end
 
 @implementation HEMVoiceTutorialViewController
@@ -37,7 +40,9 @@
 }
 
 - (void)configurePresenter {
-    HEMVoiceTutorialPresenter* presenter = [HEMVoiceTutorialPresenter new];
+    HEMVoiceService* voiceService = [HEMVoiceService new];
+    HEMVoiceTutorialPresenter* presenter =
+        [[HEMVoiceTutorialPresenter alloc] initWithVoiceService:voiceService];
     [presenter bindWithSpeechContainer:[self speechContainer]
                             titleLabel:[self speechTitleLabel]
                           commandLabel:[self speechCommandLabel]
@@ -56,6 +61,7 @@
                  descriptionLabel:[self descriptionLabel]];
     [presenter setDelegate:self];
     [self addPresenter:presenter];
+    [self setVoiceService:voiceService];
 }
 
 #pragma mark - Voice Tutorial Delegate

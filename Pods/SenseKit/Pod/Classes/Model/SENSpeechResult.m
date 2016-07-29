@@ -48,11 +48,11 @@ static NSString* const SENSpeechResultStatusAgain = @"try again";
     NSString* lower = [statusText lowercaseString];
     SENSpeechStatus status = SENSpeechStatusUnknown;
     if ([lower isEqualToString:SENSpeechResultStatusOk]) {
-        status = SENSpeechResultStatusOk;
+        status = SENSpeechStatusOk;
     } else if ([lower isEqualToString:SENSpeechResultStatusAgain]) {
-        status = SENSpeechResultStatusAgain;
+        status = SENSpeechStatusTryAgain;
     } else if ([lower isEqualToString:SENSpeechResultStatusRejected]) {
-        status = SENSpeechResultStatusRejected;
+        status = SENSpeechStatusRejected;
     }
     return status;
 }

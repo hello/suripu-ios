@@ -13,7 +13,8 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMVoiceTutorialInitialSenseScale = 0.6f;
-static CGFloat const HEMVoiceTutorialTableBottomMargin4sScale = 0.25f;
+static CGFloat const HEMVoiceTutorialTableBottomMarginSmallScale = 0.25f;
+static CGFloat const HEMVoiceTutorialSpeechContainerBottomMarginSmall = 75.0f;
 static CGFloat const HEMVoiceTutorialAnimeDuration = 0.3f;
 static CGFloat const HEMVoiceTutorialInProgressLaterBottomMargin = 21.0f;
 static CGFloat const HEMVoiceTutorialInProgressTableBottomMargin = 32.0f;
@@ -34,6 +35,7 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 @property (nonatomic, weak) UILabel* speechErrorLabel;
 @property (nonatomic, weak) NSLayoutConstraint* speechCommandBottomConstraint;
 @property (nonatomic, weak) NSLayoutConstraint* speechErrorBottomConstraint;
+@property (nonatomic, weak) NSLayoutConstraint* speechContainerBottomConstraint;
 
 @property (nonatomic, weak) UILabel* titleLabel;
 @property (nonatomic, weak) UILabel* descriptionLabel;
@@ -68,11 +70,17 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 }
 
 - (void)bindWithSpeechContainer:(UIView*)speechContainer
+      containerBottomConstraint:(NSLayoutConstraint*)containerBottomConstraint
                      titleLabel:(UILabel*)titleLabel
                    commandLabel:(UILabel*)commandLabel
         commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
                      errorLabel:(UILabel*)errorLabel
           errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint {
+    
+    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
+        CGFloat bottom = -HEMVoiceTutorialSpeechContainerBottomMarginSmall;
+        [containerBottomConstraint setConstant:bottom];
+    }
     
     [speechContainer setHidden:YES];
     [commandLabel setFont:[UIFont h4]];
@@ -85,6 +93,7 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
     [self setSpeechCommandBottomConstraint:commandBottomConstraint];
     [self setSpeechErrorLabel:errorLabel];
     [self setSpeechErrorBottomConstraint:errorBottomConstraint];
+    [self setSpeechContainerBottomConstraint:_speechContainerBottomConstraint];
 }
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
@@ -112,9 +121,9 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 
 - (void)bindWithTableImageView:(UIImageView*)tableImageView
           withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
-    if (HEMIsIPhone4Family()) {
+    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
         CGFloat bottom = [bottomConstraint constant];
-        bottom = bottom * HEMVoiceTutorialTableBottomMargin4sScale;
+        bottom = bottom * HEMVoiceTutorialTableBottomMarginSmallScale;
         [bottomConstraint setConstant:bottom];
     }
     [self setOrigTableBottomMargin:[bottomConstraint constant]];
@@ -265,13 +274,17 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
     
     CGSize senseSize = [[self senseImageView] image].size;
     CGFloat laterBottom = HEMVoiceTutorialInProgressLaterBottomMargin;
+    CGFloat tableBottom = -HEMVoiceTutorialInProgressTableBottomMargin;
+    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
+        tableBottom = tableBottom * HEMVoiceTutorialTableBottomMarginSmallScale;
+    }
     
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
         [[self speechCommandBottomConstraint] setConstant:0];
         [[self senseWidthConstraint] setConstant:senseSize.width];
         [[self senseHeightConstraint] setConstant:senseSize.height];
         [[self laterButtonBottomConstraint] setConstant:laterBottom];
-        [[self tableBottomConstraint] setConstant:-HEMVoiceTutorialInProgressTableBottomMargin];
+        [[self tableBottomConstraint] setConstant:tableBottom];
         [[self tableImageView] setAlpha:HEMVoiceTutorialInProgressTableAlpha];
         [[[self laterButton] superview] layoutIfNeeded];
     } completion:^(BOOL finished) {

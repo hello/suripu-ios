@@ -1188,11 +1188,11 @@
                                         <rect key="frame" x="0.0" y="22" width="576" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w2R-Q9-Bmm" id="39f-cF-XX7">
-                                            <rect key="frame" x="0.0" y="0.0" width="576" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="576" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EmK-D8-elU">
-                                                    <rect key="frame" x="15" y="0.0" width="546" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="546" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1980,7 +1980,7 @@ what's the temperature?"</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="64p-At-YID" firstAttribute="leading" secondItem="dbD-Ko-if1" secondAttribute="leading" id="MG8-dx-dwo"/>
                                     <constraint firstAttribute="trailing" secondItem="2wy-CI-sng" secondAttribute="trailing" id="Mn5-Qa-auQ"/>
@@ -2036,6 +2036,7 @@ what's the temperature?"</string>
                         <outlet property="speechCommandBottomConstraint" destination="oJ6-KO-Okm" id="MQd-AB-2pV"/>
                         <outlet property="speechCommandLabel" destination="2wy-CI-sng" id="26d-Xr-686"/>
                         <outlet property="speechContainer" destination="dbD-Ko-if1" id="2Am-6P-7h8"/>
+                        <outlet property="speechContainerBottomConstraint" destination="W45-iJ-V6h" id="vi6-lh-c15"/>
                         <outlet property="speechErrorBottomConstraint" destination="nwo-F2-12i" id="IxZ-RO-mGH"/>
                         <outlet property="speechErrorLabel" destination="64p-At-YID" id="4J3-2n-i3t"/>
                         <outlet property="speechTitleLabel" destination="WU3-d8-3iM" id="bEl-oq-B4h"/>

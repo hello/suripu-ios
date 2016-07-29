@@ -24,6 +24,7 @@
 - (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithSpeechContainer:(UIView*)speechContainer
+      containerBottomConstraint:(NSLayoutConstraint*)containerBottomConstraint
                      titleLabel:(UILabel*)titleLabel
                    commandLabel:(UILabel*)commandLabel
         commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint

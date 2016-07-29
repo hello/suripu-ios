@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechCommandBottomConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *speechErrorLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechErrorBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechContainerBottomConstraint;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIButton *laterButton;
 @property (weak, nonatomic) IBOutlet UIImageView *tableImageView;
@@ -44,6 +45,7 @@
     HEMVoiceTutorialPresenter* presenter =
         [[HEMVoiceTutorialPresenter alloc] initWithVoiceService:voiceService];
     [presenter bindWithSpeechContainer:[self speechContainer]
+             containerBottomConstraint:[self speechContainerBottomConstraint]
                             titleLabel:[self speechTitleLabel]
                           commandLabel:[self speechCommandLabel]
                commandBottomConstraint:[self speechCommandBottomConstraint]

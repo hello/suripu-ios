@@ -12,6 +12,7 @@
 #import "HEMSenseDFUPresenter.h"
 #import "HEMOnboardingService.h"
 #import "HEMAlertViewController.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMSenseDFUViewController () <HEMSenseDFUDelegate, HEMPresenterErrorDelegate>
 
@@ -50,14 +51,19 @@
 
 #pragma mark - DFU Delegate
 
+- (UIView*)parentContentViewFor:(HEMSenseDFUPresenter*)presenter {
+    return [[self navigationController] view];
+}
+
 - (void)senseUpdateLaterFrom:(HEMSenseDFUPresenter *)presenter {
-    // TODO: go to voice tutorials
+    // TODO: conditionally complete onboarding or go to next segue-
     [self completeOnboarding];
 }
 
 - (void)senseUpdateCompletedFrom:(HEMSenseDFUPresenter *)presenter {
-    // TODO: go to voice tutorials
-    [self completeOnboarding];
+    // TODO: only do this conditionally, if "enabled"
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard voiceTutorialSegueIdentifier]
+                              sender:self];
 }
 
 - (void)showConfirmationWithTitle:(NSString*)title

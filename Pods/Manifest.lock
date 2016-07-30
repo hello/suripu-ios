@@ -35,7 +35,7 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.0.3):
     - CocoaLumberjack/Default
-  - EVReflection (2.40.0)
+  - EVReflection (2.42.2)
   - FBSDKCoreKit (4.11.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.11.0):
@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 01a944eb7934b7970dcc53e790782c6f3a12e1d3
+    :commit: 1cdb89e52e5f81ef88f51193361082729685a0d5
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -176,7 +176,7 @@ SPEC CHECKSUMS:
   Bugsnag: 4c3f744efa9d76d9b17fddbc940e881436464cee
   CGFloatType: fa1da294540051a76750092a427b95296bbdc006
   CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
-  EVReflection: 0e8ec81c1f92646aac670b64b3199c02c5c0ae2d
+  EVReflection: 82ca5595f84e51474017eb11ebecc4a67bb151cb
   FBSDKCoreKit: 686ac982723a14ec9ddb85e2f81235d7706c891b
   FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76

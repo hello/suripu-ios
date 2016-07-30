@@ -10,7 +10,10 @@
 
 #import "HEMSenseDFUPresenter.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMActivityCoverView.h"
 #import "HEMStyle.h"
+
+static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
 
 @interface HEMSenseDFUPresenter()
 
@@ -111,17 +114,36 @@
         if ([[strongSelf previousStatus] currentState] != [status currentState]) {
             [SENAnalytics trackSenseUpdate:status];
         }
-        [[strongSelf statusLabel] setText:[strongSelf textForStatus:status]];
-        [strongSelf setPreviousStatus:status];
+        [strongSelf finish];
+//        [[strongSelf statusLabel] setText:[strongSelf textForStatus:status]];
+//        [strongSelf setPreviousStatus:status];
     } completion:^(NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [strongSelf showUpdateError:error];
         } else {
             [SENAnalytics track:HEMAnalyticsEventSenseDFUEnd];
-            [[strongSelf dfuDelegate] senseUpdateCompletedFrom:strongSelf];
+            [strongSelf finish];
         }
     }];
+}
+
+- (void)finish {
+    UIView* parentView = [[self dfuDelegate] parentContentViewFor:self];
+    NSString* updatedMessage = NSLocalizedString(@"onboarding.sense.dfu.updated", nil);
+    
+    HEMActivityCoverView* updatedView = [HEMActivityCoverView new];
+    [updatedView showInView:parentView
+                    withText:updatedMessage
+                 successMark:YES
+                  completion:^{
+                      int64_t delay = (int64_t) (HEMSenseDFUUpdatedMessageDuration*NSEC_PER_SEC);
+                      dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay);
+                      dispatch_after(time, dispatch_get_main_queue(), ^{
+                          [updatedView removeFromSuperview];
+                      });
+                  }];
+    [[self dfuDelegate] senseUpdateCompletedFrom:self];
 }
 
 - (void)updateLater {

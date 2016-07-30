@@ -218,17 +218,10 @@
 
 // support
 "debug.options.title" = "Debug options";
-"debug.option.contact-support" = "Contact support";
 "debug.option.reset" = "Start Over";
-"debug.option.led" = "LED";
-"debug.option.led.title" = "LED options";
 "debug.option.debug.info" = "Debug info";
 "debug.option.force.appreview" = "Force app review";
-"debug.led.option.pair" = "Pair";
-"debug.led.option.off" = "Off";
-"debug.led.option.success" = "Success";
-"debug.led.option.activity" = "Activity";
-"debug.option.room-check.title" = "Room Check";
+"debug.option.room-check.title" = "Show Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.force-whats-new" = "Force What's New";
 "debug.option.clear-alarms" = "Remove all alarms";
@@ -236,6 +229,7 @@
 "debug.host.action.custom-url" = "Custom";
 "debug.host.section.api" = "API Hosts";
 "debug.host.section.nonsense" = "Nonsense Hosts";
+"debug.option.voice" = "Show Voice Tutorial";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
@@ -865,3 +859,4 @@
 "onboarding.sense.dfu.status.in-progress" = "Sense is updating";
 "onboarding.sense.dfu.later.dialog.title" = "Update later";
 "onboarding.sense.dfu.later.dialog.message" = "Sense will try to update at a later time. You can begin using Sense, but some features may not be available until the update is complete.";
+"onboarding.sense.dfu.updated" = "Sense updated";

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.1.2
+
+New:
+
+* Added voice tutorial to onboarding
+* Integrates with speech API to grab recent responses
+* Analytics for Sense DFU
+
+Fixes:
+
+* Smooth out animation for Pill wave transmission animation
+
 ## 1.5.1.1
 
 New:

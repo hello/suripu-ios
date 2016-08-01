@@ -52,7 +52,7 @@
 #pragma mark - DFU Delegate
 
 - (UIView*)parentContentViewFor:(HEMSenseDFUPresenter*)presenter {
-    return [[self navigationController] view];
+    return [[self rootViewController] view];
 }
 
 - (void)senseUpdateLaterFrom:(HEMSenseDFUPresenter *)presenter {

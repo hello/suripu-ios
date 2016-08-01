@@ -683,7 +683,8 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 }
 
 - (BOOL)isDFURequiredForSense {
-    return [[self currentDFUStatus] isRequired];
+    return [[self currentDFUStatus] isRequired]
+        || [[self currentDFUStatus] currentState] == SENDFUStateInProgress;
 }
 
 - (void)scheduleDFUTimeout {

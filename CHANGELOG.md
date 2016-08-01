@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.1.3
+
+Fixes:
+
+* Removed debug code
+
 ## 1.5.1.2
 
 New:

@@ -114,9 +114,8 @@ static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
         if ([[strongSelf previousStatus] currentState] != [status currentState]) {
             [SENAnalytics trackSenseUpdate:status];
         }
-        [strongSelf finish];
-//        [[strongSelf statusLabel] setText:[strongSelf textForStatus:status]];
-//        [strongSelf setPreviousStatus:status];
+        [[strongSelf statusLabel] setText:[strongSelf textForStatus:status]];
+        [strongSelf setPreviousStatus:status];
     } completion:^(NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {

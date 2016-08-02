@@ -29,6 +29,7 @@ static CGFloat const HEMVoiceTutorialInProgressInnerRingSize = 146.0f;
 static CGFloat const HEMVoiceTutorialRingAnimeDelay = 0.1f;
 static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
 static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
+static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
 
 @interface HEMVoiceTutorialPresenter()
 
@@ -61,6 +62,8 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 @property (nonatomic, strong) UIBarButtonItem* infoItem;
 @property (nonatomic, weak) UINavigationItem* navItem;
 
+@property (nonatomic, assign) NSInteger failures;
+
 @property (nonatomic, weak) HEMVoiceService* voiceService;
 
 @end
@@ -71,6 +74,7 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
     self = [super init];
     if (self) {
         _voiceService = voiceService;
+        _failures = 0;
     }
     return self;
 }
@@ -421,13 +425,18 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
         dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
         dispatch_after(delayTime, dispatch_get_main_queue(), ^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf listenForVoiceResult];
+            if ([strongSelf failures] == HEMVoiceTutorialFailureBeforeTip) {
+                [strongSelf voiceInfo];
+            } else {
+                [strongSelf listenForVoiceResult];
+            }
         });
         
     }];
 }
 
 - (void)showUnrecognizedResponse:(NSString*)message {
+    [self setFailures:[self failures] + 1];
     [self stopListeningForVoiceResult];
     
     [self prepareSenseRingColor:[UIColor red4]];

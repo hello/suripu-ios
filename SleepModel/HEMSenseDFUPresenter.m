@@ -136,13 +136,17 @@ static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
                     withText:updatedMessage
                  successMark:YES
                   completion:^{
+                      [[self dfuDelegate] senseUpdateCompletedFrom:self];
                       int64_t delay = (int64_t) (HEMSenseDFUUpdatedMessageDuration*NSEC_PER_SEC);
                       dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay);
                       dispatch_after(time, dispatch_get_main_queue(), ^{
-                          [updatedView removeFromSuperview];
+                          [updatedView dismissWithResultText:nil
+                                             showSuccessMark:NO
+                                                      remove:YES
+                                                  completion:nil];
                       });
                   }];
-    [[self dfuDelegate] senseUpdateCompletedFrom:self];
+    
 }
 
 - (void)updateLater {

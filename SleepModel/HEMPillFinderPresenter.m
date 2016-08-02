@@ -51,6 +51,7 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
     [titleLabel setTextColor:[UIColor grey6]];
     [descriptionLabel setFont:[UIFont body]];
     [descriptionLabel setTextColor:[UIColor grey5]];
+    [[descriptionLabel superview] updateConstraintsIfNeeded];
     [self setTitleLabel:titleLabel];
     [self setDescriptionLabel:descriptionLabel];
 }

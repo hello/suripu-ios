@@ -45,9 +45,9 @@
     
     HEMPillFinderPresenter* finderPresenter =
         [[HEMPillFinderPresenter alloc] initWithDeviceService:[self deviceService]];
-    [finderPresenter bindWithVideoView:[self videoView]];
     [finderPresenter bindWithTitleLabel:[self titleLabel]
                        descriptionLabel:[self descriptionLabel]];
+    [finderPresenter bindWithVideoView:[self videoView]];
     [finderPresenter bindWithStatusLabel:[self statusLabel]
                             andIndicator:[self activityView]];
     [finderPresenter bindWithCancelButton:[self cancelButton] helpButton:[self helpButton]];

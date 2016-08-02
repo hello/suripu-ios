@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5.1.4
+
+New:
+
+* Voice Tip dialog
+* Added error handling for voice tutorial
+* Updated copy for end of onboarding message
+* Add Sense is updated confirmation
+
+Fixes:
+
+* 4s layout for pill dfu
+
 ## 1.5.1.3
 
 Fixes:

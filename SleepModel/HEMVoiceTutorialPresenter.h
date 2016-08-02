@@ -14,6 +14,7 @@
 @protocol HEMVoiceTutorialDelegate <NSObject>
 
 - (void)didFinishTutorialFrom:(HEMVoiceTutorialPresenter*)presenter;
+- (void)showController:(UIViewController*)controller fromPresenter:(HEMVoiceTutorialPresenter*)presenter;
 
 @end
 
@@ -30,6 +31,7 @@
         commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
                      errorLabel:(UILabel*)errorLabel
           errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint;
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
           descriptionLabel:(UILabel*)descriptionLabel;
 - (void)bindWithSenseImageView:(UIImageView*)senseImageView

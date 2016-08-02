@@ -34,7 +34,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
 }
 
 + (NSDictionary*)defaultDescriptionProperties {
-    return @{NSFontAttributeName : [UIFont actionSheetTitleViewDescriptionFont],
+    return @{NSFontAttributeName : [UIFont body],
              NSForegroundColorAttributeName : [UIColor detailTextColor]};
 }
 
@@ -100,9 +100,8 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     
     if (title) {
         UIColor* titleColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
-        UIFont* titleFont = [UIFont actionSheetTitleViewTitleFont];
         UILabel* titleLabel = [self labelWithText:title
-                                          andFont:titleFont
+                                          andFont:[UIFont h5]
                                          andColor:titleColor
                                         atYOrigin:maxY];
         [self addSubview:titleLabel];

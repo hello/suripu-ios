@@ -39,7 +39,7 @@
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
 "onboarding.before-sleep.4.description" = "Sense glows red when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
 "onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom. Go ahead, give it a try now.";
-"onboarding.end-message.well-done" = "You're all set up";
+"onboarding.end-message.well-done" = "You're all set.";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
 "onboarding.room-check.failed" = "Unsuccessful";
 "onboarding.room-check.failed-message" = "One or more sensors is not ready yet. Don't worry, data will show soon. Set up a Smart Alarm first.";
@@ -860,3 +860,9 @@
 "onboarding.sense.dfu.later.dialog.title" = "Update later";
 "onboarding.sense.dfu.later.dialog.message" = "Sense will try to update at a later time. You can begin using Sense, but some features may not be available until the update is complete.";
 "onboarding.sense.dfu.updated" = "Sense updated";
+
+// voice tutorial
+"onboarding.voice.info.title" = "Voice Tip";
+"onboarding.voice.info.message" = "Make sure your room is quiet, and that you're speaking clearly to Sense and not your mobile device.";
+"onboarding.voice.error.problem" = "Sorry, there was a problem. Please try again.";
+"onboarding.voice.error.not-understood" = "Sorry, didn't quite get that. Please try again.";

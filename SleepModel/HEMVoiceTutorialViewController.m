@@ -51,6 +51,7 @@
                commandBottomConstraint:[self speechCommandBottomConstraint]
                             errorLabel:[self speechErrorLabel]
                  errorBottomConstraint:[self speechErrorBottomConstraint]];
+    [presenter bindWithNavigationItem:[self navigationItem]];
     [presenter bindWithContinueButton:[self continueButton]];
     [presenter bindWithLaterButton:[self laterButton]
               withBottomConstraint:[self laterButtonBottomConstraint]];
@@ -70,6 +71,10 @@
 
 - (void)didFinishTutorialFrom:(HEMVoiceTutorialPresenter *)presenter {
     [self completeOnboarding];
+}
+
+- (void)showController:(UIViewController *)controller fromPresenter:(HEMVoiceTutorialPresenter *)presenter {
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 @end

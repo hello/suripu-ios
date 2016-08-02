@@ -10,6 +10,9 @@
 #import "HEMVoiceTutorialPresenter.h"
 #import "HEMScreenUtils.h"
 #import "HEMVoiceService.h"
+#import "HEMActionSheetViewController.h"
+#import "HEMActionSheetTitleView.h"
+#import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMVoiceTutorialInitialSenseScale = 0.6f;
@@ -55,6 +58,9 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 @property (nonatomic, weak) CAShapeLayer* middleSenseRing;
 @property (nonatomic, weak) CAShapeLayer* innerSenseRing;
 
+@property (nonatomic, strong) UIBarButtonItem* infoItem;
+@property (nonatomic, weak) UINavigationItem* navItem;
+
 @property (nonatomic, weak) HEMVoiceService* voiceService;
 
 @end
@@ -94,6 +100,16 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
     [self setSpeechErrorLabel:errorLabel];
     [self setSpeechErrorBottomConstraint:errorBottomConstraint];
     [self setSpeechContainerBottomConstraint:_speechContainerBottomConstraint];
+}
+
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem {
+    UIImage* infoImage = [UIImage imageNamed:@"infoIconSmall"];
+    UIBarButtonItem* infoItem = [[UIBarButtonItem alloc] initWithImage:infoImage
+                                                                 style:UIBarButtonItemStylePlain
+                                                                target:self
+                                                                action:@selector(voiceInfo)];
+    [self setInfoItem:infoItem];
+    [self setNavItem:navItem];
 }
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
@@ -252,6 +268,40 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 
 #pragma mark - Actions
 
+- (void)voiceInfo {
+    DDLogVerbose(@"show voice info");
+    HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
+    
+    // title view
+    NSString* title = NSLocalizedString(@"onboarding.voice.info.title", nil);
+    NSString* message = NSLocalizedString(@"onboarding.voice.info.message", nil);
+    NSDictionary* messageAttributes = @{NSFontAttributeName : [UIFont body],
+                                        NSForegroundColorAttributeName : [UIColor grey5]};
+    NSMutableAttributedString* attrMessage = [[NSMutableAttributedString alloc] initWithString:message attributes:messageAttributes];
+    HEMActionSheetTitleView* titleView = [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrMessage];
+    
+    [sheet setCustomTitleView:titleView];
+    
+    __weak typeof(self) weakSelf = self;
+    NSString* cancelOption = NSLocalizedString(@"actions.close", nil);
+    [sheet setOptionTextAlignment:NSTextAlignmentCenter];
+    [sheet addDismissAction:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf listenForVoiceResult];
+    }];
+    [sheet addOptionWithTitle:cancelOption
+                   titleColor:[UIColor tintColor]
+                  description:nil
+                    imageName:nil
+                       action:^{
+                           __strong typeof(weakSelf) strongSelf = weakSelf;
+                           [strongSelf listenForVoiceResult];
+                       }];
+    
+    [self stopListeningForVoiceResult];
+    [[self delegate] showController:sheet fromPresenter:self];
+}
+
 - (void)finish {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -265,6 +315,8 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 }
 
 - (void)start {
+    [[self navItem] setRightBarButtonItem:[self infoItem]];
+    
     [[self speechCommandLabel] sizeToFit];
     [[self speechErrorLabel] setHidden:YES];
     [[self continueButton] setHidden:YES];
@@ -317,15 +369,18 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
             case SENSpeechStatusOk:
                 [self showCorrectResponse];
                 break;
-            default:
-                [self showUnrecognizedResponse];
+            default: {
+                NSString* message = NSLocalizedString(@"onboarding.voice.error.not-understood", nil);
+                [self showUnrecognizedResponse:message];
                 break;
+            }
         }
         
     } else {
-        // TODO handle error;
         NSError* error = [note userInfo][HEMVoiceNotificationInfoError];
         DDLogWarn(@"got voice result error %@", error);
+        NSString* message = NSLocalizedString(@"onboarding.voice.error.problem", nil);
+        [self showUnrecognizedResponse:message];
     }
 }
 
@@ -372,11 +427,12 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
     }];
 }
 
-- (void)showUnrecognizedResponse {
+- (void)showUnrecognizedResponse:(NSString*)message {
     [self stopListeningForVoiceResult];
     
     [self prepareSenseRingColor:[UIColor red4]];
     
+    [[self speechErrorLabel] setText:message];
     [[self speechErrorLabel] sizeToFit];
     [[self speechErrorLabel] setHidden:NO];
     [[self speechErrorLabel] setAlpha:0.0f];
@@ -403,16 +459,15 @@ static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 }
 
 - (void)showCorrectResponse {
+    [self stopListeningForVoiceResult];
+    
+    [[self navItem] setRightBarButtonItem:nil];
+
     UIColor* successColor = [UIColor tintColor];
-    CGColorRef colorRef = [successColor CGColor];
-    [[self innerSenseRing] setFillColor:colorRef];
-    [[self middleSenseRing] setFillColor:colorRef];
-    [[self outerSenseRing] setFillColor:colorRef];
+    [self prepareSenseRingColor:successColor];
     
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
-        [[self innerSenseRing] fillColor];
-        [[self middleSenseRing] fillColor];
-        [[self outerSenseRing] fillColor];
+        [self updatesenseRingColor];
         [[self speechCommandLabel] setTextColor:successColor];
         [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoiceBlue"]];
     } completion:^(BOOL finished) {

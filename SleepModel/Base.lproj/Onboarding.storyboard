@@ -1946,7 +1946,7 @@
                                     <action selector="setAlarmLater:" destination="0qJ-qR-xla" eventType="touchUpInside" id="BaF-6P-sdr"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseTable" translatesAutoresizingMaskIntoConstraints="NO" id="OHD-cz-GEY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" image="senseTable" translatesAutoresizingMaskIntoConstraints="NO" id="OHD-cz-GEY">
                                 <rect key="frame" x="0.0" y="300" width="600" height="154"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseVoiceGray" translatesAutoresizingMaskIntoConstraints="NO" id="zDm-Bg-xLx">

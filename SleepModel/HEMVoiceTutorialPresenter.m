@@ -16,7 +16,8 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMVoiceTutorialInitialSenseScale = 0.6f;
-static CGFloat const HEMVoiceTutorialTableBottomMarginSmallScale = 0.25f;
+static CGFloat const HEMVoiceTutorialTableBottomMargin5 = -6.0f;
+static CGFloat const HEMVoiceTutorialTableBottomMargin4s = 40.0f;
 static CGFloat const HEMVoiceTutorialSpeechContainerBottomMarginSmall = 75.0f;
 static CGFloat const HEMVoiceTutorialAnimeDuration = 0.3f;
 static CGFloat const HEMVoiceTutorialInProgressLaterBottomMargin = 21.0f;
@@ -87,15 +88,17 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
                      errorLabel:(UILabel*)errorLabel
           errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint {
     
+    UIFont* commandFont = [UIFont h4];
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
         CGFloat bottom = -HEMVoiceTutorialSpeechContainerBottomMarginSmall;
         [containerBottomConstraint setConstant:bottom];
+        commandFont = [UIFont h5];
     }
     
     [speechContainer setHidden:YES];
-    [commandLabel setFont:[UIFont h4]];
+    [commandLabel setFont:commandFont];
     [commandLabel setTextColor:[UIColor grey6]];
-    [errorLabel setFont:[UIFont h4]];
+    [errorLabel setFont:commandFont];
     [errorLabel setTextColor:[UIColor grey6]];
     [self setSpeechContainer:speechContainer];
     [self setSpeechTitleLabel:titleLabel];
@@ -141,11 +144,13 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
 
 - (void)bindWithTableImageView:(UIImageView*)tableImageView
           withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
-    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
-        CGFloat bottom = [bottomConstraint constant];
-        bottom = bottom * HEMVoiceTutorialTableBottomMarginSmallScale;
-        [bottomConstraint setConstant:bottom];
+    CGFloat bottom = [bottomConstraint constant];
+    if (HEMIsIPhone4Family()) {
+        bottom = HEMVoiceTutorialTableBottomMargin4s;
+    } else if (HEMIsIPhone5Family()) {
+        bottom = HEMVoiceTutorialTableBottomMargin5;
     }
+    [bottomConstraint setConstant:bottom];
     [self setOrigTableBottomMargin:[bottomConstraint constant]];
     [self setTableImageView:tableImageView];
     [self setTableBottomConstraint:bottomConstraint];
@@ -307,13 +312,11 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
 }
 
 - (void)finish {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self stopListeningForVoiceResult];
     
     [[self innerSenseRing] removeAllAnimations];
     [[self middleSenseRing] removeAllAnimations];
     [[self outerSenseRing] removeAllAnimations];
-
-    [[self voiceService] stopListeningForVoiceResult];
     
     [[self delegate] didFinishTutorialFrom:self];
 }
@@ -331,8 +334,11 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
     CGSize senseSize = [[self senseImageView] image].size;
     CGFloat laterBottom = HEMVoiceTutorialInProgressLaterBottomMargin;
     CGFloat tableBottom = -HEMVoiceTutorialInProgressTableBottomMargin;
-    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
-        tableBottom = tableBottom * HEMVoiceTutorialTableBottomMarginSmallScale;
+    if (HEMIsIPhone4Family()) {
+        tableBottom = HEMVoiceTutorialTableBottomMargin4s;
+        [[self navItem] setTitle:nil];
+    } else if (HEMIsIPhone5Family()) {
+        tableBottom = HEMVoiceTutorialTableBottomMargin5;
     }
     
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{

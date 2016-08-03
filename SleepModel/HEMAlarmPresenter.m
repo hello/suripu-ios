@@ -16,6 +16,10 @@
 #import "HEMClockPickerView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmTableViewCell.h"
+#import "HEMActivityCoverView.h"
+#import "HEMActivityIndicatorView.h"
+
+static CGFloat const HEMAlarmPresenterSuccessDelay = 0.8f;
 
 typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     HEMAlarmTableRowSmart = 0,
@@ -38,6 +42,8 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 @property (nonatomic, strong) HEMAlarmCache* originalAlarm;
 @property (nonatomic, weak) SENAlarm* alarm;
 @property (nonatomic, assign) BOOL configuredClockPicker;
+@property (nonatomic, assign) BOOL deletingAlarm;
+@property (nonatomic, strong) HEMActivityCoverView* activityView;
 
 @end
 
@@ -120,10 +126,59 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+#pragma mark - Activity
+
+- (void)showAlarmActivity:(void(^)(void))completion {
+    if ([self activityView]) {
+        [[self activityView] removeFromSuperview];
+    }
+    
+    UIView* parentView = [[self delegate] activityContainerFor:self];
+    NSString* activityText = NSLocalizedString(@"activity.saving.changes", nil);
+    [self setActivityView:[HEMActivityCoverView new]];
+    [[self activityView] showInView:parentView
+                           withText:activityText
+                           activity:YES
+                         completion:completion];
+}
+
+- (void)hideAlarmActivity:(BOOL)success completion:(void(^)(void))completion {
+    if ([[self activityView] isShowing]) {
+        NSString* message = [self successText];
+        if (success && !message) {
+            message = [self deletingAlarm]
+                    ? NSLocalizedString(@"actions.deleted", nil)
+                    : NSLocalizedString(@"actions.saved", nil);
+        }
+        
+        if (success) {
+            UIImage* check = [UIImage imageNamed:@"check"];
+            [[[self activityView] indicator] setHidden:YES];
+            [[self activityView] updateText:message successIcon:check hideActivity:YES completion:^(BOOL finished) {
+                [[self activityView] showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                    CGFloat duration = [self successDuration] > 0
+                                     ? [self successDuration]
+                                     : HEMAlarmPresenterSuccessDelay;
+                    int64_t delayInSecs = (int64_t)(duration * NSEC_PER_SEC);
+                    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+                    dispatch_after(delay, dispatch_get_main_queue(), completion);
+                }];
+            }];
+        } else {
+            [[self activityView] dismissWithResultText:nil
+                                       showSuccessMark:NO
+                                                remove:YES
+                                            completion:completion];
+        }
+    } else {
+        completion ();
+    }
+}
+
 #pragma mark - Actions
 
 - (void)cancel:(UIButton*)button {
-    [[self delegate] dismissWithMessage:nil saved:NO from:self];
+    [[self delegate] didSave:NO from:self];
 }
 
 - (void)save:(UIButton*)button {
@@ -136,6 +191,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
         return;
     }
     
+    [self setDeletingAlarm:NO];
     [[self cache] setOn:YES];
     [[self service] copyCache:[self cache] to:[self alarm]];
     
@@ -146,37 +202,56 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
         [updatedAlarms addObject:[self alarm]];
     }
     
-    __weak typeof(self) weakSelf = self;
-    [[self service] updateAlarms:updatedAlarms ?: alarms completion:^(NSError * _Nullable error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error) {
-            NSString* title = NSLocalizedString(@"alarm.save-error.title", nil);
-            NSString* message = [error localizedDescription];
-            [[strongSelf delegate] showErrorWithTitle:title message:message from:strongSelf];
-            [[strongSelf service] copyCache:[strongSelf originalAlarm] to:[strongSelf alarm]];
-        } else {
-            [SENAnalytics trackAlarmSave:[strongSelf alarm]];
-            NSString* message = NSLocalizedString(@"actions.saved", nil);
-            [[strongSelf delegate] dismissWithMessage:message saved:YES from:strongSelf];
-        }
+    [self showAlarmActivity:^{
+        __weak typeof(self) weakSelf = self;
+        [[self service] updateAlarms:updatedAlarms ?: alarms completion:^(NSError * _Nullable error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            BOOL success = error == nil;
+            [strongSelf hideAlarmActivity:success completion:^{
+                if (error) {
+                    NSString* title = NSLocalizedString(@"alarm.save-error.title", nil);
+                    NSString* message = [error localizedDescription];
+                    [[strongSelf delegate] showErrorWithTitle:title message:message from:strongSelf];
+                    [[strongSelf service] copyCache:[strongSelf originalAlarm] to:[strongSelf alarm]];
+                } else {
+                    [SENAnalytics trackAlarmSave:[strongSelf alarm]];
+                    [[strongSelf delegate] didSave:YES from:strongSelf];
+                }
+            }];
+        }];
     }];
+
 }
 
 - (void)deleteAlarm {
+    [self setDeletingAlarm:YES];
+    
     NSString *title = NSLocalizedString(@"alarm.delete.confirm.title", nil);
     NSString *message = NSLocalizedString(@"alarm.delete.confirm.message", nil);
     
     __weak typeof(self) weakSelf = self;
-    [[self delegate] showConfirmationDialogWithTitle:title message:message action:^{
+    void(^deleteAlarm)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSMutableArray* alarms = [[[strongSelf service] alarms] mutableCopy];
         [alarms removeObject:[strongSelf alarm]];
         [[strongSelf service] updateAlarms:alarms completion:^(NSError * _Nullable error) {
-            if (!error) {
-                [SENAnalytics track:HEMAnalyticsEventDeleteAlarm];
-                [[strongSelf delegate] dismissWithMessage:nil saved:YES from:strongSelf];
-            }
+            BOOL success = error == nil;
+            [strongSelf hideAlarmActivity:success completion:^{
+                if (success) {
+                    [SENAnalytics track:HEMAnalyticsEventDeleteAlarm];
+                    [[strongSelf delegate] didSave:YES from:strongSelf];
+                } else {
+                    NSString* title = NSLocalizedString(@"alarm.delete-error.title", nil);
+                    NSString* message = [error localizedDescription];
+                    [[strongSelf delegate] showErrorWithTitle:title message:message from:strongSelf];
+                }
+            }];
         }];
+    };
+    
+    [[self delegate] showConfirmationDialogWithTitle:title message:message action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showAlarmActivity:deleteAlarm];
     } from:self];
 }
 

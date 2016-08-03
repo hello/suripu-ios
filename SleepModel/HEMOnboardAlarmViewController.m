@@ -23,6 +23,7 @@
 
 static CGFloat const HEMOnboardAlarmSavedDisplayDuration = 1.0f;
 static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
+static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
@@ -72,8 +73,17 @@ static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
     if ([[nav topViewController] isKindOfClass:[HEMAlarmViewController class]]) {
         SENAlarm* alarm = [SENAlarm createDefaultAlarm];
         
+        HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
+        NSString* successText = nil;
+        CGFloat successDuration = 0.0f;
+        if (![onbService isDFURequiredForSense]) {
+            successText = NSLocalizedString(@"onboarding.end-message.well-done", nil);
+            successDuration = HEMOnboardAlarmCompleteDuration;
+        }
         HEMAlarmViewController* alarmVC = (HEMAlarmViewController*)[nav topViewController];
         [alarmVC setAlarm:alarm];
+        [alarmVC setSuccessText:successText];
+        [alarmVC setSuccessDuration:successDuration];
         [alarmVC setDelegate:self];
     }
     [self presentViewController:nav animated:YES completion:nil];
@@ -90,32 +100,23 @@ static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
 }
 
 - (void)didSaveAlarm:(__unused SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC {
-    UINavigationController* nav = [self navigationController];
+    UIView* snapshot = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
+    UIView* parentView = [[self navigationController] view];
+    [parentView addSubview:snapshot];
     
-    UIImage* snapshot = [[alarmVC view] snapshot];
-    UIImageView* overlay = [[UIImageView alloc] initWithFrame:[[nav view] bounds]];
-    [overlay setImage:snapshot];
-
-    [[nav view] addSubview:overlay];
     [self dismissViewControllerAnimated:NO completion:^{
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        if (![service isDFURequiredForSense]) {
-            [self next];
-        } else {
-            HEMActivityCoverView* coverView = [HEMActivityCoverView new];
-            NSString* savedText = NSLocalizedString(@"actions.alarm-saved", nil);
-            [coverView showInView:overlay withText:savedText successMark:YES completion:^{
-                [self next];
-                [UIView animateWithDuration:HEMOnboardAlarmSavedAnimeDuration
-                                      delay:HEMOnboardAlarmSavedDisplayDuration
-                                    options:UIViewAnimationOptionBeginFromCurrentState
-                                 animations:^{
-                                     [overlay setAlpha:0.0f];
-                                 }
-                                 completion:^(BOOL finished) {
-                                     [overlay removeFromSuperview];
-                                 }];
-            }];
+        [self next];
+        if ([service isDFURequiredForSense]) {
+            [UIView animateWithDuration:HEMOnboardAlarmSavedAnimeDuration
+                                  delay:HEMOnboardAlarmSavedDisplayDuration
+                                options:UIViewAnimationOptionBeginFromCurrentState
+                             animations:^{
+                                 [snapshot setAlpha:0.0f];
+                             }
+                             completion:^(BOOL finished) {
+                                 [snapshot removeFromSuperview];
+                             }];
         }
     }];
 }
@@ -125,7 +126,7 @@ static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
 - (void)next {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     if (![service isDFURequiredForSense]) {
-        [self completeOnboarding];
+        [self completionOnboardingWithoutMessage];
     } else {
         UIViewController* controller = [HEMOnboardingStoryboard instantiateSenseDFUViewController];
         [[self navigationController] setViewControllers:@[controller] animated:YES];

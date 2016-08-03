@@ -368,6 +368,7 @@
 "alarm.smart.title" = "Smart Alarm";
 "alarm.delete.title" = "Delete alarm";
 "alarm.save-error.title" = "Alarm could not be saved";
+"alarm.delete-error.title" = "Alarm could not be deleted";
 "alarm.save-error.too-soon.title" = "Too Soon!";
 "alarm.save-error.too-soon.message" = "The alarm you set is only a couple minutes away. If you want to test the Alarm, please set an alarm for a bit later.";
 "alarm.delete.confirm.title" = "Delete alarm";
@@ -627,7 +628,7 @@
 "actions.next" = "Next";
 "actions.done" = "Done";
 "actions.saved" = "Saved";
-"actions.alarm-saved" = "Alarm saved";
+"actions.deleted" = "Deleted";
 "actions.save" = "Save";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";

@@ -106,6 +106,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 }
 
 - (void)update {
+    [[self collectionView] reloadData];
     [self loadData];
 }
 

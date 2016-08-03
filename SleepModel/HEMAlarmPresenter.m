@@ -144,8 +144,8 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 
 - (void)hideAlarmActivity:(BOOL)success completion:(void(^)(void))completion {
     if ([[self activityView] isShowing]) {
-        NSString* message = nil;
-        if (success) {
+        NSString* message = [self successText];
+        if (success && !message) {
             message = [self deletingAlarm]
                     ? NSLocalizedString(@"actions.deleted", nil)
                     : NSLocalizedString(@"actions.saved", nil);
@@ -156,7 +156,10 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
             [[[self activityView] indicator] setHidden:YES];
             [[self activityView] updateText:message successIcon:check hideActivity:YES completion:^(BOOL finished) {
                 [[self activityView] showSuccessMarkAnimated:YES completion:^(BOOL finished) {
-                    int64_t delayInSecs = (int64_t)(HEMAlarmPresenterSuccessDelay * NSEC_PER_SEC);
+                    CGFloat duration = [self successDuration] > 0
+                                     ? [self successDuration]
+                                     : HEMAlarmPresenterSuccessDelay;
+                    int64_t delayInSecs = (int64_t)(duration * NSEC_PER_SEC);
                     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
                     dispatch_after(delay, dispatch_get_main_queue(), completion);
                 }];

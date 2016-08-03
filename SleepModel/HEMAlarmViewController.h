@@ -18,6 +18,7 @@
 @interface HEMAlarmViewController : HEMBaseController
 
 @property (nonatomic, copy) NSString* successText;
+@property (nonatomic, assign) CGFloat successDuration;
 @property (nonatomic, strong) SENAlarm* alarm;
 @property (nonatomic, strong) HEMAlarmService* alarmService;
 @property (nonatomic, weak)   id<HEMAlarmControllerDelegate> delegate;

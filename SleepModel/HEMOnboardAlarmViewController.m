@@ -23,6 +23,7 @@
 
 static CGFloat const HEMOnboardAlarmSavedDisplayDuration = 1.0f;
 static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
+static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
@@ -74,12 +75,15 @@ static CGFloat const HEMOnboardAlarmSavedAnimeDuration = 1.0f;
         
         HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
         NSString* successText = nil;
+        CGFloat successDuration = 0.0f;
         if (![onbService isDFURequiredForSense]) {
             successText = NSLocalizedString(@"onboarding.end-message.well-done", nil);
+            successDuration = HEMOnboardAlarmCompleteDuration;
         }
         HEMAlarmViewController* alarmVC = (HEMAlarmViewController*)[nav topViewController];
         [alarmVC setAlarm:alarm];
         [alarmVC setSuccessText:successText];
+        [alarmVC setSuccessDuration:successDuration];
         [alarmVC setDelegate:self];
     }
     [self presentViewController:nav animated:YES completion:nil];

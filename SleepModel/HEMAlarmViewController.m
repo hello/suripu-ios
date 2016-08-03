@@ -42,6 +42,7 @@
     HEMAlarmPresenter* presenter = [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
                                                                alarmService:[self alarmService]];
     [presenter setDelegate:self];
+    [presenter setSuccessDuration:[self successDuration]];
     [presenter setSuccessText:[self successText]];
     [presenter bindWithTutorialPresentingController:self];
     [presenter bindWithButtonContainer:[self buttonContainer]

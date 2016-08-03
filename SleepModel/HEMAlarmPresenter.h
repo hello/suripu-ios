@@ -40,6 +40,7 @@ typedef void(^HEMAlarmAction)(void);
 @property (nonatomic, weak, readonly) SENAlarm* alarm;
 @property (nonatomic, weak, nullable) id<HEMAlarmPresenterDelegate> delegate;
 @property (nonatomic, copy) NSString* successText;
+@property (nonatomic, assign) CGFloat successDuration;
 
 - (instancetype)initWithAlarm:(nullable SENAlarm*)alarm
                  alarmService:(HEMAlarmService*)alarmService NS_DESIGNATED_INITIALIZER;

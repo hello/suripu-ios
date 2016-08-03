@@ -29,9 +29,8 @@ typedef void(^HEMAlarmAction)(void);
                    message:(NSString*)message
                       from:(HEMAlarmPresenter*)presenter;
 
-- (void)dismissWithMessage:(nullable NSString*)message
-                     saved:(BOOL)saved
-                      from:(HEMAlarmPresenter*)presenter;
+- (void)didSave:(BOOL)save from:(HEMAlarmPresenter*)presenter;
+- (UIView*)activityContainerFor:(HEMAlarmPresenter*)presenter;
 
 @end
 
@@ -40,6 +39,7 @@ typedef void(^HEMAlarmAction)(void);
 @property (nonatomic, strong, readonly) HEMAlarmCache* cache;
 @property (nonatomic, weak, readonly) SENAlarm* alarm;
 @property (nonatomic, weak, nullable) id<HEMAlarmPresenterDelegate> delegate;
+@property (nonatomic, copy) NSString* successText;
 
 - (instancetype)initWithAlarm:(nullable SENAlarm*)alarm
                  alarmService:(HEMAlarmService*)alarmService NS_DESIGNATED_INITIALIZER;

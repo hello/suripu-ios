@@ -103,5 +103,6 @@
 - (NSAttributedString*)boldAttributedText:(NSString *)text withColor:(UIColor*)color;
 
 - (void)completeOnboarding;
+- (void)completionOnboardingWithoutMessage;
 
 @end

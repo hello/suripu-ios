@@ -13,13 +13,14 @@
 
 @interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *voiceContentContainer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *voiceContentCenterConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *tryNowLabel;
 @property (weak, nonatomic) IBOutlet UIView *speechContainer;
-@property (weak, nonatomic) IBOutlet UILabel *speechTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *speechCommandLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechCommandBottomConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *speechErrorLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechErrorBottomConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *speechContainerBottomConstraint;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIButton *laterButton;
 @property (weak, nonatomic) IBOutlet UIImageView *tableImageView;
@@ -44,13 +45,15 @@
     HEMVoiceService* voiceService = [HEMVoiceService new];
     HEMVoiceTutorialPresenter* presenter =
         [[HEMVoiceTutorialPresenter alloc] initWithVoiceService:voiceService];
-    [presenter bindWithSpeechContainer:[self speechContainer]
-             containerBottomConstraint:[self speechContainerBottomConstraint]
-                            titleLabel:[self speechTitleLabel]
-                          commandLabel:[self speechCommandLabel]
-               commandBottomConstraint:[self speechCommandBottomConstraint]
-                            errorLabel:[self speechErrorLabel]
-                 errorBottomConstraint:[self speechErrorBottomConstraint]];
+    
+    [presenter bindWithTryNowLabel:[self tryNowLabel]];
+    [presenter bindWithVoiceContentContainer:[self voiceContentContainer]
+                        withCenterConstraint:[self voiceContentCenterConstraint]];
+    [presenter bindWithSpeechLabelContainer:[self speechContainer]
+                               commandLabel:[self speechCommandLabel]
+                    commandBottomConstraint:[self speechCommandBottomConstraint]
+                                 errorLabel:[self speechErrorLabel]
+                      errorBottomConstraint:[self speechErrorBottomConstraint]];
     [presenter bindWithNavigationItem:[self navigationItem]];
     [presenter bindWithContinueButton:[self continueButton]];
     [presenter bindWithLaterButton:[self laterButton]
@@ -63,6 +66,7 @@
     [presenter bindWithTitleLabel:[self titleLabel]
                  descriptionLabel:[self descriptionLabel]];
     [presenter setDelegate:self];
+    
     [self addPresenter:presenter];
     [self setVoiceService:voiceService];
 }
@@ -73,7 +77,8 @@
     [self completeOnboarding];
 }
 
-- (void)showController:(UIViewController *)controller fromPresenter:(HEMVoiceTutorialPresenter *)presenter {
+- (void)showController:(UIViewController *)controller
+         fromPresenter:(HEMVoiceTutorialPresenter *)presenter {
     [self presentViewController:controller animated:YES completion:nil];
 }
 

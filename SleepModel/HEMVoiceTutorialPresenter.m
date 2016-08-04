@@ -16,14 +16,10 @@
 #import "HEMStyle.h"
 
 static CGFloat const HEMVoiceTutorialInitialSenseScale = 0.6f;
-static CGFloat const HEMVoiceTutorialTableBottomMargin5 = -6.0f;
-static CGFloat const HEMVoiceTutorialTableBottomMargin4s = 40.0f;
-static CGFloat const HEMVoiceTutorialSpeechContainerBottomMarginSmall = 75.0f;
 static CGFloat const HEMVoiceTutorialAnimeDuration = 0.3f;
 static CGFloat const HEMVoiceTutorialInProgressLaterBottomMargin = 21.0f;
-static CGFloat const HEMVoiceTutorialInProgressTableBottomMargin = 32.0f;
 static CGFloat const HEMVoiceTutorialInProgressTableAlpha = 0.4f;
-static CGFloat const HEMVoiceTutorialInProgressRingAlpha = 0.04f;
+static CGFloat const HEMVoiceTutorialInProgressRingAlpha = 0.07f;
 static CGFloat const HEMVoiceTutorialInProgressOuterRingSize = 236.0f;
 static CGFloat const HEMVoiceTutorialInProgressMiddleRingSize = 192.0f;
 static CGFloat const HEMVoiceTutorialInProgressInnerRingSize = 146.0f;
@@ -31,16 +27,20 @@ static CGFloat const HEMVoiceTutorialRingAnimeDelay = 0.1f;
 static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
 static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
 static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
+static CGFloat const HEMVoiceTutorialMinContentTopSpacing = 32.0f;
+static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 
 @interface HEMVoiceTutorialPresenter()
 
-@property (nonatomic, weak) UIView* speechContainer;
-@property (nonatomic, weak) UILabel* speechTitleLabel;
+@property (nonatomic, weak) UILabel* tryNowLabel;
+
+@property (nonatomic, weak) UIView* voiceContentContainer;
+@property (nonatomic, weak) UIView* speechLabelContainer;
 @property (nonatomic, weak) UILabel* speechCommandLabel;
 @property (nonatomic, weak) UILabel* speechErrorLabel;
 @property (nonatomic, weak) NSLayoutConstraint* speechCommandBottomConstraint;
 @property (nonatomic, weak) NSLayoutConstraint* speechErrorBottomConstraint;
-@property (nonatomic, weak) NSLayoutConstraint* speechContainerBottomConstraint;
+@property (nonatomic, weak) NSLayoutConstraint* voiceContentCenterConstraint;
 
 @property (nonatomic, weak) UILabel* titleLabel;
 @property (nonatomic, weak) UILabel* descriptionLabel;
@@ -80,33 +80,38 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
     return self;
 }
 
-- (void)bindWithSpeechContainer:(UIView*)speechContainer
-      containerBottomConstraint:(NSLayoutConstraint*)containerBottomConstraint
-                     titleLabel:(UILabel*)titleLabel
-                   commandLabel:(UILabel*)commandLabel
-        commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
-                     errorLabel:(UILabel*)errorLabel
-          errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint {
-    
+- (void)bindWithTryNowLabel:(UILabel*)tryNowLabel {
+    [tryNowLabel setHidden:YES]; // initially, until user continues
+    [self setTryNowLabel:tryNowLabel];
+}
+
+- (void)bindWithVoiceContentContainer:(UIView*)voiceContentContainer
+                 withCenterConstraint:(NSLayoutConstraint*)centerConstraint {
+    [self setVoiceContentContainer:voiceContentContainer];
+    [self setVoiceContentCenterConstraint:centerConstraint];
+}
+
+- (void)bindWithSpeechLabelContainer:(UIView*)speechCommandContainer
+                        commandLabel:(UILabel*)commandLabel
+             commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
+                          errorLabel:(UILabel*)errorLabel
+               errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint {
     UIFont* commandFont = [UIFont h4];
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
-        CGFloat bottom = -HEMVoiceTutorialSpeechContainerBottomMarginSmall;
-        [containerBottomConstraint setConstant:bottom];
         commandFont = [UIFont h5];
     }
     
-    [speechContainer setHidden:YES];
     [commandLabel setFont:commandFont];
     [commandLabel setTextColor:[UIColor grey6]];
     [errorLabel setFont:commandFont];
     [errorLabel setTextColor:[UIColor grey6]];
-    [self setSpeechContainer:speechContainer];
-    [self setSpeechTitleLabel:titleLabel];
+    [speechCommandContainer setHidden:YES];
+    
+    [self setSpeechLabelContainer:speechCommandContainer];
     [self setSpeechCommandLabel:commandLabel];
     [self setSpeechCommandBottomConstraint:commandBottomConstraint];
     [self setSpeechErrorLabel:errorLabel];
     [self setSpeechErrorBottomConstraint:errorBottomConstraint];
-    [self setSpeechContainerBottomConstraint:_speechContainerBottomConstraint];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -144,13 +149,6 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
 
 - (void)bindWithTableImageView:(UIImageView*)tableImageView
           withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
-    CGFloat bottom = [bottomConstraint constant];
-    if (HEMIsIPhone4Family()) {
-        bottom = HEMVoiceTutorialTableBottomMargin4s;
-    } else if (HEMIsIPhone5Family()) {
-        bottom = HEMVoiceTutorialTableBottomMargin5;
-    }
-    [bottomConstraint setConstant:bottom];
     [self setOrigTableBottomMargin:[bottomConstraint constant]];
     [self setTableImageView:tableImageView];
     [self setTableBottomConstraint:bottomConstraint];
@@ -161,6 +159,8 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
     [laterButton addTarget:self
                     action:@selector(finish)
           forControlEvents:UIControlEventTouchUpInside];
+    [laterButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [[laterButton titleLabel] setFont:[UIFont buttonSmall]];
     [self setOrigLaterBottomMargin:[bottomConstraint constant]];
     [self setLaterButton:laterButton];
     [self setLaterButtonBottomConstraint:bottomConstraint];
@@ -325,20 +325,29 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
     [[self navItem] setRightBarButtonItem:[self infoItem]];
     
     [[self speechCommandLabel] sizeToFit];
+    [[self speechLabelContainer] setHidden:NO];
     [[self speechErrorLabel] setHidden:YES];
     [[self continueButton] setHidden:YES];
     [[self titleLabel] setHidden:YES];
     [[self descriptionLabel] setHidden:YES];
-    [[self speechContainer] setHidden:NO];
+    [[self tryNowLabel] setHidden:NO];
     
     CGSize senseSize = [[self senseImageView] image].size;
     CGFloat laterBottom = HEMVoiceTutorialInProgressLaterBottomMargin;
-    CGFloat tableBottom = -HEMVoiceTutorialInProgressTableBottomMargin;
+    CGFloat voiceContentMinY = CGRectGetMinY([[self voiceContentContainer] frame]);
+    CGFloat tryNowMaxY = CGRectGetMaxY([[self tryNowLabel] frame]);
+    CGFloat adjustedContentCenter = [[self voiceContentCenterConstraint] constant];;
+    CGFloat minVoiceContentTopMargin = HEMVoiceTutorialMinContentTopSpacing;
+    
     if (HEMIsIPhone4Family()) {
-        tableBottom = HEMVoiceTutorialTableBottomMargin4s;
         [[self navItem] setTitle:nil];
-    } else if (HEMIsIPhone5Family()) {
-        tableBottom = HEMVoiceTutorialTableBottomMargin5;
+        [[self tableImageView] setHidden:YES];
+        minVoiceContentTopMargin = HEMVoiceTutorialMinContentTopSpacing4s;
+    }
+
+    if (voiceContentMinY < tryNowMaxY + minVoiceContentTopMargin) {
+        CGFloat currentCenter = [[self voiceContentCenterConstraint] constant];
+        adjustedContentCenter = currentCenter + minVoiceContentTopMargin;
     }
     
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
@@ -346,9 +355,10 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
         [[self senseWidthConstraint] setConstant:senseSize.width];
         [[self senseHeightConstraint] setConstant:senseSize.height];
         [[self laterButtonBottomConstraint] setConstant:laterBottom];
-        [[self tableBottomConstraint] setConstant:tableBottom];
+        [[self voiceContentCenterConstraint] setConstant:adjustedContentCenter];
+        [[self tableBottomConstraint] setConstant:0.0f];
         [[self tableImageView] setAlpha:HEMVoiceTutorialInProgressTableAlpha];
-        [[[self laterButton] superview] layoutIfNeeded];
+        [[[self voiceContentContainer] superview] layoutIfNeeded];
     } completion:^(BOOL finished) {
         [self animateSenseRings];
         [self listenForVoiceResult];
@@ -476,6 +486,7 @@ static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
 - (void)showCorrectResponse {
     [self stopListeningForVoiceResult];
     
+    [[self laterButton] setHidden:YES];
     [[self navItem] setRightBarButtonItem:nil];
 
     UIColor* successColor = [UIColor tintColor];

@@ -92,10 +92,21 @@ static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
 
 #pragma mark - Errors
 
-- (void)showUpdateError:(__unused NSError*)error {
+- (void)showUpdateError:(NSError*)error {
     [self showUpdatingState:NO];
-    NSString* title = NSLocalizedString(@"onboarding.sense.dfu.error.title", nil);
-    NSString* message = NSLocalizedString(@"onboarding.sense.dfu.error.generic", nil);
+    
+    NSString* title = nil;
+    NSString* message = nil;
+    
+    if ([[error domain] isEqualToString:NSURLErrorDomain]
+        && [error code] == NSURLErrorNotConnectedToInternet) {
+        title = NSLocalizedString(@"error.no-connection.title", nil);
+        message = NSLocalizedString(@"error.no-connection", nil);
+    } else {
+        title = NSLocalizedString(@"onboarding.sense.dfu.error.title", nil);
+        message = NSLocalizedString(@"onboarding.sense.dfu.error.generic", nil);
+    }
+    
     [[self errorDelegate] showErrorWithTitle:title
                                   andMessage:message
                                 withHelpPage:nil

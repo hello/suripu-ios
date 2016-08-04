@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.15
+
+Fixes:
+
+* Fixed layout / spacing for 6plus and 4s in voice tutorial
+* Disable / hide the later button in voice tutorial on success
+
 ## 1.5.1.4
 
 New:

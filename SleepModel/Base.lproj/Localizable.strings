@@ -867,3 +867,7 @@
 "onboarding.voice.info.message" = "Make sure your room is quiet, and that you're speaking clearly to Sense and not your mobile device.";
 "onboarding.voice.error.problem" = "Sorry, there was a problem. Please try again.";
 "onboarding.voice.error.not-understood" = "Sorry, didn't quite get that. Please try again.";
+
+// generic errors
+"error.no-connection.title" = "No internet connection";
+"error.no-connection" = "Your mobile device is not connected to the internet. Check your internet connection and Wi-Fi settings, and try again.";

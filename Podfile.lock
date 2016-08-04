@@ -35,7 +35,7 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.0.3):
     - CocoaLumberjack/Default
-  - EVReflection (2.42.2)
+  - EVReflection (2.44.0)
   - FBSDKCoreKit (4.11.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.11.0):
@@ -48,7 +48,7 @@ PODS:
   - LGBluetooth (1.1.4)
   - MSDynamicsDrawerViewController (1.5.1)
   - NAPickerView (0.0.1)
-  - Nocilla (0.10.0)
+  - Nocilla (0.11.0)
   - NSJSONSerialization-NSNullRemoval (1.0.1)
   - SenseKit (0.1.0):
     - SenseKit/Analytics (= 0.1.0)
@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 1cdb89e52e5f81ef88f51193361082729685a0d5
+    :commit: 52b76a4516ae14203426cc43067db79bc88164dd
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -176,7 +176,7 @@ SPEC CHECKSUMS:
   Bugsnag: 4c3f744efa9d76d9b17fddbc940e881436464cee
   CGFloatType: fa1da294540051a76750092a427b95296bbdc006
   CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
-  EVReflection: 82ca5595f84e51474017eb11ebecc4a67bb151cb
+  EVReflection: 290a7feb1f32d7dbb8f9c4234609d75ceba97da4
   FBSDKCoreKit: 686ac982723a14ec9ddb85e2f81235d7706c891b
   FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
@@ -185,7 +185,7 @@ SPEC CHECKSUMS:
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
   MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
-  Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
+  Nocilla: 7af7a386071150cc8aa5da4da97d060f049dd61c
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
   SenseKit: c061883ef8ed2c6781fee3af2df870172e6303c0
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3

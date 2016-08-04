@@ -27,6 +27,7 @@
 #import "SENSleepSoundsState.h"
 #import "SENDFUStatus.h"
 #import "SENSpeechResult.h"
+#import "SENFeatures.h"
 
 void SENClearModel();
 

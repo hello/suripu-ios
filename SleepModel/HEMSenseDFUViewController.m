@@ -56,14 +56,11 @@
 }
 
 - (void)senseUpdateLaterFrom:(HEMSenseDFUPresenter *)presenter {
-    // TODO: conditionally complete onboarding or go to next segue-
-    [self completeOnboarding];
+    [self next];
 }
 
 - (void)senseUpdateCompletedFrom:(HEMSenseDFUPresenter *)presenter {
-    // TODO: only do this conditionally, if "enabled"
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard voiceTutorialSegueIdentifier]
-                              sender:self];
+    [self next];
 }
 
 - (void)showConfirmationWithTitle:(NSString*)title
@@ -93,6 +90,18 @@
                       title:title
                       image:nil
                withHelpPage:nil];
+}
+
+#pragma mark - Flow
+
+- (void)next {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    if ([service isVoiceAvailable]) {
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard voiceTutorialSegueIdentifier]
+                                  sender:self];
+    } else {
+        [self completeOnboarding];
+    }
 }
 
 @end

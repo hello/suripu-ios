@@ -378,6 +378,10 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 - (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUStatusHandler)update
                         completion:(HEMOnboardingDFUHandler)completion;
 
+#pragma mark - Features
+
+- (BOOL)isVoiceAvailable;
+
 @end
 
 NS_ASSUME_NONNULL_END

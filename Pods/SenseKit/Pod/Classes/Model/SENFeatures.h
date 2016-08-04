@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SENSerializable.h"
 
-@interface SENFeatures : NSObject
+@interface SENFeatures : NSObject <NSCoding, SENSerializable>
 
 @property (nonatomic, assign, getter=hasVoice, readonly) BOOL voice;
 
-- (instancetype)initWithDictionary:(NSDictionary*)dictionary;
++ (instancetype)savedFeatures;
+- (void)save;
+- (void)remove;
 
 @end

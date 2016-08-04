@@ -125,11 +125,14 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 
 - (void)next {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    if (![service isDFURequiredForSense]) {
-        [self completionOnboardingWithoutMessage];
-    } else {
+    if ([service isDFURequiredForSense]) {
         UIViewController* controller = [HEMOnboardingStoryboard instantiateSenseDFUViewController];
         [[self navigationController] setViewControllers:@[controller] animated:YES];
+    } else if ([service isVoiceAvailable]) {
+        UIViewController* controller = [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+        [[self navigationController] setViewControllers:@[controller] animated:YES];
+    } else {
+        [self completeOnboardingWithoutMessage];
     }
 }
 

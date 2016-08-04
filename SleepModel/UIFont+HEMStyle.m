@@ -87,6 +87,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
 
++ (UIFont*)buttonSmall {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:13.0f];
+}
+
 #pragma mark - Common fonts
 
 + (UIFont*)settingsTableCellFont {

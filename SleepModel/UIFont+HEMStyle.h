@@ -26,6 +26,7 @@
 + (UIFont*)bodySmall;
 + (UIFont*)bodySmallBold;
 + (UIFont*)button;
++ (UIFont*)buttonSmall;
 
 #pragma mark - Common fonts
 

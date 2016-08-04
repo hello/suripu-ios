@@ -24,13 +24,14 @@
 
 - (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
-- (void)bindWithSpeechContainer:(UIView*)speechContainer
-      containerBottomConstraint:(NSLayoutConstraint*)containerBottomConstraint
-                     titleLabel:(UILabel*)titleLabel
-                   commandLabel:(UILabel*)commandLabel
-        commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
-                     errorLabel:(UILabel*)errorLabel
-          errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint;
+- (void)bindWithTryNowLabel:(UILabel*)tryNowLabel;
+- (void)bindWithVoiceContentContainer:(UIView*)voiceContentContainer
+                 withCenterConstraint:(NSLayoutConstraint*)centerConstraint;
+- (void)bindWithSpeechLabelContainer:(UIView*)speechCommandContainer
+                        commandLabel:(UILabel*)commandLabel
+             commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
+                          errorLabel:(UILabel*)errorLabel
+               errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint;
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
           descriptionLabel:(UILabel*)descriptionLabel;

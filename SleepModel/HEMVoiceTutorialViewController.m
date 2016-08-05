@@ -10,6 +10,7 @@
 #import "HEMActionButton.h"
 #import "HEMVoiceTutorialPresenter.h"
 #import "HEMVoiceService.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate>
 
@@ -73,8 +74,9 @@
 
 #pragma mark - Voice Tutorial Delegate
 
-- (void)didFinishTutorialFrom:(HEMVoiceTutorialPresenter *)presenter {
-    [self completeOnboarding];
+- (void)didFinishTutorialFrom:(__unused HEMVoiceTutorialPresenter *)presenter {
+    UIViewController* lastVC = [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
+    [[self navigationController] setViewControllers:@[lastVC] animated:YES];
 }
 
 - (void)showController:(UIViewController *)controller

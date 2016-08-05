@@ -380,6 +380,7 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 
 #pragma mark - Features
 
+- (void)checkFeatures;
 - (BOOL)isVoiceAvailable;
 
 @end

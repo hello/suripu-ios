@@ -37,12 +37,20 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureVideoView];
+    [self configureButton];
+    [self doubleCheckResources];
+    [self trackAnalyticsEvent:HEMAnalyticsEventFirstAlarm];
+}
+
+- (void)configureButton {
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
-    
-    [[HEMOnboardingService sharedService] checkIfSenseDFUIsRequired]; // in case RC was not shown
-    
-    [self trackAnalyticsEvent:HEMAnalyticsEventFirstAlarm];
+}
+
+- (void)doubleCheckResources {
+    HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
+    [onbService checkIfSenseDFUIsRequired];
+    [onbService checkFeatures];
 }
 
 - (void)configureVideoView {
@@ -65,6 +73,11 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
     [[self videoView] pause];
 }
 
+- (BOOL)willBeDoneWithOnboarding {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    return ![service isDFURequiredForSense] && ![service isVoiceAvailable];
+}
+
 #pragma mark - Actions
 
 - (IBAction)setAlarmNow:(id)sender {
@@ -73,10 +86,9 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
     if ([[nav topViewController] isKindOfClass:[HEMAlarmViewController class]]) {
         SENAlarm* alarm = [SENAlarm createDefaultAlarm];
         
-        HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
         NSString* successText = nil;
         CGFloat successDuration = 0.0f;
-        if (![onbService isDFURequiredForSense]) {
+        if ([self willBeDoneWithOnboarding]) {
             successText = NSLocalizedString(@"onboarding.end-message.well-done", nil);
             successDuration = HEMOnboardAlarmCompleteDuration;
         }
@@ -105,9 +117,8 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
     [parentView addSubview:snapshot];
     
     [self dismissViewControllerAnimated:NO completion:^{
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
         [self next:YES];
-        if ([service isDFURequiredForSense]) {
+        if (![self willBeDoneWithOnboarding]) {
             [UIView animateWithDuration:HEMOnboardAlarmSavedAnimeDuration
                                   delay:HEMOnboardAlarmSavedDisplayDuration
                                 options:UIViewAnimationOptionBeginFromCurrentState

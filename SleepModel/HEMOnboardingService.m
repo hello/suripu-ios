@@ -59,6 +59,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 
 @property (nonatomic, strong) SENFeatures* features;
 @property (nonatomic, assign) NSInteger featureCheckAttempts;
+@property (nonatomic, assign, getter=isGettingFeatures) BOOL gettingFeatures;
 
 @end
 
@@ -71,6 +72,20 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
         service = [[super alloc] init];
     });
     return service;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        if ([SENAuthorizationService isAuthorized] && ![self hasFinishedOnboarding]) {
+            HEMOnboardingCheckpoint cp = [self onboardingCheckpoint];
+            if (cp > HEMOnboardingCheckpointSenseDone) {
+                DDLogVerbose(@"updating features");
+                [self checkFeatures];
+            }
+        }
+    }
+    return self;
 }
 
 - (void)reset {
@@ -86,6 +101,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     [self setPollingSensorData:NO];
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
+    [self setFeatures:nil];
     // leave the current sense manager in place
 }
 
@@ -413,7 +429,6 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 - (void)finishSignIn {
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
-    [self checkFeatures];
 }
 
 - (void)pushDefaultPreferences {
@@ -756,7 +771,9 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 
 - (void)checkFeatures {
     if (![self features]) {
+        [self setGettingFeatures:YES];
         [self setFeatureCheckAttempts:1];
+        
         __weak typeof(self) weakSelf = self;
         [SENAPIFeature getFeatures:^(SENFeatures* features, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -771,23 +788,15 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
                     });
                 }
 
-            } else {
+            } else if (features) {
                 [strongSelf setFeatures:features];
+                [strongSelf setGettingFeatures:NO];
             }
         }];
     }
 }
 
-- (void)saveFeatures:(SENFeatures*)features {
-    [features save];
-    [self setFeatures:features];
-}
-
 - (BOOL)isVoiceAvailable {
-    if (![self features]) {
-        [self setFeatures:[SENFeatures savedFeatures]];
-        DDLogVerbose(@"onboarding - features loaded from local storage %@", [self features]);
-    }
     return [[self features] hasVoice];
 }
 

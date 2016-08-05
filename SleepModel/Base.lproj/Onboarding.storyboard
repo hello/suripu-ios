@@ -1885,6 +1885,7 @@
                         <outlet property="videoView" destination="XVL-7j-gjt" id="tbS-Vb-YuS"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
                         <segue destination="0on-Mh-6AZ" kind="show" identifier="dfu" id="BBN-wL-Nmg"/>
+                        <segue destination="bWw-oE-R3u" kind="show" identifier="voice" id="TUA-hg-W7k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2061,7 +2062,7 @@ what's the temperature?"</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f3e-yP-TIj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18093" y="905"/>
+            <point key="canvasLocation" x="18096" y="905"/>
         </scene>
         <!--SenseDFU View Controller-->
         <scene sceneID="oof-oH-4Rh">
@@ -2183,7 +2184,7 @@ what's the temperature?"</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFy-4R-NYq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="17320" y="905"/>
+            <point key="canvasLocation" x="17343" y="1437"/>
         </scene>
         <!--Room Check View Controller-->
         <scene sceneID="XHB-1W-ISz">
@@ -3396,11 +3397,12 @@ Flip the switch to On</string>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3DQ-Vg-FaT"/>
         <segue reference="d9a-nc-483"/>
+        <segue reference="3DQ-Vg-FaT"/>
         <segue reference="JsS-bV-f7k"/>
         <segue reference="7LA-fg-2Jb"/>
         <segue reference="zxE-Zn-Swl"/>
+        <segue reference="TUA-hg-W7k"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

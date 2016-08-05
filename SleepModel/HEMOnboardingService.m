@@ -31,8 +31,11 @@ NSString* const HEMOnboardingNotificationComplete = @"HEMOnboardingNotificationC
 static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
 
 // polling of data
+static NSUInteger const HEMOnboardingMaxFeatureCheckAttempts = 5;
+static CGFloat const HEMOnboardingFeatureCheckInterval = 5.0f;
+
 static NSUInteger const HEMOnboardingMaxSensorPollAttempts = 10;
-static NSUInteger const HEMOnboardingSensorPollIntervals = 5.0f;
+static CGFloat const HEMOnboardingSensorPollIntervals = 5.0f;
 // pre-scanning for senses
 static NSInteger const HEMOnboardingMaxSenseScanAttempts = 10;
 // settings / preferences
@@ -54,6 +57,10 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 @property (nonatomic, strong) NSTimer* senseDFUTimer;
 @property (nonatomic, copy)   HEMOnboardingDFUHandler dfuCompletionHandler;
 
+@property (nonatomic, strong) SENFeatures* features;
+@property (nonatomic, assign) NSInteger featureCheckAttempts;
+@property (nonatomic, assign, getter=isGettingFeatures) BOOL gettingFeatures;
+
 @end
 
 @implementation HEMOnboardingService
@@ -65,6 +72,20 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
         service = [[super alloc] init];
     });
     return service;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        if ([SENAuthorizationService isAuthorized] && ![self hasFinishedOnboarding]) {
+            HEMOnboardingCheckpoint cp = [self onboardingCheckpoint];
+            if (cp > HEMOnboardingCheckpointSenseDone) {
+                DDLogVerbose(@"updating features");
+                [self checkFeatures];
+            }
+        }
+    }
+    return self;
 }
 
 - (void)reset {
@@ -80,6 +101,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     [self setPollingSensorData:NO];
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
+    [self setFeatures:nil];
     // leave the current sense manager in place
 }
 
@@ -549,12 +571,14 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         // load the service data so is readily available, if not in onboarding
-        if ([weakSelf hasFinishedOnboarding]) {
+        if ([strongSelf hasFinishedOnboarding]) {
             [[SENServiceDevice sharedService] loadDeviceInfo:nil];
         }
         
         [SENAnalytics track:HEMAnalyticsEventSensePaired];
+        [strongSelf checkFeatures];
         
         if (completion) {
             completion (nil);
@@ -741,6 +765,39 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 
 - (void)notifyOfOnboardingCompletion {
     [self notify:HEMOnboardingNotificationComplete];
+}
+
+#pragma mark - enabled features
+
+- (void)checkFeatures {
+    if (![self features]) {
+        [self setGettingFeatures:YES];
+        [self setFeatureCheckAttempts:1];
+        
+        __weak typeof(self) weakSelf = self;
+        [SENAPIFeature getFeatures:^(SENFeatures* features, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error];
+                
+                if ([strongSelf featureCheckAttempts] <= HEMOnboardingMaxFeatureCheckAttempts) {
+                    int64_t delayInSecs = (int64_t) (HEMOnboardingFeatureCheckInterval * NSEC_PER_SEC);
+                    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+                    dispatch_after(delay, dispatch_get_main_queue(), ^{
+                        [strongSelf checkFeatures];
+                    });
+                }
+
+            } else if (features) {
+                [strongSelf setFeatures:features];
+                [strongSelf setGettingFeatures:NO];
+            }
+        }];
+    }
+}
+
+- (BOOL)isVoiceAvailable {
+    return [[self features] hasVoice];
 }
 
 @end

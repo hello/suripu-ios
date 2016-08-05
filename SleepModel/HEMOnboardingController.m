@@ -380,7 +380,7 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     
 }
 
-- (void)completionOnboardingWithoutMessage {
+- (void)completeOnboardingWithoutMessage {
     [SENAnalytics track:HEMAnalyticsEventOnbEnd];
     
     HEMOnboardingService* service = [HEMOnboardingService sharedService];

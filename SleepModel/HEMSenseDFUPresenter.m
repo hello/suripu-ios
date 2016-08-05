@@ -139,6 +139,11 @@ static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
 }
 
 - (void)finish {
+    BOOL voiceAvailable = [[self onboardingService] isVoiceAvailable];
+    if (!voiceAvailable) {
+        return [[self dfuDelegate] senseUpdateCompletedFrom:self];
+    }
+    
     UIView* parentView = [[self dfuDelegate] parentContentViewFor:self];
     NSString* updatedMessage = NSLocalizedString(@"onboarding.sense.dfu.updated", nil);
     

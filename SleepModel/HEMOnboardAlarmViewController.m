@@ -90,7 +90,7 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 }
 
 - (IBAction)setAlarmLater:(id)sender {
-    [self next];
+    [self next:NO];
 }
 
 #pragma mark - HEMAlarmControllerDelegate
@@ -106,7 +106,7 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
     
     [self dismissViewControllerAnimated:NO completion:^{
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        [self next];
+        [self next:YES];
         if ([service isDFURequiredForSense]) {
             [UIView animateWithDuration:HEMOnboardAlarmSavedAnimeDuration
                                   delay:HEMOnboardAlarmSavedDisplayDuration
@@ -123,7 +123,7 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 
 #pragma mark - Next
 
-- (void)next {
+- (void)next:(BOOL)savedAlarm {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     if ([service isDFURequiredForSense]) {
         UIViewController* controller = [HEMOnboardingStoryboard instantiateSenseDFUViewController];
@@ -131,8 +131,10 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
     } else if ([service isVoiceAvailable]) {
         UIViewController* controller = [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
         [[self navigationController] setViewControllers:@[controller] animated:YES];
-    } else {
+    } else if (savedAlarm) {
         [self completeOnboardingWithoutMessage];
+    } else {
+        [self completeOnboarding];
     }
 }
 

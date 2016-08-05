@@ -1,6 +1,17 @@
 # Changelog
 
-## 1.5.15
+## 1.5.1.6
+
+New:
+
+* Using the features API to determine whether or not voice tutorial is shown
+* Show a network connection specific error for no connection errors during forced ota
+
+Fixes:
+
+* Fixed case where the onboarding end message is not displayed
+
+## 1.5.1.5
 
 Fixes:
 

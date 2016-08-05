@@ -772,7 +772,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 - (void)checkFeatures {
     if (![self features]) {
         [self setGettingFeatures:YES];
-        [self setFeatureCheckAttempts:1];
+        [self setFeatureCheckAttempts:[self featureCheckAttempts] + 1];
         
         __weak typeof(self) weakSelf = self;
         [SENAPIFeature getFeatures:^(SENFeatures* features, NSError *error) {
@@ -780,7 +780,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
             if (error) {
                 [SENAnalytics trackError:error];
                 
-                if ([strongSelf featureCheckAttempts] <= HEMOnboardingMaxFeatureCheckAttempts) {
+                if ([strongSelf featureCheckAttempts] < HEMOnboardingMaxFeatureCheckAttempts) {
                     int64_t delayInSecs = (int64_t) (HEMOnboardingFeatureCheckInterval * NSEC_PER_SEC);
                     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
                     dispatch_after(delay, dispatch_get_main_queue(), ^{

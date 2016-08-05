@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.1.7
+
+New:
+
+* All set, last onboarding screen, hooked up to the voice tutorial
+
+Fixes
+
+* Only show the You're all set message and not the sense updated message if no voice
+
 ## 1.5.1.6
 
 New:

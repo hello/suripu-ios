@@ -2,7 +2,7 @@
 
 ## Development
 
-## Signing Key
+### Signing Key
 
 Our signing key, which expires annually around the first week of August, is stored in a secure S3 `hello-keys` bucket.
 

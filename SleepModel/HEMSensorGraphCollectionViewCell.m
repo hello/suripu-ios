@@ -71,7 +71,12 @@
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:graphData unit:sensor.unit];
     self.graphView.dataSource = self.graphDataSource;
     self.graphView.colorLine = conditionColor;
+    
+    if (self.graphView.gradientBottom) {
+        CGGradientRelease(self.graphView.gradientBottom);
+    }
     self.graphView.gradientBottom = [self newGradientForColor:conditionColor];
+    
     [self.graphView reloadGraph];
 }
 
@@ -153,6 +158,14 @@
     } completion:^(BOOL finished) {
         self.graphView.dataSource = nil;
     }];
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    if (_graphView && _graphView.gradientBottom) {
+        CGGradientRelease(_graphView.gradientBottom);
+    }
 }
 
 @end

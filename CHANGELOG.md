@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.1.8
+
+Note:
+
+* bumping to create the RC, built for the App Store
+
 ## 1.5.1.7
 
 New:

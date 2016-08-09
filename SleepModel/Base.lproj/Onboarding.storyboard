@@ -425,10 +425,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sense" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
-                                <rect key="frame" x="0.0" y="146" width="600" height="291"/>
+                                <rect key="frame" x="0.0" y="146" width="600" height="346"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
-                                <rect key="frame" x="24" y="475" width="552" height="50"/>
+                                <rect key="frame" x="24" y="530" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="v8x-zs-ef3"/>
                                 </constraints>
@@ -442,7 +442,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-El-CBa">
-                                <rect key="frame" x="24" y="530" width="552" height="50"/>
+                                <rect key="frame" x="24" y="475" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6b2-fH-agt"/>
                                 </constraints>
@@ -461,9 +461,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="R0B-PY-KLe" secondAttribute="trailing" constant="4" id="88x-uE-kGP"/>
                             <constraint firstItem="k0c-FQ-y2a" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="IqC-VG-tjs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="n2K-Db-VCV" secondAttribute="trailing" constant="-20" id="L1A-Qv-rS7"/>
-                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="tgV-El-CBa" secondAttribute="bottom" constant="20" id="OvH-WI-UZO"/>
+                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="tgV-El-CBa" secondAttribute="bottom" constant="75" id="OvH-WI-UZO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="k0c-FQ-y2a" secondAttribute="trailing" constant="4" id="UpE-wU-j13"/>
-                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="ONz-So-uP9" secondAttribute="bottom" constant="75" id="agi-kV-WVh"/>
+                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="ONz-So-uP9" secondAttribute="bottom" constant="20" id="agi-kV-WVh"/>
                             <constraint firstItem="R0B-PY-KLe" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="d23-Ik-No7"/>
                             <constraint firstItem="n2K-Db-VCV" firstAttribute="bottom" secondItem="ONz-So-uP9" secondAttribute="top" constant="-38" id="eMi-jV-YFE"/>
                             <constraint firstItem="n2K-Db-VCV" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="-20" id="iNe-kb-lbB"/>

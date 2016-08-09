@@ -8,6 +8,11 @@
 
 #import "HEMOnboardingController.h"
 
+@class HEMNewSensePresenter;
+
 @interface HEMHaveSenseViewController : HEMOnboardingController
+
+@property (nonatomic, strong) HEMNewSensePresenter* presenter;
+@property (nonatomic, assign, getter=shouldShowBackButtonAsCancel) BOOL showBackButtonAsCancel;
 
 @end

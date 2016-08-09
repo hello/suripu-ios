@@ -437,9 +437,6 @@
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="O8f-43-SpP" kind="show" id="NcF-uD-VEp"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-El-CBa">
                                 <rect key="frame" x="24" y="475" width="552" height="50"/>
@@ -450,9 +447,6 @@
                                 <state key="normal" title="ORDER A SENSE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="orderSense:" destination="RYl-gV-ozZ" eventType="touchUpInside" id="pcF-Te-6eP"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -481,9 +475,11 @@
                     <connections>
                         <outlet property="descriptionLabel" destination="R0B-PY-KLe" id="wCA-5n-3HK"/>
                         <outlet property="descriptionTopConstraint" destination="y0T-np-cds" id="3Qr-bU-Wkg"/>
+                        <outlet property="nextButton" destination="ONz-So-uP9" id="0HC-NQ-ygj"/>
                         <outlet property="orderSenseButton" destination="tgV-El-CBa" id="aF1-dB-f03"/>
                         <outlet property="titleHeightConstraint" destination="mRd-go-Uvt" id="PGb-IY-V4G"/>
                         <outlet property="titleLabel" destination="k0c-FQ-y2a" id="yrI-pf-51T"/>
+                        <segue destination="O8f-43-SpP" kind="show" identifier="register" id="hpM-xq-Qfk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vOs-bg-4TL" userLabel="First Responder" sceneMemberID="firstResponder"/>

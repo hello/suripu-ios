@@ -16,6 +16,8 @@
 "welcome.intro.desc.current-conditions" = "Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
 
 // onboarding
+"onboarding.no-sense.title" = "Have Sense ready?";
+"onboarding.no-sense.desc" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
 "onboarding.account.sign-in.title" = "Welcome back";
 "sign-up.activity.message" = "Creating your account";
 "sign-up.failed.title" = "Sign up failed";

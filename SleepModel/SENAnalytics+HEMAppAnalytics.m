@@ -71,6 +71,7 @@ NSString* const kHEMAnalyticsEventPropWiFiScan = @"wifi_scan";
 NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";
 NSString* const kHEMAnalyticsEventPropPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventPropPillPlacement = @"pill_placement";
+NSString* const kHEMAnalyticsEventPropSenseDFU = @"sense_ota";
 
 NSString* const HEMAnalyticsEventOnbStart = @"Onboarding Start";
 NSString* const HEMAnalyticsEventAccount = @"Account";
@@ -258,6 +259,11 @@ NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";
 NSString* const HEMAnalyticsEventPillDfuStart = @"Pill Update Start";
 NSString* const HEMAnalyticsEventPillDfuOTAStart = @"Pill Update OTA Start";
 NSString* const HEMAnalyticsEventPillDfuDone = @"Pill Update Complete";
+
+// sense forced ota dfu
+NSString* const HEMAnalyticsEventSenseDFU = @"Sense DFU";
+NSString* const HEMAnalyticsEventSenseDFUBegin = @"Sense DFU begin";
+NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
 
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
@@ -460,6 +466,13 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
         name = [HEMAnalyticsEventOnboardingPrefix stringByAppendingFormat:@" %@", name];
     }
     [self track:name properties:props];
+}
+
+#pragma mark - Sense Forced OTA DFU
+
++ (void)trackSenseUpdate:(SENDFUStatus*)status {
+    [self track:@"Sense DFU status"
+     properties:@{@"status" : @([status currentState])}];
 }
 
 @end

@@ -39,7 +39,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 @property (nonatomic, weak) HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 @property (nonatomic, assign, getter=hasDataError) BOOL dataError;
-@property (nonatomic, assign) NSInteger currentGraphCount;
 @property (nonatomic, weak) HEMTrendsCalendarViewCell* sleepScoreCell;
 @property (nonatomic, weak) HEMTrendsBarGraphCell* sleepDurationCell;
 @property (nonatomic, weak) HEMTrendsSleepDepthCell* sleepDepthCell;
@@ -52,7 +51,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     self = [super init];
     if (self) {
         _trendService = trendService;
-        _currentGraphCount = 0;
         [self listenForTrendsDataEvents];
         [self listenForTimelineChanges];
     }
@@ -142,13 +140,13 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     if ([self isRefreshing]) {
         [[self collectionView] reloadData];
     } else {
-        NSInteger graphs = [[[self selectedTrends] graphs] count];
-        if (graphs == [self currentGraphCount] && [self currentGraphCount] > 0) {
+        NSInteger currentCount = [[self collectionView] numberOfItemsInSection:0];
+        NSInteger newGraphCount = [[[self selectedTrends] graphs] count];
+        if (newGraphCount == currentCount && currentCount > 0) {
             [[self collectionView] performBatchUpdates:^{
                 [self updateCellsWithSelectedTrends];
             } completion:nil];
         } else {
-            [self setCurrentGraphCount:graphs];
             [[self collectionView] reloadData];
         }
     }

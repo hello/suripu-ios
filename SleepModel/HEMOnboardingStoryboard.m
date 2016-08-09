@@ -11,9 +11,11 @@ static NSString *const _HEMonboarding = @"Onboarding";
 static NSString *const _HEMaudioToSetup = @"audioToSetup";
 static NSString *const _HEMbeforeSleepToSmartAlarm = @"beforeSleepToSmartAlarm";
 static NSString *const _HEMbeforeSleeptoRoomCheck = @"beforeSleeptoRoomCheck";
+static NSString *const _HEMdfu = @"dfu";
 static NSString *const _HEMdobViewController = @"dobViewController";
 static NSString *const _HEMdone = @"done";
 static NSString *const _HEMemail = @"email";
+static NSString *const _HEMfinish = @"finish";
 static NSString *const _HEMfirstName = @"firstName";
 static NSString *const _HEMgender = @"gender";
 static NSString *const _HEMgenderPicker = @"genderPicker";
@@ -27,6 +29,7 @@ static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMnoBle = @"noBle";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMnotificationToAudio = @"notificationToAudio";
+static NSString *const _HEMonboardingComplete = @"onboardingComplete";
 static NSString *const _HEMpassword = @"password";
 static NSString *const _HEMphoto = @"photo";
 static NSString *const _HEMpillDescription = @"pillDescription";
@@ -38,12 +41,15 @@ static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMroomCheckToSmartAlarm = @"roomCheckToSmartAlarm";
 static NSString *const _HEMsenseAudio = @"senseAudio";
 static NSString *const _HEMsenseColors = @"senseColors";
+static NSString *const _HEMsenseDFU = @"senseDFU";
 static NSString *const _HEMsensePairToPill = @"sensePairToPill";
 static NSString *const _HEMsensePairViewController = @"sensePairViewController";
 static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsignupToNoBle = @"signupToNoBle";
 static NSString *const _HEMskipPillPairSegue = @"skipPillPairSegue";
 static NSString *const _HEMtitle = @"title";
+static NSString *const _HEMvoice = @"voice";
+static NSString *const _HEMvoiceTutorial = @"voiceTutorial";
 static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMweightToHealthKit = @"weightToHealthKit";
@@ -74,7 +80,9 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)audioToSetupSegueIdentifier { return _HEMaudioToSetup; }
 +(NSString *)beforeSleepToSmartAlarmSegueIdentifier { return _HEMbeforeSleepToSmartAlarm; }
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier { return _HEMbeforeSleeptoRoomCheck; }
++(NSString *)dfuSegueIdentifier { return _HEMdfu; }
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
++(NSString *)finishSegueIdentifier { return _HEMfinish; }
 +(NSString *)genderSegueIdentifier { return _HEMgender; }
 +(NSString *)healthKitToLocationSegueIdentifier { return _HEMhealthKitToLocation; }
 +(NSString *)heightSegueIdentifier { return _HEMheight; }
@@ -87,6 +95,8 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)sensePairToPillSegueIdentifier { return _HEMsensePairToPill; }
 +(NSString *)signupToNoBleSegueIdentifier { return _HEMsignupToNoBle; }
 +(NSString *)skipPillPairSegue { return _HEMskipPillPairSegue; }
++(NSString *)voiceSegueIdentifier { return _HEMvoice; }
++(NSString *)voiceTutorialSegueIdentifier { return _HEMvoiceTutorial; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
 +(NSString *)weightToHealthKitSegueIdentifier { return _HEMweightToHealthKit; }
 +(NSString *)weightToLocationSegueIdentifier { return _HEMweightToLocation; }
@@ -99,13 +109,16 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(id)instantiateGenderPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgenderPicker]; }
 +(id)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
 +(id)instantiateNoBleViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnoBle]; }
++(id)instantiateOnboardingCompleteViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMonboardingComplete]; }
 +(id)instantiatePillDescriptionViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDescription]; }
 +(id)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
 +(id)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
 +(id)instantiateSenseAudioViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseAudio]; }
 +(id)instantiateSenseColorsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseColors]; }
++(id)instantiateSenseDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseDFU]; }
 +(id)instantiateSensePairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensePairViewController]; }
 +(id)instantiateSenseSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseSetup]; }
++(id)instantiateVoiceTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMvoiceTutorial]; }
 +(id)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
 +(id)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }
 +(id)instantiateWifiPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiPicker]; }

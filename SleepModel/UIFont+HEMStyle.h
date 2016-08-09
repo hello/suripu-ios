@@ -26,6 +26,7 @@
 + (UIFont*)bodySmall;
 + (UIFont*)bodySmallBold;
 + (UIFont*)button;
++ (UIFont*)buttonSmall;
 
 #pragma mark - Common fonts
 
@@ -492,19 +493,7 @@
 /**
  * Font used to display the option description in the custom action sheet
  */
-+ (UIFont*)actionSheetOptionDescriptionFont;
-
-/**
- * Font used for the basic custom title view's title, intended to be used with the
- * action sheet
- */
-+ (UIFont*)actionSheetTitleViewTitleFont;
-
-/**
- * Font used for the basic custom title view's description, intended to be used 
- * with the action sheet
- */
-+ (UIFont*)actionSheetTitleViewDescriptionFont;
++ (UIFont*)actionSheetOptionDescriptionFont;;
 
 #pragma mark - Tutorial Dialogs
 

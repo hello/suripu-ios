@@ -397,25 +397,18 @@ final public class EVReflection {
     - returns: A cleaned up name of the app.
     */
     public class func getCleanAppName(forObject: NSObject? = nil) -> String {
-        var bundle = NSBundle.mainBundle()
+        // if an object was specified, then always use the bundle name of that class
         if forObject != nil {
-            bundle = NSBundle(forClass: forObject!.dynamicType)
+            return nameForBundle(NSBundle(forClass: forObject!.dynamicType))
         }
         
-        if forObject == nil && EVReflection.bundleIdentifier != nil {
+        // If no object was specified but an identifier was set, then use that identifier.
+        if EVReflection.bundleIdentifier != nil {
             return EVReflection.bundleIdentifier!
         }
-        var appName = bundle.infoDictionary?["CFBundleName"] as? String ?? ""
-        if appName == "" {
-            if bundle.bundleIdentifier == nil {
-                bundle = NSBundle(forClass: EVReflection().dynamicType)
-            }
-            appName = (bundle.bundleIdentifier!).characters.split(isSeparator: {$0 == "."}).map({ String($0) }).last ?? ""
-        }
-        let cleanAppName = appName
-            .stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-            .stringByReplacingOccurrencesOfString("-", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-        return cleanAppName
+        
+        // use the bundle name from the main bundle, if that's not set use the identifier
+        return nameForBundle(NSBundle.mainBundle())
     }
     
     /// Variable that can be set using setBundleIdentifier
@@ -431,7 +424,7 @@ final public class EVReflection {
      */
     public class func setBundleIdentifier(forClass: AnyClass) {
         if let bundle: NSBundle = NSBundle(forClass:forClass) {
-            EVReflection.bundleIdentifier = bundleForClass(forClass, bundle: bundle)
+            EVReflection.bundleIdentifier = nameForBundle(bundle)
         }
     }
     
@@ -444,17 +437,23 @@ final public class EVReflection {
         bundleIdentifiers = []
         for aClass in classes {
             if let bundle: NSBundle = NSBundle(forClass: aClass) {
-                bundleIdentifiers?.append(bundleForClass(aClass, bundle: bundle))
+                bundleIdentifiers?.append(nameForBundle(bundle))
             }
         }
     }
     
-    private static func bundleForClass(forClass: AnyClass, bundle: NSBundle) -> String {
-        let appName = (bundle.infoDictionary![kCFBundleNameKey as String] as? String)!.characters.split(isSeparator: {$0 == "."}).map({ String($0) }).last ?? ""
-        let cleanAppName = appName
-            .stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-            .stringByReplacingOccurrencesOfString("-", withString: "_", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-        return cleanAppName
+    private static func nameForBundle(bundle: NSBundle) -> String {
+        // get the bundle name from what is set in the infoDictionary
+        var appName = bundle.infoDictionary?[kCFBundleNameKey as String] as? String ?? ""
+        
+        // If it was not set, then use the bundleIdentifier (which is the same as kCFBundleIdentifierKey)
+        if appName == "" {
+            appName = bundle.bundleIdentifier ?? ""
+        }
+        appName = appName.characters.split(isSeparator: {$0 == "."}).map({ String($0) }).last ?? ""
+        
+        // Clean up special characters
+        return appName.componentsSeparatedByCharactersInSet(illegalCharacterSet).joinWithSeparator("_")
     }
 
     
@@ -603,6 +602,17 @@ final public class EVReflection {
                 let convertedValue = dictionaryConverter.convertDictionary(key!, dict: theValue)
                 return (convertedValue, valueType, false)
             }
+        } else if mi.displayStyle == .Set {
+            valueType = "\(mi.subjectType)"
+            if valueType.hasPrefix("Set<") {
+                if let arrayConverter = parentObject as? EVArrayConvertable {
+                    let convertedValue = arrayConverter.convertArray(key!, array: theValue)
+                    return (convertedValue, valueType, false)
+                }
+                (parentObject as? EVObject)?.addStatusMessage(.MissingProtocol, message: "An object with a property of type Set should implement the EVArrayConvertable protocol. type = \(valueType) for key \(key)")
+                print("WARNING: An object with a property of type Set should implement the EVArrayConvertable protocol. type = \(valueType) for key \(key)")
+                return (NSNull(), "NSNull", false)
+            }
         } else if mi.displayStyle == .Struct {
             valueType = "\(mi.subjectType)"
             if valueType.containsString("_NativeDictionaryStorage") {
@@ -617,10 +627,10 @@ final public class EVReflection {
             valueType = "\(mi.subjectType)"
         }
         
-        return valueForAnyDetail(parentObject, theValue: theValue, valueType: valueType)
+        return valueForAnyDetail(parentObject, key: key, theValue: theValue, valueType: valueType)
     }
     
-    public class func valueForAnyDetail(parentObject: Any? = nil, theValue: Any, valueType: String) -> (value: AnyObject, type: String, isObject: Bool) {
+    public class func valueForAnyDetail(parentObject: Any? = nil, key: String? = nil, theValue: Any, valueType: String) -> (value: AnyObject, type: String, isObject: Bool) {
         
         if theValue is NSNumber {
             return (theValue as! NSNumber, "NSNumber", false)
@@ -671,6 +681,10 @@ final public class EVReflection {
             // isObject is false to prevent parsing of objects like CKRecord, CKRecordId and other objects.
             return (theValue as! NSObject, valueType, false)
         }
+        if valueType.hasPrefix("Array<") && parentObject is EVArrayConvertable {
+            return ((parentObject as! EVArrayConvertable).convertArray(key ?? "_unknownKey", array: theValue), valueType, false)
+        }
+        
         (parentObject as? EVObject)?.addStatusMessage(.InvalidType, message: "valueForAny unkown type \(valueType) for value: \(theValue).")
         print("ERROR: valueForAny unkown type \(valueType) for value: \(theValue).")
         return (NSNull(), "NSNull", false)
@@ -1082,6 +1096,10 @@ final public class EVReflection {
             if let originalKey: String = property.label {
                 var skipThisKey = false
                 var mapKey = originalKey
+                if mapKey.containsString(".") {
+                    mapKey = mapKey.componentsSeparatedByString(".")[0] // remover the .storage for lazy properties
+                }
+                
                 if originalKey  == "evReflectionStatuses" {
                     skipThisKey = true
                 }

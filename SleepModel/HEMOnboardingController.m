@@ -22,6 +22,8 @@
 #import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"
 
+static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
+
 @interface HEMOnboardingController()
 
 @property (strong, nonatomic) HEMActivityCoverView* activityCoverView;
@@ -364,27 +366,26 @@
     
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     
-    void (^activityShownCompletion)(void) = ^{
-        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1.0f*NSEC_PER_SEC);
-        dispatch_after(time, dispatch_get_main_queue(), ^{
-            [activityView updateText:NSLocalizedString(@"onboarding.end-message.sleep", nil)
-                         successIcon:[UIImage imageNamed:@"moon"]
-                        hideActivity:YES
-                          completion:^(BOOL finished) {
-                              dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2.0f*NSEC_PER_SEC);
-                              dispatch_after(time, dispatch_get_main_queue(), ^{
-                                  [service notifyOfOnboardingCompletion];
-                              });
-                          }];
-        });
-    };
-    
     NSString* doneMessage = NSLocalizedString(@"onboarding.end-message.well-done", nil);
     [activityView showInView:[[self navigationController] view]
                     withText:doneMessage
                  successMark:YES
-                  completion:activityShownCompletion];
+                  completion:^{
+                      int64_t delay = (int64_t) (HEMOnboardingCompletionDelay*NSEC_PER_SEC);
+                      dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay);
+                      dispatch_after(time, dispatch_get_main_queue(), ^{
+                          [service notifyOfOnboardingCompletion];
+                      });
+                  }];
     
+}
+
+- (void)completeOnboardingWithoutMessage {
+    [SENAnalytics track:HEMAnalyticsEventOnbEnd];
+    
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    [service markOnboardingAsComplete];
+    [service notifyOfOnboardingCompletion];
 }
 
 @end

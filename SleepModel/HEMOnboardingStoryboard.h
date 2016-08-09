@@ -24,7 +24,9 @@
 +(NSString *)audioToSetupSegueIdentifier;
 +(NSString *)beforeSleepToSmartAlarmSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
++(NSString *)dfuSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
++(NSString *)finishSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
 +(NSString *)healthKitToLocationSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
@@ -37,6 +39,8 @@
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)skipPillPairSegue;
++(NSString *)voiceSegueIdentifier;
++(NSString *)voiceTutorialSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)weightToHealthKitSegueIdentifier;
 +(NSString *)weightToLocationSegueIdentifier;
@@ -49,13 +53,16 @@
 +(id)instantiateGenderPickerViewController;
 +(id)instantiateHeightPickerViewController;
 +(id)instantiateNoBleViewController;
++(id)instantiateOnboardingCompleteViewController;
 +(id)instantiatePillDescriptionViewController;
 +(id)instantiatePillPairViewController;
 +(id)instantiateRoomCheckViewController;
 +(id)instantiateSenseAudioViewController;
 +(id)instantiateSenseColorsViewController;
++(id)instantiateSenseDFUViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
++(id)instantiateVoiceTutorialViewController;
 +(id)instantiateWeightPickerViewController;
 +(id)instantiateWelcomeViewController;
 +(id)instantiateWifiPickerViewController;

@@ -1,5 +1,86 @@
 # Changelog
 
+## 1.5.1.8
+
+Note:
+
+* bumping to create the RC, built for the App Store
+
+## 1.5.1.7
+
+New:
+
+* All set, last onboarding screen, hooked up to the voice tutorial
+
+Fixes
+
+* Only show the You're all set message and not the sense updated message if no voice
+
+## 1.5.1.6
+
+New:
+
+* Using the features API to determine whether or not voice tutorial is shown
+* Show a network connection specific error for no connection errors during forced ota
+
+Fixes:
+
+* Fixed case where the onboarding end message is not displayed
+
+## 1.5.1.5
+
+Fixes:
+
+* Fixed layout / spacing for 6plus and 4s in voice tutorial
+* Disable / hide the later button in voice tutorial on success
+
+## 1.5.1.4
+
+New:
+
+* Voice Tip dialog
+* Added error handling for voice tutorial
+* Updated copy for end of onboarding message
+* Add Sense is updated confirmation
+
+Fixes:
+
+* 4s layout for pill dfu
+
+## 1.5.1.3
+
+Fixes:
+
+* Removed debug code
+
+## 1.5.1.2
+
+New:
+
+* Added voice tutorial to onboarding
+* Integrates with speech API to grab recent responses
+* Analytics for Sense DFU
+
+Fixes:
+
+* Smooth out animation for Pill wave transmission animation
+
+## 1.5.1.1
+
+New:
+
+* Integrates with new OTA endpoints
+* Checks the server during onboarding to see if forced dfu is required
+* New onboarding screen to trigger DFU of Sense
+* Removed "all you need to do now is sleep" message at end of onboarding flow
+
+Fixes:
+
+* Avoid crasher when animating Trends graphs' height
+* Updated color of action sheet buttons
+* Fixed margins of status label in Pill DFU flow
+* Fixed wave animation inside Pill DFU flow for large devices (6p)
+
 ## 1.5.0.6
 
 Note:

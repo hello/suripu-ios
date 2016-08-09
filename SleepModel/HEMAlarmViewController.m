@@ -42,6 +42,8 @@
     HEMAlarmPresenter* presenter = [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
                                                                alarmService:[self alarmService]];
     [presenter setDelegate:self];
+    [presenter setSuccessDuration:[self successDuration]];
+    [presenter setSuccessText:[self successText]];
     [presenter bindWithTutorialPresentingController:self];
     [presenter bindWithButtonContainer:[self buttonContainer]
                           cancelButton:[self cancelButton]
@@ -117,6 +119,10 @@
 
 #pragma mark - HEMAlarmPresenterDelegate
 
+- (UIView*)activityContainerFor:(HEMAlarmPresenter *)presenter {
+    return [[self navigationController] view];
+}
+
 - (void)showConfirmationDialogWithTitle:(NSString*)title
                                 message:(NSString*)message
                                  action:(HEMAlarmAction)action
@@ -136,18 +142,9 @@
     [self showMessageDialog:message title:title];
 }
 
-- (void)dismissWithMessage:(nullable NSString*)message
-                     saved:(BOOL)saved
-                      from:(HEMAlarmPresenter*)presenter {
-    
-    id transition = self.navigationController.transitioningDelegate;
-    if ([transition isKindOfClass:[HEMSimpleModalTransitionDelegate class]]) {
-        HEMSimpleModalTransitionDelegate* modalTransition = transition;
-        [modalTransition setDismissMessage:message];
-    }
-    
+- (void)didSave:(BOOL)save from:(HEMAlarmPresenter*)presenter {
     if ([self delegate]) {
-        if (saved) {
+        if (save) {
             [self.delegate didSaveAlarm:self.alarm from:self];
         } else {
             [self.delegate didCancelAlarmFrom:self];

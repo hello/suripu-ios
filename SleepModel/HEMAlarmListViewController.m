@@ -6,7 +6,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSubNavigationView.h"
@@ -22,7 +21,6 @@
 
 @property (nonatomic, strong) HEMAlarmService* alarmService;
 @property (nonatomic, weak) HEMAlarmListPresenter* alarmsPresenter;
-@property (nonatomic, strong) HEMSimpleModalTransitionDelegate *alarmSaveTransitionDelegate;
 @property (nonatomic, assign) BOOL launchNewAlarmOnLoad;
 
 @end
@@ -40,7 +38,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureTransitions];
     [self configurePresenter];
 }
 
@@ -59,15 +56,8 @@
     [self addPresenter:alarmPresenter];
 }
 
-- (void)configureTransitions {
-    self.alarmSaveTransitionDelegate = [HEMSimpleModalTransitionDelegate new];
-    self.alarmSaveTransitionDelegate.wantsStatusBar = YES;
-}
-
 - (void)presentViewControllerForAlarm:(SENAlarm *)alarm {
     UINavigationController *controller = (UINavigationController *)[HEMMainStoryboard instantiateAlarmNavController];
-    controller.transitioningDelegate = self.alarmSaveTransitionDelegate;
-    controller.modalPresentationStyle = UIModalPresentationCustom;
     HEMAlarmViewController *alarmController = (HEMAlarmViewController *)controller.topViewController;
     alarmController.alarm = alarm;
     alarmController.alarmService = self.alarmService;

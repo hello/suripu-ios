@@ -10,7 +10,8 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENTrendsGraph.h>
 
-@class  SENAlarm;
+@class SENAlarm;
+@class SENDFUStatus;
 
 NS_ASSUME_NONNULL_BEGIN
 // general
@@ -59,6 +60,7 @@ extern NSString* const kHEMAnalyticsEventPropWiFiOther;
 extern NSString* const kHEMAnalyticsEventPropWiFiRSSI;
 extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
+extern NSString* const kHEMAnalyticsEventPropSenseDFU;
 extern NSString* const HEMAnalyticsEventOnbStart;
 extern NSString* const HEMAnalyticsEventHealth;
 extern NSString* const HEMAnalyticsEventAccount;
@@ -244,6 +246,11 @@ extern NSString* const HEMAnalyticsEventShareComplete;
 extern NSString* const HEMAnalyticsPropCategory;
 extern NSString* const HEMAnalyticsPropService;
 
+// sense forced ota dfu
+extern NSString* const HEMAnalyticsEventSenseDFU;
+extern NSString* const HEMAnalyticsEventSenseDFUBegin;
+extern NSString* const HEMAnalyticsEventSenseDFUEnd;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;
@@ -260,6 +267,7 @@ extern NSString* const HEMAnalyticsPropService;
 + (void)trackTrendsTimescaleChange:(SENTrendsTimeScale)timescale;
 + (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding;
 + (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding;
++ (void)trackSenseUpdate:(SENDFUStatus*)status;
 
 @end
 

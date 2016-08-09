@@ -16,3 +16,5 @@
 #import "SENAPISleepSounds.h"
 #import "SENAPIPhoto.h"
 #import "SENAPIShare.h"
+#import "SENAPISpeech.h"
+#import "SENAPIFeature.h"

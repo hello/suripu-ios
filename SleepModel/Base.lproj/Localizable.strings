@@ -39,8 +39,7 @@
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
 "onboarding.before-sleep.4.description" = "Sense glows red when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
 "onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom. Go ahead, give it a try now.";
-"onboarding.end-message.well-done" = "You're all set up";
-"onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
+"onboarding.end-message.well-done" = "You're all set.";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
 "onboarding.room-check.failed" = "Unsuccessful";
 "onboarding.room-check.failed-message" = "One or more sensors is not ready yet. Don't worry, data will show soon. Set up a Smart Alarm first.";
@@ -84,6 +83,7 @@
 "help.url.slug.facebook-import" = "articles/210329423";
 "help.url.slug.pill-dfu" = "articles/211303163";
 "help.url.slug.pill-dfu-not-found" = "articles/211421183";
+"help.url.slug.sense-dfu" = "articles/211890643";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -218,17 +218,10 @@
 
 // support
 "debug.options.title" = "Debug options";
-"debug.option.contact-support" = "Contact support";
 "debug.option.reset" = "Start Over";
-"debug.option.led" = "LED";
-"debug.option.led.title" = "LED options";
 "debug.option.debug.info" = "Debug info";
 "debug.option.force.appreview" = "Force app review";
-"debug.led.option.pair" = "Pair";
-"debug.led.option.off" = "Off";
-"debug.led.option.success" = "Success";
-"debug.led.option.activity" = "Activity";
-"debug.option.room-check.title" = "Room Check";
+"debug.option.room-check.title" = "Show Room Check";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.force-whats-new" = "Force What's New";
 "debug.option.clear-alarms" = "Remove all alarms";
@@ -236,6 +229,7 @@
 "debug.host.action.custom-url" = "Custom";
 "debug.host.section.api" = "API Hosts";
 "debug.host.section.nonsense" = "Nonsense Hosts";
+"debug.option.voice" = "Show Voice Tutorial";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
@@ -374,6 +368,7 @@
 "alarm.smart.title" = "Smart Alarm";
 "alarm.delete.title" = "Delete alarm";
 "alarm.save-error.title" = "Alarm could not be saved";
+"alarm.delete-error.title" = "Alarm could not be deleted";
 "alarm.save-error.too-soon.title" = "Too Soon!";
 "alarm.save-error.too-soon.message" = "The alarm you set is only a couple minutes away. If you want to test the Alarm, please set an alarm for a bit later.";
 "alarm.delete.confirm.title" = "Delete alarm";
@@ -633,6 +628,7 @@
 "actions.next" = "Next";
 "actions.done" = "Done";
 "actions.saved" = "Saved";
+"actions.deleted" = "Deleted";
 "actions.save" = "Save";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";
@@ -856,3 +852,22 @@
 "dfu.pill.error.insufficient-phone-battery" = "To continue this update, your mobile device needs to be charged at least 20% or be connected to its charger.";
 "dfu.pill.error.title.pill-not-found" = "Sleep Pill not detected";
 "dfu.pill.error.pill-not-found" = "Make sure to shake your Sleep Pill quickly for three seconds while holding it close to your mobile device.";
+
+// sense dfu
+"onboarding.sense.dfu.error.title" = "Update failed";
+"onboarding.sense.dfu.error.generic" = "Sense was unable to update successfully. Please try again.";
+"onboarding.sense.dfu.status.sent" = "Starting update...";
+"onboarding.sense.dfu.status.in-progress" = "Downloading update...";
+"onboarding.sense.dfu.later.dialog.title" = "Update later";
+"onboarding.sense.dfu.later.dialog.message" = "Sense will try to update at a later time. You can begin using Sense, but some features may not be available until the update is complete.";
+"onboarding.sense.dfu.updated" = "Sense updated";
+
+// voice tutorial
+"onboarding.voice.info.title" = "Voice Tip";
+"onboarding.voice.info.message" = "Make sure your room is quiet, and that you're speaking clearly to Sense and not your mobile device.";
+"onboarding.voice.error.problem" = "Sorry, there was a problem. Please try again.";
+"onboarding.voice.error.not-understood" = "Sorry, didn't quite get that. Please try again.";
+
+// generic errors
+"error.no-connection.title" = "No internet connection";
+"error.no-connection" = "Your mobile device is not connected to the internet. Check your internet connection and Wi-Fi settings, and try again.";

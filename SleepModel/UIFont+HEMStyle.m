@@ -87,6 +87,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:14.0f];
 }
 
++ (UIFont*)buttonSmall {
+    return [UIFont fontWithName:HEMFontFamilyNameModernMedium size:13.0f];
+}
+
 #pragma mark - Common fonts
 
 + (UIFont*)settingsTableCellFont {
@@ -600,14 +604,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont*)actionSheetOptionDescriptionFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
-}
-
-+ (UIFont*)actionSheetTitleViewTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
-}
-
-+ (UIFont*)actionSheetTitleViewDescriptionFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 

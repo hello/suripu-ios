@@ -251,6 +251,10 @@ extern NSString* const HEMAnalyticsEventSenseDFU;
 extern NSString* const HEMAnalyticsEventSenseDFUBegin;
 extern NSString* const HEMAnalyticsEventSenseDFUEnd;
 
+// voice tutorial
+extern NSString* const HEMAnalyticsEventVoiceTutorial;
+extern NSString* const HEMAnalyticsEventVoiceResponse;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;

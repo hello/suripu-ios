@@ -3436,7 +3436,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/env ruby";
-			shellScript = "fork do\n  Process.setsid\n  STDIN.reopen(\"/dev/null\")\n  STDOUT.reopen(\"/dev/null\", \"a\")\n  STDERR.reopen(\"/dev/null\", \"a\")\n\n  require 'shellwords'\n\n  Dir[\"#{ENV[\"DWARF_DSYM_FOLDER_PATH\"]}/*/Contents/Resources/DWARF/*\"].each do |dsym|\n    system(\"curl -F dsym=@#{Shellwords.escape(dsym)} -F projectRoot=#{Shellwords.escape(ENV[\"PROJECT_DIR\"])} https://upload.bugsnag.com/\")\n  end\nend\n";
+			shellScript = "#!/usr/bin/env ruby\n\nrequire 'shellwords'\n\n\nupload_server_url = \"https://upload.bugsnag.com/\"\nto_upload = ARGV\nif to_upload.include?(\"-h\") ||\n    to_upload.include?(\"--help\") || to_upload.length == 0\n    puts \"Usage: upload_dsym UUID [UUID..]\"\nend\n\nmissing = []\n\nto_upload.each do |uuid|\n\npaths = `mdfind #{Shellwords.escape(uuid)}`.split(\"\\n\")\nfile = nil\n\npaths.detect do |path|\n        dsyms = Dir[\"#{path}/Contents/Resources/DWARF/*\"] + Dir[\"#{path}/dSYMs/*/Contents/Resources/DWARF/*\"]\n        dsyms.detect do |f|\n        if `dwarfdump -u #{Shellwords.escape(f)}` =~ /UUID: #{Regexp.escape(uuid)}/\n            file = f\n        end\n    end\nend\n\n    if file\n        puts \"Uploading dSYM with UUID: #{uuid}\\n\"\n        puts `curl -F dsym=@#{Shellwords.escape(\"\\\"#{file}\\\"\")} #{Shellwords.escape(upload_server_url)}`\n    else\n        missing << uuid\n    end\nend\n\nunless missing == []\n    puts \"Still missing: #{missing.join(\", \")}.\"\nend";
 			showEnvVarsInLog = 0;
 		};
 		69DE724F6CF308D19D81AE58 /* 📦 Embed Pods Frameworks */ = {

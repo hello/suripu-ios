@@ -53,6 +53,7 @@
 +(id)instantiateDobViewController;
 +(id)instantiateGenderPickerViewController;
 +(id)instantiateHeightPickerViewController;
++(id)instantiateNewSenseViewController;
 +(id)instantiateNoBleViewController;
 +(id)instantiateOnboardingCompleteViewController;
 +(id)instantiatePillDescriptionViewController;

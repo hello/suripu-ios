@@ -30,6 +30,8 @@
 #import "HEMAlarmService.h"
 #import "HEMWhatsNewService.h"
 #import "HEMAppUsage.h"
+#import "HEMUpgradeSensePresenter.h"
+#import "HEMHaveSenseViewController.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -89,6 +91,7 @@
     
     [self addRoomCheckOptionTo:sheet];
     [self addShowVoiceTutorialOptionToSheet:sheet];
+    [self addShowUpgradePathOptionToSheet:sheet];
     [self addPillDfuOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
     [self addWhatsNewOptionTo:sheet];
@@ -142,6 +145,27 @@
         [strongSelf showSelectHostController];
         [strongSelf setSupportOptionController:nil];
     }];
+}
+
+#pragma mark Upgrade path
+
+- (void)addShowUpgradePathOptionToSheet:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.upgrade", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showUpgradePath];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showUpgradePath {
+    HEMUpgradeSensePresenter* upgradePresenter = [HEMUpgradeSensePresenter new];
+    HEMHaveSenseViewController* senseVC = [HEMOnboardingStoryboard instantiateNewSenseViewController];
+    [senseVC setPresenter:upgradePresenter];
+    
+    HEMStyledNavigationViewController* nav
+        = [[HEMStyledNavigationViewController alloc] initWithRootViewController:senseVC];
+    [self showController:nav animated:YES completion:nil];
 }
 
 #pragma mark Voice Tutorial

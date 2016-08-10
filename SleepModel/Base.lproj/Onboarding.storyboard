@@ -401,7 +401,7 @@
         <!--Have Sense View Controller-->
         <scene sceneID="IYi-mC-ciF">
             <objects>
-                <viewController id="RYl-gV-ozZ" customClass="HEMHaveSenseViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newSense" id="RYl-gV-ozZ" customClass="HEMHaveSenseViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vvM-Kl-XD4"/>
                         <viewControllerLayoutGuide type="bottom" id="pwf-tC-J0F"/>

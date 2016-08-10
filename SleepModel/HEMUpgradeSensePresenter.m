@@ -1,5 +1,5 @@
 //
-//  HEMOnboardingHaveSensePresenter.m
+//  HEMUpgradeSensePresenter.m
 //  Sense
 //
 //  Created by Jimmy Lu on 8/9/16.
@@ -7,25 +7,24 @@
 //
 #import "UIBarButtonItem+HEMNav.h"
 
-#import "HEMOnboardingNewSensePresenter.h"
-#import "HEMOnboardingStoryboard.h"
+#import "HEMUpgradeSensePresenter.h"
 
-@implementation HEMOnboardingNewSensePresenter
+@implementation HEMUpgradeSensePresenter
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
           descriptionLabel:(UILabel*)descriptionLabel {
     [super bindWithTitleLabel:titleLabel descriptionLabel:descriptionLabel];
     
-    [titleLabel setText:NSLocalizedString(@"onboarding.new-sense.title", nil)];
-    [descriptionLabel setText:NSLocalizedString(@"onboarding.new-sense.desc", nil)];
-    [SENAnalytics track:HEMAnalyticsEventOnbStart];
+    [titleLabel setText:NSLocalizedString(@"upgrade.new-sense.title", nil)];
+    [descriptionLabel setText:NSLocalizedString(@"upgrade.new-sense.desc", nil)];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem *)navItem {
     [super bindWithNavigationItem:navItem];
     
-    UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil
-                                                                 image:[UIImage imageNamed:@"backIcon"]
+    NSString* title = NSLocalizedString(@"actions.cancel", nil);
+    UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:title
+                                                                 image:nil
                                                                 target:self
                                                                 action:@selector(cancel)];
     [navItem setLeftBarButtonItem:cancelItem];
@@ -33,11 +32,15 @@
 
 - (void)bindWithNextButton:(UIButton*)nextButton {
     [super bindWithNextButton:nextButton];
+    [nextButton setTitle:NSLocalizedString(@"upgrade.new-sense.setup", nil)
+                forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(proceed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)bindWithNeedButton:(UIButton*)needButton {
     [super bindWithNeedButton:needButton];
+    [needButton setTitle:NSLocalizedString(@"upgrade.new-sense.learn-more", nil)
+                forState:UIControlStateNormal];
     [needButton addTarget:self action:@selector(order) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -48,16 +51,12 @@
 }
 
 - (void)proceed {
-    NSString* nextSegueId = [HEMOnboardingStoryboard registerSegueIdentifier];
-    [[self actionDelegate] shouldProceedToNextSegueWithIdentifier:nextSegueId
-                                                    nextPresenter:nil
-                                                             from:self];
+    // TODO - next screen!
 }
 
 - (void)order {
     NSString* orderURLString = NSLocalizedString(@"help.url.order-form", nil);
     [[self actionDelegate] shouldOpenPageTo:orderURLString from:self];
-    [SENAnalytics track:kHEMAnalyticsEventOnBNoSense];
 }
 
 @end

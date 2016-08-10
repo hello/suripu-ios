@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.2.1
+
+New:
+
+* Refactored Have Sense ready screen to VSPER architecture to maximize reuse
+* Analytics for voice tutorial screen
+
+Fixes:
+
+* Fix rare crasher that happens if insights API failed, showing only 1 question in the feed + a refresh of the view is triggered and both questions and insights api fails, which then requires user to either skip or answer the question that is still showing.
+* Prevent crasher with Sensors if API response contains an object type that we do not expect.
+
 ## 1.5.1.8
 
 Note:

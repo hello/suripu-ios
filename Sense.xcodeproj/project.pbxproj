@@ -370,6 +370,9 @@
 		BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD3CCF01B9F7F8D00643987 /* NSShadow+HEMStyle.m */; };
 		BFD4012C1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD4012B1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m */; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
+		BFD9A96D1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */; };
+		BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9721D5A8C37003EC82A /* HEMNewSensePresenter.m */; };
+		BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9761D5A9A14003EC82A /* HEMUpgradeSensePresenter.m */; };
 		BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */; };
 		BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9F1A71D36C43300BB4E3A /* HEMPillCollectionViewCell.m */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
@@ -1112,6 +1115,12 @@
 		BFD4012B1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSimpleModalTransitionDelegate.m; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
+		BFD9A96B1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingNewSensePresenter.h; sourceTree = "<group>"; };
+		BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingNewSensePresenter.m; sourceTree = "<group>"; };
+		BFD9A9711D5A8C37003EC82A /* HEMNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNewSensePresenter.h; sourceTree = "<group>"; };
+		BFD9A9721D5A8C37003EC82A /* HEMNewSensePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNewSensePresenter.m; sourceTree = "<group>"; };
+		BFD9A9751D5A9A14003EC82A /* HEMUpgradeSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUpgradeSensePresenter.h; sourceTree = "<group>"; };
+		BFD9A9761D5A9A14003EC82A /* HEMUpgradeSensePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUpgradeSensePresenter.m; sourceTree = "<group>"; };
 		BFD9D1FE1BF27E2900948CB7 /* HEMSegmentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSegmentProvider.h; sourceTree = "<group>"; };
 		BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSegmentProvider.m; sourceTree = "<group>"; };
 		BFD9F1A51D35C30C00BB4E3A /* HEMSleepPillDFUDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepPillDFUDelegate.h; sourceTree = "<group>"; };
@@ -1307,6 +1316,7 @@
 				8AC49F8F1981B92100C2BD63 /* Timeline */,
 				8AC276A91A3CE54C00B082D9 /* Trends */,
 				8A576F0F1A79B11000287398 /* Tutorial */,
+				BFD9A9691D5A7F3B003EC82A /* Upgrade */,
 				BF6098821D4AD61F0005C8F0 /* Voice */,
 			);
 			name = Sense;
@@ -2598,6 +2608,10 @@
 				BF9826661D3ECF89009518CA /* HEMSenseDFUPresenter.m */,
 				BF6098751D4820E20005C8F0 /* HEMVoiceTutorialPresenter.h */,
 				BF6098761D4820E20005C8F0 /* HEMVoiceTutorialPresenter.m */,
+				BFD9A96B1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.h */,
+				BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */,
+				BFD9A9711D5A8C37003EC82A /* HEMNewSensePresenter.h */,
+				BFD9A9721D5A8C37003EC82A /* HEMNewSensePresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3056,6 +3070,23 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		BFD9A9691D5A7F3B003EC82A /* Upgrade */ = {
+			isa = PBXGroup;
+			children = (
+				BFD9A9741D5A99E3003EC82A /* Presenters */,
+			);
+			name = Upgrade;
+			sourceTree = "<group>";
+		};
+		BFD9A9741D5A99E3003EC82A /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BFD9A9751D5A9A14003EC82A /* HEMUpgradeSensePresenter.h */,
+				BFD9A9761D5A9A14003EC82A /* HEMUpgradeSensePresenter.m */,
+			);
+			name = Presenters;
+			sourceTree = "<group>";
+		};
 		BFDFCEA01B729F96000DA303 /* Sensors */ = {
 			isa = PBXGroup;
 			children = (
@@ -3436,7 +3467,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/env ruby";
-			shellScript = "fork do\n  Process.setsid\n  STDIN.reopen(\"/dev/null\")\n  STDOUT.reopen(\"/dev/null\", \"a\")\n  STDERR.reopen(\"/dev/null\", \"a\")\n\n  require 'shellwords'\n\n  Dir[\"#{ENV[\"DWARF_DSYM_FOLDER_PATH\"]}/*/Contents/Resources/DWARF/*\"].each do |dsym|\n    system(\"curl -F dsym=@#{Shellwords.escape(dsym)} -F projectRoot=#{Shellwords.escape(ENV[\"PROJECT_DIR\"])} https://upload.bugsnag.com/\")\n  end\nend\n";
+			shellScript = "#!/usr/bin/env ruby\n\nrequire 'shellwords'\n\n\nupload_server_url = \"https://upload.bugsnag.com/\"\nto_upload = ARGV\nif to_upload.include?(\"-h\") ||\n    to_upload.include?(\"--help\") || to_upload.length == 0\n    puts \"Usage: upload_dsym UUID [UUID..]\"\nend\n\nmissing = []\n\nto_upload.each do |uuid|\n\npaths = `mdfind #{Shellwords.escape(uuid)}`.split(\"\\n\")\nfile = nil\n\npaths.detect do |path|\n        dsyms = Dir[\"#{path}/Contents/Resources/DWARF/*\"] + Dir[\"#{path}/dSYMs/*/Contents/Resources/DWARF/*\"]\n        dsyms.detect do |f|\n        if `dwarfdump -u #{Shellwords.escape(f)}` =~ /UUID: #{Regexp.escape(uuid)}/\n            file = f\n        end\n    end\nend\n\n    if file\n        puts \"Uploading dSYM with UUID: #{uuid}\\n\"\n        puts `curl -F dsym=@#{Shellwords.escape(\"\\\"#{file}\\\"\")} #{Shellwords.escape(upload_server_url)}`\n    else\n        missing << uuid\n    end\nend\n\nunless missing == []\n    puts \"Still missing: #{missing.join(\", \")}.\"\nend";
 			showEnvVarsInLog = 0;
 		};
 		69DE724F6CF308D19D81AE58 /* 📦 Embed Pods Frameworks */ = {
@@ -3768,6 +3799,7 @@
 				BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */,
 				BFC4C20B1B90D89500BB7761 /* HEMEmbeddedVideoView.m in Sources */,
 				BFB7B2101CCFE9E40060999E /* HEMAlarmRepeatDaysPresenter.m in Sources */,
+				BFD9A96D1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m in Sources */,
 				BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */,
 				BF885F251CE562A500A92F90 /* HEMNewAccountPresenter.m in Sources */,
 				BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */,
@@ -3797,6 +3829,8 @@
 				8AB2683C19CCFDBF00017818 /* HEMAlarmListViewController.m in Sources */,
 				BF2123F61B66E8B50017D67A /* HEMAppUsage.m in Sources */,
 				BF0E37971C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m in Sources */,
+				BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */,
+				BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */,
 				8B1DB6DE1C18B35D006C8AFF /* HEMSelectHostPresenter.m in Sources */,
 				8A7D80491A421B7300B0BFD7 /* HEMAlarmListCell.m in Sources */,
 				BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */,

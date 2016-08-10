@@ -16,6 +16,8 @@
 "welcome.intro.desc.current-conditions" = "Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
 
 // onboarding
+"onboarding.new-sense.title" = "Have Sense ready?";
+"onboarding.new-sense.desc" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
 "onboarding.account.sign-in.title" = "Welcome back";
 "sign-up.activity.message" = "Creating your account";
 "sign-up.failed.title" = "Sign up failed";
@@ -232,6 +234,7 @@
 "debug.option.voice" = "Show Voice Tutorial";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
+"debug.option.upgrade" = "Show Upgrade Path";
 
 // tell a friend
 "settings.tell-a-friend.subject" = "Try Sense";
@@ -871,3 +874,9 @@
 // generic errors
 "error.no-connection.title" = "No internet connection";
 "error.no-connection" = "Your mobile device is not connected to the internet. Check your internet connection and Wi-Fi settings, and try again.";
+
+// upgrade path
+"upgrade.new-sense.title" = "Upgrade to Sense with Voice";
+"upgrade.new-sense.desc" = "The new Sense introduces improved sensors, and Voice — which lets you control Sense just by speaking to it. If you already purchased a new Sense with Voice, make sure it’s plugged in and nearby.";
+"upgrade.new-sense.learn-more" = "Learn more about Sense with Voice";
+"upgrade.new-sense.setup" = "Set up";

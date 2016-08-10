@@ -610,9 +610,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     }];
 }
 
-- (BOOL)removeQuestionFromData:(nonnull SENQuestion*)question {
+- (NSInteger)removeQuestionFromData:(nonnull SENQuestion*)question {
     NSMutableArray* mutableData = [[self data] mutableCopy];
-    NSInteger dataCount = [mutableData count];
     [mutableData removeObject:question];
     [self setData:mutableData];
     
@@ -620,12 +619,17 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     [mutableQuestions removeObject:question];
     [self setQuestions:mutableQuestions];
     
-    return dataCount > [[self data] count];
+    return [[self data] count];
 }
 
 - (void)removeQuestion:(nonnull SENQuestion*)question atIndexPath:(nonnull NSIndexPath*)indexPath {
-    if ([self removeQuestionFromData:question]) {
+    NSInteger beforeCount = [[self collectionView] numberOfItemsInSection:0];
+    NSInteger afterCount = [self removeQuestionFromData:question];
+    
+    if (--beforeCount == afterCount) {
         [[self collectionView] deleteItemsAtIndexPaths:@[indexPath]];
+    } else {
+        [[self collectionView] reloadData];
     }
 }
 

@@ -401,7 +401,7 @@
         <!--Have Sense View Controller-->
         <scene sceneID="IYi-mC-ciF">
             <objects>
-                <viewController id="RYl-gV-ozZ" customClass="HEMHaveSenseViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newSense" id="RYl-gV-ozZ" customClass="HEMHaveSenseViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vvM-Kl-XD4"/>
                         <viewControllerLayoutGuide type="bottom" id="pwf-tC-J0F"/>
@@ -425,10 +425,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sense" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
-                                <rect key="frame" x="0.0" y="146" width="600" height="291"/>
+                                <rect key="frame" x="0.0" y="146" width="600" height="346"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
-                                <rect key="frame" x="24" y="475" width="552" height="50"/>
+                                <rect key="frame" x="24" y="530" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="v8x-zs-ef3"/>
                                 </constraints>
@@ -437,12 +437,9 @@
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="O8f-43-SpP" kind="show" id="NcF-uD-VEp"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgV-El-CBa">
-                                <rect key="frame" x="24" y="530" width="552" height="50"/>
+                                <rect key="frame" x="24" y="475" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6b2-fH-agt"/>
                                 </constraints>
@@ -450,9 +447,6 @@
                                 <state key="normal" title="ORDER A SENSE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="orderSense:" destination="RYl-gV-ozZ" eventType="touchUpInside" id="pcF-Te-6eP"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -461,9 +455,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="R0B-PY-KLe" secondAttribute="trailing" constant="4" id="88x-uE-kGP"/>
                             <constraint firstItem="k0c-FQ-y2a" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="IqC-VG-tjs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="n2K-Db-VCV" secondAttribute="trailing" constant="-20" id="L1A-Qv-rS7"/>
-                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="tgV-El-CBa" secondAttribute="bottom" constant="20" id="OvH-WI-UZO"/>
+                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="tgV-El-CBa" secondAttribute="bottom" constant="75" id="OvH-WI-UZO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="k0c-FQ-y2a" secondAttribute="trailing" constant="4" id="UpE-wU-j13"/>
-                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="ONz-So-uP9" secondAttribute="bottom" constant="75" id="agi-kV-WVh"/>
+                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="ONz-So-uP9" secondAttribute="bottom" constant="20" id="agi-kV-WVh"/>
                             <constraint firstItem="R0B-PY-KLe" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="d23-Ik-No7"/>
                             <constraint firstItem="n2K-Db-VCV" firstAttribute="bottom" secondItem="ONz-So-uP9" secondAttribute="top" constant="-38" id="eMi-jV-YFE"/>
                             <constraint firstItem="n2K-Db-VCV" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="-20" id="iNe-kb-lbB"/>
@@ -481,9 +475,11 @@
                     <connections>
                         <outlet property="descriptionLabel" destination="R0B-PY-KLe" id="wCA-5n-3HK"/>
                         <outlet property="descriptionTopConstraint" destination="y0T-np-cds" id="3Qr-bU-Wkg"/>
+                        <outlet property="nextButton" destination="ONz-So-uP9" id="0HC-NQ-ygj"/>
                         <outlet property="orderSenseButton" destination="tgV-El-CBa" id="aF1-dB-f03"/>
                         <outlet property="titleHeightConstraint" destination="mRd-go-Uvt" id="PGb-IY-V4G"/>
                         <outlet property="titleLabel" destination="k0c-FQ-y2a" id="yrI-pf-51T"/>
+                        <segue destination="O8f-43-SpP" kind="show" identifier="register" id="hpM-xq-Qfk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vOs-bg-4TL" userLabel="First Responder" sceneMemberID="firstResponder"/>

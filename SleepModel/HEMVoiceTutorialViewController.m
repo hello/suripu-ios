@@ -40,6 +40,7 @@
     [super viewDidLoad];
     [self configurePresenter];
     [self enableBackButton:NO];
+    [self trackAnalyticsEvent:HEMAnalyticsEventVoiceTutorial];
 }
 
 - (void)configurePresenter {

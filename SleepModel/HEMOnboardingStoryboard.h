@@ -35,6 +35,7 @@
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)notificationToAudioSegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
++(NSString *)registerSegueIdentifier;
 +(NSString *)roomCheckToSmartAlarmSegueIdentifier;
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
@@ -52,6 +53,7 @@
 +(id)instantiateDobViewController;
 +(id)instantiateGenderPickerViewController;
 +(id)instantiateHeightPickerViewController;
++(id)instantiateNewSenseViewController;
 +(id)instantiateNoBleViewController;
 +(id)instantiateOnboardingCompleteViewController;
 +(id)instantiatePillDescriptionViewController;

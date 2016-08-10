@@ -82,7 +82,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 + (void)refreshCachedSensors
 {
     [SENAPIRoom currentWithCompletion:^(NSDictionary* data, NSError* error) {
-        if (error) {
+        if (error || ![data isKindOfClass:[NSDictionary class]]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:SENSensorUpdateFailedNotification object:nil];
             return;
         }
@@ -93,13 +93,15 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
             }
         }
         NSMutableArray* sensors = [[NSMutableArray alloc] initWithCapacity:[data count]];
-        [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSDictionary* obj, BOOL *stop) {
-            NSMutableDictionary* values = [obj mutableCopy];
-            values[SENSensorNameKey] = key;
-            SENSensor* sensor = [[SENSensor alloc] initWithDictionary:values];
-            if (sensor) {
-                [sensors addObject:sensor];
-                [sensor save];
+        [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, id obj, BOOL *stop) {
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                NSMutableDictionary* values = [obj mutableCopy];
+                values[SENSensorNameKey] = key;
+                SENSensor* sensor = [[SENSensor alloc] initWithDictionary:values];
+                if (sensor) {
+                    [sensors addObject:sensor];
+                    [sensor save];
+                }
             }
         }];
         [[NSNotificationCenter defaultCenter] postNotificationName:SENSensorsUpdatedNotification object:sensors];

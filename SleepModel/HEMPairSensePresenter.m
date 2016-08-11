@@ -65,6 +65,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
             forState:UIControlStateNormal];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [[button titleLabel] setFont:[UIFont button]];
+    [button addTarget:self action:@selector(help) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)bindWithNextButton:(UIButton*)button {

@@ -704,6 +704,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         }
     };
     
+    // FIXME: hmm, i see the prompt before calling pair.  Maybe the call to pair
+    // is no longer needed?
     void(^pair)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [[strongSelf currentSenseManager] pair:^(id response) {

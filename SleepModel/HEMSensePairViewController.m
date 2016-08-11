@@ -112,4 +112,14 @@
     [alert showFrom:self];
 }
 
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController* destVC = segue.destinationViewController;
+    if ([destVC isKindOfClass:[HEMWifiPickerViewController class]]) {
+        HEMWifiPickerViewController* pickerVC = (HEMWifiPickerViewController*)destVC;
+        [pickerVC setSensePairDelegate:[self delegate]]; // if one is set, pass it along
+    }
+}
+
 @end

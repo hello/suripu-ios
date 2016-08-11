@@ -754,6 +754,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         }
         if ([strongSelf wifihandler]) {
             [strongSelf wifihandler] (ssid, [status isConnected], error);
+            [strongSelf setWifihandler:nil];
         }
     };
     

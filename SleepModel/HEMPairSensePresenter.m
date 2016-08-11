@@ -33,7 +33,6 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 
 @interface HEMPairSensePresenter()
 
-@property (nonatomic, copy) NSString* disconnectObserverId;
 @property (nonatomic, weak) HEMOnboardingService* onbService;
 @property (nonatomic, weak) NSLayoutConstraint* descTopConstraint;
 @property (nonatomic, assign) HEMPairSenseState currentState;
@@ -400,7 +399,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 
 - (void)failPairing {
     [self setCurrentState:HEMPairSenseStateNotStarted]; // reset
-    [[self onbService] disconnectCurrentSense];
+    [[self onbService] replaceCurrentSenseManagerWith:nil];
     [self showCouldNotPairErrorMessage];
 }
 

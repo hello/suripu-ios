@@ -51,7 +51,7 @@
 }
 
 - (void)proceed {
-    // TODO - next screen!
+    [[self actionDelegate] shouldProceedFrom:self];
 }
 
 - (void)order {

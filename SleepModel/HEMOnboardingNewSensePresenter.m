@@ -48,10 +48,7 @@
 }
 
 - (void)proceed {
-    NSString* nextSegueId = [HEMOnboardingStoryboard registerSegueIdentifier];
-    [[self actionDelegate] shouldProceedToNextSegueWithIdentifier:nextSegueId
-                                                    nextPresenter:nil
-                                                             from:self];
+    [[self actionDelegate] shouldProceedFrom:self];
 }
 
 - (void)order {

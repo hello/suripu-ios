@@ -32,6 +32,7 @@
 #import "HEMAppUsage.h"
 #import "HEMUpgradeSensePresenter.h"
 #import "HEMHaveSenseViewController.h"
+#import "HEMUpgradeFlow.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -159,9 +160,11 @@
 }
 
 - (void)showUpgradePath {
+    HEMUpgradeFlow* flow = [HEMUpgradeFlow new];
     HEMUpgradeSensePresenter* upgradePresenter = [HEMUpgradeSensePresenter new];
     HEMHaveSenseViewController* senseVC = [HEMOnboardingStoryboard instantiateNewSenseViewController];
     [senseVC setPresenter:upgradePresenter];
+    [senseVC setFlow:flow];
     
     HEMStyledNavigationViewController* nav
         = [[HEMStyledNavigationViewController alloc] initWithRootViewController:senseVC];

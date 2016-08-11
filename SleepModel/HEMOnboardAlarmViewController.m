@@ -43,7 +43,7 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 }
 
 - (void)configureButton {
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[[self skipButton] titleLabel] setFont:[UIFont button]];
     [self enableBackButton:NO];
 }
 

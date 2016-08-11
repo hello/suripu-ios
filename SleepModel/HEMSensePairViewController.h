@@ -10,8 +10,11 @@
 #import "HEMOnboardingController.h"
 #import "HEMSensePairDelegate.h"
 
+@class HEMPairSensePresenter;
+
 @interface HEMSensePairViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMSensePairingDelegate> delegate;
+@property (nonatomic, strong) HEMPairSensePresenter* presenter;
 
 @end

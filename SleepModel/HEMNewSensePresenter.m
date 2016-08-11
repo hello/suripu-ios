@@ -20,7 +20,7 @@
 
 - (void)bindWithNeedButton:(UIButton*)needButton {
     [needButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [[needButton titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[needButton titleLabel] setFont:[UIFont button]];
 }
 
 @end

@@ -32,7 +32,7 @@
 
 - (void)bindWithNextButton:(UIButton*)nextButton {
     [super bindWithNextButton:nextButton];
-    [nextButton setTitle:NSLocalizedString(@"upgrade.new-sense.setup", nil)
+    [nextButton setTitle:[NSLocalizedString(@"upgrade.new-sense.setup", nil) uppercaseString]
                 forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(proceed) forControlEvents:UIControlEventTouchUpInside];
 }

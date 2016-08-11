@@ -3108,8 +3108,8 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="34"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="43"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Now we'll pair your phone with Sense. Make sure Sense is plugged in, nearby, and glowing purple. Tap Continue when ready.">
                                         <attributes>
@@ -3130,6 +3130,17 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <constraint firstAttribute="height" constant="184" id="KfE-AJ-gGk"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="R81-5h-QfC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
                                 <constraints>
@@ -3140,28 +3151,11 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="showPairingModeHelp:" destination="cgk-PX-LxG" eventType="touchUpInside" id="ehn-re-hXg"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="530" width="560" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="R81-5h-QfC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="CONTINUE">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="enablePairing:" destination="cgk-PX-LxG" eventType="touchUpInside" id="Kvt-hJ-N0l"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="0fo-8k-s7Q"/>
+                            <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leading" constant="20" id="0fo-8k-s7Q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ahI-Ri-OCe" secondAttribute="trailing" constant="-20" id="Bva-v6-Aw6"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="4" id="D61-4A-EJJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" id="KNC-U4-JbD"/>
@@ -3175,7 +3169,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="top" constant="-10" id="cUY-fa-DEC"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="qgY-WF-PLN" secondAttribute="bottom" constant="118" id="gyO-py-tGj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" id="jFT-SI-kIS"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="4" id="kx2-M4-RDe"/>
+                            <constraint firstAttribute="trailing" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="20" id="kx2-M4-RDe"/>
                             <constraint firstItem="ahI-Ri-OCe" firstAttribute="top" secondItem="qgY-WF-PLN" secondAttribute="top" constant="-11" id="l8Z-G6-DFC"/>
                             <constraint firstItem="bX7-3Z-6yh" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" id="q6q-ws-CKy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bX7-3Z-6yh" secondAttribute="trailing" id="w0J-7J-bbG"/>
@@ -3186,7 +3180,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                     <connections>
                         <outlet property="descriptionLabel" destination="mFI-cr-rhB" id="06H-pA-6mf"/>
                         <outlet property="descriptionTopConstraint" destination="cUY-fa-DEC" id="6wz-Dm-eoT"/>
-                        <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Dcn-nY-xAS"/>
+                        <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Iu5-EF-hLO"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
                         <outlet property="senseIconHeightConstraint" destination="KfE-AJ-gGk" id="xjh-y3-ptH"/>
                         <outlet property="titleHeightConstraint" destination="mde-7P-QTN" id="yBx-7W-leE"/>

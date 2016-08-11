@@ -25,7 +25,11 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorSenseNotInitialized = -4,
     HEMOnboardingErrorMissingAuthToken = -5,
     HEMOnboardingErrorDFUTimeout = -6,
-    HEMOnboardingErrorDFUStatusError = -7
+    HEMOnboardingErrorDFUStatusError = -7,
+    HEMOnboardingErrorBLENotReady = -8,
+    HEMOnboardingErrorNoSenseFound = -9,
+    HEMOnboardingErrorScanTimeout = -10,
+    HEMOnboardingErrorSenseDisconnected = -11
 };
 
 /**
@@ -48,6 +52,8 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 };
 
 typedef void(^HEMOnboardingDFUHandler)(NSError* _Nullable error);
+typedef void(^HEMOnboardingErrorHandler)(NSError* _Nullable error);
+typedef void(^HEMOnboardingWiFiHandler)(NSString* _Nullable ssid, BOOL connected, NSError* _Nullable error);
 typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 
 @class SENSense;
@@ -134,6 +140,13 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  * @param completion: the block to invoke upon completion
  */
 - (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion;
+
+- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion;
+- (void)pairWithCurrentSenseWithLEDOn:(BOOL)turnOnLEDs
+                           completion:(HEMOnboardingErrorHandler)completion;
+- (void)checkIfCurrentSenseHasWiFi:(HEMOnboardingWiFiHandler)completion;
+- (void)setTimeZone:(HEMOnboardingErrorHandler)completion;
+- (void)stopObservingDisconnectsIfNeeded;
 
 #pragma mark - Accounts
 
@@ -370,6 +383,10 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 - (BOOL)isLastNameValid:(nullable NSString*)lastName;
 - (BOOL)isEmailValid:(nullable NSString*)email;
 - (BOOL)isPasswordValid:(nullable NSString*)password;
+
+#pragma mark - LEDs
+
+- (void)resetLED:(HEMOnboardingErrorHandler)completion;
 
 #pragma mark - OTA
 

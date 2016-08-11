@@ -328,11 +328,6 @@
 
 + (UIFont*)alertBoldButtonFont;
 
-/**
- * Font used for normal UIButtons that are secondary actions
- */
-+ (UIFont*)secondaryButtonFont;
-
 + (UIFont*)alertLightButtonFont;
 
 /**

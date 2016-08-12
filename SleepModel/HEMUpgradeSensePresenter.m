@@ -8,6 +8,7 @@
 #import "UIBarButtonItem+HEMNav.h"
 
 #import "HEMUpgradeSensePresenter.h"
+#import "HEMBluetoothUtils.h"
 
 @implementation HEMUpgradeSensePresenter
 

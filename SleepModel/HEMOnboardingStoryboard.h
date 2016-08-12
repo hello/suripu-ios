@@ -32,6 +32,7 @@
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationToPushSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
++(NSString *)noBLESegueIdentifier;
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)notificationToAudioSegueIdentifier;
 +(NSString *)pairSegueIdentifier;

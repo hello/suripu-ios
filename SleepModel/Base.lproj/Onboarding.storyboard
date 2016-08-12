@@ -481,6 +481,7 @@
                         <outlet property="titleLabel" destination="k0c-FQ-y2a" id="yrI-pf-51T"/>
                         <segue destination="O8f-43-SpP" kind="show" identifier="register" id="hpM-xq-Qfk"/>
                         <segue destination="cgk-PX-LxG" kind="show" identifier="pair" id="Sda-jg-aqk"/>
+                        <segue destination="AER-Sm-Ec9" kind="show" identifier="noBLE" id="6ED-su-wCY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vOs-bg-4TL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3468,6 +3469,7 @@ Flip the switch to On</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d9a-nc-483"/>
+        <segue reference="6ED-su-wCY"/>
         <segue reference="Sda-jg-aqk"/>
         <segue reference="JsS-bV-f7k"/>
         <segue reference="7LA-fg-2Jb"/>

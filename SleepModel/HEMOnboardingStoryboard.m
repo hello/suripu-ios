@@ -27,6 +27,7 @@ static NSString *const _HEMlocationToPush = @"locationToPush";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMnewSense = @"newSense";
+static NSString *const _HEMnoBLE = @"noBLE";
 static NSString *const _HEMnoBle = @"noBle";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMnotificationToAudio = @"notificationToAudio";
@@ -91,6 +92,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)heightSegueIdentifier { return _HEMheight; }
 +(NSString *)locationToPushSegueIdentifier { return _HEMlocationToPush; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
++(NSString *)noBLESegueIdentifier { return _HEMnoBLE; }
 +(NSString *)noBleToBirthdaySegueIdentifier { return _HEMnoBleToBirthday; }
 +(NSString *)notificationToAudioSegueIdentifier { return _HEMnotificationToAudio; }
 +(NSString *)pairSegueIdentifier { return _HEMpair; }

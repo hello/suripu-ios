@@ -10,6 +10,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMHaveSenseViewController.h"
+#import "HEMNoBLEViewController.h"
 #import "HEMOnboardingNewSensePresenter.h"
 #import "HEMSensePairViewController.h"
 #import "HEMSupportUtil.h"
@@ -86,6 +87,9 @@
                                   fromCurrentViewController:self];
             [pairVC setPresenter:(id)nextPresenter];
         }
+    } else if ([nextController isKindOfClass:[HEMNoBLEViewController class]]) {
+        HEMNoBLEViewController* bleVC = (id)nextController;
+        [bleVC setFlow:[self flow]];
     }
 }
 

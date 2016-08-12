@@ -3347,11 +3347,12 @@ Flip the switch to On</string>
                         <outlet property="titleHeightConstraint" destination="Xxa-Zj-87F" id="rse-ve-5dK"/>
                         <outlet property="titleLabel" destination="WSp-oq-I62" id="4Q5-mb-N6A"/>
                         <segue destination="R0p-kB-1qZ" kind="show" identifier="noBleToBirthday" id="d9a-nc-483"/>
+                        <segue destination="cgk-PX-LxG" kind="show" identifier="pair" id="pzU-cR-vI1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-3B-dpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2357" y="526"/>
+            <point key="canvasLocation" x="2391" y="510"/>
         </scene>
         <!--Sense Setup View Controller-->
         <scene sceneID="1ot-8w-aZb">
@@ -3470,7 +3471,7 @@ Flip the switch to On</string>
     <inferredMetricsTieBreakers>
         <segue reference="d9a-nc-483"/>
         <segue reference="6ED-su-wCY"/>
-        <segue reference="Sda-jg-aqk"/>
+        <segue reference="pzU-cR-vI1"/>
         <segue reference="JsS-bV-f7k"/>
         <segue reference="7LA-fg-2Jb"/>
         <segue reference="zxE-Zn-Swl"/>

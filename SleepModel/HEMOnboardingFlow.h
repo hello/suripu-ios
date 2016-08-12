@@ -15,4 +15,7 @@
 
 - (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController;
 
+- (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
+     withPreviousController:(UIViewController*)previousController;
+
 @end

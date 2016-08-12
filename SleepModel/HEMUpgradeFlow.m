@@ -8,6 +8,8 @@
 
 #import "HEMUpgradeFlow.h"
 #import "HEMHaveSenseViewController.h"
+#import "HEMNoBLEViewController.h"
+#import "HEMSensePairViewController.h"
 #import "HEMUpgradePairSensePresenter.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
@@ -39,8 +41,20 @@
         } else {
             nextSegueId = [HEMOnboardingStoryboard pairSegueIdentifier];
         }
+    } else if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
+        nextSegueId = [HEMOnboardingStoryboard pairSegueIdentifier];
     }
     return nextSegueId;
+}
+
+- (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
+     withPreviousController:(UIViewController*)previousController {
+    BOOL enable = YES;
+    if ([previousController isKindOfClass:[HEMNoBLEViewController class]]
+        && [currentViewController isKindOfClass:[HEMSensePairViewController class]]) {
+        enable = NO;
+    }
+    return enable;
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HEMOnboardingController.h"
+#import "HEMOnboardingFlow.h"
 
 @class HEMNoBLEViewController;
 
@@ -20,5 +21,6 @@
 @interface HEMNoBLEViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMNoBLEDelegate> delegate;
+@property (nonatomic, weak) id<HEMOnboardingFlow> flow;
 
 @end

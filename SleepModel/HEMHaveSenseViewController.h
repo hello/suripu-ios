@@ -7,13 +7,11 @@
 //
 
 #import "HEMOnboardingController.h"
-#import "HEMOnboardingFlow.h"
 
 @class HEMNewSensePresenter;
 
 @interface HEMHaveSenseViewController : HEMOnboardingController
 
 @property (nonatomic, strong) HEMNewSensePresenter* presenter;
-@property (nonatomic, strong) id<HEMOnboardingFlow> flow;
 
 @end

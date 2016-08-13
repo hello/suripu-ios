@@ -85,7 +85,11 @@
 }
 
 - (void)didCancelPairingFromPresenter:(HEMPairSensePresenter *)presenter {
-    [[self delegate] didPairSenseUsing:nil from:self];
+    if ([self delegate]) {
+        [[self delegate] didPairSenseUsing:nil from:self];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)showHelpWithPage:(NSString *)page

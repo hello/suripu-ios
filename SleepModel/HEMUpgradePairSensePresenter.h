@@ -10,4 +10,6 @@
 
 @interface HEMUpgradePairSensePresenter : HEMPairSensePresenter
 
+@property (nonatomic, assign, getter=isCancellable) BOOL cancellable;
+
 @end

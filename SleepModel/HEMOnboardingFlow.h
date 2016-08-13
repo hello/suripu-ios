@@ -15,6 +15,8 @@
 
 - (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController;
 
+- (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController;
+
 - (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
      withPreviousController:(UIViewController*)previousController;
 

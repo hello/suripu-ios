@@ -80,27 +80,19 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 }
 
 - (void)next {
-    if (![self delegate]) {
-        NSString* nextSegue = nil;
-        if ([self flow]) {
-            nextSegue = [[self flow] nextSegueIdentifierAfterViewController:self];
+    if ([self flow]) {
+        UIViewController* nextVC = [[self flow] controllerToSwapInAfterViewController:self];
+        if (nextVC) {
+            [[self navigationController] setViewControllers:@[nextVC] animated:YES];
         } else {
-            nextSegue = [HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier];
+            NSString* nextSegue = [[self flow] nextSegueIdentifierAfterViewController:self];
+            [self performSegueWithIdentifier:nextSegue sender:nil];
         }
+    } else if (![self delegate]) {
+        NSString* nextSegue = [HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier];
         [self performSegueWithIdentifier:nextSegue sender:self];
     } else {
         [[self delegate] bleDetectedFrom:self];
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    id destVC = [segue destinationViewController];
-    if ([destVC isKindOfClass:[HEMSensePairViewController class]]) {
-        if ([self flow]) {
-            HEMSensePairViewController* senseVC = destVC;
-            [senseVC setPresenter:(id)[[self flow] presenterForNextViewController:senseVC
-                                                        fromCurrentViewController:self]];
-        }
     }
 }
 

@@ -41,10 +41,21 @@
         } else {
             nextSegueId = [HEMOnboardingStoryboard pairSegueIdentifier];
         }
-    } else if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
-        nextSegueId = [HEMOnboardingStoryboard pairSegueIdentifier];
-    }
+    } // NO BLE should call controllerToSwapInAfterViewController: instead
     return nextSegueId;
+}
+
+- (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
+    UIViewController* controller = nil;
+    if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
+        HEMSensePairViewController* pairVC = [HEMOnboardingStoryboard instantiateSensePairViewController];
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        HEMUpgradePairSensePresenter* presenter = [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service];
+        [presenter setCancellable:YES];
+        [pairVC setPresenter:presenter];
+        controller = pairVC;
+    }
+    return controller;
 }
 
 - (BOOL)enableBackButtonFor:(UIViewController*)currentViewController

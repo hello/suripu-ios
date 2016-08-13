@@ -7,6 +7,7 @@
 //
 
 #import "HEMUpgradePairSensePresenter.h"
+#import "UIBarButtonItem+HEMNav.h"
 
 @implementation HEMUpgradePairSensePresenter
 
@@ -22,11 +23,29 @@
     [descriptionLabel setText:NSLocalizedString(@"upgrade.pair-sense.desc", nil)];
 }
 
+- (void)bindWithNavigationItem:(UINavigationItem *)navItem {
+    [super bindWithNavigationItem:navItem];
+    
+    if ([self isCancellable]) {
+        NSString* title = NSLocalizedString(@"actions.cancel", nil);
+        UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:title
+                                                                     image:nil
+                                                                    target:self
+                                                                    action:@selector(cancel)];
+        [navItem setLeftBarButtonItem:cancelItem];
+    }
+
+}
+
 - (void)help {
     [super help];
     NSString* step = kHEMAnalyticsEventPropSensePairing;
     NSDictionary* properties = @{kHEMAnalyticsEventPropStep : step};
     [SENAnalytics track:kHEMAnalyticsEventHelp properties:properties];
+}
+
+- (void)cancel {
+    [[self actionDelegate] didCancelPairingFromPresenter:self];
 }
 
 @end

@@ -72,7 +72,6 @@
                                       sender:self];
         }
     } else {
-        
         NSString* segueId = nil;
         if (ssid) {
             DDLogVerbose(@"detected SSID %@, skipping wifi set up", ssid);

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^HEMBluetoothStateHandler)(BOOL on);
+
 @interface HEMBluetoothUtils : NSObject
 
 /**
@@ -40,5 +42,14 @@
  * @return YES if ble state is available to be queried.  No otherwise
  */
 + (BOOL)stateAvailable;
+
+/**
+ * @discussion
+ * Call this method to determine if bluetooth is on and ready for use.  This will
+ * wait for the state to be known, before checking whether it's on.
+ *
+ * @param completion: the handler to call when state is available
+ */
++ (void)whenBleStateAvailable:(HEMBluetoothStateHandler)completion;
 
 @end

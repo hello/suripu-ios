@@ -14,11 +14,7 @@
 
 - (void)shouldDismissFrom:(HEMNewSensePresenter*)presenter;
 - (void)shouldOpenPageTo:(NSString*)page from:(HEMNewSensePresenter*)presenter;
-- (void)shouldProceedToViewController:(UIViewController*)viewController
-                                 from:(HEMNewSensePresenter*)presenter;
-- (void)shouldProceedToNextSegueWithIdentifier:(NSString*)identifier
-                                 nextPresenter:(HEMPresenter*)presenter
-                                          from:(HEMNewSensePresenter*)presenter;
+- (void)shouldProceedFrom:(HEMNewSensePresenter*)presenter;
 
 @end
 

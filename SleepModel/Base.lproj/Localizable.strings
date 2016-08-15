@@ -18,6 +18,9 @@
 // onboarding
 "onboarding.new-sense.title" = "Have Sense ready?";
 "onboarding.new-sense.desc" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
+"onboarding.pair-sense.title" = "Pair your Sense";
+"onboarding.pair-sense.not-glowing" = "Sense isn't glowing purple?";
+"onboarding.pair-sense.desc" = "Now we'll pair your phone with Sense. Make sure Sense is plugged in, nearby, and glowing purple. Tap Continue when ready.";
 "onboarding.account.sign-in.title" = "Welcome back";
 "sign-up.activity.message" = "Creating your account";
 "sign-up.failed.title" = "Sign up failed";
@@ -613,6 +616,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.continue" = "Continue";
 "actions.update-now" = "Update now";
 "actions.update" = "Update";
 "actions.retry" = "Retry";
@@ -880,3 +884,5 @@
 "upgrade.new-sense.desc" = "The new Sense introduces improved sensors, and Voice — which lets you control Sense just by speaking to it. If you already purchased a new Sense with Voice, make sure it’s plugged in and nearby.";
 "upgrade.new-sense.learn-more" = "Learn more about Sense with Voice";
 "upgrade.new-sense.setup" = "Set up";
+"upgrade.pair-sense.title" = "Pairing your new Sense";
+"upgrade.pair-sense.desc" = "Confirm that your new Sense is plugged in nearby and glowing purple.";

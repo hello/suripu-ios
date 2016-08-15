@@ -35,7 +35,7 @@
            andTrackWithStepName:kHEMAnalyticsEventPropAudio];
     [[self skipButton] setTitleColor:[UIColor tintColor]
                             forState:UIControlStateNormal];
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[[self skipButton] titleLabel] setFont:[UIFont button]];
 }
 
 - (void)next {

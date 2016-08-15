@@ -10,15 +10,16 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMHaveSenseViewController.h"
+#import "HEMNoBLEViewController.h"
 #import "HEMOnboardingNewSensePresenter.h"
 #import "HEMSensePairViewController.h"
 #import "HEMSupportUtil.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMHaveSenseViewController() <HEMNewSenseActionDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *orderSenseButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
-@property (strong, nonatomic) HEMPresenter* nextPresenter;
 
 @end
 
@@ -54,17 +55,24 @@
     [HEMSupportUtil openURL:page from:self];
 }
 
-- (void)shouldProceedToViewController:(UIViewController*)viewController
-                                 from:(HEMNewSensePresenter*)presenter {
-    // TODO
+- (void)shouldProceedFrom:(HEMNewSensePresenter *)presenter {
+    NSString* nextSegueId = nil;
+    
+    if ([self flow]) {
+        nextSegueId = [[self flow] nextSegueIdentifierAfterViewController:self];
+    }
+    
+    if (!nextSegueId) {
+        nextSegueId = [HEMOnboardingStoryboard registerSegueIdentifier];
+    }
+    
+    [self performSegueWithIdentifier:nextSegueId sender:self];
 }
 
 - (void)shouldProceedToNextSegueWithIdentifier:(NSString*)identifier
                                  nextPresenter:(HEMPresenter*)nextPresenter
                                           from:(HEMNewSensePresenter*)presenter {
-    [self setNextPresenter:nextPresenter];
-    [self performSegueWithIdentifier:identifier
-                              sender:self];
+    [self performSegueWithIdentifier:identifier sender:self];
 }
 
 #pragma mark - Segue
@@ -72,8 +80,16 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     id nextController = [segue destinationViewController];
     if ([nextController isKindOfClass:[HEMSensePairViewController class]]) {
-        // TODO: do something
-        [self setNextPresenter:nil];
+        HEMSensePairViewController* pairVC = nextController;
+        if ([self flow]) {
+            HEMPresenter* nextPresenter =
+                [[self flow] presenterForNextViewController:pairVC
+                                  fromCurrentViewController:self];
+            [pairVC setPresenter:(id)nextPresenter];
+        }
+    } else if ([nextController isKindOfClass:[HEMNoBLEViewController class]]) {
+        HEMNoBLEViewController* bleVC = (id)nextController;
+        [bleVC setFlow:[self flow]];
     }
 }
 

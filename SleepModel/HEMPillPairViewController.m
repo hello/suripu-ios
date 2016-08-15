@@ -72,7 +72,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 - (void)configureButtons {
     [[self skipButton] setTitleColor:[UIColor tintColor]
                             forState:UIControlStateNormal];
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[[self skipButton] titleLabel] setFont:[UIFont button]];
     
     [self showRetryButtonAsRetrying:YES];
     

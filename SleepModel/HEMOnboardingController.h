@@ -8,6 +8,7 @@
 
 #import "HEMBaseController.h"
 #import "HEMOnboardingService.h"
+#import "HEMOnboardingFlow.h"
 
 @class SENSenseManager;
 
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 
 @property (assign, nonatomic, readonly, getter=isVisible) BOOL visible;
+@property (strong, nonatomic) id<HEMOnboardingFlow> flow;
 
 /**
  * @param checkpoint: the onboarding checkpoint

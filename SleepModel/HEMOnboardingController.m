@@ -345,7 +345,7 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
            secondaryButton:(UIButton*)secondaryButton
               withDelegate:(BOOL)hasDelegate {
     
-    [[secondaryButton titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[secondaryButton titleLabel] setFont:[UIFont button]];
     [secondaryButton setTitleColor:[UIColor tintColor]
                           forState:UIControlStateNormal];
 

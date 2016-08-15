@@ -8,6 +8,7 @@
 #import "UIBarButtonItem+HEMNav.h"
 
 #import "HEMUpgradeSensePresenter.h"
+#import "HEMBluetoothUtils.h"
 
 @implementation HEMUpgradeSensePresenter
 
@@ -32,7 +33,7 @@
 
 - (void)bindWithNextButton:(UIButton*)nextButton {
     [super bindWithNextButton:nextButton];
-    [nextButton setTitle:NSLocalizedString(@"upgrade.new-sense.setup", nil)
+    [nextButton setTitle:[NSLocalizedString(@"upgrade.new-sense.setup", nil) uppercaseString]
                 forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(proceed) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -51,7 +52,7 @@
 }
 
 - (void)proceed {
-    // TODO - next screen!
+    [[self actionDelegate] shouldProceedFrom:self];
 }
 
 - (void)order {

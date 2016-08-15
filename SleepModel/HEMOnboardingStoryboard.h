@@ -32,8 +32,10 @@
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationToPushSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
++(NSString *)noBLESegueIdentifier;
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)notificationToAudioSegueIdentifier;
++(NSString *)pairSegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)registerSegueIdentifier;
 +(NSString *)roomCheckToSmartAlarmSegueIdentifier;

@@ -27,10 +27,12 @@ static NSString *const _HEMlocationToPush = @"locationToPush";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMnewSense = @"newSense";
+static NSString *const _HEMnoBLE = @"noBLE";
 static NSString *const _HEMnoBle = @"noBle";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMnotificationToAudio = @"notificationToAudio";
 static NSString *const _HEMonboardingComplete = @"onboardingComplete";
+static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpassword = @"password";
 static NSString *const _HEMphoto = @"photo";
 static NSString *const _HEMpillDescription = @"pillDescription";
@@ -90,8 +92,10 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)heightSegueIdentifier { return _HEMheight; }
 +(NSString *)locationToPushSegueIdentifier { return _HEMlocationToPush; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
++(NSString *)noBLESegueIdentifier { return _HEMnoBLE; }
 +(NSString *)noBleToBirthdaySegueIdentifier { return _HEMnoBleToBirthday; }
 +(NSString *)notificationToAudioSegueIdentifier { return _HEMnotificationToAudio; }
++(NSString *)pairSegueIdentifier { return _HEMpair; }
 +(NSString *)pillSetupToColorsSegueIdentifier { return _HEMpillSetupToColors; }
 +(NSString *)registerSegueIdentifier { return _HEMregister; }
 +(NSString *)roomCheckToSmartAlarmSegueIdentifier { return _HEMroomCheckToSmartAlarm; }

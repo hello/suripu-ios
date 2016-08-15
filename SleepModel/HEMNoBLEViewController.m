@@ -11,6 +11,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMNoBLEViewController.h"
+#import "HEMSensePairViewController.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
@@ -79,7 +80,15 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 }
 
 - (void)next {
-    if (![self delegate]) {
+    if ([self flow]) {
+        UIViewController* nextVC = [[self flow] controllerToSwapInAfterViewController:self];
+        if (nextVC) {
+            [[self navigationController] setViewControllers:@[nextVC] animated:YES];
+        } else {
+            NSString* nextSegue = [[self flow] nextSegueIdentifierAfterViewController:self];
+            [self performSegueWithIdentifier:nextSegue sender:nil];
+        }
+    } else if (![self delegate]) {
         NSString* nextSegue = [HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier];
         [self performSegueWithIdentifier:nextSegue sender:self];
     } else {

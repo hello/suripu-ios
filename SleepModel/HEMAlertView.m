@@ -228,7 +228,7 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
                 break;
             case HEMAlertViewButtonStyleBlueText:
                 [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont secondaryButtonFont];
+                button.titleLabel.font = [UIFont button];
                 break;
             default:
                 break;

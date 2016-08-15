@@ -480,11 +480,13 @@
                         <outlet property="titleHeightConstraint" destination="mRd-go-Uvt" id="PGb-IY-V4G"/>
                         <outlet property="titleLabel" destination="k0c-FQ-y2a" id="yrI-pf-51T"/>
                         <segue destination="O8f-43-SpP" kind="show" identifier="register" id="hpM-xq-Qfk"/>
+                        <segue destination="cgk-PX-LxG" kind="show" identifier="pair" id="Sda-jg-aqk"/>
+                        <segue destination="AER-Sm-Ec9" kind="show" identifier="noBLE" id="6ED-su-wCY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vOs-bg-4TL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="660" y="922"/>
+            <point key="canvasLocation" x="660" y="1336"/>
         </scene>
         <!--Create Account View Controller-->
         <scene sceneID="y8L-RP-Stu">
@@ -1911,13 +1913,13 @@
                                                 <string key="text">"Hey Sense...
 what's the temperature?"</string>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Sorry, I didn't quite get that, please try again&quot;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64p-At-YID">
                                                 <rect key="frame" x="0.0" y="70" width="560" height="33"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -2008,7 +2010,7 @@ what's the temperature?"</string>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try it now:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WU3-d8-3iM">
                                 <rect key="frame" x="20" y="33" width="560" height="21"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -3108,8 +3110,8 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="34"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="43"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Now we'll pair your phone with Sense. Make sure Sense is plugged in, nearby, and glowing purple. Tap Continue when ready.">
                                         <attributes>
@@ -3130,6 +3132,17 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <constraint firstAttribute="height" constant="184" id="KfE-AJ-gGk"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="R81-5h-QfC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
                                 <constraints>
@@ -3140,28 +3153,11 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="showPairingModeHelp:" destination="cgk-PX-LxG" eventType="touchUpInside" id="ehn-re-hXg"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="530" width="560" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="R81-5h-QfC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="CONTINUE">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="enablePairing:" destination="cgk-PX-LxG" eventType="touchUpInside" id="Kvt-hJ-N0l"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="0fo-8k-s7Q"/>
+                            <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leading" constant="20" id="0fo-8k-s7Q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ahI-Ri-OCe" secondAttribute="trailing" constant="-20" id="Bva-v6-Aw6"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="4" id="D61-4A-EJJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" id="KNC-U4-JbD"/>
@@ -3175,7 +3171,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="top" constant="-10" id="cUY-fa-DEC"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="qgY-WF-PLN" secondAttribute="bottom" constant="118" id="gyO-py-tGj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" id="jFT-SI-kIS"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="4" id="kx2-M4-RDe"/>
+                            <constraint firstAttribute="trailing" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="20" id="kx2-M4-RDe"/>
                             <constraint firstItem="ahI-Ri-OCe" firstAttribute="top" secondItem="qgY-WF-PLN" secondAttribute="top" constant="-11" id="l8Z-G6-DFC"/>
                             <constraint firstItem="bX7-3Z-6yh" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" id="q6q-ws-CKy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bX7-3Z-6yh" secondAttribute="trailing" id="w0J-7J-bbG"/>
@@ -3186,7 +3182,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                     <connections>
                         <outlet property="descriptionLabel" destination="mFI-cr-rhB" id="06H-pA-6mf"/>
                         <outlet property="descriptionTopConstraint" destination="cUY-fa-DEC" id="6wz-Dm-eoT"/>
-                        <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Dcn-nY-xAS"/>
+                        <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Iu5-EF-hLO"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
                         <outlet property="senseIconHeightConstraint" destination="KfE-AJ-gGk" id="xjh-y3-ptH"/>
                         <outlet property="titleHeightConstraint" destination="mde-7P-QTN" id="yBx-7W-leE"/>
@@ -3351,11 +3347,12 @@ Flip the switch to On</string>
                         <outlet property="titleHeightConstraint" destination="Xxa-Zj-87F" id="rse-ve-5dK"/>
                         <outlet property="titleLabel" destination="WSp-oq-I62" id="4Q5-mb-N6A"/>
                         <segue destination="R0p-kB-1qZ" kind="show" identifier="noBleToBirthday" id="d9a-nc-483"/>
+                        <segue destination="cgk-PX-LxG" kind="show" identifier="pair" id="pzU-cR-vI1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-3B-dpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2357" y="526"/>
+            <point key="canvasLocation" x="2391" y="510"/>
         </scene>
         <!--Sense Setup View Controller-->
         <scene sceneID="1ot-8w-aZb">
@@ -3472,12 +3469,14 @@ Flip the switch to On</string>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zxE-Zn-Swl"/>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="JsS-bV-f7k"/>
-        <segue reference="3DQ-Vg-FaT"/>
         <segue reference="d9a-nc-483"/>
+        <segue reference="6ED-su-wCY"/>
+        <segue reference="pzU-cR-vI1"/>
+        <segue reference="JsS-bV-f7k"/>
+        <segue reference="7LA-fg-2Jb"/>
+        <segue reference="zxE-Zn-Swl"/>
         <segue reference="wdw-bO-x3J"/>
+        <segue reference="3DQ-Vg-FaT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

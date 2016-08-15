@@ -402,6 +402,7 @@
 		BFF14C2B1C63E47500AD3773 /* HEMMultiTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF14C2A1C63E47500AD3773 /* HEMMultiTitleView.m */; };
 		BFF14C2E1C64178F00AD3773 /* HEMBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF14C2D1C64178F00AD3773 /* HEMBarChartView.m */; };
 		BFF14C311C642B6A00AD3773 /* HEMTrendsAverageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF14C301C642B6A00AD3773 /* HEMTrendsAverageView.m */; };
+		BFF364731D62702E008D4DF8 /* Upgrade.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFF364721D62702E008D4DF8 /* Upgrade.xcassets */; };
 		BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */; };
 		BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4461A5CD60300B11643 /* HEMDeviceCollectionViewCell.m */; };
 		BFF3B44A1A5DB5DE00B11643 /* HEMNoDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4491A5DB5DD00B11643 /* HEMNoDeviceCollectionViewCell.m */; };
@@ -1183,6 +1184,7 @@
 		BFF14C2D1C64178F00AD3773 /* HEMBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBarChartView.m; sourceTree = "<group>"; };
 		BFF14C2F1C642B6A00AD3773 /* HEMTrendsAverageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsAverageView.h; sourceTree = "<group>"; };
 		BFF14C301C642B6A00AD3773 /* HEMTrendsAverageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsAverageView.m; sourceTree = "<group>"; };
+		BFF364721D62702E008D4DF8 /* Upgrade.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Upgrade.xcassets; sourceTree = "<group>"; };
 		BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTableViewCell.h; sourceTree = "<group>"; };
 		BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsTableViewCell.m; sourceTree = "<group>"; };
 		BFF3B4451A5CD60300B11643 /* HEMDeviceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceCollectionViewCell.h; sourceTree = "<group>"; };
@@ -3108,6 +3110,7 @@
 		BFD9A9691D5A7F3B003EC82A /* Upgrade */ = {
 			isa = PBXGroup;
 			children = (
+				BFF364721D62702E008D4DF8 /* Upgrade.xcassets */,
 				BFD603D11D5D3E5A00F4E2D4 /* Flow */,
 				BFD9A9741D5A99E3003EC82A /* Presenters */,
 			);
@@ -3381,6 +3384,7 @@
 				BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */,
 				8AD3312A1BB08D5300DFF95A /* Sensors.xcassets in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
+				BFF364731D62702E008D4DF8 /* Upgrade.xcassets in Resources */,
 				BFCB894F1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf in Resources */,
 				BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */,
 				8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */,

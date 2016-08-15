@@ -11,6 +11,7 @@
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
+            <string>HelveticaNeue-Light</string>
         </mutableArray>
         <mutableArray key="HelveticaNeue-Medium.otf">
             <string>HelveticaNeue-Medium</string>
@@ -1497,6 +1498,94 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1yE-pK-lVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="12439" y="895"/>
+        </scene>
+        <!--Onboarding Controller-->
+        <scene sceneID="khy-cN-h7t">
+            <objects>
+                <viewController storyboardIdentifier="senseUpgraded" id="m40-U0-40M" customClass="HEMOnboardingController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xnm-iU-nw5"/>
+                        <viewControllerLayoutGuide type="bottom" id="imC-e8-BgN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FXm-MD-Ve7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense with Voice is ready" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVR-wV-eCB">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="LzU-Ad-7EV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Your new Sense with Voice is set up and is currently paired with original Sleep Pill. Next, you'll pair your Sleep Pill." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-eT-uQJ" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="senseUpgraded" translatesAutoresizingMaskIntoConstraints="NO" id="IKV-ei-EsM">
+                                <rect key="frame" x="0.0" y="111" width="600" height="419"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="g8c-GK-mMf"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="g8c-GK-mMf"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fP-1F-Zqp" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Wpc-a3-rZr"/>
+                                    <constraint firstAttribute="width" constant="220" id="bXv-hH-cHA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bXv-hH-cHA"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="58j-vj-AB8" kind="show" id="wOz-xn-rlO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="4fP-1F-Zqp" secondAttribute="trailing" constant="20" id="AUd-aY-fgT"/>
+                            <constraint firstItem="IKV-ei-EsM" firstAttribute="top" secondItem="bhx-eT-uQJ" secondAttribute="bottom" id="Eih-JJ-DJG"/>
+                            <constraint firstItem="bhx-eT-uQJ" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" constant="20" id="Hhx-dv-9vP"/>
+                            <constraint firstItem="SVR-wV-eCB" firstAttribute="bottom" secondItem="bhx-eT-uQJ" secondAttribute="top" constant="-10" id="Hsw-kT-A0b"/>
+                            <constraint firstItem="SVR-wV-eCB" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" constant="20" id="IMA-1D-sjW"/>
+                            <constraint firstAttribute="trailing" secondItem="SVR-wV-eCB" secondAttribute="trailing" constant="20" id="N0k-Js-N3i"/>
+                            <constraint firstAttribute="trailing" secondItem="IKV-ei-EsM" secondAttribute="trailing" id="TFy-36-d1G"/>
+                            <constraint firstItem="IKV-ei-EsM" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" id="b3K-CQ-9ox"/>
+                            <constraint firstItem="SVR-wV-eCB" firstAttribute="top" secondItem="Xnm-iU-nw5" secondAttribute="bottom" constant="4" id="cyH-Pe-PQO"/>
+                            <constraint firstItem="imC-e8-BgN" firstAttribute="top" secondItem="4fP-1F-Zqp" secondAttribute="bottom" constant="20" id="fbZ-at-iX3"/>
+                            <constraint firstAttribute="trailing" secondItem="bhx-eT-uQJ" secondAttribute="trailing" constant="20" id="oQz-R6-6VH"/>
+                            <constraint firstItem="IKV-ei-EsM" firstAttribute="bottom" secondItem="4fP-1F-Zqp" secondAttribute="top" id="qF0-4A-w1P"/>
+                            <constraint firstItem="4fP-1F-Zqp" firstAttribute="top" secondItem="IKV-ei-EsM" secondAttribute="bottom" id="tge-Nx-cgh"/>
+                            <constraint firstItem="4fP-1F-Zqp" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" constant="20" id="uSr-B5-ICX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="bhx-eT-uQJ" id="fyE-kP-MSD"/>
+                        <outlet property="descriptionTopConstraint" destination="Hsw-kT-A0b" id="yMR-AP-f2X"/>
+                        <outlet property="titleHeightConstraint" destination="LzU-Ad-7EV" id="HrW-mP-7vn"/>
+                        <outlet property="titleLabel" destination="SVR-wV-eCB" id="nAG-0a-Xhx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ARw-7e-dNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="11988" y="1653"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -3463,19 +3552,20 @@ Flip the switch to On</string>
         <image name="senseRed" width="186" height="183"/>
         <image name="senseTable" width="274" height="154"/>
         <image name="senseUpdate" width="190" height="185"/>
+        <image name="senseUpgraded" width="375" height="250"/>
         <image name="senseVoiceGray" width="86" height="81"/>
         <image name="senseYellow" width="186" height="183"/>
         <image name="settingsAppIcon" width="32" height="32"/>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d9a-nc-483"/>
+        <segue reference="zxE-Zn-Swl"/>
+        <segue reference="7LA-fg-2Jb"/>
+        <segue reference="wOz-xn-rlO"/>
+        <segue reference="wdw-bO-x3J"/>
         <segue reference="6ED-su-wCY"/>
         <segue reference="pzU-cR-vI1"/>
-        <segue reference="JsS-bV-f7k"/>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="zxE-Zn-Swl"/>
-        <segue reference="wdw-bO-x3J"/>
+        <segue reference="d9a-nc-483"/>
         <segue reference="3DQ-Vg-FaT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

@@ -388,4 +388,24 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     [service notifyOfOnboardingCompletion];
 }
 
+- (BOOL)continueWithFlow {
+    BOOL canHandle = NO;
+    if ([self flow]) {
+        // first check if we can use a segue
+        NSString* nextSegueId = [[self flow] nextSegueIdentifierAfterViewController:self];
+        if (nextSegueId) {
+            canHandle = YES;
+            [self performSegueWithIdentifier:nextSegueId sender:nil];
+        } else {
+            // second, see if we should replace nav stack with current controller
+            UIViewController* nextController = [[self flow] controllerToSwapInAfterViewController:self];
+            if (nextController) {
+                canHandle = YES;
+                [[self navigationController] setViewControllers:@[nextController] animated:YES];
+            }
+        }
+    }
+    return canHandle;
+}
+
 @end

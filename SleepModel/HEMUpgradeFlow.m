@@ -27,12 +27,6 @@
     return self;
 }
 
-- (HEMPresenter*)presenterForNextViewController:(UIViewController*)controller
-                      fromCurrentViewController:(UIViewController*)currentViewController {
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    return [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service];
-}
-
 - (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController {
     NSString* nextSegueId = nil;
     if ([currentViewController isKindOfClass:[HEMHaveSenseViewController class]]) {
@@ -46,14 +40,19 @@
 }
 
 - (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
-    UIViewController* controller = nil;
+    HEMOnboardingController* controller = nil;
     if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
         HEMSensePairViewController* pairVC = [HEMOnboardingStoryboard instantiateSensePairViewController];
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        HEMUpgradePairSensePresenter* presenter = [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service];
-        [presenter setCancellable:YES];
-        [pairVC setPresenter:presenter];
+        [self prepareNextController:pairVC fromController:currentViewController];
         controller = pairVC;
+    } else if ([currentViewController isKindOfClass:[HEMSensePairViewController class]]) {
+        HEMSensePairViewController* pairVC = (id) currentViewController;
+        if ([pairVC isSenseConnectedToWiFi]) {
+            controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
+        }
+    }
+    if (controller) {
+        [controller setFlow:self];
     }
     return controller;
 }
@@ -66,6 +65,20 @@
         enable = NO;
     }
     return enable;
+}
+
+- (void)prepareNextController:(HEMOnboardingController*)controller
+               fromController:(UIViewController*)currentController {
+    if ([controller isKindOfClass:[HEMSensePairViewController class]]) {
+        HEMSensePairViewController* pairVC = (id) controller;
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        HEMUpgradePairSensePresenter* presenter = [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service];
+        if ([currentController isKindOfClass:[HEMNoBLEViewController class]]) {
+            [presenter setCancellable:YES];
+        }
+        [pairVC setPresenter:presenter];
+    }
+    [controller setFlow:self];
 }
 
 @end

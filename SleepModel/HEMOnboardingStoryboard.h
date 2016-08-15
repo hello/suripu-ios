@@ -66,6 +66,7 @@
 +(id)instantiateSenseDFUViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
++(id)instantiateSenseUpgradedViewController;
 +(id)instantiateVoiceTutorialViewController;
 +(id)instantiateWeightPickerViewController;
 +(id)instantiateWelcomeViewController;

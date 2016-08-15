@@ -56,17 +56,10 @@
 }
 
 - (void)shouldProceedFrom:(HEMNewSensePresenter *)presenter {
-    NSString* nextSegueId = nil;
-    
-    if ([self flow]) {
-        nextSegueId = [[self flow] nextSegueIdentifierAfterViewController:self];
+    if (![self continueWithFlow]) {
+        NSString* nextSegueId = [HEMOnboardingStoryboard registerSegueIdentifier];
+        [self performSegueWithIdentifier:nextSegueId sender:self];
     }
-    
-    if (!nextSegueId) {
-        nextSegueId = [HEMOnboardingStoryboard registerSegueIdentifier];
-    }
-    
-    [self performSegueWithIdentifier:nextSegueId sender:self];
 }
 
 - (void)shouldProceedToNextSegueWithIdentifier:(NSString*)identifier
@@ -79,17 +72,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     id nextController = [segue destinationViewController];
-    if ([nextController isKindOfClass:[HEMSensePairViewController class]]) {
-        HEMSensePairViewController* pairVC = nextController;
-        if ([self flow]) {
-            HEMPresenter* nextPresenter =
-                [[self flow] presenterForNextViewController:pairVC
-                                  fromCurrentViewController:self];
-            [pairVC setPresenter:(id)nextPresenter];
-        }
-    } else if ([nextController isKindOfClass:[HEMNoBLEViewController class]]) {
-        HEMNoBLEViewController* bleVC = (id)nextController;
-        [bleVC setFlow:[self flow]];
+    if ([self flow] && [nextController isKindOfClass:[HEMOnboardingController class]]) {
+        [[self flow] prepareNextController:(id)nextController fromController:self];
     }
 }
 

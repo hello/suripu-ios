@@ -107,4 +107,15 @@
 - (void)completeOnboarding;
 - (void)completeOnboardingWithoutMessage;
 
+/**
+ * @discussion
+ * Subclasses should link continue buttons to this method and override this to alter
+ * the behvaior as needed.  Default behavior is to check the flow parameter to see
+ * if it was specified and if so, uses that to determine if it continue with the
+ * flow or not.
+ *
+ * @return YES if it knows how to continue to the next screen in the flow
+ */
+- (BOOL)continueWithFlow;
+
 @end

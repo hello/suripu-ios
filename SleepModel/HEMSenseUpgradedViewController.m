@@ -12,7 +12,7 @@
 @implementation HEMSenseUpgradedViewController
 
 - (IBAction)proceed:(id)sender {
-    if (![self continueWithFlow]) {
+    if (![self continueWithFlowBySkipping:NO]) {
         NSString* segueId = [HEMOnboardingStoryboard pairPillSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];
     }

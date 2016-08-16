@@ -76,6 +76,14 @@
     return nextSegueId;
 }
 
+- (NSString*)nextSegueIdentifierAfter:(UIViewController*)controller skip:(BOOL)skip {
+    if (skip) {
+        return [self nextSegueIdentifierAfterSkipping:controller];
+    } else {
+        return [self nextSegueIdentifierAfterViewController:controller];
+    }
+}
+
 #pragma mark - Next by swapping controllers
 
 - (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
@@ -102,6 +110,16 @@
 - (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController *)controller {
     return nil;
 }
+
+- (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip {
+    if (skip) {
+        return [self controllerToSwapInAfterViewController:controller];
+    } else {
+        return [self controllerToSwapInAfterViewController:controller];
+    }
+}
+
+#pragma mark - Preparing next screen
 
 - (void)prepareNextController:(HEMOnboardingController*)controller
                fromController:(UIViewController*)currentController {

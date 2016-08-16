@@ -169,6 +169,11 @@
     HEMStyledNavigationViewController* nav
         = [[HEMStyledNavigationViewController alloc] initWithRootViewController:senseVC];
     [self showController:nav animated:YES completion:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didEndOnboarding)
+                                                 name:HEMOnboardingNotificationComplete
+                                               object:nil];
 }
 
 #pragma mark Voice Tutorial
@@ -198,6 +203,8 @@
                                                     name:HEMOnboardingNotificationComplete
                                                   object:nil];
     [[self presentingController] dismissViewControllerAnimated:YES completion:nil];
+    
+    [self setRoomCheckViewController:nil];
 }
 
 #pragma mark Debug Info
@@ -239,17 +246,9 @@
 
     [self setRoomCheckViewController:nav];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didEndRoomCheck:)
+                                             selector:@selector(didEndOnboarding)
                                                  name:HEMOnboardingNotificationComplete
                                                object:nil];
-}
-
-- (void)didEndRoomCheck:(NSNotification*)notification {
-    if ([self roomCheckViewController] != nil) {
-        [[self presentingController] dismissViewControllerAnimated:YES completion:nil];
-        [self setRoomCheckViewController:nil];
-    }
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
 }
 
 #pragma mark - Alarms

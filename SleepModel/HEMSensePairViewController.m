@@ -66,7 +66,7 @@
         [service notifyOfSensePairingChange];
     }
     
-    if (![self continueWithFlow]) {
+    if (![self continueWithFlowBySkipping:NO]) {
         if ([self isSenseConnectedToWiFi]) {
             DDLogVerbose(@"sense is already connected to WiFi on %@, skipping WiFi flow", ssid);
             if ([self delegate]) {

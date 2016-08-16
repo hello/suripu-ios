@@ -56,7 +56,7 @@
 }
 
 - (void)shouldProceedFrom:(HEMNewSensePresenter *)presenter {
-    if (![self continueWithFlow]) {
+    if (![self continueWithFlowBySkipping:NO]) {
         NSString* nextSegueId = [HEMOnboardingStoryboard registerSegueIdentifier];
         [self performSegueWithIdentifier:nextSegueId sender:self];
     }

@@ -111,20 +111,10 @@
  * if it was specified and if so, uses that to determine if it continue with the
  * flow or not.
  *
+ * @param skip: YES if user indicated to skip the screen.  NO otherwise
  * @return YES if it knows the next screen in the flow
  */
-- (BOOL)continueWithFlow;
-
-/**
- * @discussion
- * Subclasses should link skip / later buttons to this method and override this to alter
- * the behvaior as needed.  Default behavior is to check the flow parameter to see
- * if it was specified and if so, uses that to determine the next step after skipping
- * the current view controller
- *
- * @return YES if it knows the next screen in the flow
- */
-- (BOOL)skipFlow;
+- (BOOL)continueWithFlowBySkipping:(BOOL)skip;
 
 - (void)completeOnboarding;
 - (void)completeOnboardingWithoutMessage;

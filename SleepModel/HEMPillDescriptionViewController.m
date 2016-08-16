@@ -48,9 +48,7 @@
 #pragma mark - HEMPillDescriptionDelegate
 
 - (void)skip:(BOOL)skip fromPresenter:(HEMPillDescriptionPresenter *)presenter {
-    if (skip) {
-        [self skipFlow]; // we don't know how to handle it, without the flow
-    } else if (![self continueWithFlow]) {
+    if (![self continueWithFlowBySkipping:skip]) {
         NSString* segueId = [HEMOnboardingStoryboard pairSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];
     }

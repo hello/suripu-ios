@@ -16,12 +16,8 @@
 
 - (NSString*)analyticsEventPrefixForViewController:(UIViewController*)viewController;
 
-- (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController;
-- (NSString*)nextSegueIdentifierAfterSkipping:(UIViewController*)controller;
-
-- (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController;
-- (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController*)controller;
-
+- (NSString*)nextSegueIdentifierAfter:(UIViewController*)controller skip:(BOOL)skip;
+- (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (void)prepareNextController:(HEMOnboardingController*)controller
                fromController:(UIViewController*)controller;
 

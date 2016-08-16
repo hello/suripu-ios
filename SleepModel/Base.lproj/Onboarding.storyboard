@@ -1458,10 +1458,6 @@
                                     <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="later:" destination="58j-vj-AB8" eventType="touchUpInside" id="PdH-7U-S76"/>
-                                    <segue destination="0on-Mh-6AZ" kind="show" identifier="updateSense" id="3eP-Nz-n1w"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfJ-2L-zpu" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -1480,9 +1476,6 @@
                                         <exclude reference="aZa-6l-5kt"/>
                                     </mask>
                                 </variation>
-                                <connections>
-                                    <action selector="proceed:" destination="58j-vj-AB8" eventType="touchUpInside" id="Vrw-Xu-ZGR"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1515,6 +1508,7 @@
                         <outlet property="titleHeightConstraint" destination="jO7-hZ-McB" id="xHJ-se-mGG"/>
                         <outlet property="titleLabel" destination="1o0-dY-ESb" id="yqv-Tm-VxH"/>
                         <segue destination="Aoy-k8-hYr" kind="show" identifier="pairPill" id="S1y-47-v72"/>
+                        <segue destination="0on-Mh-6AZ" kind="show" identifier="updateSense" id="2bN-N8-HGp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1yE-pK-lVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3583,7 +3577,7 @@ Flip the switch to On</string>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3eP-Nz-n1w"/>
+        <segue reference="2bN-N8-HGp"/>
         <segue reference="JsS-bV-f7k"/>
         <segue reference="pzU-cR-vI1"/>
         <segue reference="6ED-su-wCY"/>

@@ -20,11 +20,18 @@
 - (void)bindWithContinueButton:(UIButton*)continueButton {
     [continueButton setTitle:NSLocalizedString(@"actions.continue", nil)
                     forState:UIControlStateNormal];
+    [continueButton addTarget:self
+                       action:@selector(proceed)
+             forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)bindWithLaterButton:(UIButton*)laterButton {
     [laterButton setHidden:YES];
     [laterButton setUserInteractionEnabled:NO];
+}
+
+- (void)proceed {
+    [[self delegate] skip:NO fromPresenter:self];
 }
 
 @end

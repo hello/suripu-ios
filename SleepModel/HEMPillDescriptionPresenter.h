@@ -8,7 +8,17 @@
 
 #import "HEMPresenter.h"
 
+@class HEMPillDescriptionPresenter;
+
+@protocol HEMPillDescriptionDelegate <NSObject>
+
+- (void)skip:(BOOL)skip fromPresenter:(HEMPillDescriptionPresenter*)presenter;
+
+@end
+
 @interface HEMPillDescriptionPresenter : HEMPresenter
+
+@property (nonatomic, weak) id<HEMPillDescriptionDelegate> delegate;
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
           descriptionLabel:(UILabel*)descriptionLabel;

@@ -891,6 +891,8 @@
 "upgrade.pair-sense.title" = "Pairing your new Sense";
 "upgrade.pair-sense.desc" = "Confirm that your new Sense is plugged in nearby and glowing purple.";
 "upgrade.actions.pair-pill" = "Pair new Sleep Pill";
+"upgrade.actions.skip-new" = "Don't pair new Sleep Pill";
 "upgrade.pill.title" = "Pair your new Sleep Pill";
 "upgrade.pill.description" = "Your new Sleep Pill has been redesigned with an improved sensor and better battery life.";
-
+"upgrade.pill.skip-new-alert.title" = "About the new Sleep Pill";
+"upgrade.pill.skip-new-alert.message" = "Using the new Sleep Pill will improve the accuracy of your Sleep Timeline, and provide better battery life over the original Sleep Pill.";

@@ -864,8 +864,10 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 }
 
 - (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    [preferences setPersistentPreference:@(checkpoint) forKey:HEMOnboardingSettingCheckpoint];
+    if (![self hasFinishedOnboarding]) {
+        SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+        [preferences setPersistentPreference:@(checkpoint) forKey:HEMOnboardingSettingCheckpoint];
+    }
 }
 
 - (HEMOnboardingCheckpoint)onboardingCheckpoint {

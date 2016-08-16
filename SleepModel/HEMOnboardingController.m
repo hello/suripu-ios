@@ -223,9 +223,16 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (NSString*)onboardingAnalyticsEventNameFor:(NSString*)event {
     NSString* reusedEvent = event;
-    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]
-        && ![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
-        reusedEvent = [NSString stringWithFormat:@"%@ %@", HEMAnalyticsEventOnboardingPrefix, event];
+    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
+        NSString* expectedPrefix = HEMAnalyticsEventOnboardingPrefix;
+        if ([self flow]) {
+            expectedPrefix = [[self flow] analyticsEventPrefixForViewController:self];
+        }
+        
+        if (![event hasPrefix:expectedPrefix]) {
+            reusedEvent = [NSString stringWithFormat:@"%@ %@",
+                           expectedPrefix, event];
+        }
     }
     return reusedEvent;
 }
@@ -358,6 +365,8 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     
 }
 
+#pragma mark - What's Next
+
 - (void)completeOnboarding {
     [SENAnalytics track:HEMAnalyticsEventOnbEnd];
     
@@ -406,6 +415,33 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
         }
     }
     return canHandle;
+}
+
+- (BOOL)skipFlow {
+    BOOL canHandle = NO;
+    if ([self flow]) {
+        // first check if we can use a segue
+        NSString* nextSegueId = [[self flow] nextSegueIdentifierAfterSkipping:self];
+        if (nextSegueId) {
+            canHandle = YES;
+            [self performSegueWithIdentifier:nextSegueId sender:nil];
+        } else {
+            // second, see if we should replace nav stack with current controller
+            UIViewController* nextController = [[self flow] controllerToSwapInAfterSkipping:self];
+            if (nextController) {
+                canHandle = YES;
+                [[self navigationController] setViewControllers:@[nextController] animated:YES];
+            }
+        }
+    }
+    return canHandle;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController* nextController = [segue destinationViewController];
+    if ([self flow] && [nextController isKindOfClass:[HEMOnboardingController class]]) {
+        [[self flow] prepareNextController:(id)nextController fromController:self];
+    }
 }
 
 @end

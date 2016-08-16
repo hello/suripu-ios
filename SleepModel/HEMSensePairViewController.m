@@ -119,6 +119,8 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [super prepareForSegue:segue sender:sender];
+    
     UIViewController* destVC = segue.destinationViewController;
     if ([destVC isKindOfClass:[HEMWifiPickerViewController class]]) {
         HEMWifiPickerViewController* pickerVC = (HEMWifiPickerViewController*)destVC;

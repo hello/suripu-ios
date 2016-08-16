@@ -53,8 +53,6 @@
 "onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
 "onboarding.room-check.intro.sound" = "Noise and loud interruptions hinder a good night's sleep.";
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep and staying asleep.";
-"onboarding.pill-setup.title" = "Attach Sleep Pill to your pillow";
-"onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
 "onboarding.health.enable.failure.title" = "Unable to sync with Health​";
 "onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
 "onboarding.health.enable.failure.generic" = "Sense requires write access to provide Sleep Analysis data to the Health app. If you’d like to enable this, you’ll need to do so in Sources within the Health App.";
@@ -62,6 +60,12 @@
 "onboarding.account.lastname" = "Last name";
 "onboarding.account.email" = "Email address";
 "onboarding.account.password" = "Password";
+
+// onboarding pill
+"onboarding.pill-setup.title" = "Attach Sleep Pill to your pillow";
+"onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
+"onboarding.pill.title" = "Sleep Pill";
+"onboarding.pill.description" = "Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.";
 
 // help links
 "help.email.address" = "support@hello.is";
@@ -886,3 +890,7 @@
 "upgrade.new-sense.setup" = "Set up";
 "upgrade.pair-sense.title" = "Pairing your new Sense";
 "upgrade.pair-sense.desc" = "Confirm that your new Sense is plugged in nearby and glowing purple.";
+"upgrade.actions.pair-pill" = "Pair new Sleep Pill";
+"upgrade.pill.title" = "Pair your new Sleep Pill";
+"upgrade.pill.description" = "Your new Sleep Pill has been redesigned with an improved sensor and better battery life.";
+

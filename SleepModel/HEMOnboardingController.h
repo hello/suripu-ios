@@ -104,9 +104,6 @@
  */
 - (NSAttributedString*)boldAttributedText:(NSString *)text withColor:(UIColor*)color;
 
-- (void)completeOnboarding;
-- (void)completeOnboardingWithoutMessage;
-
 /**
  * @discussion
  * Subclasses should link continue buttons to this method and override this to alter
@@ -114,8 +111,22 @@
  * if it was specified and if so, uses that to determine if it continue with the
  * flow or not.
  *
- * @return YES if it knows how to continue to the next screen in the flow
+ * @return YES if it knows the next screen in the flow
  */
 - (BOOL)continueWithFlow;
+
+/**
+ * @discussion
+ * Subclasses should link skip / later buttons to this method and override this to alter
+ * the behvaior as needed.  Default behavior is to check the flow parameter to see
+ * if it was specified and if so, uses that to determine the next step after skipping
+ * the current view controller
+ *
+ * @return YES if it knows the next screen in the flow
+ */
+- (BOOL)skipFlow;
+
+- (void)completeOnboarding;
+- (void)completeOnboardingWithoutMessage;
 
 @end

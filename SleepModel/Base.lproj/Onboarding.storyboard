@@ -1144,6 +1144,7 @@
                         <outlet property="titleLabel" destination="gvl-uZ-ZRh" id="fLo-xO-ZeJ"/>
                         <outlet property="view" destination="E50-HK-wnd" id="l6c-lF-vh7"/>
                         <segue destination="58j-vj-AB8" kind="show" identifier="wifiToPill" id="u9Q-g4-qbd"/>
+                        <segue destination="m40-U0-40M" kind="show" identifier="upgradeDone" id="ABK-Gx-jne"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1421,7 +1422,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sleep Pill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1o0-dY-ESb">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Pill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1o0-dY-ESb">
                                 <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="jO7-hZ-McB"/>
@@ -1430,13 +1431,13 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLk-KX-k9s" userLabel="descLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLk-KX-k9s" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="86"/>
                                 <string key="text">Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="sleepPill" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sleepPill" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
                                 <rect key="frame" x="0.0" y="154" width="600" height="376"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="fol-lJ-5R8"/>
@@ -1447,7 +1448,22 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfJ-2L-zpu" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq1-j8-qPi">
+                                <rect key="frame" x="20" y="485" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="xb5-oh-l6a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
+                                <state key="normal" title="I'll do this later">
+                                    <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="later:" destination="58j-vj-AB8" eventType="touchUpInside" id="PdH-7U-S76"/>
+                                    <segue destination="0on-Mh-6AZ" kind="show" identifier="updateSense" id="3eP-Nz-n1w"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfJ-2L-zpu" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="aZa-6l-5kt"/>
@@ -1465,44 +1481,50 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="Aoy-k8-hYr" kind="show" id="L4u-DE-B7w"/>
+                                    <action selector="proceed:" destination="58j-vj-AB8" eventType="touchUpInside" id="Vrw-Xu-ZGR"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1o0-dY-ESb" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="1vz-Mt-TcE"/>
-                            <constraint firstItem="l6o-sp-rMW" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="-16" id="3Dh-PT-jUn"/>
+                            <constraint firstItem="1o0-dY-ESb" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="1vz-Mt-TcE"/>
+                            <constraint firstItem="l6o-sp-rMW" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" id="3Dh-PT-jUn"/>
                             <constraint firstItem="1o0-dY-ESb" firstAttribute="bottom" secondItem="FLk-KX-k9s" secondAttribute="top" constant="-10" id="60d-m8-ntB"/>
                             <constraint firstItem="FLk-KX-k9s" firstAttribute="bottom" secondItem="l6o-sp-rMW" secondAttribute="top" id="DVR-I6-O8y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YfJ-2L-zpu" secondAttribute="trailing" constant="4" id="EBk-zf-uEy"/>
+                            <constraint firstAttribute="trailing" secondItem="YfJ-2L-zpu" secondAttribute="trailing" constant="20" id="EBk-zf-uEy"/>
                             <constraint firstItem="1o0-dY-ESb" firstAttribute="top" secondItem="bnn-jv-ggS" secondAttribute="bottom" constant="4" id="OLl-eX-i8h"/>
-                            <constraint firstItem="FLk-KX-k9s" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="OPK-Sd-7xX"/>
-                            <constraint firstItem="YfJ-2L-zpu" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="P2i-LH-BBs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1o0-dY-ESb" secondAttribute="trailing" constant="4" id="Pnh-e5-g7S"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="l6o-sp-rMW" secondAttribute="trailing" constant="-16" id="Wqp-5y-Yui"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FLk-KX-k9s" secondAttribute="trailing" constant="4" id="aW5-NY-OGa"/>
+                            <constraint firstItem="FLk-KX-k9s" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="OPK-Sd-7xX"/>
+                            <constraint firstItem="YfJ-2L-zpu" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="P2i-LH-BBs"/>
+                            <constraint firstAttribute="trailing" secondItem="1o0-dY-ESb" secondAttribute="trailing" constant="20" id="Pnh-e5-g7S"/>
+                            <constraint firstAttribute="trailing" secondItem="fq1-j8-qPi" secondAttribute="trailing" constant="20" id="RRV-pO-vQi"/>
+                            <constraint firstAttribute="trailing" secondItem="l6o-sp-rMW" secondAttribute="trailing" id="Wqp-5y-Yui"/>
+                            <constraint firstAttribute="trailing" secondItem="FLk-KX-k9s" secondAttribute="trailing" constant="20" id="aW5-NY-OGa"/>
+                            <constraint firstItem="fq1-j8-qPi" firstAttribute="bottom" secondItem="YfJ-2L-zpu" secondAttribute="top" constant="-15" id="aoo-MS-A4k"/>
                             <constraint firstItem="FLk-KX-k9s" firstAttribute="top" secondItem="1o0-dY-ESb" secondAttribute="bottom" constant="10" id="edr-Ut-Ev7"/>
                             <constraint firstItem="YfJ-2L-zpu" firstAttribute="top" secondItem="l6o-sp-rMW" secondAttribute="bottom" id="fje-RL-BFc"/>
                             <constraint firstItem="0XB-1j-3Lb" firstAttribute="top" secondItem="YfJ-2L-zpu" secondAttribute="bottom" constant="20" id="j3O-Pk-A5A"/>
+                            <constraint firstItem="fq1-j8-qPi" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="yN9-i7-dRz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MgK-i0-Acr"/>
                     <connections>
+                        <outlet property="continueButton" destination="YfJ-2L-zpu" id="2QW-r4-FXa"/>
                         <outlet property="descriptionLabel" destination="FLk-KX-k9s" id="o9m-O3-Rb6"/>
                         <outlet property="descriptionTopConstraint" destination="edr-Ut-Ev7" id="W9c-Ux-1ag"/>
+                        <outlet property="laterButton" destination="fq1-j8-qPi" id="P4L-1a-H6o"/>
                         <outlet property="titleHeightConstraint" destination="jO7-hZ-McB" id="xHJ-se-mGG"/>
                         <outlet property="titleLabel" destination="1o0-dY-ESb" id="yqv-Tm-VxH"/>
+                        <segue destination="Aoy-k8-hYr" kind="show" identifier="pairPill" id="S1y-47-v72"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1yE-pK-lVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12439" y="895"/>
+            <point key="canvasLocation" x="12439" y="356"/>
         </scene>
-        <!--Onboarding Controller-->
+        <!--Sense Upgraded View Controller-->
         <scene sceneID="khy-cN-h7t">
             <objects>
-                <viewController storyboardIdentifier="senseUpgraded" id="m40-U0-40M" customClass="HEMOnboardingController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="senseUpgraded" id="m40-U0-40M" customClass="HEMSenseUpgradedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xnm-iU-nw5"/>
                         <viewControllerLayoutGuide type="bottom" id="imC-e8-BgN"/>
@@ -1554,7 +1576,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="58j-vj-AB8" kind="show" id="wOz-xn-rlO"/>
+                                    <action selector="proceed:" destination="m40-U0-40M" eventType="touchUpInside" id="f0W-xB-c2Q"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1581,11 +1603,12 @@
                         <outlet property="descriptionTopConstraint" destination="Hsw-kT-A0b" id="yMR-AP-f2X"/>
                         <outlet property="titleHeightConstraint" destination="LzU-Ad-7EV" id="HrW-mP-7vn"/>
                         <outlet property="titleLabel" destination="SVR-wV-eCB" id="nAG-0a-Xhx"/>
+                        <segue destination="58j-vj-AB8" kind="show" identifier="pairPill" id="l0v-WX-q0S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARw-7e-dNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11988" y="1653"/>
+            <point key="canvasLocation" x="12439" y="1203"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -3279,6 +3302,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
                         <segue destination="H2i-xS-f14" kind="show" identifier="wifi" id="IQX-WG-nAB"/>
                         <segue destination="58j-vj-AB8" kind="show" identifier="sensePairToPill" id="JsS-bV-f7k"/>
+                        <segue destination="m40-U0-40M" kind="show" identifier="upgradeDone" id="v6v-Rh-oSf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3441,7 +3465,7 @@ Flip the switch to On</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-3B-dpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2391" y="510"/>
+            <point key="canvasLocation" x="2369" y="1806"/>
         </scene>
         <!--Sense Setup View Controller-->
         <scene sceneID="1ot-8w-aZb">
@@ -3559,14 +3583,16 @@ Flip the switch to On</string>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zxE-Zn-Swl"/>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="wOz-xn-rlO"/>
-        <segue reference="wdw-bO-x3J"/>
-        <segue reference="6ED-su-wCY"/>
+        <segue reference="3eP-Nz-n1w"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="pzU-cR-vI1"/>
+        <segue reference="6ED-su-wCY"/>
         <segue reference="d9a-nc-483"/>
         <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="v6v-Rh-oSf"/>
+        <segue reference="7LA-fg-2Jb"/>
+        <segue reference="zxE-Zn-Swl"/>
+        <segue reference="wdw-bO-x3J"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

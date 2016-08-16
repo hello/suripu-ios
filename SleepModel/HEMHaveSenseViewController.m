@@ -68,13 +68,4 @@
     [self performSegueWithIdentifier:identifier sender:self];
 }
 
-#pragma mark - Segue
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    id nextController = [segue destinationViewController];
-    if ([self flow] && [nextController isKindOfClass:[HEMOnboardingController class]]) {
-        [[self flow] prepareNextController:(id)nextController fromController:self];
-    }
-}
-
 @end

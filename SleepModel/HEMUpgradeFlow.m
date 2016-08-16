@@ -11,6 +11,10 @@
 #import "HEMNoBLEViewController.h"
 #import "HEMSensePairViewController.h"
 #import "HEMUpgradePairSensePresenter.h"
+#import "HEMPillDescriptionViewController.h"
+#import "HEMWifiPasswordViewController.h"
+#import "HEMSenseUpgradedViewController.h"
+#import "HEMUpgradePillDescriptionPresenter.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBluetoothUtils.h"
@@ -27,34 +31,8 @@
     return self;
 }
 
-- (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController {
-    NSString* nextSegueId = nil;
-    if ([currentViewController isKindOfClass:[HEMHaveSenseViewController class]]) {
-        if (![HEMBluetoothUtils isBluetoothOn]) {
-            nextSegueId = [HEMOnboardingStoryboard noBLESegueIdentifier];
-        } else {
-            nextSegueId = [HEMOnboardingStoryboard pairSegueIdentifier];
-        }
-    } // NO BLE should call controllerToSwapInAfterViewController: instead
-    return nextSegueId;
-}
-
-- (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
-    HEMOnboardingController* controller = nil;
-    if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
-        HEMSensePairViewController* pairVC = [HEMOnboardingStoryboard instantiateSensePairViewController];
-        [self prepareNextController:pairVC fromController:currentViewController];
-        controller = pairVC;
-    } else if ([currentViewController isKindOfClass:[HEMSensePairViewController class]]) {
-        HEMSensePairViewController* pairVC = (id) currentViewController;
-        if ([pairVC isSenseConnectedToWiFi]) {
-            controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
-        }
-    }
-    if (controller) {
-        [controller setFlow:self];
-    }
-    return controller;
+- (NSString*)analyticsEventPrefixForViewController:(UIViewController*)viewController {
+    return HEMAnalyticsEventUpgradePrefix;
 }
 
 - (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
@@ -67,16 +45,79 @@
     return enable;
 }
 
+#pragma mark - Next using segues
+
+- (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController {
+    NSString* nextSegueId = nil;
+    if ([currentViewController isKindOfClass:[HEMHaveSenseViewController class]]) {
+        if (![HEMBluetoothUtils isBluetoothOn]) {
+            nextSegueId = [HEMOnboardingStoryboard noBLESegueIdentifier];
+        } else {
+            nextSegueId = [HEMOnboardingStoryboard pairSegueIdentifier];
+        }
+    } else if ([currentViewController isKindOfClass:[HEMPillDescriptionViewController class]]) {
+        nextSegueId = [HEMOnboardingStoryboard pairPillSegueIdentifier];
+    }
+    return nextSegueId;
+}
+
+- (NSString*)nextSegueIdentifierAfterSkipping:(UIViewController *)controller {
+    NSString* nextSegueId = nil;
+    if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        if ([service isDFURequiredForSense]) {
+            nextSegueId = [HEMOnboardingStoryboard updateSenseSegueIdentifier];
+        } else if ([service isVoiceAvailable]) {
+            nextSegueId = [HEMOnboardingStoryboard updateSenseSegueIdentifier];
+        } else {
+            // TODO: hook up new screen to factory reset
+        }
+    }
+    return nextSegueId;
+}
+
+#pragma mark - Next by swapping controllers
+
+- (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
+    HEMOnboardingController* controller = nil;
+    
+    if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateSensePairViewController];
+    } else if ([currentViewController isKindOfClass:[HEMSensePairViewController class]]) {
+        HEMSensePairViewController* pairVC = (id) currentViewController;
+        if ([pairVC isSenseConnectedToWiFi]) {
+            controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
+        }
+    } else if ([currentViewController isKindOfClass:[HEMWifiPasswordViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
+    } else if ([currentViewController isKindOfClass:[HEMSenseUpgradedViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
+    }
+    
+    [self prepareNextController:controller fromController:currentViewController];
+    
+    return controller;
+}
+
+- (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController *)controller {
+    return nil;
+}
+
 - (void)prepareNextController:(HEMOnboardingController*)controller
                fromController:(UIViewController*)currentController {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
     if ([controller isKindOfClass:[HEMSensePairViewController class]]) {
         HEMSensePairViewController* pairVC = (id) controller;
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
         HEMUpgradePairSensePresenter* presenter = [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service];
         if ([currentController isKindOfClass:[HEMNoBLEViewController class]]) {
             [presenter setCancellable:YES];
         }
         [pairVC setPresenter:presenter];
+    } else if ([controller isKindOfClass:[HEMSenseUpgradedViewController class]]) {
+        [service checkFeatures];
+    } else if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {
+        HEMPillDescriptionViewController* pillDescVC = (id) controller;
+        [pillDescVC setPresenter:[HEMUpgradePillDescriptionPresenter new]];
     }
     [controller setFlow:self];
 }

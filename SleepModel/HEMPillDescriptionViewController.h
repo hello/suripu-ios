@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "HEMOnboardingController.h"
 
+@class HEMPillDescriptionPresenter;
+
 @interface HEMPillDescriptionViewController : HEMOnboardingController
+
+@property (nonatomic, strong) HEMPillDescriptionPresenter* presenter;
 
 @end

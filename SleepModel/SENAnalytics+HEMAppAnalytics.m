@@ -269,6 +269,9 @@ NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
 NSString* const HEMAnalyticsEventVoiceTutorial = @"Voice Tutorial";
 NSString* const HEMAnalyticsEventVoiceResponse = @"Onboarding Voice Command";
 
+// upgrade path
+NSString* const HEMAnalyticsEventUpgradePrefix = @"Upgrade";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";

@@ -11,12 +11,16 @@
 
 @protocol HEMOnboardingFlow <NSObject>
 
-- (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController;
-
-- (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController;
-
 - (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
      withPreviousController:(UIViewController*)previousController;
+
+- (NSString*)analyticsEventPrefixForViewController:(UIViewController*)viewController;
+
+- (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController;
+- (NSString*)nextSegueIdentifierAfterSkipping:(UIViewController*)controller;
+
+- (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController;
+- (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController*)controller;
 
 - (void)prepareNextController:(HEMOnboardingController*)controller
                fromController:(UIViewController*)controller;

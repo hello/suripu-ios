@@ -27,4 +27,11 @@
 
 - (void)bindWithLaterButton:(UIButton*)laterButton;
 
+/**
+ * @discussion
+ * Should not call directly.  It is meant for subclasses to override.  By default,
+ * this will simply call the delegate method to continue
+ */
+- (void)proceed;
+
 @end

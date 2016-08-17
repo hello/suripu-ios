@@ -189,7 +189,6 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
             [service rescanForNearbySense:^(NSError * _Nullable error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (error) {
-                    [SENAnalytics trackErrorWithMessage:@"no sense found"];
                     if ([[strongSelf activityCoverView] isShowing]) {
                         [[strongSelf activityCoverView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                             [strongSelf setActivityCoverView:nil];
@@ -216,7 +215,6 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     [[self onbService] rescanForNearbySense:^(NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
-            [SENAnalytics trackErrorWithMessage:@"no sense found"];
             [strongSelf showCouldNotPairErrorMessage];
         }
     }];

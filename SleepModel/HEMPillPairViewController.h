@@ -10,6 +10,7 @@
 #import "HEMOnboardingController.h"
 
 @class HEMPillPairViewController;
+@class HEMPairPiillPresenter;
 
 @protocol HEMPillPairDelegate <NSObject>
 
@@ -21,5 +22,6 @@
 @interface HEMPillPairViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMPillPairDelegate> delegate;
+@property (nonatomic, strong) HEMPairPiillPresenter* presenter;
 
 @end

@@ -19,7 +19,7 @@
 
 - (void)bindWithContinueButton:(UIButton*)continueButton {
     [super bindWithContinueButton:continueButton];
-    [continueButton setTitle:NSLocalizedString(@"upgrade.actions.pair-pill", nil)
+    [continueButton setTitle:[NSLocalizedString(@"upgrade.actions.pair-pill", nil) uppercaseString]
                     forState:UIControlStateNormal];
 }
 

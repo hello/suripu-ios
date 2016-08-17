@@ -66,6 +66,8 @@
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
 "onboarding.pill.title" = "Sleep Pill";
 "onboarding.pill.description" = "Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.";
+"onboarding.pill.pair.title" = "Pairing your Sleep Pill";
+"onboarding.pill.pair.description" = "Shake your Sleep Pill for three seconds to pair it with your Sense. You may need to shake it quickly for it to register.";
 
 // help links
 "help.email.address" = "support@hello.is";

@@ -18,7 +18,7 @@
 }
 
 - (void)bindWithContinueButton:(UIButton*)continueButton {
-    [continueButton setTitle:NSLocalizedString(@"actions.continue", nil)
+    [continueButton setTitle:[NSLocalizedString(@"actions.continue", nil) uppercaseString]
                     forState:UIControlStateNormal];
     [continueButton addTarget:self
                        action:@selector(proceed)

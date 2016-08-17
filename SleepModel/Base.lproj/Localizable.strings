@@ -62,8 +62,8 @@
 "onboarding.account.password" = "Password";
 
 // onboarding pill
-"onboarding.pill-setup.title" = "Attach Sleep Pill to your pillow";
-"onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
+"onboarding.pill-setup.title" = "Clip Sleep Pill to your pillow";
+"onboarding.pill-setup.description" = "Clip the new Sleep Pill to the side of your pillowcase closest to the edge of your bed. You may need to pull your pillowcase taut between two hands.";
 "onboarding.pill.title" = "Sleep Pill";
 "onboarding.pill.description" = "Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.";
 "onboarding.pill.pair.title" = "Pairing your Sleep Pill";
@@ -122,6 +122,7 @@
 "pairing.error.set-timezone-failed" = "There was a problem setting your timezone.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired";
+"pairing.pill.done" = "Sleep Pill connected";
 "pairing.pill.error.title" = "Sleep Pill Pairing Failed";
 "pairing.error.pill-already-paired" = "This Sleep Pill is already paired with another account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
@@ -898,3 +899,5 @@
 "upgrade.pill.description" = "Your new Sleep Pill has been redesigned with an improved sensor and better battery life.";
 "upgrade.pill.skip-new-alert.title" = "About the new Sleep Pill";
 "upgrade.pill.skip-new-alert.message" = "Using the new Sleep Pill will improve the accuracy of your Sleep Timeline, and provide better battery life over the original Sleep Pill.";
+"upgrade.pair-pill.title" = "Pairing your new Sleep Pill";
+"upgrade.pair-pill.description" = "Hold the Sleep Pill close to Sense and shake it quickly for three seconds.";

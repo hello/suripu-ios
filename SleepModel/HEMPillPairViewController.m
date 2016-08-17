@@ -53,6 +53,7 @@
                          withWidthConstraint:[self retryButtonWidthConstraint]];
     [[self presenter] bindWithNavigationItem:[self navigationItem]];
     [[self presenter] bindWithStatusLabel:[self activityLabel]];
+    [[self presenter] bindWithContentContainerView:[[self navigationController] view]];
     [[self presenter] setErrorDelegate:self];
     [[self presenter] setDelegate:self];
     

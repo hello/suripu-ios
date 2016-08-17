@@ -400,23 +400,22 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 - (BOOL)continueWithFlowBySkipping:(BOOL)skip {
     BOOL canHandle = NO;
     if ([self flow]) {
-        canHandle = YES;
-        BOOL shouldComplete = YES;
         // first check if we can use a segue
         NSString* nextSegueId = [[self flow] nextSegueIdentifierAfter:self skip:skip];
         if (nextSegueId) {
-            shouldComplete = NO;
+            canHandle = YES;
             [self performSegueWithIdentifier:nextSegueId sender:nil];
         } else {
             // second, see if we should replace nav stack with current controller
             UIViewController* nextController = [[self flow] controllerToSwapInAfter:self skip:skip];
             if (nextController) {
-                shouldComplete = NO;
+                canHandle = YES;
                 [[self navigationController] setViewControllers:@[nextController] animated:YES];
             }
         }
         
-        if (shouldComplete) {
+        if (!canHandle && [[self flow] shouldCompleteFlowAfter:self]) {
+            canHandle = YES;
             [self completeOnboarding];
         }
     }

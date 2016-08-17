@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 
 @property (assign, nonatomic, readonly, getter=isVisible) BOOL visible;
-@property (strong, nonatomic) id<HEMOnboardingFlow> flow;
+@property (strong, nonatomic) id<HEMSetupFlow> flow;
 
 /**
  * @param checkpoint: the onboarding checkpoint

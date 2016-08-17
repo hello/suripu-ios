@@ -9,7 +9,7 @@
 @class HEMPresenter;
 @class HEMOnboardingController;
 
-@protocol HEMOnboardingFlow <NSObject>
+@protocol HEMSetupFlow <NSObject>
 
 - (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
      withPreviousController:(UIViewController*)previousController;
@@ -18,6 +18,7 @@
 
 - (NSString*)nextSegueIdentifierAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip;
+- (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller;
 - (void)prepareNextController:(HEMOnboardingController*)controller
                fromController:(UIViewController*)controller;
 

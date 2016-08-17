@@ -30,7 +30,6 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 @property (nonatomic, weak) NSLayoutConstraint* continueWidthConstraint;
 @property (nonatomic, assign, getter=isLoaded) BOOL loaded;
 @property (nonatomic, assign, getter=isPairing) BOOL pairing;
-@property (nonatomic, assign, getter=isCancellable) BOOL cancellable;
 @property (nonatomic, assign) NSInteger pairingAttempts;
 @property (nonatomic, copy) NSString* errorTitle;
 @property (nonatomic, weak) UIButton* skipButton;
@@ -99,10 +98,9 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
     [self setActivityView:activityView];
 }
 
-- (void)bindWithNavigationItem:(UINavigationItem*)navItem cancellable:(BOOL)cancellable {
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem {
     [navItem setRightBarButtonItem:[UIBarButtonItem helpButtonWithTarget:self action:@selector(help)]];
-    if (cancellable) {
-        [self setCancellable:YES];
+    if ([self isCancellable]) {
         NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
         [navItem setLeftBarButtonItem:[UIBarButtonItem cancelItemWithTitle:cancel
                                                                      image:nil
@@ -292,7 +290,7 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 #pragma mark - Completion
 
 - (void)flashPairedState {
-        NSString* paired = NSLocalizedString(@"pairing.done", nil);
+        NSString* paired = NSLocalizedString(@"pairing.pill.done", nil);
         [[self activityView] showInView:[self contentview] withText:paired activity:NO completion:^{
             [self finish:YES];
         }];

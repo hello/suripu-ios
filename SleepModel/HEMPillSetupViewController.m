@@ -232,8 +232,10 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 #pragma mark - Actions
 
 - (IBAction)next:(id)sender {
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSetupToColorsSegueIdentifier]
-                              sender:self];
+    if (![self continueWithFlowBySkipping:NO]) {
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSetupToColorsSegueIdentifier]
+                                  sender:self];
+    }
 }
 
 @end

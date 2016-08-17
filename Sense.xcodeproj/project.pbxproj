@@ -407,6 +407,7 @@
 		BFF3647D1D629018008D4DF8 /* HEMSenseUpgradedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3647C1D629018008D4DF8 /* HEMSenseUpgradedViewController.m */; };
 		BFF364811D62A06F008D4DF8 /* HEMUpgradePillDescriptionPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF364801D62A06F008D4DF8 /* HEMUpgradePillDescriptionPresenter.m */; };
 		BFF364871D638AC5008D4DF8 /* HEMPairPiillPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF364861D638AC5008D4DF8 /* HEMPairPiillPresenter.m */; };
+		BFF3648A1D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF364891D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m */; };
 		BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */; };
 		BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4461A5CD60300B11643 /* HEMDeviceCollectionViewCell.m */; };
 		BFF3B44A1A5DB5DE00B11643 /* HEMNoDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4491A5DB5DD00B11643 /* HEMNoDeviceCollectionViewCell.m */; };
@@ -1197,6 +1198,8 @@
 		BFF364801D62A06F008D4DF8 /* HEMUpgradePillDescriptionPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUpgradePillDescriptionPresenter.m; sourceTree = "<group>"; };
 		BFF364851D638AC5008D4DF8 /* HEMPairPiillPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPairPiillPresenter.h; sourceTree = "<group>"; };
 		BFF364861D638AC5008D4DF8 /* HEMPairPiillPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPairPiillPresenter.m; sourceTree = "<group>"; };
+		BFF364881D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUpgradePairPillPresenter.h; sourceTree = "<group>"; };
+		BFF364891D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUpgradePairPillPresenter.m; sourceTree = "<group>"; };
 		BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTableViewCell.h; sourceTree = "<group>"; };
 		BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsTableViewCell.m; sourceTree = "<group>"; };
 		BFF3B4451A5CD60300B11643 /* HEMDeviceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceCollectionViewCell.h; sourceTree = "<group>"; };
@@ -3143,6 +3146,8 @@
 				BFD603CD1D5D3B0C00F4E2D4 /* HEMUpgradePairSensePresenter.m */,
 				BFF3647F1D62A06F008D4DF8 /* HEMUpgradePillDescriptionPresenter.h */,
 				BFF364801D62A06F008D4DF8 /* HEMUpgradePillDescriptionPresenter.m */,
+				BFF364881D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.h */,
+				BFF364891D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3952,6 +3957,7 @@
 				BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */,
 				BFE375E31CEBD1200029EE66 /* HEMPhotoHeaderView.m in Sources */,
 				BFBC78B11D2C8E1200076235 /* HEMSleepPillFinderViewController.m in Sources */,
+				BFF3648A1D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m in Sources */,
 				BF885F221CE55B7500A92F90 /* HEMProfileImageView.m in Sources */,
 				8B1DB6DD1C18AC00006C8AFF /* HEMNonsenseScanService.m in Sources */,
 				BFBC78B41D2C959E00076235 /* HEMPillFinderPresenter.m in Sources */,

@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HEMPairPillPresenterDelegate> delegate;
 @property (nonatomic, copy) NSString* analyticsHelpEventName;
+@property (nonatomic, assign, getter=isCancellable) BOOL cancellable;
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onboardingService;
 

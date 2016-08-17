@@ -18,6 +18,7 @@
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBluetoothUtils.h"
+#import "HEMPillSetupViewController.h"
 
 @implementation HEMUpgradeFlow
 
@@ -117,6 +118,15 @@
     } else {
         return [self controllerToSwapInAfterViewController:controller];
     }
+}
+
+#pragma mark - Completion
+
+- (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    return ![service isDFURequiredForSense]
+        && ![service isVoiceAvailable]
+        && [controller isKindOfClass:[HEMPillSetupViewController class]];
 }
 
 #pragma mark - Preparing next screen

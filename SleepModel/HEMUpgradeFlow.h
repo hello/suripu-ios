@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "HEMOnboardingFlow.h"
 
-@interface HEMUpgradeFlow : NSObject <HEMOnboardingFlow>
+@interface HEMUpgradeFlow : NSObject <HEMSetupFlow>
 
 @end

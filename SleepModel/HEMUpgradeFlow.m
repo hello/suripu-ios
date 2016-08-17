@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 8/11/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <SenseKit/SENServiceDevice.h>
 
 #import "HEMUpgradeFlow.h"
 #import "HEMHaveSenseViewController.h"
@@ -70,8 +71,6 @@
             nextSegueId = [HEMOnboardingStoryboard updateSenseSegueIdentifier];
         } else if ([service isVoiceAvailable]) {
             nextSegueId = [HEMOnboardingStoryboard updateSenseSegueIdentifier];
-        } else {
-            // TODO: hook up new screen to factory reset
         }
     }
     return nextSegueId;
@@ -126,7 +125,8 @@
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     return ![service isDFURequiredForSense]
         && ![service isVoiceAvailable]
-        && [controller isKindOfClass:[HEMPillSetupViewController class]];
+        && ([controller isKindOfClass:[HEMPillSetupViewController class]]
+            || [controller isKindOfClass:[HEMPillDescriptionViewController class]]);
 }
 
 #pragma mark - Preparing next screen
@@ -145,7 +145,8 @@
         [service checkFeatures];
     } else if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {
         HEMPillDescriptionViewController* pillDescVC = (id) controller;
-        [pillDescVC setPresenter:[HEMUpgradePillDescriptionPresenter new]];
+        SENServiceDevice* service = [SENServiceDevice sharedService];
+        [pillDescVC setPresenter:[[HEMUpgradePillDescriptionPresenter alloc] initWithDeviceService:service]];
     }
     [controller setFlow:self];
 }

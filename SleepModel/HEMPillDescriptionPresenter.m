@@ -9,6 +9,12 @@
 #import "HEMPillDescriptionPresenter.h"
 #import "HEMOnboardingService.h"
 
+@interface HEMPillDescriptionPresenter()
+
+@property (nonatomic, weak) UIView* activityContainerView;
+
+@end
+
 @implementation HEMPillDescriptionPresenter
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
@@ -28,6 +34,10 @@
 - (void)bindWithLaterButton:(UIButton*)laterButton {
     [laterButton setHidden:YES];
     [laterButton setUserInteractionEnabled:NO];
+}
+
+- (void)bindWithActivityContainerView:(UIView*)containerView {
+    [self setActivityContainerView:containerView];
 }
 
 - (void)proceed {

@@ -19,6 +19,7 @@
 @interface HEMPillDescriptionPresenter : HEMPresenter
 
 @property (nonatomic, weak) id<HEMPillDescriptionDelegate> delegate;
+@property (nonatomic, weak, readonly) UIView* activityContainerView; // for subclasses
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
           descriptionLabel:(UILabel*)descriptionLabel;
@@ -26,6 +27,8 @@
 - (void)bindWithContinueButton:(UIButton*)continueButton;
 
 - (void)bindWithLaterButton:(UIButton*)laterButton;
+
+- (void)bindWithActivityContainerView:(UIView*)containerView;
 
 /**
  * @discussion

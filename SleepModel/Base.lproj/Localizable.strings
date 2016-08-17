@@ -901,3 +901,9 @@
 "upgrade.pill.skip-new-alert.message" = "Using the new Sleep Pill will improve the accuracy of your Sleep Timeline, and provide better battery life over the original Sleep Pill.";
 "upgrade.pair-pill.title" = "Pairing your new Sleep Pill";
 "upgrade.pair-pill.description" = "Hold the Sleep Pill close to Sense and shake it quickly for three seconds.";
+"upgrade.pill.unpair.status" = "Unpairing Sleep Pill";
+"upgrade.pill.unpair.done" = "Sleep Pill upaired";
+"upgrade.pill.unpair.error.title" = "Sleep Pill";
+"upgrade.pill.unpair.error.message" = "Unable to unpair your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
+"upgrade.pill.checking-pill" = "Checking for Sleep Pill";
+"upgrade.pill.checking-pill.error.message" = "Unable to check your account for an existing Sleep Pill. Make sure you are connected to the internet and try again.";

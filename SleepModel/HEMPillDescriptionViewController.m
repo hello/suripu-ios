@@ -43,13 +43,16 @@
                         descriptionLabel:[self descriptionLabel]];
     [[self presenter] bindWithContinueButton:[self continueButton]];
     [[self presenter] bindWithLaterButton:[self laterButton]];
+    [[self presenter] bindWithActivityContainerView:[[self navigationController] view]];
+    
+    [self addPresenter:[self presenter]];
 }
 
 #pragma mark - HEMPillDescriptionDelegate
 
 - (void)skip:(BOOL)skip fromPresenter:(HEMPillDescriptionPresenter *)presenter {
     if (![self continueWithFlowBySkipping:skip]) {
-        NSString* segueId = [HEMOnboardingStoryboard pairSegueIdentifier];
+        NSString* segueId = [HEMOnboardingStoryboard pairPillSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];
     }
 }
@@ -60,10 +63,14 @@
                 andMessage:(NSString*)message
               withHelpPage:(nullable NSString*)helpPage
              fromPresenter:(HEMPresenter*)presenter {
-    [self showMessageDialog:message
-                      title:title
-                      image:nil
-               withHelpPage:helpPage];
+    if (helpPage) {
+        [self showMessageDialog:message
+                          title:title
+                          image:nil
+                   withHelpPage:helpPage];
+    } else {
+        [self showMessageDialog:message title:title];
+    }
 }
 
 - (void)showCustomerAlert:(HEMAlertViewController*)alert

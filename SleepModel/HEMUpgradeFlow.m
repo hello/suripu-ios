@@ -20,6 +20,8 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMPillSetupViewController.h"
+#import "HEMPillPairViewController.h"
+#import "HEMUpgradePairPillPresenter.h"
 
 @implementation HEMUpgradeFlow
 
@@ -147,6 +149,10 @@
         HEMPillDescriptionViewController* pillDescVC = (id) controller;
         SENServiceDevice* service = [SENServiceDevice sharedService];
         [pillDescVC setPresenter:[[HEMUpgradePillDescriptionPresenter alloc] initWithDeviceService:service]];
+    } else if ([controller isKindOfClass:[HEMPillPairViewController class]]) {
+        HEMPillPairViewController* pillPairVC = (id) controller;
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        [pillPairVC setPresenter:[[HEMUpgradePairPillPresenter alloc] initWithOnboardingService:service]];
     }
     [controller setFlow:self];
 }

@@ -112,9 +112,9 @@
                 [strongSelf showErrorMessage:message];
             } else {
                 NSString* successText = NSLocalizedString(@"upgrade.pill.unpair.done", nil);
-                [[strongSelf activityView] dismissWithResultText:successText showSuccessMark:YES remove:YES completion:^{
-                    [[strongSelf delegate] skip:NO fromPresenter:strongSelf];
-                }];
+                // proceed while activity is being dismissed
+                [[strongSelf activityView] dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
+                [[strongSelf delegate] skip:NO fromPresenter:strongSelf];
             }
         }];
     };

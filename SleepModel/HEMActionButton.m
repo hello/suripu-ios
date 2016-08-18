@@ -13,7 +13,6 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 @property (nonatomic, assign, getter=isShowingActivity) BOOL showingActivity;
 @property (nonatomic, strong) UIActivityIndicatorView* activityView;
 @property (nonatomic, weak)   NSLayoutConstraint* widthConstraint;
-@property (nonatomic, strong) NSMutableDictionary* backgroundColors;
 
 @end
 
@@ -44,13 +43,12 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 - (void)setDefaults {
     self.layer.cornerRadius = 3;
-    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor whiteColor]
-               forState:UIControlStateDisabled];
     [self.titleLabel setFont:[UIFont primaryButtonFont]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
     
-    [self setBackgroundColors:[NSMutableDictionary new]];
+    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+    
     [self setBackgroundColor:[UIColor tintColor] forState:UIControlStateNormal];
     [self setBackgroundColor:[UIColor blue7] forState:UIControlStateHighlighted];
 }
@@ -155,52 +153,26 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
                      }];
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
-    if (highlighted && [self isEnabled]) {
-        UIColor* bgColor = [self backgroundColors][@(UIControlStateHighlighted)];
-        [self setBackgroundColor:bgColor];
-    } else {
-        [self updateNormalBackgroundColor];
-    }
-    [super setHighlighted:highlighted];
-}
-
-- (void)setSelected:(BOOL)selected {
-    UIColor* selectedColor = [self backgroundColors][@(UIControlStateSelected)];
-    if (selectedColor) {
-        [self setBackgroundColor:selectedColor];
-    }
-    [super setSelected:selected];
-}
-
-- (void)updateNormalBackgroundColor {
-    UIColor* normalColor = [self backgroundColors][@(UIControlStateNormal)];
-    if (normalColor) {
-        [self setBackgroundColor:normalColor];
-    } else {
-        [self setBackgroundColor:[UIColor tintColor]];
-    }
-}
-
-- (void)setEnabled:(BOOL)enabled {
-    [super setEnabled:enabled];
-    UIColor* disabledColor = [self backgroundColors][@(UIControlStateDisabled)];
-    if (disabledColor) {
-        [self setBackgroundColor:disabledColor];
-    } else {
-        [self updateNormalBackgroundColor];
-    }
-}
-
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
     if (backgroundColor) {
-        [self backgroundColors][@(state)] = backgroundColor;
-        if (state == UIControlStateNormal) {
-            [self setBackgroundColor:backgroundColor];
-        }
+        [self setBackgroundImage:[self imageWithColor:backgroundColor] forState:state];
     } else {
-        [[self backgroundColors] removeObjectForKey:@(state)];
+        [self setBackgroundImage:nil forState:state];
     }
+}
+
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 @end

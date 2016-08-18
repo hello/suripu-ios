@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *notGlowingButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseIconHeightConstraint;
+@property (nonatomic, assign, getter=isSenseConnectedToWiFi) BOOL senseConnectedToWiFi;
 
 @end
 
@@ -56,6 +57,8 @@
 #pragma mark - HEMSensePairingDelegate
 
 - (void)didPairWithSenseWithCurrentSSID:(NSString *)ssid fromPresenter:(HEMPairSensePresenter *)presenter {
+    [self setSenseConnectedToWiFi:ssid != nil];
+    
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     SENSenseManager* manager = [service currentSenseManager];
     
@@ -63,23 +66,21 @@
         [service notifyOfSensePairingChange];
     }
     
-    if ([self delegate]) {
-        if (ssid) {
-            [[HEMOnboardingService sharedService] clearAll];
-            [[self delegate] didPairSenseUsing:manager from:self];
+    if (![self continueWithFlowBySkipping:NO]) {
+        if ([self isSenseConnectedToWiFi]) {
+            DDLogVerbose(@"sense is already connected to WiFi on %@, skipping WiFi flow", ssid);
+            if ([self delegate]) {
+                [[HEMOnboardingService sharedService] clearAll];
+                [[self delegate] didPairSenseUsing:manager from:self];
+            } else {
+                NSString* segueId = [HEMOnboardingStoryboard sensePairToPillSegueIdentifier];
+                [self performSegueWithIdentifier:segueId sender:self];
+            }
         } else {
-            [self performSegueWithIdentifier:[HEMOnboardingStoryboard wifiSegueIdentifier]
-                                      sender:self];
+            NSString* segueId = segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+            [self performSegueWithIdentifier:segueId sender:self];
+            
         }
-    } else {
-        NSString* segueId = nil;
-        if (ssid) {
-            DDLogVerbose(@"detected SSID %@, skipping wifi set up", ssid);
-            segueId = [HEMOnboardingStoryboard sensePairToPillSegueIdentifier];
-        } else {
-            segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
-        }
-        [self performSegueWithIdentifier:segueId sender:self];
     }
 }
 
@@ -118,6 +119,8 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [super prepareForSegue:segue sender:sender];
+    
     UIViewController* destVC = segue.destinationViewController;
     if ([destVC isKindOfClass:[HEMWifiPickerViewController class]]) {
         HEMWifiPickerViewController* pickerVC = (HEMWifiPickerViewController*)destVC;

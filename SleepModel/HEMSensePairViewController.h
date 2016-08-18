@@ -16,5 +16,6 @@
 
 @property (nonatomic, weak) id<HEMSensePairingDelegate> delegate;
 @property (nonatomic, strong) HEMPairSensePresenter* presenter;
+@property (nonatomic, assign, readonly, getter=isSenseConnectedToWiFi) BOOL senseConnectedToWiFi;
 
 @end

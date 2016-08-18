@@ -15,4 +15,6 @@
                                  target:(id)target
                                  action:(SEL)action;
 
++ (UIBarButtonItem*)helpButtonWithTarget:(id)target action:(SEL)action;
+
 @end

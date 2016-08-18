@@ -17,6 +17,7 @@ extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
 extern NSString* const HEMOnboardingNotificationUserInfoSenseManager;
 extern NSString* const HEMOnboardingNotificationDidChangePillPairing;
+extern NSString* const HEMOnboardingErrorDomain;
 
 typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorNoAccount = -1,
@@ -29,7 +30,9 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorBLENotReady = -8,
     HEMOnboardingErrorNoSenseFound = -9,
     HEMOnboardingErrorScanTimeout = -10,
-    HEMOnboardingErrorSenseDisconnected = -11
+    HEMOnboardingErrorSenseDisconnected = -11,
+    HEMOnboardingErrorFailedToLoadPairingInfo = -12,
+    HEMOnboardingErrorNotAuthorized = -13
 };
 
 /**
@@ -141,12 +144,19 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  */
 - (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion;
 
+- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+                             completion:(HEMOnboardingErrorHandler)completion;
 - (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion;
 - (void)pairWithCurrentSenseWithLEDOn:(BOOL)turnOnLEDs
                            completion:(HEMOnboardingErrorHandler)completion;
 - (void)checkIfCurrentSenseHasWiFi:(HEMOnboardingWiFiHandler)completion;
 - (void)setTimeZone:(HEMOnboardingErrorHandler)completion;
 - (void)stopObservingDisconnectsIfNeeded;
+- (void)ensurePairedSenseIsReady:(HEMOnboardingErrorHandler)completion;
+
+#pragma mark - Pill
+
+- (void)pairPill:(HEMOnboardingErrorHandler)completion;
 
 #pragma mark - Accounts
 
@@ -386,6 +396,7 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 
 #pragma mark - LEDs
 
+- (void)spinTheLEDs:(HEMOnboardingErrorHandler)completion;
 - (void)resetLED:(HEMOnboardingErrorHandler)completion;
 
 #pragma mark - OTA

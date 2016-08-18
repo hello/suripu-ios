@@ -5,19 +5,37 @@
 //  Created by Jimmy Lu on 8/11/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENSenseMetadata.h>
 
-#import "HEMUpgradePairSensePresenter.h"
 #import "UIBarButtonItem+HEMNav.h"
 
+#import "HEMUpgradePairSensePresenter.h"
+#import "HEMOnboardingService.h"
+
 @implementation HEMUpgradePairSensePresenter
+
+- (instancetype)initWithOnboardingService:(HEMOnboardingService *)onbService
+                         andDeviceService:(SENServiceDevice*)deviceService {
+    self = [super initWithOnboardingService:onbService];
+    if (self) {
+        if ([[deviceService devices] hasPairedSense]) {
+            NSString* deviceId = [[[deviceService devices] senseMetadata] uniqueId];
+            if (deviceId) {
+                [self setDeviceIdsToExclude:[NSSet setWithObject:deviceId]];
+            }
+        }
+    }
+    return self;
+}
 
 #pragma mark - Actions
 
 - (void)bindWithTitleLabel:(UILabel *)titleLabel
           descriptionLabel:(UILabel *)descriptionLabel
   descriptionTopConstraint:(NSLayoutConstraint *)topConstraint {
-    [super bindWithTitleLabel:titleLabel
-             descriptionLabel:descriptionLabel
+    [super bindWithTitleLabel:titleLabel descriptionLabel:descriptionLabel
      descriptionTopConstraint:topConstraint];
     [titleLabel setText:NSLocalizedString(@"upgrade.pair-sense.title", nil)];
     [descriptionLabel setText:NSLocalizedString(@"upgrade.pair-sense.desc", nil)];

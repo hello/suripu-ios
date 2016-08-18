@@ -186,10 +186,9 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
             
             __weak typeof(self) weakSelf = self;
             HEMOnboardingService* service = [HEMOnboardingService sharedService];
-            [service rescanForNearbySense:^(NSError * _Nullable error) {
+            [service rescanForNearbySenseNotMatching:[self deviceIdsToExclude] completion:^(NSError * _Nullable error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (error) {
-                    [SENAnalytics trackErrorWithMessage:@"no sense found"];
                     if ([[strongSelf activityCoverView] isShowing]) {
                         [[strongSelf activityCoverView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                             [strongSelf setActivityCoverView:nil];
@@ -204,20 +203,6 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
                     [strongSelf executeNextStep];
                 }
             }];
-        }
-    }];
-}
-
-- (void)startScan {
-    __weak typeof(self) weakSelf = self;
-    // if a Sense has been found and the peripheral connected, disconnect from it
-    // first to avoid causing issues when atttempting the process
-    [[self onbService] disconnectCurrentSense];
-    [[self onbService] rescanForNearbySense:^(NSError * error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error) {
-            [SENAnalytics trackErrorWithMessage:@"no sense found"];
-            [strongSelf showCouldNotPairErrorMessage];
         }
     }];
 }

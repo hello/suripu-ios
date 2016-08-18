@@ -80,19 +80,13 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 }
 
 - (void)next {
-    if ([self flow]) {
-        UIViewController* nextVC = [[self flow] controllerToSwapInAfterViewController:self];
-        if (nextVC) {
-            [[self navigationController] setViewControllers:@[nextVC] animated:YES];
+    if (![self continueWithFlowBySkipping:NO]) {
+        if ([self delegate]) {
+            [[self delegate] bleDetectedFrom:self];
         } else {
-            NSString* nextSegue = [[self flow] nextSegueIdentifierAfterViewController:self];
-            [self performSegueWithIdentifier:nextSegue sender:nil];
+            NSString* nextSegue = [HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier];
+            [self performSegueWithIdentifier:nextSegue sender:self];
         }
-    } else if (![self delegate]) {
-        NSString* nextSegue = [HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier];
-        [self performSegueWithIdentifier:nextSegue sender:self];
-    } else {
-        [[self delegate] bleDetectedFrom:self];
     }
 }
 

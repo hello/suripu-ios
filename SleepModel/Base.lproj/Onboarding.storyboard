@@ -11,19 +11,7 @@
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
-        </mutableArray>
-        <mutableArray key="HelveticaNeue-Medium.otf">
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue-Medium</string>
+            <string>HelveticaNeue-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -194,12 +182,13 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9w-pu-D4W" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9w-pu-D4W" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4Kl-IU-802"/>
                                 </constraints>
                                 <state key="normal" title="LOG IN">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -427,12 +416,11 @@
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sense" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
                                 <rect key="frame" x="0.0" y="146" width="600" height="346"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
                                 <rect key="frame" x="24" y="530" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="v8x-zs-ef3"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="PAIR YOUR SENSE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -783,12 +771,14 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OPs-a3-qZt" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OPs-a3-qZt" customClass="HEMActionButton">
                                 <rect key="frame" x="24" y="530" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8cI-2r-8Wn"/>
                                 </constraints>
-                                <state key="normal" title="NEXT"/>
+                                <state key="normal" title="NEXT">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -862,12 +852,11 @@
                                     <action selector="skip:" destination="R0p-kB-1qZ" eventType="touchUpInside" id="Lgf-Ps-tCa"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1g-YQ-7bC" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1g-YQ-7bC" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6fN-Mb-Rff"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -984,12 +973,11 @@
                                     <action selector="skip:" destination="uc7-01-jZi" eventType="touchUpInside" id="yEf-lx-efh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0L-MG-dGi" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0L-MG-dGi" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="QMZ-zo-7zG"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1094,7 +1082,7 @@
                                     <outlet property="delegate" destination="qC8-fd-UCX" id="xOx-Z6-87h"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTd-VJ-D0f" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTd-VJ-D0f" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="267" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="QHc-d2-Zcx"/>
@@ -1143,6 +1131,7 @@
                         <outlet property="titleLabel" destination="gvl-uZ-ZRh" id="fLo-xO-ZeJ"/>
                         <outlet property="view" destination="E50-HK-wnd" id="l6c-lF-vh7"/>
                         <segue destination="58j-vj-AB8" kind="show" identifier="wifiToPill" id="u9Q-g4-qbd"/>
+                        <segue destination="m40-U0-40M" kind="show" identifier="upgradeDone" id="ABK-Gx-jne"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1213,12 +1202,11 @@
                                     <constraint firstAttribute="height" constant="4" id="BYm-hO-2pR"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJB-u8-jcX" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJB-u8-jcX" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mSv-MI-GYb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="SCAN">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1361,9 +1349,8 @@
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qKC-Ye-ncl">
                                 <rect key="frame" x="0.0" y="509" width="600" height="91"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-tg-U0e" customClass="HEMActionButton">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-tg-U0e" customClass="HEMActionButton">
                                         <rect key="frame" x="20" y="20" width="560" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="CONTINUE">
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1420,7 +1407,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sleep Pill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1o0-dY-ESb">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Pill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1o0-dY-ESb">
                                 <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="jO7-hZ-McB"/>
@@ -1429,13 +1416,13 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLk-KX-k9s" userLabel="descLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLk-KX-k9s" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="86"/>
                                 <string key="text">Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="sleepPill" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sleepPill" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
                                 <rect key="frame" x="0.0" y="154" width="600" height="376"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="fol-lJ-5R8"/>
@@ -1446,13 +1433,23 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfJ-2L-zpu" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq1-j8-qPi">
+                                <rect key="frame" x="20" y="485" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="xb5-oh-l6a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
+                                <state key="normal" title="I'll do this later">
+                                    <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfJ-2L-zpu" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="aZa-6l-5kt"/>
                                     <constraint firstAttribute="height" constant="50" id="szp-em-tb0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="CONTINUE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1463,40 +1460,132 @@
                                         <exclude reference="aZa-6l-5kt"/>
                                     </mask>
                                 </variation>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1o0-dY-ESb" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="1vz-Mt-TcE"/>
+                            <constraint firstItem="l6o-sp-rMW" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" id="3Dh-PT-jUn"/>
+                            <constraint firstItem="1o0-dY-ESb" firstAttribute="bottom" secondItem="FLk-KX-k9s" secondAttribute="top" constant="-10" id="60d-m8-ntB"/>
+                            <constraint firstItem="FLk-KX-k9s" firstAttribute="bottom" secondItem="l6o-sp-rMW" secondAttribute="top" id="DVR-I6-O8y"/>
+                            <constraint firstAttribute="trailing" secondItem="YfJ-2L-zpu" secondAttribute="trailing" constant="20" id="EBk-zf-uEy"/>
+                            <constraint firstItem="1o0-dY-ESb" firstAttribute="top" secondItem="bnn-jv-ggS" secondAttribute="bottom" constant="4" id="OLl-eX-i8h"/>
+                            <constraint firstItem="FLk-KX-k9s" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="OPK-Sd-7xX"/>
+                            <constraint firstItem="YfJ-2L-zpu" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="P2i-LH-BBs"/>
+                            <constraint firstAttribute="trailing" secondItem="1o0-dY-ESb" secondAttribute="trailing" constant="20" id="Pnh-e5-g7S"/>
+                            <constraint firstAttribute="trailing" secondItem="fq1-j8-qPi" secondAttribute="trailing" constant="20" id="RRV-pO-vQi"/>
+                            <constraint firstAttribute="trailing" secondItem="l6o-sp-rMW" secondAttribute="trailing" id="Wqp-5y-Yui"/>
+                            <constraint firstAttribute="trailing" secondItem="FLk-KX-k9s" secondAttribute="trailing" constant="20" id="aW5-NY-OGa"/>
+                            <constraint firstItem="fq1-j8-qPi" firstAttribute="bottom" secondItem="YfJ-2L-zpu" secondAttribute="top" constant="-15" id="aoo-MS-A4k"/>
+                            <constraint firstItem="FLk-KX-k9s" firstAttribute="top" secondItem="1o0-dY-ESb" secondAttribute="bottom" constant="10" id="edr-Ut-Ev7"/>
+                            <constraint firstItem="YfJ-2L-zpu" firstAttribute="top" secondItem="l6o-sp-rMW" secondAttribute="bottom" id="fje-RL-BFc"/>
+                            <constraint firstItem="0XB-1j-3Lb" firstAttribute="top" secondItem="YfJ-2L-zpu" secondAttribute="bottom" constant="20" id="j3O-Pk-A5A"/>
+                            <constraint firstItem="fq1-j8-qPi" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leading" constant="20" id="yN9-i7-dRz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="MgK-i0-Acr"/>
+                    <connections>
+                        <outlet property="continueButton" destination="YfJ-2L-zpu" id="2QW-r4-FXa"/>
+                        <outlet property="descriptionLabel" destination="FLk-KX-k9s" id="o9m-O3-Rb6"/>
+                        <outlet property="descriptionTopConstraint" destination="edr-Ut-Ev7" id="W9c-Ux-1ag"/>
+                        <outlet property="laterButton" destination="fq1-j8-qPi" id="P4L-1a-H6o"/>
+                        <outlet property="titleHeightConstraint" destination="jO7-hZ-McB" id="xHJ-se-mGG"/>
+                        <outlet property="titleLabel" destination="1o0-dY-ESb" id="yqv-Tm-VxH"/>
+                        <segue destination="Aoy-k8-hYr" kind="show" identifier="pairPill" id="S1y-47-v72"/>
+                        <segue destination="0on-Mh-6AZ" kind="show" identifier="updateSense" id="2bN-N8-HGp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1yE-pK-lVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12439" y="356"/>
+        </scene>
+        <!--Sense Upgraded View Controller-->
+        <scene sceneID="khy-cN-h7t">
+            <objects>
+                <viewController storyboardIdentifier="senseUpgraded" id="m40-U0-40M" customClass="HEMSenseUpgradedViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xnm-iU-nw5"/>
+                        <viewControllerLayoutGuide type="bottom" id="imC-e8-BgN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FXm-MD-Ve7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense with Voice is ready" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVR-wV-eCB">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="LzU-Ad-7EV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Your new Sense with Voice is set up and is currently paired with original Sleep Pill. Next, you'll pair your Sleep Pill." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-eT-uQJ" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="43"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="senseUpgraded" translatesAutoresizingMaskIntoConstraints="NO" id="IKV-ei-EsM">
+                                <rect key="frame" x="0.0" y="111" width="600" height="419"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="g8c-GK-mMf"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="g8c-GK-mMf"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fP-1F-Zqp" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Wpc-a3-rZr"/>
+                                    <constraint firstAttribute="width" constant="220" id="bXv-hH-cHA"/>
+                                </constraints>
+                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bXv-hH-cHA"/>
+                                    </mask>
+                                </variation>
                                 <connections>
-                                    <segue destination="Aoy-k8-hYr" kind="show" id="L4u-DE-B7w"/>
+                                    <action selector="proceed:" destination="m40-U0-40M" eventType="touchUpInside" id="f0W-xB-c2Q"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1o0-dY-ESb" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="1vz-Mt-TcE"/>
-                            <constraint firstItem="l6o-sp-rMW" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="-16" id="3Dh-PT-jUn"/>
-                            <constraint firstItem="1o0-dY-ESb" firstAttribute="bottom" secondItem="FLk-KX-k9s" secondAttribute="top" constant="-10" id="60d-m8-ntB"/>
-                            <constraint firstItem="FLk-KX-k9s" firstAttribute="bottom" secondItem="l6o-sp-rMW" secondAttribute="top" id="DVR-I6-O8y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YfJ-2L-zpu" secondAttribute="trailing" constant="4" id="EBk-zf-uEy"/>
-                            <constraint firstItem="1o0-dY-ESb" firstAttribute="top" secondItem="bnn-jv-ggS" secondAttribute="bottom" constant="4" id="OLl-eX-i8h"/>
-                            <constraint firstItem="FLk-KX-k9s" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="OPK-Sd-7xX"/>
-                            <constraint firstItem="YfJ-2L-zpu" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="P2i-LH-BBs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1o0-dY-ESb" secondAttribute="trailing" constant="4" id="Pnh-e5-g7S"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="l6o-sp-rMW" secondAttribute="trailing" constant="-16" id="Wqp-5y-Yui"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FLk-KX-k9s" secondAttribute="trailing" constant="4" id="aW5-NY-OGa"/>
-                            <constraint firstItem="FLk-KX-k9s" firstAttribute="top" secondItem="1o0-dY-ESb" secondAttribute="bottom" constant="10" id="edr-Ut-Ev7"/>
-                            <constraint firstItem="YfJ-2L-zpu" firstAttribute="top" secondItem="l6o-sp-rMW" secondAttribute="bottom" id="fje-RL-BFc"/>
-                            <constraint firstItem="0XB-1j-3Lb" firstAttribute="top" secondItem="YfJ-2L-zpu" secondAttribute="bottom" constant="20" id="j3O-Pk-A5A"/>
+                            <constraint firstAttribute="trailing" secondItem="4fP-1F-Zqp" secondAttribute="trailing" constant="20" id="AUd-aY-fgT"/>
+                            <constraint firstItem="IKV-ei-EsM" firstAttribute="top" secondItem="bhx-eT-uQJ" secondAttribute="bottom" id="Eih-JJ-DJG"/>
+                            <constraint firstItem="bhx-eT-uQJ" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" constant="20" id="Hhx-dv-9vP"/>
+                            <constraint firstItem="SVR-wV-eCB" firstAttribute="bottom" secondItem="bhx-eT-uQJ" secondAttribute="top" constant="-10" id="Hsw-kT-A0b"/>
+                            <constraint firstItem="SVR-wV-eCB" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" constant="20" id="IMA-1D-sjW"/>
+                            <constraint firstAttribute="trailing" secondItem="SVR-wV-eCB" secondAttribute="trailing" constant="20" id="N0k-Js-N3i"/>
+                            <constraint firstAttribute="trailing" secondItem="IKV-ei-EsM" secondAttribute="trailing" id="TFy-36-d1G"/>
+                            <constraint firstItem="IKV-ei-EsM" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" id="b3K-CQ-9ox"/>
+                            <constraint firstItem="SVR-wV-eCB" firstAttribute="top" secondItem="Xnm-iU-nw5" secondAttribute="bottom" constant="4" id="cyH-Pe-PQO"/>
+                            <constraint firstItem="imC-e8-BgN" firstAttribute="top" secondItem="4fP-1F-Zqp" secondAttribute="bottom" constant="20" id="fbZ-at-iX3"/>
+                            <constraint firstAttribute="trailing" secondItem="bhx-eT-uQJ" secondAttribute="trailing" constant="20" id="oQz-R6-6VH"/>
+                            <constraint firstItem="IKV-ei-EsM" firstAttribute="bottom" secondItem="4fP-1F-Zqp" secondAttribute="top" id="qF0-4A-w1P"/>
+                            <constraint firstItem="4fP-1F-Zqp" firstAttribute="top" secondItem="IKV-ei-EsM" secondAttribute="bottom" id="tge-Nx-cgh"/>
+                            <constraint firstItem="4fP-1F-Zqp" firstAttribute="leading" secondItem="FXm-MD-Ve7" secondAttribute="leading" constant="20" id="uSr-B5-ICX"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="MgK-i0-Acr"/>
                     <connections>
-                        <outlet property="descriptionLabel" destination="FLk-KX-k9s" id="o9m-O3-Rb6"/>
-                        <outlet property="descriptionTopConstraint" destination="edr-Ut-Ev7" id="W9c-Ux-1ag"/>
-                        <outlet property="titleHeightConstraint" destination="jO7-hZ-McB" id="xHJ-se-mGG"/>
-                        <outlet property="titleLabel" destination="1o0-dY-ESb" id="yqv-Tm-VxH"/>
+                        <outlet property="descriptionLabel" destination="bhx-eT-uQJ" id="fyE-kP-MSD"/>
+                        <outlet property="descriptionTopConstraint" destination="Hsw-kT-A0b" id="yMR-AP-f2X"/>
+                        <outlet property="titleHeightConstraint" destination="LzU-Ad-7EV" id="HrW-mP-7vn"/>
+                        <outlet property="titleLabel" destination="SVR-wV-eCB" id="nAG-0a-Xhx"/>
+                        <segue destination="58j-vj-AB8" kind="show" identifier="pairPill" id="l0v-WX-q0S"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1yE-pK-lVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ARw-7e-dNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12439" y="895"/>
+            <point key="canvasLocation" x="12439" y="1203"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -1552,9 +1641,6 @@
                                     <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="skip:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="9f9-e4-frb"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Myj-pb-yY5">
                                 <rect key="frame" x="24" y="485" width="552" height="30"/>
@@ -1565,13 +1651,12 @@
                                 <color key="textColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-9N-cHV" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-9N-cHV" customClass="HEMActionButton">
                                 <rect key="frame" x="24" y="530" width="552" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="eTO-Et-PGf"/>
                                     <constraint firstAttribute="height" constant="50" id="xEI-cW-YPv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="RETRY">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1582,9 +1667,6 @@
                                         <exclude reference="eTO-Et-PGf"/>
                                     </mask>
                                 </variation>
-                                <connections>
-                                    <action selector="pairPill:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="NnP-xb-lYr"/>
-                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SET-g8-gMj" customClass="HEMActivityCoverView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -1700,12 +1782,11 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="mBM-ym-hmu">
                                 <rect key="frame" x="20" y="540" width="560" height="37"/>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMQ-Qm-jOb" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMQ-Qm-jOb" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="JoA-O9-ety"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="CONTINUE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1838,12 +1919,11 @@
                                     <action selector="setAlarmLater:" destination="0qJ-qR-xla" eventType="touchUpInside" id="662-Kh-mZj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5s-t3-orP" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5s-t3-orP" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bBF-QE-aBI"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="SET A SMART ALARM">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1967,12 +2047,11 @@ what's the temperature?"</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g46-hF-kDb" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g46-hF-kDb" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="526" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mIB-yx-sNi"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="CONTINUE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -2093,12 +2172,11 @@ what's the temperature?"</string>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="senseAllSet" translatesAutoresizingMaskIntoConstraints="NO" id="Sef-ar-nxu">
                                 <rect key="frame" x="0.0" y="89" width="600" height="437"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bU-8C-09t" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bU-8C-09t" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="526" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lfo-K2-7Cx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="DONE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -2173,12 +2251,11 @@ what's the temperature?"</string>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseUpdate" translatesAutoresizingMaskIntoConstraints="NO" id="G1S-ig-3QH">
                                 <rect key="frame" x="205" y="208" width="190" height="185"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5d5-Gw-aSY" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5d5-Gw-aSY" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="526" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="PAr-CW-enx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="CONTINUE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -2321,12 +2398,11 @@ what's the temperature?"</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybq-zx-dgL" userLabel="buttonContainer">
                                 <rect key="frame" x="0.0" y="505" width="600" height="95"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkw-WQ-h6F" customClass="HEMActionButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkw-WQ-h6F" customClass="HEMActionButton">
                                         <rect key="frame" x="20" y="23" width="560" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="21U-DL-0b4"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="CONTINUE">
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -2524,12 +2600,11 @@ Now let’s set your first Smart Alarm.</string>
                                     <action selector="skip:" destination="gpF-55-MmK" eventType="touchUpInside" id="Imv-3H-Yv8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-fl-V5h" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-fl-V5h" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="g8t-6w-Xa2"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2647,12 +2722,11 @@ Now let’s set your first Smart Alarm.</string>
                                     <action selector="skip:" destination="f6G-Sh-hYd" eventType="touchUpInside" id="IXX-e4-Bys"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwe-Kd-JLe" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwe-Kd-JLe" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="irU-2z-tSw"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2746,12 +2820,11 @@ Now let’s set your first Smart Alarm.</string>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="sSm-FW-Kol"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="SET LOCATION">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2840,12 +2913,11 @@ Now let’s set your first Smart Alarm.</string>
                                     <action selector="skip:" destination="ihV-hq-yEO" eventType="touchUpInside" id="hPj-XI-5NJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19L-c5-l2p" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19L-c5-l2p" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="fza-Q4-5cg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="SYNC WITH HEALTH">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2923,12 +2995,11 @@ Otherwise, Sense only looks at background noise levels.</string>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="enableAudio" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
                                 <rect key="frame" x="0.0" y="150" width="600" height="325"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="GZx-kq-8Ya"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="ENABLE ENHANCED AUDIO">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3040,12 +3111,11 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <action selector="skip:" destination="ihV-hq-yEO" eventType="touchUpInside" id="b3J-My-ENV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="je6-JT-9YZ" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="je6-JT-9YZ" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Zhc-cc-6Gl"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="ALLOW NOTIFICATIONS">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3132,12 +3202,11 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <constraint firstAttribute="height" constant="184" id="KfE-AJ-gGk"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="R81-5h-QfC"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="CONTINUE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3190,6 +3259,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
                         <segue destination="H2i-xS-f14" kind="show" identifier="wifi" id="IQX-WG-nAB"/>
                         <segue destination="58j-vj-AB8" kind="show" identifier="sensePairToPill" id="JsS-bV-f7k"/>
+                        <segue destination="m40-U0-40M" kind="show" identifier="upgradeDone" id="v6v-Rh-oSf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3352,7 +3422,7 @@ Flip the switch to On</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-3B-dpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2391" y="510"/>
+            <point key="canvasLocation" x="2369" y="1806"/>
         </scene>
         <!--Sense Setup View Controller-->
         <scene sceneID="1ot-8w-aZb">
@@ -3392,12 +3462,11 @@ Flip the switch to On</string>
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="37N-ly-LlQ" customClass="HEMActionButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="37N-ly-LlQ" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="aQG-D8-5cc"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="CONTINUE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -3463,20 +3532,23 @@ Flip the switch to On</string>
         <image name="senseRed" width="186" height="183"/>
         <image name="senseTable" width="274" height="154"/>
         <image name="senseUpdate" width="190" height="185"/>
+        <image name="senseUpgraded" width="375" height="250"/>
         <image name="senseVoiceGray" width="86" height="81"/>
         <image name="senseYellow" width="186" height="183"/>
         <image name="settingsAppIcon" width="32" height="32"/>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d9a-nc-483"/>
+        <segue reference="BBN-wL-Nmg"/>
+        <segue reference="tkT-Pb-lgk"/>
+        <segue reference="gUR-KW-V2G"/>
+        <segue reference="l0v-WX-q0S"/>
+        <segue reference="ABK-Gx-jne"/>
+        <segue reference="Sda-jg-aqk"/>
         <segue reference="6ED-su-wCY"/>
-        <segue reference="pzU-cR-vI1"/>
-        <segue reference="JsS-bV-f7k"/>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="zxE-Zn-Swl"/>
-        <segue reference="wdw-bO-x3J"/>
+        <segue reference="0DP-Ib-Jz4"/>
         <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="wdw-bO-x3J"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

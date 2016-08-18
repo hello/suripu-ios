@@ -255,6 +255,9 @@ extern NSString* const HEMAnalyticsEventSenseDFUEnd;
 extern NSString* const HEMAnalyticsEventVoiceTutorial;
 extern NSString* const HEMAnalyticsEventVoiceResponse;
 
+// upgrade path
+extern NSString* const HEMAnalyticsEventUpgradePrefix;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;

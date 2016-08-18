@@ -12,4 +12,7 @@
 
 @property (nonatomic, assign, getter=isCancellable) BOOL cancellable;
 
+- (instancetype)initWithOnboardingService:(HEMOnboardingService *)onbService
+                         andDeviceService:(SENServiceDevice*)deviceService;
+
 @end

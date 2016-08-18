@@ -36,12 +36,15 @@
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)notificationToAudioSegueIdentifier;
 +(NSString *)pairSegueIdentifier;
++(NSString *)pairPillSegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)registerSegueIdentifier;
 +(NSString *)roomCheckToSmartAlarmSegueIdentifier;
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)skipPillPairSegue;
++(NSString *)updateSenseSegueIdentifier;
++(NSString *)upgradeDoneSegueIdentifier;
 +(NSString *)voiceSegueIdentifier;
 +(NSString *)voiceTutorialSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
@@ -66,6 +69,7 @@
 +(id)instantiateSenseDFUViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
++(id)instantiateSenseUpgradedViewController;
 +(id)instantiateVoiceTutorialViewController;
 +(id)instantiateWeightPickerViewController;
 +(id)instantiateWelcomeViewController;

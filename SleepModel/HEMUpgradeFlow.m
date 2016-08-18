@@ -33,10 +33,6 @@
         // we need to do this to warm up the radio to check later
         BOOL on = [HEMBluetoothUtils isBluetoothOn];
         DDLogVerbose(@"is bluetooth on %@", on ? @"y" : @"n");
-        
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        [service checkIfSenseDFUIsRequired];
-        [service checkFeatures];
     }
     return self;
 }
@@ -109,7 +105,12 @@
     } else if ([currentViewController isKindOfClass:[HEMSenseUpgradedViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
     } else if ([currentViewController isKindOfClass:[HEMPillSetupViewController class]]) {
-        controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        if ([service isDFURequiredForSense]) {
+            controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
+        } else if ([service isVoiceAvailable]) {
+            controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+        }
     }
     
     [self prepareNextController:controller fromController:currentViewController];
@@ -168,7 +169,8 @@
         [pairVC setPresenter:presenter];
         
     } else if ([controller isKindOfClass:[HEMSenseUpgradedViewController class]]) {
-        
+
+        [service checkIfSenseDFUIsRequired];
         [service checkFeatures];
         
     } else if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5.2.2
+
+New:
+
+* New upgrade path for sense pairing, with current Sense filtering
+* New upgrade path for pill unpairing / pairing
+* New screen to suggest Sense with Voice paired
+* Refactored onboarding flow to allow customizations to flow
+
+Fixes:
+
+* Fixed issue where retry button in pill pairing does not update background button color
+
 ## 1.5.2.1
 
 New:

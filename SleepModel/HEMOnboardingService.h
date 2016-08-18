@@ -144,6 +144,8 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  */
 - (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion;
 
+- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+                             completion:(HEMOnboardingErrorHandler)completion;
 - (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion;
 - (void)pairWithCurrentSenseWithLEDOn:(BOOL)turnOnLEDs
                            completion:(HEMOnboardingErrorHandler)completion;

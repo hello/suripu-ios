@@ -236,7 +236,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     }
 }
 
-- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion {
+- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+                             completion:(HEMOnboardingErrorHandler)completion {
     [SENSenseManager stopScan]; // stop a scan if one is in progress;
     [self setRescanHandler:completion];
     [self scheduleRescanTimeout];
@@ -278,11 +279,26 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                     done (nil, [strongSelf errorWithCode:HEMOnboardingErrorNoSenseFound
                                                   reason:reason]);
                 } else {
-                    done ([senses firstObject], nil);
+                    SENSense* nearestSense = nil;
+                    if ([deviceIdsToFilter count] == 0) {
+                        nearestSense = [senses firstObject];
+                    } else {
+                        for (SENSense* sense in senses) {
+                            if (![deviceIdsToFilter containsObject:[sense deviceId]]) {
+                                nearestSense = sense;
+                                break;
+                            }
+                        }
+                    }
+                    done (nearestSense, nil);
                 }
             }];
         }
     }];
+}
+
+- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion {
+    [self rescanForNearbySenseNotMatching:nil completion:completion];
 }
 
 - (void)scanForSenses {

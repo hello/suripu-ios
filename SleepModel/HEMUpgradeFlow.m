@@ -137,22 +137,33 @@
                fromController:(UIViewController*)currentController {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     if ([controller isKindOfClass:[HEMSensePairViewController class]]) {
+        
+        SENServiceDevice* deviceService = [SENServiceDevice sharedService];
         HEMSensePairViewController* pairVC = (id) controller;
-        HEMUpgradePairSensePresenter* presenter = [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service];
+        HEMUpgradePairSensePresenter* presenter =
+            [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service
+                                                           andDeviceService:deviceService];
         if ([currentController isKindOfClass:[HEMNoBLEViewController class]]) {
             [presenter setCancellable:YES];
         }
         [pairVC setPresenter:presenter];
+        
     } else if ([controller isKindOfClass:[HEMSenseUpgradedViewController class]]) {
+        
         [service checkFeatures];
+        
     } else if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {
+        
         HEMPillDescriptionViewController* pillDescVC = (id) controller;
         SENServiceDevice* service = [SENServiceDevice sharedService];
         [pillDescVC setPresenter:[[HEMUpgradePillDescriptionPresenter alloc] initWithDeviceService:service]];
+        
     } else if ([controller isKindOfClass:[HEMPillPairViewController class]]) {
+        
         HEMPillPairViewController* pillPairVC = (id) controller;
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
         [pillPairVC setPresenter:[[HEMUpgradePairPillPresenter alloc] initWithOnboardingService:service]];
+        
     }
     [controller setFlow:self];
 }

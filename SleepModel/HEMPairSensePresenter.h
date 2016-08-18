@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak, readonly) HEMOnboardingService* onbService;
 @property (nonatomic, weak) id<HEMPairSenseActionDelegate> actionDelegate;
+@property (nonatomic, copy) NSSet<NSString*>* deviceIdsToExclude;
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;

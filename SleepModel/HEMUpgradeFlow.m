@@ -22,6 +22,8 @@
 #import "HEMPillSetupViewController.h"
 #import "HEMPillPairViewController.h"
 #import "HEMUpgradePairPillPresenter.h"
+#import "HEMSenseDFUViewController.h"
+#import "HEMVoiceTutorialViewController.h"
 
 @implementation HEMUpgradeFlow
 
@@ -31,6 +33,10 @@
         // we need to do this to warm up the radio to check later
         BOOL on = [HEMBluetoothUtils isBluetoothOn];
         DDLogVerbose(@"is bluetooth on %@", on ? @"y" : @"n");
+        
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        [service checkIfSenseDFUIsRequired];
+        [service checkFeatures];
     }
     return self;
 }
@@ -102,6 +108,8 @@
         controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
     } else if ([currentViewController isKindOfClass:[HEMSenseUpgradedViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
+    } else if ([currentViewController isKindOfClass:[HEMPillSetupViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];
@@ -125,10 +133,21 @@
 
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    return ![service isDFURequiredForSense]
-        && ![service isVoiceAvailable]
+    BOOL senseRequiresUpdate = [service isDFURequiredForSense];
+    BOOL hasVoice = [service isVoiceAvailable];
+    BOOL finishAfterPillPairing = !senseRequiresUpdate
+        && !hasVoice
         && ([controller isKindOfClass:[HEMPillSetupViewController class]]
             || [controller isKindOfClass:[HEMPillDescriptionViewController class]]);
+    BOOL finishAfterSenseDFU = !finishAfterPillPairing
+        && !hasVoice
+        && senseRequiresUpdate
+        && [controller isKindOfClass:[HEMSenseDFUViewController class]];
+    BOOL finishAfterVoice = !finishAfterPillPairing
+        && !finishAfterSenseDFU
+        && hasVoice
+        && [controller isKindOfClass:[HEMVoiceTutorialViewController class]];
+    return finishAfterPillPairing || finishAfterSenseDFU || finishAfterVoice;
 }
 
 #pragma mark - Preparing next screen

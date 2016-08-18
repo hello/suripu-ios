@@ -424,6 +424,10 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController* nextController = [segue destinationViewController];
+    [self prepareViewControllerForNextStep:nextController];
+}
+
+- (void)prepareViewControllerForNextStep:(UIViewController*)nextController {
     if ([self flow] && [nextController isKindOfClass:[HEMOnboardingController class]]) {
         [[self flow] prepareNextController:(id)nextController fromController:self];
     }

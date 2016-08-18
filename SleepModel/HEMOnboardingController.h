@@ -115,6 +115,7 @@
  * @return YES if it knows the next screen in the flow
  */
 - (BOOL)continueWithFlowBySkipping:(BOOL)skip;
+- (void)prepareViewControllerForNextStep:(UIViewController*)nextController;
 
 - (void)completeOnboarding;
 - (void)completeOnboardingWithoutMessage;

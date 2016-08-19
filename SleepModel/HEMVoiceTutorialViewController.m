@@ -76,8 +76,10 @@
 #pragma mark - Voice Tutorial Delegate
 
 - (void)didFinishTutorialFrom:(__unused HEMVoiceTutorialPresenter *)presenter {
-    UIViewController* lastVC = [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
-    [[self navigationController] setViewControllers:@[lastVC] animated:YES];
+    if (![self continueWithFlowBySkipping:NO]) {
+        UIViewController* lastVC = [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
+        [[self navigationController] setViewControllers:@[lastVC] animated:YES];
+    }
 }
 
 - (void)showController:(UIViewController *)controller

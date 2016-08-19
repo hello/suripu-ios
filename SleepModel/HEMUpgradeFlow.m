@@ -24,6 +24,10 @@
 #import "HEMUpgradePairPillPresenter.h"
 #import "HEMSenseDFUViewController.h"
 #import "HEMVoiceTutorialViewController.h"
+#import "HEMResetSenseViewController.h"
+#import "HEMSetupDoneViewController.h"
+#import "HEMResetSenseViewController.h"
+#import "HEMResetDoneViewController.h"
 
 @implementation HEMUpgradeFlow
 
@@ -90,27 +94,50 @@
 
 #pragma mark - Next by swapping controllers
 
+- (HEMOnboardingController*)controllerAfterPillController {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    HEMOnboardingController* controller = nil;
+    if ([service isDFURequiredForSense]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
+    } else if ([service isVoiceAvailable]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+    } else {
+        controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+    }
+    return controller;
+}
+
 - (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
     HEMOnboardingController* controller = nil;
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
     
     if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateSensePairViewController];
     } else if ([currentViewController isKindOfClass:[HEMSensePairViewController class]]) {
+        
         HEMSensePairViewController* pairVC = (id) currentViewController;
         if ([pairVC isSenseConnectedToWiFi]) {
             controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
         }
+        
     } else if ([currentViewController isKindOfClass:[HEMWifiPasswordViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
     } else if ([currentViewController isKindOfClass:[HEMSenseUpgradedViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
     } else if ([currentViewController isKindOfClass:[HEMPillSetupViewController class]]) {
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        if ([service isDFURequiredForSense]) {
-            controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
-        } else if ([service isVoiceAvailable]) {
-            controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+        controller = [self controllerAfterPillController];
+    } else if ([currentViewController isKindOfClass:[HEMSenseDFUViewController class]]) {
+        
+        if (![service isVoiceAvailable]) {
+            controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
         }
+        
+    } else if ([currentViewController isKindOfClass:[HEMVoiceTutorialViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
+    } else if ([currentViewController isKindOfClass:[HEMSetupDoneViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+    } else if ([currentViewController isKindOfClass:[HEMResetSenseViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateResetDoneViewController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];
@@ -118,13 +145,21 @@
     return controller;
 }
 
-- (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController *)controller {
-    return nil;
+- (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController *)currentViewController {
+    HEMOnboardingController* controller = nil;
+    
+    if ([currentViewController isKindOfClass:[HEMPillDescriptionViewController class]]) {
+        controller = [self controllerAfterPillController];
+    }
+    
+    [self prepareNextController:controller fromController:currentViewController];
+    
+    return controller;
 }
 
 - (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip {
     if (skip) {
-        return [self controllerToSwapInAfterViewController:controller];
+        return [self controllerToSwapInAfterSkipping:controller];
     } else {
         return [self controllerToSwapInAfterViewController:controller];
     }
@@ -133,22 +168,8 @@
 #pragma mark - Completion
 
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller {
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    BOOL senseRequiresUpdate = [service isDFURequiredForSense];
-    BOOL hasVoice = [service isVoiceAvailable];
-    BOOL finishAfterPillPairing = !senseRequiresUpdate
-        && !hasVoice
-        && ([controller isKindOfClass:[HEMPillSetupViewController class]]
-            || [controller isKindOfClass:[HEMPillDescriptionViewController class]]);
-    BOOL finishAfterSenseDFU = !finishAfterPillPairing
-        && !hasVoice
-        && senseRequiresUpdate
-        && [controller isKindOfClass:[HEMSenseDFUViewController class]];
-    BOOL finishAfterVoice = !finishAfterPillPairing
-        && !finishAfterSenseDFU
-        && hasVoice
-        && [controller isKindOfClass:[HEMVoiceTutorialViewController class]];
-    return finishAfterPillPairing || finishAfterSenseDFU || finishAfterVoice;
+    return [controller isKindOfClass:[HEMResetSenseViewController class]]
+        || [controller isKindOfClass:[HEMResetDoneViewController class]];
 }
 
 #pragma mark - Preparing next screen

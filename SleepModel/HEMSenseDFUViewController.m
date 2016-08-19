@@ -56,11 +56,11 @@
 }
 
 - (void)senseUpdateLaterFrom:(HEMSenseDFUPresenter *)presenter {
-    [self next];
+    [self next:YES];
 }
 
 - (void)senseUpdateCompletedFrom:(HEMSenseDFUPresenter *)presenter {
-    [self next];
+    [self next:NO];
 }
 
 - (void)showConfirmationWithTitle:(NSString*)title
@@ -94,13 +94,15 @@
 
 #pragma mark - Flow
 
-- (void)next {
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    if ([service isVoiceAvailable]) {
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard voiceTutorialSegueIdentifier]
-                                  sender:self];
-    } else {
-        [self completeOnboarding];
+- (void)next:(BOOL)skip {
+    if (![self continueWithFlowBySkipping:skip]) {
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        if ([service isVoiceAvailable]) {
+            NSString* voiceSegue = [HEMOnboardingStoryboard voiceTutorialSegueIdentifier];
+            [self performSegueWithIdentifier:voiceSegue sender:self];
+        } else {
+            [self completeOnboarding];
+        }
     }
 }
 

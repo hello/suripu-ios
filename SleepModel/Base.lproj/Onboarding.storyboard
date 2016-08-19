@@ -2212,11 +2212,180 @@ what's the temperature?"</string>
                         <outlet property="illustrationImageView" destination="Sef-ar-nxu" id="ByQ-Sa-LEp"/>
                         <outlet property="titleHeightConstraint" destination="WqJ-Eb-wvA" id="G03-wr-X8N"/>
                         <outlet property="titleLabel" destination="l2r-jW-l2c" id="02f-bK-c73"/>
+                        <segue destination="k3l-zE-uHk" kind="show" identifier="reset" id="lI8-WH-MFJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pws-xE-yMm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18831" y="910"/>
+            <point key="canvasLocation" x="18840" y="910"/>
+        </scene>
+        <!--Reset Sense View Controller-->
+        <scene sceneID="wMh-KW-h7m">
+            <objects>
+                <viewController storyboardIdentifier="resetSense" id="k3l-zE-uHk" customClass="HEMResetSenseViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GTh-pQ-RcD"/>
+                        <viewControllerLayoutGuide type="bottom" id="N4E-cN-PXC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V58-xl-yVN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset your original Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ws-rV-Oms">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="3E4-nJ-HMw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resetting your original Sense will return it to factory settings." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRD-Cf-aqm">
+                                <rect key="frame" x="20" y="68" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="originalSense" translatesAutoresizingMaskIntoConstraints="NO" id="hdu-0v-JDJ">
+                                <rect key="frame" x="0.0" y="89" width="600" height="386"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avG-7e-FI4" customClass="HEMActionButton">
+                                <rect key="frame" x="24" y="530" width="552" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="KUA-Eh-YXK"/>
+                                </constraints>
+                                <state key="normal" title="RESET SENSE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lny-4o-nyl">
+                                <rect key="frame" x="24" y="475" width="552" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="wV9-W8-1wk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                <state key="normal" title="I'll do this later">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1ws-rV-Oms" firstAttribute="bottom" secondItem="pRD-Cf-aqm" secondAttribute="top" constant="-10" id="1SJ-Sg-hO0"/>
+                            <constraint firstItem="hdu-0v-JDJ" firstAttribute="leading" secondItem="V58-xl-yVN" secondAttribute="leading" id="7rR-Ma-pDm"/>
+                            <constraint firstItem="N4E-cN-PXC" firstAttribute="top" secondItem="avG-7e-FI4" secondAttribute="bottom" constant="20" id="9f0-fG-SgE"/>
+                            <constraint firstItem="lny-4o-nyl" firstAttribute="leading" secondItem="V58-xl-yVN" secondAttribute="leadingMargin" constant="4" id="ARP-Di-l84"/>
+                            <constraint firstAttribute="trailing" secondItem="1ws-rV-Oms" secondAttribute="trailing" constant="20" id="DMY-AY-MdV"/>
+                            <constraint firstAttribute="trailing" secondItem="pRD-Cf-aqm" secondAttribute="trailing" constant="20" id="E1Q-kF-Zjl"/>
+                            <constraint firstItem="1ws-rV-Oms" firstAttribute="leading" secondItem="V58-xl-yVN" secondAttribute="leading" constant="20" id="NaW-LO-3RC"/>
+                            <constraint firstItem="hdu-0v-JDJ" firstAttribute="bottom" secondItem="lny-4o-nyl" secondAttribute="top" id="SDw-S9-ZAD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lny-4o-nyl" secondAttribute="trailing" constant="4" id="Vfx-KR-ckS"/>
+                            <constraint firstAttribute="trailing" secondItem="hdu-0v-JDJ" secondAttribute="trailing" id="WF4-vd-qqW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="avG-7e-FI4" secondAttribute="trailing" constant="4" id="iGL-Sd-ggp"/>
+                            <constraint firstItem="pRD-Cf-aqm" firstAttribute="leading" secondItem="V58-xl-yVN" secondAttribute="leading" constant="20" id="ihy-3n-ySB"/>
+                            <constraint firstItem="N4E-cN-PXC" firstAttribute="top" secondItem="lny-4o-nyl" secondAttribute="bottom" constant="75" id="m4l-Wb-Sfg"/>
+                            <constraint firstItem="avG-7e-FI4" firstAttribute="leading" secondItem="V58-xl-yVN" secondAttribute="leadingMargin" constant="4" id="pfN-QT-5zv"/>
+                            <constraint firstItem="1ws-rV-Oms" firstAttribute="top" secondItem="GTh-pQ-RcD" secondAttribute="bottom" constant="4" id="tyk-6G-fZr"/>
+                            <constraint firstItem="hdu-0v-JDJ" firstAttribute="top" secondItem="pRD-Cf-aqm" secondAttribute="bottom" id="uJn-kR-Jcf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="pRD-Cf-aqm" id="Xky-YG-4qL"/>
+                        <outlet property="descriptionTopConstraint" destination="1SJ-Sg-hO0" id="YgT-05-uMC"/>
+                        <outlet property="illustrationView" destination="hdu-0v-JDJ" id="rWL-ok-QtT"/>
+                        <outlet property="laterButton" destination="lny-4o-nyl" id="J7p-mI-fDV"/>
+                        <outlet property="resetButton" destination="avG-7e-FI4" id="jNZ-ET-6gv"/>
+                        <outlet property="titleHeightConstraint" destination="3E4-nJ-HMw" id="t0c-b2-XJb"/>
+                        <outlet property="titleLabel" destination="1ws-rV-Oms" id="1oU-YR-3Dx"/>
+                        <segue destination="JxP-XP-0BB" kind="show" identifier="done" id="pca-Di-ehp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ntm-oT-pCm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="19618" y="1437"/>
+        </scene>
+        <!--Reset Done View Controller-->
+        <scene sceneID="1Kk-VL-SYa">
+            <objects>
+                <viewController storyboardIdentifier="resetDone" id="JxP-XP-0BB" customClass="HEMResetDoneViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="q5C-BT-AzL"/>
+                        <viewControllerLayoutGuide type="bottom" id="qwn-Km-7gs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NuI-dw-n6H">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseBackground" translatesAutoresizingMaskIntoConstraints="NO" id="78J-C9-ZhS">
+                                <rect key="frame" x="0.0" y="272" width="600" height="210"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset your original Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcK-vV-96H">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="stN-YA-XWc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQy-SK-PKh">
+                                <rect key="frame" x="20" y="68" width="560" height="102"/>
+                                <string key="text">Plug your original Sense into a power outlet, and it will automatically reset within the next two hours. 
+
+There’s nothing else you need to do — you’ll know it’s finished when it glows purple. </string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sensePurple" translatesAutoresizingMaskIntoConstraints="NO" id="6eX-HB-bau">
+                                <rect key="frame" x="0.0" y="261" width="600" height="184"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="184" id="AMu-I0-kec"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dFo-hq-p86" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="9Ix-yN-13b"/>
+                                </constraints>
+                                <state key="normal" title="DONE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="finish:" destination="JxP-XP-0BB" eventType="touchUpInside" id="eEY-re-pRh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="6eX-HB-bau" secondAttribute="trailing" id="1rf-Tb-M7D"/>
+                            <constraint firstItem="qwn-Km-7gs" firstAttribute="top" secondItem="dFo-hq-p86" secondAttribute="bottom" constant="20" id="4fS-FA-gdd"/>
+                            <constraint firstItem="dQy-SK-PKh" firstAttribute="leading" secondItem="NuI-dw-n6H" secondAttribute="leading" constant="20" id="5EL-yy-D3b"/>
+                            <constraint firstAttribute="trailing" secondItem="78J-C9-ZhS" secondAttribute="trailing" id="CnX-SG-DAc"/>
+                            <constraint firstItem="tcK-vV-96H" firstAttribute="leading" secondItem="NuI-dw-n6H" secondAttribute="leading" constant="20" id="FVg-1H-9TL"/>
+                            <constraint firstItem="78J-C9-ZhS" firstAttribute="leading" secondItem="NuI-dw-n6H" secondAttribute="leading" id="ITt-uo-000"/>
+                            <constraint firstAttribute="trailing" secondItem="dFo-hq-p86" secondAttribute="trailing" constant="20" id="M5e-7q-GhV"/>
+                            <constraint firstItem="dFo-hq-p86" firstAttribute="leading" secondItem="NuI-dw-n6H" secondAttribute="leading" constant="20" id="akT-gZ-VeD"/>
+                            <constraint firstItem="qwn-Km-7gs" firstAttribute="top" secondItem="78J-C9-ZhS" secondAttribute="bottom" constant="118" id="dmZ-Ex-WYF"/>
+                            <constraint firstItem="tcK-vV-96H" firstAttribute="bottom" secondItem="dQy-SK-PKh" secondAttribute="top" constant="-10" id="gqG-r7-wlK"/>
+                            <constraint firstItem="6eX-HB-bau" firstAttribute="leading" secondItem="NuI-dw-n6H" secondAttribute="leading" id="izb-tH-fYB"/>
+                            <constraint firstAttribute="trailing" secondItem="dQy-SK-PKh" secondAttribute="trailing" constant="20" id="lhB-Ph-XC4"/>
+                            <constraint firstAttribute="trailing" secondItem="tcK-vV-96H" secondAttribute="trailing" constant="20" id="mhp-QB-1bF"/>
+                            <constraint firstItem="tcK-vV-96H" firstAttribute="top" secondItem="q5C-BT-AzL" secondAttribute="bottom" constant="4" id="t1x-4v-Da3"/>
+                            <constraint firstItem="6eX-HB-bau" firstAttribute="top" secondItem="78J-C9-ZhS" secondAttribute="top" constant="-11" id="zaX-ip-S7C"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="dQy-SK-PKh" id="RCq-Pe-vUJ"/>
+                        <outlet property="descriptionTopConstraint" destination="gqG-r7-wlK" id="LtP-0c-bTc"/>
+                        <outlet property="titleHeightConstraint" destination="stN-YA-XWc" id="cKf-Rk-TCM"/>
+                        <outlet property="titleLabel" destination="tcK-vV-96H" id="zOd-36-8lQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zpC-mr-DpB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="20379" y="1437"/>
         </scene>
         <!--SenseDFU View Controller-->
         <scene sceneID="oof-oH-4Rh">
@@ -3521,6 +3690,7 @@ Flip the switch to On</string>
         <image name="listShadow" width="320" height="4"/>
         <image name="male" width="75" height="72"/>
         <image name="map" width="320" height="218"/>
+        <image name="originalSense" width="375" height="250"/>
         <image name="sampleNotification" width="320" height="186"/>
         <image name="sense" width="186" height="183"/>
         <image name="senseAllSet" width="375" height="233"/>
@@ -3539,15 +3709,15 @@ Flip the switch to On</string>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BBN-wL-Nmg"/>
-        <segue reference="tkT-Pb-lgk"/>
-        <segue reference="gUR-KW-V2G"/>
-        <segue reference="l0v-WX-q0S"/>
-        <segue reference="ABK-Gx-jne"/>
+        <segue reference="7LA-fg-2Jb"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="Sda-jg-aqk"/>
         <segue reference="6ED-su-wCY"/>
         <segue reference="0DP-Ib-Jz4"/>
         <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="v6v-Rh-oSf"/>
+        <segue reference="tkT-Pb-lgk"/>
+        <segue reference="BBN-wL-Nmg"/>
         <segue reference="wdw-bO-x3J"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

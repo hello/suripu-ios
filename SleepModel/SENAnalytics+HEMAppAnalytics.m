@@ -66,6 +66,7 @@ NSString* const kHEMAnalyticsEventPropBluetooth = @"bluetooth";
 NSString* const kHEMAnalyticsEventPropAudio = @"enhanced_audio";
 NSString* const kHEMAnalyticsEventPropSensePairingMode = @"sense_pairing_mode";
 NSString* const kHEMAnalyticsEventPropSensePairing = @"sense_pairing";
+NSString* const kHEMAnalyticsEventPropResetSense = @"reset_sense";
 NSString* const kHEMAnalyticsEventPropSenseSetup = @"setup_sense";
 NSString* const kHEMAnalyticsEventPropWiFiScan = @"wifi_scan";
 NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";

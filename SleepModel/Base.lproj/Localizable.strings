@@ -907,3 +907,7 @@
 "upgrade.pill.unpair.error.message" = "Unable to unpair your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "upgrade.pill.checking-pill" = "Checking for Sleep Pill";
 "upgrade.pill.checking-pill.error.message" = "Unable to check your account for an existing Sleep Pill. Make sure you are connected to the internet and try again.";
+"upgrade.reset.sense.title" = "Reset your original Sense";
+"upgrade.reset.sense.description" = "Resetting your original Sense will return it to factory settings.";
+"upgrade.reset.status" = "Sending request";
+"upgrade.reset.done" = "Sent";

@@ -24,6 +24,8 @@
 #import "HEMUpgradePairPillPresenter.h"
 #import "HEMSenseDFUViewController.h"
 #import "HEMVoiceTutorialViewController.h"
+#import "HEMResetSenseViewController.h"
+#import "HEMSetupDoneViewController.h"
 
 @implementation HEMUpgradeFlow
 
@@ -92,6 +94,7 @@
 
 - (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
     HEMOnboardingController* controller = nil;
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
     
     if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateSensePairViewController];
@@ -105,12 +108,21 @@
     } else if ([currentViewController isKindOfClass:[HEMSenseUpgradedViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
     } else if ([currentViewController isKindOfClass:[HEMPillSetupViewController class]]) {
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        
         if ([service isDFURequiredForSense]) {
             controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
         } else if ([service isVoiceAvailable]) {
             controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+        } else {
+            controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
         }
+        
+    } else if ([currentViewController isKindOfClass:[HEMSenseDFUViewController class]]) {
+        if (![service isVoiceAvailable]) {
+            controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+        }
+    } else if ([currentViewController isKindOfClass:[HEMSetupDoneViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];

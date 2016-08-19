@@ -39,6 +39,7 @@
 +(NSString *)pairPillSegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)registerSegueIdentifier;
++(NSString *)resetSegueIdentifier;
 +(NSString *)roomCheckToSmartAlarmSegueIdentifier;
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
@@ -63,6 +64,8 @@
 +(id)instantiateOnboardingCompleteViewController;
 +(id)instantiatePillDescriptionViewController;
 +(id)instantiatePillPairViewController;
++(id)instantiateResetDoneViewController;
++(id)instantiateResetSenseViewController;
 +(id)instantiateRoomCheckViewController;
 +(id)instantiateSenseAudioViewController;
 +(id)instantiateSenseColorsViewController;

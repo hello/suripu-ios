@@ -52,6 +52,7 @@ extern NSString* const kHEMAnalyticsEventPropBluetooth;
 extern NSString* const kHEMAnalyticsEventPropAudio;
 extern NSString* const kHEMAnalyticsEventPropSensePairingMode;
 extern NSString* const kHEMAnalyticsEventPropSensePairing;
+extern NSString* const kHEMAnalyticsEventPropResetSense;
 extern NSString* const kHEMAnalyticsEventPropSenseSetup;
 extern NSString* const kHEMAnalyticsEventPropWiFiScan;
 extern NSString* const kHEMAnalyticsEventPropWiFiPass;

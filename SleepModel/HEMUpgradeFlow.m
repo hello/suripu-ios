@@ -41,10 +41,6 @@
     return self;
 }
 
-- (NSString*)analyticsEventPrefixForViewController:(UIViewController*)viewController {
-    return HEMAnalyticsEventUpgradePrefix;
-}
-
 - (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
      withPreviousController:(UIViewController*)previousController {
     BOOL enable = YES;

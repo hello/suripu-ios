@@ -21,6 +21,7 @@
 @interface HEMVoiceTutorialPresenter : HEMPresenter
 
 @property (nonatomic, weak) id<HEMVoiceTutorialDelegate> delegate;
+@property (nonatomic, assign) BOOL onboarding;
 
 - (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;

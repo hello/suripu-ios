@@ -385,8 +385,10 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 - (void)didGetVoiceResult:(NSNotification*)note {
     SENSpeechResult* result = [note userInfo][HEMVoiceNotificationInfoResult];
     if (result) {
+        NSDictionary* props = @{kHEManaltyicsEventPropStatus : @([result status])};
         [SENAnalytics track:HEMAnalyticsEventVoiceResponse
-                 properties:@{kHEManaltyicsEventPropStatus : @([result status])}];
+                 properties:props
+                 onboarding:[self onboarding]];
         
         switch ([result status]) {
             case SENSpeechStatusOk:

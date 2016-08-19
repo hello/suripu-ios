@@ -1175,7 +1175,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 #pragma mark - enabled features
 
 - (void)checkFeatures {
-    if (![self features]) {
+    if (![self features] && ![self isGettingFeatures]) {
         [self setGettingFeatures:YES];
         [self setFeatureCheckAttempts:[self featureCheckAttempts] + 1];
         

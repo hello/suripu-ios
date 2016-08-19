@@ -11,6 +11,7 @@
 #import "HEMVoiceTutorialPresenter.h"
 #import "HEMVoiceService.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMOnboardingService.h"
 
 @interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate>
 
@@ -67,6 +68,7 @@
                   andHeightConstraint:[self senseHeightConstraint]];
     [presenter bindWithTitleLabel:[self titleLabel]
                  descriptionLabel:[self descriptionLabel]];
+    [presenter setOnboarding:![[HEMOnboardingService sharedService] hasFinishedOnboarding]];
     [presenter setDelegate:self];
     
     [self addPresenter:presenter];

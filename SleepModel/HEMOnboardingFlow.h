@@ -13,9 +13,6 @@
 
 - (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
      withPreviousController:(UIViewController*)previousController;
-
-- (NSString*)analyticsEventPrefixForViewController:(UIViewController*)viewController;
-
 - (NSString*)nextSegueIdentifierAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller;

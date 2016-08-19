@@ -224,14 +224,9 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 - (NSString*)onboardingAnalyticsEventNameFor:(NSString*)event {
     NSString* reusedEvent = event;
     if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
-        NSString* expectedPrefix = HEMAnalyticsEventOnboardingPrefix;
-        if ([self flow]) {
-            expectedPrefix = [[self flow] analyticsEventPrefixForViewController:self];
-        }
-        
-        if (![event hasPrefix:expectedPrefix]) {
+        if (![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
             reusedEvent = [NSString stringWithFormat:@"%@ %@",
-                           expectedPrefix, event];
+                           HEMAnalyticsEventOnboardingPrefix, event];
         }
     }
     return reusedEvent;
@@ -368,14 +363,15 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 #pragma mark - What's Next
 
 - (void)completeOnboarding {
-    [SENAnalytics track:HEMAnalyticsEventOnbEnd];
-    
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    [service markOnboardingAsComplete];
     
-    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    if (![service hasFinishedOnboarding]) {
+        [SENAnalytics track:HEMAnalyticsEventOnbEnd];
+        [service markOnboardingAsComplete];
+    }
     
     NSString* doneMessage = NSLocalizedString(@"onboarding.end-message.well-done", nil);
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
     [activityView showInView:[[self navigationController] view]
                     withText:doneMessage
                  successMark:YES

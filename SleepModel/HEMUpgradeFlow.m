@@ -26,6 +26,8 @@
 #import "HEMVoiceTutorialViewController.h"
 #import "HEMResetSenseViewController.h"
 #import "HEMSetupDoneViewController.h"
+#import "HEMResetSenseViewController.h"
+#import "HEMResetDoneViewController.h"
 
 @implementation HEMUpgradeFlow
 
@@ -121,8 +123,12 @@
         if (![service isVoiceAvailable]) {
             controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
         }
+    } else if ([currentViewController isKindOfClass:[HEMVoiceTutorialViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
     } else if ([currentViewController isKindOfClass:[HEMSetupDoneViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+    } else if ([currentViewController isKindOfClass:[HEMResetSenseViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateResetDoneViewController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];
@@ -136,7 +142,7 @@
 
 - (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip {
     if (skip) {
-        return [self controllerToSwapInAfterViewController:controller];
+        return [self controllerToSwapInAfterSkipping:controller];
     } else {
         return [self controllerToSwapInAfterViewController:controller];
     }
@@ -145,22 +151,8 @@
 #pragma mark - Completion
 
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller {
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    BOOL senseRequiresUpdate = [service isDFURequiredForSense];
-    BOOL hasVoice = [service isVoiceAvailable];
-    BOOL finishAfterPillPairing = !senseRequiresUpdate
-        && !hasVoice
-        && ([controller isKindOfClass:[HEMPillSetupViewController class]]
-            || [controller isKindOfClass:[HEMPillDescriptionViewController class]]);
-    BOOL finishAfterSenseDFU = !finishAfterPillPairing
-        && !hasVoice
-        && senseRequiresUpdate
-        && [controller isKindOfClass:[HEMSenseDFUViewController class]];
-    BOOL finishAfterVoice = !finishAfterPillPairing
-        && !finishAfterSenseDFU
-        && hasVoice
-        && [controller isKindOfClass:[HEMVoiceTutorialViewController class]];
-    return finishAfterPillPairing || finishAfterSenseDFU || finishAfterVoice;
+    return [controller isKindOfClass:[HEMResetSenseViewController class]]
+        || [controller isKindOfClass:[HEMResetDoneViewController class]];
 }
 
 #pragma mark - Preparing next screen

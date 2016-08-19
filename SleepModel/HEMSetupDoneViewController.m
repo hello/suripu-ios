@@ -24,7 +24,9 @@
 }
 
 - (IBAction)finish:(id)sender {
-    [self completeOnboardingWithoutMessage];
+    if (![self continueWithFlowBySkipping:NO]) {
+        [self completeOnboardingWithoutMessage];
+    }
 }
 
 @end

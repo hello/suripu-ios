@@ -94,6 +94,19 @@
 
 #pragma mark - Next by swapping controllers
 
+- (HEMOnboardingController*)controllerAfterPillController {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    HEMOnboardingController* controller = nil;
+    if ([service isDFURequiredForSense]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
+    } else if ([service isVoiceAvailable]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+    } else {
+        controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+    }
+    return controller;
+}
+
 - (UIViewController*)controllerToSwapInAfterViewController:(UIViewController*)currentViewController {
     HEMOnboardingController* controller = nil;
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
@@ -101,28 +114,24 @@
     if ([currentViewController isKindOfClass:[HEMNoBLEViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateSensePairViewController];
     } else if ([currentViewController isKindOfClass:[HEMSensePairViewController class]]) {
+        
         HEMSensePairViewController* pairVC = (id) currentViewController;
         if ([pairVC isSenseConnectedToWiFi]) {
             controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
         }
+        
     } else if ([currentViewController isKindOfClass:[HEMWifiPasswordViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateSenseUpgradedViewController];
     } else if ([currentViewController isKindOfClass:[HEMSenseUpgradedViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
     } else if ([currentViewController isKindOfClass:[HEMPillSetupViewController class]]) {
-        
-        if ([service isDFURequiredForSense]) {
-            controller = (id) [HEMOnboardingStoryboard instantiateSenseDFUViewController];
-        } else if ([service isVoiceAvailable]) {
-            controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
-        } else {
-            controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
-        }
-        
+        controller = [self controllerAfterPillController];
     } else if ([currentViewController isKindOfClass:[HEMSenseDFUViewController class]]) {
+        
         if (![service isVoiceAvailable]) {
             controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
         }
+        
     } else if ([currentViewController isKindOfClass:[HEMVoiceTutorialViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
     } else if ([currentViewController isKindOfClass:[HEMSetupDoneViewController class]]) {
@@ -136,8 +145,16 @@
     return controller;
 }
 
-- (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController *)controller {
-    return nil;
+- (UIViewController*)controllerToSwapInAfterSkipping:(UIViewController *)currentViewController {
+    HEMOnboardingController* controller = nil;
+    
+    if ([currentViewController isKindOfClass:[HEMPillDescriptionViewController class]]) {
+        controller = [self controllerAfterPillController];
+    }
+    
+    [self prepareNextController:controller fromController:currentViewController];
+    
+    return controller;
 }
 
 - (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip {

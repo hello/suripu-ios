@@ -73,6 +73,9 @@
     NSString* step = kHEMAnalyticsEventPropResetSense;
     NSDictionary* properties = @{kHEMAnalyticsEventPropStep : step};
     [SENAnalytics track:kHEMAnalyticsEventOnBHelp properties:properties];
+    
+    NSString* page = NSLocalizedString(@"help.url.slug.factory-reset", nil);
+    [[self delegate] showHelpWithPage:page fromPresenter:self];
 }
 
 @end

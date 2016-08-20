@@ -41,16 +41,6 @@
     return self;
 }
 
-- (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
-     withPreviousController:(UIViewController*)previousController {
-    BOOL enable = YES;
-    if ([previousController isKindOfClass:[HEMNoBLEViewController class]]
-        && [currentViewController isKindOfClass:[HEMSensePairViewController class]]) {
-        enable = NO;
-    }
-    return enable;
-}
-
 #pragma mark - Next using segues
 
 - (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController {
@@ -126,6 +116,8 @@
         
         if (![service isVoiceAvailable]) {
             controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+        } else {
+            controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
         }
         
     } else if ([currentViewController isKindOfClass:[HEMVoiceTutorialViewController class]]) {

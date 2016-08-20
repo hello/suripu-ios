@@ -44,6 +44,14 @@
     [self trackAnalyticsEvent:HEMAnalyticsEventVoiceTutorial];
 }
 
+- (void)trackAnalyticsEvent:(NSString *)event {
+    if ([self flow]) {
+        [SENAnalytics track:event];
+    } else {
+        [SENAnalytics track:event properties:nil onboarding:YES];
+    }
+}
+
 - (void)configurePresenter {
     HEMVoiceService* voiceService = [HEMVoiceService new];
     HEMVoiceTutorialPresenter* presenter =
@@ -68,7 +76,7 @@
                   andHeightConstraint:[self senseHeightConstraint]];
     [presenter bindWithTitleLabel:[self titleLabel]
                  descriptionLabel:[self descriptionLabel]];
-    [presenter setOnboarding:![[HEMOnboardingService sharedService] hasFinishedOnboarding]];
+    [presenter setOnboarding:![self flow]];
     [presenter setDelegate:self];
     
     [self addPresenter:presenter];

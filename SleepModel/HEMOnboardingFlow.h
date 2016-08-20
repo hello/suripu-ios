@@ -11,8 +11,6 @@
 
 @protocol HEMSetupFlow <NSObject>
 
-- (BOOL)enableBackButtonFor:(UIViewController*)currentViewController
-     withPreviousController:(UIViewController*)previousController;
 - (NSString*)nextSegueIdentifierAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller;

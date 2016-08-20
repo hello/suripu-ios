@@ -29,7 +29,15 @@
     [super viewDidLoad];
     [self configureHelpButton];
     [self configurePresenter];
-    [SENAnalytics track:HEMAnalyticsEventSenseDFU];
+    [self trackAnalyticsEvent:HEMAnalyticsEventSenseDFU];
+}
+
+- (void)trackAnalyticsEvent:(NSString *)event {
+    if ([self flow]) {
+        [SENAnalytics track:event];
+    } else {
+        [SENAnalytics track:event properties:nil onboarding:YES];
+    }
 }
 
 - (void)configureHelpButton {
@@ -46,6 +54,7 @@
     [presenter bindWithLaterButton:[self laterButton]];
     [presenter setErrorDelegate:self];
     [presenter setDfuDelegate:self];
+    [presenter setOnboarding:![self flow]];
     [self addPresenter:presenter];
 }
 

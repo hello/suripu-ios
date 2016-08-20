@@ -117,6 +117,7 @@
 - (BOOL)continueWithFlowBySkipping:(BOOL)skip;
 - (void)prepareViewControllerForNextStep:(UIViewController*)nextController;
 
+- (void)endFlow;
 - (void)completeOnboarding;
 - (void)completeOnboardingWithoutMessage;
 

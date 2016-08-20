@@ -16,7 +16,9 @@
 }
 
 - (IBAction)finish:(id)sender {
-    [self completeOnboarding];
+    if (![self continueWithFlowBySkipping:NO]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 @end

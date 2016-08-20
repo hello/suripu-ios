@@ -447,8 +447,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         bytesWritten += actualSize;
     }
     
-    DDLogVerbose(@"protobuf message %@ with size %ld", helloBlePackets, (long)bytesWritten);
-    
     return helloBlePackets;
 }
 

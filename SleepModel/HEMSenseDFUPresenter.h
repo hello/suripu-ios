@@ -32,6 +32,7 @@ typedef void(^HEMSenseDFUActionCallback)(void);
 @interface HEMSenseDFUPresenter : HEMPresenter
 
 @property (nonatomic, weak) id<HEMSenseDFUDelegate> dfuDelegate;
+@property (nonatomic, assign) BOOL onboarding;
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService;
 - (void)bindWithUpdateButton:(UIButton*)updateButton;

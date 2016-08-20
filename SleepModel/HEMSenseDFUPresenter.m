@@ -118,7 +118,10 @@ static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
 - (void)update {
     [self showUpdatingState:YES];
     
-    [SENAnalytics track:HEMAnalyticsEventSenseDFUBegin];
+    [SENAnalytics track:HEMAnalyticsEventSenseDFUBegin
+             properties:nil
+             onboarding:[self onboarding]];
+    
     __weak typeof(self) weakSelf = self;
     [[self onboardingService] forceSenseToUpdateFirmware:^(SENDFUStatus* status) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -132,7 +135,9 @@ static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
         if (error) {
             [strongSelf showUpdateError:error];
         } else {
-            [SENAnalytics track:HEMAnalyticsEventSenseDFUEnd];
+            [SENAnalytics track:HEMAnalyticsEventSenseDFUEnd
+                     properties:nil
+                     onboarding:[self onboarding]];
             [strongSelf finish];
         }
     }];

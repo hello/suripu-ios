@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.2.3
+
+New:
+
+* Optionally show Sense DFU screen in upgrade path
+* Optionally show Voice Tutorial in upgrade path
+* Add factory reset option screen in upgrade path (no API yet)
+
+Fixes:
+
+* Fix issue with Voice tutorial analytics not being consistent with Onboarding prefix
+
 ## 1.5.2.2
 
 New:

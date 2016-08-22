@@ -97,6 +97,7 @@
 "help.url.slug.sense-dfu" = "articles/211890643";
 "help.url.slug.factory-reset" = "articles/213033483";
 "help.url.slug.pairing-sense-over-ble" = "articles/205493235";
+"help.url.slug.new-pill-info" = "articles/211531286";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages

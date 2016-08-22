@@ -40,6 +40,8 @@
     [self setActivityContainerView:containerView];
 }
 
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem { }
+
 - (void)proceed {
     [[self delegate] skip:NO fromPresenter:self];
 }

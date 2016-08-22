@@ -12,6 +12,7 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAlertViewController.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMPillDescriptionViewController() <
     HEMPillDescriptionDelegate,
@@ -44,6 +45,7 @@
     [[self presenter] bindWithContinueButton:[self continueButton]];
     [[self presenter] bindWithLaterButton:[self laterButton]];
     [[self presenter] bindWithActivityContainerView:[[self navigationController] view]];
+    [[self presenter] bindWithNavigationItem:[self navigationItem]];
     
     [self addPresenter:[self presenter]];
 }
@@ -55,6 +57,10 @@
         NSString* segueId = [HEMOnboardingStoryboard pairPillSegueIdentifier];
         [self performSegueWithIdentifier:segueId sender:self];
     }
+}
+
+- (void)showHelpPage:(NSString*)page fromPresenter:(HEMPillDescriptionPresenter*)presenter {
+    [HEMSupportUtil openHelpToPage:page fromController:self];
 }
 
 #pragma mark - HEMPresenterErrorDelegate

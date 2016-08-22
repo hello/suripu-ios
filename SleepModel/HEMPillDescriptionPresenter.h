@@ -13,6 +13,7 @@
 @protocol HEMPillDescriptionDelegate <NSObject>
 
 - (void)skip:(BOOL)skip fromPresenter:(HEMPillDescriptionPresenter*)presenter;
+- (void)showHelpPage:(NSString*)page fromPresenter:(HEMPillDescriptionPresenter*)presenter;
 
 @end
 
@@ -29,6 +30,13 @@
 - (void)bindWithLaterButton:(UIButton*)laterButton;
 
 - (void)bindWithActivityContainerView:(UIView*)containerView;
+
+/**
+ * @discussion
+ * Does nothing by default.  Subclasses should override to decorate the navigation
+ * item as needed
+ */
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 
 /**
  * @discussion

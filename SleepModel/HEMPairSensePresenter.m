@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
             forState:UIControlStateNormal];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [[button titleLabel] setFont:[UIFont button]];
-    [button addTarget:self action:@selector(help) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(showWhyNotGlowing) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)bindWithNextButton:(UIButton*)button {
@@ -374,7 +374,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
         [dialogVC addButtonWithTitle:NSLocalizedString(@"dialog.help.title", nil)
                                style:HEMAlertViewButtonStyleBlueText
                               action:^{
-                                  NSString* helpPage = NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil);
+                                  NSString* helpPage = NSLocalizedString(@"help.url.slug.sense-pairing", nil);
                                   __strong typeof(weakSelf) strongSelf = weakSelf;
                                   [[strongSelf actionDelegate] showHelpWithPage:helpPage fromPresenter:strongSelf];
                               }];
@@ -409,6 +409,11 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 
 - (void)help {
     NSString* page = NSLocalizedString(@"help.url.slug.pairing-sense-over-ble", nil);
+    [[self actionDelegate] showHelpWithPage:page fromPresenter:self];
+}
+
+- (void)showWhyNotGlowing {
+    NSString* page = NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil);
     [[self actionDelegate] showHelpWithPage:page fromPresenter:self];
 }
 

@@ -23,4 +23,8 @@
     [[needButton titleLabel] setFont:[UIFont button]];
 }
 
+- (void)bindWithIllustrationView:(UIImageView*)illustrationView {
+    [illustrationView setImage:[UIImage imageNamed:@"sense"]];
+}
+
 @end

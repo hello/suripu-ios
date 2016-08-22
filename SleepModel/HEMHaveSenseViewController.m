@@ -20,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *orderSenseButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
 
 @end
 
@@ -39,6 +40,7 @@
     [[self presenter] bindWithNeedButton:[self orderSenseButton]];
     [[self presenter] bindWithTitleLabel:[self titleLabel]
                         descriptionLabel:[self descriptionLabel]];
+    [[self presenter] bindWithIllustrationView:[self illustrationView]];
     [[self presenter] bindWithNavigationItem:[self navigationItem]];
     [[self presenter] setActionDelegate:self];
     

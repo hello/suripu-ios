@@ -374,7 +374,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
         [dialogVC addButtonWithTitle:NSLocalizedString(@"dialog.help.title", nil)
                                style:HEMAlertViewButtonStyleBlueText
                               action:^{
-                                  NSString* helpPage = NSLocalizedString(@"help.url.slug.sense-pairing", nil);
+                                  NSString* helpPage = NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil);
                                   __strong typeof(weakSelf) strongSelf = weakSelf;
                                   [[strongSelf actionDelegate] showHelpWithPage:helpPage fromPresenter:strongSelf];
                               }];
@@ -408,7 +408,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 #pragma mark - Actions
 
 - (void)help {
-    NSString* page = NSLocalizedString(@"help.url.slug.sense-pairing", nil);
+    NSString* page = NSLocalizedString(@"help.url.slug.pairing-sense-over-ble", nil);
     [[self actionDelegate] showHelpWithPage:page fromPresenter:self];
 }
 

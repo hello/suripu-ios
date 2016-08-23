@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5.2.4
+
+Fixes:
+
+* Fixed issue where the pill swapping dialog does not unpair existing pill
+* Made last reset screen description in to 1 paragraph instead of 2
+* Changed copy on the first upgrade path screen
+* Added help button to the new pill description screen
+* Fixed copy with the unpaired state for the pill
+* Fixed 4s (yup, the phone itself)
+* Changed voice tutorial copy for the done screen to match Android
+* Pointing pair Sense help links to correct pages
+
 ## 1.5.2.3
 
 New:

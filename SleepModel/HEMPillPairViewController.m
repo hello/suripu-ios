@@ -34,7 +34,10 @@
     
     [super viewDidLoad];
     
-    [self enableBackButton:NO];
+    if (![self delegate]) {
+        [self enableBackButton:NO];
+    }
+    
     [self trackAnalyticsEvent:HEMAnalyticsEventPairPill];
 }
 
@@ -43,6 +46,10 @@
         HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
         [self setPresenter:[[HEMPairPiillPresenter alloc] initWithOnboardingService:onbService]];
     }
+    
+    [[self presenter] setCancellable:[self delegate] != nil];
+    [[self presenter] setErrorDelegate:self];
+    [[self presenter] setDelegate:self];
     
     [[self presenter] bindWithTitleLabel:[self titleLabel]
                         descriptionLabel:[self descriptionLabel]];
@@ -54,8 +61,6 @@
     [[self presenter] bindWithNavigationItem:[self navigationItem]];
     [[self presenter] bindWithStatusLabel:[self activityLabel]];
     [[self presenter] bindWithContentContainerView:[[self navigationController] view]];
-    [[self presenter] setErrorDelegate:self];
-    [[self presenter] setDelegate:self];
     
     [self addPresenter:[self presenter]];
 }

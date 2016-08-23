@@ -57,6 +57,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 @property (nonatomic, strong) SENDFUStatus* currentDFUStatus;
 @property (nonatomic, strong) NSTimer* senseDFUTimer;
 @property (nonatomic, copy)   HEMOnboardingDFUHandler dfuCompletionHandler;
+@property (nonatomic, assign) BOOL senseManagerInitailizedFromDevices;
 
 @property (nonatomic, strong) SENFeatures* features;
 @property (nonatomic, assign) NSInteger featureCheckAttempts;
@@ -182,23 +183,18 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
  *         make sure we're using the actual sense manager that is instantiated
  */
 - (SENSenseManager*)currentSenseManager {
-    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
-    SENSenseManager* manager = nil;
-    if ([deviceService senseManager]) {
-        manager = [deviceService senseManager];
-    } else {
-        manager = _currentSenseManager;
+    if (!_currentSenseManager && ![self senseManagerInitailizedFromDevices]) {
+        SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+        _currentSenseManager = [deviceService senseManager];
+        [self setSenseManagerInitailizedFromDevices:YES];
     }
-    return manager;
+    return _currentSenseManager;
 }
 
-- (void)replaceCurrentSenseManagerWith:(SENSenseManager*)manager {
+- (void)useSenseManager:(SENSenseManager *)manager {
     DDLogVerbose(@"replacing current manager %@, with %@", [self currentSenseManager], manager);
     [self disconnectCurrentSense];
     [self setCurrentSenseManager:manager];
-    if (manager) {
-        [self notifyOfSensePairingChange];
-    }
 }
 
 - (void)stopPreScanning {
@@ -251,8 +247,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         }
         
         if (sense && !error) {
-            SENSenseManager* manager = [[SENSenseManager alloc] initWithSense:sense];
-            [strongSelf replaceCurrentSenseManagerWith:manager];
+            [strongSelf useSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
         }
         
         if (error) {
@@ -463,7 +458,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     if ([self disconnectObserverId] && [self currentSenseManager]) {
         if (![self sensePairingHandler]
             && ![self wifihandler]
-            && ![self linkAccountHandler]) {
+            && ![self linkAccountHandler]
+            && ![self pillPairingHandler]) {
             [[self currentSenseManager] removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
             [self setDisconnectObserverId:nil];
         }
@@ -972,8 +968,10 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
             if ([strongSelf hasFinishedOnboarding]) {
                 [[SENServiceDevice sharedService] loadDeviceInfo:nil];
             }
+            
             [SENAnalytics track:HEMAnalyticsEventSensePaired];
             [strongSelf checkFeatures];
+            [strongSelf notifyOfSensePairingChange];
         } else {
             [SENAnalytics trackError:error];
         }

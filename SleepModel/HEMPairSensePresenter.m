@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     [self showActivityWithMessage:activityMessage completion:^{
         if (preScanned) {
             SENSenseManager* manager = [[SENSenseManager alloc] initWithSense:[service nearestSense]];
-            [service replaceCurrentSenseManagerWith:manager];
+            [service useSenseManager:manager];
             [service clearNearbySensesCache];
             [self setCurrentState:HEMPairSenseStateFound];
             [self executeNextStep];
@@ -384,7 +384,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 
 - (void)failPairing {
     [self setCurrentState:HEMPairSenseStateNotStarted]; // reset
-    [[self onbService] replaceCurrentSenseManagerWith:nil];
+    [[self onbService] useSenseManager:nil];
     [self showCouldNotPairErrorMessage];
 }
 

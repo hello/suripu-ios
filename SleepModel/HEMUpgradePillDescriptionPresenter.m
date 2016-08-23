@@ -72,7 +72,7 @@
                            style:HEMAlertViewButtonStyleRoundRect
                           action:^{
                                __strong typeof(weakSelf) strongSelf = weakSelf;
-                               [[strongSelf delegate] skip:NO fromPresenter:nil];
+                              [strongSelf proceed];
                           }];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"upgrade.actions.skip-new", nil)
                            style:HEMAlertViewButtonStyleBlueText

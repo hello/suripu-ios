@@ -143,9 +143,7 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
         [[self continueButton] showActivityWithWidthConstraint:[self continueWidthConstraint]];
     } else {
         [[self videoView] stop];
-        BOOL onboarding = ![[self onboardingService] hasFinishedOnboarding];
-        [[self skipButton] setHidden:[self pairingAttempts] < kHEMPairPillAttemptsBeforeSkip
-                                         || !onboarding];
+        [[self skipButton] setHidden:[self pairingAttempts] < kHEMPairPillAttemptsBeforeSkip];
         [[self continueButton] setEnabled:YES];
         [[self continueButton] setTitleColor:[UIColor whiteColor]
                                  forState:UIControlStateNormal];

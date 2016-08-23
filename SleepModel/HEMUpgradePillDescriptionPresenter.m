@@ -53,6 +53,16 @@
           forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)bindWithNavigationItem:(UINavigationItem *)navItem {
+    [super bindWithNavigationItem:navItem];
+    UIBarButtonItem* item =
+    [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"helpIconSmall"]
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(moreInfo)];
+    [navItem setRightBarButtonItem:item];
+}
+
 - (void)skipPillPairing {
     NSString* title = NSLocalizedString(@"upgrade.pill.skip-new-alert.title", nil);
     NSString* message = NSLocalizedString(@"upgrade.pill.skip-new-alert.message", nil);
@@ -62,7 +72,7 @@
                            style:HEMAlertViewButtonStyleRoundRect
                           action:^{
                                __strong typeof(weakSelf) strongSelf = weakSelf;
-                               [[strongSelf delegate] skip:NO fromPresenter:nil];
+                              [strongSelf proceed];
                           }];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"upgrade.actions.skip-new", nil)
                            style:HEMAlertViewButtonStyleBlueText
@@ -144,6 +154,11 @@
     } else {
         [[self delegate] skip:NO fromPresenter:self];
     }
+}
+
+- (void)moreInfo {
+    NSString* page = NSLocalizedString(@"help.url.slug.new-pill-info", nil);
+    [[self delegate] showHelpPage:page fromPresenter:self];
 }
 
 @end

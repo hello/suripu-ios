@@ -45,6 +45,12 @@
     [needButton addTarget:self action:@selector(order) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)bindWithIllustrationView:(UIImageView *)illustrationView {
+    [super bindWithIllustrationView:illustrationView];
+    [illustrationView setImage:[UIImage imageNamed:@"sensePlacement"]];
+    [illustrationView setContentMode:UIViewContentModeScaleAspectFit];
+}
+
 #pragma mark - Actions
 
 - (void)cancel {

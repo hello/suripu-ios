@@ -27,5 +27,6 @@
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 - (void)bindWithNextButton:(UIButton*)nextButton;
 - (void)bindWithNeedButton:(UIButton*)needButton;
+- (void)bindWithIllustrationView:(UIImageView*)illustrationView;
 
 @end

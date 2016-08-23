@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
             forState:UIControlStateNormal];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [[button titleLabel] setFont:[UIFont button]];
-    [button addTarget:self action:@selector(help) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(showWhyNotGlowing) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)bindWithNextButton:(UIButton*)button {
@@ -408,7 +408,12 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 #pragma mark - Actions
 
 - (void)help {
-    NSString* page = NSLocalizedString(@"help.url.slug.sense-pairing", nil);
+    NSString* page = NSLocalizedString(@"help.url.slug.pairing-sense-over-ble", nil);
+    [[self actionDelegate] showHelpWithPage:page fromPresenter:self];
+}
+
+- (void)showWhyNotGlowing {
+    NSString* page = NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil);
     [[self actionDelegate] showHelpWithPage:page fromPresenter:self];
 }
 

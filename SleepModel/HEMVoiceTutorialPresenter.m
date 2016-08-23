@@ -434,6 +434,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     [self prepareSenseRingColor:[UIColor grey4]];
     
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
+        [[self tryNowLabel] setAlpha:1.0f];
         [[self speechCommandLabel] setAlpha:1.0f];
         [[self speechErrorLabel] setAlpha:0.0f];
         [self updatesenseRingColor];
@@ -462,6 +463,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     
     [self prepareSenseRingColor:[UIColor red4]];
     
+    [[self tryNowLabel] setAlpha:0.0f];
     [[self speechErrorLabel] setText:message];
     [[self speechErrorLabel] sizeToFit];
     [[self speechErrorLabel] setHidden:NO];
@@ -491,6 +493,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 - (void)showCorrectResponse {
     [self stopListeningForVoiceResult];
     
+    [[self tryNowLabel] setAlpha:0.0f];
     [[self laterButton] setHidden:YES];
     [[self navItem] setRightBarButtonItem:nil];
 

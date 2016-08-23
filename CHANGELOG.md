@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.2.5
+
+New:
+
+* Removed audio player that was shown in the Timeline for dev / beta builds
+
+Fixes:
+
+* Fixed crasher when skipping pill pairing, during upgrade path
+
 ## 1.5.2.4
 
 Fixes:

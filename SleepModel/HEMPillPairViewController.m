@@ -76,6 +76,11 @@
     }
 }
 
+- (void)showCustomerAlert:(HEMAlertViewController *)alert fromPresenter:(HEMPresenter *)presenter {
+    [alert setViewToShowThrough:[self backgroundViewForAlerts]];
+    [alert showFrom:self];
+}
+
 #pragma mark - HEMPairPillPresenterDelegate
 
 - (void)completePairing:(BOOL)skipped fromPresenter:(HEMPairPiillPresenter *)presenter {

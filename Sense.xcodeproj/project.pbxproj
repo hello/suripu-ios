@@ -569,7 +569,6 @@
 		8A8397A31B683A200079AC24 /* HEMWaveform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWaveform.m; sourceTree = "<group>"; };
 		8A8397A51B68480E0079AC24 /* HEMPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPlayButton.h; sourceTree = "<group>"; };
 		8A8397A61B68480E0079AC24 /* HEMPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPlayButton.m; sourceTree = "<group>"; };
-		8A8397B41B6AE5270079AC24 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		8A8621651B5D5DC20033F44C /* HEMAppReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppReview.h; sourceTree = "<group>"; };
 		8A8621661B5D5DC20033F44C /* HEMAppReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReview.m; sourceTree = "<group>"; };
 		8A90F9A719630C3800AFD110 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1831,7 +1830,6 @@
 		8AC49F8F1981B92100C2BD63 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
-				8A8397B41B6AE5270079AC24 /* test.mp3 */,
 				8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */,
 				8AA8D92619ABACC100349FD0 /* Cells */,
 				8AA8D93119ABDC8B00349FD0 /* Layouts */,

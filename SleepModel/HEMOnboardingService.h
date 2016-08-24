@@ -115,7 +115,13 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  */
 - (SENSense*)nearestSense;
 
-- (void)replaceCurrentSenseManagerWith:(SENSenseManager*)manager;
+/**
+ * @discussion
+ * Call this method to make the service use this specified manager for BLE operations.
+ *
+ * @param manager: sense manager to use, or nil to clear it out
+ */
+- (void)useTempSenseManager:(SENSenseManager*)manager;
 
 /**
  * Stop the pre-scanning that may or may not have been started

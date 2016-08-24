@@ -34,6 +34,8 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 @property (nonatomic, copy) NSString* errorTitle;
 @property (nonatomic, weak) UIButton* skipButton;
 @property (nonatomic, weak) UIView* contentview;
+@property (nonatomic, strong) UIBarButtonItem* cancelItem;
+@property (nonatomic, weak) UINavigationItem* navItem;
 
 @end
 
@@ -102,11 +104,13 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
     [navItem setRightBarButtonItem:[UIBarButtonItem helpButtonWithTarget:self action:@selector(help)]];
     if ([self isCancellable]) {
         NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
-        [navItem setLeftBarButtonItem:[UIBarButtonItem cancelItemWithTitle:cancel
-                                                                     image:nil
-                                                                    target:self
-                                                                    action:@selector(cancel)]];
+        [self setCancelItem:[UIBarButtonItem cancelItemWithTitle:cancel
+                                                           image:nil
+                                                          target:self
+                                                          action:@selector(cancel)]];
+        [navItem setLeftBarButtonItem:[self cancelItem]];
     }
+    [self setNavItem:navItem];
 }
 
 #pragma mark - Presenter events
@@ -136,6 +140,7 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
     _pairing = pairing;
     
     if (pairing) {
+        [[self navItem] setLeftBarButtonItem:nil];
         [[self videoView] playVideoWhenReady];
         [[self continueButton] setEnabled:NO];
         [[self continueButton] setTitleColor:[UIColor tintColor]
@@ -143,6 +148,7 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
         [[self continueButton] showActivityWithWidthConstraint:[self continueWidthConstraint]];
     } else {
         [[self videoView] stop];
+        [[self navItem] setLeftBarButtonItem:[self cancelItem]];
         [[self skipButton] setHidden:[self pairingAttempts] < kHEMPairPillAttemptsBeforeSkip];
         [[self continueButton] setEnabled:YES];
         [[self continueButton] setTitleColor:[UIColor whiteColor]

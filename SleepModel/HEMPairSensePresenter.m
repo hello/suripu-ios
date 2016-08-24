@@ -10,6 +10,7 @@
 #import "HEMPairSensePresenter.h"
 #import "HEMAlertViewController.h"
 #import "HEMOnboardingService.h"
+#import "HEMDeviceService.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
 #import "HEMStyle.h"
@@ -25,6 +26,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     HEMPairSenseStateSettingUpNewSense,
     HEMPairSenseStateWiFiNotDetected,
     HEMPairSenseStateWiFiDetected,
+    HEMPairSenseStateIssuedSwapIntent,
     HEMPairSenseStateAccountLinked,
     HEMPairSenseStateTimezoneSet,
     HEMPairSenseStateForceDataUpload,
@@ -34,6 +36,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 @interface HEMPairSensePresenter()
 
 @property (nonatomic, weak) HEMOnboardingService* onbService;
+@property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) NSLayoutConstraint* descTopConstraint;
 @property (nonatomic, assign) HEMPairSenseState currentState;
 @property (nonatomic, assign) NSInteger linkAccountAttempts;
@@ -45,9 +48,11 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 
 @implementation HEMPairSensePresenter
 
-- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService {
+- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
+                            deviceService:(HEMDeviceService*)deviceService {
     self = [super init];
     if (self) {
+        _deviceService = deviceService;
         _onbService = onbService;
         _linkAccountAttempts = 0;
         _currentState = HEMPairSenseStateNotStarted;
@@ -117,6 +122,13 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
         case HEMPairSenseStateWiFiNotDetected:
             return [self proceed];
         case HEMPairSenseStateWiFiDetected:
+            if ([self isUpgrading]) {
+                [self issueSwapIntent];
+            } else {
+                [self linkAccount];
+            }
+            return;
+        case HEMPairSenseStateIssuedSwapIntent:
             return [self linkAccount];
         case HEMPairSenseStateAccountLinked:
             return [self setTimeZone];
@@ -245,13 +257,36 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     }];
 }
 
+- (void)issueSwapIntent {
+    __weak typeof(self) weakSelf = self;
+    
+    DDLogVerbose(@"issuing swap intent");
+    
+    NSString* activityMessage = NSLocalizedString(@"pairing.activity.linking-account", nil);
+    [self updateActivityText:activityMessage completion:nil];
+    
+    SENSense* currentSense = [[[self onbService] currentSenseManager] sense];
+    [[self deviceService] issueSwapIntentFor:currentSense completion:^(NSError * error) {
+         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!error) {
+            [strongSelf setCurrentState:HEMPairSenseStateIssuedSwapIntent];
+            [strongSelf executeNextStep];
+        } else {
+            [strongSelf showSwapError:error];
+        }
+    }];
+}
+
 - (void)linkAccount {
     __weak typeof(self) weakSelf = self;
     
     DDLogVerbose(@"linking account");
     
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.linking-account", nil);
-    [self updateActivityText:activityMessage completion:nil];
+    if (![[[[self activityCoverView] activityLabel] text] isEqualToString:activityMessage]) {
+        [self updateActivityText:activityMessage completion:nil];
+    }
+    
     [[self onbService] linkCurrentAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
@@ -338,6 +373,19 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 }
 
 #pragma mark - Errors
+
+- (void)showSwapError:(NSError*)error {
+    __weak typeof(self) weakSelf = self;
+    [self stopActivityBefore:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
+        NSString* message = NSLocalizedString(@"pairing.error.link-account-failed", nil);
+        [[strongSelf errorDelegate] showErrorWithTitle:title
+                                            andMessage:message
+                                          withHelpPage:nil
+                                         fromPresenter:strongSelf];
+    }];
+}
 
 - (void)showLinkAccountError:(BOOL)allowWiFiEdit {
     __weak typeof(self) weakSelf = self;

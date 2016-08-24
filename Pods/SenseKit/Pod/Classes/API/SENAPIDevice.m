@@ -20,6 +20,9 @@ static NSString* const SENAPIDeviceOTAEndpoint = @"v1/ota";
 static NSString* const SENAPIDeviceOTAStatusPath = @"status";
 static NSString* const SENAPIDeviceOTARequestPath = @"request_ota";
 
+static NSString* const SENAPIDeviceSwapPath = @"swap";
+static NSString* const SENAPIDeviceSwapParamDeviceId = @"sense_id";
+
 @implementation SENAPIDevice
 
 + (void)getPairedDevices:(SENAPIDataBlock)completion {
@@ -44,6 +47,14 @@ static NSString* const SENAPIDeviceOTARequestPath = @"request_ota";
         }
         completion (pairingInfo, error);
     }];
+}
+
+#pragma mark - Swap
+
++ (void)issueIntentToSwapWithDeviceId:(NSString*)deviceId completion:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingPathComponent:SENAPIDeviceSwapPath];
+    NSDictionary* param = @{SENAPIDeviceSwapParamDeviceId : deviceId ?: @""};
+    [SENAPIClient PUT:path parameters:param completion:completion];
 }
 
 #pragma mark - Unregistering Devices

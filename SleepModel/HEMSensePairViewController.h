@@ -11,11 +11,13 @@
 #import "HEMSensePairDelegate.h"
 
 @class HEMPairSensePresenter;
+@class HEMDeviceService;
 
 @interface HEMSensePairViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMSensePairingDelegate> delegate;
 @property (nonatomic, strong) HEMPairSensePresenter* presenter;
+@property (nonatomic, strong) HEMDeviceService* deviceService;
 @property (nonatomic, assign, readonly, getter=isSenseConnectedToWiFi) BOOL senseConnectedToWiFi;
 
 @end

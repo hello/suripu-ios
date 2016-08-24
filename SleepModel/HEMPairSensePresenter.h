@@ -9,6 +9,7 @@
 #import "HEMPresenter.h"
 
 @class HEMOnboardingService;
+@class HEMDeviceService;
 @class HEMPairSensePresenter;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,8 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readonly) HEMOnboardingService* onbService;
 @property (nonatomic, weak) id<HEMPairSenseActionDelegate> actionDelegate;
 @property (nonatomic, copy) NSSet<NSString*>* deviceIdsToExclude;
+@property (nonatomic, assign, getter=isUpgrading) BOOL upgrade;
 
-- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService
+                            deviceService:(HEMDeviceService*)deviceService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 

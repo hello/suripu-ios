@@ -6,19 +6,19 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <SenseKit/SENPairedDevices.h>
-#import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENSenseMetadata.h>
 
 #import "UIBarButtonItem+HEMNav.h"
 
 #import "HEMUpgradePairSensePresenter.h"
 #import "HEMOnboardingService.h"
+#import "HEMDeviceService.h"
 
 @implementation HEMUpgradePairSensePresenter
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService *)onbService
-                         andDeviceService:(SENServiceDevice*)deviceService {
-    self = [super initWithOnboardingService:onbService];
+                            deviceService:(HEMDeviceService*)deviceService {
+    self = [super initWithOnboardingService:onbService deviceService:deviceService];
     if (self) {
         if ([[deviceService devices] hasPairedSense]) {
             NSString* deviceId = [[[deviceService devices] senseMetadata] uniqueId];
@@ -26,6 +26,7 @@
                 [self setDeviceIdsToExclude:[NSSet setWithObject:deviceId]];
             }
         }
+        [self setUpgrade:YES];
     }
     return self;
 }

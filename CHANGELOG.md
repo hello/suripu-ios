@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.2.6
+
+Fixes:
+
+* Updated copy for setting time zone after setting WiFi
+* Updated copy for pairing / connecting to Sense alert
+* Hide the Try now label in voice tutorial during responses
+* Fixed issue that would cause upgrade path to hang while pairing with Sense
+* Guarding against possible race condition crasher when Sense disconnects unexpectedly
+
 ## 1.5.2.5
 
 New:

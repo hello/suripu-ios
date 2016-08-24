@@ -53,11 +53,11 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 @property (nonatomic, assign) NSInteger senseScanAttempts;
 @property (nonatomic, strong) SENAccount* currentAccount;
 @property (nonatomic, strong) SENSenseManager* currentSenseManager;
+@property (nonatomic, strong) SENSenseManager* tempSenseManager;
 @property (nonatomic, assign, getter=shouldStopPreScanningForSenses) BOOL stopPreScanningForSenses;
 @property (nonatomic, strong) SENDFUStatus* currentDFUStatus;
 @property (nonatomic, strong) NSTimer* senseDFUTimer;
 @property (nonatomic, copy)   HEMOnboardingDFUHandler dfuCompletionHandler;
-@property (nonatomic, assign) BOOL senseManagerInitailizedFromDevices;
 
 @property (nonatomic, strong) SENFeatures* features;
 @property (nonatomic, assign) NSInteger featureCheckAttempts;
@@ -71,6 +71,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 @property (nonatomic, copy) HEMOnboardingWiFiHandler wifihandler;
 @property (nonatomic, copy) HEMOnboardingErrorHandler linkAccountHandler;
 @property (nonatomic, copy) HEMOnboardingErrorHandler pillPairingHandler;
+@property (nonatomic, copy) HEMOnboardingErrorHandler ledHandler;
 
 @end
 
@@ -120,6 +121,13 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     [self setPillPairingHandler:nil];
     [self setWifihandler:nil];
     [self setLinkAccountHandler:nil];
+    
+    if ([self tempSenseManager]) {
+        [[self tempSenseManager] disconnectFromSense];
+        [self setTempSenseManager:nil];
+    }
+    
+    [self stopObservingDisconnectsIfNeeded];
     // leave the current sense manager in place
 }
 
@@ -183,18 +191,22 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
  *         make sure we're using the actual sense manager that is instantiated
  */
 - (SENSenseManager*)currentSenseManager {
-    if (!_currentSenseManager && ![self senseManagerInitailizedFromDevices]) {
+    if ([self tempSenseManager]) {
+        return [self tempSenseManager];
+    } else if (!_currentSenseManager) {
         SENServiceDevice* deviceService = [SENServiceDevice sharedService];
-        _currentSenseManager = [deviceService senseManager];
-        [self setSenseManagerInitailizedFromDevices:YES];
+        return [deviceService senseManager];
+    } else {
+        return _currentSenseManager;
     }
-    return _currentSenseManager;
 }
 
-- (void)useSenseManager:(SENSenseManager *)manager {
-    DDLogVerbose(@"replacing current manager %@, with %@", [self currentSenseManager], manager);
+- (void)useTempSenseManager:(SENSenseManager *)manager {
+    DDLogVerbose(@"using temp sense manager %@", [manager sense]);
     [self disconnectCurrentSense];
-    [self setCurrentSenseManager:manager];
+    if (manager) {
+        [self setTempSenseManager:manager];
+    }
 }
 
 - (void)stopPreScanning {
@@ -247,7 +259,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         }
         
         if (sense && !error) {
-            [strongSelf useSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
+            [strongSelf useTempSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
         }
         
         if (error) {
@@ -449,6 +461,10 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                 [SENAnalytics trackError:internalError];
                 [strongSelf pillPairingHandler] (internalError);
                 [strongSelf setPillPairingHandler:nil];
+            } else if ([strongSelf ledHandler]) {
+                [SENAnalytics trackError:internalError];
+                [strongSelf ledHandler] (internalError);
+                [strongSelf setLedHandler:nil];
             }
         }];
     }
@@ -459,7 +475,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         if (![self sensePairingHandler]
             && ![self wifihandler]
             && ![self linkAccountHandler]
-            && ![self pillPairingHandler]) {
+            && ![self pillPairingHandler]
+            && ![self ledHandler]) {
             [[self currentSenseManager] removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
             [self setDisconnectObserverId:nil];
         }
@@ -470,12 +487,19 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 
 - (void)spinTheLEDs:(HEMOnboardingErrorHandler)completion {
     if ([self currentSenseManager]) {
+        [self setLedHandler:completion];
+        [self observeUnexpectedDisconnects];
+        
+        __weak typeof(self) weakSelf = self;
+        
         [[self currentSenseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
                 [SENAnalytics trackError: error];
             }
-            if (completion) {
-                completion (error);
+            if ([strongSelf ledHandler]) {
+                [strongSelf ledHandler] (error);
+                [strongSelf setLedHandler:nil];
             }
         }];
     } else if (completion) {
@@ -488,11 +512,18 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 
 - (void)resetLED:(HEMOnboardingErrorHandler)completion {
     if ([self currentSenseManager]) {
+        [self setLedHandler:completion];
+        [self observeUnexpectedDisconnects];
+        
+        __weak typeof(self) weakSelf = self;
+        
         BOOL onboarding = ![self hasFinishedOnboarding];
         SENSenseLEDState state = onboarding ? SENSenseLEDStatePair : SENSenseLEDStateOff;
         [[self currentSenseManager] setLED:state completion:^(id response, NSError *error) {
-            if (completion) {
-                completion (error);
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf ledHandler]) {
+                [strongSelf ledHandler] (error);
+                [strongSelf setLedHandler:nil];
             }
         }];
     } else if (completion) {
@@ -970,6 +1001,12 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
             }
             
             [SENAnalytics track:HEMAnalyticsEventSensePaired];
+            
+            if ([strongSelf tempSenseManager]) {
+                [strongSelf setCurrentSenseManager:[strongSelf tempSenseManager]];
+                [strongSelf setTempSenseManager:nil];
+            }
+            
             [strongSelf checkFeatures];
             [strongSelf notifyOfSensePairingChange];
         } else {

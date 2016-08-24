@@ -139,7 +139,7 @@
 "wifi.error.link-account-title" = "Failed to Link Account";
 "wifi.error.timezone-title" = "Setting Time Zone Failed";
 "wifi.activity.setting-wifi" = "Setting WiFi credentials";
-"wifi.activity.setting-timezone" = "Setting timezone";
+"wifi.activity.setting-timezone" = "Setting time zone";
 "wifi.error.set-sense-general" = "There was a problem connecting Sense to WiFi. Make sure Sense is plugged in and nearby and try again.";
 "wifi.activity.scanning" = "Finding WiFi networks...";
 "wifi.error.invalid-input" = "The WiFi credentials provided are invalid. Please ensure you have entered everything correctly.";

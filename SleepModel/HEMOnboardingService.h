@@ -121,7 +121,7 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  *
  * @param manager: sense manager to use, or nil to clear it out
  */
-- (void)useSenseManager:(SENSenseManager*)manager;
+- (void)useTempSenseManager:(SENSenseManager*)manager;
 
 /**
  * Stop the pre-scanning that may or may not have been started

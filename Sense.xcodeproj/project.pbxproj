@@ -3277,7 +3277,6 @@
 				6003F588195388D20070C39A /* Resources */,
 				BF7F1BDB19E304050028F799 /* Embed App Extensions */,
 				8B38885B1C17B46B0036250B /* Run Info.plist ATS Update */,
-				67BDAC11372D0D75C46A2047 /* Upload Bugsnag dSYM */,
 				69DE724F6CF308D19D81AE58 /* 📦 Embed Pods Frameworks */,
 				D6CC4F7EB17986BEA3391B4F /* 📦 Copy Pods Resources */,
 			);
@@ -3541,21 +3540,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		67BDAC11372D0D75C46A2047 /* Upload Bugsnag dSYM */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Bugsnag dSYM";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/usr/bin/env ruby";
-			shellScript = "#!/usr/bin/env ruby\n\nrequire 'shellwords'\n\n\nupload_server_url = \"https://upload.bugsnag.com/\"\nto_upload = ARGV\nif to_upload.include?(\"-h\") ||\n    to_upload.include?(\"--help\") || to_upload.length == 0\n    puts \"Usage: upload_dsym UUID [UUID..]\"\nend\n\nmissing = []\n\nto_upload.each do |uuid|\n\npaths = `mdfind #{Shellwords.escape(uuid)}`.split(\"\\n\")\nfile = nil\n\npaths.detect do |path|\n        dsyms = Dir[\"#{path}/Contents/Resources/DWARF/*\"] + Dir[\"#{path}/dSYMs/*/Contents/Resources/DWARF/*\"]\n        dsyms.detect do |f|\n        if `dwarfdump -u #{Shellwords.escape(f)}` =~ /UUID: #{Regexp.escape(uuid)}/\n            file = f\n        end\n    end\nend\n\n    if file\n        puts \"Uploading dSYM with UUID: #{uuid}\\n\"\n        puts `curl -F dsym=@#{Shellwords.escape(\"\\\"#{file}\\\"\")} #{Shellwords.escape(upload_server_url)}`\n    else\n        missing << uuid\n    end\nend\n\nunless missing == []\n    puts \"Still missing: #{missing.join(\", \")}.\"\nend";
 			showEnvVarsInLog = 0;
 		};
 		69DE724F6CF308D19D81AE58 /* 📦 Embed Pods Frameworks */ = {

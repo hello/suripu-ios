@@ -139,6 +139,8 @@
     
     if ([currentViewController isKindOfClass:[HEMPillDescriptionViewController class]]) {
         controller = [self controllerAfterPillController];
+    } else if ([currentViewController isKindOfClass:[HEMPillPairViewController class]]) {
+        controller = [self controllerAfterPillController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];

@@ -336,9 +336,11 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
         } else if (completion) {
             completion (YES);
         }
-    } else {
+    } else if (![[[[self activityCoverView] activityLabel] text] isEqualToString:updateMessage]) {
         [[self activityCoverView] updateText:updateMessage completion:completion];
-    }
+    } else if (completion) {
+        completion (YES);
+    } // else, do nothing
 }
 
 #pragma mark - Convenience Methods

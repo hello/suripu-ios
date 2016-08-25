@@ -91,7 +91,9 @@
 - (void)completePairing:(BOOL)skipped fromPresenter:(HEMPairPiillPresenter *)presenter {
     if (![self continueWithFlowBySkipping:skipped]) {
         if ([self delegate] == nil) {
-            NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
+            NSString* segueId = skipped
+                ? [HEMOnboardingStoryboard skipPillPairSegue]
+                : [HEMOnboardingStoryboard doneSegueIdentifier];
             [self performSegueWithIdentifier:segueId sender:self];
         } else {
             [[self delegate] didPairWithPillFrom:self];

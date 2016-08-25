@@ -18,5 +18,6 @@
 @property (nonatomic, strong) SENWifiEndpoint* endpoint;
 @property (nonatomic, weak)   id<HEMWiFiConfigurationDelegate> delegate;
 @property (nonatomic, weak)   id<HEMSensePairingDelegate> sensePairDelegate;
+@property (nonatomic, assign, getter=isUpgrading) BOOL upgrading;
 
 @end

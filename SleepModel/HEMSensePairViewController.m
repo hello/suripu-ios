@@ -13,6 +13,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMAlertViewController.h"
+#import "HEMDeviceService.h"
 
 #import "HEMOnboardingPairSensePresenter.h"
 
@@ -21,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *notGlowingButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseIconHeightConstraint;
-@property (nonatomic, assign, getter=isSenseConnectedToWiFi) BOOL senseConnectedToWiFi;
+@property (assign, nonatomic, getter=isSenseConnectedToWiFi) BOOL senseConnectedToWiFi;
 
 @end
 
@@ -36,7 +37,11 @@
 - (void)configurePresenter {
     if (![self presenter]) {
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        [self setPresenter:[[HEMOnboardingPairSensePresenter alloc] initWithOnboardingService:service]];
+        HEMDeviceService* deviceService = [HEMDeviceService new];
+        
+        [self setPresenter:[[HEMOnboardingPairSensePresenter alloc] initWithOnboardingService:service
+                                                                                deviceService:deviceService]];
+        [self setDeviceService:deviceService];
     }
     
     [[self presenter] bindWithTitleLabel:[self titleLabel]

@@ -9,6 +9,7 @@
 
 #import <LGBluetooth/LGBluetooth.h>
 
+#import <SenseKit/SENSense.h>
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENDeviceMetadata.h>
@@ -223,6 +224,25 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 - (BOOL)meetsPhoneBatteryRequirementForDFU:(float)batteryLevel {
     return batteryLevel > HEMPillDfuMinPhoneBattery;
+}
+
+#pragma mark - Upgrade
+
+- (void)issueSwapIntentFor:(SENSense*)sense completion:(HEMDeviceUpgradeHandler)completion {
+    NSString* senseId = [sense deviceId];
+    if (!senseId) {
+        NSError* error = [self errorWithCode:HEMDeviceErrorInvalidArgument];
+        [SENAnalytics trackError:error];
+        return completion (error);
+    }
+
+    [SENAPIDevice issueIntentToSwapWithDeviceId:senseId completion:^(id data, NSError *error) {
+        // TODO: handle response data to translate status to result
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        completion (error);
+    }];
 }
 
 #pragma mark - Clean up

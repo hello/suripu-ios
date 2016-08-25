@@ -28,6 +28,7 @@
 #import "HEMSetupDoneViewController.h"
 #import "HEMResetSenseViewController.h"
 #import "HEMResetDoneViewController.h"
+#import "HEMDeviceService.h"
 
 @implementation HEMUpgradeFlow
 
@@ -138,6 +139,8 @@
     
     if ([currentViewController isKindOfClass:[HEMPillDescriptionViewController class]]) {
         controller = [self controllerAfterPillController];
+    } else if ([currentViewController isKindOfClass:[HEMPillPairViewController class]]) {
+        controller = [self controllerAfterPillController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];
@@ -167,15 +170,17 @@
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     if ([controller isKindOfClass:[HEMSensePairViewController class]]) {
         
-        SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+        HEMDeviceService* deviceService = [HEMDeviceService new];
         HEMSensePairViewController* pairVC = (id) controller;
         HEMUpgradePairSensePresenter* presenter =
             [[HEMUpgradePairSensePresenter alloc] initWithOnboardingService:service
-                                                           andDeviceService:deviceService];
+                                                              deviceService:deviceService];
+        
         if ([currentController isKindOfClass:[HEMNoBLEViewController class]]) {
             [presenter setCancellable:YES];
         }
         [pairVC setPresenter:presenter];
+        [pairVC setDeviceService:deviceService];
         
     } else if ([controller isKindOfClass:[HEMSenseUpgradedViewController class]]) {
 
@@ -194,7 +199,13 @@
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
         [pillPairVC setPresenter:[[HEMUpgradePairPillPresenter alloc] initWithOnboardingService:service]];
         
+    } else if ([controller isKindOfClass:[HEMWifiPasswordViewController class]]) {
+        
+        HEMWifiPasswordViewController* wiFiVC = (id) controller;
+        [wiFiVC setUpgrading:YES];
+        
     }
+    
     [controller setFlow:self];
 }
 

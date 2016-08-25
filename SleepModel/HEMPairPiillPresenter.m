@@ -168,10 +168,23 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 
 - (void)showErrorMessage:(NSString*)message {
     [self setPairing:NO];
-    [[self errorDelegate] showErrorWithTitle:[self errorTitle]
-                                  andMessage:message
-                                withHelpPage:nil
-                               fromPresenter:self];
+    
+    void(^show)(void) = ^{
+        [[self errorDelegate] showErrorWithTitle:[self errorTitle]
+                                      andMessage:message
+                                    withHelpPage:nil
+                                   fromPresenter:self];
+    };
+    
+    if ([[self activityView] isShowing]) {
+        [[self activityView] dismissWithResultText:nil
+                                   showSuccessMark:NO
+                                            remove:NO
+                                        completion:show];
+    } else {
+        show();
+    }
+
 }
 
 - (NSString*)errorMessageForError:(NSError*)error {

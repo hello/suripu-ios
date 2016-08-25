@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require 'shellwords'
+
+upload_server_url = "https://upload.bugsnag.com/"
+to_upload = ARGV
+if to_upload.include?("-h") ||
+   to_upload.include?("--help") ||
+   to_upload.length == 0
+  puts "Usage: upload_dsym UUID [UUID..]"
+end
+
+missing = []
+
+to_upload.each do |uuid|
+
+  paths = `mdfind #{Shellwords.escape(uuid)}`.split("\n")
+  file = nil
+
+  paths.detect do |path|
+    dsyms = Dir["#{path}/Contents/Resources/DWARF/*"] + Dir["#{path}/dSYMs/*/Contents/Resources/DWARF/*"]
+    dsyms.detect do |f|
+      if `dwarfdump -u #{Shellwords.escape(f)}` =~ /UUID: #{Regexp.escape(uuid)}/
+        file = f
+      end
+    end
+  end
+
+  if file
+    puts "Uploading dSYM with UUID: #{uuid}\n"
+    puts `curl -F dsym=@#{Shellwords.escape("\"#{file}\"")} #{Shellwords.escape(upload_server_url)}`
+  else
+    missing << uuid
+  end
+end
+
+unless missing == []
+  puts "Still missing: #{missing.join(", ")}."
+end

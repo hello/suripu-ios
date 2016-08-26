@@ -27,14 +27,20 @@
 #import "HEMResetSenseViewController.h"
 #import "HEMSetupDoneViewController.h"
 #import "HEMResetSenseViewController.h"
-#import "HEMResetDoneViewController.h"
 #import "HEMDeviceService.h"
+
+@interface HEMUpgradeFlow()
+
+@property (nonatomic, copy) NSString* previousSenseId;
+
+@end
 
 @implementation HEMUpgradeFlow
 
-- (instancetype)init {
+- (instancetype)initWithCurrentSenseId:(NSString*)currentSenseId {
     self = [super init];
     if (self) {
+        _previousSenseId = [currentSenseId copy];
         // we need to do this to warm up the radio to check later
         BOOL on = [HEMBluetoothUtils isBluetoothOn];
         DDLogVerbose(@"is bluetooth on %@", on ? @"y" : @"n");
@@ -125,8 +131,6 @@
         controller = (id) [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
     } else if ([currentViewController isKindOfClass:[HEMSetupDoneViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
-    } else if ([currentViewController isKindOfClass:[HEMResetSenseViewController class]]) {
-        controller = (id) [HEMOnboardingStoryboard instantiateResetDoneViewController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];
@@ -159,8 +163,13 @@
 #pragma mark - Completion
 
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller {
-    return [controller isKindOfClass:[HEMResetSenseViewController class]]
-        || [controller isKindOfClass:[HEMResetDoneViewController class]];
+    if ([controller isKindOfClass:[HEMResetSenseViewController class]]) {
+        [[HEMOnboardingService sharedService] clearAll];
+        [controller dismissViewControllerAnimated:YES completion:nil];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - Preparing next screen
@@ -203,6 +212,11 @@
         
         HEMWifiPasswordViewController* wiFiVC = (id) controller;
         [wiFiVC setUpgrading:YES];
+        
+    } else if ([controller isKindOfClass:[HEMResetSenseViewController class]]) {
+        
+        HEMResetSenseViewController* resetVC = (id) controller;
+        [resetVC setSenseId:[self previousSenseId]];
         
     }
     

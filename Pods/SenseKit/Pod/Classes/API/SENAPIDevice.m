@@ -54,7 +54,15 @@ static NSString* const SENAPIDeviceSwapParamDeviceId = @"sense_id";
 + (void)issueIntentToSwapWithDeviceId:(NSString*)deviceId completion:(SENAPIDataBlock)completion {
     NSString* path = [SENAPIDeviceEndpoint stringByAppendingPathComponent:SENAPIDeviceSwapPath];
     NSDictionary* param = @{SENAPIDeviceSwapParamDeviceId : deviceId ?: @""};
-    [SENAPIClient PUT:path parameters:param completion:completion];
+    [SENAPIClient PUT:path parameters:param completion:^(id data, NSError *error) {
+        if (completion) {
+            SENSwapStatus* status = nil;
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                status = [[SENSwapStatus alloc] initWithDictionary:data];
+            }
+            completion (status, error);
+        }
+    }];
 }
 
 #pragma mark - Unregistering Devices

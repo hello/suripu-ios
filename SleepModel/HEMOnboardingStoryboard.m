@@ -43,7 +43,6 @@ static NSString *const _HEMpillSetupToColors = @"pillSetupToColors";
 static NSString *const _HEMpillSetupVideoCell = @"pillSetupVideoCell";
 static NSString *const _HEMregister = @"register";
 static NSString *const _HEMreset = @"reset";
-static NSString *const _HEMresetDone = @"resetDone";
 static NSString *const _HEMresetSense = @"resetSense";
 static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMroomCheckToSmartAlarm = @"roomCheckToSmartAlarm";
@@ -131,7 +130,6 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(id)instantiateOnboardingCompleteViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMonboardingComplete]; }
 +(id)instantiatePillDescriptionViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDescription]; }
 +(id)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
-+(id)instantiateResetDoneViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMresetDone]; }
 +(id)instantiateResetSenseViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMresetSense]; }
 +(id)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
 +(id)instantiateSenseAudioViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseAudio]; }

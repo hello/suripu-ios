@@ -64,7 +64,6 @@
 +(id)instantiateOnboardingCompleteViewController;
 +(id)instantiatePillDescriptionViewController;
 +(id)instantiatePillPairViewController;
-+(id)instantiateResetDoneViewController;
 +(id)instantiateResetSenseViewController;
 +(id)instantiateRoomCheckViewController;
 +(id)instantiateSenseAudioViewController;

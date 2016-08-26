@@ -10,6 +10,9 @@
 #import <SenseKit/API.h>
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
@@ -160,7 +163,9 @@
 }
 
 - (void)showUpgradePath {
-    HEMUpgradeFlow* flow = [HEMUpgradeFlow new];
+    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+    NSString* currentSenseId = [[[deviceService devices] senseMetadata] uniqueId];
+    HEMUpgradeFlow* flow = [[HEMUpgradeFlow alloc] initWithCurrentSenseId:currentSenseId];;
     HEMUpgradeSensePresenter* upgradePresenter = [HEMUpgradeSensePresenter new];
     HEMHaveSenseViewController* senseVC = [HEMOnboardingStoryboard instantiateNewSenseViewController];
     [senseVC setPresenter:upgradePresenter];

@@ -410,7 +410,6 @@
 		BFF3648A1D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF364891D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m */; };
 		BFF3648D1D665C3E008D4DF8 /* HEMResetSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3648C1D665C3E008D4DF8 /* HEMResetSenseViewController.m */; };
 		BFF364901D667B67008D4DF8 /* HEMResetSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3648F1D667B67008D4DF8 /* HEMResetSensePresenter.m */; };
-		BFF364931D677C6A008D4DF8 /* HEMResetDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF364921D677C6A008D4DF8 /* HEMResetDoneViewController.m */; };
 		BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */; };
 		BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4461A5CD60300B11643 /* HEMDeviceCollectionViewCell.m */; };
 		BFF3B44A1A5DB5DE00B11643 /* HEMNoDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B4491A5DB5DD00B11643 /* HEMNoDeviceCollectionViewCell.m */; };
@@ -1206,8 +1205,6 @@
 		BFF3648C1D665C3E008D4DF8 /* HEMResetSenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMResetSenseViewController.m; sourceTree = "<group>"; };
 		BFF3648E1D667B67008D4DF8 /* HEMResetSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMResetSensePresenter.h; sourceTree = "<group>"; };
 		BFF3648F1D667B67008D4DF8 /* HEMResetSensePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMResetSensePresenter.m; sourceTree = "<group>"; };
-		BFF364911D677C6A008D4DF8 /* HEMResetDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMResetDoneViewController.h; sourceTree = "<group>"; };
-		BFF364921D677C6A008D4DF8 /* HEMResetDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMResetDoneViewController.m; sourceTree = "<group>"; };
 		BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTableViewCell.h; sourceTree = "<group>"; };
 		BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsTableViewCell.m; sourceTree = "<group>"; };
 		BFF3B4451A5CD60300B11643 /* HEMDeviceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceCollectionViewCell.h; sourceTree = "<group>"; };
@@ -3224,8 +3221,6 @@
 				BFF3647C1D629018008D4DF8 /* HEMSenseUpgradedViewController.m */,
 				BFF3648B1D665C3E008D4DF8 /* HEMResetSenseViewController.h */,
 				BFF3648C1D665C3E008D4DF8 /* HEMResetSenseViewController.m */,
-				BFF364911D677C6A008D4DF8 /* HEMResetDoneViewController.h */,
-				BFF364921D677C6A008D4DF8 /* HEMResetDoneViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -4025,7 +4020,6 @@
 				BFB59E101C03A929001BD941 /* HEMTimeZoneService.m in Sources */,
 				BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */,
 				BF55D87E1CA484F500379FBF /* HEMSoundsContainerViewController.m in Sources */,
-				BFF364931D677C6A008D4DF8 /* HEMResetDoneViewController.m in Sources */,
 				BFC99BC01B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m in Sources */,
 				BF5BACFF1C5C266900347185 /* HEMTrendsBaseCell.m in Sources */,
 			);

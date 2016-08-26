@@ -11,6 +11,7 @@
 #import "HEMResetSensePresenter.h"
 #import "HEMSupportUtil.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMDeviceService.h"
 
 @interface HEMResetSenseViewController () <HEMPresenterErrorDelegate, HEMResetPresenterDelegate>
 
@@ -28,9 +29,15 @@
 }
 
 - (void)configurePresenter {
-    if (![self presenter]) {
-        [self setPresenter:[HEMResetSensePresenter new]];
+    if (![self deviceService]) {
+        [self setDeviceService:[HEMDeviceService new]];
     }
+    
+    if (![self presenter]) {
+        [self setPresenter:[[HEMResetSensePresenter alloc] initWithDeviceService:[self deviceService]
+                                                                         senseId:[self senseId]]];
+    }
+    
     [[self presenter] bindWithTitleLabel:[self titleLabel] descriptionLabel:[self descriptionLabel]];
     [[self presenter] bindWithLaterButton:[self laterButton]];
     [[self presenter] bindWithActivityContainerView:[[self navigationController] view]];
@@ -58,10 +65,9 @@
 
 #pragma mark - HEMResetPresenterDelegate
 
-- (void)didFinishWithReset:(BOOL)skipped fromPresenter:(HEMResetSensePresenter *)presenter {
-    if (![self continueWithFlowBySkipping:skipped]) {
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard doneSegueIdentifier]
-                                  sender:self];
+- (void)didFinishWithReset:(BOOL)reset fromPresenter:(HEMResetSensePresenter *)presenter {
+    if (![self continueWithFlowBySkipping:!reset]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

@@ -364,20 +364,25 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 #pragma mark - Flow
 
-- (void)endFlow {
-    NSString* doneMessage = NSLocalizedString(@"onboarding.end-message.well-done", nil);
-    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
-    [activityView showInView:[[self navigationController] view]
-                    withText:doneMessage
-                 successMark:YES
-                  completion:^{
-                      int64_t delay = (int64_t) (HEMOnboardingCompletionDelay*NSEC_PER_SEC);
-                      dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay);
-                      dispatch_after(time, dispatch_get_main_queue(), ^{
-                          HEMOnboardingService* service = [HEMOnboardingService sharedService];
-                          [service notifyOfOnboardingCompletion];
-                      });
-                  }];
+- (void)endFlow:(NSString*)doneMessage {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    
+    if (!doneMessage) {
+        [service notifyOfOnboardingCompletion];
+    } else {
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[[self navigationController] view]
+                        withText:doneMessage
+                     successMark:YES
+                      completion:^{
+                          int64_t delay = (int64_t) (HEMOnboardingCompletionDelay*NSEC_PER_SEC);
+                          dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay);
+                          dispatch_after(time, dispatch_get_main_queue(), ^{
+                              [service notifyOfOnboardingCompletion];
+                          });
+                      }];
+    }
+
 }
 
 - (void)completeOnboarding {
@@ -385,8 +390,18 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     
     [SENAnalytics track:HEMAnalyticsEventOnbEnd];
     [service markOnboardingAsComplete];
-    
-    [self endFlow];
+
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+    [activityView showInView:[[self navigationController] view]
+                    withText:NSLocalizedString(@"onboarding.end-message.well-done", nil)
+                 successMark:YES
+                  completion:^{
+                      int64_t delay = (int64_t) (HEMOnboardingCompletionDelay*NSEC_PER_SEC);
+                      dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay);
+                      dispatch_after(time, dispatch_get_main_queue(), ^{
+                          [service notifyOfOnboardingCompletion];
+                      });
+                  }];
 }
 
 - (void)completeOnboardingWithoutMessage {
@@ -416,7 +431,6 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
         
         if (!canHandle && [[self flow] shouldCompleteFlowAfter:self]) {
             canHandle = YES;
-            [self endFlow];
         }
     }
     return canHandle;

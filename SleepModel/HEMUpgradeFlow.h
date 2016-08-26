@@ -9,6 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "HEMOnboardingFlow.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface HEMUpgradeFlow : NSObject <HEMSetupFlow>
 
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)initWithCurrentSenseId:(NSString*)currentSenseId NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @end
+
+NS_ASSUME_NONNULL_END

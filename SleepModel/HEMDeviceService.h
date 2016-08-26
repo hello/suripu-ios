@@ -43,7 +43,9 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
     HEMDeviceErrorUnlinkSenseFromAccount = -8,
     HEMDeviceErrorSenseNotMatching = -9,
     HEMDeviceErrorNoPillFirmwareURL = -10,
-    HEMDeviceErrorInvalidArgument = -11
+    HEMDeviceErrorInvalidArgument = -11,
+    HEMDeviceErrorSwapErrorMultipleSenses = -12,
+    HEMDeviceErrorSwapErrorPairedToAnother = -13
 };
 
 typedef void(^HEMDevicePillHandler)(SENSleepPill* _Nullable sleepPill, NSError* _Nullable error);

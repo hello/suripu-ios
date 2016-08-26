@@ -18,6 +18,7 @@
 #import <SenseKit/SENSleepPillManager.h>
 #import <SenseKit/SENSleepPill.h>
 #import <SenseKit/SENLocalPreferences.h>
+#import <SenseKit/SENSwapStatus.h>
 
 #import "HEMDeviceService.h"
 #import "HEMConfig.h"
@@ -236,11 +237,26 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
         return completion (error);
     }
 
-    [SENAPIDevice issueIntentToSwapWithDeviceId:senseId completion:^(id data, NSError *error) {
-        // TODO: handle response data to translate status to result
+    __weak typeof(self) weakSelf = self;
+    [SENAPIDevice issueIntentToSwapWithDeviceId:senseId completion:^(SENSwapStatus* status, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        NSError* swapError = error;
+        
+        switch ([status response]) {
+            case SENSwapResponseTooManyDevices:
+                swapError = [strongSelf errorWithCode:HEMDeviceErrorSwapErrorMultipleSenses];
+                break;
+            case SENSwapResponsePairedToAnother:
+                swapError = [strongSelf errorWithCode:HEMDeviceErrorSwapErrorPairedToAnother];
+            default:
+                break;
+        }
+        
         if (error) {
             [SENAnalytics trackError:error];
         }
+        
         completion (error);
     }];
 }

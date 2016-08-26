@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.2.7
+
+New:
+
+* Integrate with swap API
+* Update factory reset screen and perform reset over BLE
+
+Fixes:
+
+* Prevent back button from showing after skipping pill pairing in upgrade flow, that leads to Sense DFU
+* Skipping pill pairing will not take you to clip your pill screen
+
 ## 1.5.2.6
 
 Fixes:

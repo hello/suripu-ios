@@ -60,19 +60,19 @@ static NSString* const HEMDevicesDictPropPills = @"pills";
 }
 
 - (BOOL)hasPairedSense {
-    return [[self senseMetadata] uniqueId] > 0;
+    return [[[self senseMetadata] uniqueId] length] > 0;
 }
 
 - (BOOL)hasPairedPill {
-    return [[self pillMetadata] uniqueId] > 0;
+    return [[[self pillMetadata] uniqueId] length] > 0;
 }
 
 - (void)removePairedPill {
-    [self setPills:[NSArray new]];
+    [self setPills:@[]];
 }
 
 - (void)removePairedSense {
-    [self setSenses:[NSArray new]];
+    [self setSenses:@[]];
 }
 
 @end

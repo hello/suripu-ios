@@ -911,6 +911,8 @@
 "upgrade.pill.checking-pill" = "Checking for Sleep Pill";
 "upgrade.pill.checking-pill.error.message" = "Unable to check your account for an existing Sleep Pill. Make sure you are connected to the internet and try again.";
 "upgrade.reset.sense.title" = "Reset your original Sense";
-"upgrade.reset.sense.description" = "Resetting your original Sense will return it to factory settings.";
+"upgrade.reset.sense.description" = "Reset your original Sense to use with another account or give away. Plug your original Sense into a power outlet and make sure it’s nearby before resetting.";
 "upgrade.reset.status" = "Sending request";
 "upgrade.reset.done" = "Sent";
+"upgrade.reset.error.title" = "Factory reset";
+"upgrade.reset.error.message" = "An error occurred while attempting to factory reset your original Sense. Make sure Sense is plugged in, nearby and try again.";

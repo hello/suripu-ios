@@ -9,9 +9,12 @@
 #import "HEMOnboardingController.h"
 
 @class HEMResetSensePresenter;
+@class HEMDeviceService;
 
 @interface HEMResetSenseViewController : HEMOnboardingController
 
 @property (nonatomic, strong) HEMResetSensePresenter* presenter;
+@property (nonatomic, strong) HEMDeviceService* deviceService;
+@property (nonatomic, copy) NSString* senseId;
 
 @end

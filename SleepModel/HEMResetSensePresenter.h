@@ -9,12 +9,13 @@
 #import "HEMPresenter.h"
 
 @class HEMResetSensePresenter;
+@class HEMDeviceService;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol HEMResetPresenterDelegate <NSObject>
 
-- (void)didFinishWithReset:(BOOL)skipped fromPresenter:(HEMResetSensePresenter*)presenter;
+- (void)didFinishWithReset:(BOOL)reset fromPresenter:(HEMResetSensePresenter*)presenter;
 - (void)showHelpWithPage:(NSString*)page fromPresenter:(HEMResetSensePresenter*)presenter;
 
 @end
@@ -23,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HEMResetPresenterDelegate> delegate;
 
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithDeviceService:(nullable HEMDeviceService*)deviceService
+                              senseId:(nullable NSString*)senseId NS_DESIGNATED_INITIALIZER;
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel;
 - (void)bindWithLaterButton:(UIButton*)laterButton;
 - (void)bindWithResetButton:(UIButton*)resetButton;

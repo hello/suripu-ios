@@ -36,6 +36,9 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 @property (nonatomic, strong) SENPairedDevices* devices;
 @property (nonatomic, strong) SENSleepPillManager* pillManager;
+@property (nonatomic, strong) SENSenseManager* senseManager;
+@property (nonatomic, copy) HEMDeviceResetHandler resetHandler;
+@property (nonatomic, copy) id senseDisconnectObserver;
 
 @end
 
@@ -258,6 +261,74 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
         }
         
         completion (error);
+    }];
+}
+
+- (void)listenForSenseDisconnect {
+    if (![self senseDisconnectObserver]) {
+        __weak typeof(self) weakSelf = self;
+        self.senseDisconnectObserver = [[self senseManager] observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf resetHandler]) {
+                [strongSelf resetHandler] (error);
+                [strongSelf setResetHandler:nil];
+            }
+        }];
+    }
+}
+
+- (void)removeSenseDisconnectObserver {
+    if ([self senseDisconnectObserver] && [self senseManager]) {
+        [[self senseManager] removeUnexpectedDisconnectObserver:[self senseDisconnectObserver]];
+        [self setSenseDisconnectObserver:nil];
+    }
+}
+
+- (void)hardFactoryResetSense:(NSString*)senseId completion:(HEMDeviceResetHandler)completion {
+    __weak typeof(self) weakSelf = self;
+    [self setResetHandler:completion];
+    [self listenForSenseDisconnect];
+    
+    [SENSenseManager whenBleStateAvailable:^(BOOL on) {
+        [SENSenseManager scanForSense:^(NSArray *senses) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            void(^done)(NSError* error) = ^(NSError* error) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf removeSenseDisconnectObserver];
+                [[strongSelf senseManager] disconnectFromSense];
+                [strongSelf setSenseManager:nil];
+                
+                if (error) {
+                    [SENAnalytics trackError:error];
+                }
+                
+                if ([strongSelf resetHandler]) {
+                    [strongSelf resetHandler] (error);
+                    [strongSelf setResetHandler:nil];
+                }
+            };
+            
+            if ([senses count] > 0) {
+                for (SENSense* scannedSense in senses) {
+                    if ([[scannedSense deviceId] isEqualToString:senseId]) {
+                        [strongSelf setSenseManager:[[SENSenseManager alloc] initWithSense:scannedSense]];
+                        [[strongSelf senseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+                            if (!error) {
+                                [[strongSelf senseManager] resetToFactoryState:^(id response) {
+                                    done(nil);
+                                } failure:done];
+                            } else {
+                                done (error);
+                            }
+                        }];
+                        break;
+                    }
+                }
+            } else {
+                done ([strongSelf errorWithCode:HEMDeviceErrorFactoryResetSenseNotFound]);
+            }
+        }];
     }];
 }
 

@@ -65,16 +65,7 @@
 }
 
 - (NSString*)nextSegueIdentifierAfterSkipping:(UIViewController *)controller {
-    NSString* nextSegueId = nil;
-    if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        if ([service isDFURequiredForSense]) {
-            nextSegueId = [HEMOnboardingStoryboard updateSenseSegueIdentifier];
-        } else if ([service isVoiceAvailable]) {
-            nextSegueId = [HEMOnboardingStoryboard updateSenseSegueIdentifier];
-        }
-    }
-    return nextSegueId;
+    return nil; // skipping should swap in the controller to whatever is next
 }
 
 - (NSString*)nextSegueIdentifierAfter:(UIViewController*)controller skip:(BOOL)skip {

@@ -389,6 +389,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* property1ValueColor = wiFiColor;
     NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
     NSString* property2Value = [senseMetadata firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
+    NSString* actionButtonText = hasUpgrade ? [NSLocalizedString(@"upgrade.button.title", nil) uppercaseString] : nil;
     
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
@@ -401,6 +402,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [[cell property2ValueLabel] setText:property2Value];
     [[cell property2InfoButton] setHidden:YES];
     [[cell actionButton] setHidden:!hasUpgrade];
+    [[cell actionButton] setTitle:actionButtonText forState:UIControlStateNormal];
     [[cell actionButton] addTarget:self
                             action:@selector(upgradeSense)
                   forControlEvents:UIControlEventTouchUpInside];

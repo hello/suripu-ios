@@ -234,7 +234,6 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 #pragma mark - Upgrade
 
 - (BOOL)hasHardwareUpgradeForSense {
-    // hide for now
 #if STORE
     return NO;
 #endif

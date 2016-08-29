@@ -891,6 +891,7 @@
 "error.no-connection" = "Your mobile device is not connected to the internet. Check your internet connection and Wi-Fi settings, and try again.";
 
 // upgrade path
+"upgrade.button.title" = "Upgrade to Sense with Voice";
 "upgrade.new-sense.title" = "Sense with Voice";
 "upgrade.new-sense.desc" = "The new Sense introduces improved sensors, and Voice — which lets you control Sense just by speaking to it. Purchase a Sense with Voice to upgrade.";
 "upgrade.new-sense.learn-more" = "Purchase Sense with Voice";

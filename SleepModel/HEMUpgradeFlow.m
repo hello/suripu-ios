@@ -28,6 +28,7 @@
 #import "HEMSetupDoneViewController.h"
 #import "HEMResetSenseViewController.h"
 #import "HEMDeviceService.h"
+#import "HEMUpgradeSensePresenter.h"
 
 @interface HEMUpgradeFlow()
 
@@ -36,6 +37,17 @@
 @end
 
 @implementation HEMUpgradeFlow
+
++ (UIViewController*)rootViewControllerForFlow {
+    return [self rootViewControllerForFlowWithCurrentSenseId:nil];
+}
+
++ (UIViewController*)rootViewControllerForFlowWithCurrentSenseId:(NSString*)senseId {
+    HEMHaveSenseViewController* senseVC = [HEMOnboardingStoryboard instantiateNewSenseViewController];
+    [senseVC setFlow:[[self alloc] initWithCurrentSenseId:senseId]];
+    [senseVC setPresenter:[HEMUpgradeSensePresenter new]];
+    return senseVC;
+}
 
 - (instancetype)initWithCurrentSenseId:(NSString*)currentSenseId {
     self = [super init];

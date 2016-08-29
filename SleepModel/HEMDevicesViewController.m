@@ -20,6 +20,7 @@
 #import "HEMDeviceService.h"
 #import "HEMDevicesPresenter.h"
 #import "HEMSleepPillDfuViewController.h"
+#import "HEMSettingsNavigationController.h"
 
 @interface HEMDevicesViewController() <
     HEMPillPairDelegate,
@@ -61,6 +62,11 @@
 }
 
 #pragma mark - HEMDeviceDelegate
+
+- (void)showModalController:(UIViewController*)controller from:(HEMDevicesPresenter*)presenter {
+    UIViewController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
+}
 
 - (void)showAlertWithTitle:(NSString*)title
                    message:(NSString*)message

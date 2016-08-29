@@ -25,10 +25,13 @@
 #import "HEMTutorial.h"
 #import "HEMPillCollectionViewCell.h"
 #import "HEMActionButton.h"
+#import "HEMUpgradeFlow.h"
+#import "HEMUpgradeSensePresenter.h"
+#import "HEMHaveSenseViewController.h"
+#import "HEMOnboardingStoryboard.h"
 
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 static CGFloat const HEMDeviceSectionMargin = 15.0f;
-static CGFloat const HEMDeviceInfoHeight = 184.0f;
 static CGFloat const HEMNoDeviceHeight = 203.0f;
 
 typedef NS_ENUM(NSInteger, HEMDevicesRow) {
@@ -329,8 +332,9 @@ referenceSizeForFooterInSection:(NSInteger)section {
         if ([indexPath row] == HEMDevicesRowPill) {
             BOOL hasUpdate = [self hasPillFirmwareUpdate];
             size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
-        } else {
-            size.height = HEMDeviceInfoHeight;
+        } else { // is sense
+            BOOL hasUpgrade = [[self deviceService] hasUpgrade];
+            size.height = [HEMDeviceCollectionViewCell heightOfCellActionButton:hasUpgrade];
         }
     } else {
         size.height = HEMNoDeviceHeight;
@@ -376,6 +380,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* wiFiColor = nil;
     [self wiFiColor:&wiFiColor icon:&wiFiIcon];
     
+    BOOL hasUpgrade = [[self deviceService] hasUpgrade];
     NSString* lastSeen = [self lastSeenFor:senseMetadata];
     UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
     NSString* name = NSLocalizedString(@"settings.device.sense", nil);
@@ -395,6 +400,10 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
     [[cell property2InfoButton] setHidden:YES];
+    [[cell actionButton] setHidden:!hasUpgrade];
+    [[cell actionButton] addTarget:self
+                            action:@selector(upgradeSense)
+                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)updateCellForPill:(HEMDeviceCollectionViewCell*)cell {
@@ -488,6 +497,12 @@ referenceSizeForFooterInSection:(NSInteger)section {
 }
 
 #pragma mark - Actions
+
+- (void)upgradeSense {
+    NSString* currentSenseId = [[[[self deviceService] devices] senseMetadata] uniqueId];
+    UIViewController* upgradeVC = [HEMUpgradeFlow rootViewControllerForFlowWithCurrentSenseId:currentSenseId];
+    [[self delegate] showModalController:upgradeVC from:self];
+}
 
 - (void)showPillColorTutorial {
     [HEMTutorial showTutorialForPillColor];

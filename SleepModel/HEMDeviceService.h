@@ -84,6 +84,7 @@ typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 - (BOOL)meetsPhoneBatteryRequirementForDFU:(float)batteryLevel;
 - (void)issueSwapIntentFor:(SENSense*)sense completion:(HEMDeviceUpgradeHandler)completion;
 - (void)hardFactoryResetSense:(NSString*)senseId completion:(HEMDeviceResetHandler)completion;
+- (BOOL)hasUpgrade;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

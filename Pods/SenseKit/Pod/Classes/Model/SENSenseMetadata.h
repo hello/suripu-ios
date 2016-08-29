@@ -27,6 +27,12 @@ typedef NS_ENUM(NSUInteger, SENWiFiCondition) {
     SENWiFiConditionGood = 3
 };
 
+typedef NS_ENUM(NSUInteger, SENSenseHardware) {
+    SENSenseHardwareUnknown = 0,
+    SENSenseHardwareOne,
+    SENSenseHardwareVoice
+};
+
 @interface SENSenseWiFiInfo : NSObject
 
 @property (nonatomic, copy, readonly, nullable)   NSString* ssid;
@@ -43,5 +49,6 @@ typedef NS_ENUM(NSUInteger, SENWiFiCondition) {
 @property (nonatomic, assign, readonly) SENSenseState state;
 @property (nonatomic, assign, readonly) SENSenseColor color;
 @property (nonatomic, strong, readonly, nonnull) SENSenseWiFiInfo* wiFi;
+@property (nonatomic, assign, readonly) SENSenseHardware hardwareVersion;
 
 @end

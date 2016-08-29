@@ -36,6 +36,8 @@
 #import "HEMUpgradeSensePresenter.h"
 #import "HEMHaveSenseViewController.h"
 #import "HEMUpgradeFlow.h"
+#import "HEMResetSenseViewController.h"
+#import "HEMDeviceService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -96,6 +98,7 @@
     [self addRoomCheckOptionTo:sheet];
     [self addShowVoiceTutorialOptionToSheet:sheet];
     [self addShowUpgradePathOptionToSheet:sheet];
+    [self addFactoryResetScreenToSheet:sheet];
     [self addPillDfuOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
     [self addWhatsNewOptionTo:sheet];
@@ -179,6 +182,44 @@
                                              selector:@selector(didEndOnboarding)
                                                  name:HEMOnboardingNotificationComplete
                                                object:nil];
+}
+
+#pragma mark Factory Reset
+
+- (void)addFactoryResetScreenToSheet:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showFactoryReset];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showFactoryReset {
+    HEMDeviceService* service = [HEMDeviceService new];
+    __weak typeof(self) weakSelf = self;
+    void(^show)(NSString* senseId) = ^(NSString* senseId) {
+        __strong typeof(weakSelf) strongself = self;
+        HEMResetSenseViewController* resetVC = [HEMOnboardingStoryboard instantiateResetSenseViewController];
+        [resetVC setSenseId:senseId];
+        [resetVC setDeviceService:service];
+        
+        UINavigationController* nav = [[HEMSettingsNavigationController alloc] initWithRootViewController:resetVC];
+        [strongself showController:nav animated:YES completion:nil];
+    };
+    
+    if ([service devices]) {
+        if ([[service devices] hasPairedSense]) {
+            show ([[[service devices] senseMetadata] uniqueId]);
+        }
+    } else {
+        [service refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
+            if ([devices hasPairedSense]) {
+                show ([[devices senseMetadata] uniqueId]);
+            }
+        }];
+    }
+
 }
 
 #pragma mark Voice Tutorial

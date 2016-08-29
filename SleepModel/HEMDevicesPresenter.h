@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showPillSettingsFrom:(HEMDevicesPresenter*)presenter;
 - (void)pairPillFrom:(HEMDevicesPresenter*)presenter;
 - (void)showFirmwareUpdateFrom:(HEMDevicesPresenter*)presenter;
+- (void)showModalController:(UIViewController*)controller from:(HEMDevicesPresenter*)presenter;
 
 @end
 

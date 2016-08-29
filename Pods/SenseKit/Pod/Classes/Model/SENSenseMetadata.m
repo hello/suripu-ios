@@ -54,10 +54,16 @@ static NSString* const SENSenseWiFiInfoDictPropLastUpdated = @"last_updated";
 static NSString* const SENSenseMetadataDictPropState = @"state";
 static NSString* const SENSenseMetadataDictPropStateNormal = @"NORMAL";
 static NSString* const SENSenseMetadataDictPropStateUnknown = @"UNKNOWN";
+
 static NSString* const SENSenseMetadataDictPropColor = @"color";
 static NSString* const SENSenseMetadataDictPropColorCharcoal = @"BLACK";
 static NSString* const SENSenseMetadataDictPropColorCotton = @"WHITE";
+
 static NSString* const SENSenseMetadataDictPropWiFi = @"wifi_info";
+
+static NSString* const SENSenseMetadataDictPropHwVersion = @"hw_version";
+static NSString* const SENSenseMetadataDictPropHwOne = @"SENSE";
+static NSString* const SENSenseMetadataDictPropHwVoice = @"SENSE_WITH_VOICE";
 
 - (instancetype)initWithDictionary:(NSDictionary*)dict {
     self = [super initWithDictionary:dict];
@@ -67,6 +73,10 @@ static NSString* const SENSenseMetadataDictPropWiFi = @"wifi_info";
         _color = [self colorFromValue:SENObjectOfClass(dict[SENSenseMetadataDictPropColor],
                                                        [NSString class])];
         _wiFi = [[SENSenseWiFiInfo alloc] initWithDictionary:dict[SENSenseMetadataDictPropWiFi]];
+        
+        NSString* hwVersion = SENObjectOfClass(dict[SENSenseMetadataDictPropHwVersion],
+                                               [NSString class]);
+        _hardwareVersion = [self hardwareVersionFromValue:hwVersion];
     }
     return self;
 }
@@ -93,6 +103,17 @@ static NSString* const SENSenseMetadataDictPropWiFi = @"wifi_info";
     }
     
     return color;
+}
+
+- (SENSenseHardware)hardwareVersionFromValue:(NSString*)versionValue {
+    SENSenseHardware hwVersion = SENSenseHardwareUnknown;
+    NSString* upper = [versionValue uppercaseString];
+    if ([upper isEqualToString:SENSenseMetadataDictPropHwOne]) {
+        hwVersion = SENSenseHardwareOne;
+    } else if ([upper isEqualToString:SENSenseMetadataDictPropHwVoice]) {
+        hwVersion = SENSenseHardwareVoice;
+    }
+    return hwVersion;
 }
 
 @end

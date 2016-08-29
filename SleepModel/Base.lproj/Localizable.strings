@@ -248,6 +248,7 @@
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 "debug.option.upgrade" = "Show Upgrade Path";
+"debug.option.reset" = "Show Factory Reset";
 
 // tell a friend
 "settings.tell-a-friend.subject" = "Try Sense";

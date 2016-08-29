@@ -192,7 +192,9 @@ final public class EVReflection {
                 if let jsonDic = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
                     result = jsonDic
                 }
-            } catch _ as NSError { }
+            } catch {
+                print("ERROR: Invalid json!")
+            }
         }
         return result
     }
@@ -224,7 +226,9 @@ final public class EVReflection {
                     return (setPropertiesfromDictionary($0, anyObject: nsobject, conversionOptions: conversionOptions) as? T)!
                 })
             }
-        } catch _ as NSError {}
+        } catch {
+            print("ERROR: Invalid json!")
+        }        
         return result
     }
     
@@ -750,6 +754,11 @@ final public class EVReflection {
                 value = date
             }
         }
+        
+        if !(value is NSArray)  && (typeInObject ?? "").containsString("Array") {
+            value = NSArray(array: [value])
+        }
+        
         if typeInObject == "Struct" {
             anyObject.setValue(value, forUndefinedKey: key)
         } else {

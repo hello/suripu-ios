@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithLaterButton:(UIButton*)laterButton;
 - (void)bindWithResetButton:(UIButton*)resetButton;
 - (void)bindWithActivityContainerView:(UIView*)containerView;
-- (void)bindWithNavigationItem:(UINavigationItem*)navItem;
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem cancellable:(BOOL)cancellable;
 
 @end
 

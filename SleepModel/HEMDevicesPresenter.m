@@ -25,10 +25,13 @@
 #import "HEMTutorial.h"
 #import "HEMPillCollectionViewCell.h"
 #import "HEMActionButton.h"
+#import "HEMUpgradeFlow.h"
+#import "HEMUpgradeSensePresenter.h"
+#import "HEMHaveSenseViewController.h"
+#import "HEMOnboardingStoryboard.h"
 
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 static CGFloat const HEMDeviceSectionMargin = 15.0f;
-static CGFloat const HEMDeviceInfoHeight = 184.0f;
 static CGFloat const HEMNoDeviceHeight = 203.0f;
 
 typedef NS_ENUM(NSInteger, HEMDevicesRow) {
@@ -329,8 +332,9 @@ referenceSizeForFooterInSection:(NSInteger)section {
         if ([indexPath row] == HEMDevicesRowPill) {
             BOOL hasUpdate = [self hasPillFirmwareUpdate];
             size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
-        } else {
-            size.height = HEMDeviceInfoHeight;
+        } else { // is sense
+            BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
+            size.height = [HEMDeviceCollectionViewCell heightOfCellActionButton:hasUpgrade];
         }
     } else {
         size.height = HEMNoDeviceHeight;
@@ -376,6 +380,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* wiFiColor = nil;
     [self wiFiColor:&wiFiColor icon:&wiFiIcon];
     
+    BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
     NSString* lastSeen = [self lastSeenFor:senseMetadata];
     UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
     NSString* name = NSLocalizedString(@"settings.device.sense", nil);
@@ -384,6 +389,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* property1ValueColor = wiFiColor;
     NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
     NSString* property2Value = [senseMetadata firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
+    NSString* actionButtonText = hasUpgrade ? [NSLocalizedString(@"upgrade.button.title", nil) uppercaseString] : nil;
     
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
@@ -395,6 +401,11 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
     [[cell property2InfoButton] setHidden:YES];
+    [[cell actionButton] setHidden:!hasUpgrade];
+    [[cell actionButton] setTitle:actionButtonText forState:UIControlStateNormal];
+    [[cell actionButton] addTarget:self
+                            action:@selector(upgradeSense)
+                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)updateCellForPill:(HEMDeviceCollectionViewCell*)cell {
@@ -488,6 +499,12 @@ referenceSizeForFooterInSection:(NSInteger)section {
 }
 
 #pragma mark - Actions
+
+- (void)upgradeSense {
+    NSString* currentSenseId = [[[[self deviceService] devices] senseMetadata] uniqueId];
+    UIViewController* upgradeVC = [HEMUpgradeFlow rootViewControllerForFlowWithCurrentSenseId:currentSenseId];
+    [[self delegate] showModalController:upgradeVC from:self];
+}
 
 - (void)showPillColorTutorial {
     [HEMTutorial showTutorialForPillColor];

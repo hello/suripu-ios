@@ -62,12 +62,25 @@ static CGFloat const HEMResetSenseFinishDelay = 2.0f;
     [self setActivityContainerView:containerView];
 }
 
-- (void)bindWithNavigationItem:(UINavigationItem*)navItem {
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem cancellable:(BOOL)cancellable {
     UIBarButtonItem* helpButton = [UIBarButtonItem helpButtonWithTarget:self action:@selector(help)];
     [navItem setRightBarButtonItem:helpButton];
+    
+    if (cancellable) {
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
+        UIBarButtonItem* cancelButton = [UIBarButtonItem cancelItemWithTitle:cancel
+                                                                       image:nil
+                                                                      target:self
+                                                                      action:@selector(cancel)];
+        [navItem setLeftBarButtonItem:cancelButton];
+    }
 }
 
 #pragma mark - Actions
+
+- (void)cancel {
+    [[self delegate] didFinishWithReset:NO fromPresenter:self];
+}
 
 - (void)reset {
     if (![self deviceService] || ![self senseId]) {

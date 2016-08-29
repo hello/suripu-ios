@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMUpgradeFlow : NSObject <HEMSetupFlow>
 
++ (UIViewController*)rootViewControllerForFlowWithCurrentSenseId:(NSString*)senseId;
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)initWithCurrentSenseId:(NSString*)currentSenseId NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;

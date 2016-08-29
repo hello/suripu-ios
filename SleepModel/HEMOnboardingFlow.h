@@ -11,6 +11,7 @@
 
 @protocol HEMSetupFlow <NSObject>
 
++ (UIViewController*)rootViewControllerForFlow;
 - (NSString*)nextSegueIdentifierAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (UIViewController*)controllerToSwapInAfter:(UIViewController*)controller skip:(BOOL)skip;
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller;

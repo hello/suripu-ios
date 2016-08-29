@@ -11,6 +11,9 @@
 #import "HEMDeviceCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
 
+static CGFloat kHEMDeviceCellBaseHeight = 184.0f;
+static CGFloat kHEMDeviceCellActionHeight = 269.0f;
+
 @interface HEMDeviceCollectionViewCell()
 
 @property (nonatomic, strong) HEMActivityCoverView* activityView;
@@ -20,6 +23,10 @@
 @end
 
 @implementation HEMDeviceCollectionViewCell
+
++ (CGFloat)heightOfCellActionButton:(BOOL)hasActionButton {
+    return hasActionButton ? kHEMDeviceCellActionHeight : kHEMDeviceCellBaseHeight;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -36,6 +36,8 @@
 #import "HEMUpgradeSensePresenter.h"
 #import "HEMHaveSenseViewController.h"
 #import "HEMUpgradeFlow.h"
+#import "HEMResetSenseViewController.h"
+#import "HEMDeviceService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -96,6 +98,7 @@
     [self addRoomCheckOptionTo:sheet];
     [self addShowVoiceTutorialOptionToSheet:sheet];
     [self addShowUpgradePathOptionToSheet:sheet];
+    [self addFactoryResetScreenToSheet:sheet];
     [self addPillDfuOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
     [self addWhatsNewOptionTo:sheet];
@@ -165,20 +168,55 @@
 - (void)showUpgradePath {
     SENServiceDevice* deviceService = [SENServiceDevice sharedService];
     NSString* currentSenseId = [[[deviceService devices] senseMetadata] uniqueId];
-    HEMUpgradeFlow* flow = [[HEMUpgradeFlow alloc] initWithCurrentSenseId:currentSenseId];;
-    HEMUpgradeSensePresenter* upgradePresenter = [HEMUpgradeSensePresenter new];
-    HEMHaveSenseViewController* senseVC = [HEMOnboardingStoryboard instantiateNewSenseViewController];
-    [senseVC setPresenter:upgradePresenter];
-    [senseVC setFlow:flow];
+    UIViewController* upgradeVC = [HEMUpgradeFlow rootViewControllerForFlowWithCurrentSenseId:currentSenseId];
     
     HEMStyledNavigationViewController* nav
-        = [[HEMStyledNavigationViewController alloc] initWithRootViewController:senseVC];
+        = [[HEMStyledNavigationViewController alloc] initWithRootViewController:upgradeVC];
     [self showController:nav animated:YES completion:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didEndOnboarding)
                                                  name:HEMOnboardingNotificationComplete
                                                object:nil];
+}
+
+#pragma mark Factory Reset
+
+- (void)addFactoryResetScreenToSheet:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showFactoryReset];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showFactoryReset {
+    HEMDeviceService* service = [HEMDeviceService new];
+    __weak typeof(self) weakSelf = self;
+    void(^show)(NSString* senseId) = ^(NSString* senseId) {
+        __strong typeof(weakSelf) strongself = self;
+        HEMResetSenseViewController* resetVC = [HEMOnboardingStoryboard instantiateResetSenseViewController];
+        [resetVC setSenseId:senseId];
+        [resetVC setDeviceService:service];
+        [resetVC setCancellable:YES];
+        
+        UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:resetVC];
+        [strongself showController:nav animated:YES completion:nil];
+    };
+    
+    if ([service devices]) {
+        if ([[service devices] hasPairedSense]) {
+            show ([[[service devices] senseMetadata] uniqueId]);
+        }
+    } else {
+        [service refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
+            if ([devices hasPairedSense]) {
+                show ([[devices senseMetadata] uniqueId]);
+            }
+        }];
+    }
+
 }
 
 #pragma mark Voice Tutorial

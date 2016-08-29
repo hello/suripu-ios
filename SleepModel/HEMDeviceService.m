@@ -19,6 +19,7 @@
 #import <SenseKit/SENSleepPill.h>
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENSwapStatus.h>
+#import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMDeviceService.h"
 #import "HEMConfig.h"
@@ -232,6 +233,14 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 #pragma mark - Upgrade
 
+- (BOOL)hasHardwareUpgradeForSense {
+#if STORE
+    return NO;
+#endif
+    SENSenseMetadata* sense = [[self devices] senseMetadata];
+    return [sense hardwareVersion] == SENSenseHardwareOne;
+}
+
 - (void)issueSwapIntentFor:(SENSense*)sense completion:(HEMDeviceUpgradeHandler)completion {
     NSString* senseId = [sense deviceId];
     if (!senseId) {
@@ -309,9 +318,11 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
                 }
             };
             
+            BOOL found = NO;
             if ([senses count] > 0) {
                 for (SENSense* scannedSense in senses) {
                     if ([[scannedSense deviceId] isEqualToString:senseId]) {
+                        found = YES;
                         [strongSelf setSenseManager:[[SENSenseManager alloc] initWithSense:scannedSense]];
                         [[strongSelf senseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
                             if (!error) {
@@ -325,7 +336,9 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
                         break;
                     }
                 }
-            } else {
+            }
+            
+            if (!found) {
                 done ([strongSelf errorWithCode:HEMDeviceErrorFactoryResetSenseNotFound]);
             }
         }];

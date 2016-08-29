@@ -42,6 +42,7 @@
     [[self presenter] bindWithLaterButton:[self laterButton]];
     [[self presenter] bindWithActivityContainerView:[[self navigationController] view]];
     [[self presenter] bindWithResetButton:[self resetButton]];
+    [[self presenter] bindWithNavigationItem:[self navigationItem]];
     [[self presenter] setDelegate:self];
     [[self presenter] setErrorDelegate:self];
     [self addPresenter:[self presenter]];

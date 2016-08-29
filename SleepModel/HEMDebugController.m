@@ -168,14 +168,10 @@
 - (void)showUpgradePath {
     SENServiceDevice* deviceService = [SENServiceDevice sharedService];
     NSString* currentSenseId = [[[deviceService devices] senseMetadata] uniqueId];
-    HEMUpgradeFlow* flow = [[HEMUpgradeFlow alloc] initWithCurrentSenseId:currentSenseId];;
-    HEMUpgradeSensePresenter* upgradePresenter = [HEMUpgradeSensePresenter new];
-    HEMHaveSenseViewController* senseVC = [HEMOnboardingStoryboard instantiateNewSenseViewController];
-    [senseVC setPresenter:upgradePresenter];
-    [senseVC setFlow:flow];
+    UIViewController* upgradeVC = [HEMUpgradeFlow rootViewControllerForFlowWithCurrentSenseId:currentSenseId];
     
     HEMStyledNavigationViewController* nav
-        = [[HEMStyledNavigationViewController alloc] initWithRootViewController:senseVC];
+        = [[HEMStyledNavigationViewController alloc] initWithRootViewController:upgradeVC];
     [self showController:nav animated:YES completion:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -203,8 +199,9 @@
         HEMResetSenseViewController* resetVC = [HEMOnboardingStoryboard instantiateResetSenseViewController];
         [resetVC setSenseId:senseId];
         [resetVC setDeviceService:service];
+        [resetVC setCancellable:YES];
         
-        UINavigationController* nav = [[HEMSettingsNavigationController alloc] initWithRootViewController:resetVC];
+        UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:resetVC];
         [strongself showController:nav animated:YES completion:nil];
     };
     

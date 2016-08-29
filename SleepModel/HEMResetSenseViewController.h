@@ -16,5 +16,6 @@
 @property (nonatomic, strong) HEMResetSensePresenter* presenter;
 @property (nonatomic, strong) HEMDeviceService* deviceService;
 @property (nonatomic, copy) NSString* senseId;
+@property (nonatomic, assign) BOOL cancellable;
 
 @end

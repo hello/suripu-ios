@@ -333,7 +333,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
             BOOL hasUpdate = [self hasPillFirmwareUpdate];
             size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
         } else { // is sense
-            BOOL hasUpgrade = [[self deviceService] hasUpgrade];
+            BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
             size.height = [HEMDeviceCollectionViewCell heightOfCellActionButton:hasUpgrade];
         }
     } else {

@@ -85,6 +85,7 @@ typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 - (void)issueSwapIntentFor:(SENSense*)sense completion:(HEMDeviceUpgradeHandler)completion;
 - (void)hardFactoryResetSense:(NSString*)senseId completion:(HEMDeviceResetHandler)completion;
 - (BOOL)hasHardwareUpgradeForSense;
+- (BOOL)isPillFirmwareUpdateAvailable;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

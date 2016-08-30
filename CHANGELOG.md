@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5.2.8
+
+New:
+
+* Support the hardware version returned in devices endpoint
+* Show upgrade button in settings, if hardware is Sense
+* Update name of Sense in settings, based on sense version
+
+Fixes:
+
+* Fixed issue in factory reset screen so it doesn't hang if it can't find paired Sense
+* Ensure help button is shown in factory reset screen
+
 ## 1.5.2.7
 
 New:

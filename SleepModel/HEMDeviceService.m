@@ -231,6 +231,12 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
     return batteryLevel > HEMPillDfuMinPhoneBattery;
 }
 
+- (BOOL)isPillFirmwareUpdateAvailable {
+    SENPillMetadata* pillMetadata = [[self devices] pillMetadata];
+    return [pillMetadata firmwareUpdateUrl] != nil
+        && ![self shouldSuppressPillFirmwareUpdate];
+}
+
 #pragma mark - Upgrade
 
 - (BOOL)hasHardwareUpgradeForSense {

@@ -270,6 +270,7 @@
 
 // device management
 "settings.device.sense" = "Sense";
+"settings.device.sense.voice" = "Sense with Voice";
 "settings.device.pill" = "Sleep Pill";
 "settings.device.firmware-version" = "Firmware";
 "settings.device.battery" = "Battery level";

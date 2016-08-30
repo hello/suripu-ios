@@ -210,6 +210,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 }
 
 - (void)stopPreScanning {
+    DDLogVerbose(@"stop prescanning for senses");
     [self setStopPreScanningForSenses:YES];
 }
 
@@ -217,6 +218,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     __weak typeof(self) weakSelf = self;
     [SENSenseManager whenBleStateAvailable:^(BOOL on) {
         if (on) {
+            DDLogVerbose(@"prescanning for senses");
             [weakSelf scanForSenses];
         } else {
             DDLogVerbose(@"pre-scanning for nearby senses skipped, ble not on");

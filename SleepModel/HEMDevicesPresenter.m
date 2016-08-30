@@ -246,10 +246,13 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     }
 }
 
-- (BOOL)hasPillFirmwareUpdate {
-    SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
-    return [pillMetadata firmwareUpdateUrl] != nil
-        && ![[self deviceService] shouldSuppressPillFirmwareUpdate];
+- (NSString*)senseTitleForMetadata:(SENSenseMetadata*)senseMetadata {
+    switch ([senseMetadata hardwareVersion]) {
+        case SENSenseHardwareVoice:
+            return NSLocalizedString(@"settings.device.sense.voice", nil);
+        default:
+            return NSLocalizedString(@"settings.device.sense", nil);
+    }
 }
 
 #pragma mark - UICollectionView
@@ -330,7 +333,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     
     if (hasDevice) {
         if ([indexPath row] == HEMDevicesRowPill) {
-            BOOL hasUpdate = [self hasPillFirmwareUpdate];
+            BOOL hasUpdate = [[self deviceService] isPillFirmwareUpdateAvailable];
             size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
         } else { // is sense
             BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
@@ -383,7 +386,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
     NSString* lastSeen = [self lastSeenFor:senseMetadata];
     UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
-    NSString* name = NSLocalizedString(@"settings.device.sense", nil);
+    NSString* name = [self senseTitleForMetadata:senseMetadata];
     NSString* property1Name = NSLocalizedString(@"settings.sense.wifi", nil);
     NSString* property1Value = [self senseConnectedSSID];
     UIColor* property1ValueColor = wiFiColor;
@@ -412,7 +415,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     HEMPillCollectionViewCell* pillCell = (id)cell;
     SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
     
-    BOOL hasUpdate = [self hasPillFirmwareUpdate];
+    BOOL hasUpdate = [[self deviceService] isPillFirmwareUpdateAvailable];
     NSString* lastSeen = [self lastSeenFor:pillMetadata];
     UIColor* lastSeenColor = [self lastSeenTextColorFor:pillMetadata];
     NSString* name = NSLocalizedString(@"settings.device.pill", nil);

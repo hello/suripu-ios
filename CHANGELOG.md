@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.2.10
+
+Fixes:
+
+* Fix issue where skipping Sense DFU in upgrade path will unexpectedly end the flow
+
 ## 1.5.2.9
 
 Fixes:

@@ -148,6 +148,12 @@
         controller = [self controllerAfterPillController];
     } else if ([currentViewController isKindOfClass:[HEMPillPairViewController class]]) {
         controller = [self controllerAfterPillController];
+    } else if ([currentViewController isKindOfClass:[HEMSenseDFUViewController class]]) {
+        // if you skip DFU, voice is not going to be available either so we should skip
+        // that as well.
+        controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+    } else if ([currentViewController isKindOfClass:[HEMVoiceTutorialViewController class]]) {
+        controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
     }
     
     [self prepareNextController:controller fromController:currentViewController];

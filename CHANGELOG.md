@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.2.9
+
+Fixes:
+
+* Fixes upgrade path skipping the linking of account, if first connecting to Sense first before upgrading
+* Adjusts copy to match what is spec'ed out
+
 ## 1.5.2.8
 
 New:

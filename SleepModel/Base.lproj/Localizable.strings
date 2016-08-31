@@ -136,7 +136,7 @@
 
 // wifi setup
 "wifi.error.title" = "WiFi Setup Failed";
-"wifi.error.link-account-title" = "Failed to Link Account";
+"wifi.error.link-account-title" = "Account not linked";
 "wifi.error.timezone-title" = "Setting Time Zone Failed";
 "wifi.activity.setting-wifi" = "Setting WiFi credentials";
 "wifi.activity.setting-timezone" = "Setting time zone";
@@ -148,7 +148,7 @@
 "wifi.error.wep.no-ascii" = "Sense could not connect to WiFi. Make sure you are using your network's WEP key.";
 "wifi.error.set-sense-timeout" = "Timed out while setting WiFi credentials on Sense.";
 "wifi.error.set-sense-failed-connection" = "Sense could not connect to the WiFi.";
-"wifi.error.account-link-message" = "Unable to link your account with Sense.";
+"wifi.error.account-link-message" = "Your account could not be linked. Please try again.";
 "wifi.error.account-link-timeout" = "Timed out while linking Sense to your account.";
 "wifi.error.account-link-network-failed" = "Sense failed to connect to your network to link your account.";
 "wifi.error.time-zone-failed" = "There was a problem setting your timezone.";

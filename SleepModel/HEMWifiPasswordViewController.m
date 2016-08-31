@@ -546,8 +546,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)executeNextStep {
-    [[self view] endEditing:NO];
-    
+
     switch ([self stepFinished]) {
         case HEMWiFiSetupStepNone: {
             // from a google search, spaces are allowed in both ssid and passwords so we
@@ -614,6 +613,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 #pragma mark - Actions
 
 - (IBAction)connectWifi:(id)sender {
+    [[self view] endEditing:NO];
     [self executeNextStep];
 }
 

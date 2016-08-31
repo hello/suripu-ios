@@ -21,7 +21,7 @@
 @property (nonatomic, weak) HEMSensorService* sensorService;
 @property (nonatomic, weak) HEMIntroService* introService;
 @property (nonatomic, weak) UICollectionView* collectionView;
-@property (nonatomic)
+@property (nonatomic, assign) CGFloat headerViewHeight;
 
 @end
 
@@ -33,6 +33,7 @@
     if (self) {
         _sensorService = sensorService;
         _introService = introService;
+        _headerViewHeight = -1.0f;
     }
     return self;
 }
@@ -68,9 +69,12 @@
 referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize headerSize = CGSizeZero;
     if ([[self introService] shouldIntroduceType:HEMIntroTypeRoomConditions]) {
-        NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
-        NSString* message = NSLocalizedString(@"room-conditions.intro.desc", nil);
-        CGFloat cellWidth = CGRectGetWidth([collectionView bounds]);
+        if ([self headerViewHeight] < 0.0f) {
+            NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
+            NSString* message = NSLocalizedString(@"room-conditions.intro.desc", nil);
+            CGFloat cellWidth = CGRectGetWidth([collectionView bounds]);
+            
+        }
     }
     return headerSize;
 }

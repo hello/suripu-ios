@@ -18,7 +18,9 @@ static CGFloat const HEMDescriptionHeaderDescBotMargin = 40.0f;
 @implementation HEMDescriptionHeaderView
 
 + (CGFloat)heightWithTitle:(NSAttributedString*)title
-               description:(NSAttributedString*)description {
+               description:(NSAttributedString*)description
+           widthConstraint:(CGFloat)width {
+    CGFloat titleHeight = [title sizeWithWidth:width].height;
     return 0.0f;
 }
 

@@ -151,6 +151,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (BOOL)shouldLinkAccount {
+    if ([self isUpgrading]) {
+        return YES; // always allow it
+    }
     // When we reuse this controller in settings, pairedSenseAvailable will
     // be true and in that case, we should not need to linkAccount again.
     return ![[SENServiceDevice sharedService] pairedSenseAvailable];
@@ -543,7 +546,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)executeNextStep {
-
+    [[self view] endEditing:NO];
+    
     switch ([self stepFinished]) {
         case HEMWiFiSetupStepNone: {
             // from a google search, spaces are allowed in both ssid and passwords so we

@@ -3427,18 +3427,18 @@
                         <viewControllerLayoutGuide type="bottom" id="i2H-c6-eq3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="REg-4p-5tB">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXh-Cj-YP0" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="273" y="241" width="55" height="55"/>
+                                <rect key="frame" x="273" y="273" width="55" height="55"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="LpU-1Y-Yb1"/>
                                     <constraint firstAttribute="width" constant="55" id="zDD-A2-qur"/>
                                 </constraints>
                             </view>
-                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2SF-Wz-APV">
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2SF-Wz-APV">
                                 <rect key="frame" x="0.0" y="3" width="600" height="477"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kxy-bs-n5o" customClass="HEMCardFlowLayout">
                                     <size key="itemSize" width="576" height="95"/>
@@ -3615,7 +3615,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Sb-DU-1Mz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1219" y="-10"/>
+            <point key="canvasLocation" x="-399" y="753"/>
         </scene>
         <!--Sleep History View Controller-->
         <scene sceneID="FLt-el-bXB">
@@ -3814,12 +3814,52 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="kT5-aR-lha" kind="relationship" relationship="rootViewController" id="pFj-NH-KNj"/>
+                        <segue destination="14u-gk-etK" kind="relationship" relationship="rootViewController" id="Mis-C3-3uW"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVj-8z-5ax" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="500.625" y="-9.5070422535211261"/>
+        </scene>
+        <!--Sense-->
+        <scene sceneID="Tbx-8E-7KV">
+            <objects>
+                <viewController id="14u-gk-etK" customClass="HEMRoomConditionsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AI9-lR-8z4"/>
+                        <viewControllerLayoutGuide type="bottom" id="OyU-TY-GKW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vLp-tA-5za">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gTK-vk-XAu">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iaa-Kb-m1S">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gTK-vk-XAu" firstAttribute="top" secondItem="AI9-lR-8z4" secondAttribute="bottom" id="Nfq-4j-atF"/>
+                            <constraint firstAttribute="trailing" secondItem="gTK-vk-XAu" secondAttribute="trailing" id="hNd-xW-Yjy"/>
+                            <constraint firstItem="gTK-vk-XAu" firstAttribute="leading" secondItem="vLp-tA-5za" secondAttribute="leading" id="rDl-Ec-pXO"/>
+                            <constraint firstItem="OyU-TY-GKW" firstAttribute="top" secondItem="gTK-vk-XAu" secondAttribute="bottom" id="v3o-JF-qRT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Sense" id="eET-Oo-8Fi"/>
+                    <connections>
+                        <outlet property="collectionView" destination="gTK-vk-XAu" id="Fur-kG-7Qy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0SY-YO-9OH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218" y="-8"/>
         </scene>
         <!--Settings Navigation Controller-->
         <scene sceneID="lPQ-1w-Jov">

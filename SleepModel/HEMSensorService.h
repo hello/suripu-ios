@@ -8,6 +8,8 @@
 
 #import "SENService.h"
 
+@class SENSensor;
+
 @interface HEMSensorService : SENService
 
 /**

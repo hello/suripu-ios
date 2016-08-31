@@ -919,3 +919,7 @@
 "upgrade.reset.done" = "Sent";
 "upgrade.reset.error.title" = "Factory reset";
 "upgrade.reset.error.message" = "An error occurred while attempting to factory reset your original Sense. Make sure Sense is plugged in, nearby and try again.";
+
+// room conditions
+"room-conditions.intro.title" = "Your current conditions";
+"room-conditions.intro.desc" = "Recent changes to room conditions make take a few moments to be reflected here. Tap a card for more detail.";

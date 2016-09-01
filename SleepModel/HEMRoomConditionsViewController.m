@@ -8,12 +8,15 @@
 
 #import "HEMRoomConditionsViewController.h"
 #import "HEMRoomConditionsPresenter.h"
+#import "HEMActivityIndicatorView.h"
 #import "HEMSensorService.h"
 #import "HEMIntroService.h"
 
 @interface HEMRoomConditionsViewController ()
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
+
 @property (strong, nonatomic) HEMSensorService* sensorService;
 @property (strong, nonatomic) HEMIntroService* introService;
 
@@ -49,6 +52,7 @@
                                                      introService:introService];
     
     [presenter bindWithCollectionView:[self collectionView]];
+    [presenter bindWithActivityIndicator:[self activityIndicator]];
     [presenter bindWithShadowView:[self shadowView]];
 
     [self setSensorService:sensorService];

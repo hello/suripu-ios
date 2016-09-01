@@ -11,6 +11,7 @@
 @class HEMSensorService;
 @class HEMIntroService;
 @class HEMRoomConditionsPresenter;
+@class HEMActivityIndicatorView;
 
 @protocol HEMRoomConditionsDelegate <NSObject>
 
@@ -26,5 +27,6 @@
 - (instancetype)initWithSensorService:(HEMSensorService*)sensorService
                          introService:(HEMIntroService*)introService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
 
 @end

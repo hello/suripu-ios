@@ -6,11 +6,26 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import <AttributedMarkdown/markdown_peg.h>
+
+#import <SenseKit/SENSensor.h>
+
+#import "NSAttributedString+HEMUtils.h"
+
 #import "HEMRoomConditionsPresenter.h"
 #import "HEMSensorService.h"
 #import "HEMIntroService.h"
 #import "HEMDescriptionHeaderView.h"
+#import "HEMSensorGraphCollectionViewCell.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMSensorCollectionViewCell.h"
+#import "HEMCardFlowLayout.h"
+#import "HEMMainStoryboard.h"
+#import "HEMMarkdown.h"
 #import "HEMStyle.h"
+
+static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
+// static CGFloat const kHEMCurrentConditionsPairViewHeight = 352.0f;
 
 @interface HEMRoomConditionsPresenter() <
     UICollectionViewDelegate,
@@ -22,6 +37,11 @@
 @property (nonatomic, weak) HEMIntroService* introService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, assign) CGFloat headerViewHeight;
+@property (nonatomic, strong) NSAttributedString* attributedIntroTitle;
+@property (nonatomic, strong) NSAttributedString* attributedIntroDesc;
+@property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
+@property (nonatomic, strong) NSArray<SENSensor*>* sensors;
+@property (nonatomic, strong) NSError* error;
 
 @end
 
@@ -42,26 +62,153 @@
     [collectionView setBackgroundColor:[UIColor grey2]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
+    [collectionView registerClass:[HEMDescriptionHeaderView class]
+       forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+              withReuseIdentifier:kHEMRoomConditionsIntroReuseId];
+    
     [self setCollectionView:collectionView];
+}
+
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator {
+    [activityIndicator setHidden:YES];
+    [activityIndicator stop];
+    [self setActivityIndicator:activityIndicator];
 }
 
 #pragma mark - Presenter Events
 
 - (void)didAppear {
     [super didAppear];
-    [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
+    [self startPolling];
+}
+
+- (void)didDisappear {
+    [super didDisappear];
+    [[self sensorService] stopPollingForCurrentConditions];
+}
+
+- (void)userDidSignOut {
+    [super userDidSignOut];
+    [[self sensorService] stopPollingForCurrentConditions];
+}
+
+#pragma mark - Data
+
+- (void)startPolling {
+    if ([[self sensors] count] == 0) {
+        [self setError:nil];
+        [[self collectionView] reloadData];
+        [[self activityIndicator] setHidden:NO];
+        [[self activityIndicator] start];
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [[self sensorService] pollCurrentConditions:^(NSArray<SENSensor *> * sensors, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf activityIndicator] setHidden:YES];
+        [[strongSelf activityIndicator] stop];
+        
+        if (error) {
+            if ([[error domain] isEqualToString:kHEMSensorErrorDomain]
+                && [error code] == HEMSensorServiceErrorCodePollingAlreadyStarted) {
+                // ignore
+            } else {
+                [strongSelf setError:error];
+                [[strongSelf collectionView] reloadData];
+                // TODO: handle error
+            }
+        } else {
+            [strongSelf setError:nil];
+            [strongSelf setSensors:sensors];
+            [[strongSelf collectionView] reloadData];
+            [[strongSelf introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
+        }
+        
+    }];
+}
+
+#pragma mark - Text
+
+- (NSAttributedString*)attributedIntroTitle {
+    if (!_attributedIntroTitle) {
+        NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [style setAlignment:NSTextAlignmentCenter];
+        
+        NSDictionary* attrs = @{NSFontAttributeName : [UIFont h5],
+                                NSForegroundColorAttributeName : [UIColor grey6],
+                                NSParagraphStyleAttributeName : style};
+        
+        NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
+        
+        _attributedIntroTitle = [[NSAttributedString alloc] initWithString:title attributes:attrs];
+    }
+    return _attributedIntroTitle;
+}
+
+- (NSAttributedString*)attributedIntroDesc {
+    if (!_attributedIntroDesc) {
+        NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [style setAlignment:NSTextAlignmentCenter];
+        
+        NSDictionary* attrs = @{NSFontAttributeName : [UIFont body],
+                                NSForegroundColorAttributeName : [UIColor grey5],
+                                NSParagraphStyleAttributeName : style};
+        
+        NSString* desc = NSLocalizedString(@"room-conditions.intro.desc", nil);
+        
+        _attributedIntroDesc = [[NSAttributedString alloc] initWithString:desc attributes:attrs];
+    }
+    return _attributedIntroDesc;
+}
+
+// TODO: this is a hack, but since server is returning markdown, we need to temporarily
+// convert to attributed string, then back
+- (NSString*)sensorMessageFrom:(SENSensor*)sensor {
+    if ([[sensor message] length] == 0) {
+        return nil;
+    }
+    return [markdown_to_attr_string([sensor message], 0, [HEMMarkdown attributesForSensorMessage]) string];
 }
 
 #pragma mark - UICollectionView
 
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+    HEMCardFlowLayout* cardLayout = (id)collectionViewLayout;
+    CGSize itemSize = [cardLayout itemSize];
+    
+    SENSensor* sensor = [self sensors][[indexPath row]];
+    itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[self sensorMessageFrom:sensor]
+                                                               cellWidth:itemSize.width];
+    return itemSize;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return 0;
+    return [[self sensors] count];
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    NSString* reuseId = [HEMMainStoryboard sensorReuseIdentifier];
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                     forIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
+        SENSensor* sensor = [self sensors][[indexPath row]];
+        HEMSensorCollectionViewCell* sensorCell = (id)cell;
+        [[sensorCell descriptionLabel] setText:[self sensorMessageFrom:sensor]];
+        [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
+        [[sensorCell valueLabel] setText:[sensor localizedValue]];
+        [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:[sensor condition]]];
+        [[sensorCell unitLabel] setText:nil]; // TODO add it
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
@@ -70,13 +217,36 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize headerSize = CGSizeZero;
     if ([[self introService] shouldIntroduceType:HEMIntroTypeRoomConditions]) {
         if ([self headerViewHeight] < 0.0f) {
-            NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
-            NSString* message = NSLocalizedString(@"room-conditions.intro.desc", nil);
-            CGFloat cellWidth = CGRectGetWidth([collectionView bounds]);
-            
+            HEMCardFlowLayout* flowLayout = (id) collectionViewLayout;
+            NSAttributedString* title = [self attributedIntroTitle];
+            NSAttributedString* message = [self attributedIntroDesc];
+            CGFloat itemWidth = [flowLayout itemSize].width;
+            [self setHeaderViewHeight:[HEMDescriptionHeaderView heightWithTitle:title
+                                                                     description:message
+                                                                widthConstraint:itemWidth]];
         }
+        headerSize.height = [self headerViewHeight];
     }
     return headerSize;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath {
+    NSString* reuseId = kHEMRoomConditionsIntroReuseId;
+    HEMDescriptionHeaderView* header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                          withReuseIdentifier:reuseId
+                                                                                 forIndexPath:indexPath];
+    
+    [[header titlLabel] setAttributedText:[self attributedIntroTitle]];
+    [[header descriptionLabel] setAttributedText:[self attributedIntroDesc]];
+    [[header imageView] setImage:[UIImage imageNamed:@"introRoomConditions"]];
+    
+    return header;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
 }
 
 #pragma mark - Clean up

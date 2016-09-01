@@ -15,6 +15,7 @@
 #import "SENAPIPreferences.h"
 #import "SENAPIQuestions.h"
 #import "SENAPIRoom.h"
+#import "SENAPISensor.h"
 #import "SENAPIShare.h"
 #import "SENAPISleepSounds.h"
 #import "SENAPISpeech.h"

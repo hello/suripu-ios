@@ -63,6 +63,7 @@ static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
 static NSString *const _HEMscan = @"scan";
 static NSString *const _HEMsense = @"sense";
+static NSString *const _HEMsensor = @"sensor";
 static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettings = @"settings";
@@ -137,6 +138,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)senseReuseIdentifier { return _HEMsense; }
++(NSString *)sensorReuseIdentifier { return _HEMsensor; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
 +(NSString *)settingsReuseIdentifier { return _HEMsettings; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }

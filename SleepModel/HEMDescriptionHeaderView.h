@@ -14,4 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel* titlLabel;
 @property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
 
++ (CGFloat)heightWithTitle:(NSAttributedString*)title
+               description:(NSAttributedString*)description
+           widthConstraint:(CGFloat)width;
+
 @end

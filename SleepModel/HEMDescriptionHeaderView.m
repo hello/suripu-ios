@@ -21,7 +21,13 @@ static CGFloat const HEMDescriptionHeaderDescBotMargin = 40.0f;
                description:(NSAttributedString*)description
            widthConstraint:(CGFloat)width {
     CGFloat titleHeight = [title sizeWithWidth:width].height;
-    return 0.0f;
+    CGFloat descHeight = [description sizeWithWidth:width].height;
+    return HEMDescriptionHeaderBaseImageHeight
+            + HEMDescriptionHeaderTitleTopMargin
+            + titleHeight
+            + HEMDescriptionHeaderTextSpacing
+            + descHeight
+            + HEMDescriptionHeaderDescBotMargin;
 }
 
 @end

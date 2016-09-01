@@ -204,6 +204,7 @@
 		BF5BACFF1C5C266900347185 /* HEMTrendsBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BACFE1C5C266900347185 /* HEMTrendsBaseCell.m */; };
 		BF5BAD021C5FE02100347185 /* HEMTrendsBarGraphCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAD011C5FE02100347185 /* HEMTrendsBarGraphCell.m */; };
 		BF5BAD081C6169BF00347185 /* HEMTrendsCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAD071C6169BF00347185 /* HEMTrendsCircleView.m */; };
+		BF5BF2991D78D628007B39A2 /* HEMSensorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BF2981D78D628007B39A2 /* HEMSensorCollectionViewCell.m */; };
 		BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */; };
 		BF6098741D4811CA0005C8F0 /* HEMVoiceTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6098731D4811CA0005C8F0 /* HEMVoiceTutorialViewController.m */; };
 		BF6098771D4820E20005C8F0 /* HEMVoiceTutorialPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6098761D4820E20005C8F0 /* HEMVoiceTutorialPresenter.m */; };
@@ -830,6 +831,8 @@
 		BF5BAD011C5FE02100347185 /* HEMTrendsBarGraphCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsBarGraphCell.m; sourceTree = "<group>"; };
 		BF5BAD061C6169BF00347185 /* HEMTrendsCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsCircleView.h; sourceTree = "<group>"; };
 		BF5BAD071C6169BF00347185 /* HEMTrendsCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsCircleView.m; sourceTree = "<group>"; };
+		BF5BF2971D78D628007B39A2 /* HEMSensorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorCollectionViewCell.h; sourceTree = "<group>"; };
+		BF5BF2981D78D628007B39A2 /* HEMSensorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorCollectionViewCell.m; sourceTree = "<group>"; };
 		BF5D53291A26749F0090DD6A /* HEMActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActivityIndicatorView.h; sourceTree = "<group>"; };
 		BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActivityIndicatorView.m; sourceTree = "<group>"; };
 		BF6098721D4811CA0005C8F0 /* HEMVoiceTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceTutorialViewController.h; sourceTree = "<group>"; };
@@ -1642,6 +1645,8 @@
 				8A9D380A1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m */,
 				8A7D80091A3F7E4A00B0BFD7 /* HEMSensorGraphCollectionViewCell.h */,
 				8A7D800A1A3F7E4A00B0BFD7 /* HEMSensorGraphCollectionViewCell.m */,
+				BF5BF2971D78D628007B39A2 /* HEMSensorCollectionViewCell.h */,
+				BF5BF2981D78D628007B39A2 /* HEMSensorCollectionViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3986,6 +3991,7 @@
 				BFC3FE761AE863B80061D6A1 /* HEMActionSheetOptionCell.m in Sources */,
 				BFCB99101CA9D259000D7619 /* HEMSleepSoundVolume.m in Sources */,
 				8A19BF1A1B20D1880025DFA7 /* HEMTimelineLayoutAttributes.m in Sources */,
+				BF5BF2991D78D628007B39A2 /* HEMSensorCollectionViewCell.m in Sources */,
 				BFB815121BFC0A12009740D0 /* HEMDeviceActionCell.m in Sources */,
 				BF5B1D271D2C717500DF1190 /* HEMPillDfuPresenter.m in Sources */,
 				BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */,

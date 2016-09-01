@@ -30,9 +30,9 @@
 +(NSString *)signoutReuseIdentifier;
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
-+(NSString *)pairReuseIdentifier;
-+(NSString *)pillReuseIdentifier;
 +(NSString *)senseReuseIdentifier;
++(NSString *)pillReuseIdentifier;
++(NSString *)pairReuseIdentifier;
 +(NSString *)supportCellReuseIdentifier;
 +(NSString *)topicCellReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
@@ -45,6 +45,7 @@
 +(NSString *)sensorGraphCellReuseIdentifier;
 +(NSString *)errorReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
++(NSString *)sensorReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;

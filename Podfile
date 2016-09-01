@@ -26,6 +26,7 @@ abstract_target 'SenseApp' do
         pod 'Bugsnag', '~> 4.1.0'
         pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
         pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git'
+        pod 'Charts/Realm'
     end
     
     # the Sense iOS today extension

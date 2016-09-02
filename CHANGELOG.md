@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.2.11
+
+Note:
+
+* bumping just to create an app store build
+
 ## 1.5.2.10
 
 Fixes:

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *unitLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 
-+ (CGFloat)heightWithDescription:(NSString*)description cellWidth:(CGFloat)cellWidth;
++ (CGFloat)heightWithDescription:(NSString*)description
+                       cellWidth:(CGFloat)cellWidth;
 
 @end

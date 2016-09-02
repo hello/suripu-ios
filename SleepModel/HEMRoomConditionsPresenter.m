@@ -42,6 +42,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, strong) NSArray<SENSensor*>* sensors;
 @property (nonatomic, strong) NSError* error;
+@property (nonatomic, assign) BOOL loadedIntro;
 
 @end
 
@@ -62,9 +63,9 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     [collectionView setBackgroundColor:[UIColor grey2]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
-    [collectionView registerClass:[HEMDescriptionHeaderView class]
-       forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-              withReuseIdentifier:kHEMRoomConditionsIntroReuseId];
+//    [collectionView registerClass:[HEMDescriptionHeaderView class]
+//       forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+//              withReuseIdentifier:kHEMRoomConditionsIntroReuseId];
     
     [self setCollectionView:collectionView];
 }
@@ -121,7 +122,6 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
             [strongSelf setError:nil];
             [strongSelf setSensors:sensors];
             [[strongSelf collectionView] reloadData];
-            [[strongSelf introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
         }
         
     }];
@@ -240,7 +240,13 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     
     [[header titlLabel] setAttributedText:[self attributedIntroTitle]];
     [[header descriptionLabel] setAttributedText:[self attributedIntroDesc]];
+    [[header descriptionLabel] sizeToFit];
     [[header imageView] setImage:[UIImage imageNamed:@"introRoomConditions"]];
+    
+    if (![self loadedIntro]) {
+        [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
+        [self setLoadedIntro:YES];
+    }
     
     return header;
 }

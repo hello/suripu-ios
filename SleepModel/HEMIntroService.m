@@ -9,7 +9,7 @@
 #import <SenseKit/SENLocalPreferences.h>
 #import "HEMIntroService.h"
 
-static NSString* const kHEMIntroKeyRoomConditons = @"intro.room.conditions";
+static NSString* const kHEMIntroKeyRoomConditons = @"intro.room.conditions.views";
 static NSUInteger const kHEMIntroMinCount = 2;
 
 @implementation HEMIntroService

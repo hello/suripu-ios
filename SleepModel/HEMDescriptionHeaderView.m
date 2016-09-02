@@ -13,7 +13,7 @@
 static CGFloat const HEMDescriptionHeaderBaseImageHeight = 182.0f;
 static CGFloat const HEMDescriptionHeaderTitleTopMargin = 13.0f;
 static CGFloat const HEMDescriptionHeaderTextSpacing = 8.0f;
-static CGFloat const HEMDescriptionHeaderDescBotMargin = 40.0f;
+static CGFloat const HEMDescriptionHeaderDescBotMargin = 32.0f;
 
 @implementation HEMDescriptionHeaderView
 

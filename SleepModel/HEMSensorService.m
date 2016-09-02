@@ -83,6 +83,14 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
         if (error) {
             [SENAnalytics trackError:error];
         }
+        
+        // force the sensors in to a specific order
+        NSArray<SENSensor*>* sensors = data;
+        if (sensors) {
+            NSComparator comparator = [self preferredSensorOrderComparator];
+            sensors = [sensors sortedArrayUsingComparator:comparator];
+        }
+        
         if (completion) {
             completion (data, error);
         }

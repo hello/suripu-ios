@@ -7,7 +7,7 @@
 //
 
 #import <AttributedMarkdown/markdown_peg.h>
-
+#import <Charts/Charts-Swift.h>
 #import <SenseKit/SENSensor.h>
 
 #import "NSAttributedString+HEMUtils.h"
@@ -30,7 +30,8 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 @interface HEMRoomConditionsPresenter() <
     UICollectionViewDelegate,
     UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegateFlowLayout,
+    ChartViewDelegate
 >
 
 @property (nonatomic, weak) HEMSensorService* sensorService;
@@ -43,6 +44,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 @property (nonatomic, strong) NSArray<SENSensor*>* sensors;
 @property (nonatomic, strong) NSError* error;
 @property (nonatomic, assign) BOOL loadedIntro;
+@property (nonatomic, strong) NSMutableDictionary* chartViewBySensor;
 
 @end
 
@@ -55,6 +57,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
         _sensorService = sensorService;
         _introService = introService;
         _headerViewHeight = -1.0f;
+        _chartViewBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
     }
     return self;
 }
@@ -63,10 +66,6 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     [collectionView setBackgroundColor:[UIColor grey2]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
-//    [collectionView registerClass:[HEMDescriptionHeaderView class]
-//       forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-//              withReuseIdentifier:kHEMRoomConditionsIntroReuseId];
-    
     [self setCollectionView:collectionView];
 }
 
@@ -125,6 +124,29 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
         }
         
     }];
+}
+
+#pragma mark - Charts
+
+- (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
+                              inCell:(HEMSensorCollectionViewCell*)cell {
+    // TODO: for now, use the line chart for every sensor.
+    LineChartView* lineChartView = [self chartViewBySensor][[sensor name]];
+    
+    if (!lineChartView) {
+        lineChartView = [[LineChartView alloc] initWithFrame:[[cell graphContainerView] bounds]];
+        [lineChartView setAutoresizingMask:UIViewAutoresizingFlexibleWidth
+                                         | UIViewAutoresizingFlexibleHeight];
+        [lineChartView setBackgroundColor:[UIColor whiteColor]];
+        [lineChartView setDrawGridBackgroundEnabled:YES];
+        [lineChartView setNoDataText:nil];
+        [self chartViewBySensor][[sensor name]] = lineChartView;
+    }
+    
+    UIColor* sensorColor = [UIColor colorForCondition:[sensor condition]];
+    [lineChartView setGridBackgroundColor:sensorColor];
+    
+    return lineChartView;
 }
 
 #pragma mark - Text
@@ -203,11 +225,13 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
         SENSensor* sensor = [self sensors][[indexPath row]];
         HEMSensorCollectionViewCell* sensorCell = (id)cell;
+        ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
         [[sensorCell descriptionLabel] setText:[self sensorMessageFrom:sensor]];
         [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
         [[sensorCell valueLabel] setText:[sensor localizedValue]];
         [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:[sensor condition]]];
         [[sensorCell unitLabel] setText:nil]; // TODO add it
+        [[sensorCell graphContainerView] addSubview:chartView];
     }
 }
 

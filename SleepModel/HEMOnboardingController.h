@@ -8,6 +8,7 @@
 
 #import "HEMBaseController.h"
 #import "HEMOnboardingService.h"
+#import "HEMOnboardingFlow.h"
 
 @class SENSenseManager;
 
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 
 @property (assign, nonatomic, readonly, getter=isVisible) BOOL visible;
+@property (strong, nonatomic) id<HEMSetupFlow> flow;
 
 /**
  * @param checkpoint: the onboarding checkpoint
@@ -102,6 +104,18 @@
  */
 - (NSAttributedString*)boldAttributedText:(NSString *)text withColor:(UIColor*)color;
 
+/**
+ * @discussion
+ * Subclasses should link continue buttons to this method and override this to alter
+ * the behvaior as needed.  Default behavior is to check the flow parameter to see
+ * if it was specified and if so, uses that to determine if it continue with the
+ * flow or not.
+ *
+ * @param skip: YES if user indicated to skip the screen.  NO otherwise
+ * @return YES if it knows the next screen in the flow
+ */
+- (BOOL)continueWithFlowBySkipping:(BOOL)skip;
+- (void)prepareViewControllerForNextStep:(UIViewController*)nextController;
 - (void)completeOnboarding;
 - (void)completeOnboardingWithoutMessage;
 

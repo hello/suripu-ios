@@ -20,13 +20,15 @@
 #import "HEMWifiUtils.h"
 #import "HEMScreenUtils.h"
 #import "HEMSimpleLineTextField.h"
+#import "HEMDeviceService.h"
 
 typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepNone = 0,
-    HEMWiFiSetupStepConfigureWiFi = 1,
-    HEMWiFiSetupStepLinkAccount = 2,
-    HEMWiFiSetupStepSetTimezone = 3,
-    HEMWiFiSetupStepForceDataUpload = 4
+    HEMWiFiSetupStepConfigureWiFi,
+    HEMWiFiSetupStepIssueSwapIntent,
+    HEMWiFiSetupStepLinkAccount,
+    HEMWiFiSetupStepSetTimezone,
+    HEMWiFiSetupStepForceDataUpload
 };
 
 static CGFloat const kHEMWifiSecurityPickerDefaultHeight = 216.0f;
@@ -48,6 +50,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
 @property (assign, nonatomic) SENWifiEndpointSecurityType securityType;
 @property (assign, nonatomic) HEMWiFiSetupStep stepFinished;
+@property (strong, nonatomic) HEMDeviceService* deviceService;
 
 @end
 
@@ -148,6 +151,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (BOOL)shouldLinkAccount {
+    if ([self isUpgrading]) {
+        return YES; // always allow it
+    }
     // When we reuse this controller in settings, pairedSenseAvailable will
     // be true and in that case, we should not need to linkAccount again.
     return ![[SENServiceDevice sharedService] pairedSenseAvailable];
@@ -428,6 +434,28 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     }];
 }
 
+- (void)issueSwapIntent {
+    if (![self deviceService]) {
+        [self setDeviceService:[HEMDeviceService new]];
+    }
+    
+    NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
+    [self updateActivityText:message completion:nil];
+    
+    SENSense* sense = [[self manager] sense];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self deviceService] issueSwapIntentFor:sense completion:^(NSError * error) {
+        __weak typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [strongSelf showSwapError:error];
+        } else {
+            [strongSelf setStepFinished:HEMWiFiSetupStepIssueSwapIntent];
+            [strongSelf executeNextStep];
+        }
+    }];
+}
+
 - (void)linkAccount {
     if (![self shouldLinkAccount]) {
         [self setStepFinished:HEMWiFiSetupStepLinkAccount];
@@ -496,18 +524,20 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
         HEMOnboardingService* service = [HEMOnboardingService sharedService];
         [service notifyOfSensePairingChange];
-
-        if ([strongSelf delegate] != nil) { // Edit-WiFi in settings
-            [[HEMOnboardingService sharedService] clear]; // don't clear all, aka disconnect from Sense, or else issues arise
-            [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
-        } else if ([strongSelf sensePairDelegate] != nil) { // pairing from inside app (not onboarding)
-            __block SENSenseManager* manager = [strongSelf manager];
-            [[HEMOnboardingService sharedService] clearAll];
-            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:manager from:strongSelf];
-        } else {
-            [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
-            [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
-                                            sender:nil];
+        
+        if (![strongSelf continueWithFlowBySkipping:NO]) {
+            if ([strongSelf delegate] != nil) { // Edit-WiFi in settings
+                [[HEMOnboardingService sharedService] clear]; // don't clear all, aka disconnect from Sense, or else issues arise
+                [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
+            } else if ([strongSelf sensePairDelegate] != nil) { // pairing from inside app (not onboarding)
+                __block SENSenseManager* manager = [strongSelf manager];
+                [[HEMOnboardingService sharedService] clearAll];
+                [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:manager from:strongSelf];
+            } else {
+                [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+                [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
+                                                sender:nil];
+            }
         }
     };
 
@@ -535,6 +565,14 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             break;
         }
         case HEMWiFiSetupStepConfigureWiFi: {
+            if ([self isUpgrading]) {
+                [self issueSwapIntent];
+            } else {
+                [self linkAccount];
+            }
+            break;
+        }
+        case HEMWiFiSetupStepIssueSwapIntent: {
             [self linkAccount];
             break;
         }
@@ -575,6 +613,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 #pragma mark - Actions
 
 - (IBAction)connectWifi:(id)sender {
+    [[self view] endEditing:NO];
     [self executeNextStep];
 }
 
@@ -631,6 +670,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             break;
     }
 
+    [self showErrorMessage:message withTitle:title];
+}
+
+- (void)showSwapError:(NSError*)error {
+    NSString* title = NSLocalizedString(@"wifi.error.link-account-title", nil);
+    NSString* message = NSLocalizedString(@"wifi.error.account-link-message", nil);
     [self showErrorMessage:message withTitle:title];
 }
 

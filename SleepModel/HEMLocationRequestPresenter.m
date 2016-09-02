@@ -43,7 +43,7 @@
 
 - (void)bindWithSkipButton:(UIButton*)skipButton {
     [self setSkipButton:skipButton];
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[[self skipButton] titleLabel] setFont:[UIFont button]];
     [[self skipButton] addTarget:self
                           action:@selector(skip:)
                 forControlEvents:UIControlEventTouchUpInside];

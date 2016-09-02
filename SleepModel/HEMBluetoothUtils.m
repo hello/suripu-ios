@@ -9,6 +9,8 @@
 
 #import "HEMBluetoothUtils.h"
 
+static CGFloat const HEMBluetoothRetryDelay = 2.0f;
+
 static CBCentralManager* manager = nil;
 
 @implementation HEMBluetoothUtils
@@ -31,6 +33,20 @@ static CBCentralManager* manager = nil;
 + (BOOL)stateAvailable {
     return [manager state] != CBCentralManagerStateUnknown
         && [manager state] != CBCentralManagerStateResetting;
+}
+
++ (void)whenBleStateAvailable:(HEMBluetoothStateHandler)completion {
+    if (![self isBleSupported]) {
+        completion (NO);
+    } else if ([self stateAvailable]) {
+        completion ([self isBluetoothOn]);
+    } else {
+        int64_t delayInSecs = (int64_t) (HEMBluetoothRetryDelay* NSEC_PER_SEC);
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+        dispatch_after(delay, dispatch_get_main_queue(), ^{
+            [self whenBleStateAvailable:completion];
+        });   
+    }
 }
 
 @end

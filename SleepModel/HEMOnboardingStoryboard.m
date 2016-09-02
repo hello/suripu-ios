@@ -26,10 +26,14 @@ static NSString *const _HEMlastName = @"lastName";
 static NSString *const _HEMlocationToPush = @"locationToPush";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
+static NSString *const _HEMnewSense = @"newSense";
+static NSString *const _HEMnoBLE = @"noBLE";
 static NSString *const _HEMnoBle = @"noBle";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMnotificationToAudio = @"notificationToAudio";
 static NSString *const _HEMonboardingComplete = @"onboardingComplete";
+static NSString *const _HEMpair = @"pair";
+static NSString *const _HEMpairPill = @"pairPill";
 static NSString *const _HEMpassword = @"password";
 static NSString *const _HEMphoto = @"photo";
 static NSString *const _HEMpillDescription = @"pillDescription";
@@ -37,6 +41,9 @@ static NSString *const _HEMpillPair = @"pillPair";
 static NSString *const _HEMpillSetupTextCell = @"pillSetupTextCell";
 static NSString *const _HEMpillSetupToColors = @"pillSetupToColors";
 static NSString *const _HEMpillSetupVideoCell = @"pillSetupVideoCell";
+static NSString *const _HEMregister = @"register";
+static NSString *const _HEMreset = @"reset";
+static NSString *const _HEMresetSense = @"resetSense";
 static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMroomCheckToSmartAlarm = @"roomCheckToSmartAlarm";
 static NSString *const _HEMsenseAudio = @"senseAudio";
@@ -45,9 +52,12 @@ static NSString *const _HEMsenseDFU = @"senseDFU";
 static NSString *const _HEMsensePairToPill = @"sensePairToPill";
 static NSString *const _HEMsensePairViewController = @"sensePairViewController";
 static NSString *const _HEMsenseSetup = @"senseSetup";
+static NSString *const _HEMsenseUpgraded = @"senseUpgraded";
 static NSString *const _HEMsignupToNoBle = @"signupToNoBle";
 static NSString *const _HEMskipPillPairSegue = @"skipPillPairSegue";
 static NSString *const _HEMtitle = @"title";
+static NSString *const _HEMupdateSense = @"updateSense";
+static NSString *const _HEMupgradeDone = @"upgradeDone";
 static NSString *const _HEMvoice = @"voice";
 static NSString *const _HEMvoiceTutorial = @"voiceTutorial";
 static NSString *const _HEMweight = @"weight";
@@ -88,13 +98,20 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)heightSegueIdentifier { return _HEMheight; }
 +(NSString *)locationToPushSegueIdentifier { return _HEMlocationToPush; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
++(NSString *)noBLESegueIdentifier { return _HEMnoBLE; }
 +(NSString *)noBleToBirthdaySegueIdentifier { return _HEMnoBleToBirthday; }
 +(NSString *)notificationToAudioSegueIdentifier { return _HEMnotificationToAudio; }
++(NSString *)pairSegueIdentifier { return _HEMpair; }
++(NSString *)pairPillSegueIdentifier { return _HEMpairPill; }
 +(NSString *)pillSetupToColorsSegueIdentifier { return _HEMpillSetupToColors; }
++(NSString *)registerSegueIdentifier { return _HEMregister; }
++(NSString *)resetSegueIdentifier { return _HEMreset; }
 +(NSString *)roomCheckToSmartAlarmSegueIdentifier { return _HEMroomCheckToSmartAlarm; }
 +(NSString *)sensePairToPillSegueIdentifier { return _HEMsensePairToPill; }
 +(NSString *)signupToNoBleSegueIdentifier { return _HEMsignupToNoBle; }
 +(NSString *)skipPillPairSegue { return _HEMskipPillPairSegue; }
++(NSString *)updateSenseSegueIdentifier { return _HEMupdateSense; }
++(NSString *)upgradeDoneSegueIdentifier { return _HEMupgradeDone; }
 +(NSString *)voiceSegueIdentifier { return _HEMvoice; }
 +(NSString *)voiceTutorialSegueIdentifier { return _HEMvoiceTutorial; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
@@ -108,16 +125,19 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(id)instantiateDobViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdobViewController]; }
 +(id)instantiateGenderPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgenderPicker]; }
 +(id)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
++(id)instantiateNewSenseViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnewSense]; }
 +(id)instantiateNoBleViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnoBle]; }
 +(id)instantiateOnboardingCompleteViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMonboardingComplete]; }
 +(id)instantiatePillDescriptionViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDescription]; }
 +(id)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
++(id)instantiateResetSenseViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMresetSense]; }
 +(id)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
 +(id)instantiateSenseAudioViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseAudio]; }
 +(id)instantiateSenseColorsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseColors]; }
 +(id)instantiateSenseDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseDFU]; }
 +(id)instantiateSensePairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensePairViewController]; }
 +(id)instantiateSenseSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseSetup]; }
++(id)instantiateSenseUpgradedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseUpgraded]; }
 +(id)instantiateVoiceTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMvoiceTutorial]; }
 +(id)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
 +(id)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }

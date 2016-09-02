@@ -5,28 +5,18 @@
 //  Created by Jimmy Lu on 9/2/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENSenseManager.h>
-#import <SenseKit/SENSense.h>
-#import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENServiceDevice.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 #import "HEMPillPairViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMSupportUtil.h"
-#import "HEMBluetoothUtils.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
 #import "HEMEmbeddedVideoView.h"
+#import "HEMPairPiillPresenter.h"
 
-static CGFloat const kHEMPillPairAnimDuration = 0.5f;
-static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
-static NSInteger const kHEMPillPairMaxBleChecks = 10;
-
-@interface HEMPillPairViewController()
+@interface HEMPillPairViewController() <HEMPresenterErrorDelegate, HEMPairPillPresenterDelegate>
 
 @property (weak, nonatomic) IBOutlet HEMActivityCoverView *overlayActivityView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *retryButton;
@@ -35,346 +25,84 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet HEMEmbeddedVideoView *videoView;
 
-@property (assign, nonatomic) BOOL pairTimedOut;
-@property (assign, nonatomic, getter=isLoaded) BOOL loaded;
-@property (assign, nonatomic) NSUInteger pairAttempts;
-@property (assign, nonatomic) NSUInteger bleCheckAttempts;
-
-@property (strong, nonatomic) id disconnectObserverId;
-
 @end
 
 @implementation HEMPillPairViewController
 
 - (void)viewDidLoad {
+    [self configurePresenter];
+    
     [super viewDidLoad];
     
-    [self configureButtons];
-    [self configureVideo];
-    [self configureActivity];
+    if (![self delegate]) {
+        [self enableBackButton:NO];
+    }
+    
     [self trackAnalyticsEvent:HEMAnalyticsEventPairPill];
 }
 
-- (void)configureVideo {
-    UIImage* image = [UIImage imageNamed:@"pairing_your_sleep_pill"];
-    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-pair", nil);
-    [[self videoView] setFirstFrame:image videoPath:videoPath];
-}
-
-- (void)configureActivity {
-    [[self activityLabel] setTextColor:[UIColor tintColor]];
-    [[self activityLabel] setText:nil];
-    
-    NSString* text = NSLocalizedString(@"pairing.activity.waiting-for-sense", nil);
-    [[[self overlayActivityView] activityLabel] setText:text];
-}
-
-- (void)configureButtons {
-    [[self skipButton] setTitleColor:[UIColor tintColor]
-                            forState:UIControlStateNormal];
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    
-    [self showRetryButtonAsRetrying:YES];
-    
-    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)
-           andTrackWithStepName:kHEMAnalyticsEventPropPillPairing];
-    
-    if ([self delegate] != nil) {
-        [self showCancelButtonWithSelector:@selector(cancel:)];
-    } else {
-        [self enableBackButton:NO];
-    }
-}
-
-- (void)showRetryButtonAsRetrying:(BOOL)retrying {
-    if (retrying) {
-        [[self retryButton] setBackgroundColor:[UIColor clearColor]];
-        [[self retryButton] setTitleColor:[UIColor tintColor]
-                                 forState:UIControlStateNormal];
-        [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
-    } else {
-        [[self retryButton] setBackgroundColor:[UIColor tintColor]];
-        [[self retryButton] setTitleColor:[UIColor whiteColor]
-                                 forState:UIControlStateNormal];
-        [[self retryButton] stopActivity];
-    }
-
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if (![self isLoaded]) {
-        if (![[self videoView] isReady]) {
-            [[self videoView] setReady:YES];
-        }
-        [[self overlayActivityView] showActivity];
-        [self setControlsEnabled:NO];
-        [self pairPill:self];
-        [self setLoaded:YES];
-    } else {
-        if ([[self retryButton] isShowingActivity]) {
-            [[self videoView] playVideoWhenReady];
-        }
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [[self videoView] stop];
-}
-
-- (void)setControlsEnabled:(BOOL)enable {
-    [[self cancelItem] setEnabled:enable];
-    [self showRetryButtonAsRetrying:!enable];
-    [[self skipButton] setHidden:!enable
-                                 || [self pairAttempts] < kHEMPillPairAttemptsBeforeSkip
-                                 || [self delegate] != nil];
-
-    CGFloat activityLabelAlpha = enable ? 0.0f : 1.0f;
-    CGFloat skipButtonAlpha = enable ? 1.0f : 0.0f;
-    [UIView animateWithDuration:kHEMPillPairAnimDuration animations:^{
-        [[self activityLabel] setAlpha:activityLabelAlpha];
-        [[self skipButton] setAlpha:skipButtonAlpha];
-    }];
-}
-
-- (void)listenForDisconnects {
-    SENSenseManager* manager = [self manager];
-    if ([self disconnectObserverId] == nil && manager != nil) {
-        __weak typeof(self) weakSelf = self;
-        self.disconnectObserverId =
-            [manager observeUnexpectedDisconnect:^(NSError *error) {
-                __strong typeof(weakSelf) strongSelf = weakSelf;
-                if ([strongSelf isVisible]) {
-                    NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                    [strongSelf showError:error customMessage:msg];
-                }
-            }];
-    }
-}
-
-#pragma mark - Pairing
-
-- (void)ensureSenseIsReady:(void(^)(SENSenseManager* manager))completion {
-    if (!completion) return;
-    
-    SENSenseManager* manager = [self manager];
-    if (manager != nil) {
-        completion (manager);
-    } else if (![HEMBluetoothUtils isBluetoothOn]) {
-        if ([self bleCheckAttempts] < kHEMPillPairMaxBleChecks) {
-            [self setBleCheckAttempts:[self bleCheckAttempts] + 1];
-            [self performSelector:@selector(ensureSenseIsReady:) withObject:completion afterDelay:0.1f];
-        } else {
-            [self setBleCheckAttempts:0]; // reset it
-            [self showError:nil customMessage:NSLocalizedString(@"pairing.activity.bluetooth-not-on", nil)];
-        }
-    } else {
-        [self scanForPairedSense:completion];
-    }
-}
-
-- (void)scanForPairedSense:(void(^)(SENSenseManager* manager))completion {
-    
-    __weak typeof(self) weakSelf = self;
-    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        if (error != nil) {
-            NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
-            [strongSelf showError:error customMessage:msg];
-            completion (nil);
-            return;
-        }
-        
-        DDLogVerbose(@"looking for sense to trigger pill pairing");
-        [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
-            if (error != nil) {
-                NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                [strongSelf showError:error customMessage:msg];
-                completion (nil);
-                return;
-            }
-            completion ([[SENServiceDevice sharedService] senseManager]);
-        }];
-    }];
-}
-
-- (IBAction)pairPill:(id)sender {
-    [self setControlsEnabled:NO];
-    [self setPairAttempts:[self pairAttempts] + 1];
-    [[self videoView] playVideoWhenReady];
-    
-    if ([self pairAttempts] > 1) {
-        [self trackAnalyticsEvent:HEMAnalyticsEventPairPillRetry];
+- (void)configurePresenter {
+    if (![self presenter]) {
+        HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
+        [self setPresenter:[[HEMPairPiillPresenter alloc] initWithOnboardingService:onbService]];
     }
     
-    __weak typeof(self) weakSelf = self;
-    void(^begin)(void) = ^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf ensureSenseIsReady:^(SENSenseManager *manager) {
-            if (manager == nil) {
-                [strongSelf showError:nil customMessage:NSLocalizedString(@"pairing.error.sense-not-found", nil)];
-            } else {
-                [strongSelf pairNowWith:manager];
-            }
-        }];
-    };
+    [[self presenter] setCancellable:[self delegate] != nil];
+    [[self presenter] setErrorDelegate:self];
+    [[self presenter] setDelegate:self];
     
-    if (![[self overlayActivityView] isShowing]) {
-        NSString* text = NSLocalizedString(@"pairing.activity.waiting-for-sense", nil);
-        [[self overlayActivityView] showWithText:text activity:YES completion:begin];
-    } else {
-        begin();
-    }
+    [[self presenter] bindWithTitleLabel:[self titleLabel]
+                        descriptionLabel:[self descriptionLabel]];
+    [[self presenter] bindWithActivityView:[self overlayActivityView]];
+    [[self presenter] bindWithEmbeddedVideoView:[self videoView]];
+    [[self presenter] bindWithSkipButton:[self skipButton]];
+    [[self presenter] bindWithContinueButton:[self retryButton]
+                         withWidthConstraint:[self retryButtonWidthConstraint]];
+    [[self presenter] bindWithNavigationItem:[self navigationItem]];
+    [[self presenter] bindWithStatusLabel:[self activityLabel]];
+    [[self presenter] bindWithContentContainerView:[[self navigationController] view]];
+    
+    [self addPresenter:[self presenter]];
 }
 
-- (void)pairNowWith:(SENSenseManager*)manager {
-    [self listenForDisconnects];
-    
-    [[self activityLabel] setText:NSLocalizedString(@"pairing.activity.looking-for-pill", nil)];
-    
-    __weak typeof(self) weakSelf = self;
-    [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        if (error != nil) {
-            [strongSelf showError:error customMessage:nil];
-            return;
-        }
-        
-        [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-            [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
-                [SENAnalytics track:HEMAnalyticsEventPillPaired];
-                [strongSelf flashPairedState];
-            } failure:^(NSError *error) {
-                SENSenseLEDState ledState = [strongSelf delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
-                [[strongSelf manager] setLED:ledState completion:^(id response, NSError *ledError) {
-                    [strongSelf showError:error ?: ledError customMessage:nil];
-                    if (error && ledError) {
-                        // if there are errors from both, log the led error since showError: will
-                        // show the error for pill pairing failure instead, which will log that
-                        [SENAnalytics trackError:ledError withEventName:kHEMAnalyticsEventWarning];
-                    }
-                }];
-            }];
-        }];
-    }];
-}
+#pragma mark - HEMPresenterErrorDelegate
 
-- (void)flashPairedState {
-    NSString* paired = NSLocalizedString(@"pairing.done", nil);
-    UIView* activitySuperview = [[self navigationController] view];
-    [[self overlayActivityView] showInView:activitySuperview withText:paired activity:NO completion:^{
-        [self proceed];
-    }];
-}
-
-#pragma mark - Skipping
-
-- (IBAction)skip:(id)sender {
-    [self showSkipConfirmation];
-}
-
-- (void)showSkipConfirmation {
-    NSString *title = NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil);
-    NSString *message = NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil);
-    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
-    __weak typeof(self) weakSelf = self;
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.skip-for-now", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
-        __strong typeof(weakSelf) strongSelf = self;
-        HEMOnboardingService* service = [HEMOnboardingService sharedService];
-        NSDictionary* props = @{kHEMAnalyticsEventPropOnBScreen :kHEMAnalyticsEventPropScreenPillPairing};
-        [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSkip properties:props];
-        [service saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
-        [service disconnectCurrentSense];
-        NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
-        [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
-    }];
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil) style:HEMAlertViewButtonStyleBlueText action:nil];
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
-    [dialogVC showFrom:self];
-}
-
-- (void)cancel:(id)sender {
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    [service disconnectCurrentSense];
-    [[self delegate] didCancelPairing:self];
-}
-
-#pragma mark - Next
-
-- (void)proceed {
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    [service notifyOfPillPairingChange];
-    [service disconnectCurrentSense];
-    
-    BOOL remove = ![self delegate];
-    [[self overlayActivityView] dismissWithResultText:nil
-                                      showSuccessMark:YES
-                                               remove:remove
-                                           completion:nil];
-    
-    if ([self delegate] == nil) {
-        [service saveOnboardingCheckpoint:HEMOnboardingCheckpointPillFinished];
-        NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
-        [self performSegueWithIdentifier:segueId sender:self];
-    } else {
-        [[self cancelItem] setEnabled:YES];
-        [[self delegate] didPairWithPillFrom:self];
-    }
-}
-
-#pragma mark - Errors
-
-- (void)showError:(NSError*)error customMessage:(NSString*)customMessage {
-    NSString* message = customMessage;
-    
-    if (message == nil) {
-        
-        switch ([error code]) {
-            case SENSenseManagerErrorCodeInvalidated:
-            case SENSenseManagerErrorCodeConnectionFailed:
-            case SENSenseManagerErrorCodeCannotConnectToSense:
-                message = NSLocalizedString(@"pairing.error.could-not-pair", nil);
-                break;
-            case SENSenseManagerErrorCodeSenseAlreadyPaired:
-                message = NSLocalizedString(@"pairing.error.pill-already-paired", nil);
-                break;
-            case SENSenseManagerErrorCodeSenseNetworkError:
-                message = NSLocalizedString(@"pairing.error.pill-pairing-no-network", nil);
-                break;
-            case SENSenseManagerErrorCodeTimeout:
-            default:
-                message = NSLocalizedString(@"pairing.error.pill-pairing-failed", nil);
-                break;
-        }
-    }
-    
-    [[self overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-        
+- (void)showErrorWithTitle:(NSString *)title
+                andMessage:(NSString *)message
+              withHelpPage:(NSString *)helpPage
+             fromPresenter:(HEMPresenter *)presenter {
+    if (helpPage) {
         [self showMessageDialog:message
-                          title:NSLocalizedString(@"pairing.pill.error.title", nil)
+                          title:title
                           image:nil
-                   withHelpPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)];
-        
-        [self setControlsEnabled:YES];
-        
-    }];
-    
-    if (error) {
-        [SENAnalytics trackError:error];
+                   withHelpPage:helpPage];
+    } else {
+        [self showMessageDialog:message title:title];
     }
 }
 
-#pragma mark - Clean Up
+- (void)showCustomerAlert:(HEMAlertViewController *)alert fromPresenter:(HEMPresenter *)presenter {
+    [alert setViewToShowThrough:[self backgroundViewForAlerts]];
+    [alert showFrom:self];
+}
 
-- (void)dealloc {
-    if (_disconnectObserverId != nil) {
-        SENSenseManager* manager = [self manager];
-        [manager removeUnexpectedDisconnectObserver:_disconnectObserverId];
-        [self setDisconnectObserverId:nil];
+#pragma mark - HEMPairPillPresenterDelegate
+
+- (void)completePairing:(BOOL)skipped fromPresenter:(HEMPairPiillPresenter *)presenter {
+    if (![self continueWithFlowBySkipping:skipped]) {
+        if ([self delegate] == nil) {
+            NSString* segueId = skipped
+                ? [HEMOnboardingStoryboard skipPillPairSegue]
+                : [HEMOnboardingStoryboard doneSegueIdentifier];
+            [self performSegueWithIdentifier:segueId sender:self];
+        } else {
+            [[self delegate] didPairWithPillFrom:self];
+        }
     }
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
+- (void)showHelpPage:(NSString *)helpPage fromPresenter:(HEMPairPiillPresenter *)presenter {
+    [HEMSupportUtil openHelpToPage:helpPage fromController:self];
 }
 
 @end

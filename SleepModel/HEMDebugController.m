@@ -10,6 +10,9 @@
 #import <SenseKit/API.h>
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
@@ -30,6 +33,11 @@
 #import "HEMAlarmService.h"
 #import "HEMWhatsNewService.h"
 #import "HEMAppUsage.h"
+#import "HEMUpgradeSensePresenter.h"
+#import "HEMHaveSenseViewController.h"
+#import "HEMUpgradeFlow.h"
+#import "HEMResetSenseViewController.h"
+#import "HEMDeviceService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -89,6 +97,8 @@
     
     [self addRoomCheckOptionTo:sheet];
     [self addShowVoiceTutorialOptionToSheet:sheet];
+    [self addShowUpgradePathOptionToSheet:sheet];
+    [self addFactoryResetScreenToSheet:sheet];
     [self addPillDfuOptionTo:sheet];
     [self addResetTutorialsOptionTo:sheet];
     [self addWhatsNewOptionTo:sheet];
@@ -144,6 +154,71 @@
     }];
 }
 
+#pragma mark Upgrade path
+
+- (void)addShowUpgradePathOptionToSheet:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.upgrade", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showUpgradePath];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showUpgradePath {
+    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+    NSString* currentSenseId = [[[deviceService devices] senseMetadata] uniqueId];
+    UIViewController* upgradeVC = [HEMUpgradeFlow rootViewControllerForFlowWithCurrentSenseId:currentSenseId];
+    
+    HEMStyledNavigationViewController* nav
+        = [[HEMStyledNavigationViewController alloc] initWithRootViewController:upgradeVC];
+    [self showController:nav animated:YES completion:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didEndOnboarding)
+                                                 name:HEMOnboardingNotificationComplete
+                                               object:nil];
+}
+
+#pragma mark Factory Reset
+
+- (void)addFactoryResetScreenToSheet:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showFactoryReset];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showFactoryReset {
+    HEMDeviceService* service = [HEMDeviceService new];
+    __weak typeof(self) weakSelf = self;
+    void(^show)(NSString* senseId) = ^(NSString* senseId) {
+        __strong typeof(weakSelf) strongself = self;
+        HEMResetSenseViewController* resetVC = [HEMOnboardingStoryboard instantiateResetSenseViewController];
+        [resetVC setSenseId:senseId];
+        [resetVC setDeviceService:service];
+        [resetVC setCancellable:YES];
+        
+        UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:resetVC];
+        [strongself showController:nav animated:YES completion:nil];
+    };
+    
+    if ([service devices]) {
+        if ([[service devices] hasPairedSense]) {
+            show ([[[service devices] senseMetadata] uniqueId]);
+        }
+    } else {
+        [service refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
+            if ([devices hasPairedSense]) {
+                show ([[devices senseMetadata] uniqueId]);
+            }
+        }];
+    }
+
+}
+
 #pragma mark Voice Tutorial
 
 - (void)addShowVoiceTutorialOptionToSheet:(HEMActionSheetViewController*)sheet {
@@ -171,6 +246,8 @@
                                                     name:HEMOnboardingNotificationComplete
                                                   object:nil];
     [[self presentingController] dismissViewControllerAnimated:YES completion:nil];
+    
+    [self setRoomCheckViewController:nil];
 }
 
 #pragma mark Debug Info
@@ -212,17 +289,9 @@
 
     [self setRoomCheckViewController:nav];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didEndRoomCheck:)
+                                             selector:@selector(didEndOnboarding)
                                                  name:HEMOnboardingNotificationComplete
                                                object:nil];
-}
-
-- (void)didEndRoomCheck:(NSNotification*)notification {
-    if ([self roomCheckViewController] != nil) {
-        [[self presentingController] dismissViewControllerAnimated:YES completion:nil];
-        [self setRoomCheckViewController:nil];
-    }
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
 }
 
 #pragma mark - Alarms

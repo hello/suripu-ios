@@ -10,6 +10,7 @@
 
 @class HEMNavigationShadowView;
 @class HEMPresenter;
+@class HEMAlertViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
                 andMessage:(NSString*)message
               withHelpPage:(nullable NSString*)helpPage
              fromPresenter:(HEMPresenter*)presenter;
+
+@optional
+- (void)showCustomerAlert:(HEMAlertViewController*)alert
+            fromPresenter:(HEMPresenter*)presenter;
 
 @end
 

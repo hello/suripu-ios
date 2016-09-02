@@ -12,6 +12,7 @@
 @class SENDeviceMetadata;
 @class SENPillMetadata;
 @class SENSleepPill;
+@class SENSense;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -41,13 +42,19 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
     HEMDeviceErrorUnlinkPillFromAccount = -7,
     HEMDeviceErrorUnlinkSenseFromAccount = -8,
     HEMDeviceErrorSenseNotMatching = -9,
-    HEMDeviceErrorNoPillFirmwareURL = -10
+    HEMDeviceErrorNoPillFirmwareURL = -10,
+    HEMDeviceErrorInvalidArgument = -11,
+    HEMDeviceErrorSwapErrorMultipleSenses = -12,
+    HEMDeviceErrorSwapErrorPairedToAnother = -13,
+    HEMDeviceErrorFactoryResetSenseNotFound = -14
 };
 
 typedef void(^HEMDevicePillHandler)(SENSleepPill* _Nullable sleepPill, NSError* _Nullable error);
 typedef void(^HEMDeviceDfuHandler)(NSError* _Nullable error);
 typedef void(^HEMDeviceDfuProgressHandler)(CGFloat progress, HEMDeviceDfuState state);
 typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSError* _Nullable error);
+typedef void(^HEMDeviceUpgradeHandler)(NSError* _Nullable error);
+typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 
 /**
  * @discussion
@@ -75,6 +82,10 @@ typedef void(^HEMDeviceMetadataHandler)(SENPairedDevices* _Nullable devices, NSE
              completion:(HEMDeviceDfuHandler)completion;
 - (BOOL)shouldSuppressPillFirmwareUpdate;
 - (BOOL)meetsPhoneBatteryRequirementForDFU:(float)batteryLevel;
+- (void)issueSwapIntentFor:(SENSense*)sense completion:(HEMDeviceUpgradeHandler)completion;
+- (void)hardFactoryResetSense:(NSString*)senseId completion:(HEMDeviceResetHandler)completion;
+- (BOOL)hasHardwareUpgradeForSense;
+- (BOOL)isPillFirmwareUpdateAvailable;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

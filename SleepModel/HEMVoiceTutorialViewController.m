@@ -11,6 +11,7 @@
 #import "HEMVoiceTutorialPresenter.h"
 #import "HEMVoiceService.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMOnboardingService.h"
 
 @interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate>
 
@@ -40,6 +41,15 @@
     [super viewDidLoad];
     [self configurePresenter];
     [self enableBackButton:NO];
+    [self trackAnalyticsEvent:HEMAnalyticsEventVoiceTutorial];
+}
+
+- (void)trackAnalyticsEvent:(NSString *)event {
+    if ([self flow]) {
+        [SENAnalytics track:event];
+    } else {
+        [SENAnalytics track:event properties:nil onboarding:YES];
+    }
 }
 
 - (void)configurePresenter {
@@ -66,6 +76,7 @@
                   andHeightConstraint:[self senseHeightConstraint]];
     [presenter bindWithTitleLabel:[self titleLabel]
                  descriptionLabel:[self descriptionLabel]];
+    [presenter setOnboarding:![self flow]];
     [presenter setDelegate:self];
     
     [self addPresenter:presenter];
@@ -75,8 +86,10 @@
 #pragma mark - Voice Tutorial Delegate
 
 - (void)didFinishTutorialFrom:(__unused HEMVoiceTutorialPresenter *)presenter {
-    UIViewController* lastVC = [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
-    [[self navigationController] setViewControllers:@[lastVC] animated:YES];
+    if (![self continueWithFlowBySkipping:NO]) {
+        UIViewController* lastVC = [HEMOnboardingStoryboard instantiateOnboardingCompleteViewController];
+        [[self navigationController] setViewControllers:@[lastVC] animated:YES];
+    }
 }
 
 - (void)showController:(UIViewController *)controller

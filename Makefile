@@ -33,5 +33,8 @@ ipa:
 upload:
 	deliver testflight
 
+upload_dsym:
+	./Scripts/upload_dsym ${ARGS}
+
 generate:
 	ovaltine -p Sense.xcodeproj -o SleepModel/ --prefix HEM --auto-add --auto-replace --copyright 'Hello Inc' SleepModel/

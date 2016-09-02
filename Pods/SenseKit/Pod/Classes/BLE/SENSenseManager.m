@@ -447,8 +447,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         bytesWritten += actualSize;
     }
     
-    DDLogVerbose(@"protobuf message %@ with size %ld", helloBlePackets, (long)bytesWritten);
-    
     return helloBlePackets;
 }
 
@@ -1378,11 +1376,15 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                         if ([errorObject isKindOfClass:[NSError class]]) {
                             DDLogVerbose(@"error from disconnect: %@", errorObject);
                         }
-                        for (NSString* observerId in [strongSelf disconnectObservers]) {
+                        
+                        NSArray* observerIds = [[[strongSelf disconnectObservers] allKeys] mutableCopy];
+                        for (NSString* observerId in observerIds) {
                             SENSenseFailureBlock block = [[strongSelf disconnectObservers] valueForKey:observerId];
-                            block ([strongSelf errorWithCode:SENSenseManagerErrorCodeUnexpectedDisconnect
-                                                 description:@"unexpectedly disconnected from Sense"
-                                         fromUnderlyingError:nil]);
+                            if (block) {
+                                block ([strongSelf errorWithCode:SENSenseManagerErrorCodeUnexpectedDisconnect
+                                                     description:@"unexpectedly disconnected from Sense"
+                                             fromUnderlyingError:nil]);
+                            }
                         }
                     }];
 }

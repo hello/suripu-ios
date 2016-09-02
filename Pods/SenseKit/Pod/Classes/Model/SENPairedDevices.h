@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SENSerializable.h"
 
 @class SENSenseMetadata;
 @class SENPillMetadata;
 
-@interface SENPairedDevices : NSObject
+@interface SENPairedDevices : NSObject <SENSerializable>
 
-- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary*)dict;
 - (nullable SENSenseMetadata*)senseMetadata;
 - (nullable SENPillMetadata*)pillMetadata;
 - (BOOL)hasPairedSense;

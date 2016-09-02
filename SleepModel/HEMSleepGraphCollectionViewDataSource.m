@@ -631,32 +631,16 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (BOOL)segmentForSoundExistsAtIndexPath:(NSIndexPath *)indexPath {
-#if defined(BETA) || defined(DEBUG)
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     return segment.type == SENTimelineSegmentTypeGenericSound || segment.type == SENTimelineSegmentTypeSnored;
-#endif
-    return NO;
 }
 
 - (HEMWaveform *)waveformForIndexPath:(NSIndexPath *)indexPath {
-    if (![self segmentForSoundExistsAtIndexPath:indexPath])
-        return nil;
-#if defined(BETA) || defined(DEBUG)
-    return [HEMWaveform faketrogram];
-#endif
-    return nil;
+    return nil; // not supported.  meant for snoring playback
 }
 
 - (NSData *)audioDataForIndexPath:(NSIndexPath *)indexPath {
-    if (![self segmentForSoundExistsAtIndexPath:indexPath])
-        return nil;
-#if defined(BETA) || defined(DEBUG)
-    NSString *testAudioPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"test.mp3"];
-    NSError *error = nil;
-    NSData *data = [NSData dataWithContentsOfFile:testAudioPath options:0 error:&error];
-    return error == nil ? data : nil;
-#endif
-    return nil;
+    return nil; // not supported.  meant for snoring playback
 }
 
 @end

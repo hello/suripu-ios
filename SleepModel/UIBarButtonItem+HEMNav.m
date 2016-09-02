@@ -28,4 +28,11 @@
     return [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 }
 
++ (UIBarButtonItem*)helpButtonWithTarget:(id)target action:(SEL)action {
+    return [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"helpIconSmall"]
+                                            style:UIBarButtonItemStylePlain
+                                           target:target
+                                           action:action];
+}
+
 @end

@@ -1,5 +1,119 @@
 # Changelog
 
+## 1.5.2.11
+
+Note:
+
+* bumping just to create an app store build
+
+## 1.5.2.10
+
+Fixes:
+
+* Fix issue where skipping Sense DFU in upgrade path will unexpectedly end the flow
+
+## 1.5.2.9
+
+Fixes:
+
+* Fixes upgrade path skipping the linking of account, if first connecting to Sense first before upgrading
+* Adjusts copy to match what is spec'ed out
+
+## 1.5.2.8
+
+New:
+
+* Support the hardware version returned in devices endpoint
+* Show upgrade button in settings, if hardware is Sense
+* Update name of Sense in settings, based on sense version
+
+Fixes:
+
+* Fixed issue in factory reset screen so it doesn't hang if it can't find paired Sense
+* Ensure help button is shown in factory reset screen
+
+## 1.5.2.7
+
+New:
+
+* Integrate with swap API
+* Update factory reset screen and perform reset over BLE
+
+Fixes:
+
+* Prevent back button from showing after skipping pill pairing in upgrade flow, that leads to Sense DFU
+* Skipping pill pairing will not take you to clip your pill screen
+
+## 1.5.2.6
+
+Fixes:
+
+* Updated copy for setting time zone after setting WiFi
+* Updated copy for pairing / connecting to Sense alert
+* Hide the Try now label in voice tutorial during responses
+* Fixed issue that would cause upgrade path to hang while pairing with Sense
+* Guarding against possible race condition crasher when Sense disconnects unexpectedly
+
+## 1.5.2.5
+
+New:
+
+* Removed audio player that was shown in the Timeline for dev / beta builds
+
+Fixes:
+
+* Fixed crasher when skipping pill pairing, during upgrade path
+
+## 1.5.2.4
+
+Fixes:
+
+* Fixed issue where the pill swapping dialog does not unpair existing pill
+* Made last reset screen description in to 1 paragraph instead of 2
+* Changed copy on the first upgrade path screen
+* Added help button to the new pill description screen
+* Fixed copy with the unpaired state for the pill
+* Fixed 4s (yup, the phone itself)
+* Changed voice tutorial copy for the done screen to match Android
+* Pointing pair Sense help links to correct pages
+
+## 1.5.2.3
+
+New:
+
+* Optionally show Sense DFU screen in upgrade path
+* Optionally show Voice Tutorial in upgrade path
+* Add factory reset option screen in upgrade path (no API yet)
+
+Fixes:
+
+* Fix issue with Voice tutorial analytics not being consistent with Onboarding prefix
+
+## 1.5.2.2
+
+New:
+
+* New upgrade path for sense pairing, with current Sense filtering
+* New upgrade path for pill unpairing / pairing
+* New screen to suggest Sense with Voice paired
+* Refactored onboarding flow to allow customizations to flow
+
+Fixes:
+
+* Fixed issue where retry button in pill pairing does not update background button color
+
+## 1.5.2.1
+
+New:
+
+* Refactored Have Sense ready screen to VSPER architecture to maximize reuse
+* Analytics for voice tutorial screen
+
+Fixes:
+
+* Fix rare crasher that happens if insights API failed, showing only 1 question in the feed + a refresh of the view is triggered and both questions and insights api fails, which then requires user to either skip or answer the question that is still showing.
+* Prevent crasher with Sensors if API response contains an object type that we do not expect.
+
 ## 1.5.1.8
 
 Note:

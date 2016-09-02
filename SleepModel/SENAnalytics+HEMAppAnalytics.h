@@ -52,6 +52,7 @@ extern NSString* const kHEMAnalyticsEventPropBluetooth;
 extern NSString* const kHEMAnalyticsEventPropAudio;
 extern NSString* const kHEMAnalyticsEventPropSensePairingMode;
 extern NSString* const kHEMAnalyticsEventPropSensePairing;
+extern NSString* const kHEMAnalyticsEventPropResetSense;
 extern NSString* const kHEMAnalyticsEventPropSenseSetup;
 extern NSString* const kHEMAnalyticsEventPropWiFiScan;
 extern NSString* const kHEMAnalyticsEventPropWiFiPass;
@@ -250,6 +251,13 @@ extern NSString* const HEMAnalyticsPropService;
 extern NSString* const HEMAnalyticsEventSenseDFU;
 extern NSString* const HEMAnalyticsEventSenseDFUBegin;
 extern NSString* const HEMAnalyticsEventSenseDFUEnd;
+
+// voice tutorial
+extern NSString* const HEMAnalyticsEventVoiceTutorial;
+extern NSString* const HEMAnalyticsEventVoiceResponse;
+
+// upgrade path
+extern NSString* const HEMAnalyticsEventUpgradePrefix;
 
 @interface SENAnalytics (HEMAppAnalytics)
 

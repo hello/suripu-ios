@@ -27,8 +27,7 @@ NSString* const HEMOnboardingNotificationDidChangeSensePairing = @"HEMOnboarding
 NSString* const HEMOnboardingNotificationUserInfoSenseManager = @"HEMOnboardingNotificationUserInfoSenseManager";
 NSString* const HEMOnboardingNotificationDidChangePillPairing = @"HEMOnboardingNotificationDidChangePillPairing";
 NSString* const HEMOnboardingNotificationComplete = @"HEMOnboardingNotificationComplete";
-
-static NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
+NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
 
 // polling of data
 static NSUInteger const HEMOnboardingMaxFeatureCheckAttempts = 5;
@@ -44,6 +43,8 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 static CGFloat const HEMOnboardingSenseDFUTimeout = 150.0f;
 static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 
+static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
+
 @interface HEMOnboardingService()
 
 @property (nonatomic, assign, getter=isPollingSensorData) BOOL pollingSensorData;
@@ -52,6 +53,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 @property (nonatomic, assign) NSInteger senseScanAttempts;
 @property (nonatomic, strong) SENAccount* currentAccount;
 @property (nonatomic, strong) SENSenseManager* currentSenseManager;
+@property (nonatomic, strong) SENSenseManager* tempSenseManager;
 @property (nonatomic, assign, getter=shouldStopPreScanningForSenses) BOOL stopPreScanningForSenses;
 @property (nonatomic, strong) SENDFUStatus* currentDFUStatus;
 @property (nonatomic, strong) NSTimer* senseDFUTimer;
@@ -60,6 +62,16 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 @property (nonatomic, strong) SENFeatures* features;
 @property (nonatomic, assign) NSInteger featureCheckAttempts;
 @property (nonatomic, assign, getter=isGettingFeatures) BOOL gettingFeatures;
+
+@property (nonatomic, copy) HEMOnboardingErrorHandler rescanHandler;
+@property (nonatomic, strong) NSTimer* rescanTimer;
+
+@property (nonatomic, copy) NSString* disconnectObserverId;
+@property (nonatomic, copy) HEMOnboardingErrorHandler sensePairingHandler;
+@property (nonatomic, copy) HEMOnboardingWiFiHandler wifihandler;
+@property (nonatomic, copy) HEMOnboardingErrorHandler linkAccountHandler;
+@property (nonatomic, copy) HEMOnboardingErrorHandler pillPairingHandler;
+@property (nonatomic, copy) HEMOnboardingErrorHandler ledHandler;
 
 @end
 
@@ -102,6 +114,20 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
     [self setFeatures:nil];
+    [self setRescanHandler:nil];
+    [[self rescanTimer] invalidate];
+    [self setRescanTimer:nil];
+    [self setSensePairingHandler:nil];
+    [self setPillPairingHandler:nil];
+    [self setWifihandler:nil];
+    [self setLinkAccountHandler:nil];
+    
+    if ([self tempSenseManager]) {
+        [[self tempSenseManager] disconnectFromSense];
+        [self setTempSenseManager:nil];
+    }
+    
+    [self stopObservingDisconnectsIfNeeded];
     // leave the current sense manager in place
 }
 
@@ -118,6 +144,45 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
                            userInfo:userInfo];
 }
 
+#pragma mark - Pill
+
+- (void)pairPill:(HEMOnboardingErrorHandler)completion {
+    if (![self currentSenseManager]) {
+        NSString* reason = @"sense not initialized for pill pairing";
+        NSError* error = [self errorWithCode:HEMOnboardingErrorSenseNotInitialized reason:reason];
+        [SENAnalytics trackError:error];
+        completion (error);
+        return;
+    }
+    
+    if (![SENAuthorizationService isAuthorized]) {
+        NSString* reason = @"user is not signed in for pill pairing";
+        NSError* error = [self errorWithCode:HEMOnboardingErrorNotAuthorized reason:reason];
+        [SENAnalytics trackError:error];
+        completion (error);
+        return;
+    }
+    
+    [self setPillPairingHandler:completion];
+    [self observeUnexpectedDisconnects];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^done)(NSError* error) = ^(NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf pillPairingHandler]) {
+            [strongSelf pillPairingHandler] (error);
+            [strongSelf setPillPairingHandler:nil];
+        }
+    };
+    
+    [[self currentSenseManager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
+        done (nil);
+    } failure:^(NSError *error) {
+        [SENAnalytics trackError:error];
+        done (error);
+    }];
+}
+
 #pragma mark - Sense
 
 /**
@@ -126,22 +191,26 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
  *         make sure we're using the actual sense manager that is instantiated
  */
 - (SENSenseManager*)currentSenseManager {
-    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
-    SENSenseManager* manager = nil;
-    if ([deviceService senseManager]) {
-        manager = [deviceService senseManager];
+    if ([self tempSenseManager]) {
+        return [self tempSenseManager];
+    } else if (!_currentSenseManager) {
+        SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+        return [deviceService senseManager];
     } else {
-        manager = _currentSenseManager;
+        return _currentSenseManager;
     }
-    return manager;
 }
 
-- (void)replaceCurrentSenseManagerWith:(SENSenseManager*)manager {
-    DDLogVerbose(@"replacing current manager %@, with %@", [self currentSenseManager], manager);
-    [self setCurrentSenseManager:manager];
+- (void)useTempSenseManager:(SENSenseManager *)manager {
+    DDLogVerbose(@"using temp sense manager %@", [manager sense]);
+    [self disconnectCurrentSense];
+    if (manager) {
+        [self setTempSenseManager:manager];
+    }
 }
 
 - (void)stopPreScanning {
+    DDLogVerbose(@"stop prescanning for senses");
     [self setStopPreScanningForSenses:YES];
 }
 
@@ -149,11 +218,96 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     __weak typeof(self) weakSelf = self;
     [SENSenseManager whenBleStateAvailable:^(BOOL on) {
         if (on) {
+            DDLogVerbose(@"prescanning for senses");
             [weakSelf scanForSenses];
         } else {
             DDLogVerbose(@"pre-scanning for nearby senses skipped, ble not on");
         }
     }];
+}
+
+- (void)scheduleRescanTimeout {
+    CGFloat timeout = HEMOnboardingSenseScanTimeout;
+    [[self rescanTimer] invalidate];
+    [self setRescanTimer:[NSTimer scheduledTimerWithTimeInterval:timeout
+                                                          target:self
+                                                        selector:@selector(rescanTimeout)
+                                                        userInfo:nil
+                                                         repeats:NO]];
+}
+
+- (void)rescanTimeout {
+    [self setRescanTimer:nil];
+    if ([self rescanHandler]) {
+        NSString* reason = @"rescan timed out";
+        [self rescanHandler] ([self errorWithCode:HEMOnboardingErrorScanTimeout
+                                           reason:reason]);
+        [self setRescanHandler:nil];
+    }
+}
+
+- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+                             completion:(HEMOnboardingErrorHandler)completion {
+    [SENSenseManager stopScan]; // stop a scan if one is in progress;
+    [self setRescanHandler:completion];
+    [self scheduleRescanTimeout];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^done)(SENSense* sense, NSError* error) = ^(SENSense* sense, NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf rescanTimer]) {
+            [[strongSelf rescanTimer] invalidate];
+            [strongSelf setRescanTimer:nil];
+        }
+        
+        if (sense && !error) {
+            [strongSelf useTempSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
+        }
+        
+        if (error) {
+            [SENAnalytics trackErrorWithMessage:@"no sense found"];
+        }
+        
+        if ([strongSelf rescanHandler]) {
+            [strongSelf rescanHandler] (error);
+            [strongSelf setRescanHandler:nil];
+        }
+    };
+    
+    [SENSenseManager whenBleStateAvailable:^(BOOL on) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!on) {
+            NSString* reason = @"ble does not appear to be on";
+            done (nil, [strongSelf errorWithCode:HEMOnboardingErrorBLENotReady
+                                          reason:reason]);
+        } else {
+            [SENSenseManager scanForSense:^(NSArray *senses) {
+                DDLogVerbose(@"found senses %@", senses);
+                if ([senses count] == 0) {
+                    NSString* reason = @"sense not found";
+                    done (nil, [strongSelf errorWithCode:HEMOnboardingErrorNoSenseFound
+                                                  reason:reason]);
+                } else {
+                    SENSense* nearestSense = nil;
+                    if ([deviceIdsToFilter count] == 0) {
+                        nearestSense = [senses firstObject];
+                    } else {
+                        for (SENSense* sense in senses) {
+                            if (![deviceIdsToFilter containsObject:[sense deviceId]]) {
+                                nearestSense = sense;
+                                break;
+                            }
+                        }
+                    }
+                    done (nearestSense, nil);
+                }
+            }];
+        }
+    }];
+}
+
+- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion {
+    [self rescanForNearbySenseNotMatching:nil completion:completion];
 }
 
 - (void)scanForSenses {
@@ -204,6 +358,10 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 }
 
 - (void)disconnectCurrentSense {
+    if ([self disconnectObserverId] != nil) {
+        [[self currentSenseManager] removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
+        [self setDisconnectObserverId:nil];
+    }
     [[self currentSenseManager] disconnectFromSense];
 }
 
@@ -211,15 +369,178 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     [self setNearbySensesFound:nil];
 }
 
+- (void)failWithUninitializedMessage:(NSString*)message completion:(HEMOnboardingErrorHandler)completion {
+    if (completion) {
+        NSError* error = [self errorWithCode:HEMOnboardingErrorSenseNotInitialized
+                                      reason:message];
+        [SENAnalytics trackError:error];
+        completion (error);
+    }
+}
+
+- (void)ensurePairedSenseIsReady:(HEMOnboardingErrorHandler)completion {
+    if (!completion) return;
+
+    SENSenseManager* manager = [self currentSenseManager];
+    if (manager) {
+        completion (nil);
+    } else if (![SENSenseManager isReady]) {
+        __weak typeof(self) weakSelf = self;
+        [SENSenseManager whenReady:^(BOOL ready) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (!ready) {
+                NSString* reason = @"BLE might not be on";
+                completion ([strongSelf errorWithCode:HEMOnboardingErrorBLENotReady reason:reason]);
+            } else {
+                [strongSelf scanForPairedSense:completion];
+            }
+        }];
+    } else {
+        [self scanForPairedSense:completion];
+    }
+}
+
+- (void)scanForPairedSense:(HEMOnboardingErrorHandler)completion {
+    // if we are here, then an onboarding controller was reused inside the app,
+    // so use the device service
+    __weak typeof(self) weakSelf = self;
+    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            NSString* reason = @"failed to load pairing ";
+            NSError* error = [strongSelf errorWithCode:HEMOnboardingErrorFailedToLoadPairingInfo reason:reason];
+            [SENAnalytics trackError:error];
+            completion (error);
+            return;
+        }
+
+        DDLogVerbose(@"looking for paired sense");
+        [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
+            if (error) {
+                NSString* reason = @"paired sense not found";
+                NSError* error = [strongSelf errorWithCode:HEMOnboardingErrorNoSenseFound reason:reason];
+                [SENAnalytics trackErrorWithMessage:@"no sense found"];
+                completion (error);
+            } else {
+                completion (nil);
+            }
+        }];
+    }];
+}
+
+#pragma mark - Disconnects
+
+- (void)observeUnexpectedDisconnects {
+    if (![self disconnectObserverId]) {
+        __weak typeof(self) weakSelf = self;
+        self.disconnectObserverId =
+        [[self currentSenseManager] observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            NSError* internalError = error;
+            if (!internalError) {
+                NSString* reason = @"sense unexpectedly disconnected";
+                internalError = [strongSelf errorWithCode:HEMOnboardingErrorSenseDisconnected
+                                                   reason:reason];
+            }
+            
+            [[strongSelf currentSenseManager] removeUnexpectedDisconnectObserver:[strongSelf disconnectObserverId]];
+            [strongSelf setCurrentSenseManager:nil];
+            [strongSelf setDisconnectObserverId:nil];
+            
+            if ([strongSelf sensePairingHandler]) {
+                [SENAnalytics trackError:internalError];
+                [strongSelf sensePairingHandler] (internalError);
+                [strongSelf setSensePairingHandler:nil];
+            } else if ([strongSelf wifihandler]) {
+                [SENAnalytics trackError:internalError];
+                [strongSelf wifihandler] (nil, NO, internalError);
+                [strongSelf setWifihandler:nil];
+            } else if ([strongSelf linkAccountHandler]) {
+                [SENAnalytics trackError:internalError];
+                [strongSelf linkAccountHandler] (internalError);
+                [strongSelf setLinkAccountHandler:nil];
+            } else if ([strongSelf pillPairingHandler]) {
+                [SENAnalytics trackError:internalError];
+                [strongSelf pillPairingHandler] (internalError);
+                [strongSelf setPillPairingHandler:nil];
+            } else if ([strongSelf ledHandler]) {
+                [SENAnalytics trackError:internalError];
+                [strongSelf ledHandler] (internalError);
+                [strongSelf setLedHandler:nil];
+            }
+        }];
+    }
+}
+
+- (void)stopObservingDisconnectsIfNeeded {
+    if ([self disconnectObserverId] && [self currentSenseManager]) {
+        if (![self sensePairingHandler]
+            && ![self wifihandler]
+            && ![self linkAccountHandler]
+            && ![self pillPairingHandler]
+            && ![self ledHandler]) {
+            [[self currentSenseManager] removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
+            [self setDisconnectObserverId:nil];
+        }
+    }
+}
+
+#pragma mark - LEDs
+
+- (void)spinTheLEDs:(HEMOnboardingErrorHandler)completion {
+    if ([self currentSenseManager]) {
+        [self setLedHandler:completion];
+        [self observeUnexpectedDisconnects];
+        
+        __weak typeof(self) weakSelf = self;
+        
+        [[self currentSenseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError: error];
+            }
+            if ([strongSelf ledHandler]) {
+                [strongSelf ledHandler] (error);
+                [strongSelf setLedHandler:nil];
+            }
+        }];
+    } else if (completion) {
+        NSString* reason = @"sense not initialized.  cannot spin the LEDs";
+        NSError* error = [self errorWithCode:HEMOnboardingErrorSenseNotInitialized reason:reason];
+        [SENAnalytics trackError: error];
+        completion (error);
+    }
+}
+
+- (void)resetLED:(HEMOnboardingErrorHandler)completion {
+    if ([self currentSenseManager]) {
+        [self setLedHandler:completion];
+        [self observeUnexpectedDisconnects];
+        
+        __weak typeof(self) weakSelf = self;
+        
+        BOOL onboarding = ![self hasFinishedOnboarding];
+        SENSenseLEDState state = onboarding ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+        [[self currentSenseManager] setLED:state completion:^(id response, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf ledHandler]) {
+                [strongSelf ledHandler] (error);
+                [strongSelf setLedHandler:nil];
+            }
+        }];
+    } else if (completion) {
+        DDLogVerbose(@"cannot reset LED with sense manager, silently fail");
+        completion (nil);
+    }
+}
+
 #pragma mark - Pairing Mode for next user
 
-- (void)enablePairingMode:(void(^)(NSError* error))completion {
+- (void)enablePairingMode:(HEMOnboardingErrorHandler)completion {
     SENSenseManager* manager = [self currentSenseManager];
     if (!manager) {
-        if (completion) {
-            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
-                                     reason:@"cannot enable pairing mode without a sense"]);
-        }
+        NSString* message = @"cannot enable pairing mode without a sense";
+        [self failWithUninitializedMessage:message completion:completion];
         return;
     }
     
@@ -243,15 +564,16 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
             if (!error && ![strongSelf hasFinishedOnboarding]) {
                 [strongSelf startPollingSensorData];
             }
+            if (error) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+            }
             if (completion) {
                 completion (error);
             }
         }];
     } else {
-        if (completion) {
-            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
-                                     reason:@"cannot force sensor data upload without a sense"]);
-        }
+        NSString* message = @"cannot force sensor data upload without a sense";
+        [self failWithUninitializedMessage:message completion:completion];
     }
 }
 
@@ -518,29 +840,132 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     return message;
 }
 
+#pragma mark - Sense Pairing
+
+- (void)pairWithCurrentSenseWithLEDOn:(BOOL)turnOnLEDs
+                           completion:(HEMOnboardingErrorHandler)completion {
+    SENSenseManager* manager = [self currentSenseManager];
+    if (!manager) {
+        NSString* reason = @"unable to pair without a sense manager initialized";
+        return [self failWithUninitializedMessage:reason completion:completion];
+    }
+    // make sure we set the sense Id as soon as user tries to pair so if there is
+    // an error, we will know what device id it's for
+    NSString* deviceId = [[[self currentSenseManager] sense] deviceId];
+    if (deviceId) {
+        [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : deviceId}];
+    }
+    
+    [self setSensePairingHandler:completion];
+    [self observeUnexpectedDisconnects];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^finish)(NSError* error) = ^(NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        if ([strongSelf sensePairingHandler]) {
+            [strongSelf sensePairingHandler] (error);
+            [strongSelf setSensePairingHandler:nil];
+        }
+    };
+    
+    // FIXME: hmm, i see the prompt before calling pair.  Maybe the call to pair
+    // is no longer needed?
+    void(^pair)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf currentSenseManager] pair:^(id response) {
+            DDLogVerbose(@"paired!");
+            finish (nil);
+        } failure:finish];
+    };
+    
+    if (turnOnLEDs) {
+        [[self currentSenseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+            if (error) {
+                DDLogVerbose(@"showing led activity failed, stopping");
+                finish (error);
+            } else {
+                pair ();
+            }
+        }];
+    } else {
+        pair ();
+    }
+}
+
 #pragma mark - WiFi
+
+- (void)checkIfCurrentSenseHasWiFi:(HEMOnboardingWiFiHandler)completion {
+    if (![self currentSenseManager]) {
+        if (completion) {
+            NSString* reason = @"unable to check wifi without a sense manager initialized";
+            NSError* error = [self errorWithCode:HEMOnboardingErrorSenseNotInitialized
+                                          reason:reason];
+            [SENAnalytics trackError:error];
+            completion (nil, NO, error);
+        }
+        return;
+    }
+    
+    [self setWifihandler:completion];
+    [self observeUnexpectedDisconnects];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^finish)(NSString* ssid, SENSenseWiFiStatus* status, NSError* error) = ^(NSString* ssid, SENSenseWiFiStatus* status, NSError* error) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            DDLogVerbose(@"could not determine configured wifi ssid + state");
+            [SENAnalytics trackError:error];
+        }
+        if ([strongSelf wifihandler]) {
+            [strongSelf wifihandler] (ssid, [status isConnected], error);
+            [strongSelf setWifihandler:nil];
+        }
+    };
+    
+    [[self currentSenseManager] getConfiguredWiFi:^(NSString *ssid, SENSenseWiFiStatus *status) {
+        finish (ssid, status, nil);
+    } failure:^(NSError *error) {
+        finish (nil, nil, error);
+    }];
+}
 
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)type
          update:(void(^)(SENSenseWiFiStatus* status))update
-     completion:(void(^)(NSError* error))completion {
+     completion:(HEMOnboardingErrorHandler)completion {
     
-    SENSenseManager* manager = [self currentSenseManager];
-    if (!manager) {
-        if (completion) {
-            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
-                                     reason:@"unable to set wifi without a sense manager initialized"]);
-        }
-        return;
+    if (![self currentSenseManager]) {
+        NSString* message = @"unable to check wifi without a sense manager initialized";
+        return [self failWithUninitializedMessage:message completion:completion];
     }
     
-    [manager setWiFi:ssid password:password securityType:type update:update success:^(id response) {
-        if (completion) {
-            completion (nil);
-        }
-    } failure:completion];
+    [[self currentSenseManager] setWiFi:ssid
+                               password:password
+                           securityType:type
+                                 update:update
+                                success:^(id response) {
+                                    if (completion) {
+                                        completion (nil);
+                                    }
+                                } failure:completion];
     
+}
+
+#pragma mark - Time Zone
+
+- (void)setTimeZone:(HEMOnboardingErrorHandler)completion {
+    [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        if (completion) {
+            completion (error);
+        }
+    }];
 }
 
 #pragma mark - Link Account
@@ -549,7 +974,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 // so that all device interaction happens within one of them and not both
 // such that these types of interactions are more fluid (see note after linking
 // account)
-- (void)linkCurrentAccount:(void(^)(NSError* error))completion {
+- (void)linkCurrentAccount:(HEMOnboardingErrorHandler)completion {
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self currentSenseManager];
     
@@ -562,28 +987,43 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
     }
     
     if (!manager) {
-        if (completion) {
-            completion ([self errorWithCode:HEMOnboardingErrorSenseNotInitialized
-                                     reason:@"cannot link account without a sense manager initialized"]);
-        }
-        return;
+        NSString* reason = @"cannot link account without a sense manager initialized";
+        return [self failWithUninitializedMessage:reason completion:completion];
     }
-
+    
+    [self setLinkAccountHandler:completion];
+    [self observeUnexpectedDisconnects];
+    
     __weak typeof(self) weakSelf = self;
+    void(^finish) (NSError* error) = ^(NSError* error) {
+         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!error) {
+            if ([strongSelf hasFinishedOnboarding]) {
+                [[SENServiceDevice sharedService] loadDeviceInfo:nil];
+            }
+            
+            [SENAnalytics track:HEMAnalyticsEventSensePaired];
+            
+            if ([strongSelf tempSenseManager]) {
+                [strongSelf setCurrentSenseManager:[strongSelf tempSenseManager]];
+                [strongSelf setTempSenseManager:nil];
+            }
+            
+            [strongSelf checkFeatures];
+            [strongSelf notifyOfSensePairingChange];
+        } else {
+            [SENAnalytics trackError:error];
+        }
+        
+        if ([strongSelf linkAccountHandler]) {
+            [strongSelf linkAccountHandler] (error);
+            [strongSelf setLinkAccountHandler:nil];
+        }
+    };
+
     [manager linkAccount:accessToken success:^(id response) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        // load the service data so is readily available, if not in onboarding
-        if ([strongSelf hasFinishedOnboarding]) {
-            [[SENServiceDevice sharedService] loadDeviceInfo:nil];
-        }
-        
-        [SENAnalytics track:HEMAnalyticsEventSensePaired];
-        [strongSelf checkFeatures];
-        
-        if (completion) {
-            completion (nil);
-        }
-    } failure:completion];
+        finish (nil);
+    } failure:finish];
 }
 
 #pragma mark - Checkpoints
@@ -599,8 +1039,10 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 }
 
 - (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    [preferences setPersistentPreference:@(checkpoint) forKey:HEMOnboardingSettingCheckpoint];
+    if (![self hasFinishedOnboarding]) {
+        SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+        [preferences setPersistentPreference:@(checkpoint) forKey:HEMOnboardingSettingCheckpoint];
+    }
 }
 
 - (HEMOnboardingCheckpoint)onboardingCheckpoint {
@@ -770,7 +1212,7 @@ static CGFloat const HEMOnboardingSenseDFUCheckInterval = 5.0f;
 #pragma mark - enabled features
 
 - (void)checkFeatures {
-    if (![self features]) {
+    if (![self features] && ![self isGettingFeatures]) {
         [self setGettingFeatures:YES];
         [self setFeatureCheckAttempts:[self featureCheckAttempts] + 1];
         

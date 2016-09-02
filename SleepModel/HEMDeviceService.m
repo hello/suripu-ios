@@ -9,6 +9,7 @@
 
 #import <LGBluetooth/LGBluetooth.h>
 
+#import <SenseKit/SENSense.h>
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENDeviceMetadata.h>
@@ -17,6 +18,8 @@
 #import <SenseKit/SENSleepPillManager.h>
 #import <SenseKit/SENSleepPill.h>
 #import <SenseKit/SENLocalPreferences.h>
+#import <SenseKit/SENSwapStatus.h>
+#import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMDeviceService.h"
 #import "HEMConfig.h"
@@ -34,6 +37,9 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 @property (nonatomic, strong) SENPairedDevices* devices;
 @property (nonatomic, strong) SENSleepPillManager* pillManager;
+@property (nonatomic, strong) SENSenseManager* senseManager;
+@property (nonatomic, copy) HEMDeviceResetHandler resetHandler;
+@property (nonatomic, copy) id senseDisconnectObserver;
 
 @end
 
@@ -223,6 +229,126 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 - (BOOL)meetsPhoneBatteryRequirementForDFU:(float)batteryLevel {
     return batteryLevel > HEMPillDfuMinPhoneBattery;
+}
+
+- (BOOL)isPillFirmwareUpdateAvailable {
+    SENPillMetadata* pillMetadata = [[self devices] pillMetadata];
+    return [pillMetadata firmwareUpdateUrl] != nil
+        && ![self shouldSuppressPillFirmwareUpdate];
+}
+
+#pragma mark - Upgrade
+
+- (BOOL)hasHardwareUpgradeForSense {
+#if STORE
+    return NO;
+#endif
+    SENSenseMetadata* sense = [[self devices] senseMetadata];
+    return [sense hardwareVersion] == SENSenseHardwareOne;
+}
+
+- (void)issueSwapIntentFor:(SENSense*)sense completion:(HEMDeviceUpgradeHandler)completion {
+    NSString* senseId = [sense deviceId];
+    if (!senseId) {
+        NSError* error = [self errorWithCode:HEMDeviceErrorInvalidArgument];
+        [SENAnalytics trackError:error];
+        return completion (error);
+    }
+
+    __weak typeof(self) weakSelf = self;
+    [SENAPIDevice issueIntentToSwapWithDeviceId:senseId completion:^(SENSwapStatus* status, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        NSError* swapError = error;
+        
+        switch ([status response]) {
+            case SENSwapResponseTooManyDevices:
+                swapError = [strongSelf errorWithCode:HEMDeviceErrorSwapErrorMultipleSenses];
+                break;
+            case SENSwapResponsePairedToAnother:
+                swapError = [strongSelf errorWithCode:HEMDeviceErrorSwapErrorPairedToAnother];
+            default:
+                break;
+        }
+        
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        
+        completion (error);
+    }];
+}
+
+- (void)listenForSenseDisconnect {
+    if (![self senseDisconnectObserver]) {
+        __weak typeof(self) weakSelf = self;
+        self.senseDisconnectObserver = [[self senseManager] observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf resetHandler]) {
+                [strongSelf resetHandler] (error);
+                [strongSelf setResetHandler:nil];
+            }
+        }];
+    }
+}
+
+- (void)removeSenseDisconnectObserver {
+    if ([self senseDisconnectObserver] && [self senseManager]) {
+        [[self senseManager] removeUnexpectedDisconnectObserver:[self senseDisconnectObserver]];
+        [self setSenseDisconnectObserver:nil];
+    }
+}
+
+- (void)hardFactoryResetSense:(NSString*)senseId completion:(HEMDeviceResetHandler)completion {
+    __weak typeof(self) weakSelf = self;
+    [self setResetHandler:completion];
+    [self listenForSenseDisconnect];
+    
+    [SENSenseManager whenBleStateAvailable:^(BOOL on) {
+        [SENSenseManager scanForSense:^(NSArray *senses) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            void(^done)(NSError* error) = ^(NSError* error) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf removeSenseDisconnectObserver];
+                [[strongSelf senseManager] disconnectFromSense];
+                [strongSelf setSenseManager:nil];
+                
+                if (error) {
+                    [SENAnalytics trackError:error];
+                }
+                
+                if ([strongSelf resetHandler]) {
+                    [strongSelf resetHandler] (error);
+                    [strongSelf setResetHandler:nil];
+                }
+            };
+            
+            BOOL found = NO;
+            if ([senses count] > 0) {
+                for (SENSense* scannedSense in senses) {
+                    if ([[scannedSense deviceId] isEqualToString:senseId]) {
+                        found = YES;
+                        [strongSelf setSenseManager:[[SENSenseManager alloc] initWithSense:scannedSense]];
+                        [[strongSelf senseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+                            if (!error) {
+                                [[strongSelf senseManager] resetToFactoryState:^(id response) {
+                                    done(nil);
+                                } failure:done];
+                            } else {
+                                done (error);
+                            }
+                        }];
+                        break;
+                    }
+                }
+            }
+            
+            if (!found) {
+                done ([strongSelf errorWithCode:HEMDeviceErrorFactoryResetSenseNotFound]);
+            }
+        }];
+    }];
 }
 
 #pragma mark - Clean up

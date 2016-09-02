@@ -17,6 +17,7 @@ extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
 extern NSString* const HEMOnboardingNotificationUserInfoSenseManager;
 extern NSString* const HEMOnboardingNotificationDidChangePillPairing;
+extern NSString* const HEMOnboardingErrorDomain;
 
 typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorNoAccount = -1,
@@ -25,7 +26,13 @@ typedef NS_ENUM(NSInteger, HEMOnboardingError) {
     HEMOnboardingErrorSenseNotInitialized = -4,
     HEMOnboardingErrorMissingAuthToken = -5,
     HEMOnboardingErrorDFUTimeout = -6,
-    HEMOnboardingErrorDFUStatusError = -7
+    HEMOnboardingErrorDFUStatusError = -7,
+    HEMOnboardingErrorBLENotReady = -8,
+    HEMOnboardingErrorNoSenseFound = -9,
+    HEMOnboardingErrorScanTimeout = -10,
+    HEMOnboardingErrorSenseDisconnected = -11,
+    HEMOnboardingErrorFailedToLoadPairingInfo = -12,
+    HEMOnboardingErrorNotAuthorized = -13
 };
 
 /**
@@ -48,6 +55,8 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 };
 
 typedef void(^HEMOnboardingDFUHandler)(NSError* _Nullable error);
+typedef void(^HEMOnboardingErrorHandler)(NSError* _Nullable error);
+typedef void(^HEMOnboardingWiFiHandler)(NSString* _Nullable ssid, BOOL connected, NSError* _Nullable error);
 typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 
 @class SENSense;
@@ -106,7 +115,13 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  */
 - (SENSense*)nearestSense;
 
-- (void)replaceCurrentSenseManagerWith:(SENSenseManager*)manager;
+/**
+ * @discussion
+ * Call this method to make the service use this specified manager for BLE operations.
+ *
+ * @param manager: sense manager to use, or nil to clear it out
+ */
+- (void)useTempSenseManager:(SENSenseManager*)manager;
 
 /**
  * Stop the pre-scanning that may or may not have been started
@@ -134,6 +149,20 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  * @param completion: the block to invoke upon completion
  */
 - (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion;
+
+- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+                             completion:(HEMOnboardingErrorHandler)completion;
+- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion;
+- (void)pairWithCurrentSenseWithLEDOn:(BOOL)turnOnLEDs
+                           completion:(HEMOnboardingErrorHandler)completion;
+- (void)checkIfCurrentSenseHasWiFi:(HEMOnboardingWiFiHandler)completion;
+- (void)setTimeZone:(HEMOnboardingErrorHandler)completion;
+- (void)stopObservingDisconnectsIfNeeded;
+- (void)ensurePairedSenseIsReady:(HEMOnboardingErrorHandler)completion;
+
+#pragma mark - Pill
+
+- (void)pairPill:(HEMOnboardingErrorHandler)completion;
 
 #pragma mark - Accounts
 
@@ -370,6 +399,11 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 - (BOOL)isLastNameValid:(nullable NSString*)lastName;
 - (BOOL)isEmailValid:(nullable NSString*)email;
 - (BOOL)isPasswordValid:(nullable NSString*)password;
+
+#pragma mark - LEDs
+
+- (void)spinTheLEDs:(HEMOnboardingErrorHandler)completion;
+- (void)resetLED:(HEMOnboardingErrorHandler)completion;
 
 #pragma mark - OTA
 

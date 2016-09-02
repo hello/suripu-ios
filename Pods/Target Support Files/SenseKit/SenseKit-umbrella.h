@@ -67,6 +67,7 @@
 #import "SENSound.h"
 #import "SENSpeechResult.h"
 #import "SENSupportTopic.h"
+#import "SENSwapStatus.h"
 #import "SENTimeline.h"
 #import "SENTimelineMetric.h"
 #import "SENTimelineSegment.h"

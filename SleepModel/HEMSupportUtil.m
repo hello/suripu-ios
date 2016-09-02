@@ -84,11 +84,6 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
          mailDelegate:delegate];
 }
 
-+ (void)openOrderFormFrom:(UIViewController*)controller {
-    NSString* orderURLString = NSLocalizedString(@"help.url.order-form", nil);
-    [self openURL:orderURLString from:controller];
-}
-
 + (void)openHelpFrom:(UIViewController*)controller {
     NSString* helpURLString = NSLocalizedString(@"help.url.support", nil);
     [self openURL:helpURLString from:controller];

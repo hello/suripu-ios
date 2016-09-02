@@ -223,9 +223,11 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (NSString*)onboardingAnalyticsEventNameFor:(NSString*)event {
     NSString* reusedEvent = event;
-    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]
-        && ![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
-        reusedEvent = [NSString stringWithFormat:@"%@ %@", HEMAnalyticsEventOnboardingPrefix, event];
+    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
+        if (![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
+            reusedEvent = [NSString stringWithFormat:@"%@ %@",
+                           HEMAnalyticsEventOnboardingPrefix, event];
+        }
     }
     return reusedEvent;
 }
@@ -334,9 +336,11 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
         } else if (completion) {
             completion (YES);
         }
-    } else {
+    } else if (![[[[self activityCoverView] activityLabel] text] isEqualToString:updateMessage]) {
         [[self activityCoverView] updateText:updateMessage completion:completion];
-    }
+    } else if (completion) {
+        completion (YES);
+    } // else, do nothing
 }
 
 #pragma mark - Convenience Methods
@@ -345,7 +349,7 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
            secondaryButton:(UIButton*)secondaryButton
               withDelegate:(BOOL)hasDelegate {
     
-    [[secondaryButton titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[secondaryButton titleLabel] setFont:[UIFont button]];
     [secondaryButton setTitleColor:[UIColor tintColor]
                           forState:UIControlStateNormal];
 
@@ -358,17 +362,38 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     
 }
 
-- (void)completeOnboarding {
-    [SENAnalytics track:HEMAnalyticsEventOnbEnd];
-    
+#pragma mark - Flow
+
+- (void)endFlow:(NSString*)doneMessage {
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    
+    if (!doneMessage) {
+        [service notifyOfOnboardingCompletion];
+    } else {
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[[self navigationController] view]
+                        withText:doneMessage
+                     successMark:YES
+                      completion:^{
+                          int64_t delay = (int64_t) (HEMOnboardingCompletionDelay*NSEC_PER_SEC);
+                          dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay);
+                          dispatch_after(time, dispatch_get_main_queue(), ^{
+                              [service notifyOfOnboardingCompletion];
+                          });
+                      }];
+    }
+
+}
+
+- (void)completeOnboarding {
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    
+    [SENAnalytics track:HEMAnalyticsEventOnbEnd];
     [service markOnboardingAsComplete];
-    
-    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
-    
-    NSString* doneMessage = NSLocalizedString(@"onboarding.end-message.well-done", nil);
+
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
     [activityView showInView:[[self navigationController] view]
-                    withText:doneMessage
+                    withText:NSLocalizedString(@"onboarding.end-message.well-done", nil)
                  successMark:YES
                   completion:^{
                       int64_t delay = (int64_t) (HEMOnboardingCompletionDelay*NSEC_PER_SEC);
@@ -377,7 +402,6 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
                           [service notifyOfOnboardingCompletion];
                       });
                   }];
-    
 }
 
 - (void)completeOnboardingWithoutMessage {
@@ -386,6 +410,41 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     HEMOnboardingService* service = [HEMOnboardingService sharedService];
     [service markOnboardingAsComplete];
     [service notifyOfOnboardingCompletion];
+}
+
+- (BOOL)continueWithFlowBySkipping:(BOOL)skip {
+    BOOL canHandle = NO;
+    if ([self flow]) {
+        // first check if we can use a segue
+        NSString* nextSegueId = [[self flow] nextSegueIdentifierAfter:self skip:skip];
+        if (nextSegueId) {
+            canHandle = YES;
+            [self performSegueWithIdentifier:nextSegueId sender:nil];
+        } else {
+            // second, see if we should replace nav stack with current controller
+            UIViewController* nextController = [[self flow] controllerToSwapInAfter:self skip:skip];
+            if (nextController) {
+                canHandle = YES;
+                [[self navigationController] setViewControllers:@[nextController] animated:YES];
+            }
+        }
+        
+        if (!canHandle && [[self flow] shouldCompleteFlowAfter:self]) {
+            canHandle = YES;
+        }
+    }
+    return canHandle;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController* nextController = [segue destinationViewController];
+    [self prepareViewControllerForNextStep:nextController];
+}
+
+- (void)prepareViewControllerForNextStep:(UIViewController*)nextController {
+    if ([self flow] && [nextController isKindOfClass:[HEMOnboardingController class]]) {
+        [[self flow] prepareNextController:(id)nextController fromController:self];
+    }
 }
 
 @end

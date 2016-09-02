@@ -29,7 +29,15 @@
     [super viewDidLoad];
     [self configureHelpButton];
     [self configurePresenter];
-    [SENAnalytics track:HEMAnalyticsEventSenseDFU];
+    [self trackAnalyticsEvent:HEMAnalyticsEventSenseDFU];
+}
+
+- (void)trackAnalyticsEvent:(NSString *)event {
+    if ([self flow]) {
+        [SENAnalytics track:event];
+    } else {
+        [SENAnalytics track:event properties:nil onboarding:YES];
+    }
 }
 
 - (void)configureHelpButton {
@@ -46,6 +54,7 @@
     [presenter bindWithLaterButton:[self laterButton]];
     [presenter setErrorDelegate:self];
     [presenter setDfuDelegate:self];
+    [presenter setOnboarding:![self flow]];
     [self addPresenter:presenter];
 }
 
@@ -56,11 +65,11 @@
 }
 
 - (void)senseUpdateLaterFrom:(HEMSenseDFUPresenter *)presenter {
-    [self next];
+    [self next:YES];
 }
 
 - (void)senseUpdateCompletedFrom:(HEMSenseDFUPresenter *)presenter {
-    [self next];
+    [self next:NO];
 }
 
 - (void)showConfirmationWithTitle:(NSString*)title
@@ -94,13 +103,15 @@
 
 #pragma mark - Flow
 
-- (void)next {
-    HEMOnboardingService* service = [HEMOnboardingService sharedService];
-    if ([service isVoiceAvailable]) {
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard voiceTutorialSegueIdentifier]
-                                  sender:self];
-    } else {
-        [self completeOnboarding];
+- (void)next:(BOOL)skip {
+    if (![self continueWithFlowBySkipping:skip]) {
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        if ([service isVoiceAvailable]) {
+            NSString* voiceSegue = [HEMOnboardingStoryboard voiceTutorialSegueIdentifier];
+            [self performSegueWithIdentifier:voiceSegue sender:self];
+        } else {
+            [self completeOnboarding];
+        }
     }
 }
 

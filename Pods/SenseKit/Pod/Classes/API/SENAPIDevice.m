@@ -20,6 +20,9 @@ static NSString* const SENAPIDeviceOTAEndpoint = @"v1/ota";
 static NSString* const SENAPIDeviceOTAStatusPath = @"status";
 static NSString* const SENAPIDeviceOTARequestPath = @"request_ota";
 
+static NSString* const SENAPIDeviceSwapPath = @"swap";
+static NSString* const SENAPIDeviceSwapParamDeviceId = @"sense_id";
+
 @implementation SENAPIDevice
 
 + (void)getPairedDevices:(SENAPIDataBlock)completion {
@@ -43,6 +46,22 @@ static NSString* const SENAPIDeviceOTARequestPath = @"request_ota";
             pairingInfo = [[SENDevicePairingInfo alloc] initWithDictionary:dict];
         }
         completion (pairingInfo, error);
+    }];
+}
+
+#pragma mark - Swap
+
++ (void)issueIntentToSwapWithDeviceId:(NSString*)deviceId completion:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingPathComponent:SENAPIDeviceSwapPath];
+    NSDictionary* param = @{SENAPIDeviceSwapParamDeviceId : deviceId ?: @""};
+    [SENAPIClient PUT:path parameters:param completion:^(id data, NSError *error) {
+        if (completion) {
+            SENSwapStatus* status = nil;
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                status = [[SENSwapStatus alloc] initWithDictionary:data];
+            }
+            completion (status, error);
+        }
     }];
 }
 

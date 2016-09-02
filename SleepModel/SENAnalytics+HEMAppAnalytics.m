@@ -66,6 +66,7 @@ NSString* const kHEMAnalyticsEventPropBluetooth = @"bluetooth";
 NSString* const kHEMAnalyticsEventPropAudio = @"enhanced_audio";
 NSString* const kHEMAnalyticsEventPropSensePairingMode = @"sense_pairing_mode";
 NSString* const kHEMAnalyticsEventPropSensePairing = @"sense_pairing";
+NSString* const kHEMAnalyticsEventPropResetSense = @"reset_sense";
 NSString* const kHEMAnalyticsEventPropSenseSetup = @"setup_sense";
 NSString* const kHEMAnalyticsEventPropWiFiScan = @"wifi_scan";
 NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";
@@ -81,7 +82,7 @@ NSString* const HEMAnalyticsEventNotification = @"Notifications";
 NSString* const HEMAnalyticsEventNoBle = @"No BLE";
 NSString* const HEMAnalyticsEventAudio = @"Sense Audio";
 NSString* const HEMAnalyticsEventSleepPill = @"Sleep Pill";
-NSString* const HEMAnalyticsEventPillPlacement = @"Onboarding Pill Placement";
+NSString* const HEMAnalyticsEventPillPlacement = @"Pill Placement";
 NSString* const HEMAnalyticsEventSenseColors = @"Onboarding Sense Colors";
 NSString* const HEMAnalyticsEventFirstAlarm = @"Onboarding First Alarm";
 NSString* const HEMAnalyticsEventRoomCheck = @"Onboarding Room Check";
@@ -264,6 +265,10 @@ NSString* const HEMAnalyticsEventPillDfuDone = @"Pill Update Complete";
 NSString* const HEMAnalyticsEventSenseDFU = @"Sense DFU";
 NSString* const HEMAnalyticsEventSenseDFUBegin = @"Sense DFU begin";
 NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
+
+// voice tutorial
+NSString* const HEMAnalyticsEventVoiceTutorial = @"Voice Tutorial";
+NSString* const HEMAnalyticsEventVoiceResponse = @"Voice Command";
 
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";

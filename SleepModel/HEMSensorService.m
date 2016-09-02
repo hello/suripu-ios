@@ -77,7 +77,34 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 #pragma mark - Data
 
-- (void)currentConditions:(HEMSensorConditionslHandler)completion {
+- (void)roomConditions:(HEMSensorRoomHandler)completion {
+    __block NSArray<SENSensor*>* sensors = nil;
+    __block NSDictionary<NSString*, NSArray<SENSensorDataPoint*>*>* data = nil;
+    __block NSError* metadataError = nil;
+    __block NSError* dataError = nil;
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_enter(group);
+    [self roomMetadata:^(NSArray<SENSensor *> * data, NSError * error) {
+        sensors = data;
+        metadataError = error;
+        dispatch_group_leave(group);
+    }];
+    
+    dispatch_group_enter(group);
+    [self roomData:^(NSDictionary<NSString *,NSArray<SENSensorDataPoint*>*>* response, NSError * error) {
+        data = response;
+        dataError = error;
+        dispatch_group_leave(group);
+    }];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        completion (sensors, data, metadataError ?: dataError);
+    });
+}
+
+- (void)roomMetadata:(HEMSensorMetadataHandler)completion {
     SENAPISensorTempUnit unit = [self sensorTempUnitFromPreferences];
     [SENAPISensor currentConditionsWithTempUnit:unit completion:^(id data, NSError *error) {
         if (error) {
@@ -97,12 +124,22 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
     }];
 }
 
-- (void)pollCurrentConditions:(HEMSensorConditionslHandler)update {
+- (void)roomData:(HEMSensorDataHandler)completion {
+    [SENAPISensor dataForAllSensorsWithScope:SENAPISensorDataScopeDay
+                                  completion:^(id data, NSError *error) {
+                                      if (error) {
+                                          [SENAnalytics trackError:error];
+                                      }
+                                      completion (data, error);
+                                  }];
+}
+
+- (void)pollRoomConditions:(HEMSensorRoomHandler)update {
     if ([self isPolling]) {
         NSError* error = [self errorWithCode:HEMSensorServiceErrorCodePollingAlreadyStarted
                                       reason:nil];
         [SENAnalytics trackError:error];
-        return update (nil, error);
+        return update (nil, nil, error);
     }
     
     [self setPollHander:update];
@@ -117,20 +154,20 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 - (void)refreshCurrentConditions {
     __weak typeof(self) weakSelf = self;
-    [self currentConditions:^(NSArray<SENSensor *> * sensors, NSError * error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([strongSelf pollHander]) {
-            [strongSelf pollHander] (sensors, error);
-        }
-        
-        if ([strongSelf isPolling] && [strongSelf pollHander]) {
-            int64_t delayInSecs = (int64_t)(kHEMSensorPollInterval * NSEC_PER_SEC);
-            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
-            dispatch_after(delay, dispatch_get_main_queue(), ^{
-                [strongSelf refreshCurrentConditions];
-            });
-        }
-    }];
+//    [self roomConditions:^(NSArray<SENSensor *> * sensors, NSDictionaryNSError * error) {
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//        if ([strongSelf pollHander]) {
+//            [strongSelf pollHander] (sensors, error);
+//        }
+//        
+//        if ([strongSelf isPolling] && [strongSelf pollHander]) {
+//            int64_t delayInSecs = (int64_t)(kHEMSensorPollInterval * NSEC_PER_SEC);
+//            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+//            dispatch_after(delay, dispatch_get_main_queue(), ^{
+//                [strongSelf refreshCurrentConditions];
+//            });
+//        }
+//    }];
 }
 
 @end

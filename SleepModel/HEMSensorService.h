@@ -9,6 +9,7 @@
 #import "SENService.h"
 
 @class SENSensor;
+@class SENSensorDataPoint;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +19,18 @@ typedef NS_ENUM(NSInteger, HEMSensorServiceErrorCode) {
     HEMSensorServiceErrorCodePollingAlreadyStarted = -1
 };
 
-typedef void(^HEMSensorConditionslHandler)(NSArray<SENSensor*>* _Nullable sensors, NSError* _Nullable error);
+typedef NS_ENUM(NSUInteger, HEMSensorServiceScope) {
+    HEMSensorServiceScopeDay = 0,
+    HEMSensorServiceScopeWeek
+};
+
+typedef void(^HEMSensorRoomHandler)(NSArray<SENSensor*>* _Nullable sensors,
+                                    NSDictionary<NSString*, NSArray<SENSensorDataPoint*>*>* _Nullable data,
+                                    NSError* _Nullable error);
+typedef void(^HEMSensorDataHandler)(NSDictionary<NSString*, NSArray<SENSensorDataPoint*>*>* _Nullable data,
+                                    NSError* _Nullable error);
+typedef void(^HEMSensorMetadataHandler)(NSArray<SENSensor*>* _Nullable sensors,
+                                    NSError* _Nullable error);
 
 @interface HEMSensorService : SENService
 
@@ -35,7 +47,7 @@ typedef void(^HEMSensorConditionslHandler)(NSArray<SENSensor*>* _Nullable sensor
  *
  * @param block to call upon completion
  */
-- (void)currentConditions:(HEMSensorConditionslHandler)completion;
+- (void)roomConditions:(HEMSensorRoomHandler)completion;
 
 /**
  * @description
@@ -46,13 +58,13 @@ typedef void(^HEMSensorConditionslHandler)(NSArray<SENSensor*>* _Nullable sensor
  *
  * @param update: the callback to call on each refresh
  */
-- (void)pollCurrentConditions:(HEMSensorConditionslHandler)update;
+- (void)pollRoomConditions:(HEMSensorRoomHandler)update;
 
 /**
  * @description
  * Stop the polling and remove reference to the polling update handler.
  */
-- (void)stopPollingForCurrentConditions;
+- (void)stopPollingForRoomConditions;
 
 @end
 

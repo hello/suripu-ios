@@ -45,6 +45,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 @property (nonatomic, strong) NSError* error;
 @property (nonatomic, assign) BOOL loadedIntro;
 @property (nonatomic, strong) NSMutableDictionary* chartViewBySensor;
+@property (nonatomic, strong) NSMutableDictionary* sensorDataPoints;
 
 @end
 
@@ -58,6 +59,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
         _introService = introService;
         _headerViewHeight = -1.0f;
         _chartViewBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
+        _sensorDataPoints = [NSMutableDictionary dictionaryWithCapacity:8];
     }
     return self;
 }
@@ -84,12 +86,12 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 
 - (void)didDisappear {
     [super didDisappear];
-    [[self sensorService] stopPollingForCurrentConditions];
+    [[self sensorService] stopPollingForRoomConditions];
 }
 
 - (void)userDidSignOut {
     [super userDidSignOut];
-    [[self sensorService] stopPollingForCurrentConditions];
+    [[self sensorService] stopPollingForRoomConditions];
 }
 
 #pragma mark - Data
@@ -103,7 +105,10 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     }
     
     __weak typeof(self) weakSelf = self;
-    [[self sensorService] pollCurrentConditions:^(NSArray<SENSensor *> * sensors, NSError * error) {
+    HEMSensorService* service = [self sensorService];
+    [service pollRoomConditions:^(NSArray<SENSensor *> * sensors,
+                                  NSDictionary<NSString *,NSArray<SENSensorDataPoint*>*>* data,
+                                  NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [[strongSelf activityIndicator] setHidden:YES];
         [[strongSelf activityIndicator] stop];
@@ -122,7 +127,6 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
             [strongSelf setSensors:sensors];
             [[strongSelf collectionView] reloadData];
         }
-        
     }];
 }
 

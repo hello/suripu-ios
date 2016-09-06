@@ -13,13 +13,13 @@
 
 #import "HEMSensorService.h"
 
-static NSTimeInterval const kHEMSensorPollInterval = 10.0f;
+static double const kHEMSensorPollInterval = 30.0f;
 NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 @interface HEMSensorService()
 
 @property (nonatomic, assign, getter=isPolling) BOOL polling;
-@property (nonatomic, copy) HEMSensorConditionslHandler pollHander;
+@property (nonatomic, copy) HEMSensorRoomHandler pollHander;
 
 @end
 
@@ -147,27 +147,29 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
     [self refreshCurrentConditions];
 }
 
-- (void)stopPollingForCurrentConditions {
+- (void)stopPollingForRoomConditions {
     [self setPollHander:nil];
     [self setPolling:NO];
 }
 
 - (void)refreshCurrentConditions {
     __weak typeof(self) weakSelf = self;
-//    [self roomConditions:^(NSArray<SENSensor *> * sensors, NSDictionaryNSError * error) {
-//        __strong typeof(weakSelf) strongSelf = weakSelf;
-//        if ([strongSelf pollHander]) {
-//            [strongSelf pollHander] (sensors, error);
-//        }
-//        
-//        if ([strongSelf isPolling] && [strongSelf pollHander]) {
-//            int64_t delayInSecs = (int64_t)(kHEMSensorPollInterval * NSEC_PER_SEC);
-//            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
-//            dispatch_after(delay, dispatch_get_main_queue(), ^{
-//                [strongSelf refreshCurrentConditions];
-//            });
-//        }
-//    }];
+    [self roomConditions:^(NSArray<SENSensor*>* sensors,
+                           NSDictionary<NSString *,NSArray<SENSensorDataPoint*>*>* data,
+                           NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf pollHander]) {
+            [strongSelf pollHander] (sensors, data, error);
+        }
+        
+        if ([strongSelf isPolling] && [strongSelf pollHander]) {
+            int64_t delayInSecs = (int64_t)(kHEMSensorPollInterval * NSEC_PER_SEC);
+            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+            dispatch_after(delay, dispatch_get_main_queue(), ^{
+                [strongSelf refreshCurrentConditions];
+            });
+        }
+    }];
 }
 
 @end

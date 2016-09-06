@@ -131,7 +131,11 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     /**
      * If the peripheral is found, but cannot connect to Sense
      */
-    SENSenseManagerErrorCodeCannotConnectToSense = -28
+    SENSenseManagerErrorCodeCannotConnectToSense = -28,
+    /**
+     * If the peripheral is attempting to connect to the server, but fails
+     */
+    SENSenseManagerErrorCodeFailedToConnectToServer = -29
 };
 
 @interface SENSenseManager : SENPeripheralManager

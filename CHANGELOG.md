@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.3.1
+
+New:
+
+* Updated protobuf to sync with firmware changes
+* Updated WiFi password screen to handle the removal of WPA2 in Sense security options
+
 ## 1.5.2.11
 
 Note:

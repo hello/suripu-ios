@@ -82,7 +82,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [[self securityField] setHidden:YES];
         [[self passwordField] setHidden:[self securityType] == SENWifiEndpointSecurityTypeOpen];
     } else { // default to WPA2
-        [self setSecurityType:SENWifiEndpointSecurityTypeWpa2];
+        [self setSecurityType:SENWifiEndpointSecurityTypeWpa];
     }
 
     [self setupSecurityPickerView];
@@ -248,9 +248,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (SENWifiEndpointSecurityType)securityTypeForPickerRow:(NSInteger)row {
     SENWifiEndpointSecurityType securityType;
     switch (row) {
-        case 1:
-            securityType = SENWifiEndpointSecurityTypeWpa;
-            break;
         case 2:
             securityType = SENWifiEndpointSecurityTypeWep;
             break;
@@ -258,8 +255,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             securityType = SENWifiEndpointSecurityTypeOpen;
             break;
         case 0:
+        case 1:
         default:
-            securityType = SENWifiEndpointSecurityTypeWpa2;
+            securityType = SENWifiEndpointSecurityTypeWpa;
             break;
     }
     return securityType;
@@ -298,7 +296,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         case SENWifiEndpointSecurityTypeOpen:
             pickerRow = 3;
             break;
-        case SENWifiEndpointSecurityTypeWpa2:
         default:
             pickerRow = 0;
             break;
@@ -393,8 +390,22 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             return @"wep";
         case SENWifiEndpointSecurityTypeWpa:
             return @"wpa";
-        case SENWifiEndpointSecurityTypeWpa2:
-            return @"wpa2";
+        case SENWifiEndpointSecurityTypeWpaEnterprise:
+            return @"wpa enterprise";
+        case SENWifiEndpointSecurityTypeWpsPbc:
+            return @"protected setup, pbc";
+        case SENWifiEndpointSecurityTypeWpsPin:
+            return @"protected setup, pin";
+        case SENWifiEndpointSecurityTypeWepShared:
+            return @"wep, shared";
+        case SENWifiEndpointSecurityTypeP2PPinAuto:
+            return @"peer to peer, pin auto";
+        case SENWifiEndpointSecurityTypeP2PPinKeypad:
+            return @"peer to peer, pin keypad";
+        case SENWifiEndpointSecurityTypeP2PPinDisplay:
+            return @"peer to peer, pin display";
+        case SENWifiEndpointSecurityTypeP2PPbc:
+            return @"peer to peer, pbc";
         default:
             return @"unknown";
     }

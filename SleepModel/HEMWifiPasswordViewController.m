@@ -31,6 +31,13 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepForceDataUpload
 };
 
+typedef NS_ENUM(NSInteger, HEMWiFiSupportedSecurity) {
+    HEMWiFiSupportedSecurityWPA2 = 0,
+    HEMWiFiSupportedSecurityWPA,
+    HEMWiFiSupportedSecurityWEP,
+    HEMWiFiSupportedSecurityOpen
+};
+
 static CGFloat const kHEMWifiSecurityPickerDefaultHeight = 216.0f;
 static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
@@ -48,7 +55,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 @property (strong, nonatomic) UIPickerView* securityPickerView;
 @property (copy,   nonatomic) NSString* ssidConfigured;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
-@property (assign, nonatomic) SENWifiEndpointSecurityType securityType;
+@property (assign, nonatomic) HEMWiFiSupportedSecurity securityType;
 @property (assign, nonatomic) HEMWiFiSetupStep stepFinished;
 @property (strong, nonatomic) HEMDeviceService* deviceService;
 
@@ -78,15 +85,42 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (void)configureForm {
     if ([self endpoint] != nil) {
         [[self ssidField] setText:[[self endpoint] ssid]];
-        [self setSecurityType:[[self endpoint] security]];
+        [self setSecurityType:[self supportedSecurityTypeFromEndpoint:[self endpoint]]];
         [[self securityField] setHidden:YES];
-        [[self passwordField] setHidden:[self securityType] == SENWifiEndpointSecurityTypeOpen];
-    } else { // default to WPA2
-        [self setSecurityType:SENWifiEndpointSecurityTypeWpa];
+        [[self passwordField] setHidden:[self securityType] == HEMWiFiSupportedSecurityOpen];
+    } else { // default to WPA
+        [self setSecurityType:HEMWiFiSupportedSecurityWPA2];
     }
 
     [self setupSecurityPickerView];
-    [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
+    [self updateSecurityTypeLabelForRow:(NSUInteger)[self securityType]];
+}
+
+- (SENWifiEndpointSecurityType)selectedSenseSecurityType {
+    switch ([self securityType]) {
+        case HEMWiFiSupportedSecurityOpen:
+            return SENWifiEndpointSecurityTypeOpen;
+        case HEMWiFiSupportedSecurityWEP:
+            return SENWifiEndpointSecurityTypeWep;
+        case HEMWiFiSupportedSecurityWPA2:
+        case HEMWiFiSupportedSecurityWPA:
+        default:
+            return SENWifiEndpointSecurityTypeWpa;
+    }
+}
+
+- (HEMWiFiSupportedSecurity)supportedSecurityTypeFromEndpoint:(SENWifiEndpoint*)endpoint {
+    switch ([endpoint security]) {
+        case SENWifiEndpointSecurityTypeOpen:
+            return HEMWiFiSupportedSecurityOpen;
+        case SENWifiEndpointSecurityTypeWepShared:
+        case SENWifiEndpointSecurityTypeWep:
+            return HEMWiFiSupportedSecurityWEP;
+        case SENWifiEndpointSecurityTypeWpaEnterprise:
+        case SENWifiEndpointSecurityTypeWpa:
+        default:
+            return HEMWiFiSupportedSecurityWPA;
+    }
 }
 
 - (BOOL)haveDelegates {
@@ -174,10 +208,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     BOOL valid = YES;
     if ([ssid length] == 0) {
         valid = NO;
-    } else if ([self securityType] != SENWifiEndpointSecurityTypeOpen
+    } else if ([self securityType] != HEMWiFiSupportedSecurityOpen
                && [pass length] == 0) {
         valid = NO;
-    } else if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+    } else if ([self securityType] == HEMWiFiSupportedSecurityWEP) {
         valid = [SENSenseManager isWepKeyValid:pass];
     }
     return valid;
@@ -245,62 +279,19 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                     }];
 }
 
-- (SENWifiEndpointSecurityType)securityTypeForPickerRow:(NSInteger)row {
-    SENWifiEndpointSecurityType securityType;
+- (NSString*)securityTypeTextForPickerRow:(HEMWiFiSupportedSecurity)row {
     switch (row) {
-        case 2:
-            securityType = SENWifiEndpointSecurityTypeWep;
-            break;
-        case 3:
-            securityType = SENWifiEndpointSecurityTypeOpen;
-            break;
-        case 0:
-        case 1:
+        case HEMWiFiSupportedSecurityWPA2:
+            return NSLocalizedString(@"wifi.security.wpa2", nil);
+        case HEMWiFiSupportedSecurityWPA:
+            return NSLocalizedString(@"wifi.security.wpa", nil);
+        case HEMWiFiSupportedSecurityWEP:
+            return NSLocalizedString(@"wifi.security.wep", nil);
+        case HEMWiFiSupportedSecurityOpen:
+            return NSLocalizedString(@"wifi.security.open", nil);
         default:
-            securityType = SENWifiEndpointSecurityTypeWpa;
-            break;
+            return nil;
     }
-    return securityType;
-}
-
-- (NSString*)securityTypeTextForPickerRow:(NSInteger)row {
-    NSString* securityType = nil;
-    switch (row) {
-        case 0:
-            securityType = NSLocalizedString(@"wifi.security.wpa2", nil);
-            break;
-        case 1:
-            securityType = NSLocalizedString(@"wifi.security.wpa", nil);
-            break;
-        case 2:
-            securityType = NSLocalizedString(@"wifi.security.wep", nil);
-            break;
-        case 3:
-            securityType = NSLocalizedString(@"wifi.security.open", nil);
-            break;
-        default:
-            break;
-    }
-    return securityType;
-}
-
-- (NSInteger)rowForSecurityType:(SENWifiEndpointSecurityType)securityType {
-    NSInteger pickerRow;
-    switch (securityType) {
-        case SENWifiEndpointSecurityTypeWpa:
-            pickerRow = 1;
-            break;
-        case SENWifiEndpointSecurityTypeWep:
-            pickerRow = 2;
-            break;
-        case SENWifiEndpointSecurityTypeOpen:
-            pickerRow = 3;
-            break;
-        default:
-            pickerRow = 0;
-            break;
-    }
-    return pickerRow;
 }
 
 - (void)updateSecurityTypeLabelForRow:(NSInteger)row {
@@ -318,7 +309,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
     [selectedTypeLabel setText:[self securityTypeTextForPickerRow:row]];
     [selectedTypeLabel sizeToFit];
-    [self setSecurityType:[self securityTypeForPickerRow:row]];
+    [self setSecurityType:row];
 }
 
 #pragma mark UIPickerViewDelegate / DataSource
@@ -568,7 +559,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 [self observeUnexpectedDisconnects];
                 NSString* message = NSLocalizedString(@"wifi.activity.setting-wifi", nil);
                 [self showActivityWithText:message completion:^{
-                    [self setupWiFi:ssid password:pass securityType:[self securityType]];
+                    [self setupWiFi:ssid
+                           password:pass
+                       securityType:[self selectedSenseSecurityType]];
                 }];
             } else {
                 [self showInvalidInputMessage];
@@ -642,7 +635,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)showInvalidInputMessage {
     NSString* message = nil;
-    if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+    if ([self securityType] == HEMWiFiSupportedSecurityWEP) {
         message = NSLocalizedString(@"wifi.error.invalid-wep-key", nil);
     } else {
         message = NSLocalizedString(@"wifi.error.invalid-input", nil);
@@ -659,7 +652,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
     switch ([error code]) {
         case SENSenseManagerErrorCodeWifiNotInRange:
-            if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+            if ([self securityType] == HEMWiFiSupportedSecurityWEP) {
                 message = NSLocalizedString(@"wifi.error.wep.no-ascii", nil);
             } else {
                 message = NSLocalizedString(@"wifi.error.set-sense-not-in-range", nil);
@@ -670,7 +663,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             break;
         case SENSenseManagerErrorCodeWLANConnection:
         case SENSenseManagerErrorCodeFailToObtainIP:
-            if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+            if ([self securityType] == HEMWiFiSupportedSecurityWEP) {
                 message = NSLocalizedString(@"wifi.error.wep.no-ascii", nil);
             } else {
                 message = NSLocalizedString(@"wifi.error.set-sense-failed-connection", nil);

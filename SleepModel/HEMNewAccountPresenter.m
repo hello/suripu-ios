@@ -454,6 +454,8 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     BOOL secure = NO;
     UIReturnKeyType returnKeyType = UIReturnKeyNext;
     UIKeyboardType keyboardType = UIKeyboardTypeAlphabet;
+    UITextAutocapitalizationType capitalization = UITextAutocapitalizationTypeWords;
+    UITextAutocorrectionType autocorrect = UITextAutocorrectionTypeDefault;
     
     switch (index) {
         default:
@@ -468,12 +470,16 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
         case HEMNewAccountRowEmail:
             placeholderText = NSLocalizedString(@"onboarding.account.email", nil);
             keyboardType = UIKeyboardTypeEmailAddress;
+            capitalization = UITextAutocapitalizationTypeNone;
+            autocorrect = UITextAutocorrectionTypeNo;
             value = [[self tempAccount] email];
             break;
         case HEMNewAccountRowPassword:
             placeholderText = NSLocalizedString(@"onboarding.account.password", nil);
             secure = YES;
             returnKeyType = UIReturnKeyDone;
+            capitalization = UITextAutocapitalizationTypeNone;
+            autocorrect = UITextAutocorrectionTypeNo;;
             value = [self password];
             break;
     }
@@ -485,6 +491,8 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     [[cell textField] setDelegate:self];
     [[cell textField] setReturnKeyType:returnKeyType];
     [[cell textField] setKeyboardType:keyboardType];
+    [[cell textField] setAutocapitalizationType:capitalization];
+    [[cell textField] setAutocorrectionType:autocorrect];
 }
 
 #pragma mark - Displaying Next Button

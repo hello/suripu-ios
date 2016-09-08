@@ -29,6 +29,14 @@
     return UIKeyboardTypeEmailAddress;
 }
 
+- (UITextAutocapitalizationType)fieldCapitalizationTypeInRow:(NSInteger)row {
+    return UITextAutocapitalizationTypeNone;
+}
+
+- (UITextAutocorrectionType)fieldAutocorrectTypeInRow:(NSInteger)row {
+    return UITextAutocorrectionTypeNo;
+}
+
 - (NSUInteger)numberOfFields {
     return 1;
 }

@@ -126,6 +126,14 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     return UIKeyboardTypeDefault;
 }
 
+- (UITextAutocorrectionType)fieldAutocorrectTypeInRow:(NSInteger)row {
+    return UITextAutocorrectionTypeDefault;
+}
+
+- (UITextAutocapitalizationType)fieldCapitalizationTypeInRow:(NSInteger)row {
+    return UITextAutocapitalizationTypeWords;
+}
+
 - (BOOL)isFieldSecureInRow:(NSInteger)row {
     return NO;
 }
@@ -221,6 +229,8 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     [textField setDelegate:self];
     [textField setTag:row];
     [textField setKeyboardType:[self keyboardTypeForFieldInRow:row]];
+    [textField setAutocorrectionType:[self fieldAutocorrectTypeInRow:row]];
+    [textField setAutocapitalizationType:[self fieldCapitalizationTypeInRow:row]];
 }
 
 #pragma mark - UITextFieldDelegate

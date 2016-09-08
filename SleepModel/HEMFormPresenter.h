@@ -37,6 +37,8 @@ typedef void(^HEMFormSaveHandler)(NSString* _Nullable errorMessage);
 - (NSString*)existingTextForFieldInRow:(NSInteger)row;
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row;
 - (UIKeyboardType)keyboardTypeForFieldInRow:(NSInteger)row;
+- (UITextAutocorrectionType)fieldAutocorrectTypeInRow:(NSInteger)row;
+- (UITextAutocapitalizationType)fieldCapitalizationTypeInRow:(NSInteger)row;
 - (BOOL)isFieldSecureInRow:(NSInteger)row;
 - (BOOL)canEnableSave:(NSDictionary*)formContent;
 - (void)saveContent:(NSDictionary*)content completion:(HEMFormSaveHandler)completion;

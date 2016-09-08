@@ -11,6 +11,7 @@
 #import <SenseKit/SENSensorStatus.h>
 
 #import "NSAttributedString+HEMUtils.h"
+#import "NSString+HEMUtils.h"
 
 #import "HEMRoomConditionsPresenter.h"
 #import "HEMSensorService.h"
@@ -113,13 +114,11 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         [[strongSelf activityIndicator] setHidden:YES];
         [[strongSelf activityIndicator] stop];
         [strongSelf setSensorError:error];
-        if (error) {
-            [[strongSelf collectionView] reloadData];
-        } else {
+        if (!error && status) {
             [strongSelf setSensorStatus:status];
-            [[strongSelf collectionView] reloadData];
-            // TODO: poll data for a subset of sensors
         }
+        [[strongSelf collectionView] reloadData];
+        // TODO: poll data for a subset of sensors
     }];
 }
 
@@ -205,9 +204,9 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             if ([self sensorError]) {
                 NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
                 UIFont* font = [UIFont errorStateDescriptionFont];
-                itemSize.height = [HEMTextCollectionViewCell heightWithText:text
-                                                                       font:font
-                                                                  cellWidth:itemSize.width];
+                CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
+                CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
+                itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
             }
             return itemSize;
         }

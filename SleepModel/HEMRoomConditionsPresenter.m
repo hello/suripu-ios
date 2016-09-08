@@ -190,6 +190,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     CGSize itemSize = [cardLayout itemSize];
     
     switch ([[self sensorStatus] state]) {
+        case SENSensorStateWaiting:
         case SENSensorStateOk: {
             
             SENSensor* sensor = [[self sensorStatus] sensors][[indexPath row]];
@@ -213,8 +214,13 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     }
 }
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return [self sensorStatus] ? 1 : 0;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     switch ([[self sensorStatus] state]) {
+        case SENSensorStateWaiting:
         case SENSensorStateOk:
             return [[[self sensorStatus] sensors] count];
         case SENSensorStateNoSense:

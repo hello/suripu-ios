@@ -19,6 +19,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMSensorCollectionViewCell.h"
+#import "HEMTextCollectionViewCell.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
@@ -201,6 +202,13 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             itemSize.height = kHEMRoomConditionsPairViewHeight;
             return itemSize;
         default: {
+            if ([self sensorError]) {
+                NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
+                UIFont* font = [UIFont errorStateDescriptionFont];
+                itemSize.height = [HEMTextCollectionViewCell heightWithText:text
+                                                                       font:font
+                                                                  cellWidth:itemSize.width];
+            }
             return itemSize;
         }
     }
@@ -263,6 +271,11 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
                               forControlEvents:UIControlEventTouchUpInside];
         [[senseCell pairSenseButton] setTitle:[buttonTitle uppercaseString]
                                      forState:UIControlStateNormal];
+    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) { // error
+        HEMTextCollectionViewCell* textCell = (id)cell;
+        [[textCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
+        [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [textCell displayAsACard:YES];
     }
 }
 

@@ -27,11 +27,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@protocol HEMPresenterPairDelegate <NSObject>
+
+- (void)pairSenseFrom:(HEMPresenter*)presenter;
+
+@end
+
 @interface HEMPresenter : NSObject
 
 @property (nonatomic, assign, getter=isVisible, readonly) BOOL visible;
 @property (nonatomic, weak, readonly) HEMNavigationShadowView* shadowView;
 @property (nonatomic, weak) id<HEMPresenterErrorDelegate> errorDelegate;
+@property (nonatomic, weak) id<HEMPresenterPairDelegate> pairDelegate;
 
 /*
  * @discussion

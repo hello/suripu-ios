@@ -16,16 +16,17 @@
 #import "HEMSensorService.h"
 #import "HEMIntroService.h"
 #import "HEMDescriptionHeaderView.h"
-#import "HEMSensorGraphCollectionViewCell.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMSensorCollectionViewCell.h"
 #import "HEMCardFlowLayout.h"
+#import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMMarkdown.h"
 #import "HEMStyle.h"
 
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
-// static CGFloat const kHEMCurrentConditionsPairViewHeight = 352.0f;
+static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 @interface HEMRoomConditionsPresenter() <
     UICollectionViewDelegate,
@@ -41,8 +42,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 @property (nonatomic, strong) NSAttributedString* attributedIntroTitle;
 @property (nonatomic, strong) NSAttributedString* attributedIntroDesc;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
-@property (nonatomic, strong) NSArray<SENSensor*>* sensors;
-@property (nonatomic, strong) NSError* error;
+@property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, assign) BOOL loadedIntro;
 @property (nonatomic, strong) NSMutableDictionary* chartViewBySensor;
 @property (nonatomic, strong) NSMutableDictionary* sensorDataPoints;
@@ -98,8 +98,8 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 #pragma mark - Data
 
 - (void)startPolling {
-    if ([[self sensors] count] == 0) {
-        [self setError:nil];
+    if (![self sensorStatus]) {
+        [self setSensorError:nil];
         [[self collectionView] reloadData];
         [[self activityIndicator] setHidden:NO];
         [[self activityIndicator] start];
@@ -111,20 +111,13 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [[strongSelf activityIndicator] setHidden:YES];
         [[strongSelf activityIndicator] stop];
+        [strongSelf setSensorError:error];
         if (error) {
-            if ([[error domain] isEqualToString:kHEMSensorErrorDomain]
-                && [error code] == HEMSensorServiceErrorCodePollingAlreadyStarted) {
-                // ignore
-            } else {
-                [strongSelf setError:error];
-                [[strongSelf collectionView] reloadData];
-                // TODO: handle error
-            }
+            [[strongSelf collectionView] reloadData];
         } else {
-            [strongSelf setError:nil];
             [strongSelf setSensorStatus:status];
             [[strongSelf collectionView] reloadData];
-            // poll data for a subset of sensors
+            // TODO: poll data for a subset of sensors
         }
     }];
 }
@@ -196,20 +189,52 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     HEMCardFlowLayout* cardLayout = (id)collectionViewLayout;
     CGSize itemSize = [cardLayout itemSize];
     
-    SENSensor* sensor = [self sensors][[indexPath row]];
-    itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[sensor localizedMessage]
-                                                               cellWidth:itemSize.width];
-    return itemSize;
+    switch ([[self sensorStatus] state]) {
+        case SENSensorStateOk: {
+            
+            SENSensor* sensor = [[self sensorStatus] sensors][[indexPath row]];
+            itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[sensor localizedMessage]
+                                                                       cellWidth:itemSize.width];
+            return itemSize;
+        }
+        case SENSensorStateNoSense:
+            itemSize.height = kHEMRoomConditionsPairViewHeight;
+            return itemSize;
+        default: {
+            return itemSize;
+        }
+    }
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section {
-    return [[self sensors] count];
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    switch ([[self sensorStatus] state]) {
+        case SENSensorStateOk:
+            return [[[self sensorStatus] sensors] count];
+        case SENSensorStateNoSense:
+            return 1;
+        default: {
+            return [self sensorError] ? 1 : 0;
+        }
+    }
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* reuseId = [HEMMainStoryboard sensorReuseIdentifier];
+    NSString* reuseId = nil;
+    
+    switch ([[self sensorStatus] state]) {
+        case SENSensorStateWaiting:
+        case SENSensorStateOk:
+            reuseId = [HEMMainStoryboard sensorReuseIdentifier];
+            break;
+        case SENSensorStateNoSense:
+            reuseId = [HEMMainStoryboard pairReuseIdentifier];
+            break;
+        default:
+            reuseId = [self sensorError] ? [HEMMainStoryboard errorReuseIdentifier] : nil;
+            break;
+    }
+    
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                      forIndexPath:indexPath];
 }
@@ -218,7 +243,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
-        SENSensor* sensor = [self sensors][[indexPath row]];
+        SENSensor* sensor = [[self sensorStatus] sensors][[indexPath row]];
         HEMSensorCollectionViewCell* sensorCell = (id)cell;
         SENCondition condition = [sensor condition];
         ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
@@ -228,6 +253,16 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
         [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:condition]];
         [[sensorCell unitLabel] setText:nil]; // TODO add it
         [[sensorCell graphContainerView] addSubview:chartView];
+    } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
+        HEMSenseRequiredCollectionViewCell* senseCell = (id)cell;
+        NSString* buttonTitle = NSLocalizedString(@"room-conditions.pair-sense.button.title", nil);
+        NSString* message = NSLocalizedString(@"room-conditions.pair-sense.message", nil);
+        [[senseCell descriptionLabel] setText:message];
+        [[senseCell pairSenseButton] addTarget:self
+                                        action:@selector(pairSense)
+                              forControlEvents:UIControlEventTouchUpInside];
+        [[senseCell pairSenseButton] setTitle:[buttonTitle uppercaseString]
+                                     forState:UIControlStateNormal];
     }
 }
 
@@ -273,6 +308,12 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self didScrollContentIn:scrollView];
+}
+
+#pragma mark - Actions
+
+- (void)pairSense {
+    [[self pairDelegate] pairSenseFrom:self];
 }
 
 #pragma mark - Clean up

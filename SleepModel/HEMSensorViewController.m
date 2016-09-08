@@ -1,6 +1,5 @@
 
 #import <SenseKit/SENSensor.h>
-#import <SenseKit/SENAPIRoom.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENPreference.h>
@@ -99,7 +98,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
                                                        selector:@selector(refreshData)
                                                        userInfo:nil
                                                         repeats:YES];
-    [self registerForNotifications];
     [self showTutorialIfNeeded];
 }
 
@@ -117,7 +115,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (void)showTutorialIfNeeded {
-    if (![HEMTutorial showTutorialIfNeededForSensorNamed:self.sensor.name]) {
+    if (![HEMTutorial showTutorialIfNeededForSensorNamed:self.sensor.localizedName]) {
         if ([self haveDataToShow]) {
             [[self handHoldingPresenter] showIfNeededIn:[self view] withGraphView:[self graphView]];
         }
@@ -144,23 +142,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [_refreshTimer invalidate];
 }
 
-- (void)registerForNotifications
-{
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(refreshCurrentSensorValue:)
-                   name:SENSensorUpdatedNotification object:nil];
-    [center addObserver:self
-               selector:@selector(refreshData)
-                   name:SENAPIReachableNotification object:nil];
-    [center addObserver:self
-               selector:@selector(reloadData)
-                   name:SENLocalPrefDidChangeNotification
-                 object:[SENPreference nameFromType:SENPreferenceTypeTempCelcius]];
-}
-
 - (void)showTutorial {
-    [HEMTutorial showTutorialForSensorNamed:self.sensor.name];
+    [HEMTutorial showTutorialForSensorNamed:self.sensor.localizedName];
 }
 
 #pragma mark - Configuration
@@ -244,7 +227,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (void)configureSensorValueViews {
-    UIColor* color = [UIColor colorForCondition:self.sensor.condition];
+    UIColor* color = [UIColor colorForCondition:SENConditionIdeal];
     self.graphView.colorTouchInputLine = color;
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.7;
@@ -256,7 +239,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (void)showSensorDetails {
-    UIColor* color = [UIColor colorForCondition:self.sensor.condition];
+    UIColor* color = [UIColor colorForCondition:SENConditionIdeal];
     NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessage];
     
     self.valueLabel.textColor = color;
@@ -267,19 +250,9 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
-    self.unitLabel.text = [self.sensor localizedUnit];
+    self.unitLabel.text = [NSString stringWithFormat:@"%@", self.sensor.value];
     self.statusMessageLabel.textAlignment = NSTextAlignmentLeft;
-    NSMutableAttributedString* statusMessage = [[markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim] mutableCopy];
-    if (self.sensor.idealConditionsMessage.length > 0) {
-        static NSString* const HEMSensorContentDivider = @"\n\n";
-        NSDictionary* idealAttributes = [HEMMarkdown attributesForSensorMessage];
-        NSAttributedString* divider = [[NSAttributedString alloc] initWithString:HEMSensorContentDivider attributes:statusAttributes];
-        NSAttributedString* idealMessage = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
-        [statusMessage appendAttributedString:divider];
-        [statusMessage appendAttributedString:idealMessage];
-    }
-    
-    self.statusMessageLabel.attributedText = statusMessage;
+    self.statusMessageLabel.text = self.sensor.localizedMessage;
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
@@ -307,52 +280,52 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 {
     if (![SENAuthorizationService isAuthorized] || [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive)
         return;
-    
-    __weak typeof(self) weakSelf = self;
-    [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        if (error) {
-            strongSelf.hourlyDataLoadState = HEMSensorLoadStateError;
-            strongSelf.graphView.alpha = 0;
-            return;
-        }
-        
-        strongSelf.hourlyDataLoadState = HEMSensorLoadStateLoaded;
-        
-        if (![strongSelf.hourlyDataSeries isEqualToArray:data]) {
-            strongSelf.hourlyDataSeries = data;
-            [strongSelf showTutorialIfNeeded];
-            if ([strongSelf isShowingHourlyData])
-                [strongSelf updateGraphWithHourlyData:data];
-        }
-        
-    }];
-    [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        if (error) {
-            strongSelf.dailyDataLoadState = HEMSensorLoadStateError;
-            strongSelf.graphView.alpha = 0;
-            return;
-        }
-        
-        strongSelf.dailyDataLoadState = HEMSensorLoadStateLoaded;
-        
-        if (![strongSelf.dailyDataSeries isEqualToArray:data]) {
-            strongSelf.dailyDataSeries = data;
-            [strongSelf showTutorialIfNeeded];
-            if (![strongSelf isShowingHourlyData])
-                [strongSelf updateGraphWithDailyData:data];
-        }
-    }];
-    [SENSensor refreshCachedSensors];
+//    
+//    __weak typeof(self) weakSelf = self;
+//    [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//        
+//        if (error) {
+//            strongSelf.hourlyDataLoadState = HEMSensorLoadStateError;
+//            strongSelf.graphView.alpha = 0;
+//            return;
+//        }
+//        
+//        strongSelf.hourlyDataLoadState = HEMSensorLoadStateLoaded;
+//        
+//        if (![strongSelf.hourlyDataSeries isEqualToArray:data]) {
+//            strongSelf.hourlyDataSeries = data;
+//            [strongSelf showTutorialIfNeeded];
+//            if ([strongSelf isShowingHourlyData])
+//                [strongSelf updateGraphWithHourlyData:data];
+//        }
+//        
+//    }];
+//    [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//        
+//        if (error) {
+//            strongSelf.dailyDataLoadState = HEMSensorLoadStateError;
+//            strongSelf.graphView.alpha = 0;
+//            return;
+//        }
+//        
+//        strongSelf.dailyDataLoadState = HEMSensorLoadStateLoaded;
+//        
+//        if (![strongSelf.dailyDataSeries isEqualToArray:data]) {
+//            strongSelf.dailyDataSeries = data;
+//            [strongSelf showTutorialIfNeeded];
+//            if (![strongSelf isShowingHourlyData])
+//                [strongSelf updateGraphWithDailyData:data];
+//        }
+//    }];
+//    [SENSensor refreshCachedSensors];
 }
 
 - (void)refreshCurrentSensorValue:(NSNotification*)note
 {
     SENSensor* sensor = note.object;
-    if (![sensor.name isEqualToString:self.sensor.name])
+    if (![sensor.localizedName isEqualToString:self.sensor.localizedName])
         return;
 
     if (![self.sensor isEqual:sensor]) {
@@ -487,14 +460,14 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     if ([maxValue isEqual:[NSNull null]])
         self.maxGraphValue = 0;
     else
-        self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:self.sensor.unit] floatValue];
+        self.maxGraphValue = [maxValue floatValue];
     for (NSNumber* value in values) {
         if (![value isEqual:[NSNull null]]) {
             minValue = value;
             break;
         }
     }
-    self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:self.sensor.unit] floatValue] * 0.75;
+    self.minGraphValue = [minValue floatValue] * 0.75;
 }
 
 #pragma mark - BEMSimpleLineGraphDelegate

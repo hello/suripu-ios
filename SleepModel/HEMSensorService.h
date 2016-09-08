@@ -10,13 +10,15 @@
 
 @class SENSensor;
 @class SENSensorDataPoint;
+@class SENSensorStatus;
 
 NS_ASSUME_NONNULL_BEGIN
 
 extern NSString* const kHEMSensorErrorDomain;
 
 typedef NS_ENUM(NSInteger, HEMSensorServiceErrorCode) {
-    HEMSensorServiceErrorCodePollingAlreadyStarted = -1
+    HEMSensorServiceErrorCodePollingAlreadyStarted = -1,
+    HEMSensorServiceErrorCodeNoSense = -2
 };
 
 typedef NS_ENUM(NSUInteger, HEMSensorServiceScope) {
@@ -24,21 +26,12 @@ typedef NS_ENUM(NSUInteger, HEMSensorServiceScope) {
     HEMSensorServiceScopeWeek
 };
 
-typedef void(^HEMSensorRoomHandler)(NSArray<SENSensor*>* _Nullable sensors,
-                                    NSDictionary<NSString*, NSArray<SENSensorDataPoint*>*>* _Nullable data,
-                                    NSError* _Nullable error);
 typedef void(^HEMSensorDataHandler)(NSDictionary<NSString*, NSArray<SENSensorDataPoint*>*>* _Nullable data,
                                     NSError* _Nullable error);
-typedef void(^HEMSensorMetadataHandler)(NSArray<SENSensor*>* _Nullable sensors,
+typedef void(^HEMSensorStatusHandler)(SENSensorStatus* _Nullable status,
                                     NSError* _Nullable error);
 
 @interface HEMSensorService : SENService
-
-/**
- * @return a sorted array of cached SENSensor objects.  The sort order is the
- *         preferred order of the sensors, if displayed in a list
- */
-- (nullable NSArray<SENSensor*>*)sortedCacheSensors;
 
 /**
  * @discussion
@@ -47,24 +40,35 @@ typedef void(^HEMSensorMetadataHandler)(NSArray<SENSensor*>* _Nullable sensors,
  *
  * @param block to call upon completion
  */
-- (void)roomConditions:(HEMSensorRoomHandler)completion;
+- (void)roomStatus:(HEMSensorStatusHandler)completion;
+
+/**
+ * @discussion
+ * Returns the room data for specified list of Sensors
+ *
+ * @param sensors: list of sensors to retrieve data for
+ * @param completion: the block to call upon completion
+ */
+- (void)roomDataForSensors:(NSArray<SENSensor*>*)sensors
+                completion:(HEMSensorDataHandler)completion;
 
 /**
  * @description
- * If not already polling, will continuously call currentConditions: with a set
- * interval until stopped.  Upon each refresh of the conditions, the callback
- * will be called.  Be sure not to have any direct references to self in the block
- * to prevent retain cycles
+ * If not already polling, will continuously call roomData: with a set interval 
+ * until stopped.  Upon each refresh of the conditions, the callback will be called.  
+ * Be sure not to have any direct references to self in the block to prevent retain 
+ * cycles
  *
+ * @param sensors: sensors to continually poll data for
  * @param update: the callback to call on each refresh
  */
-- (void)pollRoomConditions:(HEMSensorRoomHandler)update;
+- (void)pollRoomDataForSensors:(NSArray<SENSensor*>*)sensors update:(HEMSensorDataHandler)update;
 
 /**
  * @description
  * Stop the polling and remove reference to the polling update handler.
  */
-- (void)stopPollingForRoomConditions;
+- (void)stopPollingForRoomData;
 
 @end
 

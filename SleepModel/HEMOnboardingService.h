@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SENSenseWiFiStatus;
 @class SENDFUStatus;
+@class SENSensor;
 
 extern NSString* const HEMOnboardingNotificationComplete;
 extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
@@ -159,6 +160,8 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 - (void)setTimeZone:(HEMOnboardingErrorHandler)completion;
 - (void)stopObservingDisconnectsIfNeeded;
 - (void)ensurePairedSenseIsReady:(HEMOnboardingErrorHandler)completion;
+- (BOOL)hasSensorData;
+- (NSArray<SENSensor*>*)sensors;
 
 #pragma mark - Pill
 

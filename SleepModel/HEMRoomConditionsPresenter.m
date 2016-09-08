@@ -6,9 +6,9 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-#import <AttributedMarkdown/markdown_peg.h>
 #import <Charts/Charts-Swift.h>
 #import <SenseKit/SENSensor.h>
+#import <SenseKit/SENSensorStatus.h>
 
 #import "NSAttributedString+HEMUtils.h"
 
@@ -46,6 +46,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 @property (nonatomic, assign) BOOL loadedIntro;
 @property (nonatomic, strong) NSMutableDictionary* chartViewBySensor;
 @property (nonatomic, strong) NSMutableDictionary* sensorDataPoints;
+@property (nonatomic, strong) SENSensorStatus* sensorStatus;
 
 @end
 
@@ -86,12 +87,12 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 
 - (void)didDisappear {
     [super didDisappear];
-    [[self sensorService] stopPollingForRoomConditions];
+    // TODO: stop polling
 }
 
 - (void)userDidSignOut {
     [super userDidSignOut];
-    [[self sensorService] stopPollingForRoomConditions];
+    // TODO: stop polling
 }
 
 #pragma mark - Data
@@ -106,13 +107,10 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     
     __weak typeof(self) weakSelf = self;
     HEMSensorService* service = [self sensorService];
-    [service pollRoomConditions:^(NSArray<SENSensor *> * sensors,
-                                  NSDictionary<NSString *,NSArray<SENSensorDataPoint*>*>* data,
-                                  NSError * error) {
+    [service roomStatus:^(SENSensorStatus* status, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [[strongSelf activityIndicator] setHidden:YES];
         [[strongSelf activityIndicator] stop];
-        
         if (error) {
             if ([[error domain] isEqualToString:kHEMSensorErrorDomain]
                 && [error code] == HEMSensorServiceErrorCodePollingAlreadyStarted) {
@@ -124,8 +122,9 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
             }
         } else {
             [strongSelf setError:nil];
-            [strongSelf setSensors:sensors];
+            [strongSelf setSensorStatus:status];
             [[strongSelf collectionView] reloadData];
+            // poll data for a subset of sensors
         }
     }];
 }
@@ -135,7 +134,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 - (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
                               inCell:(HEMSensorCollectionViewCell*)cell {
     // TODO: for now, use the line chart for every sensor.
-    LineChartView* lineChartView = [self chartViewBySensor][[sensor name]];
+    LineChartView* lineChartView = [self chartViewBySensor][@([sensor type])];
     
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initWithFrame:[[cell graphContainerView] bounds]];
@@ -144,10 +143,11 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
         [lineChartView setBackgroundColor:[UIColor whiteColor]];
         [lineChartView setDrawGridBackgroundEnabled:YES];
         [lineChartView setNoDataText:nil];
-        [self chartViewBySensor][[sensor name]] = lineChartView;
+        [self chartViewBySensor][@([sensor type])] = lineChartView;
     }
     
-    UIColor* sensorColor = [UIColor colorForCondition:[sensor condition]];
+    SENCondition condition = [sensor condition];
+    UIColor* sensorColor = [UIColor colorForCondition:condition];
     [lineChartView setGridBackgroundColor:sensorColor];
     
     return lineChartView;
@@ -187,15 +187,6 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     return _attributedIntroDesc;
 }
 
-// TODO: this is a hack, but since server is returning markdown, we need to temporarily
-// convert to attributed string, then back
-- (NSString*)sensorMessageFrom:(SENSensor*)sensor {
-    if ([[sensor message] length] == 0) {
-        return nil;
-    }
-    return [markdown_to_attr_string([sensor message], 0, [HEMMarkdown attributesForSensorMessage]) string];
-}
-
 #pragma mark - UICollectionView
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
@@ -206,7 +197,7 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     CGSize itemSize = [cardLayout itemSize];
     
     SENSensor* sensor = [self sensors][[indexPath row]];
-    itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[self sensorMessageFrom:sensor]
+    itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[sensor localizedMessage]
                                                                cellWidth:itemSize.width];
     return itemSize;
 }
@@ -229,11 +220,12 @@ static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
     if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
         SENSensor* sensor = [self sensors][[indexPath row]];
         HEMSensorCollectionViewCell* sensorCell = (id)cell;
+        SENCondition condition = [sensor condition];
         ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
-        [[sensorCell descriptionLabel] setText:[self sensorMessageFrom:sensor]];
+        [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
         [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
-        [[sensorCell valueLabel] setText:[sensor localizedValue]];
-        [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:[sensor condition]]];
+        [[sensorCell valueLabel] setText:[NSString stringWithFormat:@"%@", [sensor value]]];
+        [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:condition]];
         [[sensorCell unitLabel] setText:nil]; // TODO add it
         [[sensorCell graphContainerView] addSubview:chartView];
     }

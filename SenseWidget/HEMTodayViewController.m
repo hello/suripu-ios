@@ -6,10 +6,9 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENSensor.h>
-#import <SenseKit/SENAPIRoom.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENTimeline.h>
-#import <SenseKit/SENAPITimeline.h>
+#import <SenseKit/SENAPIClient.h>
+#import <SenseKit/SENSensorStatus.h>
 
 #import <NotificationCenter/NotificationCenter.h>
 
@@ -24,7 +23,6 @@
 static NSString* const HEMAPIPlistKey = @"SenseApiUrl";
 static NSString* const HEMClientIdPlistKey = @"SenseClientId";
 static NSString* const kHEMTodayErrorDomain = @"is.hello.sense.today";
-static NSString* const kHEMTodaySleepScoreCellId = @"sleepScore";
 static NSString* const kHEMTodayConditionsCellId = @"info";
 static NSString* const kHEMTodaySenseScheme = @"sense://";
 static NSString* const HEMTodaySensorQueryItem = @"sensor";
@@ -45,7 +43,6 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (nonatomic, weak)   IBOutlet UILabel *noDataLabel;
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, strong) NSDate* lastNight;
-@property (nonatomic, strong) SENTimeline* sleepResult;
 @property (nonatomic, copy)   HEMWidgeUpdateBlock updateBlock;
 @property (nonatomic, assign) BOOL sensorsChecked;
 @property (nonatomic, strong) NSError* sensorsError;
@@ -58,9 +55,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self configureApi];
-    [self listenForSensorUpdates];
     [self configureContent];
 }
 
@@ -77,18 +72,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 - (void)configureContent {
     [self setService:[HEMSensorService new]];
     [self setSensorFormatter:[HEMSensorValueFormatter new]];
-    
-    self.tableView.rowHeight = kHEMTodayRowHeight;
-    
-    if ([SENAuthorizationService accessToken] != nil) {
-        [self loadCachedSensors];
-        [SENSensor refreshCachedSensors];
-    }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self reloadUI];
+    [[self tableView] setRowHeight:kHEMTodayRowHeight];
 }
 
 - (void)showNoDataLabel:(BOOL)show {
@@ -110,7 +94,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)reloadUI {
     [self updateHeight];
-    [self showNoDataLabel:[SENAuthorizationService accessToken] == nil];
+    [self showNoDataLabel:![SENAuthorizationService isAuthorized]];
     [[self tableView] reloadData];
 }
 
@@ -134,14 +118,13 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 #pragma mark - NCWidgetProviding
 
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
-    if ([SENAuthorizationService accessToken] != nil) {
+    if ([SENAuthorizationService isAuthorized]) {
         [self setUpdateBlock:completionHandler];
         [self setSensorsError:nil];
-        [SENSensor refreshCachedSensors];
     } else {
         [self showNoDataLabel:YES];
+        completionHandler (NCUpdateResultNoData);
     }
-
 }
 
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
@@ -150,19 +133,18 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 #pragma mark - Sensors
 
-- (void)loadCachedSensors {
-    self.sensors = [[self service] sortedCacheSensors];
-}
-
-- (void)listenForSensorUpdates {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(update)
-                   name:SENSensorUpdatedNotification object:nil];
-    [center addObserver:self
-               selector:@selector(failedToUpdate)
-                   name:SENSensorUpdateFailedNotification
-                 object:nil];
+- (void)loadRoomStatus {
+    __weak typeof(self) weakSelf = self;
+    [[self service] roomStatus:^(SENSensorStatus* status, NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [strongSelf setSensorsError:error];
+        } else if ([status state] == SENSensorStateOk) {
+            [strongSelf setSensors:[status sensors]];
+        }
+        [strongSelf setSensorsChecked:YES];
+        [strongSelf completeWhenDone];
+    }];
 }
 
 - (void)failedToUpdate {
@@ -173,36 +155,20 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     [self completeWhenDone];
 }
 
-- (void)update {
-    [self loadCachedSensors];
-    [self setSensorsChecked:YES];
-    [self completeWhenDone];
-}
-
 - (UIImage *)imageForSensor:(SENSensor *)sensor {
-    switch ([sensor unit]) {
-        case SENSensorUnitDegreeCentigrade:
+    switch ([sensor type]) {
+        case SENSensorTypeTemp:
             return [UIImage imageNamed:@"temperatureIcon"];
-        case SENSensorUnitAQI:
+        case SENSensorTypeAir:
             return [UIImage imageNamed:@"particleIcon"];
-        case SENSensorUnitPercent:
+        case SENSensorTypeHumidity:
             return [UIImage imageNamed:@"humidityIcon"];
-        case SENSensorUnitLux:
+        case SENSensorTypeLight:
             return [UIImage imageNamed:@"lightIcon"];
-        case SENSensorUnitDecibel:
+        case SENSensorTypeSound:
             return [UIImage imageNamed:@"soundIcon"];
         default:
             return nil;
-    }
-}
-
-- (UIColor *)colorForSensor:(SENSensor *)sensor {
-    switch ([sensor condition]) {
-        case SENConditionAlert:
-        case SENConditionWarning:
-            return [UIColor colorForCondition:[sensor condition]];
-        default:
-            return [UIColor whiteColor];
     }
 }
 
@@ -234,19 +200,14 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     SENSensor* sensor = [self sensorAtIndexPath:indexPath];
     NSString* value = [[self sensorFormatter] stringFromSensor:sensor];
     
-    if (value) {
-        // if AQI, ignore unit, to match room conditions view
-        if (sensor.unit != SENSensorUnitAQI) {
-            value = [value stringByAppendingString:[sensor localizedUnit]];
-        }
-    } else {
+    if (!value) {
         value = NSLocalizedString(@"empty-data", nil);
     }
     
     cell.sensorIconView.image = [self imageForSensor:sensor];
     cell.sensorNameLabel.text = [sensor localizedName];
     cell.sensorValueLabel.text = value;
-    cell.sensorValueLabel.textColor = [self colorForSensor:sensor];
+    cell.sensorValueLabel.textColor = [UIColor whiteColor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -259,8 +220,11 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     NSURLComponents* components = [NSURLComponents componentsWithString:kHEMTodaySenseScheme];
     if ([sender isKindOfClass:[NSIndexPath class]]) {
         SENSensor* sensor = [self sensorAtIndexPath:sender];
-        if (sensor.name.length > 0)
-            components.queryItems = @[[NSURLQueryItem queryItemWithName:HEMTodaySensorQueryItem value:sensor.name]];
+        NSString* name = [sensor localizedName];
+        if ([name length] > 0) {
+            components.queryItems = @[[NSURLQueryItem queryItemWithName:HEMTodaySensorQueryItem
+                                                                  value:name]];
+        }
     }
     [[self extensionContext] openURL:[components URL] completionHandler:nil];
 }

@@ -45,7 +45,7 @@ static CGFloat const HEMLineGraphMissingPoint = -200.f;
     SENSensorDataPoint* dataPoint = [self dataPointAtIndex:index];
     if (!dataPoint.value)
         return HEMLineGraphMissingPoint;
-    return [[SENSensor value:dataPoint.value inPreferredUnit:self.unit] floatValue];
+    return [dataPoint.value floatValue];
 }
 
 @end

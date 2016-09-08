@@ -225,11 +225,6 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSleepSoundsKey];
-    // delete individual sensor keys
-    for (SENSensor* sensor in [SENSensor sensors]) {
-        NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, [sensor name]];
-        [prefs setPersistentPreference:@NO forKey:key];
-    }
 }
 
 @end

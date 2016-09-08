@@ -56,7 +56,7 @@
 
 - (void)setGraphData:(NSArray *)graphData sensor:(SENSensor *)sensor
 {
-    UIColor* conditionColor = [UIColor colorForCondition:sensor.condition];
+    UIColor* conditionColor = [UIColor colorForCondition:SENConditionIdeal];
     graphData = [self padGraphDataIfNeeded:graphData];
     if (self.graphDataSource != nil
         && [graphData isEqual:self.graphDataSource.dataSeries]
@@ -106,7 +106,7 @@
     if ([maxValue isEqual:[NSNull null]])
         self.maxGraphValue = 0;
     else
-        self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:sensor.unit] floatValue];
+        self.maxGraphValue = [maxValue floatValue];
     for (NSNumber* value in values) {
         if (![value isEqual:[NSNull null]] && [value floatValue] < self.maxGraphValue) {
             minValue = value;
@@ -118,7 +118,7 @@
         minValue = @0;
     }
     
-    self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:sensor.unit] floatValue];
+    self.minGraphValue = [minValue floatValue];
 }
 
 - (CGGradientRef)newGradientForColor:(UIColor*)color

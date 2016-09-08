@@ -383,18 +383,8 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
 #pragma mark - Navigation
 
 - (BOOL)sensorsAreReady {
-    NSArray* sensors = [SENSensor sensors];
-    if ([sensors count] == 0) {
-        return NO;
-    }
-    
-    for (SENSensor* sensor in sensors) {
-        if ([sensor condition] == SENConditionUnknown) {
-            return NO;
-        }
-    }
-    
-    return YES;
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    return [service hasSensorData];
 }
 
 - (IBAction)next:(id)sender {

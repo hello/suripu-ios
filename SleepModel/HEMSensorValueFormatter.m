@@ -53,24 +53,18 @@
         return [self nilSymbol];
     }
     
-    NSNumber* preferredValue = [SENSensor value:value inPreferredUnit:[self sensorUnit]];
     switch ([self sensorUnit]) {
         case SENSensorUnitLux: {
-            BOOL showFraction = [preferredValue floatValue] < 10;
+            BOOL showFraction = [value floatValue] < 10;
             [self setNumberOfFractionDigits:showFraction ? 1 : 0];
             break;
         }
-        case SENSensorUnitAQI:
-        case SENSensorUnitDecibel:
-        case SENSensorUnitDegreeCentigrade:
-        case SENSensorUnitPercent:
-        case SENSensorUnitUnknown:
         default:
             [self setNumberOfFractionDigits:0];
             break;
     }
     
-    return [self stringFromNumber:preferredValue];
+    return [self stringFromNumber:value];
 }
 
 - (NSString *)stringFromSensor:(SENSensor *)sensor {

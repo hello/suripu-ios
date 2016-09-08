@@ -58,6 +58,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 @property (nonatomic, strong) SENDFUStatus* currentDFUStatus;
 @property (nonatomic, strong) NSTimer* senseDFUTimer;
 @property (nonatomic, copy)   HEMOnboardingDFUHandler dfuCompletionHandler;
+@property (nonatomic, strong) SENSensorStatus* sensorStatus;
 
 @property (nonatomic, strong) SENFeatures* features;
 @property (nonatomic, assign) NSInteger featureCheckAttempts;
@@ -578,47 +579,43 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 }
 
 - (void)startPollingSensorData {
-    if (![self isPollingSensorData]
-        && [self sensorPollingAttempts] < HEMOnboardingMaxSensorPollAttempts) {
-        
-        [self setSensorPollingAttempts:[self sensorPollingAttempts]+1];
+    if (![self isPollingSensorData]) {
         [self setPollingSensorData:YES];
+        [self checkRoomStatus];
+    }
+}
+
+- (void)checkRoomStatus {
+    if ([self sensorPollingAttempts] < HEMOnboardingMaxSensorPollAttempts) {
+        [self setSensorPollingAttempts:[self sensorPollingAttempts] + 1];
         
-        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self
-                   selector:@selector(sensorsDidUpdate:)
-                       name:SENSensorsUpdatedNotification
-                     object:nil];
-        
-        DDLogVerbose(@"polling for sensor data during onboarding");
-        [SENSensor refreshCachedSensors];
+        __weak typeof(self) weakSelf = self;
+        [SENAPISensor getSensorStatus:^(SENSensorStatus* status, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+            } else if ([status state] != SENSensorStateOk){
+                __weak typeof (self) weakSelf = self;
+                int64_t delayInSec = (int64_t)(HEMOnboardingSensorPollIntervals * NSEC_PER_SEC);
+                dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
+                dispatch_after(delay, dispatch_get_main_queue(), ^{
+                    [weakSelf checkRoomStatus];
+                });
+            } else {
+                [strongSelf setSensorStatus:status];
+            }
+        }];
     } else {
         DDLogVerbose(@"polling stopped, attempts %ld", (long)[self sensorPollingAttempts]);
     }
 }
 
-- (void)sensorsDidUpdate:(NSNotification*)note {
-    if ([self isPollingSensorData]) {
-        [self setPollingSensorData:NO];
-        NSArray* sensors = [SENSensor sensors];
-        NSInteger sensorCount = [sensors count];
-        DDLogVerbose(@"sensors returned %ld", (long)sensorCount);
-        if (sensorCount == 0
-            || [((SENSensor*)sensors[0]) condition] == SENConditionUnknown) {
-            
-            __weak typeof (self) weakSelf = self;
-            int64_t delayInSec = (int64_t)(HEMOnboardingSensorPollIntervals * NSEC_PER_SEC);
-            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
-            dispatch_after(delay, dispatch_get_main_queue(), ^{
-                [weakSelf startPollingSensorData];
-            });
-            
-        }
-    }
-    // always remove observer on update since it will add observer upon next attempt
-    // or simply stop polling
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:SENSensorsUpdatedNotification object:nil];
+- (BOOL)hasSensorData {
+    return [[[self sensorStatus] sensors] count] > 0;
+}
+
+- (NSArray<SENSensor*>*)sensors {
+    return [[self sensorStatus] sensors];
 }
 
 #pragma mark - Accounts

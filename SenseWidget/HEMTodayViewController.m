@@ -135,7 +135,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)loadRoomStatus {
     __weak typeof(self) weakSelf = self;
-    [[self service] roomStatus:^(SENSensorStatus* status, NSError* error) {
+    [[self service] sensorStatus:^(SENSensorStatus* status, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [strongSelf setSensorsError:error];

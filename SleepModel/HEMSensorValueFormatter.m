@@ -64,7 +64,11 @@
             break;
     }
     
-    return [self stringFromNumber:value];
+    NSString* valueString = [self stringFromNumber:value];
+    if ([self includeUnitSymbol]) {
+        valueString = [valueString stringByAppendingString:[self unitSymbol]];
+    }
+    return valueString;
 }
 
 - (NSString *)stringFromSensor:(SENSensor *)sensor {
@@ -74,6 +78,22 @@
 - (NSString *)stringFromNumber:(NSNumber *)number forSensorUnit:(SENSensorUnit)unit {
     [self setSensorUnit:unit];
     return [self stringFromSensorValue:number];
+}
+
+- (NSString*)unitSymbol {
+    switch ([self sensorUnit]) {
+        case SENSensorUnitFahrenheit:
+        case SENSensorUnitCelcius:
+            return NSLocalizedString(@"measurement.temperature.unit", nil);
+        case SENSensorUnitPercent:
+            return NSLocalizedString(@"measurement.percentage.unit", nil);
+        case SENSensorUnitLux:
+            return NSLocalizedString(@"measurement.light.unit", nil);
+        case SENSensorUnitDecibel:
+            return NSLocalizedString(@"measurement.sound.unit", nil);
+        default:
+            return @"";
+    }
 }
 
 @end

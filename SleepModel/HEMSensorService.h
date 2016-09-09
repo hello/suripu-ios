@@ -9,8 +9,8 @@
 #import "SENService.h"
 
 @class SENSensor;
-@class SENSensorDataPoint;
 @class SENSensorStatus;
+@class SENSensorDataCollection;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,10 +26,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorServiceScope) {
     HEMSensorServiceScopeWeek
 };
 
-typedef void(^HEMSensorDataHandler)(NSDictionary<NSString*, NSArray<SENSensorDataPoint*>*>* _Nullable data,
-                                    NSError* _Nullable error);
-typedef void(^HEMSensorStatusHandler)(SENSensorStatus* _Nullable status,
-                                    NSError* _Nullable error);
+typedef void(^HEMSensorDataHandler)(SENSensorDataCollection* data, NSError* _Nullable error);
+typedef void(^HEMSensorStatusHandler)(SENSensorStatus* _Nullable status, NSError* _Nullable error);
+typedef void(^HEMSensorPollHandler)(SENSensorStatus* _Nullable status, SENSensorDataCollection* _Nullable data, NSError* _Nullable error);
 
 @interface HEMSensorService : SENService
 
@@ -40,7 +39,7 @@ typedef void(^HEMSensorStatusHandler)(SENSensorStatus* _Nullable status,
  *
  * @param block to call upon completion
  */
-- (void)roomStatus:(HEMSensorStatusHandler)completion;
+- (void)sensorStatus:(HEMSensorStatusHandler)completion;
 
 /**
  * @discussion
@@ -49,26 +48,25 @@ typedef void(^HEMSensorStatusHandler)(SENSensorStatus* _Nullable status,
  * @param sensors: list of sensors to retrieve data for
  * @param completion: the block to call upon completion
  */
-- (void)roomDataForSensors:(NSArray<SENSensor*>*)sensors
-                completion:(HEMSensorDataHandler)completion;
+- (void)dataForSensors:(NSArray<SENSensor*>*)sensors
+            completion:(HEMSensorDataHandler)completion;
 
 /**
  * @description
- * If not already polling, will continuously call roomData: with a set interval 
- * until stopped.  Upon each refresh of the conditions, the callback will be called.  
- * Be sure not to have any direct references to self in the block to prevent retain 
- * cycles
+ * Continuously poll for data at a set interval for all sensors, except what is
+ * specified to be excluded.  If a poll request has been started, it will attempt
+ * to override the current request with the new incoming request
  *
- * @param sensors: sensors to continually poll data for
+ * @param sensorTypes: types of sensors to exclude from
  * @param update: the callback to call on each refresh
  */
-- (void)pollRoomDataForSensors:(NSArray<SENSensor*>*)sensors update:(HEMSensorDataHandler)update;
+- (void)pollDataForSensorsExcept:(NSSet<NSNumber*>*)sensorTypes completion:(HEMSensorPollHandler)completion;
 
 /**
  * @description
- * Stop the polling and remove reference to the polling update handler.
+ * Stop the polling when possible
  */
-- (void)stopPollingForRoomData;
+- (void)stopPollingForData;
 
 @end
 

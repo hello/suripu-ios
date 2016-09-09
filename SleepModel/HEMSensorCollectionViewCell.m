@@ -10,8 +10,9 @@
 
 #import "HEMSensorCollectionViewCell.h"
 #import "HEMStyle.h"
+#import "HEMSensorChartContainer.h"
 
-static CGFloat const HEMSensorCellPadding = 16.0f;
+static CGFloat const HEMSensorCellPadding = 24.0f;
 static CGFloat const HEMSensorCellNameHeight = 24.0f;
 static CGFloat const HEMSensorCellGraphHeight = 112.0f;
 static CGFloat const HEMSensorCellTextWidthRatio = 0.75f;
@@ -36,6 +37,8 @@ static CGFloat const HEMSensorCellTextWidthRatio = 0.75f;
     [[self nameLabel] setFont:[UIFont h7Bold]];
     [[self nameLabel] setTextColor:[UIColor grey6]];
     [[self valueLabel] setFont:[UIFont h4]];
+    [[self unitLabel] setTextColor:[UIColor grey5]];
+    [[self unitLabel] setFont:[UIFont h8]];
 }
 
 @end

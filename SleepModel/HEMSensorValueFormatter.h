@@ -10,6 +10,8 @@
 
 @interface HEMSensorValueFormatter : NSNumberFormatter
 
+@property (nonatomic, assign) BOOL includeUnitSymbol;
+
 /**
  * @method initWithSensorUnit:
  *
@@ -65,5 +67,14 @@
  * @return        the string representation of the sensor's value, in preferred unit
  */
 - (NSString*)stringFromNumber:(NSNumber *)number forSensorUnit:(SENSensorUnit)unit;
+
+/**
+ * @discussion
+ * Convenience method to return the symbol that represents the unit set in this
+ * formatter
+ * 
+ * @return unit symbol, if available
+ */
+- (NSString*)unitSymbol;
 
 @end

@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "HEMCardCollectionViewCell.h"
 
+@class HEMSensorChartContainer;
+
 @interface HEMSensorCollectionViewCell : HEMCardCollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unitLabel;
-@property (weak, nonatomic) IBOutlet UIView *graphContainerView;
+@property (weak, nonatomic) IBOutlet HEMSensorChartContainer *graphContainerView;
 
 + (CGFloat)heightWithDescription:(NSString*)description
                        cellWidth:(CGFloat)cellWidth;

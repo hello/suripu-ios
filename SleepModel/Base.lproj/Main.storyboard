@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -3680,12 +3679,58 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cLU-R9-XQZ">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cLU-R9-XQZ" customClass="HEMSensorChartContainer">
                                                     <rect key="frame" x="0.0" y="77" width="584" height="112"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktV-G2-rAh">
+                                                            <rect key="frame" x="16" y="0.0" width="552" height="12"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvx-Gg-RMm">
+                                                            <rect key="frame" x="16" y="15" width="552" height="1"/>
+                                                            <color key="backgroundColor" red="0.72549019607843135" green="0.74901960784313726" blue="0.78431372549019607" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="DMb-ly-Vk3"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsI-kz-gO1">
+                                                            <rect key="frame" x="16" y="76" width="552" height="12"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZlX-hQ-4XS">
+                                                            <rect key="frame" x="16" y="91" width="552" height="1"/>
+                                                            <color key="backgroundColor" red="0.72549019609999998" green="0.74901960779999999" blue="0.7843137255" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="NTt-V9-vTu"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
+                                                        <constraint firstItem="ZlX-hQ-4XS" firstAttribute="trailing" secondItem="ktV-G2-rAh" secondAttribute="trailing" id="B2q-kg-Uwn"/>
+                                                        <constraint firstAttribute="bottom" secondItem="EsI-kz-gO1" secondAttribute="bottom" constant="24" id="DRf-aj-x6J"/>
+                                                        <constraint firstItem="EsI-kz-gO1" firstAttribute="leading" secondItem="ktV-G2-rAh" secondAttribute="leading" id="GF6-a0-euK"/>
+                                                        <constraint firstItem="ktV-G2-rAh" firstAttribute="top" secondItem="cLU-R9-XQZ" secondAttribute="top" id="H1l-oB-9RY"/>
                                                         <constraint firstAttribute="height" constant="112" id="HdI-Nc-tgL"/>
+                                                        <constraint firstItem="ktV-G2-rAh" firstAttribute="leading" secondItem="cLU-R9-XQZ" secondAttribute="leading" constant="16" id="Mbb-Ca-bHp"/>
+                                                        <constraint firstItem="EsI-kz-gO1" firstAttribute="trailing" secondItem="ktV-G2-rAh" secondAttribute="trailing" id="ZSn-sY-W7M"/>
+                                                        <constraint firstItem="cvx-Gg-RMm" firstAttribute="trailing" secondItem="ktV-G2-rAh" secondAttribute="trailing" id="j6a-Ug-dCI"/>
+                                                        <constraint firstItem="cvx-Gg-RMm" firstAttribute="leading" secondItem="ktV-G2-rAh" secondAttribute="leading" id="jjK-lc-CjR"/>
+                                                        <constraint firstItem="ZlX-hQ-4XS" firstAttribute="top" secondItem="EsI-kz-gO1" secondAttribute="bottom" constant="3" id="jtf-QC-ipQ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ktV-G2-rAh" secondAttribute="trailing" constant="16" id="qYZ-bv-M2g"/>
+                                                        <constraint firstItem="ZlX-hQ-4XS" firstAttribute="leading" secondItem="ktV-G2-rAh" secondAttribute="leading" id="s8x-0C-Ui5"/>
+                                                        <constraint firstItem="cvx-Gg-RMm" firstAttribute="top" secondItem="ktV-G2-rAh" secondAttribute="bottom" constant="3" id="zXL-Jd-bE8"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outlet property="botLimitLabel" destination="EsI-kz-gO1" id="00p-d6-y2Y"/>
+                                                        <outlet property="botLimitLine" destination="ZlX-hQ-4XS" id="KQa-70-PG0"/>
+                                                        <outlet property="topLimitLabel" destination="ktV-G2-rAh" id="Cqd-2G-ZvW"/>
+                                                        <outlet property="topLimitLine" destination="cvx-Gg-RMm" id="Lfx-Dl-rBl"/>
+                                                    </connections>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

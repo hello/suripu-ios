@@ -24,8 +24,9 @@
 #import "HEMCardFlowLayout.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
-#import "HEMMarkdown.h"
+#import "HEMSensorValueFormatter.h"
 #import "HEMStyle.h"
+#import "HEMSensorChartContainer.h"
 
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
@@ -47,8 +48,10 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 @property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, assign) BOOL loadedIntro;
 @property (nonatomic, strong) NSMutableDictionary* chartViewBySensor;
-@property (nonatomic, strong) NSMutableDictionary* sensorDataPoints;
+@property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
+@property (nonatomic, strong) SENSensorDataCollection* sensorData;
+@property (nonatomic, strong) HEMSensorValueFormatter* formatter;
 
 @end
 
@@ -62,7 +65,8 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         _introService = introService;
         _headerViewHeight = -1.0f;
         _chartViewBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
-        _sensorDataPoints = [NSMutableDictionary dictionaryWithCapacity:8];
+        _chartDataBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
+        _formatter = [HEMSensorValueFormatter new];
     }
     return self;
 }
@@ -89,12 +93,12 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 - (void)didDisappear {
     [super didDisappear];
-    // TODO: stop polling
+    [[self sensorService] stopPollingForData];
 }
 
 - (void)userDidSignOut {
     [super userDidSignOut];
-    // TODO: stop polling
+    [[self sensorService] stopPollingForData];
 }
 
 #pragma mark - Data
@@ -109,20 +113,52 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     __weak typeof(self) weakSelf = self;
     HEMSensorService* service = [self sensorService];
-    [service roomStatus:^(SENSensorStatus* status, NSError* error) {
+    NSMutableSet<NSNumber*>* excludeSensorTypes = [NSMutableSet set];
+    [excludeSensorTypes addObject:@(SENSensorTypeAir)];
+    [excludeSensorTypes addObject:@(SENSensorTypeVOC)];
+    [excludeSensorTypes addObject:@(SENSensorTypeCO2)];
+
+    [service pollDataForSensorsExcept:excludeSensorTypes completion:^(SENSensorStatus* status, id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [[strongSelf activityIndicator] setHidden:YES];
-        [[strongSelf activityIndicator] stop];
         [strongSelf setSensorError:error];
-        if (!error && status) {
+        if (!error) {
             [strongSelf setSensorStatus:status];
+            [strongSelf setSensorData:data];
+            [strongSelf prepareChartDataAndReload];
+        } else {
+            [[strongSelf activityIndicator] setHidden:YES];
+            [[strongSelf activityIndicator] stop];
+            [[strongSelf collectionView] reloadData];
         }
-        [[strongSelf collectionView] reloadData];
-        // TODO: poll data for a subset of sensors
     }];
 }
 
 #pragma mark - Charts
+
+- (void)prepareChartDataAndReload {
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSArray<SENSensor*>* sensors = [[strongSelf sensorStatus] sensors];
+        for (SENSensor* sensor in sensors) {
+            NSArray<NSNumber*>* values = [[strongSelf sensorData] dataPointsForSensorType:[sensor type]];
+            NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
+            if ([values count] == [timestamps count]) {
+                NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
+                NSUInteger index = 0;
+                for (NSNumber* value in values) {
+                    [chartData addObject:[[ChartDataEntry alloc] initWithValue:[value doubleValue] xIndex:index++]];
+                }
+                [strongSelf chartDataBySensor][@([sensor type])] = chartData;
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[strongSelf activityIndicator] setHidden:YES];
+            [[strongSelf activityIndicator] stop];
+            [[strongSelf collectionView] reloadData];
+        });
+    });
+}
 
 - (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
                               inCell:(HEMSensorCollectionViewCell*)cell {
@@ -134,14 +170,41 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         [lineChartView setAutoresizingMask:UIViewAutoresizingFlexibleWidth
                                          | UIViewAutoresizingFlexibleHeight];
         [lineChartView setBackgroundColor:[UIColor whiteColor]];
-        [lineChartView setDrawGridBackgroundEnabled:YES];
+        [lineChartView setDrawGridBackgroundEnabled:NO];
+        [lineChartView setDrawBordersEnabled:NO];
         [lineChartView setNoDataText:nil];
+        [[lineChartView leftAxis] setEnabled:NO];
+        [[lineChartView leftAxis] removeAllLimitLines];
+        [[lineChartView rightAxis] removeAllLimitLines];
+        [[lineChartView rightAxis] setEnabled:NO];
+        [[lineChartView xAxis] setEnabled:NO];
+        [[lineChartView xAxis] setDrawAxisLineEnabled:NO];
+        [[lineChartView xAxis] setDrawGridLinesEnabled:NO];
+        [[lineChartView xAxis] removeAllLimitLines];
+        [lineChartView setDescriptionText:nil];
+        [[lineChartView legend] setEnabled:NO];
+        [[lineChartView layer] setBorderWidth:0.0f];
+        [lineChartView setBorderLineWidth:0.0f];
+        [lineChartView setBorderColor:[UIColor whiteColor]];
+        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-40.0f];
+        [lineChartView setUserInteractionEnabled:NO];
         [self chartViewBySensor][@([sensor type])] = lineChartView;
     }
     
     SENCondition condition = [sensor condition];
     UIColor* sensorColor = [UIColor colorForCondition:condition];
     [lineChartView setGridBackgroundColor:sensorColor];
+    
+    NSArray* chartData = [self chartDataBySensor][@([sensor type])];
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:chartData];
+    [dataSet setFill:[ChartFill fillWithColor:sensorColor]];
+    [dataSet setDrawFilledEnabled:YES];
+    [dataSet setDrawCirclesEnabled:NO];
+    [dataSet setLabel:nil];
+    
+    NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
+    [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
+    [lineChartView setNeedsDisplay];
     
     return lineChartView;
 }
@@ -258,14 +321,21 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
         SENSensor* sensor = [[self sensorStatus] sensors][[indexPath row]];
         HEMSensorCollectionViewCell* sensorCell = (id)cell;
+        
+        [[self formatter] setSensorUnit:[sensor unit]];
+        
         SENCondition condition = [sensor condition];
         ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
+        NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
+        
         [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
         [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
-        [[sensorCell valueLabel] setText:[NSString stringWithFormat:@"%@", [sensor value]]];
+        [[sensorCell valueLabel] setText:formattedValue];
         [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:condition]];
-        [[sensorCell unitLabel] setText:nil]; // TODO add it
-        [[sensorCell graphContainerView] addSubview:chartView];
+        [[sensorCell unitLabel] setText:[[self formatter] unitSymbol]];
+        [[sensorCell graphContainerView] setChartView:chartView];
+        [[[sensorCell graphContainerView] topLimitLabel] setText:nil];
+        [[[sensorCell graphContainerView] botLimitLabel] setText:nil];
     } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
         HEMSenseRequiredCollectionViewCell* senseCell = (id)cell;
         NSString* buttonTitle = NSLocalizedString(@"room-conditions.pair-sense.button.title", nil);

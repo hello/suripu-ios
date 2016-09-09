@@ -17,13 +17,13 @@
 
 #import "HEMSensorService.h"
 
-static double const kHEMSensorPollInterval = 30.0f;
+static double const kHEMSensorPollInterval = 10.0f;
 
 NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 @interface HEMSensorService()
 
-@property (nonatomic, copy) HEMSensorDataHandler pollHander;
+@property (nonatomic, copy) HEMSensorPollHandler pollHandler;
 @property (nonatomic, strong) SENSensorDataRequest* pollRequest;
 
 @end
@@ -45,7 +45,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 #pragma mark - Data
 
-- (void)roomStatus:(HEMSensorStatusHandler)completion {
+- (void)sensorStatus:(HEMSensorStatusHandler)completion {
     [SENAPISensor getSensorStatus:^(SENSensorStatus* status, NSError *error) {
         if (error) {
             [SENAnalytics trackError:error];
@@ -56,9 +56,8 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
     }];
 }
 
-- (void)roomDataForSensors:(NSArray<SENSensor*>*)sensors completion:(HEMSensorDataHandler)completion {
-    [self setPollRequest:[self dataRequestForSensors:sensors]];
-    [self roomDataWithRequest:[self pollRequest] completion:completion];
+- (void)dataForSensors:(NSArray<SENSensor*>*)sensors completion:(HEMSensorDataHandler)completion {
+    [self dataWithRequest:[self dataRequestForSensors:sensors] completion:completion];
 }
 
 - (SENSensorDataRequest*)dataRequestForSensors:(NSArray<SENSensor*>*)sensors {
@@ -69,7 +68,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
     return request;
 }
 
-- (void)roomDataWithRequest:(SENSensorDataRequest*)request completion:(HEMSensorDataHandler)completion {
+- (void)dataWithRequest:(SENSensorDataRequest*)request completion:(HEMSensorDataHandler)completion {
     [SENAPISensor getSensorDataWithRequest:request completion:^(id data, NSError *error) {
         if (error) {
             [SENAnalytics trackError:error];
@@ -78,45 +77,64 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
     }];
 }
 
-- (void)pollRoomDataForSensors:(NSArray<SENSensor*>*)sensors update:(HEMSensorDataHandler)update {
-    if ([self pollRequest]) {
-        NSError* error = [self errorWithCode:HEMSensorServiceErrorCodePollingAlreadyStarted
-                                      reason:nil];
-        [SENAnalytics trackError:error];
-        return update (nil, error);
-    }
-    
-    [self setPollRequest:[self dataRequestForSensors:sensors]];
-    [self setPollHander:update];
-    [self continuePollingRoomData];
+#pragma mark - Polling
+
+- (void)pollDataForSensorsExcept:(NSSet<NSNumber*>*)sensorTypes completion:(HEMSensorPollHandler)completion {
+    [self stopPollingForData];
+    [self setPollHandler:completion];
+    [self continuePollingSensorsExcept:sensorTypes];
 }
 
-- (void)stopPollingForRoomData {
-    [self setPollHander:nil];
-    [self setPollRequest:nil];
-}
-
-- (void)continuePollingRoomData {
-    if (![self pollRequest]) {
+- (void)continuePollingSensorsExcept:(NSSet<NSNumber*>*)sensorTypes {
+    if (![self pollHandler]) {
         return;
     }
     
     __weak typeof(self) weakSelf = self;
-    [self roomDataWithRequest:[self pollRequest] completion:^(NSDictionary<NSString *,NSArray<SENSensorDataPoint*>*>* data, NSError* error) {
+    void(^again)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([strongSelf pollHander]) {
-            [strongSelf pollHander] (data, error);
+        [strongSelf continuePollingSensorsExcept:sensorTypes];
+    };
+    
+    [self sensorStatus:^(SENSensorStatus * _Nullable status, NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!status || [[status sensors] count] == 0) {
+            [strongSelf addPollDelay:again];
+        } else {
+            if (![strongSelf pollRequest]) {
+                NSArray* filteredSensors = [strongSelf filter:[status sensors] byExcluding:sensorTypes];
+                [strongSelf setPollRequest:[strongSelf dataRequestForSensors:filteredSensors]];
+            }
+            [strongSelf dataWithRequest:[strongSelf pollRequest] completion:^(id _Nullable data, NSError * _Nullable error) {
+                if ([strongSelf pollHandler]) {
+                    [strongSelf pollHandler] (status, data, error);
+                }
+                [strongSelf addPollDelay:again];
+            }];
         }
-        
-        if ([strongSelf pollHander] && [strongSelf pollRequest]) {
-            int64_t delayInSecs = (int64_t)(kHEMSensorPollInterval * NSEC_PER_SEC);
-            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
-            dispatch_after(delay, dispatch_get_main_queue(), ^{
-                [strongSelf continuePollingRoomData];
-            });
-        }
-
     }];
+}
+
+- (void)addPollDelay:(void(^)(void))action {
+    int64_t delayInSecs = (int64_t) (kHEMSensorPollInterval * NSEC_PER_SEC);
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+    dispatch_after(delay, dispatch_get_main_queue(), action);
+}
+
+- (void)stopPollingForData {
+    [self setPollRequest:nil];
+    [self setPollHandler:nil];
+}
+
+- (NSArray<SENSensor*>*)filter:(NSArray<SENSensor*>*)sensors byExcluding:(NSSet<NSNumber*>*)exclusion {
+    NSUInteger capacity = [sensors count] - [exclusion count];
+    NSMutableArray<SENSensor*>* filtered = [NSMutableArray arrayWithCapacity:capacity];
+    for (SENSensor* sensor in sensors) {
+        if (![exclusion containsObject:@([sensor type])]) {
+            [filtered addObject:sensor];
+        }
+    }
+    return filtered;
 }
 
 @end

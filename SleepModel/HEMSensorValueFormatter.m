@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import <SenseKit/SENPreference.h>
+
 #import "HEMSensorValueFormatter.h"
 
 @interface HEMSensorValueFormatter()
@@ -55,8 +57,22 @@
     
     switch ([self sensorUnit]) {
         case SENSensorUnitLux: {
-            BOOL showFraction = [value floatValue] < 10;
+            BOOL showFraction = [value doubleValue] < 10;
             [self setNumberOfFractionDigits:showFraction ? 1 : 0];
+            break;
+        }
+        case SENSensorUnitCelcius: {
+            if (![SENPreference useCentigrade]) {
+                value = @([value doubleValue] * 1.8f + 32);
+            }
+            [self setNumberOfFractionDigits:0];
+            break;
+        }
+        case SENSensorUnitFahrenheit: {
+            if ([SENPreference useCentigrade]) {
+                value = @([value doubleValue] / 1.8f - 32);
+            }
+            [self setNumberOfFractionDigits:0];
             break;
         }
         default:

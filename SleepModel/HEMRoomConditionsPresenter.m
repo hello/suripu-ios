@@ -30,6 +30,7 @@
 
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
+static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 
 @interface HEMRoomConditionsPresenter() <
     UICollectionViewDelegate,
@@ -184,8 +185,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         [lineChartView setDescriptionText:nil];
         [[lineChartView legend] setEnabled:NO];
         [[lineChartView layer] setBorderWidth:0.0f];
-        [lineChartView setBorderLineWidth:0.0f];
-        [lineChartView setBorderColor:[UIColor whiteColor]];
         [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-40.0f];
         [lineChartView setUserInteractionEnabled:NO];
         [self chartViewBySensor][@([sensor type])] = lineChartView;
@@ -198,9 +197,12 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
     LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:chartData];
     [dataSet setFill:[ChartFill fillWithColor:sensorColor]];
+    [dataSet setColor:sensorColor];
     [dataSet setDrawFilledEnabled:YES];
     [dataSet setDrawCirclesEnabled:NO];
+    [dataSet setFillColor:sensorColor];
     [dataSet setLabel:nil];
+    
     
     NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
     [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
@@ -324,6 +326,16 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         
         [[self formatter] setSensorUnit:[sensor unit]];
         
+        if ([sensor unit] == SENSensorUnitPercent
+            || [sensor unit] == SENSensorUnitCelcius
+            || [sensor unit] == SENSensorUnitFahrenheit) {
+            [[self formatter] setIncludeUnitSymbol:YES];
+            [[sensorCell unitLabel] setText:nil];
+        } else {
+            [[self formatter] setIncludeUnitSymbol:NO];
+            [[sensorCell unitLabel] setText:[[self formatter] unitSymbol]];
+        }
+        
         SENCondition condition = [sensor condition];
         ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
         NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
@@ -332,10 +344,11 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
         [[sensorCell valueLabel] setText:formattedValue];
         [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:condition]];
-        [[sensorCell unitLabel] setText:[[self formatter] unitSymbol]];
         [[sensorCell graphContainerView] setChartView:chartView];
         [[[sensorCell graphContainerView] topLimitLabel] setText:nil];
         [[[sensorCell graphContainerView] botLimitLabel] setText:nil];
+        
+        [chartView animateWithXAxisDuration:kHEMRoomConditionsChartAnimeDuration];
     } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
         HEMSenseRequiredCollectionViewCell* senseCell = (id)cell;
         NSString* buttonTitle = NSLocalizedString(@"room-conditions.pair-sense.button.title", nil);

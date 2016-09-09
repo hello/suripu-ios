@@ -50,6 +50,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
         if (error) {
             [SENAnalytics trackError:error];
         }
+        
         if (completion) {
             completion (status, error);
         }

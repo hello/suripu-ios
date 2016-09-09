@@ -107,6 +107,10 @@
             return NSLocalizedString(@"measurement.light.unit", nil);
         case SENSensorUnitDecibel:
             return NSLocalizedString(@"measurement.sound.unit", nil);
+        case SENSensorUnitMGCM:
+            return NSLocalizedString(@"measurement.particle.unit", nil);
+        case SENSensorUnitPPM:
+            return NSLocalizedString(@"measurement.ppm.unit", nil);
         default:
             return @"";
     }

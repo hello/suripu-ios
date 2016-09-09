@@ -42,10 +42,10 @@
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;
-+(NSString *)sensorGraphCellReuseIdentifier;
-+(NSString *)errorReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)sensorReuseIdentifier;
++(NSString *)groupReuseIdentifier;
++(NSString *)errorReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;

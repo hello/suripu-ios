@@ -40,6 +40,7 @@ static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfield = @"field";
 static NSString *const _HEMformViewController = @"formViewController";
+static NSString *const _HEMgroup = @"group";
 static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinfoCell = @"infoCell";
@@ -64,7 +65,6 @@ static NSString *const _HEMquestion = @"question";
 static NSString *const _HEMscan = @"scan";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensor = @"sensor";
-static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettings = @"settings";
 static NSString *const _HEMsettingsCell = @"settingsCell";
@@ -124,6 +124,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldReuseIdentifier { return _HEMfield; }
++(NSString *)groupReuseIdentifier { return _HEMgroup; }
 +(NSString *)imageReuseIdentifier { return _HEMimage; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }
@@ -139,7 +140,6 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)senseReuseIdentifier { return _HEMsense; }
 +(NSString *)sensorReuseIdentifier { return _HEMsensor; }
-+(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
 +(NSString *)settingsReuseIdentifier { return _HEMsettings; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }

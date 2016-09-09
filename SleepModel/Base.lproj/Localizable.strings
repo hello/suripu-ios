@@ -444,6 +444,7 @@
 "measurement.temperature.unit" = "°";
 "measurement.percentage.unit" = "%";
 "measurement.particle.unit" = "µg/m³";
+"measurement.ppm.unit" = "ppm";
 "measurement.light.unit" = "lx";
 "measurement.sound.unit" = "dB";
 "measurement.cm.unit" = "cm";
@@ -925,3 +926,4 @@
 "room-conditions.intro.desc" = "Recent changes to room conditions make take a few moments to be reflected here. Tap a card for more detail.";
 "room-conditions.pair-sense.button.title" = "Pair Sense";
 "room-conditions.pair-sense.message" = "You don't currently have a Sense paired to your account. Please pair with Sense to view current conditions.";
+"room-conditions.air-quality" = "Air quality";

@@ -27,6 +27,7 @@
 #import "HEMSensorValueFormatter.h"
 #import "HEMStyle.h"
 #import "HEMSensorChartContainer.h"
+#import "HEMSensorGroupCollectionViewCell.h"
 
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
@@ -51,6 +52,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 @property (nonatomic, strong) NSMutableDictionary* chartViewBySensor;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
+@property (nonatomic, strong) NSArray* groupedSensors;
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
 @property (nonatomic, strong) HEMSensorValueFormatter* formatter;
 
@@ -115,7 +117,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     __weak typeof(self) weakSelf = self;
     HEMSensorService* service = [self sensorService];
     NSMutableSet<NSNumber*>* excludeSensorTypes = [NSMutableSet set];
-    [excludeSensorTypes addObject:@(SENSensorTypeAir)];
+    [excludeSensorTypes addObject:@(SENSensorTypeDust)];
     [excludeSensorTypes addObject:@(SENSensorTypeVOC)];
     [excludeSensorTypes addObject:@(SENSensorTypeCO2)];
 
@@ -124,14 +126,43 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
         [strongSelf setSensorError:error];
         if (!error) {
             [strongSelf setSensorStatus:status];
-            [strongSelf setSensorData:data];
-            [strongSelf prepareChartDataAndReload];
+            
+            SENSensorDataCollection* sensorData = data;
+            if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
+                [strongSelf setGroupedSensors:[strongSelf groupedSensorsFrom:[status sensors]]];
+                [strongSelf setSensorData:data];
+                [strongSelf prepareChartDataAndReload];
+            }
+            
         } else {
             [[strongSelf activityIndicator] setHidden:YES];
             [[strongSelf activityIndicator] stop];
             [[strongSelf collectionView] reloadData];
         }
     }];
+}
+
+- (NSArray*)groupedSensorsFrom:(NSArray<SENSensor*>*)allSensors {
+    if ([allSensors count] == 0) {
+        return nil;
+    }
+    
+    NSMutableArray* groupedSensors = [NSMutableArray arrayWithCapacity:[allSensors count]];
+    NSMutableArray* airGroup = nil;
+    for (SENSensor* sensor in allSensors) {
+        if ([sensor type] == SENSensorTypeDust
+            || [sensor type] == SENSensorTypeCO2
+            || [sensor type] == SENSensorTypeVOC) {
+            if (!airGroup) {
+                airGroup = [NSMutableArray arrayWithCapacity:3];
+                [groupedSensors addObject:airGroup];
+            }
+            [airGroup addObject:sensor];
+        } else {
+            [groupedSensors addObject:sensor];
+        }
+    }
+    return groupedSensors;
 }
 
 #pragma mark - Charts
@@ -257,10 +288,14 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     switch ([[self sensorStatus] state]) {
         case SENSensorStateWaiting:
         case SENSensorStateOk: {
-            
-            SENSensor* sensor = [[self sensorStatus] sensors][[indexPath row]];
-            itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[sensor localizedMessage]
-                                                                       cellWidth:itemSize.width];
+            id sensorObj = [self groupedSensors][[indexPath row]];
+            if ([sensorObj isKindOfClass:[NSArray class]]) {
+                itemSize.height = [HEMSensorGroupCollectionViewCell heightWithNumberOfMembers:[sensorObj count]];
+            } else {
+                SENSensor* sensor = sensorObj;
+                itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[sensor localizedMessage]
+                                                                           cellWidth:itemSize.width];
+            }
             return itemSize;
         }
         case SENSensorStateNoSense:
@@ -287,7 +322,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     switch ([[self sensorStatus] state]) {
         case SENSensorStateWaiting:
         case SENSensorStateOk:
-            return [[[self sensorStatus] sensors] count];
+            return [[self groupedSensors] count];
         case SENSensorStateNoSense:
             return 1;
         default: {
@@ -302,9 +337,15 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     
     switch ([[self sensorStatus] state]) {
         case SENSensorStateWaiting:
-        case SENSensorStateOk:
-            reuseId = [HEMMainStoryboard sensorReuseIdentifier];
+        case SENSensorStateOk: {
+            id sensorObj = [self groupedSensors][[indexPath row]];
+            if ([sensorObj isKindOfClass:[NSArray class]]) {
+                reuseId = [HEMMainStoryboard groupReuseIdentifier];
+            } else {
+                reuseId = [HEMMainStoryboard sensorReuseIdentifier];
+            }
             break;
+        }
         case SENSensorStateNoSense:
             reuseId = [HEMMainStoryboard pairReuseIdentifier];
             break;
@@ -320,50 +361,17 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 - (void)collectionView:(UICollectionView *)collectionView
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
-        SENSensor* sensor = [[self sensorStatus] sensors][[indexPath row]];
-        HEMSensorCollectionViewCell* sensorCell = (id)cell;
-        
-        [[self formatter] setSensorUnit:[sensor unit]];
-        
-        if ([sensor unit] == SENSensorUnitPercent
-            || [sensor unit] == SENSensorUnitCelcius
-            || [sensor unit] == SENSensorUnitFahrenheit) {
-            [[self formatter] setIncludeUnitSymbol:YES];
-            [[sensorCell unitLabel] setText:nil];
-        } else {
-            [[self formatter] setIncludeUnitSymbol:NO];
-            [[sensorCell unitLabel] setText:[[self formatter] unitSymbol]];
-        }
-        
-        SENCondition condition = [sensor condition];
-        ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
-        NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
-        
-        [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
-        [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
-        [[sensorCell valueLabel] setText:formattedValue];
-        [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:condition]];
-        [[sensorCell graphContainerView] setChartView:chartView];
-        [[[sensorCell graphContainerView] topLimitLabel] setText:nil];
-        [[[sensorCell graphContainerView] botLimitLabel] setText:nil];
-        
-        [chartView animateWithXAxisDuration:kHEMRoomConditionsChartAnimeDuration];
+        SENSensor* sensor = [self groupedSensors][[indexPath row]];
+        [self configureSensorCell:(id)cell forSensor:sensor];
     } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
-        HEMSenseRequiredCollectionViewCell* senseCell = (id)cell;
-        NSString* buttonTitle = NSLocalizedString(@"room-conditions.pair-sense.button.title", nil);
-        NSString* message = NSLocalizedString(@"room-conditions.pair-sense.message", nil);
-        [[senseCell descriptionLabel] setText:message];
-        [[senseCell pairSenseButton] addTarget:self
-                                        action:@selector(pairSense)
-                              forControlEvents:UIControlEventTouchUpInside];
-        [[senseCell pairSenseButton] setTitle:[buttonTitle uppercaseString]
-                                     forState:UIControlStateNormal];
+        [self configurePairSenseCell:(id)cell];
     } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) { // error
-        HEMTextCollectionViewCell* textCell = (id)cell;
-        [[textCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
-        [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
-        [textCell displayAsACard:YES];
+        [self configureErrorCell:(id)cell];
+    } else if ([cell isKindOfClass:[HEMSensorGroupCollectionViewCell class]]) {
+        NSArray<SENSensor*>* sensors = [self groupedSensors][[indexPath row]];
+        [self configureGroupSensorCell:(id)cell forSensors:sensors];
     }
 }
 
@@ -409,6 +417,76 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self didScrollContentIn:scrollView];
+}
+
+#pragma mark - Cell configurations
+
+- (void)configureGroupSensorCell:(HEMSensorGroupCollectionViewCell*)groupCell
+                      forSensors:(NSArray<SENSensor*>*)sensors {
+    NSString* groupTitle = NSLocalizedString(@"room-conditions.air-quality", nil);
+    [[groupCell groupNameLabel] setText:[groupTitle uppercaseString]];
+    
+    SENCondition worstCondition = SENConditionIdeal;
+    NSString* worstConditionString = nil;
+    for (SENSensor* sensor in sensors) {
+        if (!worstConditionString || [sensor condition] < worstCondition) {
+            worstConditionString = [sensor localizedMessage];
+            worstCondition = [sensor condition];
+        }
+        
+        [[self formatter] setSensorUnit:[sensor unit]];
+        [[self formatter] setIncludeUnitSymbol:YES];
+        UIColor* conditionColor = [UIColor colorForCondition:[sensor condition]];
+        NSString* valueText = [[self formatter] stringFromSensor:sensor];
+        NSString* name = [sensor localizedName];
+        [groupCell addSensorWithName:name value:valueText valueColor:conditionColor];
+    }
+    [[groupCell groupMessageLabel] setText:worstConditionString];
+}
+
+- (void)configureSensorCell:(HEMSensorCollectionViewCell*)sensorCell forSensor:(SENSensor*)sensor {
+    [[self formatter] setSensorUnit:[sensor unit]];
+    
+    if ([sensor unit] == SENSensorUnitPercent
+        || [sensor unit] == SENSensorUnitCelcius
+        || [sensor unit] == SENSensorUnitFahrenheit) {
+        [[self formatter] setIncludeUnitSymbol:YES];
+        [[sensorCell unitLabel] setText:nil];
+    } else {
+        [[self formatter] setIncludeUnitSymbol:NO];
+        [[sensorCell unitLabel] setText:[[self formatter] unitSymbol]];
+    }
+    
+    SENCondition condition = [sensor condition];
+    ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
+    NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
+    
+    [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
+    [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
+    [[sensorCell valueLabel] setText:formattedValue];
+    [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:condition]];
+    [[sensorCell graphContainerView] setChartView:chartView];
+    [[[sensorCell graphContainerView] topLimitLabel] setText:nil];
+    [[[sensorCell graphContainerView] botLimitLabel] setText:nil];
+    
+    [chartView animateWithXAxisDuration:kHEMRoomConditionsChartAnimeDuration];
+}
+
+- (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
+    [[errorCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
+    [[errorCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [errorCell displayAsACard:YES];
+}
+
+- (void)configurePairSenseCell:(HEMSenseRequiredCollectionViewCell*)pairSenseCell {
+    NSString* buttonTitle = NSLocalizedString(@"room-conditions.pair-sense.button.title", nil);
+    NSString* message = NSLocalizedString(@"room-conditions.pair-sense.message", nil);
+    [[pairSenseCell descriptionLabel] setText:message];
+    [[pairSenseCell pairSenseButton] addTarget:self
+                                        action:@selector(pairSense)
+                              forControlEvents:UIControlEventTouchUpInside];
+    [[pairSenseCell pairSenseButton] setTitle:[buttonTitle uppercaseString]
+                                     forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions

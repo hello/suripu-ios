@@ -159,7 +159,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     switch ([sensor type]) {
         case SENSensorTypeTemp:
             return [UIImage imageNamed:@"temperatureIcon"];
-        case SENSensorTypeAir:
+        case SENSensorTypeDust:
             return [UIImage imageNamed:@"particleIcon"];
         case SENSensorTypeHumidity:
             return [UIImage imageNamed:@"humidityIcon"];

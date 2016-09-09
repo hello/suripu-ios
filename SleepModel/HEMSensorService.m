@@ -17,7 +17,7 @@
 
 #import "HEMSensorService.h"
 
-static double const kHEMSensorPollInterval = 10.0f;
+static double const kHEMSensorPollInterval = 20.0f;
 
 NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
@@ -81,6 +81,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 #pragma mark - Polling
 
 - (void)pollDataForSensorsExcept:(NSSet<NSNumber*>*)sensorTypes completion:(HEMSensorPollHandler)completion {
+    // TODO: put this in to an operation queue
     [self stopPollingForData];
     [self setPollHandler:completion];
     [self continuePollingSensorsExcept:sensorTypes];

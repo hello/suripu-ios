@@ -161,6 +161,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)isViewFullyVisible:(UIView*)view;
 
+/**
+ * @discussion
+ * 
+ * Called when the drawer is opened to reveal the back side
+ */
+- (void)didOpenDrawer;
+
+/**
+ * @discussion
+ *
+ * Called when the drawer is closed to hide the back side
+ */
+- (void)didCloseDrawer;
+
 @end
 
 NS_ASSUME_NONNULL_END

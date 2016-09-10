@@ -30,8 +30,13 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self listenForAccountEvents];
+        [self listenForDrawerEvents];
     }
     return self;
+}
+
+- (UIViewController*)rootViewController {
+    return [HEMRootViewController rootViewControllerForKeyWindow];
 }
 
 #pragma mark - View Controller Lifecycle Events
@@ -111,8 +116,25 @@
     [[self presenters] makeObjectsPerformSelector:@selector(didEnterBackground)];
 }
 
-- (UIViewController*)rootViewController {
-    return [HEMRootViewController rootViewControllerForKeyWindow];
+#pragma mark - Drawer Events
+
+- (void)listenForDrawerEvents {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerDidOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerDidCloseNotification
+                                               object:nil];
+}
+
+- (void)drawerDidOpen {
+    [[self presenters] makeObjectsPerformSelector:@selector(didOpenDrawer)];
+}
+
+- (void)drawerDidClose {
+    [[self presenters] makeObjectsPerformSelector:@selector(didCloseDrawer)];
 }
 
 #pragma mark - Shadows

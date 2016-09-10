@@ -16,6 +16,7 @@
 #import "SENAnalytics+HEMAppAnalytics.h"
 
 #import "HEMSensorService.h"
+#import "HEMSensorDataRequestOperation.h"
 
 static double const kHEMSensorPollInterval = 20.0f;
 
@@ -25,10 +26,19 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 @property (nonatomic, copy) HEMSensorPollHandler pollHandler;
 @property (nonatomic, strong) SENSensorDataRequest* pollRequest;
+@property (nonatomic, strong) NSOperationQueue* roomPollQueue;
 
 @end
 
 @implementation HEMSensorService
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _roomPollQueue = [NSOperationQueue new];
+        [_roomPollQueue setMaxConcurrentOperationCount:1];
+    }
+    return self;
+}
 
 #pragma mark - Errors
 
@@ -81,40 +91,29 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 #pragma mark - Polling
 
 - (void)pollDataForSensorsExcept:(NSSet<NSNumber*>*)sensorTypes completion:(HEMSensorPollHandler)completion {
-    // TODO: put this in to an operation queue
-    [self stopPollingForData];
-    [self setPollHandler:completion];
-    [self continuePollingSensorsExcept:sensorTypes];
-}
-
-- (void)continuePollingSensorsExcept:(NSSet<NSNumber*>*)sensorTypes {
-    if (![self pollHandler]) {
-        return;
-    }
+    [[self roomPollQueue] cancelAllOperations];
     
     __weak typeof(self) weakSelf = self;
-    void(^again)(void) = ^{
+    HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
+    [op setDataScope:SENSensorDataScopeDay5Min];
+    [op setDataMethod:SENSensorDataMethodAverage];
+    [op setSensorTypesToExclude:sensorTypes];
+    [op setDataHandler:^(SENSensorStatus* status, SENSensorDataCollection* data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf continuePollingSensorsExcept:sensorTypes];
-    };
-    
-    [self sensorStatus:^(SENSensorStatus * _Nullable status, NSError * _Nullable error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!status || [[status sensors] count] == 0) {
-            [strongSelf addPollDelay:again];
-        } else {
-            if (![strongSelf pollRequest]) {
-                NSArray* filteredSensors = [strongSelf filter:[status sensors] byExcluding:sensorTypes];
-                [strongSelf setPollRequest:[strongSelf dataRequestForSensors:filteredSensors]];
-            }
-            [strongSelf dataWithRequest:[strongSelf pollRequest] completion:^(id _Nullable data, NSError * _Nullable error) {
-                if ([strongSelf pollHandler]) {
-                    [strongSelf pollHandler] (status, data, error);
-                }
-                [strongSelf addPollDelay:again];
-            }];
+        if (error) {
+            [SENAnalytics trackError:error];
         }
+        if (completion) {
+            completion (status, data, error);
+        }
+        
+        [strongSelf addPollDelay:^{
+            __strong typeof(weakSelf) safeSelf = weakSelf;
+            [safeSelf pollDataForSensorsExcept:sensorTypes completion:completion];
+        }];
     }];
+    
+    [[self roomPollQueue] addOperation:op];
 }
 
 - (void)addPollDelay:(void(^)(void))action {
@@ -124,19 +123,15 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 }
 
 - (void)stopPollingForData {
-    [self setPollRequest:nil];
-    [self setPollHandler:nil];
+    [[self roomPollQueue] cancelAllOperations];
 }
 
-- (NSArray<SENSensor*>*)filter:(NSArray<SENSensor*>*)sensors byExcluding:(NSSet<NSNumber*>*)exclusion {
-    NSUInteger capacity = [sensors count] - [exclusion count];
-    NSMutableArray<SENSensor*>* filtered = [NSMutableArray arrayWithCapacity:capacity];
-    for (SENSensor* sensor in sensors) {
-        if (![exclusion containsObject:@([sensor type])]) {
-            [filtered addObject:sensor];
-        }
+#pragma mark - Clean up
+
+- (void)dealloc {
+    if (_roomPollQueue) {
+        [_roomPollQueue cancelAllOperations];
     }
-    return filtered;
 }
 
 @end

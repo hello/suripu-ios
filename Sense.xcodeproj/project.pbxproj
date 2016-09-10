@@ -193,6 +193,7 @@
 		BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */; };
 		BF55D8841CA48C7F00379FBF /* HEMSoundsContentPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8831CA48C7F00379FBF /* HEMSoundsContentPresenter.m */; };
 		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
+		BF59E19E1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59E19D1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m */; };
 		BF5B1D1E1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5B1D1D1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m */; };
 		BF5B1D271D2C717500DF1190 /* HEMPillDfuPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5B1D261D2C717500DF1190 /* HEMPillDfuPresenter.m */; };
 		BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF5BAC9F1C920336001E77F6 /* SleepSounds.xcassets */; };
@@ -269,6 +270,7 @@
 		BF83399C1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83399B1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m */; };
 		BF83399F1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = BF83399E1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m */; };
 		BF8339A21C18E05600BFD0F4 /* HEMNavigationShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8339A11C18E05600BFD0F4 /* HEMNavigationShadowView.m */; };
+		BF8411EE1D83912700D7A676 /* HEMSensorDataRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59E19D1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m */; };
 		BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C1FF1A0C111E009471D5 /* HEMSupportUtil.m */; };
 		BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */; };
 		BF885F1E1CE54D0900A92F90 /* HEMCreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF885F1D1CE54D0900A92F90 /* HEMCreateAccountViewController.m */; };
@@ -812,6 +814,8 @@
 		BF55D8831CA48C7F00379FBF /* HEMSoundsContentPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsContentPresenter.m; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
+		BF59E19C1D8386D0000DCC28 /* HEMSensorDataRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDataRequestOperation.h; sourceTree = "<group>"; };
+		BF59E19D1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorDataRequestOperation.m; sourceTree = "<group>"; };
 		BF5B1D1C1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepPillDfuViewController.h; sourceTree = "<group>"; };
 		BF5B1D1D1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepPillDfuViewController.m; sourceTree = "<group>"; };
 		BF5B1D251D2C717500DF1190 /* HEMPillDfuPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDfuPresenter.h; sourceTree = "<group>"; };
@@ -2051,6 +2055,8 @@
 			children = (
 				BF287D611C9CBF1F0052F543 /* HEMSensorService.h */,
 				BF287D621C9CBF1F0052F543 /* HEMSensorService.m */,
+				BF59E19C1D8386D0000DCC28 /* HEMSensorDataRequestOperation.h */,
+				BF59E19D1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -3757,6 +3763,7 @@
 				8A391FCA1A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m in Sources */,
 				8AC3C2DC1A3C7FF00074A87F /* HEMSnazzBarController.m in Sources */,
 				BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */,
+				BF59E19E1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8AA157B51A5E194100BF1D4A /* HEMStyledNavigationViewController.m in Sources */,
 				BFE376031CF646BE0029EE66 /* HEMSignInFormPresenter.m in Sources */,
@@ -4106,6 +4113,7 @@
 			files = (
 				8A7214441A1EC710008B59C4 /* HEMTodayTableViewCell.m in Sources */,
 				BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */,
+				BF8411EE1D83912700D7A676 /* HEMSensorDataRequestOperation.m in Sources */,
 				8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 				BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */,
 				BF287D641C9CBF250052F543 /* HEMSensorService.m in Sources */,
@@ -4576,6 +4584,36 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AFNetworking\"",
+					"-framework",
+					"\"AttributedMarkdown\"",
+					"-framework",
+					"\"CGFloatType\"",
+					"-framework",
+					"\"CocoaLumberjack\"",
+					"-framework",
+					"\"EVReflection\"",
+					"-framework",
+					"\"FXKeychain\"",
+					"-framework",
+					"\"LGBluetooth\"",
+					"-framework",
+					"\"NSJSONSerialization_NSNullRemoval\"",
+					"-framework",
+					"\"ProtocolBuffers\"",
+					"-framework",
+					"\"SORelativeDateTransformer\"",
+					"-framework",
+					"\"SenseKit\"",
+					"-framework",
+					"\"Zip\"",
+					"-framework",
+					"\"iOSDFULibrary\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}.Widget";
 				PRODUCT_NAME = SenseToday;
 				PROVISIONING_PROFILE = "";

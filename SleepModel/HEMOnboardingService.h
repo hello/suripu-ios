@@ -402,6 +402,7 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 - (BOOL)isLastNameValid:(nullable NSString*)lastName;
 - (BOOL)isEmailValid:(nullable NSString*)email;
 - (BOOL)isPasswordValid:(nullable NSString*)password;
+- (void)checkRoomStatus; // automatically called.  call only if needed again
 
 #pragma mark - LEDs
 

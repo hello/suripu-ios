@@ -104,6 +104,18 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     [[self sensorService] stopPollingForData];
 }
 
+- (void)didOpenDrawer {
+    [super didOpenDrawer];
+    if ([self isViewFullyVisible:[self collectionView]]) {
+        [self startPolling];
+    }
+}
+
+- (void)didCloseDrawer {
+    [super didCloseDrawer];
+    [[self sensorService] stopPollingForData];
+}
+
 #pragma mark - Data
 
 - (void)startPolling {

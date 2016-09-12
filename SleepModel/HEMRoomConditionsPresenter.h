@@ -12,11 +12,11 @@
 @class HEMIntroService;
 @class HEMRoomConditionsPresenter;
 @class HEMActivityIndicatorView;
+@class SENSensor;
 
 @protocol HEMRoomConditionsDelegate <NSObject>
 
-- (void)showController:(UIViewController*)controller
-         fromPresenter:(HEMRoomConditionsPresenter*)presenter;
+- (void)showSensor:(SENSensor*)sensor fromPresenter:(HEMRoomConditionsPresenter*)presenter;
 
 @end
 

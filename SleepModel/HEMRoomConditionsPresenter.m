@@ -431,6 +431,13 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [self didScrollContentIn:scrollView];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    id sensorObj = [self groupedSensors][[indexPath row]];
+    if ([sensorObj isKindOfClass:[SENSensor class]]) {
+        [[self delegate] showSensor:sensorObj fromPresenter:self];
+    }
+}
+
 #pragma mark - Cell configurations
 
 - (void)configureGroupSensorCell:(HEMSensorGroupCollectionViewCell*)groupCell

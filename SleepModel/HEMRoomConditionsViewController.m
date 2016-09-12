@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 8/30/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <SenseKit/SENSensor.h>
 
 #import "HEMRoomConditionsViewController.h"
 #import "HEMRoomConditionsPresenter.h"
@@ -14,14 +15,21 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSensePairViewController.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMSensorDetailViewController.h"
+#import "HEMMainStoryboard.h"
 
-@interface HEMRoomConditionsViewController () <HEMPresenterPairDelegate, HEMSensePairingDelegate>
+@interface HEMRoomConditionsViewController () <
+    HEMPresenterPairDelegate,
+    HEMSensePairingDelegate,
+    HEMRoomConditionsDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) HEMSensorService* sensorService;
 @property (strong, nonatomic) HEMIntroService* introService;
+@property (strong, nonatomic) SENSensor* sensorSelected;
 
 @end
 
@@ -58,10 +66,18 @@
     [presenter bindWithActivityIndicator:[self activityIndicator]];
     [presenter bindWithShadowView:[self shadowView]];
     [presenter setPairDelegate:self];
+    [presenter setDelegate:self];
 
     [self setSensorService:sensorService];
     [self setIntroService:introService];
     [self addPresenter:presenter];
+}
+
+#pragma mark - HEMRoomConditionsDelegate
+
+- (void)showSensor:(SENSensor *)sensor fromPresenter:(HEMRoomConditionsPresenter *)presenter {
+    [self setSensorSelected:sensor];
+    [self performSegueWithIdentifier:[HEMMainStoryboard detailSegueIdentifier] sender:self];
 }
 
 #pragma mark - HEMPresenterPairDelegate
@@ -83,6 +99,17 @@
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
     BOOL paired = senseManager != nil;
     [self dismissModalAfterDelay:paired];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    id destVC = [segue destinationViewController];
+    if ([destVC isKindOfClass:[HEMSensorDetailViewController class]]) {
+        HEMSensorDetailViewController* detailVC = destVC;
+        [detailVC setSensor:[self sensorSelected]];
+        [detailVC setTitle:[[self sensorSelected] localizedName]];
+    }
 }
 
 @end

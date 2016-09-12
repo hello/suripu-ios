@@ -32,8 +32,10 @@ static NSString *const _HEMbreakdownController = @"breakdownController";
 static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
 static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
+static NSString *const _HEMchart = @"chart";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
+static NSString *const _HEMcurrentValue = @"currentValue";
 static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
@@ -119,7 +121,9 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)breakdownLineCellReuseIdentifier { return _HEMbreakdownLineCell; }
 +(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
 +(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
++(NSString *)chartReuseIdentifier { return _HEMchart; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
++(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
@@ -159,6 +163,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)alarmSoundsSegueIdentifier { return _HEMalarmSounds; }
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
++(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }

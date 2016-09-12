@@ -2905,6 +2905,36 @@
             </objects>
             <point key="canvasLocation" x="2002" y="-10"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="I0P-XQ-sj2">
+            <objects>
+                <viewController id="Kzl-WG-JYd" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="teA-GK-4zq"/>
+                        <viewControllerLayoutGuide type="bottom" id="IXC-su-XWw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8QW-Yv-BMk">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f4V-5A-PDX">
+                                <rect key="frame" x="11" y="57" width="240" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="a5B-g7-PIH">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rTc-W9-aHg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2750" y="-8"/>
+        </scene>
         <!--Alarm List View Controller-->
         <scene sceneID="XpH-hn-x9c">
             <objects>
@@ -3686,7 +3716,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktV-G2-rAh">
                                                             <rect key="frame" x="16" y="0.0" width="552" height="12"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvx-Gg-RMm">
@@ -3699,7 +3729,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsI-kz-gO1">
                                                             <rect key="frame" x="16" y="76" width="552" height="12"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZlX-hQ-4XS">
@@ -3954,6 +3984,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="vsQ-R3-Wd6" id="j4I-RL-lVi"/>
                         <outlet property="collectionView" destination="gTK-vk-XAu" id="Fur-kG-7Qy"/>
+                        <segue destination="Kzl-WG-JYd" kind="show" id="R8i-gl-BhB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0SY-YO-9OH" userLabel="First Responder" sceneMemberID="firstResponder"/>

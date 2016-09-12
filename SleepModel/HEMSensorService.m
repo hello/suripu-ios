@@ -27,6 +27,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 @property (nonatomic, copy) HEMSensorPollHandler pollHandler;
 @property (nonatomic, strong) SENSensorDataRequest* pollRequest;
 @property (nonatomic, strong) NSOperationQueue* roomPollQueue;
+@property (nonatomic, assign, getter=shouldStopRoomPoll) BOOL stopRoomPoll;
 
 @end
 
@@ -91,6 +92,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 #pragma mark - Polling
 
 - (void)pollDataForSensorsExcept:(NSSet<NSNumber*>*)sensorTypes completion:(HEMSensorPollHandler)completion {
+    [self setStopRoomPoll:NO];
     [[self roomPollQueue] cancelAllOperations];
     
     __weak typeof(self) weakSelf = self;
@@ -107,10 +109,12 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
             completion (status, data, error);
         }
         
-        [strongSelf addPollDelay:^{
-            __strong typeof(weakSelf) safeSelf = weakSelf;
-            [safeSelf pollDataForSensorsExcept:sensorTypes completion:completion];
-        }];
+        if (![strongSelf shouldStopRoomPoll]) {
+            [strongSelf addPollDelay:^{
+                __strong typeof(weakSelf) safeSelf = weakSelf;
+                [safeSelf pollDataForSensorsExcept:sensorTypes completion:completion];
+            }];
+        }
     }];
     
     [[self roomPollQueue] addOperation:op];
@@ -124,6 +128,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 - (void)stopPollingForData {
     [[self roomPollQueue] cancelAllOperations];
+    [self setStopRoomPoll:YES];
 }
 
 #pragma mark - Clean up

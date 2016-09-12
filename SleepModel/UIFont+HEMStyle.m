@@ -241,7 +241,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 {
     switch (unit) {
         case SENSensorUnitFahrenheit:
-        case SENSensorUnitCelcius:
+        case SENSensorUnitCelsius:
             return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
         default:
             return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];

@@ -61,7 +61,7 @@
             [self setNumberOfFractionDigits:showFraction ? 1 : 0];
             break;
         }
-        case SENSensorUnitCelcius: {
+        case SENSensorUnitCelsius: {
             if (![SENPreference useCentigrade]) {
                 value = @([value doubleValue] * 1.8f + 32);
             }
@@ -99,7 +99,7 @@
 - (NSString*)unitSymbol {
     switch ([self sensorUnit]) {
         case SENSensorUnitFahrenheit:
-        case SENSensorUnitCelcius:
+        case SENSensorUnitCelsius:
             return NSLocalizedString(@"measurement.temperature.unit", nil);
         case SENSensorUnitPercent:
             return NSLocalizedString(@"measurement.percentage.unit", nil);

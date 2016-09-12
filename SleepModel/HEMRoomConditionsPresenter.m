@@ -460,7 +460,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [[self formatter] setSensorUnit:[sensor unit]];
     
     if ([sensor unit] == SENSensorUnitPercent
-        || [sensor unit] == SENSensorUnitCelcius
+        || [sensor unit] == SENSensorUnitCelsius
         || [sensor unit] == SENSensorUnitFahrenheit) {
         [[self formatter] setIncludeUnitSymbol:YES];
         [[sensorCell unitLabel] setText:nil];

@@ -239,7 +239,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell chartContentView] bounds]];
         [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-20.0f];
-        [lineChartView setUserInteractionEnabled:NO];
+        [lineChartView setHighlighter:nil];
+        
     }
     
     LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[self chartData]];

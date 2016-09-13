@@ -165,6 +165,7 @@ describe(@"HEMOnboardingService", ^{
         
         beforeEach(^{
             SENSenseManager* fakeManager = [[SENSenseManager alloc] init];
+            [service resetOnboardingCheckpoint];
             [service stub:@selector(currentSenseManager) andReturn:fakeManager];
             [fakeManager stub:@selector(forceDataUpload:) withBlock:^id(NSArray *params) {
                 SENSenseCompletionBlock block = [params lastObject];
@@ -181,11 +182,12 @@ describe(@"HEMOnboardingService", ^{
         context(@"user has not finished onboarding", ^{
             
             beforeEach(^{
-                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointAccountDone]];
             });
             
             afterEach(^{
-                [service resetOnboardingCheckpoint];
+                [service clearStubs];
             });
             
             it(@"should start polling for sensor data", ^{
@@ -207,12 +209,14 @@ describe(@"HEMOnboardingService", ^{
         context(@"user has finished onboarding", ^{
             
             beforeEach(^{
-                [service stub:@selector(isAuthorizedUser) andReturn:[KWValue valueWithBool:YES]];
-                [service saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseColorsFinished];
+                [service stub:@selector(isAuthorizedUser)
+                    andReturn:[KWValue valueWithBool:YES]];
+                [service stub:@selector(onboardingCheckpoint)
+                    andReturn:[KWValue valueWithInteger:HEMOnboardingCheckpointSenseColorsFinished]];
             });
             
             afterEach(^{
-                [service resetOnboardingCheckpoint];
+                [service clearStubs];
             });
             
             it(@"should not poll for sensor data", ^{

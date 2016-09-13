@@ -112,7 +112,7 @@ DEPENDENCIES:
   - MSDynamicsDrawerViewController (= 1.5.1)
   - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
   - Nocilla
-  - SenseKit (from `../SenseKit`)
+  - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (from `git@github.com:jrmiddle/SORelativeDateTransformer.git`, commit `51f53d591b7c19da1fcea5a91e5c044089c99410`)
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
@@ -133,7 +133,7 @@ EXTERNAL SOURCES:
   NAPickerView:
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :path: "../SenseKit"
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
   SORelativeDateTransformer:
@@ -161,6 +161,9 @@ CHECKOUT OPTIONS:
   NAPickerView:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
+  SenseKit:
+    :commit: 54ab200f6229646e44485c344d6855be54f906cc
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
     :git: git@github.com:hello/protobuf-objc.git
@@ -206,6 +209,6 @@ SPEC CHECKSUMS:
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
   Zip: 670419a5ba9faaf5f24ed3650c4c38b4136e996b
 
-PODFILE CHECKSUM: 097e73d9aff4737302a252b030142b8d8f17f1f8
+PODFILE CHECKSUM: 60f6ac892e92f14646b61e60bf7fce28f7ac260d
 
 COCOAPODS: 1.0.0

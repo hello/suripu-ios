@@ -214,7 +214,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell graphContainerView] bounds]];
-        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-40.0f];
+        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-25.0f];
         [lineChartView setUserInteractionEnabled:NO];
         *animate = YES;
     } else {

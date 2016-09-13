@@ -86,9 +86,7 @@
             if (!status || [[status sensors] count] == 0) {
                 [strongSelf setCompleted:YES];
             } else {
-                NSArray* filteredSensors = [strongSelf filter:[status sensors]
-                                                  byExcluding:[strongSelf sensorTypesToExclude]];
-                
+                NSArray* filteredSensors = [strongSelf filter:[status sensors]];
                 SENSensorDataRequest* request  = [SENSensorDataRequest new];
                 [request addRequestForSensors:filteredSensors
                                   usingMethod:[strongSelf dataMethod]
@@ -104,11 +102,13 @@
     }];
 }
 
-- (NSArray<SENSensor*>*)filter:(NSArray<SENSensor*>*)sensors byExcluding:(NSSet<NSNumber*>*)exclusion {
-    NSUInteger capacity = [sensors count] - [exclusion count];
+- (NSArray<SENSensor*>*)filter:(NSArray<SENSensor*>*)sensors {
+    NSUInteger capacity = [sensors count] - [[self filterByTypes] count];
     NSMutableArray<SENSensor*>* filtered = [NSMutableArray arrayWithCapacity:capacity];
     for (SENSensor* sensor in sensors) {
-        if (![exclusion containsObject:@([sensor type])]) {
+        BOOL contains = [[self filterByTypes] containsObject:@([sensor type])];
+        if (([self exclude] && !contains)
+            || (![self exclude] && contains)) {
             [filtered addObject:sensor];
         }
     }

@@ -9,6 +9,12 @@
 #import "HEMSensorChartContainer.h"
 #import "HEMStyle.h"
 
+@interface HEMSensorChartContainer()
+
+@property (nonatomic, weak) ChartViewBase* chartView;
+
+@end
+
 @implementation HEMSensorChartContainer
 
 - (void)awakeFromNib {
@@ -18,8 +24,9 @@
     [[self botLimitLine] setBackgroundColor:[[UIColor grey3] colorWithAlphaComponent:0.2f]];
 }
 
-- (void)setChartView:(UIView*)chartView {
+- (void)setChartView:(ChartViewBase*)chartView {
     [self insertSubview:chartView atIndex:0];
+    _chartView = chartView;
 }
 
 @end

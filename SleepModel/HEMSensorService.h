@@ -58,9 +58,19 @@ typedef void(^HEMSensorPollHandler)(SENSensorStatus* _Nullable status, SENSensor
  * to override the current request with the new incoming request
  *
  * @param sensorTypes: types of sensors to exclude from
- * @param update: the callback to call on each refresh
+ * @param completion: the callback to call on each refresh
  */
 - (void)pollDataForSensorsExcept:(NSSet<NSNumber*>*)sensorTypes completion:(HEMSensorPollHandler)completion;
+
+/**
+ * @description
+ * Continuously poll for data at a set interval for the specified sensor and scope.
+ *
+ * @param sensor: sensor to poll data for
+ * @param scope: scope of the data to be polled for
+ * @param completion: the callback to call on each refresh
+ */
+- (void)pollDataForSensor:(SENSensor*)sensor withScope:(HEMSensorServiceScope)scope completion:(HEMSensorPollHandler)completion;
 
 /**
  * @description

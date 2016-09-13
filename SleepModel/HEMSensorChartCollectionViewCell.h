@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMSensorChartContainer;
+
 @interface HEMSensorChartCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIView *chartContentView;
+@property (weak, nonatomic) IBOutlet HEMSensorChartContainer *chartContentView;
 
 @end

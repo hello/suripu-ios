@@ -6,6 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import <Charts/Charts-Swift.h>
 #import <UIKit/UIKit.h>
 
 @interface HEMSensorChartContainer : UIView
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* botLimitLabel;
 @property (weak, nonatomic) IBOutlet UIView* botLimitLine;
 
-- (void)setChartView:(UIView*)chartView;
+- (void)setChartView:(ChartViewBase*)chartView;
+- (ChartViewBase*)chartView;
 
 @end

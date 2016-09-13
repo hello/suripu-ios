@@ -11,12 +11,17 @@
 #import "HEMSensorDetailViewController.h"
 #import "HEMSensorService.h"
 #import "HEMSensorDetailSubNavPresenter.h"
+#import "HEMSensorDetailPresenter.h"
 
-@interface HEMSensorDetailViewController ()
+@interface HEMSensorDetailViewController () <
+    HEMSensorDetailSubNavDelegate
+>
 
 @property (weak, nonatomic) IBOutlet HEMSubNavigationView *subNavBar;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMSensorService* sensorService;
+@property (weak, nonatomic) HEMSensorDetailSubNavPresenter* subNavPresenter;
+@property (weak, nonatomic) HEMSensorDetailPresenter* detailPresenter;
 
 @end
 
@@ -31,10 +36,33 @@
     HEMSensorService* sensorService = [HEMSensorService new];
     HEMSensorDetailSubNavPresenter* subNavPresenter =
         [[HEMSensorDetailSubNavPresenter alloc] initWithSensorService:sensorService];
-    [subNavPresenter bindwithSubNavigationView:[self subNavBar]];
-    
+    [subNavPresenter bindWithSubNavigationView:[self subNavBar]];
+    [subNavPresenter setDelegate:self];
     [self setSensorService:sensorService];
+    [self setSubNavPresenter:subNavPresenter];
     [self addPresenter:subNavPresenter];
+    
+    HEMSensorDetailPresenter* presenter =
+        [[HEMSensorDetailPresenter alloc] initWithSensorService:sensorService
+                                                      forSensor:[self sensor]];
+    [presenter bindWithCollectionView:[self collectionView]];
+    [presenter setPollScope:[subNavPresenter scopeSelected]];
+    [self setDetailPresenter:presenter];
+    [self addPresenter:presenter];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if ([[self navigationController] navigationBar]
+        && ![[self subNavPresenter] hasNavBar]) {
+        [[self subNavPresenter] bindWithNavBar:[[self navigationController] navigationBar]];
+    }
+}
+
+#pragma mark - HEMSensorDetailSubNavDelegate
+
+- (void)didChangeScopeTo:(HEMSensorServiceScope)scope fromPresenter:(HEMSensorDetailSubNavPresenter *)presenter {
+    [[self detailPresenter] setPollScope:scope];
 }
 
 @end

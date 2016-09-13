@@ -18,7 +18,7 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
 
 @property (nonatomic, weak) HEMSensorService* sensorService;
 @property (nonatomic, weak) HEMSubNavigationView* subNav;
-@property (nonatomic, assign) HEMSensorServiceScope scopeSelected;
+@property (nonatomic, weak) UINavigationBar* navBar;
 
 @end
 
@@ -32,10 +32,19 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
     return self;
 }
 
-- (void)bindwithSubNavigationView:(HEMSubNavigationView*)subNav {
+- (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav {
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeDay]];
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeWeek]];
     [self setSubNav:subNav];
+}
+
+- (void)bindWithNavBar:(UINavigationBar*)navBar {
+    [navBar setShadowImage:[UIImage new]];
+    [self setNavBar:navBar];
+}
+
+- (BOOL)hasNavBar {
+    return [self navBar] != nil;
 }
 
 - (NSString*)subNavTitleForScope:(HEMSensorServiceScope)scope {
@@ -65,13 +74,18 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
 
 - (void)changeScope:(UIButton*)button {
     DDLogVerbose(@"changed sensor scope to %ld", (long)[button tag]);
+    [[self delegate] didChangeScopeTo:[button tag] fromPresenter:self];
 }
-
 #pragma mark - Presenter Events
 
 - (void)didRelayout {
     [super didRelayout];
     [[self subNav] setNeedsLayout];
+}
+
+- (void)didDisappear {
+    [super didDisappear];
+    [[self navBar] setShadowImage:[UIImage imageNamed:@"navBorder"]];
 }
 
 @end

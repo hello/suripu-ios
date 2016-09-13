@@ -21,7 +21,8 @@ typedef void(^HEMSensorDataPollHandler)(SENSensorStatus* _Nullable status,
 @interface HEMSensorDataRequestOperation : NSOperation
 
 @property (nonatomic, copy) HEMSensorDataPollHandler dataHandler;
-@property (nonatomic, strong) NSSet<NSNumber*>* sensorTypesToExclude;
+@property (nonatomic, strong) NSSet<NSNumber*>* filterByTypes;
+@property (nonatomic, assign) BOOL exclude;
 @property (nonatomic, assign) SENSensorDataScope dataScope;
 @property (nonatomic, assign) SENSensorDataMethod dataMethod;
 

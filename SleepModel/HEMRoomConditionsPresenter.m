@@ -7,6 +7,8 @@
 //
 
 #import <Charts/Charts-Swift.h>
+#import "LineChartView+HEMSensor.h"
+
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSensorStatus.h>
 
@@ -49,7 +51,6 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, assign) BOOL loadedIntro;
-@property (nonatomic, strong) NSMutableDictionary* chartViewBySensor;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
 @property (nonatomic, strong) NSArray* groupedSensors;
@@ -67,7 +68,6 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
         _sensorService = sensorService;
         _introService = introService;
         _headerViewHeight = -1.0f;
-        _chartViewBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
         _chartDataBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
         _formatter = [HEMSensorValueFormatter new];
     }
@@ -144,6 +144,8 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
                 [strongSelf setGroupedSensors:[strongSelf groupedSensorsFrom:[status sensors]]];
                 [strongSelf setSensorData:data];
                 [strongSelf prepareChartDataAndReload];
+            } else {
+                [[strongSelf collectionView] reloadData];
             }
             
         } else {
@@ -191,7 +193,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
                 NSUInteger index = 0;
                 for (NSNumber* value in values) {
-                    [chartData addObject:[[ChartDataEntry alloc] initWithValue:[value doubleValue] xIndex:index++]];
+                    [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index++]];
                 }
                 [strongSelf chartDataBySensor][@([sensor type])] = chartData;
             }
@@ -205,32 +207,18 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 }
 
 - (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
-                              inCell:(HEMSensorCollectionViewCell*)cell {
+                              inCell:(HEMSensorCollectionViewCell*)cell
+                             animate:(BOOL*)animate {
     // TODO: for now, use the line chart for every sensor.
-    LineChartView* lineChartView = [self chartViewBySensor][@([sensor type])];
+    LineChartView* lineChartView = (id) [[cell graphContainerView] chartView];
     
     if (!lineChartView) {
-        lineChartView = [[LineChartView alloc] initWithFrame:[[cell graphContainerView] bounds]];
-        [lineChartView setAutoresizingMask:UIViewAutoresizingFlexibleWidth
-                                         | UIViewAutoresizingFlexibleHeight];
-        [lineChartView setBackgroundColor:[UIColor whiteColor]];
-        [lineChartView setDrawGridBackgroundEnabled:NO];
-        [lineChartView setDrawBordersEnabled:NO];
-        [lineChartView setNoDataText:nil];
-        [[lineChartView leftAxis] setEnabled:NO];
-        [[lineChartView leftAxis] removeAllLimitLines];
-        [[lineChartView rightAxis] removeAllLimitLines];
-        [[lineChartView rightAxis] setEnabled:NO];
-        [[lineChartView xAxis] setEnabled:NO];
-        [[lineChartView xAxis] setDrawAxisLineEnabled:NO];
-        [[lineChartView xAxis] setDrawGridLinesEnabled:NO];
-        [[lineChartView xAxis] removeAllLimitLines];
-        [lineChartView setDescriptionText:nil];
-        [[lineChartView legend] setEnabled:NO];
-        [[lineChartView layer] setBorderWidth:0.0f];
+        lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell graphContainerView] bounds]];
         [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-40.0f];
         [lineChartView setUserInteractionEnabled:NO];
-        [self chartViewBySensor][@([sensor type])] = lineChartView;
+        *animate = YES;
+    } else {
+        *animate = NO;
     }
     
     SENCondition condition = [sensor condition];
@@ -245,7 +233,6 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     [dataSet setDrawCirclesEnabled:NO];
     [dataSet setFillColor:sensorColor];
     [dataSet setLabel:nil];
-    
     
     NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
     [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
@@ -476,8 +463,11 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         [[sensorCell unitLabel] setText:[[self formatter] unitSymbol]];
     }
     
+    BOOL animate = NO;
     SENCondition condition = [sensor condition];
-    ChartViewBase* chartView = [self chartViewForSensor:sensor inCell:sensorCell];
+    ChartViewBase* chartView = [self chartViewForSensor:sensor
+                                                 inCell:sensorCell
+                                                animate:&animate];
     NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
     
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
@@ -488,7 +478,9 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [[[sensorCell graphContainerView] topLimitLabel] setText:nil];
     [[[sensorCell graphContainerView] botLimitLabel] setText:nil];
     
-    [chartView animateWithXAxisDuration:kHEMRoomConditionsChartAnimeDuration];
+    if (animate) {
+        [chartView animateWithXAxisDuration:kHEMRoomConditionsChartAnimeDuration];
+    }
 }
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {

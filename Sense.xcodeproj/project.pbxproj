@@ -165,6 +165,8 @@
 		BF3326E61D875213009A3E65 /* HEMSensorChartCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326E51D875213009A3E65 /* HEMSensorChartCollectionViewCell.m */; };
 		BF3326E91D875222009A3E65 /* HEMSensorAboutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326E81D875222009A3E65 /* HEMSensorAboutCollectionViewCell.m */; };
 		BF3326EC1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326EB1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.m */; };
+		BF3326EF1D876BE3009A3E65 /* HEMSensorDetailPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326EE1D876BE3009A3E65 /* HEMSensorDetailPresenter.m */; };
+		BF3326F21D878995009A3E65 /* LineChartView+HEMSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326F11D878995009A3E65 /* LineChartView+HEMSensor.m */; };
 		BF35838C1CAC8F3600760CD4 /* HEMShortcutService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35838B1CAC8F3600760CD4 /* HEMShortcutService.m */; };
 		BF35838F1CB437E100760CD4 /* HEMAudioService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35838E1CB437E100760CD4 /* HEMAudioService.m */; };
 		BF3583921CB441B000760CD4 /* HEMAudioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3583911CB441B000760CD4 /* HEMAudioButton.m */; };
@@ -769,6 +771,10 @@
 		BF3326E81D875222009A3E65 /* HEMSensorAboutCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorAboutCollectionViewCell.m; sourceTree = "<group>"; };
 		BF3326EA1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDetailSubNavPresenter.h; sourceTree = "<group>"; };
 		BF3326EB1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorDetailSubNavPresenter.m; sourceTree = "<group>"; };
+		BF3326ED1D876BE3009A3E65 /* HEMSensorDetailPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDetailPresenter.h; sourceTree = "<group>"; };
+		BF3326EE1D876BE3009A3E65 /* HEMSensorDetailPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorDetailPresenter.m; sourceTree = "<group>"; };
+		BF3326F01D878995009A3E65 /* LineChartView+HEMSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LineChartView+HEMSensor.h"; sourceTree = "<group>"; };
+		BF3326F11D878995009A3E65 /* LineChartView+HEMSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LineChartView+HEMSensor.m"; sourceTree = "<group>"; };
 		BF35838A1CAC8F3600760CD4 /* HEMShortcutService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMShortcutService.h; sourceTree = "<group>"; };
 		BF35838B1CAC8F3600760CD4 /* HEMShortcutService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMShortcutService.m; sourceTree = "<group>"; };
 		BF35838D1CB437E100760CD4 /* HEMAudioService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAudioService.h; sourceTree = "<group>"; };
@@ -1602,6 +1608,8 @@
 				BF825CFB1D764528003F34B0 /* HEMRoomConditionsViewController.m */,
 				BF3326DE1D87309B009A3E65 /* HEMSensorDetailViewController.h */,
 				BF3326DF1D87309B009A3E65 /* HEMSensorDetailViewController.m */,
+				BF3326F01D878995009A3E65 /* LineChartView+HEMSensor.h */,
+				BF3326F11D878995009A3E65 /* LineChartView+HEMSensor.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2472,6 +2480,8 @@
 				BF825CF81D76360E003F34B0 /* HEMRoomConditionsPresenter.m */,
 				BF3326EA1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.h */,
 				BF3326EB1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.m */,
+				BF3326ED1D876BE3009A3E65 /* HEMSensorDetailPresenter.h */,
+				BF3326EE1D876BE3009A3E65 /* HEMSensorDetailPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3819,6 +3829,7 @@
 				BF52946C1C652C8000D931B7 /* HEMTrendsDisplayPoint.m in Sources */,
 				BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */,
 				BFF3647D1D629018008D4DF8 /* HEMSenseUpgradedViewController.m in Sources */,
+				BF3326F21D878995009A3E65 /* LineChartView+HEMSensor.m in Sources */,
 				BF825CFC1D764528003F34B0 /* HEMRoomConditionsViewController.m in Sources */,
 				BFB59E151C03B98E001BD941 /* UITableViewCell+HEMSettings.m in Sources */,
 				BF52946F1C6929C200D931B7 /* HEMDashLine.m in Sources */,
@@ -3828,6 +3839,7 @@
 				BFFCEFCF1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m in Sources */,
 				BF8C092A1C28E52D005AB5A7 /* HEMNameChangePresenter.m in Sources */,
 				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
+				BF3326EF1D876BE3009A3E65 /* HEMSensorDetailPresenter.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */,
 				BF5BAD081C6169BF00347185 /* HEMTrendsCircleView.m in Sources */,

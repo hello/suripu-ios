@@ -2924,11 +2924,11 @@
                                     <size key="itemSize" width="600" height="103"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="24" maxX="0.0" maxY="24"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="currentValue" id="b7a-DY-DJQ" customClass="HEMSensorValueCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="155"/>
+                                        <rect key="frame" x="0.0" y="24" width="600" height="155"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="155"/>
@@ -2964,26 +2964,32 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="chart" id="WY3-eO-8e2" customClass="HEMSensorChartCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="200" width="600" height="265"/>
+                                        <rect key="frame" x="0.0" y="224" width="600" height="265"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="265"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="96I-UY-JZ5">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="96I-UY-JZ5" customClass="HEMSensorChartContainer">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="265"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="96I-UY-JZ5" secondAttribute="trailing" id="XKn-vv-kol"/>
+                                            <constraint firstAttribute="bottom" secondItem="96I-UY-JZ5" secondAttribute="bottom" id="YNI-AA-mZy"/>
+                                            <constraint firstItem="96I-UY-JZ5" firstAttribute="leading" secondItem="WY3-eO-8e2" secondAttribute="leading" id="tkk-Bi-Mpt"/>
+                                            <constraint firstItem="96I-UY-JZ5" firstAttribute="top" secondItem="WY3-eO-8e2" secondAttribute="top" id="wow-0p-jlG"/>
+                                        </constraints>
                                         <size key="customSize" width="600" height="265"/>
                                         <connections>
                                             <outlet property="chartContentView" destination="96I-UY-JZ5" id="7xX-QF-mWm"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="about" id="LUo-F5-vKi" customClass="HEMSensorAboutCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="510" width="600" height="28"/>
+                                        <rect key="frame" x="0.0" y="534" width="600" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="28"/>
@@ -2995,7 +3001,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CuN-PL-AEL">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CuN-PL-AEL">
                                                     <rect key="frame" x="24" y="28" width="552" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

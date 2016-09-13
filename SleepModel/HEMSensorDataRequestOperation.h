@@ -14,12 +14,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^HEMSensorDataPollHandler)(SENSensorStatus* _Nullable status,
+typedef void(^HEMSensorDataPollHandler)(NSUUID* _Nullable uuid,
+                                        SENSensorStatus* _Nullable status,
                                         SENSensorDataCollection* _Nullable data,
                                         NSError* _Nullable error);
 
 @interface HEMSensorDataRequestOperation : NSOperation
 
+@property (nonatomic, strong) NSUUID* uuid;
 @property (nonatomic, copy) HEMSensorDataPollHandler dataHandler;
 @property (nonatomic, strong) NSSet<NSNumber*>* filterByTypes;
 @property (nonatomic, assign) BOOL exclude;

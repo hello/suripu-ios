@@ -48,11 +48,14 @@
 - (void)setCompleted:(BOOL)completed {
     [self willChangeValueForKey:@"isFinished"];
     _completed = completed;
-    if (completed && [self dataHandler]) {
+    if (completed && ![self isCancelled] && [self dataHandler]) {
         __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf dataHandler] ([strongSelf status], [strongSelf data], [strongSelf error]);
+            [strongSelf dataHandler] ([strongSelf uuid],
+                                      [strongSelf status],
+                                      [strongSelf data],
+                                      [strongSelf error]);
             [strongSelf didChangeValueForKey:@"isFinished"];
         });
     } else {

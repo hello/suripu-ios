@@ -226,7 +226,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     [lineChartView setGridBackgroundColor:sensorColor];
     
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:chartData];
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[chartData copy]];
     [dataSet setFill:[ChartFill fillWithColor:sensorColor]];
     [dataSet setColor:sensorColor];
     [dataSet setDrawFilledEnabled:YES];

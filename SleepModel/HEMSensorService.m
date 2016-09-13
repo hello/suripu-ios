@@ -27,7 +27,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 @property (nonatomic, copy) HEMSensorPollHandler pollHandler;
 @property (nonatomic, strong) SENSensorDataRequest* pollRequest;
 @property (nonatomic, strong) NSOperationQueue* pollQueue;
-@property (nonatomic, assign, getter=shouldStopPolling) BOOL stopPolling;
+@property (nonatomic, strong) NSUUID* currentPollId;
 
 @end
 
@@ -91,15 +91,27 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 #pragma mark - Polling
 
-- (void)pollDataForSensor:(SENSensor*)sensor withScope:(HEMSensorServiceScope)scope completion:(HEMSensorPollHandler)completion {
-    [self setStopPolling:NO];
+- (void)pollDataForSensor:(SENSensor*)sensor
+                withScope:(HEMSensorServiceScope)scope
+               completion:(HEMSensorPollHandler)completion {
+    [self setCurrentPollId:[NSUUID UUID]];
+    [self continuePollingForSensorUsingUUID:[self currentPollId]
+                                  forSensor:sensor
+                                  withScope:scope
+                                 completion:completion];
+}
+
+- (void)continuePollingForSensorUsingUUID:(NSUUID*)uuid
+                                forSensor:(SENSensor*)sensor
+                                withScope:(HEMSensorServiceScope)scope
+                               completion:(HEMSensorPollHandler)completion {
     [[self pollQueue] cancelAllOperations];
     
     __weak typeof(self) weakSelf = self;
     HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
     SENSensorDataScope apiScope;
     switch (scope) {
-        // TODO: api not supporting anything else right now
+            // TODO: api not supporting anything else right now
         case HEMSensorServiceScopeDay:
         case HEMSensorServiceScopeWeek:
         default:
@@ -107,23 +119,31 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
             break;
     }
     
+    [op setUuid:[self currentPollId]];
     [op setDataScope:apiScope];
     [op setDataMethod:SENSensorDataMethodAverage];
     [op setFilterByTypes:[NSSet setWithObject:@([sensor type])]];
     [op setExclude:NO];
-    [op setDataHandler:^(SENSensorStatus* status, SENSensorDataCollection* data, NSError* error) {
+    [op setDataHandler:^(NSUUID* uuid,
+                         SENSensorStatus* status,
+                         SENSensorDataCollection* data,
+                         NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [SENAnalytics trackError:error];
         }
-        if (completion) {
-            completion (status, data, error);
-        }
         
-        if (![strongSelf shouldStopPolling]) {
+        if ([uuid isEqual:[strongSelf currentPollId]]) {
+            if (completion) {
+                completion (status, data, error);
+            }
+            
             [strongSelf addPollDelay:^{
                 __strong typeof(weakSelf) safeSelf = weakSelf;
-                [safeSelf pollDataForSensor:sensor withScope:scope completion:completion];
+                [safeSelf continuePollingForSensorUsingUUID:uuid
+                                                  forSensor:sensor
+                                                  withScope:scope
+                                                 completion:completion];
             }];
         }
     }];
@@ -132,28 +152,47 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 }
 
 - (void)pollDataForSensorsExcept:(NSSet<NSNumber*>*)sensorTypes completion:(HEMSensorPollHandler)completion {
-    [self setStopPolling:NO];
+    [self setCurrentPollId:[NSUUID UUID]];
+    [self continuePollingSensorsUsingUUID:[self currentPollId]
+                                   except:sensorTypes
+                               completion:completion];
+}
+
+- (void)continuePollingSensorsUsingUUID:(NSUUID*)uuid
+                                 except:(NSSet<NSNumber*>*)sensorTypes
+                             completion:(HEMSensorPollHandler)completion {
+    if (![uuid isEqual:[self currentPollId]]) {
+        return; // was cancelled
+    }
+    
     [[self pollQueue] cancelAllOperations];
     
     __weak typeof(self) weakSelf = self;
     HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
     [op setDataScope:SENSensorDataScopeDay5Min];
+    [op setUuid:[self currentPollId]];
     [op setDataMethod:SENSensorDataMethodAverage];
     [op setFilterByTypes:sensorTypes];
     [op setExclude:YES];
-    [op setDataHandler:^(SENSensorStatus* status, SENSensorDataCollection* data, NSError* error) {
+    [op setDataHandler:^(NSUUID* uuid,
+                         SENSensorStatus* status,
+                         SENSensorDataCollection* data,
+                         NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [SENAnalytics trackError:error];
         }
-        if (completion) {
-            completion (status, data, error);
-        }
         
-        if (![strongSelf shouldStopPolling]) {
+        if ([uuid isEqual:[strongSelf currentPollId]]) {
+            if (completion) {
+                completion (status, data, error);
+            }
+            
             [strongSelf addPollDelay:^{
                 __strong typeof(weakSelf) safeSelf = weakSelf;
-                [safeSelf pollDataForSensorsExcept:sensorTypes completion:completion];
+                [safeSelf continuePollingSensorsUsingUUID:uuid
+                                                   except:sensorTypes
+                                               completion:completion];
             }];
         }
     }];
@@ -169,7 +208,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 
 - (void)stopPollingForData {
     [[self pollQueue] cancelAllOperations];
-    [self setStopPolling:YES];
+    [self setCurrentPollId:nil];
 }
 
 #pragma mark - Clean up

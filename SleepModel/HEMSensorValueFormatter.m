@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 8/5/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
+#import <CoreText/CoreText.h>
 
 #import <SenseKit/SENPreference.h>
 
@@ -94,6 +95,38 @@
 - (NSString *)stringFromNumber:(NSNumber *)number forSensorUnit:(SENSensorUnit)unit {
     [self setSensorUnit:unit];
     return [self stringFromSensorValue:number];
+}
+
+- (NSAttributedString*)attributedValueFromSensor:(SENSensor*)sensor
+                              unitSymbolLocation:(HEMSensorValueUnitLoc)location
+                                 valueAttributes:(NSDictionary*)valueAttributes
+                                  unitAttributes:(NSDictionary*)unitAttributes {
+    // turn it off momentarily so that it can be separately added
+    BOOL includeUnit = [self includeUnitSymbol];
+    [self setIncludeUnitSymbol:NO];
+    
+    NSMutableAttributedString* attributedString = nil;
+    NSString* valueString = [self stringFromSensor:sensor];
+    
+    if (valueString) {
+        attributedString = [[NSMutableAttributedString alloc] initWithString:valueString attributes:valueAttributes];
+        if (includeUnit) {
+            NSString* unitSymbol = [self unitSymbol];
+            if (unitSymbol) {
+                NSMutableDictionary* unitAtts = [unitAttributes mutableCopy];
+                if (!unitAtts) {
+                    unitAtts = [NSMutableDictionary dictionaryWithCapacity:1];
+                }
+                [unitAtts setValue:@(location) forKey:(id)kCTSuperscriptAttributeName];
+                
+                NSAttributedString* attrUnit = [[NSAttributedString alloc] initWithString:unitSymbol attributes:unitAtts];
+                [attributedString appendAttributedString:attrUnit];
+            }
+        }
+    }
+    
+    [self setIncludeUnitSymbol:includeUnit]; // set it back to whatever it was
+    return attributedString;
 }
 
 - (NSString*)unitSymbol {

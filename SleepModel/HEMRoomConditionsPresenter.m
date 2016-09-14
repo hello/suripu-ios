@@ -236,7 +236,6 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell graphContainerView] bounds]];
-        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-22.0f];
         [lineChartView setUserInteractionEnabled:NO];
         *animate = YES;
     } else {
@@ -485,27 +484,51 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 - (void)configureSensorCell:(HEMSensorCollectionViewCell*)sensorCell forSensor:(SENSensor*)sensor {
     [[self formatter] setSensorUnit:[sensor unit]];
     
-    if ([sensor unit] == SENSensorUnitPercent
-        || [sensor unit] == SENSensorUnitCelsius
-        || [sensor unit] == SENSensorUnitFahrenheit) {
+    SENCondition condition = [sensor condition];
+    UIColor* conditionColor = [UIColor colorForCondition:condition];
+    
+    if ([sensor type] == SENSensorTypeTemp) {
         [[self formatter] setIncludeUnitSymbol:YES];
         [[sensorCell unitLabel] setText:nil];
+        
+        NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
+        [[sensorCell valueLabel] setText:formattedValue];
+        [[sensorCell valueLabel] setTextColor:conditionColor];
+        
+    } else if ([sensor type] == SENSensorTypeHumidity) {
+        [[self formatter] setIncludeUnitSymbol:YES];
+        
+        NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h4],
+                                          NSForegroundColorAttributeName : conditionColor};
+        NSDictionary* unitAttributes = @{NSFontAttributeName : [UIFont h8],
+                                         NSForegroundColorAttributeName : conditionColor,
+                                         NSBaselineOffsetAttributeName : @(5.0f)};
+        
+        NSAttributedString* attributedString =
+            [[self formatter] attributedValueFromSensor:sensor
+                                     unitSymbolLocation:HEMSensorValueUnitLocSuperscript
+                                        valueAttributes:valueAttributes
+                                         unitAttributes:unitAttributes];
+
+        [[sensorCell valueLabel] setAttributedText:attributedString];
+        [[sensorCell unitLabel] setText:nil];
+        
     } else {
         [[self formatter] setIncludeUnitSymbol:NO];
         [[sensorCell unitLabel] setText:[[self formatter] unitSymbol]];
+        
+        NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
+        [[sensorCell valueLabel] setText:formattedValue];
+        [[sensorCell valueLabel] setTextColor:conditionColor];
     }
     
     BOOL animate = NO;
-    SENCondition condition = [sensor condition];
     ChartViewBase* chartView = [self chartViewForSensor:sensor
                                                  inCell:sensorCell
                                                 animate:&animate];
-    NSString* formattedValue = [[self formatter] stringFromSensorValue:[sensor value]];
     
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
     [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
-    [[sensorCell valueLabel] setText:formattedValue];
-    [[sensorCell valueLabel] setTextColor:[UIColor colorForCondition:condition]];
     [[sensorCell graphContainerView] setChartView:chartView];
     [[[sensorCell graphContainerView] topLimitLabel] setText:nil];
     [[[sensorCell graphContainerView] botLimitLabel] setText:nil];

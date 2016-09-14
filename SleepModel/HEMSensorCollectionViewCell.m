@@ -42,4 +42,9 @@ static CGFloat const HEMSensorCellTextWidthRatio = 0.75f;
     [[self unitLabel] setFont:[UIFont h8]];
 }
 
+- (void)prepareForReuse {
+    [[self valueLabel] setText:nil];
+    [[self valueLabel] setAttributedText:nil];
+}
+
 @end

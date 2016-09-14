@@ -8,6 +8,12 @@
 #import <SenseKit/SENSensor.h>
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, HEMSensorValueUnitLoc) {
+    HEMSensorValueUnitLocNormal = 0,
+    HEMSensorValueUnitLocSuperscript = 1,
+    HEMSensorValueUnitLocSubscript = -1
+};
+
 @interface HEMSensorValueFormatter : NSNumberFormatter
 
 @property (nonatomic, assign) BOOL includeUnitSymbol;
@@ -76,5 +82,21 @@
  * @return unit symbol, if available
  */
 - (NSString*)unitSymbol;
+
+/**
+ * @discussion
+ * Return an attributed value string containing the unit symbol.  This only applies
+ * if includeUnitSymbol is YES.  If that property is NO, then attributed string
+ * will simply be the formatted value.
+ *
+ * @param sensor: sensor to process
+ * @param location: the location of the unit symbol, if includeUnitSymbol is YES
+ * @param valueAttributes: attributes to be applied to the sensor value itself
+ * @param unitAttributes: attributes to be applied to the sensor unit symbol
+ */
+- (NSAttributedString*)attributedValueFromSensor:(SENSensor*)sensor
+                              unitSymbolLocation:(HEMSensorValueUnitLoc)location
+                                 valueAttributes:(NSDictionary*)valueAttributes
+                                  unitAttributes:(NSDictionary*)unitAttributes;
 
 @end

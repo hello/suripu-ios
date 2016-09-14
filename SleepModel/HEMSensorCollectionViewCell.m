@@ -34,6 +34,7 @@ static CGFloat const HEMSensorCellTextWidthRatio = 0.75f;
     [super awakeFromNib];
     [[self descriptionLabel] setFont:[UIFont body]];
     [[self descriptionLabel] setTextColor:[UIColor grey5]];
+    [[self descriptionLabel] setNumberOfLines:0];
     [[self nameLabel] setFont:[UIFont h7Bold]];
     [[self nameLabel] setTextColor:[UIColor grey6]];
     [[self valueLabel] setFont:[UIFont h4]];

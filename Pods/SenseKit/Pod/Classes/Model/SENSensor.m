@@ -175,6 +175,10 @@ static NSString* const kSENSensorTimeAttrTimestamp = @"t";
         && SENObjectIsEqual([self date], [other date]);
 }
 
+- (NSString*)description {
+    return @"NOW";
+}
+
 @end
 
 @interface SENSensorDataCollection()

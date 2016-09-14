@@ -10,6 +10,7 @@
 #import "HEMSensorService.h"
 
 @class SENSensor;
+@class HEMSubNavigationView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSensorService:(HEMSensorService*)sensorService
                             forSensor:(SENSensor*)sensor;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
+- (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav;
 - (void)setPollScope:(HEMSensorServiceScope)scope;
 
 @end

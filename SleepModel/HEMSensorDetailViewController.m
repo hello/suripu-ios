@@ -46,6 +46,7 @@
         [[HEMSensorDetailPresenter alloc] initWithSensorService:sensorService
                                                       forSensor:[self sensor]];
     [presenter bindWithCollectionView:[self collectionView]];
+    [presenter bindWithSubNavigationView:[self subNavBar]];
     [presenter setPollScope:[subNavPresenter scopeSelected]];
     [self setDetailPresenter:presenter];
     [self addPresenter:presenter];

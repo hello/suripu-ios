@@ -209,12 +209,11 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 - (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
                               inCell:(HEMSensorCollectionViewCell*)cell
                              animate:(BOOL*)animate {
-    // TODO: for now, use the line chart for every sensor.
     LineChartView* lineChartView = (id) [[cell graphContainerView] chartView];
     
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell graphContainerView] bounds]];
-        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-25.0f];
+        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-22.0f];
         [lineChartView setUserInteractionEnabled:NO];
         *animate = YES;
     } else {

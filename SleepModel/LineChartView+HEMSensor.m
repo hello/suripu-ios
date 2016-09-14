@@ -22,7 +22,7 @@
         [[self leftAxis] removeAllLimitLines];
         [[self rightAxis] removeAllLimitLines];
         [[self rightAxis] setEnabled:NO];
-        [[self xAxis] setEnabled:NO];
+        [[self xAxis] setEnabled:YES];
         [[self xAxis] setDrawAxisLineEnabled:NO];
         [[self xAxis] setDrawGridLinesEnabled:NO];
         [[self xAxis] removeAllLimitLines];

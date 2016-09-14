@@ -18,13 +18,16 @@
 #import "HEMStyle.h"
 #import "HEMSensorValueFormatter.h"
 #import "HEMSensorChartContainer.h"
+#import "HEMSensorXAxisValueFormatter.h"
+#import "HEMSubNavigationView.h"
 
 #import "HEMSensorValueCollectionViewCell.h"
 #import "HEMSensorAboutCollectionViewCell.h"
 #import "HEMSensorChartCollectionViewCell.h"
 
-static CGFloat const kHEMSensorDetailCellHeightChart = 265.0f;
+static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartAnimeDuration = 1.0f;
+static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -49,7 +52,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
 @property (nonatomic, strong) NSError* pollError;
 @property (nonatomic, strong) NSArray<ChartDataEntry*>* chartData;
+@property (nonatomic, strong) NSArray<NSString*>* xLabelData;
 @property (nonatomic, assign) HEMSensorServiceScope scopeSelected;
+@property (nonatomic, strong) NSDateFormatter* xAxisLabelFormatter;
 
 @end
 
@@ -60,6 +65,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     if (self = [super init]) {
         _sensorService = sensorService;
         _sensor = sensor;
+        _xAxisLabelFormatter = [NSDateFormatter new];
+        
+        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
+            [_xAxisLabelFormatter setDateFormat:@"HH:mm"];
+        } else {
+            [_xAxisLabelFormatter setDateFormat:@"ha"];
+        }
+        
         _formatter = [[HEMSensorValueFormatter alloc] initWithSensorUnit:[sensor unit]];
         if ([sensor unit] == SENSensorUnitCelsius || [sensor unit] == SENSensorUnitFahrenheit) {
             [_formatter setIncludeUnitSymbol:YES];
@@ -74,6 +87,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
     [self setCollectionView:collectionView];
+}
+
+- (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav {
+    [self bindWithShadowView:[subNav shadowView]];
 }
 
 - (void)determineContent {
@@ -132,14 +149,24 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSArray<NSNumber*>* values = [[strongSelf sensorData] dataPointsForSensorType:[[strongSelf sensor] type]];
         NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
+        NSUInteger valueCount = [values count];
         
-        if ([values count] == [timestamps count]) {
-            NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
+        if (valueCount == [timestamps count]) {
+            NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:valueCount];
+            NSMutableArray* labelData = [NSMutableArray arrayWithCapacity:kHEMSensorDetailChartXLabelCount];
+            NSInteger indicesBetweenLabels = valueCount / kHEMSensorDetailChartXLabelCount;
             NSUInteger index = 0;
+            SENSensorTime* time = nil;
             for (NSNumber* value in values) {
-                [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index++]];
+                [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index]];
+                if (index == ([labelData count] + 1) * indicesBetweenLabels) {
+                    time = [[strongSelf sensorData] timestamps][index];
+                    [labelData addObject:[[strongSelf xAxisLabelFormatter] stringFromDate:[time date]]];
+                }
+                index++;
             }
             [strongSelf setChartData:chartData];
+            [strongSelf setXLabelData:labelData];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -165,9 +192,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewFlowLayout* flowLayout = (id)collectionViewLayout;
-    CGFloat width = CGRectGetWidth([[collectionView superview] bounds]);
+    CGFloat widthBounds = CGRectGetWidth([[collectionView superview] bounds]);
+    CGFloat heightBounds = CGRectGetHeight([[collectionView superview] bounds]);
     CGFloat cellSpacing = [flowLayout minimumInteritemSpacing];
     CGFloat topSpacing = [flowLayout sectionInset].top;
+    CGFloat chartHeight = heightBounds * kHEMSensorDetailCellChartHeightRatio;
     CGFloat height = 0.0f;
     
     NSNumber* contentType = [self content][[indexPath row]];
@@ -177,20 +206,20 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             height = CGRectGetHeight([collectionView bounds])
                         - cellSpacing
                         - topSpacing
-                        - kHEMSensorDetailCellHeightChart;
+                        - chartHeight;
             break;
         case HEMSensorDetailContentChart:
-            height = kHEMSensorDetailCellHeightChart;
+            height = chartHeight;
             break;
         case HEMSensorDetailContentAbout: {
             NSString* about = [self aboutDetail];
             NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
-            height = [HEMSensorAboutCollectionViewCell heightWithTitle:title about:about maxWidth:width];
+            height = [HEMSensorAboutCollectionViewCell heightWithTitle:title about:about maxWidth:widthBounds];
             break;
         }
     }
 
-    return CGSizeMake(width, height);
+    return CGSizeMake(widthBounds, height);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -228,6 +257,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
 #pragma mark - Cell appearance
 
 - (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
@@ -238,9 +271,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     LineChartView* lineChartView = (id) [[cell chartContentView] chartView];
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell chartContentView] bounds]];
-        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-20.0f];
+        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:-22.0f];
         [lineChartView setHighlighter:nil];
-        
     }
     
     LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[self chartData]];
@@ -276,11 +308,12 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[[chartCell chartContentView] topLimitLabel] setText:nil];
     [[[chartCell chartContentView] botLimitLabel] setText:nil];
     [chartView animateWithXAxisDuration:kHEMSensorDetailChartAnimeDuration];
+    [chartCell setXAxisLabels:[self xLabelData]];
 }
 
 - (void)configureAboutCell:(HEMSensorAboutCollectionViewCell*)aboutCell {
     NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
-    [[aboutCell titleLabel] setText:[title uppercaseString]];
+    [[aboutCell titleLabel] setText:title];
     [[aboutCell titleLabel] setFont:[UIFont h6]];
     [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
     [[aboutCell aboutLabel] setText:[self aboutDetail]];

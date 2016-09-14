@@ -36,6 +36,7 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeDay]];
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeWeek]];
     [self setSubNav:subNav];
+    [self bindWithShadowView:[subNav shadowView]];
 }
 
 - (void)bindWithNavBar:(UINavigationBar*)navBar {

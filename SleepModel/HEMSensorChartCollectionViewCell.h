@@ -13,5 +13,8 @@
 @interface HEMSensorChartCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet HEMSensorChartContainer *chartContentView;
+@property (weak, nonatomic) IBOutlet UIView *xAxisLabelContainer;
+
+- (void)setXAxisLabels:(NSArray<NSString*>*)labels;
 
 @end

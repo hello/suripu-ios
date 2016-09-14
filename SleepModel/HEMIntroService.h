@@ -17,5 +17,6 @@ typedef NS_ENUM(NSUInteger, HEMIntroType) {
 
 - (BOOL)shouldIntroduceType:(HEMIntroType)type;
 - (void)incrementIntroViewsForType:(HEMIntroType)introType;
+- (void)reset;
 
 @end

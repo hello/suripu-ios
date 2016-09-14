@@ -32,6 +32,7 @@
 #import "HEMSensorGroupCollectionViewCell.h"
 
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
+static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 
@@ -50,12 +51,12 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 @property (nonatomic, strong) NSAttributedString* attributedIntroDesc;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, strong) NSError* sensorError;
-@property (nonatomic, assign) BOOL loadedIntro;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
 @property (nonatomic, strong) NSArray* groupedSensors;
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
 @property (nonatomic, strong) HEMSensorValueFormatter* formatter;
+@property (nonatomic, assign, getter=isIntroShowing) BOOL introShowing;
 
 @end
 
@@ -116,7 +117,32 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     [[self sensorService] stopPollingForData];
 }
 
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self startPolling];
+}
+
+- (void)didEnterBackground {
+    [super didEnterBackground];
+    [[self sensorService] stopPollingForData];
+}
+
+- (void)didGainConnectivity {
+    [super didGainConnectivity];
+    [self startPolling];
+}
+
 #pragma mark - Data
+
+- (void)reloadUI {
+    if ([self isIntroShowing]) {
+        [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
+    }
+    
+    [[self activityIndicator] setHidden:YES];
+    [[self activityIndicator] stop];
+    [[self collectionView] reloadData];
+}
 
 - (void)startPolling {
     if (![self sensorStatus]) {
@@ -145,13 +171,12 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
                 [strongSelf setSensorData:data];
                 [strongSelf prepareChartDataAndReload];
             } else {
-                [[strongSelf collectionView] reloadData];
+                [strongSelf reloadUI];
             }
             
         } else {
-            [[strongSelf activityIndicator] setHidden:YES];
-            [[strongSelf activityIndicator] stop];
-            [[strongSelf collectionView] reloadData];
+            [strongSelf setSensorError:error];
+            [strongSelf reloadUI];
         }
     }];
 }
@@ -199,9 +224,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[strongSelf activityIndicator] setHidden:YES];
-            [[strongSelf activityIndicator] stop];
-            [[strongSelf collectionView] reloadData];
+            [strongSelf reloadUI];
         });
     });
 }
@@ -312,10 +335,6 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     }
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return [self sensorStatus] ? 1 : 0;
-}
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     switch ([[self sensorStatus] state]) {
         case SENSensorStateWaiting:
@@ -377,7 +396,9 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
                   layout:(UICollectionViewLayout *)collectionViewLayout
 referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize headerSize = CGSizeZero;
-    if ([[self introService] shouldIntroduceType:HEMIntroTypeRoomConditions]) {
+    if ([self sensorStatus]
+        && ![self sensorError]
+        && [[self introService] shouldIntroduceType:HEMIntroTypeRoomConditions]) {
         if ([self headerViewHeight] < 0.0f) {
             HEMCardFlowLayout* flowLayout = (id) collectionViewLayout;
             NSAttributedString* title = [self attributedIntroTitle];
@@ -386,8 +407,14 @@ referenceSizeForHeaderInSection:(NSInteger)section {
             [self setHeaderViewHeight:[HEMDescriptionHeaderView heightWithTitle:title
                                                                      description:message
                                                                 widthConstraint:itemWidth]];
+            // must additionally increment here b/c reloadData will initially not
+            // increment the count
+            [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
         }
         headerSize.height = [self headerViewHeight];
+        [self setIntroShowing:YES];
+    } else {
+        [self setIntroShowing:NO];
     }
     return headerSize;
 }
@@ -396,21 +423,27 @@ referenceSizeForHeaderInSection:(NSInteger)section {
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = kHEMRoomConditionsIntroReuseId;
-    HEMDescriptionHeaderView* header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                          withReuseIdentifier:reuseId
-                                                                                 forIndexPath:indexPath];
-    
-    [[header titlLabel] setAttributedText:[self attributedIntroTitle]];
-    [[header descriptionLabel] setAttributedText:[self attributedIntroDesc]];
-    [[header descriptionLabel] sizeToFit];
-    [[header imageView] setImage:[UIImage imageNamed:@"introRoomConditions"]];
-    
-    if (![self loadedIntro]) {
-        [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
-        [self setLoadedIntro:YES];
+    return [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                              withReuseIdentifier:reuseId
+                                                     forIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+willDisplaySupplementaryView:(UICollectionReusableView *)view
+        forElementKind:(NSString *)elementKind
+           atIndexPath:(NSIndexPath *)indexPath {
+    if ([view isKindOfClass:[HEMDescriptionHeaderView class]]) {
+        HEMDescriptionHeaderView* header = (id) view;
+        [[header titlLabel] setAttributedText:[self attributedIntroTitle]];
+        [[header imageView] setImage:[UIImage imageNamed:@"introRoomConditions"]];
+        
+        UILabel* descriptionLabel = [header descriptionLabel];
+        CGFloat containerWidth = CGRectGetWidth([collectionView bounds]);
+        CGFloat labelWidth = containerWidth - (2 * kHEMRoomConditionsIntroDescriptionMargin);
+        [descriptionLabel setAttributedText:[self attributedIntroDesc]];
+        [descriptionLabel setPreferredMaxLayoutWidth:labelWidth];
+        [descriptionLabel sizeToFit];
     }
-    
-    return header;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

@@ -53,4 +53,9 @@ static NSUInteger const kHEMIntroMinCount = 2;
     return [localPrefs userPreferenceForKey:[self keyForType:type]];
 }
 
+- (void)reset {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    [localPrefs setUserPreference:nil forKey:[self keyForType:HEMIntroTypeRoomConditions]];
+}
+
 @end

@@ -586,27 +586,29 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 }
 
 - (void)checkRoomStatus {
-    if ([self sensorPollingAttempts] < HEMOnboardingMaxSensorPollAttempts) {
-        [self setSensorPollingAttempts:[self sensorPollingAttempts] + 1];
-        
-        __weak typeof(self) weakSelf = self;
-        [SENAPISensor getSensorStatus:^(SENSensorStatus* status, NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error) {
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
-            } else if ([status state] != SENSensorStateOk){
-                __weak typeof (self) weakSelf = self;
-                int64_t delayInSec = (int64_t)(HEMOnboardingSensorPollIntervals * NSEC_PER_SEC);
-                dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
-                dispatch_after(delay, dispatch_get_main_queue(), ^{
-                    [weakSelf checkRoomStatus];
-                });
-            } else {
-                [strongSelf setSensorStatus:status];
-            }
-        }];
-    } else {
-        DDLogVerbose(@"polling stopped, attempts %ld", (long)[self sensorPollingAttempts]);
+    if ([[self sensorStatus] state] != SENSensorStateOk) {
+        if ([self sensorPollingAttempts] < HEMOnboardingMaxSensorPollAttempts) {
+            [self setSensorPollingAttempts:[self sensorPollingAttempts] + 1];
+            
+            __weak typeof(self) weakSelf = self;
+            [SENAPISensor getSensorStatus:^(SENSensorStatus* status, NSError *error) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (error) {
+                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+                } else if ([status state] != SENSensorStateOk){
+                    __weak typeof (self) weakSelf = self;
+                    int64_t delayInSec = (int64_t)(HEMOnboardingSensorPollIntervals * NSEC_PER_SEC);
+                    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
+                    dispatch_after(delay, dispatch_get_main_queue(), ^{
+                        [weakSelf checkRoomStatus];
+                    });
+                } else {
+                    [strongSelf setSensorStatus:status];
+                }
+            }];
+        } else {
+            DDLogVerbose(@"polling stopped, attempts %ld", (long)[self sensorPollingAttempts]);
+        }
     }
 }
 

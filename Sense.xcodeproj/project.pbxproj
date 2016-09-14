@@ -4380,7 +4380,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
+				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
@@ -4804,7 +4804,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
+				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
@@ -5021,7 +5021,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
+				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;

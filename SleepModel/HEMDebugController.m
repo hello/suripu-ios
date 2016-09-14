@@ -41,6 +41,7 @@
 #import "HEMDeviceService.h"
 #import "HEMSensorService.h"
 #import "HEMRoomCheckViewController.h"
+#import "HEMIntroService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -344,9 +345,14 @@
 - (void)addResetTutorialsOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
+        HEMIntroService* intro = [HEMIntroService new];
+        [intro reset];
+        
         HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
         [handHoldingService reset];
+        
         [HEMTutorial resetTutorials];
+        
         [weakSelf setSupportOptionController:nil];
     }];
 }

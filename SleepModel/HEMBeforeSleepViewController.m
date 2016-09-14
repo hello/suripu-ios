@@ -62,6 +62,7 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
     [self configureButtons];
     [self configureScrollView];
     [self configureInitialScreen];
+    [[HEMOnboardingService sharedService] startPollingSensorData]; // in case it was restarted from here and status not available
     [self trackAnalyticsEvent:HEMAnalyticsEventSenseColors];
 }
 

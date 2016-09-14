@@ -35,7 +35,6 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsBottomConstraint;
 
-@property (strong, nonatomic) NSArray* sensors;
 @property (assign, nonatomic) BOOL sensorsOk;
 @property (strong, nonatomic) HEMRoomCheckView* roomCheckView;
 @property (strong, nonatomic) HEMSensorService* sensorService;
@@ -55,36 +54,20 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 }
 
 - (void)configureRoomCheckView {
-    HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
-    
     [self setSensorsOk:YES];
-    [self setSensors:[onbService sensors]];
     
-    __weak typeof(self) weakSelf = self;
-    void(^finish)(void) = ^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setRoomCheckView:[HEMRoomCheckView createRoomCheckViewWithFrame:[[strongSelf view] bounds]]];
-        [[strongSelf roomCheckView] setAlpha:0.0f];
-        [[strongSelf roomCheckView] setDelegate:strongSelf];
-        [[strongSelf view] insertSubview:[strongSelf roomCheckView] atIndex:0];
-        
-        [[strongSelf resultsDescriptionLabel] setAlpha:0.0f];
-        [[strongSelf resultsTitleLabel] setAlpha:0.0f];
-    };
-    
-    if (![self sensors] || [[self sensors] count] == 0) {
-        [self setSensorService:[HEMSensorService new]];
-        __weak typeof(self) weakSelf = self;
-        [[self sensorService] sensorStatus:^(SENSensorStatus * status, NSError * error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            // we don't care about error or whether status is nil.  this block
-            // should only execute if launched independently from the flow
-            [strongSelf setSensors:[status sensors]];
-            finish();
-        }];
-    } else {
-        finish ();
+    if (![self sensors]) {
+        HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
+        [self setSensors:[onbService sensors]];
     }
+    
+    [self setRoomCheckView:[HEMRoomCheckView createRoomCheckViewWithFrame:[[self view] bounds]]];
+    [[self roomCheckView] setAlpha:0.0f];
+    [[self roomCheckView] setDelegate:self];
+    [[self view] insertSubview:[self roomCheckView] atIndex:0];
+    
+    [[self resultsDescriptionLabel] setAlpha:0.0f];
+    [[self resultsTitleLabel] setAlpha:0.0f];
 }
 
 - (NSString*)imageName:(NSString*)imageName

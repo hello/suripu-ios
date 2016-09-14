@@ -13,6 +13,7 @@
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENSensorStatus.h>
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
@@ -38,6 +39,8 @@
 #import "HEMUpgradeFlow.h"
 #import "HEMResetSenseViewController.h"
 #import "HEMDeviceService.h"
+#import "HEMSensorService.h"
+#import "HEMRoomCheckViewController.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -46,6 +49,7 @@
 @property (weak,   nonatomic) UIViewController* roomCheckViewController;
 @property (weak,   nonatomic) UIViewController* sleepSoundsViewController;
 @property (assign, nonatomic) UIModalPresentationStyle origPresentationStyle;
+@property (strong, nonatomic) HEMSensorService* sensorService;
 
 @end
 
@@ -283,15 +287,24 @@
 }
 
 - (void)showRoomCheckController {
-    UIViewController* rcVC = [HEMOnboardingStoryboard instantiateRoomCheckViewController];
-    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:rcVC];
-    [self showController:nav animated:YES completion:nil];
-
-    [self setRoomCheckViewController:nav];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didEndOnboarding)
-                                                 name:HEMOnboardingNotificationComplete
-                                               object:nil];
+    void(^show)(NSArray* sensors) = ^(NSArray* sensors){
+        HEMRoomCheckViewController* rcVC = [HEMOnboardingStoryboard instantiateRoomCheckViewController];
+        [rcVC setSensors:sensors];
+        
+        UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:rcVC];
+        [self showController:nav animated:YES completion:nil];
+        
+        [self setRoomCheckViewController:nav];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didEndOnboarding)
+                                                     name:HEMOnboardingNotificationComplete
+                                                   object:nil];
+    };
+    
+    [self setSensorService:[HEMSensorService new]];
+    [[self sensorService] sensorStatus:^(SENSensorStatus * status, NSError * error) {
+        show([status sensors]);
+    }];
 }
 
 #pragma mark - Alarms

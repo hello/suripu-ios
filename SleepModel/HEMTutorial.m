@@ -25,8 +25,6 @@
 @implementation HEMTutorial
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
-static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
-static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
 
@@ -61,26 +59,6 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
 + (BOOL)shouldShowTutorialForTimeline
 {
     return [self shouldShowTutorialForKey:HEMTutorialTimelineKey];
-}
-
-+ (void)showTutorialForSensorsIfNeeded
-{
-    if ([self shouldShowTutorialForKey:HEMTutorialSensorsKey]) {
-        if ([self showTutorialForSensors]) {
-            [self markTutorialViewed:HEMTutorialSensorsKey];
-        }
-    }
-}
-
-+ (BOOL)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
-{
-    NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
-    if ([self shouldShowTutorialForKey:key]) {
-        [self showTutorialForSensorNamed:sensorName];
-        [self markTutorialViewed:key];
-        return YES;
-    }
-    return NO;
 }
 
 + (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
@@ -133,36 +111,6 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
                                         image:[UIImage imageNamed:@"timeline_explain_graph"]];
     
     return [self showTutorialWithContent:@[tutorial1, tutorial2, tutorial3, tutorial4]];
-}
-
-+ (BOOL)showTutorialForSensors
-{
-    HEMTutorialContent* tutorial =
-        [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.sensors.title", nil)
-                                             text:NSLocalizedString(@"tutorial.sensors.message", nil)
-                                            image:[UIImage imageNamed:@"welcome_dialog_sensors"]];
-    
-    return [self showTutorialWithContent:@[tutorial]];
-}
-
-+ (void)showTutorialForSensorNamed:(NSString*)sensorName
-{
-    static NSString* const nameFormat = @"welcome_dialog_%@";
-    static NSString* const titleFormat = @"tutorial.sensor.%@.title";
-    static NSString* const messageFormat = @"tutorial.sensor.%@.message";
-    UIImage* image = [UIImage imageNamed:[NSString stringWithFormat:nameFormat, sensorName]];
-    if (!image)
-        return;
-
-    NSString* localizedTitleKey = [NSString stringWithFormat:titleFormat, sensorName];
-    NSString* localizedMessageKey = [NSString stringWithFormat:messageFormat, sensorName];
-    
-    HEMTutorialContent* tutorial =
-    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(localizedTitleKey, nil)
-                                         text:NSLocalizedString(localizedMessageKey, nil)
-                                        image:image];
-    
-    [self showTutorialWithContent:@[tutorial]];
 }
 
 + (void)showTutorialForAlarmsFrom:(UIViewController*)controller
@@ -222,7 +170,6 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
 + (void)resetTutorials {
     SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialTimelineKey];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialSensorsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialSleepSoundsKey];
 }

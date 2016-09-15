@@ -756,20 +756,6 @@
 "tutorial.alarm-smart.title" = "Smart Alarm";
 "tutorial.alarm-smart.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle, up to 30 minutes before your requested wake-up time, making sure you wake up refreshed and at the right time for you.";
 
-"tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you'll see the current conditions in your bedroom: temperature, humidity, air quality, light, and noise.\n\nThese values update as Sense uploads new data. So as the conditions in your room change, it may take a few moments for them to be reflected here.\n\nTap a card to see more details.";
-
-"tutorial.sensor.temperature.title" = "Temperature";
-"tutorial.sensor.temperature.message" = "A proper temperature is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.humidity.title" = "Humidity";
-"tutorial.sensor.humidity.message" = "Humidity is a measure of the amount of moisture in the air. Here you’ll see detailed information on the humidity levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.light.title" = "Light";
-"tutorial.sensor.light.message" = "Sense measures light in lux (lx), which is the standard unit of illuminance. Here you’ll see detailed information on the light levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.sound.title" = "Noise";
-"tutorial.sensor.sound.message" = "Sense measures noise in decibels (dB). Here you’ll see detailed information on the noise levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.particulates.title" = "Air quality";
-"tutorial.sensor.particulates.message" = "Sense measures air quality in micrograms per cubic meter (µg/m³), which is a measure of the amount of particulates in the air by volume. Here you'll see detailed information on the air quality in your bedroom. The graphs will fill in as Sense collects more data.";
-
 "tutorial.pill-color.title" = "Sleep Pill Color";
 "tutorial.pill-color.message" = "Each Sleep Pill paired with Sense is assigned a unique color — you can see which color yours is on this page. If you shake your Sleep Pill for a few seconds, Sense will glow the color assigned to your Sleep Pill. If you’re sharing Sense with a partner, this is also a great way to tell your Sleep Pills apart if they get mixed up.";
 

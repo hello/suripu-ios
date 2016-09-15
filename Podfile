@@ -25,7 +25,6 @@ abstract_target 'SenseApp' do
         pod 'Analytics', '3.0.7'
         pod 'Bugsnag', '~> 4.1.0'
         pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
-        pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git'
         pod 'Charts/Realm'
     end
     

@@ -1173,8 +1173,9 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                            DDLogVerbose(@"found wifi %@", [((SENWifiEndpoint*)obj) ssid]);
                            if ([obj isKindOfClass:[SENWifiEndpoint class]]) {
                                SENWifiEndpoint* endpoint = obj;
-                               // Sense may return hidden networks, with no SSID
-                               if ([endpoint hasSsid]) {
+                               // Sense may return hidden networks, with no SSID or ssid
+                               // that is an empty string
+                               if ([endpoint hasSsid] && [[endpoint ssid] length] > 0) {
                                    [wifis addObject:obj];
                                } else {
                                    DDLogVerbose(@"skipping network with no ssid");

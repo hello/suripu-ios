@@ -13,6 +13,8 @@ static NSString* const kSENSensorDataRequestAttrSensors = @"sensors";
 static NSString* const kSENSensorDataRequestAttrType = @"type";
 static NSString* const kSENSensorDataRequestAttrScope = @"scope";
 static NSString* const kSENSensorDataRequestValueDay5Min = @"DAY_5_MINUTE";
+static NSString* const kSENSensorDataRequestValueWeek1Hour = @"WEEK_1_HOUR";
+static NSString* const kSENSensorDataRequestValueLast3H5Min = @"LAST_3H_5_MINUTE";
 static NSString* const kSENSensorDataRequestAttrUnit = @"unit";
 static NSString* const kSENSensorDataRequestAttrAggMethod = @"aggregate_method";
 static NSString* const kSENSensorDataRequestValueMin = @"MIN";
@@ -71,6 +73,10 @@ static NSString* const kSENSensorDataRequestValueAvg = @"AVG";
 
 - (NSString*)scopeValueForEnum:(SENSensorDataScope)scope {
     switch (scope) {
+        case SENSensorDataScopeLast3H5Min:
+            return kSENSensorDataRequestValueLast3H5Min;
+        case SENSensorDataScopeWeek1Hour:
+            return kSENSensorDataRequestValueWeek1Hour;
         case SENSensorDataScopeDay5Min:
         default:
             return kSENSensorDataRequestValueDay5Min;

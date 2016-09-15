@@ -123,8 +123,16 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorService* service = [self sensorService];
     [service pollDataForSensor:[self sensor]
                      withScope:[self scopeSelected]
-                    completion:^(SENSensorStatus* status, SENSensorDataCollection* data, NSError* error) {
+                    completion:^(HEMSensorServiceScope scope,
+                                 SENSensorStatus* status,
+                                 SENSensorDataCollection* data,
+                                 NSError* error) {
+                        
                         __strong typeof(weakSelf) strongSelf = weakSelf;
+                        if ([strongSelf scopeSelected] != scope) {
+                            return; // ignore
+                        }
+                        
                         [strongSelf setPollError:error];
                         if (!error) {
                             [strongSelf setStatus:status];
@@ -358,6 +366,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[aboutCell aboutLabel] setText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];
     [[aboutCell aboutLabel] setTextColor:[UIColor grey5]];
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    if (_sensorService) {
+        [_sensorService stopPollingForData];
+    }
 }
 
 @end

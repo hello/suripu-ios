@@ -44,7 +44,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, weak) HEMSensorService* sensorService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSArray* content;
-@property (nonatomic, weak) SENSensor* sensor;
+@property (nonatomic, strong) SENSensor* sensor;
 @property (nonatomic, strong) NSString* aboutDetail;
 @property (nonatomic, strong) HEMSensorValueFormatter* formatter;
 @property (nonatomic, strong) SENSensorStatus* status;
@@ -128,6 +128,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                         [strongSelf setPollError:error];
                         if (!error) {
                             [strongSelf setStatus:status];
+                            [strongSelf updateSensorFromStatus];
                             
                             SENSensorDataCollection* sensorData = data;
                             if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
@@ -139,6 +140,15 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                             [[strongSelf collectionView] reloadData];
                         }
                     }];
+}
+
+- (void)updateSensorFromStatus {
+    for (SENSensor* sensor in [[self status] sensors]) {
+        if ([sensor type] == [[self sensor] type]) {
+            [self setSensor:sensor];
+            break;
+        }
+    }
 }
 
 - (void)prepareChartDataAndReload {

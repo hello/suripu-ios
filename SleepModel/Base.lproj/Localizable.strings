@@ -909,7 +909,7 @@
 
 // room conditions
 "room-conditions.intro.title" = "Your current conditions";
-"room-conditions.intro.desc" = "Recent changes to room conditions make take a few moments to be reflected here. Tap a card for more detail.";
+"room-conditions.intro.desc" = "Recent changes to room conditions may take a few moments to be reflected here. Tap a card for more detail.";
 "room-conditions.pair-sense.button.title" = "Pair Sense";
 "room-conditions.pair-sense.message" = "You don't currently have a Sense paired to your account. Please pair with Sense to view current conditions.";
 "room-conditions.air-quality" = "Air quality";

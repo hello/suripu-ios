@@ -43,4 +43,28 @@
     return [color colorWithAlphaComponent:0.8f];
 }
 
+- (void)animateIn {
+    CGFloat const duration = 1.0f;
+    
+    [self setAlpha:0.0f];
+    [UIView animateWithDuration:duration
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         [self setAlpha:1.0f];
+                     } completion:nil];
+    
+    [self animateWithXAxisDuration:duration
+                      easingOption:ChartEasingOptionEaseInSine];
+}
+
+- (void)fadeIn {
+    CGFloat const duration = 1.0f;
+    
+    [self setAlpha:0.0f];
+    [UIView animateWithDuration:duration animations:^{
+        [self setAlpha:1.0f];
+    }];
+}
+
 @end

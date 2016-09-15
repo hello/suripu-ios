@@ -34,7 +34,6 @@
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
-static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 
 @interface HEMRoomConditionsPresenter() <
     UICollectionViewDelegate,
@@ -239,7 +238,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     });
 }
 
-- (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
+- (LineChartView*)chartViewForSensor:(SENSensor*)sensor
                               inCell:(HEMSensorCollectionViewCell*)cell
                              animate:(BOOL*)animate {
     LineChartView* lineChartView = (id) [[cell graphContainerView] chartView];
@@ -410,6 +409,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize headerSize = CGSizeZero;
     if ([self sensorStatus]
+        && [[self sensorStatus] state] != SENSensorStateNoSense
         && ![self sensorError]
         && [[self introService] shouldIntroduceType:HEMIntroTypeRoomConditions]) {
         if ([self headerViewHeight] < 0.0f) {
@@ -537,7 +537,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     }
     
     BOOL animate = NO;
-    ChartViewBase* chartView = [self chartViewForSensor:sensor
+    LineChartView* chartView = [self chartViewForSensor:sensor
                                                  inCell:sensorCell
                                                 animate:&animate];
     
@@ -554,7 +554,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
     
     if (animate) {
-        [chartView animateWithXAxisDuration:kHEMRoomConditionsChartAnimeDuration];
+        [chartView animateIn];
     }
 }
 

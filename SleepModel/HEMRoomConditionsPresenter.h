@@ -28,5 +28,6 @@
                          introService:(HEMIntroService*)introService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
+- (void)startPolling;
 
 @end

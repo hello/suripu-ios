@@ -30,6 +30,7 @@
 @property (strong, nonatomic) HEMSensorService* sensorService;
 @property (strong, nonatomic) HEMIntroService* introService;
 @property (strong, nonatomic) SENSensor* sensorSelected;
+@property (weak, nonatomic) HEMRoomConditionsPresenter* presenter;
 
 @end
 
@@ -68,6 +69,7 @@
     [presenter setPairDelegate:self];
     [presenter setDelegate:self];
 
+    [self setPresenter:presenter];
     [self setSensorService:sensorService];
     [self setIntroService:introService];
     [self addPresenter:presenter];
@@ -91,14 +93,20 @@
 
 #pragma mark - HEMSensePairingDelegate
 
-- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
-    BOOL paired = senseManager != nil;
+- (void)notifyPresenterAndDismiss:(BOOL)paired {
+    if (paired) {
+        [[self presenter] startPolling];
+    }
     [self dismissModalAfterDelay:paired];
+}
+
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [self notifyPresenterAndDismiss:senseManager != nil];
 }
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
     BOOL paired = senseManager != nil;
-    [self dismissModalAfterDelay:paired];
+    [self notifyPresenterAndDismiss:senseManager != nil];
 }
 
 #pragma mark - Segues

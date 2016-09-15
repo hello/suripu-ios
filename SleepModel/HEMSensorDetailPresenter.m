@@ -26,7 +26,6 @@
 #import "HEMSensorChartCollectionViewCell.h"
 
 static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
-static CGFloat const kHEMSensorDetailChartAnimeDuration = 1.0f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
@@ -55,6 +54,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, strong) NSArray<NSString*>* xLabelData;
 @property (nonatomic, assign) HEMSensorServiceScope scopeSelected;
 @property (nonatomic, strong) NSDateFormatter* xAxisLabelFormatter;
+@property (nonatomic, assign) BOOL chartLoaded;
 
 @end
 
@@ -261,7 +261,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 
 #pragma mark - Cell appearance
 
-- (ChartViewBase*)chartViewForSensor:(SENSensor*)sensor
+- (LineChartView*)chartViewForSensor:(SENSensor*)sensor
                               inCell:(HEMSensorChartCollectionViewCell*)cell {
     SENCondition condition = [sensor condition];
     UIColor* sensorColor = [UIColor colorForCondition:condition];
@@ -319,12 +319,18 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (void)configureChartCell:(HEMSensorChartCollectionViewCell*)chartCell {
-    ChartViewBase* chartView = [self chartViewForSensor:[self sensor] inCell:chartCell];
+    LineChartView* chartView = [self chartViewForSensor:[self sensor] inCell:chartCell];
     [[chartCell chartContentView] setChartView:chartView];
     [[[chartCell chartContentView] topLimitLabel] setText:nil];
     [[[chartCell chartContentView] botLimitLabel] setText:nil];
-    [chartView animateWithXAxisDuration:kHEMSensorDetailChartAnimeDuration];
     [chartCell setXAxisLabels:[self xLabelData]];
+    
+    if (![self chartLoaded] && [[self chartData] count] > 0) {
+        [chartView animateIn];
+        [self setChartLoaded:YES];
+    } else {
+        [chartView fadeIn];
+    }
     
     CGFloat minValue = MAX(0.0f, [chartView chartYMin]);
     CGFloat maxValue = [chartView chartYMax];

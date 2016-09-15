@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.3.2
+
+New:
+
+* New Room Conditions view
+* New Sensor Detail view
+* Using V2 Sensor API
+
+Fixes:
+
+* Fixes capitalization and autocorrection in text fields
+
 ## 1.5.3.1
 
 New:

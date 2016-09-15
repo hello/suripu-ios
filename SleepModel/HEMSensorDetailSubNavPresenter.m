@@ -51,9 +51,9 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
 - (NSString*)subNavTitleForScope:(HEMSensorServiceScope)scope {
     switch (scope) {
         case HEMSensorServiceScopeWeek:
-            return NSLocalizedString(@"sensor.scope.week", nil);
+            return [NSLocalizedString(@"sensor.scope.week", nil) uppercaseString];
         default:
-            return NSLocalizedString(@"sensor.scope.day", nil);
+            return [NSLocalizedString(@"sensor.scope.day", nil) uppercaseString];
     }
 }
 
@@ -62,9 +62,9 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
     [button setBackgroundColor:[UIColor whiteColor]];
     [button setTitle:[self subNavTitleForScope:scope] forState:UIControlStateNormal];
     [[button titleLabel] setFont:[UIFont button]];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateSelected];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateHighlighted];
-    [button setTitleColor:[UIColor grey4] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateHighlighted];
+    [button setTitleColor:[UIColor subNavInactiveTitleColor] forState:UIControlStateNormal];
     [button setSelected:scope == [self scopeSelected]];
     [button setTag:scope + HEMSensorDetailSubNavTagOffset];
     [button addTarget:self

@@ -74,9 +74,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         }
         
         _formatter = [[HEMSensorValueFormatter alloc] initWithSensorUnit:[sensor unit]];
-        if ([sensor unit] == SENSensorUnitCelsius || [sensor unit] == SENSensorUnitFahrenheit) {
-            [_formatter setIncludeUnitSymbol:YES];
-        }
+         [_formatter setIncludeUnitSymbol:YES];
         [self determineContent];
     }
     return self;
@@ -274,13 +272,17 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         [lineChartView setHighlighter:nil];
     }
     
+    NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
+    CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
+    
     LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[self chartData]];
-    [dataSet setFill:[ChartFill fillWithColor:sensorColor]];
-    [dataSet setColor:sensorColor];
+    [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
+    [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
     [dataSet setDrawFilledEnabled:YES];
     [dataSet setDrawCirclesEnabled:NO];
-    [dataSet setFillColor:sensorColor];
     [dataSet setLabel:nil];
+    
+    CGGradientRelease(gradient);
     
     NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
     [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
@@ -292,10 +294,25 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 
 - (void)configureValueCell:(HEMSensorValueCollectionViewCell*)valueCell {
     UIColor* conditionColor = [UIColor colorForCondition:[[self sensor] condition]];
-    NSString* valueString = [[self formatter] stringFromSensor:[self sensor]];
-    [[valueCell valueLabel] setTextColor:conditionColor];
-    [[valueCell valueLabel] setText:valueString];
-    [[valueCell valueLabel] setFont:[UIFont h1]];
+    if ([[self sensor] type] == SENSensorTypeTemp) {
+        NSString* valueString = [[self formatter] stringFromSensor:[self sensor]];
+        [[valueCell valueLabel] setTextColor:conditionColor];
+        [[valueCell valueLabel] setText:valueString];
+        [[valueCell valueLabel] setFont:[UIFont h1]];
+    } else {
+        NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h1],
+                                          NSForegroundColorAttributeName : conditionColor};
+        NSDictionary* unitAttributes = @{NSFontAttributeName : [UIFont h4],
+                                         NSForegroundColorAttributeName : conditionColor,
+                                         NSBaselineOffsetAttributeName : @(12.0f)};
+        
+        NSAttributedString* attrValue = [[self formatter] attributedValueFromSensor:[self sensor]
+                                                                 unitSymbolLocation:HEMSensorValueUnitLocSubscript
+                                                                    valueAttributes:valueAttributes
+                                                                     unitAttributes:unitAttributes];
+        [[valueCell valueLabel] setAttributedText:attrValue];
+    }
+    
     [[valueCell messageLabel] setText:[[self sensor] localizedMessage]];
     [[valueCell messageLabel] setTextColor:[UIColor grey5]];
     [[valueCell messageLabel] setFont:[UIFont body]];
@@ -308,6 +325,13 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[[chartCell chartContentView] botLimitLabel] setText:nil];
     [chartView animateWithXAxisDuration:kHEMSensorDetailChartAnimeDuration];
     [chartCell setXAxisLabels:[self xLabelData]];
+    
+    CGFloat minValue = MAX(0.0f, [chartView chartYMin]);
+    CGFloat maxValue = [chartView chartYMax];
+    HEMSensorChartContainer* chartContainer = [chartCell chartContentView];
+    [chartContainer setChartView:chartView];
+    [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
+    [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
 }
 
 - (void)configureAboutCell:(HEMSensorAboutCollectionViewCell*)aboutCell {

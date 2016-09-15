@@ -29,9 +29,18 @@
         [self setDescriptionText:nil];
         [[self legend] setEnabled:NO];
         [[self layer] setBorderWidth:0.0f];
-        [self setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:0.0f];
+        [self setViewPortOffsetsWithLeft:0.0f top:7.0f right:0.0f bottom:0.0f];
     }
     return self;
+}
+
+- (NSArray*)gradientColorsWithColor:(UIColor*)color {
+    return @[(id)[[color colorWithAlphaComponent:0.2f] CGColor],
+             (id)[[color colorWithAlphaComponent:0.8f] CGColor]];
+}
+
+- (UIColor*)lineColorForColor:(UIColor*)color {
+    return [color colorWithAlphaComponent:0.8f];
 }
 
 @end

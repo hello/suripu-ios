@@ -76,7 +76,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
 }
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
-    [collectionView setBackgroundColor:[UIColor grey2]];
+    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     [self setCollectionView:collectionView];
@@ -154,12 +154,7 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     
     __weak typeof(self) weakSelf = self;
     HEMSensorService* service = [self sensorService];
-    NSMutableSet<NSNumber*>* excludeSensorTypes = [NSMutableSet set];
-    [excludeSensorTypes addObject:@(SENSensorTypeDust)];
-    [excludeSensorTypes addObject:@(SENSensorTypeVOC)];
-    [excludeSensorTypes addObject:@(SENSensorTypeCO2)];
-
-    [service pollDataForSensorsExcept:excludeSensorTypes completion:^(SENSensorStatus* status, id data, NSError* error) {
+    [service pollDataForSensorsExcept:nil completion:^(SENSensorStatus* status, id data, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setSensorError:error];
         if (!error) {
@@ -188,19 +183,34 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     
     NSMutableArray* groupedSensors = [NSMutableArray arrayWithCapacity:[allSensors count]];
     NSMutableArray* airGroup = nil;
+    NSInteger airGroupInitialIndex = -1;
+    NSUInteger sensorIndex = 0;
+    SENSensor* initialAirSensor = nil;
+    
     for (SENSensor* sensor in allSensors) {
         if ([sensor type] == SENSensorTypeDust
             || [sensor type] == SENSensorTypeCO2
             || [sensor type] == SENSensorTypeVOC) {
             if (!airGroup) {
+                initialAirSensor = sensor;
                 airGroup = [NSMutableArray arrayWithCapacity:3];
-                [groupedSensors addObject:airGroup];
+                airGroupInitialIndex = sensorIndex;
             }
             [airGroup addObject:sensor];
         } else {
             [groupedSensors addObject:sensor];
         }
+        sensorIndex++;
     }
+    
+    if ([airGroup count] < 2) {
+        if (airGroupInitialIndex >= 0) {
+            [groupedSensors insertObject:initialAirSensor atIndex:airGroupInitialIndex];
+        }
+    } else {
+        [groupedSensors addObject:airGroup];
+    }
+    
     return groupedSensors;
 }
 
@@ -246,14 +256,18 @@ static CGFloat const kHEMRoomConditionsChartAnimeDuration = 1.0f;
     UIColor* sensorColor = [UIColor colorForCondition:condition];
     [lineChartView setGridBackgroundColor:sensorColor];
     
+    NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
+    CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
+    
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
     LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[chartData copy]];
-    [dataSet setFill:[ChartFill fillWithColor:sensorColor]];
-    [dataSet setColor:sensorColor];
+    [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
+    [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
     [dataSet setDrawFilledEnabled:YES];
     [dataSet setDrawCirclesEnabled:NO];
-    [dataSet setFillColor:sensorColor];
     [dataSet setLabel:nil];
+    
+    CGGradientRelease(gradient);
     
     NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
     [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
@@ -529,9 +543,15 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
     [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
-    [[sensorCell graphContainerView] setChartView:chartView];
-    [[[sensorCell graphContainerView] topLimitLabel] setText:nil];
-    [[[sensorCell graphContainerView] botLimitLabel] setText:nil];
+    
+    CGFloat minValue = MAX(0.0f, [chartView chartYMin]);
+    CGFloat maxValue = [chartView chartYMax];
+    [[self formatter] setIncludeUnitSymbol:YES];
+    
+    HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
+    [chartContainer setChartView:chartView];
+    [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
+    [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
     
     if (animate) {
         [chartView animateWithXAxisDuration:kHEMRoomConditionsChartAnimeDuration];

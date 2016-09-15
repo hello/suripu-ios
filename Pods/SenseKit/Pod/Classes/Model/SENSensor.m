@@ -5,7 +5,7 @@
 NSInteger const SENSensorSentinelValue = -1;
 
 // unit values
-static NSString* const kSENSensorUnitValueCelsius = @"CELCIUS";
+static NSString* const kSENSensorUnitValueCelsius = @"CELSIUS";
 static NSString* const kSENSensorUnitValueFahrenheit = @"FAHRENHEIT";
 static NSString* const kSENSensorUnitValueMGCM = @"MG_CM";
 static NSString* const kSENSensorUnitValuePercent = @"PERCENT";
@@ -173,10 +173,6 @@ static NSString* const kSENSensorTimeAttrTimestamp = @"t";
     SENSensorTime* other = object;
     return SENObjectIsEqual([self offset], [other offset])
         && SENObjectIsEqual([self date], [other date]);
-}
-
-- (NSString*)description {
-    return @"NOW";
 }
 
 @end

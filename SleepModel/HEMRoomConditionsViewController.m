@@ -105,7 +105,6 @@
 }
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
-    BOOL paired = senseManager != nil;
     [self notifyPresenterAndDismiss:senseManager != nil];
 }
 

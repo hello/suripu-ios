@@ -26,3 +26,8 @@ BOOL SENBoolValue(id value) {
 id SENObjectOfClass(id object, __unsafe_unretained Class klass) {
     return [object isKindOfClass:klass] ? object : nil;
 }
+
+BOOL SENObjectIsEqual(id obj1, id obj2) {
+    return (obj1 && [obj1 isEqual:obj2])
+        || (!obj1 && !obj2);
+}

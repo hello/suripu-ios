@@ -29,6 +29,8 @@
 #import "SENSpeechResult.h"
 #import "SENFeatures.h"
 #import "SENSwapStatus.h"
+#import "SENSensorStatus.h"
+#import "SENSensorDataRequest.h"
 
 void SENClearModel();
 
@@ -68,3 +70,13 @@ BOOL SENBoolValue(id value);
  *  @return object if it is of type klass, else nil
  */
 id SENObjectOfClass(id object, __unsafe_unretained Class klass);
+
+/**
+ *  Checks to see if two objects are equal.  If both objects are nil, then the
+ *  objects are equal
+ *
+ *  @param obj1: first object to compare
+ *  @param obj2: second object to compare
+ *  @return YES if equal. NO Otherwise
+ */
+BOOL SENObjectIsEqual(id obj1, id obj2);

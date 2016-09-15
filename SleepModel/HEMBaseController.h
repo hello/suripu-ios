@@ -66,6 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)clearCrumb:(NSString*)crumb;
 - (void)reloadTopBar;
 - (void)didRefreshAccount;
+- (void)dismissModalAfterDelay:(BOOL)delay;
 
 @end
 

@@ -271,11 +271,11 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
                 break;
         }
         
-        if (error) {
-            [SENAnalytics trackError:error];
+        if (swapError) {
+            [SENAnalytics trackError:swapError];
         }
         
-        completion (error);
+        completion (swapError);
     }];
 }
 

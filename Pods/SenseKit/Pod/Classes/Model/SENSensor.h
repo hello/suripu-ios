@@ -1,21 +1,7 @@
 
 #import <Foundation/Foundation.h>
+#import "SENSerializable.h"
 #import "SENCondition.h"
-
-/**
- *  Notification sent when a sensor value is saved
- */
-extern NSString* const SENSensorUpdatedNotification;
-
-/**
- *  Notification sent when all sensors have been updated
- */
-extern NSString* const SENSensorsUpdatedNotification;
-
-/**
- *  Notification sent when a sensor update fails
- */
-extern NSString* const SENSensorUpdateFailedNotification;
 
 /**
  *  Sensor value indicating invalid data
@@ -23,112 +9,77 @@ extern NSString* const SENSensorUpdateFailedNotification;
 extern NSInteger const SENSensorSentinelValue;
 
 typedef NS_ENUM(NSUInteger, SENSensorUnit) {
-    SENSensorUnitUnknown,
-    SENSensorUnitDegreeCentigrade,
-    SENSensorUnitAQI,
+    SENSensorUnitUnknown = 0,
+    SENSensorUnitCelsius,
+    SENSensorUnitFahrenheit,
+    SENSensorUnitMGCM,
     SENSensorUnitPercent,
     SENSensorUnitLux,
     SENSensorUnitDecibel,
+    SENSensorUnitVOC,
+    SENSensorUnitPPM,
+    SENSensorUnitRatio,
+    SENSensorUnitKelvin,
+    SENSensorUnitKPA
 };
 
-@interface SENSensor : NSObject <NSCoding>
+typedef NS_ENUM(NSUInteger, SENSensorType) {
+    SENSensorTypeUnknown = 0,
+    SENSensorTypeTemp,
+    SENSensorTypeDust,
+    SENSensorTypeHumidity,
+    SENSensorTypeVOC,
+    SENSensorTypeCO2,
+    SENSensorTypeUV,
+    SENSensorTypeLight,
+    SENSensorTypeLightTemp,
+    SENSensorTypeSound,
+    SENSensorTypePressure
+};
 
-/**
- *  Known persisted sensors
- *
- *  @return Array of SENSensor objects
- */
-+ (NSArray*)sensors;
-
-/**
- *  Remove all cached sensor data
- */
-+ (void)clearCachedSensors;
-
-/**
- *  Sends a request to the API for the latest environmental sensor values and
- *  updates the cache
- */
-+ (void)refreshCachedSensors;
-
-/**
- *  Creates a localized string from a given value and unit
- *
- *  @param value numeric value to format
- *  @param unit  measurement unit of the value
- *
- *  @return a localized string
- */
-+ (NSString*)formatValue:(NSNumber*)value withUnit:(SENSensorUnit)unit;
-
-/**
- *  Creates a localized value from a given value and unit
- *
- *  @param value numeric value to format
- *  @param unit  measurement unit of the value
- *
- *  @return number formatted according to the unit
- */
-+ (NSNumber*)value:(NSNumber*)value inPreferredUnit:(SENSensorUnit)unit;
-
-/**
- *  Discovers the unit for a particular string value
- *
- *  @param value a unit format string, like 'ppm' or 'c'
- *
- *  @return the matching unit or SENSensorUnitUnknown
- */
-+ (SENSensorUnit)unitFromValue:(id)value;
-
-- (instancetype)initWithDictionary:(NSDictionary*)dict;
-
-/**
- *  A localized version of the quantified value
- *
- *  @return the localized string
- */
-- (NSString*)localizedValue;
-
-/**
- *  The value translated into the user's preferred unit
- *
- *  @return the value
- */
-- (NSNumber*)valueInPreferredUnit;
-
-/**
- *  A localized version of the unit
- *
- *  @return the localized string
- */
-- (NSString*)localizedUnit;
-
-/**
- *  A localized version of the persisted name property
- *
- *  @return the localized string
- */
-- (NSString*)localizedName;
-
-/**
- *  Writes a sensor to the persisted store
- */
-- (void)save;
-
-@property (nonatomic, strong, readonly) NSString* name;
-@property (nonatomic, strong, readonly) NSString* message;
-@property (nonatomic, strong, readonly) NSString* idealConditionsMessage;
-@property (nonatomic, strong, readonly) NSDate* lastUpdated;
-@property (nonatomic, readonly) NSNumber* value;
-@property (nonatomic, readonly) SENCondition condition;
-@property (nonatomic, readonly) SENSensorUnit unit;
-@end
-
-@interface SENSensorDataPoint : NSObject
-
-- (instancetype)initWithDictionary:(NSDictionary*)dict;
+@interface SENSensorDataPoint : NSObject <SENSerializable>
 
 @property (nonatomic, strong, readonly) NSDate* date;
 @property (nonatomic, strong, readonly) NSNumber* value;
 @property (nonatomic, strong, readonly) NSNumber* dateOffset;
+
+@end
+
+@interface SENSensorTime : NSObject <SENSerializable>
+
+@property (nonatomic, strong, readonly) NSNumber* offset;
+@property (nonatomic, strong, readonly) NSDate* date;
+
+@end
+
+@interface SENSensorDataCollection : NSObject <SENSerializable>
+
+@property (nonatomic, strong, readonly) NSArray<SENSensorTime*>* timestamps;
+
+- (NSArray<NSNumber*>*)dataPointsForSensorType:(SENSensorType)type;
+
+@end
+
+@interface SENSensorScale : NSObject <SENSerializable>
+
+@property (nonatomic, strong, readonly) NSNumber* min;
+@property (nonatomic, strong, readonly) NSNumber* max;
+@property (nonatomic, copy, readonly) NSString* localizedName;
+@property (nonatomic, assign, readonly) SENCondition condition;
+
+@end
+
+@interface SENSensor : NSObject <SENSerializable>
+
+@property (nonatomic, copy, readonly) NSString* localizedName;
+@property (nonatomic, copy, readonly) NSString* localizedMessage;
+@property (nonatomic, strong, readonly) NSNumber* value;
+@property (nonatomic, assign, readonly) SENSensorUnit unit;
+@property (nonatomic, assign, readonly) SENSensorType type;
+@property (nonatomic, assign, readonly) SENCondition condition;
+@property (nonatomic, copy, readonly) NSArray<SENSensorScale*>* scales;
+
+- (NSString*)typeStringValue;
+- (NSString*)unitStringValue;
+
 @end

@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "HEMOnboardingController.h"
 
+@class SENSensor;
+
 @interface HEMRoomCheckViewController : HEMOnboardingController
+
+@property (nonatomic, strong) NSArray<SENSensor*>* sensors;
 
 @end

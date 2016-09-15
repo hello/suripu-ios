@@ -444,6 +444,7 @@
 "measurement.temperature.unit" = "°";
 "measurement.percentage.unit" = "%";
 "measurement.particle.unit" = "µg/m³";
+"measurement.ppm.unit" = "ppm";
 "measurement.light.unit" = "lx";
 "measurement.sound.unit" = "dB";
 "measurement.cm.unit" = "cm";
@@ -755,20 +756,6 @@
 "tutorial.alarm-smart.title" = "Smart Alarm";
 "tutorial.alarm-smart.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle, up to 30 minutes before your requested wake-up time, making sure you wake up refreshed and at the right time for you.";
 
-"tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you'll see the current conditions in your bedroom: temperature, humidity, air quality, light, and noise.\n\nThese values update as Sense uploads new data. So as the conditions in your room change, it may take a few moments for them to be reflected here.\n\nTap a card to see more details.";
-
-"tutorial.sensor.temperature.title" = "Temperature";
-"tutorial.sensor.temperature.message" = "A proper temperature is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.humidity.title" = "Humidity";
-"tutorial.sensor.humidity.message" = "Humidity is a measure of the amount of moisture in the air. Here you’ll see detailed information on the humidity levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.light.title" = "Light";
-"tutorial.sensor.light.message" = "Sense measures light in lux (lx), which is the standard unit of illuminance. Here you’ll see detailed information on the light levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.sound.title" = "Noise";
-"tutorial.sensor.sound.message" = "Sense measures noise in decibels (dB). Here you’ll see detailed information on the noise levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.particulates.title" = "Air quality";
-"tutorial.sensor.particulates.message" = "Sense measures air quality in micrograms per cubic meter (µg/m³), which is a measure of the amount of particulates in the air by volume. Here you'll see detailed information on the air quality in your bedroom. The graphs will fill in as Sense collects more data.";
-
 "tutorial.pill-color.title" = "Sleep Pill Color";
 "tutorial.pill-color.message" = "Each Sleep Pill paired with Sense is assigned a unique color — you can see which color yours is on this page. If you shake your Sleep Pill for a few seconds, Sense will glow the color assigned to your Sleep Pill. If you’re sharing Sense with a partner, this is also a great way to tell your Sleep Pills apart if they get mixed up.";
 
@@ -919,3 +906,26 @@
 "upgrade.reset.done" = "Sent";
 "upgrade.reset.error.title" = "Factory reset";
 "upgrade.reset.error.message" = "An error occurred while attempting to factory reset your original Sense. Make sure Sense is plugged in, nearby and try again.";
+
+// room conditions
+"room-conditions.intro.title" = "Your current conditions";
+"room-conditions.intro.desc" = "Recent changes to room conditions make take a few moments to be reflected here. Tap a card for more detail.";
+"room-conditions.pair-sense.button.title" = "Pair Sense";
+"room-conditions.pair-sense.message" = "You don't currently have a Sense paired to your account. Please pair with Sense to view current conditions.";
+"room-conditions.air-quality" = "Air quality";
+
+// sensors
+"sensor.scope.day" = "Last Day";
+"sensor.scope.week" = "Past Week";
+"sensor.section.about.title" = "About";
+"sensor.section.about.temperature.celsius" = "At night, your body temperature cools to help induce sleep, and the right external temperature can make this easier. The ideal temperature for this is generally between 15 and 20 degrees Celsius. While cooler temperatures are generally better than warmer ones, be careful not to set your thermostat too low. A bedroom that’s uncomfortably hot or cold can disrupt your sleep cycle, which can negatively impact the quality of your sleep.";
+"sensor.section.about.temperature.fahrenheit" = "At night, your body temperature cools to help induce sleep, and the right external temperature can make this easier. The ideal temperature for this is generally between 59 and 68 degrees Fahrenheit. While cooler temperatures are generally better than warmer ones, be careful not to set your thermostat too low. A bedroom that’s uncomfortably hot or cold can disrupt your sleep cycle, which can negatively impact the quality of your sleep.";
+"sensor.section.about.humidity" = "The ideal humidity  for a good night’s sleep is around 50%. In addition to affecting the quality of your sleep, low humidity can cause your throat to become irritated and your skin to become dry, while high humidity can make it harder for moisture to evaporate off your body — making you hot, uncomfortable, and sweaty. Damp air can also encourage mold growth, which may affect your sleep if you suffer from mold allergies.";
+"sensor.section.about.sound" = "A noisy environment can make it difficult to fall asleep, but the impact of sound on your quality of sleep doesn’t end there. Even if you manage to doze off, your brain continues to register and process sounds, meaning nighttime noise can disrupt your sleep even if it doesn’t wake you up.";
+"sensor.section.about.particulates" = "Air quality is rated using the Air Quality Index (AQI). The AQI shows you how clean or polluted the air is in your area, as well potential corresponding effects the air might have have on your health. The AQI is calculated using five major pollutants: ground-level ozone, particle pollution (or particulate matter), carbon monoxide, sulfur dioxide, and nitrogen dioxide. Poor air quality has been correlated with increased risk of poor sleep, and sustained levels of poor air quality can be detrimental to your overall health.";
+"sensor.section.about.voc" = "Volatile organic compounds (VOCs) can be essential ingredients in many household products, such as cleansers, disinfectants, mattresses, fresh paint, and more. Indoors, normal atmospheric conditions can cause these compounds to evaporate into the air, which in large concentrations can have a detrimental effect on overall air quality, and your health. VOCs may lead to irritated eyes, headaches, allergies, or asthma which may in turn impact the quality of your sleep.";
+"sensor.section.about.light" = "Light is the primary signal for your circadian rhythm, which governs not only your sleep, but also your mood, appetite, and more. In the morning, light prompts your body to wake up, while in the evening, the decrease in light signals to your body that it’s time to wind down, relax, and prepare for sleep. Being exposed to too little light in the morning or too much at night can confuse this rhythm and make it much harder to maintain a healthy sleep schedule.";
+"sensor.section.about.co2" = "Equivalent carbon dioxide (C02e) is a measure of the equivalent amount or concentration of carbon dioxide (CO2). The greenhouse gas carbon dioxide (CO2) is naturally part of Earth’s atmosphere, and CO2 emissions come from a variety of natural sources. However, human activity such as fuel combustion for energy and transportation increases the amount of CO2 present in the atmosphere, and high concentrations can impair brain activity and make it difficult to breathe, which could affect sleep quality.";
+"sensor.section.about.uv" = "A sunny day can be enjoyable, but too much sunlight can be dangerous. The sun’s rays give off ultraviolet (UV) radiation, and it’s this radiation that makes overexposure to sunlight damaging to your skin, causing sunburns and putting you at higher risk for skin cancer. Seasonal weather conditions combined with ozone depletion can cause different amounts of UV radiation to reach different regions at different times. The UV Index exists to provide a daily forecast of the severity of UV radiation in your area.";
+"sensor.section.about.light_temp" = "Light temperatures over 4,500 K are described as cool colors (or blue light) and temperatures between 2,000–3,000 K described as warm colors (or red light). As daylight is a cool color (starting at around 2,000 K during sunrise and sunset and peaking at around 10,000 on a clear blue day), your body uses blue light as a primary signal for your circadian rhythm, suppressing melatonin and keeping you alert during the day. Personal electronics and televisions also generally give off blue light, which means that using these devices before bed can adversely affect your sleep schedule, keeping you awake when you’re trying to get to sleep.";
+"sensor.section.about.pressure" = "Barometric pressure, also known as atmospheric pressure, is a measure of the pressure exerted by the weight of air in the Earth’s atmosphere. Studies have shown some evidence that individuals diagnosed with sleep disordered breathing are susceptible to weather-related changes in barometric pressure.";

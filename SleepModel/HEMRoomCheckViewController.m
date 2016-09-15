@@ -8,6 +8,7 @@
 #import "markdown_peg.h"
 
 #import <SenseKit/SENSensor.h>
+#import <SenseKit/SENSensorStatus.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -17,6 +18,7 @@
 #import "HEMActionButton.h"
 #import "HEMRoomCheckView.h"
 #import "HEMMarkdown.h"
+#import "HEMSensorService.h"
 
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
@@ -33,9 +35,9 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsBottomConstraint;
 
-@property (strong, nonatomic) NSArray* sensors;
 @property (assign, nonatomic) BOOL sensorsOk;
 @property (strong, nonatomic) HEMRoomCheckView* roomCheckView;
+@property (strong, nonatomic) HEMSensorService* sensorService;
 
 @end
 
@@ -53,7 +55,11 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 - (void)configureRoomCheckView {
     [self setSensorsOk:YES];
-    [self setSensors:[SENSensor sensors]];
+    
+    if (![self sensors]) {
+        HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
+        [self setSensors:[onbService sensors]];
+    }
     
     [self setRoomCheckView:[HEMRoomCheckView createRoomCheckViewWithFrame:[[self view] bounds]]];
     [[self roomCheckView] setAlpha:0.0f];
@@ -88,16 +94,15 @@ withColorFromCondition:(SENCondition)condition
 }
 
 - (UIImage*)iconForSensor:(SENSensor*)sensor forState:(HEMRoomCheckState)state {
-    NSString* iconImageName = [[[sensor name] lowercaseString] stringByAppendingString:@"Icon"];
+    SENCondition condition = [sensor condition];
+    NSString* iconImageName = [[[sensor localizedName] lowercaseString] stringByAppendingString:@"Icon"];
     NSString* defaultColor = @"Gray";
     switch (state) {
         case HEMRoomCheckStateLoaded: {
-            SENCondition condition = [sensor condition];
             iconImageName = [self imageName:iconImageName withColorFromCondition:condition defaultColor:defaultColor];
             break;
         }
         case HEMRoomCheckStateLoading: {
-            SENCondition condition = [sensor condition];
             NSString* baseName = [iconImageName stringByAppendingString:@"NoBorder"];
             iconImageName = [self imageName:baseName withColorFromCondition:condition defaultColor:defaultColor];
             break;
@@ -130,8 +135,9 @@ withColorFromCondition:(SENCondition)condition
     
     SENCondition condition = SENConditionIdeal;
     for (SENSensor* sensor in [self sensors]) {
-        if ([sensor condition] < condition) {
-            condition = [sensor condition];
+        SENCondition sensorCondition = [sensor condition];
+        if (sensorCondition < condition) {
+            condition = sensorCondition;
         }
      }
     
@@ -193,17 +199,16 @@ withColorFromCondition:(SENCondition)condition
 
 - (NSString*)sensorMessageAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [sensor message];
+    return [sensor localizedMessage];
 }
 
 - (NSInteger)sensorValueAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [[sensor valueInPreferredUnit] integerValue];
+    return [[sensor value] integerValue];
 }
 
 - (NSString*)sensorValueUnitAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
-    SENSensor* sensor = [self sensors][sensorIndex];
-    return [sensor localizedUnit];
+    return @"";
 }
 
 - (UIFont*)sensorValueUnitFontAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
@@ -213,19 +218,21 @@ withColorFromCondition:(SENCondition)condition
 
 - (UIColor*)sensorValueColorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [UIColor colorForCondition:[sensor condition]];
+    SENCondition condition = [sensor condition];
+    return [UIColor colorForCondition:condition];
 }
 
 - (UIImage*)sensorActivityImageForSensorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView *)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [self sensorActivityImageForSensorCondition:[sensor condition]];
+    SENCondition condition =[sensor condition];
+    return [self sensorActivityImageForSensorCondition:condition];
 }
 
 #pragma mark - Sensor Messages
 
 - (NSAttributedString*)messageForSensor:(SENSensor*)sensor {
     NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckSensorMessage];
-    return markdown_to_attr_string([sensor message], 0, statusAttributes);
+    return markdown_to_attr_string([sensor localizedMessage], 0, statusAttributes);
 }
 
 #pragma mark - Content Display

@@ -54,7 +54,7 @@ describe(@"HEMSensorValueFormatter", ^{
             beforeEach(^{
                 NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
                 [NSLocale stub:@selector(currentLocale) andReturn:locale];
-                [formatter setSensorUnit:SENSensorUnitDegreeCentigrade];
+                [formatter setSensorUnit:SENSensorUnitCelsius];
                 
                 KWValue* fahrenheit = [KWValue valueWithInteger:SENTemperatureFormatFahrenheit];
                 [SENPreference stub:@selector(temperatureFormat) andReturn:fahrenheit];

@@ -153,7 +153,11 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     __weak typeof(self) weakSelf = self;
     HEMSensorService* service = [self sensorService];
-    [service pollDataForSensorsExcept:nil completion:^(SENSensorStatus* status, id data, NSError* error) {
+    [service pollDataForSensorsExcept:nil
+                           completion:^(HEMSensorServiceScope scope,
+                                        SENSensorStatus* status,
+                                        id data,
+                                        NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setSensorError:error];
         if (!error) {
@@ -172,6 +176,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             [strongSelf setSensorError:error];
             [strongSelf reloadUI];
         }
+        
     }];
 }
 
@@ -263,6 +268,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
     [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
     [dataSet setDrawFilledEnabled:YES];
+    [dataSet setDrawValuesEnabled:NO];
     [dataSet setDrawCirclesEnabled:NO];
     [dataSet setLabel:nil];
     

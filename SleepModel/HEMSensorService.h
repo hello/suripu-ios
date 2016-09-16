@@ -23,12 +23,16 @@ typedef NS_ENUM(NSInteger, HEMSensorServiceErrorCode) {
 
 typedef NS_ENUM(NSUInteger, HEMSensorServiceScope) {
     HEMSensorServiceScopeDay = 0,
-    HEMSensorServiceScopeWeek
+    HEMSensorServiceScopeWeek,
+    HEMSensorServiceScopeLast3H
 };
 
 typedef void(^HEMSensorDataHandler)(SENSensorDataCollection* data, NSError* _Nullable error);
 typedef void(^HEMSensorStatusHandler)(SENSensorStatus* _Nullable status, NSError* _Nullable error);
-typedef void(^HEMSensorPollHandler)(SENSensorStatus* _Nullable status, SENSensorDataCollection* _Nullable data, NSError* _Nullable error);
+typedef void(^HEMSensorPollHandler)(HEMSensorServiceScope scope,
+                                    SENSensorStatus* _Nullable status,
+                                    SENSensorDataCollection* _Nullable data,
+                                    NSError* _Nullable error);
 
 @interface HEMSensorService : SENService
 

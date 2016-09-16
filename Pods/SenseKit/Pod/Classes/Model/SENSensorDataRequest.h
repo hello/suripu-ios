@@ -16,7 +16,9 @@ typedef NS_ENUM(NSUInteger, SENSensorDataMethod) {
 };
 
 typedef NS_ENUM(NSUInteger, SENSensorDataScope) {
-    SENSensorDataScopeDay5Min = 0
+    SENSensorDataScopeLast3H5Min = 0,
+    SENSensorDataScopeDay5Min,
+    SENSensorDataScopeWeek1Hour
 };
 
 NS_ASSUME_NONNULL_BEGIN

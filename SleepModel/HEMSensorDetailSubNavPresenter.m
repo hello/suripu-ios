@@ -12,7 +12,7 @@
 #import "HEMSubNavigationView.h"
 #import "HEMStyle.h"
 
-static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
+static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 
 @interface HEMSensorDetailSubNavPresenter()
 
@@ -66,7 +66,7 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
     [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor subNavInactiveTitleColor] forState:UIControlStateNormal];
     [button setSelected:scope == [self scopeSelected]];
-    [button setTag:scope + HEMSensorDetailSubNavTagOffset];
+    [button setTag:scope + kHEMSensorDetailSubNavTagOffset]; // offset needed to avoid finding views with tag of 0
     [button addTarget:self
                action:@selector(changeScope:)
      forControlEvents:UIControlEventTouchUpInside];
@@ -74,8 +74,9 @@ static NSUInteger const HEMSensorDetailSubNavTagOffset = 1;
 }
 
 - (void)changeScope:(UIButton*)button {
-    DDLogVerbose(@"changed sensor scope to %ld", (long)[button tag]);
-    [[self delegate] didChangeScopeTo:[button tag] fromPresenter:self];
+    HEMSensorServiceScope scope = [button tag] - kHEMSensorDetailSubNavTagOffset;
+    DDLogVerbose(@"changed sensor scope to %ld", (long)scope);
+    [[self delegate] didChangeScopeTo:scope fromPresenter:self];
 }
 #pragma mark - Presenter Events
 

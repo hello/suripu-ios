@@ -41,6 +41,7 @@
 +(NSString *)timezoneReuseIdentifier;
 +(NSString *)currentValueReuseIdentifier;
 +(NSString *)chartReuseIdentifier;
++(NSString *)scaleReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;
@@ -96,7 +97,6 @@
 +(id)instantiatePillDFUViewController;
 +(id)instantiatePillDFUNavViewController;
 +(id)instantiatePillFinderViewController;
-+(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;
 +(id)instantiateSleepGraphController;

@@ -24,6 +24,7 @@
 #import "HEMSensorValueCollectionViewCell.h"
 #import "HEMSensorAboutCollectionViewCell.h"
 #import "HEMSensorChartCollectionViewCell.h"
+#import "HEMSensorScaleCollectionViewCell.h"
 
 static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
@@ -44,7 +45,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, weak) HEMSensorService* sensorService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSArray* content;
-@property (nonatomic, weak) SENSensor* sensor;
+@property (nonatomic, strong) SENSensor* sensor;
 @property (nonatomic, strong) NSString* aboutDetail;
 @property (nonatomic, strong) HEMSensorValueFormatter* formatter;
 @property (nonatomic, strong) SENSensorStatus* status;
@@ -107,6 +108,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [content addObject:@(HEMSensorDetailContentValue)];
     [content addObject:@(HEMSensorDetailContentChart)];
     
+    // check if sensor has scales to show
+    if ([[[self sensor] scales] count] > 0) {
+        [content addObject:@(HEMSensorDetailContentScale)];
+    }
+    
     // if string for content exists
     if (![about isEqualToString:aboutKey]) {
         [self setAboutDetail:about];
@@ -123,11 +129,20 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorService* service = [self sensorService];
     [service pollDataForSensor:[self sensor]
                      withScope:[self scopeSelected]
-                    completion:^(SENSensorStatus* status, SENSensorDataCollection* data, NSError* error) {
+                    completion:^(HEMSensorServiceScope scope,
+                                 SENSensorStatus* status,
+                                 SENSensorDataCollection* data,
+                                 NSError* error) {
+                        
                         __strong typeof(weakSelf) strongSelf = weakSelf;
+                        if ([strongSelf scopeSelected] != scope) {
+                            return; // ignore
+                        }
+                        
                         [strongSelf setPollError:error];
                         if (!error) {
                             [strongSelf setStatus:status];
+                            [strongSelf updateSensorFromStatus];
                             
                             SENSensorDataCollection* sensorData = data;
                             if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
@@ -139,6 +154,15 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                             [[strongSelf collectionView] reloadData];
                         }
                     }];
+}
+
+- (void)updateSensorFromStatus {
+    for (SENSensor* sensor in [[self status] sensors]) {
+        if ([sensor type] == [[self sensor] type]) {
+            [self setSensor:sensor];
+            break;
+        }
+    }
 }
 
 - (void)prepareChartDataAndReload {
@@ -209,6 +233,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         case HEMSensorDetailContentChart:
             height = chartHeight;
             break;
+        case HEMSensorDetailContentScale: {
+            NSUInteger count = [[[self sensor] scales] count];
+            height = [HEMSensorScaleCollectionViewCell heightWithNumberOfScales:count];
+            break;
+        }
         case HEMSensorDetailContentAbout: {
             NSString* about = [self aboutDetail];
             NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
@@ -234,6 +263,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         case HEMSensorDetailContentChart:
             reuseId = [HEMMainStoryboard chartReuseIdentifier];
             break;
+        case HEMSensorDetailContentScale:
+            reuseId = [HEMMainStoryboard scaleReuseIdentifier];
+            break;
         case HEMSensorDetailContentAbout:
             reuseId = [HEMMainStoryboard aboutReuseIdentifier];
             break;
@@ -250,6 +282,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         [self configureValueCell:(id) cell];
     } else if ([cell isKindOfClass:[HEMSensorChartCollectionViewCell class]]) {
         [self configureChartCell:(id) cell];
+    } else if ([cell isKindOfClass:[HEMSensorScaleCollectionViewCell class]]) {
+        [self configureScaleCell:(id) cell];
     } else if ([cell isKindOfClass:[HEMSensorAboutCollectionViewCell class]]) {
         [self configureAboutCell:(id) cell];
     }
@@ -340,6 +374,52 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
 }
 
+- (void)configureScaleCell:(HEMSensorScaleCollectionViewCell*)scaleCell {
+    NSUInteger count = [[[self sensor] scales] count];
+    NSString* measureFormat = NSLocalizedString(@"sensor.section.scale.measure.format", nil);
+    NSString* unitString = [[self formatter] unitSymbol];
+    
+    if ([[self sensor] type] == SENSensorTypeTemp) {
+        if ([SENPreference useCentigrade]) {
+            unitString = [NSString stringWithFormat:@"C%@", unitString];
+        } else {
+            unitString = [NSString stringWithFormat:@"F%@", unitString];
+        }
+    }
+
+    NSString* measureString = [NSString stringWithFormat:measureFormat, unitString];
+    
+    [scaleCell setNumberOfScales:count];
+    [[scaleCell titleLabel] setText:NSLocalizedString(@"sensor.section.scale.title", nil)];
+    [[scaleCell measurementLabel] setText:measureString];
+    
+    NSString* rangeFormat = nil;
+    NSString* rangeString = nil;
+    
+    for (SENSensorScale* scale in [[self sensor] scales]) {
+        if ([scale min] && [scale max]) {
+            rangeFormat = NSLocalizedString(@"sensor.section.scale.range.format", nil);
+            rangeString = [NSString stringWithFormat:rangeFormat,
+                           [[[self formatter] convertValue:[scale min]] doubleValue],
+                           [[[self formatter] convertValue:[scale max]] doubleValue]];
+        } else if (![scale min] && [scale max]) {
+            rangeFormat = NSLocalizedString(@"sensor.section.scale.range.no-min.format", nil);
+            rangeString = [NSString stringWithFormat:rangeFormat,
+                           [[[self formatter] convertValue:[scale max]] doubleValue]];
+        } else if (![scale max] && [scale min]) {
+            rangeFormat = NSLocalizedString(@"sensor.section.scale.range.no-max.format", nil);
+            rangeString = [NSString stringWithFormat:rangeFormat,
+                           [[[self formatter] convertValue:[scale min]] doubleValue]];
+        } else {
+            rangeString = NSLocalizedString(@"empty-data", nil);
+        }
+
+        [scaleCell addScaleWithName:[scale localizedName]
+                              range:rangeString
+                     conditionColor:[UIColor colorForCondition:[scale condition]]];
+    }
+}
+
 - (void)configureAboutCell:(HEMSensorAboutCollectionViewCell*)aboutCell {
     NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
     [[aboutCell titleLabel] setText:title];
@@ -348,6 +428,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[aboutCell aboutLabel] setText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];
     [[aboutCell aboutLabel] setTextColor:[UIColor grey5]];
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    if (_sensorService) {
+        [_sensorService stopPollingForData];
+    }
 }
 
 @end

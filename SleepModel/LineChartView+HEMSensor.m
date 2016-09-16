@@ -29,6 +29,9 @@
         [self setDescriptionText:nil];
         [[self legend] setEnabled:NO];
         [[self layer] setBorderWidth:0.0f];
+        [self setPinchZoomEnabled:NO];
+        [self setDoubleTapToZoomEnabled:NO];
+        [self setScaleEnabled:NO];
         [self setViewPortOffsetsWithLeft:0.0f top:7.0f right:0.0f bottom:0.0f];
     }
     return self;

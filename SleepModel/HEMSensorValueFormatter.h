@@ -99,4 +99,15 @@ typedef NS_ENUM(NSInteger, HEMSensorValueUnitLoc) {
                                  valueAttributes:(NSDictionary*)valueAttributes
                                   unitAttributes:(NSDictionary*)unitAttributes;
 
+/**
+ * @discussion
+ * Convert the value based on the unit to the preferred unit.  For example, if
+ * unit is celsius, but preferred unit is fahrenheit, the returned value will
+ * be the degrees in fahrenheit;
+ * 
+ * @param value: value to convert
+ * @return the converted value, if applicable
+ */
+- (NSNumber*)convertValue:(NSNumber*)value;
+
 @end

@@ -289,7 +289,7 @@ static NSString* const kSENSensorAttrCondition = @"condition";
     NSMutableArray* scaleArray = [NSMutableArray arrayWithCapacity:[scales count]];
     NSDictionary* scaleDict = nil;
     for (id scaleObj in scales) {
-        scaleDict = SENObjectOfClass(scaleDict, [NSDictionary class]);
+        scaleDict = SENObjectOfClass(scaleObj, [NSDictionary class]);
         if (scaleDict) {
             [scaleArray addObject:[[SENSensorScale alloc] initWithDictionary:scaleDict]];
         }

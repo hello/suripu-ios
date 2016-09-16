@@ -63,16 +63,12 @@
             break;
         }
         case SENSensorUnitCelsius: {
-            if (![SENPreference useCentigrade]) {
-                value = @([value doubleValue] * 1.8f + 32);
-            }
+            value = [self convertValue:value];
             [self setNumberOfFractionDigits:0];
             break;
         }
         case SENSensorUnitFahrenheit: {
-            if ([SENPreference useCentigrade]) {
-                value = @([value doubleValue] / 1.8f - 32);
-            }
+            value = [self convertValue:value];
             [self setNumberOfFractionDigits:0];
             break;
         }
@@ -86,6 +82,25 @@
         valueString = [valueString stringByAppendingString:[self unitSymbol]];
     }
     return valueString;
+}
+
+- (NSNumber*)convertValue:(NSNumber*)value {
+    switch ([self sensorUnit]) {
+        case SENSensorUnitCelsius: {
+            if (![SENPreference useCentigrade]) {
+                value = @([value doubleValue] * 1.8f + 32);
+            }
+            return value;
+        }
+        case SENSensorUnitFahrenheit: {
+            if ([SENPreference useCentigrade]) {
+                value = @([value doubleValue] / 1.8f - 32);
+            }
+            return value;
+        }
+        default:
+            return value;
+    }
 }
 
 - (NSString *)stringFromSensor:(SENSensor *)sensor {

@@ -64,10 +64,10 @@ static NSString *const _HEMpillDFUNav = @"pillDFUNav";
 static NSString *const _HEMpillFinder = @"pillFinder";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
+static NSString *const _HEMscale = @"scale";
 static NSString *const _HEMscan = @"scan";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensor = @"sensor";
-static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettings = @"settings";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
@@ -142,6 +142,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)pillReuseIdentifier { return _HEMpill; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
++(NSString *)scaleReuseIdentifier { return _HEMscale; }
 +(NSString *)senseReuseIdentifier { return _HEMsense; }
 +(NSString *)sensorReuseIdentifier { return _HEMsensor; }
 +(NSString *)settingsReuseIdentifier { return _HEMsettings; }
@@ -194,7 +195,6 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiatePillDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFU]; }
 +(id)instantiatePillDFUNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFUNav]; }
 +(id)instantiatePillFinderViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillFinder]; }
-+(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
 +(id)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }
 +(id)instantiateSleepGraphController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphController]; }

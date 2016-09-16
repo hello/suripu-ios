@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.5.3.3
+
+New:
+
+* Room conditions uses new 3H scope
+* Sensor detail past week now uses week scope
+* Added scales to sensor detail view
+* Hidden networks returned by Sense are now ignored
+* 
+
+Fixes:
+
+* Fixed typo in welcome message for room conditions
+* Sensor detail current value now refreshes as well
+* Fixed typo in dust sensor about copy
+* Fixed typo in humidity sensor about copy
+* Prevent chart in sensor detail from being zoomed
+
 ## 1.5.3.2
 
 New:

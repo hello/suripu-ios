@@ -32,6 +32,8 @@
         [self setPinchZoomEnabled:NO];
         [self setDoubleTapToZoomEnabled:NO];
         [self setScaleEnabled:NO];
+        [self setHighlightPerTapEnabled:NO];
+        [self setHighlightPerDragEnabled:NO];
         [self setViewPortOffsetsWithLeft:0.0f top:7.0f right:0.0f bottom:0.0f];
     }
     return self;

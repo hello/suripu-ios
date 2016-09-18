@@ -8,6 +8,7 @@
 #import "NSString+HEMUtils.h"
 
 #import "HEMSensorChartCollectionViewCell.h"
+#import "HEMSensorChartContainer.h"
 #import "HEMStyle.h"
 
 @interface HEMSensorChartCollectionViewCell()

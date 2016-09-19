@@ -28,7 +28,7 @@
 
 static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
-static NSUInteger const kHEMSensorDetailXAxisOffset = 12;
+static NSUInteger const kHEMSensorDetailXAxisOffset = 10;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,

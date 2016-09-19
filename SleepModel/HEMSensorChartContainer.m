@@ -15,7 +15,7 @@ static CGFloat const kHEMSensorChartScrubberFadeDuration = 0.5f;
 static CGFloat const kHEMSensorChartScrubberCircleSize = 8.0f;
 static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
 
-@interface HEMSensorChartContainer()
+@interface HEMSensorChartContainer() <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIView* scrubber;
 @property (nonatomic, strong) UIView* scrubberCircle;
@@ -35,6 +35,7 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
     UILongPressGestureRecognizer* gesture = [UILongPressGestureRecognizer new];
     [gesture addTarget:self action:@selector(startScrubbing:)];
     [gesture setMinimumPressDuration:kHEMSensorChartScrubStartDelay];
+    [gesture setDelegate:self];
     [self addGestureRecognizer:gesture];
     [self setScrubberGesture:gesture];
 }
@@ -90,6 +91,13 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
 - (void)setDelegate:(id<HEMSensorChartScrubberDelegate>)delegate {
     _delegate = delegate;
     [[self scrubberGesture] setEnabled:delegate != nil];
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gesture {
+    CGPoint pointInView = [gesture locationInView:[gesture view]];
+    LineChartView* lineView = (id)[self chartView];
+    ChartDataEntry* entry = [lineView getEntryByTouchPoint:pointInView];
+    return entry != nil;
 }
 
 - (void)startScrubbing:(UILongPressGestureRecognizer*)gesture {

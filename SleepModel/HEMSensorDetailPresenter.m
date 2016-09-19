@@ -223,7 +223,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)updateFormatters {
     if ([self scopeSelected] == HEMSensorServiceScopeWeek) {
         [[self xAxisLabelFormatter] setDateFormat:@"EEE"];
-        [[self exactTimeFormatter] setDateFormat:@"EEEE - hh:mm a"];
+        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
+            [[self exactTimeFormatter] setDateFormat:@"EEEE - HH:mm"];
+        } else {
+            [[self exactTimeFormatter] setDateFormat:@"EEEE - hh:mm a"];
+        }
     } else {
         if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
             [[self xAxisLabelFormatter] setDateFormat:@"HH:mm"];

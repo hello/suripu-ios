@@ -6,12 +6,11 @@
 //
 //
 
-@import iOSDFULibrary;
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <LGBluetooth/LGBluetooth.h>
-
+#import "iOSDFULibrary-umbrella.h"
 #import "SENSleepPillManager.h"
 #import "SENSleepPill.h"
 

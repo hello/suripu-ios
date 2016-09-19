@@ -10,7 +10,7 @@
 #import "HEMStyle.h"
 
 static CGFloat const kHEMSensorChartWidth = 1.0f;
-static CGFloat const kHEMSensorChartScrubStartDelay = 0.5f;
+static CGFloat const kHEMSensorChartScrubStartDelay = 0.25f;
 static CGFloat const kHEMSensorChartScrubberFadeDuration = 0.5f;
 static CGFloat const kHEMSensorChartScrubberCircleSize = 8.0f;
 static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;

@@ -57,6 +57,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, assign) HEMSensorServiceScope scopeSelected;
 @property (nonatomic, strong) NSDateFormatter* xAxisLabelFormatter;
 @property (nonatomic, assign) BOOL chartLoaded;
+@property (nonatomic, assign, getter=isScrubbing) BOOL scrubbing;
 @property (nonatomic, weak) LineChartView* chartView;
 @property (nonatomic, strong) NSDateFormatter* exactTimeFormatter;
 @property (nonatomic, weak) UILabel* currentValueLabel;
@@ -159,7 +160,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                             }
                             
                         } else {
-                            [[strongSelf collectionView] reloadData];
+                            [strongSelf reloadUI];
                         }
                     }];
 }
@@ -170,6 +171,12 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             [self setSensor:sensor];
             break;
         }
+    }
+}
+
+- (void)reloadUI {
+    if (![self isScrubbing]) {
+        [[self collectionView] reloadData];
     }
 }
 
@@ -200,7 +207,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[strongSelf collectionView] reloadData];
+            [strongSelf reloadUI];
         });
     });
 }
@@ -212,7 +219,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [self setStatus:nil];
     [self setPollError:nil];
     [self setChartData:nil];
-    [[self collectionView] reloadData];
+    [self reloadUI];
     [self startPolling];
 }
 
@@ -336,10 +343,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     return lineChartView;
 }
 
-- (void)configureValueCell:(HEMSensorValueCollectionViewCell*)valueCell {
-    UIColor* conditionColor = [UIColor colorForCondition:[[self sensor] condition]];
+- (void)updateValueCell:(HEMSensorValueCollectionViewCell*)valueCell
+              withValue:(NSNumber*)value
+              condition:(SENCondition)condition
+                message:(NSString*)message {
+    UIColor* conditionColor = [UIColor colorForCondition:condition];
+    
     if ([[self sensor] type] == SENSensorTypeTemp) {
-        NSString* valueString = [[self formatter] stringFromSensor:[self sensor]];
+        NSString* valueString = [[self formatter] stringFromSensorValue:value];
         [[valueCell valueLabel] setTextColor:conditionColor];
         [[valueCell valueLabel] setText:valueString];
         [[valueCell valueLabel] setFont:[UIFont h1]];
@@ -350,17 +361,21 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                                          NSForegroundColorAttributeName : conditionColor,
                                          NSBaselineOffsetAttributeName : @(12.0f)};
         
-        NSAttributedString* attrValue = [[self formatter] attributedValueFromSensor:[self sensor]
-                                                                 unitSymbolLocation:HEMSensorValueUnitLocSubscript
-                                                                    valueAttributes:valueAttributes
-                                                                     unitAttributes:unitAttributes];
+        NSAttributedString* attrValue = [[self formatter] attributedValue:value
+                                                       unitSymbolLocation:HEMSensorValueUnitLocSubscript valueAttributes:valueAttributes unitAttributes:unitAttributes];
         [[valueCell valueLabel] setAttributedText:attrValue];
     }
     
-    [[valueCell messageLabel] setText:[[self sensor] localizedMessage]];
+    [[valueCell messageLabel] setText:message];
     [[valueCell messageLabel] setTextColor:[UIColor grey5]];
     [[valueCell messageLabel] setFont:[UIFont body]];
-    
+}
+
+- (void)configureValueCell:(HEMSensorValueCollectionViewCell*)valueCell {
+    NSNumber* value = [[self sensor] value];
+    NSString* message = [[self sensor] localizedMessage];
+    SENCondition condition = [[self sensor] condition];
+    [self updateValueCell:valueCell withValue:value condition:condition message:message];
     [self setValueCell:valueCell];
 }
 
@@ -450,12 +465,20 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 
 - (void)willBeginScrubbingIn:(HEMSensorChartContainer *)chartContainer {
     [[self collectionView] setScrollEnabled:NO];
+    [self setScrubbing:YES];
 }
 
 - (void)didEndScrubbingIn:(HEMSensorChartContainer *)chartContainer {
-    [[self collectionView] setScrollEnabled:YES];
+    NSString* message = [[self sensor] localizedMessage];
+    NSNumber* value = [[self sensor] value];
+    SENCondition condition = [[self sensor] condition];
+    [self updateValueCell:[self valueCell]
+                withValue:value
+                condition:condition
+                  message:message];
     
-    [[[self valueCell] messageLabel] setText:[[self sensor] localizedMessage]];
+    [[self collectionView] setScrollEnabled:YES];
+    [self setScrubbing:NO];
 }
 
 - (void)didMoveScrubberTo:(CGPoint)pointInChartView within:(HEMSensorChartContainer *)chartContainer {
@@ -465,7 +488,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     
     DDLogVerbose(@"moved scrubber to value %f, time %@", [entry value], timeString);
     
-    [[[self valueCell] messageLabel] setText:timeString];
+    [self updateValueCell:[self valueCell]
+                withValue:@([entry value])
+                condition:[[self sensor] condition]
+                  message:timeString];
 }
 
 #pragma mark - Clean up

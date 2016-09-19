@@ -28,6 +28,7 @@
 
 static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
+static NSUInteger const kHEMSensorDetailXAxisOffset = 8;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -74,17 +75,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         _sensor = sensor;
         _xAxisLabelFormatter = [NSDateFormatter new];
         _exactTimeFormatter = [NSDateFormatter new];
-        
-        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
-            [_xAxisLabelFormatter setDateFormat:@"HH:mm"];
-            [_exactTimeFormatter setDateFormat:@"HH:mm"];
-        } else {
-            [_xAxisLabelFormatter setDateFormat:@"ha"];
-            [_exactTimeFormatter setDateFormat:@"hh:mm a"];
-        }
-        
         _formatter = [[HEMSensorValueFormatter alloc] initWithSensorUnit:[sensor unit]];
-         [_formatter setIncludeUnitSymbol:YES];
+        [_formatter setIncludeUnitSymbol:YES];
+        
+        [self updateFormatters];
         [self determineContent];
     }
     return self;
@@ -191,14 +185,16 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         if (valueCount == [timestamps count]) {
             NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:valueCount];
             NSMutableArray* labelData = [NSMutableArray arrayWithCapacity:kHEMSensorDetailChartXLabelCount];
-            NSInteger indicesBetweenLabels = valueCount / kHEMSensorDetailChartXLabelCount;
+            NSInteger indicesBetweenLabels = (valueCount - 1) / kHEMSensorDetailChartXLabelCount;
             NSUInteger index = 0;
             SENSensorTime* time = nil;
             for (NSNumber* value in values) {
                 [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index]];
                 if (index == ([labelData count] + 1) * indicesBetweenLabels) {
-                    time = [[strongSelf sensorData] timestamps][index];
-                    [labelData addObject:[[strongSelf xAxisLabelFormatter] stringFromDate:[time date]]];
+                    NSInteger indexWithOffset = index - kHEMSensorDetailXAxisOffset;
+                    time = [[strongSelf sensorData] timestamps][indexWithOffset];
+                    [labelData addObject:[[strongSelf xAxisLabelFormatter]
+                                          stringFromDate:[time date]]];
                 }
                 index++;
             }
@@ -219,8 +215,24 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [self setStatus:nil];
     [self setPollError:nil];
     [self setChartData:nil];
+    [self updateFormatters];
     [self reloadUI];
     [self startPolling];
+}
+
+- (void)updateFormatters {
+    if ([self scopeSelected] == HEMSensorServiceScopeWeek) {
+        [[self xAxisLabelFormatter] setDateFormat:@"EEE"];
+        [[self exactTimeFormatter] setDateFormat:@"EEEE - hh:mm a"];
+    } else {
+        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
+            [[self xAxisLabelFormatter] setDateFormat:@"HH:mm"];
+            [[self exactTimeFormatter] setDateFormat:@"HH:mm"];
+        } else {
+            [[self xAxisLabelFormatter] setDateFormat:@"ha"];
+            [[self exactTimeFormatter] setDateFormat:@"hh:mm a"];
+        }
+    }
 }
 
 #pragma mark - UICollectionViewDelegate / DataSource

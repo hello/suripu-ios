@@ -232,7 +232,8 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
                 NSUInteger index = 0;
                 for (NSNumber* value in values) {
-                    [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index++]];
+                    CGFloat entryValue = MAX(0.0f, [value doubleValue]);
+                    [chartData addObject:[[ChartDataEntry alloc] initWithValue:entryValue xIndex:index++]];
                 }
                 [strongSelf chartDataBySensor][@([sensor type])] = chartData;
             }

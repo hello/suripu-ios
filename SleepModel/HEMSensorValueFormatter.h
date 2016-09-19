@@ -101,6 +101,22 @@ typedef NS_ENUM(NSInteger, HEMSensorValueUnitLoc) {
 
 /**
  * @discussion
+ * Return an attributed value string containing the unit symbol.  This only applies
+ * if includeUnitSymbol is YES.  If that property is NO, then attributed string
+ * will simply be the formatted value.
+ *
+ * @param value: value to process
+ * @param location: the location of the unit symbol, if includeUnitSymbol is YES
+ * @param valueAttributes: attributes to be applied to the sensor value itself
+ * @param unitAttributes: attributes to be applied to the sensor unit symbol
+ */
+- (NSAttributedString*)attributedValue:(NSNumber*)value
+                    unitSymbolLocation:(HEMSensorValueUnitLoc)location
+                       valueAttributes:(NSDictionary*)valueAttributes
+                        unitAttributes:(NSDictionary*)unitAttributes;
+
+/**
+ * @discussion
  * Convert the value based on the unit to the preferred unit.  For example, if
  * unit is celsius, but preferred unit is fahrenheit, the returned value will
  * be the degrees in fahrenheit;

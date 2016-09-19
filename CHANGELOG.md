@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.3.4
+
+New:
+
+* Scrubbing enabled for Sensor detail view
+
+Fixes:
+
+* Updated Nordic SDK that should fix Pill DFU for iOS 10
+* Negative values are no longer converted to positive 1 in room conditions
+* Fixes old issues reported in previous sensor detail implementation
+
 ## 1.5.3.3
 
 New:

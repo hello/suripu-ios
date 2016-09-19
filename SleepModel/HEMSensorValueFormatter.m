@@ -112,16 +112,16 @@
     return [self stringFromSensorValue:number];
 }
 
-- (NSAttributedString*)attributedValueFromSensor:(SENSensor*)sensor
-                              unitSymbolLocation:(HEMSensorValueUnitLoc)location
-                                 valueAttributes:(NSDictionary*)valueAttributes
-                                  unitAttributes:(NSDictionary*)unitAttributes {
+- (NSAttributedString*)attributedValue:(NSNumber*)value
+                    unitSymbolLocation:(HEMSensorValueUnitLoc)location
+                       valueAttributes:(NSDictionary*)valueAttributes
+                        unitAttributes:(NSDictionary*)unitAttributes {
     // turn it off momentarily so that it can be separately added
     BOOL includeUnit = [self includeUnitSymbol];
     [self setIncludeUnitSymbol:NO];
     
     NSMutableAttributedString* attributedString = nil;
-    NSString* valueString = [self stringFromSensor:sensor];
+    NSString* valueString = [self stringFromSensorValue:value];
     
     if (valueString) {
         attributedString = [[NSMutableAttributedString alloc] initWithString:valueString attributes:valueAttributes];
@@ -142,6 +142,17 @@
     
     [self setIncludeUnitSymbol:includeUnit]; // set it back to whatever it was
     return attributedString;
+}
+
+- (NSAttributedString*)attributedValueFromSensor:(SENSensor*)sensor
+                              unitSymbolLocation:(HEMSensorValueUnitLoc)location
+                                 valueAttributes:(NSDictionary*)valueAttributes
+                                  unitAttributes:(NSDictionary*)unitAttributes {
+    [self setSensorUnit:[sensor unit]];
+    return [self attributedValue:[sensor value]
+              unitSymbolLocation:location
+                 valueAttributes:valueAttributes
+                  unitAttributes:unitAttributes];
 }
 
 - (NSString*)unitSymbol {

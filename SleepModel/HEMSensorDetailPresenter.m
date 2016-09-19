@@ -28,6 +28,7 @@
 
 static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
+static NSUInteger const kHEMSensorDetailXAxisOffset = 10;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -39,7 +40,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @interface HEMSensorDetailPresenter() <
     UICollectionViewDelegate,
     UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegateFlowLayout,
+    HEMSensorChartScrubberDelegate
 >
 
 @property (nonatomic, weak) HEMSensorService* sensorService;
@@ -56,6 +58,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, assign) HEMSensorServiceScope scopeSelected;
 @property (nonatomic, strong) NSDateFormatter* xAxisLabelFormatter;
 @property (nonatomic, assign) BOOL chartLoaded;
+@property (nonatomic, assign, getter=isScrubbing) BOOL scrubbing;
+@property (nonatomic, weak) LineChartView* chartView;
+@property (nonatomic, strong) NSDateFormatter* exactTimeFormatter;
+@property (nonatomic, weak) UILabel* currentValueLabel;
+@property (nonatomic, weak) HEMSensorValueCollectionViewCell* valueCell;
 
 @end
 
@@ -67,15 +74,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         _sensorService = sensorService;
         _sensor = sensor;
         _xAxisLabelFormatter = [NSDateFormatter new];
-        
-        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
-            [_xAxisLabelFormatter setDateFormat:@"HH:mm"];
-        } else {
-            [_xAxisLabelFormatter setDateFormat:@"ha"];
-        }
-        
+        _exactTimeFormatter = [NSDateFormatter new];
         _formatter = [[HEMSensorValueFormatter alloc] initWithSensorUnit:[sensor unit]];
-         [_formatter setIncludeUnitSymbol:YES];
+        [_formatter setIncludeUnitSymbol:YES];
+        
+        [self updateFormatters];
         [self determineContent];
     }
     return self;
@@ -151,7 +154,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                             }
                             
                         } else {
-                            [[strongSelf collectionView] reloadData];
+                            [strongSelf reloadUI];
                         }
                     }];
 }
@@ -162,6 +165,12 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             [self setSensor:sensor];
             break;
         }
+    }
+}
+
+- (void)reloadUI {
+    if (![self isScrubbing]) {
+        [[self collectionView] reloadData];
     }
 }
 
@@ -176,14 +185,16 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         if (valueCount == [timestamps count]) {
             NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:valueCount];
             NSMutableArray* labelData = [NSMutableArray arrayWithCapacity:kHEMSensorDetailChartXLabelCount];
-            NSInteger indicesBetweenLabels = valueCount / kHEMSensorDetailChartXLabelCount;
+            NSInteger indicesBetweenLabels = (valueCount - 1) / kHEMSensorDetailChartXLabelCount;
             NSUInteger index = 0;
             SENSensorTime* time = nil;
             for (NSNumber* value in values) {
                 [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index]];
                 if (index == ([labelData count] + 1) * indicesBetweenLabels) {
-                    time = [[strongSelf sensorData] timestamps][index];
-                    [labelData addObject:[[strongSelf xAxisLabelFormatter] stringFromDate:[time date]]];
+                    NSInteger indexWithOffset = index - kHEMSensorDetailXAxisOffset;
+                    time = [[strongSelf sensorData] timestamps][indexWithOffset];
+                    [labelData addObject:[[strongSelf xAxisLabelFormatter]
+                                          stringFromDate:[time date]]];
                 }
                 index++;
             }
@@ -192,7 +203,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[strongSelf collectionView] reloadData];
+            [strongSelf reloadUI];
         });
     });
 }
@@ -204,8 +215,28 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [self setStatus:nil];
     [self setPollError:nil];
     [self setChartData:nil];
-    [[self collectionView] reloadData];
+    [self updateFormatters];
+    [self reloadUI];
     [self startPolling];
+}
+
+- (void)updateFormatters {
+    if ([self scopeSelected] == HEMSensorServiceScopeWeek) {
+        [[self xAxisLabelFormatter] setDateFormat:@"EEE"];
+        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
+            [[self exactTimeFormatter] setDateFormat:@"EEEE - HH:mm"];
+        } else {
+            [[self exactTimeFormatter] setDateFormat:@"EEEE - hh:mm a"];
+        }
+    } else {
+        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
+            [[self xAxisLabelFormatter] setDateFormat:@"HH:mm"];
+            [[self exactTimeFormatter] setDateFormat:@"HH:mm"];
+        } else {
+            [[self xAxisLabelFormatter] setDateFormat:@"ha"];
+            [[self exactTimeFormatter] setDateFormat:@"hh:mm a"];
+        }
+    }
 }
 
 #pragma mark - UICollectionViewDelegate / DataSource
@@ -303,7 +334,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     LineChartView* lineChartView = (id) [[cell chartContentView] chartView];
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell chartContentView] bounds]];
-        [lineChartView setHighlighter:nil];
+        [lineChartView setHighlightPerDragEnabled:NO];
     }
     
     NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
@@ -314,6 +345,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
     [dataSet setDrawFilledEnabled:YES];
     [dataSet setDrawCirclesEnabled:NO];
+    [dataSet setHighlightColor:sensorColor];
+    [dataSet setDrawHorizontalHighlightIndicatorEnabled:NO];
     [dataSet setLabel:nil];
     
     CGGradientRelease(gradient);
@@ -326,10 +359,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     return lineChartView;
 }
 
-- (void)configureValueCell:(HEMSensorValueCollectionViewCell*)valueCell {
-    UIColor* conditionColor = [UIColor colorForCondition:[[self sensor] condition]];
+- (void)updateValueCell:(HEMSensorValueCollectionViewCell*)valueCell
+              withValue:(NSNumber*)value
+              condition:(SENCondition)condition
+                message:(NSString*)message {
+    UIColor* conditionColor = [UIColor colorForCondition:condition];
+    
     if ([[self sensor] type] == SENSensorTypeTemp) {
-        NSString* valueString = [[self formatter] stringFromSensor:[self sensor]];
+        NSString* valueString = [[self formatter] stringFromSensorValue:value];
         [[valueCell valueLabel] setTextColor:conditionColor];
         [[valueCell valueLabel] setText:valueString];
         [[valueCell valueLabel] setFont:[UIFont h1]];
@@ -340,16 +377,22 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                                          NSForegroundColorAttributeName : conditionColor,
                                          NSBaselineOffsetAttributeName : @(12.0f)};
         
-        NSAttributedString* attrValue = [[self formatter] attributedValueFromSensor:[self sensor]
-                                                                 unitSymbolLocation:HEMSensorValueUnitLocSubscript
-                                                                    valueAttributes:valueAttributes
-                                                                     unitAttributes:unitAttributes];
+        NSAttributedString* attrValue = [[self formatter] attributedValue:value
+                                                       unitSymbolLocation:HEMSensorValueUnitLocSubscript valueAttributes:valueAttributes unitAttributes:unitAttributes];
         [[valueCell valueLabel] setAttributedText:attrValue];
     }
     
-    [[valueCell messageLabel] setText:[[self sensor] localizedMessage]];
+    [[valueCell messageLabel] setText:message];
     [[valueCell messageLabel] setTextColor:[UIColor grey5]];
     [[valueCell messageLabel] setFont:[UIFont body]];
+}
+
+- (void)configureValueCell:(HEMSensorValueCollectionViewCell*)valueCell {
+    NSNumber* value = [[self sensor] value];
+    NSString* message = [[self sensor] localizedMessage];
+    SENCondition condition = [[self sensor] condition];
+    [self updateValueCell:valueCell withValue:value condition:condition message:message];
+    [self setValueCell:valueCell];
 }
 
 - (void)configureChartCell:(HEMSensorChartCollectionViewCell*)chartCell {
@@ -372,6 +415,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [chartContainer setChartView:chartView];
     [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
+    [chartContainer setScrubberColor:[UIColor colorForCondition:[[self sensor] condition]]];
+    [chartContainer setDelegate:self];
+    
+    [self setChartView:chartView];
 }
 
 - (void)configureScaleCell:(HEMSensorScaleCollectionViewCell*)scaleCell {
@@ -428,6 +475,39 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[aboutCell aboutLabel] setText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];
     [[aboutCell aboutLabel] setTextColor:[UIColor grey5]];
+}
+
+#pragma mark - HEMSensorChartScrubberDelegate
+
+- (void)willBeginScrubbingIn:(HEMSensorChartContainer *)chartContainer {
+    [[self collectionView] setScrollEnabled:NO];
+    [self setScrubbing:YES];
+}
+
+- (void)didEndScrubbingIn:(HEMSensorChartContainer *)chartContainer {
+    NSString* message = [[self sensor] localizedMessage];
+    NSNumber* value = [[self sensor] value];
+    SENCondition condition = [[self sensor] condition];
+    [self updateValueCell:[self valueCell]
+                withValue:value
+                condition:condition
+                  message:message];
+    
+    [[self collectionView] setScrollEnabled:YES];
+    [self setScrubbing:NO];
+}
+
+- (void)didMoveScrubberTo:(CGPoint)pointInChartView within:(HEMSensorChartContainer *)chartContainer {
+    ChartDataEntry* entry = [[self chartView] getEntryByTouchPoint:pointInChartView];
+    SENSensorTime* time = [[self sensorData] timestamps][[entry xIndex]];
+    NSString* timeString = [[self exactTimeFormatter] stringFromDate:[time date]];
+    
+    DDLogVerbose(@"moved scrubber to value %f, time %@", [entry value], timeString);
+    
+    [self updateValueCell:[self valueCell]
+                withValue:@([entry value])
+                condition:[[self sensor] condition]
+                  message:timeString];
 }
 
 #pragma mark - Clean up

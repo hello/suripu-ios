@@ -3415,6 +3415,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = HEM;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Hello;
 				TargetAttributes = {
@@ -4347,6 +4348,7 @@
 			baseConfigurationReference = 645CDA400FCEFAF1CE273637 /* Pods-SenseApp-Sense.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -4390,6 +4392,7 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
@@ -4397,6 +4400,8 @@
 				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORT_TOKEN = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = (
 					"$(inherited)",
@@ -4412,6 +4417,7 @@
 			baseConfigurationReference = B17615B39D25C4F006BA0C14 /* Pods-SenseApp-Sense.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -4458,12 +4464,14 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
 				SENSE_API_URL = "https://api.hello.is";
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = (
 					"$(inherited)",
@@ -4772,6 +4780,7 @@
 			baseConfigurationReference = 541055DBD085814436590F0F /* Pods-SenseApp-Sense.beta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -4814,10 +4823,12 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = (
 					"$(inherited)",
@@ -4989,6 +5000,7 @@
 			baseConfigurationReference = 1CEC3006712323A3E96169F0 /* Pods-SenseApp-Sense.dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -5031,11 +5043,13 @@
 				);
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = (
 					"$(inherited)",

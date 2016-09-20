@@ -262,6 +262,13 @@ static NSString* const kSENSensorScaleAttrCondition = @"condition";
 
 @end
 
+@interface SENSensor()
+
+@property (nonatomic, copy) NSString* rawType;
+@property (nonatomic, copy) NSString* rawUnit;
+
+@end
+
 @implementation SENSensor
 
 static NSString* const kSENSensorAttrName = @"name";
@@ -277,8 +284,10 @@ static NSString* const kSENSensorAttrCondition = @"condition";
         _localizedName = [SENObjectOfClass(data[kSENSensorAttrName], [NSString class]) copy];
         _localizedMessage = [SENObjectOfClass(data[kSENSensorAttrMessage], [NSString class]) copy];
         _value = SENObjectOfClass(data[kSENSensorAttrValue], [NSNumber class]);
-        _unit = SensorUnitFromString(SENObjectOfClass(data[kSENSensorAttrUnit], [NSString class]));
-        _type = SensorTypeFromString(SENObjectOfClass(data[kSENSensorAttrType], [NSString class]));
+        _rawUnit = SENObjectOfClass(data[kSENSensorAttrUnit], [NSString class]);
+        _unit = SensorUnitFromString(_rawUnit);
+        _rawType = SENObjectOfClass(data[kSENSensorAttrType], [NSString class]);
+        _type = SensorTypeFromString(_rawType);
         _scales = [self scaleArrayFromObject:SENObjectOfClass(data[kSENSensorAttrScale], [NSArray class])];
         _condition = SENConditionFromString(SENObjectOfClass(data[kSENSensorAttrCondition], [NSString class]));
     }
@@ -321,37 +330,11 @@ static NSString* const kSENSensorAttrCondition = @"condition";
 }
 
 - (NSString*)typeStringValue {
-    return TypeStringFromEnum([self type]);
+    return [self rawType];
 }
 
 - (NSString*)unitStringValue {
-    switch ([self unit]) {
-        case SENSensorUnitKPA:
-            return kSENSensorUnitValueKPA;
-        case SENSensorUnitLux:
-            return kSENSensorUnitValueLux;
-        case SENSensorUnitPPM:
-            return kSENSensorUnitValuePPM;
-        case SENSensorUnitVOC:
-            return kSENSensorUnitValueVOC;
-        case SENSensorUnitMGCM:
-            return kSENSensorUnitValueMGCM;
-        case SENSensorUnitRatio:
-            return kSENSensorUnitValueRatio;
-        case SENSensorUnitKelvin:
-            return kSENSensorUnitValueKelvin;
-        case SENSensorUnitCelsius:
-            return kSENSensorUnitValueCelsius;
-        case SENSensorUnitFahrenheit:
-            return kSENSensorUnitValueFahrenheit;
-        case SENSensorUnitDecibel:
-            return kSENSensorUnitValueDB;
-        case SENSensorUnitPercent:
-            return kSENSensorUnitValuePercent;
-        case SENSensorUnitUnknown:
-        default:
-            return @"";
-    }
+    return [self rawUnit];
 }
 
 @end

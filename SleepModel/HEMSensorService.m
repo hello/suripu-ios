@@ -70,10 +70,8 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 }
 
 - (SENSensorDataRequest*)dataRequestForSensors:(NSArray<SENSensor*>*)sensors {
-    SENSensorDataRequest* request  = [SENSensorDataRequest new];
-    [request addRequestForSensors:sensors
-                      usingMethod:SENSensorDataMethodAverage
-                        withScope:SENSensorDataScopeDay5Min];
+    SENSensorDataRequest* request  = [[SENSensorDataRequest alloc] initWithScope:SENSensorDataScopeDay5Min];
+    [request addSensors:sensors];
     return request;
 }
 
@@ -120,7 +118,6 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
     
     HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
     [op setDataScope:[self apiScopeForScope:scope]];
-    [op setDataMethod:SENSensorDataMethodAverage];
     [op setFilterByTypes:[NSSet setWithObject:@([sensor type])]];
     [op setExclude:NO];
     [op setDataHandler:^(SENSensorDataScope apiScope,
@@ -142,7 +139,6 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
     
     HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
     [op setDataScope:SENSensorDataScopeLast3H5Min];
-    [op setDataMethod:SENSensorDataMethodAverage];
     [op setFilterByTypes:sensorTypes];
     [op setExclude:YES];
     [op setDataHandler:^(SENSensorDataScope apiScope,

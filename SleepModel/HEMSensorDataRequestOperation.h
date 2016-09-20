@@ -25,7 +25,6 @@ typedef void(^HEMSensorDataPollHandler)(SENSensorDataScope dataScope,
 @property (nonatomic, strong) NSSet<NSNumber*>* filterByTypes;
 @property (nonatomic, assign) BOOL exclude;
 @property (nonatomic, assign) SENSensorDataScope dataScope;
-@property (nonatomic, assign) SENSensorDataMethod dataMethod;
 @property (nonatomic, assign) double repeatDelay;
 
 @end

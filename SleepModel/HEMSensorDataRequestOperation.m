@@ -121,10 +121,8 @@ static double const kHEMSensorDataRequestDelay = 10.0f;
                 SENSensorDataRequest* request = [strongSelf dataRequest];
                 if (!request) {
                     NSArray* filteredSensors = [strongSelf filter:[status sensors]];
-                    request  = [SENSensorDataRequest new];
-                    [request addRequestForSensors:filteredSensors
-                                      usingMethod:[strongSelf dataMethod]
-                                        withScope:[strongSelf dataScope]];
+                    request  = [[SENSensorDataRequest alloc] initWithScope:[self dataScope]];
+                    [request addSensors:filteredSensors];
                     [strongSelf setDataRequest:request];
                 }
                 

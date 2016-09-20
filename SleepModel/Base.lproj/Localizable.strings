@@ -847,7 +847,7 @@
 
 // dfu
 "dfu.pill.state.not-started" = "Update starting";
-"dfu.pill.state.updating" = "Sleep Pill Updating";
+"dfu.pill.state.updating" = "Sleep Pill updating";
 "dfu.pill.state.validating" = "Validating update";
 "dfu.pill.state.disconnecting" = "Disconnecting";
 "dfu.pill.state.complete" = "Sleep Pill updated";

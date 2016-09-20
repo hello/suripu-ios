@@ -30,6 +30,7 @@
 #import "HEMStyle.h"
 #import "HEMSensorChartContainer.h"
 #import "HEMSensorGroupCollectionViewCell.h"
+#import "HEMSensorGroupMemberView.h"
 
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
@@ -497,7 +498,11 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
         UIColor* conditionColor = [UIColor colorForCondition:[sensor condition]];
         NSString* valueText = [[self formatter] stringFromSensor:sensor];
         NSString* name = [sensor localizedName];
-        [groupCell addSensorWithName:name value:valueText valueColor:conditionColor];
+        HEMSensorGroupMemberView* memberView = [groupCell addSensorWithName:name
+                                                                      value:valueText
+                                                                 valueColor:conditionColor];
+        [memberView setType:[sensor type]];
+        [[memberView tap] addTarget:self action:@selector(didTapOnGroupMember:)];
     }
     [[groupCell groupMessageLabel] setText:worstConditionString];
 }
@@ -583,6 +588,25 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 }
 
 #pragma mark - Actions
+
+- (void)didTapOnGroupMember:(UITapGestureRecognizer*)tap {
+    switch ([tap state]) {
+        case UIGestureRecognizerStateEnded: {
+            if ([[tap view] isKindOfClass:[HEMSensorGroupMemberView class]]) {
+                HEMSensorGroupMemberView* member = (id) [tap view];
+                for (SENSensor* sensor in [[self sensorStatus] sensors]) {
+                    if ([sensor type] == [member type]) {
+                        [[self delegate] showSensor:sensor fromPresenter:self];
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 - (void)pairSense {
     [[self pairDelegate] pairSenseFrom:self];

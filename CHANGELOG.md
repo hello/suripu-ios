@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.3.5
+
+New:
+
+* CO2 should now properly be returned, when available from server
+
+Fixes:
+
+* Pill DFU for iOS 10 should be fixed
+
 ## 1.5.3.4
 
 New:

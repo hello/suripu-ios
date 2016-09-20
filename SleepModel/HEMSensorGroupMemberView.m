@@ -11,6 +11,12 @@
 #import "HEMSensorGroupMemberView.h"
 #import "HEMStyle.h"
 
+@interface HEMSensorGroupMemberView()
+
+@property (nonatomic, weak) UITapGestureRecognizer* tap;
+
+@end
+
 @implementation HEMSensorGroupMemberView
 
 + (instancetype)defaultInstance {
@@ -21,6 +27,10 @@
     [[self nameLabel] setTextColor:[UIColor grey6]];
     [[self nameLabel] setFont:[UIFont body]];
     [[self valueLabel] setFont:[UIFont body]];
+    
+    UITapGestureRecognizer* tap = [UITapGestureRecognizer new];
+    [self addGestureRecognizer:tap];
+    [self setTap:tap];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

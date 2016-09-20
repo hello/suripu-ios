@@ -28,9 +28,9 @@ static CGFloat const HEMSensorGroupMemberHeight = 56.0f;
     [[[self sensorContentView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
-- (void)addSensorWithName:(NSString*)name
-                    value:(NSString*)valueText
-               valueColor:(UIColor*)valueColor {
+- (HEMSensorGroupMemberView*)addSensorWithName:(NSString*)name
+                                         value:(NSString*)valueText
+                                    valueColor:(UIColor*)valueColor {
     if (![self memberViewCache]) {
         [self setMemberViewCache:[NSCache new]];
         [[self memberViewCache] setCountLimit:3];
@@ -55,6 +55,8 @@ static CGFloat const HEMSensorGroupMemberHeight = 56.0f;
     [memberView setFrame:memberFrame];
     
     [[self sensorContentView] addSubview:memberView];
+    
+    return memberView;
 }
 
 @end

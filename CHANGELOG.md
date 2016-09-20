@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.3.6
+
+New:
+
+* Updated sensor time series api to simplify logic and avoid issues when relaying unrecognized unit types
+
 ## 1.5.3.5
 
 New:

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMSensorGroupMemberView;
+
 @interface HEMSensorGroupCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
@@ -15,8 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIView *sensorContentView;
 
 + (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount;
-- (void)addSensorWithName:(NSString*)name
-                    value:(NSString*)valueText
-               valueColor:(UIColor*)valueColor;
+- (HEMSensorGroupMemberView*)addSensorWithName:(NSString*)name
+                                         value:(NSString*)valueText
+                                    valueColor:(UIColor*)valueColor;
 
 @end

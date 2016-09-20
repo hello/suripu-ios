@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SenseKit/SENSensor.h>
 
 @interface HEMSensorGroupMemberView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *accessoryView;
+@property (assign, nonatomic) SENSensorType type;
+@property (weak, nonatomic, readonly) UITapGestureRecognizer* tap;
 
 + (instancetype)defaultInstance;
 

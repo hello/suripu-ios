@@ -4643,8 +4643,6 @@
 					"-framework",
 					"\"CocoaLumberjack\"",
 					"-framework",
-					"\"EVReflection\"",
-					"-framework",
 					"\"FXKeychain\"",
 					"-framework",
 					"\"LGBluetooth\"",

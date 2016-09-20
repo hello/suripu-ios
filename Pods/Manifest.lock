@@ -38,14 +38,12 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.0.3):
     - CocoaLumberjack/Default
-  - EVReflection (2.46.0)
   - FBSDKCoreKit (4.11.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.11.0):
     - FBSDKCoreKit
   - FXKeychain (1.5.3)
-  - iOSDFULibrary (0.1.9):
-    - EVReflection (~> 2.6)
+  - iOSDFULibrary (1.0.12):
     - Zip (~> 0.3)
   - Kiwi (2.4.0)
   - LGBluetooth (1.1.4)
@@ -117,6 +115,7 @@ DEPENDENCIES:
   - UICountingLabel (~> 1.2.0)
   - UIImageEffects (~> 0.0.1)
   - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.5.4.1`)
+  - Zip (= 0.4.3)
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
@@ -146,7 +145,7 @@ CHECKOUT OPTIONS:
     :commit: e5ecc13e844e86e8ef37b4805d3245a36aa8422c
     :git: git@github.com:hello/AttributedMarkdown.git
   iOSDFULibrary:
-    :commit: 37ef2f90b695bb346521cadfa62f1bd6138950e1
+    :commit: 30024d5ac7ee90fc09f7836d46385474deb671a7
     :git: git@github.com:jimmymlu/IOS-Pods-DFU-Library.git
   LGBluetooth:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
@@ -155,7 +154,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: f0879a4c2ba8a75bf6889a65eafe037ff5e9c546
+    :commit: 5fde091e07dc677141dde21fc3fd05a963713425
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -179,11 +178,10 @@ SPEC CHECKSUMS:
   CGFloatType: fa1da294540051a76750092a427b95296bbdc006
   Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
   CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
-  EVReflection: 17b377f0dd86a0f6ceccab574d0e22962a2f107e
   FBSDKCoreKit: 686ac982723a14ec9ddb85e2f81235d7706c891b
   FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
-  iOSDFULibrary: 3f5081faeb578bd31ea90c1d70a76c0d686382f4
+  iOSDFULibrary: ad41b45f7cfcfc6d52a9250f6c38646bc4b77597
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
   MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
@@ -201,6 +199,6 @@ SPEC CHECKSUMS:
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
   Zip: 670419a5ba9faaf5f24ed3650c4c38b4136e996b
 
-PODFILE CHECKSUM: 2984decbdbdbfb5f03e57330a7a45d585a0fe70d
+PODFILE CHECKSUM: 41ec5b5ffa5f3d6ada1dd6eddfe600af5c9bc022
 
 COCOAPODS: 1.0.0

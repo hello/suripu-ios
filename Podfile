@@ -7,6 +7,7 @@ abstract_target 'SenseApp' do
     pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
     pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
     pod 'iOSDFULibrary', :git => 'git@github.com:jimmymlu/IOS-Pods-DFU-Library.git', :branch => 'method-name-compatibility'
+    pod 'Zip', '0.4.3'
     pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
     #pod 'SenseKit', :path => '../SenseKit'
     pod 'AttributedMarkdown', :git => 'git@github.com:hello/AttributedMarkdown.git', :inhibit_warnings => true

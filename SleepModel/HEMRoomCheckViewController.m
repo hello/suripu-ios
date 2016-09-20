@@ -19,6 +19,7 @@
 #import "HEMRoomCheckView.h"
 #import "HEMMarkdown.h"
 #import "HEMSensorService.h"
+#import "HEMSensorValueFormatter.h"
 
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
@@ -38,6 +39,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 @property (assign, nonatomic) BOOL sensorsOk;
 @property (strong, nonatomic) HEMRoomCheckView* roomCheckView;
 @property (strong, nonatomic) HEMSensorService* sensorService;
+@property (strong, nonatomic) HEMSensorValueFormatter* valueFormatter;
 
 @end
 
@@ -54,6 +56,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 }
 
 - (void)configureRoomCheckView {
+    [self setValueFormatter:[HEMSensorValueFormatter new]];
     [self setSensorsOk:YES];
     
     if (![self sensors]) {
@@ -208,7 +211,9 @@ withColorFromCondition:(SENCondition)condition
 }
 
 - (NSString*)sensorValueUnitAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
-    return @"";
+    SENSensor* sensor = [self sensors][sensorIndex];
+    [[self valueFormatter] setSensorUnit:[sensor unit]];
+    return [[self valueFormatter] unitSymbol];
 }
 
 - (UIFont*)sensorValueUnitFontAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {

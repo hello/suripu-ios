@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 4/6/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-#import "markdown_peg.h"
+#import <UICountingLabel/UICountingLabel.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"
@@ -14,19 +14,14 @@
 #import "HEMActivityIndicatorView.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMAnimationUtils.h"
-#import "HEMSpinnerView.h"
 #import "HEMMarkdown.h"
 
 static CGFloat const HEMRoomCheckViewSensorIconSpacing = 28.0f;
 static CGFloat const HEMRoomCheckViewSensorIconSize = 40.0f;
 static CGFloat const HEMRoomCheckViewSensorIconActivitySize = 40.0f;
-static CGFloat const HEMRoomCheckViewSensorDigitWidth = 41.0f;
-static CGFloat const HEMRoomCheckViewSensorDigitHeight = 98.0f;
-static CGFloat const HEMRoomCheckViewSensorDigitSpacing = 3.0f;
-static CGFloat const HEMRoomCheckViewSensorDigitToUnitSpacing = 7.0f;
-static CGFloat const HEMRoomCheckViewSensorUnitHeight = 44.0f;
-static CGFloat const HEMRoomCheckViewSensorUnitYOffset = 14.0f;
-static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
+
+static CGFloat const kHEMRoomCheckViewSensorValueDuration = 0.5f;
+static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 2.0f;
 
 @interface HEMRoomCheckView()
 
@@ -34,6 +29,8 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet UIView *sensorContainerView;
 @property (weak, nonatomic) IBOutlet UIView *sensorValueContainer;
+@property (weak, nonatomic) IBOutlet UICountingLabel *valueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *unitLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorContainerTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorMessageHeightConstraint;
@@ -44,11 +41,8 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 @property (assign, nonatomic) NSInteger numberOfSensors;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 @property (assign, nonatomic, getter=isAnimating) BOOL animating;
-@property (strong, nonatomic) NSMutableArray* sensorValueRotaries;
 @property (weak,   nonatomic) HEMActivityIndicatorView* currentSensorActivity;
 @property (assign, nonatomic) NSUInteger currentSensorIndex;
-@property (weak,   nonatomic) CAGradientLayer* topGradientLayer;
-@property (weak,   nonatomic) CAGradientLayer* botGradientLayer;
 @property (assign, nonatomic) CGFloat gradientHeight;
 @property (strong, nonatomic) NSArray* gradientColorRefs;
 
@@ -69,59 +63,6 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 
 - (void)awakeFromNib {
     [[self sensorMessageLabel] setFont:[UIFont onboardingRoomCheckSensorLightFont]];
-    [self setSensorValueRotaries:[NSMutableArray array]];
-}
-
-- (CAGradientLayer*)gradientLayerWithWidth:(CGFloat)width
-                           containerHeight:(CGFloat)containerHeight
-                                    colors:(NSArray*)colors
-                                 locations:(NSArray*)locations {
-    
-    CAGradientLayer* gradientLayer = [CAGradientLayer layer];
-    CGRect gradientFrame = CGRectZero;
-    gradientFrame.size.width = width;
-    gradientFrame.size.height = ((containerHeight - HEMRoomCheckViewSensorDigitHeight) / 2.0f);
-    [gradientLayer setFrame:gradientFrame];
-    [gradientLayer setColors:colors];
-    [gradientLayer setLocations:locations];
-    return gradientLayer;
-}
-
-- (NSArray*)gradientColorRefs {
-    if (!_gradientColorRefs) {
-        _gradientColorRefs = @[(id)[UIColor whiteColor].CGColor,
-                               (id)[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
-    }
-    return _gradientColorRefs;
-}
-
-- (void)addTopGradientTo:(UIView*)view {
-    NSArray* colors = [self gradientColorRefs];
-    CGFloat topWidth = CGRectGetWidth([[self sensorValueContainer] bounds]);
-    CGFloat containerHeight = CGRectGetHeight([[self sensorValueContainer] bounds]);
-    CAGradientLayer* layer = [self gradientLayerWithWidth:topWidth
-                                          containerHeight:containerHeight
-                                                   colors:colors
-                                                locations:@[@(0.75f), @1]];
-    [[view layer] addSublayer:layer];
-    [self setTopGradientLayer:layer];
-}
-
-- (void)addBotGradientTo:(UIView*)view {
-    NSArray* colors = [[[self gradientColorRefs] reverseObjectEnumerator] allObjects];
-    CGFloat topWidth = CGRectGetWidth([[self sensorValueContainer] bounds]);
-    CGFloat containerHeight = CGRectGetHeight([[self sensorValueContainer] bounds]);
-    
-    CAGradientLayer* layer = [self gradientLayerWithWidth:topWidth
-                                          containerHeight:containerHeight
-                                                   colors:colors
-                                                locations:@[@0, @(0.25f)]];
-    CGRect layerFrame = [layer frame];
-    layerFrame.origin.y = containerHeight - CGRectGetHeight(layerFrame);
-    [layer setFrame:layerFrame];
-    
-    [[view layer] addSublayer:layer];
-    [self setBotGradientLayer:layer];
 }
 
 - (void)adjustForiPhone4 {
@@ -153,10 +94,6 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     
     if (![self isLoaded]) {
         [self reload];
-        
-        [self addTopGradientTo:[self sensorValueContainer]];
-        [self addBotGradientTo:[self sensorValueContainer]];
-        
         [self setLoaded:YES];
     }
 }
@@ -172,14 +109,6 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     return [[NSAttributedString alloc] initWithString:value attributes:attributes];
 }
 
-- (CGSize)sizeOfAttributedSensorValueUnit:(NSAttributedString*)attributedUnit {
-    CGSize constraint = CGSizeMake(MAXFLOAT, HEMRoomCheckViewSensorUnitHeight);
-    return [attributedUnit boundingRectWithSize:constraint
-                                        options:NSStringDrawingUsesFontLeading
-                                                | NSStringDrawingUsesLineFragmentOrigin
-                                        context:nil].size;
-}
-
 #pragma mark - Presentation of data
 
 - (void)reload {
@@ -187,7 +116,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     
     if ([self numberOfSensors] > 0) {
         [self layoutSensorIcons];
-        [self configureRotariesForSensorAtIndex:0];
+        [self configureSensorValueLabelAtIndx:0];
         [self setCurrentSensorIndex:0];
     }
 }
@@ -230,74 +159,20 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
     }
 }
 
-- (void)configureRotariesForSensorAtIndex:(NSUInteger)index {
-    if (index >= [self numberOfSensors]) return;
-    
-    if ([[self sensorValueRotaries] count] > 0) {
-        [[self sensorValueRotaries] removeAllObjects];
-        [[[self sensorValueContainer] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+- (void)configureSensorValueLabelAtIndx:(NSUInteger)index {
+    if (index >= [self numberOfSensors]) {
+        return;
     }
-    
-    NSInteger sensorValue = [[self delegate] sensorValueAtIndex:index inRoomCheckView:self];
-    NSUInteger digits = [[@(sensorValue) stringValue] length];
-    
+
     NSString* unit = [[self delegate] sensorValueUnitAtIndex:index inRoomCheckView:self];
     UIColor* color = [[self delegate] sensorValueColorAtIndex:index inRoomCheckView:self];
-    UIFont* unitFont = [[self delegate] sensorValueUnitFontAtIndex:index inRoomCheckView:self];
-    NSAttributedString* attrUnit = [self attributedSensorUnitFrom:unit color:color font:unitFont];
-    CGSize unitSize = [self sizeOfAttributedSensorValueUnit:attrUnit];
-    CGFloat requiredWidth
-        = (digits * HEMRoomCheckViewSensorDigitWidth)
-        + ((digits - 1) * HEMRoomCheckViewSensorDigitSpacing);
     
-    CGRect containerBounds = [[self sensorValueContainer] bounds];
-    CGRect valueFrame = CGRectZero;
-    valueFrame.origin.x = (CGRectGetWidth(containerBounds) - requiredWidth)/2;
-    valueFrame.origin.y = (CGRectGetHeight(containerBounds) - HEMRoomCheckViewSensorDigitHeight)/2;
-    valueFrame.size = CGSizeMake(HEMRoomCheckViewSensorDigitWidth, HEMRoomCheckViewSensorDigitHeight);
-    
-    for (int i = 0; i < digits; i++) {
-        [self addDigitRotaryWithFrame:valueFrame color:color atIndex:i];
-        valueFrame.origin.x += HEMRoomCheckViewSensorDigitWidth + HEMRoomCheckViewSensorDigitSpacing;
-    }
-    
-    [self appendSensorUnit:attrUnit withSize:unitSize];
-    
-    // make sure it always sits above the digits
-    [[[self sensorValueContainer] layer] addSublayer:[self topGradientLayer]];
-    [[[self sensorValueContainer] layer] addSublayer:[self botGradientLayer]];
-}
-
-- (void)addDigitRotaryWithFrame:(CGRect)frame color:(UIColor*)color atIndex:(NSInteger)index {
-    NSMutableArray* digits = [NSMutableArray arrayWithCapacity:10];
-    for (long i = 0; i < 10; i++) {
-        [digits addObject:[NSString stringWithFormat:@"%ld", i]];
-    }
-    
-    UIFont* font = [UIFont onboardingRoomCheckSensorValueFont];
-    HEMSpinnerView* rotary = [[HEMSpinnerView alloc] initWithItems:digits
-                                                              font:font
-                                                             color:color];
-    [rotary setTag:index];
-    [rotary setFrame:frame];
-    
-    [[self sensorValueRotaries] addObject:rotary];
-    [[self sensorValueContainer] addSubview:rotary];
-}
-
-- (void)appendSensorUnit:(NSAttributedString*)attributedUnit withSize:(CGSize)size {
-    UIView* lastRotary = [[self sensorValueRotaries] lastObject];
-    CGRect unitFrame = CGRectZero;
-    unitFrame.origin.x = CGRectGetMaxX([lastRotary frame]) + HEMRoomCheckViewSensorDigitToUnitSpacing;
-    unitFrame.origin.y = CGRectGetMinY([lastRotary frame]) + HEMRoomCheckViewSensorUnitYOffset;
-    unitFrame.size = size;
-    
-    UILabel* label = [[UILabel alloc] initWithFrame:unitFrame];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setClipsToBounds:YES];
-    [label setAttributedText:attributedUnit];
-    
-    [[self sensorValueContainer] addSubview:label];
+    [[self valueLabel] setFormat:@"%.0f"];
+    [[self valueLabel] setFont:[UIFont h1]];
+    [[self valueLabel] setTextColor:color];
+    [[self unitLabel] setFont:[UIFont h4]];
+    [[self unitLabel] setText:unit];
+    [[self unitLabel] setTextColor:[UIColor grey3]];
 }
 
 #pragma mark - Animations
@@ -315,7 +190,8 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 - (void)showSensorMessageForSensorAtIndex:(NSUInteger)index {
     NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckSensorMessage];
     NSString* message = [[self delegate] sensorMessageAtIndex:index inRoomCheckView:self];
-    NSAttributedString* attrMessage = markdown_to_attr_string(message, 0, statusAttributes);
+    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message
+                                                                      attributes:statusAttributes];
     
     [[self sensorMessageLabel] setTextColor:[UIColor blackColor]];
     [[self sensorMessageLabel] setAttributedText:attrMessage];
@@ -369,71 +245,28 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
         return;
     }
     
-    [self setCurrentSensorIndex:index];
-    [self setSenseImageToDefaultForSensorIndex:index];
-    [self setDefaultMessageForSensorAtIndex:index];
-    [self showActivityAroundSensorIconAtIndex:index];
-    [self animateSensorValueAtIndex:index willComplete:^{
-        [self animateSenseImageToLoadedStateForSensorAtIndex:index];
-        [self animateSensorIconToLoadedStateAtIndex:index];
-        [self hideActivityAroundSensorIcon];
-        [HEMAnimationUtils fade:[self sensorMessageLabel] out:^{
-            [self showSensorMessageForSensorAtIndex:index];
+    NSInteger value = [[self delegate] sensorValueAtIndex:index inRoomCheckView:self];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self valueLabel] setCompletionBlock:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf animateSenseImageToLoadedStateForSensorAtIndex:index];
+        [strongSelf animateSensorIconToLoadedStateAtIndex:index];
+        [strongSelf hideActivityAroundSensorIcon];
+        [HEMAnimationUtils fade:[strongSelf sensorMessageLabel] out:^{
+            [strongSelf showSensorMessageForSensorAtIndex:index];
         } thenIn:^{
-            int64_t delayInSeconds = (int64_t)(HEMRoomCheckViewSensorDisplayDuration * NSEC_PER_SEC);
+            int64_t delayInSeconds = (int64_t)(kHEMRoomCheckViewSensorDisplayDuration * NSEC_PER_SEC);
             dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds);
             dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
                 NSUInteger nextIndex = index + 1;
-                [self configureRotariesForSensorAtIndex:nextIndex];
-                [self animateSensorAtIndex:nextIndex completion:completion];
+                [strongSelf configureSensorValueLabelAtIndx:nextIndex];
+                [strongSelf animateSensorAtIndex:nextIndex completion:completion];
             });
         }];
-    } completion:nil];
-}
-
-- (void)animateSensorValueAtIndex:(NSUInteger)index
-                     willComplete:(void(^)(void))willComplete
-                       completion:(void(^)(void))completion {
-    NSInteger value = [[self delegate] sensorValueAtIndex:index inRoomCheckView:self];
-    NSString* valueString = [@(value) stringValue];
-    NSUInteger digitsCount = [valueString length];
-    
-    if (digitsCount == 0) {
-        if (completion) {
-            completion ();
-        }
-        return;
-    }
-    
-    NSInteger digitIndex = digitsCount - 1;
-    NSString* digitString = [valueString substringWithRange:NSMakeRange(digitIndex, 1)];
-    NSInteger rotations = 0;
-    if (digitsCount > 1) {
-        // negative numbers should never happen, but if it does we still want to
-        // rotate the digits based on the values from 0, taking the absolute value
-        // to determine the rotations
-        rotations = absCGFloat([[valueString substringToIndex:digitIndex] integerValue]);
-    }
-    
-    HEMSpinnerView* rotary = [self sensorValueRotaries][digitIndex];
-    [rotary spinTo:digitString rotations:rotations onRotation:^(HEMSpinnerView* view, NSUInteger rotation) {
-        [self incrementAdjacentRotaryAtIndex:[view tag] - 1];
-    } willComplete:willComplete completion:^(BOOL finished) {
-        if (completion) {
-            completion ();
-        }
     }];
-}
-
-- (void)incrementAdjacentRotaryAtIndex:(NSInteger)index {
-    if (index >= 0) {
-        HEMSpinnerView* rotary = [self sensorValueRotaries][index];
-        [rotary next:^(NSString *itemShowing) {
-            if ([itemShowing isEqualToString:@"0"]) {
-                [self incrementAdjacentRotaryAtIndex:[rotary tag] - 1];
-            }
-        }];
-    }
+    
+    [[self valueLabel] countFromCurrentValueTo:value withDuration:kHEMRoomCheckViewSensorValueDuration];
 }
 
 - (void)showSensorImageForSensorAtIndex:(NSUInteger)index {

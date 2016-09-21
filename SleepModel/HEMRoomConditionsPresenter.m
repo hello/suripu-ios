@@ -190,9 +190,9 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
                                         NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setSensorError:error];
+        [strongSelf setSensorStatus:status];
+                               
         if (!error) {
-            [strongSelf setSensorStatus:status];
-            
             SENSensorDataCollection* sensorData = data;
             if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
                 [strongSelf setGroupedSensors:[strongSelf groupedSensorsFrom:[status sensors]]];
@@ -203,7 +203,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             }
             
         } else {
-            [strongSelf setSensorError:error];
             [strongSelf reloadUI];
         }
         

@@ -19,6 +19,7 @@
 #import "HEMRoomCheckView.h"
 #import "HEMMarkdown.h"
 #import "HEMSensorService.h"
+#import "HEMSensorValueFormatter.h"
 
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
@@ -38,6 +39,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 @property (assign, nonatomic) BOOL sensorsOk;
 @property (strong, nonatomic) HEMRoomCheckView* roomCheckView;
 @property (strong, nonatomic) HEMSensorService* sensorService;
+@property (strong, nonatomic) HEMSensorValueFormatter* valueFormatter;
 
 @end
 
@@ -54,6 +56,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 }
 
 - (void)configureRoomCheckView {
+    [self setValueFormatter:[HEMSensorValueFormatter new]];
     [self setSensorsOk:YES];
     
     if (![self sensors]) {
@@ -67,7 +70,11 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
     
     [[self resultsDescriptionLabel] setAlpha:0.0f];
+    [[self resultsDescriptionLabel] setFont:[UIFont body]];
+    [[self resultsDescriptionLabel] setTextColor:[UIColor grey4]];
     [[self resultsTitleLabel] setAlpha:0.0f];
+    [[self resultsTitleLabel] setFont:[UIFont h4]];
+    [[self resultsTitleLabel] setTextColor:[UIColor grey6]];
 }
 
 - (NSString*)imageName:(NSString*)imageName
@@ -95,16 +102,12 @@ withColorFromCondition:(SENCondition)condition
 
 - (UIImage*)iconForSensor:(SENSensor*)sensor forState:(HEMRoomCheckState)state {
     SENCondition condition = [sensor condition];
-    NSString* iconImageName = [[[sensor localizedName] lowercaseString] stringByAppendingString:@"Icon"];
+    NSString* iconImageName = [[[sensor typeStringValue] lowercaseString] stringByAppendingString:@"Icon"];
     NSString* defaultColor = @"Gray";
     switch (state) {
+        case HEMRoomCheckStateLoading:
         case HEMRoomCheckStateLoaded: {
             iconImageName = [self imageName:iconImageName withColorFromCondition:condition defaultColor:defaultColor];
-            break;
-        }
-        case HEMRoomCheckStateLoading: {
-            NSString* baseName = [iconImageName stringByAppendingString:@"NoBorder"];
-            iconImageName = [self imageName:baseName withColorFromCondition:condition defaultColor:defaultColor];
             break;
         }
         case HEMRoomCheckStateWaiting:
@@ -144,11 +147,9 @@ withColorFromCondition:(SENCondition)condition
     return condition;
 }
 
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
-    
-    UILabel* messageLabel = [[self roomCheckView] sensorMessageLabel];
-    CGRect messageFrame = [messageLabel convertRect:[messageLabel bounds] toView:[self view]];
+- (void)adjustResultsHeight {
+    UIView* sensorContainer = [[self roomCheckView] sensorContainerView];
+    CGRect messageFrame = [sensorContainer convertRect:[sensorContainer bounds] toView:[self view]];
     CGFloat viewHeight = CGRectGetHeight([[self view] bounds]);
     CGFloat resultsHeight = viewHeight - CGRectGetMinY(messageFrame);
     [[self resultsHeightConstraint] setConstant:resultsHeight];
@@ -208,7 +209,10 @@ withColorFromCondition:(SENCondition)condition
 }
 
 - (NSString*)sensorValueUnitAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
-    return @"";
+    SENSensor* sensor = [self sensors][sensorIndex];
+    [[self valueFormatter] setUnicodeUnitSymbol:NO];
+    [[self valueFormatter] setSensorUnit:[sensor unit]];
+    return [[self valueFormatter] unitSymbol];
 }
 
 - (UIFont*)sensorValueUnitFontAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
@@ -228,13 +232,6 @@ withColorFromCondition:(SENCondition)condition
     return [self sensorActivityImageForSensorCondition:condition];
 }
 
-#pragma mark - Sensor Messages
-
-- (NSAttributedString*)messageForSensor:(SENSensor*)sensor {
-    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckSensorMessage];
-    return markdown_to_attr_string([sensor localizedMessage], 0, statusAttributes);
-}
-
 #pragma mark - Content Display
 
 - (void)hideContent:(void(^)(BOOL finished))completion {
@@ -243,21 +240,14 @@ withColorFromCondition:(SENCondition)condition
     [UIView animateWithDuration:HEMRoomCheckAnimationDuration
                      animations:^{
                          [[self roomCheckView] setAlpha:1.0f];
-                         
                          [[self contentView] setAlpha:0.0f];
-                         CGRect contentFrame = [[self contentView] frame];
-                         contentFrame.origin.y -= CGRectGetHeight(contentFrame)/2;
-                         [[self contentView] setFrame:contentFrame];
-
                          [[self buttonContainer] setAlpha:0.0f];
-                         CGRect containerFrame = [[self buttonContainer] frame];
-                         containerFrame.origin.y += CGRectGetHeight(containerFrame)/2;
-                         [[self buttonContainer] setFrame:containerFrame];
                      }
                      completion:completion];
 }
 
 - (void)showResults {
+    [self adjustResultsHeight];
     [[self resultsDescriptionLabel] setAlpha:0.0f];
     [[self resultsTitleLabel] setAlpha:0.0f];
     [UIView animateWithDuration:HEMRoomCheckAnimationDuration animations:^{

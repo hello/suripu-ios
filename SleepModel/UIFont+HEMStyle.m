@@ -564,11 +564,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:11.0f];
 }
 
-+ (UIFont*)onboardingRoomCheckSensorFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
-}
-
 + (UIFont*)onboardingRoomCheckSensorBoldFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.0f];

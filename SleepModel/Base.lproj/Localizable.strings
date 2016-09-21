@@ -935,3 +935,8 @@
 "sensor.section.scale.range.format" = "%.0f to %.0f";
 "sensor.section.scale.range.no-min.format" = "0 to %.0f";
 "sensor.section.scale.range.no-max.format" = "%.0f+";
+
+// extension
+"ext.room-conditions.no-data" = "no data available";
+"ext.room-conditions.error" = "unable to load data";
+"ext.room-conditions.not-signed-in" = "sign in to view data";

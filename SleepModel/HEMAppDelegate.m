@@ -26,6 +26,8 @@
 
 @implementation HEMAppDelegate
 
+static NSString* const kHEMAppExtRoom = @"room";
+
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
 static NSString* const HEMApiUserAgentFormat = @"%@/%@ Platform/iOS OS/%@";
@@ -53,6 +55,18 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [self createAndShowWindow];
     
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *,id> *)options {
+    NSString* lastPath = [url lastPathComponent];
+    if ([lastPath isEqualToString:kHEMAppExtRoom]) {
+        HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+        [rootVC showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:YES];
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL)application:(UIApplication *)application

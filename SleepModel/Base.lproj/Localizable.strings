@@ -940,3 +940,4 @@
 "ext.room-conditions.no-data" = "no data available";
 "ext.room-conditions.error" = "unable to load data";
 "ext.room-conditions.not-signed-in" = "sign in to view data";
+"ext.room-conditions.loading" = "loading data";

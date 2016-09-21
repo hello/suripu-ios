@@ -93,6 +93,10 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 - (void)didAppear {
     [super didAppear];
     [self startPolling];
+    
+    if ([self isIntroShowing]) {
+        [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
+    }
 }
 
 - (void)didDisappear {
@@ -135,10 +139,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 #pragma mark - Data
 
 - (void)reloadUI {
-    if ([self isIntroShowing]) {
-        [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
-    }
-    
     [[self activityIndicator] setHidden:YES];
     [[self activityIndicator] stop];
     [[self collectionView] reloadData];

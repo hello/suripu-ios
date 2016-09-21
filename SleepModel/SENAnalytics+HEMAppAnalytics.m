@@ -114,6 +114,8 @@ NSString* const kHEMAnalyticsEventPropOnBScreen = @"Screen";
 NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 
 // main app
+NSString* const kHEMAnalyticsEventLaunchedFromExt = @"App Launched From Extension";
+NSString* const kHEMAnalyticsEventPropExtUrl = @"extension url";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";

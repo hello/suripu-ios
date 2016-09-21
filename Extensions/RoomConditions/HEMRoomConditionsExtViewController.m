@@ -44,7 +44,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (nonatomic, weak)   IBOutlet UITableView* tableView;
 @property (nonatomic, weak)   IBOutlet UILabel *noDataLabel;
 @property (nonatomic, copy)   HEMWidgeUpdateBlock updateBlock;
-@property (nonatomic, assign) BOOL sensorsChecked;
+@property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSError* sensorsError;
 @property (nonatomic, strong) HEMSensorValueFormatter* sensorFormatter;
 @property (nonatomic, strong) SENSensorStatus* status;
@@ -76,6 +76,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 }
 
 - (void)configureContent {
+    [[self noDataLabel] setText:nil];
     [self setSensorFormatter:[HEMSensorValueFormatter new]];
     [[self sensorFormatter] setIncludeUnitSymbol:YES];
     [[self tableView] setRowHeight:kHEMTodayRowHeight];
@@ -88,6 +89,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)refreshData:(void (^)(NCUpdateResult))completionHandler {
     [self setSensorsError:nil];
+    [self setLoading:YES];
     
     __weak typeof(self) weakSelf = self;
     // we can't use the service as it will track errors, which our analytics
@@ -96,7 +98,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setStatus:status];
         [strongSelf setSensorsError:error];
-        [strongSelf setSensorsChecked:YES];
+        [strongSelf setLoading:NO];
         
         if (completionHandler) {
             NCUpdateResult result = NCUpdateResultNewData;
@@ -117,8 +119,10 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
             message = NSLocalizedString(@"ext.room-conditions.error", nil);
         } else if (![SENAuthorizationService isAuthorized]) {
             message = NSLocalizedString(@"ext.room-conditions.not-signed-in", nil);
+        } else if ([self isLoading]) {
+            message = NSLocalizedString(@"", nil);
         } else {
-            message = NSLocalizedString(@"ext.room-conditions.no-data", nil);
+            message = NSLocalizedString(@"ext.room-conditions.loading", nil);
         }
         [[self noDataLabel] setText:message];
     }

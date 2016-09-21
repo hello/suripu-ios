@@ -62,6 +62,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
             options:(NSDictionary<NSString *,id> *)options {
     NSString* lastPath = [url lastPathComponent];
     if ([lastPath isEqualToString:kHEMAppExtRoom]) {
+        NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
+        [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
         HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
         [rootVC showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:YES];
         return YES;

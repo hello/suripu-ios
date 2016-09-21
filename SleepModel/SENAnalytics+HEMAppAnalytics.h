@@ -100,6 +100,8 @@ extern NSString* const HEMAnalyticsEventPairPillRetry;
 
 
 // main
+extern NSString* const kHEMAnalyticsEventLaunchedFromExt;
+extern NSString* const kHEMAnalyticsEventPropExtUrl;
 extern NSString* const kHEMAnalyticsEventAppLaunched;
 extern NSString* const kHEMAnalyticsEventAppClosed;
 extern NSString* const kHEMAnalyticsEventPropEvent;

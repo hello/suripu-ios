@@ -128,7 +128,7 @@ EXTERNAL SOURCES:
   NAPickerView:
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :path: "../SenseKit"
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
   SORelativeDateTransformer:
@@ -199,6 +199,6 @@ SPEC CHECKSUMS:
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
   Zip: 670419a5ba9faaf5f24ed3650c4c38b4136e996b
 
-PODFILE CHECKSUM: 77622461946cf9ab88a2096182261f8fceba34c1
+PODFILE CHECKSUM: 41ec5b5ffa5f3d6ada1dd6eddfe600af5c9bc022
 
 COCOAPODS: 1.0.0

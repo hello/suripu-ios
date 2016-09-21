@@ -144,12 +144,18 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                         
                         [strongSelf setPollError:error];
                         if (!error) {
+                            BOOL needsUIUpdate = ![strongSelf status]
+                                || ![status isEqual:[strongSelf status]];
                             [strongSelf setStatus:status];
                             [strongSelf updateSensorFromStatus];
                             
                             SENSensorDataCollection* sensorData = data;
                             if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
                                 [strongSelf setSensorData:data];
+                                needsUIUpdate = needsUIUpdate || YES;
+                            }
+                            
+                            if (needsUIUpdate) {
                                 [strongSelf prepareChartDataAndReload];
                             }
                             

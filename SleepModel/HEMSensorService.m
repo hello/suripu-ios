@@ -19,12 +19,15 @@
 #import "HEMSensorDataRequestOperation.h"
 
 NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
+NSString* const kHEMSensorNotifyStatusChanged = @"kHEMSensorNotifyStatusChanged";
+NSString* const kHEMSensorNotifyStatusKey = @"status";
 
 @interface HEMSensorService()
 
 @property (nonatomic, copy) HEMSensorPollHandler pollHandler;
 @property (nonatomic, strong) SENSensorDataRequest* pollRequest;
 @property (nonatomic, strong) NSOperationQueue* pollQueue;
+@property (nonatomic, strong) SENSensorStatus* previousStatus;
 
 @end
 
@@ -51,13 +54,34 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
                            userInfo:info];
 }
 
+#pragma mark - Notifications
+
+- (void)notifyOfStatusChangeIfNeeded:(SENSensorStatus*)status {
+    if (status
+        && (![self previousStatus]
+            || ![[self previousStatus] isEqual:status])) {
+        NSDictionary* info = @{kHEMSensorNotifyStatusKey : status};
+        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+        NSNotification* note = [NSNotification notificationWithName:kHEMSensorNotifyStatusChanged
+                                                             object:nil
+                                                           userInfo:info];
+        [center postNotification:note];
+        [self setPreviousStatus:status];
+    }
+
+}
+
 #pragma mark - Data
 
 - (void)sensorStatus:(HEMSensorStatusHandler)completion {
+    __weak typeof(self) weakSelf = self;
     [SENAPISensor getSensorStatus:^(SENSensorStatus* status, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [SENAnalytics trackError:error];
         }
+        
+        [strongSelf notifyOfStatusChangeIfNeeded:status];
         
         if (completion) {
             completion (status, error);
@@ -116,6 +140,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
                completion:(HEMSensorPollHandler)completion {
     [[self pollQueue] cancelAllOperations];
     
+    __weak typeof(self) weakSelf = self;
     HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
     [op setDataScope:[self apiScopeForScope:scope]];
     [op setFilterByTypes:[NSSet setWithObject:@([sensor type])]];
@@ -124,9 +149,14 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
                          SENSensorStatus* status,
                          SENSensorDataCollection* data,
                          NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error) {
             [SENAnalytics trackError:error];
         }
+        
+        [strongSelf notifyOfStatusChangeIfNeeded:status];
+        
         completion (scope, status, data, error);
     }];
     
@@ -137,6 +167,7 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
                       completion:(HEMSensorPollHandler)completion {
     [[self pollQueue] cancelAllOperations];
     
+    __weak typeof(self) weakSelf = self;
     HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
     [op setDataScope:SENSensorDataScopeLast3H5Min];
     [op setFilterByTypes:sensorTypes];
@@ -145,9 +176,14 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
                          SENSensorStatus* status,
                          SENSensorDataCollection* data,
                          NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error) {
             [SENAnalytics trackError:error];
         }
+        
+        [strongSelf notifyOfStatusChangeIfNeeded:status];
+        
         completion (HEMSensorServiceScopeLast3H, status, data, error);
     }];
     

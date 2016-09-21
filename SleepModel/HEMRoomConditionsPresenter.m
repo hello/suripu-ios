@@ -88,6 +88,30 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     [self setActivityIndicator:activityIndicator];
 }
 
+#pragma mark - Data Notifications
+
+- (void)listenForSensorStatusChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(sensorStatusChangedOffscreen:)
+                   name:kHEMSensorNotifyStatusChanged
+                 object:nil];
+}
+
+- (void)stopListeningForSensorStatusChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:kHEMSensorNotifyStatusChanged object:nil];
+}
+
+- (void)sensorStatusChangedOffscreen:(NSNotification*)note {
+    SENSensorStatus* status = [note userInfo][kHEMSensorNotifyStatusKey];
+    if (status) {
+        [self setSensorStatus:status];
+        [self setGroupedSensors:[self groupedSensorsFrom:[status sensors]]];
+        [self reloadUI];
+    }
+}
+
 #pragma mark - Presenter Events
 
 - (void)didAppear {
@@ -97,11 +121,16 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     if ([self isIntroShowing]) {
         [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
     }
+
+    // let the polling update the UI
+    [self stopListeningForSensorStatusChanges];
 }
 
 - (void)didDisappear {
     [super didDisappear];
     [[self sensorService] stopPollingForData];
+    // if offscreen and data is updated, make it update
+    [self listenForSensorStatusChanges];
 }
 
 - (void)userDidSignOut {
@@ -615,6 +644,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 #pragma mark - Clean up
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_collectionView) {
         [_collectionView setDelegate:nil];
         [_collectionView setDataSource:nil];

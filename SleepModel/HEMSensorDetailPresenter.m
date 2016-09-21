@@ -195,7 +195,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             NSUInteger index = 0;
             SENSensorTime* time = nil;
             for (NSNumber* value in values) {
-                [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index]];
+                CGFloat entryValue = MAX(0.0f, [value doubleValue]);
+                [chartData addObject:[[ChartDataEntry alloc] initWithValue:entryValue
+                                                                    xIndex:index]];
                 if (index == ([labelData count] + 1) * indicesBetweenLabels) {
                     NSInteger indexWithOffset = index - kHEMSensorDetailXAxisOffset;
                     time = [[strongSelf sensorData] timestamps][indexWithOffset];

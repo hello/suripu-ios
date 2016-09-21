@@ -871,7 +871,7 @@
 
 // voice tutorial
 "onboarding.voice.info.title" = "Voice Tip";
-"onboarding.voice.info.message" = "Make sure your room is quiet, and that you're speaking clearly to Sense and not your mobile device.";
+"onboarding.voice.info.message" = "Always say \"Okay Sense\" before each command to activate Voice.\n\nMake sure your room is quiet, and that you're speaking clearly to Sense and not your mobile device.";
 "onboarding.voice.error.problem" = "Sorry, there was a problem. Please try again.";
 "onboarding.voice.error.not-understood" = "Sorry, didn't quite get that. Please try again.";
 

@@ -37,6 +37,7 @@
 }
 
 - (void)setCommonProperties {
+    [self setUnicodeUnitSymbol:YES];
     [self setRoundingMode:NSNumberFormatterRoundUp];
     [self setMinimumIntegerDigits:1];
     [self setNilSymbol:NSLocalizedString(@"empty-data", nil)];
@@ -159,7 +160,11 @@
     switch ([self sensorUnit]) {
         case SENSensorUnitFahrenheit:
         case SENSensorUnitCelsius:
-            return NSLocalizedString(@"measurement.temperature.unit", nil);
+            if ([self useUnicodeUnitSymbol]) {
+                return NSLocalizedString(@"measurement.temperature.unit", nil);
+            } else {
+                return NSLocalizedString(@"measurement.temperature.unit.normal", nil);
+            }
         case SENSensorUnitPercent:
             return NSLocalizedString(@"measurement.percentage.unit", nil);
         case SENSensorUnitLux:

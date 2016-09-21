@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, HEMSensorValueUnitLoc) {
 @interface HEMSensorValueFormatter : NSNumberFormatter
 
 @property (nonatomic, assign) BOOL includeUnitSymbol;
+@property (nonatomic, assign, getter=useUnicodeUnitSymbol) BOOL unicodeUnitSymbol;
 
 /**
  * @method initWithSensorUnit:

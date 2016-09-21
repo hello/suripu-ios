@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "soundIconGreen.png",
+      "filename" : "noise_green_nofill.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "soundIconGreen@2x.png",
+      "filename" : "noise_green_nofill@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "soundIconGreen@3x.png",
+      "filename" : "noise_green_nofill@3x.png",
       "scale" : "3x"
     }
   ],

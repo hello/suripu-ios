@@ -66,6 +66,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 @property (nonatomic, assign) NSInteger failures;
 
 @property (nonatomic, weak) HEMVoiceService* voiceService;
+@property (nonatomic, assign, getter=hasStoppedListening) BOOL stopListening;
 
 @end
 
@@ -371,6 +372,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:HEMVoiceNotification object:[self voiceService]];
     [[self voiceService] stopListeningForVoiceResult];
+    [self setStopListening:YES];
 }
 
 - (void)listenForVoiceResult {
@@ -380,6 +382,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
                    name:HEMVoiceNotification
                  object:[self voiceService]];
     [[self voiceService] startListeningForVoiceResult];
+    [self setStopListening:NO];
 }
 
 - (void)didGetVoiceResult:(NSNotification*)note {
@@ -449,7 +452,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if ([strongSelf failures] == HEMVoiceTutorialFailureBeforeTip) {
                 [strongSelf voiceInfo];
-            } else {
+            } else if (![strongSelf hasStoppedListening]){
                 [strongSelf listenForVoiceResult];
             }
         });
@@ -458,6 +461,10 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 }
 
 - (void)showUnrecognizedResponse:(NSString*)message {
+    if (![self isVisible]) {
+        return;
+    }
+    
     [self setFailures:[self failures] + 1];
     [self stopListeningForVoiceResult];
     

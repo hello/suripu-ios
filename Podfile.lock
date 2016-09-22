@@ -99,7 +99,7 @@ DEPENDENCIES:
   - AttributedMarkdown (from `git@github.com:hello/AttributedMarkdown.git`)
   - Bugsnag (~> 4.1.0)
   - CGFloatType (~> 1.3.1)
-  - Charts/Realm
+  - Charts/Realm (= 2.2.5)
   - FBSDKCoreKit (~> 4.11.0)
   - FBSDKLoginKit (~> 4.11.0)
   - iOSDFULibrary (from `git@github.com:jimmymlu/IOS-Pods-DFU-Library.git`, branch `method-name-compatibility`)
@@ -199,6 +199,6 @@ SPEC CHECKSUMS:
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
   Zip: 670419a5ba9faaf5f24ed3650c4c38b4136e996b
 
-PODFILE CHECKSUM: 41ec5b5ffa5f3d6ada1dd6eddfe600af5c9bc022
+PODFILE CHECKSUM: e16372ef4b4e609ae0d74aa00128fa9c376e518e
 
 COCOAPODS: 1.0.0

@@ -114,6 +114,8 @@ NSString* const kHEMAnalyticsEventPropOnBScreen = @"Screen";
 NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 
 // main app
+NSString* const kHEMAnalyticsEventLaunchedFromExt = @"App Launched From Extension";
+NSString* const kHEMAnalyticsEventPropExtUrl = @"extension url";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
@@ -283,7 +285,6 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     // whatever 3rd party vendor we use for analytics, configure it here
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
     if ([analyticsToken length] > 0) {
-        DDLogVerbose(@"segment analytics enabled");
         [self addProvider:[[HEMSegmentProvider alloc] initWithWriteKey:analyticsToken]];
     }
     // logging for our own perhaps to replicate analytic events on console

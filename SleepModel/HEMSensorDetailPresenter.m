@@ -144,12 +144,18 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                         
                         [strongSelf setPollError:error];
                         if (!error) {
+                            BOOL needsUIUpdate = ![strongSelf status]
+                                || ![status isEqual:[strongSelf status]];
                             [strongSelf setStatus:status];
                             [strongSelf updateSensorFromStatus];
                             
                             SENSensorDataCollection* sensorData = data;
                             if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
                                 [strongSelf setSensorData:data];
+                                needsUIUpdate = needsUIUpdate || YES;
+                            }
+                            
+                            if (needsUIUpdate) {
                                 [strongSelf prepareChartDataAndReload];
                             }
                             
@@ -189,7 +195,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             NSUInteger index = 0;
             SENSensorTime* time = nil;
             for (NSNumber* value in values) {
-                [chartData addObject:[[ChartDataEntry alloc] initWithValue:absCGFloat([value doubleValue]) xIndex:index]];
+                CGFloat entryValue = MAX(0.0f, [value doubleValue]);
+                [chartData addObject:[[ChartDataEntry alloc] initWithValue:entryValue
+                                                                    xIndex:index]];
                 if (index == ([labelData count] + 1) * indicesBetweenLabels) {
                     NSInteger indexWithOffset = index - kHEMSensorDetailXAxisOffset;
                     time = [[strongSelf sensorData] timestamps][indexWithOffset];

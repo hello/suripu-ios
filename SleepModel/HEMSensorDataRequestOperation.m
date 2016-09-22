@@ -105,6 +105,16 @@ static double const kHEMSensorDataRequestDelay = 10.0f;
     [self setStatus:nil];
     
     __weak typeof(self) weakSelf = self;
+    void(^repeatAfterDelay)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        int64_t delayInSecs = (int64_t) ([strongSelf repeatDelay] * NSEC_PER_SEC);
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+        dispatch_after(delay, dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf repeat];
+        });
+    };
+    
     [SENAPISensor getSensorStatus:^(SENSensorStatus* status, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if ([strongSelf isCancelled]) {
@@ -112,11 +122,13 @@ static double const kHEMSensorDataRequestDelay = 10.0f;
         } else if (error) {
             [strongSelf setError:error];
             [strongSelf notify:nil];
+            repeatAfterDelay();
         } else {
             [strongSelf setStatus:status];
             
             if (!status || [[status sensors] count] == 0) {
                 [strongSelf notify:nil];
+                repeatAfterDelay();
             } else {
                 SENSensorDataRequest* request = [strongSelf dataRequest];
                 if (!request) {
@@ -126,18 +138,13 @@ static double const kHEMSensorDataRequestDelay = 10.0f;
                     [strongSelf setDataRequest:request];
                 }
                 
-                [SENAPISensor getSensorDataWithRequest:request completion:^(id data, NSError *error) {
-                    [strongSelf setError:error];
-                    [strongSelf setData:data];
-                    [strongSelf notify:nil];
-
-                    int64_t delayInSecs = (int64_t) ([strongSelf repeatDelay] * NSEC_PER_SEC);
-                    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
-                    dispatch_after(delay, dispatch_get_main_queue(), ^{
-                        __strong typeof(weakSelf) strongSelf = weakSelf;
-                        [strongSelf repeat];
-                    });
-                }];
+                [SENAPISensor getSensorDataWithRequest:request
+                                            completion:^(id data, NSError *error) {
+                                                [strongSelf setError:error];
+                                                [strongSelf setData:data];
+                                                [strongSelf notify:nil];
+                                                repeatAfterDelay();
+                                            }];
             }
         }
     }];

@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.5.3.7
+
+New:
+
+* Updated Room Check to support new sensors
+* Updated about copy for CO2
+* Updated Room conditions extension to support new sensors
+* Design tweaks
+* Improved limit line label appearance to show only when chart data is available
+* Updated Voice Tutorial copy
+* Updated waiting for data state for room conditions and sensor detail
+* Updated copy for Pill DFU to suggest it only takes 1 minute
+
+Fixes:
+
+* Fixed copy for VOC
+* Fixed copy for Sleep Pill updating to use lowercase u
+* Fixed issue where room conditions would not properly error out if graphs are already displayed
+* Fixed issue where room conditions intro message is dismissed automatically if you just let it sit for 20s
+* Force the room conditions view to reload if data in sensor detail has changed
+* Fixed issue where voice tutorial error message will cycle repeatedly
+
 ## 1.5.3.6
 
 New:

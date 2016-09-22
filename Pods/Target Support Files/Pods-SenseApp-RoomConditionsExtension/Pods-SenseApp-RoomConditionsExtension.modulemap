@@ -1,0 +1,6 @@
+framework module Pods_SenseApp_RoomConditionsExtension {
+  umbrella header "Pods-SenseApp-RoomConditionsExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -871,7 +871,7 @@
 
 // voice tutorial
 "onboarding.voice.info.title" = "Voice Tip";
-"onboarding.voice.info.message" = "Make sure your room is quiet, and that you're speaking clearly to Sense and not your mobile device.";
+"onboarding.voice.info.message" = "Always say \"Okay Sense\" before each command to activate Voice.\n\nMake sure your room is quiet, and that you're speaking clearly to Sense and not your mobile device.";
 "onboarding.voice.error.problem" = "Sorry, there was a problem. Please try again.";
 "onboarding.voice.error.not-understood" = "Sorry, didn't quite get that. Please try again.";
 
@@ -935,3 +935,9 @@
 "sensor.section.scale.range.format" = "%.0f to %.0f";
 "sensor.section.scale.range.no-min.format" = "0 to %.0f";
 "sensor.section.scale.range.no-max.format" = "%.0f+";
+
+// extension
+"ext.room-conditions.no-data" = "no data available";
+"ext.room-conditions.error" = "unable to load data";
+"ext.room-conditions.not-signed-in" = "sign in to view data";
+"ext.room-conditions.loading" = "loading data";

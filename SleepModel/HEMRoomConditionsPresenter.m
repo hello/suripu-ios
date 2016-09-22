@@ -500,9 +500,12 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    id sensorObj = [self groupedSensors][[indexPath row]];
-    if ([sensorObj isKindOfClass:[SENSensor class]]) {
-        [[self delegate] showSensor:sensorObj fromPresenter:self];
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
+        id sensorObj = [self groupedSensors][[indexPath row]];
+        if ([sensorObj isKindOfClass:[SENSensor class]]) {
+            [[self delegate] showSensor:sensorObj fromPresenter:self];
+        }
     }
 }
 

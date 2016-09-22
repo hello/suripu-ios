@@ -63,6 +63,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, strong) NSDateFormatter* exactTimeFormatter;
 @property (nonatomic, weak) UILabel* currentValueLabel;
 @property (nonatomic, weak) HEMSensorValueCollectionViewCell* valueCell;
+@property (nonatomic, assign) SENSensorType type;
 
 @end
 
@@ -73,6 +74,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     if (self = [super init]) {
         _sensorService = sensorService;
         _sensor = sensor;
+        _type = [sensor type];
         _xAxisLabelFormatter = [NSDateFormatter new];
         _exactTimeFormatter = [NSDateFormatter new];
         _formatter = [[HEMSensorValueFormatter alloc] initWithSensorUnit:[sensor unit]];
@@ -125,49 +127,61 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [self setContent:content];
 }
 
+#pragma mark - Presenter events
+
+- (void)didGainConnectivity {
+    [super didGainConnectivity];
+    if ([self pollError]) {
+        [self startPolling];
+    }
+}
+
 #pragma mark - Poll data
 
 - (void)startPolling {
     __weak typeof(self) weakSelf = self;
     HEMSensorService* service = [self sensorService];
-    [service pollDataForSensor:[self sensor]
-                     withScope:[self scopeSelected]
-                    completion:^(HEMSensorServiceScope scope,
-                                 SENSensorStatus* status,
-                                 SENSensorDataCollection* data,
-                                 NSError* error) {
+    [service pollDataForSensorType:[self type]
+                         withScope:[self scopeSelected]
+                        completion:^(HEMSensorServiceScope scope,
+                                     SENSensorStatus* status,
+                                     SENSensorDataCollection* data,
+                                     NSError* error) {
                         
-                        __strong typeof(weakSelf) strongSelf = weakSelf;
-                        if ([strongSelf scopeSelected] != scope) {
-                            return; // ignore
-                        }
+                            __strong typeof(weakSelf) strongSelf = weakSelf;
+                            
+                            if ([strongSelf scopeSelected] != scope) {
+                                return; // ignore
+                            }
                         
-                        [strongSelf setPollError:error];
-                        if (!error) {
-                            BOOL needsUIUpdate = ![strongSelf status]
-                                || ![status isEqual:[strongSelf status]];
-                            [strongSelf setStatus:status];
-                            [strongSelf updateSensorFromStatus];
+                            [strongSelf setPollError:error];
+                            if (!error) {
+                                BOOL needsUIUpdate = ![strongSelf status]
+                                    || ![status isEqual:[strongSelf status]];
+                                [strongSelf setStatus:status];
+                                [strongSelf updateSensorFromStatus];
                             
-                            SENSensorDataCollection* sensorData = data;
-                            if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
-                                [strongSelf setSensorData:data];
-                                needsUIUpdate = needsUIUpdate || YES;
+                                SENSensorDataCollection* sensorData = data;
+                                if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
+                                    [strongSelf setSensorData:data];
+                                    needsUIUpdate = needsUIUpdate || YES;
+                                }
+                            
+                                if (needsUIUpdate) {
+                                    [strongSelf prepareChartDataAndReload];
+                                }
+                            
+                            } else {
+                                [strongSelf setSensor:nil];
+                                [strongSelf clearData];
+                                [strongSelf reloadUI];
                             }
-                            
-                            if (needsUIUpdate) {
-                                [strongSelf prepareChartDataAndReload];
-                            }
-                            
-                        } else {
-                            [strongSelf reloadUI];
-                        }
                     }];
 }
 
 - (void)updateSensorFromStatus {
     for (SENSensor* sensor in [[self status] sensors]) {
-        if ([sensor type] == [[self sensor] type]) {
+        if ([sensor type] == [self type]) {
             [self setSensor:sensor];
             break;
         }
@@ -216,13 +230,17 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     });
 }
 
+- (void)clearData {
+    [self setChartData:nil];
+    [self setSensorData:nil];
+    [self setXLabelData:nil];
+    [self setStatus:nil];
+}
+
 - (void)setPollScope:(HEMSensorServiceScope)scope {
     [[self sensorService] stopPollingForData];
     [self setScopeSelected:scope];
-    [self setSensorData:nil];
-    [self setStatus:nil];
-    [self setPollError:nil];
-    [self setChartData:nil];
+    [self clearData];
     [self updateFormatters];
     [self reloadUI];
     [self startPolling];
@@ -386,7 +404,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                                          NSBaselineOffsetAttributeName : @(12.0f)};
         
         NSAttributedString* attrValue = [[self formatter] attributedValue:value
-                                                       unitSymbolLocation:HEMSensorValueUnitLocSubscript valueAttributes:valueAttributes unitAttributes:unitAttributes];
+                                                       unitSymbolLocation:HEMSensorValueUnitLocSubscript
+                                                          valueAttributes:valueAttributes
+                                                           unitAttributes:unitAttributes];
         [[valueCell valueLabel] setAttributedText:attrValue];
     }
     
@@ -396,35 +416,52 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (void)configureValueCell:(HEMSensorValueCollectionViewCell*)valueCell {
-    NSNumber* value = [[self sensor] value];
-    NSString* message = [[self sensor] localizedMessage];
-    SENCondition condition = [[self sensor] condition];
+    NSNumber* value = nil;
+    NSString* message = nil;
+    SENCondition condition = SENConditionUnknown;
+    if (![self pollError]) {
+        message = [[self sensor] localizedMessage];
+        value = [[self sensor] value];
+        condition = [[self sensor] condition];
+    }
+
     [self updateValueCell:valueCell withValue:value condition:condition message:message];
     [self setValueCell:valueCell];
 }
 
 - (void)configureChartCell:(HEMSensorChartCollectionViewCell*)chartCell {
-    LineChartView* chartView = [self chartViewForSensor:[self sensor] inCell:chartCell];
-    [[chartCell chartContentView] setChartView:chartView];
-    [[[chartCell chartContentView] topLimitLabel] setText:nil];
-    [[[chartCell chartContentView] botLimitLabel] setText:nil];
-    [chartCell setXAxisLabels:[self xLabelData]];
-    
-    if (![self chartLoaded] && [[self chartData] count] > 0) {
-        [chartView animateIn];
-        [self setChartLoaded:YES];
-    } else {
-        [chartView fadeIn];
-    }
-    
-    CGFloat minValue = MAX(0.0f, [chartView chartYMin]);
-    CGFloat maxValue = [chartView chartYMax];
+    LineChartView* chartView = nil;
     HEMSensorChartContainer* chartContainer = [chartCell chartContentView];
-    [chartContainer setChartView:chartView];
-    [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
-    [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
     [chartContainer setScrubberColor:[UIColor colorForCondition:[[self sensor] condition]]];
     [chartContainer setDelegate:self];
+    [chartCell setXAxisLabels:[self xLabelData]];
+    
+    if (![self sensorData]) {
+        BOOL hasError = [self pollError] != nil;
+        [chartContainer showLoadingActivity:!hasError];
+        [[chartContainer noDataLabel] setText:NSLocalizedString(@"sensor.data.error", nil)];
+        [[chartContainer noDataLabel] setHidden:!hasError];
+        [chartContainer setChartView:nil];
+        [[[chartCell chartContentView] topLimitLabel] setText:nil];
+        [[[chartCell chartContentView] botLimitLabel] setText:nil];
+    } else {
+        chartView = [self chartViewForSensor:[self sensor] inCell:chartCell];
+        CGFloat minValue = MAX(0.0f, [chartView chartYMin]);
+        CGFloat maxValue = [chartView chartYMax];
+        [chartContainer showLoadingActivity:NO];
+        [[chartContainer noDataLabel] setHidden:YES];
+        [chartContainer setChartView:chartView];
+        [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
+        [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
+        
+        if (![self chartLoaded] && [[self chartData] count] > 0) {
+            [chartView animateIn];
+            [self setChartLoaded:YES];
+        } else {
+            [chartView fadeIn];
+        }
+
+    }
     
     [self setChartView:chartView];
 }

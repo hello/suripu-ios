@@ -28,9 +28,12 @@
 @property (weak, nonatomic) IBOutlet UILabel* botLimitLabel;
 @property (weak, nonatomic) IBOutlet UIView* botLimitLine;
 
+@property (weak, nonatomic) IBOutlet UILabel* noDataLabel;
+
 @property (nonatomic, weak) id<HEMSensorChartScrubberDelegate> delegate;
 @property (nonatomic, assign) BOOL scrubberEnable;
 
+- (void)showLoadingActivity:(BOOL)loading;
 - (void)setChartView:(ChartViewBase*)chartView;
 - (ChartViewBase*)chartView;
 - (void)setScrubberColor:(UIColor*)color;

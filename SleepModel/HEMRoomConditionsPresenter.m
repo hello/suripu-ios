@@ -120,6 +120,9 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     if ([self isIntroShowing]) {
         [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
+        if (![[self introService] shouldIntroduceType:HEMIntroTypeRoomConditions]) {
+            [self reloadUI];
+        }
     }
 
     // let the polling update the UI

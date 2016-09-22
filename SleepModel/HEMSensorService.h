@@ -7,8 +7,8 @@
 //
 
 #import "SENService.h"
+#import "SENSensor.h"
 
-@class SENSensor;
 @class SENSensorStatus;
 @class SENSensorDataCollection;
 
@@ -72,11 +72,13 @@ typedef void(^HEMSensorPollHandler)(HEMSensorServiceScope scope,
  * @description
  * Continuously poll for data at a set interval for the specified sensor and scope.
  *
- * @param sensor: sensor to poll data for
+ * @param type: type of sensort to poll data for
  * @param scope: scope of the data to be polled for
  * @param completion: the callback to call on each refresh
  */
-- (void)pollDataForSensor:(SENSensor*)sensor withScope:(HEMSensorServiceScope)scope completion:(HEMSensorPollHandler)completion;
+- (void)pollDataForSensorType:(SENSensorType)type
+                    withScope:(HEMSensorServiceScope)scope
+                   completion:(HEMSensorPollHandler)completion;
 
 /**
  * @description

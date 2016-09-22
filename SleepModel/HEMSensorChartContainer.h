@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIView* botLimitLine;
 
 @property (nonatomic, weak) id<HEMSensorChartScrubberDelegate> delegate;
+@property (nonatomic, assign) BOOL scrubberEnable;
 
 - (void)setChartView:(ChartViewBase*)chartView;
 - (ChartViewBase*)chartView;

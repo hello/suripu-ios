@@ -593,6 +593,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
+    [chartContainer setScrubberEnable:NO];
     [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
     

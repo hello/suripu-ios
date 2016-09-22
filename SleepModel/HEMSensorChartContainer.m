@@ -65,6 +65,11 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
     return _scrubberCircle;
 }
 
+- (void)setScrubberEnable:(BOOL)scrubberEnable {
+    _scrubberEnable = scrubberEnable;
+    [[self scrubberGesture] setEnabled:scrubberEnable];
+}
+
 - (UIView*)scrubber {
     if (!_scrubber) {
         CGRect scrubberFrame = CGRectZero;

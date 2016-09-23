@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.5.3.8
+
+New:
+
+* Added back analytics for room conditions + sensor
+* Added analytics for Upgrade path
+* Added error state in sensor detail view
+* Added loading state in sensor detail view
+
+Fixes:
+
+* Fixed issue in upgrade path where voice tutorial is skipped if DFU is skipped
+* Room conditions error card is no longer tappable
+* Disable scrubbing in room conditions mini charts
+* Welcome / intro message now will disappear right away after the 2nd appearance
+
 ## 1.5.3.7
 
 New:

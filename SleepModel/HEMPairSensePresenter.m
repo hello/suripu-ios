@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 }
 
 - (void)trackEvent:(NSString*)event properties:(NSDictionary*)props {
-    BOOL onboarding = [[self onbService] hasFinishedOnboarding];
+    BOOL onboarding = ![[self onbService] hasFinishedOnboarding];
     [SENAnalytics track:event properties:props onboarding:onboarding];
 }
 

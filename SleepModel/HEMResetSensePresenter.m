@@ -87,6 +87,8 @@ static CGFloat const HEMResetSenseFinishDelay = 2.0f;
         return [self later];
     }
     
+    [SENAnalytics track:HEMAnalyticsEventUpgradeReset];
+    
     NSString* activityMessage = NSLocalizedString(@"settings.device.restoring-factory-settings", nil);
     HEMActivityCoverView* activityView = [HEMActivityCoverView new];
     [activityView showInView:[self activityContainerView] withText:activityMessage activity:YES completion:^{

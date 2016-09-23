@@ -7,10 +7,11 @@
 //
 
 #import "HEMSensorChartContainer.h"
+#import "HEMActivityIndicatorView.h"
 #import "HEMStyle.h"
 
 static CGFloat const kHEMSensorChartWidth = 1.0f;
-static CGFloat const kHEMSensorChartScrubStartDelay = 0.25f;
+static CGFloat const kHEMSensorChartScrubStartDelay = 0.15f;
 static CGFloat const kHEMSensorChartScrubberFadeDuration = 0.5f;
 static CGFloat const kHEMSensorChartScrubberCircleSize = 8.0f;
 static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
@@ -21,16 +22,26 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
 @property (nonatomic, strong) UIView* scrubberCircle;
 @property (nonatomic, weak) ChartViewBase* chartView;
 @property (nonatomic, weak) UILongPressGestureRecognizer* scrubberGesture;
+@property (nonatomic, weak) IBOutlet HEMActivityIndicatorView* activityView;
 
 @end
 
 @implementation HEMSensorChartContainer
 
 - (void)awakeFromNib {
+    UIColor* lineColor = [[UIColor grey3] colorWithAlphaComponent:0.2f];
     [[self topLimitLabel] setTextColor:[UIColor grey4]];
     [[self botLimitLabel] setTextColor:[UIColor grey4]];
-    [[self topLimitLine] setBackgroundColor:[[UIColor grey3] colorWithAlphaComponent:0.2f]];
-    [[self botLimitLine] setBackgroundColor:[[UIColor grey3] colorWithAlphaComponent:0.2f]];
+    [[self topLimitLine] setBackgroundColor:lineColor];
+    [[self botLimitLine] setBackgroundColor:lineColor];
+    
+    [[self noDataLabel] setFont:[UIFont body]];
+    [[self noDataLabel] setTextColor:[UIColor grey5]];
+    [[self noDataLabel] setUserInteractionEnabled:NO];
+    [[self noDataLabel] setHidden:YES];
+    
+    [[self activityView] setHidden:YES];
+    [[self activityView] stop];
     
     UILongPressGestureRecognizer* gesture = [UILongPressGestureRecognizer new];
     [gesture addTarget:self action:@selector(startScrubbing:)];
@@ -38,6 +49,13 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
     [gesture setDelegate:self];
     [self addGestureRecognizer:gesture];
     [self setScrubberGesture:gesture];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if ([self activityView]) {
+        [[self activityView] setCenter:[self center]];
+    }
 }
 
 - (UIView*)scrubberCircle {
@@ -65,6 +83,31 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
     return _scrubberCircle;
 }
 
+- (void)setScrubberEnable:(BOOL)scrubberEnable {
+    _scrubberEnable = scrubberEnable;
+    [[self scrubberGesture] setEnabled:scrubberEnable];
+}
+
+- (void)showLoadingActivity:(BOOL)loading {
+    if (loading && ![self activityView]) {
+        UIImage* loaderImage = [UIImage imageNamed:@"sensorLoaderGray"];
+        CGRect loaderFrame = CGRectZero;
+        loaderFrame.size = loaderImage.size;
+        HEMActivityIndicatorView* indicatorView
+            = [[HEMActivityIndicatorView alloc] initWithImage:loaderImage
+                                                     andFrame:loaderFrame];
+        [self setActivityView:indicatorView];
+        [self addSubview:indicatorView];
+    }
+    
+    [[self activityView]  setHidden:!loading];
+    if (loading) {
+        [[self activityView] start];
+    } else {
+        [[self activityView] stop];
+    }
+}
+
 - (UIView*)scrubber {
     if (!_scrubber) {
         CGRect scrubberFrame = CGRectZero;
@@ -84,11 +127,22 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
 }
 
 - (void)setChartView:(ChartViewBase*)chartView {
+    if (!chartView) {
+        if (_chartView) {
+            [_chartView removeFromSuperview];
+            _chartView = chartView;
+        }
+        [self setUserInteractionEnabled:NO];
+        return;
+    }
+    
     BOOL hasChartData = ![chartView isEmpty];
     [[self topLimitLabel] setHidden:!hasChartData];
     [[self botLimitLabel] setHidden:!hasChartData];
    
     [self insertSubview:chartView atIndex:0];
+    [self setUserInteractionEnabled:YES];
+    
     _chartView = chartView;
 }
 

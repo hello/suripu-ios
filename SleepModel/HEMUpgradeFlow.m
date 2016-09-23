@@ -60,6 +60,12 @@
     return self;
 }
 
+#pragma mark - Analytics
+
+- (NSString*)analyticsEventPrefix {
+    return HEMAnalyticsEventUpgradePrefix;
+}
+
 #pragma mark - Next using segues
 
 - (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController {
@@ -149,9 +155,11 @@
     } else if ([currentViewController isKindOfClass:[HEMPillPairViewController class]]) {
         controller = [self controllerAfterPillController];
     } else if ([currentViewController isKindOfClass:[HEMSenseDFUViewController class]]) {
-        // if you skip DFU, voice is not going to be available either so we should skip
-        // that as well.
-        controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+        if (![[HEMOnboardingService sharedService] isVoiceAvailable]) {
+            controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
+        } else {
+            controller = (id) [HEMOnboardingStoryboard instantiateVoiceTutorialViewController];
+        }
     } else if ([currentViewController isKindOfClass:[HEMVoiceTutorialViewController class]]) {
         controller = (id) [HEMOnboardingStoryboard instantiateResetSenseViewController];
     }

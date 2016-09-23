@@ -272,6 +272,15 @@ NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
 NSString* const HEMAnalyticsEventVoiceTutorial = @"Voice Tutorial";
 NSString* const HEMAnalyticsEventVoiceResponse = @"Voice Command";
 
+// upgrade path
+NSString* const HEMAnalyticsEventUpgradePrefix = @"Upgrade";
+NSString* const HEMAnalyticsEventUpgradeSense = @"Upgrade Sense";
+NSString* const HEMAnalyticsEventPurchaseVoice = @"Purchase Sense Voice";
+NSString* const HEMAnalyticsEventUpgradeSenseStart = @"Upgrade Sense Start";
+NSString* const HEMAnalyticsEventUpgradeSwapRequest = @"Upgrade Swap Accounts Request";
+NSString* const HEMAnalyticsEventUpgradeSwapped = @"Upgrade Account Swapped";
+NSString* const HEMAnalyticsEventUpgradeReset = @"Upgrade Factory Reset";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";
@@ -479,6 +488,16 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 + (void)trackSenseUpdate:(SENDFUStatus*)status {
     [self track:@"Sense DFU status"
      properties:@{@"status" : @([status currentState])}];
+}
+
+#pragma mark - Convenience methods
+
++ (NSString*)addPrefixIfNeeded:(NSString*)prefix toEvent:(NSString*)event {
+    NSString* prefixedEvent = event;
+    if (![prefixedEvent hasPrefix:prefix]) {
+        prefixedEvent = [NSString stringWithFormat:@"%@ %@", prefix, event];
+    }
+    return prefixedEvent;
 }
 
 @end

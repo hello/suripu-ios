@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithStatusLabel:(UILabel*)statusLabel;
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 - (void)bindWithContentContainerView:(UIView*)contentView;
+- (void)trackEvent:(NSString*)event withProperties:(NSDictionary*)props;
 
 @end
 

@@ -120,10 +120,15 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     if ([self isIntroShowing]) {
         [[self introService] incrementIntroViewsForType:HEMIntroTypeRoomConditions];
+        if (![[self introService] shouldIntroduceType:HEMIntroTypeRoomConditions]) {
+            [self reloadUI];
+        }
     }
 
     // let the polling update the UI
     [self stopListeningForSensorStatusChanges];
+    
+    [SENAnalytics track:kHEMAnalyticsEventCurrentConditions];
 }
 
 - (void)didDisappear {
@@ -500,9 +505,12 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    id sensorObj = [self groupedSensors][[indexPath row]];
-    if ([sensorObj isKindOfClass:[SENSensor class]]) {
-        [[self delegate] showSensor:sensorObj fromPresenter:self];
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
+        id sensorObj = [self groupedSensors][[indexPath row]];
+        if ([sensorObj isKindOfClass:[SENSensor class]]) {
+            [[self delegate] showSensor:sensorObj fromPresenter:self];
+        }
     }
 }
 
@@ -590,6 +598,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
+    [chartContainer setScrubberEnable:NO];
     [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
     

@@ -474,6 +474,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [service linkCurrentAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
+            [strongSelf trackAnalyticsEvent:HEMAnalyticsEventSensePaired];
             [strongSelf setStepFinished:HEMWiFiSetupStepLinkAccount];
             [strongSelf executeNextStep];
         } else {

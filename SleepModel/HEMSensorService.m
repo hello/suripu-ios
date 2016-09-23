@@ -135,15 +135,15 @@ NSString* const kHEMSensorNotifyStatusKey = @"status";
     }
 }
 
-- (void)pollDataForSensor:(SENSensor*)sensor
-                withScope:(HEMSensorServiceScope)scope
-               completion:(HEMSensorPollHandler)completion {
+- (void)pollDataForSensorType:(SENSensorType)type
+                    withScope:(HEMSensorServiceScope)scope
+                   completion:(HEMSensorPollHandler)completion {
     [[self pollQueue] cancelAllOperations];
     
     __weak typeof(self) weakSelf = self;
     HEMSensorDataRequestOperation* op = [HEMSensorDataRequestOperation new];
     [op setDataScope:[self apiScopeForScope:scope]];
-    [op setFilterByTypes:[NSSet setWithObject:@([sensor type])]];
+    [op setFilterByTypes:[NSSet setWithObject:@(type)]];
     [op setExclude:NO];
     [op setDataHandler:^(SENSensorDataScope apiScope,
                          SENSensorStatus* status,

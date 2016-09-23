@@ -260,6 +260,12 @@ extern NSString* const HEMAnalyticsEventVoiceResponse;
 
 // upgrade path
 extern NSString* const HEMAnalyticsEventUpgradePrefix;
+extern NSString* const HEMAnalyticsEventUpgradeSense;
+extern NSString* const HEMAnalyticsEventPurchaseVoice;
+extern NSString* const HEMAnalyticsEventUpgradeSenseStart;
+extern NSString* const HEMAnalyticsEventUpgradeSwapRequest;
+extern NSString* const HEMAnalyticsEventUpgradeSwapped;
+extern NSString* const HEMAnalyticsEventUpgradeReset;
 
 @interface SENAnalytics (HEMAppAnalytics)
 
@@ -278,6 +284,7 @@ extern NSString* const HEMAnalyticsEventUpgradePrefix;
 + (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding;
 + (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding;
 + (void)trackSenseUpdate:(SENDFUStatus*)status;
++ (NSString*)addPrefixIfNeeded:(NSString*)prefix toEvent:(NSString*)event;
 
 @end
 

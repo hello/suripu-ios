@@ -1001,8 +1001,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                 [[SENServiceDevice sharedService] loadDeviceInfo:nil];
             }
             
-            [SENAnalytics track:HEMAnalyticsEventSensePaired];
-            
             if ([strongSelf tempSenseManager]) {
                 [strongSelf setCurrentSenseManager:[strongSelf tempSenseManager]];
                 [strongSelf setTempSenseManager:nil];

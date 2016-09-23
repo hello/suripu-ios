@@ -60,6 +60,12 @@
     return self;
 }
 
+#pragma mark - Analytics
+
+- (NSString*)analyticsEventPrefix {
+    return HEMAnalyticsEventUpgradePrefix;
+}
+
 #pragma mark - Next using segues
 
 - (NSString*)nextSegueIdentifierAfterViewController:(UIViewController*)currentViewController {

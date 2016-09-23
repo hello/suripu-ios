@@ -31,6 +31,12 @@
     return self;
 }
 
+- (void)trackEvent:(NSString *)event properties:(NSDictionary *)props {
+    NSString* prefixedEvent = [SENAnalytics addPrefixIfNeeded:HEMAnalyticsEventUpgradePrefix
+                                                      toEvent:event];
+    [SENAnalytics track:prefixedEvent properties:nil];
+}
+
 #pragma mark - Actions
 
 - (void)bindWithTitleLabel:(UILabel *)titleLabel

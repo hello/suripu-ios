@@ -18,6 +18,8 @@
     
     [titleLabel setText:NSLocalizedString(@"upgrade.new-sense.title", nil)];
     [descriptionLabel setText:NSLocalizedString(@"upgrade.new-sense.desc", nil)];
+    
+    [SENAnalytics track:HEMAnalyticsEventUpgradeSense];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem *)navItem {
@@ -58,10 +60,12 @@
 }
 
 - (void)proceed {
+    [SENAnalytics track:HEMAnalyticsEventUpgradeSenseStart];
     [[self actionDelegate] shouldProceedFrom:self];
 }
 
 - (void)order {
+    [SENAnalytics track:HEMAnalyticsEventPurchaseVoice];
     NSString* orderURLString = NSLocalizedString(@"help.url.order-form", nil);
     [[self actionDelegate] shouldOpenPageTo:orderURLString from:self];
 }

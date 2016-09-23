@@ -127,6 +127,8 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
     // let the polling update the UI
     [self stopListeningForSensorStatusChanges];
+    
+    [SENAnalytics track:kHEMAnalyticsEventCurrentConditions];
 }
 
 - (void)didDisappear {

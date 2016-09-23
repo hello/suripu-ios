@@ -129,6 +129,13 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 
 #pragma mark - Presenter events
 
+- (void)didAppear {
+    [super didAppear];
+    NSString* sensorType = [[self sensor] typeStringValue];
+    NSDictionary* props = @{kHEMAnalyticsEventPropSensorName : sensorType ?: @""};
+    [SENAnalytics track:kHEMAnalyticsEventSensor properties:props];
+}
+
 - (void)didGainConnectivity {
     [super didGainConnectivity];
     if ([self pollError]) {

@@ -256,6 +256,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [self setSensorData:nil];
     [self setXLabelData:nil];
     [self setStatus:nil];
+    [self setChartMaxValue:0.0f];
+    [self setChartMinValue:MAXFLOAT];
 }
 
 - (void)setPollScope:(HEMSensorServiceScope)scope {

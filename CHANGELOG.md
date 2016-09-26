@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.3.9
+
+Fixes:
+
+* Fix voice tutorial so it continues to poll after an error
+
 ## 1.5.3.8
 
 New:

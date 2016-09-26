@@ -65,6 +65,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, weak) HEMSensorValueCollectionViewCell* valueCell;
 @property (nonatomic, assign) SENSensorType type;
 
+@property (nonatomic, assign) CGFloat chartMinValue;
+@property (nonatomic, assign) CGFloat chartMaxValue;
+
 @end
 
 @implementation HEMSensorDetailPresenter
@@ -75,6 +78,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         _sensorService = sensorService;
         _sensor = sensor;
         _type = [sensor type];
+        _chartMinValue = MAXFLOAT;
+        _chartMaxValue = 0.0f;
         _xAxisLabelFormatter = [NSDateFormatter new];
         _exactTimeFormatter = [NSDateFormatter new];
         _formatter = [[HEMSensorValueFormatter alloc] initWithSensorUnit:[sensor unit]];
@@ -225,6 +230,15 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                     [labelData addObject:[[strongSelf xAxisLabelFormatter]
                                           stringFromDate:[time date]]];
                 }
+                
+                if (entryValue < [strongSelf chartMinValue]) {
+                    [strongSelf setChartMinValue:entryValue];
+                }
+                
+                if (entryValue > [strongSelf chartMaxValue]) {
+                    [strongSelf setChartMaxValue:entryValue];
+                }
+                
                 index++;
             }
             [strongSelf setChartData:chartData];
@@ -242,6 +256,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [self setSensorData:nil];
     [self setXLabelData:nil];
     [self setStatus:nil];
+    [self setChartMaxValue:0.0f];
+    [self setChartMinValue:MAXFLOAT];
 }
 
 - (void)setPollScope:(HEMSensorServiceScope)scope {
@@ -367,7 +383,6 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     LineChartView* lineChartView = (id) [[cell chartContentView] chartView];
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell chartContentView] bounds]];
-        [lineChartView setHighlightPerDragEnabled:NO];
     }
     
     NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
@@ -453,13 +468,16 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         [[[chartCell chartContentView] botLimitLabel] setText:nil];
     } else {
         chartView = [self chartViewForSensor:[self sensor] inCell:chartCell];
-        CGFloat minValue = MAX(0.0f, [chartView chartYMin]);
-        CGFloat maxValue = [chartView chartYMax];
         [chartContainer showLoadingActivity:NO];
         [[chartContainer noDataLabel] setHidden:YES];
         [chartContainer setChartView:chartView];
-        [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
-        [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
+        
+        NSNumber* minValue = @([chartView chartYMin]);
+        NSNumber* maxValue = @([chartView chartYMax]);
+        NSString* minText = [[self formatter] stringFromSensorValue:minValue];
+        NSString* maxText = [[self formatter] stringFromSensorValue:maxValue];
+        [[chartContainer topLimitLabel] setText:maxText];
+        [[chartContainer botLimitLabel] setText:minText];
         
         if (![self chartLoaded] && [[self chartData] count] > 0) {
             [chartView animateIn];

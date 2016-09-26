@@ -66,7 +66,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 @property (nonatomic, assign) NSInteger failures;
 
 @property (nonatomic, weak) HEMVoiceService* voiceService;
-@property (nonatomic, assign, getter=hasStoppedListening) BOOL stopListening;
+@property (nonatomic, assign, getter=isInfoShowing) BOOL infoShowing;
 
 @end
 
@@ -297,6 +297,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     [sheet setOptionTextAlignment:NSTextAlignmentCenter];
     [sheet addDismissAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setInfoShowing:NO];
         [strongSelf listenForVoiceResult];
     }];
     [sheet addOptionWithTitle:cancelOption
@@ -305,10 +306,12 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
                     imageName:nil
                        action:^{
                            __strong typeof(weakSelf) strongSelf = weakSelf;
+                           [strongSelf setInfoShowing:NO];
                            [strongSelf listenForVoiceResult];
                        }];
     
     [self stopListeningForVoiceResult];
+    [self setInfoShowing:YES];
     [[self delegate] showController:sheet fromPresenter:self];
 }
 
@@ -372,20 +375,27 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:HEMVoiceNotification object:[self voiceService]];
     [[self voiceService] stopListeningForVoiceResult];
-    [self setStopListening:YES];
 }
 
 - (void)listenForVoiceResult {
+    if ([self isInfoShowing]) {
+        [self stopListeningForVoiceResult];
+        return;
+    }
+    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(didGetVoiceResult:)
                    name:HEMVoiceNotification
                  object:[self voiceService]];
     [[self voiceService] startListeningForVoiceResult];
-    [self setStopListening:NO];
 }
 
 - (void)didGetVoiceResult:(NSNotification*)note {
+    if ([self isInfoShowing]) {
+        return;
+    }
+    
     SENSpeechResult* result = [note userInfo][HEMVoiceNotificationInfoResult];
     if (result) {
         NSDictionary* props = @{kHEManaltyicsEventPropStatus : @([result status])};
@@ -452,7 +462,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if ([strongSelf failures] == HEMVoiceTutorialFailureBeforeTip) {
                 [strongSelf voiceInfo];
-            } else if (![strongSelf hasStoppedListening]){
+            } else {
                 [strongSelf listenForVoiceResult];
             }
         });

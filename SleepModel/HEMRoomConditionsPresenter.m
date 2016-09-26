@@ -592,7 +592,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
     [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
     
-    CGFloat minValue = MAX(0.0f, [chartView chartYMin]);
+    CGFloat minValue = [chartView chartYMin];
     CGFloat maxValue = [chartView chartYMax];
     [[self formatter] setIncludeUnitSymbol:YES];
     

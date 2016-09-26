@@ -141,7 +141,7 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
     [[self botLimitLabel] setHidden:!hasChartData];
    
     [self insertSubview:chartView atIndex:0];
-    [self setUserInteractionEnabled:YES];
+    [self setUserInteractionEnabled:hasChartData];
     
     _chartView = chartView;
 }

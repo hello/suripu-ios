@@ -28,7 +28,6 @@
 NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
 
 static NSInteger const HEMPillDfuPillMinimumRSSI = -70;
-static NSString* const HEMPillDfuBinURL = @"https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.hex";
 static NSString* const HEMPillDfuPrefLastUpdate = @"HEMPillDfuPrefLastUpdate";
 static NSUInteger const HEMPillDfuSuppressionReq = 2; // will not show dfu updates if done within the hour
 static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;

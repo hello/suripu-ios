@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.3.10
+
+Fixes:
+
+* Fix issue with scrolling room conditions when there is no data to draw any charts
+
 ## 1.5.3.9
 
 Fixes:

@@ -314,6 +314,9 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
                 [strongSelf showRetryButton];
                 NSString* title = NSLocalizedString(@"dfu.pill.error.title.update-failed", nil);
                 NSString* message = NSLocalizedString(@"dfu.pill.error.update-failed", nil);
+                if (![[strongSelf deviceService] isBleOn]) {
+                    message = NSLocalizedString(@"dfu.pill.error.update-failed-no-ble", nil);
+                }
                 [[strongSelf errorDelegate] showErrorWithTitle:title
                                                     andMessage:message
                                                   withHelpPage:nil

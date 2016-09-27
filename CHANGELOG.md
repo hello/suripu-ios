@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.3.11
+
+Fixes:
+
+* Fix issue where FB Oauth response was not properly being routed back to the app
+
 ## 1.5.3.10
 
 Fixes:

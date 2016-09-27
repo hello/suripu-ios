@@ -57,26 +57,21 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)app
-            openURL:(NSURL *)url
-            options:(NSDictionary<NSString *,id> *)options {
-    NSString* lastPath = [url lastPathComponent];
-    if ([lastPath isEqualToString:kHEMAppExtRoom]) {
-        NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
-        [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
-        HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-        [rootVC showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:YES];
-        return YES;
-    }
-    return NO;
-}
-
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     HEMFacebookService* fb = [HEMFacebookService new];
-    return [fb open:application url:url source:sourceApplication annotation:annotation];
+    if (![fb open:application url:url source:sourceApplication annotation:annotation]) {
+        NSString* lastPath = [url lastPathComponent];
+        if ([lastPath isEqualToString:kHEMAppExtRoom]) {
+            NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
+            [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
+            HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+            [rootVC showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:YES];
+        }
+    }
+    return YES;
 }
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {

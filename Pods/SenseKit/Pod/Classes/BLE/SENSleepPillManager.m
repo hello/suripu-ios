@@ -36,6 +36,7 @@ static NSTimeInterval const SENSleepPillDfuTimeout = 20.0f + SENSleepPillDefault
 @property (nonatomic, assign) SENSleepPillDfuState currentDfuState;
 @property (nonatomic, assign) BOOL rediscoveryRequired;
 @property (nonatomic, strong) NSTimer* timeoutTimer;
+@property (nonatomic, strong) NSURL* localDFUBinaryFileURL;
 
 @end
 
@@ -143,8 +144,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSUUID* existingUUID = [[NSUUID alloc] initWithUUIDString:[[strongSelf sleepPill] identifier]];
         NSArray* peripherals = [[LGCentralManager sharedInstance] retrievePeripheralsWithIdentifiers:@[existingUUID]];
-        if ([peripherals count] == 1) {
-            [strongSelf setRediscoveryRequired:NO];
+        if ([peripherals count] == 1 && ![strongSelf rediscoveryRequired]) {
             [strongSelf setSleepPill:[[SENSleepPill alloc] initWithPeripheral:[peripherals firstObject]]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion (nil);
@@ -251,6 +251,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (void)enableDfuTimeout {
     [self setTimeoutTimer:nil];
+    [[self class] stopScan]; // in case it was scanning
     DDLogVerbose(@"enable dfu timed out");
     
     if ([self enableDfuBlock]) {
@@ -377,48 +378,106 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     }
 }
 
+- (NSURL*)saveFirmwareBinaryData:(NSData*)data withOriginalURL:(NSURL*)url error:(NSError**)error {
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    NSURL* docsDir = [[fileManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
+    NSString* origFileName = [url lastPathComponent];
+    NSString* localPath = [[docsDir path] stringByAppendingPathComponent:origFileName];
+    NSURL* localURL = [NSURL fileURLWithPath:localPath];
+    [data writeToURL:localURL options:NSDataWritingAtomic error:error];
+    return localURL;
+}
+
+- (void)removeLocalFirmwareBinaryIfExists:(NSURL*)pathToLocalFile {
+    if (pathToLocalFile) {
+        DDLogVerbose(@"removing local binary file");
+        NSFileManager* fileManager = [NSFileManager defaultManager];
+        NSError* error = nil;
+        [fileManager removeItemAtURL:pathToLocalFile error:&error];
+        if (error) {
+            DDLogVerbose(@"failed to remove local binary file with error %@", error);
+        }
+    }
+}
+
 - (void)beginDfuWithURL:(NSString*)url {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
+        // download the binary and store it in to the Documents folder
         NSURL* pathToFirmware = [NSURL URLWithString:url];
-        DFUFirmware* firmware = [[DFUFirmware alloc] initWithUrlToBinOrHexFile:pathToFirmware
-                                                                  urlToDatFile:nil
-                                                                          type:DFUFirmwareTypeApplication];
-        
-        LGCentralManager* central = [LGCentralManager sharedInstance];
-        CBCentralManager* manager = [central manager];
-        CBPeripheral* peripheral = [[[strongSelf sleepPill] peripheral] cbPeripheral];
-        DFUServiceInitiator* initiator = [[DFUServiceInitiator alloc] initWithCentralManager:manager
-                                                                                      target:peripheral];
-        [initiator setLogger:self];
-        [initiator withFirmwareFile:firmware];
-        [initiator setProgressDelegate:strongSelf];
-        [initiator setDelegate:strongSelf];
-        
-        [strongSelf setDfuController:[initiator start]];
-    
+        NSURLSession* session = [NSURLSession sharedSession];
+        [[session dataTaskWithURL:pathToFirmware
+                completionHandler:^(NSData* data, NSURLResponse* response, NSError*  error) {
+                    __weak typeof(weakSelf) strongSelf = weakSelf;
+                    NSHTTPURLResponse* httpResponse = (id) response;
+                    if (error) {
+                        [strongSelf endDfuWithError:error];
+                    } else if ([httpResponse statusCode] == 200 && [data length] > 0) {
+                        NSError* saveError = nil;
+                        NSURL* localFileURL = [strongSelf saveFirmwareBinaryData:data
+                                                                withOriginalURL:pathToFirmware
+                                                                          error:&saveError];
+                        if (saveError) {
+                            [strongSelf endDfuWithError:saveError];
+                        } else {
+                            [strongSelf setLocalDFUBinaryFileURL:localFileURL];
+                           
+                            DFUFirmware* firmware = [[DFUFirmware alloc] initWithUrlToBinOrHexFile:localFileURL
+                                                                                     urlToDatFile:nil
+                                                                                             type:DFUFirmwareTypeApplication];
+                            LGCentralManager* central = [LGCentralManager sharedInstance];
+                            CBCentralManager* manager = [central manager];
+                            CBPeripheral* peripheral = [[[strongSelf sleepPill] peripheral] cbPeripheral];
+                            DFUServiceInitiator* initiator = [[DFUServiceInitiator alloc] initWithCentralManager:manager
+                                                                                                         target:peripheral];
+                            [initiator setLogger:strongSelf];
+                            [initiator withFirmwareFile:firmware];
+                            [initiator setProgressDelegate:strongSelf];
+                            [initiator setDelegate:strongSelf];
+                           
+                            [strongSelf setDfuController:[initiator start]];
+                        }
+                    } else {
+                        SENSleepPillErrorCode code = SENSleepPillErrorCodeUnableToDownloadUpdate;
+                        NSString* reason = [NSString stringWithFormat:@"failed to download binary with status code %ld",
+                                            (long) [httpResponse statusCode]];
+                        NSError* error = [[strongSelf class] errorWithCode:code reason:reason];
+                        [strongSelf endDfuWithError:error];
+                    }
+               }] resume];
     });
 }
 
 - (void)endDfuWithError:(NSError*)error {
-    [self cancelTimeout];
-    [self disconnect:nil];
+    __weak typeof(self) weakSelf = self;
+    void (^end)(void) = ^{
+        __strong typeof (weakSelf) strongSelf = weakSelf;
+        [strongSelf cancelTimeout];
+        [strongSelf disconnect:nil];
+        [strongSelf removeLocalFirmwareBinaryIfExists:[strongSelf localDFUBinaryFileURL]];
+        
+        if ([strongSelf dfuCompletionBlock]) {
+            [strongSelf dfuCompletionBlock] (error);
+            [strongSelf setDfuCompletionBlock:nil];
+            [strongSelf setDfuController:nil];
+            [strongSelf setProgressBlock:nil];
+            [[strongSelf class] stopScan];
+        }
+        
+        // FIXME: this is a hacky workaround for the fact that Nordic takes over the
+        // delegate of the CentralManager and never resets it.  Ideally Nordic would
+        // fix this by creating their own central, or reverting their delegate changes.
+        LGCentralManager* centralManager = [LGCentralManager sharedInstance];
+        CBCentralManager* cbCentral = [centralManager manager];
+        [cbCentral setDelegate:centralManager];
+    };
     
-    if ([self dfuCompletionBlock]) {
-        [self dfuCompletionBlock] (error);
-        [self setDfuCompletionBlock:nil]; 
-        [self setDfuController:nil];
-        [self setProgressBlock:nil];
-        [[self class] stopScan];
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), end);
+    } else {
+        end();
     }
-    
-    // FIXME: this is a hacky workaround for the fact that Nordic takes over the
-    // delegate of the CentralManager and never resets it.  Ideally Nordic would
-    // fix this by creating their own central, or reverting their delegate changes.
-    LGCentralManager* centralManager = [LGCentralManager sharedInstance];
-    CBCentralManager* cbCentral = [centralManager manager];
-    [cbCentral setDelegate:centralManager];
+
 }
 
 #pragma mark Progress
@@ -435,32 +494,32 @@ currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
     }
 }
 
-- (void)didStateChangedTo:(enum State)state {
+- (void)didStateChangedTo:(enum DFUState)state {
     [self scheduleOperationTimeout:SENSleepPillDfuTimeout action:@selector(dfuTimeout)];
     DDLogVerbose(@"did change state to %ld", (long)state);
     switch (state) {
-        case StateAborted: {
+        case DFUStateAborted: {
             SENSleepPillErrorCode code = SENSleepPillErrorCodeDfuAborted;
             NSError* error = [[self class] errorWithCode:code reason:@"dfu aborted"];
             [self endDfuWithError:error];
             [self setCurrentDfuState:SENSleepPillDfuStateError];
             break;
         }
-        case StateConnecting:
+        case DFUStateConnecting:
             [self setCurrentDfuState:SENSleepPillDfuStateConnecting];
             break;
-        case StateStarting:
-        case StateUploading:
-        case StateEnablingDfuMode:
+        case DFUStateStarting:
+        case DFUStateUploading:
+        case DFUStateEnablingDfuMode:
             [self setCurrentDfuState:SENSleepPillDfuStateUpdating];
             break;
-        case StateValidating:
+        case DFUStateValidating:
             [self setCurrentDfuState:SENSleepPillDfuStateValidating];
             break;
-        case StateDisconnecting:
+        case DFUStateDisconnecting:
             [self setCurrentDfuState:SENSleepPillDfuStateDisconnecting];
             break;
-        case StateCompleted:
+        case DFUStateCompleted:
             [self setCurrentDfuState:SENSleepPillDfuStateCompleted];
             [self endDfuWithError:nil];
             break;
@@ -471,6 +530,7 @@ currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
 }
 
 - (void)didErrorOccur:(enum DFUError)error withMessage:(NSString *)message {
+    DDLogVerbose(@"dfu did encounter error, %@", message);
     SENSleepPillErrorCode code = SENSleepPillErrorCodeDfuError;
     NSError* localError = [[self class] errorWithCode:code reason:message];
     [self endDfuWithError:localError];
@@ -492,6 +552,10 @@ currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
     
     if ([self isConnected]) {
         [self disconnect:nil];
+    }
+    
+    if (_localDFUBinaryFileURL) {
+        [self removeLocalFirmwareBinaryIfExists:_localDFUBinaryFileURL];
     }
 }
 

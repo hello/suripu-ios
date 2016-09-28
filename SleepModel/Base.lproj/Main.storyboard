@@ -1669,16 +1669,22 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="glP-Xz-ydE" id="WeR-6P-gGt"/>
-                                    <outlet property="delegate" destination="glP-Xz-ydE" id="5nX-Gb-I0c"/>
-                                </connections>
                             </tableView>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plA-2d-VTp" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="272" y="241" width="55" height="55"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="12v-zf-com"/>
+                                    <constraint firstAttribute="height" constant="55" id="GZ7-qy-Nhx"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="X4b-Va-8rq" firstAttribute="leading" secondItem="taC-qD-DrH" secondAttribute="leading" id="EOp-up-h7E"/>
                             <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="bottom" id="W3R-0G-rZo"/>
+                            <constraint firstItem="plA-2d-VTp" firstAttribute="centerY" secondItem="taC-qD-DrH" secondAttribute="centerY" id="a22-0K-b37"/>
+                            <constraint firstItem="plA-2d-VTp" firstAttribute="centerX" secondItem="taC-qD-DrH" secondAttribute="centerX" id="iy0-o6-H8Y"/>
                             <constraint firstItem="Fgn-Cc-FTR" firstAttribute="top" secondItem="X4b-Va-8rq" secondAttribute="bottom" constant="56" id="vec-qT-xZJ"/>
                             <constraint firstAttribute="trailing" secondItem="X4b-Va-8rq" secondAttribute="trailing" id="vpn-dU-nxG"/>
                         </constraints>
@@ -1687,6 +1693,7 @@
                     <navigationItem key="navigationItem" id="W0g-jJ-OWe"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="activityView" destination="plA-2d-VTp" id="zOh-2P-tzi"/>
                         <outlet property="settingsTableView" destination="X4b-Va-8rq" id="zf9-GA-mKg"/>
                         <segue destination="mDw-uo-PDk" kind="show" identifier="devicesSettings" id="iUu-8C-Pgj"/>
                         <segue destination="vA6-d5-31W" kind="show" identifier="unitsSettings" id="FWQ-VC-M1c"/>

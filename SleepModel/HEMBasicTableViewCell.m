@@ -49,8 +49,7 @@ static CGFloat const HEMBasicTableViewCellSeparatorHeight = 0.5f;
         separatorFrame.origin.x = labelMinX;
         [[self customSeparator] setFrame:separatorFrame];
     }
-    
-    
+
 }
 
 @end

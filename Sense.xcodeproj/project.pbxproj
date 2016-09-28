@@ -394,6 +394,8 @@
 		BFD7E79D1D9B2D0E007DB6E4 /* HEMSettingsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E79C1D9B2D0E007DB6E4 /* HEMSettingsPresenter.m */; };
 		BFD7E7A21D9B31A4007DB6E4 /* HEMExpansionService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7A11D9B31A4007DB6E4 /* HEMExpansionService.m */; };
 		BFD7E7A51D9B45E0007DB6E4 /* HEMLogUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7A41D9B45E0007DB6E4 /* HEMLogUtils.m */; };
+		BFD7E7AA1D9C387A007DB6E4 /* HEMExpansionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7A91D9C387A007DB6E4 /* HEMExpansionListViewController.m */; };
+		BFD7E7AD1D9C3E19007DB6E4 /* HEMExpansionsListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7AC1D9C3E19007DB6E4 /* HEMExpansionsListPresenter.m */; };
 		BFD9A96D1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */; };
 		BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9721D5A8C37003EC82A /* HEMNewSensePresenter.m */; };
 		BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9761D5A9A14003EC82A /* HEMUpgradeSensePresenter.m */; };
@@ -1191,6 +1193,10 @@
 		BFD7E7A11D9B31A4007DB6E4 /* HEMExpansionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMExpansionService.m; sourceTree = "<group>"; };
 		BFD7E7A31D9B45E0007DB6E4 /* HEMLogUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLogUtils.h; sourceTree = "<group>"; };
 		BFD7E7A41D9B45E0007DB6E4 /* HEMLogUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLogUtils.m; sourceTree = "<group>"; };
+		BFD7E7A81D9C387A007DB6E4 /* HEMExpansionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMExpansionListViewController.h; sourceTree = "<group>"; };
+		BFD7E7A91D9C387A007DB6E4 /* HEMExpansionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMExpansionListViewController.m; sourceTree = "<group>"; };
+		BFD7E7AB1D9C3E19007DB6E4 /* HEMExpansionsListPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMExpansionsListPresenter.h; sourceTree = "<group>"; };
+		BFD7E7AC1D9C3E19007DB6E4 /* HEMExpansionsListPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMExpansionsListPresenter.m; sourceTree = "<group>"; };
 		BFD9A96B1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingNewSensePresenter.h; sourceTree = "<group>"; };
 		BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingNewSensePresenter.m; sourceTree = "<group>"; };
 		BFD9A9711D5A8C37003EC82A /* HEMNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNewSensePresenter.h; sourceTree = "<group>"; };
@@ -3244,7 +3250,9 @@
 		BFD7E79E1D9B316C007DB6E4 /* Expansions */ = {
 			isa = PBXGroup;
 			children = (
+				BFD7E7A71D9C37CD007DB6E4 /* Presenters */,
 				BFD7E79F1D9B3179007DB6E4 /* Services */,
+				BFD7E7A61D9C37BF007DB6E4 /* View Controllers */,
 			);
 			name = Expansions;
 			sourceTree = "<group>";
@@ -3256,6 +3264,24 @@
 				BFD7E7A11D9B31A4007DB6E4 /* HEMExpansionService.m */,
 			);
 			name = Services;
+			sourceTree = "<group>";
+		};
+		BFD7E7A61D9C37BF007DB6E4 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BFD7E7A81D9C387A007DB6E4 /* HEMExpansionListViewController.h */,
+				BFD7E7A91D9C387A007DB6E4 /* HEMExpansionListViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BFD7E7A71D9C37CD007DB6E4 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BFD7E7AB1D9C3E19007DB6E4 /* HEMExpansionsListPresenter.h */,
+				BFD7E7AC1D9C3E19007DB6E4 /* HEMExpansionsListPresenter.m */,
+			);
+			name = Presenters;
 			sourceTree = "<group>";
 		};
 		BFD9A9691D5A7F3B003EC82A /* Upgrade */ = {
@@ -3949,6 +3975,7 @@
 				BF645D971A9FB3A70051C120 /* HEMTransitionDelegate.m in Sources */,
 				BF6D9B7E1C73EA8A00774322 /* HEMTrendsSleepDepthCell.m in Sources */,
 				BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */,
+				BFD7E7AA1D9C387A007DB6E4 /* HEMExpansionListViewController.m in Sources */,
 				BFC4C1FC1B8D536D00BB7761 /* HEMInfoViewController.m in Sources */,
 				BF78E9A61B2762060015949F /* HEMTutorialContent.m in Sources */,
 				BFF364811D62A06F008D4DF8 /* HEMUpgradePillDescriptionPresenter.m in Sources */,
@@ -3980,6 +4007,7 @@
 				BF6098771D4820E20005C8F0 /* HEMVoiceTutorialPresenter.m in Sources */,
 				BF4BE3DB1D835D65003B96ED /* HEMSensorGroupMemberView.m in Sources */,
 				BF825D021D7756E5003F34B0 /* HEMIntroService.m in Sources */,
+				BFD7E7AD1D9C3E19007DB6E4 /* HEMExpansionsListPresenter.m in Sources */,
 				BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */,
 				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
@@ -4456,7 +4484,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
 				PROVISIONING_PROFILE = "";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
-				SENSE_API_URL = "https://dev-api.hello.is";
+				SENSE_API_URL = "https://dev-api-unstable.hello.is";
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORT_TOKEN = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";

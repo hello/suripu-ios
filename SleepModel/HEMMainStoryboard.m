@@ -39,6 +39,8 @@ static NSString *const _HEMcurrentValue = @"currentValue";
 static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
+static NSString *const _HEMexpansion = @"expansion";
+static NSString *const _HEMexpansions = @"expansions";
 static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfield = @"field";
 static NSString *const _HEMformViewController = @"formViewController";
@@ -126,6 +128,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
++(NSString *)expansionReuseIdentifier { return _HEMexpansion; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldReuseIdentifier { return _HEMfield; }
 +(NSString *)groupReuseIdentifier { return _HEMgroup; }
@@ -166,6 +169,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
++(NSString *)expansionsSegueIdentifier { return _HEMexpansions; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }

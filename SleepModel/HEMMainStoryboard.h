@@ -25,6 +25,7 @@
 +(NSString *)aboutReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
++(NSString *)expansionReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;
 +(NSString *)signoutReuseIdentifier;
@@ -68,6 +69,7 @@
 +(NSString *)alarmsSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
++(NSString *)expansionsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pillSegueIdentifier;

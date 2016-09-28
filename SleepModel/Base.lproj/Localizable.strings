@@ -944,3 +944,10 @@
 "ext.room-conditions.error" = "unable to load data";
 "ext.room-conditions.not-signed-in" = "sign in to view data";
 "ext.room-conditions.loading" = "loading data";
+
+// expansions
+"expansion.state.not-connected" = "Connect";
+"expansion.state.connected-off" = "Disabled";
+"expansion.state.connected-on" = "Enabled";
+"expansion.state.revoked" = "Disconnected";
+"expansion.state.not-configured" = "Configure";

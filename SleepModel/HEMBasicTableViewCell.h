@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMURLImageView;
+
 @interface HEMBasicTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet HEMURLImageView *remoteImageView;
 
 - (void)showSeparator:(BOOL)show;
 

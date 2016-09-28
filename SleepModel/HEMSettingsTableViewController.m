@@ -90,6 +90,8 @@
             return [HEMMainStoryboard notificationSettingsSegueIdentifier];
         case HEMSettingsCategorySupport:
             return [HEMMainStoryboard settingsToSupportSegueIdentifier];
+        case HEMSettingsCategoryExpansions:
+            return [HEMMainStoryboard expansionsSegueIdentifier];
         default:
             return nil; // others show modal
     }

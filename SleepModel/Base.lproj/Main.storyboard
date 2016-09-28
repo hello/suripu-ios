@@ -1190,7 +1190,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZ3-ia-TxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="498" y="5356"/>
+            <point key="canvasLocation" x="507" y="6180"/>
         </scene>
         <!--Sleep Pill Dfu View Controller-->
         <scene sceneID="wT3-1f-Jsb">
@@ -1295,7 +1295,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cYr-Sa-cGy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1219" y="5356"/>
+            <point key="canvasLocation" x="1219" y="6180"/>
         </scene>
         <!--Sleep Pill Finder View Controller-->
         <scene sceneID="dTh-Jl-B41">
@@ -1412,7 +1412,75 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ezd-Me-6Kv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2002" y="5356"/>
+            <point key="canvasLocation" x="2002" y="6180"/>
+        </scene>
+        <!--Expansions-->
+        <scene sceneID="tDP-1j-TPN">
+            <objects>
+                <viewController title="Expansions" id="U0U-ss-dof" customClass="HEMExpansionListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3SW-vL-crN"/>
+                        <viewControllerLayoutGuide type="bottom" id="xfx-S7-udG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gNd-4G-Ezp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q8T-aD-eVu">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="16" reuseIdentifier="expansion" textLabel="ikX-59-InQ" detailTextLabel="maN-2q-QOu" rowHeight="56" style="IBUITableViewCellStyleValue1" id="IlD-ch-hmZ" customClass="HEMBasicTableViewCell">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="56"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IlD-ch-hmZ" id="c7t-rp-0Du">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="672-Vm-EGA" customClass="HEMURLImageView">
+                                                    <rect key="frame" x="16" y="8" width="40" height="40"/>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ikX-59-InQ">
+                                                    <rect key="frame" x="64" y="18" width="32" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="maN-2q-QOu">
+                                                    <rect key="frame" x="543" y="18" width="42" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="remoteImageView" destination="672-Vm-EGA" id="vYe-oD-NCE"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Q8T-aD-eVu" firstAttribute="top" secondItem="3SW-vL-crN" secondAttribute="bottom" id="UoW-Yu-zPO"/>
+                            <constraint firstItem="xfx-S7-udG" firstAttribute="top" secondItem="Q8T-aD-eVu" secondAttribute="bottom" id="aQY-Zp-1Gd"/>
+                            <constraint firstAttribute="trailing" secondItem="Q8T-aD-eVu" secondAttribute="trailing" id="jMO-zD-Fmz"/>
+                            <constraint firstItem="Q8T-aD-eVu" firstAttribute="leading" secondItem="gNd-4G-Ezp" secondAttribute="leading" id="joy-cL-NJw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="Q8T-aD-eVu" id="aTA-Sc-W7N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d0M-Ss-nd0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2002" y="5358"/>
         </scene>
         <!--My account-->
         <scene sceneID="a37-H4-b9a">
@@ -1700,6 +1768,7 @@
                         <segue destination="idz-L4-hpw" kind="show" identifier="accountSettings" id="Bkx-fs-oZz"/>
                         <segue destination="KKS-QC-rMW" kind="show" identifier="notificationSettings" id="Ogb-e2-EmZ"/>
                         <segue destination="3mQ-zN-H0E" kind="show" identifier="settingsToSupport" id="WJe-XJ-9PQ"/>
+                        <segue destination="U0U-ss-dof" kind="show" identifier="expansions" id="y97-P0-hcA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MDd-3F-Lt8" userLabel="First Responder" sceneMemberID="firstResponder"/>

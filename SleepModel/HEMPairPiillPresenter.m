@@ -113,6 +113,13 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
     [self setNavItem:navItem];
 }
 
+#pragma mark - Track Analytics Event
+
+- (void)trackEvent:(NSString*)event withProperties:(NSDictionary*)props {
+    BOOL onboarding = ![[self onboardingService] hasFinishedOnboarding];
+    [SENAnalytics track:event properties:props onboarding:onboarding];
+}
+
 #pragma mark - Presenter events
 
 - (void)didAppear {
@@ -218,8 +225,7 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
     [self setPairingAttempts:[self pairingAttempts] + 1];
     
     if ([self pairingAttempts] > 1) {
-        BOOL onboarding = ![[self onboardingService] hasFinishedOnboarding];
-        [SENAnalytics track:HEMAnalyticsEventPairPillRetry properties:nil onboarding:onboarding];
+        [self trackEvent:HEMAnalyticsEventPairPillRetry withProperties:nil];
     }
     
     __weak typeof(self) weakSelf = self;
@@ -263,7 +269,7 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
                             }
                         }];
                     } else {
-                        [SENAnalytics track:HEMAnalyticsEventPillPaired];
+                        [strongSelf trackEvent:HEMAnalyticsEventPillPaired withProperties:nil];
                         [strongSelf flashPairedState];
                     }
                 }];

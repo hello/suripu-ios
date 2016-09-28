@@ -39,6 +39,7 @@ typedef NS_ENUM(NSUInteger, HEMRoomCheckState) {
 
 + (HEMRoomCheckView*)createRoomCheckViewWithFrame:(CGRect)frame;
 
+@property (weak, nonatomic) IBOutlet UIView *sensorContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *sensorMessageLabel;
 @property (nonatomic, weak) id<HEMRoomCheckDelegate> delegate;
 

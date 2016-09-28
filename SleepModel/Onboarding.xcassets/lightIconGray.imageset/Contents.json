@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "lightIconGray.png",
+      "filename" : "brightness_gray_nofill.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "lightIconGray@2x.png",
+      "filename" : "brightness_gray_nofill@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "lightIconGray@3x.png",
+      "filename" : "brightness_gray_nofill@3x.png",
       "scale" : "3x"
     }
   ],

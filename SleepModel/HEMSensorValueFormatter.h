@@ -8,7 +8,16 @@
 #import <SenseKit/SENSensor.h>
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, HEMSensorValueUnitLoc) {
+    HEMSensorValueUnitLocNormal = 0,
+    HEMSensorValueUnitLocSuperscript = 1,
+    HEMSensorValueUnitLocSubscript = -1
+};
+
 @interface HEMSensorValueFormatter : NSNumberFormatter
+
+@property (nonatomic, assign) BOOL includeUnitSymbol;
+@property (nonatomic, assign, getter=useUnicodeUnitSymbol) BOOL unicodeUnitSymbol;
 
 /**
  * @method initWithSensorUnit:
@@ -65,5 +74,57 @@
  * @return        the string representation of the sensor's value, in preferred unit
  */
 - (NSString*)stringFromNumber:(NSNumber *)number forSensorUnit:(SENSensorUnit)unit;
+
+/**
+ * @discussion
+ * Convenience method to return the symbol that represents the unit set in this
+ * formatter
+ * 
+ * @return unit symbol, if available
+ */
+- (NSString*)unitSymbol;
+
+/**
+ * @discussion
+ * Return an attributed value string containing the unit symbol.  This only applies
+ * if includeUnitSymbol is YES.  If that property is NO, then attributed string
+ * will simply be the formatted value.
+ *
+ * @param sensor: sensor to process
+ * @param location: the location of the unit symbol, if includeUnitSymbol is YES
+ * @param valueAttributes: attributes to be applied to the sensor value itself
+ * @param unitAttributes: attributes to be applied to the sensor unit symbol
+ */
+- (NSAttributedString*)attributedValueFromSensor:(SENSensor*)sensor
+                              unitSymbolLocation:(HEMSensorValueUnitLoc)location
+                                 valueAttributes:(NSDictionary*)valueAttributes
+                                  unitAttributes:(NSDictionary*)unitAttributes;
+
+/**
+ * @discussion
+ * Return an attributed value string containing the unit symbol.  This only applies
+ * if includeUnitSymbol is YES.  If that property is NO, then attributed string
+ * will simply be the formatted value.
+ *
+ * @param value: value to process
+ * @param location: the location of the unit symbol, if includeUnitSymbol is YES
+ * @param valueAttributes: attributes to be applied to the sensor value itself
+ * @param unitAttributes: attributes to be applied to the sensor unit symbol
+ */
+- (NSAttributedString*)attributedValue:(NSNumber*)value
+                    unitSymbolLocation:(HEMSensorValueUnitLoc)location
+                       valueAttributes:(NSDictionary*)valueAttributes
+                        unitAttributes:(NSDictionary*)unitAttributes;
+
+/**
+ * @discussion
+ * Convert the value based on the unit to the preferred unit.  For example, if
+ * unit is celsius, but preferred unit is fahrenheit, the returned value will
+ * be the degrees in fahrenheit;
+ * 
+ * @param value: value to convert
+ * @return the converted value, if applicable
+ */
+- (NSNumber*)convertValue:(NSNumber*)value;
 
 @end

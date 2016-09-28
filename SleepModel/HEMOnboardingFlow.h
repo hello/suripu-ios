@@ -17,5 +17,6 @@
 - (BOOL)shouldCompleteFlowAfter:(UIViewController*)controller;
 - (void)prepareNextController:(HEMOnboardingController*)controller
                fromController:(UIViewController*)controller;
+- (NSString*)analyticsEventPrefix;
 
 @end

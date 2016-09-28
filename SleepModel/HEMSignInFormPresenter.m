@@ -262,6 +262,8 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
     [[textFieldCell textField] setDelegate:self];
     [[textFieldCell textField] setReturnKeyType:returnKeyType];
     [[textFieldCell textField] setKeyboardType:keyboardType];
+    [[textFieldCell textField] setAutocorrectionType:UITextAutocorrectionTypeNo];
+    [[textFieldCell textField] setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 }
 
 #pragma mark - UITextFieldDelegate

@@ -5,13 +5,11 @@
 //  Created by Jimmy Lu on 6/29/16.
 //
 //
-
 @import iOSDFULibrary;
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <LGBluetooth/LGBluetooth.h>
-
 #import "SENSleepPillManager.h"
 #import "SENSleepPill.h"
 
@@ -28,7 +26,7 @@ static CGFloat const SENSleepPillDfuDelay = 5.0f;
 static NSTimeInterval const SENSleepPillEnableDfuTimeout = 10.0f + SENSleepPillDefaultScanTimeout;
 static NSTimeInterval const SENSleepPillDfuTimeout = 20.0f + SENSleepPillDefaultScanTimeout;
 
-@interface SENSleepPillManager() <DFUProgressDelegate, DFUServiceDelegate>
+@interface SENSleepPillManager() <DFUProgressDelegate, DFUServiceDelegate, LoggerDelegate>
 
 @property (nonatomic, strong) SENSleepPill* sleepPill;
 @property (nonatomic, strong) DFUServiceController* dfuController;
@@ -393,7 +391,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         CBPeripheral* peripheral = [[[strongSelf sleepPill] peripheral] cbPeripheral];
         DFUServiceInitiator* initiator = [[DFUServiceInitiator alloc] initWithCentralManager:manager
                                                                                       target:peripheral];
-        
+        [initiator setLogger:self];
         [initiator withFirmwareFile:firmware];
         [initiator setProgressDelegate:strongSelf];
         [initiator setDelegate:strongSelf];
@@ -478,6 +476,12 @@ currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
     [self endDfuWithError:localError];
     [self setCurrentDfuState:SENSleepPillDfuStateError];
     [self setRediscoveryRequired:YES];
+}
+
+#pragma mark - Logger Delegate
+
+- (void)logWith:(enum LogLevel)level message:(NSString * _Nonnull)message {
+    DDLogVerbose(@"dfu message %@", message);
 }
 
 #pragma mark - Clean up

@@ -1,5 +1,126 @@
 # Changelog
 
+## 1.5.3.11
+
+Fixes:
+
+* Fix issue where FB Oauth response was not properly being routed back to the app
+
+## 1.5.3.10
+
+Fixes:
+
+* Fix issue with scrolling room conditions when there is no data to draw any charts
+
+## 1.5.3.9
+
+Fixes:
+
+* Fix voice tutorial so it continues to poll after an error
+
+## 1.5.3.8
+
+New:
+
+* Added back analytics for room conditions + sensor
+* Added analytics for Upgrade path
+* Added error state in sensor detail view
+* Added loading state in sensor detail view
+
+Fixes:
+
+* Fixed issue in upgrade path where voice tutorial is skipped if DFU is skipped
+* Room conditions error card is no longer tappable
+* Disable scrubbing in room conditions mini charts
+* Welcome / intro message now will disappear right away after the 2nd appearance
+
+## 1.5.3.7
+
+New:
+
+* Updated Room Check to support new sensors
+* Updated about copy for CO2
+* Updated Room conditions extension to support new sensors
+* Design tweaks
+* Improved limit line label appearance to show only when chart data is available
+* Updated Voice Tutorial copy
+* Updated waiting for data state for room conditions and sensor detail
+* Updated copy for Pill DFU to suggest it only takes 1 minute
+
+Fixes:
+
+* Fixed copy for VOC
+* Fixed copy for Sleep Pill updating to use lowercase u
+* Fixed issue where room conditions would not properly error out if graphs are already displayed
+* Fixed issue where room conditions intro message is dismissed automatically if you just let it sit for 20s
+* Force the room conditions view to reload if data in sensor detail has changed
+* Fixed issue where voice tutorial error message will cycle repeatedly
+
+## 1.5.3.6
+
+New:
+
+* Updated sensor time series api to simplify logic and avoid issues when relaying unrecognized unit types
+
+## 1.5.3.5
+
+New:
+
+* CO2 should now properly be returned, when available from server
+
+Fixes:
+
+* Pill DFU for iOS 10 should be fixed
+
+## 1.5.3.4
+
+New:
+
+* Scrubbing enabled for Sensor detail view
+
+Fixes:
+
+* Updated Nordic SDK that should fix Pill DFU for iOS 10
+* Negative values are no longer converted to positive 1 in room conditions
+* Fixes old issues reported in previous sensor detail implementation
+
+## 1.5.3.3
+
+New:
+
+* Room conditions uses new 3H scope
+* Sensor detail past week now uses week scope
+* Added scales to sensor detail view
+* Hidden networks returned by Sense are now ignored
+* 
+
+Fixes:
+
+* Fixed typo in welcome message for room conditions
+* Sensor detail current value now refreshes as well
+* Fixed typo in dust sensor about copy
+* Fixed typo in humidity sensor about copy
+* Prevent chart in sensor detail from being zoomed
+
+## 1.5.3.2
+
+New:
+
+* New Room Conditions view
+* New Sensor Detail view
+* Using V2 Sensor API
+
+Fixes:
+
+* Fixes capitalization and autocorrection in text fields
+
+## 1.5.3.1
+
+New:
+
+* Updated protobuf to sync with firmware changes
+* Updated WiFi password screen to handle the removal of WPA2 in Sense security options
+
 ## 1.5.2.11
 
 Note:

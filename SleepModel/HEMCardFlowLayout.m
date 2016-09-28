@@ -17,7 +17,7 @@
 
 @implementation HEMCardFlowLayout
 
-static CGFloat const HEMCardCardMargin = 12.f;
+static CGFloat const HEMCardCardMargin = 8.f;
 static CGFloat const HEMCardDefaultItemHeight = 100.f;
 
 - (instancetype)init {

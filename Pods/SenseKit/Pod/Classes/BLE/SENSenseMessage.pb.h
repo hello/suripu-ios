@@ -66,7 +66,14 @@ typedef enum {
   SENWifiEndpointSecurityTypeOpen = 0,
   SENWifiEndpointSecurityTypeWep = 1,
   SENWifiEndpointSecurityTypeWpa = 2,
-  SENWifiEndpointSecurityTypeWpa2 = 3,
+  SENWifiEndpointSecurityTypeWpsPbc = 3,
+  SENWifiEndpointSecurityTypeWpsPin = 4,
+  SENWifiEndpointSecurityTypeWpaEnterprise = 5,
+  SENWifiEndpointSecurityTypeP2PPbc = 6,
+  SENWifiEndpointSecurityTypeP2PPinKeypad = 7,
+  SENWifiEndpointSecurityTypeP2PPinDisplay = 8,
+  SENWifiEndpointSecurityTypeP2PPinAuto = 9,
+  SENWifiEndpointSecurityTypeWepShared = 10,
 } SENWifiEndpointSecurityType;
 
 BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value);

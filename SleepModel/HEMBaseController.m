@@ -30,8 +30,13 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self listenForAccountEvents];
+        [self listenForDrawerEvents];
     }
     return self;
+}
+
+- (UIViewController*)rootViewController {
+    return [HEMRootViewController rootViewControllerForKeyWindow];
 }
 
 #pragma mark - View Controller Lifecycle Events
@@ -111,8 +116,25 @@
     [[self presenters] makeObjectsPerformSelector:@selector(didEnterBackground)];
 }
 
-- (UIViewController*)rootViewController {
-    return [HEMRootViewController rootViewControllerForKeyWindow];
+#pragma mark - Drawer Events
+
+- (void)listenForDrawerEvents {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerDidOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerDidCloseNotification
+                                               object:nil];
+}
+
+- (void)drawerDidOpen {
+    [[self presenters] makeObjectsPerformSelector:@selector(didOpenDrawer)];
+}
+
+- (void)drawerDidClose {
+    [[self presenters] makeObjectsPerformSelector:@selector(didCloseDrawer)];
 }
 
 #pragma mark - Shadows
@@ -176,6 +198,28 @@
     CGRect windowFrame = [window frame];
     CGRect myViewFrame = [[self view] convertRect:[[self view] bounds] toView:window];
     return CGRectContainsRect(windowFrame, myViewFrame);
+}
+
+- (void)dismissModalAfterDelay:(BOOL)delay {
+    // dismiss modal view controller does not call controller appearance methods
+    // so we need to do it ourselves, to trigger the childs to handle changes
+    __weak typeof(self) weakSelf = self;
+    void(^done)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        UIViewController* child = [[strongSelf childViewControllers] firstObject];
+        [child beginAppearanceTransition:YES animated:YES];
+        [child endAppearanceTransition];
+    };
+    
+    if (delay) {
+        NSTimeInterval delayInSeconds = 1.5f;
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+            [self dismissViewControllerAnimated:YES completion:done];
+        });
+    } else {
+        [self dismissViewControllerAnimated:YES completion:done];
+    }
 }
 
 #pragma mark - alerts

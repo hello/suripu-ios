@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
   descriptionTopConstraint:(NSLayoutConstraint*)topConstraint;
 - (void)bindWithIllustrationView:(nullable UIImageView*)illustrationView
              andHeightConstraint:(NSLayoutConstraint*)heightConstraint;
+- (void)trackEvent:(NSString*)event properties:(NSDictionary*)props;
 - (void)help;
 - (void)proceed;
 

@@ -114,6 +114,8 @@ NSString* const kHEMAnalyticsEventPropOnBScreen = @"Screen";
 NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 
 // main app
+NSString* const kHEMAnalyticsEventLaunchedFromExt = @"App Launched From Extension";
+NSString* const kHEMAnalyticsEventPropExtUrl = @"extension url";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
@@ -270,6 +272,15 @@ NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
 NSString* const HEMAnalyticsEventVoiceTutorial = @"Voice Tutorial";
 NSString* const HEMAnalyticsEventVoiceResponse = @"Voice Command";
 
+// upgrade path
+NSString* const HEMAnalyticsEventUpgradePrefix = @"Upgrade";
+NSString* const HEMAnalyticsEventUpgradeSense = @"Upgrade Sense";
+NSString* const HEMAnalyticsEventPurchaseVoice = @"Purchase Sense Voice";
+NSString* const HEMAnalyticsEventUpgradeSenseStart = @"Upgrade Sense Start";
+NSString* const HEMAnalyticsEventUpgradeSwapRequest = @"Upgrade Swap Accounts Request";
+NSString* const HEMAnalyticsEventUpgradeSwapped = @"Upgrade Account Swapped";
+NSString* const HEMAnalyticsEventUpgradeReset = @"Upgrade Factory Reset";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";
@@ -283,7 +294,6 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     // whatever 3rd party vendor we use for analytics, configure it here
     NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
     if ([analyticsToken length] > 0) {
-        DDLogVerbose(@"segment analytics enabled");
         [self addProvider:[[HEMSegmentProvider alloc] initWithWriteKey:analyticsToken]];
     }
     // logging for our own perhaps to replicate analytic events on console
@@ -478,6 +488,16 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 + (void)trackSenseUpdate:(SENDFUStatus*)status {
     [self track:@"Sense DFU status"
      properties:@{@"status" : @([status currentState])}];
+}
+
+#pragma mark - Convenience methods
+
++ (NSString*)addPrefixIfNeeded:(NSString*)prefix toEvent:(NSString*)event {
+    NSString* prefixedEvent = event;
+    if (![prefixedEvent hasPrefix:prefix]) {
+        prefixedEvent = [NSString stringWithFormat:@"%@ %@", prefix, event];
+    }
+    return prefixedEvent;
 }
 
 @end

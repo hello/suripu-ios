@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -21,7 +22,7 @@
                     <rect key="frame" x="0.0" y="48" width="600" height="183"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRK-dj-oeP" userLabel="sensorContainer">
-                    <rect key="frame" x="0.0" y="264" width="600" height="40"/>
+                    <rect key="frame" x="280" y="264" width="320" height="40"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="zY1-Pf-bXO"/>
@@ -37,8 +38,28 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rie-2e-3zn" userLabel="sensorValueContainer">
-                    <rect key="frame" x="0.0" y="406" width="600" height="158"/>
+                    <rect key="frame" x="0.0" y="386" width="600" height="178"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNk-mY-ZJL" customClass="UICountingLabel">
+                            <rect key="frame" x="281" y="0.0" width="39" height="77"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="64"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="bottomLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="db" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGJ-r1-ZqY">
+                            <rect key="frame" x="320" y="38" width="21" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="lGJ-r1-ZqY" firstAttribute="leading" secondItem="GNk-mY-ZJL" secondAttribute="trailing" id="5cX-md-ra2"/>
+                        <constraint firstItem="lGJ-r1-ZqY" firstAttribute="bottom" secondItem="GNk-mY-ZJL" secondAttribute="bottom" constant="-18" id="7JK-v5-ypb"/>
+                        <constraint firstItem="GNk-mY-ZJL" firstAttribute="centerX" secondItem="Rie-2e-3zn" secondAttribute="centerX" id="r75-4w-WtY"/>
+                        <constraint firstItem="GNk-mY-ZJL" firstAttribute="top" secondItem="Rie-2e-3zn" secondAttribute="top" id="tw7-2U-bKH"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -51,12 +72,12 @@
                 <constraint firstAttribute="bottom" secondItem="Rie-2e-3zn" secondAttribute="bottom" constant="36" id="Im2-Da-aPb"/>
                 <constraint firstItem="xnU-64-6En" firstAttribute="top" secondItem="bRK-dj-oeP" secondAttribute="bottom" constant="46" id="KWh-6P-0hb"/>
                 <constraint firstItem="pco-pJ-gp9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="NFA-Kp-qrb"/>
-                <constraint firstItem="bRK-dj-oeP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="QLV-N8-Yy8"/>
+                <constraint firstItem="bRK-dj-oeP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-20" id="QLV-N8-Yy8"/>
                 <constraint firstAttribute="trailing" secondItem="xnU-64-6En" secondAttribute="trailing" id="UVG-mD-sDL"/>
                 <constraint firstItem="FvV-r0-P2l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fz8-DA-NwH"/>
                 <constraint firstItem="Rie-2e-3zn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gpa-x7-pRh"/>
                 <constraint firstItem="bRK-dj-oeP" firstAttribute="top" secondItem="pco-pJ-gp9" secondAttribute="bottom" constant="8" id="hhj-hd-VxJ"/>
-                <constraint firstItem="Rie-2e-3zn" firstAttribute="top" secondItem="bRK-dj-oeP" secondAttribute="bottom" constant="102" id="iz3-SW-l0J"/>
+                <constraint firstItem="Rie-2e-3zn" firstAttribute="top" secondItem="bRK-dj-oeP" secondAttribute="bottom" constant="82" id="iz3-SW-l0J"/>
                 <constraint firstAttribute="trailing" secondItem="FvV-r0-P2l" secondAttribute="trailing" id="jPZ-4P-KtU"/>
                 <constraint firstItem="xnU-64-6En" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="siW-aV-kOv"/>
             </constraints>
@@ -64,14 +85,18 @@
                 <outlet property="bgImageTopConstraint" destination="7yz-vf-3AU" id="6G3-OE-U2Q"/>
                 <outlet property="senseBgImageView" destination="pco-pJ-gp9" id="U9W-QA-G7U"/>
                 <outlet property="senseImageView" destination="FvV-r0-P2l" id="6qN-Pb-Bnd"/>
+                <outlet property="sensorContainerLeftConstraint" destination="QLV-N8-Yy8" id="fvG-AI-ste"/>
                 <outlet property="sensorContainerTopConstraint" destination="hhj-hd-VxJ" id="z3t-Gq-lvv"/>
                 <outlet property="sensorContainerView" destination="bRK-dj-oeP" id="nWS-nX-Fj0"/>
                 <outlet property="sensorMessageHeightConstraint" destination="6eO-F7-I3r" id="yCQ-Hb-Q3T"/>
                 <outlet property="sensorMessageLabel" destination="xnU-64-6En" id="kpy-01-1TF"/>
                 <outlet property="sensorMessageTopConstraint" destination="KWh-6P-0hb" id="dfk-HI-mHo"/>
                 <outlet property="sensorTopConstraint" destination="6ml-Lx-rq5" id="Wtg-BG-peU"/>
+                <outlet property="sensorValueCenterConstraint" destination="r75-4w-WtY" id="g2y-Fw-IvT"/>
                 <outlet property="sensorValueContainer" destination="Rie-2e-3zn" id="RmO-Su-LqN"/>
                 <outlet property="sensorValueContainerBottomConstraint" destination="Im2-Da-aPb" id="6dR-NF-cbo"/>
+                <outlet property="unitLabel" destination="lGJ-r1-ZqY" id="kNd-lH-p4w"/>
+                <outlet property="valueLabel" destination="GNk-mY-ZJL" id="TdT-oh-AlN"/>
             </connections>
         </view>
     </objects>

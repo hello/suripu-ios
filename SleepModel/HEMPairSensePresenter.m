@@ -109,6 +109,11 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     }
 }
 
+- (void)trackEvent:(NSString*)event properties:(NSDictionary*)props {
+    BOOL onboarding = ![[self onbService] hasFinishedOnboarding];
+    [SENAnalytics track:event properties:props onboarding:onboarding];
+}
+
 #pragma mark - State Machine
 
 - (void)executeNextStep {
@@ -261,6 +266,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     __weak typeof(self) weakSelf = self;
     
     DDLogVerbose(@"issuing swap intent");
+    [SENAnalytics track:HEMAnalyticsEventUpgradeSwapRequest];
     
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.linking-account", nil);
     [self updateActivityText:activityMessage completion:nil];
@@ -269,6 +275,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     [[self deviceService] issueSwapIntentFor:currentSense completion:^(NSError * error) {
          __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
+            [SENAnalytics track:HEMAnalyticsEventUpgradeSwapped];
             [strongSelf setCurrentState:HEMPairSenseStateIssuedSwapIntent];
             [strongSelf executeNextStep];
         } else {
@@ -290,6 +297,7 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     [[self onbService] linkCurrentAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
+            [strongSelf trackEvent:HEMAnalyticsEventSensePaired properties:nil];
             [strongSelf setCurrentState:HEMPairSenseStateAccountLinked];
             [strongSelf executeNextStep];
         } else {

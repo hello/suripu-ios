@@ -262,7 +262,14 @@ BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) 
     case SENWifiEndpointSecurityTypeOpen:
     case SENWifiEndpointSecurityTypeWep:
     case SENWifiEndpointSecurityTypeWpa:
-    case SENWifiEndpointSecurityTypeWpa2:
+    case SENWifiEndpointSecurityTypeWpsPbc:
+    case SENWifiEndpointSecurityTypeWpsPin:
+    case SENWifiEndpointSecurityTypeWpaEnterprise:
+    case SENWifiEndpointSecurityTypeP2PPbc:
+    case SENWifiEndpointSecurityTypeP2PPinKeypad:
+    case SENWifiEndpointSecurityTypeP2PPinDisplay:
+    case SENWifiEndpointSecurityTypeP2PPinAuto:
+    case SENWifiEndpointSecurityTypeWepShared:
       return YES;
     default:
       return NO;

@@ -22,11 +22,20 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 @interface HEMVoiceService()
 
 @property (nonatomic, assign, getter=isStarted) BOOL started;
+@property (nonatomic, assign, getter=isInProgress) BOOL inProgress;
 @property (nonatomic, strong) NSDate* lastVoiceResultDate;
 
 @end
 
 @implementation HEMVoiceService
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _lastVoiceResultDate = [NSDate date];
+    }
+    return self;
+}
 
 - (void)mostRecentVoiceCommands:(HEMVoiceCommandsHandler)completion {
     [SENAPISpeech getRecentVoiceCommands:^(id data, NSError *error) {
@@ -45,7 +54,11 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 }
 
 - (void)waitForVoiceCommandResult {
+    if ([self isInProgress]) {
+        return;
+    }
     __weak typeof(self) weakSelf = self;
+    [self setInProgress:YES];
     [self mostRecentVoiceCommands:^(NSArray<SENSpeechResult *> * results, NSError * error) {
         __strong typeof(weakSelf) strongself = weakSelf;
         NSDictionary* info = nil;
@@ -72,6 +85,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         int64_t delay = (int64_t)(HEMVoiceServiceWaitDelay * NSEC_PER_SEC);
         dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
         dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [strongself setInProgress:NO];
             if ([strongself isStarted]) {
                 [strongself waitForVoiceCommandResult];
             }

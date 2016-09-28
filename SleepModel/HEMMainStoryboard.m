@@ -32,14 +32,17 @@ static NSString *const _HEMbreakdownController = @"breakdownController";
 static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
 static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
+static NSString *const _HEMchart = @"chart";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
+static NSString *const _HEMcurrentValue = @"currentValue";
 static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfield = @"field";
 static NSString *const _HEMformViewController = @"formViewController";
+static NSString *const _HEMgroup = @"group";
 static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinfoCell = @"infoCell";
@@ -61,10 +64,10 @@ static NSString *const _HEMpillDFUNav = @"pillDFUNav";
 static NSString *const _HEMpillFinder = @"pillFinder";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
+static NSString *const _HEMscale = @"scale";
 static NSString *const _HEMscan = @"scan";
 static NSString *const _HEMsense = @"sense";
-static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
-static NSString *const _HEMsensorViewController = @"sensorViewController";
+static NSString *const _HEMsensor = @"sensor";
 static NSString *const _HEMsettings = @"settings";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
@@ -118,11 +121,14 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)breakdownLineCellReuseIdentifier { return _HEMbreakdownLineCell; }
 +(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
 +(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
++(NSString *)chartReuseIdentifier { return _HEMchart; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
++(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldReuseIdentifier { return _HEMfield; }
++(NSString *)groupReuseIdentifier { return _HEMgroup; }
 +(NSString *)imageReuseIdentifier { return _HEMimage; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }
@@ -136,8 +142,9 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)pillReuseIdentifier { return _HEMpill; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
++(NSString *)scaleReuseIdentifier { return _HEMscale; }
 +(NSString *)senseReuseIdentifier { return _HEMsense; }
-+(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
++(NSString *)sensorReuseIdentifier { return _HEMsensor; }
 +(NSString *)settingsReuseIdentifier { return _HEMsettings; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }
@@ -157,6 +164,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)alarmSoundsSegueIdentifier { return _HEMalarmSounds; }
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
++(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }
@@ -187,7 +195,6 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiatePillDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFU]; }
 +(id)instantiatePillDFUNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFUNav]; }
 +(id)instantiatePillFinderViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillFinder]; }
-+(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
 +(id)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }
 +(id)instantiateSleepGraphController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphController]; }

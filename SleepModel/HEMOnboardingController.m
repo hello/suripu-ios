@@ -223,7 +223,12 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (NSString*)onboardingAnalyticsEventNameFor:(NSString*)event {
     NSString* reusedEvent = event;
-    if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
+    if ([self flow]) {
+        NSString* prefix = [[self flow] analyticsEventPrefix];
+        if (![event hasPrefix:prefix]) {
+            reusedEvent = [NSString stringWithFormat:@"%@ %@", prefix, event];
+        }
+    } else if (![[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
         if (![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
             reusedEvent = [NSString stringWithFormat:@"%@ %@",
                            HEMAnalyticsEventOnboardingPrefix, event];

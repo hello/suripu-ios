@@ -7,7 +7,6 @@
 #import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
-#import "HEMCurrentConditionsViewController.h"
 #import "HEMAlarmListViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMLogUtils.h"
@@ -26,6 +25,8 @@
 #import "HEMFacebookService.h"
 
 @implementation HEMAppDelegate
+
+static NSString* const kHEMAppExtRoom = @"room";
 
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 static NSString* const HEMApiXVersionHeader = @"X-Client-Version";
@@ -62,12 +63,12 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
          annotation:(id)annotation {
     HEMFacebookService* fb = [HEMFacebookService new];
     if (![fb open:application url:url source:sourceApplication annotation:annotation]) {
-        NSURLComponents* components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-        for (NSURLQueryItem* item in components.queryItems) {
-            if ([item.name isEqualToString:@"sensor"]) {
-                [self openDetailViewForSensorNamed:item.value];
-                break;
-            }
+        NSString* lastPath = [url lastPathComponent];
+        if ([lastPath isEqualToString:kHEMAppExtRoom]) {
+            NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
+            [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
+            HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+            [rootVC showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:YES];
         }
     }
     return YES;
@@ -77,28 +78,6 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     NSString *shortcutType = shortcutItem.type;
     DDLogDebug(@"incoming shortcut %@", shortcutType);
     completionHandler([[HEMShortcutService sharedService] canHandle3DTouchType:shortcutType]);
-}
-
-- (void)openDetailViewForSensorNamed:(NSString*)name {
-    if (![SENAuthorizationService isAuthorized] || [self deauthorizeIfNeeded])
-        return;
-
-    HEMRootViewController* root = (id)self.window.rootViewController;
-    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:NO];
-    HEMSnazzBarController* controller = (id)root.backController;
-    UIViewController* visibleController = (id)[controller selectedViewController];
-
-    void (^popToRoot)() = ^{
-        if ([visibleController isKindOfClass:[UINavigationController class]]) {
-            UINavigationController* nav = (id)visibleController;
-            [nav popToRootViewControllerAnimated:NO];
-        }
-    };
-    if (visibleController.presentedViewController) {
-        [visibleController dismissViewControllerAnimated:NO completion:popToRoot];
-    } else {
-        popToRoot();
-    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
@@ -213,24 +192,11 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [HEMNotificationHandler handleRemoteNotificationWithInfo:userInfo fetchCompletionHandler:completionHandler];
-}
-
-- (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler {
-    // FIXME (jimmy): does the server even support this?  I don't see anything
-    // on the server side ...
-    NSNumber* qId = userInfo[@"qid"];
-    NSNumber* aQId = userInfo[@"aqid"];
-    SENQuestion* question = [[SENQuestion alloc] initWithId:qId
-                                          questionAccountId:aQId
-                                                   question:nil
-                                                       type:SENQuestionTypeChoice
-                                                    choices:nil];
-    SENAnswer* answer = [[SENAnswer alloc] initWithId:nil answer:identifier questionId:qId];
-    [SENAPIQuestions sendAnswer:answer forQuestion:question completion:^(id data, NSError* error) {
-                                                      // something something
-                                                  }];
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [HEMNotificationHandler handleRemoteNotificationWithInfo:userInfo
+                                      fetchCompletionHandler:completionHandler];
 }
 
 - (void)configureAppearance {

@@ -203,6 +203,8 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
             return SENSenseManagerErrorCodeProtobufEncodingFailed;
         case ErrorTypeProtobufDecodeFailed:
             return SENSenseManagerErrorCodeProtobufDecodingFailed;
+        case ErrorTypeServerConnectionTimeout:
+            return SENSenseManagerErrorCodeFailedToConnectToServer;
         default:
             return SENSenseManagerErrorCodeUnexpectedResponse;
     }
@@ -1099,8 +1101,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                 return [self dataValueForWepNetworkKey:password error:error];
             } // else, let it go through to default like all other types
         }
-        case SENWifiEndpointSecurityTypeWpa:
-        case SENWifiEndpointSecurityTypeWpa2:
         default:
             return [password dataUsingEncoding:NSUTF8StringEncoding];
     }
@@ -1171,7 +1171,16 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                    if ([updateResponse wifisDetected]) {
                        [[updateResponse wifisDetected] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                            DDLogVerbose(@"found wifi %@", [((SENWifiEndpoint*)obj) ssid]);
-                           [wifis addObject:obj];
+                           if ([obj isKindOfClass:[SENWifiEndpoint class]]) {
+                               SENWifiEndpoint* endpoint = obj;
+                               // Sense may return hidden networks, with no SSID or ssid
+                               // that is an empty string
+                               if ([endpoint hasSsid] && [[endpoint ssid] length] > 0) {
+                                   [wifis addObject:obj];
+                               } else {
+                                   DDLogVerbose(@"skipping network with no ssid");
+                               }
+                           }
                        }];
                    }
                    return [strongSelf shouldStopUpdatesFromResponse:updateResponse

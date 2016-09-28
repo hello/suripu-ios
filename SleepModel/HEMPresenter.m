@@ -84,7 +84,8 @@
 - (void)didComeBackFromBackground {}
 - (void)didMoveToParent {}
 - (void)wasRemovedFromParent {}
-
+- (void)didOpenDrawer {}
+- (void)didCloseDrawer {}
 - (void)didGainConnectivity {}
 
 - (void)userDidSignOut {}

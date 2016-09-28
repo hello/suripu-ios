@@ -66,6 +66,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 @property (nonatomic, assign) NSInteger failures;
 
 @property (nonatomic, weak) HEMVoiceService* voiceService;
+@property (nonatomic, assign, getter=isInfoShowing) BOOL infoShowing;
 
 @end
 
@@ -296,6 +297,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     [sheet setOptionTextAlignment:NSTextAlignmentCenter];
     [sheet addDismissAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setInfoShowing:NO];
         [strongSelf listenForVoiceResult];
     }];
     [sheet addOptionWithTitle:cancelOption
@@ -304,10 +306,12 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
                     imageName:nil
                        action:^{
                            __strong typeof(weakSelf) strongSelf = weakSelf;
+                           [strongSelf setInfoShowing:NO];
                            [strongSelf listenForVoiceResult];
                        }];
     
     [self stopListeningForVoiceResult];
+    [self setInfoShowing:YES];
     [[self delegate] showController:sheet fromPresenter:self];
 }
 
@@ -374,6 +378,11 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 }
 
 - (void)listenForVoiceResult {
+    if ([self isInfoShowing]) {
+        [self stopListeningForVoiceResult];
+        return;
+    }
+    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(didGetVoiceResult:)
@@ -383,6 +392,10 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 }
 
 - (void)didGetVoiceResult:(NSNotification*)note {
+    if ([self isInfoShowing]) {
+        return;
+    }
+    
     SENSpeechResult* result = [note userInfo][HEMVoiceNotificationInfoResult];
     if (result) {
         NSDictionary* props = @{kHEManaltyicsEventPropStatus : @([result status])};
@@ -458,6 +471,10 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 }
 
 - (void)showUnrecognizedResponse:(NSString*)message {
+    if (![self isVisible]) {
+        return;
+    }
+    
     [self setFailures:[self failures] + 1];
     [self stopListeningForVoiceResult];
     

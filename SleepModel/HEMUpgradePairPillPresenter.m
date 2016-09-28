@@ -16,4 +16,10 @@
     [descriptionLabel setText:NSLocalizedString(@"upgrade.pair-pill.description", nil)];
 }
 
+- (void)trackEvent:(NSString *)event withProperties:(NSDictionary *)props {
+    NSString* prefixedEvent = [SENAnalytics addPrefixIfNeeded:HEMAnalyticsEventUpgradePrefix
+                                                      toEvent:event];
+    [SENAnalytics track:prefixedEvent properties:nil];
+}
+
 @end

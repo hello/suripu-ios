@@ -33,6 +33,14 @@
     return 3;
 }
 
+- (UITextAutocapitalizationType)fieldCapitalizationTypeInRow:(NSInteger)row {
+    return UITextAutocapitalizationTypeNone;
+}
+
+- (UITextAutocorrectionType)fieldAutocorrectTypeInRow:(NSInteger)row {
+    return UITextAutocorrectionTypeNo;
+}
+
 - (NSString*)placeHolderTextForFieldInRow:(NSInteger)row {
     switch (row) {
         case 0:

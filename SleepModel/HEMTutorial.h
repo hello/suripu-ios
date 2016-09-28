@@ -22,24 +22,9 @@
 + (BOOL)shouldShowTutorialForTimeline;
 
 /**
- *  Present the tutorial for the sensor overview screen if not previously viewed
- */
-+ (void)showTutorialForSensorsIfNeeded;
-
-/**
  *  Show tutorial to describe what pill colors are for
  */
 + (void)showTutorialForPillColor;
-
-/**
- *  Present the tutorial for a particular sensor if not previously viewed
- *
- *  @param sensorName name of the sensor
- *  @return YES if shown / needed.  No otherwise
- */
-+ (BOOL)showTutorialIfNeededForSensorNamed:(NSString*)sensorName;
-
-+ (void)showTutorialForSensorNamed:(NSString*)sensorName;
 
 /**
  * Present the tutorial for alarms if not previously viewed

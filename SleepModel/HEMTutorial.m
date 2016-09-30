@@ -138,7 +138,7 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"expansion.enable.info.title", nil)
                                          text:NSLocalizedString(@"expansion.enable.info.description", nil)
-                                        image:nil];
+                                        image:[UIImage imageNamed:@"expEnableIllustration"]];
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 

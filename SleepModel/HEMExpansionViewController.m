@@ -79,7 +79,7 @@
 }
 
 - (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter *)presenter {
-    [HEMTutorial showInfoForExpansionFrom:self];
+    [HEMTutorial showInfoForExpansionFrom:[self navigationController]];
 }
 
 #pragma mark - HEMPresenterErrorDelegate

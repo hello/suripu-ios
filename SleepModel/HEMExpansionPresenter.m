@@ -459,13 +459,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 NSInteger numberOfConfigs = [[strongSelf configurations] count];
                 if (numberOfConfigs == 0) {
-                    [strongSelf dismissActivitySucessfully:numberOfConfigs > 0 completion:^{
-                        NSString* title = NSLocalizedString(@"expansion.error.setup.no-groups.title", nil);
-                        NSString* message = NSLocalizedString(@"expansion.error.setup.no-groups.message", nil);
-                        [[strongSelf errorDelegate] showErrorWithTitle:title
-                                                            andMessage:message
-                                                          withHelpPage:nil
-                                                         fromPresenter:strongSelf];
+                    [strongSelf dismissActivitySucessfully:NO completion:^{
+                        [strongSelf showNoConfigurationError];
                     }];
                 } else if (numberOfConfigs == 1) {
                     [strongSelf useConfiguration:[[strongSelf configurations] firstObject]];
@@ -482,6 +477,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showConfigurationOptions {
+    if ([[self configurations] count] == 0) {
+        return [self showNoConfigurationError];
+    }
+    
     HEMActionSheetViewController* sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     NSString* configurationName = [self configurationName];
     NSString* titleFormat = NSLocalizedString(@"expansion.configuration.options.title.format", nil);
@@ -570,6 +569,17 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     }
     
     return YES;
+}
+
+#pragma mark - Error
+
+- (void)showNoConfigurationError {
+    NSString* title = NSLocalizedString(@"expansion.error.setup.no-groups.title", nil);
+    NSString* message = NSLocalizedString(@"expansion.error.setup.no-groups.message", nil);
+    [[self errorDelegate] showErrorWithTitle:title
+                                  andMessage:message
+                                withHelpPage:nil
+                               fromPresenter:self];
 }
 
 #pragma mark - Clean up

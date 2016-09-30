@@ -73,6 +73,15 @@ extern NSString* const SENAuthorizationServiceDidReauthorizeNotification;
 + (BOOL)isAuthorizedRequest:(NSURLRequest*)request;
 
 /**
+ *  Authorize a request with the stored token, if available.  If user is not
+ *  currently signed in, nil is returned
+ *
+ *  @param request: the request to authorize for current user
+ *  @return authorized request, or nil if not signed in
+ */
++ (NSURLRequest*)authorizeRequest:(NSURLRequest*)request;
+
+/**
  * @return authenticated account id or nil
  */
 + (NSString*)accountIdOfAuthorizedUser;

@@ -176,6 +176,18 @@ static NSString* const SENAuthorizationServiceContentType = @"application/x-www-
     }
 }
 
++ (NSURLRequest*)authorizeRequest:(NSURLRequest*)request {
+    NSMutableURLRequest* authorizedRequest = nil;
+    id token = [self accessToken];
+    if (token) {
+        authorizedRequest = [request mutableCopy];
+        NSString* headerValue = token ? [NSString stringWithFormat:@"Bearer %@", token] : nil;
+        [authorizedRequest addValue:headerValue
+                 forHTTPHeaderField:SENAuthorizationServiceAuthorizationHeaderKey];
+    }
+    return authorizedRequest;
+}
+
 + (void)authorizeRequestsWithResponse:(id)responseObject notify:(NSString*)notificationName
 {
     NSDictionary* responseData = (NSDictionary*)responseObject;

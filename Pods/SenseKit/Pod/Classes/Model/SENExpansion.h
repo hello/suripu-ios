@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "SENSerializable.h"
 
+@class SENRemoteImage;
+
 typedef NS_ENUM(NSUInteger, SENExpansionState) {
     SENExpansionStateUnknown = 0,
     SENExpansionStateNotConnected,
@@ -24,13 +26,12 @@ typedef NS_ENUM(NSUInteger, SENExpansionState) {
 @property (nonatomic, copy, readonly) NSString* category;
 @property (nonatomic, copy, readonly) NSString* deviceName;
 @property (nonatomic, copy, readonly) NSString* serviceName;
-@property (nonatomic, copy, readonly) NSString* iconUri;
 @property (nonatomic, copy, readonly) NSString* authUri;
 @property (nonatomic, copy, readonly) NSString* authCompletionUri;
-@property (nonatomic, assign, readonly) SENExpansionState state;
+@property (nonatomic, copy, readonly) NSString* expansionDescription;
+@property (nonatomic, strong, readonly) SENRemoteImage* remoteIcon;
+@property (nonatomic, assign) SENExpansionState state;
 
-- (void)enable:(BOOL)enable;
-- (void)disconnect:(BOOL)disconnect;
 - (NSDictionary*)dictionaryValueForUpdate;
 
 @end

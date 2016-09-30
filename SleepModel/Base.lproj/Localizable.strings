@@ -951,3 +951,15 @@
 "expansion.state.connected-on" = "Enabled";
 "expansion.state.revoked" = "Disconnected";
 "expansion.state.not-configured" = "Configure";
+"expansion.action.permissions" = "Permissions";
+"expansion.action.enable" = "Enabled";
+"expansion.action.remove" = "Remove Access";
+"expansion.status.enabling" = "Enabling expansion";
+"expansion.status.disabling" = "Disabling expansion";
+"expansion.status.removing-access" = "Removing access";
+"expansion.configuration.name.temperature" = "Thermostat";
+"expansion.configuration.name.light" = "Room";
+"expansion.configuration.name.generic" = "Configuration";
+"expansion.configuration.activity.loading-configs" = "Checking setup";
+"expansion.configuration.options.title.format" = "select a %@";
+"expansion.configuration.activity.updating-config.format" = "Setting %@";

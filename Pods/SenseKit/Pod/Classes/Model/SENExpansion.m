@@ -15,10 +15,11 @@ static NSString* const kSENExpansionAttrId = @"id";
 static NSString* const kSENExpansionAttrCategory = @"category";
 static NSString* const kSENExpansionAttrDeviceName = @"device_name";
 static NSString* const kSENExpansionAttrServiceName = @"service_name";
-static NSString* const kSENExpansionAttrIconUri = @"icon_uri";
+static NSString* const kSENExpansionAttrIcon = @"icon";
 static NSString* const kSENExpansionAttrAuthUri = @"auth_uri";
 static NSString* const kSENExpansionAttrCompletionUri = @"completion_uri";
 static NSString* const kSENExpansionAttrState = @"state";
+static NSString* const kSENExpansionAttrDescription = @"description";
 
 static NSString* const kSENExpansionStateEnumNotConnected = @"NOT_CONNECTED";
 static NSString* const kSENExpansionStateEnumConnectedOn = @"CONNECTED_ON";
@@ -32,9 +33,12 @@ static NSString* const kSENExpansionStateEnumNotConfigured = @"NOT_CONFIGURED";
         _category = SENObjectOfClass(dict[kSENExpansionAttrCategory], [NSString class]);
         _deviceName = SENObjectOfClass(dict[kSENExpansionAttrDeviceName], [NSString class]);
         _serviceName = SENObjectOfClass(dict[kSENExpansionAttrServiceName], [NSString class]);
-        _iconUri = SENObjectOfClass(dict[kSENExpansionAttrIconUri], [NSString class]);
         _authUri = SENObjectOfClass(dict[kSENExpansionAttrAuthUri], [NSString class]);
         _authCompletionUri = SENObjectOfClass(dict[kSENExpansionAttrCompletionUri], [NSString class]);
+        _expansionDescription = SENObjectOfClass(dict[kSENExpansionAttrDescription], [NSString class]);
+ 
+        NSDictionary* iconDict = SENObjectOfClass(dict[kSENExpansionAttrIcon], [NSDictionary class]);
+        _remoteIcon = [[SENRemoteImage alloc] initWithDictionary:iconDict];
         
         NSString* stateText = SENObjectOfClass(dict[kSENExpansionAttrState], [NSString class]);
         _state = [self stateFromString:stateText];
@@ -86,7 +90,6 @@ static NSString* const kSENExpansionStateEnumNotConfigured = @"NOT_CONFIGURED";
         && SENObjectIsEqual([self category], [other category])
         && SENObjectIsEqual([self deviceName], [other deviceName])
         && SENObjectIsEqual([self serviceName], [other serviceName])
-        && SENObjectIsEqual([self iconUri], [other iconUri])
         && SENObjectIsEqual([self authUri], [other authUri])
         && SENObjectIsEqual([self authCompletionUri], [other authCompletionUri])
         && [self state] == [other state];
@@ -94,14 +97,6 @@ static NSString* const kSENExpansionStateEnumNotConfigured = @"NOT_CONFIGURED";
 
 - (NSUInteger)hash {
     return [[self identifier] hash];
-}
-
-- (void)enable:(BOOL)enable {
-    _state = enable ? SENExpansionStateConnectedOn : SENExpansionStateConnectedOff;
-}
-
-- (void)disconnect:(BOOL)disconnect {
-    _state = SENExpansionStateNotConnected;
 }
 
 - (NSDictionary*)dictionaryValueForUpdate {

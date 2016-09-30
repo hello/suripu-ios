@@ -116,14 +116,6 @@ static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
-    UIView* headerView = [tableView tableHeaderView];
-    if ([headerView isKindOfClass:[HEMPhotoHeaderView class]]) {
-        HEMPhotoHeaderView* photoView = (id) headerView;
-        [[photoView addButton] addTarget:self
-                                  action:@selector(showPhotoOptions)
-                        forControlEvents:UIControlEventTouchUpInside];
-    }
-    
     UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES
                                                                    bottomBorder:NO];
     [tableView setTableFooterView:footerView];

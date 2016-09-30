@@ -13,6 +13,10 @@
 @interface HEMBasicTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet HEMURLImageView *remoteImageView;
+@property (weak, nonatomic) IBOutlet UILabel* customDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel* customTitleLabel;
+@property (weak, nonatomic) IBOutlet UIButton* infoButton;
+@property (weak, nonatomic) IBOutlet UIView* customAccessoryView;
 
 - (void)showSeparator:(BOOL)show;
 

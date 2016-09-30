@@ -594,6 +594,11 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     
     CGFloat minValue = [chartView chartYMin];
     CGFloat maxValue = [chartView chartYMax];
+    // a hack until we can properly line up the chart to the limit lines.  This
+    // case identifies when values in the chart are all 0s.
+    if (!(minValue == -1.0f && maxValue == 1.0f)) {
+        minValue = 0.0f;
+    }
     [[self formatter] setIncludeUnitSymbol:YES];
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];

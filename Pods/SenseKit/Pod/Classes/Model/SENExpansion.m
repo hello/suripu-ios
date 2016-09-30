@@ -29,7 +29,7 @@ static NSString* const kSENExpansionStateEnumNotConfigured = @"NOT_CONFIGURED";
 
 - (instancetype)initWithDictionary:(NSDictionary*)dict {
     if (self = [super init]) {
-        _identifier = SENObjectOfClass(dict[kSENExpansionAttrId], [NSString class]);
+        _identifier = SENObjectOfClass(dict[kSENExpansionAttrId], [NSNumber class]);
         _category = SENObjectOfClass(dict[kSENExpansionAttrCategory], [NSString class]);
         _deviceName = SENObjectOfClass(dict[kSENExpansionAttrDeviceName], [NSString class]);
         _serviceName = SENObjectOfClass(dict[kSENExpansionAttrServiceName], [NSString class]);
@@ -108,12 +108,14 @@ static NSString* const kSENExpansionStateEnumNotConfigured = @"NOT_CONFIGURED";
 @implementation SENExpansionConfig
 
 static NSString* const kSENExpansionConfigAttrId = @"id";
-static NSString* const  kSENExpansionConfigAttrName = @"name";
+static NSString* const kSENExpansionConfigAttrName = @"name";
+static NSString* const kSENExpansionConfigAttrSelected = @"selected";
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
     if (self = [super init]) {
         _identifier = SENObjectOfClass(data[kSENExpansionConfigAttrId], [NSString class]);
         _localizedName = SENObjectOfClass(data[kSENExpansionConfigAttrName], [NSString class]);
+        _selected = [SENObjectOfClass(data[kSENExpansionConfigAttrSelected], [NSNumber class]) boolValue];
     }
     return self;
 }

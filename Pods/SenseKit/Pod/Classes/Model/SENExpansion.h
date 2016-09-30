@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, SENExpansionState) {
 
 @interface SENExpansion : NSObject <SENSerializable>
 
-@property (nonatomic, copy, readonly) NSString* identifier;
+@property (nonatomic, copy, readonly) NSNumber* identifier;
 @property (nonatomic, copy, readonly) NSString* category;
 @property (nonatomic, copy, readonly) NSString* deviceName;
 @property (nonatomic, copy, readonly) NSString* serviceName;
@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, SENExpansionState) {
 
 @property (nonatomic, copy, readonly) NSString* identifier;
 @property (nonatomic, copy, readonly) NSString* localizedName;
+@property (nonatomic, assign, readonly, getter=isSelected) BOOL selected;
 
 - (NSDictionary*)dictionaryValue;
 

@@ -30,18 +30,25 @@ static NSString* const kSENaPIExpansionConfigPath = @"configurations";
 }
 
 + (void)getExpansionById:(NSString*)expansionId completion:(SENAPIDataBlock)completion {
-    NSString* path = [kSENAPIExpansionResource stringByAppendingPathComponent:kSENaPIExpansionConfigPath];
+    NSString* path = [kSENAPIExpansionResource stringByAppendingPathComponent:expansionId];
     [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
         SENExpansion* expansion = nil;
-        if (!error && [data isKindOfClass:[NSDictionary class]]) {
-            expansion = [[SENExpansion alloc] initWithDictionary:data];
+        if (!error) {
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                expansion = [[SENExpansion alloc] initWithDictionary:data];
+            } else if ([data isKindOfClass:[NSArray class]]){
+                id firstObj = [data firstObject];
+                if ([firstObj isKindOfClass:[NSDictionary class]]) {
+                    expansion = [[SENExpansion alloc] initWithDictionary:firstObj];
+                }
+            }
         }
         completion (expansion, error);
     }];
 }
 
 + (void)updateExpansionStateFor:(SENExpansion*)expansion completion:(SENAPIDataBlock)completion {
-    NSString* path = [kSENAPIExpansionResource stringByAppendingPathComponent:[expansion identifier]];
+    NSString* path = [kSENAPIExpansionResource stringByAppendingPathComponent:[[expansion identifier] stringValue]];
     NSDictionary* params = [expansion dictionaryValueForUpdate];
     [SENAPIClient PATCH:path parameters:params completion:completion];
 }
@@ -73,7 +80,7 @@ static NSString* const kSENaPIExpansionConfigPath = @"configurations";
                       [expansion identifier],
                       kSENaPIExpansionConfigPath];
     NSDictionary* params = [config dictionaryValue];
-    [SENAPIClient PUT:path parameters:params completion:completion];
+    [SENAPIClient PATCH:path parameters:params completion:completion];
 }
 
 @end

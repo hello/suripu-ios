@@ -339,8 +339,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[self expansionService] removeExpansion:[self expansion] completion:^(NSError * _Nullable error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
-                // TODO: show error
-                [strongSelf dismissActivitySucessfully:NO completion:nil];
+                [strongSelf dismissActivitySucessfully:NO completion:^{
+                    NSString* title = NSLocalizedString(@"expansion.error.remove-access.title", nil);
+                    NSString* message = NSLocalizedString(@"expansion.error.remove-access.message", nil);
+                    [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                        andMessage:message
+                                                      withHelpPage:nil
+                                                     fromPresenter:strongSelf];
+                }];
             } else {
                 [[strongSelf delegate] removedAccessFrom:strongSelf];
                 [strongSelf dismissActivitySucessfully:YES completion:nil];
@@ -372,7 +378,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showEnableInfo {
-    //TODO: show info
+    [[self delegate] showEnableInfoDialogFromPresenter:self];
 }
 
 - (void)toggleEnable:(UISwitch*)enableSwitch {
@@ -413,7 +419,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                        completion:^(SENExpansion * expansion, NSError * error) {
                                            __strong typeof(weakSelf) strongSelf = weakSelf;
                                            if (error) {
-                                               // TODO: show error
+                                               NSString* title = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.title", nil);
+                                               NSString* message = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.message", nil);
+                                               [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                                                   andMessage:message
+                                                                                 withHelpPage:nil
+                                                                                fromPresenter:strongSelf];
                                            } else {
                                                [strongSelf setSelectedConfig:configuration];
                                                [strongSelf setExpansion:expansion];
@@ -434,7 +445,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 NSInteger numberOfConfigs = [[strongSelf configurations] count];
                 if (numberOfConfigs == 0) {
                     [strongSelf dismissActivitySucessfully:numberOfConfigs > 0 completion:^{
-                        // TODO: show an error
+                        NSString* title = NSLocalizedString(@"expansion.error.setup.no-groups.title", nil);
+                        NSString* message = NSLocalizedString(@"expansion.error.setup.no-groups.message", nil);
+                        [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                            andMessage:message
+                                                          withHelpPage:nil
+                                                         fromPresenter:strongSelf];
                     }];
                 } else if (numberOfConfigs == 1) {
                     [strongSelf useConfiguration:[[strongSelf configurations] firstObject]];
@@ -522,8 +538,13 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
             [[strongSelf delegate] dismissModalControllerFromPresenter:self];
             [[strongSelf expansionService] refreshExpansion:[strongSelf expansion] completion:^(SENExpansion * expansion, NSError * error) {
                 __weak typeof(weakSelf) strongSelf = weakSelf;
-                if (error) {
-                    // TODO: show error
+                if (error || ![[strongSelf expansionService] isConnected:expansion]) {
+                    NSString* title = NSLocalizedString(@"expansion.error.connect.title", nil);
+                    NSString* message = NSLocalizedString(@"expansion.error.connect.message", nil);
+                    [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                        andMessage:message
+                                                      withHelpPage:nil
+                                                     fromPresenter:strongSelf];
                 } else {
                     [strongSelf setExpansion:expansion];
                     [strongSelf hideConnectButtonIfConnected];

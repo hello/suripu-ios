@@ -93,7 +93,7 @@
                 andMessage:(NSString*)message
               withHelpPage:(nullable NSString*)helpPage
              fromPresenter:(HEMPresenter*)presenter {
-    [self showMessageDialog:message title:title image:nil withHelpPage:helpPage];
+    [self showMessageDialog:message title:title];
 }
 
 @end

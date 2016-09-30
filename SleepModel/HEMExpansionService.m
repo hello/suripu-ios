@@ -47,6 +47,14 @@
 }
 
 - (NSURLRequest*)authorizationRequestForExpansion:(SENExpansion*)expansion {
+    // remove all cookies to log the user out.  If we don't do this, some times
+    // a 401 is returned
+    NSHTTPCookieStorage* storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray* cookies = [storage cookies];
+    for (NSHTTPCookie* cookie in cookies) {
+        [storage deleteCookie:cookie];
+    }
+    
     NSURL* url = [NSURL URLWithString:[expansion authUri]];
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
     return [SENAuthorizationService authorizeRequest:request];

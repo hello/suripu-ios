@@ -10,8 +10,10 @@
 #import "HEMActionButton.h"
 #import "HEMExpansionService.h"
 #import "HEMExpansionPresenter.h"
+#import "HEMAlertViewController.h"
+#import "HEMTutorial.h"
 
-@interface HEMExpansionViewController() <HEMExpansionDelegate>
+@interface HEMExpansionViewController() <HEMExpansionDelegate, HEMPresenterErrorDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *connectButtonView;
@@ -42,6 +44,7 @@
     [presenter bindWithShadowView:[self shadowView]];
     [presenter bindWithRootView:[[self rootViewController] view]];
     [presenter setDelegate:self];
+    [presenter setErrorDelegate:self];
     
     [self setExpPresenter:presenter];
     [self addPresenter:presenter];
@@ -73,6 +76,24 @@
 
 - (void)removedAccessFrom:(HEMExpansionPresenter*)presenter {
     [[self navigationController] popViewControllerAnimated:NO];
+}
+
+- (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter *)presenter {
+    [HEMTutorial showInfoForExpansionFrom:self];
+}
+
+#pragma mark - HEMPresenterErrorDelegate
+
+- (void)showCustomerAlert:(HEMAlertViewController *)alert fromPresenter:(HEMPresenter *)presenter {
+    [alert setViewToShowThrough:[self backgroundViewForAlerts]];
+    [alert showFrom:self];
+}
+
+- (void)showErrorWithTitle:(nullable NSString*)title
+                andMessage:(NSString*)message
+              withHelpPage:(nullable NSString*)helpPage
+             fromPresenter:(HEMPresenter*)presenter {
+    [self showMessageDialog:message title:title image:nil withHelpPage:helpPage];
 }
 
 @end

@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
       onRootController:(BOOL)root
          fromPresenter:(HEMExpansionPresenter*)presenter;
 
+- (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter*)presenter;
+
 - (void)dismissModalControllerFromPresenter:(HEMExpansionPresenter*)presenter;
 
 - (void)removedAccessFrom:(HEMExpansionPresenter*)presenter;

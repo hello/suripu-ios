@@ -44,6 +44,11 @@
 + (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller;
 
 /**
+ *  Show a dialog to display information about enabling expansions
+ */
++ (void)showInfoForExpansionFrom:(UIViewController*)controller;
+
+/**
  * Mark all tutorials as unviewed so that they can be triggered again
  */
 + (void)resetTutorials;

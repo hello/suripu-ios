@@ -21,6 +21,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActionSheetViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMExpansionRowType) {
@@ -51,6 +52,7 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
 @property (nonatomic, weak) HEMActivityCoverView* activityCoverView;
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configurations;
 @property (nonatomic, weak) UINavigationBar* navBar;
+@property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 
 @end
 
@@ -101,11 +103,6 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
 - (void)bindWithConnectContainer:(UIView*)container
              andBottomConstraint:(NSLayoutConstraint*)bottomConstraint
                       withButton:(HEMActionButton*)connectButton {
-    if ([[self expansionService] isConnected:[self expansion]]) {
-        CGFloat height = CGRectGetHeight([container bounds]);
-        [bottomConstraint setConstant:-height];
-    }
-
     [connectButton addTarget:self
                       action:@selector(connect)
             forControlEvents:UIControlEventTouchUpInside];
@@ -113,6 +110,7 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
     [self setConnectContainer:container];
     [self setConnectButton:connectButton];
     [self setConnectBottomConstraint:bottomConstraint];
+    [self hideConnectButtonIfConnected];
 }
 
 - (void)bindWithNavBar:(UINavigationBar*)navBar {
@@ -126,6 +124,13 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
 
 - (BOOL)hasNavBar {
     return [self navBar] != nil;
+}
+
+- (void)hideConnectButtonIfConnected {
+    if ([[self expansionService] isConnected:[self expansion]]) {
+        CGFloat height = CGRectGetHeight([[self connectContainer] bounds]);
+        [[self connectBottomConstraint] setConstant:-height];
+    }
 }
 
 - (HEMExpansionHeaderView*)headerView {
@@ -158,6 +163,14 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
                                                 completion:^(NSArray<SENExpansionConfig *> * configs, NSError * error) {
                                                     __strong typeof(weakSelf) strongSelf = weakSelf;
                                                     [strongSelf setConfigurations:configs];
+                                                    if (configs) {
+                                                        for (SENExpansionConfig* config in configs) {
+                                                            if ([config isSelected]) {
+                                                                [strongSelf setSelectedConfig:config];
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
                                                     [[strongSelf tableView] reloadData];
                                                     if (completion) {
                                                         completion();
@@ -172,7 +185,8 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
         [rows addObject:@(HEMExpansionRowTypeConfiguration)];
         [rows addObject:@(HEMExpansionRowTypeRemove)];
     } else {
-        [rows addObject:@(HEMExpansionRowTypePermissions)];
+        // TODO: add this later
+//        [rows addObject:@(HEMExpansionRowTypePermissions)];
     }
     [self setRows:rows];
 }
@@ -227,40 +241,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
         }
         case HEMExpansionRowTypeEnable: {
-            [basicCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            [[basicCell customTitleLabel] setText:NSLocalizedString(@"expansion.action.enable", nil)];
-            [[basicCell infoButton] addTarget:self
-                                       action:@selector(showEnableInfo)
-                             forControlEvents:UIControlEventTouchUpInside];
-            
-            // TODO: hide this for now
-            [[basicCell infoButton] setHidden:YES];
-            
-            BOOL isEnabled = [[self expansion] state] == SENExpansionStateConnectedOn;
-            UISwitch* enableSwitch = (UISwitch*) [basicCell customAccessoryView];
-            [enableSwitch setOnTintColor:[UIColor tintColor]];
-            [enableSwitch setOn:isEnabled];
-            [enableSwitch addTarget:self
-                             action:@selector(toggleEnable:)
-                   forControlEvents:UIControlEventTouchUpInside];
+            [self configureEnableCell:basicCell];
             break;
         }
         case HEMExpansionRowTypeConfiguration: {
-            SENExpansionConfig* config = [[self configurations] firstObject];
-            NSString* selectedName = [config localizedName];
-            if (!selectedName) {
-                selectedName = NSLocalizedString(@"empty-data", nil);
-            }
-            [[basicCell customTitleLabel] setText:[self configurationName]];
-            [[basicCell customDetailLabel] setText:[config localizedName]];
-            [[basicCell customDetailLabel] setFont:[UIFont body]];
-            [[basicCell customDetailLabel] setTextColor:[UIColor grey3]];
+            [self configureConfigurationCell:basicCell];
             break;
         }
         case HEMExpansionRowTypeRemove:
-            [basicCell setCustomAccessoryView:nil];
-            [[basicCell customTitleLabel] setText:NSLocalizedString(@"expansion.action.remove", nil)];
-            [[basicCell customTitleLabel] setTextColor:[UIColor red6]];
+            [self configureRemoveAccessCell:basicCell];
             break;
         default:
             break;
@@ -273,7 +262,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSNumber* rowType = [self rows][[indexPath row]];
     switch ([rowType unsignedIntegerValue]) {
         case HEMExpansionRowTypeRemove:
-            [self removeAccess];
+            [self showRemoveAccessConfirmation];
             break;
         case HEMExpansionRowTypeConfiguration:
             [self showConfigurationOptions];
@@ -283,12 +272,70 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+#pragma mark - Display methods for cells
+
+- (void)configureEnableCell:(HEMBasicTableViewCell*)cell {
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [[cell customTitleLabel] setText:NSLocalizedString(@"expansion.action.enable", nil)];
+    [[cell infoButton] addTarget:self
+                          action:@selector(showEnableInfo)
+                forControlEvents:UIControlEventTouchUpInside];
+    
+    BOOL isEnabled = [[self expansion] state] == SENExpansionStateConnectedOn;
+    UISwitch* enableSwitch = (UISwitch*) [cell customAccessoryView];
+    [enableSwitch setOnTintColor:[UIColor tintColor]];
+    [enableSwitch setOn:isEnabled];
+    [enableSwitch addTarget:self
+                     action:@selector(toggleEnable:)
+           forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)configureConfigurationCell:(HEMBasicTableViewCell*)cell {
+    SENExpansionConfig* config = [[self configurations] firstObject];
+    NSString* selectedName = [config localizedName];
+    if (!selectedName) {
+        selectedName = NSLocalizedString(@"empty-data", nil);
+    }
+    [[cell customTitleLabel] setText:[self configurationName]];
+    [[cell customDetailLabel] setText:[config localizedName]];
+    [[cell customDetailLabel] setFont:[UIFont body]];
+    [[cell customDetailLabel] setTextColor:[UIColor grey3]];
+}
+
+- (void)configureRemoveAccessCell:(HEMBasicTableViewCell*)cell {
+    [cell setCustomAccessoryView:nil];
+    [[cell customTitleLabel] setText:NSLocalizedString(@"expansion.action.remove", nil)];
+    [[cell customTitleLabel] setTextColor:[UIColor red6]];
+}
+
 #pragma mark - Actions
+
+- (void)showRemoveAccessConfirmation {
+    NSString* title = NSLocalizedString(@"expansion.configuration.removal.confirm.title", nil);
+    NSString* message = NSLocalizedString(@"expansion.configuration.removal.confirm.message", nil);
+    
+    NSDictionary* messageAttrs = @{NSFontAttributeName : [UIFont dialogMessageFont],
+                                   NSForegroundColorAttributeName : [UIColor blackColor]};
+    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message attributes:messageAttrs];
+    
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setAttributedMessage:attrMessage];
+    
+    __weak typeof(self) weakSelf = self;
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf removeAccess];
+    }];
+    
+    [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
+}
 
 - (void)removeAccess {
     NSString* statusText = NSLocalizedString(@"expansion.status.removing-access", nil);
     __weak typeof(self) weakSelf = self;
-    [self showActivity:statusText inView:[self rootView] completion:^{
+    [self showActivity:statusText completion:^{
         [[self expansionService] removeExpansion:[self expansion] completion:^(NSError * _Nullable error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
@@ -325,7 +372,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showEnableInfo {
-    
+    //TODO: show info
 }
 
 - (void)toggleEnable:(UISwitch*)enableSwitch {
@@ -339,9 +386,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             statusText = NSLocalizedString(@"expansion.status.disabling", nil);
         }
         
-        UIView* activityView = [[self tableView] superview];
         __weak typeof(self) weakSelf = self;
-        [self showActivity:statusText inView:activityView completion:^{
+        [self showActivity:statusText completion:^{
             [[self expansionService] enable:enabled expansion:[self expansion] completion:^(NSError * error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (error) {
@@ -361,7 +407,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* activityText = [NSString stringWithFormat:activityTextFormat, [self configurationName]];
     
     __weak typeof(self) weakSelf = self;
-    [self showActivity:activityText inView:[[self tableView] superview] completion:^{
+    [self showActivity:activityText completion:^{
         [[self expansionService] setConfiguration:configuration
                                      forExpansion:[self expansion]
                                        completion:^(SENExpansion * expansion, NSError * error) {
@@ -369,6 +415,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                            if (error) {
                                                // TODO: show error
                                            } else {
+                                               [strongSelf setSelectedConfig:configuration];
                                                [strongSelf setExpansion:expansion];
                                                [[strongSelf tableView] reloadData];
                                            }
@@ -381,7 +428,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([[self configurations] count] == 0) {
         __weak typeof(self) weakSelf = self;
         NSString* activityText = NSLocalizedString(@"expansion.configuration.activity.loading-configs", nil);
-        [self showActivity:activityText inView:[self rootView] completion:^{
+        [self showActivity:activityText completion:^{
             [self grabConfigurations:^{
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 NSInteger numberOfConfigs = [[strongSelf configurations] count];
@@ -389,6 +436,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                     [strongSelf dismissActivitySucessfully:numberOfConfigs > 0 completion:^{
                         // TODO: show an error
                     }];
+                } else if (numberOfConfigs == 1) {
+                    [strongSelf useConfiguration:[[strongSelf configurations] firstObject]];
                 } else {
                     // pop up choices
                     [strongSelf showConfigurationOptions];
@@ -411,7 +460,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     for (SENExpansionConfig* config in [self configurations]) {
         [sheet addOptionWithTitle:[config localizedName]
-                       titleColor:nil
+                       titleColor:[UIColor grey7]
                       description:nil
                         imageName:nil
                            action:^{
@@ -425,10 +474,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - Activity
 
-- (void)showActivity:(NSString*)text inView:(UIView*)view completion:(void(^)(void))completion {
-    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
-    [activityView showInView:view withText:text activity:YES completion:completion];
-    [self setActivityCoverView:activityView];
+- (void)showActivity:(NSString*)text completion:(void(^)(void))completion {
+    if ([[self activityCoverView] isShowing]) {
+        [[self activityCoverView] updateText:text completion:^(BOOL finished) {
+            if (completion) {
+                completion ();
+            }
+        }];
+    } else {
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[self rootView] withText:text activity:YES completion:completion];
+        [self setActivityCoverView:activityView];
+    }
 }
 
 - (void)dismissActivitySucessfully:(BOOL)success completion:(void(^)(void))completion {
@@ -450,6 +507,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (BOOL)webView:(UIWebView *)webView
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
+    DDLogVerbose(@"loading web request %@", [request URL]);
     BOOL finished = [[self expansionService] hasExpansion:[self expansion]
                                          connectedWithURL:[request URL]];
     if (finished) {
@@ -468,6 +526,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                     // TODO: show error
                 } else {
                     [strongSelf setExpansion:expansion];
+                    [strongSelf hideConnectButtonIfConnected];
                     [strongSelf showAvailableConfigurations];
                 }
             }];

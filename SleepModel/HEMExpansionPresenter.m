@@ -130,6 +130,7 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
     if ([[self expansionService] isConnected:[self expansion]]) {
         CGFloat height = CGRectGetHeight([[self connectContainer] bounds]);
         [[self connectBottomConstraint] setConstant:-height];
+        [[self connectContainer] layoutIfNeeded];
     }
 }
 
@@ -541,9 +542,6 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     BOOL finished = [[self expansionService] hasExpansion:[self expansion]
                                          connectedWithURL:[request URL]];
     if (finished) {
-        [self refreshRows:YES];
-        [[self tableView] reloadData];
-        
         __weak typeof(self) weakSelf = self;
         int64_t delayInSecs = (int64_t) kHEMExpansionConnectFinishDelay* NSEC_PER_SEC;
         dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
@@ -562,6 +560,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                 } else {
                     [strongSelf setExpansion:expansion];
                     [strongSelf hideConnectButtonIfConnected];
+                    [strongSelf refreshRows:YES];
+                    [[strongSelf tableView] reloadData];
                     [strongSelf showAvailableConfigurations];
                 }
             }];

@@ -159,23 +159,29 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
     }
     
     __weak typeof(self) weakSelf = self;
-    [[self expansionService] getConfigurationsForExpansion:[self expansion]
-                                                completion:^(NSArray<SENExpansionConfig *> * configs, NSError * error) {
-                                                    __strong typeof(weakSelf) strongSelf = weakSelf;
-                                                    [strongSelf setConfigurations:configs];
-                                                    if (configs) {
-                                                        for (SENExpansionConfig* config in configs) {
-                                                            if ([config isSelected]) {
-                                                                [strongSelf setSelectedConfig:config];
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    [[strongSelf tableView] reloadData];
-                                                    if (completion) {
-                                                        completion();
-                                                    }
-                                                }];
+    void(^finish)(NSArray<SENExpansionConfig*>* configs) = ^(NSArray<SENExpansionConfig*>* configs) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setConfigurations:configs];
+        if (configs) {
+            for (SENExpansionConfig* config in configs) {
+                if ([config isSelected]) {
+                    [strongSelf setSelectedConfig:config];
+                    break;
+                }
+            }
+        }
+        [[strongSelf tableView] reloadData];
+        if (completion) {
+            completion();
+        }
+    };
+    
+    HEMExpansionService* service = [self expansionService];
+    [service getConfigurationsForExpansion:[self expansion]
+                                completion:^(NSArray<SENExpansionConfig*>* configs, NSError * error) {
+                                    finish(configs);
+                                    // what if there's an error here?
+                                }];
 }
 
 - (void)refreshRows:(BOOL)connected {
@@ -258,17 +264,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     NSNumber* rowType = [self rows][[indexPath row]];
     switch ([rowType unsignedIntegerValue]) {
         case HEMExpansionRowTypeRemove:
-            [self showRemoveAccessConfirmation];
-            break;
+            return [self showRemoveAccessConfirmation];
         case HEMExpansionRowTypeConfiguration:
-            [self showConfigurationOptions];
-            break;
+            return [self showConfigurationOptions];
         default:
-            break;
+            return;
     }
 }
 
@@ -398,8 +401,20 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (error) {
                     [enableSwitch setOn:!enabled];
-                    // TODO: show error
-                    [strongSelf dismissActivitySucessfully:NO completion:nil];
+                    [strongSelf dismissActivitySucessfully:NO completion:^{
+                        NSString* title = nil, *message = nil;
+                        if (enabled) {
+                            title = NSLocalizedString(@"expansion.error.enable.title", nil);
+                            message = NSLocalizedString(@"expansion.error.enable.message", nil);
+                        } else {
+                            title = NSLocalizedString(@"expansion.error.disable.title", nil);
+                            message = NSLocalizedString(@"expansion.error.disable.message", nil);
+                        }
+                        [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                            andMessage:message
+                                                          withHelpPage:nil
+                                                         fromPresenter:strongSelf];
+                    }];
                 } else {
                     [strongSelf dismissActivitySucessfully:YES completion:nil];
                 }

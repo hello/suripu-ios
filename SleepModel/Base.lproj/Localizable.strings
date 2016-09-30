@@ -974,3 +974,7 @@
 "expansion.error.setup.configuration-not-saved.message" = "An error occurred while attempting to configure your expansion. Please try again.";
 "expansion.error.remove-access.title" = "Expansion not removed";
 "expansion.error.remove-access.message" = "Sense could not remove access to this expansion. Please try again.";
+"expansion.error.enable.title" = "Expansion not enabled";
+"expansion.error.enable.message" = "Sense could not enable this expansion at this time. Please try again.";
+"expansion.error.disable.title" = "Expansion not disabled";
+"expansion.error.disable.message" = "Sense could not disable this expansion at this time. Please try again.";

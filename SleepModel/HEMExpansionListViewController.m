@@ -36,7 +36,6 @@
     HEMExpansionListPresenter* presenter =
         [[HEMExpansionListPresenter alloc] initWithExpansionService:[self expansionService]];
     [presenter bindWithTableView:[self tableView]];
-    [presenter bindWithShadowView:[self shadowView]];
     [presenter bindWithActivityIndicator:[self activityIndicator]];
     [presenter setActionDelegate:self];
     

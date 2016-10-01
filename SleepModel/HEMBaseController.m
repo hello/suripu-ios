@@ -71,6 +71,11 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [[self presenters] makeObjectsPerformSelector:@selector(didRelayout)];
+    for (HEMPresenter* presenter in [self presenters]) {
+        if (![presenter shadowView]) {
+            [presenter bindWithShadowView:[self shadowView]];
+        }
+    }
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {

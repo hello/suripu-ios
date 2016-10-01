@@ -56,15 +56,6 @@
     [self setHandHoldingService:handHoldingService];
 }
 
-- (void)didMoveToParentViewController:(UIViewController *)parent {
-    [super didMoveToParentViewController:parent];
-    if (parent) {
-        // shadow view depends on the navigation controller, which is
-        // not set on viewDidLoad
-        [[self accountPresenter] bindWithShadowView:[self shadowView]];
-    }
-}
-
 #pragma mark - HEMAccountDelegate
 
 - (UIViewController*)mainControllerFor:(HEMAccountPresenter*)presenter {

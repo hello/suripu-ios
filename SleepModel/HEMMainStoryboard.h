@@ -26,6 +26,7 @@
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
 +(NSString *)expansionReuseIdentifier;
++(NSString *)plainReuseIdentifier;
 +(NSString *)configReuseIdentifier;
 +(NSString *)textReuseIdentifier;
 +(NSString *)toggleReuseIdentifier;

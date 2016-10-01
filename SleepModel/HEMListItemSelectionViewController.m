@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *extraNavigationBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationBarTopConstraint;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
-@property (nonatomic, assign, getter=isFullyConfigured) BOOL fullyConfigured;
 
 @end
 
@@ -27,14 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenter];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (![self isFullyConfigured]) {
-        [[self listPresenter] bindWithShadowView:[self shadowView]];
-        [self setFullyConfigured:YES];
-    }
 }
 
 - (void)configurePresenter {

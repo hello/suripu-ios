@@ -41,7 +41,6 @@
     [presenter bindWithConnectContainer:[self connectButtonView]
                     andBottomConstraint:[self buttonBottomConstraint]
                              withButton:[self connectButton]];
-    [presenter bindWithShadowView:[self shadowView]];
     [presenter bindWithRootView:[[self rootViewController] view]];
     [presenter setDelegate:self];
     [presenter setErrorDelegate:self];

@@ -65,6 +65,7 @@ static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpillDFU = @"pillDFU";
 static NSString *const _HEMpillDFUNav = @"pillDFUNav";
 static NSString *const _HEMpillFinder = @"pillFinder";
+static NSString *const _HEMplain = @"plain";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
 static NSString *const _HEMscale = @"scale";
@@ -147,6 +148,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)optionReuseIdentifier { return _HEMoption; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
 +(NSString *)pillReuseIdentifier { return _HEMpill; }
++(NSString *)plainReuseIdentifier { return _HEMplain; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)scaleReuseIdentifier { return _HEMscale; }

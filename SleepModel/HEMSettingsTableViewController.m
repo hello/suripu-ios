@@ -55,7 +55,6 @@
                                           breadCrumbService:breadService];
     [presenter bindWithTableView:[self settingsTableView]];
     [presenter bindWithActivityView:[self activityView]];
-    [presenter bindWithShadowView:[self shadowView]];
     [presenter setDelegate:self];
     
     [self addPresenter:presenter];

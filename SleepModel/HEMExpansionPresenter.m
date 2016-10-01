@@ -222,11 +222,13 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
         case HEMExpansionRowTypeEnable:
             reuseId = [HEMMainStoryboard toggleReuseIdentifier];
             break;
+        case HEMExpansionRowTypeRemove:
+            reuseId = [HEMMainStoryboard plainReuseIdentifier];
+            break;
         case HEMExpansionRowTypeConfiguration:
             reuseId = [HEMMainStoryboard configReuseIdentifier];
             break;
         case HEMExpansionRowTypePermissions:
-        case HEMExpansionRowTypeRemove:
         default:
             reuseId = [HEMMainStoryboard textReuseIdentifier];
             break;
@@ -276,6 +278,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
 #pragma mark - Display methods for cells
 
 - (void)configureEnableCell:(HEMBasicTableViewCell*)cell {
@@ -295,19 +301,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)configureConfigurationCell:(HEMBasicTableViewCell*)cell {
-    SENExpansionConfig* config = [[self configurations] firstObject];
-    NSString* selectedName = [config localizedName];
+    NSString* selectedName = [[self selectedConfig] localizedName];
     if (!selectedName) {
         selectedName = NSLocalizedString(@"empty-data", nil);
     }
     [[cell customTitleLabel] setText:[self configurationName]];
-    [[cell customDetailLabel] setText:[config localizedName]];
+    [[cell customDetailLabel] setText:selectedName];
     [[cell customDetailLabel] setFont:[UIFont body]];
     [[cell customDetailLabel] setTextColor:[UIColor grey3]];
 }
 
 - (void)configureRemoveAccessCell:(HEMBasicTableViewCell*)cell {
-    [cell setCustomAccessoryView:nil];
     [[cell customTitleLabel] setText:NSLocalizedString(@"expansion.action.remove", nil)];
     [[cell customTitleLabel] setTextColor:[UIColor red6]];
 }

@@ -26,6 +26,17 @@ typedef void(^HEMActionSheetCallback)(void);
 - (void)addOptionWithTitle:(NSString*)optionTitle action:(HEMActionSheetCallback)action;
 
 /**
+ * @method addOptionWithTitle:selected:action
+ *
+ * @param optionTitle: the title for the option
+ * @param selected: YES if this is selected, NO otherwise
+ * @param action: the callback to trigger when this option is re-selected/selected
+ */
+- (void)addOptionWithTitle:(NSString *)optionTitle
+                  selected:(BOOL)selected
+                    action:(HEMActionSheetCallback)action;
+
+/**
  * @method addOptionWithTitle:titleColor:description:action
  *
  * @param optionTitle title to be displayed for the option
@@ -38,6 +49,23 @@ typedef void(^HEMActionSheetCallback)(void);
                 titleColor:(UIColor*)color
                description:(NSString*)description
                  imageName:(NSString*)imageName
+                    action:(HEMActionSheetCallback)action;
+
+/**
+ * @method addOptionWithTitle:titleColor:description:action
+ *
+ * @param optionTitle title to be displayed for the option
+ * @param color       optional color to be used for the title
+ * @param description optional description to be displayed below the title
+ * @param imageName   optional image to display leading the discription
+ * @param selected    YES if selected, NO otherwise
+ * @param action      block to be invoked when the option is selected
+ */
+- (void)addOptionWithTitle:(NSString*)optionTitle
+                titleColor:(UIColor*)color
+               description:(NSString*)description
+                 imageName:(NSString*)imageName
+                  selected:(BOOL)selected
                     action:(HEMActionSheetCallback)action;
 
 /**

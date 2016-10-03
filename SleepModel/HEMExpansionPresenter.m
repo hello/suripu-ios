@@ -494,10 +494,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak typeof (self) weakSelf = self;
     
     for (SENExpansionConfig* config in [self configurations]) {
+        BOOL selected = NO;
+        // check against the selectedConfig in case the cached list of configs
+        // has not reloaded in time after selection.
+        if ([config isEqual:[self selectedConfig]]) {
+            selected = YES;
+        }
         [sheet addOptionWithTitle:[config localizedName]
                        titleColor:[UIColor grey7]
                       description:nil
                         imageName:nil
+                         selected:selected
                            action:^{
                                __strong typeof(weakSelf) strongSelf = weakSelf;
                                [strongSelf useConfiguration:config];

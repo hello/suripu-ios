@@ -295,8 +295,6 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     } else {
         finish(YES);
     }
-
-    
 }
 
 - (void)dismissImmediatelyWithRemoval:(BOOL)remove completion:(void(^)(void))completion {

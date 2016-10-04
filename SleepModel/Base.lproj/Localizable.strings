@@ -171,6 +171,7 @@
 
 // settings
 "settings.title" = "Settings";
+"settings.expansions" = "Expansions";
 "settings.notifications" = "Notifications";
 "settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My account";
@@ -943,3 +944,37 @@
 "ext.room-conditions.error" = "unable to load data";
 "ext.room-conditions.not-signed-in" = "sign in to view data";
 "ext.room-conditions.loading" = "loading data";
+
+// expansions
+"expansion.state.not-connected" = "Connect";
+"expansion.state.connected-off" = "Disabled";
+"expansion.state.connected-on" = "Enabled";
+"expansion.state.not-configured" = "Configure";
+"expansion.action.permissions" = "Permissions";
+"expansion.action.enable" = "Enabled";
+"expansion.action.remove" = "Remove Access";
+"expansion.status.enabling" = "Enabling expansion";
+"expansion.status.disabling" = "Disabling expansion";
+"expansion.status.removing-access" = "Removing access";
+"expansion.configuration.name.temperature" = "Thermostat";
+"expansion.configuration.name.light" = "Room";
+"expansion.configuration.name.generic" = "Configuration";
+"expansion.configuration.activity.loading-configs" = "Loading configurations";
+"expansion.configuration.options.title.format" = "select a %@";
+"expansion.configuration.activity.updating-config.format" = "Setting %@";
+"expansion.configuration.removal.confirm.title" = "Are you sure?";
+"expansion.configuration.removal.confirm.message" = "Are you sure you want to remove this expansion? Previously set alarms will still sound, but will no longer activate this expansion.";
+"expansion.enable.info.title" = "Expansions";
+"expansion.enable.info.description" = "Enabling access to compatible smart devices allows Sense to activate them at relevant moments, like turning on your lights when Sense’s alarm sounds.";
+"expansion.error.connect.title" = "Expansion not connected";
+"expansion.error.connect.message" = "An error occurred while attempting to complete the process. Try again.";
+"expansion.error.setup.no-groups.title" = "Expansion not set up";
+"expansion.error.setup.no-groups.message" = "This expansion requires a device or group of devices to be selected, but none were found. Ensure your expansion device has been properly configured and try again.";
+"expansion.error.setup.configuration-not-saved.title" = "Expansion not configured";
+"expansion.error.setup.configuration-not-saved.message" = "An error occurred while attempting to configure your expansion. Please try again.";
+"expansion.error.remove-access.title" = "Expansion not removed";
+"expansion.error.remove-access.message" = "Sense could not remove access to this expansion. Please try again.";
+"expansion.error.enable.title" = "Expansion not enabled";
+"expansion.error.enable.message" = "Sense could not enable this expansion at this time. Please try again.";
+"expansion.error.disable.title" = "Expansion not disabled";
+"expansion.error.disable.message" = "Sense could not disable this expansion at this time. Please try again.";

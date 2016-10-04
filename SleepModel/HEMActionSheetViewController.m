@@ -19,12 +19,14 @@ static NSString* const HEMActionSheetOptionDescription = @"description";
 static NSString* const HEMActionSheetOptionActionBlock = @"action";
 static NSString* const HEMActionSheetOptionConfirmView = @"confirmation";
 static NSString* const HEMActionSheetOptionConfirmDisplayInterval = @"confirm_time";
+static NSString* const HEMActionSheetOptionSelected = @"selected";
 
 static CGFloat const HEMActionSheetTitleHorzMargin = 24.0f;
 static CGFloat const HEMActionSheetTitleTopMargin = 28.0f;
 static CGFloat const HEMActionSheetTitleBottomMargin = 4.0f;
 static CGFloat const HEMActionSheetOptionAnimDuration = 0.3f;
 static CGFloat const HEMActionSheetConfirmAnimDuration = 1.0f;
+static CGFloat const HEMActionSheetConfirmSelectedMargin = 16.0f; // there's an implicit 8
 
 CGFloat const HEMActionSheetDefaultCellHeight = 72.0f;
 
@@ -80,6 +82,17 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 - (void)addOptionWithTitle:(NSString *)optionTitle
+                  selected:(BOOL)selected
+                    action:(HEMActionSheetCallback)action {
+    [self addOptionWithTitle:optionTitle
+                  titleColor:nil
+                 description:nil
+                   imageName:nil
+                    selected:selected
+                      action:action];
+}
+
+- (void)addOptionWithTitle:(NSString *)optionTitle
                 titleColor:(UIColor *)color
                description:(NSString *)description
                  imageName:(NSString *)imageName
@@ -113,6 +126,22 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                                HEMActionSheetOptionActionBlock : actionBlock,
                                HEMActionSheetOptionImage : imageName ?: @"" }
                       forKey:optionTitle];
+}
+
+- (void)addOptionWithTitle:(NSString*)optionTitle
+                titleColor:(UIColor*)color
+               description:(NSString*)description
+                 imageName:(NSString*)imageName
+                  selected:(BOOL)selected
+                    action:(HEMActionSheetCallback)action {
+    [self addOptionWithTitle:optionTitle
+                  titleColor:color
+                 description:description
+                   imageName:imageName
+                      action:action];
+    NSMutableDictionary* options = [[self options][optionTitle] mutableCopy];
+    options[HEMActionSheetOptionSelected] = @(selected);
+    [self options][optionTitle] = options;
 }
 
 - (void)addDismissAction:(HEMActionSheetCallback)action {
@@ -343,12 +372,30 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIColor* titleColor = [optionAttributes objectForKey:HEMActionSheetOptionColor];
     NSString* imageName = optionAttributes[HEMActionSheetOptionImage];
     UIImage* iconImage = imageName ? [UIImage imageNamed:imageName] : nil;
+    NSNumber* selected = optionAttributes[HEMActionSheetOptionSelected];
     
     [optionCell setOptionTitle:optionTitle
                      withColor:titleColor
                           icon:iconImage
                    description:desc
                  textAlignment:[self optionTextAlignment]];
+    
+    if (selected != nil) {
+        UIImageView* checkMarkView = (UIImageView*) [optionCell accessoryView];
+        if (!checkMarkView) {
+            UIImage* checkImage = [UIImage imageNamed:@"checkBlue"];
+            CGRect checkFrame = CGRectZero;
+            checkFrame.size.height = CGRectGetHeight([optionCell bounds]);
+            checkFrame.size.width = checkImage.size.width + HEMActionSheetConfirmSelectedMargin;
+            
+            checkMarkView = [[UIImageView alloc] initWithImage:checkImage];
+            [checkMarkView setFrame:checkFrame];
+            [checkMarkView setContentMode:UIViewContentModeLeft];
+            
+            [optionCell setAccessoryView:checkMarkView];
+        }
+        [checkMarkView setHidden:![selected boolValue]];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

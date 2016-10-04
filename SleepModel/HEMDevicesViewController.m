@@ -50,7 +50,6 @@
     HEMDevicesPresenter* presenter = [[HEMDevicesPresenter alloc] initWithDeviceService:service];
     [presenter setDelegate:self];
     [presenter bindWithCollectionView:[self collectionView]];
-    [presenter bindWithShadowView:[self shadowView]];
     [self addPresenter:presenter];
     [self setDeviceService:service];
     [self setDevicesPresenter:presenter];

@@ -154,7 +154,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 32f4e8319cbaceeee3e504395178a67ea034b6b9
+    :commit: 0d9eb5e3e8125f7041bb24729105d9ce98719b78
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -199,6 +199,6 @@ SPEC CHECKSUMS:
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
   Zip: 670419a5ba9faaf5f24ed3650c4c38b4136e996b
 
-PODFILE CHECKSUM: e16372ef4b4e609ae0d74aa00128fa9c376e518e
+PODFILE CHECKSUM: 7d5242e2506ba12f31affb1fcd9b590909277712
 
 COCOAPODS: 1.0.0

@@ -12,18 +12,23 @@
 
 @implementation UIBarButtonItem (HEMNav)
 
++ (UIButton*)buttonWithTitle:(NSString*)title andImage:(UIImage*)image {
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setImage:image forState:UIControlStateNormal];
+    [[button titleLabel] setFont:[UIFont navButtonTitleFont]];
+    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [button setTintColor:[UIColor tintColor]];
+    [button sizeToFit];
+    return button;
+}
+
 + (UIBarButtonItem*)cancelItemWithTitle:(NSString*)title
                                   image:(UIImage*)image
                                  target:(id)target
                                  action:(SEL)action {
-    UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelButton setTitle:title forState:UIControlStateNormal];
-    [cancelButton setImage:image forState:UIControlStateNormal];
-    [[cancelButton titleLabel] setFont:[UIFont navButtonTitleFont]];
-    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    UIButton* cancelButton = [self buttonWithTitle:title andImage:image];
     [cancelButton setTitleColor:[UIColor clearColor] forState:UIControlStateDisabled];
-    [cancelButton setTintColor:[UIColor tintColor]];
-    [cancelButton sizeToFit];
     [cancelButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 }
@@ -33,6 +38,14 @@
                                             style:UIBarButtonItemStylePlain
                                            target:target
                                            action:action];
+}
+
++ (UIBarButtonItem*)saveButtonWithTarget:(id)target action:(SEL)action {
+    NSString* saveTitle = NSLocalizedString(@"actions.save", nil);
+    UIButton* saveButton = [self buttonWithTitle:saveTitle andImage:nil];
+    [saveButton setTitleColor:[UIColor grey4] forState:UIControlStateDisabled];
+    [saveButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return [[UIBarButtonItem alloc] initWithCustomView:saveButton];
 }
 
 @end

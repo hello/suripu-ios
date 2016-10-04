@@ -10,7 +10,7 @@
 #import "HEMListPresenter.h"
 #import "HEMActivityIndicatorView.h"
 
-@interface HEMListItemSelectionViewController() <HEMListPresenterDelegate>
+@interface HEMListItemSelectionViewController() <HEMListPresenterDelegate, HEMListDelegate>
 
 // FIXME: this extra navigation bar is a workaround for the mess that is
 // the alarm code.  Once we rewrite the alarm code, we should consider
@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *extraNavigationBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationBarTopConstraint;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
-@property (nonatomic, assign, getter=isFullyConfigured) BOOL fullyConfigured;
 
 @end
 
@@ -29,20 +28,19 @@
     [self configurePresenter];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (![self isFullyConfigured]) {
-        [[self listPresenter] bindWithShadowView:[self shadowView]];
-        [self setFullyConfigured:YES];
-    }
-}
-
 - (void)configurePresenter {
     [[self listPresenter] bindWithTableView:[self tableView]];
     [[self listPresenter] bindWithNavigationBar:[self extraNavigationBar]
                               withTopConstraint:[self navigationBarTopConstraint]];
     [[self listPresenter] bindWithActivityIndicator:[self activityIndicator]];
     [[self listPresenter] setPresenterDelegate:self];
+    [[self listPresenter] bindWithNavigationItem:[self navigationItem]];
+    [[self listPresenter] bindWithActivityContainerView:[[self navigationController] view]];
+    
+    if (![[self listPresenter] delegate]) {
+        [[self listPresenter] setDelegate:self];
+    }
+    
     [self addPresenter:[self listPresenter]];
 }
 
@@ -52,6 +50,12 @@
                       message:(NSString *)message
                          from:(HEMListPresenter *)presenter {
     [self showMessageDialog:message title:title];
+}
+
+#pragma mark - List Delegate
+
+- (void)dismissControllerFromPresenter:(HEMListPresenter *)presenter {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

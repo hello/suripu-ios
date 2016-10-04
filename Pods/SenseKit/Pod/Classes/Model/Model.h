@@ -31,6 +31,7 @@
 #import "SENSwapStatus.h"
 #import "SENSensorStatus.h"
 #import "SENSensorDataRequest.h"
+#import "SENExpansion.h"
 
 void SENClearModel();
 

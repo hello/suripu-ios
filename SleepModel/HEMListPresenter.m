@@ -18,7 +18,9 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 @interface HEMListPresenter()
 
+@property (nonatomic, weak) UIView* activityContainerView;
 @property (nonatomic, weak) UITableView* tableView;
+@property (nonatomic, weak) UINavigationItem* mainNavItem;
 @property (nonatomic, weak) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy) NSString* title;
 @property (nonatomic, assign, getter=isPreSelected) BOOL preSelected;
@@ -61,9 +63,17 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     }
 }
 
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem {
+    [self setMainNavItem:navItem];
+}
+
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicatorView {
     [indicatorView setHidden:YES];
     [self setIndicatorView:indicatorView];
+}
+
+- (void)bindWithActivityContainerView:(UIView*)activityContainerView {
+    [self setActivityContainerView:activityContainerView];
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
@@ -159,9 +169,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         int64_t secs = (int64_t)(HEMListPresenterSelectionDelay * NSEC_PER_SEC);
         dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, secs);
         dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             NSInteger index = [indexPath row];
             [tableView setUserInteractionEnabled:YES];
-            [[weakSelf delegate] didSelectItem:item atIndex:index from:weakSelf];
+            if ([[strongSelf delegate] respondsToSelector:@selector(didSelectItem:atIndex:from:)]) {
+                [[strongSelf delegate] didSelectItem:item atIndex:index from:strongSelf];
+            }
         });
     }
 }

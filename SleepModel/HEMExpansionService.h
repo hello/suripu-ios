@@ -33,6 +33,7 @@ typedef void(^HEMExpansionUpdateHandler)(NSError* _Nullable error);
               completion:(HEMExpansionHandler)completion;
 - (void)refreshExpansion:(SENExpansion*)expansion completion:(HEMExpansionHandler)completion;
 - (NSURLRequest*)authorizationRequestForExpansion:(SENExpansion*)expansion;
+- (NSString*)configurationNameForExpansion:(SENExpansion*)expansion;
 
 @end
 

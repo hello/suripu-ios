@@ -71,6 +71,8 @@
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)alarmSoundsSegueIdentifier;
 +(NSString *)alarmsSegueIdentifier;
++(NSString *)configurationsSegueIdentifier;
++(NSString *)connectSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
 +(NSString *)expansionSegueIdentifier;

@@ -959,7 +959,7 @@
 "expansion.configuration.name.temperature" = "Thermostat";
 "expansion.configuration.name.light" = "Room";
 "expansion.configuration.name.generic" = "Configuration";
-"expansion.configuration.activity.loading-configs" = "Looking at your setup";
+"expansion.configuration.activity.loading-configs" = "Loading configurations";
 "expansion.configuration.options.title.format" = "select a %@";
 "expansion.configuration.activity.updating-config.format" = "Setting %@";
 "expansion.configuration.removal.confirm.title" = "Are you sure?";

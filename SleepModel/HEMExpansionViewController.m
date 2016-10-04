@@ -11,9 +11,17 @@
 #import "HEMExpansionService.h"
 #import "HEMExpansionPresenter.h"
 #import "HEMAlertViewController.h"
+#import "HEMExpansionAuthViewController.h"
+#import "HEMExpansionConnectDelegate.h"
+#import "HEMMainStoryboard.h"
 #import "HEMTutorial.h"
+#import "HEMExpansionConnectDelegate.h"
 
-@interface HEMExpansionViewController() <HEMExpansionDelegate, HEMPresenterErrorDelegate>
+@interface HEMExpansionViewController() <
+    HEMExpansionDelegate,
+    HEMPresenterErrorDelegate,
+    HEMExpansionConnectDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *connectButtonView;
@@ -69,16 +77,16 @@
     }
 }
 
-- (void)dismissModalControllerFromPresenter:(HEMExpansionPresenter*)presenter {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)removedAccessFrom:(HEMExpansionPresenter*)presenter {
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
 - (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter *)presenter {
     [HEMTutorial showInfoForExpansionFrom:[self navigationController]];
+}
+
+- (void)connectExpansionFromPresenter:(HEMExpansionPresenter *)presenter {
+    [self performSegueWithIdentifier:[HEMMainStoryboard connectSegueIdentifier] sender:self];
 }
 
 #pragma mark - HEMPresenterErrorDelegate
@@ -93,6 +101,30 @@
               withHelpPage:(nullable NSString*)helpPage
              fromPresenter:(HEMPresenter*)presenter {
     [self showMessageDialog:message title:title];
+}
+
+#pragma mark - HEMExpansionConnectDelegate
+
+- (void)didConnect:(BOOL)connected withExpansion:(SENExpansion *)expansion {
+    if (connected) {
+        [[self expPresenter] reload:expansion];
+    }
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    id dest = [segue destinationViewController];
+    if ([dest isKindOfClass:[UINavigationController class]]) {
+        dest = [dest topViewController];
+    }
+    
+    if ([dest isKindOfClass:[HEMExpansionAuthViewController class]]) {
+        HEMExpansionAuthViewController* authVC = dest;
+        [authVC setExpansion:[self expansion]];
+        [authVC setConnectDelegate:self];
+        [authVC setExpansionService:[self expansionService]];
+    }
 }
 
 @end

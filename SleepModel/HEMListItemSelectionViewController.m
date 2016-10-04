@@ -10,7 +10,7 @@
 #import "HEMListPresenter.h"
 #import "HEMActivityIndicatorView.h"
 
-@interface HEMListItemSelectionViewController() <HEMListPresenterDelegate>
+@interface HEMListItemSelectionViewController() <HEMListPresenterDelegate, HEMListDelegate>
 
 // FIXME: this extra navigation bar is a workaround for the mess that is
 // the alarm code.  Once we rewrite the alarm code, we should consider
@@ -34,6 +34,13 @@
                               withTopConstraint:[self navigationBarTopConstraint]];
     [[self listPresenter] bindWithActivityIndicator:[self activityIndicator]];
     [[self listPresenter] setPresenterDelegate:self];
+    [[self listPresenter] bindWithNavigationItem:[self navigationItem]];
+    [[self listPresenter] bindWithActivityContainerView:[[self navigationController] view]];
+    
+    if (![[self listPresenter] delegate]) {
+        [[self listPresenter] setDelegate:self];
+    }
+    
     [self addPresenter:[self listPresenter]];
 }
 
@@ -43,6 +50,12 @@
                       message:(NSString *)message
                          from:(HEMListPresenter *)presenter {
     [self showMessageDialog:message title:title];
+}
+
+#pragma mark - List Delegate
+
+- (void)dismissControllerFromPresenter:(HEMListPresenter *)presenter {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

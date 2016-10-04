@@ -8,8 +8,6 @@
 
 #import <SenseKit/SENExpansion.h>
 
-#import <SVWebViewController/SVModalWebViewController.h>
-
 #import "SENRemoteImage+HEMDeviceSpecific.h"
 
 #import "HEMExpansionPresenter.h"
@@ -33,12 +31,10 @@ typedef NS_ENUM(NSUInteger, HEMExpansionRowType) {
 
 static CGFloat const kHEMExpansionHeaderIconBorder = 0.5f;
 static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
-static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
 
 @interface HEMExpansionPresenter() <
     UITableViewDelegate,
-    UITableViewDataSource,
-    UIWebViewDelegate
+    UITableViewDataSource
 >
 
 @property (nonatomic, weak) SENExpansion* expansion;
@@ -53,6 +49,7 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configurations;
 @property (nonatomic, weak) UINavigationBar* navBar;
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
+@property (nonatomic, copy) NSString* configurationName;
 
 @end
 
@@ -63,6 +60,7 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
     if (self = [super init]) {
         _expansionService = service;
         _expansion = expansion;
+        _configurationName = [service configurationNameForExpansion:expansion];
         [self refreshRows:[service isConnected:expansion]];
         [self grabConfigurations:nil];
     }
@@ -126,6 +124,24 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
     return [self navBar] != nil;
 }
 
+- (void)reload:(SENExpansion*)expansion {
+    [self setExpansion:expansion];
+    [self refreshRows:[[self expansionService] isConnected:expansion]];
+    [self grabConfigurations:nil];
+    [self hideConnectButtonIfConnected];
+}
+
+#pragma mark - Presenter Events
+
+- (void)wasRemovedFromParent {
+    [super wasRemovedFromParent];
+    if (_navBar) {
+        [_navBar setShadowImage:[UIImage imageNamed:@"navBorder"]];
+    }
+}
+
+#pragma mark -
+
 - (void)hideConnectButtonIfConnected {
     if ([[self expansionService] isConnected:[self expansion]]) {
         CGFloat height = CGRectGetHeight([[self connectContainer] bounds]);
@@ -141,13 +157,6 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
         expansionHeader = (id) headerView;
     }
     return expansionHeader;
-}
-
-- (void)wasRemovedFromParent {
-    [super wasRemovedFromParent];
-    if (_navBar) {
-        [_navBar setShadowImage:[UIImage imageNamed:@"navBorder"]];
-    }
 }
 
 - (void)grabConfigurations:(void(^)(void))completion {
@@ -197,18 +206,6 @@ static CGFloat const kHEMExpansionConnectFinishDelay = 1.0f;
     }
     [self setRows:rows];
 }
-
-- (NSString*)configurationName {
-    NSString* type = [[[self expansion] category] lowercaseString];
-    NSString* configNameFormat = @"expansion.configuration.name.%@";
-    NSString* configNameKey = [NSString stringWithFormat:configNameFormat, type];
-    NSString* configName = NSLocalizedString(configNameKey, nil);
-    if ([configName isEqualToString:configNameKey]) {
-        configName = NSLocalizedString(@"expansion.configuration.name.generic", nil);
-    }
-    return configName;
-}
-
 #pragma mark - UITableViewDelegate and UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -305,6 +302,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (!selectedName) {
         selectedName = NSLocalizedString(@"empty-data", nil);
     }
+    
     [[cell customTitleLabel] setText:[self configurationName]];
     [[cell customDetailLabel] setText:selectedName];
     [[cell customDetailLabel] setFont:[UIFont body]];
@@ -364,25 +362,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)connect {
-    NSURLRequest* request = [[self expansionService] authorizationRequestForExpansion:[self expansion]];
-    
-    SVModalWebViewController *webViewController =
-        [[SVModalWebViewController alloc] initWithURLRequest:request];
-    
-    [webViewController setWebViewDelegate:self];
-    
-    UINavigationBar* navBar = [webViewController navigationBar];
-    [navBar setBarTintColor:[UIColor navigationBarColor]];
-    [navBar setTranslucent:NO];
-    // show default shadow / divider
-    [navBar setClipsToBounds:NO];
-    [navBar setShadowImage:nil];
-    
-    UIToolbar* toolBar = [webViewController toolbar];
-    [toolBar setTintColor:[UIColor tintColor]];
-    [toolBar setTranslucent:NO];
-    
-    [[self delegate] showController:webViewController onRootController:NO fromPresenter:self];
+    [[self delegate] connectExpansionFromPresenter:self];
 }
 
 - (void)showEnableInfo {
@@ -542,44 +522,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                                  remove:YES
                                              completion:completion];
     }
-}
-
-#pragma mark - UIWebViewDelegate
-
-- (BOOL)webView:(UIWebView *)webView
-shouldStartLoadWithRequest:(NSURLRequest *)request
- navigationType:(UIWebViewNavigationType)navigationType {
-    DDLogVerbose(@"loading web request %@", [request URL]);
-    BOOL finished = [[self expansionService] hasExpansion:[self expansion]
-                                         connectedWithURL:[request URL]];
-    if (finished) {
-        __weak typeof(self) weakSelf = self;
-        int64_t delayInSecs = (int64_t) kHEMExpansionConnectFinishDelay* NSEC_PER_SEC;
-        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
-        dispatch_after(delay, dispatch_get_main_queue(), ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [[strongSelf delegate] dismissModalControllerFromPresenter:self];
-            [[strongSelf expansionService] refreshExpansion:[strongSelf expansion] completion:^(SENExpansion * expansion, NSError * error) {
-                __weak typeof(weakSelf) strongSelf = weakSelf;
-                if (error || ![[strongSelf expansionService] isConnected:expansion]) {
-                    NSString* title = NSLocalizedString(@"expansion.error.connect.title", nil);
-                    NSString* message = NSLocalizedString(@"expansion.error.connect.message", nil);
-                    [[strongSelf errorDelegate] showErrorWithTitle:title
-                                                        andMessage:message
-                                                      withHelpPage:nil
-                                                     fromPresenter:strongSelf];
-                } else {
-                    [strongSelf setExpansion:expansion];
-                    [strongSelf hideConnectButtonIfConnected];
-                    [strongSelf refreshRows:YES];
-                    [[strongSelf tableView] reloadData];
-                    [strongSelf showAvailableConfigurations];
-                }
-            }];
-        });
-    }
-    
-    return YES;
 }
 
 #pragma mark - Error

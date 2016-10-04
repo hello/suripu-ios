@@ -34,6 +34,8 @@ static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMchart = @"chart";
 static NSString *const _HEMconfig = @"config";
+static NSString *const _HEMconfigurations = @"configurations";
+static NSString *const _HEMconnect = @"connect";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMcurrentValue = @"currentValue";
@@ -175,6 +177,8 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)alarmSoundsSegueIdentifier { return _HEMalarmSounds; }
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
++(NSString *)configurationsSegueIdentifier { return _HEMconfigurations; }
++(NSString *)connectSegueIdentifier { return _HEMconnect; }
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)expansionSegueIdentifier { return _HEMexpansion; }

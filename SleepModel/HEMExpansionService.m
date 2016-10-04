@@ -179,4 +179,15 @@
     }];
 }
 
+- (NSString*)configurationNameForExpansion:(SENExpansion*)expansion {
+    NSString* type = [[expansion category] lowercaseString];
+    NSString* configNameFormat = @"expansion.configuration.name.%@";
+    NSString* configNameKey = [NSString stringWithFormat:configNameFormat, type];
+    NSString* configName = NSLocalizedString(configNameKey, nil);
+    if ([configName isEqualToString:configNameKey]) {
+        configName = NSLocalizedString(@"expansion.configuration.name.generic", nil);
+    }
+    return configName;
+}
+
 @end

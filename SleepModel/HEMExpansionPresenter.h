@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter*)presenter;
 
-- (void)dismissModalControllerFromPresenter:(HEMExpansionPresenter*)presenter;
-
 - (void)removedAccessFrom:(HEMExpansionPresenter*)presenter;
+
+- (void)connectExpansionFromPresenter:(HEMExpansionPresenter*)presenter;
 
 @end
 
@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithNavBar:(UINavigationBar*)navBar;
 - (void)bindWithRootView:(UIView*)view;
 - (BOOL)hasNavBar;
+- (void)reload:(SENExpansion*)expansion;
 
 @end
 

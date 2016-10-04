@@ -947,6 +947,7 @@
 
 // expansions
 "expansion.state.not-connected" = "Connect";
+"expansion.state.revoked" = "Disconnected";
 "expansion.state.connected-off" = "Disabled";
 "expansion.state.connected-on" = "Enabled";
 "expansion.state.not-configured" = "Configure";

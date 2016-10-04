@@ -67,8 +67,9 @@ static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
             return NSLocalizedString(@"expansion.state.connected-on", nil);
         case SENExpansionStateConnectedOff:
             return NSLocalizedString(@"expansion.state.connected-off", nil);
-        case SENExpansionStateUnknown:
         case SENExpansionStateRevoked:
+            return NSLocalizedString(@"expansion.state.revoked", nil);
+        case SENExpansionStateUnknown:
         case SENExpansionStateNotConnected:
         default:
             return NSLocalizedString(@"expansion.state.not-connected", nil);

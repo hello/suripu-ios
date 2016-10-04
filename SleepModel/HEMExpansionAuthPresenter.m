@@ -17,6 +17,7 @@
 
 static CGFloat const kHEMExpansionActionDelay = 1.0f;
 static CGFloat const kHEMExpansionActionDelayBeforeLoadingConfigs = 2.0f;
+static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
 
 @interface HEMExpansionAuthPresenter() <UIWebViewDelegate>
 
@@ -27,6 +28,7 @@ static CGFloat const kHEMExpansionActionDelayBeforeLoadingConfigs = 2.0f;
 @property (nonatomic, strong) HEMActivityCoverView* activityView;
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configs;
 @property (nonatomic, strong) NSURLRequest* authUriRequest;
+@property (nonatomic, assign) NSUInteger loadConfigAttempts;
 
 @end
 
@@ -94,6 +96,8 @@ static CGFloat const kHEMExpansionActionDelayBeforeLoadingConfigs = 2.0f;
 }
 
 - (void)showAvailableConfigurations {
+    [self setLoadConfigAttempts:[self loadConfigAttempts] + 1];
+    
     __weak typeof(self) weakSelf = self;
     [[self expansionService] getConfigurationsForExpansion:[self expansion] completion:^(NSArray<SENExpansionConfig*>* configs, NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -114,7 +118,17 @@ static CGFloat const kHEMExpansionActionDelayBeforeLoadingConfigs = 2.0f;
                                                    forExpansion:[strongSelf expansion]
                                                      completion:finish];
             }];
-        } else {
+        } else if ([configs count] > 1) {
+            [strongSelf finishByShowingConfigurations:YES];
+        } else if ([strongSelf loadConfigAttempts] < kHEMExpansionLoadMaxAttempts) {
+            // FIXME: this is a workaround for Hue, where it doesn't seem to be able
+            // grab configurations right after connecting, perhaps due to the extra
+            // need to whitelist
+            DDLogVerbose(@"retrying to load configurations");
+            [strongSelf actionAfterDelay:kHEMExpansionActionDelay action:^{
+                [strongSelf showAvailableConfigurations];
+            }];
+        } else { // no configs after retries
             [strongSelf finishByShowingConfigurations:YES];
         }
     }];

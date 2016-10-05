@@ -631,6 +631,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.delete" = "Delete";
 "actions.continue" = "Continue";
 "actions.update-now" = "Update now";
 "actions.update" = "Update";

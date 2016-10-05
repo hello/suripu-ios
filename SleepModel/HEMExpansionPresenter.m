@@ -329,11 +329,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [dialogVC setAttributedMessage:attrMessage];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.delete", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf removeAccess];
     }];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil) style:HEMAlertViewButtonStyleBlueText action:nil];
     
     [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
 }

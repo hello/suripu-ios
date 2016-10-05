@@ -103,7 +103,7 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setConfigs:configs];
         
-        if ([configs count] == 10) {
+        if ([configs count] == 1) {
             // set the config here and end it
             void(^finish)(SENExpansion * expansion, NSError* error) = ^(SENExpansion * expansion, NSError* error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -118,7 +118,7 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
                                                    forExpansion:[strongSelf expansion]
                                                      completion:finish];
             }];
-        } else if ([configs count] >= 1) {
+        } else if ([configs count] > 1) {
             [strongSelf finishByShowingConfigurations:YES];
         } else if ([strongSelf loadConfigAttempts] < kHEMExpansionLoadMaxAttempts) {
             // FIXME: this is a workaround for Hue, where it doesn't seem to be able

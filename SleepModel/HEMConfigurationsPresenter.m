@@ -18,6 +18,9 @@
 
 static CGFloat const kHEMConfigurationSaveDelay = 1.0f;
 static CGFloat const kHEMConfigurationAccessoryMargin = 14.0f;
+static CGFloat const kHEMConfigurationNoConfigFooterHeight = 36.0f;
+static CGFloat const kHEMConfigurationNoConfigFooterMargin = 24.0f;
+static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
 
 @interface HEMConfigurationsPresenter() <UITableViewDelegate, UITableViewDataSource>
 
@@ -57,8 +60,37 @@ static CGFloat const kHEMConfigurationAccessoryMargin = 14.0f;
 - (void)bindWithTableView:(UITableView*)tableView {
     [tableView setDelegate:self];
     [tableView setDataSource:self];
-    [tableView setTableFooterView:[UIView new]];
+    [tableView setSeparatorColor:[UIColor separatorColor]];
+    [tableView setTableFooterView:[self tableFooter]];
     [self setTableView:tableView];
+}
+
+- (UIView*)tableFooter {
+    if ([[self configs] count] == 0) {
+        CGRect labelFrame = CGRectZero;
+        labelFrame.size.height = kHEMConfigurationNoConfigFooterHeight;
+        labelFrame.origin.x = kHEMConfigurationNoConfigFooterMargin;
+        
+        NSString* footerFormat = NSLocalizedString(@"expansion.config.no-config.footer.format", nil);
+        NSString* footer = [NSString stringWithFormat:footerFormat,
+                            [[self expansion] serviceName],
+                            [self configurationName]];
+        
+        UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
+        [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        [label setTextColor:[UIColor grey5]];
+        [label setFont:[UIFont h7]];
+        [label setText:footer];
+        
+        CGRect containerFrame = CGRectZero;
+        containerFrame.size.height = kHEMConfigurationNoConfigFooterHeight;
+        
+        UIView* container = [[UIView alloc] initWithFrame:containerFrame];
+        [container addSubview:label];
+        return container;
+    } else {
+        return [UIView new];
+    }
 }
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel {
@@ -94,10 +126,21 @@ static CGFloat const kHEMConfigurationAccessoryMargin = 14.0f;
     [self setSaveButton:doneButton];
 }
 
+- (UIImageView*)accessoryViewWithImage:(UIImage*)image withHeight:(CGFloat)height {
+    CGRect imageFrame = CGRectZero;
+    imageFrame.size.width = image.size.width + kHEMConfigurationAccessoryMargin;
+    imageFrame.size.height = height;
+    
+    UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
+    [imageView setFrame:imageFrame];
+    [imageView setContentMode:UIViewContentModeCenter];
+    return imageView;
+}
+
 #pragma mark - UITableViewDelegate / UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self configs] count];
+    return [[self configs] count] > 0 ? [[self configs] count] : 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,29 +148,51 @@ static CGFloat const kHEMConfigurationAccessoryMargin = 14.0f;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    SENExpansionConfig* config = [self configs][[indexPath row]];
+    CGFloat cellHeight = CGRectGetHeight([cell bounds]);
+    
     [[cell textLabel] setFont:[UIFont body]];
-    [[cell textLabel] setTextColor:[UIColor grey6]];
-    [[cell textLabel] setText:[config localizedName]];
     
-    if (![cell accessoryView]) {
-        UIImage* checkImage = [UIImage imageNamed:@"checkBlue"];
-        CGRect imageFrame = CGRectZero;
-        imageFrame.size.width = checkImage.size.width + kHEMConfigurationAccessoryMargin;
-        imageFrame.size.height = CGRectGetHeight([cell bounds]);
-        UIImageView* checkImageView = [[UIImageView alloc] initWithImage:checkImage];
-        [checkImageView setFrame:imageFrame];
-        [checkImageView setContentMode:UIViewContentModeCenter];
-        [cell setAccessoryView:checkImageView];
+    if ([indexPath row] < [[self configs] count]) {
+        SENExpansionConfig* config = [self configs][[indexPath row]];
+        [[cell textLabel] setTextColor:[UIColor grey6]];
+        [[cell textLabel] setText:[config localizedName]];
+        
+        if (![cell accessoryView]) {
+            UIImage* checkImage = [UIImage imageNamed:@"checkBlue"];
+            [cell setAccessoryView:[self accessoryViewWithImage:checkImage withHeight:cellHeight]];
+        }
+        
+        [[cell accessoryView] setHidden:![config isEqual:[self selectedConfig]]];
+    } else {
+        UIImage* warningImage = [UIImage imageNamed:@"noConfigIcon"];
+        NSString* textFormat = NSLocalizedString(@"expansion.config.no-cnfig.format", nil);
+        NSString* text = [NSString stringWithFormat:textFormat, [[self configurationName] lowercaseString]];
+        
+        CGRect separatorFrame = CGRectZero;
+        separatorFrame.size.height = kHEMConfigurationNoConfigSeparatorHeight;
+        separatorFrame.origin.x = kHEMConfigurationNoConfigFooterMargin;
+        separatorFrame.size.width = CGRectGetWidth([cell bounds]);
+        separatorFrame.origin.y = cellHeight - kHEMConfigurationNoConfigSeparatorHeight;
+        
+        UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
+        [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        [separator setBackgroundColor:[UIColor separatorColor]];
+        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [[cell textLabel] setTextColor:[UIColor grey3]];
+        [[cell textLabel] setText:text];
+        [cell setAccessoryView:[self accessoryViewWithImage:warningImage withHeight:cellHeight]];
+        [[cell contentView] addSubview:separator];
     }
-    
-    [[cell accessoryView] setHidden:![config isEqual:[self selectedConfig]]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SENExpansionConfig* config = [self configs][[indexPath row]];
-    [self setSelectedConfig:config];
-    [tableView reloadData];
+    SENExpansionConfig* config = nil;
+    if ([indexPath row] < [[self configs] count]) {
+        config = [self configs][[indexPath row]];
+        [self setSelectedConfig:config];
+        [tableView reloadData];
+    }
 }
 
 #pragma mark - Actions

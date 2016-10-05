@@ -197,12 +197,12 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 - (void)refreshRows:(BOOL)connected {
     NSMutableArray* rows = [NSMutableArray arrayWithCapacity:3];
     if (connected) {
-        [rows addObject:@(HEMExpansionRowTypeEnable)];
+        if ([[self expansion] state] != SENExpansionStateNotConfigured
+            || [self selectedConfig]) {
+            [rows addObject:@(HEMExpansionRowTypeEnable)];
+        }
         [rows addObject:@(HEMExpansionRowTypeConfiguration)];
         [rows addObject:@(HEMExpansionRowTypeRemove)];
-    } else {
-        // TODO: add this later
-//        [rows addObject:@(HEMExpansionRowTypePermissions)];
     }
     [self setRows:rows];
 }
@@ -428,6 +428,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                            } else {
                                                [strongSelf setSelectedConfig:configuration];
                                                [strongSelf setExpansion:expansion];
+                                               [strongSelf refreshRows:YES];
                                                [[strongSelf tableView] reloadData];
                                            }
                                            [strongSelf dismissActivitySucessfully:error == nil completion:nil];

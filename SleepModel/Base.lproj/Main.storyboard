@@ -1628,11 +1628,17 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDV-B8-Gw8">
-                                                    <rect key="frame" x="558" y="17" width="16" height="21"/>
+                                                    <rect key="frame" x="544" y="17" width="16" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="ijB-ox-9qf">
+                                                    <rect key="frame" x="568" y="0.0" width="8" height="56"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="8" id="hv8-jf-Vql"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ctw-e9-sxy" firstAttribute="leading" secondItem="MtE-o8-sIc" secondAttribute="leading" constant="24" id="67h-d1-q4a"/>
@@ -1640,14 +1646,18 @@
                                                 <constraint firstAttribute="trailing" secondItem="ctw-e9-sxy" secondAttribute="trailing" constant="24" id="Aee-ff-FXV"/>
                                                 <constraint firstItem="HDV-B8-Gw8" firstAttribute="centerY" secondItem="MtE-o8-sIc" secondAttribute="centerY" id="Hev-5O-Np4"/>
                                                 <constraint firstAttribute="bottom" secondItem="ctw-e9-sxy" secondAttribute="bottom" id="QbT-gW-uII"/>
-                                                <constraint firstAttribute="trailing" secondItem="HDV-B8-Gw8" secondAttribute="trailing" constant="26" id="XeV-dM-slf"/>
+                                                <constraint firstAttribute="trailing" secondItem="HDV-B8-Gw8" secondAttribute="trailing" constant="40" id="XeV-dM-slf"/>
                                                 <constraint firstItem="HDV-B8-Gw8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UX3-Ow-cXt" secondAttribute="leading" constant="10" id="mAX-3x-KMQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="ijB-ox-9qf" secondAttribute="trailing" constant="24" id="H9w-nC-hxC"/>
+                                            <constraint firstItem="ijB-ox-9qf" firstAttribute="height" secondItem="KLJ-ps-VfB" secondAttribute="height" id="UAK-XM-njq"/>
+                                            <constraint firstItem="ijB-ox-9qf" firstAttribute="top" secondItem="KLJ-ps-VfB" secondAttribute="top" id="V4X-Q6-hdl"/>
                                             <constraint firstItem="UX3-Ow-cXt" firstAttribute="leading" secondItem="KLJ-ps-VfB" secondAttribute="leading" constant="24" id="rC8-UG-yLb"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="customAccessoryView" destination="ijB-ox-9qf" id="6D2-ge-CIU"/>
                                             <outlet property="customDetailLabel" destination="HDV-B8-Gw8" id="hGu-Oq-fTC"/>
                                             <outlet property="customTitleLabel" destination="UX3-Ow-cXt" id="iov-cL-tgL"/>
                                         </connections>

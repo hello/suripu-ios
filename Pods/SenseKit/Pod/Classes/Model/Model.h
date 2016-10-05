@@ -32,6 +32,7 @@
 #import "SENSensorStatus.h"
 #import "SENSensorDataRequest.h"
 #import "SENExpansion.h"
+#import "SENAlarmCollection.h"
 
 void SENClearModel();
 

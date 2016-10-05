@@ -1,8 +1,8 @@
 
 #import "SENAlarm.h"
-#import "SENAPIAlarms.h"
 #import "SENKeyedArchiver.h"
 #import "SENPreference.h"
+#import "Model.h"
 
 @interface SENAlarm()
 
@@ -24,6 +24,10 @@ static NSString* const SENAlarmHourKey = @"hour";
 static NSString* const SENAlarmMinuteKey = @"minute";
 static NSString* const SENAlarmRepeatKey = @"day_of_week";
 static NSString* const SENAlarmIdentifierKey = @"id";
+static NSString* const SENAlarmSourceKey = @"source";
+static NSString* const SENALarmSourceValueVoice = @"VOICE_SERVICE";
+static NSString* const SENALarmSourceValueOther = @"OTHER";
+static NSString* const SENALarmSourceValueMobile = @"MOBILE_APP";
 
 static NSString* const SENAlarmDefaultSoundName = @"None";
 static NSUInteger const SENAlarmDefaultHour = 7;
@@ -94,8 +98,21 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         _soundName = dict[SENAlarmSoundKey][SENAlarmSoundNameKey];
         _soundID = dict[SENAlarmSoundKey][SENAlarmSoundIDKey];
         _saved = YES;
+        NSString* sourceName = SENObjectOfClass(dict[SENAlarmSourceKey], [NSString class]);
+        _source = [self sourceForName:sourceName];
     }
     return self;
+}
+
+- (SENALarmSource)sourceForName:(NSString*)name {
+    NSString* upperName = [name uppercaseString];
+    if ([upperName isEqualToString:SENALarmSourceValueVoice]) {
+        return SENAlarmSourceVoice;
+    } else if ([upperName isEqualToString:SENALarmSourceValueOther]) {
+        return SENAlarmSourceOther;
+    } else { // default to mobile, since that was the only way to create alarms
+        return SENAlarmSourceMobile;
+    }
 }
 
 - (NSString*)localizedValue {
@@ -107,19 +124,19 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
 - (NSUInteger)repeatFlagsFromDays:(NSArray*)days {
     NSUInteger repeatFlags = 0;
-    if ([days containsObject:@(SENAPIAlarmsRepeatDayMonday)])
+    if ([days containsObject:@(SENALarmRepeatDayValueMonday)])
         repeatFlags |= SENAlarmRepeatMonday;
-    if ([days containsObject:@(SENAPIAlarmsRepeatDayTuesday)])
+    if ([days containsObject:@(SENALarmRepeatDayValueTuesday)])
         repeatFlags |= SENAlarmRepeatTuesday;
-    if ([days containsObject:@(SENAPIAlarmsRepeatDayWednesday)])
+    if ([days containsObject:@(SENALarmRepeatDayValueWednesday)])
         repeatFlags |= SENAlarmRepeatWednesday;
-    if ([days containsObject:@(SENAPIAlarmsRepeatDayThursday)])
+    if ([days containsObject:@(SENALarmRepeatDayValueThursday)])
         repeatFlags |= SENAlarmRepeatThursday;
-    if ([days containsObject:@(SENAPIAlarmsRepeatDayFriday)])
+    if ([days containsObject:@(SENALarmRepeatDayValueFriday)])
         repeatFlags |= SENAlarmRepeatFriday;
-    if ([days containsObject:@(SENAPIAlarmsRepeatDaySaturday)])
+    if ([days containsObject:@(SENALarmRepeatDayValueSaturday)])
         repeatFlags |= SENAlarmRepeatSaturday;
-    if ([days containsObject:@(SENAPIAlarmsRepeatDaySunday)])
+    if ([days containsObject:@(SENALarmRepeatDayValueSunday)])
         repeatFlags |= SENAlarmRepeatSunday;
 
     return repeatFlags;
@@ -131,6 +148,63 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
 - (BOOL)isRepeatedOn:(SENAlarmRepeatDays)days {
     return (self.repeatFlags & days) != 0;
+}
+
+- (NSDictionary*)dictionaryValue {
+    BOOL repeated = self.repeatFlags != 0;
+    NSMutableDictionary* properties = [NSMutableDictionary new];
+    
+    properties[@"editable"] = @([self isEditable]);
+    properties[@"enabled"] = @([self isOn]);
+    properties[@"sound"] = @{@"name" : self.soundName ?: @"",
+                             @"id" : self.soundID ?: @""};
+    
+    if (self.identifier.length > 0) {
+        properties[@"id"] = self.identifier;
+    }
+    
+    properties[@"hour"] = @(self.hour);
+    properties[@"minute"] = @(self.minute);
+    properties[@"repeated"] = @(repeated);
+    properties[@"smart"] = @([self isSmartAlarm]);
+    properties[@"day_of_week"] = [self repeatDays];
+    
+    if (!repeated) {
+        NSDateComponents* alarmDateComponents = [self dateComponents];
+        properties[@"day_of_month"] = @(alarmDateComponents.day);
+        properties[@"month"] = @(alarmDateComponents.month);
+        properties[@"year"] = @(alarmDateComponents.year);
+    }
+    
+    return properties;
+}
+
+- (NSDateComponents*)dateComponents {
+    NSCalendarUnit flags = (NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay);
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDate* nextRingDate = [SENAlarm nextRingDateWithHour:[self hour] minute:[self minute]];
+    return [calendar components:flags fromDate:nextRingDate];
+}
+
+
+- (NSArray*)repeatDays {
+    NSMutableArray* repeatDays = [[NSMutableArray alloc] initWithCapacity:7];
+    if ((self.repeatFlags & SENAlarmRepeatMonday) == SENAlarmRepeatMonday)
+        [repeatDays addObject:@(SENALarmRepeatDayValueMonday)];
+    if ((self.repeatFlags & SENAlarmRepeatTuesday) == SENAlarmRepeatTuesday)
+        [repeatDays addObject:@(SENALarmRepeatDayValueTuesday)];
+    if ((self.repeatFlags & SENAlarmRepeatWednesday) == SENAlarmRepeatWednesday)
+        [repeatDays addObject:@(SENALarmRepeatDayValueWednesday)];
+    if ((self.repeatFlags & SENAlarmRepeatThursday) == SENAlarmRepeatThursday)
+        [repeatDays addObject:@(SENALarmRepeatDayValueThursday)];
+    if ((self.repeatFlags & SENAlarmRepeatFriday) == SENAlarmRepeatFriday)
+        [repeatDays addObject:@(SENALarmRepeatDayValueFriday)];
+    if ((self.repeatFlags & SENAlarmRepeatSaturday) == SENAlarmRepeatSaturday)
+        [repeatDays addObject:@(SENALarmRepeatDayValueSaturday)];
+    if ((self.repeatFlags & SENAlarmRepeatSunday) == SENAlarmRepeatSunday)
+        [repeatDays addObject:@(SENALarmRepeatDayValueSunday)];
+    
+    return repeatDays;
 }
 
 #pragma mark - NSCoding

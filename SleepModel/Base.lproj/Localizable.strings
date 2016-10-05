@@ -369,6 +369,7 @@
 "alarms.title" = "Alarms";
 "alarms.first-alarm.button-title" = "Set smart alarm";
 "alarms.smart-alarm.format" = "Smart alarm — %@";
+"alarms.voice-alarm.format" = "Voice alarm — %@";
 "alarms.alarm.format" = "Alarm — %@";
 "alarms.alarm.meridiem.am" = "AM";
 "alarms.alarm.meridiem.pm" = "PM";
@@ -631,6 +632,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.delete" = "Delete";
 "actions.continue" = "Continue";
 "actions.update-now" = "Update now";
 "actions.update" = "Update";

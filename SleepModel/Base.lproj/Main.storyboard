@@ -1819,20 +1819,59 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3hX-Vu-Sg6">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4S7-zn-20h">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" id="7qr-4P-OZy">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7es-HE-gWB">
+                                            <rect key="frame" x="20" y="11" width="12" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="webBack"/>
+                                            <state key="disabled" image="webBackDisabled"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem width="72" style="plain" systemItem="fixedSpace" id="iuz-wg-bfk"/>
+                                    <barButtonItem style="plain" id="Saz-ZO-Pic">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yi5-cv-5DW">
+                                            <rect key="frame" x="114" y="11" width="12" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="webForward"/>
+                                            <state key="disabled" image="webForwardDisabled"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="s0B-vM-ENC"/>
+                                    <barButtonItem style="plain" id="oja-eD-PQM">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lH8-TP-DcX">
+                                            <rect key="frame" x="556" y="10" width="24" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="webRefresh"/>
+                                            <state key="disabled" image="webRefreshDisabled"/>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3hX-Vu-Sg6" firstAttribute="leading" secondItem="jsO-QL-iXf" secondAttribute="leading" id="7RK-nw-sl6"/>
+                            <constraint firstAttribute="trailing" secondItem="4S7-zn-20h" secondAttribute="trailing" id="HRO-bI-dC9"/>
+                            <constraint firstItem="3hX-Vu-Sg6" firstAttribute="bottom" secondItem="4S7-zn-20h" secondAttribute="top" id="NJi-yN-FBv"/>
                             <constraint firstItem="3hX-Vu-Sg6" firstAttribute="top" secondItem="7m9-pu-Ph9" secondAttribute="bottom" id="Qhq-5K-dcR"/>
                             <constraint firstAttribute="trailing" secondItem="3hX-Vu-Sg6" secondAttribute="trailing" id="TGM-K4-aQU"/>
-                            <constraint firstItem="8YG-On-XM4" firstAttribute="top" secondItem="3hX-Vu-Sg6" secondAttribute="bottom" id="fO0-EJ-Z3P"/>
+                            <constraint firstItem="4S7-zn-20h" firstAttribute="leading" secondItem="jsO-QL-iXf" secondAttribute="leading" id="moa-XD-viu"/>
+                            <constraint firstItem="8YG-On-XM4" firstAttribute="top" secondItem="4S7-zn-20h" secondAttribute="bottom" id="zG1-k9-J1g"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HnY-hE-UQg"/>
                     <connections>
+                        <outlet property="toolbar" destination="4S7-zn-20h" id="1XO-c7-Ctm"/>
+                        <outlet property="toolbarBackButton" destination="7es-HE-gWB" id="0JG-gG-BEL"/>
+                        <outlet property="toolbarForwardButton" destination="yi5-cv-5DW" id="XqS-nH-Ua8"/>
+                        <outlet property="toolbarRefreshButton" destination="lH8-TP-DcX" id="zMg-tP-jXc"/>
                         <outlet property="webView" destination="3hX-Vu-Sg6" id="BXd-Km-6Eh"/>
                         <segue destination="LCm-vK-zvX" kind="show" id="bVM-sH-XB1"/>
                     </connections>
@@ -6587,6 +6626,12 @@
         <image name="topShadow" width="375" height="4"/>
         <image name="volumeIcon" width="32" height="32"/>
         <image name="warning" width="24" height="22"/>
+        <image name="webBack" width="12" height="20"/>
+        <image name="webBackDisabled" width="12" height="20"/>
+        <image name="webForward" width="12" height="20"/>
+        <image name="webForwardDisabled" width="12" height="20"/>
+        <image name="webRefresh" width="24" height="25"/>
+        <image name="webRefreshDisabled" width="24" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="v5y-38-JCi"/>

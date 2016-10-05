@@ -36,6 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithWebView:(UIWebView*)webView;
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 - (void)bindWithActivityContainerView:(UIView*)activityContainerView;
+- (void)bindWithToolbar:(__unused UIToolbar*)toolbar
+         containingBack:(UIButton*)backButton
+                forward:(UIButton*)forwardButton
+             andRefresh:(UIButton*)refreshButton;
 
 @end
 

@@ -18,6 +18,10 @@
 >
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIButton *toolbarBackButton;
+@property (weak, nonatomic) IBOutlet UIButton *toolbarForwardButton;
+@property (weak, nonatomic) IBOutlet UIButton *toolbarRefreshButton;
 
 @end
 
@@ -38,6 +42,10 @@
     [authPresenter bindWithWebView:[self webView]];
     [authPresenter bindWithNavigationItem:[self navigationItem]];
     [authPresenter bindWithActivityContainerView:[[self navigationController] view]];
+    [authPresenter bindWithToolbar:[self toolbar]
+                    containingBack:[self toolbarBackButton]
+                           forward:[self toolbarForwardButton]
+                        andRefresh:[self toolbarRefreshButton]];
     [authPresenter setDelegate:self];
     [authPresenter setConnectDelegate:[self connectDelegate]];
     [self addPresenter:authPresenter];

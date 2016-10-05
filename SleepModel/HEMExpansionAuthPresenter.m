@@ -29,6 +29,9 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configs;
 @property (nonatomic, strong) NSURLRequest* authUriRequest;
 @property (nonatomic, assign) NSUInteger loadConfigAttempts;
+@property (nonatomic, weak) UIButton* backButton;
+@property (nonatomic, weak) UIButton* forwardButton;
+@property (nonatomic, weak) UIButton* refreshButton;
 
 @end
 
@@ -65,6 +68,24 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
 
 - (void)bindWithActivityContainerView:(UIView*)activityContainerView {
     [self setActivityContainerView:activityContainerView];
+}
+
+- (void)bindWithToolbar:(__unused UIToolbar*)toolbar
+         containingBack:(UIButton*)backButton
+                forward:(UIButton*)forwardButton
+             andRefresh:(UIButton*)refreshButton {
+    [backButton setEnabled:NO];
+    [backButton addTarget:self action:@selector(goBackAPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    [forwardButton setEnabled:NO];
+    [forwardButton addTarget:self action:@selector(goForwardAPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    [refreshButton setEnabled:NO];
+    [refreshButton addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self setBackButton:backButton];
+    [self setForwardButton:forwardButton];
+    [self setRefreshButton:refreshButton];
 }
 
 #pragma mark - Activity
@@ -168,13 +189,27 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                 }];
             }];
         }];
+    } else {
+        [self updateToolbarWithWebView:webView];
     }
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [self updateToolbarWithWebView:webView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
     [self didScrollContentIn:scrollView];
 }
+
+- (void)updateToolbarWithWebView:(UIWebView*)webView {
+    [[self backButton] setEnabled:[webView canGoBack]];
+    [[self forwardButton] setEnabled:[webView canGoForward]];
+    [[self refreshButton] setEnabled:![webView isLoading]];
+}
+
+#pragma mark - Delay
 
 - (void)actionAfterDelay:(CGFloat)delay action:(void(^)(void))action {
     int64_t delayInSecs = (int64_t) delay * NSEC_PER_SEC;
@@ -183,6 +218,18 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 }
 
 #pragma mark - Actions
+
+- (void)goBackAPage {
+    [[self webView] goBack];
+}
+
+- (void)goForwardAPage {
+    [[self webView] goForward];
+}
+
+- (void)refreshPage {
+    [[self webView] reload];
+}
 
 - (void)cancel {
     [[self connectDelegate] didConnect:NO withExpansion:[self expansion]];

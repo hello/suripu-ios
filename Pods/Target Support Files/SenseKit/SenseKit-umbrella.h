@@ -38,6 +38,7 @@
 #import "Model.h"
 #import "SENAccount.h"
 #import "SENAlarm.h"
+#import "SENAlarmCollection.h"
 #import "SENAnswer.h"
 #import "SENAppStats.h"
 #import "SENAppUnreadStats.h"

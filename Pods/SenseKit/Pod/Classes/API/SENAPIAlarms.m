@@ -5,136 +5,52 @@
 
 @implementation SENAPIAlarms
 
-static NSString* const SENAPIAlarmsEndpoint = @"v1/alarms";
-static NSString* const SENAPIAlarmSoundsEndpoint = @"v1/alarms/sounds";
-static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"v1/alarms/%.0f";
+static NSString* const kSENAPIAlarmsResource = @"v2/alarms";
+static NSString* const kSENAPIAlarmsUpdateClientTimeFormat = @"/%.0f";
+static NSString* const kSENAPIAlarmsSoundsPath = @"sounds";
 
 static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
     return ^(NSArray* data, NSError* error) {
-        NSMutableArray* alarms = nil;
-        if (data && [data isKindOfClass:[NSArray class]]) {
-            alarms = [NSMutableArray arrayWithCapacity:[data count]];
-            NSDictionary* alarmDict = nil;
-            for (id alarmObj in data) {
-                alarmDict = SENObjectOfClass(alarmObj, [NSDictionary class]);
-                [alarms addObject:[[SENAlarm alloc] initWithDictionary:alarmDict]];
-            }
+        SENAlarmCollection* collection = nil;
+        
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            collection = [[SENAlarmCollection alloc] initWithDictionary:data];
         }
 
-        if (completion)
-            completion(alarms, error);
+        if (completion) {
+            completion(collection, error);
+        }
     };
 }
 
-+ (void)alarmsWithCompletion:(SENAPIDataBlock)completion
-{
-    if (!completion)
-        return;
-    [SENAPIClient GET:SENAPIAlarmsEndpoint
++ (void)alarmsWithCompletion:(SENAPIDataBlock)completion {
+    [SENAPIClient GET:kSENAPIAlarmsResource
            parameters:nil
            completion:SENAPIAlarmDataBlock(completion)];
 }
 
-+ (void)updateAlarms:(NSArray*)alarms completion:(SENAPIDataBlock)completion
-{
++ (void)updateAlarms:(SENAlarmCollection*)alarms completion:(nullable SENAPIDataBlock)completion {
     NSTimeInterval clientTimeUTC = [SENDateMillisecondsSince1970([NSDate date]) doubleValue];
-    NSArray* alarmData = [self parameterArrayForAlarms:alarms];
-    [SENAPIClient POST:[NSString stringWithFormat:SENAPIAlarmsUpdateEndpointFormat, clientTimeUTC]
-            parameters:alarmData
+    NSDictionary* serializedAlarms = [alarms dictionaryValue];
+    NSString* path = [kSENAPIAlarmsResource stringByAppendingFormat:kSENAPIAlarmsUpdateClientTimeFormat, clientTimeUTC];
+    [SENAPIClient POST:path
+            parameters:serializedAlarms
             completion:SENAPIAlarmDataBlock(completion)];
 }
 
-+ (void)availableSoundsWithCompletion:(SENAPIDataBlock)completion
-{
-    if (!completion)
-        return;
-
-    [SENAPIClient GET:SENAPIAlarmSoundsEndpoint parameters:nil completion:^(NSArray* data, NSError *error) {
++ (void)availableSoundsWithCompletion:(SENAPIDataBlock)completion {
+    NSString* soundsPath = [kSENAPIAlarmsResource stringByAppendingPathComponent:kSENAPIAlarmsSoundsPath];
+    [SENAPIClient GET:soundsPath parameters:nil completion:^(id data, NSError *error) {
         if (error || ![data isKindOfClass:[NSArray class]]) {
             completion(nil, error);
             return;
         }
-        NSMutableArray* sounds = [[NSMutableArray alloc] initWithCapacity:data.count];
+        NSMutableArray* sounds = [[NSMutableArray alloc] initWithCapacity:[data count]];
         for (NSDictionary* soundData in data) {
-            SENSound* sound = [[SENSound alloc] initWithDictionary:soundData];
-            if (sound)
-                [sounds addObject:sound];
+            [sounds addObject:[[SENSound alloc] initWithDictionary:soundData]];
         }
         completion(sounds, nil);
     }];
-}
-
-+ (NSArray*)parameterArrayForAlarms:(NSArray*)alarms
-{
-    NSMutableArray* data = [[NSMutableArray alloc] initWithCapacity:alarms.count];
-    for (SENAlarm* alarm in alarms) {
-        if ([alarm isKindOfClass:[SENAlarm class]]) {
-            NSDictionary* alarmRepresentation = [self dictionaryForAlarm:alarm];
-            if (alarmRepresentation) {
-                [data addObject:alarmRepresentation];
-            }
-        }
-    }
-    return data;
-}
-
-+ (NSDictionary*)dictionaryForAlarm:(SENAlarm*)alarm
-{
-    BOOL repeated = alarm.repeatFlags != 0;
-    NSMutableDictionary* properties = [NSMutableDictionary new];
-    
-    properties[@"editable"] = @([alarm isEditable]);
-    properties[@"enabled"] = @([alarm isOn]);
-    properties[@"sound"] = @{
-        @"name" : alarm.soundName ?: @"",
-        @"id" : alarm.soundID ?: @""
-    };
-    if (alarm.identifier.length > 0)
-        properties[@"id"] = alarm.identifier;
-
-    properties[@"hour"] = @(alarm.hour);
-    properties[@"minute"] = @(alarm.minute);
-    properties[@"repeated"] = @(repeated);
-    properties[@"smart"] = @([alarm isSmartAlarm]);
-    properties[@"day_of_week"] = [self repeatDaysForAlarm:alarm];
-
-    if (!repeated) {
-        NSDateComponents* alarmDateComponents = [self dateComponentsForAlarm:alarm];
-        properties[@"day_of_month"] = @(alarmDateComponents.day);
-        properties[@"month"] = @(alarmDateComponents.month);
-        properties[@"year"] = @(alarmDateComponents.year);
-    }
-
-    return properties;
-}
-
-+ (NSDateComponents*)dateComponentsForAlarm:(SENAlarm*)alarm
-{
-    NSCalendarUnit flags = (NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay);
-    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDate* nextRingDate = [SENAlarm nextRingDateWithHour:[alarm hour] minute:[alarm minute]];
-    return [calendar components:flags fromDate:nextRingDate];
-}
-
-+ (NSArray*)repeatDaysForAlarm:(SENAlarm*)alarm
-{
-    NSMutableArray* repeatDays = [[NSMutableArray alloc] initWithCapacity:7];
-    if ((alarm.repeatFlags & SENAlarmRepeatMonday) == SENAlarmRepeatMonday)
-        [repeatDays addObject:@(SENAPIAlarmsRepeatDayMonday)];
-    if ((alarm.repeatFlags & SENAlarmRepeatTuesday) == SENAlarmRepeatTuesday)
-        [repeatDays addObject:@(SENAPIAlarmsRepeatDayTuesday)];
-    if ((alarm.repeatFlags & SENAlarmRepeatWednesday) == SENAlarmRepeatWednesday)
-        [repeatDays addObject:@(SENAPIAlarmsRepeatDayWednesday)];
-    if ((alarm.repeatFlags & SENAlarmRepeatThursday) == SENAlarmRepeatThursday)
-        [repeatDays addObject:@(SENAPIAlarmsRepeatDayThursday)];
-    if ((alarm.repeatFlags & SENAlarmRepeatFriday) == SENAlarmRepeatFriday)
-        [repeatDays addObject:@(SENAPIAlarmsRepeatDayFriday)];
-    if ((alarm.repeatFlags & SENAlarmRepeatSaturday) == SENAlarmRepeatSaturday)
-        [repeatDays addObject:@(SENAPIAlarmsRepeatDaySaturday)];
-    if ((alarm.repeatFlags & SENAlarmRepeatSunday) == SENAlarmRepeatSunday)
-        [repeatDays addObject:@(SENAPIAlarmsRepeatDaySunday)];
-
-    return repeatDays;
 }
 
 @end

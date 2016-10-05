@@ -11,6 +11,23 @@ typedef NS_ENUM(NSUInteger, SENAlarmRepeatDays) {
     SENAlarmRepeatSaturday = (1UL << 7),
 };
 
+// for backward compatibility. should have used the flags to imply value
+typedef NS_ENUM(NSUInteger, SENALarmRepeatDayValue) {
+    SENALarmRepeatDayValueMonday = 1,
+    SENALarmRepeatDayValueTuesday,
+    SENALarmRepeatDayValueWednesday,
+    SENALarmRepeatDayValueThursday,
+    SENALarmRepeatDayValueFriday,
+    SENALarmRepeatDayValueSaturday,
+    SENALarmRepeatDayValueSunday,
+};
+
+typedef NS_ENUM(NSUInteger, SENALarmSource) {
+    SENAlarmSourceMobile = 0,
+    SENAlarmSourceVoice,
+    SENAlarmSourceOther
+};
+
 struct SENAlarmTime {
     NSInteger hour;
     NSInteger minute;
@@ -83,6 +100,13 @@ struct SENAlarmTime {
  */
 - (BOOL)isRepeatedOn:(SENAlarmRepeatDays)days;
 
+/**
+ * Serialize object back to raw NSDictionary, as it was received
+ *
+ * @return dictionary value of this object
+ */
+- (NSDictionary*)dictionaryValue;
+
 @property (nonatomic, getter=isOn) BOOL on;
 @property (nonatomic, readonly, assign, getter=isSaved) BOOL saved;
 @property (nonatomic, readonly, assign, getter=isEditable) BOOL editable;
@@ -93,4 +117,6 @@ struct SENAlarmTime {
 @property (nonatomic, copy) NSString* soundName;
 @property (nonatomic, strong) NSString* soundID;
 @property (nonatomic, readonly, strong) NSString* identifier;
+@property (nonatomic, readonly, assign) SENALarmSource source;
+
 @end

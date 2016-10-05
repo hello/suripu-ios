@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.5.4.1
+
+New:
+
+* Expansions settings
+* Expansions view
+* Expansions connect flow
+* Expansions removal
+* Expansions ability to enable/disable
+* Expansions ability to change configuration
+
+Fixes:
+
+* Fixed issue that causes a crash in Pill DFU when binary cannot be downloaded
+* Fixed issue where Pill DFU will sometime report that it completed, when it didn't
+
 ## 1.5.3.11
 
 Fixes:

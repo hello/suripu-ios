@@ -19,8 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol HEMExpansionAuthDelegate <NSObject>
 
 - (void)didCancelAuthenticationFrom:(HEMExpansionAuthPresenter*)authPresenter;
-- (void)showConfigurations:(nullable NSArray<SENExpansionConfig*>*)configs
-             fromPresenter:(HEMExpansionAuthPresenter*)authPresenter;
+- (void)showConfigurations:(NSArray<SENExpansionConfig *> *)configs
+              forExpansion:(SENExpansion*)expansion
+             fromPresenter:(HEMExpansionAuthPresenter *)authPresenter;
 - (void)didCompleteAuthenticationFrom:(HEMExpansionAuthPresenter*)authPresenter;
 
 @end

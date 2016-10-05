@@ -34,7 +34,6 @@ static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMchart = @"chart";
 static NSString *const _HEMconfig = @"config";
-static NSString *const _HEMconfigurations = @"configurations";
 static NSString *const _HEMconnect = @"connect";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
@@ -43,6 +42,7 @@ static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexpansion = @"expansion";
+static NSString *const _HEMexpansionConfig = @"expansionConfig";
 static NSString *const _HEMexpansions = @"expansions";
 static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfield = @"field";
@@ -177,7 +177,6 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)alarmSoundsSegueIdentifier { return _HEMalarmSounds; }
 +(NSString *)alarmsSegueIdentifier { return _HEMalarms; }
-+(NSString *)configurationsSegueIdentifier { return _HEMconfigurations; }
 +(NSString *)connectSegueIdentifier { return _HEMconnect; }
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
@@ -204,6 +203,7 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
 +(id)instantiateBreakdownController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
++(id)instantiateExpansionConfigViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMexpansionConfig]; }
 +(id)instantiateFormViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMformViewController]; }
 +(id)instantiateInfoNavigationController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoNavigationController]; }
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }

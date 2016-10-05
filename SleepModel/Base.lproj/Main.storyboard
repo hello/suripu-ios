@@ -1901,7 +1901,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="fdD-mi-ImE"/>
                                 </constraints>
-                                <state key="normal" title="FINISH"/>
+                                <state key="normal" title="DONE"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -10,12 +10,11 @@
 #import "HEMExpansionAuthPresenter.h"
 #import "HEMConfigurationsPresenter.h"
 #import "HEMExpansionService.h"
-#import "HEMListItemSelectionViewController.h"
+#import "HEMExpansionsConfigViewController.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMExpansionAuthViewController () <
-    HEMExpansionAuthDelegate,
-    HEMListDelegate
+    HEMExpansionAuthDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
@@ -47,18 +46,14 @@
 #pragma mark - HEMExpansionAuthDelegate
 
 - (void)showConfigurations:(NSArray<SENExpansionConfig *> *)configs
+              forExpansion:(SENExpansion*)expansion
              fromPresenter:(HEMExpansionAuthPresenter *)authPresenter {
-    HEMListItemSelectionViewController* listVC = [HEMMainStoryboard instantiateListItemViewController];
-    
-    HEMConfigurationsPresenter* presenter =
-    [[HEMConfigurationsPresenter alloc] initWithConfigs:configs
-                                           forExpansion:[self expansion]
-                                       expansionService:[self expansionService]];
-    [presenter setConnectDelegate:[self connectDelegate]];
-    [listVC setListPresenter:presenter];
-    
+    HEMExpansionsConfigViewController* listVC = [HEMMainStoryboard instantiateExpansionConfigViewController];
+    [listVC setExpansion:expansion];
+    [listVC setExpansionService:[self expansionService]];
+    [listVC setConfigs:configs];
+    [listVC setConnectDelegate:[self connectDelegate]];
     [[self navigationController] setViewControllers:@[listVC]];
-    
 }
 
 - (void)didCompleteAuthenticationFrom:(HEMExpansionAuthPresenter *)authPresenter {

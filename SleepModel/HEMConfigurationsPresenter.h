@@ -6,19 +6,33 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-#import "HEMListPresenter.h"
+#import "HEMPresenter.h"
 #import "HEMExpansionConnectDelegate.h"
 
 @class SENExpansionConfig;
 @class HEMExpansionService;
 @class SENExpansion;
+@class HEMActionButton;
+@class HEMConfigurationsPresenter;
 
-@interface HEMConfigurationsPresenter : HEMListPresenter
+@protocol HEMConfigurationsDelegate <NSObject>
+
+- (void)dismissConfigurationFrom:(HEMConfigurationsPresenter*)presenter;
+
+@end
+
+@interface HEMConfigurationsPresenter : HEMPresenter
+
+@property (nonatomic, weak) id<HEMExpansionConnectDelegate> connectDelegate;
+@property (nonatomic, weak) id<HEMConfigurationsDelegate> configDelegate;
 
 - (instancetype)initWithConfigs:(NSArray<SENExpansionConfig*>*)configs
                    forExpansion:(SENExpansion*)expansion
                expansionService:(HEMExpansionService*)service;
-
-@property (nonatomic, weak) id<HEMExpansionConnectDelegate> connectDelegate;
+- (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel;
+- (void)bindWithTableView:(UITableView*)tableView;
+- (void)bindWithActivityContainer:(UIView*)activityContainerView;
+- (void)bindWithSkipButton:(UIButton*)skipButton;
+- (void)bindWithDoneButton:(HEMActionButton*)doneButton;
 
 @end

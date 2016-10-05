@@ -979,3 +979,5 @@
 "expansion.error.enable.message" = "Sense could not enable this expansion at this time. Please try again.";
 "expansion.error.disable.title" = "Expansion not disabled";
 "expansion.error.disable.message" = "Sense could not disable this expansion at this time. Please try again.";
+"expansion.config.title.format" = "You've connected to %@";
+"expansion.config.description.format" = "Choose which %@ you would like to control with your Sense.";

@@ -19,7 +19,7 @@ static CGFloat const kHEMExpansionActionDelay = 1.0f;
 static CGFloat const kHEMExpansionActionDelayBeforeLoadingConfigs = 2.0f;
 static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
 
-@interface HEMExpansionAuthPresenter() <UIWebViewDelegate>
+@interface HEMExpansionAuthPresenter() <UIWebViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) SENExpansion* expansion;
 @property (nonatomic, weak) HEMExpansionService* expansionService;
@@ -49,7 +49,7 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
     [webView setDelegate:self];
     [webView loadRequest:request];
     [webView setScalesPageToFit:YES];
-    [webView setBackgroundColor:[UIColor backgroundColor]];
+    [[webView scrollView] setDelegate:self];
     [self setWebView:webView];
     [self setAuthUriRequest:request];
 }
@@ -103,7 +103,7 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setConfigs:configs];
         
-        if ([configs count] == 1) {
+        if ([configs count] == 10) {
             // set the config here and end it
             void(^finish)(SENExpansion * expansion, NSError* error) = ^(SENExpansion * expansion, NSError* error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -118,7 +118,7 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
                                                    forExpansion:[strongSelf expansion]
                                                      completion:finish];
             }];
-        } else if ([configs count] > 1) {
+        } else if ([configs count] >= 1) {
             [strongSelf finishByShowingConfigurations:YES];
         } else if ([strongSelf loadConfigAttempts] < kHEMExpansionLoadMaxAttempts) {
             // FIXME: this is a workaround for Hue, where it doesn't seem to be able
@@ -150,6 +150,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 [[strongSelf expansionService] refreshExpansion:[strongSelf expansion] completion:^(SENExpansion * expansion, NSError * error) {
                     __weak typeof(weakSelf) strongSelf = weakSelf;
+                    if (expansion) {
+                        [strongSelf setExpansion:expansion];
+                    }
+                    
                     if (error || ![[strongSelf expansionService] isConnected:expansion]) {
                         [strongSelf finishByShowingConfigurations:YES];
                     } else {
@@ -160,13 +164,16 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                             __weak typeof(weakSelf) strongSelf = weakSelf;
                             [strongSelf showAvailableConfigurations];
                         }];
-                        
                     }
                 }];
             }];
         }];
     }
     return YES;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+    [self didScrollContentIn:scrollView];
 }
 
 - (void)actionAfterDelay:(CGFloat)delay action:(void(^)(void))action {
@@ -184,7 +191,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
 - (void)finishByShowingConfigurations:(BOOL)showConfigurations {
     if (showConfigurations) {
-        [[self delegate] showConfigurations:[self configs] fromPresenter:self];
+        [[self delegate] showConfigurations:[self configs] forExpansion:[self expansion] fromPresenter:self];
         [self dismissActivityWithSucces:NO completion:nil];
     } else {
         [[self expansion] setState:SENExpansionStateConnectedOn];

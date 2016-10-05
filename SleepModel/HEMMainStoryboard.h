@@ -71,7 +71,6 @@
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)alarmSoundsSegueIdentifier;
 +(NSString *)alarmsSegueIdentifier;
-+(NSString *)configurationsSegueIdentifier;
 +(NSString *)connectSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
@@ -98,6 +97,7 @@
 +(id)instantiateAlarmViewController;
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
++(id)instantiateExpansionConfigViewController;
 +(id)instantiateFormViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;

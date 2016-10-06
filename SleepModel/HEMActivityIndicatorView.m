@@ -46,6 +46,10 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 }
 
 - (void)setup {
+    if ([self indicatorLayer]) {
+        [[self indicatorLayer] removeFromSuperlayer];
+    }
+    
     [self setUserInteractionEnabled:NO];
     [self setBackgroundColor:[UIColor clearColor]];
     
@@ -57,6 +61,13 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
     CALayer* layer = [indicator layer];
     [self setIndicatorLayer:layer];
     [[self layer] addSublayer:layer];
+}
+
+- (void)setIndicatorImage:(UIImage *)indicatorImage {
+    if (![_indicatorImage isEqual:indicatorImage]) {
+        _indicatorImage = indicatorImage;
+        [self setup];
+    }
 }
 
 - (void)start {

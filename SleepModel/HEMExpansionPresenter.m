@@ -50,6 +50,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 @property (nonatomic, weak) UINavigationBar* navBar;
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 @property (nonatomic, copy) NSString* configurationName;
+@property (nonatomic, assign, getter=isLoadingConfigs) BOOL loadingConfigs;
 
 @end
 
@@ -168,9 +169,12 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
         return;
     }
     
+    [self setLoadingConfigs:YES];
+    
     __weak typeof(self) weakSelf = self;
     void(^finish)(NSArray<SENExpansionConfig*>* configs) = ^(NSArray<SENExpansionConfig*>* configs) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setLoadingConfigs:NO];
         [strongSelf setConfigurations:configs];
         if (configs) {
             for (SENExpansionConfig* config in configs) {
@@ -197,12 +201,12 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 - (void)refreshRows:(BOOL)connected {
     NSMutableArray* rows = [NSMutableArray arrayWithCapacity:3];
     if (connected) {
-        [rows addObject:@(HEMExpansionRowTypeEnable)];
+        if ([[self expansion] state] != SENExpansionStateNotConfigured
+            || [self selectedConfig]) {
+            [rows addObject:@(HEMExpansionRowTypeEnable)];
+        }
         [rows addObject:@(HEMExpansionRowTypeConfiguration)];
         [rows addObject:@(HEMExpansionRowTypeRemove)];
-    } else {
-        // TODO: add this later
-//        [rows addObject:@(HEMExpansionRowTypePermissions)];
     }
     [self setRows:rows];
 }
@@ -268,8 +272,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     switch ([rowType unsignedIntegerValue]) {
         case HEMExpansionRowTypeRemove:
             return [self showRemoveAccessConfirmation];
-        case HEMExpansionRowTypeConfiguration:
-            return [self showConfigurationOptions];
+        case HEMExpansionRowTypeConfiguration: {
+            if (![self isLoadingConfigs]) {
+                return [self showConfigurationOptions];
+            } else {
+                return;
+            }
+        }
         default:
             return;
     }
@@ -299,14 +308,29 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureConfigurationCell:(HEMBasicTableViewCell*)cell {
     NSString* selectedName = [[self selectedConfig] localizedName];
+    UIColor* nameColor = [UIColor grey3];
     if (!selectedName) {
-        selectedName = NSLocalizedString(@"empty-data", nil);
+        if ([[self configurations] count] == 0) {
+            selectedName = NSLocalizedString(@"empty-data", nil);
+        } else {
+            NSString* selectionFormat = NSLocalizedString(@"expansion.config.select-config.format", nil);
+            selectedName = [NSString stringWithFormat:selectionFormat, [self configurationName]];
+            
+            nameColor = [UIColor tintColor];
+        }
     }
     
     [[cell customTitleLabel] setText:[self configurationName]];
     [[cell customDetailLabel] setText:selectedName];
     [[cell customDetailLabel] setFont:[UIFont body]];
-    [[cell customDetailLabel] setTextColor:[UIColor grey3]];
+    [[cell customDetailLabel] setTextColor:nameColor];
+    [cell showActivity:[self isLoadingConfigs]];
+    
+    if ([self isLoadingConfigs]) {
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    } else {
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+    }
 }
 
 - (void)configureRemoveAccessCell:(HEMBasicTableViewCell*)cell {
@@ -428,6 +452,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                            } else {
                                                [strongSelf setSelectedConfig:configuration];
                                                [strongSelf setExpansion:expansion];
+                                               [strongSelf refreshRows:YES];
                                                [[strongSelf tableView] reloadData];
                                            }
                                            [strongSelf dismissActivitySucessfully:error == nil completion:nil];
@@ -527,8 +552,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Error
 
 - (void)showNoConfigurationError {
-    NSString* title = NSLocalizedString(@"expansion.error.setup.no-groups.title", nil);
-    NSString* message = NSLocalizedString(@"expansion.error.setup.no-groups.message", nil);
+    NSString* categoryLower = [[[self expansion] category] lowercaseString];
+    NSString* titleKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.title", categoryLower];
+    NSString* title = NSLocalizedString(titleKey, nil);
+    
+    NSString* messageKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.message.format", categoryLower];
+    NSString* messageFormat = NSLocalizedString(messageKey, nil);
+    NSString* message = [NSString stringWithFormat:messageFormat, [[self expansion] serviceName]];
+    
     [[self errorDelegate] showErrorWithTitle:title
                                   andMessage:message
                                 withHelpPage:nil

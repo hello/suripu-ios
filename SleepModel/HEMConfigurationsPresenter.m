@@ -117,6 +117,7 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
     [skipButton addTarget:self
                    action:@selector(skip)
          forControlEvents:UIControlEventTouchUpInside];
+    [skipButton setHidden:[[self configs] count] == 0];
     [self setSkipButton:skipButton];
 }
 
@@ -204,47 +205,52 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
 
 - (void)save {
     if ([self selectedConfig]) {
-        DDLogVerbose(@"saving configuration");
-        
-        NSString* textFormat = NSLocalizedString(@"expansion.configuration.activity.updating-config.format", nil);
-        NSString* message = [NSString stringWithFormat:textFormat, [self configurationName]];
-        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
-        
-        __weak typeof(self) weakSelf = self;
-        void(^finish)(SENExpansion* expansion, NSError* error) = ^(SENExpansion* expansion, NSError* error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error) {
-                [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                    // show error
-                    NSString* title = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.title", nil);
-                    NSString* message = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.message", nil);
-                    [[strongSelf errorDelegate] showErrorWithTitle:title andMessage:message withHelpPage:nil fromPresenter:strongSelf];
-                }];
-            } else {
-                [[strongSelf expansion] setState:SENExpansionStateConnectedOn];
-                [[strongSelf connectDelegate] didConnect:YES withExpansion:[strongSelf expansion]];
-                
-                NSString* successText = NSLocalizedString(@"status.success", nil);
-                UIImage* successIcon = [UIImage imageNamed:@"check"];
-                [activityView updateText:successText successIcon:successIcon hideActivity:YES completion:^(BOOL finished) {
-                    [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
-                        int64_t delayInSecs =  (int64_t)(kHEMConfigurationSaveDelay * NSEC_PER_SEC);
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayInSecs), dispatch_get_main_queue(), ^{
-                            [[strongSelf configDelegate] dismissConfigurationFrom:strongSelf];
-                        });
-                    }];
-                }];
-            }
-        };
-        
-        [activityView showInView:[self activityContainerView] withText:message activity:YES completion:^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [[strongSelf service] setConfiguration:[strongSelf selectedConfig]
-                                      forExpansion:[strongSelf expansion]
-                                        completion:finish];
-        }];
-
+        [self saveConfig];
+    } else if ([[self configs] count] == 0) { // no config to pick, just flash done and leave
+        [self skip];
     }
+}
+
+- (void)saveConfig {
+    DDLogVerbose(@"saving configuration");
+    
+    NSString* textFormat = NSLocalizedString(@"expansion.configuration.activity.updating-config.format", nil);
+    NSString* message = [NSString stringWithFormat:textFormat, [self configurationName]];
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^finish)(SENExpansion* expansion, NSError* error) = ^(SENExpansion* expansion, NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                // show error
+                NSString* title = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.title", nil);
+                NSString* message = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.message", nil);
+                [[strongSelf errorDelegate] showErrorWithTitle:title andMessage:message withHelpPage:nil fromPresenter:strongSelf];
+            }];
+        } else {
+            [[strongSelf expansion] setState:SENExpansionStateConnectedOn];
+            [[strongSelf connectDelegate] didConnect:YES withExpansion:[strongSelf expansion]];
+            
+            NSString* successText = NSLocalizedString(@"status.success", nil);
+            UIImage* successIcon = [UIImage imageNamed:@"check"];
+            [activityView updateText:successText successIcon:successIcon hideActivity:YES completion:^(BOOL finished) {
+                [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                    int64_t delayInSecs =  (int64_t)(kHEMConfigurationSaveDelay * NSEC_PER_SEC);
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayInSecs), dispatch_get_main_queue(), ^{
+                        [[strongSelf configDelegate] dismissConfigurationFrom:strongSelf];
+                    });
+                }];
+            }];
+        }
+    };
+    
+    [activityView showInView:[self activityContainerView] withText:message activity:YES completion:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf service] setConfiguration:[strongSelf selectedConfig]
+                                  forExpansion:[strongSelf expansion]
+                                    completion:finish];
+    }];
 }
 
 @end

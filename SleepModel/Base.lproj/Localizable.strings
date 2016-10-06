@@ -989,3 +989,4 @@
 "expansion.config.description.format" = "Choose which %@ you would like to control with your Sense.";
 "expansion.config.no-config.footer.format" = "Go to your %@ app to configure %@";
 "expansion.config.no-cnfig.format" = "No %@ found";
+"expansion.config.select-config.format" = "Choose a %@";

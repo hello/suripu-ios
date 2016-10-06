@@ -308,14 +308,22 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureConfigurationCell:(HEMBasicTableViewCell*)cell {
     NSString* selectedName = [[self selectedConfig] localizedName];
+    UIColor* nameColor = [UIColor grey3];
     if (!selectedName) {
-        selectedName = NSLocalizedString(@"empty-data", nil);
+        if ([[self configurations] count] == 0) {
+            selectedName = NSLocalizedString(@"empty-data", nil);
+        } else {
+            NSString* selectionFormat = NSLocalizedString(@"expansion.config.select-config.format", nil);
+            selectedName = [NSString stringWithFormat:selectionFormat, [self configurationName]];
+            
+            nameColor = [UIColor tintColor];
+        }
     }
     
     [[cell customTitleLabel] setText:[self configurationName]];
     [[cell customDetailLabel] setText:selectedName];
     [[cell customDetailLabel] setFont:[UIFont body]];
-    [[cell customDetailLabel] setTextColor:[UIColor grey3]];
+    [[cell customDetailLabel] setTextColor:nameColor];
     [cell showActivity:[self isLoadingConfigs]];
     
     if ([self isLoadingConfigs]) {

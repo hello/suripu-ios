@@ -207,7 +207,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="gFg-NX-sGf">
-                                                    <rect key="frame" x="572" y="21" width="8" height="15"/>
+                                                    <rect key="frame" x="572" y="22" width="8" height="14"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -255,7 +255,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="sVq-mc-4Ub">
-                                                    <rect key="frame" x="572" y="21" width="8" height="15"/>
+                                                    <rect key="frame" x="572" y="22" width="8" height="14"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -1639,11 +1639,20 @@
                                                         <constraint firstAttribute="width" constant="8" id="hv8-jf-Vql"/>
                                                     </constraints>
                                                 </imageView>
+                                                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aa2-WJ-JcU" customClass="HEMActivityIndicatorView">
+                                                    <rect key="frame" x="551" y="15" width="25" height="25"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="6HG-J8-usd"/>
+                                                        <constraint firstAttribute="width" constant="25" id="zQp-bk-LBG"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ctw-e9-sxy" firstAttribute="leading" secondItem="MtE-o8-sIc" secondAttribute="leading" constant="24" id="67h-d1-q4a"/>
                                                 <constraint firstItem="UX3-Ow-cXt" firstAttribute="centerY" secondItem="MtE-o8-sIc" secondAttribute="centerY" id="7Lh-Ss-yGe"/>
                                                 <constraint firstAttribute="trailing" secondItem="ctw-e9-sxy" secondAttribute="trailing" constant="24" id="Aee-ff-FXV"/>
+                                                <constraint firstItem="Aa2-WJ-JcU" firstAttribute="trailing" secondItem="ijB-ox-9qf" secondAttribute="trailing" id="BA9-VN-R9t"/>
                                                 <constraint firstItem="HDV-B8-Gw8" firstAttribute="centerY" secondItem="MtE-o8-sIc" secondAttribute="centerY" id="Hev-5O-Np4"/>
                                                 <constraint firstAttribute="bottom" secondItem="ctw-e9-sxy" secondAttribute="bottom" id="QbT-gW-uII"/>
                                                 <constraint firstAttribute="trailing" secondItem="HDV-B8-Gw8" secondAttribute="trailing" constant="40" id="XeV-dM-slf"/>
@@ -1651,12 +1660,14 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
+                                            <constraint firstItem="Aa2-WJ-JcU" firstAttribute="centerY" secondItem="KLJ-ps-VfB" secondAttribute="centerY" id="7a0-U3-gqv"/>
                                             <constraint firstAttribute="trailing" secondItem="ijB-ox-9qf" secondAttribute="trailing" constant="24" id="H9w-nC-hxC"/>
                                             <constraint firstItem="ijB-ox-9qf" firstAttribute="height" secondItem="KLJ-ps-VfB" secondAttribute="height" id="UAK-XM-njq"/>
                                             <constraint firstItem="ijB-ox-9qf" firstAttribute="top" secondItem="KLJ-ps-VfB" secondAttribute="top" id="V4X-Q6-hdl"/>
                                             <constraint firstItem="UX3-Ow-cXt" firstAttribute="leading" secondItem="KLJ-ps-VfB" secondAttribute="leading" constant="24" id="rC8-UG-yLb"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="activityView" destination="Aa2-WJ-JcU" id="vkG-ah-Oby"/>
                                             <outlet property="customAccessoryView" destination="ijB-ox-9qf" id="6D2-ge-CIU"/>
                                             <outlet property="customDetailLabel" destination="HDV-B8-Gw8" id="hGu-Oq-fTC"/>
                                             <outlet property="customTitleLabel" destination="UX3-Ow-cXt" id="iov-cL-tgL"/>
@@ -6602,7 +6613,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="accessory" width="8" height="15"/>
+        <image name="accessory" width="8" height="14"/>
         <image name="accessoryBlue" width="10" height="18"/>
         <image name="addIconSmall" width="24" height="24"/>
         <image name="alarmDeleteIcon" width="19" height="19"/>

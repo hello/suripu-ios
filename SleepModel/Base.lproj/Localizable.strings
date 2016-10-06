@@ -971,8 +971,12 @@
 "expansion.enable.info.description" = "Enabling access to compatible smart devices allows Sense to activate them at relevant moments, like turning on your lights when Sense’s alarm sounds.";
 "expansion.error.connect.title" = "Expansion not connected";
 "expansion.error.connect.message" = "An error occurred while attempting to complete the process. Try again.";
-"expansion.error.setup.no-groups.title" = "Expansion not set up";
-"expansion.error.setup.no-groups.message" = "This expansion requires a device or group of devices to be selected, but none were found. Ensure your expansion device has been properly configured and try again.";
+
+"expansion.error.setup.no-groups.temperature.title" = "No thermostat available";
+"expansion.error.setup.no-groups.temperature.message.format" = "Before enabling this expansion, you'll need to set up a thermostat in the %@ app.";
+"expansion.error.setup.no-groups.light.title" = "No rooms available";
+"expansion.error.setup.no-groups.light.message.format" = "Before enabling this expansion, you'll need to set up a room in the %@ app.";
+
 "expansion.error.setup.configuration-not-saved.title" = "Expansion not configured";
 "expansion.error.setup.configuration-not-saved.message" = "An error occurred while attempting to configure your expansion. Please try again.";
 "expansion.error.remove-access.title" = "Expansion not removed";

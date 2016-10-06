@@ -544,8 +544,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Error
 
 - (void)showNoConfigurationError {
-    NSString* title = NSLocalizedString(@"expansion.error.setup.no-groups.title", nil);
-    NSString* message = NSLocalizedString(@"expansion.error.setup.no-groups.message", nil);
+    NSString* categoryLower = [[[self expansion] category] lowercaseString];
+    NSString* titleKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.title", categoryLower];
+    NSString* title = NSLocalizedString(titleKey, nil);
+    
+    NSString* messageKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.message.format", categoryLower];
+    NSString* messageFormat = NSLocalizedString(messageKey, nil);
+    NSString* message = [NSString stringWithFormat:messageFormat, [[self expansion] serviceName]];
+    
     [[self errorDelegate] showErrorWithTitle:title
                                   andMessage:message
                                 withHelpPage:nil

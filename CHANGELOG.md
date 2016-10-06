@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.4.2
+
+New:
+
+* Design tweaks from design review
+* Added controls for the web view that controls the third party oauth pages for expansions
+* Added voice attribution to alarms, when available
+* Updated copy
+
 ## 1.5.4.1
 
 New:

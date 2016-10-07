@@ -396,6 +396,7 @@
 "alarm.delete.confirm.message" = "Are you sure you want to delete this alarm?";
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
+"alarm.light.title" = "Lights";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";

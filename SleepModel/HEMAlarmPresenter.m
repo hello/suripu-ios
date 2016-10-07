@@ -20,6 +20,7 @@
 #import "HEMAlarmTableViewCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMDeviceService.h"
 
 static CGFloat const HEMAlarmPresenterSuccessDelay = 0.8f;
 static CGFloat const HEMAlarmConfigCellHeight = 66.0f;
@@ -32,6 +33,7 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
 >
 
 @property (nonatomic, weak) HEMAlarmService* service;
+@property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, weak) UIViewController* tutorialPresenter;
 @property (nonatomic, strong) HEMAlarmCache* cache;
@@ -46,11 +48,14 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
 
 @implementation HEMAlarmPresenter
 
-- (instancetype)initWithAlarm:(SENAlarm*)alarm alarmService:(HEMAlarmService*)alarmService {
+- (instancetype)initWithAlarm:(SENAlarm*)alarm
+                 alarmService:(HEMAlarmService*)alarmService
+                deviceService:(HEMDeviceService*)deviceService {
     self = [super init];
     if (self) {
         _alarm = alarm;
         _service = alarmService;
+        _deviceService = deviceService;
         _cache = [HEMAlarmCache new];
         _originalAlarm = [HEMAlarmCache new];
         
@@ -67,7 +72,11 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
         [rows addObjectsFromArray:@[@(HEMAlarmRowTypeSmart),
                                     @(HEMAlarmRowTypeTone),
                                     @(HEMAlarmRowTypeRepeat)]];
-        // TODO: determine if Lights and Thermostat are availabe
+        
+        // Sense Voice only features
+        if ([_deviceService savedHardwareVersion] == SENSenseHardwareVoice) {
+            [rows addObject:@(HEMAlarmRowTypeLight)];
+        }
         
         // Optionally show delete
         if ([alarm isSaved]) {
@@ -270,6 +279,16 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
     [HEMTutorial showTutorialForAlarmSmartnessFrom:[self tutorialPresenter]];
 }
 
+#pragma mark - Light
+
+- (void)toggleLight:(UISwitch*)sender {
+    // TODO: update cache / alarm
+}
+
+- (void)showLightInfo:(UIButton*)sender {
+    [HEMTutorial showInfoForExpansionFrom:[self tutorialPresenter]];
+}
+
 #pragma mark - Presenter events
 
 - (void)willAppear {
@@ -287,6 +306,7 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
     if ([self tutorialPresenter]) {
         [HEMTutorial showTutorialForAlarmsIfNeededFrom:[self tutorialPresenter]];
     }
+    [[self tableView] flashScrollIndicators];
 }
 
 - (void)didRelayout {
@@ -334,6 +354,9 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
         case HEMAlarmRowTypeDelete:
             identifier = [HEMMainStoryboard alarmDeleteCellReuseIdentifier];
             break;
+        case HEMAlarmRowTypeLight:
+            identifier = [HEMMainStoryboard alarmLightCellReuseIdentifier];
+            break;
     }
     
     return [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -359,6 +382,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         case HEMAlarmRowTypeSmart:
             switchState = [[self cache] isSmart];
             title = NSLocalizedString(@"alarm.smart.title", nil);
+            [[cell smartSwitch] setOn:switchState];
+            [[cell smartSwitch] addTarget:self
+                                   action:@selector(toggleSmartness:)
+                         forControlEvents:UIControlEventTouchUpInside];
+            [[cell infoButton] addTarget:self
+                                  action:@selector(showSmartTutorial:)
+                        forControlEvents:UIControlEventTouchUpInside];
             break;
         case HEMAlarmRowTypeTone:
             title = NSLocalizedString(@"alarm.sound.title", nil);
@@ -372,6 +402,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             title = NSLocalizedString(@"alarm.delete.title", nil);
             titleColor = [UIColor red6];
             break;
+        case HEMAlarmRowTypeLight:
+            title = NSLocalizedString(@"alarm.light.title", nil);
+            // TODO: update state of Lights
+            [[cell smartSwitch] setOn:switchState];
+            [[cell smartSwitch] addTarget:self
+                                   action:@selector(toggleLight:)
+                         forControlEvents:UIControlEventTouchUpInside];
+            [[cell infoButton] addTarget:self
+                                  action:@selector(showLightInfo:)
+                        forControlEvents:UIControlEventTouchUpInside];
+            break;
     }
     
     [[cell titleLabel] setText:title];
@@ -383,15 +424,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell detailLabel] setTextColor:[UIColor grey4]];
     
     [cell setBackgroundColor:[UIColor clearColor]];
-    // only cells prototyped with these views will have the following effect.
-    // other cells will be No-Op
-    [[cell smartSwitch] setOn:switchState];
-    [[cell smartSwitch] addTarget:self
-                           action:@selector(toggleSmartness:)
-                 forControlEvents:UIControlEventTouchUpInside];
-    [[cell infoButton] addTarget:self
-                          action:@selector(showSmartTutorial:)
-                forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

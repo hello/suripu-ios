@@ -34,8 +34,10 @@
     if (![self alarmService]) {
         [self setAlarmService:[HEMAlarmService new]];
     }
-    HEMAlarmPresenter* presenter = [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
-                                                               alarmService:[self alarmService]];
+    HEMAlarmPresenter* presenter =
+        [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
+                                    alarmService:[self alarmService]
+                                   deviceService:[self deviceService]];
     [presenter setDelegate:self];
     [presenter setSuccessDuration:[self successDuration]];
     [presenter setSuccessText:[self successText]];

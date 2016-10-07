@@ -60,6 +60,7 @@
     UINavigationController *controller = (UINavigationController *)[HEMMainStoryboard instantiateAlarmNavController];
     HEMAlarmViewController *alarmController = (HEMAlarmViewController *)controller.topViewController;
     alarmController.alarm = alarm;
+    alarmController.deviceService = self.deviceService;
     alarmController.alarmService = self.alarmService;
     alarmController.delegate = self;
     [self presentViewController:controller animated:YES completion:nil];

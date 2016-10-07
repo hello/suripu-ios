@@ -971,22 +971,12 @@
 "expansion.configuration.removal.confirm.message" = "Are you sure you want to remove this expansion? Previously set alarms will still sound, but will no longer activate this expansion.";
 "expansion.enable.info.title" = "Expansions";
 "expansion.enable.info.description" = "Enabling access to compatible smart devices allows Sense to activate them at relevant moments, like turning on your lights when Sense’s alarm sounds.";
-"expansion.error.connect.title" = "Expansion not connected";
-"expansion.error.connect.message" = "An error occurred while attempting to complete the process. Try again.";
-
 "expansion.error.setup.no-groups.temperature.title" = "No thermostat available";
 "expansion.error.setup.no-groups.temperature.message.format" = "You will need to set up a thermostat in the %@ app.";
 "expansion.error.setup.no-groups.light.title" = "No rooms available";
 "expansion.error.setup.no-groups.light.message.format" = "You will need to set up a room in the %@ app.";
-
-"expansion.error.setup.configuration-not-saved.title" = "Expansion not configured";
-"expansion.error.setup.configuration-not-saved.message" = "An error occurred while attempting to configure your expansion. Please try again.";
-"expansion.error.remove-access.title" = "Expansion not removed";
-"expansion.error.remove-access.message" = "Sense could not remove access to this expansion. Please try again.";
-"expansion.error.enable.title" = "Expansion not enabled";
-"expansion.error.enable.message" = "Sense could not enable this expansion at this time. Please try again.";
-"expansion.error.disable.title" = "Expansion not disabled";
-"expansion.error.disable.message" = "Sense could not disable this expansion at this time. Please try again.";
+"expansion.error.setup.generic.title" = "Changes not saved";
+"expansion.error.setup.generic.message" = "Sense couldn't save your changes. Please try again later.";
 "expansion.config.title.format" = "You've connected to %@";
 "expansion.config.description.format" = "Choose which %@ you would like to control with your Sense.";
 "expansion.config.no-config.footer.format" = "Go to your %@ app to configure %@";

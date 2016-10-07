@@ -108,7 +108,7 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
     [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setTableFooterView:[UIView new]];
-    [tableView setBounces:NO];
+    [tableView setBounces:YES];
     
     HEMClockPickerView* timePicker = (id) [tableView tableHeaderView];
     [timePicker setDelegate:self];

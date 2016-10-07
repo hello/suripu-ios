@@ -10,9 +10,11 @@
 +(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
++(NSString *)clockReuseIdentifier;
 +(NSString *)alarmSwitchCellReuseIdentifier;
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
++(NSString *)alarmLightCellReuseIdentifier;
 +(NSString *)alarmDeleteCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;

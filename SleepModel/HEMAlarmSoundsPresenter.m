@@ -49,11 +49,9 @@
     return self;
 }
 
-- (void)bindWithNavigationBar:(UINavigationBar *)navigationBar
-            withTopConstraint:(NSLayoutConstraint *)topConstraint {
-    [super bindWithNavigationBar:navigationBar withTopConstraint:topConstraint];
-    UINavigationItem* topItem = [navigationBar topItem];
-    [topItem setTitle:[self navTitle]];
+- (void)bindWithNavigationItem:(UINavigationItem *)navItem {
+    [super bindWithNavigationItem:navItem];
+    [navItem setTitle:[self navTitle]];
 }
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView *)indicatorView {
@@ -118,6 +116,10 @@
 }
 
 #pragma mark - HEMSoundListPresenter Overrides
+
+- (BOOL)hideExtraNavigationBar {
+    return YES;
+}
 
 - (NSInteger)indexOfItemWithName:(NSString*)name {
     NSInteger index = -1;

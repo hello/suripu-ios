@@ -14,12 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HEMGradient : NSObject
 
 @property (nonatomic, assign, readonly) CGGradientRef gradientRef;
+@property (nonatomic, strong, readonly) NSArray* colors;
 
 + (HEMGradient*)gradientForTimelineSleepSegment;
++ (HEMGradient*)topGradientForTimePicker;
++ (HEMGradient*)bottomGradientForTimePicker;
 
 - (instancetype)initWithColors:(NSArray*)colors
                      locations:(const CGFloat*)locations NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
+
+- (NSArray*)colorRefs;
 
 @end
            

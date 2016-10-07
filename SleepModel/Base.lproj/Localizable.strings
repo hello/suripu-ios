@@ -379,6 +379,7 @@
 "alarms.error.message.limit-reached" = "You've created the maximum number of alarms. Delete an alarm before attempting to create a new one, or edit an existing alarm.";
 
 // alarm settings
+"alarm.edit.title" = "Edit Alarm";
 "alarm.sound.title" = "Tone";
 "alarm.sound.subtitle" = "Select an alarm tone";
 "alarm.repeat.title" = "Repeat";
@@ -395,6 +396,7 @@
 "alarm.delete.confirm.message" = "Are you sure you want to delete this alarm?";
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
+"alarm.light.title" = "Lights";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";
@@ -973,9 +975,9 @@
 "expansion.error.connect.message" = "An error occurred while attempting to complete the process. Try again.";
 
 "expansion.error.setup.no-groups.temperature.title" = "No thermostat available";
-"expansion.error.setup.no-groups.temperature.message.format" = "Before enabling this expansion, you'll need to set up a thermostat in the %@ app.";
+"expansion.error.setup.no-groups.temperature.message.format" = "You will need to set up a thermostat in the %@ app.";
 "expansion.error.setup.no-groups.light.title" = "No rooms available";
-"expansion.error.setup.no-groups.light.message.format" = "Before enabling this expansion, you'll need to set up a room in the %@ app.";
+"expansion.error.setup.no-groups.light.message.format" = "You will need to set up a room in the %@ app.";
 
 "expansion.error.setup.configuration-not-saved.title" = "Expansion not configured";
 "expansion.error.setup.configuration-not-saved.message" = "An error occurred while attempting to configure your expansion. Please try again.";
@@ -989,4 +991,4 @@
 "expansion.config.description.format" = "Choose which %@ you would like to control with your Sense.";
 "expansion.config.no-config.footer.format" = "Go to your %@ app to configure %@";
 "expansion.config.no-cnfig.format" = "No %@ found";
-"expansion.config.select-config.format" = "Choose a %@";
+"expansion.config.select" = "Select";

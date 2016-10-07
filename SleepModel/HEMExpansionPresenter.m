@@ -37,7 +37,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     UITableViewDataSource
 >
 
-@property (nonatomic, weak) SENExpansion* expansion;
+@property (nonatomic, strong) SENExpansion* expansion;
 @property (nonatomic, weak) HEMExpansionService* expansionService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, weak) HEMActionButton* connectButton;

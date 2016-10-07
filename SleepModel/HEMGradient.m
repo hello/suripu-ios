@@ -23,6 +23,20 @@
     return [[HEMGradient alloc] initWithColors:@[color1, color2] locations:locations];
 }
 
++ (HEMGradient*)topGradientForTimePicker {
+    UIColor* color1 = [UIColor colorWithWhite:1.0f alpha:0.8f];
+    UIColor* color2 = [UIColor colorWithWhite:1.0f alpha:0.05f];
+    CGFloat locations[] = {0, 1};
+    return [[HEMGradient alloc] initWithColors:@[color1, color2] locations:locations];
+}
+
++ (HEMGradient*)bottomGradientForTimePicker {
+    UIColor* color1 = [UIColor colorWithWhite:1.0f alpha:0.05f];
+    UIColor* color2 = [UIColor colorWithWhite:1.0f alpha:0.8f];
+    CGFloat locations[] = {0, 1};
+    return [[HEMGradient alloc] initWithColors:@[color1, color2] locations:locations];
+}
+
 - (instancetype)initWithColors:(NSArray*)colors locations:(const CGFloat*)locations {
     self = [super init];
     if (self) {
@@ -32,10 +46,19 @@
             [cgColors addObject: (id)color.CGColor];
         }
         
+        _colors = colors;
         _gradientRef = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)cgColors, locations);
         CGColorSpaceRelease(colorSpace);
     }
     return self;
+}
+
+- (NSArray*)colorRefs {
+    NSMutableArray* refs = [NSMutableArray arrayWithCapacity:[[self colors] count]];
+    for (UIColor* color in [self colors]) {
+        [refs addObject:(id)[color CGColor]];
+    }
+    return refs;
 }
 
 - (void)dealloc {

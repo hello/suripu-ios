@@ -253,4 +253,13 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
     }];
 }
 
+#pragma mark - Clean up
+
+- (void)dealloc {
+    if (_tableView) {
+        [_tableView setDelegate:nil];
+        [_tableView setDataSource:nil];
+    }
+}
+
 @end

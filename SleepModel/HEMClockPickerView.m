@@ -8,8 +8,7 @@
 #import <SenseKit/SENPreference.h>
 #import <NAPickerView/NAPickerView.h>
 #import "HEMClockPickerView.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
+#import "HEMStyle.h"
 #import "HEMScreenUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMClockIndex) {
@@ -20,12 +19,12 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
 };
 
 @interface HEMClockPickerView ()
-@property (nonatomic, strong) UIView *gradientView;
+@property (nonatomic, weak) IBOutlet UIView* topGradientView;
+@property (nonatomic, weak) IBOutlet UIView* botGradientView;
 @property (nonatomic, strong) UILabel *colonLabel;
 @property (nonatomic, strong) NAPickerView *hourPickerView;
 @property (nonatomic, strong) NAPickerView *minutePickerView;
 @property (nonatomic, strong) NAPickerView *meridiemPickerView;
-@property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @property (nonatomic, strong) NSString *selectedMeridiemText;
 @property (nonatomic, getter=shouldUse12Hour) BOOL use12Hour;
 @property (nonatomic, strong) UIView* selectionUnderlay;
@@ -48,7 +47,7 @@ static NSUInteger const HEMClock12HourCount = 12;
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self initializeComponents];
-        [self applyStyling];
+        [self display];
     }
     return self;
 }
@@ -56,7 +55,7 @@ static NSUInteger const HEMClock12HourCount = 12;
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         [self initializeComponents];
-        [self applyStyling];
+        [self display];
     }
     return self;
 }
@@ -70,9 +69,6 @@ static NSUInteger const HEMClock12HourCount = 12;
     if (_use12Hour) {
         [self initializeMeridiemPicker];
     }
-    _gradientView = [UIView new];
-    _gradientView.userInteractionEnabled = NO;
-    [self addSubview:_gradientView];
     [self layoutPickerViews];
 }
 
@@ -118,12 +114,12 @@ static NSUInteger const HEMClock12HourCount = 12;
            [UIView animateWithDuration:0.2f
                             animations:^{
                                 cell.textView.transform = CGAffineTransformIdentity;
-                                cell.textView.textColor = [UIColor textColor];
+                                cell.textView.textColor = [UIColor grey4];
                             }];
        }
     };
     [_hourPickerView setIndex:0];
-    [self addSubview:_hourPickerView];
+    [self insertSubview:_hourPickerView atIndex:0];
 }
 
 - (void)initializeDivider {
@@ -132,7 +128,7 @@ static NSUInteger const HEMClock12HourCount = 12;
     _colonLabel.font = [UIFont alarmSelectedNumberFont];
     _colonLabel.textColor = [UIColor tintColor];
     _colonLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_colonLabel];
+    [self insertSubview:_colonLabel atIndex:0];
 }
 
 - (void)initializeMinutePicker {
@@ -175,7 +171,7 @@ static NSUInteger const HEMClock12HourCount = 12;
           [UIView animateWithDuration:0.2f
                            animations:^{
                              cell.textView.transform = CGAffineTransformIdentity;
-                             cell.textView.textColor = [UIColor textColor];
+                             cell.textView.textColor = [UIColor grey4];
                            }];
       }
     };
@@ -197,7 +193,7 @@ static NSUInteger const HEMClock12HourCount = 12;
     _meridiemPickerView.overlayColor = [UIColor clearColor];
     _meridiemPickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
       cell.textView.font = [UIFont alarmMeridiemFont];
-      cell.textView.textColor = [UIColor textColor];
+      cell.textView.textColor = [UIColor grey4];
       cell.textView.textAlignment = NSTextAlignmentCenter;
       cell.textView.backgroundColor = [UIColor clearColor];
       cell.textView.text = item;
@@ -211,29 +207,40 @@ static NSUInteger const HEMClock12HourCount = 12;
       [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
     };
     _meridiemPickerView.unhighlightBlock = ^(NALabelCell *cell) {
-      cell.textView.textColor = [UIColor textColor];
+      cell.textView.textColor = [UIColor grey4];
     };
     [_meridiemPickerView setIndex:0];
-    [self addSubview:_meridiemPickerView];
+    [self insertSubview:_meridiemPickerView atIndex:0];
 }
 
 - (void)awakeFromNib {
     [self layoutPickerViews];
 }
 
-- (void)applyStyling {
-    CGRect gradientFrame = self.gradientView.bounds;
-    gradientFrame.size.width = CGRectGetWidth(HEMKeyWindowBounds());
-    CAGradientLayer *vLayer = [CAGradientLayer layer];
-    UIColor *topColor = [UIColor colorWithWhite:0.98f alpha:0.9f];
-    UIColor *middleColor = [[UIColor whiteColor] colorWithAlphaComponent:0];
-    vLayer.colors = @[ (id)topColor.CGColor, (id)middleColor.CGColor, (id)middleColor.CGColor, (id)topColor.CGColor ];
-    vLayer.frame = gradientFrame;
-    vLayer.locations = @[ @0, @(0.25), @(0.75), @1 ];
-    vLayer.startPoint = CGPointZero;
-    vLayer.endPoint = CGPointMake(0, 1);
-    self.gradientLayer = vLayer;
-    [self.gradientView.layer insertSublayer:vLayer atIndex:0];
+- (void)addGradient:(HEMGradient*)gradient toView:(UIView*)view {
+    if (view && gradient) {
+        [[[view layer] sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        
+        CAGradientLayer* layer = [CAGradientLayer layer];
+        [layer setFrame:[view bounds]];
+        [layer setColors:[gradient colorRefs]];
+        [[view layer] addSublayer:layer];
+        [view setBackgroundColor:[UIColor clearColor]];
+        [view setUserInteractionEnabled:NO];
+    }
+}
+
+- (void)configureGradientViews {
+    [self addGradient:[HEMGradient topGradientForTimePicker]
+               toView:[self topGradientView]];
+    
+    [self addGradient:[HEMGradient bottomGradientForTimePicker]
+               toView:[self botGradientView]];
+}
+
+- (void)display {
+    [self setClipsToBounds:NO];
+    
     self.alpha = 0;
     [UIView animateWithDuration:0.25f
                           delay:0.3f
@@ -272,6 +279,7 @@ static NSUInteger const HEMClock12HourCount = 12;
     [super layoutSubviews];
     [self layoutPickerViews];
     [self layoutUnderlay];
+    [self configureGradientViews];
 }
 
 - (void)layoutUnderlay {
@@ -284,14 +292,11 @@ static NSUInteger const HEMClock12HourCount = 12;
 }
 
 - (void)layoutPickerViews {
-    CGRect bounds = self.bounds;
     CGFloat height = CGRectGetHeight(self.bounds);
     CGFloat width = CGRectGetWidth(self.bounds);
     CGFloat totalItemWidth = HEMClockPickerHourWidth + HEMClockPickerMinuteWidth + HEMClockPickerDividerWidth
                              + ([self shouldUse12Hour] ? HEMClockPickerMeridiemWidth : 0);
     CGFloat offset = MAX((width - totalItemWidth) / 2, 0);
-    self.gradientView.frame = bounds;
-    self.gradientLayer.frame = bounds;
     self.hourPickerView.frame = CGRectMake(offset, 0, HEMClockPickerHourWidth, height);
     self.colonLabel.frame
         = CGRectMake(CGRectGetMaxX(self.hourPickerView.frame), 0, HEMClockPickerDividerWidth, height - 10);

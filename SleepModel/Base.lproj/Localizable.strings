@@ -379,6 +379,7 @@
 "alarms.error.message.limit-reached" = "You've created the maximum number of alarms. Delete an alarm before attempting to create a new one, or edit an existing alarm.";
 
 // alarm settings
+"alarm.edit.title" = "Edit Alarm";
 "alarm.sound.title" = "Tone";
 "alarm.sound.subtitle" = "Select an alarm tone";
 "alarm.repeat.title" = "Repeat";

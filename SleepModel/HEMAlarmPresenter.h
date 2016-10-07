@@ -14,6 +14,14 @@
 @class HEMAlarmCache;
 @class HEMClockPickerView;
 
+typedef NS_ENUM(NSUInteger, HEMAlarmRowType) {
+    HEMAlarmRowTypeSmart = 1,
+    HEMAlarmRowTypeTone,
+    HEMAlarmRowTypeRepeat,
+    HEMAlarmRowTypeDelete,
+    HEMAlarmRowTypeLight
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^HEMAlarmAction)(void);
@@ -31,6 +39,7 @@ typedef void(^HEMAlarmAction)(void);
 
 - (void)didSave:(BOOL)save from:(HEMAlarmPresenter*)presenter;
 - (UIView*)activityContainerFor:(HEMAlarmPresenter*)presenter;
+- (void)didSelectRowType:(HEMAlarmRowType)rowType;
 
 @end
 
@@ -45,12 +54,9 @@ typedef void(^HEMAlarmAction)(void);
 - (instancetype)initWithAlarm:(nullable SENAlarm*)alarm
                  alarmService:(HEMAlarmService*)alarmService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
-- (void)bindWithTableView:(UITableView*)tableView heightConstraint:(NSLayoutConstraint*)heightConstraint;
+- (void)bindWithTableView:(UITableView*)tableView;
 - (void)bindWithTutorialPresentingController:(UIViewController*)controller;
-- (void)bindWithButtonContainer:(UIView*)container
-                   cancelButton:(UIButton*)cancelButton
-                     saveButton:(UIButton*)saveButton;
-- (void)bindWithClockPickerView:(HEMClockPickerView*)clockPicker;
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 
 @end
 

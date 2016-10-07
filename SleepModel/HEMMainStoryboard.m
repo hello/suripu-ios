@@ -14,6 +14,7 @@ static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMaction = @"action";
 static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
+static NSString *const _HEMalarmLightCell = @"alarmLightCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListEmptyCell = @"alarmListEmptyCell";
 static NSString *const _HEMalarmListNavViewController = @"alarmListNavViewController";
@@ -33,6 +34,7 @@ static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
 static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMchart = @"chart";
+static NSString *const _HEMclock = @"clock";
 static NSString *const _HEMconfig = @"config";
 static NSString *const _HEMconnect = @"connect";
 static NSString *const _HEMconnection = @"connection";
@@ -119,6 +121,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)aboutReuseIdentifier { return _HEMabout; }
 +(NSString *)actionReuseIdentifier { return _HEMaction; }
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
++(NSString *)alarmLightCellReuseIdentifier { return _HEMalarmLightCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
 +(NSString *)alarmListEmptyCellReuseIdentifier { return _HEMalarmListEmptyCell; }
 +(NSString *)alarmListStatusCellReuseIdentifier { return _HEMalarmListStatusCell; }
@@ -130,6 +133,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
 +(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
 +(NSString *)chartReuseIdentifier { return _HEMchart; }
++(NSString *)clockReuseIdentifier { return _HEMclock; }
 +(NSString *)configReuseIdentifier { return _HEMconfig; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }

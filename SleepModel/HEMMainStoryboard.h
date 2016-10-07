@@ -10,7 +10,6 @@
 +(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
-+(NSString *)clockReuseIdentifier;
 +(NSString *)alarmSwitchCellReuseIdentifier;
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
@@ -27,6 +26,7 @@
 +(NSString *)aboutReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
++(NSString *)errorReuseIdentifier;
 +(NSString *)expansionReuseIdentifier;
 +(NSString *)plainReuseIdentifier;
 +(NSString *)configReuseIdentifier;
@@ -55,7 +55,6 @@
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)sensorReuseIdentifier;
 +(NSString *)groupReuseIdentifier;
-+(NSString *)errorReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;

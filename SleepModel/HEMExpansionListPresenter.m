@@ -28,6 +28,7 @@ static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
 @property (nonatomic, weak) HEMExpansionService* expansionService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSArray<SENExpansion*>* expansions;
+@property (nonatomic, strong) NSError* loadError;
 
 @end
 
@@ -77,6 +78,8 @@ static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
 }
 
 - (void)refresh {
+    [self setLoadError:nil];
+    
     if ([[self expansions] count] == 0) {
         [[self activityView] start];
         [[self activityView] setHidden:NO];
@@ -85,10 +88,9 @@ static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
     __weak typeof(self) weakSelf = self;
     [[self expansionService] getListOfExpansion:^(NSArray<SENExpansion *> * expansions, NSError * error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setLoadError:error];
         if (expansions) {
             [strongSelf setExpansions:expansions];
-        } else if (error) {
-            // TODO: handle it!
         }
         [[strongSelf activityView] stop];
         [[strongSelf activityView] setHidden:YES];
@@ -110,41 +112,52 @@ static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self expansions] count];
+    return [self loadError] ? 1 : [[self expansions] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = [HEMMainStoryboard expansionReuseIdentifier];
+    if ([self loadError]) {
+        reuseId = [HEMMainStoryboard errorReuseIdentifier];
+    }
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
 
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSInteger row = [indexPath row];
-    BOOL lastRow = row == [[self expansions] count] - 1;
-    SENExpansion* expansion = [self expansions][[indexPath row]];
-    NSString* iconUri = [[expansion remoteIcon] uriForCurrentDevice];
-    NSString* stateString = [self localizedTextFromState:[expansion state]];
-    HEMBasicTableViewCell* basicCell = (id) cell;
-    
-    [[basicCell customTitleLabel] setText:[expansion deviceName]];
-    [[basicCell customTitleLabel] setFont:[UIFont body]];
-    [[basicCell customTitleLabel] setTextColor:[UIColor grey6]];
-    
-    [[basicCell customDetailLabel] setTextColor:[UIColor grey3]];
-    [[basicCell customDetailLabel] setFont:[UIFont body]];
-    [[basicCell customDetailLabel] setText:stateString];
-    
-    [[[basicCell remoteImageView] layer] setCornerRadius:kHEMExpansionListImageCornerRadius];
-    [[[basicCell remoteImageView] layer] setBorderWidth:kHEMExpansionListImageBorder];
-    [[[basicCell remoteImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
-    [[basicCell remoteImageView] setClipsToBounds:YES];
-    [[basicCell remoteImageView] setContentMode:UIViewContentModeScaleAspectFit];
-    [[basicCell remoteImageView] setImageWithURL:iconUri];
-    [[basicCell remoteImageView] setBackgroundColor:[UIColor grey3]];
-    
-    [basicCell showSeparator:!lastRow];
+    if ( [self loadError]) {
+        [[cell textLabel] setText:NSLocalizedString(@"expansion.error.empty-list", nil)];
+        [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [[cell textLabel] setTextColor:[UIColor grey4]];
+        [[cell textLabel] setNumberOfLines:0];
+        [cell sizeToFit];
+    } else {
+        NSInteger row = [indexPath row];
+        BOOL lastRow = row == [[self expansions] count] - 1;
+        SENExpansion* expansion = [self expansions][[indexPath row]];
+        NSString* iconUri = [[expansion remoteIcon] uriForCurrentDevice];
+        NSString* stateString = [self localizedTextFromState:[expansion state]];
+        HEMBasicTableViewCell* basicCell = (id) cell;
+        
+        [[basicCell customTitleLabel] setText:[expansion deviceName]];
+        [[basicCell customTitleLabel] setFont:[UIFont body]];
+        [[basicCell customTitleLabel] setTextColor:[UIColor grey6]];
+        
+        [[basicCell customDetailLabel] setTextColor:[UIColor grey3]];
+        [[basicCell customDetailLabel] setFont:[UIFont body]];
+        [[basicCell customDetailLabel] setText:stateString];
+        
+        [[[basicCell remoteImageView] layer] setCornerRadius:kHEMExpansionListImageCornerRadius];
+        [[[basicCell remoteImageView] layer] setBorderWidth:kHEMExpansionListImageBorder];
+        [[[basicCell remoteImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
+        [[basicCell remoteImageView] setClipsToBounds:YES];
+        [[basicCell remoteImageView] setContentMode:UIViewContentModeScaleAspectFit];
+        [[basicCell remoteImageView] setImageWithURL:iconUri];
+        [[basicCell remoteImageView] setBackgroundColor:[UIColor grey3]];
+        
+        [basicCell showSeparator:!lastRow];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -152,8 +165,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SENExpansion* expansion = [self expansions][[indexPath row]];
-    [[self actionDelegate] shouldShowExpansion:expansion fromPresenter:self];
+    NSInteger row = [indexPath row];
+    if (row < [[self expansions] count] && ![self loadError]) {
+        SENExpansion* expansion = [self expansions][[indexPath row]];
+        [[self actionDelegate] shouldShowExpansion:expansion fromPresenter:self];
+    }
 }
 
 #pragma mark - Clean up

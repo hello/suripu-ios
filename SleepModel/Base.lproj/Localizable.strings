@@ -982,3 +982,4 @@
 "expansion.config.no-config.footer.format" = "Go to your %@ app to configure %@";
 "expansion.config.no-cnfig.format" = "No %@ found";
 "expansion.config.select" = "Select";
+"expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";

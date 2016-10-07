@@ -34,7 +34,6 @@ static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
 static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMchart = @"chart";
-static NSString *const _HEMclock = @"clock";
 static NSString *const _HEMconfig = @"config";
 static NSString *const _HEMconnect = @"connect";
 static NSString *const _HEMconnection = @"connection";
@@ -133,7 +132,6 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
 +(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
 +(NSString *)chartReuseIdentifier { return _HEMchart; }
-+(NSString *)clockReuseIdentifier { return _HEMclock; }
 +(NSString *)configReuseIdentifier { return _HEMconfig; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }

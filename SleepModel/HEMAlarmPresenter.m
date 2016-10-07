@@ -73,10 +73,10 @@ static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
                                     @(HEMAlarmRowTypeTone),
                                     @(HEMAlarmRowTypeRepeat)]];
         
-        // Sense Voice only features
-        if ([_deviceService savedHardwareVersion] == SENSenseHardwareVoice) {
-            [rows addObject:@(HEMAlarmRowTypeLight)];
-        }
+        // TODO: hide for now. Sense Voice only features
+//        if ([_deviceService savedHardwareVersion] == SENSenseHardwareVoice) {
+//            [rows addObject:@(HEMAlarmRowTypeLight)];
+//        }
         
         // Optionally show delete
         if ([alarm isSaved]) {

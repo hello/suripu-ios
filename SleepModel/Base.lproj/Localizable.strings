@@ -975,9 +975,9 @@
 "expansion.error.connect.message" = "An error occurred while attempting to complete the process. Try again.";
 
 "expansion.error.setup.no-groups.temperature.title" = "No thermostat available";
-"expansion.error.setup.no-groups.temperature.message.format" = "Before enabling this expansion, you'll need to set up a thermostat in the %@ app.";
+"expansion.error.setup.no-groups.temperature.message.format" = "You will need to set up a thermostat in the %@ app.";
 "expansion.error.setup.no-groups.light.title" = "No rooms available";
-"expansion.error.setup.no-groups.light.message.format" = "Before enabling this expansion, you'll need to set up a room in the %@ app.";
+"expansion.error.setup.no-groups.light.message.format" = "You will need to set up a room in the %@ app.";
 
 "expansion.error.setup.configuration-not-saved.title" = "Expansion not configured";
 "expansion.error.setup.configuration-not-saved.message" = "An error occurred while attempting to configure your expansion. Please try again.";

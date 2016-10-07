@@ -368,12 +368,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
                 [strongSelf dismissActivitySucessfully:NO completion:^{
-                    NSString* title = NSLocalizedString(@"expansion.error.remove-access.title", nil);
-                    NSString* message = NSLocalizedString(@"expansion.error.remove-access.message", nil);
-                    [[strongSelf errorDelegate] showErrorWithTitle:title
-                                                        andMessage:message
-                                                      withHelpPage:nil
-                                                     fromPresenter:strongSelf];
+                    [strongSelf showGenericError];
                 }];
             } else {
                 [[strongSelf delegate] removedAccessFrom:strongSelf];
@@ -409,18 +404,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 if (error) {
                     [enableSwitch setOn:!enabled];
                     [strongSelf dismissActivitySucessfully:NO completion:^{
-                        NSString* title = nil, *message = nil;
-                        if (enabled) {
-                            title = NSLocalizedString(@"expansion.error.enable.title", nil);
-                            message = NSLocalizedString(@"expansion.error.enable.message", nil);
-                        } else {
-                            title = NSLocalizedString(@"expansion.error.disable.title", nil);
-                            message = NSLocalizedString(@"expansion.error.disable.message", nil);
-                        }
-                        [[strongSelf errorDelegate] showErrorWithTitle:title
-                                                            andMessage:message
-                                                          withHelpPage:nil
-                                                         fromPresenter:strongSelf];
+                        [strongSelf showGenericError];
                     }];
                 } else {
                     [strongSelf dismissActivitySucessfully:YES completion:nil];
@@ -441,12 +425,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                        completion:^(SENExpansion * expansion, NSError * error) {
                                            __strong typeof(weakSelf) strongSelf = weakSelf;
                                            if (error) {
-                                               NSString* title = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.title", nil);
-                                               NSString* message = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.message", nil);
-                                               [[strongSelf errorDelegate] showErrorWithTitle:title
-                                                                                   andMessage:message
-                                                                                 withHelpPage:nil
-                                                                                fromPresenter:strongSelf];
+                                               [strongSelf showGenericError];
                                            } else {
                                                [strongSelf setSelectedConfig:configuration];
                                                [strongSelf setExpansion:expansion];
@@ -548,6 +527,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - Error
+
+- (void)showGenericError {
+    NSString* title = NSLocalizedString(@"expansion.error.setup.generic.title", nil);
+    NSString* message = NSLocalizedString(@"expansion.error.setup.generic.message", nil);
+    [[self errorDelegate] showErrorWithTitle:title
+                                  andMessage:message
+                                withHelpPage:nil
+                               fromPresenter:self];
+}
 
 - (void)showNoConfigurationError {
     NSString* categoryLower = [[[self expansion] category] lowercaseString];

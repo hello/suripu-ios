@@ -223,9 +223,8 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                // show error
-                NSString* title = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.title", nil);
-                NSString* message = NSLocalizedString(@"expansion.error.setup.configuration-not-saved.message", nil);
+                NSString* title = NSLocalizedString(@"expansion.error.setup.generic.title", nil);
+                NSString* message = NSLocalizedString(@"expansion.error.setup.generic.message", nil);
                 [[strongSelf errorDelegate] showErrorWithTitle:title andMessage:message withHelpPage:nil fromPresenter:strongSelf];
             }];
         } else {

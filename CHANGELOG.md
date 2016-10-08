@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.5.4.3
+
+New:
+
+* Added error state when list of expansions cannot be retrieved
+* Updated the UI of Alarms to prepare for introduction of expansion integration
+* Updated copy references to purple during onboarding
+* Updated copy of errors that may occur within Expansion configuration
+* Updated copy for various Expansion screens
+
+Fixes:
+
+* Fixed issue that prevented user from taken action on an Expansion setting right after connecting to it
+* Fixed issue that would cause the enable switch to not reflect current state after selecting a configuration
+
 ## 1.5.4.2
 
 New:

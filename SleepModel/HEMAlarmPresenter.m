@@ -337,11 +337,9 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 
 - (void)didAppear {
     [super didAppear];
-    
     if ([self tutorialPresenter]) {
         [HEMTutorial showTutorialForAlarmsIfNeededFrom:[self tutorialPresenter]];
-    }
-    
+    }    
     [[self tableView] flashScrollIndicators];
 }
 
@@ -505,7 +503,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [self deleteAlarm];
             break;
         case HEMAlarmRowTypeLight:
-            
             [self handleLightSelection];
             break;
         case HEMAlarmRowTypeTone:

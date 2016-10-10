@@ -397,6 +397,8 @@
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
 "alarm.light.title" = "Lights";
+"alarm.light.error.unable.to.load.title" = "Expansion not loaded";
+"alarm.light.error.unable.to.load.message" = "Sense could not load expansions at this time. Please try again later.";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";

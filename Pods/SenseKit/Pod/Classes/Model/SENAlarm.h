@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "SENSerializable.h"
 
 typedef NS_ENUM(NSUInteger, SENAlarmRepeatDays) {
     SENAlarmRepeatSunday = (1UL << 1),
@@ -32,6 +33,15 @@ struct SENAlarmTime {
     NSInteger hour;
     NSInteger minute;
 };
+
+@interface SENAlarmExpansion : NSObject <NSCoding, SENSerializable>
+
+@property (nonatomic, strong, readonly) NSNumber* expansionId;
+@property (nonatomic, assign, getter=isEnable) BOOL enable;
+
+- (instancetype)initWithExpansionId:(NSNumber*)expansionId enable:(BOOL)enable;
+
+@end
 
 @interface SENAlarm : NSObject <NSCoding>
 
@@ -107,10 +117,18 @@ struct SENAlarmTime {
  */
 - (NSDictionary*)dictionaryValue;
 
+/**
+ * Add an expansion to the alarm
+ * @param enable: YES to enable it. NO otherwise
+ * @param expansionId: a valid expansion id
+ */
+- (void)setEnable:(BOOL)enable forExpansionId:(NSNumber*)expansionId;
+
 @property (nonatomic, getter=isOn) BOOL on;
 @property (nonatomic, readonly, assign, getter=isSaved) BOOL saved;
 @property (nonatomic, readonly, assign, getter=isEditable) BOOL editable;
 @property (nonatomic, getter=isSmartAlarm) BOOL smartAlarm;
+@property (nonatomic, strong) NSArray<SENAlarmExpansion*>* expansions;
 @property (nonatomic) NSUInteger hour;
 @property (nonatomic) NSUInteger minute;
 @property (nonatomic) NSUInteger repeatFlags;

@@ -4,6 +4,54 @@
 #import "SENPreference.h"
 #import "Model.h"
 
+@interface SENAlarmExpansion()
+
+- (NSDictionary*)dictionaryValue;
+
+@end
+
+@implementation SENAlarmExpansion
+
+static NSString* const SENAlarmExpansionIdKey = @"id";
+static NSString* const SENAlarmExpansionEnableKey = @"enable";
+
+- (instancetype)initWithDictionary:(NSDictionary *)data {
+    if (self = [super init]) {
+        _expansionId = SENObjectOfClass(data[SENAlarmExpansionIdKey], [NSNumber class]);
+        _enable = [SENObjectOfClass(data[SENAlarmExpansionEnableKey], [NSNumber class]) boolValue];
+    }
+    return self;
+}
+
+- (instancetype)initWithExpansionId:(NSNumber *)expansionId enable:(BOOL)enable {
+    if (self = [super init]) {
+        _expansionId = expansionId;
+        _enable = enable;
+    }
+    return self;
+}
+
+- (NSUInteger)hash {
+    return [[self expansionId] hash];
+}
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[SENAlarmExpansion class]]) {
+        return NO;
+    }
+    
+    SENAlarmExpansion* other = object;
+    return SENObjectIsEqual([self expansionId], [other expansionId])
+        && [self isEnable] == [other isEnable];
+}
+
+- (NSDictionary*)dictionaryValue {
+    return @{SENAlarmExpansionIdKey : [self expansionId],
+             SENAlarmExpansionEnableKey : @([self isEnable])};
+}
+
+@end
+
 @interface SENAlarm()
 
 @property (nonatomic, assign) BOOL saved;
@@ -25,6 +73,7 @@ static NSString* const SENAlarmMinuteKey = @"minute";
 static NSString* const SENAlarmRepeatKey = @"day_of_week";
 static NSString* const SENAlarmIdentifierKey = @"id";
 static NSString* const SENAlarmSourceKey = @"source";
+static NSString* const SENAlarmExpansionsKey = @"expansions";
 static NSString* const SENALarmSourceValueVoice = @"VOICE_SERVICE";
 static NSString* const SENALarmSourceValueOther = @"OTHER";
 static NSString* const SENALarmSourceValueMobile = @"MOBILE_APP";
@@ -98,10 +147,24 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         _soundName = dict[SENAlarmSoundKey][SENAlarmSoundNameKey];
         _soundID = dict[SENAlarmSoundKey][SENAlarmSoundIDKey];
         _saved = YES;
+        
+        NSArray* expansionObjects = SENObjectOfClass(dict[SENAlarmExpansionsKey], [NSArray class]);
+        _expansions = [self expansionsFromRawArray:expansionObjects];
+        
         NSString* sourceName = SENObjectOfClass(dict[SENAlarmSourceKey], [NSString class]);
         _source = [self sourceForName:sourceName];
     }
     return self;
+}
+
+- (NSSet<SENAlarmExpansion*>*)expansionsFromRawArray:(NSArray*)expansionArray {
+    NSMutableSet* expansions = [NSMutableSet setWithCapacity:[expansionArray count]];
+    for (id expansionObj in expansionArray) {
+        if ([expansionObj isKindOfClass:[NSDictionary class]]) {
+            [expansions addObject:[[SENAlarmExpansion alloc] initWithDictionary:expansionObj]];
+        }
+    }
+    return expansions;
 }
 
 - (SENALarmSource)sourceForName:(NSString*)name {
@@ -169,6 +232,14 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     properties[@"smart"] = @([self isSmartAlarm]);
     properties[@"day_of_week"] = [self repeatDays];
     
+    if ([self expansions]) {
+        NSMutableArray* rawArray = [NSMutableArray arrayWithCapacity:[[self expansions] count]];
+        for (SENAlarmExpansion* expansion in [self expansions]) {
+            [rawArray addObject:[expansion dictionaryValue]];
+        }
+        properties[SENAlarmExpansionsKey] = rawArray;
+    }
+    
     if (!repeated) {
         NSDateComponents* alarmDateComponents = [self dateComponents];
         properties[@"day_of_month"] = @(alarmDateComponents.day);
@@ -207,6 +278,29 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     return repeatDays;
 }
 
+- (void)setEnable:(BOOL)enable forExpansionId:(NSNumber*)expansionId {
+    NSMutableArray* mutableExpansions = [[self expansions] mutableCopy];
+    if (!mutableExpansions) {
+        mutableExpansions = [NSMutableArray arrayWithCapacity:2];
+    }
+    SENAlarmExpansion* alarmExpansion = nil;
+    for (SENAlarmExpansion* expansion in mutableExpansions) {
+        if ([[expansion expansionId] isEqualToNumber:expansionId]) {
+            alarmExpansion = expansion;
+            break;
+        }
+    }
+    
+    if (alarmExpansion) {
+        [alarmExpansion setEnable:enable];
+    } else {
+        alarmExpansion = [[SENAlarmExpansion alloc] initWithExpansionId:expansionId enable:enable];
+        [mutableExpansions addObject:alarmExpansion];
+    }
+    
+    _expansions = mutableExpansions;
+}
+
 #pragma mark - NSCoding
 
 - (id)initWithCoder:(NSCoder*)aDecoder {
@@ -221,6 +315,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         _smartAlarm = [[aDecoder decodeObjectForKey:SENAlarmSmartKey] boolValue];
         _soundName = [aDecoder decodeObjectForKey:SENAlarmSoundNameKey];
         _soundID = [aDecoder decodeObjectForKey:SENAlarmSoundIDEncodingKey];
+        _expansions = [aDecoder decodeObjectForKey:SENAlarmExpansionsKey];
     }
     return self;
 }
@@ -235,6 +330,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     [aCoder encodeObject:@([self isEditable]) forKey:SENAlarmEditableKey];
     [aCoder encodeObject:@([self repeatFlags]) forKey:SENAlarmRepeatKey];
     [aCoder encodeObject:@([self isSmartAlarm]) forKey:SENAlarmSmartKey];
+    [aCoder encodeObject:[self expansions] forKey:SENAlarmExpansionsKey];
 }
 
 - (NSUInteger)hash {
@@ -256,7 +352,8 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         && ((self.soundName && [self.soundName isEqual:alarm.soundName]) || (!self.soundName && !alarm.soundName))
         && [self isSmartAlarm] == [alarm isSmartAlarm]
         && [self isEditable] == [alarm isEditable]
-        && [self isOn] == [alarm isOn];
+        && [self isOn] == [alarm isOn]
+        && SENObjectIsEqual([self expansions], [alarm expansions]);
 }
 
 @end

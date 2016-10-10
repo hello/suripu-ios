@@ -44,6 +44,7 @@ static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexpansion = @"expansion";
 static NSString *const _HEMexpansionConfig = @"expansionConfig";
+static NSString *const _HEMexpansionLight = @"expansionLight";
 static NSString *const _HEMexpansions = @"expansions";
 static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfield = @"field";
@@ -183,6 +184,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)expansionSegueIdentifier { return _HEMexpansion; }
++(NSString *)expansionLightSegueIdentifier { return _HEMexpansionLight; }
 +(NSString *)expansionsSegueIdentifier { return _HEMexpansions; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }

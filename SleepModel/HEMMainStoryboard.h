@@ -76,6 +76,7 @@
 +(NSString *)detailSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
 +(NSString *)expansionSegueIdentifier;
++(NSString *)expansionLightSegueIdentifier;
 +(NSString *)expansionsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;

@@ -14,6 +14,8 @@
 
 #import "HEMExpansionService.h"
 
+static NSString* const HEMExpansionLightCategory = @"LIGHT";
+
 @interface HEMExpansionService()
 
 @property (nonatomic, strong) NSArray<SENExpansion*>* expansions;
@@ -44,6 +46,21 @@
         default:
             return YES;
     }
+}
+
+- (BOOL)isReadyForUse:(SENExpansion*)expansion {
+    return [expansion state] == SENExpansionStateConnectedOn;
+}
+
+- (SENExpansion*)lightExpansionFrom:(NSArray<SENExpansion*>*)expansions {
+    SENExpansion* lightExpansion = nil;
+    for (SENExpansion* expansion in expansions) {
+        if ([[[expansion category] uppercaseString] isEqualToString:HEMExpansionLightCategory]) {
+            lightExpansion = expansion;
+            break;
+        }
+    }
+    return lightExpansion;
 }
 
 - (NSURLRequest*)authorizationRequestForExpansion:(SENExpansion*)expansion {

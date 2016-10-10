@@ -23,6 +23,7 @@ typedef void(^HEMExpansionUpdateHandler)(NSError* _Nullable error);
 
 - (BOOL)isEnabledForHardware:(SENSenseHardware)hardware;
 - (BOOL)isConnected:(SENExpansion*)expansion;
+- (BOOL)isReadyForUse:(SENExpansion*)expansion;
 - (BOOL)hasExpansion:(SENExpansion*)expansion connectedWithURL:(NSURL*)url;
 - (void)getListOfExpansion:(HEMExpansionListHandler)completion;
 - (void)getConfigurationsForExpansion:(SENExpansion*)expansion completion:(HEMExpansionConfigHandler)completion;
@@ -34,6 +35,7 @@ typedef void(^HEMExpansionUpdateHandler)(NSError* _Nullable error);
 - (void)refreshExpansion:(SENExpansion*)expansion completion:(HEMExpansionHandler)completion;
 - (NSURLRequest*)authorizationRequestForExpansion:(SENExpansion*)expansion;
 - (NSString*)configurationNameForExpansion:(SENExpansion*)expansion;
+- (SENExpansion*)lightExpansionFrom:(NSArray<SENExpansion*>*)expansions;
 
 @end
 

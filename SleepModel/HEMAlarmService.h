@@ -12,6 +12,7 @@
 @class SENSound;
 @class HEMAlarmCache;
 @class SENAlarm;
+@class SENExpansion;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,6 +47,7 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
 - (BOOL)canCreateMoreAlarms;
 - (BOOL)useMilitaryTimeFormat;
 - (BOOL)hasLoadedAlarms;
+- (BOOL)isExpansionEnabledFor:(SENExpansion*)expansion inAlarmCache:(HEMAlarmCache*)alarm;
 
 @end
 

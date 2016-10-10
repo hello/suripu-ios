@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class SENExpansion;
+@class SENAlarmExpansion;
+
 @interface HEMAlarmCache : NSObject
 
 @property (nonatomic) NSUInteger hour;
@@ -17,7 +20,9 @@
 @property (nonatomic) NSUInteger repeatFlags;
 @property (nonatomic, getter=isSmart) BOOL smart;
 @property (nonatomic, getter=isOn) BOOL on;
+@property (nonatomic, strong) NSArray<SENAlarmExpansion*>* expansions;
 
 - (void)cacheValuesFromAlarm:(SENAlarm*)alarm;
+- (void)setEnable:(BOOL)enable expansion:(SENExpansion*)expansion;
 - (BOOL)isRepeated;
 @end

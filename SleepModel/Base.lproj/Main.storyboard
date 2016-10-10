@@ -66,8 +66,8 @@
                                             <rect key="frame" x="0.0" y="160" width="600" height="90"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-uk-Loy">
-                                            <rect key="frame" x="0.0" y="283" width="600" height="4"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-uk-Loy">
+                                            <rect key="frame" x="0.0" y="246" width="600" height="4"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -258,7 +258,7 @@
                                                     <rect key="frame" x="529" y="17" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.0" green="0.61666666670000003" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                                 </switch>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxh-GC-c3K">
+                                                <button opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxh-GC-c3K">
                                                     <rect key="frame" x="107" y="0.0" width="40" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="Vzr-At-1iG"/>
@@ -267,6 +267,17 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiW-99-dk9" customClass="HEMActivityIndicatorView">
+                                                    <rect key="frame" x="548" y="18" width="30" height="30"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="nYF-WI-haV"/>
+                                                        <constraint firstAttribute="height" constant="30" id="qom-ip-fxe"/>
+                                                    </constraints>
+                                                </view>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConfigIcon" translatesAutoresizingMaskIntoConstraints="NO" id="3Aq-xh-ciS">
+                                                    <rect key="frame" x="560" y="23" width="20" height="20"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="nxO-KD-y84" secondAttribute="centerY" constant="3" id="CFi-Iq-5Is"/>
@@ -276,12 +287,20 @@
                                                 <constraint firstItem="nxh-GC-c3K" firstAttribute="leading" secondItem="uMH-h1-jvV" secondAttribute="trailing" id="MoL-pG-53a"/>
                                                 <constraint firstItem="nxO-KD-y84" firstAttribute="leading" secondItem="r6x-xo-aOh" secondAttribute="leading" constant="16" id="R1w-lZ-ANn"/>
                                                 <constraint firstAttribute="centerY" secondItem="uMH-h1-jvV" secondAttribute="centerY" id="Uwd-J2-Sbg"/>
+                                                <constraint firstItem="iiW-99-dk9" firstAttribute="trailing" secondItem="yig-pc-6pF" secondAttribute="trailing" id="WF9-eC-hbV"/>
                                                 <constraint firstItem="uMH-h1-jvV" firstAttribute="leading" secondItem="nxO-KD-y84" secondAttribute="trailing" constant="16" id="b4n-Qs-Mrc"/>
                                                 <constraint firstAttribute="bottom" secondItem="nxh-GC-c3K" secondAttribute="bottom" id="pph-uJ-HAw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="3Aq-xh-ciS" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="Ax2-s9-kRX"/>
+                                            <constraint firstItem="iiW-99-dk9" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="l3A-54-uTh"/>
+                                            <constraint firstAttribute="trailing" secondItem="3Aq-xh-ciS" secondAttribute="trailing" constant="20" id="qw5-7H-02E"/>
+                                        </constraints>
                                         <connections>
+                                            <outlet property="activityView" destination="iiW-99-dk9" id="3P2-X9-AIE"/>
+                                            <outlet property="errorIcon" destination="3Aq-xh-ciS" id="Bfy-KK-W8v"/>
                                             <outlet property="infoButton" destination="nxh-GC-c3K" id="HSr-Pd-TVz"/>
                                             <outlet property="smartSwitch" destination="yig-pc-6pF" id="xlo-MW-vEI"/>
                                         </connections>
@@ -334,6 +353,7 @@
                         <outlet property="tableView" destination="H1m-SK-M1g" id="Kwz-xO-ZKd"/>
                         <segue destination="Ebm-qJ-kTZ" kind="show" identifier="alarmRepeat" id="RyB-Yv-vfU"/>
                         <segue destination="Ebm-qJ-kTZ" kind="show" identifier="alarmSounds" id="Uew-Av-EPF"/>
+                        <segue destination="H4Q-Iz-Kxu" kind="show" identifier="expansionLight" id="ytT-am-YU3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vYW-Zc-0Au" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6632,6 +6652,7 @@
         <image name="helpIconSmall" width="22" height="22"/>
         <image name="infoIconSmall" width="22" height="22"/>
         <image name="introRoomConditions" width="375" height="182"/>
+        <image name="noConfigIcon" width="20" height="20"/>
         <image name="noSense" width="359" height="180"/>
         <image name="questions_check" width="20" height="15"/>
         <image name="questions_circle" width="21" height="21"/>
@@ -6655,7 +6676,8 @@
         <image name="webRefreshDisabled" width="24" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Uew-Av-EPF"/>
+        <segue reference="ytT-am-YU3"/>
         <segue reference="CUW-PA-dNh"/>
-        <segue reference="QaF-2O-SxF"/>
     </inferredMetricsTieBreakers>
 </document>

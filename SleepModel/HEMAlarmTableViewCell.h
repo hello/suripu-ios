@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMActivityIndicatorView.h"
 
 @interface HEMAlarmTableViewCell : UITableViewCell
 
@@ -14,5 +15,9 @@
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel* detailLabel;
 @property (nonatomic, weak) IBOutlet UIButton *infoButton;
+@property (nonatomic, weak) IBOutlet HEMActivityIndicatorView* activityView;
+@property (nonatomic, weak) IBOutlet UIImageView* errorIcon;
+
+- (void)showActivity:(BOOL)show;
 
 @end

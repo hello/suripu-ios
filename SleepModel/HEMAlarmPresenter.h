@@ -14,6 +14,7 @@
 @class HEMAlarmCache;
 @class HEMClockPickerView;
 @class HEMDeviceService;
+@class HEMExpansionService;
 
 typedef NS_ENUM(NSUInteger, HEMAlarmRowType) {
     HEMAlarmRowTypeSmart = 1,
@@ -54,7 +55,8 @@ typedef void(^HEMAlarmAction)(void);
 
 - (instancetype)initWithAlarm:(SENAlarm*)alarm
                  alarmService:(HEMAlarmService*)alarmService
-                deviceService:(HEMDeviceService*)deviceService NS_DESIGNATED_INITIALIZER;
+                deviceService:(HEMDeviceService*)deviceService
+             expansionService:(HEMExpansionService*)expansionService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithTableView:(UITableView*)tableView;
 - (void)bindWithTutorialPresentingController:(UIViewController*)controller;

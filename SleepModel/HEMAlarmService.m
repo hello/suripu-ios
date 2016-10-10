@@ -9,6 +9,7 @@
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAlarmCollection.h>
+#import <SenseKit/SENExpansion.h>
 
 #import "HEMAlarmService.h"
 #import "HEMAlarmCache.h"
@@ -245,6 +246,7 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     [alarm setSoundName:[cache soundName]];
     [alarm setSoundID:[cache soundID]];
     [alarm setOn:[cache isOn]];
+    [alarm setExpansions:[cache expansions]];
 }
 
 - (BOOL)canCreateMoreAlarms {
@@ -257,6 +259,15 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 
 - (BOOL)hasLoadedAlarms {
     return [self alarms] != nil;
+}
+
+- (BOOL)isExpansionEnabledFor:(SENExpansion*)expansion inAlarmCache:(HEMAlarmCache*)alarm {
+    for (SENAlarmExpansion* alarmExpansion in [alarm expansions]) {
+        if ([[expansion identifier] isEqualToNumber:[alarmExpansion expansionId]]) {
+            return [alarmExpansion isEnable];
+        }
+    }
+    return NO;
 }
 
 @end

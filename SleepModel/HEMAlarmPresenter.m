@@ -541,7 +541,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [self setReloadWhenBack:YES];
         }
     } else {
-        // TODO: show error
+        NSString* title = NSLocalizedString(@"alarm.light.error.unable.to.load.title", nil);
+        NSString* message = NSLocalizedString(@"alarm.light.error.unable.to.load.message", nil);
+        [[self delegate] showErrorWithTitle:title message:message from:self];
     }
 }
 

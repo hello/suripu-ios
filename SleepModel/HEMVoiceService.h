@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SenseKit/SENService.h>
 
 @class SENSpeechResult;
 
@@ -16,10 +17,15 @@ NSString* const HEMVoiceNotification;
 NSString* const HEMVoiceNotificationInfoError;
 NSString* const HEMVoiceNotificationInfoResult;
 
-@interface HEMVoiceService : NSObject
+typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
+
+@interface HEMVoiceService : SENService
+
+@property (nonatomic, assign, readonly, getter=isVoiceEnabled) BOOL voiceEnabled;
 
 - (void)startListeningForVoiceResult;
 - (void)stopListeningForVoiceResult;
+- (void)updateVoiceAvailability:(nullable HEMVoiceFeatureHandler)completion;
 
 @end
 

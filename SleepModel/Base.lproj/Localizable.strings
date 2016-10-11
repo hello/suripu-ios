@@ -985,3 +985,6 @@
 "expansion.config.no-cnfig.format" = "No %@ found";
 "expansion.config.select" = "Select";
 "expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";
+
+// voice
+"voice.title" = "Voice";

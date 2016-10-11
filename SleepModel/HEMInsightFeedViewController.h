@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
+@class HEMUnreadAlertService;
+@class HEMSubNavigationView;
+
 @interface HEMInsightFeedViewController : HEMBaseController
+
+@property (nonatomic, strong) HEMUnreadAlertService* unreadService;
+@property (nonatomic, weak) HEMSubNavigationView* subNavBar;
 
 @end

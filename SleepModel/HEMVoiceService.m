@@ -7,6 +7,9 @@
 //
 #import <SenseKit/SENAPISpeech.h>
 #import <SenseKit/SENSpeechResult.h>
+#import <SenseKit/SENAPIFeature.h>
+#import <SenseKit/SENFeatures.h>
+#import <SenseKit/SENService+Protected.h>
 
 #import "HEMVoiceService.h"
 
@@ -33,9 +36,12 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
     self = [super init];
     if (self) {
         _lastVoiceResultDate = [NSDate date];
+        [self updateVoiceAvailability:nil];
     }
     return self;
 }
+
+#pragma mark - Speech responses
 
 - (void)mostRecentVoiceCommands:(HEMVoiceCommandsHandler)completion {
     [SENAPISpeech getRecentVoiceCommands:^(id data, NSError *error) {
@@ -96,6 +102,33 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 
 - (void)stopListeningForVoiceResult {
     [self setStarted:NO];
+}
+
+#pragma mark - Service overrides
+
+- (void)serviceBecameActive {
+    [super serviceBecameActive];
+    [self updateVoiceAvailability:nil];
+}
+
+#pragma mark - Availability
+
+- (BOOL)isVoiceEnabled {
+    return [[SENFeatures savedFeatures] hasVoice];
+}
+
+- (void)updateVoiceAvailability:(HEMVoiceFeatureHandler)completion {
+    [SENAPIFeature getFeatures:^(SENFeatures* features, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        } else {
+            [features save];
+        }
+        
+        if (completion) {
+            completion ([features hasVoice]);
+        }
+    }];
 }
 
 @end

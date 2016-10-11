@@ -739,6 +739,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         
         if (error) {
             [SENAnalytics trackError:error];
+        } else {
+            [strongSelf checkFeatures];
         }
         
         if (completion) {

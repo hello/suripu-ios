@@ -100,10 +100,11 @@
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateExpansionConfigViewController;
++(id)instantiateFeedViewController;
 +(id)instantiateFormViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
-+(id)instantiateInsightFeedViewController;
++(id)instantiateInsightsFeedViewController;
 +(id)instantiateListItemViewController;
 +(id)instantiatePillDFUViewController;
 +(id)instantiatePillDFUNavViewController;
@@ -124,5 +125,6 @@
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;
++(id)instantiateVoiceViewController;
 
 @end

@@ -47,6 +47,7 @@ static NSString *const _HEMexpansionConfig = @"expansionConfig";
 static NSString *const _HEMexpansionLight = @"expansionLight";
 static NSString *const _HEMexpansions = @"expansions";
 static NSString *const _HEMexplanation = @"explanation";
+static NSString *const _HEMfeed = @"feed";
 static NSString *const _HEMfield = @"field";
 static NSString *const _HEMformViewController = @"formViewController";
 static NSString *const _HEMgroup = @"group";
@@ -56,7 +57,7 @@ static NSString *const _HEMinfoCell = @"infoCell";
 static NSString *const _HEMinfoNavigationController = @"infoNavigationController";
 static NSString *const _HEMinfoViewController = @"infoViewController";
 static NSString *const _HEMinsight = @"insight";
-static NSString *const _HEMinsightFeed = @"insightFeed";
+static NSString *const _HEMinsightsFeed = @"insightsFeed";
 static NSString *const _HEMlist = @"list";
 static NSString *const _HEMlistItem = @"listItem";
 static NSString *const _HEMloading = @"loading";
@@ -111,6 +112,7 @@ static NSString *const _HEMtutorialViewController = @"tutorialViewController";
 static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
 static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
+static NSString *const _HEMvoice = @"voice";
 static NSString *const _HEMwarning = @"warning";
 
 @implementation HEMMainStoryboard
@@ -208,10 +210,11 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateBreakdownController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
 +(id)instantiateExpansionConfigViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMexpansionConfig]; }
++(id)instantiateFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMfeed]; }
 +(id)instantiateFormViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMformViewController]; }
 +(id)instantiateInfoNavigationController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoNavigationController]; }
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
-+(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
++(id)instantiateInsightsFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightsFeed]; }
 +(id)instantiateListItemViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMlistItem]; }
 +(id)instantiatePillDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFU]; }
 +(id)instantiatePillDFUNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFUNav]; }
@@ -232,5 +235,6 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
 +(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
 +(id)instantiateTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtutorialViewController]; }
++(id)instantiateVoiceViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMvoice]; }
 
 @end

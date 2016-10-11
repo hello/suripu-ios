@@ -37,6 +37,7 @@ static NSTimeInterval const SENSleepPillDfuTimeout = 20.0f + SENSleepPillDefault
 @property (nonatomic, assign) BOOL rediscoveryRequired;
 @property (nonatomic, strong) NSTimer* timeoutTimer;
 @property (nonatomic, strong) NSURL* localDFUBinaryFileURL;
+@property (nonatomic, assign) NSInteger dfuProgress;
 
 @end
 
@@ -84,7 +85,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
             }
             completion (sleepPills, nil);
         };
-        
         // since the pill can be in either mode (dfu / normal), we need to support
         // multiple services.  however, CoreBluetooth's scan API is an AND not an
         // OR when it comes to services, which means we need to pass in nil and
@@ -157,7 +157,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 - (BOOL)operationInProgress {
     return [self enableDfuBlock] != nil
-        || [self dfuCompletionBlock] != nil;
+    || [self dfuCompletionBlock] != nil;
 }
 
 #pragma mark - Timeout
@@ -281,7 +281,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     if ([self isInDfuMode]) {
         return completion (nil);
     }
-
+    
     [self setEnableDfuBlock:completion];
     [self listenForUnexpectedDisconnects];
     [self scheduleOperationTimeout:SENSleepPillEnableDfuTimeout action:@selector(enableDfuTimeout)];
@@ -296,6 +296,9 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     
     [self connect:^(NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            return done (error);
+        }
         NSSet* characteristicIds = [NSSet setWithObject:SENSleepPillCharacteristicUUID];
         [strongSelf characteristicsWithIds:characteristicIds
                            insideServiceId:SENSleepPillServiceUUID
@@ -415,26 +418,25 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                     } else if ([httpResponse statusCode] == 200 && [data length] > 0) {
                         NSError* saveError = nil;
                         NSURL* localFileURL = [strongSelf saveFirmwareBinaryData:data
-                                                                withOriginalURL:pathToFirmware
-                                                                          error:&saveError];
+                                                                 withOriginalURL:pathToFirmware
+                                                                           error:&saveError];
                         if (saveError) {
                             [strongSelf endDfuWithError:saveError];
                         } else {
                             [strongSelf setLocalDFUBinaryFileURL:localFileURL];
-                           
                             DFUFirmware* firmware = [[DFUFirmware alloc] initWithUrlToBinOrHexFile:localFileURL
-                                                                                     urlToDatFile:nil
-                                                                                             type:DFUFirmwareTypeApplication];
+                                                                                      urlToDatFile:nil
+                                                                                              type:DFUFirmwareTypeApplication];
                             LGCentralManager* central = [LGCentralManager sharedInstance];
                             CBCentralManager* manager = [central manager];
                             CBPeripheral* peripheral = [[[strongSelf sleepPill] peripheral] cbPeripheral];
                             DFUServiceInitiator* initiator = [[DFUServiceInitiator alloc] initWithCentralManager:manager
-                                                                                                         target:peripheral];
+                                                                                                          target:peripheral];
                             [initiator setLogger:strongSelf];
                             [initiator withFirmwareFile:firmware];
                             [initiator setProgressDelegate:strongSelf];
                             [initiator setDelegate:strongSelf];
-                           
+                            
                             [strongSelf setDfuController:[initiator start]];
                         }
                     } else {
@@ -444,7 +446,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
                         NSError* error = [[strongSelf class] errorWithCode:code reason:reason];
                         [strongSelf endDfuWithError:error];
                     }
-               }] resume];
+                }] resume];
     });
 }
 
@@ -455,21 +457,17 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         [strongSelf cancelTimeout];
         [strongSelf disconnect:nil];
         [strongSelf removeLocalFirmwareBinaryIfExists:[strongSelf localDFUBinaryFileURL]];
+        [strongSelf setDfuController:nil];
+        [strongSelf setDfuProgress:0];
+        [[strongSelf class] stopScan];
         
         if ([strongSelf dfuCompletionBlock]) {
             [strongSelf dfuCompletionBlock] (error);
             [strongSelf setDfuCompletionBlock:nil];
-            [strongSelf setDfuController:nil];
             [strongSelf setProgressBlock:nil];
-            [[strongSelf class] stopScan];
         }
         
-        // FIXME: this is a hacky workaround for the fact that Nordic takes over the
-        // delegate of the CentralManager and never resets it.  Ideally Nordic would
-        // fix this by creating their own central, or reverting their delegate changes.
-        LGCentralManager* centralManager = [LGCentralManager sharedInstance];
-        CBCentralManager* cbCentral = [centralManager manager];
-        [cbCentral setDelegate:centralManager];
+        [strongSelf resetCentralManager];
     };
     
     if (![NSThread isMainThread]) {
@@ -477,7 +475,16 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     } else {
         end();
     }
+    
+}
 
+- (void)resetCentralManager {
+    // FIXME: this is a hacky workaround for the fact that Nordic takes over the
+    // delegate of the CentralManager and never resets it.  Ideally Nordic would
+    // fix this by creating their own central, or reverting their delegate changes.
+    LGCentralManager* centralManager = [LGCentralManager sharedInstance];
+    CBCentralManager* cbCentral = [centralManager manager];
+    [cbCentral setDelegate:centralManager];
 }
 
 #pragma mark Progress
@@ -488,6 +495,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
   avgSpeedBytesPerSecond:(double)avgSpeedBytesPerSecond {
     DDLogVerbose(@"upload progress %ld", progress);
+    [self setDfuProgress:progress];
     [self scheduleOperationTimeout:SENSleepPillDfuTimeout action:@selector(dfuTimeout)];
     if ([self progressBlock]) {
         [self progressBlock] (progress / 100.0f, [self currentDfuState]);
@@ -519,10 +527,19 @@ currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
         case DFUStateDisconnecting:
             [self setCurrentDfuState:SENSleepPillDfuStateDisconnecting];
             break;
-        case DFUStateCompleted:
-            [self setCurrentDfuState:SENSleepPillDfuStateCompleted];
-            [self endDfuWithError:nil];
+        case DFUStateCompleted: {
+            // sometimes, nordic lies
+            NSError* error = nil;
+            if ([self dfuProgress] == 100) {
+                [self setCurrentDfuState:SENSleepPillDfuStateCompleted];
+            } else {
+                [self setCurrentDfuState:SENSleepPillDfuStateError];
+                SENSleepPillErrorCode code = SENSleepPillErrorCodeDfuAborted;
+                error = [[self class] errorWithCode:code reason:@"dfu aborted"];
+            }
+            [self endDfuWithError:error];
             break;
+        }
         default:
             [self setCurrentDfuState:SENSleepPillDfuStateNotStarted];
             break;
@@ -557,6 +574,8 @@ currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
     if (_localDFUBinaryFileURL) {
         [self removeLocalFirmwareBinaryIfExists:_localDFUBinaryFileURL];
     }
+    
+    [self resetCentralManager];
 }
 
 @end

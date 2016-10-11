@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.5.4.4
+
+New:
+
+* Added lights option to Alarm view, when available (selection depends on server to work)
+
+Fixes:
+
+* Pill DFU should no longer unexpectedly complete on iOS 10
+* Sense pairing screen in upgrade path should properly display blue or purple copy
+* Pill DFU scanning should time out if pill not found within 15s
+
 ## 1.5.4.3
 
 New:

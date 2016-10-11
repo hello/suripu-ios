@@ -894,7 +894,7 @@
 "upgrade.new-sense.learn-more" = "Purchase Sense with Voice";
 "upgrade.new-sense.setup" = "Set up";
 "upgrade.pair-sense.title" = "Pairing your new Sense";
-"upgrade.pair-sense.desc" = "Confirm that your new Sense is plugged in nearby and glowing purple.";
+"upgrade.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";
 "upgrade.actions.pair-pill" = "Pair new Sleep Pill";
 "upgrade.actions.skip-new" = "Don't pair new Sleep Pill";
 "upgrade.pill.title" = "Pair your new Sleep Pill";

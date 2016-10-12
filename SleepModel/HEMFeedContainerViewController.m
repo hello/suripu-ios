@@ -13,6 +13,7 @@
 #import "HEMVoiceService.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMInsightFeedViewController.h"
+#import "HEMVoiceFeedViewController.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMFeedContainerViewController () <HEMFeedNavigationDelegate>
@@ -61,7 +62,10 @@
 }
 
 - (void)showVoiceFrom:(HEMFeedNavigationPresenter*)presenter {
-    
+    HEMVoiceFeedViewController* voiceVC = [HEMMainStoryboard instantiateVoiceViewController];
+    [voiceVC setVoiceService:[self voiceService]];
+    [voiceVC setSubNavBar:[self subNav]];
+    [self showViewOf:voiceVC completion:nil];
 }
 
 - (void)showViewOf:(UIViewController*)controller completion:(void(^)(void))completion {

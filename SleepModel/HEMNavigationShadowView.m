@@ -88,6 +88,10 @@ static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
     [[self separatorView] setAlpha:show ? 1.0f : 0.0f];
 }
 
+- (void)reset {
+    [[self shadowImageView] setAlpha:0.0f];
+}
+
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset {
     CGFloat diff = MAX(0.0f, contentOffset - [self topOffset]);
     CGFloat alpha = MAX(0.0f, MIN(1.0f, diff / 10.0f));

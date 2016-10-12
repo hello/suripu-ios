@@ -988,3 +988,12 @@
 
 // voice
 "voice.title" = "Voice";
+"voice.command.list.title" = "Voice commands";
+"voice.command.sound.category.name" = "Alarm and Sleep Sounds";
+"voice.command.sound.example" = "Wake me up at 8.";
+"voice.command.sleep.category.name" = "Sleep";
+"voice.command.sleep.example" = "What was my Sleep Score?";
+"voice.command.room-conditions.category.name" = "Room Conditions";
+"voice.command.room-conditions.example" = "What is the temperature in my room?";
+"voice.command.expansions.category.name" = "Expansions";
+"voice.command.expansions.example" = "Turn off my lights.";

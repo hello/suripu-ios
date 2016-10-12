@@ -10,6 +10,7 @@
 #import <SenseKit/SENService.h>
 
 @class SENSpeechResult;
+@class HEMVoiceCommand;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +27,7 @@ typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
 - (void)startListeningForVoiceResult;
 - (void)stopListeningForVoiceResult;
 - (void)updateVoiceAvailability:(nullable HEMVoiceFeatureHandler)completion;
+- (NSArray<HEMVoiceCommand*>*)availableVoiceCommands;
 
 @end
 

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithNavigationBar:(UIView*)navBar;
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset;
 - (void)showSeparator:(BOOL)show;
+- (void)reset;
 
 @end
 

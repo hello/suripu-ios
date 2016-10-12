@@ -12,6 +12,7 @@
 #import <SenseKit/SENService+Protected.h>
 
 #import "HEMVoiceService.h"
+#import "HEMVoiceCommand.h"
 
 NSString* const HEMVoiceNotification = @"HEMVoiceNotificationResult";
 NSString* const HEMVoiceNotificationInfoError = @"voice.error";
@@ -27,6 +28,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 @property (nonatomic, assign, getter=isStarted) BOOL started;
 @property (nonatomic, assign, getter=isInProgress) BOOL inProgress;
 @property (nonatomic, strong) NSDate* lastVoiceResultDate;
+@property (nonatomic, strong) NSArray<HEMVoiceCommand*>* voiceCommands;
 
 @end
 
@@ -111,6 +113,11 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
     [self updateVoiceAvailability:nil];
 }
 
+- (void)serviceReceivedMemoryWarning {
+    [super serviceReceivedMemoryWarning];
+    [self setVoiceCommands:nil];
+}
+
 #pragma mark - Availability
 
 - (BOOL)isVoiceEnabled {
@@ -129,6 +136,31 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
             completion ([features hasVoice]);
         }
     }];
+}
+
+#pragma mark - Commands
+
+- (NSArray<HEMVoiceCommand*>*)availableVoiceCommands {
+    if (![self voiceCommands]) {
+        HEMVoiceCommand* soundsCommand = [HEMVoiceCommand new];
+        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.sound.category.name", nil)];
+        [soundsCommand setExample:NSLocalizedString(@"voice.command.sound.example", nil)];
+        
+        HEMVoiceCommand* sleepCommand = [HEMVoiceCommand new];
+        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.sleep.category.name", nil)];
+        [soundsCommand setExample:NSLocalizedString(@"voice.command.sleep.example", nil)];
+        
+        HEMVoiceCommand* rcCommand = [HEMVoiceCommand new];
+        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.room-conditions.category.name", nil)];
+        [soundsCommand setExample:NSLocalizedString(@"voice.command.room-conditions.example", nil)];
+        
+        HEMVoiceCommand* expansionsCommand = [HEMVoiceCommand new];
+        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.expansions.category.name", nil)];
+        [soundsCommand setExample:NSLocalizedString(@"voice.command.expansions.example", nil)];
+        
+        [self setVoiceCommands:@[soundsCommand, sleepCommand, rcCommand, expansionsCommand]];
+    }
+    return [self voiceCommands];
 }
 
 @end

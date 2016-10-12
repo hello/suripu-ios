@@ -13,6 +13,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMSubNavigationView.h"
+#import "HEMNavigationShadowView.h"
 #import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 @property (nonatomic, weak) HEMSubNavigationView* subNavBar;
 @property (nonatomic, assign) CGFloat origSubNavHeight;
 @property (nonatomic, weak) NSLayoutConstraint* subNavHeightConstraint;
+@property (nonatomic, assign) HEMFeedContentOption selectedOption;
 
 @end
 
@@ -50,6 +52,7 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
         [self setOrigSubNavHeight:[heightConstraint constant]];
         [heightConstraint setConstant:0.0f];
     } else {
+        [self setSelectedOption:HEMFeedContentOptionInsights];
         [subNavgationBar addControl:[self navButtonWithOption:HEMFeedContentOptionInsights selected:YES]];
         [subNavgationBar addControl:[self navButtonWithOption:HEMFeedContentOptionVoice selected:NO]];
         [subNavgationBar setNeedsDisplay];
@@ -130,15 +133,20 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 #pragma mark - Actions
 
 - (void)changeOption:(UIButton*)navButton {
-    DDLogVerbose(@"change option %ld", [navButton tag]);
-    [self updateTabBarItemUnreadIndicator];
-    switch ([navButton tag]) {
-        case HEMFeedContentOptionInsights:
-            return [[self navDelegate] showInsightsFrom:self];
-        case HEMFeedContentOptionVoice:
-            return [[self navDelegate] showVoiceFrom:self];
-        default:
-            return;
+    if ([self selectedOption] != [navButton tag]) {
+        DDLogVerbose(@"change option %ld", [navButton tag]);
+        [self setSelectedOption:[navButton tag]];
+        [[self shadowView] reset];
+        [self updateTabBarItemUnreadIndicator];
+        
+        switch ([self selectedOption]) {
+            case HEMFeedContentOptionInsights:
+                return [[self navDelegate] showInsightsFrom:self];
+            case HEMFeedContentOptionVoice:
+                return [[self navDelegate] showVoiceFrom:self];
+            default:
+                return;
+        }
     }
 }
 

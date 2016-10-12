@@ -151,6 +151,10 @@
 		BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */; };
 		BF2D64341C585C01009AD365 /* HEMHandHoldingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */; };
 		BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */; };
+		BF2F4C641DAD977A00502521 /* HEMVoiceFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C631DAD977A00502521 /* HEMVoiceFeedViewController.m */; };
+		BF2F4C681DAD9BEA00502521 /* HEMVoiceCommandsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C671DAD9BEA00502521 /* HEMVoiceCommandsCell.m */; };
+		BF2F4C6C1DADA2DB00502521 /* HEMVoiceFeedPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */; };
+		BF2F4C701DADB22700502521 /* HEMVoiceCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C6F1DADB22700502521 /* HEMVoiceCommand.m */; };
 		BF31A5DA1D07AEC20054D82E /* HEMLocationRequestPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */; };
 		BF3326E01D87309B009A3E65 /* HEMSensorDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326DF1D87309B009A3E65 /* HEMSensorDetailViewController.m */; };
 		BF3326E31D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326E21D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m */; };
@@ -768,6 +772,14 @@
 		BF2D64331C585C01009AD365 /* HEMHandHoldingServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandHoldingServiceSpec.m; sourceTree = "<group>"; };
 		BF2EAD1F1B2F520400C3A6E3 /* HEMSupportTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportTopicsViewController.h; sourceTree = "<group>"; };
 		BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportTopicsViewController.m; sourceTree = "<group>"; };
+		BF2F4C621DAD977A00502521 /* HEMVoiceFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceFeedViewController.h; sourceTree = "<group>"; };
+		BF2F4C631DAD977A00502521 /* HEMVoiceFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceFeedViewController.m; sourceTree = "<group>"; };
+		BF2F4C661DAD9BEA00502521 /* HEMVoiceCommandsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceCommandsCell.h; sourceTree = "<group>"; };
+		BF2F4C671DAD9BEA00502521 /* HEMVoiceCommandsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceCommandsCell.m; sourceTree = "<group>"; };
+		BF2F4C6A1DADA2DB00502521 /* HEMVoiceFeedPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceFeedPresenter.h; sourceTree = "<group>"; };
+		BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceFeedPresenter.m; sourceTree = "<group>"; };
+		BF2F4C6E1DADB22700502521 /* HEMVoiceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceCommand.h; sourceTree = "<group>"; };
+		BF2F4C6F1DADB22700502521 /* HEMVoiceCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceCommand.m; sourceTree = "<group>"; };
 		BF31A5D81D07AEC20054D82E /* HEMLocationRequestPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationRequestPresenter.h; sourceTree = "<group>"; };
 		BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationRequestPresenter.m; sourceTree = "<group>"; };
 		BF3326DE1D87309B009A3E65 /* HEMSensorDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDetailViewController.h; sourceTree = "<group>"; };
@@ -2160,6 +2172,42 @@
 			name = Onboarding;
 			sourceTree = "<group>";
 		};
+		BF2F4C611DAD975300502521 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BF2F4C621DAD977A00502521 /* HEMVoiceFeedViewController.h */,
+				BF2F4C631DAD977A00502521 /* HEMVoiceFeedViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BF2F4C651DAD9BB300502521 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BF2F4C661DAD9BEA00502521 /* HEMVoiceCommandsCell.h */,
+				BF2F4C671DAD9BEA00502521 /* HEMVoiceCommandsCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BF2F4C691DADA2BF00502521 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BF2F4C6A1DADA2DB00502521 /* HEMVoiceFeedPresenter.h */,
+				BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */,
+			);
+			name = Presenters;
+			sourceTree = "<group>";
+		};
+		BF2F4C6D1DADB20D00502521 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BF2F4C6E1DADB22700502521 /* HEMVoiceCommand.h */,
+				BF2F4C6F1DADB22700502521 /* HEMVoiceCommand.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		BF3583881CAC8F0D00760CD4 /* Shortcuts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2478,7 +2526,11 @@
 		BF6098821D4AD61F0005C8F0 /* Voice */ = {
 			isa = PBXGroup;
 			children = (
+				BF2F4C6D1DADB20D00502521 /* Models */,
+				BF2F4C691DADA2BF00502521 /* Presenters */,
 				BF6098831D4AD6530005C8F0 /* Services */,
+				BF2F4C611DAD975300502521 /* View Controllers */,
+				BF2F4C651DAD9BB300502521 /* Views */,
 			);
 			name = Voice;
 			sourceTree = "<group>";
@@ -4083,6 +4135,7 @@
 				BF8339891C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
 				BFF3648D1D665C3E008D4DF8 /* HEMResetSenseViewController.m in Sources */,
+				BF2F4C641DAD977A00502521 /* HEMVoiceFeedViewController.m in Sources */,
 				BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */,
 				BF5B1D1E1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m in Sources */,
 				BF8C09471C330E55005AB5A7 /* HEMDevicesPresenter.m in Sources */,
@@ -4114,8 +4167,10 @@
 				BFB7B2101CCFE9E40060999E /* HEMAlarmRepeatDaysPresenter.m in Sources */,
 				BFD9A96D1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m in Sources */,
 				BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */,
+				BF2F4C681DAD9BEA00502521 /* HEMVoiceCommandsCell.m in Sources */,
 				BF885F251CE562A500A92F90 /* HEMNewAccountPresenter.m in Sources */,
 				BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */,
+				BF2F4C6C1DADA2DB00502521 /* HEMVoiceFeedPresenter.m in Sources */,
 				BF3583A11CB5C03700760CD4 /* HEMSleepSoundActionOperation.m in Sources */,
 				BF83399C1C179B2F00BFD0F4 /* UIImage+HEMPixelColor.m in Sources */,
 				BFC7D32B1B91118600D40D58 /* HEMVideoCollectionViewCell.m in Sources */,
@@ -4132,6 +4187,7 @@
 				BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */,
+				BF2F4C701DADB22700502521 /* HEMVoiceCommand.m in Sources */,
 				BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */,
 				BF55D8841CA48C7F00379FBF /* HEMSoundsContentPresenter.m in Sources */,
 				BFC458BE1BDAA2CE008EE871 /* HEMGlobalContants.m in Sources */,

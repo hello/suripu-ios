@@ -178,11 +178,7 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
     
     __weak typeof(self) weakSelf = self;
     
-    if ([self pillManager]) {
-        if (![[[self pillManager] sleepPill] isEqual:sleepPill]) {
-            [self setPillManager:[[SENSleepPillManager alloc] initWithSleepPill:sleepPill]];
-        }
-    } else {
+    if (![[[self pillManager] sleepPill] isEqual:sleepPill]) {
         [self setPillManager:[[SENSleepPillManager alloc] initWithSleepPill:sleepPill]];
     }
     
@@ -193,11 +189,14 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
         }
     } completion:^(NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error) {
             [SENAnalytics trackError:error];
         } else {
             [strongSelf saveLastPillUpdate];
+            [strongSelf setPillManager:nil];
         }
+        
         completion (error);
     }];
 }

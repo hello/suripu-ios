@@ -49,7 +49,7 @@
     [presenter bindWithConnectContainer:[self connectButtonView]
                     andBottomConstraint:[self buttonBottomConstraint]
                              withButton:[self connectButton]];
-    [presenter bindWithRootView:[[self rootViewController] view]];
+    [presenter bindWithRootView:[self rootView]];
     [presenter setDelegate:self];
     [presenter setErrorDelegate:self];
     
@@ -65,15 +65,23 @@
     }
 }
 
+- (UIView*)rootView {
+    return [[self rootViewController] presentedViewController] != nil
+        ? [[[self rootViewController] presentedViewController] view]
+        : [[self rootViewController] view];
+}
+
 #pragma mark - HEMExpansionDelegate
 
 - (void)showController:(UIViewController*)controller
-      onRootController:(BOOL)root
          fromPresenter:(HEMExpansionPresenter*)presenter {
-    if (root) {
-        [[self rootViewController] presentViewController:controller animated:YES completion:nil];
-    } else {
+    
+    if ([[self rootViewController] presentedViewController]) {
         [self presentViewController:controller animated:YES completion:nil];
+    } else {
+        [[self rootViewController] presentViewController:controller
+                                                animated:YES
+                                              completion:nil];
     }
 }
 

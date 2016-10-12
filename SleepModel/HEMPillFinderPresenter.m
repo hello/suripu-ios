@@ -18,7 +18,7 @@
 static NSString* const HEMPillFinderErrorDomain = @"is.hello.app.pill";
 static CGFloat const HEMPillFinderAnimeDuration = 0.5f;
 static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
-static CGFloat const HEMPillFinderScanTimeout = 15.0f;
+static CGFloat const HEMPillFinderScanTimeout = 30.0f;
 
 @interface HEMPillFinderPresenter()
 
@@ -122,14 +122,14 @@ static CGFloat const HEMPillFinderScanTimeout = 15.0f;
 }
 
 - (void)findNearestPillIfNotFound {
-    [[self scanTimer] invalidate]; // in case 1 exists that never fired
-    [self setScanTimer:[NSTimer scheduledTimerWithTimeInterval:HEMPillFinderScanTimeout
-                                                        target:self
-                                                      selector:@selector(timeout)
-                                                      userInfo:nil
-                                                       repeats:NO]];
-     
     if (![[self deviceService] isScanningPill] && ![self sleepPill]) {
+        [[self scanTimer] invalidate]; // in case 1 exists that never fired
+        [self setScanTimer:[NSTimer scheduledTimerWithTimeInterval:HEMPillFinderScanTimeout
+                                                            target:self
+                                                          selector:@selector(timeout)
+                                                          userInfo:nil
+                                                           repeats:NO]];
+        
         __weak typeof(self) weakSelf = self;
         [[self deviceService] findNearestPill:^(SENSleepPill * _Nullable sleepPill, NSError * _Nullable error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.4.5
+
+Fixes:
+
+* Fixes frequent time outs on Pill DFU flow
+* Fix action sheet blocking the UI in expansion configuration selection
+
 ## 1.5.4.4
 
 New:

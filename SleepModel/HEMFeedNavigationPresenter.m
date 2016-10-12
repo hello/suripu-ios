@@ -9,7 +9,7 @@
 
 #import "HEMFeedNavigationPresenter.h"
 #import "HEMInsightsService.h"
-#import "HEMVoiceService.h"
+#import "HEMDeviceService.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMSubNavigationView.h"
@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 
 @property (nonatomic, weak) HEMUnreadAlertService* unreadService;
 @property (nonatomic, weak) UITabBarItem* tabBarItem;
-@property (nonatomic, weak) HEMVoiceService* voiceService;
+@property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) HEMSubNavigationView* subNavBar;
 @property (nonatomic, assign) CGFloat origSubNavHeight;
 @property (nonatomic, weak) NSLayoutConstraint* subNavHeightConstraint;
@@ -35,10 +35,10 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 
 @implementation HEMFeedNavigationPresenter
 
-- (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService
-                       unreadService:(HEMUnreadAlertService*)unreadService {
+- (instancetype)initWithDeviceService:(HEMDeviceService*)deviceService
+                        unreadService:(HEMUnreadAlertService*)unreadService {
     if (self = [super init]) {
-        _voiceService = voiceService;
+        _deviceService = deviceService;
         _unreadService = unreadService;
     }
     return self;
@@ -47,7 +47,8 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 - (void)bindWithSubNavigationBar:(HEMSubNavigationView*)subNavgationBar
             withHeightConstraint:(NSLayoutConstraint*)heightConstraint {
 
-    if (![[self voiceService] isVoiceEnabled]) {
+    SENSenseHardware hardware = [[self deviceService] savedHardwareVersion];
+    if (hardware != SENSenseHardwareVoice) {
         // hide the subnav
         [self setOrigSubNavHeight:[heightConstraint constant]];
         [heightConstraint setConstant:0.0f];
@@ -136,7 +137,7 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
     if ([self selectedOption] != [navButton tag]) {
         DDLogVerbose(@"change option %ld", [navButton tag]);
         [self setSelectedOption:[navButton tag]];
-        [[self shadowView] reset];
+        [[[self subNavBar] shadowView] reset];
         [self updateTabBarItemUnreadIndicator];
         
         switch ([self selectedOption]) {

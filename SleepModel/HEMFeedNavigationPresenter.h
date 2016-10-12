@@ -8,7 +8,7 @@
 
 #import "HEMPresenter.h"
 
-@class HEMVoiceService;
+@class HEMDeviceService;
 @class HEMUnreadAlertService;
 @class HEMSubNavigationView;
 @class HEMFeedNavigationPresenter;
@@ -26,8 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) id <HEMFeedNavigationDelegate> navDelegate;
 
-- (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService
-                       unreadService:(HEMUnreadAlertService*)unreadService;
+- (instancetype)initWithDeviceService:(HEMDeviceService*)deviceService
+                        unreadService:(HEMUnreadAlertService*)unreadService;
 
 - (void)bindWithTabBarItem:(UITabBarItem*)tabBarItem;
 - (void)bindWithSubNavigationBar:(HEMSubNavigationView*)subNavgationBar

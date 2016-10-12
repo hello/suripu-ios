@@ -5046,7 +5046,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gnG-7x-weR">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="480"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bhL-lO-vo3" customClass="HEMCardFlowLayout">
                                     <size key="itemSize" width="576" height="366"/>
@@ -5108,7 +5108,7 @@
                         <constraints>
                             <constraint firstItem="gnG-7x-weR" firstAttribute="leading" secondItem="zfg-YB-tBx" secondAttribute="leading" id="3n8-3j-OhH"/>
                             <constraint firstItem="gnG-7x-weR" firstAttribute="top" secondItem="P95-Yg-RN5" secondAttribute="bottom" id="BOa-NO-Irb"/>
-                            <constraint firstItem="xmt-1W-ZwX" firstAttribute="top" secondItem="gnG-7x-weR" secondAttribute="bottom" id="dfD-X0-U8w"/>
+                            <constraint firstItem="xmt-1W-ZwX" firstAttribute="top" secondItem="gnG-7x-weR" secondAttribute="bottom" constant="56" id="dfD-X0-U8w"/>
                             <constraint firstAttribute="trailing" secondItem="gnG-7x-weR" secondAttribute="trailing" id="xSU-qq-qyL"/>
                         </constraints>
                     </view>
@@ -6811,8 +6811,8 @@
         <image name="webRefreshDisabled" width="24" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Uew-Av-EPF"/>
-        <segue reference="ytT-am-YU3"/>
         <segue reference="CUW-PA-dNh"/>
+        <segue reference="QaF-2O-SxF"/>
+        <segue reference="ytT-am-YU3"/>
     </inferredMetricsTieBreakers>
 </document>

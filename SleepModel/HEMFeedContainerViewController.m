@@ -11,6 +11,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMFeedNavigationPresenter.h"
 #import "HEMVoiceService.h"
+#import "HEMDeviceService.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMInsightFeedViewController.h"
 #import "HEMVoiceFeedViewController.h"
@@ -23,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subNavHeightConstraint;
 
 @property (strong, nonatomic) HEMFeedNavigationPresenter* navPresenter;
-@property (strong, nonatomic) HEMVoiceService* voiceService;
+@property (strong, nonatomic) HEMDeviceService* deviceService;
 @property (strong, nonatomic) HEMUnreadAlertService* unreadService;
 
 @end
@@ -32,12 +33,12 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _voiceService = [HEMVoiceService new];
+        _deviceService = [HEMDeviceService new];
         _unreadService = [HEMUnreadAlertService new];
 
         HEMFeedNavigationPresenter* navPresenter =
-            [[HEMFeedNavigationPresenter alloc] initWithVoiceService:_voiceService
-                                                       unreadService:_unreadService];
+            [[HEMFeedNavigationPresenter alloc] initWithDeviceService:_deviceService
+                                                        unreadService:_unreadService];
         [navPresenter bindWithTabBarItem:[self tabBarItem]];
         _navPresenter = navPresenter;
         [self addPresenter:navPresenter];
@@ -63,7 +64,6 @@
 
 - (void)showVoiceFrom:(HEMFeedNavigationPresenter*)presenter {
     HEMVoiceFeedViewController* voiceVC = [HEMMainStoryboard instantiateVoiceViewController];
-    [voiceVC setVoiceService:[self voiceService]];
     [voiceVC setSubNavBar:[self subNav]];
     [self showViewOf:voiceVC completion:nil];
 }

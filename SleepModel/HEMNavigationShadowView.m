@@ -90,6 +90,7 @@ static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
 
 - (void)reset {
     [[self shadowImageView] setAlpha:0.0f];
+    [[self superview] bringSubviewToFront:self];
 }
 
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset {

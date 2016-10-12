@@ -145,18 +145,22 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         HEMVoiceCommand* soundsCommand = [HEMVoiceCommand new];
         [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.sound.category.name", nil)];
         [soundsCommand setExample:NSLocalizedString(@"voice.command.sound.example", nil)];
+        [soundsCommand setIconNameSmall:@"voiceSoundIconSmall"];
         
         HEMVoiceCommand* sleepCommand = [HEMVoiceCommand new];
-        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.sleep.category.name", nil)];
-        [soundsCommand setExample:NSLocalizedString(@"voice.command.sleep.example", nil)];
+        [sleepCommand setCategoryName:NSLocalizedString(@"voice.command.sleep.category.name", nil)];
+        [sleepCommand setExample:NSLocalizedString(@"voice.command.sleep.example", nil)];
+        [sleepCommand setIconNameSmall:@"voiceSleepIconSmall"];
         
         HEMVoiceCommand* rcCommand = [HEMVoiceCommand new];
-        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.room-conditions.category.name", nil)];
-        [soundsCommand setExample:NSLocalizedString(@"voice.command.room-conditions.example", nil)];
+        [rcCommand setCategoryName:NSLocalizedString(@"voice.command.room-conditions.category.name", nil)];
+        [rcCommand setExample:NSLocalizedString(@"voice.command.room-conditions.example", nil)];
+        [rcCommand setIconNameSmall:@"voiceConditionsIconSmall"];
         
         HEMVoiceCommand* expansionsCommand = [HEMVoiceCommand new];
-        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.expansions.category.name", nil)];
-        [soundsCommand setExample:NSLocalizedString(@"voice.command.expansions.example", nil)];
+        [expansionsCommand setCategoryName:NSLocalizedString(@"voice.command.expansions.category.name", nil)];
+        [expansionsCommand setExample:NSLocalizedString(@"voice.command.expansions.example", nil)];
+        [expansionsCommand setIconNameSmall:@"voiceExpansionsIconSmall"];
         
         [self setVoiceCommands:@[soundsCommand, sleepCommand, rcCommand, expansionsCommand]];
     }

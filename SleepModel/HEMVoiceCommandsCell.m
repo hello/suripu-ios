@@ -7,6 +7,7 @@
 //
 
 #import "HEMVoiceCommandsCell.h"
+#import "HEMVoiceExampleView.h"
 
 static CGFloat const HEMVoiceCommandCellBaseHeight = 50.0f;
 static CGFloat const HEMVoiceCommandViewSize = 80.0f;
@@ -28,7 +29,32 @@ static CGFloat const HEMVoiceCommandViewSize = 80.0f;
 - (void)addCommandWithCategory:(NSString*)category
                        example:(NSString*)example
                           icon:(UIImage*)icon {
+    NSInteger count = [[[self commandsContainerView] subviews] count];
+    if (count == [self estimatedNumberOfCommands]) {
+        return; // assume they've all there to avoid recreating
+    }
+    HEMVoiceExampleView* commandView = [HEMVoiceExampleView exampleViewWithCategoryName:category
+                                                                                example:example
+                                                                              iconImage:icon];
+
+    CGRect commandFrame = CGRectZero;
+    commandFrame.size.width = CGRectGetWidth([[self commandsContainerView] bounds]);
+    commandFrame.size.height = HEMVoiceCommandViewSize;
+    commandFrame.origin.y = count * HEMVoiceCommandViewSize;
+    [commandView setFrame:commandFrame];
+    [commandView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
+    if (count == [self estimatedNumberOfCommands]) {
+        [[commandView separatorView] removeFromSuperview];
+    }
+    
+    CGRect containerFrame = [[self commandsContainerView] frame];
+    containerFrame.size.height = CGRectGetMaxY(commandFrame);
+    [[self commandsContainerView] setFrame:containerFrame];
+    
+    [[self commandsContainerView] addSubview:commandView];
+    
+    [self setNeedsUpdateConstraints];
 }
 
 @end

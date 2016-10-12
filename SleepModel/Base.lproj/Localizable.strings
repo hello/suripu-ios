@@ -994,6 +994,6 @@
 "voice.command.sleep.category.name" = "Sleep";
 "voice.command.sleep.example" = "What was my Sleep Score?";
 "voice.command.room-conditions.category.name" = "Room Conditions";
-"voice.command.room-conditions.example" = "What is the temperature in my room?";
+"voice.command.room-conditions.example" = "What is the temperature?";
 "voice.command.expansions.category.name" = "Expansions";
 "voice.command.expansions.example" = "Turn off my lights.";

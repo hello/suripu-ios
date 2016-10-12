@@ -91,4 +91,8 @@
     
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
 @end

@@ -493,7 +493,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                            }];
     }
     
-    [[self delegate] showController:sheet onRootController:NO fromPresenter:self];
+    [[self delegate] showController:sheet fromPresenter:self];
 }
 
 #pragma mark - Activity

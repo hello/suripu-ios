@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol HEMExpansionDelegate <NSObject>
 
 - (void)showController:(UIViewController*)controller
-      onRootController:(BOOL)root
          fromPresenter:(HEMExpansionPresenter*)presenter;
 
 - (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter*)presenter;

@@ -68,12 +68,14 @@
 #pragma mark - HEMExpansionDelegate
 
 - (void)showController:(UIViewController*)controller
-      onRootController:(BOOL)root
          fromPresenter:(HEMExpansionPresenter*)presenter {
-    if (root) {
-        [[self rootViewController] presentViewController:controller animated:YES completion:nil];
-    } else {
+    
+    if ([[self rootViewController] presentedViewController]) {
         [self presentViewController:controller animated:YES completion:nil];
+    } else {
+        [[self rootViewController] presentViewController:controller
+                                                animated:YES
+                                              completion:nil];
     }
 }
 

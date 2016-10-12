@@ -49,7 +49,7 @@
     [presenter bindWithConnectContainer:[self connectButtonView]
                     andBottomConstraint:[self buttonBottomConstraint]
                              withButton:[self connectButton]];
-    [presenter bindWithRootView:[[self rootViewController] view]];
+    [presenter bindWithRootView:[self rootView]];
     [presenter setDelegate:self];
     [presenter setErrorDelegate:self];
     
@@ -63,6 +63,12 @@
         && ![[self expPresenter] hasNavBar]) {
         [[self expPresenter] bindWithNavBar:[[self navigationController] navigationBar]];
     }
+}
+
+- (UIView*)rootView {
+    return [[self rootViewController] presentedViewController] != nil
+        ? [[[self rootViewController] presentedViewController] view]
+        : [[self rootViewController] view];
 }
 
 #pragma mark - HEMExpansionDelegate

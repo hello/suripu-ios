@@ -21,6 +21,7 @@
 
 #import "HEMOnboardingService.h"
 #import "HEMNotificationHandler.h"
+#import "HEMDeviceService.h"
 
 // notifications
 NSString* const HEMOnboardingNotificationDidChangeSensePairing = @"HEMOnboardingNotificationDidChangeSensePairing";
@@ -30,8 +31,8 @@ NSString* const HEMOnboardingNotificationComplete = @"HEMOnboardingNotificationC
 NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
 
 // polling of data
-static NSUInteger const HEMOnboardingMaxFeatureCheckAttempts = 5;
-static CGFloat const HEMOnboardingFeatureCheckInterval = 5.0f;
+static NSUInteger const HEMOnboardingMaxDeviceRefreshAttempts = 5;
+static CGFloat const HEMOnboardingDeviceRefreshInterval = 5.0f;
 
 static NSUInteger const HEMOnboardingMaxSensorPollAttempts = 10;
 static CGFloat const HEMOnboardingSensorPollIntervals = 5.0f;
@@ -60,10 +61,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 @property (nonatomic, copy)   HEMOnboardingDFUHandler dfuCompletionHandler;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
 
-@property (nonatomic, strong) SENFeatures* features;
-@property (nonatomic, assign) NSInteger featureCheckAttempts;
-@property (nonatomic, assign, getter=isGettingFeatures) BOOL gettingFeatures;
-
 @property (nonatomic, copy) HEMOnboardingErrorHandler rescanHandler;
 @property (nonatomic, strong) NSTimer* rescanTimer;
 
@@ -73,6 +70,10 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 @property (nonatomic, copy) HEMOnboardingErrorHandler linkAccountHandler;
 @property (nonatomic, copy) HEMOnboardingErrorHandler pillPairingHandler;
 @property (nonatomic, copy) HEMOnboardingErrorHandler ledHandler;
+
+@property (nonatomic, strong) HEMDeviceService* deviceService;
+@property (nonatomic, assign, getter=isRefreshingDeviceMetadata) BOOL refreshingDeviceMetadata;
+@property (nonatomic, assign) NSInteger refreshDeviceAttempts;
 
 @end
 
@@ -93,8 +94,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         if ([SENAuthorizationService isAuthorized] && ![self hasFinishedOnboarding]) {
             HEMOnboardingCheckpoint cp = [self onboardingCheckpoint];
             if (cp > HEMOnboardingCheckpointSenseDone) {
-                DDLogVerbose(@"updating features");
-                [self checkFeatures];
+                [self refreshDeviceMetadata];
             }
         }
     }
@@ -114,7 +114,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     [self setPollingSensorData:NO];
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
-    [self setFeatures:nil];
+    [self setDeviceService:nil];
     [self setRescanHandler:nil];
     [[self rescanTimer] invalidate];
     [self setRescanTimer:nil];
@@ -739,8 +739,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
         
         if (error) {
             [SENAnalytics trackError:error];
-        } else {
-            [strongSelf checkFeatures];
         }
         
         if (completion) {
@@ -999,16 +997,13 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     void(^finish) (NSError* error) = ^(NSError* error) {
          __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
-            if ([strongSelf hasFinishedOnboarding]) {
-                [[SENServiceDevice sharedService] loadDeviceInfo:nil];
-            }
+            [strongSelf refreshDeviceMetadata];
             
             if ([strongSelf tempSenseManager]) {
                 [strongSelf setCurrentSenseManager:[strongSelf tempSenseManager]];
                 [strongSelf setTempSenseManager:nil];
             }
             
-            [strongSelf checkFeatures];
             [strongSelf notifyOfSensePairingChange];
         } else {
             [SENAnalytics trackError:error];
@@ -1208,37 +1203,37 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     [self notify:HEMOnboardingNotificationComplete];
 }
 
-#pragma mark - enabled features
-
-- (void)checkFeatures {
-    if (![self features] && ![self isGettingFeatures]) {
-        [self setGettingFeatures:YES];
-        [self setFeatureCheckAttempts:[self featureCheckAttempts] + 1];
+- (void)refreshDeviceMetadata {
+    if (![[self deviceService] devices] && ![self isRefreshingDeviceMetadata]) {
+        [self setRefreshingDeviceMetadata:YES];
+        [self setRefreshDeviceAttempts:[self refreshDeviceAttempts] + 1];
+        
+        if (![self deviceService]) {
+            [self setDeviceService:[HEMDeviceService new]];
+        }
         
         __weak typeof(self) weakSelf = self;
-        [SENAPIFeature getFeatures:^(SENFeatures* features, NSError *error) {
+        [[self deviceService] refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
-                [SENAnalytics trackError:error];
-                
-                if ([strongSelf featureCheckAttempts] < HEMOnboardingMaxFeatureCheckAttempts) {
-                    int64_t delayInSecs = (int64_t) (HEMOnboardingFeatureCheckInterval * NSEC_PER_SEC);
+                if ([strongSelf refreshDeviceAttempts] < HEMOnboardingMaxDeviceRefreshAttempts) {
+                    int64_t delayInSecs = (int64_t) (HEMOnboardingDeviceRefreshInterval * NSEC_PER_SEC);
                     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
                     dispatch_after(delay, dispatch_get_main_queue(), ^{
-                        [strongSelf checkFeatures];
+                        [strongSelf refreshDeviceMetadata];
                     });
+                } else {
+                    [strongSelf setRefreshingDeviceMetadata:NO];
                 }
-
-            } else if (features) {
-                [strongSelf setFeatures:features];
-                [strongSelf setGettingFeatures:NO];
             }
         }];
+        
+        
     }
 }
 
 - (BOOL)isVoiceAvailable {
-    return [[self features] hasVoice];
+    return [[self deviceService] savedHardwareVersion] == SENSenseHardwareVoice;
 }
 
 @end

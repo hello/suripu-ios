@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet HEMSubNavigationView *subNav;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subNavHeightConstraint;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) HEMFeedNavigationPresenter* navPresenter;
 @property (strong, nonatomic) HEMDeviceService* deviceService;

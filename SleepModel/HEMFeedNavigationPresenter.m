@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 
 @interface HEMFeedNavigationPresenter()
 
+@property (nonatomic, weak) HEMActivityIndicatorView* activityView;
 @property (nonatomic, weak) HEMUnreadAlertService* unreadService;
 @property (nonatomic, weak) UITabBarItem* tabBarItem;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
@@ -30,6 +31,7 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 @property (nonatomic, assign) CGFloat origSubNavHeight;
 @property (nonatomic, weak) NSLayoutConstraint* subNavHeightConstraint;
 @property (nonatomic, assign) HEMFeedContentOption selectedOption;
+@property (nonatomic, assign, getter=isLoadingDeviceInfo) BOOL loadingDeviceInfo;
 
 @end
 
@@ -46,21 +48,24 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 
 - (void)bindWithSubNavigationBar:(HEMSubNavigationView*)subNavgationBar
             withHeightConstraint:(NSLayoutConstraint*)heightConstraint {
-
-    SENSenseHardware hardware = [[self deviceService] savedHardwareVersion];
-    if (hardware != SENSenseHardwareVoice) {
-        // hide the subnav
-        [self setOrigSubNavHeight:[heightConstraint constant]];
-        [heightConstraint setConstant:0.0f];
-    } else {
-        [self setSelectedOption:HEMFeedContentOptionInsights];
-        [subNavgationBar addControl:[self navButtonWithOption:HEMFeedContentOptionInsights selected:YES]];
-        [subNavgationBar addControl:[self navButtonWithOption:HEMFeedContentOptionVoice selected:NO]];
-        [subNavgationBar setNeedsDisplay];
-    }
+    // hide the subnav initially
+    [self setOrigSubNavHeight:[heightConstraint constant]];
+    [heightConstraint setConstant:0.0f];
     
     [self setSubNavBar:subNavgationBar];
     [self setSubNavHeightConstraint:heightConstraint];
+    
+}
+
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator {
+    if ([self isLoadingDeviceInfo]) {
+        [activityIndicator start];
+        [activityIndicator setHidden:NO];
+    } else {
+        [activityIndicator setHidden:YES];
+    }
+    [activityIndicator setUserInteractionEnabled:NO];
+    [self setActivityView:activityIndicator];
 }
 
 - (void)bindWithTabBarItem:(UITabBarItem*)tabBarItem {
@@ -76,7 +81,53 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
     [navDelegate showInsightsFrom:self];
 }
 
+#pragma mark - Update Navigation
+
+- (void)updateNavigation {
+    SENSenseHardware hardware = [[self deviceService] savedHardwareVersion];
+    if (hardware == SENSenseHardwareVoice) {
+        // show the nav
+        [[self subNavBar] setHidden:NO];
+        [[self subNavHeightConstraint] setConstant:[self origSubNavHeight]];
+        [[self subNavBar] addControl:[self navButtonWithOption:HEMFeedContentOptionInsights selected:YES]];
+        [[self subNavBar] addControl:[self navButtonWithOption:HEMFeedContentOptionVoice selected:NO]];
+        [[self subNavBar] setNeedsDisplay];
+    } else {
+        [self updateFeedTo:HEMFeedContentOptionInsights];
+        [[self subNavBar] setHidden:YES];
+        [[self subNavHeightConstraint] setConstant:0.0f];
+        [[self subNavBar] layoutIfNeeded];
+    }
+}
+
+#pragma mark - Load info
+
+- (void)updateUI {
+    SENSenseHardware hardware = [[self deviceService] savedHardwareVersion];
+    if (hardware == SENSenseHardwareUnknown) {
+        [self setLoadingDeviceInfo:YES];
+        [[self activityView] start];
+        [[self activityView] setHidden:NO];
+        
+        __weak typeof(self) weakSelf = self;
+        [[self deviceService] refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
+            __strong  typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf setLoadingDeviceInfo:NO];
+            [[strongSelf activityView] stop];
+            [[strongSelf activityView] setHidden:YES];
+            [strongSelf updateNavigation];
+        }];
+    } else {
+        [self updateNavigation];
+    }
+}
+
 #pragma mark - Presenter events
+
+- (void)willAppear {
+    [super willAppear];
+    [self updateUI];
+}
 
 - (void)willDisappear {
     [super willDisappear];
@@ -87,21 +138,10 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 
 - (void)updateTabBarItemUnreadIndicator {
     if ([self tabBarItem]) {
-        // since the service is shared, if the last viewed is updated, the stats
-        // will to, so we don't need to ask the service to update again.  Also
-        // because the SnazzBarController indirectly depends on the tabBarItem,
-        // updating the tabBar doesn't really have an effect immediately, which
-        // is partially why we don't want to make an async call here
-        
-        SENAppUnreadStats* unreadStats = [[self unreadService] unreadStats];
-        if (unreadStats) {
-            [self updateBadge];
-        } else {
-            __weak typeof(self) weakSelf = self;
-            [[self unreadService] update:^(BOOL hasUnread, NSError *error) {
-                [weakSelf updateBadge];
-            }];
-        }
+        __weak typeof(self) weakSelf = self;
+        [[self unreadService] update:^(BOOL hasUnread, NSError *error) {
+            [weakSelf updateBadge];
+        }];
     }
 }
 
@@ -134,9 +174,13 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 #pragma mark - Actions
 
 - (void)changeOption:(UIButton*)navButton {
-    if ([self selectedOption] != [navButton tag]) {
-        DDLogVerbose(@"change option %ld", [navButton tag]);
-        [self setSelectedOption:[navButton tag]];
+    [self updateFeedTo:[navButton tag]];
+}
+
+- (void)updateFeedTo:(HEMFeedContentOption)option {
+    if ([self selectedOption] != option) {
+        DDLogVerbose(@"change option %ld", option);
+        [self setSelectedOption:option];
         [[[self subNavBar] shadowView] reset];
         [self updateTabBarItemUnreadIndicator];
         

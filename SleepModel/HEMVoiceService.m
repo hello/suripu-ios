@@ -7,7 +7,6 @@
 //
 #import <SenseKit/SENAPISpeech.h>
 #import <SenseKit/SENSpeechResult.h>
-#import <SenseKit/SENAPIFeature.h>
 #import <SenseKit/SENFeatures.h>
 #import <SenseKit/SENService+Protected.h>
 
@@ -38,7 +37,6 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
     self = [super init];
     if (self) {
         _lastVoiceResultDate = [NSDate date];
-        [self updateVoiceAvailability:nil];
     }
     return self;
 }
@@ -108,34 +106,9 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 
 #pragma mark - Service overrides
 
-- (void)serviceBecameActive {
-    [super serviceBecameActive];
-    [self updateVoiceAvailability:nil];
-}
-
 - (void)serviceReceivedMemoryWarning {
     [super serviceReceivedMemoryWarning];
     [self setVoiceCommands:nil];
-}
-
-#pragma mark - Availability
-
-- (BOOL)isVoiceEnabled {
-    return [[SENFeatures savedFeatures] hasVoice];
-}
-
-- (void)updateVoiceAvailability:(HEMVoiceFeatureHandler)completion {
-    [SENAPIFeature getFeatures:^(SENFeatures* features, NSError *error) {
-        if (error) {
-            [SENAnalytics trackError:error];
-        } else {
-            [features save];
-        }
-        
-        if (completion) {
-            completion ([features hasVoice]);
-        }
-    }];
 }
 
 #pragma mark - Commands

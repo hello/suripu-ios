@@ -6123,6 +6123,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9jX-YZ-6g4" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="272" y="273" width="55" height="55"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="YB1-Fh-9wK"/>
+                                    <constraint firstAttribute="height" constant="55" id="hpM-uO-mag"/>
+                                </constraints>
+                            </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pq-YC-Q1B">
                                 <rect key="frame" x="0.0" y="110" width="600" height="490"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -6139,15 +6147,18 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8Pq-YC-Q1B" secondAttribute="trailing" id="6EI-WY-FrS"/>
                             <constraint firstAttribute="trailing" secondItem="BD5-Tb-gYa" secondAttribute="trailing" id="BKY-kZ-CMK"/>
+                            <constraint firstItem="9jX-YZ-6g4" firstAttribute="centerX" secondItem="clW-9U-dza" secondAttribute="centerX" id="BcU-Vd-xgf"/>
                             <constraint firstItem="vGE-eA-ifV" firstAttribute="top" secondItem="8Pq-YC-Q1B" secondAttribute="bottom" id="Hgf-Jf-M52"/>
                             <constraint firstItem="BD5-Tb-gYa" firstAttribute="top" secondItem="SpM-PP-5Vc" secondAttribute="bottom" id="RIF-mf-1Ul"/>
                             <constraint firstItem="BD5-Tb-gYa" firstAttribute="leading" secondItem="clW-9U-dza" secondAttribute="leading" id="Tkx-mp-X3S"/>
+                            <constraint firstItem="9jX-YZ-6g4" firstAttribute="centerY" secondItem="clW-9U-dza" secondAttribute="centerY" id="WcG-xA-9dp"/>
                             <constraint firstItem="8Pq-YC-Q1B" firstAttribute="leading" secondItem="clW-9U-dza" secondAttribute="leading" id="cxN-tK-idE"/>
                             <constraint firstItem="8Pq-YC-Q1B" firstAttribute="top" secondItem="BD5-Tb-gYa" secondAttribute="bottom" id="kZj-Lc-ehG"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7SI-CY-Tma"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="9jX-YZ-6g4" id="UQS-1I-Gzf"/>
                         <outlet property="contentView" destination="8Pq-YC-Q1B" id="GIE-4F-uX8"/>
                         <outlet property="subNav" destination="BD5-Tb-gYa" id="fj0-tm-CpK"/>
                         <outlet property="subNavHeightConstraint" destination="cMC-gp-XQX" id="hhf-nL-lDa"/>

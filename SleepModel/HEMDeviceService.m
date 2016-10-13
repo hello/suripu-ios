@@ -92,7 +92,10 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
             [strongSelf saveHardwareVersion:[devices senseMetadata]];
             [strongSelf setDevices:devices];
         }
-        completion (devices, error);
+        
+        if (completion) {
+            completion (devices, error);
+        }
     }];
 }
 

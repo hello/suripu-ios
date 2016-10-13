@@ -12,6 +12,7 @@
 @class HEMUnreadAlertService;
 @class HEMSubNavigationView;
 @class HEMFeedNavigationPresenter;
+@class HEMActivityIndicatorView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDeviceService:(HEMDeviceService*)deviceService
                         unreadService:(HEMUnreadAlertService*)unreadService;
 
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
 - (void)bindWithTabBarItem:(UITabBarItem*)tabBarItem;
 - (void)bindWithSubNavigationBar:(HEMSubNavigationView*)subNavgationBar
             withHeightConstraint:(NSLayoutConstraint*)heightConstraint;

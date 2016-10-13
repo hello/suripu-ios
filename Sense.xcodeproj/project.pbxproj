@@ -159,7 +159,7 @@
 		BF2F4C641DAD977A00502521 /* HEMVoiceFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C631DAD977A00502521 /* HEMVoiceFeedViewController.m */; };
 		BF2F4C681DAD9BEA00502521 /* HEMVoiceCommandsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C671DAD9BEA00502521 /* HEMVoiceCommandsCell.m */; };
 		BF2F4C6C1DADA2DB00502521 /* HEMVoiceFeedPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */; };
-		BF2F4C701DADB22700502521 /* HEMVoiceCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C6F1DADB22700502521 /* HEMVoiceCommand.m */; };
+		BF2F4C701DADB22700502521 /* HEMVoiceCommandGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C6F1DADB22700502521 /* HEMVoiceCommandGroup.m */; };
 		BF31A5DA1D07AEC20054D82E /* HEMLocationRequestPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */; };
 		BF3326E01D87309B009A3E65 /* HEMSensorDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326DF1D87309B009A3E65 /* HEMSensorDetailViewController.m */; };
 		BF3326E31D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326E21D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m */; };
@@ -791,8 +791,8 @@
 		BF2F4C671DAD9BEA00502521 /* HEMVoiceCommandsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceCommandsCell.m; sourceTree = "<group>"; };
 		BF2F4C6A1DADA2DB00502521 /* HEMVoiceFeedPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceFeedPresenter.h; sourceTree = "<group>"; };
 		BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceFeedPresenter.m; sourceTree = "<group>"; };
-		BF2F4C6E1DADB22700502521 /* HEMVoiceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceCommand.h; sourceTree = "<group>"; };
-		BF2F4C6F1DADB22700502521 /* HEMVoiceCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceCommand.m; sourceTree = "<group>"; };
+		BF2F4C6E1DADB22700502521 /* HEMVoiceCommandGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceCommandGroup.h; sourceTree = "<group>"; };
+		BF2F4C6F1DADB22700502521 /* HEMVoiceCommandGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceCommandGroup.m; sourceTree = "<group>"; };
 		BF31A5D81D07AEC20054D82E /* HEMLocationRequestPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationRequestPresenter.h; sourceTree = "<group>"; };
 		BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationRequestPresenter.m; sourceTree = "<group>"; };
 		BF3326DE1D87309B009A3E65 /* HEMSensorDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDetailViewController.h; sourceTree = "<group>"; };
@@ -2222,8 +2222,8 @@
 		BF2F4C6D1DADB20D00502521 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BF2F4C6E1DADB22700502521 /* HEMVoiceCommand.h */,
-				BF2F4C6F1DADB22700502521 /* HEMVoiceCommand.m */,
+				BF2F4C6E1DADB22700502521 /* HEMVoiceCommandGroup.h */,
+				BF2F4C6F1DADB22700502521 /* HEMVoiceCommandGroup.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -4213,7 +4213,7 @@
 				BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */,
-				BF2F4C701DADB22700502521 /* HEMVoiceCommand.m in Sources */,
+				BF2F4C701DADB22700502521 /* HEMVoiceCommandGroup.m in Sources */,
 				BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */,
 				BF55D8841CA48C7F00379FBF /* HEMSoundsContentPresenter.m in Sources */,
 				BFC458BE1BDAA2CE008EE871 /* HEMGlobalContants.m in Sources */,

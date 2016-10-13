@@ -12,7 +12,7 @@
 #import "HEMVoiceCommandsCell.h"
 #import "HEMWelcomeVoiceCell.h"
 #import "HEMMainStoryboard.h"
-#import "HEMVoiceCommand.h"
+#import "HEMVoiceCommandGroup.h"
 #import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
@@ -77,7 +77,7 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
     HEMVoiceFeedRowType type = [rowValue unsignedIntegerValue];
     
     UICollectionViewFlowLayout* layout = (id) collectionViewLayout;
-    NSArray<HEMVoiceCommand*>* commands = [[self voiceService] availableVoiceCommands];
+    NSArray<HEMVoiceCommandGroup*>* commands = [[self voiceService] availableVoiceCommands];
     CGSize itemSize = [layout itemSize];
     
     switch (type) {
@@ -131,14 +131,14 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
     [[commandsCell titleLabel] setTextColor:[UIColor grey6]];
     [[commandsCell separatorView] setBackgroundColor:[UIColor separatorColor]];
     
-    NSArray<HEMVoiceCommand*>* commands = [[self voiceService] availableVoiceCommands];
-    [commandsCell setEstimatedNumberOfCommands:[commands count]];
+    NSArray<HEMVoiceCommandGroup*>* groups = [[self voiceService] availableVoiceCommands];
+    [commandsCell setEstimatedNumberOfCommands:[groups count]];
     
-    for (HEMVoiceCommand* command in commands) {
-        NSString* exampleWithQuote = [NSString stringWithFormat:@"\"%@\"", [command example]];
-        [commandsCell addCommandWithCategory:[command categoryName]
+    for (HEMVoiceCommandGroup* group in groups) {
+        NSString* exampleWithQuote = [NSString stringWithFormat:@"\"%@\"", [group example]];
+        [commandsCell addCommandWithCategory:[group categoryName]
                                      example:exampleWithQuote
-                                        icon:[UIImage imageNamed:[command iconNameSmall]]];
+                                        icon:[UIImage imageNamed:[group iconNameSmall]]];
     }
 }
 

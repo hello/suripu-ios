@@ -11,7 +11,7 @@
 #import <SenseKit/SENLocalPreferences.h>
 
 #import "HEMVoiceService.h"
-#import "HEMVoiceCommand.h"
+#import "HEMVoiceCommandGroup.h"
 
 NSString* const HEMVoiceNotification = @"HEMVoiceNotificationResult";
 NSString* const HEMVoiceNotificationInfoError = @"voice.error";
@@ -28,7 +28,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 @property (nonatomic, assign, getter=isStarted) BOOL started;
 @property (nonatomic, assign, getter=isInProgress) BOOL inProgress;
 @property (nonatomic, strong) NSDate* lastVoiceResultDate;
-@property (nonatomic, strong) NSArray<HEMVoiceCommand*>* voiceCommands;
+@property (nonatomic, strong) NSArray<HEMVoiceCommandGroup*>* voiceCommands;
 
 @end
 
@@ -114,29 +114,87 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 
 #pragma mark - Commands
 
-- (NSArray<HEMVoiceCommand*>*)availableVoiceCommands {
+- (NSArray<HEMVoiceCommandGroup*>*)availableVoiceCommands {
     if (![self voiceCommands]) {
-        HEMVoiceCommand* soundsCommand = [HEMVoiceCommand new];
-        [soundsCommand setCategoryName:NSLocalizedString(@"voice.command.sound.category.name", nil)];
-        [soundsCommand setExample:NSLocalizedString(@"voice.command.sound.example", nil)];
-        [soundsCommand setIconNameSmall:@"voiceSoundIconSmall"];
+        // sounds
+        HEMVoiceCommandExamples* alarmExamples = [HEMVoiceCommandExamples new];
+        [alarmExamples setCategoryName:NSLocalizedString(@"voice.command.alarm.category.name", nil)];
+        [alarmExamples setCommands:@[NSLocalizedString(@"voice.command.alarm.example.1", nil),
+                                     NSLocalizedString(@"voice.command.alarm.example.2", nil)]];
         
-        HEMVoiceCommand* sleepCommand = [HEMVoiceCommand new];
-        [sleepCommand setCategoryName:NSLocalizedString(@"voice.command.sleep.category.name", nil)];
-        [sleepCommand setExample:NSLocalizedString(@"voice.command.sleep.example", nil)];
-        [sleepCommand setIconNameSmall:@"voiceSleepIconSmall"];
+        HEMVoiceCommandExamples* sleepSoundExamples = [HEMVoiceCommandExamples new];
+        [sleepSoundExamples setCategoryName:NSLocalizedString(@"voice.command.sleep-sound.category.name", nil)];
+        [sleepSoundExamples setCommands:@[NSLocalizedString(@"voice.command.sleep-sound.example.1", nil),
+                                          NSLocalizedString(@"voice.command.sleep-sound.example.2", nil)]];
         
-        HEMVoiceCommand* rcCommand = [HEMVoiceCommand new];
-        [rcCommand setCategoryName:NSLocalizedString(@"voice.command.room-conditions.category.name", nil)];
-        [rcCommand setExample:NSLocalizedString(@"voice.command.room-conditions.example", nil)];
-        [rcCommand setIconNameSmall:@"voiceConditionsIconSmall"];
+        HEMVoiceCommandGroup* soundsGroup = [HEMVoiceCommandGroup new];
+        [soundsGroup setCategoryName:NSLocalizedString(@"voice.command.sound.category.name", nil)];
+        [soundsGroup setExamples:@[alarmExamples, sleepSoundExamples]];
+        [soundsGroup setIconNameSmall:@"voiceSoundIconSmall"];
+        [soundsGroup setIconNameLarge:@"voiceSoundIconLarge"];
         
-        HEMVoiceCommand* expansionsCommand = [HEMVoiceCommand new];
-        [expansionsCommand setCategoryName:NSLocalizedString(@"voice.command.expansions.category.name", nil)];
-        [expansionsCommand setExample:NSLocalizedString(@"voice.command.expansions.example", nil)];
-        [expansionsCommand setIconNameSmall:@"voiceExpansionsIconSmall"];
+        // sleep
+        HEMVoiceCommandExamples* timelineExamples = [HEMVoiceCommandExamples new];
+        [timelineExamples setCategoryName:NSLocalizedString(@"voice.command.timeline.category.name", nil)];
+        [timelineExamples setCommands:@[NSLocalizedString(@"voice.command.timeline.example.1", nil),
+                                        NSLocalizedString(@"voice.command.timeline.example.2", nil)]];
         
-        [self setVoiceCommands:@[soundsCommand, sleepCommand, rcCommand, expansionsCommand]];
+        HEMVoiceCommandGroup* sleepGroup = [HEMVoiceCommandGroup new];
+        [sleepGroup setCategoryName:NSLocalizedString(@"voice.command.sleep.category.name", nil)];
+        [sleepGroup setExamples:@[timelineExamples]];
+        [sleepGroup setIconNameSmall:@"voiceSleepIconSmall"];
+        [sleepGroup setIconNameLarge:@"voiceSleepIconLarge"];
+        
+        // room conditions
+        HEMVoiceCommandExamples* tempExamples = [HEMVoiceCommandExamples new];
+        [tempExamples setCategoryName:NSLocalizedString(@"voice.command.temperature.category.name", nil)];
+        [tempExamples setCommands:@[NSLocalizedString(@"voice.command.temperature.example.1", nil)]];
+        
+        HEMVoiceCommandExamples* bedroomExamples = [HEMVoiceCommandExamples new];
+        [bedroomExamples setCategoryName:NSLocalizedString(@"voice.command.bedroom.category.name", nil)];
+        [bedroomExamples setCommands:@[NSLocalizedString(@"voice.command.bedroom.example.1", nil)]];
+        
+        HEMVoiceCommandExamples* humidityExamples = [HEMVoiceCommandExamples new];
+        [humidityExamples setCategoryName:NSLocalizedString(@"voice.command.humidity.category.name", nil)];
+        [humidityExamples setCommands:@[NSLocalizedString(@"voice.command.humidity.example.1", nil)]];
+        
+        HEMVoiceCommandExamples* noiseExamples = [HEMVoiceCommandExamples new];
+        [noiseExamples setCategoryName:NSLocalizedString(@"voice.command.noise.category.name", nil)];
+        [noiseExamples setCommands:@[NSLocalizedString(@"voice.command.noise.example.1", nil),
+                                     NSLocalizedString(@"voice.command.noise.example.2", nil)]];
+        
+        HEMVoiceCommandExamples* airExamples = [HEMVoiceCommandExamples new];
+        [airExamples setCategoryName:NSLocalizedString(@"voice.command.air.category.name", nil)];
+        [airExamples setCommands:@[NSLocalizedString(@"voice.command.air.example.1", nil)]];
+        
+        HEMVoiceCommandGroup* conditionsGroup = [HEMVoiceCommandGroup new];
+        [conditionsGroup setCategoryName:NSLocalizedString(@"voice.command.room-conditions.category.name", nil)];
+        [conditionsGroup setExamples:@[tempExamples,
+                                       bedroomExamples,
+                                       humidityExamples,
+                                       noiseExamples,
+                                       airExamples]];
+        [conditionsGroup setIconNameSmall:@"voiceConditionsIconSmall"];
+        [conditionsGroup setIconNameLarge:@"voiceConditionsIconLarge"];
+        
+        // expansion
+        HEMVoiceCommandExamples* lightsExamples = [HEMVoiceCommandExamples new];
+        [lightsExamples setCategoryName:NSLocalizedString(@"voice.command.lights.category.name", nil)];
+        [lightsExamples setCommands:@[NSLocalizedString(@"voice.command.lights.example.1", nil),
+                                      NSLocalizedString(@"voice.command.lights.example.2", nil),
+                                      NSLocalizedString(@"voice.command.lights.example.3", nil)]];
+        
+        HEMVoiceCommandExamples* thermostatExamples = [HEMVoiceCommandExamples new];
+        [thermostatExamples setCategoryName:NSLocalizedString(@"voice.command.thermostat.category.name", nil)];
+        [thermostatExamples setCommands:@[NSLocalizedString(@"voice.command.thermostat.example.1", nil)]];
+        
+        HEMVoiceCommandGroup* expansionsGroup = [HEMVoiceCommandGroup new];
+        [expansionsGroup setCategoryName:NSLocalizedString(@"voice.command.expansions.category.name", nil)];
+        [expansionsGroup setExamples:@[lightsExamples, thermostatExamples]];
+        [expansionsGroup setIconNameSmall:@"voiceExpansionsIconSmall"];
+        [expansionsGroup setIconNameLarge:@"voiceExpansionsIconLarge"];
+        
+        [self setVoiceCommands:@[soundsGroup, sleepGroup, conditionsGroup, expansionsGroup]];
     }
     return [self voiceCommands];
 }

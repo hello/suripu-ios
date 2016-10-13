@@ -58,6 +58,7 @@
 +(NSString *)groupReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
++(NSString *)welcomeReuseIdentifier;
 +(NSString *)commandsReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;
 +(NSString *)messageReuseIdentifier;

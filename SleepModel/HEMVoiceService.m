@@ -8,6 +8,7 @@
 #import <SenseKit/SENAPISpeech.h>
 #import <SenseKit/SENSpeechResult.h>
 #import <SenseKit/SENService+Protected.h>
+#import <SenseKit/SENLocalPreferences.h>
 
 #import "HEMVoiceService.h"
 #import "HEMVoiceCommand.h"
@@ -17,6 +18,7 @@ NSString* const HEMVoiceNotificationInfoError = @"voice.error";
 NSString* const HEMVoiceNotificationInfoResult = @"voice.result";
 
 static CGFloat const HEMVoiceServiceWaitDelay = 1.0f;
+static NSString* const HEMVoiceServiceHideIntroKey = @"HEMVoiceServiceIntroKey";
 
 typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable results,
                                        NSError* _Nullable error);
@@ -137,6 +139,21 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         [self setVoiceCommands:@[soundsCommand, sleepCommand, rcCommand, expansionsCommand]];
     }
     return [self voiceCommands];
+}
+
+- (BOOL)showVoiceIntro {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    return ![[localPrefs userPreferenceForKey:HEMVoiceServiceHideIntroKey] boolValue];
+}
+
+- (void)hideVoiceIntro {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    [localPrefs setUserPreference:@YES forKey:HEMVoiceServiceHideIntroKey];
+}
+
+- (void)resetVoiceIntro {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    [localPrefs setUserPreference:@NO forKey:HEMVoiceServiceHideIntroKey];
 }
 
 @end

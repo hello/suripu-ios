@@ -140,6 +140,7 @@
 		BF21F0221DAEEB560057F24E /* HEMVoiceExampleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF21F0211DAEEB560057F24E /* HEMVoiceExampleView.m */; };
 		BF21F0241DAEF0430057F24E /* Voice.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF21F0231DAEF0430057F24E /* Voice.xcassets */; };
 		BF21F0271DAF20540057F24E /* HEMAlarmExpansionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF21F0261DAF20540057F24E /* HEMAlarmExpansionListCell.m */; };
+		BF21F02A1DAFFC120057F24E /* HEMWelcomeVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF21F0291DAFFC120057F24E /* HEMWelcomeVoiceCell.m */; };
 		BF238DE31D1A126600F6E62C /* HEMShareService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE21D1A126600F6E62C /* HEMShareService.m */; };
 		BF238DE71D1A15FC00F6E62C /* HEMShareContentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE61D1A15FC00F6E62C /* HEMShareContentProvider.m */; };
 		BF238DEA1D1B254100F6E62C /* HEMConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF238DE91D1B254100F6E62C /* HEMConfirmationView.m */; };
@@ -756,6 +757,8 @@
 		BF21F0231DAEF0430057F24E /* Voice.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Voice.xcassets; sourceTree = "<group>"; };
 		BF21F0251DAF20540057F24E /* HEMAlarmExpansionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmExpansionListCell.h; sourceTree = "<group>"; };
 		BF21F0261DAF20540057F24E /* HEMAlarmExpansionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmExpansionListCell.m; sourceTree = "<group>"; };
+		BF21F0281DAFFC120057F24E /* HEMWelcomeVoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWelcomeVoiceCell.h; sourceTree = "<group>"; };
+		BF21F0291DAFFC120057F24E /* HEMWelcomeVoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWelcomeVoiceCell.m; sourceTree = "<group>"; };
 		BF238DE11D1A126600F6E62C /* HEMShareService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMShareService.h; sourceTree = "<group>"; };
 		BF238DE21D1A126600F6E62C /* HEMShareService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMShareService.m; sourceTree = "<group>"; };
 		BF238DE51D1A15FC00F6E62C /* HEMShareContentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMShareContentProvider.h; sourceTree = "<group>"; };
@@ -2201,6 +2204,8 @@
 				BF21F01B1DAEE6400057F24E /* HEMVoiceExampleView.xib */,
 				BF21F0201DAEEB560057F24E /* HEMVoiceExampleView.h */,
 				BF21F0211DAEEB560057F24E /* HEMVoiceExampleView.m */,
+				BF21F0281DAFFC120057F24E /* HEMWelcomeVoiceCell.h */,
+				BF21F0291DAFFC120057F24E /* HEMWelcomeVoiceCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -4096,6 +4101,7 @@
 				BF539CC01C0D292C000F77AA /* HEMInsightsService.m in Sources */,
 				BF8C09301C29D9DF005AB5A7 /* HEMPasswordChangePresenter.m in Sources */,
 				8A8621671B5D5DC20033F44C /* HEMAppReview.m in Sources */,
+				BF21F02A1DAFFC120057F24E /* HEMWelcomeVoiceCell.m in Sources */,
 				BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */,
 				BFA884AD1C1A012100613069 /* HEMNetworkAlertService.m in Sources */,
 				BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */,

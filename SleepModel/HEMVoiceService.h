@@ -25,6 +25,9 @@ typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
 - (void)startListeningForVoiceResult;
 - (void)stopListeningForVoiceResult;
 - (NSArray<HEMVoiceCommand*>*)availableVoiceCommands;
+- (BOOL)showVoiceIntro;
+- (void)hideVoiceIntro;
+- (void)resetVoiceIntro;
 
 @end
 

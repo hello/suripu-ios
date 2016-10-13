@@ -997,3 +997,5 @@
 "voice.command.room-conditions.example" = "What is the temperature?";
 "voice.command.expansions.category.name" = "Expansions";
 "voice.command.expansions.example" = "Turn off my lights.";
+"voice.welcome.message" = "Always say “Okay Sense” before each command to activate Voice. Ask about your Sleep Score, room conditions, and more.";
+"voice.welcome.title" = "Welcome to Voice";

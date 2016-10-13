@@ -116,6 +116,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
 static NSString *const _HEMvoice = @"voice";
 static NSString *const _HEMwarning = @"warning";
+static NSString *const _HEMwelcome = @"welcome";
 
 @implementation HEMMainStoryboard
 
@@ -180,6 +181,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)topicCellReuseIdentifier { return _HEMtopicCell; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 +(NSString *)warningReuseIdentifier { return _HEMwarning; }
++(NSString *)welcomeReuseIdentifier { return _HEMwelcome; }
 
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }

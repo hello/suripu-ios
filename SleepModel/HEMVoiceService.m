@@ -7,7 +7,6 @@
 //
 #import <SenseKit/SENAPISpeech.h>
 #import <SenseKit/SENSpeechResult.h>
-#import <SenseKit/SENFeatures.h>
 #import <SenseKit/SENService+Protected.h>
 
 #import "HEMVoiceService.h"

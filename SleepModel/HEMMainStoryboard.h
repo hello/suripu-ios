@@ -50,6 +50,7 @@
 +(NSString *)chartReuseIdentifier;
 +(NSString *)scaleReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
++(NSString *)alarmExpansionCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;

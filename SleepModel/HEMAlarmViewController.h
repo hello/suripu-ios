@@ -6,6 +6,7 @@
 @class HEMAlarmViewController;
 @class HEMAlarmService;
 @class HEMDeviceService;
+@class HEMExpansionService;
 
 @protocol HEMAlarmControllerDelegate <NSObject>
 
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) SENAlarm* alarm;
 @property (nonatomic, strong) HEMAlarmService* alarmService;
 @property (nonatomic, strong) HEMDeviceService* deviceService;
+@property (nonatomic, strong) HEMExpansionService* expansionService;
 @property (nonatomic, weak)   id<HEMAlarmControllerDelegate> delegate;
 
 @end

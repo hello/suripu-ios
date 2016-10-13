@@ -3698,8 +3698,85 @@
                                             <outlet property="titleLabel" destination="tbK-mA-0ly" id="aGX-EA-VIX"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmExpansionCell" id="khT-7j-fsG" customClass="HEMAlarmExpansionListCell">
+                                        <rect key="frame" x="8" y="170" width="584" height="138"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="138"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXg-4r-GxB">
+                                                    <rect key="frame" x="16" y="38" width="71" height="50"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="36"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SMART ALARM – WEEKDAYS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86T-RR-IbO">
+                                                    <rect key="frame" x="16" y="16" width="139" height="14"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="10"/>
+                                                    <color key="textColor" white="0.75240162040000003" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Egr-uh-f2s" customClass="HEMSwitchControl">
+                                                    <rect key="frame" x="519" y="32" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.0" green="0.61666666670000003" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5eg-5V-O9q">
+                                                    <rect key="frame" x="90" y="58" width="26" height="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="16"/>
+                                                    <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="deviceRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyI-Z7-rmZ">
+                                                    <rect key="frame" x="0.0" y="95" width="584" height="1"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="po0-EC-PC7"/>
+                                                    </constraints>
+                                                </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmLightIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dca-8n-GEX">
+                                                    <rect key="frame" x="18" y="102" width="25" height="26"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lights" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mev-4o-OPe">
+                                                    <rect key="frame" x="57" y="108" width="35" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="86T-RR-IbO" firstAttribute="leading" secondItem="khT-7j-fsG" secondAttribute="leading" constant="16" id="0p7-kM-A8A"/>
+                                            <constraint firstItem="VXg-4r-GxB" firstAttribute="leading" secondItem="86T-RR-IbO" secondAttribute="leading" id="1Tr-Ri-IF4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Egr-uh-f2s" secondAttribute="trailing" constant="16" id="29I-8p-994"/>
+                                            <constraint firstItem="dca-8n-GEX" firstAttribute="top" secondItem="VyI-Z7-rmZ" secondAttribute="bottom" constant="6" id="8KA-uO-Y4K"/>
+                                            <constraint firstItem="dca-8n-GEX" firstAttribute="leading" secondItem="khT-7j-fsG" secondAttribute="leading" constant="18" id="MKa-rQ-CzX"/>
+                                            <constraint firstAttribute="trailing" secondItem="VyI-Z7-rmZ" secondAttribute="trailing" id="Qgc-5W-qLk"/>
+                                            <constraint firstItem="VyI-Z7-rmZ" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="95" id="WN2-49-5w1"/>
+                                            <constraint firstItem="86T-RR-IbO" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="16" id="XcX-vW-Ymg"/>
+                                            <constraint firstItem="Mev-4o-OPe" firstAttribute="leading" secondItem="dca-8n-GEX" secondAttribute="trailing" constant="14" id="Yk5-fq-gJk"/>
+                                            <constraint firstItem="Mev-4o-OPe" firstAttribute="top" secondItem="VyI-Z7-rmZ" secondAttribute="bottom" constant="12" id="b8Q-aq-xmp"/>
+                                            <constraint firstItem="VXg-4r-GxB" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="38" id="gSw-U8-BJ8"/>
+                                            <constraint firstItem="5eg-5V-O9q" firstAttribute="leading" secondItem="VXg-4r-GxB" secondAttribute="trailing" constant="3" id="iAL-1h-Khp"/>
+                                            <constraint firstItem="VyI-Z7-rmZ" firstAttribute="leading" secondItem="khT-7j-fsG" secondAttribute="leading" id="liA-na-Zih"/>
+                                            <constraint firstItem="5eg-5V-O9q" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="58" id="rAa-fk-ZO0"/>
+                                            <constraint firstItem="Egr-uh-f2s" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="32" id="vVw-Ht-gFb"/>
+                                        </constraints>
+                                        <size key="customSize" width="584" height="138"/>
+                                        <connections>
+                                            <outlet property="enabledSwitch" destination="Egr-uh-f2s" id="IMO-AO-ILg"/>
+                                            <outlet property="expansionIconView" destination="dca-8n-GEX" id="zoz-VW-28K"/>
+                                            <outlet property="expansionLabel" destination="Mev-4o-OPe" id="ybj-6v-y50"/>
+                                            <outlet property="expansionSeparator" destination="VyI-Z7-rmZ" id="iiU-AS-5fU"/>
+                                            <outlet property="meridiemLabel" destination="5eg-5V-O9q" id="DXc-7P-qZv"/>
+                                            <outlet property="timeLabel" destination="VXg-4r-GxB" id="8hd-Is-FtE"/>
+                                            <outlet property="titleLabel" destination="86T-RR-IbO" id="Y2r-Ap-z0V"/>
+                                        </connections>
+                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListEmptyCell" id="Yyh-iI-O4j" customClass="HEMNoAlarmCell">
-                                        <rect key="frame" x="8" y="170" width="584" height="292"/>
+                                        <rect key="frame" x="8" y="318" width="584" height="292"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="292"/>
@@ -3749,7 +3826,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListStatusCell" id="EAK-HN-7Nz" customClass="HEMAlarmListCell">
-                                        <rect key="frame" x="8" y="472" width="584" height="94"/>
+                                        <rect key="frame" x="8" y="620" width="584" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
@@ -6822,8 +6899,8 @@
         <image name="webRefreshDisabled" width="24" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CUW-PA-dNh"/>
         <segue reference="QaF-2O-SxF"/>
         <segue reference="ytT-am-YU3"/>
+        <segue reference="xK0-Ru-V1S"/>
     </inferredMetricsTieBreakers>
 </document>

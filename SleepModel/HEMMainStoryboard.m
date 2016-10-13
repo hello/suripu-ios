@@ -14,6 +14,7 @@ static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMaction = @"action";
 static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
+static NSString *const _HEMalarmExpansionCell = @"alarmExpansionCell";
 static NSString *const _HEMalarmLightCell = @"alarmLightCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListEmptyCell = @"alarmListEmptyCell";
@@ -124,6 +125,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)aboutReuseIdentifier { return _HEMabout; }
 +(NSString *)actionReuseIdentifier { return _HEMaction; }
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
++(NSString *)alarmExpansionCellReuseIdentifier { return _HEMalarmExpansionCell; }
 +(NSString *)alarmLightCellReuseIdentifier { return _HEMalarmLightCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
 +(NSString *)alarmListEmptyCellReuseIdentifier { return _HEMalarmListEmptyCell; }

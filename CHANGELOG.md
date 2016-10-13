@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.4.6
+
+New:
+
+* Hiding lights expansion integration in alarms for now, until next release
+
 ## 1.5.4.5
 
 Fixes:

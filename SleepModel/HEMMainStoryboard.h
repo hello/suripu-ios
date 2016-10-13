@@ -60,6 +60,8 @@
 +(NSString *)insightReuseIdentifier;
 +(NSString *)welcomeReuseIdentifier;
 +(NSString *)commandsReuseIdentifier;
++(NSString *)commandGroupReuseIdentifier;
++(NSString *)examplesReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;
 +(NSString *)messageReuseIdentifier;
 +(NSString *)calendarReuseIdentifier;

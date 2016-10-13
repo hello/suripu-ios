@@ -30,6 +30,10 @@
     [[self exampleLabel] setNumberOfLines:0];
     [[self iconView] setContentMode:UIViewContentModeCenter];
     [[self separatorView] setBackgroundColor:[UIColor separatorColor]];
+    
+    UITapGestureRecognizer* tap = [UITapGestureRecognizer new];
+    [self addGestureRecognizer:tap];
+    [self setTapGesture:tap];
 }
 
 @end

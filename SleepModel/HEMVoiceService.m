@@ -129,6 +129,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         
         HEMVoiceCommandGroup* soundsGroup = [HEMVoiceCommandGroup new];
         [soundsGroup setCategoryName:NSLocalizedString(@"voice.command.sound.category.name", nil)];
+        [soundsGroup setMessage:NSLocalizedString(@"voice.command.sound.message", nil)];
         [soundsGroup setExamples:@[alarmExamples, sleepSoundExamples]];
         [soundsGroup setIconNameSmall:@"voiceSoundIconSmall"];
         [soundsGroup setIconNameLarge:@"voiceSoundIconLarge"];
@@ -141,6 +142,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         
         HEMVoiceCommandGroup* sleepGroup = [HEMVoiceCommandGroup new];
         [sleepGroup setCategoryName:NSLocalizedString(@"voice.command.sleep.category.name", nil)];
+        [sleepGroup setMessage:NSLocalizedString(@"voice.command.sleep.message", nil)];
         [sleepGroup setExamples:@[timelineExamples]];
         [sleepGroup setIconNameSmall:@"voiceSleepIconSmall"];
         [sleepGroup setIconNameLarge:@"voiceSleepIconLarge"];
@@ -169,6 +171,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         
         HEMVoiceCommandGroup* conditionsGroup = [HEMVoiceCommandGroup new];
         [conditionsGroup setCategoryName:NSLocalizedString(@"voice.command.room-conditions.category.name", nil)];
+        [conditionsGroup setMessage:NSLocalizedString(@"voice.command.room-conditions.message", nil)];
         [conditionsGroup setExamples:@[tempExamples,
                                        bedroomExamples,
                                        humidityExamples,
@@ -190,6 +193,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         
         HEMVoiceCommandGroup* expansionsGroup = [HEMVoiceCommandGroup new];
         [expansionsGroup setCategoryName:NSLocalizedString(@"voice.command.expansions.category.name", nil)];
+        [expansionsGroup setMessage:NSLocalizedString(@"voice.command.expansions.message", nil)];
         [expansionsGroup setExamples:@[lightsExamples, thermostatExamples]];
         [expansionsGroup setIconNameSmall:@"voiceExpansionsIconSmall"];
         [expansionsGroup setIconNameLarge:@"voiceExpansionsIconLarge"];

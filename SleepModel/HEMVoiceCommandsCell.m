@@ -26,12 +26,12 @@ static CGFloat const HEMVoiceCommandViewSize = 80.0f;
     }
 }
 
-- (void)addCommandWithCategory:(NSString*)category
-                       example:(NSString*)example
-                          icon:(UIImage*)icon {
+- (HEMVoiceExampleView*)addCommandWithCategory:(NSString*)category
+                                       example:(NSString*)example
+                                          icon:(UIImage*)icon {
     NSInteger count = [[[self commandsContainerView] subviews] count];
     if (count == [self estimatedNumberOfCommands]) {
-        return; // assume they've all there to avoid recreating
+        return nil;
     }
     HEMVoiceExampleView* commandView = [HEMVoiceExampleView exampleViewWithCategoryName:category
                                                                                 example:example
@@ -55,6 +55,8 @@ static CGFloat const HEMVoiceCommandViewSize = 80.0f;
     [[self commandsContainerView] addSubview:commandView];
     
     [self setNeedsUpdateConstraints];
+    
+    return commandView;
 }
 
 @end

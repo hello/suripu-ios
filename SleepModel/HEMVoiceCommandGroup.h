@@ -18,6 +18,7 @@
 @interface HEMVoiceCommandGroup : NSObject
 
 @property (nonatomic, copy) NSString* categoryName;
+@property (nonatomic, copy) NSString* message;
 @property (nonatomic, copy, readonly) NSString* example;
 @property (nonatomic, copy) NSString* iconNameSmall;
 @property (nonatomic, copy) NSString* iconNameLarge;

@@ -994,6 +994,7 @@
 "voice.welcome.title" = "Welcome to Voice";
 
 "voice.command.sound.category.name" = "Alarm and Sleep Sounds";
+"voice.command.sound.message" = "Before each command, say \"Okay Sense\" to set an alarm or begin playing Sleep Sounds.";
 "voice.command.alarm.category.name" = "Alarms";
 "voice.command.alarm.example.1" = "Wake me up at 10am.";
 "voice.command.alarm.example.2" = "Set alarm for tomorrow morning at 8.";
@@ -1003,11 +1004,13 @@
 "voice.command.sleep-sound.example.2" = "Play White Noise";
 
 "voice.command.sleep.category.name" = "Sleep";
+"voice.command.sleep.message" = "Before each command, say \"Okay Sense\" to ask about your Sleep Score, Sleep Timeline, and Sleep Trends.";
 "voice.command.timeline.category.name" = "Sleep Timeline";
 "voice.command.timeline.example.1" = "How was my sleep last night?";
 "voice.command.timeline.example.2" = "What was my Sleep Score?";
 
 "voice.command.room-conditions.category.name" = "Room Conditions";
+"voice.command.room-conditions.message" = "Before each command, say \"Okay Sense\" to ask about your temperature, humidity, air quality, and more.";
 "voice.command.bedroom.category.name" = "Bedroom Conditions";
 "voice.command.bedroom.example.1" = "What are my bedroom conditions?";
 
@@ -1025,6 +1028,7 @@
 "voice.command.air.example.1" = "How is my air quality?";
 
 "voice.command.expansions.category.name" = "Expansions";
+"voice.command.expansions.message" = "Before each command, say \"Okay Sense\" to control your lights or thermostat.";
 "voice.command.lights.category.name" = "Lights";
 "voice.command.lights.example.1" = "Turn the light on.";
 "voice.command.lights.example.2" = "Turn the light off";

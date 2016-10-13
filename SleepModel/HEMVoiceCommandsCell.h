@@ -8,6 +8,8 @@
 
 #import "HEMCardCollectionViewCell.h"
 
+@class HEMVoiceExampleView;
+
 @interface HEMVoiceCommandsCell : HEMCardCollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -18,8 +20,8 @@
 
 + (CGFloat)heightWithNumberOfCommands:(NSInteger)numberOfCommands;
 
-- (void)addCommandWithCategory:(NSString*)category
-                       example:(NSString*)example
-                          icon:(UIImage*)icon;
+- (HEMVoiceExampleView*)addCommandWithCategory:(NSString*)category
+                                       example:(NSString*)example
+                                          icon:(UIImage*)icon;
 
 @end

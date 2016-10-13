@@ -13,6 +13,7 @@
 #import "HEMWelcomeVoiceCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMVoiceCommandGroup.h"
+#import "HEMVoiceExampleView.h"
 #import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
@@ -134,11 +135,15 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
     NSArray<HEMVoiceCommandGroup*>* groups = [[self voiceService] availableVoiceCommands];
     [commandsCell setEstimatedNumberOfCommands:[groups count]];
     
+    NSUInteger index = 0;
     for (HEMVoiceCommandGroup* group in groups) {
         NSString* exampleWithQuote = [NSString stringWithFormat:@"\"%@\"", [group example]];
-        [commandsCell addCommandWithCategory:[group categoryName]
-                                     example:exampleWithQuote
-                                        icon:[UIImage imageNamed:[group iconNameSmall]]];
+        HEMVoiceExampleView* exampleView =
+            [commandsCell addCommandWithCategory:[group categoryName]
+                                         example:exampleWithQuote
+                                            icon:[UIImage imageNamed:[group iconNameSmall]]];
+        [exampleView setTag:index++];
+        [[exampleView tapGesture] addTarget:self action:@selector(didTapOnCommandGroup:)];
     }
 }
 
@@ -162,6 +167,20 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
 }
 
 #pragma mark - Actions
+
+- (void)didTapOnCommandGroup:(UITapGestureRecognizer*)tap {
+    NSArray<HEMVoiceCommandGroup*>* groups = [[self voiceService] availableVoiceCommands];
+    UIView* groupView = [tap view];
+    switch ([tap state]) {
+        case UIGestureRecognizerStateEnded: {
+            HEMVoiceCommandGroup* group = groups[[groupView tag]];
+            [[self feedDelegate] didTapOnCommandGroup:group fromPresenter:self];
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 - (void)dismissWelcome {
     NSNumber* welcomeType = @(HEMVoiceFeedRowTypeWelcome);

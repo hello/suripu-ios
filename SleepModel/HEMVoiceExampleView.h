@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* categoryLabel;
 @property (weak, nonatomic) IBOutlet UILabel* exampleLabel;
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
+@property (weak, nonatomic) UITapGestureRecognizer* tapGesture;
 
 + (instancetype)exampleViewWithCategoryName:(NSString*)name
                                     example:(NSString*)example

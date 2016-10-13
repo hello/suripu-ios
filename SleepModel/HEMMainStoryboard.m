@@ -35,6 +35,7 @@ static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
 static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMchart = @"chart";
+static NSString *const _HEMcommandGroup = @"commandGroup";
 static NSString *const _HEMcommands = @"commands";
 static NSString *const _HEMconfig = @"config";
 static NSString *const _HEMconnect = @"connect";
@@ -44,6 +45,7 @@ static NSString *const _HEMcurrentValue = @"currentValue";
 static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
+static NSString *const _HEMexamples = @"examples";
 static NSString *const _HEMexpansion = @"expansion";
 static NSString *const _HEMexpansionConfig = @"expansionConfig";
 static NSString *const _HEMexpansionLight = @"expansionLight";
@@ -139,12 +141,14 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
 +(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
 +(NSString *)chartReuseIdentifier { return _HEMchart; }
++(NSString *)commandGroupReuseIdentifier { return _HEMcommandGroup; }
 +(NSString *)commandsReuseIdentifier { return _HEMcommands; }
 +(NSString *)configReuseIdentifier { return _HEMconfig; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
++(NSString *)examplesReuseIdentifier { return _HEMexamples; }
 +(NSString *)expansionReuseIdentifier { return _HEMexpansion; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldReuseIdentifier { return _HEMfield; }

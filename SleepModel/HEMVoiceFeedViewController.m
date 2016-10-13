@@ -7,12 +7,16 @@
 //
 
 #import "HEMVoiceFeedViewController.h"
+#import "HEMVoiceExamplesViewController.h"
 #import "HEMVoiceService.h"
+#import "HEMVoiceCommandGroup.h"
 #import "HEMVoiceFeedPresenter.h"
+#import "HEMMainStoryboard.h"
 
-@interface HEMVoiceFeedViewController ()
+@interface HEMVoiceFeedViewController () <HEMVoiceFeedDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) HEMVoiceCommandGroup* selectedGroup;
 
 @end
 
@@ -32,7 +36,25 @@
         [[HEMVoiceFeedPresenter alloc] initWithVoiceService:[self voiceService]];
     [feedPresenter bindWithCollectionView:[self collectionView]];
     [feedPresenter bindWithSubNavigationBar:[self subNavBar]];
+    [feedPresenter setFeedDelegate:self];
     [self addPresenter:feedPresenter];
+}
+
+#pragma mark - Feed Delegate
+
+- (void)didTapOnCommandGroup:(HEMVoiceCommandGroup *)group
+               fromPresenter:(HEMVoiceFeedPresenter *)presenter {
+    [self setSelectedGroup:group];
+    [self performSegueWithIdentifier:[HEMMainStoryboard detailSegueIdentifier]
+                              sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    id destVC = [segue destinationViewController];
+    if ([destVC isKindOfClass:[HEMVoiceExamplesViewController class]]) {
+        HEMVoiceExamplesViewController* examplesVC = destVC;
+        [examplesVC setCommandGroup:[self selectedGroup]];
+    }
 }
 
 @end

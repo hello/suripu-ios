@@ -1000,8 +1000,8 @@
 "voice.command.alarm.example.2" = "Set alarm for tomorrow morning at 8.";
 
 "voice.command.sleep-sound.category.name" = "Sleep Sounds";
-"voice.command.sleep-sound.example.1" = "Play a Sleep Sound";
-"voice.command.sleep-sound.example.2" = "Play White Noise";
+"voice.command.sleep-sound.example.1" = "Play a Sleep Sound.";
+"voice.command.sleep-sound.example.2" = "Play White Noise.";
 
 "voice.command.sleep.category.name" = "Sleep";
 "voice.command.sleep.message" = "Before each command, say \"Okay Sense\" to ask about your Sleep Score, Sleep Timeline, and Sleep Trends.";
@@ -1031,7 +1031,7 @@
 "voice.command.expansions.message" = "Before each command, say \"Okay Sense\" to control your lights or thermostat.";
 "voice.command.lights.category.name" = "Lights";
 "voice.command.lights.example.1" = "Turn the light on.";
-"voice.command.lights.example.2" = "Turn the light off";
+"voice.command.lights.example.2" = "Turn the light off.";
 "voice.command.lights.example.3" = "Decrease the light.";
 
 "voice.command.thermostat.category.name" = "Thermostat";

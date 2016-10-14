@@ -2,15 +2,9 @@
 #import <Foundation/Foundation.h>
 #import "SENAPIClient.h"
 
-typedef NS_ENUM(NSUInteger, SENAPIAlarmsRepeatDay) {
-    SENAPIAlarmsRepeatDayMonday = 1,
-    SENAPIAlarmsRepeatDayTuesday = 2,
-    SENAPIAlarmsRepeatDayWednesday = 3,
-    SENAPIAlarmsRepeatDayThursday = 4,
-    SENAPIAlarmsRepeatDayFriday = 5,
-    SENAPIAlarmsRepeatDaySaturday = 6,
-    SENAPIAlarmsRepeatDaySunday = 7,
-};
+@class SENAlarmCollection;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface SENAPIAlarms : NSObject
 
@@ -25,11 +19,11 @@ typedef NS_ENUM(NSUInteger, SENAPIAlarmsRepeatDay) {
 /**
  *  Update stored alarms
  *
- *  @param alarms     an array of SENAlarm objects
+ *  @param alarms     an collection of alarms
  *  @param completion block invoked when call completes asynchronously
  *                    with the data parameter set to returned alarm data
  */
-+ (void)updateAlarms:(NSArray*)alarms completion:(SENAPIDataBlock)completion;
++ (void)updateAlarms:(SENAlarmCollection*)alarms completion:(nullable SENAPIDataBlock)completion;
 
 /**
  *  Fetch available sounds for alarms
@@ -40,3 +34,5 @@ typedef NS_ENUM(NSUInteger, SENAPIAlarmsRepeatDay) {
 + (void)availableSoundsWithCompletion:(SENAPIDataBlock)completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

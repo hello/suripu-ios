@@ -7,6 +7,9 @@
 //
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENSound.h>
+#import <SenseKit/SENExpansion.h>
+
+#import "UIBarButtonItem+HEMNav.h"
 
 #import "HEMAlarmPresenter.h"
 #import "HEMAlarmService.h"
@@ -15,18 +18,16 @@
 #import "HEMTutorial.h"
 #import "HEMClockPickerView.h"
 #import "HEMMainStoryboard.h"
+#import "HEMExpansionService.h"
 #import "HEMAlarmTableViewCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMDeviceService.h"
 
 static CGFloat const HEMAlarmPresenterSuccessDelay = 0.8f;
-
-typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
-    HEMAlarmTableRowSmart = 0,
-    HEMAlarmTableRowSound,
-    HEMAlarmTableRowRepeat,
-    HEMAlarmTableRowDeletion
-};
+static CGFloat const HEMAlarmConfigCellHeight = 66.0f;
+static CGFloat const HEMAlarmTimePickerMinHeight = 250.0f;
+static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 
 @interface HEMAlarmPresenter() <
     UITableViewDataSource,
@@ -35,25 +36,35 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 >
 
 @property (nonatomic, weak) HEMAlarmService* service;
+@property (nonatomic, weak) HEMDeviceService* deviceService;
+@property (nonatomic, weak) HEMExpansionService* expansionService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, weak) UIViewController* tutorialPresenter;
-@property (nonatomic, weak) HEMClockPickerView* clockPicker;
 @property (nonatomic, strong) HEMAlarmCache* cache;
 @property (nonatomic, strong) HEMAlarmCache* originalAlarm;
 @property (nonatomic, weak) SENAlarm* alarm;
 @property (nonatomic, assign) BOOL configuredClockPicker;
 @property (nonatomic, assign) BOOL deletingAlarm;
 @property (nonatomic, strong) HEMActivityCoverView* activityView;
+@property (nonatomic, strong) NSArray<NSNumber*>* rows;
+@property (nonatomic, assign, getter=isLoadingExpansions) BOOL loadingExpansions;
+@property (nonatomic, strong) NSArray<SENExpansion*>* expansions;
+@property (nonatomic, assign) BOOL reloadWhenBack;
 
 @end
 
 @implementation HEMAlarmPresenter
 
-- (instancetype)initWithAlarm:(SENAlarm*)alarm alarmService:(HEMAlarmService*)alarmService {
+- (instancetype)initWithAlarm:(SENAlarm*)alarm
+                 alarmService:(HEMAlarmService*)alarmService
+                deviceService:(HEMDeviceService*)deviceService
+             expansionService:(HEMExpansionService*)expansionService {
     self = [super init];
     if (self) {
         _alarm = alarm;
         _service = alarmService;
+        _deviceService = deviceService;
+        _expansionService = expansionService;
         _cache = [HEMAlarmCache new];
         _originalAlarm = [HEMAlarmCache new];
         
@@ -66,24 +77,58 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
             [_service refreshAlarms:nil];
         }
         
+        NSMutableArray* rows = [NSMutableArray arrayWithCapacity:6];
+        [rows addObjectsFromArray:@[@(HEMAlarmRowTypeSmart),
+                                    @(HEMAlarmRowTypeTone),
+                                    @(HEMAlarmRowTypeRepeat)]];
+        
+        // Sense Voice only features
+        // TODO: hide for 1.5.4
+//        if ([_deviceService savedHardwareVersion] == SENSenseHardwareVoice) {
+//            [rows addObject:@(HEMAlarmRowTypeLight)];
+//        }
+        
+        // Optionally show delete
+        if ([alarm isSaved]) {
+            [rows addObject:@(HEMAlarmRowTypeDelete)];
+        }
+        
+        _rows = rows;
     }
     return self;
 }
 
-- (void)bindWithTableView:(UITableView*)tableView heightConstraint:(NSLayoutConstraint*)heightConstraint {
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem {
+    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+    UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:cancelText
+                                                                 image:nil
+                                                                target:self
+                                                                action:@selector(cancel)];
+    
+    UIBarButtonItem* saveItem = [UIBarButtonItem saveButtonWithTarget:self action:@selector(save)];
+    
+    [navItem setLeftBarButtonItem:cancelItem];
+    [navItem setRightBarButtonItem:saveItem];
+    [navItem setTitle:NSLocalizedString(@"alarm.edit.title", nil)];
+}
+
+- (void)bindWithTableView:(UITableView*)tableView {
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView setBackgroundColor:[UIColor clearColor]];
+    [tableView setSeparatorColor:[UIColor separatorColor]];
+    [tableView setTableFooterView:[UIView new]];
+    [tableView setBounces:YES];
     
-    if (![[self alarm] isSaved]) {
-        // remove the height allocated for the delete button
-        CGFloat currentConstant = [heightConstraint constant];
-        CGFloat rowHeight = [tableView rowHeight];
-        [heightConstraint setConstant:currentConstant - rowHeight];
-    }
+    HEMClockPickerView* timePicker = (id) [tableView tableHeaderView];
+    [timePicker setDelegate:self];
     
     [self setTableView:tableView];
     [self reloadWithAlarmSoundMetadata];
+    
+    if ([[self rows] containsObject:@(HEMAlarmRowTypeLight)]) {
+        [self loadExpansions:nil];
+    }
 }
 
 - (void)reloadWithAlarmSoundMetadata {
@@ -104,26 +149,21 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     }];
 }
 
-- (void)bindWithClockPickerView:(HEMClockPickerView*)clockPicker {
-    [clockPicker setDelegate:self];
-    [clockPicker setBackgroundColor:[UIColor lightBackgroundColor]];
-    [self setClockPicker:clockPicker];
-}
-
 - (void)bindWithTutorialPresentingController:(UIViewController*)controller {
     [self setTutorialPresenter:controller];
 }
 
-- (void)bindWithButtonContainer:(UIView*)container
-                   cancelButton:(UIButton*)cancelButton
-                     saveButton:(UIButton*)saveButton {
-    [container addSubview:[self artificialBorderInView:container]];
-    
-    [[saveButton titleLabel] setFont:[UIFont alarmButtonFont]];
-    [saveButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [[cancelButton titleLabel] setFont:[UIFont alarmButtonFont]];
-    [cancelButton addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
+#pragma mark - Expansions
+
+- (void)loadExpansions:(void(^)(void))completion {
+    [self setLoadingExpansions:YES];
+    __weak typeof(self) weakSelf = self;
+    [[self expansionService] getListOfExpansion:^(NSArray<SENExpansion *> * expansions, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setExpansions:expansions];
+        [strongSelf setLoadingExpansions:NO];
+        [[strongSelf tableView] reloadData];
+    }];
 }
 
 #pragma mark - Activity
@@ -177,11 +217,11 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 
 #pragma mark - Actions
 
-- (void)cancel:(UIButton*)button {
+- (void)cancel {
     [[self delegate] didSave:NO from:self];
 }
 
-- (void)save:(UIButton*)button {
+- (void)save {
     BOOL tooSoon = [[self service] isTimeTooSoon:[self cache]];
     BOOL willRingToday = [[self service] willRingToday:[self cache]];
     if (tooSoon && willRingToday) {
@@ -266,24 +306,33 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [HEMTutorial showTutorialForAlarmSmartnessFrom:[self tutorialPresenter]];
 }
 
-- (UIView*)artificialBorderInView:(UIView*)view {
-    CGFloat width = CGRectGetWidth([view bounds]);
-    CGRect borderFrame = CGRectZero;
-    borderFrame.size.width = width;
-    borderFrame.size.height = HEMStyleButtonContainerBorderWidth;
-    UIView* border = [[UIView alloc] initWithFrame:borderFrame];
-    [border setBackgroundColor:[UIColor separatorColor]];
-    return border;
+#pragma mark - Light
+
+- (void)toggleLight:(UISwitch*)sender {
+    SENExpansion* lightExpansion = [[self expansionService] lightExpansionFrom:[self expansions]];
+    BOOL enableLight = [sender isOn];
+    [[self cache] setEnable:enableLight expansion:lightExpansion];
+}
+
+- (void)showLightInfo:(UIButton*)sender {
+    [HEMTutorial showInfoForExpansionFrom:[self tutorialPresenter]];
 }
 
 #pragma mark - Presenter events
 
 - (void)willAppear {
     [super willAppear];
-    if (![self configuredClockPicker] && [self clockPicker]) {
-        [[self clockPicker] updateTimeToHour:[[self cache] hour] minute:[[self cache] minute]];
+    HEMClockPickerView* timePicker = (id) [[self tableView] tableHeaderView];
+    if (![self configuredClockPicker] && timePicker) {
+        [timePicker updateTimeToHour:[[self cache] hour] minute:[[self cache] minute]];
         [self setConfiguredClockPicker:YES];
     }
+    
+    if ([self reloadWhenBack]) {
+        [self loadExpansions:nil];
+        [self setReloadWhenBack:NO];
+    }
+    
     [[self tableView] reloadData];
 }
 
@@ -291,77 +340,175 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
     [super didAppear];
     if ([self tutorialPresenter]) {
         [HEMTutorial showTutorialForAlarmsIfNeededFrom:[self tutorialPresenter]];
-    }
+    }    
+    [[self tableView] flashScrollIndicators];
+}
+
+- (void)didRelayout {
+    [super didRelayout];
+    
+    NSInteger rowCount = [[self rows] count];
+    CGFloat rowTotalHeight = rowCount * HEMAlarmConfigCellHeight;
+    CGFloat tableHeight = CGRectGetHeight([[self tableView] bounds]);
+    
+    UIView* tableHeaderView = [[self tableView] tableHeaderView];
+    CGRect headerFrame = [tableHeaderView frame];
+    headerFrame.size.height = MAX(HEMAlarmTimePickerMinHeight, tableHeight - rowTotalHeight);
+    [tableHeaderView setFrame:headerFrame];
+    
+    // required to cause it to adjust content size
+    [[self tableView] setTableHeaderView:tableHeaderView];
 }
 
 #pragma mark - TableView
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    UIImage* shadow = [UIImage imageNamed:@"topShadowStraight"];
-    return [shadow size].height;
-}
-
-- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIImage* shadow = [UIImage imageNamed:@"topShadowStraight"];
-    UIImageView* shadowView = [[UIImageView alloc] initWithImage:shadow];
-    [shadowView setBackgroundColor:[UIColor clearColor]]; // let it blend with clock view
-    [shadowView setContentMode:UIViewContentModeScaleAspectFill];
-    [shadowView addSubview:[self artificialBorderInView:shadowView]];
-    return shadowView;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return HEMAlarmConfigCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return ![[self alarm] isSaved] ? 3 : 4;
+    return [[self rows] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier, *title = nil, *detail = nil;
-    BOOL switchState = NO;
-    switch ([indexPath row]) {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSNumber* typeNumber = [self rows][[indexPath row]];
+    NSString *identifier = nil;
+    
+    switch ([typeNumber unsignedIntegerValue]) {
         default:
-        case HEMAlarmTableRowSmart:
+        case HEMAlarmRowTypeSmart:
             identifier = [HEMMainStoryboard alarmSwitchCellReuseIdentifier];
+            break;
+        case HEMAlarmRowTypeTone:
+            identifier = [HEMMainStoryboard alarmSoundCellReuseIdentifier];
+            break;
+        case HEMAlarmRowTypeRepeat:
+            identifier = [HEMMainStoryboard alarmRepeatCellReuseIdentifier];
+            break;
+        case HEMAlarmRowTypeDelete:
+            identifier = [HEMMainStoryboard alarmDeleteCellReuseIdentifier];
+            break;
+        case HEMAlarmRowTypeLight:
+            identifier = [HEMMainStoryboard alarmLightCellReuseIdentifier];
+            break;
+    }
+    
+    return [tableView dequeueReusableCellWithIdentifier:identifier];
+}
+
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([cell isKindOfClass:[HEMAlarmTableViewCell class]]) {
+        NSNumber* typeNumber = [self rows][[indexPath row]];
+        HEMAlarmRowType type = [typeNumber unsignedIntegerValue];
+        [self configureAlarmConfigCell:(id)cell forType:type];
+    }
+}
+
+- (void)configureAlarmConfigCell:(HEMAlarmTableViewCell*)cell forType:(HEMAlarmRowType)type {
+    NSString *title = nil, *detail = nil;
+    UIColor* titleColor = [UIColor grey6];
+    BOOL switchState = NO;
+    
+    switch (type) {
+        default:
+        case HEMAlarmRowTypeSmart:
             switchState = [[self cache] isSmart];
             title = NSLocalizedString(@"alarm.smart.title", nil);
+            [[cell smartSwitch] setOn:switchState];
+            [[cell smartSwitch] addTarget:self
+                                   action:@selector(toggleSmartness:)
+                         forControlEvents:UIControlEventTouchUpInside];
+            [[cell infoButton] addTarget:self
+                                  action:@selector(showSmartTutorial:)
+                        forControlEvents:UIControlEventTouchUpInside];
             break;
-        case HEMAlarmTableRowSound:
-            identifier = [HEMMainStoryboard alarmSoundCellReuseIdentifier];
+        case HEMAlarmRowTypeTone:
             title = NSLocalizedString(@"alarm.sound.title", nil);
             detail = [[self cache] soundName] ?: NSLocalizedString(@"alarm.sound.no-selection", nil);
             break;
-        case HEMAlarmTableRowRepeat:
-            identifier = [HEMMainStoryboard alarmRepeatCellReuseIdentifier];
+        case HEMAlarmRowTypeRepeat:
             title = NSLocalizedString(@"alarm.repeat.title", nil);
             detail = [[self service] localizedTextForRepeatFlags:[[self cache] repeatFlags]];
             break;
-        case HEMAlarmTableRowDeletion:
-            identifier = [HEMMainStoryboard alarmDeleteCellReuseIdentifier];
+        case HEMAlarmRowTypeDelete:
             title = NSLocalizedString(@"alarm.delete.title", nil);
+            titleColor = [UIColor red6];
+            break;
+        case HEMAlarmRowTypeLight:
+            title = NSLocalizedString(@"alarm.light.title", nil);
+            [self configureLightSwitchInCell:cell];
             break;
     }
-    HEMAlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
     [[cell titleLabel] setText:title];
-    [[cell titleLabel] setFont:[UIFont alarmTitleFont]];
+    [[cell titleLabel] setFont:[UIFont body]];
+    [[cell titleLabel] setTextColor:titleColor];
+    
     [[cell detailLabel] setText:detail];
-    [[cell detailLabel] setFont:[UIFont alarmDetailFont]];
+    [[cell detailLabel] setFont:[UIFont body]];
+    [[cell detailLabel] setTextColor:[UIColor grey4]];
+    
     [cell setBackgroundColor:[UIColor clearColor]];
-    // only cells prototyped with these views will have the following effect.
-    // other cells will be No-Op
-    [[cell smartSwitch] setOn:switchState];
-    [[cell smartSwitch] addTarget:self
-                           action:@selector(toggleSmartness:)
-                 forControlEvents:UIControlEventTouchUpInside];
-    [[cell infoButton] addTarget:self
-                          action:@selector(showSmartTutorial:)
-                forControlEvents:UIControlEventTouchUpInside];
-    return cell;
+}
+
+- (void)configureLightSwitchInCell:(HEMAlarmTableViewCell*)lightCell {
+    [lightCell showActivity:[self isLoadingExpansions]];
+    [[lightCell infoButton] addTarget:self
+                               action:@selector(showLightInfo:)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [[lightCell errorIcon] setHidden:YES];
+    [lightCell setAccessoryView:nil];
+    
+    if (![self isLoadingExpansions]) {
+        SENExpansion* lightExpansion =
+            [[self expansionService] lightExpansionFrom:[self expansions]];
+        
+        if ([[self expansionService] isReadyForUse:lightExpansion]) {
+            BOOL enabled = [[self service] isExpansionEnabledFor:lightExpansion inAlarmCache:[self cache]];
+            [lightCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [[lightCell smartSwitch] setHidden:NO];
+            [[lightCell smartSwitch] setOn:enabled];
+            [[lightCell smartSwitch] addTarget:self
+                                        action:@selector(toggleLight:)
+                         forControlEvents:UIControlEventTouchUpInside];
+            
+        } else if (lightExpansion) {
+            UIImage* accessoryImage = [UIImage imageNamed:@"accessory"];
+            CGRect accessoryFrame = CGRectZero;
+            accessoryFrame.size.height = CGRectGetHeight([lightCell bounds]);
+            accessoryFrame.size.width = accessoryImage.size.width + HEMAlarmConfigCellLightAccessoryPadding;
+            
+            UIImageView* accessoryView = [[UIImageView alloc] initWithImage:accessoryImage];
+            [accessoryView setFrame:accessoryFrame];
+            [accessoryView setContentMode:UIViewContentModeCenter];
+            
+            [[lightCell smartSwitch] setHidden:YES];
+            [lightCell setAccessoryView:accessoryView];
+        } else {
+            [[lightCell errorIcon] setHidden:NO];
+            [[lightCell smartSwitch] setHidden:YES];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch ([indexPath row]) {
-        case HEMAlarmTableRowDeletion:
+    
+    NSNumber* typeNumber = [self rows][[indexPath row]];
+    
+    switch ([typeNumber unsignedIntegerValue]) {
+        case HEMAlarmRowTypeDelete:
             [self deleteAlarm];
+            break;
+        case HEMAlarmRowTypeLight:
+            [self handleLightSelection];
+            break;
+        case HEMAlarmRowTypeTone:
+        case HEMAlarmRowTypeRepeat:
+            [[self delegate] didSelectRowType:[typeNumber unsignedIntegerValue]];
             break;
         default:
             break;
@@ -369,7 +516,33 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [indexPath row] != HEMAlarmTableRowSmart;
+    NSNumber* typeNumber = [self rows][[indexPath row]];
+    switch ([typeNumber unsignedIntegerValue]) {
+        case HEMAlarmRowTypeSmart:
+            return NO;
+        case HEMAlarmRowTypeLight: {
+            SENExpansion* expansion = [[self expansionService] lightExpansionFrom:[self expansions]];
+            return ![[self expansionService] isReadyForUse:expansion];
+        }
+        default:
+            return YES;
+    }
+}
+
+#pragma mark - Light actions
+
+- (void)handleLightSelection {
+    SENExpansion* lightExpansion = [[self expansionService] lightExpansionFrom:[self expansions]];
+    if (lightExpansion) {
+        if (![[self expansionService] isReadyForUse:lightExpansion]) {
+            [[self delegate] didSelectRowType:HEMAlarmRowTypeLight];
+            [self setReloadWhenBack:YES];
+        }
+    } else {
+        NSString* title = NSLocalizedString(@"alarm.light.error.unable.to.load.title", nil);
+        NSString* message = NSLocalizedString(@"alarm.light.error.unable.to.load.message", nil);
+        [[self delegate] showErrorWithTitle:title message:message from:self];
+    }
 }
 
 #pragma mark - HEMClockPickerViewDelegate
@@ -384,7 +557,9 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableRow) {
 - (void)dealloc {
     [_tableView setDataSource:nil];
     [_tableView setDelegate:nil];
-    [_clockPicker setDelegate:nil];
+    
+    HEMClockPickerView* timePicker = (id) [_tableView tableHeaderView];
+    [timePicker setDelegate:nil];
 }
 
 @end

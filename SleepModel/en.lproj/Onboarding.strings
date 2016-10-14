@@ -152,8 +152,8 @@
 /* Class = "UILabel"; text = "This is used to provide you with more personalized sleep insights."; ObjectID = "ayt-S0-U9x"; */
 "ayt-S0-U9x.text" = "This is used to provide you with more personalized sleep insights.";
 
-/* Class = "UIButton"; normalTitle = "SENSE ISN'T GLOWING PURPLE?"; ObjectID = "bX7-3Z-6yh"; */
-"bX7-3Z-6yh.normalTitle" = "SENSE ISN'T GLOWING PURPLE?";
+/* Class = "UIButton"; normalTitle = "Sense isn’t glowing blue or purple"; ObjectID = "bX7-3Z-6yh"; */
+"bX7-3Z-6yh.normalTitle" = "Sense isn’t glowing blue or purple";
 
 /* Class = "UILabel"; text = "Pairing your Sleep Pill"; ObjectID = "beC-YD-29R"; */
 "beC-YD-29R.text" = "Pairing your Sleep Pill";

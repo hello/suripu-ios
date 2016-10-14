@@ -96,8 +96,10 @@
 }
 
 - (void)updatePaneVisibilityAnimated:(BOOL)animated {
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root setPaneVisible:[self shouldShowDrawerPane] animated:animated];
+    if (![self manuallyHandleDrawerVisibility]) {
+        HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+        [root setPaneVisible:[self shouldShowDrawerPane] animated:animated];
+    }
 }
 
 #pragma mark - Top Bar Handling

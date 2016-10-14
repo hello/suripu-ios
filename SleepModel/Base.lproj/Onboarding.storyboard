@@ -3268,12 +3268,18 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="43"/>
+                                <rect key="frame" x="20" y="68" width="560" height="17"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Now we'll pair your phone with Sense. Make sure Sense is plugged in, nearby, and glowing purple. Tap Continue when ready.">
+                                    <fragment content="Sense should be plugged in, nearby, and glowing either blue or purple.">
                                         <attributes>
-                                            <font key="NSFont" metaFont="system" size="18"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                            <font key="NSFont" size="15" name="ArialMT"/>
+                                            <real key="NSKern" value="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" minimumLineHeight="17" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                            <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                            <real key="NSStrokeWidth" value="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -3305,7 +3311,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                                     <constraint firstAttribute="height" constant="28" id="JOa-ZV-j6V"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
-                                <state key="normal" title="SENSE ISN'T GLOWING PURPLE?">
+                                <state key="normal" title="Sense isn’t glowing blue or purple">
                                     <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -3628,15 +3634,15 @@ Flip the switch to On</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Sda-jg-aqk"/>
-        <segue reference="6ED-su-wCY"/>
+        <segue reference="Gpb-8d-Xjm"/>
+        <segue reference="0DP-Ib-Jz4"/>
+        <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="v6v-Rh-oSf"/>
-        <segue reference="l0v-WX-q0S"/>
         <segue reference="7LA-fg-2Jb"/>
         <segue reference="tkT-Pb-lgk"/>
         <segue reference="BBN-wL-Nmg"/>
         <segue reference="wdw-bO-x3J"/>
-        <segue reference="0DP-Ib-Jz4"/>
-        <segue reference="3DQ-Vg-FaT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

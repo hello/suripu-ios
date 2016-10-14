@@ -48,11 +48,9 @@
     return self;
 }
 
-- (void)bindWithNavigationBar:(UINavigationBar *)navigationBar
-            withTopConstraint:(NSLayoutConstraint *)topConstraint {
-    [super bindWithNavigationBar:navigationBar withTopConstraint:topConstraint];
-    UINavigationItem* topItem = [navigationBar topItem];
-    [topItem setTitle:[self navTitle]];
+- (void)bindWithNavigationItem:(UINavigationItem *)navItem {
+    [super bindWithNavigationItem:navItem];
+    [navItem setTitle:[self navTitle]];
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
@@ -80,6 +78,12 @@
     SENAlarmRepeatDays selectedDays = [[self cache] repeatFlags];
     BOOL selected = (selectedDays & day) == day;
     return selected;
+}
+
+#pragma mark - Overrides
+
+- (BOOL)hideExtraNavigationBar {
+    return YES;
 }
 
 #pragma mark -

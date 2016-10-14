@@ -8,6 +8,8 @@
 #import <SenseKit/SENAPIAlarms.h>
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENPreference.h>
+#import <SenseKit/SENAlarmCollection.h>
+#import <SenseKit/SENExpansion.h>
 
 #import "HEMAlarmService.h"
 #import "HEMAlarmCache.h"
@@ -50,8 +52,20 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 - (void)handleAlarmResponse:(id)data error:(NSError*)error {
     if (error) {
         [SENAnalytics trackError:error];
-    } else if ([data isKindOfClass:[NSArray class]]) {
-        [self setAlarms:[self sortAlarms:data]];
+    } else if ([data isKindOfClass:[SENAlarmCollection class]]) {
+        // build a single list from the collection of alarms
+        SENAlarmCollection* collection = data;
+        NSMutableArray* allAlarms = [NSMutableArray arrayWithCapacity:HEMAlarmServiceMaxAlarmLimit];
+        if ([collection expansionAlarms]) {
+            [allAlarms addObjectsFromArray:[collection expansionAlarms]];
+        }
+        if ([collection voiceAlarms]) {
+            [allAlarms addObjectsFromArray:[collection voiceAlarms]];
+        }
+        if ([collection classicAlarms]) {
+            [allAlarms addObjectsFromArray:[collection classicAlarms]];
+        }
+        [self setAlarms:[self sortAlarms:allAlarms]];
     } else {
         [self setAlarms:@[]];
     }
@@ -63,20 +77,23 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf handleAlarmResponse:data error:error];
         if (completion) {
-            completion (data, error);
+            completion ([strongSelf alarms], error);
         }
     }];
 }
 
 - (void)updateAlarms:(NSArray<SENAlarm*>*)alarms completion:(HEMAlarmUpdateHandler)completion {
     __weak typeof(self) weakSelf = self;
-    [SENAPIAlarms updateAlarms:alarms completion:^(id data, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf handleAlarmResponse:data error:error];
-        if (completion) {
-            completion (error);
-        }
-    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        SENAlarmCollection* collection = [[SENAlarmCollection alloc] initWithAlarms:alarms];
+        [SENAPIAlarms updateAlarms:collection completion:^(id data, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf handleAlarmResponse:data error:error];
+            if (completion) {
+                completion (error);
+            }
+        }];
+    });
 }
 
 - (BOOL)isTimeTooSoon:(HEMAlarmCache*)cache {
@@ -229,6 +246,7 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     [alarm setSoundName:[cache soundName]];
     [alarm setSoundID:[cache soundID]];
     [alarm setOn:[cache isOn]];
+    [alarm setExpansions:[cache expansions]];
 }
 
 - (BOOL)canCreateMoreAlarms {
@@ -241,6 +259,15 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 
 - (BOOL)hasLoadedAlarms {
     return [self alarms] != nil;
+}
+
+- (BOOL)isExpansionEnabledFor:(SENExpansion*)expansion inAlarmCache:(HEMAlarmCache*)alarm {
+    for (SENAlarmExpansion* alarmExpansion in [alarm expansions]) {
+        if ([[expansion identifier] isEqualToNumber:[alarmExpansion expansionId]]) {
+            return [alarmExpansion isEnable];
+        }
+    }
+    return NO;
 }
 
 @end

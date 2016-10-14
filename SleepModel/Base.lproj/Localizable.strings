@@ -19,8 +19,8 @@
 "onboarding.new-sense.title" = "Have Sense ready?";
 "onboarding.new-sense.desc" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
 "onboarding.pair-sense.title" = "Pair your Sense";
-"onboarding.pair-sense.not-glowing" = "Sense isn't glowing purple?";
-"onboarding.pair-sense.desc" = "Now we'll pair your phone with Sense. Make sure Sense is plugged in, nearby, and glowing purple. Tap Continue when ready.";
+"onboarding.pair-sense.not-glowing" = "Sense isn’t glowing blue or purple";
+"onboarding.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";
 "onboarding.account.sign-in.title" = "Welcome back";
 "sign-up.activity.message" = "Creating your account";
 "sign-up.failed.title" = "Sign up failed";
@@ -171,6 +171,7 @@
 
 // settings
 "settings.title" = "Settings";
+"settings.expansions" = "Expansions";
 "settings.notifications" = "Notifications";
 "settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My account";
@@ -368,6 +369,7 @@
 "alarms.title" = "Alarms";
 "alarms.first-alarm.button-title" = "Set smart alarm";
 "alarms.smart-alarm.format" = "Smart alarm — %@";
+"alarms.voice-alarm.format" = "Voice alarm — %@";
 "alarms.alarm.format" = "Alarm — %@";
 "alarms.alarm.meridiem.am" = "AM";
 "alarms.alarm.meridiem.pm" = "PM";
@@ -377,6 +379,7 @@
 "alarms.error.message.limit-reached" = "You've created the maximum number of alarms. Delete an alarm before attempting to create a new one, or edit an existing alarm.";
 
 // alarm settings
+"alarm.edit.title" = "Edit Alarm";
 "alarm.sound.title" = "Tone";
 "alarm.sound.subtitle" = "Select an alarm tone";
 "alarm.repeat.title" = "Repeat";
@@ -393,6 +396,9 @@
 "alarm.delete.confirm.message" = "Are you sure you want to delete this alarm?";
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
+"alarm.light.title" = "Lights";
+"alarm.light.error.unable.to.load.title" = "Expansion not loaded";
+"alarm.light.error.unable.to.load.message" = "Sense could not load expansions at this time. Please try again later.";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";
@@ -630,6 +636,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.delete" = "Delete";
 "actions.continue" = "Continue";
 "actions.update-now" = "Update now";
 "actions.update" = "Update";
@@ -859,6 +866,7 @@
 "dfu.pill.error.insufficient-phone-battery" = "To continue this update, your mobile device needs to be charged at least 20% or be connected to its charger.";
 "dfu.pill.error.title.pill-not-found" = "Sleep Pill not detected";
 "dfu.pill.error.pill-not-found" = "Make sure to shake your Sleep Pill quickly for three seconds while holding it close to your mobile device.";
+"dfu.pill.error.update-failed-no-ble" = "There was a problem updating your Sleep Pill. Check to make sure Bluetooth is on and try again.";
 
 // sense dfu
 "onboarding.sense.dfu.error.title" = "Update failed";
@@ -886,7 +894,7 @@
 "upgrade.new-sense.learn-more" = "Purchase Sense with Voice";
 "upgrade.new-sense.setup" = "Set up";
 "upgrade.pair-sense.title" = "Pairing your new Sense";
-"upgrade.pair-sense.desc" = "Confirm that your new Sense is plugged in nearby and glowing purple.";
+"upgrade.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";
 "upgrade.actions.pair-pill" = "Pair new Sleep Pill";
 "upgrade.actions.skip-new" = "Don't pair new Sleep Pill";
 "upgrade.pill.title" = "Pair your new Sleep Pill";
@@ -942,3 +950,38 @@
 "ext.room-conditions.error" = "unable to load data";
 "ext.room-conditions.not-signed-in" = "sign in to view data";
 "ext.room-conditions.loading" = "loading data";
+
+// expansions
+"expansion.state.not-connected" = "Connect";
+"expansion.state.revoked" = "Disconnected";
+"expansion.state.connected-off" = "Disabled";
+"expansion.state.connected-on" = "Enabled";
+"expansion.state.not-configured" = "Configure";
+"expansion.action.permissions" = "Permissions";
+"expansion.action.enable" = "Enabled";
+"expansion.action.remove" = "Remove Access";
+"expansion.status.enabling" = "Enabling expansion";
+"expansion.status.disabling" = "Disabling expansion";
+"expansion.status.removing-access" = "Removing access";
+"expansion.configuration.name.temperature" = "Thermostat";
+"expansion.configuration.name.light" = "Room";
+"expansion.configuration.name.generic" = "Configuration";
+"expansion.configuration.activity.loading-configs" = "Loading configurations";
+"expansion.configuration.options.title.format" = "select a %@";
+"expansion.configuration.activity.updating-config.format" = "Setting %@";
+"expansion.configuration.removal.confirm.title" = "Are you sure?";
+"expansion.configuration.removal.confirm.message" = "Are you sure you want to remove this expansion? Previously set alarms will still sound, but will no longer activate this expansion.";
+"expansion.enable.info.title" = "Expansions";
+"expansion.enable.info.description" = "Enabling access to compatible smart devices allows Sense to activate them at relevant moments, like turning on your lights when Sense’s alarm sounds.";
+"expansion.error.setup.no-groups.temperature.title" = "No thermostat available";
+"expansion.error.setup.no-groups.temperature.message.format" = "You will need to set up a thermostat in the %@ app.";
+"expansion.error.setup.no-groups.light.title" = "No rooms available";
+"expansion.error.setup.no-groups.light.message.format" = "You will need to set up a room in the %@ app.";
+"expansion.error.setup.generic.title" = "Changes not saved";
+"expansion.error.setup.generic.message" = "Sense couldn't save your changes. Please try again later.";
+"expansion.config.title.format" = "You've connected to %@";
+"expansion.config.description.format" = "Choose which %@ you would like to control with your Sense.";
+"expansion.config.no-config.footer.format" = "Go to your %@ app to configure %@";
+"expansion.config.no-cnfig.format" = "No %@ found";
+"expansion.config.select" = "Select";
+"expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";

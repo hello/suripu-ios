@@ -65,7 +65,6 @@
     
     [presenter bindWithCollectionView:[self collectionView]];
     [presenter bindWithActivityIndicator:[self activityIndicator]];
-    [presenter bindWithShadowView:[self shadowView]];
     [presenter setPairDelegate:self];
     [presenter setDelegate:self];
 

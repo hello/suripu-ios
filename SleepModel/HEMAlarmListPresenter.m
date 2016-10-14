@@ -347,10 +347,13 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 - (void)updateDetailTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm {
     NSString *detailFormat;
     
-    if ([alarm isSmartAlarm])
+    if ([alarm source] == SENAlarmSourceVoice) {
+        detailFormat = NSLocalizedString(@"alarms.voice-alarm.format", nil);
+    } else if ([alarm isSmartAlarm]) {
         detailFormat = NSLocalizedString(@"alarms.smart-alarm.format", nil);
-    else
+    } else {
         detailFormat = NSLocalizedString(@"alarms.alarm.format", nil);
+    }
     
     NSString *repeatText = [[self alarmService] localizedTextForRepeatFlags:alarm.repeatFlags];
     NSString *detailText = [[NSString stringWithFormat:detailFormat, repeatText] uppercaseString];

@@ -7,6 +7,7 @@
 //
 
 #import "SENService.h"
+#import <SenseKit/SENSenseMetadata.h>
 
 @class SENPairedDevices;
 @class SENDeviceMetadata;
@@ -86,6 +87,7 @@ typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 - (void)hardFactoryResetSense:(NSString*)senseId completion:(HEMDeviceResetHandler)completion;
 - (BOOL)hasHardwareUpgradeForSense;
 - (BOOL)isPillFirmwareUpdateAvailable;
+- (SENSenseHardware)savedHardwareVersion;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

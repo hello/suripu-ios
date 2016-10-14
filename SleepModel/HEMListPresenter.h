@@ -25,11 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HEMListDelegate <NSObject>
 
-- (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter*)presenter;
-
 @optional
 - (void)goBackFrom:(HEMListPresenter*)presenter;
 - (void)didDeselectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter*)presenter;
+- (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter*)presenter;
+- (void)dismissControllerFromPresenter:(HEMListPresenter*)presenter;
 
 @end
 
@@ -38,12 +38,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<HEMListDelegate> delegate;
 @property (nonatomic, weak) id<HEMListPresenterDelegate> presenterDelegate;
 
+@property (nonatomic, weak, readonly) UIView* activityContainerView;
 @property (nonatomic, weak, readonly) UITableView* tableView;
 @property (nonatomic, weak, readonly, nullable) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, copy, nullable) NSArray* selectedItemNames;
 @property (nonatomic, copy, nullable) NSArray* items;
 @property (nonatomic, assign) BOOL hideExtraNavigationBar; // defaults to YES
+@property (nonatomic, weak, readonly) UINavigationItem* mainNavItem;
 
 - (instancetype)initWithTitle:(NSString*)title
                         items:(nullable NSArray*)items
@@ -55,6 +57,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
             withTopConstraint:(NSLayoutConstraint*)topConstraint;
+
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem;
+
+- (void)bindWithActivityContainerView:(UIView*)activityContainerView;
 
 /**
  * @discussion

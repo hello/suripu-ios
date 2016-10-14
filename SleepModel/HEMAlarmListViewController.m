@@ -5,7 +5,7 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMStyledNavigationViewController.h"
+#import "HEMSettingsNavigationController.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSubNavigationView.h"
@@ -58,8 +58,13 @@
 
 - (void)presentViewControllerForAlarm:(SENAlarm *)alarm {
     UINavigationController *controller = (UINavigationController *)[HEMMainStoryboard instantiateAlarmNavController];
+    if ([controller isKindOfClass:[HEMSettingsNavigationController class]]) {
+        HEMSettingsNavigationController* settingsNav = (id)controller;
+        [settingsNav setManuallyHandleDrawerVisibility:YES];
+    }
     HEMAlarmViewController *alarmController = (HEMAlarmViewController *)controller.topViewController;
     alarmController.alarm = alarm;
+    alarmController.deviceService = self.deviceService;
     alarmController.alarmService = self.alarmService;
     alarmController.delegate = self;
     [self presentViewController:controller animated:YES completion:nil];

@@ -13,6 +13,7 @@
 +(NSString *)alarmSwitchCellReuseIdentifier;
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
++(NSString *)alarmLightCellReuseIdentifier;
 +(NSString *)alarmDeleteCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
@@ -25,6 +26,12 @@
 +(NSString *)aboutReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
++(NSString *)errorReuseIdentifier;
++(NSString *)expansionReuseIdentifier;
++(NSString *)plainReuseIdentifier;
++(NSString *)configReuseIdentifier;
++(NSString *)textReuseIdentifier;
++(NSString *)toggleReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;
 +(NSString *)signoutReuseIdentifier;
@@ -48,7 +55,6 @@
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)sensorReuseIdentifier;
 +(NSString *)groupReuseIdentifier;
-+(NSString *)errorReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;
@@ -66,8 +72,12 @@
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)alarmSoundsSegueIdentifier;
 +(NSString *)alarmsSegueIdentifier;
++(NSString *)connectSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
++(NSString *)expansionSegueIdentifier;
++(NSString *)expansionLightSegueIdentifier;
++(NSString *)expansionsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
@@ -89,6 +99,7 @@
 +(id)instantiateAlarmViewController;
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
++(id)instantiateExpansionConfigViewController;
 +(id)instantiateFormViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;

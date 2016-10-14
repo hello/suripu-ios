@@ -26,7 +26,8 @@ typedef NS_ENUM(NSInteger, SENSleepPillErrorCode) {
     SENSleepPillErrorCodeDfuMissingCharacteristic = -9,
     SENSleepPillErrorCodeUnexpectedDisconnect = -10,
     SENSleepPillErrorCodeRediscoveryFailed = -11,
-    SENSleepPillErrorCodeTimeout = -12
+    SENSleepPillErrorCodeTimeout = -12,
+    SENSleepPillErrorCodeUnableToDownloadUpdate = -13
 };
 
 typedef NS_ENUM(NSInteger, SENSleepPillDfuState) {

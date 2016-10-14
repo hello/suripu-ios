@@ -18,6 +18,7 @@
 static NSString* const HEMPillFinderErrorDomain = @"is.hello.app.pill";
 static CGFloat const HEMPillFinderAnimeDuration = 0.5f;
 static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
+static CGFloat const HEMPillFinderScanTimeout = 30.0f;
 
 @interface HEMPillFinderPresenter()
 
@@ -32,6 +33,7 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
 @property (nonatomic, weak) UIButton *cancelButton;
 @property (nonatomic, weak) UIButton *helpButton;
 @property (nonatomic, assign) BOOL autoStart;
+@property (nonatomic, strong) NSTimer* scanTimer;
 
 @end
 
@@ -99,11 +101,41 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
     [[self indicatorView] setHidden:show];
 }
 
+- (void)timeout {
+    [[self scanTimer] invalidate];
+    [self setScanTimer:nil];
+    [self showPillNotFoundError];
+}
+
+- (void)showPillNotFoundError {
+    NSString* errorTitle = NSLocalizedString(@"dfu.pill.error.title.pill-not-found", nil);
+    NSString* errorMessage = NSLocalizedString(@"dfu.pill.error.pill-not-found", nil);
+    NSString* helpSlug = NSLocalizedString(@"help.url.slug.pill-dfu-not-found", nil);
+    [[self errorDelegate] showErrorWithTitle:errorTitle
+                                  andMessage:errorMessage
+                                withHelpPage:helpSlug
+                               fromPresenter:self];
+    
+    [[self videoView] stop];
+    [self showRetryButton:YES];
+    [self showNavButtons:YES];
+}
+
 - (void)findNearestPillIfNotFound {
     if (![[self deviceService] isScanningPill] && ![self sleepPill]) {
+        [[self scanTimer] invalidate]; // in case 1 exists that never fired
+        [self setScanTimer:[NSTimer scheduledTimerWithTimeInterval:HEMPillFinderScanTimeout
+                                                            target:self
+                                                          selector:@selector(timeout)
+                                                          userInfo:nil
+                                                           repeats:NO]];
+        
         __weak typeof(self) weakSelf = self;
         [[self deviceService] findNearestPill:^(SENSleepPill * _Nullable sleepPill, NSError * _Nullable error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
+            [[strongSelf scanTimer] invalidate];
+            [strongSelf setScanTimer:nil];
+            
             if (sleepPill) {
                 [strongSelf finishWithSleepPill:sleepPill];
             } else {
@@ -111,16 +143,7 @@ static CGFloat const HEMPillFinderSuccessDuration = 1.0f;
                 NSError* error = [NSError errorWithDomain:HEMPillFinderErrorDomain code:-1 userInfo:info];
                 [SENAnalytics trackError:error];
                 
-                NSString* errorTitle = NSLocalizedString(@"dfu.pill.error.title.pill-not-found", nil);
-                NSString* errorMessage = NSLocalizedString(@"dfu.pill.error.pill-not-found", nil);
-                NSString* helpSlug = NSLocalizedString(@"help.url.slug.pill-dfu-not-found", nil);
-                [[strongSelf errorDelegate] showErrorWithTitle:errorTitle
-                                                    andMessage:errorMessage
-                                                  withHelpPage:helpSlug
-                                                 fromPresenter:strongSelf];
-                [[strongSelf videoView] stop];
-                [strongSelf showRetryButton:YES];
-                [strongSelf showNavButtons:YES];
+                [strongSelf showPillNotFoundError];
             }
         }];
     }

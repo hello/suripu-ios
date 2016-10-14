@@ -13,6 +13,7 @@
 @property (nonatomic, assign, readonly, getter=isAnimating) BOOL animating;
 
 - (instancetype)initWithImage:(UIImage*)image andFrame:(CGRect)frame;
+- (void)setIndicatorImage:(UIImage *)indicatorImage;
 - (void)start;
 - (void)stop;
 

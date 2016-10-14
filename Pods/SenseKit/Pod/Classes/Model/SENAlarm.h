@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "SENSerializable.h"
 
 typedef NS_ENUM(NSUInteger, SENAlarmRepeatDays) {
     SENAlarmRepeatSunday = (1UL << 1),
@@ -11,10 +12,36 @@ typedef NS_ENUM(NSUInteger, SENAlarmRepeatDays) {
     SENAlarmRepeatSaturday = (1UL << 7),
 };
 
+// for backward compatibility. should have used the flags to imply value
+typedef NS_ENUM(NSUInteger, SENALarmRepeatDayValue) {
+    SENALarmRepeatDayValueMonday = 1,
+    SENALarmRepeatDayValueTuesday,
+    SENALarmRepeatDayValueWednesday,
+    SENALarmRepeatDayValueThursday,
+    SENALarmRepeatDayValueFriday,
+    SENALarmRepeatDayValueSaturday,
+    SENALarmRepeatDayValueSunday,
+};
+
+typedef NS_ENUM(NSUInteger, SENALarmSource) {
+    SENAlarmSourceMobile = 0,
+    SENAlarmSourceVoice,
+    SENAlarmSourceOther
+};
+
 struct SENAlarmTime {
     NSInteger hour;
     NSInteger minute;
 };
+
+@interface SENAlarmExpansion : NSObject <NSCoding, SENSerializable>
+
+@property (nonatomic, strong, readonly) NSNumber* expansionId;
+@property (nonatomic, assign, getter=isEnable) BOOL enable;
+
+- (instancetype)initWithExpansionId:(NSNumber*)expansionId enable:(BOOL)enable;
+
+@end
 
 @interface SENAlarm : NSObject <NSCoding>
 
@@ -83,14 +110,31 @@ struct SENAlarmTime {
  */
 - (BOOL)isRepeatedOn:(SENAlarmRepeatDays)days;
 
+/**
+ * Serialize object back to raw NSDictionary, as it was received
+ *
+ * @return dictionary value of this object
+ */
+- (NSDictionary*)dictionaryValue;
+
+/**
+ * Add an expansion to the alarm
+ * @param enable: YES to enable it. NO otherwise
+ * @param expansionId: a valid expansion id
+ */
+- (void)setEnable:(BOOL)enable forExpansionId:(NSNumber*)expansionId;
+
 @property (nonatomic, getter=isOn) BOOL on;
 @property (nonatomic, readonly, assign, getter=isSaved) BOOL saved;
 @property (nonatomic, readonly, assign, getter=isEditable) BOOL editable;
 @property (nonatomic, getter=isSmartAlarm) BOOL smartAlarm;
+@property (nonatomic, strong) NSArray<SENAlarmExpansion*>* expansions;
 @property (nonatomic) NSUInteger hour;
 @property (nonatomic) NSUInteger minute;
 @property (nonatomic) NSUInteger repeatFlags;
 @property (nonatomic, copy) NSString* soundName;
 @property (nonatomic, strong) NSString* soundID;
 @property (nonatomic, readonly, strong) NSString* identifier;
+@property (nonatomic, readonly, assign) SENALarmSource source;
+
 @end

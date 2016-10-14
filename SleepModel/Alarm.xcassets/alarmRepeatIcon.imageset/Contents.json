@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "alarmRepeatIcon.png",
+      "filename" : "alarmRepeatIcon@1x.png",
       "scale" : "1x"
     },
     {

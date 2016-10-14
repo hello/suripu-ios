@@ -54,11 +54,6 @@
     [self addPresenter:presenter];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [[[self presenters] firstObject] bindWithShadowView:[self shadowView]];
-}
-
 - (BOOL)wantsShadowView {
     return YES;
 }

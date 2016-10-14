@@ -472,7 +472,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         [[chartContainer noDataLabel] setHidden:YES];
         [chartContainer setChartView:chartView];
         
-        NSNumber* minValue = @([chartView chartYMin]);
+        CGFloat chartMin = [chartView chartYMin];
+        if ([self chartMinValue] != [self chartMaxValue]) {
+            chartMin = [self chartMinValue];
+        }
+        NSNumber* minValue = @(chartMin);
         NSNumber* maxValue = @([chartView chartYMax]);
         NSString* minText = [[self formatter] stringFromSensorValue:minValue];
         NSString* maxText = [[self formatter] stringFromSensorValue:maxValue];

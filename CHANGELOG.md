@@ -1,5 +1,70 @@
 # Changelog
 
+## 1.5.4.6
+
+New:
+
+* Hiding lights expansion integration in alarms for now, until next release
+
+## 1.5.4.5
+
+Fixes:
+
+* Fixes frequent time outs on Pill DFU flow
+* Fix action sheet blocking the UI in expansion configuration selection
+
+## 1.5.4.4
+
+New:
+
+* Added lights option to Alarm view, when available (selection depends on server to work)
+
+Fixes:
+
+* Pill DFU should no longer unexpectedly complete on iOS 10
+* Sense pairing screen in upgrade path should properly display blue or purple copy
+* Pill DFU scanning should time out if pill not found within 15s
+
+## 1.5.4.3
+
+New:
+
+* Added error state when list of expansions cannot be retrieved
+* Updated the UI of Alarms to prepare for introduction of expansion integration
+* Updated copy references to purple during onboarding
+* Updated copy of errors that may occur within Expansion configuration
+* Updated copy for various Expansion screens
+
+Fixes:
+
+* Fixed issue that prevented user from taken action on an Expansion setting right after connecting to it
+* Fixed issue that would cause the enable switch to not reflect current state after selecting a configuration
+
+## 1.5.4.2
+
+New:
+
+* Design tweaks from design review
+* Added controls for the web view that controls the third party oauth pages for expansions
+* Added voice attribution to alarms, when available
+* Updated copy
+
+## 1.5.4.1
+
+New:
+
+* Expansions settings
+* Expansions view
+* Expansions connect flow
+* Expansions removal
+* Expansions ability to enable/disable
+* Expansions ability to change configuration
+
+Fixes:
+
+* Fixed issue that causes a crash in Pill DFU when binary cannot be downloaded
+* Fixed issue where Pill DFU will sometime report that it completed, when it didn't
+
 ## 1.5.3.11
 
 Fixes:

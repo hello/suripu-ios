@@ -111,6 +111,7 @@
     if (![self alarmVC]) {
         DDLogVerbose(@"creating new alarm list vc");
         HEMAlarmListViewController* alarmVC = [HEMMainStoryboard instantiateAlarmListViewController];
+        [alarmVC setDeviceService:[self deviceService]];
         [self setAlarmVC:alarmVC];
     }
     

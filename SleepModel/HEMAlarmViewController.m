@@ -1,4 +1,5 @@
 #import <SenseKit/SENSound.h>
+#import <SenseKit/SENExpansion.h>
 
 #import "HEMAlarmViewController.h"
 #import "HEMAlertViewController.h"
@@ -14,17 +15,15 @@
 #import "HEMAlarmRepeatDaysPresenter.h"
 #import "HEMAlarmService.h"
 #import "HEMAudioService.h"
+#import "HEMExpansionService.h"
+#import "HEMExpansionViewController.h"
 
 @interface HEMAlarmViewController () <HEMAlarmPresenterDelegate, HEMListDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet HEMClockPickerView *clockView;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
 @property (strong, nonatomic) HEMAudioService* audioService;
+@property (strong, nonatomic) HEMExpansionService* expansionService;
 
 @end
 
@@ -39,21 +38,98 @@
     if (![self alarmService]) {
         [self setAlarmService:[HEMAlarmService new]];
     }
-    HEMAlarmPresenter* presenter = [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
-                                                               alarmService:[self alarmService]];
+    
+    HEMExpansionService* expansionService = [HEMExpansionService new];
+    HEMAlarmPresenter* presenter =
+        [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
+                                    alarmService:[self alarmService]
+                                   deviceService:[self deviceService]
+                                expansionService:expansionService];
+    
     [presenter setDelegate:self];
     [presenter setSuccessDuration:[self successDuration]];
     [presenter setSuccessText:[self successText]];
-    [presenter bindWithTutorialPresentingController:self];
-    [presenter bindWithButtonContainer:[self buttonContainer]
-                          cancelButton:[self cancelButton]
-                            saveButton:[self saveButton]];
-    [presenter bindWithTableView:[self tableView] heightConstraint:[self tableViewHeightConstraint]];
-    [presenter bindWithClockPickerView:[self clockView]];
+    [presenter bindWithTutorialPresentingController:[self navigationController]];
+    [presenter bindWithTableView:[self tableView]];
+    [presenter bindWithNavigationItem:[self navigationItem]];
     
+    [self setExpansionService:expansionService];
     [self setPresenter:presenter];
     [self addPresenter:presenter];
 }
+
+#pragma mark - HEMListDelegate
+
+- (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter *)presenter {
+    if ([presenter isKindOfClass:[HEMAlarmSoundsPresenter class]]) {
+        SENSound* sound = item;
+        [[[self presenter] cache] setSoundID:[sound identifier]];
+        [[[self presenter] cache] setSoundName:[sound displayName]];
+    } // do nothing since it's all done inside the presenter ...
+}
+
+- (void)goBackFrom:(HEMListPresenter *)presenter {
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
+#pragma mark - HEMAlarmPresenterDelegate
+
+- (void)didSelectRowType:(HEMAlarmRowType)rowType {
+    NSString* segueId = nil;
+    switch (rowType) {
+        case HEMAlarmRowTypeTone:
+            segueId = [HEMMainStoryboard alarmSoundsSegueIdentifier];
+            break;
+        case HEMAlarmRowTypeRepeat:
+            segueId = [HEMMainStoryboard alarmRepeatSegueIdentifier];
+            break;
+        case HEMAlarmRowTypeLight:
+            segueId = [HEMMainStoryboard expansionLightSegueIdentifier];
+            break;
+        default:
+            break;
+    }
+    if (segueId) {
+        [self performSegueWithIdentifier:segueId sender:self];
+    }
+}
+
+- (UIView*)activityContainerFor:(HEMAlarmPresenter *)presenter {
+    return [[self navigationController] view];
+}
+
+- (void)showConfirmationDialogWithTitle:(NSString*)title
+                                message:(NSString*)message
+                                 action:(HEMAlarmAction)action
+                                   from:(HEMAlarmPresenter*)presenter {
+    HEMAlertViewController* alert =
+        [[HEMAlertViewController alloc] initBooleanDialogWithTitle:title
+                                                            message:message
+                                                      defaultsToYes:YES
+                                                             action:action];
+    [alert setViewToShowThrough:[[self navigationController] view]];
+    [alert showFrom:self];
+}
+
+- (void)showErrorWithTitle:(NSString*)title
+                   message:(NSString*)message
+                      from:(HEMAlarmPresenter*)presenter {
+    [self showMessageDialog:message title:title];
+}
+
+- (void)didSave:(BOOL)save from:(HEMAlarmPresenter*)presenter {
+    if ([self delegate]) {
+        if (save) {
+            [self.delegate didSaveAlarm:self.alarm from:self];
+        } else {
+            [self.delegate didCancelAlarmFrom:self];
+        }
+    } else {
+        [[self navigationController] dismissViewControllerAnimated:YES completion:NULL];
+    }
+}
+
+#pragma mark - Segues
 
 - (void)prepareForRepeatDaysSegue:(UIStoryboardSegue*)segue {
     NSString* title = NSLocalizedString(@"alarm.repeat.title", nil);
@@ -95,62 +171,22 @@
     [listVC setListPresenter:soundsPresenter];
 }
 
+- (void)prepareForLightExpansionSegue:(UIStoryboardSegue*)segue {
+    NSArray<SENExpansion*>* expansions = [[self expansionService] expansions];
+    SENExpansion* expansion = [[self expansionService] lightExpansionFrom:expansions];
+    
+    HEMExpansionViewController* expansionVC = [segue destinationViewController];
+    [expansionVC setExpansion:expansion];
+    [expansionVC setExpansionService:[self expansionService]];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
         [self prepareForRepeatDaysSegue:segue];
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmSoundsSegueIdentifier]]) {
         [self prepareForSoundSegue:segue];
-    }
-}
-
-#pragma mark - HEMListDelegate
-
-- (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter *)presenter {
-    if ([presenter isKindOfClass:[HEMAlarmSoundsPresenter class]]) {
-        SENSound* sound = item;
-        [[[self presenter] cache] setSoundID:[sound identifier]];
-        [[[self presenter] cache] setSoundName:[sound displayName]];
-    } // do nothing since it's all done inside the presenter ...
-}
-
-- (void)goBackFrom:(HEMListPresenter *)presenter {
-    [[self navigationController] popViewControllerAnimated:YES];
-}
-
-#pragma mark - HEMAlarmPresenterDelegate
-
-- (UIView*)activityContainerFor:(HEMAlarmPresenter *)presenter {
-    return [[self navigationController] view];
-}
-
-- (void)showConfirmationDialogWithTitle:(NSString*)title
-                                message:(NSString*)message
-                                 action:(HEMAlarmAction)action
-                                   from:(HEMAlarmPresenter*)presenter {
-    HEMAlertViewController* alert =
-        [[HEMAlertViewController alloc] initBooleanDialogWithTitle:title
-                                                            message:message
-                                                      defaultsToYes:YES
-                                                             action:action];
-    [alert setViewToShowThrough:[[self navigationController] view]];
-    [alert showFrom:self];
-}
-
-- (void)showErrorWithTitle:(NSString*)title
-                   message:(NSString*)message
-                      from:(HEMAlarmPresenter*)presenter {
-    [self showMessageDialog:message title:title];
-}
-
-- (void)didSave:(BOOL)save from:(HEMAlarmPresenter*)presenter {
-    if ([self delegate]) {
-        if (save) {
-            [self.delegate didSaveAlarm:self.alarm from:self];
-        } else {
-            [self.delegate didCancelAlarmFrom:self];
-        }
-    } else {
-        [[self navigationController] dismissViewControllerAnimated:YES completion:NULL];
+    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionLightSegueIdentifier]]) {
+        [self prepareForLightExpansionSegue:segue];
     }
 }
 

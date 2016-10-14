@@ -58,13 +58,6 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
     [self addPresenter:navBarPresenter];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    if (![[self formPresenter] shadowView]) {
-        [[self formPresenter] bindWithShadowView:[self shadowView]];
-    }
-}
-
 - (BOOL)wantsShadowView {
     return YES;
 }

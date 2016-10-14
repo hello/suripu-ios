@@ -27,6 +27,7 @@
 
 NSString* const HEMDeviceServiceErrorDomain = @"is.hello.app.service.device";
 
+static NSString* const HEMDeviceSettingHwVersion = @"HEMDeviceSettingHwVersion";
 static NSInteger const HEMPillDfuPillMinimumRSSI = -70;
 static NSString* const HEMPillDfuPrefLastUpdate = @"HEMPillDfuPrefLastUpdate";
 static NSUInteger const HEMPillDfuSuppressionReq = 2; // will not show dfu updates if done within the hour
@@ -88,10 +89,23 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
             [SENAnalytics trackError:error];
         } else {
             devices = [[SENServiceDevice sharedService] devices];
+            [strongSelf saveHardwareVersion:[devices senseMetadata]];
             [strongSelf setDevices:devices];
         }
         completion (devices, error);
     }];
+}
+
+- (void)saveHardwareVersion:(SENSenseMetadata*)senseMetadata {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    NSNumber* version = @([senseMetadata hardwareVersion]);
+    [localPrefs setUserPreference:version forKey:HEMDeviceSettingHwVersion];
+}
+
+- (SENSenseHardware)savedHardwareVersion {
+    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+    NSNumber* versionValue = [localPrefs userPreferenceForKey:HEMDeviceSettingHwVersion];
+    return versionValue ? [versionValue unsignedIntegerValue] : SENSenseHardwareUnknown;
 }
 
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata {
@@ -164,11 +178,7 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
     
     __weak typeof(self) weakSelf = self;
     
-    if ([self pillManager]) {
-        if (![[[self pillManager] sleepPill] isEqual:sleepPill]) {
-            [self setPillManager:[[SENSleepPillManager alloc] initWithSleepPill:sleepPill]];
-        }
-    } else {
+    if (![[[self pillManager] sleepPill] isEqual:sleepPill]) {
         [self setPillManager:[[SENSleepPillManager alloc] initWithSleepPill:sleepPill]];
     }
     
@@ -179,11 +189,14 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
         }
     } completion:^(NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error) {
             [SENAnalytics trackError:error];
         } else {
             [strongSelf saveLastPillUpdate];
+            [strongSelf setPillManager:nil];
         }
+        
         completion (error);
     }];
 }

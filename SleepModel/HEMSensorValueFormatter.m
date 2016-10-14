@@ -175,6 +175,8 @@
             return NSLocalizedString(@"measurement.particle.unit", nil);
         case SENSensorUnitPPM:
             return NSLocalizedString(@"measurement.ppm.unit", nil);
+        case SENSensorUnitMBar:
+            return NSLocalizedString(@"measurement.mbar.unit", nil);
         default:
             return @"";
     }

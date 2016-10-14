@@ -13,4 +13,9 @@
 @property (nonatomic, weak) IBOutlet UILabel* categoryLabel;
 @property (nonatomic, weak) IBOutlet UILabel* examplesLabel;
 
++ (CGFloat)heightWithCategoryName:(NSString*)categoryName
+                     categoryFont:(UIFont*)categoryFont
+                         examples:(NSAttributedString*)examples
+                        cellWidth:(CGFloat)cellWidth;
+
 @end

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.0.2
+
+New:
+
+* Sense MAC address now shown on the WiFi scan screen
+* Added support for mbar unit for barometric pressure
+
+Fixes:
+
+* Fix issue where navigation bar separator is shown in voice examples screen on iOS 10
+* Fixed punctuation copy from several voice examples
+* Allow server to define order of displayed sensors
+
 ## 1.6.0.1
 
 New:

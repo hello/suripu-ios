@@ -16,6 +16,7 @@ static NSString* const kSENSensorUnitValuePPM = @"PPM";
 static NSString* const kSENSensorUnitValueRatio = @"RATIO";
 static NSString* const kSENSensorUnitValueKelvin = @"KELVIN";
 static NSString* const kSENSensorUnitValueKPA = @"KPA";
+static NSString* const kSENSensorUnitValueMBar = @"MILLIBAR";
 
 // type values
 static NSString* const kSENSensorTypeValueTemp = @"TEMPERATURE";
@@ -54,6 +55,8 @@ SENSensorUnit SensorUnitFromString(NSString* unitString) {
         return SENSensorUnitKelvin;
     } else if ([unitStringUpper isEqualToString:kSENSensorUnitValueKPA]) {
         return  SENSensorUnitKPA;
+    } else if ([unitStringUpper isEqualToString:kSENSensorUnitValueMBar]) {
+        return  SENSensorUnitMBar;
     } else {
         return SENSensorUnitUnknown;
     }

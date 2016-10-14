@@ -452,6 +452,7 @@
 "measurement.percentage.unit" = "%";
 "measurement.particle.unit" = "µg/m³";
 "measurement.ppm.unit" = "ppm";
+"measurement.mbar.unit" = "mbar";
 "measurement.light.unit" = "lx";
 "measurement.sound.unit" = "dB";
 "measurement.cm.unit" = "cm";

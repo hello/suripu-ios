@@ -1171,9 +1171,57 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="tnj-94-2e9" customClass="HEMMacAddressHeaderView">
+                                    <rect key="frame" x="0.0" y="0.0" width="576" height="61"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense MAC Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYm-dC-JGd">
+                                            <rect key="frame" x="15" y="5" width="148" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00:00:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="015-SP-vGO">
+                                            <rect key="frame" x="15" y="25" width="140" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JM6-ua-NLc">
+                                            <rect key="frame" x="525" y="0.0" width="36" height="61"/>
+                                            <state key="normal" title="Copy"/>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YaD-JS-8eP">
+                                            <rect key="frame" x="15" y="60" width="546" height="1"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="qyD-mx-0xP"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="fYm-dC-JGd" firstAttribute="top" secondItem="tnj-94-2e9" secondAttribute="top" constant="5" id="F7v-an-woK"/>
+                                        <constraint firstItem="015-SP-vGO" firstAttribute="top" secondItem="fYm-dC-JGd" secondAttribute="bottom" id="Ii9-hO-jU4"/>
+                                        <constraint firstAttribute="bottom" secondItem="JM6-ua-NLc" secondAttribute="bottom" id="OnA-ED-a7K"/>
+                                        <constraint firstAttribute="trailing" secondItem="JM6-ua-NLc" secondAttribute="trailing" constant="15" id="PQl-DG-Ea2"/>
+                                        <constraint firstItem="JM6-ua-NLc" firstAttribute="top" secondItem="tnj-94-2e9" secondAttribute="top" id="VfU-xd-kh0"/>
+                                        <constraint firstAttribute="trailing" secondItem="YaD-JS-8eP" secondAttribute="trailing" constant="15" id="c12-pO-Z3r"/>
+                                        <constraint firstItem="YaD-JS-8eP" firstAttribute="leading" secondItem="tnj-94-2e9" secondAttribute="leading" constant="15" id="cTl-v6-VIZ"/>
+                                        <constraint firstItem="015-SP-vGO" firstAttribute="leading" secondItem="fYm-dC-JGd" secondAttribute="leading" id="lgD-4k-AIm"/>
+                                        <constraint firstItem="fYm-dC-JGd" firstAttribute="leading" secondItem="tnj-94-2e9" secondAttribute="leading" constant="15" id="ojy-ge-x9J"/>
+                                        <constraint firstAttribute="bottom" secondItem="YaD-JS-8eP" secondAttribute="bottom" id="p9U-Tz-jkJ"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="actionButton" destination="JM6-ua-NLc" id="WO2-gZ-a39"/>
+                                        <outlet property="macAddressLabel" destination="015-SP-vGO" id="qpu-9p-3T0"/>
+                                        <outlet property="separator" destination="YaD-JS-8eP" id="J2c-PI-6u8"/>
+                                        <outlet property="titleLabel" destination="fYm-dC-JGd" id="RHK-zH-bNZ"/>
+                                    </connections>
+                                </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="network" textLabel="EmK-D8-elU" style="IBUITableViewCellStyleDefault" id="w2R-Q9-Bmm">
-                                        <rect key="frame" x="0.0" y="22" width="576" height="44"/>
+                                        <rect key="frame" x="0.0" y="83" width="576" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w2R-Q9-Bmm" id="39f-cF-XX7">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="43"/>
@@ -3634,15 +3682,15 @@ Flip the switch to On</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Sda-jg-aqk"/>
-        <segue reference="Gpb-8d-Xjm"/>
-        <segue reference="0DP-Ib-Jz4"/>
-        <segue reference="3DQ-Vg-FaT"/>
-        <segue reference="JsS-bV-f7k"/>
-        <segue reference="v6v-Rh-oSf"/>
+        <segue reference="u9Q-g4-qbd"/>
+        <segue reference="ABK-Gx-jne"/>
         <segue reference="7LA-fg-2Jb"/>
         <segue reference="tkT-Pb-lgk"/>
         <segue reference="BBN-wL-Nmg"/>
         <segue reference="wdw-bO-x3J"/>
+        <segue reference="0DP-Ib-Jz4"/>
+        <segue reference="Gpb-8d-Xjm"/>
+        <segue reference="3DQ-Vg-FaT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

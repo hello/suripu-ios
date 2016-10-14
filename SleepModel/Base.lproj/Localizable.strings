@@ -669,6 +669,7 @@
 "actions.share" = "Share";
 "status.shared" = "Shared";
 "status.copied" = "Copied";
+"actions.copy" = "Copy";
 
 // action sheet
 "action-sheet.accessibility.did-appear" = "Open options";

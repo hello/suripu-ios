@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.6.0.1
+
+New:
+
+* Voice tab appears as sibling to Insights feed if Sense paired is Sense with Voice
+* Voice tab displays welcome card until closed
+* Voice tab displays a set of categorized commands with an example preview
+* Tapping in to a command category will display a full set of commands based on what is available today.
+* Added Lights attribution to expansion alarms
+* Removed dependency to features API, using hardware version as replacement
+
 ## 1.5.4.6
 
 New:

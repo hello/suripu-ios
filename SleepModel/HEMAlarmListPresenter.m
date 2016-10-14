@@ -23,11 +23,13 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlarmCache.h"
+#import "HEMAlarmExpansionListCell.h"
 
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmLoadAnimeDuration = 0.5f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
+static CGFloat const HEMAlarmExpansionListCellHeight = 138.0f;
 static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static CGFloat const HEMAlarmNoAlarmHorzMargin = 40.0f;
@@ -290,12 +292,40 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([[[self alarmService] alarms] count] > 0) {
-        return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
+        SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];
+        if ([[self alarmService] hasLightsEnabledForAlarm:alarm]) {
+            return [self collectionView:collectionView alarmExpansionCellAtIndexPath:indexPath];
+        } else {
+            return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
+        }
     } else if ([self loadError]) {
         return [self collectionView:collectionView statusCellAtIndexPath:indexPath];
     } else {
         return [self collectionView:collectionView emptyCellAtIndexPath:indexPath];
     }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+           alarmExpansionCellAtIndexPath:(NSIndexPath*)indexPath {
+    NSString *identifier = [HEMMainStoryboard alarmExpansionCellReuseIdentifier];
+    HEMAlarmExpansionListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
+                                                                                forIndexPath:indexPath];
+    NSArray* alarms = [[self alarmService] alarms];
+    SENAlarm *alarm = alarms[indexPath.item];
+    
+    [[cell expansionLabel] setText:NSLocalizedString(@"alarm.light.title", nil)];
+    [[cell expansionLabel] setFont:[UIFont h7]];
+    [[cell expansionLabel] setTextColor:[UIColor grey6]];
+    [[cell expansionSeparator] setBackgroundColor:[[UIColor grey5] colorWithAlphaComponent:0.1f]];
+    [[cell expansionIconView] setImage:[UIImage imageNamed:@"alarmLightIcon"]];
+    
+    [[cell timeLabel] setTextColor:[UIColor grey5]];
+    [[cell meridiemLabel] setTextColor:[UIColor grey5]];
+    
+    [self updateSwitchInCell:cell forAlarm:alarm atIndexPath:indexPath];
+    [self updateDetailTextInCell:cell fromAlarm:alarm];
+    [self updateTimeTextInCell:cell fromAlarm:alarm];
+    return cell;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -305,10 +335,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     NSArray* alarms = [[self alarmService] alarms];
     SENAlarm *alarm = alarms[indexPath.item];
     
-    cell.enabledSwitch.on = [alarm isOn];
-    cell.enabledSwitch.tag = indexPath.item;
-    [cell.enabledSwitch addTarget:self action:@selector(toggleEnableSwitch:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self updateSwitchInCell:cell forAlarm:alarm atIndexPath:indexPath];
     [self updateDetailTextInCell:cell fromAlarm:alarm];
     [self updateTimeTextInCell:cell fromAlarm:alarm];
     return cell;
@@ -342,6 +369,16 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     } else {
         cell.meridiemLabel.text = nil;
     }
+}
+
+- (void)updateSwitchInCell:(HEMAlarmListCell *)cell
+                  forAlarm:(SENAlarm *)alarm
+               atIndexPath:(NSIndexPath*)indexPath {
+    cell.enabledSwitch.on = [alarm isOn];
+    cell.enabledSwitch.tag = indexPath.item;
+    [cell.enabledSwitch addTarget:self
+                           action:@selector(toggleEnableSwitch:)
+                 forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)updateDetailTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm {
@@ -400,8 +437,14 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     CGFloat width = layout.itemSize.width;
     
     NSInteger alarmCount = [[[self alarmService] alarms] count];
-    if (alarmCount > 0 || [self loadError]) {
+    if ([self loadError]) {
         return CGSizeMake(width, HEMAlarmListCellHeight);
+    } else if (alarmCount > 0) {
+        SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];
+        CGFloat height = [[self alarmService] hasLightsEnabledForAlarm:alarm]
+            ? HEMAlarmExpansionListCellHeight
+            : HEMAlarmListCellHeight;
+        return CGSizeMake(width, height);
     } else if (alarmCount == 0) {
         NSAttributedString* attributedText = [self attributedNoAlarmText];
         CGFloat maxWidth = width - (HEMAlarmNoAlarmHorzMargin * 2);

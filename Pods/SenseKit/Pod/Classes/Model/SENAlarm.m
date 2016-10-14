@@ -157,8 +157,8 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     return self;
 }
 
-- (NSSet<SENAlarmExpansion*>*)expansionsFromRawArray:(NSArray*)expansionArray {
-    NSMutableSet* expansions = [NSMutableSet setWithCapacity:[expansionArray count]];
+- (NSArray<SENAlarmExpansion*>*)expansionsFromRawArray:(NSArray*)expansionArray {
+    NSMutableArray* expansions = [NSMutableArray arrayWithCapacity:[expansionArray count]];
     for (id expansionObj in expansionArray) {
         if ([expansionObj isKindOfClass:[NSDictionary class]]) {
             [expansions addObject:[[SENAlarmExpansion alloc] initWithDictionary:expansionObj]];

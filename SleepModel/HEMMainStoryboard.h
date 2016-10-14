@@ -50,6 +50,7 @@
 +(NSString *)chartReuseIdentifier;
 +(NSString *)scaleReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
++(NSString *)alarmExpansionCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
@@ -57,6 +58,10 @@
 +(NSString *)groupReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
++(NSString *)welcomeReuseIdentifier;
++(NSString *)commandsReuseIdentifier;
++(NSString *)commandGroupReuseIdentifier;
++(NSString *)examplesReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;
 +(NSString *)messageReuseIdentifier;
 +(NSString *)calendarReuseIdentifier;
@@ -100,10 +105,11 @@
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateExpansionConfigViewController;
++(id)instantiateFeedViewController;
 +(id)instantiateFormViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
-+(id)instantiateInsightFeedViewController;
++(id)instantiateInsightsFeedViewController;
 +(id)instantiateListItemViewController;
 +(id)instantiatePillDFUViewController;
 +(id)instantiatePillDFUNavViewController;
@@ -124,5 +130,6 @@
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;
++(id)instantiateVoiceViewController;
 
 @end

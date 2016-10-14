@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SenseKit/SENService.h>
 
 @class SENSpeechResult;
+@class HEMVoiceCommandGroup;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,10 +18,16 @@ NSString* const HEMVoiceNotification;
 NSString* const HEMVoiceNotificationInfoError;
 NSString* const HEMVoiceNotificationInfoResult;
 
-@interface HEMVoiceService : NSObject
+typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
+
+@interface HEMVoiceService : SENService
 
 - (void)startListeningForVoiceResult;
 - (void)stopListeningForVoiceResult;
+- (NSArray<HEMVoiceCommandGroup*>*)availableVoiceCommands;
+- (BOOL)showVoiceIntro;
+- (void)hideVoiceIntro;
+- (void)resetVoiceIntro;
 
 @end
 

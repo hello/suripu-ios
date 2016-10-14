@@ -985,3 +985,54 @@
 "expansion.config.no-cnfig.format" = "No %@ found";
 "expansion.config.select" = "Select";
 "expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";
+
+// voice
+"voice.title" = "Voice";
+"voice.command.list.title" = "Voice commands";
+
+"voice.welcome.message" = "Always say “Okay Sense” before each command to activate Voice. Ask about your Sleep Score, room conditions, and more.";
+"voice.welcome.title" = "Welcome to Voice";
+
+"voice.command.sound.category.name" = "Alarm and Sleep Sounds";
+"voice.command.sound.message" = "Before each command, say \"Okay Sense\" to set an alarm or begin playing Sleep Sounds.";
+"voice.command.alarm.category.name" = "Alarms";
+"voice.command.alarm.example.1" = "Wake me up at 10am.";
+"voice.command.alarm.example.2" = "Set alarm for tomorrow morning at 8.";
+
+"voice.command.sleep-sound.category.name" = "Sleep Sounds";
+"voice.command.sleep-sound.example.1" = "Play a Sleep Sound";
+"voice.command.sleep-sound.example.2" = "Play White Noise";
+
+"voice.command.sleep.category.name" = "Sleep";
+"voice.command.sleep.message" = "Before each command, say \"Okay Sense\" to ask about your Sleep Score, Sleep Timeline, and Sleep Trends.";
+"voice.command.timeline.category.name" = "Sleep Timeline";
+"voice.command.timeline.example.1" = "How was my sleep last night?";
+"voice.command.timeline.example.2" = "What was my Sleep Score?";
+
+"voice.command.room-conditions.category.name" = "Room Conditions";
+"voice.command.room-conditions.message" = "Before each command, say \"Okay Sense\" to ask about your temperature, humidity, air quality, and more.";
+"voice.command.bedroom.category.name" = "Bedroom Conditions";
+"voice.command.bedroom.example.1" = "What are my bedroom conditions?";
+
+"voice.command.temperature.category.name" = "Temperature";
+"voice.command.temperature.example.1" = "What is the temperature?";
+
+"voice.command.humidity.category.name" = "Humidity";
+"voice.command.humidity.example.1" = "What is the humidity?";
+
+"voice.command.noise.category.name" = "Noise Level";
+"voice.command.noise.example.1" = "How is the noise?";
+"voice.command.noise.example.2" = "What is the noise level?";
+
+"voice.command.air.category.name" = "Air Quality";
+"voice.command.air.example.1" = "How is my air quality?";
+
+"voice.command.expansions.category.name" = "Expansions";
+"voice.command.expansions.message" = "Before each command, say \"Okay Sense\" to control your lights or thermostat.";
+"voice.command.lights.category.name" = "Lights";
+"voice.command.lights.example.1" = "Turn the light on.";
+"voice.command.lights.example.2" = "Turn the light off";
+"voice.command.lights.example.3" = "Decrease the light.";
+
+"voice.command.thermostat.category.name" = "Thermostat";
+"voice.command.thermostat.example.1" = "Set the thermostat to 70°.";

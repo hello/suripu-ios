@@ -42,6 +42,7 @@
 #import "HEMSensorService.h"
 #import "HEMRoomCheckViewController.h"
 #import "HEMIntroService.h"
+#import "HEMVoiceService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -347,6 +348,9 @@
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
         HEMIntroService* intro = [HEMIntroService new];
         [intro reset];
+        
+        HEMVoiceService* voice = [HEMVoiceService new];
+        [voice resetVoiceIntro];
         
         HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
         [handHoldingService reset];

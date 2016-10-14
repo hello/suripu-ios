@@ -211,7 +211,7 @@
     } else if ([controller isKindOfClass:[HEMSenseUpgradedViewController class]]) {
 
         [service checkIfSenseDFUIsRequired];
-        [service checkFeatures];
+        [service refreshDeviceMetadata];
         
     } else if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {
         

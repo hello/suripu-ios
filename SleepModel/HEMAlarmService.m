@@ -270,4 +270,9 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     return NO;
 }
 
+- (BOOL)hasLightsEnabledForAlarm:(SENAlarm*)alarm {
+    SENAlarmExpansion* expansion = [[alarm expansions] lastObject];
+    return [expansion isEnable];
+}
+
 @end

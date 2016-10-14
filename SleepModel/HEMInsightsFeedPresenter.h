@@ -20,6 +20,7 @@
 @class HEMActivityIndicatorView;
 @class HEMInsightCollectionViewCell;
 @class HEMHandHoldingService;
+@class HEMSubNavigationView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -59,6 +60,8 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicator;
 
 - (void)bindWithTutorialContainerView:(UIView*)tutorialContainerView;
+
+- (void)bindWithSubNavBar:(HEMSubNavigationView*)subNavBar;
 
 - (void)refresh;
 

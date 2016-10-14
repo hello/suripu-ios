@@ -87,7 +87,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     barController.viewControllers = @[
         [HEMMainStoryboard instantiateCurrentNavController],
         [HEMMainStoryboard instantiateTrendsViewController],
-        [HEMMainStoryboard instantiateInsightFeedViewController],
+        [HEMMainStoryboard instantiateFeedViewController],
         [HEMMainStoryboard instantiateSoundsNavigationViewController],
         [HEMMainStoryboard instantiateSettingsNavController]
     ];

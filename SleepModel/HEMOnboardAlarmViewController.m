@@ -50,7 +50,7 @@ static CGFloat const HEMOnboardAlarmCompleteDuration = 2.0f;
 - (void)doubleCheckResources {
     HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
     [onbService checkIfSenseDFUIsRequired];
-    [onbService checkFeatures];
+    [onbService refreshDeviceMetadata];
 }
 
 - (void)configureVideoView {

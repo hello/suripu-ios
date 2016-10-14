@@ -36,6 +36,7 @@
 #import "HEMShareContentProvider.h"
 #import "HEMConfirmationView.h"
 #import "HEMShareButton.h"
+#import "HEMSubNavigationView.h"
 
 static NSString* const HEMInsightsFeedWhatsNewReuseId = @"whatsNew";
 
@@ -106,6 +107,10 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 
 - (void)bindWithTutorialContainerView:(UIView*)tutorialContainerView {
     [self setTutorialContainerView:tutorialContainerView];
+}
+
+- (void)bindWithSubNavBar:(HEMSubNavigationView*)subNavBar {
+    [self bindWithShadowView:[subNavBar shadowView]];
 }
 
 - (void)showLoadingActivity:(BOOL)show {

@@ -16,6 +16,7 @@
 #import "HEMAlarmService.h"
 #import "HEMAudioService.h"
 #import "HEMExpansionService.h"
+#import "HEMDeviceService.h"
 #import "HEMExpansionViewController.h"
 
 @interface HEMAlarmViewController () <HEMAlarmPresenterDelegate, HEMListDelegate>
@@ -23,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
 @property (strong, nonatomic) HEMAudioService* audioService;
-@property (strong, nonatomic) HEMExpansionService* expansionService;
 
 @end
 
@@ -39,12 +39,19 @@
         [self setAlarmService:[HEMAlarmService new]];
     }
     
-    HEMExpansionService* expansionService = [HEMExpansionService new];
+    if (![self deviceService]) {
+        [self setDeviceService:[HEMDeviceService new]];
+    }
+    
+    if (![self expansionService]) {
+        [self setExpansionService:[HEMExpansionService new]];
+    }
+
     HEMAlarmPresenter* presenter =
         [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
                                     alarmService:[self alarmService]
                                    deviceService:[self deviceService]
-                                expansionService:expansionService];
+                                expansionService:[self expansionService]];
     
     [presenter setDelegate:self];
     [presenter setSuccessDuration:[self successDuration]];
@@ -52,8 +59,7 @@
     [presenter bindWithTutorialPresentingController:[self navigationController]];
     [presenter bindWithTableView:[self tableView]];
     [presenter bindWithNavigationItem:[self navigationItem]];
-    
-    [self setExpansionService:expansionService];
+
     [self setPresenter:presenter];
     [self addPresenter:presenter];
 }

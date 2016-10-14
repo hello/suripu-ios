@@ -241,12 +241,12 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         sensorIndex++;
     }
     
-    if ([airGroup count] < 2) {
-        if (airGroupInitialIndex >= 0) {
+    if (airGroupInitialIndex >= 0 && initialAirSensor) {
+        if ([airGroup count] < 2) {
             [groupedSensors insertObject:initialAirSensor atIndex:airGroupInitialIndex];
+        } else {
+            [groupedSensors insertObject:airGroup atIndex:airGroupInitialIndex];
         }
-    } else {
-        [groupedSensors addObject:airGroup];
     }
     
     return groupedSensors;

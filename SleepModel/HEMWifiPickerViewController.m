@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENSenseMessage.pb.h>
+#import <SenseKit/SENSense.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -18,6 +19,8 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
 #import "HEMWifiUtils.h"
+#import "HEMMacAddressHeaderView.h"
+#import "HEMConfirmationView.h"
 
 static CGFloat const HEMWiFiPickerLockLeftPadding = 24.0f;
 static CGFloat const HEMWifiPickerLockRightPadding = 16.0f;
@@ -44,6 +47,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
 @property (assign, nonatomic, getter=hasScanned) BOOL scanned;
+@property (strong, nonatomic) HEMMacAddressHeaderView* macAddressHeaderView;
 
 @end
 
@@ -83,6 +87,25 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
     // shares the same shadow image as the topPickerShadow, which requires a flip
     [[self botPickerShadow] setTransform:CGAffineTransformMakeRotation(M_PI)];
+
+    HEMMacAddressHeaderView* headerView = (id)[[self wifiPickerTableView] tableHeaderView];
+    SENSense* sense = [[self manager] sense];
+    
+    [[headerView titleLabel] setFont:[UIFont h6]];
+    [[headerView titleLabel] setTextColor:[UIColor grey6]];
+    
+    [[headerView macAddressLabel] setFont:[UIFont body]];
+    [[headerView macAddressLabel] setTextColor:[UIColor grey4]];
+    [[headerView macAddressLabel] setText:[sense macAddress]];
+    
+    [[[headerView actionButton] titleLabel] setFont:[UIFont button]];
+    [[headerView actionButton] setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [[headerView actionButton] addTarget:self
+                                  action:@selector(copyMacAddress:)
+                        forControlEvents:UIControlEventTouchUpInside];
+    
+    [[headerView separator] setBackgroundColor:[[self wifiPickerTableView] separatorColor]];
+    [headerView setHidden:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -227,6 +250,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         __block typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"wifi scan completed");
         
+        [[[strongSelf wifiPickerTableView] tableHeaderView] setHidden:NO];
         [[strongSelf wifiPickerTableView] reloadData];
         [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
             [strongSelf updateContentBottomShadowVisibility];
@@ -282,6 +306,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - Actions
+
+- (void)copyMacAddress:(UIButton*)sender {
+    SENSense* sense = [[self manager] sense];
+    UIPasteboard* copyBoard = [UIPasteboard generalPasteboard];
+    [copyBoard setString:[sense macAddress]];
+    
+    NSString* copiedText = NSLocalizedString(@"status.copied", nil);
+    HEMConfirmationView* copiedView =
+        [[HEMConfirmationView alloc] initWithText:copiedText layout:HEMConfirmationLayoutHorizontal];
+    [copiedView showInView:[[self navigationController] view]];
+}
 
 - (IBAction)scan:(id)sender {
     [self trackAnalyticsEvent:HEMAnalyticsEventWiFiRescan];

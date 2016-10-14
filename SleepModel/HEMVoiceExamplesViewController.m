@@ -35,7 +35,8 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    if (![[self presenter] hasNavBar]) {
+    if ([[self navigationController] navigationBar]
+        && ![[self presenter] hasNavBar]) {
         [[self presenter] bindWithNavigationBar:[[self navigationController] navigationBar]];
     }
 }

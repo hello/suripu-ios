@@ -8,7 +8,6 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
-static NSString *const _HEMaudioToSetup = @"audioToSetup";
 static NSString *const _HEMbeforeSleepToSmartAlarm = @"beforeSleepToSmartAlarm";
 static NSString *const _HEMbeforeSleeptoRoomCheck = @"beforeSleeptoRoomCheck";
 static NSString *const _HEMdfu = @"dfu";
@@ -30,7 +29,7 @@ static NSString *const _HEMnewSense = @"newSense";
 static NSString *const _HEMnoBLE = @"noBLE";
 static NSString *const _HEMnoBle = @"noBle";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
-static NSString *const _HEMnotificationToAudio = @"notificationToAudio";
+static NSString *const _HEMnotificationToSense = @"notificationToSense";
 static NSString *const _HEMonboardingComplete = @"onboardingComplete";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpairPill = @"pairPill";
@@ -46,7 +45,6 @@ static NSString *const _HEMreset = @"reset";
 static NSString *const _HEMresetSense = @"resetSense";
 static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMroomCheckToSmartAlarm = @"roomCheckToSmartAlarm";
-static NSString *const _HEMsenseAudio = @"senseAudio";
 static NSString *const _HEMsenseColors = @"senseColors";
 static NSString *const _HEMsenseDFU = @"senseDFU";
 static NSString *const _HEMsensePairToPill = @"sensePairToPill";
@@ -87,7 +85,6 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)titleReuseIdentifier { return _HEMtitle; }
 
 /** Segue Identifiers */
-+(NSString *)audioToSetupSegueIdentifier { return _HEMaudioToSetup; }
 +(NSString *)beforeSleepToSmartAlarmSegueIdentifier { return _HEMbeforeSleepToSmartAlarm; }
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier { return _HEMbeforeSleeptoRoomCheck; }
 +(NSString *)dfuSegueIdentifier { return _HEMdfu; }
@@ -100,7 +97,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
 +(NSString *)noBLESegueIdentifier { return _HEMnoBLE; }
 +(NSString *)noBleToBirthdaySegueIdentifier { return _HEMnoBleToBirthday; }
-+(NSString *)notificationToAudioSegueIdentifier { return _HEMnotificationToAudio; }
++(NSString *)notificationToSenseSegueIdentifier { return _HEMnotificationToSense; }
 +(NSString *)pairSegueIdentifier { return _HEMpair; }
 +(NSString *)pairPillSegueIdentifier { return _HEMpairPill; }
 +(NSString *)pillSetupToColorsSegueIdentifier { return _HEMpillSetupToColors; }
@@ -132,7 +129,6 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(id)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
 +(id)instantiateResetSenseViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMresetSense]; }
 +(id)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
-+(id)instantiateSenseAudioViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseAudio]; }
 +(id)instantiateSenseColorsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseColors]; }
 +(id)instantiateSenseDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseDFU]; }
 +(id)instantiateSensePairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensePairViewController]; }

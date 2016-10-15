@@ -992,7 +992,7 @@
 "voice.title" = "Voice";
 "voice.command.list.title" = "Voice commands";
 
-"voice.welcome.message" = "Always say “Okay Sense” before each command to activate Voice. Ask about your Sleep Score, room conditions, and more.";
+"voice.welcome.message" = "Always say \"Okay Sense\" before each command to activate Voice. Ask about your Sleep Score, room conditions, and more.";
 "voice.welcome.title" = "Welcome to Voice";
 
 "voice.command.sound.category.name" = "Alarm and Sleep Sounds";

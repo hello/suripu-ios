@@ -16,8 +16,8 @@
 "welcome.intro.desc.current-conditions" = "Sense is packed with sensors that monitor the conditions of your bedroom, giving you unparalleled insight into how temperature, humidity, light, sound, and even air quality affects how well you sleep.";
 
 // onboarding
-"onboarding.new-sense.title" = "Have Sense ready?";
-"onboarding.new-sense.desc" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
+"onboarding.new-sense.title" = "Set up Sense";
+"onboarding.new-sense.desc" = "The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep PIll are nearby.";
 "onboarding.pair-sense.title" = "Pair your Sense";
 "onboarding.pair-sense.not-glowing" = "Sense isn’t glowing blue or purple";
 "onboarding.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";
@@ -34,16 +34,16 @@
 "sign-up.error.name-too-short" = "Your name is too short.";
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
-"onboarding.before-sleep.1.title" = "Sense Colors";
-"onboarding.before-sleep.2.title" = "All good.";
+"onboarding.before-sleep.1.title" = "Sense colors";
+"onboarding.before-sleep.2.title" = "Everything’s good";
 "onboarding.before-sleep.3.title" = "Something's not right";
-"onboarding.before-sleep.4.title" = "We've got a problem";
-"onboarding.before-sleep.5.title" = "Just wave";
-"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, air quality, light, and noise. Sense has three different colors.";
-"onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
-"onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
-"onboarding.before-sleep.4.description" = "Sense glows red when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
-"onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom. Go ahead, give it a try now.";
+"onboarding.before-sleep.4.title" = "Things aren’t great";
+"onboarding.before-sleep.5.title" = "Check any time";
+"onboarding.before-sleep.1.description" = "Sense can glow one of three colors to tell you if the conditions in your bedroom are conducive to a good night’s sleep.";
+"onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right.";
+"onboarding.before-sleep.3.description" = "Sense glows yellow when something in your room is less than ideal.";
+"onboarding.before-sleep.4.description" = "Sense glows red when the conditions in your room might prevent restful sleep. You’ll be able to see further details in the Sense app.";
+"onboarding.before-sleep.5.description" = "You can also wave your hand over Sense to check the conditions in your room at any time.";
 "onboarding.end-message.well-done" = "You're all set.";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
 "onboarding.room-check.failed" = "Unsuccessful";
@@ -62,8 +62,8 @@
 "onboarding.account.password" = "Password";
 
 // onboarding pill
-"onboarding.pill-setup.title" = "Clip Sleep Pill to your pillow";
-"onboarding.pill-setup.description" = "Clip the new Sleep Pill to the side of your pillowcase closest to the edge of your bed. You may need to pull your pillowcase taut between two hands.";
+"onboarding.pill-setup.title" = "Attach your Sleep Pill";
+"onboarding.pill-setup.description" = "Clip your Sleep Pill to the side of your pillowcase closest to the edge of your bed.";
 "onboarding.pill.title" = "Sleep Pill";
 "onboarding.pill.description" = "Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.";
 "onboarding.pill.pair.title" = "Pairing your Sleep Pill";
@@ -107,7 +107,7 @@
 "user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
 
 // pairing
-"pairing.activity.checking-wifi" = "Checking WiFi";
+"pairing.activity.checking-wifi" = "Checking for Wi-Fi";
 "pairing.activity.pairing-sense" = "Pairing with Sense";
 "pairing.activity.scanning-sense" = "Looking for Sense";
 "pairing.activity.bluetooth-not-on" = "Bluetooth is required to pair your Sleep Pill. Make sure it's on and try again.";
@@ -115,44 +115,44 @@
 "pairing.activity.connecting-sense" = "Connecting to Sense";
 "pairing.activity.linking-account" = "Linking account to Sense";
 "pairing.activity.setting-timezone" = "Setting time zone";
-"pairing.failed.title" = "Pairing Failed";
+"pairing.failed.title" = "Pairing failed";
 "pairing.activity.waiting-for-sense" = "Waiting for Sense";
 "pairing.error.sense-not-found" = "Could not detect a Sense nearby. Make sure Sense is plugged in, nearby, and in pairing mode. Ensure no other devices are connected with Sense over Bluetooth.";
 "pairing.error.could-not-pair" = "Could not connect to Sense to pair. Sense should be plugged in, nearby, and in Pairing Mode. Make sure no other devices are connected with Sense over Bluetooth.";
 "pairing.error.unexpected-disconnect" = "The connection with Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Your account could not be linked with Sense.";
-"pairing.error.link-account-failed-edit-wifi" = "Your account could not be linked with Sense. You can try changing the WiFi Sense is configured to.";
+"pairing.error.link-account-failed-edit-wifi" = "Your account could not be linked with Sense. You can try changing the Wi-Fi Sense is configured to.";
 "pairing.error.set-timezone-failed" = "There was a problem setting your timezone.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired";
-"pairing.pill.done" = "Sleep Pill connected";
-"pairing.pill.error.title" = "Sleep Pill Pairing Failed";
+"pairing.pill.done" = "Sleep Pill paired";
+"pairing.pill.error.title" = "Pairing failed";
 "pairing.error.pill-already-paired" = "This Sleep Pill is already paired with another account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
-"pairing.error.pill-pairing-failed" = "Sense could not pair your Sleep Pill. Please try again.";
-"pairing.error.pill-pairing-no-network" = "Sense could not pair your Sleep Pill. Please ensure the network Sense is connected to can reach the internet then try again.";
+"pairing.error.pill-pairing-failed" = "Sense was unable to pair with your Sleep Pill.";
+"pairing.error.pill-pairing-no-network" = "Sense was unable to pair with your Sleep Pill. Please ensure the network Sense is connected to can reach the internet then try again.";
 "pairing.pill.skip-confirmation-title" = "Are you sure?";
 "pairing.pill.skip-confirmation-message" = "Sense is not designed to work without a Sleep Pill. You will not be able to track your sleep, or set Smart Alarms. If you're having trouble, you can skip for now, and pair a Sleep Pill later.";
 
 // wifi setup
-"wifi.error.title" = "WiFi Setup Failed";
+"wifi.error.title" = "Wi-Fi setup failed";
 "wifi.error.link-account-title" = "Account not linked";
 "wifi.error.timezone-title" = "Setting Time Zone Failed";
-"wifi.activity.setting-wifi" = "Setting WiFi credentials";
+"wifi.activity.setting-wifi" = "Connecting to Wi-Fi network";
 "wifi.activity.setting-timezone" = "Setting time zone";
-"wifi.error.set-sense-general" = "There was a problem connecting Sense to WiFi. Make sure Sense is plugged in and nearby and try again.";
-"wifi.activity.scanning" = "Finding WiFi networks...";
-"wifi.error.invalid-input" = "The WiFi credentials provided are invalid. Please ensure you have entered everything correctly.";
-"wifi.error.invalid-wep-key" = "The WiFi credentials provided are invalid. Please ensure you have entered the WEP key generated by your router and not the passphrase.";
-"wifi.error.set-sense-not-in-range" = "Sense could not connect to WiFi. Please verify your credentials and ensure Sense is within WiFi range.";
-"wifi.error.wep.no-ascii" = "Sense could not connect to WiFi. Make sure you are using your network's WEP key.";
-"wifi.error.set-sense-timeout" = "Timed out while setting WiFi credentials on Sense.";
-"wifi.error.set-sense-failed-connection" = "Sense could not connect to the WiFi.";
+"wifi.error.set-sense-general" = "There was a problem connecting to the selected Wi-Fi network. Make sure Sense is plugged in and nearby, and try again.";
+"wifi.activity.scanning" = "Finding Wi-Fi networks";
+"wifi.error.invalid-input" = "The Wi-Fi credentials provided are invalid. Please ensure you have entered everything correctly.";
+"wifi.error.invalid-wep-key" = "The Wi-Fi credentials provided are invalid. Please ensure you have entered the WEP key generated by your router and not the passphrase.";
+"wifi.error.set-sense-not-in-range" = "Sense could not connect to Wi-Fi. Please verify your credentials and ensure Sense is within Wi-Fi range.";
+"wifi.error.wep.no-ascii" = "Sense could not connect to Wi-Fi. Make sure you are using your network's WEP key.";
+"wifi.error.set-sense-timeout" = "Timed out while setting Wi-Fi credentials on Sense.";
+"wifi.error.set-sense-failed-connection" = "Sense could not connect to the Wi-Fi.";
 "wifi.error.account-link-message" = "Your account could not be linked. Please try again.";
 "wifi.error.account-link-timeout" = "Timed out while linking Sense to your account.";
 "wifi.error.account-link-network-failed" = "Sense failed to connect to your network to link your account.";
 "wifi.error.time-zone-failed" = "There was a problem setting your timezone.";
-"wifi.error.scan-title" = "Could not scan for WiFi networks.";
+"wifi.error.scan-title" = "Could not scan for Wi-Fi networks.";
 "wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
 "wifi.error.unexpected-disconnnect" = "The connection with Sense was broken. Please try again.";
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
@@ -310,7 +310,7 @@
 "settings.sense.warning.summary.last-seen" = "No recent data.";
 "settings.sense.warning.summary.not-connected-ble" = "Could not connect over Bluetooth.";
 "settings.sense.action.pairing-mode" = "Put into pairing mode";
-"settings.sense.action.edit-wifi" = "Edit WiFi";
+"settings.sense.action.edit-wifi" = "Edit Wi-Fi";
 "settings.sense.action.change-time-zone" = "Change Time Zone";
 "settings.sense.action.advanced" = "Advanced";
 "settings.sense.advanced.option.title" = "Advanced";
@@ -321,7 +321,7 @@
 "settings.sense.factory-reset.complete.title" = "Power Cycle Sense";
 "settings.sense.factory-reset.complete.confirmation" = "Sense has been successfully restored to factory settings. Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
 "settings.sense.not-found-title" = "Sense not found";
-"settings.sense.wifi" = "WiFi";
+"settings.sense.wifi" = "Wi-Fi";
 "settings.sense.unpairing-message" = "Removing Sense";
 "settings.sense.unpair.title" = "Remove Sense";
 "settings.sense.unpair.confirmation.format" = "Are you sure you want to remove Sense from your account? You should only do this if you have another Sense that you would like to replace it with. If you're having trouble, visit %@ for support.";
@@ -335,8 +335,8 @@
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message.format" = "Are you sure you want to put Sense into Pairing Mode? You should use this option only if you have another mobile device you wish to pair with Sense. If you're having trouble, visit %@ for support.";
 "settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
-"settings.sense.warning.summary.wifi" = "Sense cannot connect to WiFi.";
-"settings.sense.warning.wifi" = "To edit your WiFi credentials, tap 'Edit WiFi' below.";
+"settings.sense.warning.summary.wifi" = "Sense cannot connect to Wi-Fi.";
+"settings.sense.warning.wifi" = "To edit your WiFi credentials, tap 'Edit Wi-Fi' below.";
 "settings.sense.warning.not-connected-sense" = "Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot. Some actions below are disabled.";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
@@ -660,7 +660,7 @@
 "actions.deleted" = "Deleted";
 "actions.save" = "Save";
 "actions.troubleshoot" = "troubleshoot";
-"actions.edit.wifi" = "Edit WiFi";
+"actions.edit.wifi" = "Edit Wi-Fi";
 "actions.import.from.fb" = "Import from Facebook";
 "actions.take.photo" = "Take Photo";
 "actions.camera-roll" = "Choose from Library";

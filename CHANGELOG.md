@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.0.3
+
+New:
+
+* Removed enhanced audio from onboarding
+* Updated copy throughout onboarding
+
 ## 1.6.0.2
 
 New:

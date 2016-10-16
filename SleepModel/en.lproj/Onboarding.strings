@@ -11,8 +11,8 @@
 /* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "2TQ-o7-Rs6"; */
 "2TQ-o7-Rs6.normalTitle" = "CONTINUE";
 
-/* Class = "UILabel"; text = "Make sure Sense is plugged into a wall outlet next to your bed."; ObjectID = "2Xd-u7-RCe"; */
-"2Xd-u7-RCe.text" = "Make sure Sense is plugged into a wall outlet next to your bed.";
+/* Class = "UILabel"; text = "Make sure Sense is plugged into a power outlet, and is next to your bed."; ObjectID = "2Xd-u7-RCe"; */
+"2Xd-u7-RCe.text" = "Make sure Sense is plugged into a power outlet, and is next to your bed.";
 
 /* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "37N-ly-LlQ"; */
 "37N-ly-LlQ.normalTitle" = "CONTINUE";
@@ -26,8 +26,8 @@
 /* Class = "UIButton"; normalTitle = "Add another Sleep Pill now"; ObjectID = "4OB-Af-zlr"; */
 "4OB-Af-zlr.normalTitle" = "Add another Sleep Pill now";
 
-/* Class = "UILabel"; text = "Setting up Sense"; ObjectID = "6Cl-vP-IeW"; */
-"6Cl-vP-IeW.text" = "Setting up Sense";
+/* Class = "UILabel"; text = "Set up Sense"; ObjectID = "6Cl-vP-IeW"; */
+"6Cl-vP-IeW.text" = "Set up Sense";
 
 /* Class = "UIButton"; disabledTitle = " "; ObjectID = "6FP-vw-B5B"; */
 "6FP-vw-B5B.disabledTitle" = " ";
@@ -38,11 +38,11 @@
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "6gv-tX-fiV"; */
 "6gv-tX-fiV.normalTitle" = "NEXT";
 
-/* Class = "UILabel"; text = "Sense uses your location to know sunrise and sunset times, local weather and more."; ObjectID = "8Sy-ck-jAh"; */
-"8Sy-ck-jAh.text" = "Sense uses your location to know sunrise and sunset times, local weather and more.";
+/* Class = "UILabel"; text = "Sense uses your location to know sunrise and sunset times, local weather, and more."; ObjectID = "8Sy-ck-jAh"; */
+"8Sy-ck-jAh.text" = "Sense uses your location to know sunrise and sunset times, local weather, and more.";
 
-/* Class = "UILabel"; text = "Tap Bluetooth\nFlip the switch to On"; ObjectID = "9L6-H0-aYi"; */
-"9L6-H0-aYi.text" = "Tap Bluetooth\nFlip the switch to On";
+/* Class = "UILabel"; text = "Tap Bluetooth\nTurn Bluetooth on"; ObjectID = "9L6-H0-aYi"; */
+"9L6-H0-aYi.text" = "Tap Bluetooth\nTurn Bluetooth on";
 
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "9ia-GF-Swk"; */
 "9ia-GF-Swk.normalTitle" = "Skip for now";
@@ -53,8 +53,8 @@
 /* Class = "UITextField"; placeholder = "Full Name"; ObjectID = "EoV-KF-nla"; */
 "EoV-KF-nla.placeholder" = "Full Name";
 
-/* Class = "UILabel"; text = "Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense."; ObjectID = "FLk-KX-k9s"; */
-"FLk-KX-k9s.text" = "Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.";
+/* Class = "UILabel"; text = "Your Sleep Pill clips to your pillow and tracks your sleep through your movement during the night. Each person using Sense will need their own Sleep Pill. If you’re using Sense with a partner, they’ll set up their Sleep Pill separately."; ObjectID = "FLk-KX-k9s"; */
+"FLk-KX-k9s.text" = "Your Sleep Pill clips to your pillow and tracks your sleep through your movement during the night. Each person using Sense will need their own Sleep Pill. If you’re using Sense with a partner, they’ll set up their Sleep Pill separately.";
 
 /* Class = "UIButton"; normalTitle = "LOG IN"; ObjectID = "G9w-pu-D4W"; */
 "G9w-pu-D4W.normalTitle" = "LOG IN";
@@ -62,8 +62,8 @@
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "GFw-g6-B5s"; */
 "GFw-g6-B5s.normalTitle" = "Skip for now";
 
-/* Class = "UILabel"; text = "Enable notifications"; ObjectID = "Go7-Z7-kmw"; */
-"Go7-Z7-kmw.text" = "Enable notifications";
+/* Class = "UILabel"; text = "Allow notifications"; ObjectID = "Go7-Z7-kmw"; */
+"Go7-Z7-kmw.text" = "Allow notifications";
 
 /* Class = "UIButton"; normalTitle = "SET A SMART ALARM"; ObjectID = "H5s-t3-orP"; */
 "H5s-t3-orP.normalTitle" = "SET A SMART ALARM";
@@ -95,26 +95,26 @@
 /* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "MMQ-Qm-jOb"; */
 "MMQ-Qm-jOb.normalTitle" = "CONTINUE";
 
-/* Class = "UILabel"; text = "Success!"; ObjectID = "MmC-AT-a0e"; */
-"MmC-AT-a0e.text" = "Success!";
+/* Class = "UILabel"; text = "Room check complete"; ObjectID = "MmC-AT-a0e"; */
+"MmC-AT-a0e.text" = "Room check complete";
 
 /* Class = "UIButton"; normalTitle = "LOG IN"; ObjectID = "N7h-8T-8md"; */
 "N7h-8T-8md.normalTitle" = "LOG IN";
 
-/* Class = "UIButton"; normalTitle = "PAIR YOUR SENSE"; ObjectID = "ONz-So-uP9"; */
-"ONz-So-uP9.normalTitle" = "PAIR YOUR SENSE";
+/* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "ONz-So-uP9"; */
+"ONz-So-uP9.normalTitle" = "CONTINUE";
 
-/* Class = "UILabel"; text = "Room Check"; ObjectID = "PMR-Df-HyE"; */
-"PMR-Df-HyE.text" = "Room Check";
+/* Class = "UILabel"; text = "Room check"; ObjectID = "PMR-Df-HyE"; */
+"PMR-Df-HyE.text" = "Room check";
 
 /* Class = "UILabel"; text = "Have your partner get the app"; ObjectID = "Pe9-oy-MXl"; */
 "Pe9-oy-MXl.text" = "Have your partner get the app";
 
-/* Class = "UILabel"; text = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later."; ObjectID = "R0B-PY-KLe"; */
-"R0B-PY-KLe.text" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
+/* Class = "UILabel"; text = "The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep PIll are nearby."; ObjectID = "R0B-PY-KLe"; */
+"R0B-PY-KLe.text" = "The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep PIll are nearby.";
 
-/* Class = "UILabel"; text = "Are you male or female?"; ObjectID = "S9f-tS-yQg"; */
-"S9f-tS-yQg.text" = "Are you male or female?";
+/* Class = "UILabel"; text = "Confirm your gender"; ObjectID = "S9f-tS-yQg"; */
+"S9f-tS-yQg.text" = "Confirm your gender";
 
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "SVC-vN-68T"; */
 "SVC-vN-68T.normalTitle" = "Skip for now";
@@ -128,8 +128,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "UY8-cb-5so"; */
 "UY8-cb-5so.text" = "Label";
 
-/* Class = "UILabel"; text = "How much do you weigh?"; ObjectID = "Vca-9S-Db1"; */
-"Vca-9S-Db1.text" = "How much do you weigh?";
+/* Class = "UILabel"; text = "Confirm your weight"; ObjectID = "Vca-9S-Db1"; */
+"Vca-9S-Db1.text" = "Confirm your weight";
 
 /* Class = "UILabel"; text = "Turn on Bluetooth"; ObjectID = "WSp-oq-I62"; */
 "WSp-oq-I62.text" = "Turn on Bluetooth";
@@ -149,8 +149,8 @@
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "ZLg-Bc-ITS"; */
 "ZLg-Bc-ITS.normalTitle" = "Skip for now";
 
-/* Class = "UILabel"; text = "This is used to provide you with more personalized sleep insights."; ObjectID = "ayt-S0-U9x"; */
-"ayt-S0-U9x.text" = "This is used to provide you with more personalized sleep insights.";
+/* Class = "UILabel"; text = "This is used to provide you with more personalized recommendations about your sleep."; ObjectID = "ayt-S0-U9x"; */
+"ayt-S0-U9x.text" = "This is used to provide you with more personalized recommendations about your sleep.";
 
 /* Class = "UIButton"; normalTitle = "Sense isn’t glowing blue or purple"; ObjectID = "bX7-3Z-6yh"; */
 "bX7-3Z-6yh.normalTitle" = "Sense isn’t glowing blue or purple";
@@ -164,8 +164,8 @@
 /* Class = "UILabel"; text = "With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nOtherwise, Sense only looks at background noise levels."; ObjectID = "cYf-D8-Nxr"; */
 "cYf-D8-Nxr.text" = "With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nOtherwise, Sense only looks at background noise levels.";
 
-/* Class = "UILabel"; text = "Sense will occasionally notify you with important messages about your sleep, bedroom, and deliver you your Sleep Score each morning."; ObjectID = "cxR-ry-GIM"; */
-"cxR-ry-GIM.text" = "Sense will occasionally notify you with important messages about your sleep, bedroom, and deliver you your Sleep Score each morning.";
+/* Class = "UILabel"; text = "Sense will occasionally provide important information about your sleep, the current conditions in your room, and your Sleep Score."; ObjectID = "cxR-ry-GIM"; */
+"cxR-ry-GIM.text" = "Sense will occasionally provide important information about your sleep, the current conditions in your room, and your Sleep Score.";
 
 /* Class = "UILabel"; text = "Set up another Sleep Pill?"; ObjectID = "eDs-8j-Vd9"; */
 "eDs-8j-Vd9.text" = "Set up another Sleep Pill?";
@@ -173,11 +173,11 @@
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "eHT-GQ-6UW"; */
 "eHT-GQ-6UW.placeholder" = "Password";
 
-/* Class = "UILabel"; text = "This is used to provide you with more personalized sleep insights."; ObjectID = "f5o-GP-Ma1"; */
-"f5o-GP-Ma1.text" = "This is used to provide you with more personalized sleep insights.";
+/* Class = "UILabel"; text = "This is used to provide you with more personalized recommendations about your sleep."; ObjectID = "f5o-GP-Ma1"; */
+"f5o-GP-Ma1.text" = "This is used to provide you with more personalized recommendations about your sleep.";
 
-/* Class = "UILabel"; text = "Open iPhone Settings"; ObjectID = "g4c-af-MzQ"; */
-"g4c-af-MzQ.text" = "Open iPhone Settings";
+/* Class = "UILabel"; text = "Open iOS Settings"; ObjectID = "g4c-af-MzQ"; */
+"g4c-af-MzQ.text" = "Open iOS Settings";
 
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "gMf-fl-V5h"; */
 "gMf-fl-V5h.normalTitle" = "NEXT";
@@ -185,8 +185,8 @@
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "gMo-0B-UJM"; */
 "gMo-0B-UJM.placeholder" = "Email";
 
-/* Class = "UILabel"; text = "Connecting Sense to WiFi"; ObjectID = "gvl-uZ-ZRh"; */
-"gvl-uZ-ZRh.text" = "Connecting Sense to WiFi";
+/* Class = "UILabel"; text = "Connecting Sense to Wi-Fi"; ObjectID = "gvl-uZ-ZRh"; */
+"gvl-uZ-ZRh.text" = "Connecting Sense to Wi-Fi";
 
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "h1g-YQ-7bC"; */
 "h1g-YQ-7bC.normalTitle" = "NEXT";
@@ -197,11 +197,11 @@
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "hPf-UR-a80"; */
 "hPf-UR-a80.placeholder" = "Password";
 
-/* Class = "UILabel"; text = "This is used to provide you with more personalized sleep insights."; ObjectID = "hpH-00-fqv"; */
-"hpH-00-fqv.text" = "This is used to provide you with more personalized sleep insights.";
+/* Class = "UILabel"; text = "This is used to provide you with more personalized recommendations about your sleep."; ObjectID = "hpH-00-fqv"; */
+"hpH-00-fqv.text" = "This is used to provide you with more personalized recommendations about your sleep.";
 
-/* Class = "UILabel"; text = "Sense will now check the conditions in your bedroom."; ObjectID = "iGc-8P-g1M"; */
-"iGc-8P-g1M.text" = "Sense will now check the conditions in your bedroom.";
+/* Class = "UILabel"; text = "Sit back while Sense checks the conditions in your room."; ObjectID = "iGc-8P-g1M"; */
+"iGc-8P-g1M.text" = "Sit back while Sense checks the conditions in your room.";
 
 /* Class = "UILabel"; text = "If you're using Sense with a partner, they can create an account and set up their own Sleep Pill at this time.  If your partner is not nearby now, they can always do this later."; ObjectID = "iMZ-p6-gA8"; */
 "iMZ-p6-gA8.text" = "If you're using Sense with a partner, they can create an account and set up their own Sleep Pill at this time.  If your partner is not nearby now, they can always do this later.";
@@ -209,23 +209,23 @@
 /* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "imr-Jl-fE8"; */
 "imr-Jl-fE8.normalTitle" = "CONTINUE";
 
-/* Class = "UILabel"; text = "How tall are you?"; ObjectID = "iyM-PD-FTT"; */
-"iyM-PD-FTT.text" = "How tall are you?";
+/* Class = "UILabel"; text = "Confirm your height"; ObjectID = "iyM-PD-FTT"; */
+"iyM-PD-FTT.text" = "Confirm your height";
 
-/* Class = "UILabel"; text = "Please select your WiFi network from the list below:"; ObjectID = "jA1-IU-BsJ"; */
-"jA1-IU-BsJ.text" = "Please select your WiFi network from the list below:";
+/* Class = "UILabel"; text = "Select your Wi-Fi network."; ObjectID = "jA1-IU-BsJ"; */
+"jA1-IU-BsJ.text" = "Select your Wi-Fi network.";
 
 /* Class = "UIButton"; normalTitle = "ALLOW NOTIFICATIONS"; ObjectID = "je6-JT-9YZ"; */
 "je6-JT-9YZ.normalTitle" = "ALLOW NOTIFICATIONS";
 
-/* Class = "UILabel"; text = "Have Sense ready?"; ObjectID = "k0c-FQ-y2a"; */
-"k0c-FQ-y2a.text" = "Have Sense ready?";
+/* Class = "UILabel"; text = "Set up Sense"; ObjectID = "k0c-FQ-y2a"; */
+"k0c-FQ-y2a.text" = "Set up Sense";
 
-/* Class = "UILabel"; text = "Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register."; ObjectID = "kFD-e4-hma"; */
-"kFD-e4-hma.text" = "Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register.";
+/* Class = "UILabel"; text = "Hold your Sleep Pill nearby Sense, and shake it quickly. It may take a few seconds to pair your Sleep Pill with Sense."; ObjectID = "kFD-e4-hma"; */
+"kFD-e4-hma.text" = "Hold your Sleep Pill nearby Sense, and shake it quickly. It may take a few seconds to pair your Sleep Pill with Sense.";
 
-/* Class = "UILabel"; text = "Connecting Sense to WiFi"; ObjectID = "kPY-hQ-rr3"; */
-"kPY-hQ-rr3.text" = "Connecting Sense to WiFi";
+/* Class = "UILabel"; text = "Connecting Sense to Wi-Fi"; ObjectID = "kPY-hQ-rr3"; */
+"kPY-hQ-rr3.text" = "Connecting Sense to Wi-Fi";
 
 /* Class = "UIButton"; normalTitle = "RETRY"; ObjectID = "lGd-9N-cHV"; */
 "lGd-9N-cHV.normalTitle" = "RETRY";
@@ -236,8 +236,8 @@
 /* Class = "UILabel"; text = "Welcome back"; ObjectID = "lcc-O3-dxY"; */
 "lcc-O3-dxY.text" = "Welcome back";
 
-/* Class = "UILabel"; text = "This is used to provide you with more personalized sleep insights."; ObjectID = "mBp-0g-Ucq"; */
-"mBp-0g-Ucq.text" = "This is used to provide you with more personalized sleep insights.";
+/* Class = "UILabel"; text = "This is used to provide you with more personalized recommendations about your sleep."; ObjectID = "mBp-0g-Ucq"; */
+"mBp-0g-Ucq.text" = "This is used to provide you with more personalized recommendations about your sleep.";
 
 /* Class = "UIButton"; disabledTitle = " "; ObjectID = "nBf-Bp-BiO"; */
 "nBf-Bp-BiO.disabledTitle" = " ";
@@ -245,8 +245,8 @@
 /* Class = "UIButton"; normalTitle = "Forgot password"; ObjectID = "nBf-Bp-BiO"; */
 "nBf-Bp-BiO.normalTitle" = "Forgot password";
 
-/* Class = "UILabel"; text = "Sense can sync your sleep data to Apple's Health app so you can see all your information at a glance."; ObjectID = "pZv-GO-TM0"; */
-"pZv-GO-TM0.text" = "Sense can sync your sleep data to Apple's Health app so you can see all your information at a glance.";
+/* Class = "UILabel"; text = "Sense can sync your sleep data to the Health app."; ObjectID = "pZv-GO-TM0"; */
+"pZv-GO-TM0.text" = "Sense can sync your sleep data to the Health app.";
 
 /* Class = "UILabel"; text = "Pairing Mode"; ObjectID = "phz-De-JCe"; */
 "phz-De-JCe.text" = "Pairing Mode";
@@ -254,8 +254,8 @@
 /* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "qdG-tg-U0e"; */
 "qdG-tg-U0e.normalTitle" = "CONTINUE";
 
-/* Class = "UILabel"; text = "Works with Health"; ObjectID = "qjM-t5-PIi"; */
-"qjM-t5-PIi.text" = "Works with Health";
+/* Class = "UILabel"; text = "Sync with Health"; ObjectID = "qjM-t5-PIi"; */
+"qjM-t5-PIi.text" = "Sync with Health";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "rFe-bS-5Yc"; */
 "rFe-bS-5Yc.placeholder" = "Password";
@@ -287,8 +287,8 @@
 /* Class = "UIButton"; normalTitle = "Female"; ObjectID = "w1t-tO-D6Q"; */
 "w1t-tO-D6Q.normalTitle" = "Female";
 
-/* Class = "UILabel"; text = "Everything looks great.\nNow let’s set your first Smart Alarm."; ObjectID = "wOT-kZ-3fG"; */
-"wOT-kZ-3fG.text" = "Everything looks great.\nNow let’s set your first Smart Alarm.";
+/* Class = "UILabel"; text = "All sensors are up and running. You’ll now be able to check the conditions in your room at any time."; ObjectID = "wOT-kZ-3fG"; */
+"wOT-kZ-3fG.text" = "All sensors are up and running. You’ll now be able to check the conditions in your room at any time.";
 
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "wdU-1v-eC1"; */
 "wdU-1v-eC1.normalTitle" = "Skip for now";
@@ -305,11 +305,11 @@
 /* Class = "UIButton"; normalTitle = "Male"; ObjectID = "yLf-ik-ger"; */
 "yLf-ik-ger.normalTitle" = "Male";
 
-/* Class = "UILabel"; text = "What's your location?"; ObjectID = "zaK-X5-Jnp"; */
-"zaK-X5-Jnp.text" = "What's your location?";
+/* Class = "UILabel"; text = "Set your location"; ObjectID = "zaK-X5-Jnp"; */
+"zaK-X5-Jnp.text" = "Set your location";
 
-/* Class = "UILabel"; text = "When is your birthday?"; ObjectID = "znD-8e-Xes"; */
-"znD-8e-Xes.text" = "When is your birthday?";
+/* Class = "UILabel"; text = "Confirm your birthday"; ObjectID = "znD-8e-Xes"; */
+"znD-8e-Xes.text" = "Confirm your birthday";
 
-/* Class = "UILabel"; text = "Return to the Sense app."; ObjectID = "znE-i9-5u6"; */
-"znE-i9-5u6.text" = "Return to the Sense app.";
+/* Class = "UILabel"; text = "Return to the Sense app"; ObjectID = "znE-i9-5u6"; */
+"znE-i9-5u6.text" = "Return to the Sense app";

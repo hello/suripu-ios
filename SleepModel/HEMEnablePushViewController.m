@@ -61,7 +61,8 @@
 #pragma mark -
 
 - (void)next {
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard notificationToAudioSegueIdentifier]
+    [[HEMOnboardingService sharedService] saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard notificationToSenseSegueIdentifier]
                               sender:self];
 }
 

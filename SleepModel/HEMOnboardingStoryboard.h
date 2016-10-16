@@ -21,7 +21,6 @@
 +(NSString *)pillSetupVideoCellReuseIdentifier;
 
 /** Segue Identifiers */
-+(NSString *)audioToSetupSegueIdentifier;
 +(NSString *)beforeSleepToSmartAlarmSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)dfuSegueIdentifier;
@@ -34,7 +33,7 @@
 +(NSString *)moreInfoSegueIdentifier;
 +(NSString *)noBLESegueIdentifier;
 +(NSString *)noBleToBirthdaySegueIdentifier;
-+(NSString *)notificationToAudioSegueIdentifier;
++(NSString *)notificationToSenseSegueIdentifier;
 +(NSString *)pairSegueIdentifier;
 +(NSString *)pairPillSegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
@@ -66,7 +65,6 @@
 +(id)instantiatePillPairViewController;
 +(id)instantiateResetSenseViewController;
 +(id)instantiateRoomCheckViewController;
-+(id)instantiateSenseAudioViewController;
 +(id)instantiateSenseColorsViewController;
 +(id)instantiateSenseDFUViewController;
 +(id)instantiateSensePairViewController;

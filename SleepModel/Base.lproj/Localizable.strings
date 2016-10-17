@@ -172,6 +172,7 @@
 // settings
 "settings.title" = "Settings";
 "settings.expansions" = "Expansions";
+"settings.voice" = "Voice";
 "settings.notifications" = "Notifications";
 "settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My account";

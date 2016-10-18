@@ -77,6 +77,8 @@ typedef NS_ENUM(NSInteger, HEMSignOutRow) {
 
 static CGFloat const HEMAccountTableCellBaseHeight = 56.0f;
 static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
+static CGFloat const HEMAccountAudioNoteVertMargin = 12.0f;
+static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
 
 @interface HEMAccountPresenter() <
     UITableViewDataSource,
@@ -561,6 +563,11 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     HEMSettingsHeaderFooterView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     [footer setAttributedTitle:[self enhancedAudioNote]];
+    [footer setTitleInsets:UIEdgeInsetsMake(HEMAccountAudioNoteVertMargin,
+                                            HEMAccountAudioNoteHorzMargin,
+                                            HEMAccountAudioNoteVertMargin,
+                                            HEMAccountAudioNoteHorzMargin)];
+    [footer setAdjustBasedOnTitle:YES];
     return footer;
 }
 

@@ -11,6 +11,7 @@
 
 @class SENSpeechResult;
 @class HEMVoiceCommandGroup;
+@class SENSenseVoiceInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,7 @@ NSString* const HEMVoiceNotificationInfoError;
 NSString* const HEMVoiceNotificationInfoResult;
 
 typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
+typedef void(^HEMVoiceControlUpdateHandler)(id _Nullable response, NSError* _Nullable error);
 
 @interface HEMVoiceService : SENService
 
@@ -28,6 +30,9 @@ typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
 - (BOOL)showVoiceIntro;
 - (void)hideVoiceIntro;
 - (void)resetVoiceIntro;
+- (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
+             forSenseId:(NSString*)senseId
+             completion:(HEMVoiceControlUpdateHandler)completion;
 
 @end
 

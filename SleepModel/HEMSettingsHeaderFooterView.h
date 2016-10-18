@@ -17,6 +17,9 @@ extern CGFloat const HEMSettingsHeaderFooterHeightWithTitle;
 
 @interface HEMSettingsHeaderFooterView : UIView
 
+@property (nonatomic, assign) UIEdgeInsets titleInsets;
+@property (nonatomic, assign) BOOL adjustBasedOnTitle;
+
 - (instancetype)initWithTopBorder:(BOOL)topBorder bottomBorder:(BOOL)bottomBorder;
 - (void)setTitle:(nullable NSString*)title;
 - (void)setAttributedTitle:(NSAttributedString*)attributedTitle;

@@ -72,6 +72,12 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 
 - (void)setAttributedTitle:(NSAttributedString*)attributedTitle {
     if (![self titleLabel]) {
+        // set default
+        [self setTitleInsets:UIEdgeInsetsMake(0.0f,
+                                              HEMSettingsHeaderFooterTitleMargins,
+                                              0.0f,
+                                              HEMSettingsHeaderFooterTitleMargins)];
+        
         UILabel* label = [UILabel new];
         [label setNumberOfLines:0];
         [label setBackgroundColor:[UIColor clearColor]];
@@ -85,14 +91,25 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 
 - (void)layoutSubviews {
     if ([self titleLabel]) {
+        CGFloat horzMargins = [self titleInsets].left + [self titleInsets].right;;
+        CGFloat width = CGRectGetWidth([self bounds]) - horzMargins;
         CGRect frame = [[self titleLabel] frame];
-        frame.size.width = CGRectGetWidth([self bounds]) - (2 * HEMSettingsHeaderFooterTitleMargins);
-        frame.size.height = CGRectGetHeight([self bounds]);
-        frame.origin.x = HEMSettingsHeaderFooterTitleMargins;
+        frame.size.width = width;
+        frame.origin.x = [self titleInsets].left;
+        frame.origin.y = [self titleInsets].top;
+        
+        if ([self adjustBasedOnTitle]) {
+            CGSize constraint = CGSizeMake(width, MAXFLOAT);
+            CGSize textSize = [[self titleLabel] sizeThatFits:constraint];
+            frame.size.height = textSize.height;
+        } else {
+            frame.size.height = HEMSettingsHeaderFooterHeightWithTitle;
+        }
+        
         [[self titleLabel] setFrame:frame];
         
         CGRect myFrame = [self frame];
-        myFrame.size.height = HEMSettingsHeaderFooterHeightWithTitle;
+        myFrame.size.height = CGRectGetMaxY(frame) + [self titleInsets].bottom;
         [self setFrame:myFrame];
     }
     

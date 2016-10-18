@@ -15,6 +15,7 @@ static NSString* const SENAPIDeviceEndpoint = @"v2/devices";
 static NSString* const SENAPIDeviceInfoPath = @"info";
 static NSString* const SENAPIDeviceSensePath = @"sense";
 static NSString* const SENAPIDevicePillPath = @"pill";
+static NSString* const SENAPIDeviceVoicePath = @"voice";
 
 static NSString* const SENAPIDeviceOTAEndpoint = @"v1/ota";
 static NSString* const SENAPIDeviceOTAStatusPath = @"status";
@@ -47,6 +48,17 @@ static NSString* const SENAPIDeviceSwapParamDeviceId = @"sense_id";
         }
         completion (pairingInfo, error);
     }];
+}
+
++ (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
+             forSenseId:(NSString*)senseId
+             completion:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/%@/%@/%@",
+                      SENAPIDeviceSensePath,
+                      senseId,
+                      SENAPIDeviceVoicePath];
+    NSDictionary* params = [voiceInfo dictionaryValue];
+    [SENAPIClient PATCH:path parameters:params completion:completion];
 }
 
 #pragma mark - Swap

@@ -18,4 +18,8 @@
 
 - (void)bindWithTableView:(UITableView*)tableView;
 
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem;
+
+- (void)bindWithActivityContainer:(UIView*)activityContainer;
+
 @end

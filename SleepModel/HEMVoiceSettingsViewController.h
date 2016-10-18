@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMVoiceSettingsViewController : UIViewController
+@class HEMDeviceService;
+@class HEMVoiceService;
+
+@interface HEMVoiceSettingsViewController : HEMBaseController
+
+@property (nonatomic, strong) HEMDeviceService* deviceService;
+@property (nonatomic, strong) HEMVoiceService* voiceService;
 
 @end

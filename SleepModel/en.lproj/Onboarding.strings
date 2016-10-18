@@ -263,8 +263,8 @@
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "tOK-gj-1np"; */
 "tOK-gj-1np.normalTitle" = "Skip for now";
 
-/* Class = "UIButton"; normalTitle = "ORDER A SENSE"; ObjectID = "tgV-El-CBa"; */
-"tgV-El-CBa.normalTitle" = "ORDER A SENSE";
+/* Class = "UIButton"; normalTitle = "Order a Sense"; ObjectID = "tgV-El-CBa"; */
+"tgV-El-CBa.normalTitle" = "Order a Sense";
 
 /* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "tkw-WQ-h6F"; */
 "tkw-WQ-h6F.normalTitle" = "CONTINUE";

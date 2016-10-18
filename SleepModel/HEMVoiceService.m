@@ -9,6 +9,8 @@
 #import <SenseKit/SENSpeechResult.h>
 #import <SenseKit/SENService+Protected.h>
 #import <SenseKit/SENLocalPreferences.h>
+#import <SenseKit/SENAPIDevice.h>
+#import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMVoiceService.h"
 #import "HEMVoiceCommandGroup.h"
@@ -216,6 +218,21 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 - (void)resetVoiceIntro {
     SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
     [localPrefs setUserPreference:@NO forKey:HEMVoiceServiceHideIntroKey];
+}
+
+#pragma mark - Voice controls
+
+- (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
+             forSenseId:(NSString*)senseId
+             completion:(HEMVoiceControlUpdateHandler)completion {
+    [SENAPIDevice updateVoiceInfo:voiceInfo forSenseId:senseId completion:^(id data, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error];
+        }
+        if (completion) {
+            completion (data, error);
+        }
+    }];
 }
 
 @end

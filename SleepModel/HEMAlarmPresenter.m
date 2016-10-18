@@ -83,10 +83,9 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
                                     @(HEMAlarmRowTypeRepeat)]];
         
         // Sense Voice only features
-        // TODO: hide for 1.5.4
-//        if ([_deviceService savedHardwareVersion] == SENSenseHardwareVoice) {
-//            [rows addObject:@(HEMAlarmRowTypeLight)];
-//        }
+        if ([_deviceService savedHardwareVersion] == SENSenseHardwareVoice) {
+            [rows addObject:@(HEMAlarmRowTypeLight)];
+        }
         
         // Optionally show delete
         if ([alarm isSaved]) {

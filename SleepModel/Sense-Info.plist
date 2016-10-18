@@ -35,7 +35,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.0.3</string>
+	<string>1.6.0.4</string>
 	<key>FacebookAppID</key>
 	<string>372438546161587</string>
 	<key>FacebookDisplayName</key>
@@ -105,7 +105,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is needed for Sense to better understand your sleep environment.</string>
+	<string>Sense uses your location to know sunrise and sunset times, local weather, and more.</string>
 	<key>PillFirmwareURL</key>
 	<string>${PILL_FIRMWARE_URL}</string>
 	<key>SenseAllowSupportOptions</key>

@@ -10,10 +10,13 @@
 #import "HEMVoiceService.h"
 #import "HEMDeviceService.h"
 #import "HEMVoiceSettingsPresenter.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMAlertViewController.h"
 
 @interface HEMVoiceSettingsViewController () <HEMPresenterErrorDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -41,6 +44,7 @@
     [settingsPresenter bindWithShadowView:[self shadowView]];
     [settingsPresenter bindWithNavigationItem:[self navigationItem]];
     [settingsPresenter bindWithActivityContainer:[[self rootViewController] view]];
+    [settingsPresenter bindWithActivityIndicator:[self activityIndicator]];
     [settingsPresenter setErrorDelegate:self];
     
     [self addPresenter:settingsPresenter];
@@ -53,6 +57,12 @@
               withHelpPage:(NSString *)helpPage
              fromPresenter:(HEMPresenter *)presenter {
     [self showMessageDialog:message title:title];
+}
+
+- (void)showCustomerAlert:(HEMAlertViewController*)alertVC
+            fromPresenter:(HEMPresenter *)presenter {
+    [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
+    [alertVC showFrom:self];
 }
 
 @end

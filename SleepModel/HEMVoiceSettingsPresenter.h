@@ -10,6 +10,7 @@
 
 @class HEMVoiceService;
 @class HEMDeviceService;
+@class HEMActivityIndicatorView;
 
 @interface HEMVoiceSettingsPresenter : HEMPresenter
 
@@ -21,5 +22,7 @@
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 
 - (void)bindWithActivityContainer:(UIView*)activityContainer;
+
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicatorView;
 
 @end

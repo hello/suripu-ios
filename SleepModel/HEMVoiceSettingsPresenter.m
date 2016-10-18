@@ -15,6 +15,8 @@
 #import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMActivityCoverView.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMAlertViewController.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
     HEMVoiceSettingsRowPrimaryUser = 0,
@@ -30,6 +32,8 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, weak) UIView* activityContainerView;
+@property (nonatomic, weak) HEMActivityIndicatorView* activityIndicatorView;
+@property (nonatomic, strong) NSError* dataError;
 
 @end
 
@@ -64,6 +68,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     
     [tableView setTableHeaderView:headerView];
     [tableView setTableFooterView:footerView];
+    [tableView setHidden:YES];
     [self setTableView:tableView];
 }
 
@@ -75,6 +80,14 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     [self setActivityContainerView:activityContainer];
 }
 
+- (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicatorView {
+    [activityIndicatorView start];
+    [activityIndicatorView setHidden:NO];
+    [self setActivityIndicatorView:activityIndicatorView];
+}
+
+#pragma mark - Presenter events
+
 - (void)didRelayout {
     [super didRelayout];
     
@@ -83,14 +96,48 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     [[self tableView] setTableFooterView:footer];
 }
 
+- (void)didAppear {
+    [super didAppear];
+    [self updateUI];
+}
+
+#pragma mark - Data
+
+- (void)updateUI {
+    __weak typeof(self) weakSelf = self;
+    void(^reload)(NSError* error) = ^(NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setDataError:error];
+        [[[strongSelf tableView] tableFooterView] setHidden:error != nil];
+        [[strongSelf tableView] setHidden:NO];
+        [[strongSelf tableView] reloadData];
+        [[strongSelf activityIndicatorView] stop];
+        [[strongSelf activityIndicatorView] setHidden:YES];
+    };
+    
+    if ([[[self deviceService] devices] senseMetadata]) {
+        reload(nil);
+    } else {
+        [[self deviceService] refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
+            reload(error);
+        }];
+    }
+}
+
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return HEMVoiceSettingsRowCount;
-}
+    return [self dataError] ? 1 : HEMVoiceSettingsRowCount;
+}   
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* reuseId = [HEMMainStoryboard settingsReuseIdentifier];
+- (UITableViewCell*)tableView:(UITableView *)tableView
+        cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString* reuseId = nil;
+    if ([self dataError]) {
+        reuseId = [HEMMainStoryboard errorReuseIdentifier];
+    } else {
+        reuseId = [HEMMainStoryboard settingsReuseIdentifier];
+    }
     return [tableView dequeueReusableCellWithIdentifier:reuseId
                                            forIndexPath:indexPath];
 }
@@ -98,42 +145,75 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* title = nil;
-    NSString* detail = nil;
-    UIView* accessoryView = nil;
-    
-    switch ([indexPath row]) {
-        default:
-        case HEMVoiceSettingsRowPrimaryUser: {
-            title = NSLocalizedString(@"voice.settings.primary-user", nil);
-            
-            SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
-            SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
-            UISwitch* primarySwitch = [UISwitch new];
-            [primarySwitch setOn:[voiceInfo isPrimaryUser]];
-            [primarySwitch setEnabled:![voiceInfo isPrimaryUser]];
-            [primarySwitch setOnTintColor:[UIColor tintColor]];
-            [primarySwitch addTarget:self
-                              action:@selector(setAsPrimary:)
-                    forControlEvents:UIControlEventTouchUpInside];
-            
-            accessoryView = primarySwitch;
-            break;
+    if ([self dataError] && [indexPath row] == 0) {
+        [[cell textLabel] setText:NSLocalizedString(@"voice.settings.error.message", nil)];
+        [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [[cell textLabel] setTextColor:[UIColor grey4]];
+        [[cell textLabel] setNumberOfLines:0];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell sizeToFit];
+    } else {
+        NSString* title = nil;
+        NSString* detail = nil;
+        UIView* accessoryView = nil;
+        UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleGray;
+        
+        switch ([indexPath row]) {
+            default:
+            case HEMVoiceSettingsRowPrimaryUser: {
+                title = NSLocalizedString(@"voice.settings.primary-user", nil);
+                selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
+                SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
+                UISwitch* primarySwitch = [UISwitch new];
+                [primarySwitch setOn:[voiceInfo isPrimaryUser]];
+                [primarySwitch setEnabled:![voiceInfo isPrimaryUser]];
+                [primarySwitch setOnTintColor:[UIColor tintColor]];
+                [primarySwitch addTarget:self
+                                  action:@selector(showPrimaryUserConfirmation:)
+                        forControlEvents:UIControlEventTouchUpInside];
+                accessoryView = primarySwitch;
+                break;
+            }
         }
+        
+        [[cell textLabel] setText:title];
+        [[cell textLabel] setFont:[UIFont body]];
+        [[cell textLabel] setTextColor:[UIColor grey6]];
+        [[cell detailTextLabel] setText:detail];
+        [[cell detailTextLabel] setFont:[UIFont body]];
+        [[cell detailTextLabel] setTextColor:[UIColor grey4]];
+        [cell setAccessoryView:accessoryView];
+        [cell setSelectionStyle:selectionStyle];
     }
-    
-    [[cell textLabel] setText:title];
-    [[cell textLabel] setFont:[UIFont body]];
-    [[cell textLabel] setTextColor:[UIColor grey6]];
-    [[cell detailTextLabel] setText:detail];
-    [[cell detailTextLabel] setFont:[UIFont body]];
-    [[cell detailTextLabel] setTextColor:[UIColor grey4]];
-    [cell setAccessoryView:accessoryView];
 }
 
 #pragma mark - Actions
 
+- (void)showPrimaryUserConfirmation:(UISwitch*)primarySwitch {
+    [primarySwitch setOn:NO];
+    
+    NSString* title = NSLocalizedString(@"voice.settings.primary-user.confirm.title", nil);
+    NSString* message = NSLocalizedString(@"voice.settings.primary-user.confirm.message", nil);
+    
+    __weak typeof(self) weakSelf = self;
+    HEMAlertViewController *dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"voice.settings.primary-user.confirm.ok", nil)
+                           style:HEMAlertViewButtonStyleRoundRect
+                          action:^{
+                              __strong typeof(weakSelf) strongSelf = weakSelf;
+                              [strongSelf setAsPrimary:primarySwitch];
+                          }];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil)
+                           style:HEMAlertViewButtonStyleBlueText
+                          action:nil];
+    [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
+}
+
 - (void)setAsPrimary:(UISwitch*)primarySwitch {
+    [primarySwitch setOn:YES];
+    
     NSString* senseId = [[[[self deviceService] devices] senseMetadata] uniqueId];
     SENSenseVoiceInfo* voiceInfo = [SENSenseVoiceInfo new];
     [voiceInfo setPrimaryUser:YES];

@@ -403,6 +403,8 @@
 		BFCB894F1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFCB894B1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf */; };
 		BFCB89501BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFCB894C1BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf */; };
 		BFCB91C21DB16F7900810CFB /* HEMMacAddressHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB91C11DB16F7900810CFB /* HEMMacAddressHeaderView.m */; };
+		BFCB91C61DB57EA900810CFB /* HEMVoiceSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB91C51DB57EA900810CFB /* HEMVoiceSettingsViewController.m */; };
+		BFCB91CB1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB91CA1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m */; };
 		BFCB99091CA61A4E000D7619 /* HEMSleepSoundDurationsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB99081CA61A4E000D7619 /* HEMSleepSoundDurationsPresenter.m */; };
 		BFCB990C1CA9D032000D7619 /* HEMSleepSoundVolumePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB990B1CA9D032000D7619 /* HEMSleepSoundVolumePresenter.m */; };
 		BFCB99101CA9D259000D7619 /* HEMSleepSoundVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB990F1CA9D259000D7619 /* HEMSleepSoundVolume.m */; };
@@ -1230,6 +1232,10 @@
 		BFCB894C1BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AvenirNext-ThinItalic.ttf"; path = "Resources/Fonts/AvenirNext-ThinItalic.ttf"; sourceTree = SOURCE_ROOT; };
 		BFCB91C01DB16F7900810CFB /* HEMMacAddressHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMacAddressHeaderView.h; sourceTree = "<group>"; };
 		BFCB91C11DB16F7900810CFB /* HEMMacAddressHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMacAddressHeaderView.m; sourceTree = "<group>"; };
+		BFCB91C41DB57EA900810CFB /* HEMVoiceSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceSettingsViewController.h; sourceTree = "<group>"; };
+		BFCB91C51DB57EA900810CFB /* HEMVoiceSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceSettingsViewController.m; sourceTree = "<group>"; };
+		BFCB91C91DB57F3700810CFB /* HEMVoiceSettingsPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceSettingsPresenter.h; sourceTree = "<group>"; };
+		BFCB91CA1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceSettingsPresenter.m; sourceTree = "<group>"; };
 		BFCB99071CA61A4E000D7619 /* HEMSleepSoundDurationsPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundDurationsPresenter.h; sourceTree = "<group>"; };
 		BFCB99081CA61A4E000D7619 /* HEMSleepSoundDurationsPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundDurationsPresenter.m; sourceTree = "<group>"; };
 		BFCB990A1CA9D032000D7619 /* HEMSleepSoundVolumePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundVolumePresenter.h; sourceTree = "<group>"; };
@@ -2031,6 +2037,7 @@
 				BF8C09401C330B0A005AB5A7 /* Preferences */,
 				BF8C09411C330B17005AB5A7 /* Notifications */,
 				BF78E9951B2128F70015949F /* Support */,
+				BFCB91C31DB57E7A00810CFB /* Voice */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3351,6 +3358,33 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		BFCB91C31DB57E7A00810CFB /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				BFCB91C81DB57F2900810CFB /* Presenters */,
+				BFCB91C71DB57F1D00810CFB /* View Controllers */,
+			);
+			name = Voice;
+			sourceTree = "<group>";
+		};
+		BFCB91C71DB57F1D00810CFB /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BFCB91C41DB57EA900810CFB /* HEMVoiceSettingsViewController.h */,
+				BFCB91C51DB57EA900810CFB /* HEMVoiceSettingsViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BFCB91C81DB57F2900810CFB /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				BFCB91C91DB57F3700810CFB /* HEMVoiceSettingsPresenter.h */,
+				BFCB91CA1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m */,
+			);
+			name = Presenters;
+			sourceTree = "<group>";
+		};
 		BFCB990D1CA9D245000D7619 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -4017,6 +4051,7 @@
 				8A7D800E1A3F952000B0BFD7 /* UIColor+HEMStyle.m in Sources */,
 				BF238DFC1D1DACEB00F6E62C /* HEMShareButton.m in Sources */,
 				8AC49F9C198305F600C2BD63 /* HEMAuthenticationViewController.m in Sources */,
+				BFCB91C61DB57EA900810CFB /* HEMVoiceSettingsViewController.m in Sources */,
 				BF14E3DB19EF3C3D0006EFEA /* HEMSenseSetupViewController.m in Sources */,
 				BF5BAD021C5FE02100347185 /* HEMTrendsBarGraphCell.m in Sources */,
 				8A63D5551A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m in Sources */,
@@ -4129,6 +4164,7 @@
 				BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */,
 				BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */,
 				BF535B7A1DA471AD001944F5 /* HEMExpansionsConfigViewController.m in Sources */,
+				BFCB91CB1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m in Sources */,
 				8AA8D94019AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
 				8AA1E62C1A898EDB00590EB6 /* HEMClockPickerView.m in Sources */,

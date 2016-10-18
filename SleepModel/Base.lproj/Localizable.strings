@@ -1039,3 +1039,5 @@
 
 "voice.command.thermostat.category.name" = "Thermostat";
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";
+
+"voice.settings.primary-user" = "Primary User";

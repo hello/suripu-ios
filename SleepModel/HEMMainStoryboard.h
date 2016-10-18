@@ -28,6 +28,7 @@
 +(NSString *)infoCellReuseIdentifier;
 +(NSString *)errorReuseIdentifier;
 +(NSString *)expansionReuseIdentifier;
++(NSString *)settingReuseIdentifier;
 +(NSString *)plainReuseIdentifier;
 +(NSString *)configReuseIdentifier;
 +(NSString *)textReuseIdentifier;
@@ -94,6 +95,7 @@
 +(NSString *)topicsSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)updateAccountInfoSegueIdentifier;
++(NSString *)voiceSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateRootViewController;

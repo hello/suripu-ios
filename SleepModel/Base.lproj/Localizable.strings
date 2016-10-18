@@ -65,9 +65,9 @@
 "onboarding.pill-setup.title" = "Attach your Sleep Pill";
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the side of your pillowcase closest to the edge of your bed.";
 "onboarding.pill.title" = "Sleep Pill";
-"onboarding.pill.description" = "Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.";
+"onboarding.pill.description" = "Your Sleep Pill clips to your pillow and tracks your sleep through your movement during the night. Each person using Sense will need their own Sleep Pill. If you’re using Sense with a partner, they’ll set up their Sleep Pill separately.";
 "onboarding.pill.pair.title" = "Pairing your Sleep Pill";
-"onboarding.pill.pair.description" = "Shake your Sleep Pill for three seconds to pair it with your Sense. You may need to shake it quickly for it to register.";
+"onboarding.pill.pair.description" = "Hold your Sleep Pill nearby Sense, and shake it quickly. It may take a few seconds to pair your Sleep Pill with Sense.";
 
 // help links
 "help.email.address" = "support@hello.is";
@@ -172,6 +172,7 @@
 // settings
 "settings.title" = "Settings";
 "settings.expansions" = "Expansions";
+"settings.voice" = "Voice";
 "settings.notifications" = "Notifications";
 "settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My account";
@@ -1038,3 +1039,9 @@
 
 "voice.command.thermostat.category.name" = "Thermostat";
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";
+
+"voice.settings.primary-user" = "Primary User";
+"voice.settings.primary-user.foot.note" = "Setting a primary user tells Sense whose information to respond with when asked questions like \"What's my sleep score?\"";
+"voice.settings.update.status" = "Updating";
+"voice.settings.update.error.title" = "Changes not saved";
+"voice.settings.update.error.primary-not-set" = "Sense was not able to set you as the primary user. Try again.";

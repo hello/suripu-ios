@@ -81,6 +81,7 @@ static NSString *const _HEMscale = @"scale";
 static NSString *const _HEMscan = @"scan";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensor = @"sensor";
+static NSString *const _HEMsetting = @"setting";
 static NSString *const _HEMsettings = @"settings";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
@@ -170,6 +171,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)scaleReuseIdentifier { return _HEMscale; }
 +(NSString *)senseReuseIdentifier { return _HEMsense; }
 +(NSString *)sensorReuseIdentifier { return _HEMsensor; }
++(NSString *)settingReuseIdentifier { return _HEMsetting; }
 +(NSString *)settingsReuseIdentifier { return _HEMsettings; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }
@@ -209,6 +211,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)topicsSegueIdentifier { return _HEMtopics; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 +(NSString *)updateAccountInfoSegueIdentifier { return _HEMupdateAccountInfo; }
++(NSString *)voiceSegueIdentifier { return _HEMvoice; }
 
 /** View Controllers */
 +(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }

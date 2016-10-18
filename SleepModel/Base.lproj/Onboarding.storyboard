@@ -433,7 +433,7 @@
                                     <constraint firstAttribute="height" constant="50" id="6b2-fH-agt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
-                                <state key="normal" title="ORDER A SENSE">
+                                <state key="normal" title="Order a Sense">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>

@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsCategory) {
     HEMSettingsCategoryNotifications,
     HEMSettingsCategoryPreferences,
     HEMSettingsCategoryExpansions,
+    HEMSettingsCategoryVoice,
     HEMSettingsCategorySupport,
     HEMSettingsCategoryTellFriend
 };

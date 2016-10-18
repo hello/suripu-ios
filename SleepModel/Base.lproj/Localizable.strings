@@ -1051,3 +1051,4 @@
 "voice.settings.primary-user.confirm.ok" = "Become primary";
 "voice.settings.primary-user.you" = "You";
 "voice.settings.primary-user.change" = "Change";
+"voice.settings.volume" = "Volume";

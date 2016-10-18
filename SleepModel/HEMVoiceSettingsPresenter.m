@@ -20,7 +20,8 @@
 #import "HEMBasicTableViewCell.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
-    HEMVoiceSettingsRowPrimaryUser = 0,
+    HEMVoiceSettingsRowVolume = 0,
+    HEMVoiceSettingsRowPrimaryUser,
     HEMVoiceSettingsRowCount
 };
 
@@ -153,24 +154,31 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[cell textLabel] setNumberOfLines:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell sizeToFit];
-    } else {
+    } else if (![self dataError]) {
         HEMBasicTableViewCell* basicCell = (id) cell;
+        SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
+        SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
+        
+        BOOL showCustomAccessory = YES;
         NSString* title = nil;
         NSString* detail = nil;
         UIColor* detailColor = [UIColor grey4];
-        UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryNone;
         UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleGray;
         
         switch ([indexPath row]) {
             default:
+            case HEMVoiceSettingsRowVolume: {
+                title = NSLocalizedString(@"voice.settings.volume", nil);
+                detail = [NSString stringWithFormat:@"%ld", [[voiceInfo volume] longValue]];
+                break;
+            }
             case HEMVoiceSettingsRowPrimaryUser: {
                 title = NSLocalizedString(@"voice.settings.primary-user", nil);
-                
-                SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
-                SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
+
                 if ([voiceInfo isPrimaryUser]) {
                     detail = NSLocalizedString(@"voice.settings.primary-user.you", nil);
                     selectionStyle = UITableViewCellSelectionStyleNone;
+                    showCustomAccessory = NO;
                 } else {
                     detail = NSLocalizedString(@"voice.settings.primary-user.change", nil);
                     detailColor = [UIColor tintColor];
@@ -185,8 +193,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[basicCell customDetailLabel] setText:detail];
         [[basicCell customDetailLabel] setFont:[UIFont body]];
         [[basicCell customDetailLabel] setTextColor:detailColor];
+        [basicCell showCustomAccessoryView:showCustomAccessory];
         [basicCell setSelectionStyle:selectionStyle];
-        [basicCell setAccessoryType:accessoryType];
     }
 }
 
@@ -203,7 +211,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-#pragma mark - Actions
+#pragma mark - Primary User
 
 - (void)showPrimaryUserConfirmation {
     NSString* title = NSLocalizedString(@"voice.settings.primary-user.confirm.title", nil);
@@ -217,9 +225,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                               __strong typeof(weakSelf) strongSelf = weakSelf;
                               [strongSelf setAsPrimary];
                           }];
+    
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil)
                            style:HEMAlertViewButtonStyleBlueText
                           action:nil];
+    
     [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
 }
 
@@ -252,7 +262,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                       }
                                   }];
     }];
+}
 
+#pragma mark - Volume
+
+- (void)changeVolume {
+    
 }
 
 #pragma mark - Error

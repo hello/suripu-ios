@@ -1605,14 +1605,20 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKO-QZ-GKc">
-                                                    <rect key="frame" x="538" y="0.0" width="38" height="55"/>
+                                                    <rect key="frame" x="520" y="0.0" width="38" height="55"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="WXt-rr-fFI">
+                                                    <rect key="frame" x="568" y="0.0" width="8" height="55"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="uKO-QZ-GKc" secondAttribute="trailing" constant="24" id="ASP-rz-UVf"/>
+                                                <constraint firstAttribute="bottom" secondItem="WXt-rr-fFI" secondAttribute="bottom" id="0GP-SV-jLP"/>
+                                                <constraint firstItem="WXt-rr-fFI" firstAttribute="top" secondItem="OOT-xa-Uz0" secondAttribute="top" id="1fq-Gi-Owp"/>
+                                                <constraint firstItem="uKO-QZ-GKc" firstAttribute="trailing" secondItem="WXt-rr-fFI" secondAttribute="leading" constant="-10" id="3nI-d2-o05"/>
+                                                <constraint firstAttribute="trailing" secondItem="WXt-rr-fFI" secondAttribute="trailing" constant="24" id="CMj-CI-LfI"/>
                                                 <constraint firstAttribute="bottom" secondItem="JJ1-Nm-PWP" secondAttribute="bottom" id="RwI-lM-lP4"/>
                                                 <constraint firstItem="uKO-QZ-GKc" firstAttribute="top" secondItem="OOT-xa-Uz0" secondAttribute="top" id="UbM-qn-obk"/>
                                                 <constraint firstAttribute="bottom" secondItem="uKO-QZ-GKc" secondAttribute="bottom" id="VcU-wo-O7R"/>
@@ -1623,8 +1629,10 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="customAccessoryView" destination="WXt-rr-fFI" id="CTZ-w8-j4H"/>
                                             <outlet property="customDetailLabel" destination="uKO-QZ-GKc" id="X1E-y6-YZs"/>
                                             <outlet property="customTitleLabel" destination="JJ1-Nm-PWP" id="Lgo-ch-5w3"/>
+                                            <outlet property="leadingCustomAccessoryConstraint" destination="3nI-d2-o05" id="dUc-W4-tXD"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.6.0.4
+
+New:
+
+* Added voice settings screen
+* Added support for setting primary user, hooked up to an API that is not yet available
+* Re-enabled lights integration in alarms
+* Updated location prompt message
+
+Fixes:
+
+* Fixed order sense casing in initial set up screen
+* Fixed copy in pill set up screen
+* Fixed copy in pill pairing screen
+
 ## 1.6.0.3
 
 New:

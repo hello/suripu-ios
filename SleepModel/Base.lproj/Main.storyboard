@@ -1591,30 +1591,41 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="16" reuseIdentifier="settings" textLabel="mxH-HA-Uc7" detailTextLabel="0KK-wg-ARQ" style="IBUITableViewCellStyleValue1" id="pMr-YK-zSI">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="16" reuseIdentifier="settings" id="pMr-YK-zSI" customClass="HEMBasicTableViewCell">
                                         <rect key="frame" x="0.0" y="100" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pMr-YK-zSI" id="OOT-xa-Uz0">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mxH-HA-Uc7">
-                                                    <rect key="frame" x="24" y="18" width="32" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JJ1-Nm-PWP">
+                                                    <rect key="frame" x="24" y="0.0" width="38" height="55"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0KK-wg-ARQ">
-                                                    <rect key="frame" x="543" y="18" width="42" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKO-QZ-GKc">
+                                                    <rect key="frame" x="538" y="0.0" width="38" height="55"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="uKO-QZ-GKc" secondAttribute="trailing" constant="24" id="ASP-rz-UVf"/>
+                                                <constraint firstAttribute="bottom" secondItem="JJ1-Nm-PWP" secondAttribute="bottom" id="RwI-lM-lP4"/>
+                                                <constraint firstItem="uKO-QZ-GKc" firstAttribute="top" secondItem="OOT-xa-Uz0" secondAttribute="top" id="UbM-qn-obk"/>
+                                                <constraint firstAttribute="bottom" secondItem="uKO-QZ-GKc" secondAttribute="bottom" id="VcU-wo-O7R"/>
+                                                <constraint firstItem="JJ1-Nm-PWP" firstAttribute="top" secondItem="OOT-xa-Uz0" secondAttribute="top" id="ZAn-uI-wcF"/>
+                                                <constraint firstItem="JJ1-Nm-PWP" firstAttribute="leading" secondItem="OOT-xa-Uz0" secondAttribute="leading" constant="24" id="e1M-Xm-BrT"/>
+                                                <constraint firstItem="uKO-QZ-GKc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JJ1-Nm-PWP" secondAttribute="trailing" constant="10" id="oJh-OK-sNx"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="customDetailLabel" destination="uKO-QZ-GKc" id="X1E-y6-YZs"/>
+                                            <outlet property="customTitleLabel" destination="JJ1-Nm-PWP" id="Lgo-ch-5w3"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

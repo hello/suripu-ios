@@ -17,6 +17,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlertViewController.h"
+#import "HEMBasicTableViewCell.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
     HEMVoiceSettingsRowPrimaryUser = 0,
@@ -153,10 +154,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell sizeToFit];
     } else {
+        HEMBasicTableViewCell* basicCell = (id) cell;
         NSString* title = nil;
         NSString* detail = nil;
-        UIView* accessoryView = nil;
         UIColor* detailColor = [UIColor grey4];
+        UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryNone;
         UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleGray;
         
         switch ([indexPath row]) {
@@ -168,6 +170,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
                 if ([voiceInfo isPrimaryUser]) {
                     detail = NSLocalizedString(@"voice.settings.primary-user.you", nil);
+                    selectionStyle = UITableViewCellSelectionStyleNone;
                 } else {
                     detail = NSLocalizedString(@"voice.settings.primary-user.change", nil);
                     detailColor = [UIColor tintColor];
@@ -176,14 +179,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             }
         }
         
-        [[cell textLabel] setText:title];
-        [[cell textLabel] setFont:[UIFont body]];
-        [[cell textLabel] setTextColor:[UIColor grey6]];
-        [[cell detailTextLabel] setText:detail];
-        [[cell detailTextLabel] setFont:[UIFont body]];
-        [[cell detailTextLabel] setTextColor:detailColor];
-        [cell setAccessoryView:accessoryView];
-        [cell setSelectionStyle:selectionStyle];
+        [[basicCell customTitleLabel] setText:title];
+        [[basicCell customTitleLabel] setFont:[UIFont body]];
+        [[basicCell customTitleLabel] setTextColor:[UIColor grey6]];
+        [[basicCell customDetailLabel] setText:detail];
+        [[basicCell customDetailLabel] setFont:[UIFont body]];
+        [[basicCell customDetailLabel] setTextColor:detailColor];
+        [basicCell setSelectionStyle:selectionStyle];
+        [basicCell setAccessoryType:accessoryType];
     }
 }
 

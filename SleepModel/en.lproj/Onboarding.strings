@@ -56,8 +56,8 @@
 /* Class = "UILabel"; text = "Your Sleep Pill clips to your pillow and tracks your sleep through your movement during the night. Each person using Sense will need their own Sleep Pill. If you’re using Sense with a partner, they’ll set up their Sleep Pill separately."; ObjectID = "FLk-KX-k9s"; */
 "FLk-KX-k9s.text" = "Your Sleep Pill clips to your pillow and tracks your sleep through your movement during the night. Each person using Sense will need their own Sleep Pill. If you’re using Sense with a partner, they’ll set up their Sleep Pill separately.";
 
-/* Class = "UIButton"; normalTitle = "LOG IN"; ObjectID = "G9w-pu-D4W"; */
-"G9w-pu-D4W.normalTitle" = "LOG IN";
+/* Class = "UIButton"; normalTitle = "SIGN IN"; ObjectID = "G9w-pu-D4W"; */
+"G9w-pu-D4W.normalTitle" = "SIGN IN";
 
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "GFw-g6-B5s"; */
 "GFw-g6-B5s.normalTitle" = "Skip for now";
@@ -98,8 +98,8 @@
 /* Class = "UILabel"; text = "Room check complete"; ObjectID = "MmC-AT-a0e"; */
 "MmC-AT-a0e.text" = "Room check complete";
 
-/* Class = "UIButton"; normalTitle = "LOG IN"; ObjectID = "N7h-8T-8md"; */
-"N7h-8T-8md.normalTitle" = "LOG IN";
+/* Class = "UIButton"; normalTitle = "SIGN IN"; ObjectID = "N7h-8T-8md"; */
+"N7h-8T-8md.normalTitle" = "SIGN IN";
 
 /* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "ONz-So-uP9"; */
 "ONz-So-uP9.normalTitle" = "CONTINUE";

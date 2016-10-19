@@ -647,7 +647,7 @@
 "actions.close" = "Close";
 "actions.ok" = "Okay";
 "actions.sign-out" = "Sign out";
-"actions.sign-in" = "Log in";
+"actions.sign-in" = "Sign in";
 "actions.no" = "No";
 "actions.yes" = "Yes";
 "actions.skip" = "Skip";

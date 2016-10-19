@@ -49,6 +49,7 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
 - (BOOL)hasLoadedAlarms;
 - (BOOL)isExpansionEnabledFor:(SENExpansion*)expansion inAlarmCache:(HEMAlarmCache*)alarm;
 - (BOOL)hasLightsEnabledForAlarm:(SENAlarm*)alarm;
+- (SENAlarmRepeatDays)dayForNonRepeatingAlarmWithHour:(NSUInteger)hour minute:(NSUInteger)minute;
 
 @end
 

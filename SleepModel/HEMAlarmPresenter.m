@@ -75,6 +75,8 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
         
         if (![_service hasLoadedAlarms]) {
             [_service refreshAlarms:nil];
+        } else {
+            [self setDefaultsForAlarm:_cache];
         }
         
         NSMutableArray* rows = [NSMutableArray arrayWithCapacity:6];
@@ -95,6 +97,19 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
         _rows = rows;
     }
     return self;
+}
+
+- (void)setDefaultsForAlarm:(HEMAlarmCache*)alarmCache {
+    if (![[self alarm] isSaved]) {
+        SENAlarmRepeatDays days = [alarmCache repeatFlags];
+        if (![alarmCache isRepeated]) {
+            days = [[self service] dayForNonRepeatingAlarmWithHour:[alarmCache hour]
+                                                            minute:[alarmCache minute]];
+        }
+        [alarmCache setSmart:[[self service] canAddRepeatDay:days
+                                                          to:alarmCache
+                                                   excluding:[self alarm]]];
+    }
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {

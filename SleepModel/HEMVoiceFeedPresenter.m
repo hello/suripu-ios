@@ -126,12 +126,6 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
 }
 
 - (void)configureCommandsCell:(HEMVoiceCommandsCell*)commandsCell {
-    NSString* voiceTitle = [NSLocalizedString(@"voice.command.list.title", nil) uppercaseString];
-    [[commandsCell titleLabel] setFont:[UIFont h7Bold]];
-    [[commandsCell titleLabel] setText:voiceTitle];
-    [[commandsCell titleLabel] setTextColor:[UIColor grey6]];
-    [[commandsCell separatorView] setBackgroundColor:[UIColor separatorColor]];
-    
     NSArray<HEMVoiceCommandGroup*>* groups = [[self voiceService] availableVoiceCommands];
     [commandsCell setEstimatedNumberOfCommands:[groups count]];
     

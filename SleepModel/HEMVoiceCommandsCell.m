@@ -9,13 +9,12 @@
 #import "HEMVoiceCommandsCell.h"
 #import "HEMVoiceExampleView.h"
 
-static CGFloat const HEMVoiceCommandCellBaseHeight = 50.0f;
 static CGFloat const HEMVoiceCommandViewSize = 80.0f;
 
 @implementation HEMVoiceCommandsCell
 
 + (CGFloat)heightWithNumberOfCommands:(NSInteger)numberOfCommands {
-    return HEMVoiceCommandCellBaseHeight + (HEMVoiceCommandViewSize * numberOfCommands);
+    return (HEMVoiceCommandViewSize * numberOfCommands);
 }
 
 - (void)setEstimatedNumberOfCommands:(NSInteger)estimatedNumberOfCommands {

@@ -70,6 +70,21 @@ static NSString* const SENSenseVoiceDictPropMuted = @"muted";
              SENSenseVoiceDictPropVolume : [self volume] ?: @1};
 }
 
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    SENSenseVoiceInfo* other = object;
+    return SENObjectIsEqual([self volume], [other volume])
+        && [self isPrimaryUser] && [other isPrimaryUser]
+        && [self isMuted] && [other isMuted];
+}
+
+- (NSUInteger)hash {
+    return [[self volume] hash] + [self isPrimaryUser] + [self isMuted];
+}
+
 @end
 
 @implementation SENSenseMetadata

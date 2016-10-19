@@ -1041,7 +1041,7 @@
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";
 
 "voice.settings.primary-user" = "Primary User";
-"voice.settings.primary-user.foot.note" = "Setting a primary user tells Sense whose information to respond with when asked questions like \"What's my sleep score?\"";
+"voice.settings.primary-user.foot.note" = "Tell Sense whose information to respond with when asked questions like \"What’s my sleep score?\" by setting primary user.";
 "voice.settings.update.status" = "Saving";
 "voice.settings.update.error.title" = "Changes not saved";
 "voice.settings.update.error.primary-not-set" = "Sense was not able to set you as the primary user. Try again.";

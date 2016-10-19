@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.0.5
+
+New:
+
+* Updated primary user VX
+
+
+
 ## 1.6.0.4
 
 New:

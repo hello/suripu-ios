@@ -28,6 +28,7 @@ typedef NS_ENUM(NSUInteger, SENSenseAdvertisedVersion) {
 @property (nonatomic, copy, readonly) NSString* deviceId;
 @property (nonatomic, assign, readonly) SENSenseMode mode;
 @property (nonatomic, strong, readonly) LGPeripheral* peripheral;
+@property (nonatomic, assign, readonly) SENSenseAdvertisedVersion version;
 
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral;
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral andDeviceId:(NSString*)deviceId;

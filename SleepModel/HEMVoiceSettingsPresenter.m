@@ -20,7 +20,9 @@
 #import "HEMBasicTableViewCell.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
-    HEMVoiceSettingsRowPrimaryUser = 0,
+    HEMVoiceSettingsRowVolume = 0,
+    HEMVoiceSettingsRowMute,
+    HEMVoiceSettingsRowPrimaryUser,
     HEMVoiceSettingsRowCount
 };
 
@@ -136,8 +138,10 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     NSString* reuseId = nil;
     if ([self dataError]) {
         reuseId = [HEMMainStoryboard errorReuseIdentifier];
-    } else {
+    } else if ([indexPath row] != HEMVoiceSettingsRowMute) {
         reuseId = [HEMMainStoryboard settingsReuseIdentifier];
+    } else {
+        reuseId = [HEMMainStoryboard switchReuseIdentifier];
     }
     return [tableView dequeueReusableCellWithIdentifier:reuseId
                                            forIndexPath:indexPath];
@@ -153,24 +157,42 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[cell textLabel] setNumberOfLines:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell sizeToFit];
-    } else {
+    } else if (![self dataError]) {
         HEMBasicTableViewCell* basicCell = (id) cell;
+        SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
+        SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
+        
+        BOOL showCustomAccessory = YES;
         NSString* title = nil;
         NSString* detail = nil;
         UIColor* detailColor = [UIColor grey4];
-        UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryNone;
         UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleGray;
         
         switch ([indexPath row]) {
             default:
+            case HEMVoiceSettingsRowVolume: {
+                title = NSLocalizedString(@"voice.settings.volume", nil);
+                NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:voiceInfo];
+                detail = [NSString stringWithFormat:@"%ld", volumeLevel];
+                break;
+            }
+            case HEMVoiceSettingsRowMute: {
+                title = NSLocalizedString(@"voice.settings.mute", nil);
+                UISwitch* control = (UISwitch*) [basicCell customAccessoryView];
+                [control setOnTintColor:[UIColor tintColor]];
+                [control setOn:[voiceInfo isMuted]];
+                [control addTarget:self
+                            action:@selector(toggleMute:)
+                  forControlEvents:UIControlEventTouchUpInside];
+                break;
+            }
             case HEMVoiceSettingsRowPrimaryUser: {
                 title = NSLocalizedString(@"voice.settings.primary-user", nil);
-                
-                SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
-                SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
+
                 if ([voiceInfo isPrimaryUser]) {
                     detail = NSLocalizedString(@"voice.settings.primary-user.you", nil);
                     selectionStyle = UITableViewCellSelectionStyleNone;
+                    showCustomAccessory = NO;
                 } else {
                     detail = NSLocalizedString(@"voice.settings.primary-user.change", nil);
                     detailColor = [UIColor tintColor];
@@ -185,8 +207,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[basicCell customDetailLabel] setText:detail];
         [[basicCell customDetailLabel] setFont:[UIFont body]];
         [[basicCell customDetailLabel] setTextColor:detailColor];
+        [basicCell showCustomAccessoryView:showCustomAccessory];
         [basicCell setSelectionStyle:selectionStyle];
-        [basicCell setAccessoryType:accessoryType];
     }
 }
 
@@ -194,16 +216,72 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (![self dataError]) {
         switch ([indexPath row]) {
+            case HEMVoiceSettingsRowVolume:
+                return [self changeVolume];
             case HEMVoiceSettingsRowPrimaryUser:
-                [self showPrimaryUserConfirmation];
-                break;
+                return [self showPrimaryUserConfirmation];
             default:
-                break;
+                return;
         }
     }
 }
 
-#pragma mark - Actions
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
+#pragma mark - Updates
+
+- (void)update:(SENSenseVoiceInfo*)info
+messageIfError:(NSString*)errorMessage
+    completion:(void(^)(BOOL updated))completion {
+    __weak typeof(self) weakSelf = self;
+    
+    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
+
+    NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+    [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
+        [[self voiceService] updateVoiceInfo:info
+                                  forSenseId:[metadata uniqueId]
+                                  completion:^(BOOL updated) {
+                                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                                      if (completion) {
+                                          completion (updated);
+                                      }
+                                      
+                                      if (!updated) {
+                                          [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                                              [strongSelf showUpdateError:errorMessage];
+                                          }];
+                                      } else {
+                                          [[strongSelf tableView] reloadData];
+                                          NSString* successText = NSLocalizedString(@"status.success", nil);
+                                          [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
+                                      }
+                                  }];
+    }];
+}
+
+#pragma mark - Mute
+
+- (void)toggleMute:(UISwitch*)control {
+    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
+    NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.mute-not-changed", nil);
+    BOOL mute = [control isOn];
+    
+    SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
+    [voiceInfo setMuted:mute];
+
+    [self update:voiceInfo messageIfError:errorMessage completion:^(BOOL updated) {
+        if (!updated) {
+            [control setOn:!mute];
+            [voiceInfo setMuted:!mute];
+        }
+    }];
+}
+
+#pragma mark - Primary User
 
 - (void)showPrimaryUserConfirmation {
     NSString* title = NSLocalizedString(@"voice.settings.primary-user.confirm.title", nil);
@@ -217,42 +295,32 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                               __strong typeof(weakSelf) strongSelf = weakSelf;
                               [strongSelf setAsPrimary];
                           }];
+    
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil)
                            style:HEMAlertViewButtonStyleBlueText
                           action:nil];
+    
     [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
 }
 
 - (void)setAsPrimary {
     SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
-    NSString* senseId = [metadata uniqueId];
+    NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.primary-not-set", nil);
     SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
     
     [voiceInfo setPrimaryUser:YES];
     
-    NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
-    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
-    __weak typeof(self) weakSelf = self;
-    [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
-        [[self voiceService] updateVoiceInfo:voiceInfo
-                                  forSenseId:senseId
-                                  completion:^(id response, NSError* error) {
-                                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      if (error) {
-                                          [voiceInfo setPrimaryUser:NO];
-                                          // TODO: show error after completion!
-                                          NSString* message = NSLocalizedString(@"voice.settings.update.error.primary-not-set", nil);
-                                          [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                                              [strongSelf showUpdateError:message];
-                                          }];
-                                      } else {
-                                          [[strongSelf tableView] reloadData];
-                                          NSString* successText = NSLocalizedString(@"status.success", nil);
-                                          [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
-                                      }
-                                  }];
+    [self update:voiceInfo messageIfError:errorMessage completion:^(BOOL updated) {
+        if (!updated) {
+            [voiceInfo setPrimaryUser:NO];
+        }
     }];
+}
 
+#pragma mark - Volume
+
+- (void)changeVolume {
+    [[self delegate] showVolumeControlFromPresenter:self];
 }
 
 #pragma mark - Error

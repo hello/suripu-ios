@@ -235,6 +235,9 @@
 		BF5BAD081C6169BF00347185 /* HEMTrendsCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BAD071C6169BF00347185 /* HEMTrendsCircleView.m */; };
 		BF5BF2991D78D628007B39A2 /* HEMSensorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5BF2981D78D628007B39A2 /* HEMSensorCollectionViewCell.m */; };
 		BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */; };
+		BF5F972B1DB6C61800EF460B /* HEMVolumeControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5F972A1DB6C61800EF460B /* HEMVolumeControlViewController.m */; };
+		BF5F97311DB6C80D00EF460B /* HEMVolumeControlPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5F97301DB6C80D00EF460B /* HEMVolumeControlPresenter.m */; };
+		BF5F97341DB6C94700EF460B /* HEMVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5F97331DB6C94700EF460B /* HEMVolumeSlider.m */; };
 		BF6098741D4811CA0005C8F0 /* HEMVoiceTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6098731D4811CA0005C8F0 /* HEMVoiceTutorialViewController.m */; };
 		BF6098771D4820E20005C8F0 /* HEMVoiceTutorialPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6098761D4820E20005C8F0 /* HEMVoiceTutorialPresenter.m */; };
 		BF6098861D4AD67A0005C8F0 /* HEMVoiceService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6098851D4AD67A0005C8F0 /* HEMVoiceService.m */; };
@@ -934,6 +937,12 @@
 		BF5BF2981D78D628007B39A2 /* HEMSensorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorCollectionViewCell.m; sourceTree = "<group>"; };
 		BF5D53291A26749F0090DD6A /* HEMActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActivityIndicatorView.h; sourceTree = "<group>"; };
 		BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActivityIndicatorView.m; sourceTree = "<group>"; };
+		BF5F97291DB6C61800EF460B /* HEMVolumeControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVolumeControlViewController.h; sourceTree = "<group>"; };
+		BF5F972A1DB6C61800EF460B /* HEMVolumeControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVolumeControlViewController.m; sourceTree = "<group>"; };
+		BF5F972F1DB6C80D00EF460B /* HEMVolumeControlPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVolumeControlPresenter.h; sourceTree = "<group>"; };
+		BF5F97301DB6C80D00EF460B /* HEMVolumeControlPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVolumeControlPresenter.m; sourceTree = "<group>"; };
+		BF5F97321DB6C94700EF460B /* HEMVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVolumeSlider.h; sourceTree = "<group>"; };
+		BF5F97331DB6C94700EF460B /* HEMVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVolumeSlider.m; sourceTree = "<group>"; };
 		BF6098721D4811CA0005C8F0 /* HEMVoiceTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceTutorialViewController.h; sourceTree = "<group>"; };
 		BF6098731D4811CA0005C8F0 /* HEMVoiceTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceTutorialViewController.m; sourceTree = "<group>"; };
 		BF6098751D4820E20005C8F0 /* HEMVoiceTutorialPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceTutorialPresenter.h; sourceTree = "<group>"; };
@@ -2214,6 +2223,8 @@
 				BF2F4C631DAD977A00502521 /* HEMVoiceFeedViewController.m */,
 				BF21F02B1DB0253D0057F24E /* HEMVoiceExamplesViewController.h */,
 				BF21F02C1DB0253D0057F24E /* HEMVoiceExamplesViewController.m */,
+				BF5F97291DB6C61800EF460B /* HEMVolumeControlViewController.h */,
+				BF5F972A1DB6C61800EF460B /* HEMVolumeControlViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2232,6 +2243,8 @@
 				BF21F0321DB02B720057F24E /* HEMVoiceExampleGroupCell.m */,
 				BF21F0341DB02B920057F24E /* HEMVoiceGroupHeaderCell.h */,
 				BF21F0351DB02B920057F24E /* HEMVoiceGroupHeaderCell.m */,
+				BF5F97321DB6C94700EF460B /* HEMVolumeSlider.h */,
+				BF5F97331DB6C94700EF460B /* HEMVolumeSlider.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2245,6 +2258,8 @@
 				BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */,
 				BF21F0371DB02C650057F24E /* HEMVoiceExamplesPresenter.h */,
 				BF21F0381DB02C650057F24E /* HEMVoiceExamplesPresenter.m */,
+				BF5F972F1DB6C80D00EF460B /* HEMVolumeControlPresenter.h */,
+				BF5F97301DB6C80D00EF460B /* HEMVolumeControlPresenter.m */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -4201,6 +4216,7 @@
 				BF8C09471C330E55005AB5A7 /* HEMDevicesPresenter.m in Sources */,
 				BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */,
 				BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */,
+				BF5F972B1DB6C61800EF460B /* HEMVolumeControlViewController.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				BF6D9B7B1C6D409F00774322 /* HEMIntroMessageCell.m in Sources */,
 				BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */,
@@ -4240,6 +4256,7 @@
 				BF5BACEA1C5AE0EA00347185 /* HEMTrendsService.m in Sources */,
 				BF78E9941B21199B0015949F /* HEMSupportViewController.m in Sources */,
 				8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */,
+				BF5F97311DB6C80D00EF460B /* HEMVolumeControlPresenter.m in Sources */,
 				BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */,
 				8ADE06071B2A4DE100976654 /* HEMTimelineContainerViewController.m in Sources */,
 				BFD7E79D1D9B2D0E007DB6E4 /* HEMSettingsPresenter.m in Sources */,
@@ -4328,6 +4345,7 @@
 				BF5B1D271D2C717500DF1190 /* HEMPillDfuPresenter.m in Sources */,
 				BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */,
 				BF238DE31D1A126600F6E62C /* HEMShareService.m in Sources */,
+				BF5F97341DB6C94700EF460B /* HEMVolumeSlider.m in Sources */,
 				BFF3B44A1A5DB5DE00B11643 /* HEMNoDeviceCollectionViewCell.m in Sources */,
 				BFB815151BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m in Sources */,
 				BF78E9A91B2763CA0015949F /* HEMTutorialDataSource.m in Sources */,

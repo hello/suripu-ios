@@ -18,8 +18,10 @@
 NSString* const HEMVoiceNotification = @"HEMVoiceNotificationResult";
 NSString* const HEMVoiceNotificationInfoError = @"voice.error";
 NSString* const HEMVoiceNotificationInfoResult = @"voice.result";
+NSInteger const HEMVoiceServiceMaxVolumeLevel = 11;
 
 static CGFloat const HEMVoiceServiceWaitDelay = 1.0f;
+static NSInteger const HEMVoiceServiceMaxCheckAttempts = 15;
 static NSString* const HEMVoiceServiceHideIntroKey = @"HEMVoiceServiceIntroKey";
 
 typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable results,
@@ -224,15 +226,74 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 
 - (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
              forSenseId:(NSString*)senseId
-             completion:(HEMVoiceControlUpdateHandler)completion {
-    [SENAPIDevice updateVoiceInfo:voiceInfo forSenseId:senseId completion:^(id data, NSError *error) {
+             completion:(HEVoiceInfoUpdateHandler)completion {
+
+    __weak typeof(self) weakSelf = self;
+    [SENAPIDevice updateVoiceInfo:voiceInfo
+                       forSenseId:senseId
+                       completion:^(id data, NSError *error) {
+                           __strong typeof(weakSelf) strongSelf = weakSelf;
+                           if (error) {
+                               [SENAnalytics trackError:error];
+                               completion (NO);
+                           } else {
+                               [strongSelf verifyUpdateFor:voiceInfo
+                                               withSenseId:senseId
+                                                   attempt:1
+                                                completion:completion];
+                           }
+                       }];
+}
+
+- (void)verifyUpdateFor:(SENSenseVoiceInfo*)voiceInfo
+            withSenseId:(NSString*)senseId
+                attempt:(NSInteger)attempt
+             completion:(void(^)(BOOL updated))completion {
+    
+    if (attempt <= HEMVoiceServiceMaxCheckAttempts) {
+        __weak typeof(self) weakSelf = self;
+        [self getVoiceInfoForSenseId:senseId completion:^(id response, NSError* error) {
+            if (error) {
+                completion (NO);
+            } else {
+                if ([response isEqual:voiceInfo]) {
+                    completion (YES);
+                } else if (attempt > HEMVoiceServiceMaxCheckAttempts) {
+                    completion (NO);
+                } else {
+                    int64_t delay = (int64_t)(HEMVoiceServiceWaitDelay * NSEC_PER_SEC);
+                    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
+                    dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                        __strong typeof(weakSelf) strongSelf = weakSelf;
+                        [strongSelf verifyUpdateFor:voiceInfo
+                                        withSenseId:senseId
+                                            attempt:attempt + 1
+                                         completion:completion];
+                    });
+                }
+            }
+        }];
+    } else {
+        completion (NO);
+    }
+}
+
+- (void)getVoiceInfoForSenseId:(NSString*)senseId completion:(HEMVoiceInfoHandler)completion {
+    [SENAPIDevice getVoiceInfoForSenseId:senseId completion:^(id data, NSError *error) {
         if (error) {
             [SENAnalytics trackError:error];
         }
-        if (completion) {
-            completion (data, error);
-        }
+        completion (data, error);
     }];
+}
+
+- (NSInteger)volumeLevelFrom:(SENSenseVoiceInfo*)voiceInfo {
+    CGFloat volumePercentage = [[voiceInfo volume] integerValue] / 100.0f;
+    return MAX(1, HEMVoiceServiceMaxVolumeLevel * volumePercentage);
+}
+
+- (CGFloat)volumePercentageFromLevel:(NSInteger)volumeLevel {
+    return volumeLevel / HEMVoiceServiceMaxVolumeLevel;
 }
 
 @end

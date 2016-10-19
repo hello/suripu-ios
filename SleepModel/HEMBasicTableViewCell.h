@@ -32,4 +32,6 @@
  */
 - (void)showActivity:(BOOL)show;
 
+- (void)showCustomAccessoryView:(BOOL)show;
+
 @end

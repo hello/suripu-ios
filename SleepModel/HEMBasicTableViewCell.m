@@ -15,7 +15,9 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
 
 @interface HEMBasicTableViewCell()
 
-@property (nonatomic, strong) UIView* customSeparator;
+@property (strong, nonatomic) UIView* customSeparator;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingCustomAccessoryConstraint;
+@property (assign, nonatomic) CGFloat origLeadingAccessoryMargin;
 
 @end
 
@@ -24,6 +26,7 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
 - (void)awakeFromNib {
     [[self activityView] setUserInteractionEnabled:NO];
     [[self activityView] setIndicatorImage:[UIImage imageNamed:@"smallLoaderGray"]];
+    [self setOrigLeadingAccessoryMargin:[[self leadingCustomAccessoryConstraint] constant]];
 }
 
 - (void)showSeparator:(BOOL)show {
@@ -85,6 +88,16 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
             [[self customAccessoryView] setAlpha:1.0f];
             [[self accessoryView] setAlpha:1.0f];
         }];
+    }
+}
+
+- (void)showCustomAccessoryView:(BOOL)show {
+    [[self customAccessoryView] setHidden:!show];
+    if (!show) {
+        CGFloat width = CGRectGetWidth([[self customAccessoryView] bounds]);
+        [[self leadingCustomAccessoryConstraint] setConstant:width];
+    } else {
+        [[self leadingCustomAccessoryConstraint] setConstant:[self origLeadingAccessoryMargin]];
     }
 }
 

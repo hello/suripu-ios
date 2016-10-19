@@ -81,7 +81,6 @@ static NSString *const _HEMscale = @"scale";
 static NSString *const _HEMscan = @"scan";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensor = @"sensor";
-static NSString *const _HEMsetting = @"setting";
 static NSString *const _HEMsettings = @"settings";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
@@ -101,6 +100,7 @@ static NSString *const _HEMsummary = @"summary";
 static NSString *const _HEMsummaryViewCell = @"summaryViewCell";
 static NSString *const _HEMsupportCell = @"supportCell";
 static NSString *const _HEMsupportTopicsViewController = @"supportTopicsViewController";
+static NSString *const _HEMswitch = @"switch";
 static NSString *const _HEMtext = @"text";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMtimeZoneNavViewController = @"timeZoneNavViewController";
@@ -118,6 +118,7 @@ static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
 static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
 static NSString *const _HEMvoice = @"voice";
+static NSString *const _HEMvolume = @"volume";
 static NSString *const _HEMwarning = @"warning";
 static NSString *const _HEMwelcome = @"welcome";
 
@@ -171,7 +172,6 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)scaleReuseIdentifier { return _HEMscale; }
 +(NSString *)senseReuseIdentifier { return _HEMsense; }
 +(NSString *)sensorReuseIdentifier { return _HEMsensor; }
-+(NSString *)settingReuseIdentifier { return _HEMsetting; }
 +(NSString *)settingsReuseIdentifier { return _HEMsettings; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }
@@ -179,6 +179,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)summaryReuseIdentifier { return _HEMsummary; }
 +(NSString *)summaryViewCellReuseIdentifier { return _HEMsummaryViewCell; }
 +(NSString *)supportCellReuseIdentifier { return _HEMsupportCell; }
++(NSString *)switchReuseIdentifier { return _HEMswitch; }
 +(NSString *)textReuseIdentifier { return _HEMtext; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)timezoneReuseIdentifier { return _HEMtimezone; }
@@ -212,6 +213,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 +(NSString *)updateAccountInfoSegueIdentifier { return _HEMupdateAccountInfo; }
 +(NSString *)voiceSegueIdentifier { return _HEMvoice; }
++(NSString *)volumeSegueIdentifier { return _HEMvolume; }
 
 /** View Controllers */
 +(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }

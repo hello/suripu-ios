@@ -11,8 +11,19 @@
 @class HEMVoiceService;
 @class HEMDeviceService;
 @class HEMActivityIndicatorView;
+@class HEMVoiceSettingsPresenter;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@protocol HEMVoiceSettingsDelegate <NSObject>
+
+- (void)showVolumeControlFromPresenter:(HEMVoiceSettingsPresenter*)presenter;
+
+@end
 
 @interface HEMVoiceSettingsPresenter : HEMPresenter
+
+@property (nonatomic, weak) id<HEMVoiceSettingsDelegate> delegate;
 
 - (instancetype)initWithVoiceService:(HEMVoiceService*)voiceService
                        deviceService:(HEMDeviceService*)deviceService;
@@ -26,3 +37,5 @@
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)activityIndicatorView;
 
 @end
+
+NS_ASSUME_NONNULL_END

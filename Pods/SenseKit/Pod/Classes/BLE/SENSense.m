@@ -10,6 +10,7 @@
 #import "SENSense.h"
 
 static unsigned char const kSENSenseVoiceByte = 0x22;
+static NSInteger const kSENSenseVoiceHwVersionLoc = 2;
 
 @interface SENSense()
 
@@ -51,10 +52,10 @@ static unsigned char const kSENSenseVoiceByte = 0x22;
 }
 
 - (void)processManufacturerData:(NSData*)manufacturerData {
-    if ([manufacturerData length] > 0) {
+    if ([manufacturerData length] >= kSENSenseVoiceHwVersionLoc + 1) {
         const unsigned char* bytes = (const unsigned char*)[manufacturerData bytes];
-        unsigned char firstByte = bytes[0];
-        if (firstByte == kSENSenseVoiceByte) {
+        unsigned char hwByte = bytes[kSENSenseVoiceHwVersionLoc];
+        if (hwByte == kSENSenseVoiceByte) {
             _version = SENSenseAdvertisedVersionVoice;
         }
     }

@@ -5,8 +5,11 @@
 New:
 
 * Updated primary user VX
-
-
+* Added mute option in voice settings
+* Added volume control option in voice settings
+* Added volume control UI
+* Hide mac address for 1.0 Sense in Wi-Fi scanner
+* Updated copy in various screens
 
 ## 1.6.0.4
 

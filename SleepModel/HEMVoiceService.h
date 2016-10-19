@@ -38,7 +38,7 @@ typedef void(^HEVoiceInfoUpdateHandler)(BOOL updated);
 - (void)getVoiceInfoForSenseId:(NSString*)senseId
                     completion:(HEMVoiceInfoHandler)completion;
 - (NSInteger)volumeLevelFrom:(SENSenseVoiceInfo*)voiceInfo;
-- (CGFloat)volumePercentageFromLevel:(NSInteger)volumeLevel;
+- (NSInteger)volumePercentageFromLevel:(NSInteger)volumeLevel;
 
 @end
 

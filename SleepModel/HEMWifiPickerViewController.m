@@ -8,6 +8,9 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 #import <SenseKit/SENSense.h>
+#import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENPairedDevices.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -77,6 +80,17 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     }
 }
 
+- (BOOL)showMacAddress {
+    SENSense* currentSense = [[self manager] sense];
+    BOOL hide = [currentSense version] == SENSenseAdvertisedVersionUnknown;
+    if (hide) { // check metadata if available
+        SENSenseMetadata* senseMetadata = [[[SENServiceDevice sharedService] devices] senseMetadata];
+        hide = [senseMetadata hardwareVersion] == SENSenseHardwareOne
+            || [senseMetadata hardwareVersion] == SENSenseHardwareUnknown;
+    }
+    return !hide;
+}
+
 - (void)configurePicker {
     [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
     
@@ -88,24 +102,28 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     // shares the same shadow image as the topPickerShadow, which requires a flip
     [[self botPickerShadow] setTransform:CGAffineTransformMakeRotation(M_PI)];
 
-    HEMMacAddressHeaderView* headerView = (id)[[self wifiPickerTableView] tableHeaderView];
-    SENSense* sense = [[self manager] sense];
-    
-    [[headerView titleLabel] setFont:[UIFont h6]];
-    [[headerView titleLabel] setTextColor:[UIColor grey6]];
-    
-    [[headerView macAddressLabel] setFont:[UIFont body]];
-    [[headerView macAddressLabel] setTextColor:[UIColor grey4]];
-    [[headerView macAddressLabel] setText:[sense macAddress]];
-    
-    [[[headerView actionButton] titleLabel] setFont:[UIFont button]];
-    [[headerView actionButton] setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [[headerView actionButton] addTarget:self
-                                  action:@selector(copyMacAddress:)
-                        forControlEvents:UIControlEventTouchUpInside];
-    
-    [[headerView separator] setBackgroundColor:[[self wifiPickerTableView] separatorColor]];
-    [headerView setHidden:YES];
+    if ([self showMacAddress]) {
+        HEMMacAddressHeaderView* headerView = (id)[[self wifiPickerTableView] tableHeaderView];
+        SENSense* sense = [[self manager] sense];
+        
+        [[headerView titleLabel] setFont:[UIFont h6]];
+        [[headerView titleLabel] setTextColor:[UIColor grey6]];
+        
+        [[headerView macAddressLabel] setFont:[UIFont body]];
+        [[headerView macAddressLabel] setTextColor:[UIColor grey4]];
+        [[headerView macAddressLabel] setText:[sense macAddress]];
+        
+        [[[headerView actionButton] titleLabel] setFont:[UIFont button]];
+        [[headerView actionButton] setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+        [[headerView actionButton] addTarget:self
+                                      action:@selector(copyMacAddress:)
+                            forControlEvents:UIControlEventTouchUpInside];
+        
+        [[headerView separator] setBackgroundColor:[[self wifiPickerTableView] separatorColor]];
+        [headerView setHidden:YES];
+    } else {
+        [[self wifiPickerTableView] setTableHeaderView:nil];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -114,6 +114,16 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
              forSenseId:(NSString*)senseId
              completion:(SENAPIDataBlock)completion;
 
+/**
+ * @discussion
+ * Get voice metadata / settings for Sense.  Only applies to specific device
+ * hardware versions
+ *
+ * @param senseId: the identifier of Sense to get the voice metadata for
+ * @param copletion: the block to call when request is completed
+ */
++ (void)getVoiceInfoForSenseId:(NSString*)senseId completion:(SENAPIDataBlock)completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -226,9 +226,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
+#pragma mark - Updates
+
 - (void)update:(SENSenseVoiceInfo*)info
 messageIfError:(NSString*)errorMessage
-    completion:(void(^)(NSError* error))completion {
+    completion:(void(^)(BOOL updated))completion {
     __weak typeof(self) weakSelf = self;
     
     SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
@@ -238,13 +244,13 @@ messageIfError:(NSString*)errorMessage
     [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
         [[self voiceService] updateVoiceInfo:info
                                   forSenseId:[metadata uniqueId]
-                                  completion:^(id response, NSError* error) {
+                                  completion:^(BOOL updated) {
                                       __strong typeof(weakSelf) strongSelf = weakSelf;
                                       if (completion) {
-                                          completion (error);
+                                          completion (updated);
                                       }
                                       
-                                      if (error) {
+                                      if (!updated) {
                                           [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                                               [strongSelf showUpdateError:errorMessage];
                                           }];
@@ -267,8 +273,8 @@ messageIfError:(NSString*)errorMessage
     SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
     [voiceInfo setMuted:mute];
 
-    [self update:voiceInfo messageIfError:errorMessage completion:^(NSError *error) {
-        if (error) {
+    [self update:voiceInfo messageIfError:errorMessage completion:^(BOOL updated) {
+        if (!updated) {
             [control setOn:!mute];
             [voiceInfo setMuted:!mute];
         }
@@ -304,8 +310,8 @@ messageIfError:(NSString*)errorMessage
     
     [voiceInfo setPrimaryUser:YES];
     
-    [self update:voiceInfo messageIfError:errorMessage completion:^(NSError *error) {
-        if (error) {
+    [self update:voiceInfo messageIfError:errorMessage completion:^(BOOL updated) {
+        if (!updated) {
             [voiceInfo setPrimaryUser:NO];
         }
     }];

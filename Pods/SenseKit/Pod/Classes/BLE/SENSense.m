@@ -9,6 +9,8 @@
 #import "LGPeripheral.h"
 #import "SENSense.h"
 
+static unsigned char const kSENSenseVoiceByte = 0x22;
+
 @interface SENSense()
 
 @property (nonatomic, copy, readwrite) NSString* deviceId;
@@ -43,6 +45,18 @@
     if ([serviceData count] == 1) {
         NSData* deviceIdData = [serviceData allValues][0];
         [self processAdvertisementServiceData:deviceIdData];
+    }
+    
+    [self processManufacturerData:data[CBAdvertisementDataManufacturerDataKey]];
+}
+
+- (void)processManufacturerData:(NSData*)manufacturerData {
+    if ([manufacturerData length] > 0) {
+        const unsigned char* bytes = (const unsigned char*)[manufacturerData bytes];
+        unsigned char firstByte = bytes[0];
+        if (firstByte == kSENSenseVoiceByte) {
+            _version = SENSenseAdvertisedVersionVoice;
+        }
     }
 }
 

@@ -11,4 +11,7 @@
 - (void)didConfigureWiFiTo:(NSString*)ssid from:(id)controller;
 - (void)didCancelWiFiConfigurationFrom:(id)controller;
 
+@optional
+- (BOOL)shouldShowMacAddress:(BOOL)show from:(id)controller;
+
 @end

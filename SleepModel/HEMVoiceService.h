@@ -21,7 +21,8 @@ extern NSString* const HEMVoiceNotificationInfoResult;
 extern NSInteger const HEMVoiceServiceMaxVolumeLevel;
 
 typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
-typedef void(^HEMVoiceControlUpdateHandler)(id _Nullable response, NSError* _Nullable error);
+typedef void(^HEMVoiceInfoHandler)(id _Nullable response, NSError* _Nullable error);
+typedef void(^HEVoiceInfoUpdateHandler)(BOOL updated);
 
 @interface HEMVoiceService : SENService
 
@@ -33,7 +34,9 @@ typedef void(^HEMVoiceControlUpdateHandler)(id _Nullable response, NSError* _Nul
 - (void)resetVoiceIntro;
 - (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
              forSenseId:(NSString*)senseId
-             completion:(HEMVoiceControlUpdateHandler)completion;
+             completion:(HEVoiceInfoUpdateHandler)completion;
+- (void)getVoiceInfoForSenseId:(NSString*)senseId
+                    completion:(HEMVoiceInfoHandler)completion;
 - (NSInteger)volumeLevelFrom:(SENSenseVoiceInfo*)voiceInfo;
 - (CGFloat)volumePercentageFromLevel:(NSInteger)volumeLevel;
 

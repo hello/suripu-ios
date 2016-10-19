@@ -51,6 +51,7 @@
     [settingsPresenter bindWithNavigationItem:[self navigationItem]];
     [settingsPresenter bindWithActivityContainer:[[self rootViewController] view]];
     [settingsPresenter bindWithActivityIndicator:[self activityIndicator]];
+    [settingsPresenter bindWithShadowView:[self shadowView]];
     [settingsPresenter setErrorDelegate:self];
     [settingsPresenter setDelegate:self];
     

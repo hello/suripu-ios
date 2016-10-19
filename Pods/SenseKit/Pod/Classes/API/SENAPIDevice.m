@@ -50,6 +50,8 @@ static NSString* const SENAPIDeviceSwapParamDeviceId = @"sense_id";
     }];
 }
 
+#pragma mark - Voice Controls
+
 + (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
              forSenseId:(NSString*)senseId
              completion:(SENAPIDataBlock)completion {
@@ -59,6 +61,18 @@ static NSString* const SENAPIDeviceSwapParamDeviceId = @"sense_id";
                       SENAPIDeviceVoicePath];
     NSDictionary* params = [voiceInfo dictionaryValue];
     [SENAPIClient PATCH:path parameters:params completion:completion];
+}
+
++ (void)getVoiceInfoForSenseId:(NSString*)senseId completion:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/%@/%@",
+                      SENAPIDeviceSensePath, senseId];
+    [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
+        SENSenseVoiceInfo* voiceInfo = nil;
+        if (error && [data isKindOfClass:[NSDictionary class]]) {
+            voiceInfo = [[SENSenseVoiceInfo alloc] initWithDictionary:data];
+        }
+        completion (voiceInfo, error);
+    }];
 }
 
 #pragma mark - Swap

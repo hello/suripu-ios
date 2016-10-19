@@ -130,9 +130,9 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
     [activityView showInView:[self activityContainer] withText:activityText activity:YES completion:^{
         [[self voiceService] updateVoiceInfo:[self voiceInfo]
                                   forSenseId:[self senseId]
-                                  completion:^(id response, NSError* error) {
+                                  completion:^(BOOL updated) {
                                       __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      if (error) {
+                                      if (!updated) {
                                           [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                                               NSString* title = NSLocalizedString(@"voice.settings.update.error.title", nil);
                                               NSString* message = NSLocalizedString(@"voice.settings.update.error.volume-not-set", nil);

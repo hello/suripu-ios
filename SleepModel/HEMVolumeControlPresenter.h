@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<HEMVolumeControlDelegate> delegate;
 
 - (instancetype)initWithVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
+                          senseId:(NSString*)senseId
                      voiceService:(HEMVoiceService*)voiceService;
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
@@ -35,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithVolumeLabel:(UILabel*)volumeLabel volumeSlider:(HEMVolumeSlider*)volumeSlider;
 - (void)bindWithCancelButton:(UIButton*)cancelButton saveButton:(HEMActionButton*)saveButton;
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
+- (void)bindWithActivityContainer:(UIView*)activityContainer;
 
 @end
 

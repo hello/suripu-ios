@@ -241,4 +241,8 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
     return MAX(1, HEMVoiceServiceMaxVolumeLevel * volumePercentage);
 }
 
+- (CGFloat)volumePercentageFromLevel:(NSInteger)volumeLevel {
+    return volumeLevel / HEMVoiceServiceMaxVolumeLevel;
+}
+
 @end

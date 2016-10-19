@@ -13,6 +13,10 @@
 #import "HEMActionButton.h"
 #import "HEMVolumeSlider.h"
 #import "HEMScreenUtils.h"
+#import "HEMActivityCoverView.h"
+#import "HEMActivityIndicatorView.h"
+
+static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 
 @interface HEMVolumeControlPresenter() <HEMVolumeChangeDelegate>
 
@@ -25,16 +29,20 @@
 @property (nonatomic, weak) UILabel* descriptionLabel;
 @property (nonatomic, weak) UIButton* cancelButton;
 @property (nonatomic, weak) HEMActionButton* saveButton;
+@property (nonatomic, weak) UIView* activityContainer;
+@property (nonatomic, copy) NSString* senseId;
 
 @end
 
 @implementation HEMVolumeControlPresenter
 
 - (instancetype)initWithVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
+                          senseId:(NSString*)senseId
                      voiceService:(HEMVoiceService*)voiceService {
     if (self = [super init]) {
         _voiceService = voiceService;
         _voiceInfo = voiceInfo;
+        _senseId = senseId;
     }
     return self;
 }
@@ -58,6 +66,10 @@
     
     [self setTitleLabel:titleLabel];
     [self setDescriptionLabel:descriptionLabel];
+}
+
+- (void)bindWithActivityContainer:(UIView*)activityContainer {
+    [self setActivityContainer:activityContainer];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -89,6 +101,8 @@
     [cancelButton setTitle:NSLocalizedString(@"actions.cancel", nil) forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     
+    [saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+    
     [self setCancelButton:cancelButton];
     [self setSaveButton:saveButton];
 }
@@ -108,11 +122,50 @@
     [[self delegate] didSave:NO volumeFromPresenter:self];
 }
 
+- (void)save {
+    __weak typeof(self) weakSelf = self;
+    
+    NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+    [activityView showInView:[self activityContainer] withText:activityText activity:YES completion:^{
+        [[self voiceService] updateVoiceInfo:[self voiceInfo]
+                                  forSenseId:[self senseId]
+                                  completion:^(id response, NSError* error) {
+                                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                                      if (error) {
+                                          [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                                              NSString* title = NSLocalizedString(@"voice.settings.update.error.title", nil);
+                                              NSString* message = NSLocalizedString(@"voice.settings.update.error.volume-not-set", nil);
+                                              [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                                                  andMessage:message
+                                                                                withHelpPage:nil
+                                                                               fromPresenter:self];
+                                          }];
+                                      } else {
+                                          NSString* successText = NSLocalizedString(@"status.success", nil);
+                                          UIImage* check = [UIImage imageNamed:@"check"];
+                                          [[activityView indicator] setHidden:YES];
+                                          [activityView updateText:successText successIcon:check hideActivity:YES completion:^(BOOL finished) {
+                                              [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                                                  int64_t delayInSecs = (int64_t)(kHEMVolumeSavedMessageDuration * NSEC_PER_SEC);
+                                                  dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+                                                  dispatch_after(delay, dispatch_get_main_queue(), ^{
+                                                      __weak typeof(weakSelf) strongSelf = weakSelf;
+                                                      [[strongSelf delegate] didSave:YES volumeFromPresenter:strongSelf];
+                                                  });
+                                              }];
+                                          }];
+                                      }
+                                  }];
+    }];
+}
+
 #pragma mark - HEMVolumeChangeDelegate
 
 - (void)didChangeVolumeTo:(NSInteger)volume fromSlider:(HEMVolumeSlider *)slider {
     DDLogVerbose(@"did change volume to %ld", volume);
     [[self volumeLabel] setText:[NSString stringWithFormat:@"%ld", volume]];
+    [[self voiceInfo] setVolume:@([[self voiceService] volumePercentageFromLevel:volume])];
 }
 
 @end

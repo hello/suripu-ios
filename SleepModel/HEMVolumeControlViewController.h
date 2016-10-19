@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) HEMVoiceService* voiceService;
 @property (nonatomic, strong, nullable) SENSenseVoiceInfo* voiceInfo;
+@property (nonatomic, copy, nullable) NSString* senseId;
 
 @end
 

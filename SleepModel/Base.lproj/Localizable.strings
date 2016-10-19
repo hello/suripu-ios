@@ -1055,4 +1055,5 @@
 "voice.settings.volume.control.title" = "Select volume";
 "voice.settings.volume.control.description" = "Select a volume for Voice from 1 as the lowest to 11 at the highest.";
 "voice.settings.mute" = "Mute";
-"voice.settings.update.error.mute-not-changed" = "Sense has been notified of the change, but has not confirmed the changes were applied.";
+"voice.settings.update.error.mute-not-changed" = "Sense did not accept the changes.";
+"voice.settings.update.error.volume-not-set" = "Sense did not accept the changes.";

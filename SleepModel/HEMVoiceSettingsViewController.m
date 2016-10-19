@@ -93,10 +93,12 @@
             [delegate setWantsStatusBar:YES];
             [self setTransitionDelegate:delegate];
         }
-        SENSenseVoiceInfo* voiceInfo = [[[[self deviceService] devices] senseMetadata] voiceInfo];
+        SENSenseMetadata* sense = [[[self deviceService] devices] senseMetadata];
+        SENSenseVoiceInfo* voiceInfo = [sense voiceInfo];
         HEMVolumeControlViewController* volumeVC = destVC;
         [volumeVC setVoiceService:[self voiceService]];
         [volumeVC setVoiceInfo:voiceInfo];
+        [volumeVC setSenseId:[sense uniqueId]];
         [volumeVC setTransitioningDelegate:[self transitionDelegate]];
         [volumeVC setModalPresentationStyle:UIModalPresentationCustom];
     }

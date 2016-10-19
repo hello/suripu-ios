@@ -35,6 +35,7 @@ typedef void(^HEMVoiceControlUpdateHandler)(id _Nullable response, NSError* _Nul
              forSenseId:(NSString*)senseId
              completion:(HEMVoiceControlUpdateHandler)completion;
 - (NSInteger)volumeLevelFrom:(SENSenseVoiceInfo*)voiceInfo;
+- (CGFloat)volumePercentageFromLevel:(NSInteger)volumeLevel;
 
 @end
 

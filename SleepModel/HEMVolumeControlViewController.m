@@ -12,7 +12,7 @@
 #import "HEMVolumeControlPresenter.h"
 #import "HEMVolumeSlider.h"
 
-@interface HEMVolumeControlViewController () <HEMVolumeControlDelegate>
+@interface HEMVolumeControlViewController () <HEMVolumeControlDelegate, HEMPresenterErrorDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -37,15 +37,19 @@
     }
     
     HEMVolumeControlPresenter* presenter =
-        [[HEMVolumeControlPresenter alloc] initWithVoiceInfo:[self voiceInfo]
+    [[HEMVolumeControlPresenter alloc] initWithVoiceInfo:[self voiceInfo]
+                                                 senseId:[self senseId]
                                                 voiceService:[self voiceService]];
+    
     [presenter bindWithCancelButton:[self cancelButton] saveButton:[self saveButton]];
     [presenter bindWithVolumeLabel:[self volumeLabel] volumeSlider:[self volumeSlider]];
     [presenter bindWithTitleLabel:[self titleLabel]
                  descriptionLabel:[self descriptionLabel]
          descriptionTopConstraint:[self descriptionTopConstraint]];
     [presenter bindWithNavigationItem:[self navigationItem]];
+    [presenter bindWithActivityContainer:[self view]];
     [presenter setDelegate:self];
+    [presenter setErrorDelegate:self];
     
     [self addPresenter:presenter];
 }
@@ -54,6 +58,15 @@
 
 - (void)didSave:(BOOL)save volumeFromPresenter:(HEMVolumeControlPresenter *)presenter {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - HEMPresenterErrorDelegate
+
+- (void)showErrorWithTitle:(NSString *)title
+                andMessage:(NSString *)message
+              withHelpPage:(NSString *)helpPage
+             fromPresenter:(HEMPresenter *)presenter {
+    [self showMessageDialog:message title:title];
 }
 
 @end

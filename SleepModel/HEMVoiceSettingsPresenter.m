@@ -21,6 +21,7 @@
 
 typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
     HEMVoiceSettingsRowVolume = 0,
+    HEMVoiceSettingsRowMute,
     HEMVoiceSettingsRowPrimaryUser,
     HEMVoiceSettingsRowCount
 };
@@ -137,8 +138,10 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     NSString* reuseId = nil;
     if ([self dataError]) {
         reuseId = [HEMMainStoryboard errorReuseIdentifier];
-    } else {
+    } else if ([indexPath row] != HEMVoiceSettingsRowMute) {
         reuseId = [HEMMainStoryboard settingsReuseIdentifier];
+    } else {
+        reuseId = [HEMMainStoryboard switchReuseIdentifier];
     }
     return [tableView dequeueReusableCellWithIdentifier:reuseId
                                            forIndexPath:indexPath];
@@ -171,6 +174,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 title = NSLocalizedString(@"voice.settings.volume", nil);
                 NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:voiceInfo];
                 detail = [NSString stringWithFormat:@"%ld", volumeLevel];
+                break;
+            }
+            case HEMVoiceSettingsRowMute: {
+                title = NSLocalizedString(@"voice.settings.mute", nil);
+                UISwitch* control = (UISwitch*) [basicCell customAccessoryView];
+                [control setOnTintColor:[UIColor tintColor]];
+                [control setOn:[voiceInfo isMuted]];
+                [control addTarget:self
+                            action:@selector(toggleMute:)
+                  forControlEvents:UIControlEventTouchUpInside];
                 break;
             }
             case HEMVoiceSettingsRowPrimaryUser: {
@@ -213,6 +226,55 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+- (void)update:(SENSenseVoiceInfo*)info
+messageIfError:(NSString*)errorMessage
+    completion:(void(^)(NSError* error))completion {
+    __weak typeof(self) weakSelf = self;
+    
+    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
+
+    NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+    [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
+        [[self voiceService] updateVoiceInfo:info
+                                  forSenseId:[metadata uniqueId]
+                                  completion:^(id response, NSError* error) {
+                                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                                      if (completion) {
+                                          completion (error);
+                                      }
+                                      
+                                      if (error) {
+                                          [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                                              [strongSelf showUpdateError:errorMessage];
+                                          }];
+                                      } else {
+                                          [[strongSelf tableView] reloadData];
+                                          NSString* successText = NSLocalizedString(@"status.success", nil);
+                                          [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
+                                      }
+                                  }];
+    }];
+}
+
+#pragma mark - Mute
+
+- (void)toggleMute:(UISwitch*)control {
+    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
+    NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.mute-not-changed", nil);
+    BOOL mute = [control isOn];
+    
+    SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
+    [voiceInfo setMuted:mute];
+
+    [self update:voiceInfo messageIfError:errorMessage completion:^(NSError *error) {
+        if (error) {
+            [control setOn:!mute];
+            [voiceInfo setMuted:!mute];
+        }
+    }];
+}
+
 #pragma mark - Primary User
 
 - (void)showPrimaryUserConfirmation {
@@ -237,32 +299,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)setAsPrimary {
     SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
-    NSString* senseId = [metadata uniqueId];
+    NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.primary-not-set", nil);
     SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
     
     [voiceInfo setPrimaryUser:YES];
     
-    NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
-    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
-    __weak typeof(self) weakSelf = self;
-    [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
-        [[self voiceService] updateVoiceInfo:voiceInfo
-                                  forSenseId:senseId
-                                  completion:^(id response, NSError* error) {
-                                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      if (error) {
-                                          [voiceInfo setPrimaryUser:NO];
-                                          // TODO: show error after completion!
-                                          NSString* message = NSLocalizedString(@"voice.settings.update.error.primary-not-set", nil);
-                                          [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                                              [strongSelf showUpdateError:message];
-                                          }];
-                                      } else {
-                                          [[strongSelf tableView] reloadData];
-                                          NSString* successText = NSLocalizedString(@"status.success", nil);
-                                          [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
-                                      }
-                                  }];
+    [self update:voiceInfo messageIfError:errorMessage completion:^(NSError *error) {
+        if (error) {
+            [voiceInfo setPrimaryUser:NO];
+        }
     }];
 }
 

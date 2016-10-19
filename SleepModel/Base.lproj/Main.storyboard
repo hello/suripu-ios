@@ -1635,6 +1635,39 @@
                                             <outlet property="leadingCustomAccessoryConstraint" destination="3nI-d2-o05" id="dUc-W4-tXD"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="16" reuseIdentifier="switch" id="2xV-RH-v61" customClass="HEMBasicTableViewCell">
+                                        <rect key="frame" x="0.0" y="156" width="600" height="56"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2xV-RH-v61" id="gFS-wi-ifK">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEy-uT-13f">
+                                                    <rect key="frame" x="24" y="0.0" width="38" height="55"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PKF-DT-kFM">
+                                                    <rect key="frame" x="527" y="12" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="LEy-uT-13f" secondAttribute="bottom" id="6jD-pL-zvJ"/>
+                                                <constraint firstItem="LEy-uT-13f" firstAttribute="leading" secondItem="gFS-wi-ifK" secondAttribute="leading" constant="24" id="hzC-wR-SzP"/>
+                                                <constraint firstItem="LEy-uT-13f" firstAttribute="top" secondItem="gFS-wi-ifK" secondAttribute="top" id="sN7-f4-NX1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="PKF-DT-kFM" firstAttribute="centerY" secondItem="2xV-RH-v61" secondAttribute="centerY" id="gX8-hm-WCX"/>
+                                            <constraint firstAttribute="trailing" secondItem="PKF-DT-kFM" secondAttribute="trailing" constant="24" id="nu2-mJ-D8U"/>
+                                        </constraints>
+                                        <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="customAccessoryView" destination="PKF-DT-kFM" id="hbH-ay-0Jd"/>
+                                            <outlet property="customTitleLabel" destination="LEy-uT-13f" id="X3x-Ee-6VT"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>

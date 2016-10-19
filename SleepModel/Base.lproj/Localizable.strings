@@ -1042,7 +1042,7 @@
 
 "voice.settings.primary-user" = "Primary User";
 "voice.settings.primary-user.foot.note" = "Setting a primary user tells Sense whose information to respond with when asked questions like \"What's my sleep score?\"";
-"voice.settings.update.status" = "Updating";
+"voice.settings.update.status" = "Saving";
 "voice.settings.update.error.title" = "Changes not saved";
 "voice.settings.update.error.primary-not-set" = "Sense was not able to set you as the primary user. Try again.";
 "voice.settings.error.message" = "There was a problem loading voice settings. Please try again.";
@@ -1054,3 +1054,5 @@
 "voice.settings.volume" = "Volume";
 "voice.settings.volume.control.title" = "Select volume";
 "voice.settings.volume.control.description" = "Select a volume for Voice from 1 as the lowest to 11 at the highest.";
+"voice.settings.mute" = "Mute";
+"voice.settings.update.error.mute-not-changed" = "Sense has been notified of the change, but has not confirmed the changes were applied.";

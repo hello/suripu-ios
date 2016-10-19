@@ -29,6 +29,7 @@
 +(NSString *)errorReuseIdentifier;
 +(NSString *)expansionReuseIdentifier;
 +(NSString *)settingsReuseIdentifier;
++(NSString *)switchReuseIdentifier;
 +(NSString *)plainReuseIdentifier;
 +(NSString *)configReuseIdentifier;
 +(NSString *)textReuseIdentifier;

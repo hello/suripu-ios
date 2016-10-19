@@ -100,6 +100,7 @@ static NSString *const _HEMsummary = @"summary";
 static NSString *const _HEMsummaryViewCell = @"summaryViewCell";
 static NSString *const _HEMsupportCell = @"supportCell";
 static NSString *const _HEMsupportTopicsViewController = @"supportTopicsViewController";
+static NSString *const _HEMswitch = @"switch";
 static NSString *const _HEMtext = @"text";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMtimeZoneNavViewController = @"timeZoneNavViewController";
@@ -178,6 +179,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)summaryReuseIdentifier { return _HEMsummary; }
 +(NSString *)summaryViewCellReuseIdentifier { return _HEMsummaryViewCell; }
 +(NSString *)supportCellReuseIdentifier { return _HEMsupportCell; }
++(NSString *)switchReuseIdentifier { return _HEMswitch; }
 +(NSString *)textReuseIdentifier { return _HEMtext; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)timezoneReuseIdentifier { return _HEMtimezone; }

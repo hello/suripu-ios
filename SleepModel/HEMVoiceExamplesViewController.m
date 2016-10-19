@@ -33,8 +33,8 @@
     [self setPresenter:presenter];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     if ([[self navigationController] navigationBar]
         && ![[self presenter] hasNavBar]) {
         [[self presenter] bindWithNavigationBar:[[self navigationController] navigationBar]];

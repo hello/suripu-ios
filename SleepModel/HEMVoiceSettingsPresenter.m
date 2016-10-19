@@ -17,6 +17,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlertViewController.h"
+#import "HEMBasicTableViewCell.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
     HEMVoiceSettingsRowPrimaryUser = 0,
@@ -153,47 +154,58 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell sizeToFit];
     } else {
+        HEMBasicTableViewCell* basicCell = (id) cell;
         NSString* title = nil;
         NSString* detail = nil;
-        UIView* accessoryView = nil;
+        UIColor* detailColor = [UIColor grey4];
+        UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryNone;
         UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleGray;
         
         switch ([indexPath row]) {
             default:
             case HEMVoiceSettingsRowPrimaryUser: {
                 title = NSLocalizedString(@"voice.settings.primary-user", nil);
-                selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
                 SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
-                UISwitch* primarySwitch = [UISwitch new];
-                [primarySwitch setOn:[voiceInfo isPrimaryUser]];
-                [primarySwitch setEnabled:![voiceInfo isPrimaryUser]];
-                [primarySwitch setOnTintColor:[UIColor tintColor]];
-                [primarySwitch addTarget:self
-                                  action:@selector(showPrimaryUserConfirmation:)
-                        forControlEvents:UIControlEventTouchUpInside];
-                accessoryView = primarySwitch;
+                if ([voiceInfo isPrimaryUser]) {
+                    detail = NSLocalizedString(@"voice.settings.primary-user.you", nil);
+                    selectionStyle = UITableViewCellSelectionStyleNone;
+                } else {
+                    detail = NSLocalizedString(@"voice.settings.primary-user.change", nil);
+                    detailColor = [UIColor tintColor];
+                }
                 break;
             }
         }
         
-        [[cell textLabel] setText:title];
-        [[cell textLabel] setFont:[UIFont body]];
-        [[cell textLabel] setTextColor:[UIColor grey6]];
-        [[cell detailTextLabel] setText:detail];
-        [[cell detailTextLabel] setFont:[UIFont body]];
-        [[cell detailTextLabel] setTextColor:[UIColor grey4]];
-        [cell setAccessoryView:accessoryView];
-        [cell setSelectionStyle:selectionStyle];
+        [[basicCell customTitleLabel] setText:title];
+        [[basicCell customTitleLabel] setFont:[UIFont body]];
+        [[basicCell customTitleLabel] setTextColor:[UIColor grey6]];
+        [[basicCell customDetailLabel] setText:detail];
+        [[basicCell customDetailLabel] setFont:[UIFont body]];
+        [[basicCell customDetailLabel] setTextColor:detailColor];
+        [basicCell setSelectionStyle:selectionStyle];
+        [basicCell setAccessoryType:accessoryType];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (![self dataError]) {
+        switch ([indexPath row]) {
+            case HEMVoiceSettingsRowPrimaryUser:
+                [self showPrimaryUserConfirmation];
+                break;
+            default:
+                break;
+        }
     }
 }
 
 #pragma mark - Actions
 
-- (void)showPrimaryUserConfirmation:(UISwitch*)primarySwitch {
-    [primarySwitch setOn:NO];
-    
+- (void)showPrimaryUserConfirmation {
     NSString* title = NSLocalizedString(@"voice.settings.primary-user.confirm.title", nil);
     NSString* message = NSLocalizedString(@"voice.settings.primary-user.confirm.message", nil);
     
@@ -203,7 +215,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                            style:HEMAlertViewButtonStyleRoundRect
                           action:^{
                               __strong typeof(weakSelf) strongSelf = weakSelf;
-                              [strongSelf setAsPrimary:primarySwitch];
+                              [strongSelf setAsPrimary];
                           }];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil)
                            style:HEMAlertViewButtonStyleBlueText
@@ -211,11 +223,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
 }
 
-- (void)setAsPrimary:(UISwitch*)primarySwitch {
-    [primarySwitch setOn:YES];
+- (void)setAsPrimary {
+    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
+    NSString* senseId = [metadata uniqueId];
+    SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
     
-    NSString* senseId = [[[[self deviceService] devices] senseMetadata] uniqueId];
-    SENSenseVoiceInfo* voiceInfo = [SENSenseVoiceInfo new];
     [voiceInfo setPrimaryUser:YES];
     
     NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
@@ -225,15 +237,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[self voiceService] updateVoiceInfo:voiceInfo
                                   forSenseId:senseId
                                   completion:^(id response, NSError* error) {
+                                      __strong typeof(weakSelf) strongSelf = weakSelf;
                                       if (error) {
-                                          [primarySwitch setOn:NO];
+                                          [voiceInfo setPrimaryUser:NO];
                                           // TODO: show error after completion!
                                           NSString* message = NSLocalizedString(@"voice.settings.update.error.primary-not-set", nil);
                                           [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                                              __strong typeof(weakSelf) strongSelf = weakSelf;
                                               [strongSelf showUpdateError:message];
                                           }];
                                       } else {
+                                          [[strongSelf tableView] reloadData];
                                           NSString* successText = NSLocalizedString(@"status.success", nil);
                                           [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
                                       }

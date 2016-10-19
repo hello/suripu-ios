@@ -1049,3 +1049,5 @@
 "voice.settings.primary-user.confirm.title" = "Are you sure?";
 "voice.settings.primary-user.confirm.message" = "Once you set yourself as the primary user of this Sense, you won’t be able to undo it unless another person using this Sense sets themselves as the primary user.";
 "voice.settings.primary-user.confirm.ok" = "Become primary";
+"voice.settings.primary-user.you" = "You";
+"voice.settings.primary-user.change" = "Change";

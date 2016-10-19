@@ -85,23 +85,26 @@
     id destVC = [segue destinationViewController];
     if ([destVC isKindOfClass:[UINavigationController class]]) {
         UINavigationController* nav = destVC;
-        destVC = [nav topViewController];
-    }
-    
-    if ([destVC isKindOfClass:[HEMVolumeControlViewController class]]) {
+        
         if (![self transitionDelegate]) {
             HEMSimpleModalTransitionDelegate* delegate = [HEMSimpleModalTransitionDelegate new];
             [delegate setWantsStatusBar:YES];
             [self setTransitionDelegate:delegate];
         }
+        
+        [nav setTransitioningDelegate:[self transitionDelegate]];
+        [nav setModalPresentationStyle:UIModalPresentationCustom];
+        
+        destVC = [nav topViewController];
+    }
+    
+    if ([destVC isKindOfClass:[HEMVolumeControlViewController class]]) {
         SENSenseMetadata* sense = [[[self deviceService] devices] senseMetadata];
         SENSenseVoiceInfo* voiceInfo = [sense voiceInfo];
         HEMVolumeControlViewController* volumeVC = destVC;
         [volumeVC setVoiceService:[self voiceService]];
         [volumeVC setVoiceInfo:voiceInfo];
         [volumeVC setSenseId:[sense uniqueId]];
-        [volumeVC setTransitioningDelegate:[self transitionDelegate]];
-        [volumeVC setModalPresentationStyle:UIModalPresentationCustom];
     }
 }
 

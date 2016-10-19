@@ -5454,43 +5454,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VOICE COMMANDS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="of7-if-6YN">
-                                                    <rect key="frame" x="20" y="17" width="536" height="15"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cae-mk-mPt">
-                                                    <rect key="frame" x="20" y="49" width="536" height="1"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="yv5-Q5-u69"/>
-                                                    </constraints>
-                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49v-M9-Dkv">
-                                                    <rect key="frame" x="0.0" y="50" width="576" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="576" height="50"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="of7-if-6YN" secondAttribute="trailing" constant="20" id="1zI-sy-435"/>
-                                            <constraint firstItem="Cae-mk-mPt" firstAttribute="top" secondItem="of7-if-6YN" secondAttribute="bottom" constant="17" id="Hqw-gP-wMj"/>
-                                            <constraint firstItem="Cae-mk-mPt" firstAttribute="leading" secondItem="of7-if-6YN" secondAttribute="leading" id="NZD-Vq-hOY"/>
+                                            <constraint firstItem="49v-M9-Dkv" firstAttribute="top" secondItem="gsP-qy-WYp" secondAttribute="top" id="I3m-hi-3js"/>
                                             <constraint firstAttribute="trailing" secondItem="49v-M9-Dkv" secondAttribute="trailing" id="Tzk-H9-vJB"/>
-                                            <constraint firstItem="49v-M9-Dkv" firstAttribute="top" secondItem="Cae-mk-mPt" secondAttribute="top" constant="1" id="VOg-f9-Yve"/>
-                                            <constraint firstItem="Cae-mk-mPt" firstAttribute="trailing" secondItem="of7-if-6YN" secondAttribute="trailing" id="Yi6-Kt-VDg"/>
-                                            <constraint firstItem="of7-if-6YN" firstAttribute="leading" secondItem="gsP-qy-WYp" secondAttribute="leading" constant="20" id="ZOj-A7-Dm2"/>
                                             <constraint firstAttribute="bottom" secondItem="49v-M9-Dkv" secondAttribute="bottom" id="k2E-fW-4Fa"/>
                                             <constraint firstItem="49v-M9-Dkv" firstAttribute="leading" secondItem="gsP-qy-WYp" secondAttribute="leading" id="kuP-WZ-bIX"/>
-                                            <constraint firstItem="of7-if-6YN" firstAttribute="top" secondItem="gsP-qy-WYp" secondAttribute="top" constant="17" id="zcr-1y-ejj"/>
                                         </constraints>
                                         <size key="customSize" width="576" height="50"/>
                                         <connections>
                                             <outlet property="commandsContainerView" destination="49v-M9-Dkv" id="LdU-pS-9Nc"/>
-                                            <outlet property="separatorView" destination="Cae-mk-mPt" id="ueA-cV-h9Y"/>
-                                            <outlet property="titleLabel" destination="of7-if-6YN" id="s1b-xL-9EB"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

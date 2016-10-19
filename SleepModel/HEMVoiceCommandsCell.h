@@ -12,8 +12,6 @@
 
 @interface HEMVoiceCommandsCell : HEMCardCollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIView *separatorView;
 @property (weak, nonatomic) IBOutlet UIView *commandsContainerView;
 
 @property (assign, nonatomic) NSInteger estimatedNumberOfCommands;

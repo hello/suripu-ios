@@ -44,6 +44,7 @@
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
     HEMAccountSectionDemographics,
+    HEMAccountSectionUnits,
     HEMAccountSectionPreferences,
     HEMAccountSectionSignOut,
     HEMAccountSectionCount

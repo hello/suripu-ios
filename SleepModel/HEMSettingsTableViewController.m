@@ -84,8 +84,6 @@
             return [HEMMainStoryboard accountSettingsSegueIdentifier];
         case HEMSettingsCategoryDevices:
             return [HEMMainStoryboard devicesSettingsSegueIdentifier];
-        case HEMSettingsCategoryPreferences:
-            return [HEMMainStoryboard unitsSettingsSegueIdentifier];
         case HEMSettingsCategoryNotifications:
             return [HEMMainStoryboard notificationSettingsSegueIdentifier];
         case HEMSettingsCategorySupport:

@@ -32,7 +32,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowProfile = 0,
     HEMSettingsAccountRowDevices,
     HEMSettingsAccountRowNotifications,
-    HEMSettingsAccountRowPreferences,
     HEMSettingsAccountRowExpansions,
     HEMSettingsAccountRowVoice,
     HEMSettingsAccountRowCount
@@ -177,8 +176,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
         // account
         rows = [NSMutableArray arrayWithArray:@[@(HEMSettingsAccountRowProfile),
                                                 @(HEMSettingsAccountRowDevices),
-                                                @(HEMSettingsAccountRowNotifications),
-                                                @(HEMSettingsAccountRowPreferences)]];
+                                                @(HEMSettingsAccountRowNotifications)]];
         
         if ([[strongSelf expansionService] isEnabledForHardware:version]) {
             [rows addObject:@(HEMSettingsAccountRowExpansions)];
@@ -239,8 +237,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
                 return NSLocalizedString(@"settings.devices", nil);
             case HEMSettingsAccountRowNotifications:
                 return NSLocalizedString(@"settings.notifications", nil);
-            case HEMSettingsAccountRowPreferences:
-                return NSLocalizedString(@"settings.units", nil);
             case HEMSettingsAccountRowExpansions:
                 return NSLocalizedString(@"settings.expansions", nil);
             case HEMSettingsAccountRowVoice:
@@ -355,8 +351,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 return HEMSettingsCategoryDevices;
             case HEMSettingsAccountRowNotifications:
                 return HEMSettingsCategoryNotifications;
-            case HEMSettingsAccountRowPreferences:
-                return HEMSettingsCategoryPreferences;
             case HEMSettingsAccountRowExpansions:
                 return HEMSettingsCategoryExpansions;
             case HEMSettingsAccountRowVoice:

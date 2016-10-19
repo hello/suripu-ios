@@ -81,14 +81,16 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (BOOL)showMacAddress {
-    SENSense* currentSense = [[self manager] sense];
-    BOOL hide = [currentSense version] == SENSenseAdvertisedVersionUnknown;
-    if (hide) { // check metadata if available
-        SENSenseMetadata* senseMetadata = [[[SENServiceDevice sharedService] devices] senseMetadata];
-        hide = [senseMetadata hardwareVersion] == SENSenseHardwareOne
-            || [senseMetadata hardwareVersion] == SENSenseHardwareUnknown;
-    }
-    return !hide;
+    return YES;
+    // TODO: figure out manufacturer data
+//    SENSense* currentSense = [[self manager] sense];
+//    BOOL hide = [currentSense version] == SENSenseAdvertisedVersionUnknown;
+//    if (hide) { // check metadata if available
+//        SENSenseMetadata* senseMetadata = [[[SENServiceDevice sharedService] devices] senseMetadata];
+//        hide = [senseMetadata hardwareVersion] == SENSenseHardwareOne
+//            || [senseMetadata hardwareVersion] == SENSenseHardwareUnknown;
+//    }
+//    return !hide;
 }
 
 - (void)configurePicker {

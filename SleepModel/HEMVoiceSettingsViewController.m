@@ -5,6 +5,8 @@
 //  Created by Jimmy Lu on 10/17/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMVoiceSettingsViewController.h"
 #import "HEMVoiceService.h"
@@ -12,11 +14,15 @@
 #import "HEMVoiceSettingsPresenter.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlertViewController.h"
+#import "HEMVolumeControlViewController.h"
+#import "HEMMainStoryboard.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 
-@interface HEMVoiceSettingsViewController () <HEMPresenterErrorDelegate>
+@interface HEMVoiceSettingsViewController () <HEMPresenterErrorDelegate, HEMVoiceSettingsDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) id transitionDelegate;
 
 @end
 
@@ -46,6 +52,7 @@
     [settingsPresenter bindWithActivityContainer:[[self rootViewController] view]];
     [settingsPresenter bindWithActivityIndicator:[self activityIndicator]];
     [settingsPresenter setErrorDelegate:self];
+    [settingsPresenter setDelegate:self];
     
     [self addPresenter:settingsPresenter];
 }
@@ -63,6 +70,36 @@
             fromPresenter:(HEMPresenter *)presenter {
     [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [alertVC showFrom:self];
+}
+
+#pragma mark - HEMVoiceSettingsDelegate
+
+- (void)showVolumeControlFromPresenter:(HEMVoiceSettingsPresenter *)presenter {
+    [self performSegueWithIdentifier:[HEMMainStoryboard volumeSegueIdentifier] sender:self];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    id destVC = [segue destinationViewController];
+    if ([destVC isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = destVC;
+        destVC = [nav topViewController];
+    }
+    
+    if ([destVC isKindOfClass:[HEMVolumeControlViewController class]]) {
+        if (![self transitionDelegate]) {
+            HEMSimpleModalTransitionDelegate* delegate = [HEMSimpleModalTransitionDelegate new];
+            [delegate setWantsStatusBar:YES];
+            [self setTransitionDelegate:delegate];
+        }
+        SENSenseVoiceInfo* voiceInfo = [[[[self deviceService] devices] senseMetadata] voiceInfo];
+        HEMVolumeControlViewController* volumeVC = destVC;
+        [volumeVC setVoiceService:[self voiceService]];
+        [volumeVC setVoiceInfo:voiceInfo];
+        [volumeVC setTransitioningDelegate:[self transitionDelegate]];
+        [volumeVC setModalPresentationStyle:UIModalPresentationCustom];
+    }
 }
 
 @end

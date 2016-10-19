@@ -28,7 +28,7 @@
 +(NSString *)infoCellReuseIdentifier;
 +(NSString *)errorReuseIdentifier;
 +(NSString *)expansionReuseIdentifier;
-+(NSString *)settingReuseIdentifier;
++(NSString *)settingsReuseIdentifier;
 +(NSString *)plainReuseIdentifier;
 +(NSString *)configReuseIdentifier;
 +(NSString *)textReuseIdentifier;
@@ -63,7 +63,6 @@
 +(NSString *)commandsReuseIdentifier;
 +(NSString *)commandGroupReuseIdentifier;
 +(NSString *)examplesReuseIdentifier;
-+(NSString *)settingsReuseIdentifier;
 +(NSString *)messageReuseIdentifier;
 +(NSString *)calendarReuseIdentifier;
 +(NSString *)barReuseIdentifier;
@@ -96,6 +95,7 @@
 +(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)updateAccountInfoSegueIdentifier;
 +(NSString *)voiceSegueIdentifier;
++(NSString *)volumeSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateRootViewController;

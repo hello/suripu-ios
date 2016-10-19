@@ -169,7 +169,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             default:
             case HEMVoiceSettingsRowVolume: {
                 title = NSLocalizedString(@"voice.settings.volume", nil);
-                detail = [NSString stringWithFormat:@"%ld", [[voiceInfo volume] longValue]];
+                NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:voiceInfo];
+                detail = [NSString stringWithFormat:@"%ld", volumeLevel];
                 break;
             }
             case HEMVoiceSettingsRowPrimaryUser: {
@@ -202,11 +203,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (![self dataError]) {
         switch ([indexPath row]) {
+            case HEMVoiceSettingsRowVolume:
+                return [self changeVolume];
             case HEMVoiceSettingsRowPrimaryUser:
-                [self showPrimaryUserConfirmation];
-                break;
+                return [self showPrimaryUserConfirmation];
             default:
-                break;
+                return;
         }
     }
 }
@@ -267,7 +269,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Volume
 
 - (void)changeVolume {
-    
+    [[self delegate] showVolumeControlFromPresenter:self];
 }
 
 #pragma mark - Error

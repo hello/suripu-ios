@@ -18,6 +18,7 @@
 NSString* const HEMVoiceNotification = @"HEMVoiceNotificationResult";
 NSString* const HEMVoiceNotificationInfoError = @"voice.error";
 NSString* const HEMVoiceNotificationInfoResult = @"voice.result";
+NSInteger const HEMVoiceServiceMaxVolumeLevel = 11;
 
 static CGFloat const HEMVoiceServiceWaitDelay = 1.0f;
 static NSString* const HEMVoiceServiceHideIntroKey = @"HEMVoiceServiceIntroKey";
@@ -233,6 +234,11 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
             completion (data, error);
         }
     }];
+}
+
+- (NSInteger)volumeLevelFrom:(SENSenseVoiceInfo*)voiceInfo {
+    CGFloat volumePercentage = [[voiceInfo volume] integerValue] / 100.0f;
+    return MAX(1, HEMVoiceServiceMaxVolumeLevel * volumePercentage);
 }
 
 @end

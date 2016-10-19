@@ -15,9 +15,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString* const HEMVoiceNotification;
-NSString* const HEMVoiceNotificationInfoError;
-NSString* const HEMVoiceNotificationInfoResult;
+extern NSString* const HEMVoiceNotification;
+extern NSString* const HEMVoiceNotificationInfoError;
+extern NSString* const HEMVoiceNotificationInfoResult;
+extern NSInteger const HEMVoiceServiceMaxVolumeLevel;
 
 typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
 typedef void(^HEMVoiceControlUpdateHandler)(id _Nullable response, NSError* _Nullable error);
@@ -33,6 +34,7 @@ typedef void(^HEMVoiceControlUpdateHandler)(id _Nullable response, NSError* _Nul
 - (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
              forSenseId:(NSString*)senseId
              completion:(HEMVoiceControlUpdateHandler)completion;
+- (NSInteger)volumeLevelFrom:(SENSenseVoiceInfo*)voiceInfo;
 
 @end
 

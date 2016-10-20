@@ -37,8 +37,8 @@ static NSString* const SENSenseVoiceDictPropMuted = @"muted";
     
     SENSenseVoiceSettings* other = object;
     return SENObjectIsEqual([self volume], [other volume])
-        && [self isPrimaryUser] && [other isPrimaryUser]
-        && [self isMuted] && [other isMuted];
+        && [self isPrimaryUser] == [other isPrimaryUser]
+        && [self isMuted] == [other isMuted];
 }
 
 - (NSUInteger)hash {

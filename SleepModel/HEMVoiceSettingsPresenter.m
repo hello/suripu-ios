@@ -235,7 +235,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             case HEMVoiceSettingsRowVolume:
                 return [self changeVolume];
             case HEMVoiceSettingsRowPrimaryUser:
-                return [self showPrimaryUserConfirmation];
+                if (![[self voiceSettings] isPrimaryUser]) {
+                    return [self showPrimaryUserConfirmation];
+                } else {
+                    return;
+                }
             default:
                 return;
         }

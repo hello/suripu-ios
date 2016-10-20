@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.0.6
+
+New:
+
+* Changed copy for Log In to Sign In
+* Removed the Voice Commands title from the voice tab
+* Smart default for smart alarm switch when creating alarm
+
 ## 1.6.0.5
 
 New:

@@ -457,7 +457,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questions_check" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-Eh-lsY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-Eh-lsY">
                                                     <rect key="frame" x="516" y="0.0" width="20" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="3Ot-ft-hRK"/>
@@ -7287,6 +7287,7 @@
         <image name="backIcon" width="10" height="18"/>
         <image name="bottomShadow" width="375" height="4"/>
         <image name="cardLoadingState" width="375" height="144"/>
+        <image name="checkmark" width="20" height="15"/>
         <image name="closeXGrey" width="14" height="13"/>
         <image name="defaultAvatar" width="104" height="104"/>
         <image name="durationIcon" width="32" height="32"/>
@@ -7297,7 +7298,6 @@
         <image name="introRoomConditions" width="375" height="182"/>
         <image name="noConfigIcon" width="20" height="20"/>
         <image name="noSense" width="359" height="180"/>
-        <image name="questions_check" width="20" height="15"/>
         <image name="questions_circle" width="21" height="21"/>
         <image name="settingsToggleIconActive" width="22" height="22"/>
         <image name="settingsToggleIconInactive" width="22" height="22"/>

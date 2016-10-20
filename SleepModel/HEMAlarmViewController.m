@@ -25,6 +25,7 @@
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
 @property (strong, nonatomic) HEMAudioService* audioService;
 @property (assign, nonatomic) HEMAlarmRowType selectedRow;
+@property (assign, nonatomic) SENExpansion* selectedExpansion;
 
 @end
 
@@ -85,6 +86,19 @@
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
+- (NSString*)segueIdForExpansionType:(SENExpansionType)expansionType {
+    NSArray<SENExpansion*>* expansions = [[self expansionService] expansions];
+    SENExpansion* expansion = [[self expansionService] firstExpansionOfType:expansionType
+                                                               inExpansions:expansions];
+    [self setSelectedExpansion:expansion];
+    
+    if (![[self expansionService] isReadyForUse:expansion]) {
+        return [HEMMainStoryboard expansionSegueIdentifier];
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - HEMAlarmPresenterDelegate
 
 - (void)didSelectRowType:(HEMAlarmRowType)rowType {
@@ -97,8 +111,10 @@
             segueId = [HEMMainStoryboard alarmRepeatSegueIdentifier];
             break;
         case HEMAlarmRowTypeThermostat:
+            segueId = [self segueIdForExpansionType:SENExpansionTypeThermostat];
+            break;
         case HEMAlarmRowTypeLight:
-            segueId = [HEMMainStoryboard expansionSegueIdentifier];
+            segueId = [self segueIdForExpansionType:SENExpansionTypeLights];
             break;
         default:
             break;
@@ -188,13 +204,9 @@
     [listVC setListPresenter:soundsPresenter];
 }
 
-- (void)prepareForExpansionSegue:(UIStoryboardSegue*)segue forType:(SENExpansionType)type {
-    NSArray<SENExpansion*>* expansions = [[self expansionService] expansions];
-    SENExpansion* expansion = [[self expansionService] firstExpansionOfType:type
-                                                               inExpansions:expansions];
-    
+- (void)prepareForExpansionSegue:(UIStoryboardSegue*)segue {
     HEMExpansionViewController* expansionVC = [segue destinationViewController];
-    [expansionVC setExpansion:expansion];
+    [expansionVC setExpansion:[self selectedExpansion]];
     [expansionVC setExpansionService:[self expansionService]];
 }
 
@@ -204,17 +216,7 @@
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmSoundsSegueIdentifier]]) {
         [self prepareForSoundSegue:segue];
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionSegueIdentifier]]) {
-        SENExpansionType type;
-        switch ([self selectedRow]) {
-            default:
-            case HEMAlarmRowTypeLight:
-                type = SENExpansionTypeLights;
-                break;
-            case HEMAlarmRowTypeThermostat:
-                type = SENExpansionTypeThermostat;
-                break;
-        }
-        [self prepareForExpansionSegue:segue forType:type];
+        [self prepareForExpansionSegue:segue];
     }
 }
 

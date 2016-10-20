@@ -20,10 +20,21 @@ typedef NS_ENUM(NSUInteger, SENExpansionState) {
     SENExpansionStateNotConfigured
 };
 
+typedef NS_ENUM(NSUInteger, SENExpansionType) {
+    SENExpansionTypeUnknown = 0,
+    SENExpansionTypeLights,
+    SENExpansionTypeThermostat
+};
+
+typedef struct {
+    NSInteger min;
+    NSInteger max;
+    NSInteger setpoint;
+} SENExpansionValueRange;
+
 @interface SENExpansion : NSObject <SENSerializable>
 
 @property (nonatomic, copy, readonly) NSNumber* identifier;
-@property (nonatomic, copy, readonly) NSString* category;
 @property (nonatomic, copy, readonly) NSString* deviceName;
 @property (nonatomic, copy, readonly) NSString* serviceName;
 @property (nonatomic, copy, readonly) NSString* authUri;
@@ -31,7 +42,13 @@ typedef NS_ENUM(NSUInteger, SENExpansionState) {
 @property (nonatomic, copy, readonly) NSString* expansionDescription;
 @property (nonatomic, strong, readonly) SENRemoteImage* remoteIcon;
 @property (nonatomic, assign) SENExpansionState state;
+@property (nonatomic, assign) SENExpansionType type;
+@property (nonatomic, assign, readonly) SENExpansionValueRange valueRange;
 
++ (SENExpansionValueRange)valueRangeFromDict:(NSDictionary*)dict;
++ (SENExpansionType)typeFromString:(NSString*)typeString;
++ (NSString*)typeStringFromEnum:(SENExpansionType)type;
++ (NSDictionary*)dictionaryValueFromRange:(SENExpansionValueRange)range;
 - (NSDictionary*)dictionaryValueForUpdate;
 
 @end

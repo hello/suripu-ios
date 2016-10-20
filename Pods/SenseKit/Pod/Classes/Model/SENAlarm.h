@@ -1,6 +1,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SENSerializable.h"
+#import "SENExpansion.h"
 
 typedef NS_ENUM(NSUInteger, SENAlarmRepeatDays) {
     SENAlarmRepeatSunday = (1UL << 1),
@@ -37,6 +38,8 @@ struct SENAlarmTime {
 @interface SENAlarmExpansion : NSObject <NSCoding, SENSerializable>
 
 @property (nonatomic, strong, readonly) NSNumber* expansionId;
+@property (nonatomic, assign, readonly) SENExpansionType type;
+@property (nonatomic, assign) SENExpansionValueRange targetRange;
 @property (nonatomic, assign, getter=isEnable) BOOL enable;
 
 - (instancetype)initWithExpansionId:(NSNumber*)expansionId enable:(BOOL)enable;

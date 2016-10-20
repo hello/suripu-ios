@@ -15,7 +15,6 @@ static NSString *const _HEMaction = @"action";
 static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
 static NSString *const _HEMalarmExpansionCell = @"alarmExpansionCell";
-static NSString *const _HEMalarmLightCell = @"alarmLightCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListEmptyCell = @"alarmListEmptyCell";
 static NSString *const _HEMalarmListNavViewController = @"alarmListNavViewController";
@@ -48,7 +47,6 @@ static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexamples = @"examples";
 static NSString *const _HEMexpansion = @"expansion";
 static NSString *const _HEMexpansionConfig = @"expansionConfig";
-static NSString *const _HEMexpansionLight = @"expansionLight";
 static NSString *const _HEMexpansions = @"expansions";
 static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMfeed = @"feed";
@@ -131,7 +129,6 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)actionReuseIdentifier { return _HEMaction; }
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
 +(NSString *)alarmExpansionCellReuseIdentifier { return _HEMalarmExpansionCell; }
-+(NSString *)alarmLightCellReuseIdentifier { return _HEMalarmLightCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
 +(NSString *)alarmListEmptyCellReuseIdentifier { return _HEMalarmListEmptyCell; }
 +(NSString *)alarmListStatusCellReuseIdentifier { return _HEMalarmListStatusCell; }
@@ -199,7 +196,6 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)expansionSegueIdentifier { return _HEMexpansion; }
-+(NSString *)expansionLightSegueIdentifier { return _HEMexpansionLight; }
 +(NSString *)expansionsSegueIdentifier { return _HEMexpansions; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }

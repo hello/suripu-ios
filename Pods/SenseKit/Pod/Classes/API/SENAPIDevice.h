@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
 
 @class SENPillMetadata;
 @class SENSenseMetadata;
-@class SENSenseVoiceInfo;
+@class SENSenseVoiceSettings;
 
 @interface SENAPIDevice : NSObject
 
@@ -106,13 +106,13 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
  * Update voice metadata / settings for Sense.  Only applies to specific device
  * hardware versions
  *
- * @param voiceInfo: the updated voice info object to be updated
+ * @param voiceSettings: the updated voice settings object to be updated
  * @param senseId: the identifier of Sense to update the voice metadata for
  * @param copletion: the block to call when request is completed
  */
-+ (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
-             forSenseId:(NSString*)senseId
-             completion:(SENAPIDataBlock)completion;
++ (void)updateVoiceSettings:(SENSenseVoiceSettings*)voiceSettings
+                 forSenseId:(NSString*)senseId
+                 completion:(SENAPIDataBlock)completion;
 
 /**
  * @discussion
@@ -122,7 +122,7 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
  * @param senseId: the identifier of Sense to get the voice metadata for
  * @param copletion: the block to call when request is completed
  */
-+ (void)getVoiceInfoForSenseId:(NSString*)senseId completion:(SENAPIDataBlock)completion;
++ (void)getVoiceSettingsForSenseId:(NSString*)senseId completion:(SENAPIDataBlock)completion;
 
 @end
 

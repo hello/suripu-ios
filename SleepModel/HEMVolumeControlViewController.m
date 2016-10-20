@@ -37,8 +37,8 @@
     }
     
     HEMVolumeControlPresenter* presenter =
-    [[HEMVolumeControlPresenter alloc] initWithVoiceInfo:[self voiceInfo]
-                                                 senseId:[self senseId]
+    [[HEMVolumeControlPresenter alloc] initWithVoiceSettings:[self voiceSettings]
+                                                     senseId:[self senseId]
                                                 voiceService:[self voiceService]];
     
     [presenter bindWithCancelButton:[self cancelButton] saveButton:[self saveButton]];

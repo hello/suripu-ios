@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENSenseVoiceSettings.h>
 
 #import "HEMVoiceSettingsViewController.h"
 #import "HEMVoiceService.h"
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) id transitionDelegate;
+@property (strong, nonatomic) SENSenseVoiceSettings* voiceSettings;
 
 @end
 
@@ -75,7 +77,9 @@
 
 #pragma mark - HEMVoiceSettingsDelegate
 
-- (void)showVolumeControlFromPresenter:(HEMVoiceSettingsPresenter *)presenter {
+- (void)showVolumeControlFor:(SENSenseVoiceSettings*)voiceSettings
+               fromPresenter:(HEMVoiceSettingsPresenter*)presenter {
+    [self setVoiceSettings:voiceSettings];
     [self performSegueWithIdentifier:[HEMMainStoryboard volumeSegueIdentifier] sender:self];
 }
 
@@ -100,10 +104,9 @@
     
     if ([destVC isKindOfClass:[HEMVolumeControlViewController class]]) {
         SENSenseMetadata* sense = [[[self deviceService] devices] senseMetadata];
-        SENSenseVoiceInfo* voiceInfo = [sense voiceInfo];
         HEMVolumeControlViewController* volumeVC = destVC;
         [volumeVC setVoiceService:[self voiceService]];
-        [volumeVC setVoiceInfo:voiceInfo];
+        [volumeVC setVoiceSettings:[self voiceSettings]];
         [volumeVC setSenseId:[sense uniqueId]];
     }
 }

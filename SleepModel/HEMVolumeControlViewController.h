@@ -9,14 +9,14 @@
 #import "HEMBaseController.h"
 
 @class HEMVoiceService;
-@class SENSenseVoiceInfo;
+@class SENSenseVoiceSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMVolumeControlViewController : HEMBaseController
 
 @property (nonatomic, strong, nullable) HEMVoiceService* voiceService;
-@property (nonatomic, strong, nullable) SENSenseVoiceInfo* voiceInfo;
+@property (nonatomic, strong, nullable) SENSenseVoiceSettings* voiceSettings;
 @property (nonatomic, copy, nullable) NSString* senseId;
 
 @end

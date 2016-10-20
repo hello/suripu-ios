@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENSenseVoiceSettings.h>
 
 #import "HEMVoiceSettingsPresenter.h"
 #import "HEMVoiceService.h"
@@ -37,6 +38,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 @property (nonatomic, weak) UIView* activityContainerView;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicatorView;
 @property (nonatomic, strong) NSError* dataError;
+@property (nonatomic, strong) SENSenseVoiceSettings* voiceSettings;
 
 @end
 
@@ -118,11 +120,25 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
         [[strongSelf activityIndicatorView] setHidden:YES];
     };
     
+    void(^loadVoiceSettings)(SENSenseMetadata* senseMetadata) = ^(SENSenseMetadata* senseMetadata) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSString* senseId = [senseMetadata uniqueId];
+        [[strongSelf voiceService] getVoiceSettingsForSenseId:senseId completion:^(id response, NSError* error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf setVoiceSettings:response];
+            reload(error);
+        }];
+    };
+    
     if ([[[self deviceService] devices] senseMetadata]) {
-        reload(nil);
+        loadVoiceSettings([[[self deviceService] devices] senseMetadata]);
     } else {
         [[self deviceService] refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
-            reload(error);
+            if (error) {
+                reload(error);
+            } else {
+                loadVoiceSettings([devices senseMetadata]);
+            }
         }];
     }
 }
@@ -159,8 +175,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [cell sizeToFit];
     } else if (![self dataError]) {
         HEMBasicTableViewCell* basicCell = (id) cell;
-        SENSenseMetadata* senseMetadata = [[[self deviceService] devices] senseMetadata];
-        SENSenseVoiceInfo* voiceInfo = [senseMetadata voiceInfo];
         
         BOOL showCustomAccessory = YES;
         NSString* title = nil;
@@ -172,15 +186,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             default:
             case HEMVoiceSettingsRowVolume: {
                 title = NSLocalizedString(@"voice.settings.volume", nil);
-                NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:voiceInfo];
+                NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:[self voiceSettings]];
                 detail = [NSString stringWithFormat:@"%ld", volumeLevel];
                 break;
             }
             case HEMVoiceSettingsRowMute: {
                 title = NSLocalizedString(@"voice.settings.mute", nil);
+                selectionStyle = UITableViewCellSelectionStyleNone;
+                
                 UISwitch* control = (UISwitch*) [basicCell customAccessoryView];
                 [control setOnTintColor:[UIColor tintColor]];
-                [control setOn:[voiceInfo isMuted]];
+                [control setOn:[[self voiceSettings] isMuted]];
                 [control addTarget:self
                             action:@selector(toggleMute:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -189,7 +205,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             case HEMVoiceSettingsRowPrimaryUser: {
                 title = NSLocalizedString(@"voice.settings.primary-user", nil);
 
-                if ([voiceInfo isPrimaryUser]) {
+                if ([[self voiceSettings] isPrimaryUser]) {
                     detail = NSLocalizedString(@"voice.settings.primary-user.you", nil);
                     selectionStyle = UITableViewCellSelectionStyleNone;
                     showCustomAccessory = NO;
@@ -232,7 +248,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - Updates
 
-- (void)update:(SENSenseVoiceInfo*)info
+- (void)update:(SENSenseVoiceSettings*)info
 messageIfError:(NSString*)errorMessage
     completion:(void(^)(BOOL updated))completion {
     __weak typeof(self) weakSelf = self;
@@ -242,41 +258,40 @@ messageIfError:(NSString*)errorMessage
     NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
     HEMActivityCoverView* activityView = [HEMActivityCoverView new];
     [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
-        [[self voiceService] updateVoiceInfo:info
-                                  forSenseId:[metadata uniqueId]
-                                  completion:^(BOOL updated) {
-                                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      if (completion) {
-                                          completion (updated);
-                                      }
+        [[self voiceService] updateVoiceSettings:info
+                                      forSenseId:[metadata uniqueId]
+                                      completion:^(BOOL updated) {
+                                          __strong typeof(weakSelf) strongSelf = weakSelf;
+                                          if (completion) {
+                                              completion (updated);
+                                          }
                                       
-                                      if (!updated) {
-                                          [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                                              [strongSelf showUpdateError:errorMessage];
-                                          }];
-                                      } else {
-                                          [[strongSelf tableView] reloadData];
-                                          NSString* successText = NSLocalizedString(@"status.success", nil);
-                                          [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
-                                      }
-                                  }];
+                                          if (!updated) {
+                                              [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                                                  [strongSelf showUpdateError:errorMessage];
+                                              }];
+                                          } else {
+                                              [[strongSelf tableView] reloadData];
+                                              NSString* successText = NSLocalizedString(@"status.success", nil);
+                                              [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
+                                          }
+                                      }];
     }];
 }
 
 #pragma mark - Mute
 
 - (void)toggleMute:(UISwitch*)control {
-    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
     NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.mute-not-changed", nil);
     BOOL mute = [control isOn];
     
-    SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
-    [voiceInfo setMuted:mute];
+    __block SENSenseVoiceSettings* voiceSettings = [self voiceSettings];
+    [voiceSettings setMuted:mute];
 
-    [self update:voiceInfo messageIfError:errorMessage completion:^(BOOL updated) {
+    [self update:voiceSettings messageIfError:errorMessage completion:^(BOOL updated) {
         if (!updated) {
             [control setOn:!mute];
-            [voiceInfo setMuted:!mute];
+            [voiceSettings setMuted:!mute];
         }
     }];
 }
@@ -304,15 +319,13 @@ messageIfError:(NSString*)errorMessage
 }
 
 - (void)setAsPrimary {
-    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
     NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.primary-not-set", nil);
-    SENSenseVoiceInfo* voiceInfo = [metadata voiceInfo];
     
-    [voiceInfo setPrimaryUser:YES];
+    [[self voiceSettings] setPrimaryUser:YES];
     
-    [self update:voiceInfo messageIfError:errorMessage completion:^(BOOL updated) {
+    [self update:[self voiceSettings] messageIfError:errorMessage completion:^(BOOL updated) {
         if (!updated) {
-            [voiceInfo setPrimaryUser:NO];
+            [[self voiceSettings] setPrimaryUser:NO];
         }
     }];
 }
@@ -320,7 +333,7 @@ messageIfError:(NSString*)errorMessage
 #pragma mark - Volume
 
 - (void)changeVolume {
-    [[self delegate] showVolumeControlFromPresenter:self];
+    [[self delegate] showVolumeControlFor:[self voiceSettings] fromPresenter:self];
 }
 
 #pragma mark - Error

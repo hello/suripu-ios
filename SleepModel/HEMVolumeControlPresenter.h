@@ -10,7 +10,7 @@
 
 @class HEMActionButton;
 @class HEMVoiceService;
-@class SENSenseVoiceInfo;
+@class SENSenseVoiceSettings;
 @class HEMVolumeSlider;
 @class HEMVolumeControlPresenter;
 
@@ -26,9 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<HEMVolumeControlDelegate> delegate;
 
-- (instancetype)initWithVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
-                          senseId:(NSString*)senseId
-                     voiceService:(HEMVoiceService*)voiceService;
+- (instancetype)initWithVoiceSettings:(SENSenseVoiceSettings*)voiceSettings
+                              senseId:(NSString*)senseId
+                         voiceService:(HEMVoiceService*)voiceService;
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
           descriptionLabel:(UILabel*)descriptionLabel

@@ -5,7 +5,8 @@
 //  Created by Jimmy Lu on 10/18/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-#import <SenseKit/SENSenseMetadata.h>
+
+#import <SenseKit/SENSenseVoiceSettings.h>
 
 #import "HEMVolumeControlPresenter.h"
 #import "HEMVoiceService.h"
@@ -21,7 +22,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 @interface HEMVolumeControlPresenter() <HEMVolumeChangeDelegate>
 
 @property (nonatomic, weak) HEMVoiceService* voiceService;
-@property (nonatomic, strong) SENSenseVoiceInfo* voiceInfo;
+@property (nonatomic, strong) SENSenseVoiceSettings* voiceSettings;
 
 @property (nonatomic, weak) HEMVolumeSlider* volumeSlider;
 @property (nonatomic, weak) UILabel* volumeLabel;
@@ -36,12 +37,12 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 
 @implementation HEMVolumeControlPresenter
 
-- (instancetype)initWithVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
-                          senseId:(NSString*)senseId
-                     voiceService:(HEMVoiceService*)voiceService {
+- (instancetype)initWithVoiceSettings:(SENSenseVoiceSettings*)voiceSettings
+                              senseId:(NSString*)senseId
+                         voiceService:(HEMVoiceService*)voiceService {
     if (self = [super init]) {
         _voiceService = voiceService;
-        _voiceInfo = voiceInfo;
+        _voiceSettings = voiceSettings;
         _senseId = senseId;
     }
     return self;
@@ -79,7 +80,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 }
 
 - (void)bindWithVolumeLabel:(UILabel*)volumeLabel volumeSlider:(HEMVolumeSlider*)volumeSlider {
-    NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:[self voiceInfo]];
+    NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:[self voiceSettings]];
     
     [volumeLabel setFont:[UIFont h1]];
     [volumeLabel setTextColor:[UIColor tintColor]];
@@ -128,35 +129,35 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
     NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
     HEMActivityCoverView* activityView = [HEMActivityCoverView new];
     [activityView showInView:[self activityContainer] withText:activityText activity:YES completion:^{
-        [[self voiceService] updateVoiceInfo:[self voiceInfo]
-                                  forSenseId:[self senseId]
-                                  completion:^(BOOL updated) {
-                                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      if (!updated) {
-                                          [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                                              NSString* title = NSLocalizedString(@"voice.settings.update.error.title", nil);
-                                              NSString* message = NSLocalizedString(@"voice.settings.update.error.volume-not-set", nil);
-                                              [[strongSelf errorDelegate] showErrorWithTitle:title
-                                                                                  andMessage:message
-                                                                                withHelpPage:nil
-                                                                               fromPresenter:self];
-                                          }];
-                                      } else {
-                                          NSString* successText = NSLocalizedString(@"status.success", nil);
-                                          UIImage* check = [UIImage imageNamed:@"check"];
-                                          [[activityView indicator] setHidden:YES];
-                                          [activityView updateText:successText successIcon:check hideActivity:YES completion:^(BOOL finished) {
-                                              [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
-                                                  int64_t delayInSecs = (int64_t)(kHEMVolumeSavedMessageDuration * NSEC_PER_SEC);
-                                                  dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
-                                                  dispatch_after(delay, dispatch_get_main_queue(), ^{
-                                                      __weak typeof(weakSelf) strongSelf = weakSelf;
-                                                      [[strongSelf delegate] didSave:YES volumeFromPresenter:strongSelf];
-                                                  });
+        [[self voiceService] updateVoiceSettings:[self voiceSettings]
+                                      forSenseId:[self senseId]
+                                      completion:^(BOOL updated) {
+                                          __strong typeof(weakSelf) strongSelf = weakSelf;
+                                          if (!updated) {
+                                              [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                                                  NSString* title = NSLocalizedString(@"voice.settings.update.error.title", nil);
+                                                  NSString* message = NSLocalizedString(@"voice.settings.update.error.volume-not-set", nil);
+                                                  [[strongSelf errorDelegate] showErrorWithTitle:title
+                                                                                      andMessage:message
+                                                                                    withHelpPage:nil
+                                                                                   fromPresenter:self];
                                               }];
-                                          }];
-                                      }
-                                  }];
+                                          } else {
+                                              NSString* successText = NSLocalizedString(@"status.success", nil);
+                                              UIImage* check = [UIImage imageNamed:@"check"];
+                                              [[activityView indicator] setHidden:YES];
+                                              [activityView updateText:successText successIcon:check hideActivity:YES completion:^(BOOL finished) {
+                                                  [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                                                      int64_t delayInSecs = (int64_t)(kHEMVolumeSavedMessageDuration * NSEC_PER_SEC);
+                                                      dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+                                                      dispatch_after(delay, dispatch_get_main_queue(), ^{
+                                                          __weak typeof(weakSelf) strongSelf = weakSelf;
+                                                          [[strongSelf delegate] didSave:YES volumeFromPresenter:strongSelf];
+                                                      });
+                                                  }];
+                                              }];
+                                          }
+                                      }];
     }];
 }
 
@@ -165,7 +166,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 - (void)didChangeVolumeTo:(NSInteger)volume fromSlider:(HEMVolumeSlider *)slider {
     DDLogVerbose(@"did change volume to %ld", volume);
     [[self volumeLabel] setText:[NSString stringWithFormat:@"%ld", volume]];
-    [[self voiceInfo] setVolume:@([[self voiceService] volumePercentageFromLevel:volume])];
+    [[self voiceSettings] setVolume:@([[self voiceService] volumePercentageFromLevel:volume])];
 }
 
 @end

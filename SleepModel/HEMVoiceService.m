@@ -11,6 +11,7 @@
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENAPIDevice.h>
 #import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENSenseVoiceSettings.h>
 
 #import "HEMVoiceService.h"
 #import "HEMVoiceCommandGroup.h"
@@ -224,39 +225,39 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 
 #pragma mark - Voice controls
 
-- (void)updateVoiceInfo:(SENSenseVoiceInfo*)voiceInfo
-             forSenseId:(NSString*)senseId
-             completion:(HEVoiceInfoUpdateHandler)completion {
+- (void)updateVoiceSettings:(SENSenseVoiceSettings*)voiceSettings
+                 forSenseId:(NSString*)senseId
+                 completion:(HEVoiceSettingsUpdateHandler)completion {
 
     __weak typeof(self) weakSelf = self;
-    [SENAPIDevice updateVoiceInfo:voiceInfo
-                       forSenseId:senseId
-                       completion:^(id data, NSError *error) {
-                           __strong typeof(weakSelf) strongSelf = weakSelf;
-                           if (error) {
-                               [SENAnalytics trackError:error];
-                               completion (NO);
-                           } else {
-                               [strongSelf verifyUpdateFor:voiceInfo
-                                               withSenseId:senseId
-                                                   attempt:1
-                                                completion:completion];
-                           }
-                       }];
+    [SENAPIDevice updateVoiceSettings:voiceSettings
+                           forSenseId:senseId
+                           completion:^(id data, NSError *error) {
+                               __strong typeof(weakSelf) strongSelf = weakSelf;
+                               if (error) {
+                                   [SENAnalytics trackError:error];
+                                   completion (NO);
+                               } else {
+                                   [strongSelf verifyUpdateFor:voiceSettings
+                                                   withSenseId:senseId
+                                                       attempt:1
+                                                    completion:completion];
+                               }
+                           }];
 }
 
-- (void)verifyUpdateFor:(SENSenseVoiceInfo*)voiceInfo
+- (void)verifyUpdateFor:(SENSenseVoiceSettings*)voiceSettings
             withSenseId:(NSString*)senseId
                 attempt:(NSInteger)attempt
              completion:(void(^)(BOOL updated))completion {
     
     if (attempt <= HEMVoiceServiceMaxCheckAttempts) {
         __weak typeof(self) weakSelf = self;
-        [self getVoiceInfoForSenseId:senseId completion:^(id response, NSError* error) {
+        [self getVoiceSettingsForSenseId:senseId completion:^(id response, NSError* error) {
             if (error) {
                 completion (NO);
             } else {
-                if ([response isEqual:voiceInfo]) {
+                if ([response isEqual:voiceSettings]) {
                     completion (YES);
                 } else if (attempt > HEMVoiceServiceMaxCheckAttempts) {
                     completion (NO);
@@ -265,7 +266,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
                     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
                     dispatch_after(delayTime, dispatch_get_main_queue(), ^{
                         __strong typeof(weakSelf) strongSelf = weakSelf;
-                        [strongSelf verifyUpdateFor:voiceInfo
+                        [strongSelf verifyUpdateFor:voiceSettings
                                         withSenseId:senseId
                                             attempt:attempt + 1
                                          completion:completion];
@@ -278,8 +279,8 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
     }
 }
 
-- (void)getVoiceInfoForSenseId:(NSString*)senseId completion:(HEMVoiceInfoHandler)completion {
-    [SENAPIDevice getVoiceInfoForSenseId:senseId completion:^(id data, NSError *error) {
+- (void)getVoiceSettingsForSenseId:(NSString*)senseId completion:(HEMVoiceSettingsHandler)completion {
+    [SENAPIDevice getVoiceSettingsForSenseId:senseId completion:^(id data, NSError *error) {
         if (error) {
             [SENAnalytics trackError:error];
         }
@@ -287,8 +288,8 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
     }];
 }
 
-- (NSInteger)volumeLevelFrom:(SENSenseVoiceInfo*)voiceInfo {
-    CGFloat volumePercentage = [[voiceInfo volume] integerValue] / 100.0f;
+- (NSInteger)volumeLevelFrom:(SENSenseVoiceSettings*)voiceSettings {
+    CGFloat volumePercentage = [[voiceSettings volume] integerValue] / 100.0f;
     return MAX(1, HEMVoiceServiceMaxVolumeLevel * volumePercentage);
 }
 

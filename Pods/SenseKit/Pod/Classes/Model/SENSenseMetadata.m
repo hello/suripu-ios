@@ -49,44 +49,6 @@ static NSString* const SENSenseWiFiInfoDictPropLastUpdated = @"last_updated";
 
 @end
 
-@implementation SENSenseVoiceInfo
-
-static NSString* const SENSenseVoiceDictPropPrmaryUser = @"is_primary_user";
-static NSString* const SENSenseVoiceDictPropVolume = @"volume";
-static NSString* const SENSenseVoiceDictPropMuted = @"muted";
-
-- (instancetype)initWithDictionary:(NSDictionary *)data {
-    if (self = [super init]) {
-        _volume = SENObjectOfClass(data[SENSenseVoiceDictPropVolume], [NSNumber class]);
-        _primaryUser = [SENObjectOfClass(data[SENSenseVoiceDictPropPrmaryUser], [NSNumber class]) boolValue];
-        _muted = [SENObjectOfClass(data[SENSenseVoiceDictPropMuted], [NSNumber class]) boolValue];
-    }
-    return self;
-}
-
-- (NSDictionary*)dictionaryValue {
-    return @{SENSenseVoiceDictPropPrmaryUser : @([self isPrimaryUser]),
-             SENSenseVoiceDictPropMuted : @([self isMuted]),
-             SENSenseVoiceDictPropVolume : [self volume] ?: @1};
-}
-
-- (BOOL)isEqual:(id)object {
-    if (![object isKindOfClass:[self class]]) {
-        return NO;
-    }
-    
-    SENSenseVoiceInfo* other = object;
-    return SENObjectIsEqual([self volume], [other volume])
-        && [self isPrimaryUser] && [other isPrimaryUser]
-        && [self isMuted] && [other isMuted];
-}
-
-- (NSUInteger)hash {
-    return [[self volume] hash] + [self isPrimaryUser] + [self isMuted];
-}
-
-@end
-
 @implementation SENSenseMetadata
 
 static NSString* const SENSenseMetadataDictPropState = @"state";
@@ -103,8 +65,6 @@ static NSString* const SENSenseMetadataDictPropHwVersion = @"hw_version";
 static NSString* const SENSenseMetadataDictPropHwOne = @"SENSE";
 static NSString* const SENSenseMetadataDictPropHwVoice = @"SENSE_WITH_VOICE";
 
-static NSString* const SENSenseMetadataDictPropVoice = @"voice_metadata";
-
 - (instancetype)initWithDictionary:(NSDictionary*)dict {
     self = [super initWithDictionary:dict];
     if (self) {
@@ -113,12 +73,6 @@ static NSString* const SENSenseMetadataDictPropVoice = @"voice_metadata";
         _color = [self colorFromValue:SENObjectOfClass(dict[SENSenseMetadataDictPropColor],
                                                        [NSString class])];
         _wiFi = [[SENSenseWiFiInfo alloc] initWithDictionary:dict[SENSenseMetadataDictPropWiFi]];
-        
-        // not all devices will have voice info
-        NSDictionary* voiceInfo = SENObjectOfClass(dict[SENSenseMetadataDictPropVoice], [NSDictionary class]);
-        if (voiceInfo) {
-            _voiceInfo = [[SENSenseVoiceInfo alloc] initWithDictionary:voiceInfo];
-        }
         
         NSString* hwVersion = SENObjectOfClass(dict[SENSenseMetadataDictPropHwVersion],
                                                [NSString class]);

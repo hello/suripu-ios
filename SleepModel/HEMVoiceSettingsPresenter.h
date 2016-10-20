@@ -12,12 +12,14 @@
 @class HEMDeviceService;
 @class HEMActivityIndicatorView;
 @class HEMVoiceSettingsPresenter;
+@class SENSenseVoiceSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol HEMVoiceSettingsDelegate <NSObject>
 
-- (void)showVolumeControlFromPresenter:(HEMVoiceSettingsPresenter*)presenter;
+- (void)showVolumeControlFor:(SENSenseVoiceSettings*)voiceSettings
+               fromPresenter:(HEMVoiceSettingsPresenter*)presenter;
 
 @end
 

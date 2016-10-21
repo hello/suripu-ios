@@ -52,15 +52,16 @@ static NSString* const HEMExpansionLightCategory = @"LIGHT";
     return [expansion state] == SENExpansionStateConnectedOn;
 }
 
-- (SENExpansion*)lightExpansionFrom:(NSArray<SENExpansion*>*)expansions {
-    SENExpansion* lightExpansion = nil;
+- (SENExpansion*)firstExpansionOfType:(SENExpansionType)type
+                         inExpansions:(NSArray<SENExpansion*>*)expansions {
+    SENExpansion* firstExpansion = nil;
     for (SENExpansion* expansion in expansions) {
-        if ([[[expansion category] uppercaseString] isEqualToString:HEMExpansionLightCategory]) {
-            lightExpansion = expansion;
+        if ([expansion type] == type) {
+            firstExpansion = expansion;
             break;
         }
     }
-    return lightExpansion;
+    return firstExpansion;
 }
 
 - (NSURLRequest*)authorizationRequestForExpansion:(SENExpansion*)expansion {
@@ -105,7 +106,9 @@ static NSString* const HEMExpansionLightCategory = @"LIGHT";
 
 - (void)enable:(BOOL)enable expansion:(SENExpansion*)expansion completion:(HEMExpansionUpdateHandler)completion {
     SENExpansionState currentState = [expansion state];
-    [expansion setState:enable ? SENExpansionStateConnectedOn : SENExpansionStateConnectedOff];
+    SENExpansionState newState = enable ? SENExpansionStateConnectedOn : SENExpansionStateConnectedOff;
+    [expansion setState:newState];
+    
     [self updateExpansionState:expansion completion:^(NSError * _Nullable error) {
         if (error) {
             // revert
@@ -189,14 +192,14 @@ static NSString* const HEMExpansionLightCategory = @"LIGHT";
 }
 
 - (NSString*)configurationNameForExpansion:(SENExpansion*)expansion {
-    NSString* type = [[expansion category] lowercaseString];
-    NSString* configNameFormat = @"expansion.configuration.name.%@";
-    NSString* configNameKey = [NSString stringWithFormat:configNameFormat, type];
-    NSString* configName = NSLocalizedString(configNameKey, nil);
-    if ([configName isEqualToString:configNameKey]) {
-        configName = NSLocalizedString(@"expansion.configuration.name.generic", nil);
+    switch ([expansion type]) {
+        case SENExpansionTypeLights:
+            return NSLocalizedString(@"expansion.configuration.name.light", nil);
+        case SENExpansionTypeThermostat:
+            return NSLocalizedString(@"expansion.configuration.name.temperature", nil);
+        default:
+            return NSLocalizedString(@"expansion.configuration.name.generic", nil);
     }
-    return configName;
 }
 
 @end

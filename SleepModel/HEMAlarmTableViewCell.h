@@ -11,6 +11,7 @@
 
 @interface HEMAlarmTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *iconView;
 @property (nonatomic, weak) IBOutlet UISwitch* smartSwitch;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel* detailLabel;

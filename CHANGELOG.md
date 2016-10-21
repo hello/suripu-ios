@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.0.7
+
+New:
+
+* Add Thermostat row to Alarm screen
+* Updated Lights row in Alarm screen
+
+Fixes:
+
+* Fixed new particulates about copy
+* Fixed issue where switch for alarm list does nothing if sliding instead of tapping
+* Fixed issue where switch for smart alarm does nothing if sliding instead of tapping
+
 ## 1.6.0.6
 
 New:

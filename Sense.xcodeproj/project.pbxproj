@@ -92,7 +92,6 @@
 		8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ACD40441BACAF7400BB2815 /* Launch.xib */; };
 		8AD331261BB0836700DFF95A /* Alarm.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD331251BB0836700DFF95A /* Alarm.xcassets */; };
 		8AD331281BB08C4300DFF95A /* Drawer.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD331271BB08C4300DFF95A /* Drawer.xcassets */; };
-		8AD3312A1BB08D5300DFF95A /* Sensors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD331291BB08D5300DFF95A /* Sensors.xcassets */; };
 		8AD3312C1BB08D9900DFF95A /* Settings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3312B1BB08D9900DFF95A /* Settings.xcassets */; };
 		8AD3312E1BB08DCB00DFF95A /* Questions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3312D1BB08DCB00DFF95A /* Questions.xcassets */; };
 		8AD331301BB08DFF00DFF95A /* Timeline.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */; };
@@ -678,7 +677,6 @@
 		8ACD40441BACAF7400BB2815 /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		8AD331251BB0836700DFF95A /* Alarm.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Alarm.xcassets; sourceTree = "<group>"; };
 		8AD331271BB08C4300DFF95A /* Drawer.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Drawer.xcassets; sourceTree = "<group>"; };
-		8AD331291BB08D5300DFF95A /* Sensors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sensors.xcassets; sourceTree = "<group>"; };
 		8AD3312B1BB08D9900DFF95A /* Settings.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Settings.xcassets; sourceTree = "<group>"; };
 		8AD3312D1BB08DCB00DFF95A /* Questions.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Questions.xcassets; sourceTree = "<group>"; };
 		8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Timeline.xcassets; sourceTree = "<group>"; };
@@ -2025,7 +2023,6 @@
 		8AC49F981982DE5E00C2BD63 /* Sensors */ = {
 			isa = PBXGroup;
 			children = (
-				8AD331291BB08D5300DFF95A /* Sensors.xcassets */,
 				BF6952601C57040B000A8E85 /* Presenters */,
 				BF287D601C9CBEE50052F543 /* Services */,
 				8A7214351A1C12E1008B59C4 /* Utilities */,
@@ -3761,7 +3758,6 @@
 				BF238E001D1E009D00F6E62C /* AmazonReviews.plist in Resources */,
 				BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */,
 				BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */,
-				8AD3312A1BB08D5300DFF95A /* Sensors.xcassets in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
 				BFF364731D62702E008D4DF8 /* Upgrade.xcassets in Resources */,
 				BFCB894F1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf in Resources */,

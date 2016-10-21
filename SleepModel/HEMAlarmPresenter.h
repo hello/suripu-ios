@@ -21,7 +21,8 @@ typedef NS_ENUM(NSUInteger, HEMAlarmRowType) {
     HEMAlarmRowTypeTone,
     HEMAlarmRowTypeRepeat,
     HEMAlarmRowTypeDelete,
-    HEMAlarmRowTypeLight
+    HEMAlarmRowTypeLight,
+    HEMAlarmRowTypeThermostat
 };
 
 NS_ASSUME_NONNULL_BEGIN

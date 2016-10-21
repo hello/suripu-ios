@@ -378,7 +378,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     cell.enabledSwitch.tag = indexPath.item;
     [cell.enabledSwitch addTarget:self
                            action:@selector(toggleEnableSwitch:)
-                 forControlEvents:UIControlEventTouchUpInside];
+                 forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)updateDetailTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm {
@@ -506,10 +506,13 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 
 - (void)toggleEnableSwitch:(UISwitch *)sender {
     NSArray* alarms = [[self alarmService] alarms];
-    
     __block SENAlarm *alarm = [alarms objectAtIndex:sender.tag];
-    
     BOOL on = [sender isOn];
+    
+    if (on == alarm.on) {
+        return; //  ignore
+    }
+    
     if (on
         && [[self alarmService] isAlarmTimeTooSoon:alarm]
         && [[self alarmService] willAlarmRingToday:alarm]) {

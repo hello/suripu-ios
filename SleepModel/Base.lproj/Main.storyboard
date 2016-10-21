@@ -55,19 +55,19 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="S0h-GY-w6p" customClass="HEMClockPickerView">
-                                    <rect key="frame" x="0.0" y="64" width="600" height="250"/>
+                                    <rect key="frame" x="0.0" y="64" width="600" height="287"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUm-vw-qys">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="109"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B18-dK-Yet">
-                                            <rect key="frame" x="0.0" y="160" width="600" height="90"/>
+                                            <rect key="frame" x="0.0" y="179" width="600" height="108"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-uk-Loy">
-                                            <rect key="frame" x="0.0" y="246" width="600" height="4"/>
+                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-uk-Loy">
+                                            <rect key="frame" x="0.0" y="283" width="600" height="4"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -91,7 +91,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmSwitchCell" id="Lrv-kt-Tfs" customClass="HEMAlarmTableViewCell">
-                                        <rect key="frame" x="0.0" y="342" width="600" height="66"/>
+                                        <rect key="frame" x="0.0" y="379" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lrv-kt-Tfs" id="LN3-x9-s8z">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
@@ -142,7 +142,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmSoundCell" id="KgX-z7-oTo" customClass="HEMAlarmTableViewCell">
-                                        <rect key="frame" x="0.0" y="408" width="600" height="66"/>
+                                        <rect key="frame" x="0.0" y="445" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KgX-z7-oTo" id="Sqy-9K-a6m">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
@@ -189,7 +189,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmRepeatCell" id="PfZ-wJ-6JR" customClass="HEMAlarmTableViewCell">
-                                        <rect key="frame" x="0.0" y="474" width="600" height="66"/>
+                                        <rect key="frame" x="0.0" y="511" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PfZ-wJ-6JR" id="AgR-pl-xBe">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
@@ -235,8 +235,8 @@
                                             <outlet property="titleLabel" destination="1DK-Xn-zSV" id="fym-8R-m6v"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmLightCell" id="XwZ-CF-RCe" customClass="HEMAlarmTableViewCell">
-                                        <rect key="frame" x="0.0" y="540" width="600" height="66"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmExpansionCell" id="XwZ-CF-RCe" customClass="HEMAlarmTableViewCell">
+                                        <rect key="frame" x="0.0" y="577" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XwZ-CF-RCe" id="r6x-xo-aOh">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
@@ -254,19 +254,6 @@
                                                         <constraint firstAttribute="width" constant="32" id="OPy-ov-Khk"/>
                                                     </constraints>
                                                 </imageView>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yig-pc-6pF" customClass="HEMSwitchControl">
-                                                    <rect key="frame" x="529" y="17" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.0" green="0.61666666670000003" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                                </switch>
-                                                <button opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxh-GC-c3K">
-                                                    <rect key="frame" x="107" y="0.0" width="40" height="65"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="Vzr-At-1iG"/>
-                                                    </constraints>
-                                                    <state key="normal" image="infoIconSmall">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiW-99-dk9" customClass="HEMActivityIndicatorView">
                                                     <rect key="frame" x="548" y="18" width="30" height="30"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -278,35 +265,46 @@
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConfigIcon" translatesAutoresizingMaskIntoConstraints="NO" id="3Aq-xh-ciS">
                                                     <rect key="frame" x="560" y="23" width="20" height="20"/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n85-Ut-TkN">
+                                                    <rect key="frame" x="530" y="23" width="65" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="eSd-EE-1xm">
+                                                    <rect key="frame" x="572" y="26" width="8" height="14"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="nxO-KD-y84" secondAttribute="centerY" constant="3" id="CFi-Iq-5Is"/>
-                                                <constraint firstAttribute="centerY" secondItem="yig-pc-6pF" secondAttribute="centerY" id="EbV-PD-iAt"/>
-                                                <constraint firstItem="nxh-GC-c3K" firstAttribute="top" secondItem="r6x-xo-aOh" secondAttribute="top" id="EyT-hd-u3c"/>
-                                                <constraint firstAttribute="trailing" secondItem="yig-pc-6pF" secondAttribute="trailing" constant="22" id="JyB-AF-vZQ"/>
-                                                <constraint firstItem="nxh-GC-c3K" firstAttribute="leading" secondItem="uMH-h1-jvV" secondAttribute="trailing" id="MoL-pG-53a"/>
+                                                <constraint firstAttribute="trailing" secondItem="n85-Ut-TkN" secondAttribute="trailing" constant="5" id="Qoo-mo-heV"/>
                                                 <constraint firstItem="nxO-KD-y84" firstAttribute="leading" secondItem="r6x-xo-aOh" secondAttribute="leading" constant="16" id="R1w-lZ-ANn"/>
                                                 <constraint firstAttribute="centerY" secondItem="uMH-h1-jvV" secondAttribute="centerY" id="Uwd-J2-Sbg"/>
-                                                <constraint firstItem="iiW-99-dk9" firstAttribute="trailing" secondItem="yig-pc-6pF" secondAttribute="trailing" id="WF9-eC-hbV"/>
                                                 <constraint firstItem="uMH-h1-jvV" firstAttribute="leading" secondItem="nxO-KD-y84" secondAttribute="trailing" constant="16" id="b4n-Qs-Mrc"/>
-                                                <constraint firstAttribute="bottom" secondItem="nxh-GC-c3K" secondAttribute="bottom" id="pph-uJ-HAw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="eSd-EE-1xm" secondAttribute="trailing" constant="20" id="2Ix-Y1-JL1"/>
                                             <constraint firstItem="3Aq-xh-ciS" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="Ax2-s9-kRX"/>
+                                            <constraint firstItem="eSd-EE-1xm" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="WvA-F5-6xq"/>
+                                            <constraint firstItem="uMH-h1-jvV" firstAttribute="leading" secondItem="XwZ-CF-RCe" secondAttribute="leading" constant="64" id="ciW-5R-vWX"/>
+                                            <constraint firstItem="n85-Ut-TkN" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="kii-WL-ZhT"/>
                                             <constraint firstItem="iiW-99-dk9" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="l3A-54-uTh"/>
                                             <constraint firstAttribute="trailing" secondItem="3Aq-xh-ciS" secondAttribute="trailing" constant="20" id="qw5-7H-02E"/>
+                                            <constraint firstAttribute="trailing" secondItem="iiW-99-dk9" secondAttribute="trailing" constant="22" id="xAu-H5-BGf"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="accessoryView" destination="eSd-EE-1xm" id="D1s-tg-Psv"/>
                                             <outlet property="activityView" destination="iiW-99-dk9" id="3P2-X9-AIE"/>
+                                            <outlet property="detailLabel" destination="n85-Ut-TkN" id="12G-6k-8Tt"/>
                                             <outlet property="errorIcon" destination="3Aq-xh-ciS" id="Bfy-KK-W8v"/>
-                                            <outlet property="infoButton" destination="nxh-GC-c3K" id="HSr-Pd-TVz"/>
-                                            <outlet property="smartSwitch" destination="yig-pc-6pF" id="xlo-MW-vEI"/>
+                                            <outlet property="iconView" destination="nxO-KD-y84" id="01u-cp-e9h"/>
+                                            <outlet property="titleLabel" destination="uMH-h1-jvV" id="CE7-Kc-waW"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmDeleteCell" id="mOa-iU-hSA" customClass="HEMAlarmTableViewCell">
-                                        <rect key="frame" x="0.0" y="606" width="600" height="66"/>
+                                        <rect key="frame" x="0.0" y="643" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mOa-iU-hSA" id="6Kn-V7-LO6">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
@@ -353,7 +351,7 @@
                         <outlet property="tableView" destination="H1m-SK-M1g" id="Kwz-xO-ZKd"/>
                         <segue destination="Ebm-qJ-kTZ" kind="show" identifier="alarmRepeat" id="RyB-Yv-vfU"/>
                         <segue destination="Ebm-qJ-kTZ" kind="show" identifier="alarmSounds" id="Uew-Av-EPF"/>
-                        <segue destination="H4Q-Iz-Kxu" kind="show" identifier="expansionLight" id="ytT-am-YU3"/>
+                        <segue destination="H4Q-Iz-Kxu" kind="show" identifier="expansion" id="ytT-am-YU3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vYW-Zc-0Au" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -457,7 +455,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questions_check" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-Eh-lsY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-Eh-lsY">
                                                     <rect key="frame" x="516" y="0.0" width="20" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="3Ot-ft-hRK"/>
@@ -7287,6 +7285,7 @@
         <image name="backIcon" width="10" height="18"/>
         <image name="bottomShadow" width="375" height="4"/>
         <image name="cardLoadingState" width="375" height="144"/>
+        <image name="checkmark" width="20" height="15"/>
         <image name="closeXGrey" width="14" height="13"/>
         <image name="defaultAvatar" width="104" height="104"/>
         <image name="durationIcon" width="32" height="32"/>
@@ -7297,7 +7296,6 @@
         <image name="introRoomConditions" width="375" height="182"/>
         <image name="noConfigIcon" width="20" height="20"/>
         <image name="noSense" width="359" height="180"/>
-        <image name="questions_check" width="20" height="15"/>
         <image name="questions_circle" width="21" height="21"/>
         <image name="settingsToggleIconActive" width="22" height="22"/>
         <image name="settingsToggleIconInactive" width="22" height="22"/>
@@ -7320,8 +7318,8 @@
         <image name="welcomeVoice" width="359" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="THs-h5-Vfl"/>
-        <segue reference="QaF-2O-SxF"/>
         <segue reference="xK0-Ru-V1S"/>
+        <segue reference="RyB-Yv-vfU"/>
+        <segue reference="ytT-am-YU3"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -14,11 +14,18 @@
 
 static NSString* const SENAlarmExpansionIdKey = @"id";
 static NSString* const SENAlarmExpansionEnableKey = @"enable";
+static NSString* const SENAlarmExpansionCategoryKey = @"category";
+static NSString* const SENAlarmExpansionTargetRangeKey = @"target_value";
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
     if (self = [super init]) {
+        NSDictionary* targetRange = SENObjectOfClass(data[SENAlarmExpansionTargetRangeKey], [NSDictionary class]);
+        NSString* category = SENObjectOfClass(data[SENAlarmExpansionCategoryKey], [NSString class]);
+        
+        _type = [SENExpansion typeFromString:category];
         _expansionId = SENObjectOfClass(data[SENAlarmExpansionIdKey], [NSNumber class]);
         _enable = [SENObjectOfClass(data[SENAlarmExpansionEnableKey], [NSNumber class]) boolValue];
+        _targetRange = [SENExpansion valueRangeFromDict:targetRange];
     }
     return self;
 }
@@ -42,12 +49,18 @@ static NSString* const SENAlarmExpansionEnableKey = @"enable";
     
     SENAlarmExpansion* other = object;
     return SENObjectIsEqual([self expansionId], [other expansionId])
-        && [self isEnable] == [other isEnable];
+        && [self isEnable] == [other isEnable]
+        && [self type] == [other type]
+        && [self targetRange].min == [other targetRange].min
+        && [self targetRange].max == [other targetRange].max
+        && [self targetRange].setpoint == [other targetRange].setpoint;
 }
 
 - (NSDictionary*)dictionaryValue {
+    // type is purposely not included
     return @{SENAlarmExpansionIdKey : [self expansionId],
-             SENAlarmExpansionEnableKey : @([self isEnable])};
+             SENAlarmExpansionEnableKey : @([self isEnable]),
+             SENAlarmExpansionTargetRangeKey : @{}};
 }
 
 @end

@@ -13,7 +13,7 @@
 +(NSString *)alarmSwitchCellReuseIdentifier;
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
-+(NSString *)alarmLightCellReuseIdentifier;
++(NSString *)alarmExpansionCellReuseIdentifier;
 +(NSString *)alarmDeleteCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
@@ -52,7 +52,6 @@
 +(NSString *)chartReuseIdentifier;
 +(NSString *)scaleReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
-+(NSString *)alarmExpansionCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
@@ -82,7 +81,6 @@
 +(NSString *)detailSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
 +(NSString *)expansionSegueIdentifier;
-+(NSString *)expansionLightSegueIdentifier;
 +(NSString *)expansionsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;

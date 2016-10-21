@@ -312,9 +312,11 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 
 - (void)toggleSmartness:(UISwitch*)sender {
     BOOL isSmart = [sender isOn];
-    [[self cache] setSmart:isSmart];
-    [SENAnalytics track:HEMAnalyticsEventSwitchSmartAlarm
-             properties:@{HEMAnalyticsEventSwitchSmartAlarmOn : @(isSmart)}];
+    if (isSmart != [[self cache] isSmart]) {
+        [[self cache] setSmart:isSmart];
+        [SENAnalytics track:HEMAnalyticsEventSwitchSmartAlarm
+                 properties:@{HEMAnalyticsEventSwitchSmartAlarmOn : @(isSmart)}];
+    }
 }
 
 - (void)showSmartTutorial:(UIButton*)button {
@@ -430,7 +432,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell smartSwitch] setOn:[[self cache] isSmart]];
     [[cell smartSwitch] addTarget:self
                            action:@selector(toggleSmartness:)
-                 forControlEvents:UIControlEventTouchUpInside];
+                 forControlEvents:UIControlEventValueChanged];
     [[cell infoButton] addTarget:self
                           action:@selector(showSmartTutorial:)
                 forControlEvents:UIControlEventTouchUpInside];

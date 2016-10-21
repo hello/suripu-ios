@@ -106,7 +106,9 @@ static NSString* const HEMExpansionLightCategory = @"LIGHT";
 
 - (void)enable:(BOOL)enable expansion:(SENExpansion*)expansion completion:(HEMExpansionUpdateHandler)completion {
     SENExpansionState currentState = [expansion state];
-    [expansion setState:enable ? SENExpansionStateConnectedOn : SENExpansionStateConnectedOff];
+    SENExpansionState newState = enable ? SENExpansionStateConnectedOn : SENExpansionStateConnectedOff;
+    [expansion setState:newState];
+    
     [self updateExpansionState:expansion completion:^(NSError * _Nullable error) {
         if (error) {
             // revert
@@ -194,7 +196,7 @@ static NSString* const HEMExpansionLightCategory = @"LIGHT";
         case SENExpansionTypeLights:
             return NSLocalizedString(@"expansion.configuration.name.light", nil);
         case SENExpansionTypeThermostat:
-            return NSLocalizedString(@"expansion.configuration.name.thermostat", nil);
+            return NSLocalizedString(@"expansion.configuration.name.temperature", nil);
         default:
             return NSLocalizedString(@"expansion.configuration.name.generic", nil);
     }

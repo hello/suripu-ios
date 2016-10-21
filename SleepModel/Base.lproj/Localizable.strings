@@ -985,6 +985,8 @@
 "expansion.error.setup.no-groups.temperature.message.format" = "You will need to set up a thermostat in the %@ app.";
 "expansion.error.setup.no-groups.light.title" = "No rooms available";
 "expansion.error.setup.no-groups.light.message.format" = "You will need to set up a room in the %@ app.";
+"expansion.error.setup.no-groups.generic.title" = "No configurations available";
+"expansion.error.setup.no-groups.generic.message.format" = "You will need to make additional changes in the %@ app before continuing with this setup.";
 "expansion.error.setup.generic.title" = "Changes not saved";
 "expansion.error.setup.generic.message" = "Sense couldn't save your changes. Please try again later.";
 "expansion.config.title.format" = "You've connected to %@";

@@ -288,7 +288,6 @@
                                             <constraint firstAttribute="trailing" secondItem="eSd-EE-1xm" secondAttribute="trailing" constant="20" id="2Ix-Y1-JL1"/>
                                             <constraint firstItem="3Aq-xh-ciS" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="Ax2-s9-kRX"/>
                                             <constraint firstItem="eSd-EE-1xm" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="WvA-F5-6xq"/>
-                                            <constraint firstItem="uMH-h1-jvV" firstAttribute="leading" secondItem="XwZ-CF-RCe" secondAttribute="leading" constant="64" id="ciW-5R-vWX"/>
                                             <constraint firstItem="n85-Ut-TkN" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="kii-WL-ZhT"/>
                                             <constraint firstItem="iiW-99-dk9" firstAttribute="centerY" secondItem="XwZ-CF-RCe" secondAttribute="centerY" id="l3A-54-uTh"/>
                                             <constraint firstAttribute="trailing" secondItem="3Aq-xh-ciS" secondAttribute="trailing" constant="20" id="qw5-7H-02E"/>
@@ -380,11 +379,11 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iKn-pK-VPv">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="122"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="112"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KwE-L2-w0g">
-                                            <rect key="frame" x="0.0" y="192" width="600" height="122"/>
+                                            <rect key="frame" x="0.0" y="202" width="600" height="112"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                         <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="O7E-9b-NFi">
@@ -403,7 +402,7 @@
                                         <constraint firstItem="KwE-L2-w0g" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="nIu-Rg-kmt"/>
                                         <constraint firstItem="O7E-9b-NFi" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="pQd-bj-fNZ"/>
                                         <constraint firstItem="iKn-pK-VPv" firstAttribute="top" secondItem="hgb-Cl-XCm" secondAttribute="top" id="pdS-sX-PM2"/>
-                                        <constraint firstItem="iKn-pK-VPv" firstAttribute="bottom" secondItem="KwE-L2-w0g" secondAttribute="top" constant="-70" id="w4p-0e-87u"/>
+                                        <constraint firstItem="iKn-pK-VPv" firstAttribute="bottom" secondItem="KwE-L2-w0g" secondAttribute="top" constant="-90" id="w4p-0e-87u"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="botGradientView" destination="KwE-L2-w0g" id="fPm-IM-BS5"/>
@@ -466,6 +465,14 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="C86-3v-vhP">
                                                     <rect key="frame" x="572" y="26" width="8" height="14"/>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yfp-Nb-jxW" customClass="HEMActivityIndicatorView">
+                                                    <rect key="frame" x="546" y="18" width="30" height="30"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="nr7-fq-n23"/>
+                                                        <constraint firstAttribute="width" constant="30" id="x3U-I8-8FU"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="mbr-h5-buS" secondAttribute="centerY" constant="0.5" id="8nv-XK-yMi"/>
@@ -478,9 +485,12 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Yfp-Nb-jxW" secondAttribute="trailing" constant="24" id="KcH-F6-2Ng"/>
                                             <constraint firstItem="mbr-h5-buS" firstAttribute="leading" secondItem="lqr-0p-lGt" secondAttribute="leading" constant="24" id="pBn-kC-l4p"/>
+                                            <constraint firstItem="Yfp-Nb-jxW" firstAttribute="centerY" secondItem="lqr-0p-lGt" secondAttribute="centerY" id="xYq-2c-AfS"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="activityView" destination="Yfp-Nb-jxW" id="zjf-BK-tZj"/>
                                             <outlet property="customAccessoryView" destination="C86-3v-vhP" id="Edn-eP-uQQ"/>
                                             <outlet property="customDetailLabel" destination="98O-6D-HU1" id="oYY-uO-yky"/>
                                             <outlet property="customTitleLabel" destination="mbr-h5-buS" id="egz-zr-qsJ"/>
@@ -497,6 +507,9 @@
                             <constraint firstItem="zsM-Hx-Fnw" firstAttribute="top" secondItem="SKt-vX-681" secondAttribute="bottom" id="rKP-KW-JPn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="zsM-Hx-Fnw" id="6BP-Rr-T7H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7LM-Yo-OT5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -37,6 +37,7 @@ static NSString *const _HEMchart = @"chart";
 static NSString *const _HEMcommandGroup = @"commandGroup";
 static NSString *const _HEMcommands = @"commands";
 static NSString *const _HEMconfig = @"config";
+static NSString *const _HEMconfiguration = @"configuration";
 static NSString *const _HEMconnect = @"connect";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
@@ -143,6 +144,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)commandGroupReuseIdentifier { return _HEMcommandGroup; }
 +(NSString *)commandsReuseIdentifier { return _HEMcommands; }
 +(NSString *)configReuseIdentifier { return _HEMconfig; }
++(NSString *)configurationReuseIdentifier { return _HEMconfiguration; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
@@ -196,6 +198,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)expansionSegueIdentifier { return _HEMexpansion; }
++(NSString *)expansionConfigSegueIdentifier { return _HEMexpansionConfig; }
 +(NSString *)expansionsSegueIdentifier { return _HEMexpansions; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }

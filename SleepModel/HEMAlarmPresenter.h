@@ -42,7 +42,7 @@ typedef void(^HEMAlarmAction)(void);
 
 - (void)didSave:(BOOL)save from:(HEMAlarmPresenter*)presenter;
 - (UIView*)activityContainerFor:(HEMAlarmPresenter*)presenter;
-- (void)didSelectRowType:(HEMAlarmRowType)rowType;
+- (void)didSelectRowType:(HEMAlarmRowType)rowType withTitle:(NSString*)title;
 
 @end
 
@@ -62,6 +62,8 @@ typedef void(^HEMAlarmAction)(void);
 - (void)bindWithTableView:(UITableView*)tableView;
 - (void)bindWithTutorialPresentingController:(UIViewController*)controller;
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
+- (void)setAlarmExpansion:(SENAlarmExpansion*)alarmExpansion
+               withConfig:(SENExpansionConfig*)expansionConfig;
 
 @end
 

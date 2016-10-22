@@ -32,6 +32,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 @property (nonatomic, weak) HEMActionButton* saveButton;
 @property (nonatomic, weak) UIView* activityContainer;
 @property (nonatomic, copy) NSString* senseId;
+@property (nonatomic, strong) SENSenseVoiceSettings* cachedSettings;
 
 @end
 
@@ -44,6 +45,12 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
         _voiceService = voiceService;
         _voiceSettings = voiceSettings;
         _senseId = senseId;
+        _cachedSettings = [SENSenseVoiceSettings new];
+        [_cachedSettings setVolume:[voiceSettings volume]];
+        
+        // set default, if needed
+        NSInteger volumeLevel = [voiceService volumeLevelFrom:_cachedSettings];
+        [_cachedSettings setVolume:@([voiceService volumePercentageFromLevel:volumeLevel])];
     }
     return self;
 }
@@ -80,7 +87,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 }
 
 - (void)bindWithVolumeLabel:(UILabel*)volumeLabel volumeSlider:(HEMVolumeSlider*)volumeSlider {
-    NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:[self voiceSettings]];
+    NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:[self cachedSettings]];
     
     [volumeLabel setFont:[UIFont h1]];
     [volumeLabel setTextColor:[UIColor tintColor]];
@@ -129,7 +136,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
     NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
     HEMActivityCoverView* activityView = [HEMActivityCoverView new];
     [activityView showInView:[self activityContainer] withText:activityText activity:YES completion:^{
-        [[self voiceService] updateVoiceSettings:[self voiceSettings]
+        [[self voiceService] updateVoiceSettings:[self cachedSettings]
                                       forSenseId:[self senseId]
                                       completion:^(BOOL updated) {
                                           __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -143,6 +150,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
                                                                                    fromPresenter:self];
                                               }];
                                           } else {
+                                              [[strongSelf voiceSettings] setVolume:[[strongSelf cachedSettings] volume]];
                                               NSString* successText = NSLocalizedString(@"status.success", nil);
                                               UIImage* check = [UIImage imageNamed:@"check"];
                                               [[activityView indicator] setHidden:YES];
@@ -166,7 +174,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 - (void)didChangeVolumeTo:(NSInteger)volume fromSlider:(HEMVolumeSlider *)slider {
     DDLogVerbose(@"did change volume to %ld", volume);
     [[self volumeLabel] setText:[NSString stringWithFormat:@"%ld", volume]];
-    [[self voiceSettings] setVolume:@([[self voiceService] volumePercentageFromLevel:volume])];
+    [[self cachedSettings] setVolume:@([[self voiceService] volumePercentageFromLevel:volume])];
 }
 
 @end

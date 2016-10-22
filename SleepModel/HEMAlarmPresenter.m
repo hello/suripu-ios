@@ -168,6 +168,12 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
     [self setTutorialPresenter:controller];
 }
 
+- (void)setAlarmExpansion:(SENAlarmExpansion*)alarmExpansion
+               withConfig:(__unused SENExpansionConfig*)expansionConfig {
+    [[self cache] setAlarmExpansion:alarmExpansion];
+    [[self tableView] reloadData];
+}
+
 #pragma mark - Expansions
 
 - (void)loadExpansions:(void(^)(void))completion {
@@ -494,11 +500,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         SENAlarmExpansion* alarmExpansion = [[self service] alarmExpansionIn:[self cache] forExpansion:expansion];
         if (![alarmExpansion isEnable]) {
             detail = NSLocalizedString(@"status.off", nil);
-        } else if ([alarmExpansion type] == SENExpansionTypeLights) {
+        } else if ([expansion type] == SENExpansionTypeLights) {
+            NSString* unit = NSLocalizedString(@"measurement.percentage.unit", nil);
             NSString* format = NSLocalizedString(@"alarm.expansion.light.format", nil);
-            NSInteger setpoint = [alarmExpansion targetRange].setpoint;
-            detail = [NSString stringWithFormat:format, setpoint];
-        } else if ([alarmExpansion type] == SENExpansionTypeThermostat) {
+            NSInteger max = [alarmExpansion targetRange].max;
+            detail = [NSString stringWithFormat:format, max, unit];
+        } else if ([expansion type] == SENExpansionTypeThermostat) {
             NSString* format = NSLocalizedString(@"alarm.expansion.temp.range.format", nil);
             NSInteger min = [alarmExpansion targetRange].min;
             NSInteger max = [alarmExpansion targetRange].max;
@@ -565,7 +572,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    HEMAlarmTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     
+    NSString* title = [[cell titleLabel] text];
     NSNumber* typeNumber = [self rows][[indexPath row]];
     HEMAlarmRowType rowType = [typeNumber unsignedIntegerValue];
     
@@ -575,11 +584,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
         case HEMAlarmRowTypeThermostat:
         case HEMAlarmRowTypeLight:
-            [self handleExpansionSelection:rowType];
+            [self handleExpansionSelection:rowType withTitle:title];
             break;
         case HEMAlarmRowTypeTone:
         case HEMAlarmRowTypeRepeat:
-            [[self delegate] didSelectRowType:rowType];
+            [[self delegate] didSelectRowType:rowType withTitle:title];
             break;
         default:
             break;
@@ -598,7 +607,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - Expansion Actions
 
-- (void)handleExpansionSelection:(HEMAlarmRowType)rowSelection {
+- (void)handleExpansionSelection:(HEMAlarmRowType)rowSelection withTitle:(NSString*)title {
     SENExpansionType expansionType;
     switch (rowSelection) {
         default:
@@ -614,7 +623,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                                                inExpansions:[self expansions]];
     
     if (expansion) {
-        [[self delegate] didSelectRowType:rowSelection];
+        [[self delegate] didSelectRowType:rowSelection withTitle:title];
         [self setReloadWhenBack:YES];
     } else {
         NSString* title = NSLocalizedString(@"alarm.expansion.error.unable.to.load.title", nil);

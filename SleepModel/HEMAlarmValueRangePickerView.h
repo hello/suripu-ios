@@ -8,10 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMAlarmValueRangePickerView;
+
+@protocol HEMAlarmValueRangePickerDelegate <NSObject>
+
+- (void)didUpdateSelectedValuesFrom:(HEMAlarmValueRangePickerView*)pickerView;
+
+@end
+
 @interface HEMAlarmValueRangePickerView : UIView
 
 @property (nonatomic, weak) IBOutlet UIView* topGradientView;
 @property (nonatomic, weak) IBOutlet UIView* botGradientView;
 @property (nonatomic, weak) IBOutlet UIImageView* botShadowView;
+
+@property (nonatomic, weak) id<HEMAlarmValueRangePickerDelegate> pickerDelegate;
+@property (nonatomic, copy) NSString* unitSymbol;
+@property (nonatomic, assign) NSInteger selectedMinValue;
+@property (nonatomic, assign) NSInteger selectedMaxValue;
+
+- (void)configureRangeWithMin:(NSInteger)min max:(NSInteger)max;
+- (void)configureWithMin:(NSInteger)min max:(NSInteger)max;
 
 @end

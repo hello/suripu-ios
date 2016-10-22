@@ -31,28 +31,27 @@
     return self.repeatFlags != 0;
 }
 
-- (void)setEnable:(BOOL)enable expansion:(SENExpansion*)expansion {
+- (void)setAlarmExpansion:(SENAlarmExpansion*)alarmExpansion {
     NSMutableArray* mutableExpansions = [[self expansions] mutableCopy];
     if (!mutableExpansions) {
         mutableExpansions = [NSMutableArray arrayWithCapacity:2];
     }
-    SENAlarmExpansion* alarmExpansion = nil;
+
+    BOOL exists = NO;
     for (SENAlarmExpansion* savedExpansion in mutableExpansions) {
-        if ([[savedExpansion expansionId] isEqualToNumber:[expansion identifier]]) {
-            alarmExpansion = savedExpansion;
+        if ([[savedExpansion expansionId] isEqualToNumber:[alarmExpansion expansionId]]) {
+            [savedExpansion setEnable:[alarmExpansion isEnable]];
+            [savedExpansion setTargetRange:[alarmExpansion targetRange]];
+            exists = YES;
             break;
         }
     }
     
-    if (alarmExpansion) {
-        [alarmExpansion setEnable:enable];
-    } else {
-        alarmExpansion = [[SENAlarmExpansion alloc] initWithExpansionId:[expansion identifier]
-                                                                 enable:enable];
+    if (!exists) {
         [mutableExpansions addObject:alarmExpansion];
     }
     
-    _expansions = mutableExpansions;
+    [self setExpansions:mutableExpansions];
 }
 
 @end

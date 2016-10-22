@@ -289,13 +289,16 @@ messageIfError:(NSString*)errorMessage
     NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.mute-not-changed", nil);
     BOOL mute = [control isOn];
     
+    SENSenseVoiceSettings* muteSettings = [SENSenseVoiceSettings new];
+    [muteSettings setMuted:@(mute)];
+    
     __block SENSenseVoiceSettings* voiceSettings = [self voiceSettings];
-    [voiceSettings setMuted:mute];
 
-    [self update:voiceSettings messageIfError:errorMessage completion:^(BOOL updated) {
+    [self update:muteSettings messageIfError:errorMessage completion:^(BOOL updated) {
         if (!updated) {
             [control setOn:!mute];
-            [voiceSettings setMuted:!mute];
+        } else {
+            [voiceSettings setMuted:@(!mute)];
         }
     }];
 }
@@ -325,11 +328,14 @@ messageIfError:(NSString*)errorMessage
 - (void)setAsPrimary {
     NSString* errorMessage = NSLocalizedString(@"voice.settings.update.error.primary-not-set", nil);
     
-    [[self voiceSettings] setPrimaryUser:YES];
+    SENSenseVoiceSettings* primarySettings = [SENSenseVoiceSettings new];
+    [primarySettings setPrimaryUser:@YES];
     
-    [self update:[self voiceSettings] messageIfError:errorMessage completion:^(BOOL updated) {
-        if (!updated) {
-            [[self voiceSettings] setPrimaryUser:NO];
+    __block SENSenseVoiceSettings* voiceSettings = [self voiceSettings];
+
+    [self update:primarySettings messageIfError:errorMessage completion:^(BOOL updated) {
+        if (updated) {
+            [voiceSettings setPrimaryUser:@YES];
         }
     }];
 }

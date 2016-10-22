@@ -48,4 +48,11 @@
     return [[UIBarButtonItem alloc] initWithCustomView:saveButton];
 }
 
++ (UIBarButtonItem*)infoButtonWithTarget:(id)target action:(SEL)action {
+    return [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"infoIconSmall"]
+                                            style:UIBarButtonItemStylePlain
+                                           target:target
+                                           action:action];
+}
+
 @end

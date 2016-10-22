@@ -427,7 +427,7 @@
 "alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";
 
 "alarm.expansion.temp.range.format" = "%ld° - %ld°";
-"alarm.expansion.light.format" = "%ld%";
+"alarm.expansion.light.format" = "%ld%@";
 
 // background noise
 "noise.sound-name.none" = "None";

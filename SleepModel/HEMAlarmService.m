@@ -261,7 +261,8 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     return [self alarms] != nil;
 }
 
-- (SENAlarmExpansion*)alarmExpansionIn:(HEMAlarmCache*)alarm forExpansion:(SENExpansion*)expansion {
+- (SENAlarmExpansion*)alarmExpansionIn:(HEMAlarmCache*)alarm
+                          forExpansion:(SENExpansion*)expansion {
     for (SENAlarmExpansion* alarmExpansion in [alarm expansions]) {
         if ([[expansion identifier] isEqualToNumber:[alarmExpansion expansionId]]) {
             return alarmExpansion;
@@ -270,9 +271,19 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     return nil;
 }
 
+- (SENAlarmExpansion*)lightExpansionIn:(SENAlarm*)alarm {
+    SENAlarmExpansion* lightExpansion = nil;
+    for (SENAlarmExpansion* expansion in [alarm expansions]) {
+        if ([expansion type] == SENExpansionTypeLights) {
+            lightExpansion = expansion;
+            break;
+        }
+    }
+    return lightExpansion;
+}
+
 - (BOOL)hasLightsEnabledForAlarm:(SENAlarm*)alarm {
-    SENAlarmExpansion* expansion = [[alarm expansions] lastObject];
-    return [expansion isEnable];
+    return [self lightExpansionIn:alarm] != nil;
 }
 
 @end

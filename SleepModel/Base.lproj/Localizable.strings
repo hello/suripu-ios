@@ -398,6 +398,7 @@
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
 "alarm.light.title" = "Lights";
+"alarm.light.attribution.format" = "Lights set at %ld%@";
 "alarm.thermostat.title" = "Thermostat";
 "alarm.expansion.error.unable.to.load.title" = "Expansion not loaded";
 "alarm.expansion.error.unable.to.load.message" = "Sense could not load expansions at this time. Please try again later.";

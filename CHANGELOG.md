@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.6.0.8
+
+New:
+
+* Thermostat support in alarms
+* Lights support in alarms
+
+Fixes:
+
+* Mute control for voice now works properly
+* Volume control for voice now works properly
+
 ## 1.6.0.7
 
 New:

@@ -114,7 +114,8 @@ static NSString *const _HEMtopics = @"topics";
 static NSString *const _HEMtrends = @"trends";
 static NSString *const _HEMtutorialViewController = @"tutorialViewController";
 static NSString *const _HEMunitCell = @"unitCell";
-static NSString *const _HEMunitsSettings = @"unitsSettings";
+static NSString *const _HEMunitPreference = @"unitPreference";
+static NSString *const _HEMunits = @"units";
 static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
 static NSString *const _HEMvoice = @"voice";
 static NSString *const _HEMvolume = @"volume";
@@ -209,7 +210,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)sleepSoundsSegueIdentifier { return _HEMsleepSounds; }
 +(NSString *)timezoneSegueIdentifier { return _HEMtimezone; }
 +(NSString *)topicsSegueIdentifier { return _HEMtopics; }
-+(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
++(NSString *)unitsSegueIdentifier { return _HEMunits; }
 +(NSString *)updateAccountInfoSegueIdentifier { return _HEMupdateAccountInfo; }
 +(NSString *)voiceSegueIdentifier { return _HEMvoice; }
 +(NSString *)volumeSegueIdentifier { return _HEMvolume; }
@@ -249,6 +250,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
 +(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
 +(id)instantiateTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtutorialViewController]; }
++(id)instantiateUnitPreferenceViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMunitPreference]; }
 +(id)instantiateVoiceViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMvoice]; }
 
 @end

@@ -1009,7 +1009,7 @@
 "voice.command.sound.category.name" = "Alarm and Sleep Sounds";
 "voice.command.sound.message" = "Before each command, say \"Okay Sense\" to set an alarm or begin playing Sleep Sounds.";
 "voice.command.alarm.category.name" = "Alarms";
-"voice.command.alarm.example.1" = "Wake me up at 10am.";
+"voice.command.alarm.example.1" = "Wake me up at 10 AM.";
 "voice.command.alarm.example.2" = "Set alarm for tomorrow morning at 8.";
 
 "voice.command.sleep-sound.category.name" = "Sleep Sounds";
@@ -1038,14 +1038,15 @@
 "voice.command.noise.example.2" = "What is the noise level?";
 
 "voice.command.air.category.name" = "Air Quality";
-"voice.command.air.example.1" = "How is my air quality?";
+"voice.command.air.example.1" = "How is the air quality?";
 
 "voice.command.expansions.category.name" = "Expansions";
 "voice.command.expansions.message" = "Before each command, say \"Okay Sense\" to control your lights or thermostat.";
 "voice.command.lights.category.name" = "Lights";
-"voice.command.lights.example.1" = "Turn the light on.";
-"voice.command.lights.example.2" = "Turn the light off.";
-"voice.command.lights.example.3" = "Decrease the light.";
+"voice.command.lights.example.1" = "Turn the lights on.";
+"voice.command.lights.example.2" = "Turn the lights off.";
+"voice.command.lights.example.3" = "Brighten the lights.";
+"voice.command.lights.example.4" = "Dim the lights.";
 
 "voice.command.thermostat.category.name" = "Thermostat";
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";

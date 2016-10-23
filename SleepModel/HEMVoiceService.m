@@ -191,7 +191,8 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         [lightsExamples setCategoryName:NSLocalizedString(@"voice.command.lights.category.name", nil)];
         [lightsExamples setCommands:@[NSLocalizedString(@"voice.command.lights.example.1", nil),
                                       NSLocalizedString(@"voice.command.lights.example.2", nil),
-                                      NSLocalizedString(@"voice.command.lights.example.3", nil)]];
+                                      NSLocalizedString(@"voice.command.lights.example.3", nil),
+                                      NSLocalizedString(@"voice.command.lights.example.4", nil)]];
         
         HEMVoiceCommandExamples* thermostatExamples = [HEMVoiceCommandExamples new];
         [thermostatExamples setCategoryName:NSLocalizedString(@"voice.command.thermostat.category.name", nil)];

@@ -429,6 +429,8 @@
 
 "alarm.expansion.temp.range.format" = "%ld° - %ld°";
 "alarm.expansion.light.format" = "%ld%@";
+"alarm.expansion.error.cannot-set-config.title" = "Update failed";
+"alarm.expansion.error.cannot-set-config.message" = "A problem occurred while trying to update your selection.";
 
 // background noise
 "noise.sound-name.none" = "None";

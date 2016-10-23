@@ -12,7 +12,10 @@
 #import "HEMExpansionService.h"
 #import "HEMTutorial.h"
 
-@interface HEMAlarmExpansionSetupViewController() <HEMAlarmExpansionActionDelegate>
+@interface HEMAlarmExpansionSetupViewController() <
+    HEMAlarmExpansionActionDelegate,
+    HEMPresenterErrorDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -30,12 +33,22 @@
     [[self presenter] bindWithTableView:[self tableView]];
     [[self presenter] bindWithNavigationItem:[self navigationItem]];
     [[self presenter] bindWithShadowView:[self shadowView]];
+    [[self presenter] setErrorDelegate:self];
     [self addPresenter:[self presenter]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self presenter] bindWithActivityContainerView:[[self navigationController] view]];
+}
+
+#pragma mark - HEMPresenterErrorDelegate
+
+- (void)showErrorWithTitle:(NSString *)title
+                andMessage:(NSString *)message
+              withHelpPage:(NSString *)helpPage
+             fromPresenter:(HEMPresenter *)presenter {
+    [self showMessageDialog:message title:title];
 }
 
 #pragma mark - HEMAlarmExpansionActionDelegate

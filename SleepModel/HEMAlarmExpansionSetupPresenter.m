@@ -290,7 +290,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                            forExpansion:[strongSelf expansion]
                                              completion:^(SENExpansion * expansion, NSError * error) {
                                                  if (error) {
-                                                     // TODO show error
+                                                     [strongSelf showConfigurationUpdateError];
                                                  } else {
                                                      [strongSelf dismissActivitySucessfully:YES completion:^{
                                                          [strongSelf setSelectedConfig:config];
@@ -315,6 +315,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     return selection;
+}
+
+#pragma mark - Errors
+
+- (void)showConfigurationUpdateError {
+    NSString* title = NSLocalizedString(@"alarm.expansion.error.cannot-set-config.title", nil);
+    NSString* message = NSLocalizedString(@"alarm.expansion.error.cannot-set-config.message", nil);
+    [[self errorDelegate] showErrorWithTitle:title
+                                  andMessage:message
+                                withHelpPage:nil
+                               fromPresenter:self];
 }
 
 #pragma mark - Activity

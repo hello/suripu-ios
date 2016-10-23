@@ -14,6 +14,7 @@
 #import "HEMExpansionService.h"
 #import "HEMMainStoryboard.h"
 #import "HEMBasicTableViewCell.h"
+#import "HEMActivityCoverView.h"
 #import "HEMStyle.h"
 
 static CGFloat const kHEMAlarmExpRowHeight = 66.0f;
@@ -32,6 +33,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 @property (nonatomic, strong) SENExpansion* expansion;
 @property (nonatomic, weak) HEMExpansionService* expansionService;
 @property (nonatomic, weak) UITableView* tableView;
+@property (nonatomic, weak) UIView* activityContainerView;
 @property (nonatomic, strong) NSArray<NSNumber*>* rows;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configs;
@@ -39,6 +41,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 @property (nonatomic, strong) SENAlarmExpansion* alarmExpansion;
+@property (nonatomic, strong) HEMActivityCoverView* activityCoverView;
 
 @end
 
@@ -50,7 +53,6 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     if (self = [super init]) {
         _expansion = expansion;
         _expansionService = expansionService;
-        _alarmExpansion = alarmExpansion;
         _rows = @[@(HEMAlarmExpSetupRowTypeEnable), @(HEMAlarmExpSetupRowTypeConfigSelection)];
         _alarmExpansion = [[SENAlarmExpansion alloc] initWithExpansionId:[expansion identifier] enable:NO];
         [_alarmExpansion setEnable:[alarmExpansion isEnable]];
@@ -68,8 +70,20 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     
     SENExpansionType type = [[self expansion] type];
     HEMAlarmValueRangePickerView* picker = (id) [tableView tableHeaderView];
-    [picker setSelectedMaxValue:[[self alarmExpansion] targetRange].max];
-    [picker setSelectedMinValue:[[self alarmExpansion] targetRange].min];
+    
+    // set defaults
+    if ([[self alarmExpansion] targetRange].max > 0) {
+        [picker setSelectedMaxValue:[[self alarmExpansion] targetRange].max];
+    } else {
+        [picker setSelectedMaxValue:[[self expansion] valueRange].max];
+    }
+    
+    if ([[self alarmExpansion] targetRange].min > 0) {
+        [picker setSelectedMinValue:[[self alarmExpansion] targetRange].min];
+    } else {
+        [picker setSelectedMinValue:[[self expansion] valueRange].min];
+    }
+
     [picker setPickerDelegate:self];
     
     SENExpansionValueRange valueRange = [[self expansion] valueRange];
@@ -88,6 +102,10 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
     [navItem setRightBarButtonItem:[UIBarButtonItem infoButtonWithTarget:self
                                                                   action:@selector(showInfo)]];
+}
+
+- (void)bindWithActivityContainerView:(UIView*)activityContainerView {
+    [self setActivityContainerView:activityContainerView];
 }
 
 #pragma mark - Load data
@@ -109,8 +127,13 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 
 - (void)wasRemovedFromParent {
     [super wasRemovedFromParent];
+    
+    SENExpansionConfig* updatedConfig = nil;
+    if (![[self selectedConfig] isSelected]) {
+        updatedConfig = [self selectedConfig];
+    }
     [[self delegate] updatedAlarmExpansion:[self alarmExpansion]
-                withExpansionConfiguration:[self selectedConfig]];
+                withExpansionConfiguration:updatedConfig];
 }
 
 - (void)didRelayout {
@@ -254,8 +277,28 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)useConfig:(SENExpansionConfig*)config {
-    [self setSelectedConfig:config];
-    [[self tableView] reloadData];
+    if (config == [self selectedConfig]) {
+        return; // ignore
+    }
+    
+    NSString* updateText = NSLocalizedString(@"status.updating", nil);
+    
+    __weak typeof(self) weakSelf = self;
+    [self showActivity:updateText completion:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf expansionService] setConfiguration:config
+                                           forExpansion:[strongSelf expansion]
+                                             completion:^(SENExpansion * expansion, NSError * error) {
+                                                 if (error) {
+                                                     // TODO show error
+                                                 } else {
+                                                     [strongSelf dismissActivitySucessfully:YES completion:^{
+                                                         [strongSelf setSelectedConfig:config];
+                                                         [[strongSelf tableView] reloadData];
+                                                     }];
+                                                 }
+                                             }];
+    }];
 }
 
 - (NSString*)selectedConfigurationName {
@@ -272,6 +315,39 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     return selection;
+}
+
+#pragma mark - Activity
+
+- (void)showActivity:(NSString*)text completion:(void(^)(void))completion {
+    if ([[self activityCoverView] isShowing]) {
+        [[self activityCoverView] updateText:text completion:^(BOOL finished) {
+            if (completion) {
+                completion ();
+            }
+        }];
+    } else {
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[self activityContainerView]
+                        withText:text
+                        activity:YES
+                      completion:completion];
+        [self setActivityCoverView:activityView];
+    }
+}
+
+- (void)dismissActivitySucessfully:(BOOL)success completion:(void(^)(void))completion {
+    if ([[self activityCoverView] isShowing]) {
+        NSString* text = nil;
+        if (success) {
+            text = NSLocalizedString(@"actions.done", nil);
+        }
+        
+        [[self activityCoverView] dismissWithResultText:text
+                                        showSuccessMark:success
+                                                 remove:YES
+                                             completion:completion];
+    }
 }
 
 #pragma mark - HEMAlarmValueRangePickerDelegate

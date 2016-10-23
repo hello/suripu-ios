@@ -26,19 +26,16 @@
 }
 
 - (void)configurePresenter {
-    if (![self expansionService]) {
-        [self setExpansionService:[HEMExpansionService new]];
-    }
-    HEMAlarmExpansionSetupPresenter* presenter =
-    [[HEMAlarmExpansionSetupPresenter alloc] initWithExpansion:[self expansion]
-                                                alarmExpansion:[self alarmExpansion]
-                                              expansionService:[self expansionService]];
-    [presenter setDelegate:[self setupDelegate]];
-    [presenter setActionDelegate:self];
-    [presenter bindWithTableView:[self tableView]];
-    [presenter bindWithNavigationItem:[self navigationItem]];
-    [presenter bindWithShadowView:[self shadowView]];
-    [self addPresenter:presenter];
+    [[self presenter] setActionDelegate:self];
+    [[self presenter] bindWithTableView:[self tableView]];
+    [[self presenter] bindWithNavigationItem:[self navigationItem]];
+    [[self presenter] bindWithShadowView:[self shadowView]];
+    [self addPresenter:[self presenter]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[self presenter] bindWithActivityContainerView:[[self navigationController] view]];
 }
 
 #pragma mark - HEMAlarmExpansionActionDelegate

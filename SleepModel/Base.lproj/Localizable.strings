@@ -675,6 +675,7 @@
 "actions.share" = "Share";
 "status.shared" = "Shared";
 "status.copied" = "Copied";
+"status.updating" = "Updating";
 "status.off" = "Off";
 "actions.copy" = "Copy";
 

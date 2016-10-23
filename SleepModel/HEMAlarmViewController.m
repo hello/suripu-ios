@@ -20,7 +20,7 @@
 #import "HEMExpansionViewController.h"
 #import "HEMAlarmExpansionSetupViewController.h"
 
-@interface HEMAlarmViewController () <HEMAlarmPresenterDelegate, HEMListDelegate, HEMAlarmExpansionSetupDelegate>
+@interface HEMAlarmViewController () <HEMAlarmPresenterDelegate, HEMListDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
@@ -28,6 +28,7 @@
 @property (assign, nonatomic) HEMAlarmRowType selectedRow;
 @property (assign, nonatomic) SENExpansion* selectedExpansion;
 @property (copy, nonatomic) NSString* segueControllerTitle;
+@property (strong, nonatomic) HEMAlarmExpansionSetupPresenter* selectedExpansionPresenter;
 
 @end
 
@@ -68,20 +69,6 @@
     [self addPresenter:presenter];
 }
 
-- (NSString*)segueIdForExpansionType:(SENExpansionType)expansionType withTitle:(NSString*)title {
-    NSArray<SENExpansion*>* expansions = [[self expansionService] expansions];
-    SENExpansion* expansion = [[self expansionService] firstExpansionOfType:expansionType
-                                                               inExpansions:expansions];
-    [self setSelectedExpansion:expansion];
-    [self setSegueControllerTitle:title];
-    
-    if (![[self expansionService] isReadyForUse:expansion]) {
-        return [HEMMainStoryboard expansionSegueIdentifier];
-    } else {
-        return [HEMMainStoryboard expansionConfigSegueIdentifier];
-    }
-}
-
 #pragma mark - HEMListDelegate
 
 - (void)didSelectItem:(id)item atIndex:(NSInteger)index from:(HEMListPresenter *)presenter {
@@ -106,12 +93,6 @@
             break;
         case HEMAlarmRowTypeRepeat:
             segueId = [HEMMainStoryboard alarmRepeatSegueIdentifier];
-            break;
-        case HEMAlarmRowTypeThermostat:
-            segueId = [self segueIdForExpansionType:SENExpansionTypeThermostat withTitle:title];
-            break;
-        case HEMAlarmRowTypeLight:
-            segueId = [self segueIdForExpansionType:SENExpansionTypeLights withTitle:title];
             break;
         default:
             break;
@@ -157,6 +138,22 @@
     } else {
         [[self navigationController] dismissViewControllerAnimated:YES completion:NULL];
     }
+}
+
+- (void)showExpansion:(SENExpansion*)expansion
+        fromPresenter:(HEMAlarmPresenter*)alarmPresenter {
+    [self setSelectedExpansion:expansion];
+    NSString* segueId = [HEMMainStoryboard expansionSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
+}
+
+- (void)showExpansionSetupWithPresenter:(HEMAlarmExpansionSetupPresenter*)presenter
+                              withTitle:(NSString*)title
+                          fromPresenter:(HEMAlarmPresenter*)alarmPresenter {
+    [self setSelectedExpansionPresenter:presenter];
+    [self setSegueControllerTitle:title];
+    NSString* segueId = [HEMMainStoryboard expansionConfigSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Segues
@@ -208,14 +205,9 @@
 }
 
 - (void)prepareForExpansionSetupSegue:(UIStoryboardSegue*)segue {
-    HEMAlarmCache* cache = [[self presenter] cache];
-    SENAlarmExpansion* alarmExpansion = [[self alarmService] alarmExpansionIn:cache forExpansion:[self selectedExpansion]];
     HEMAlarmExpansionSetupViewController* setupVC = (id)[segue destinationViewController];
-    [setupVC setExpansion:[self selectedExpansion]];
-    [setupVC setAlarmExpansion:alarmExpansion];
-    [setupVC setExpansionService:[self expansionService]];
+    [setupVC setPresenter:[self selectedExpansionPresenter]];
     [setupVC setTitle:[self segueControllerTitle]];
-    [setupVC setSetupDelegate:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -228,13 +220,6 @@
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionConfigSegueIdentifier]]) {
         [self prepareForExpansionSetupSegue:segue];
     }
-}
-
-#pragma mark - HEMAlarmExpansionSetupDelegate
-
-- (void)updatedAlarmExpansion:(SENAlarmExpansion *)alarmExpansion
-   withExpansionConfiguration:(SENExpansionConfig *)config {
-    [[self presenter] setAlarmExpansion:alarmExpansion withConfig:config];
 }
 
 @end

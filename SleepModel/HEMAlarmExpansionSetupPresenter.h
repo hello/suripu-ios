@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 
+- (void)bindWithActivityContainerView:(UIView*)activityContainerView;
+
 @end
 
 NS_ASSUME_NONNULL_END

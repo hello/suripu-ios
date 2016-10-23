@@ -18,10 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMAlarmExpansionSetupViewController : HEMBaseController
 
-@property (nonatomic, strong) SENExpansion* expansion;
-@property (nonatomic, strong) SENAlarmExpansion* alarmExpansion;
-@property (nonatomic, strong) HEMExpansionService* expansionService;
-@property (nonatomic, weak) id<HEMAlarmExpansionSetupDelegate> setupDelegate;
+@property (nonatomic, strong) HEMAlarmExpansionSetupPresenter* presenter;
 
 @end
 

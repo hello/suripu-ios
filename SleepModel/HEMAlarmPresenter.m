@@ -22,6 +22,7 @@
 #import "HEMAlarmTableViewCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMAlarmExpansionSetupPresenter.h"
 #import "HEMDeviceService.h"
 
 static CGFloat const HEMAlarmPresenterSuccessDelay = 0.8f;
@@ -32,7 +33,8 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 @interface HEMAlarmPresenter() <
     UITableViewDataSource,
     UITableViewDelegate,
-    HEMClockPickerViewDelegate
+    HEMClockPickerViewDelegate,
+    HEMAlarmExpansionSetupDelegate
 >
 
 @property (nonatomic, weak) HEMAlarmService* service;
@@ -49,7 +51,6 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 @property (nonatomic, strong) NSArray<NSNumber*>* rows;
 @property (nonatomic, assign, getter=isLoadingExpansions) BOOL loadingExpansions;
 @property (nonatomic, strong) NSArray<SENExpansion*>* expansions;
-@property (nonatomic, assign) BOOL reloadWhenBack;
 
 @end
 
@@ -166,12 +167,6 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 
 - (void)bindWithTutorialPresentingController:(UIViewController*)controller {
     [self setTutorialPresenter:controller];
-}
-
-- (void)setAlarmExpansion:(SENAlarmExpansion*)alarmExpansion
-               withConfig:(__unused SENExpansionConfig*)expansionConfig {
-    [[self cache] setAlarmExpansion:alarmExpansion];
-    [[self tableView] reloadData];
 }
 
 #pragma mark - Expansions
@@ -337,11 +332,6 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
     if (![self configuredClockPicker] && timePicker) {
         [timePicker updateTimeToHour:[[self cache] hour] minute:[[self cache] minute]];
         [self setConfiguredClockPicker:YES];
-    }
-    
-    if ([self reloadWhenBack]) {
-        [self loadExpansions:nil];
-        [self setReloadWhenBack:NO];
     }
     
     [[self tableView] reloadData];
@@ -608,23 +598,38 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Expansion Actions
 
 - (void)handleExpansionSelection:(HEMAlarmRowType)rowSelection withTitle:(NSString*)title {
-    SENExpansionType expansionType;
+    SENExpansion* expansion;
     switch (rowSelection) {
         default:
         case HEMAlarmRowTypeThermostat:
-            expansionType = SENExpansionTypeThermostat;
+            expansion =
+            [[self expansionService] firstExpansionOfType:SENExpansionTypeThermostat
+                                             inExpansions:[self expansions]];
             break;
         case HEMAlarmRowTypeLight:
-            expansionType = SENExpansionTypeLights;
+            expansion =
+            [[self expansionService] firstExpansionOfType:SENExpansionTypeLights
+                                             inExpansions:[self expansions]];
             break;
     }
     
-    SENExpansion* expansion = [[self expansionService] firstExpansionOfType:expansionType
-                                                               inExpansions:[self expansions]];
-    
     if (expansion) {
-        [[self delegate] didSelectRowType:rowSelection withTitle:title];
-        [self setReloadWhenBack:YES];
+        if ([[self expansionService] isReadyForUse:expansion]) {
+            SENAlarmExpansion* alarmExpansion =
+            [[self service] alarmExpansionIn:[self cache] forExpansion:expansion];
+            
+            HEMAlarmExpansionSetupPresenter* presenter =
+            [[HEMAlarmExpansionSetupPresenter alloc] initWithExpansion:expansion
+                                                        alarmExpansion:alarmExpansion
+                                                      expansionService:[self expansionService]];
+            [presenter setDelegate:self];
+            
+            [[self delegate] showExpansionSetupWithPresenter:presenter
+                                                   withTitle:title
+                                               fromPresenter:self];
+        } else {
+            [[self delegate] showExpansion:expansion fromPresenter:self];
+        }
     } else {
         NSString* title = NSLocalizedString(@"alarm.expansion.error.unable.to.load.title", nil);
         NSString* message = NSLocalizedString(@"alarm.expansion.error.unable.to.load.message", nil);
@@ -637,6 +642,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)didUpdateTimeToHour:(NSUInteger)hour minute:(NSUInteger)minute {
     [[self cache] setHour:hour];
     [[self cache] setMinute:minute];
+}
+
+#pragma mark - HEMAlarmExpansionSetupDelegate
+
+- (void)updatedAlarmExpansion:(SENAlarmExpansion*)alarmExpansion
+   withExpansionConfiguration:(__unused SENExpansionConfig*)config {
+    [[self cache] setAlarmExpansion:alarmExpansion];
+    [[self tableView] reloadData];
 }
 
 #pragma mark - Clean up

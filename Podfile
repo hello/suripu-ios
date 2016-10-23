@@ -23,7 +23,7 @@ abstract_target 'SenseApp' do
         pod 'UICountingLabel', '~> 1.2.0'
         pod 'Bugsnag', '~> 4.1.0'
         pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
-        pod 'Charts/Realm', '2.2.5'
+        pod 'Charts/Core', '2.2.5'
         pod 'iOSDFULibrary', :git => 'git@github.com:jimmymlu/IOS-Pods-DFU-Library.git', :branch => 'method-name-compatibility'
         pod 'Zip', '0.4.3'
         pod 'Analytics', '3.0.7'

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.6.0.9
+
+New:
+
+* Reduced size of app
+* Voice command tweaks
+* Moved units & time in to account settings
+
+Fixes:
+
+* Fixed issue that would cause insights to not load right after signing in.
+
 ## 1.6.0.8
 
 New:

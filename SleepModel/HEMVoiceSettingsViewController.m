@@ -18,13 +18,14 @@
 #import "HEMVolumeControlViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSimpleModalTransitionDelegate.h"
+#import "HEMVolumeControlPresenter.h"
 
 @interface HEMVoiceSettingsViewController () <HEMPresenterErrorDelegate, HEMVoiceSettingsDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) id transitionDelegate;
-@property (strong, nonatomic) SENSenseVoiceSettings* voiceSettings;
+@property (strong, nonatomic) HEMVolumeControlPresenter* volumeControlPresenter;
 
 @end
 
@@ -77,10 +78,11 @@
 
 #pragma mark - HEMVoiceSettingsDelegate
 
-- (void)showVolumeControlFor:(SENSenseVoiceSettings*)voiceSettings
-               fromPresenter:(HEMVoiceSettingsPresenter*)presenter {
-    [self setVoiceSettings:voiceSettings];
-    [self performSegueWithIdentifier:[HEMMainStoryboard volumeSegueIdentifier] sender:self];
+- (void)showVolumeControlWithPresenter:(HEMVolumeControlPresenter*)volumePresenter
+                         fromPresenter:(HEMVoiceSettingsPresenter*)presenter {
+    [self setVolumeControlPresenter:volumePresenter];
+    [self performSegueWithIdentifier:[HEMMainStoryboard volumeSegueIdentifier]
+                              sender:self];
 }
 
 #pragma mark - Segues
@@ -103,11 +105,8 @@
     }
     
     if ([destVC isKindOfClass:[HEMVolumeControlViewController class]]) {
-        SENSenseMetadata* sense = [[[self deviceService] devices] senseMetadata];
         HEMVolumeControlViewController* volumeVC = destVC;
-        [volumeVC setVoiceService:[self voiceService]];
-        [volumeVC setVoiceSettings:[self voiceSettings]];
-        [volumeVC setSenseId:[sense uniqueId]];
+        [volumeVC setPresenter:[self volumeControlPresenter]];
     }
 }
 

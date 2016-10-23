@@ -51,6 +51,7 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 @property (nonatomic, strong) NSArray<NSNumber*>* rows;
 @property (nonatomic, assign, getter=isLoadingExpansions) BOOL loadingExpansions;
 @property (nonatomic, strong) NSArray<SENExpansion*>* expansions;
+@property (nonatomic, assign) BOOL reloadExpansionsWhenBack;
 
 @end
 
@@ -332,6 +333,11 @@ static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
     if (![self configuredClockPicker] && timePicker) {
         [timePicker updateTimeToHour:[[self cache] hour] minute:[[self cache] minute]];
         [self setConfiguredClockPicker:YES];
+    }
+    
+    if ([self reloadExpansionsWhenBack]) {
+        [self loadExpansions:nil];
+        [self setReloadExpansionsWhenBack:YES];
     }
     
     [[self tableView] reloadData];
@@ -628,6 +634,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                                    withTitle:title
                                                fromPresenter:self];
         } else {
+            [self setReloadExpansionsWhenBack:YES];
             [[self delegate] showExpansion:expansion fromPresenter:self];
         }
     } else {

@@ -19,6 +19,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlertViewController.h"
 #import "HEMBasicTableViewCell.h"
+#import "HEMVolumeControlPresenter.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
     HEMVoiceSettingsRowVolume = 0,
@@ -30,7 +31,11 @@ typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
 static CGFloat const kHEMVoiceFootNoteHorzMargins = 24.0f;
 static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 
-@interface HEMVoiceSettingsPresenter() <UITableViewDelegate, UITableViewDataSource>
+@interface HEMVoiceSettingsPresenter() <
+    UITableViewDelegate,
+    UITableViewDataSource,
+    HEMVolumeControlUpdateDelegate
+>
 
 @property (nonatomic, weak) HEMVoiceService* voiceService;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
@@ -264,10 +269,10 @@ messageIfError:(NSString*)errorMessage
     [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
         [[self voiceService] updateVoiceSettings:info
                                       forSenseId:[metadata uniqueId]
-                                      completion:^(BOOL updated) {
+                                      completion:^(SENSenseVoiceSettings* updated) {
                                           __strong typeof(weakSelf) strongSelf = weakSelf;
                                           if (completion) {
-                                              completion (updated);
+                                              completion (updated != nil);
                                           }
                                       
                                           if (!updated) {
@@ -275,6 +280,7 @@ messageIfError:(NSString*)errorMessage
                                                   [strongSelf showUpdateError:errorMessage];
                                               }];
                                           } else {
+                                              [strongSelf setVoiceSettings:updated];
                                               [[strongSelf tableView] reloadData];
                                               NSString* successText = NSLocalizedString(@"status.success", nil);
                                               [activityView dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
@@ -343,14 +349,30 @@ messageIfError:(NSString*)errorMessage
 #pragma mark - Volume
 
 - (void)changeVolume {
-    [[self delegate] showVolumeControlFor:[self voiceSettings] fromPresenter:self];
+    SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
+    HEMVolumeControlPresenter* presenter =
+    [[HEMVolumeControlPresenter alloc] initWithVoiceSettings:[self voiceSettings]
+                                                     senseId:[metadata uniqueId]
+                                                voiceService:[self voiceService]];
+    [presenter setUpdateDelegate:self];
+    [[self delegate] showVolumeControlWithPresenter:presenter
+                                      fromPresenter:self];
+}
+
+#pragma mark - HEMVolumeControlUpdateDelegate
+
+- (void)updatedVolumeFromPresenter:(HEMVolumeControlPresenter *)presenter {
+    [self updateUI];
 }
 
 #pragma mark - Error
 
 - (void)showUpdateError:(NSString*)message {
     NSString* title = NSLocalizedString(@"voice.settings.update.error.title", nil);
-    [[self errorDelegate] showErrorWithTitle:title andMessage:message withHelpPage:nil fromPresenter:self];
+    [[self errorDelegate] showErrorWithTitle:title
+                                  andMessage:message
+                                withHelpPage:nil
+                               fromPresenter:self];
 }
 
 #pragma mark - Clean up

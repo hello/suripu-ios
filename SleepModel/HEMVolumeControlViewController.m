@@ -32,31 +32,24 @@
 }
 
 - (void)configurePresenter {
-    if (![self voiceService]) {
-        [self setVoiceService:[HEMVoiceService new]];
-    }
-    
-    HEMVolumeControlPresenter* presenter =
-    [[HEMVolumeControlPresenter alloc] initWithVoiceSettings:[self voiceSettings]
-                                                     senseId:[self senseId]
-                                                voiceService:[self voiceService]];
-    
-    [presenter bindWithCancelButton:[self cancelButton] saveButton:[self saveButton]];
-    [presenter bindWithVolumeLabel:[self volumeLabel] volumeSlider:[self volumeSlider]];
-    [presenter bindWithTitleLabel:[self titleLabel]
+    [[self presenter] bindWithCancelButton:[self cancelButton]
+                                saveButton:[self saveButton]];
+    [[self presenter] bindWithVolumeLabel:[self volumeLabel]
+                             volumeSlider:[self volumeSlider]];
+    [[self presenter] bindWithTitleLabel:[self titleLabel]
                  descriptionLabel:[self descriptionLabel]
          descriptionTopConstraint:[self descriptionTopConstraint]];
-    [presenter bindWithNavigationItem:[self navigationItem]];
-    [presenter bindWithActivityContainer:[self view]];
-    [presenter setDelegate:self];
-    [presenter setErrorDelegate:self];
+    [[self presenter] bindWithNavigationItem:[self navigationItem]];
+    [[self presenter] bindWithActivityContainer:[self view]];
+    [[self presenter] setDelegate:self];
+    [[self presenter] setErrorDelegate:self];
     
-    [self addPresenter:presenter];
+    [self addPresenter:[self presenter]];
 }
 
 #pragma mark - HEMVolumeControlDelegate
 
-- (void)didSave:(BOOL)save volumeFromPresenter:(HEMVolumeControlPresenter *)presenter {
+- (void)dismissControlFrom:(HEMVolumeControlPresenter*)presenter {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -47,10 +47,6 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
         _senseId = senseId;
         _cachedSettings = [SENSenseVoiceSettings new];
         [_cachedSettings setVolume:[voiceSettings volume]];
-        
-        // set default, if needed
-        NSInteger volumeLevel = [voiceService volumeLevelFrom:_cachedSettings];
-        [_cachedSettings setVolume:@([voiceService volumePercentageFromLevel:volumeLevel])];
     }
     return self;
 }
@@ -127,7 +123,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 #pragma mark - Actions
 
 - (void)cancel {
-    [[self delegate] didSave:NO volumeFromPresenter:self];
+    [[self delegate] dismissControlFrom:self];
 }
 
 - (void)save {
@@ -138,7 +134,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
     [activityView showInView:[self activityContainer] withText:activityText activity:YES completion:^{
         [[self voiceService] updateVoiceSettings:[self cachedSettings]
                                       forSenseId:[self senseId]
-                                      completion:^(BOOL updated) {
+                                      completion:^(SENSenseVoiceSettings* updated) {
                                           __strong typeof(weakSelf) strongSelf = weakSelf;
                                           if (!updated) {
                                               [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
@@ -160,7 +156,8 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
                                                       dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
                                                       dispatch_after(delay, dispatch_get_main_queue(), ^{
                                                           __weak typeof(weakSelf) strongSelf = weakSelf;
-                                                          [[strongSelf delegate] didSave:YES volumeFromPresenter:strongSelf];
+                                                          [[strongSelf delegate] dismissControlFrom:strongSelf];
+                                                          [[strongSelf updateDelegate] updatedVolumeFromPresenter:strongSelf];
                                                       });
                                                   }];
                                               }];
@@ -172,9 +169,10 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 #pragma mark - HEMVolumeChangeDelegate
 
 - (void)didChangeVolumeTo:(NSInteger)volume fromSlider:(HEMVolumeSlider *)slider {
-    DDLogVerbose(@"did change volume to %ld", volume);
+    NSInteger percentage = [[self voiceService] volumePercentageFromLevel:volume];
+    DDLogVerbose(@"did change volume to %ld, percentage %ld", volume, percentage);
     [[self volumeLabel] setText:[NSString stringWithFormat:@"%ld", volume]];
-    [[self cachedSettings] setVolume:@([[self voiceService] volumePercentageFromLevel:volume])];
+    [[self cachedSettings] setVolume:@(percentage)];
 }
 
 @end

@@ -10,14 +10,13 @@
 
 @class HEMVoiceService;
 @class SENSenseVoiceSettings;
+@class HEMVolumeControlPresenter;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMVolumeControlViewController : HEMBaseController
 
-@property (nonatomic, strong, nullable) HEMVoiceService* voiceService;
-@property (nonatomic, strong, nullable) SENSenseVoiceSettings* voiceSettings;
-@property (nonatomic, copy, nullable) NSString* senseId;
+@property (nonatomic, strong) HEMVolumeControlPresenter* presenter;
 
 @end
 

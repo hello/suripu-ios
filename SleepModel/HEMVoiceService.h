@@ -22,7 +22,7 @@ extern NSInteger const HEMVoiceServiceMaxVolumeLevel;
 
 typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
 typedef void(^HEMVoiceSettingsHandler)(id _Nullable response, NSError* _Nullable error);
-typedef void(^HEVoiceSettingsUpdateHandler)(BOOL updated);
+typedef void(^HEVoiceSettingsUpdateHandler)(SENSenseVoiceSettings* updated);
 
 @interface HEMVoiceService : SENService
 

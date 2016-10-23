@@ -57,16 +57,22 @@
 #pragma mark - HEMFeedNavigationDelegate
 
 - (void)showInsightsFrom:(HEMFeedNavigationPresenter *)presenter {
-    HEMInsightFeedViewController* insightVC = [HEMMainStoryboard instantiateInsightsFeedViewController];
-    [insightVC setUnreadService:[self unreadService]];
-    [insightVC setSubNavBar:[self subNav]];
-    [self showViewOf:insightVC completion:nil];
+    UIViewController* currentVC = [[self childViewControllers] firstObject];
+    if (![currentVC isKindOfClass:[HEMInsightFeedViewController class]]) {
+        HEMInsightFeedViewController* insightVC = [HEMMainStoryboard instantiateInsightsFeedViewController];
+        [insightVC setUnreadService:[self unreadService]];
+        [insightVC setSubNavBar:[self subNav]];
+        [self showViewOf:insightVC completion:nil];
+    }
 }
 
 - (void)showVoiceFrom:(HEMFeedNavigationPresenter*)presenter {
-    HEMVoiceFeedViewController* voiceVC = [HEMMainStoryboard instantiateVoiceViewController];
-    [voiceVC setSubNavBar:[self subNav]];
-    [self showViewOf:voiceVC completion:nil];
+    UIViewController* currentVC = [[self childViewControllers] firstObject];
+    if (![currentVC isKindOfClass:[HEMVoiceFeedViewController class]]) {
+        HEMVoiceFeedViewController* voiceVC = [HEMMainStoryboard instantiateVoiceViewController];
+        [voiceVC setSubNavBar:[self subNav]];
+        [self showViewOf:voiceVC completion:nil];
+    }
 }
 
 - (void)showViewOf:(UIViewController*)controller completion:(void(^)(void))completion {

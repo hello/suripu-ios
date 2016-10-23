@@ -93,7 +93,7 @@
 +(NSString *)sleepSoundsSegueIdentifier;
 +(NSString *)timezoneSegueIdentifier;
 +(NSString *)topicsSegueIdentifier;
-+(NSString *)unitsSettingsSegueIdentifier;
++(NSString *)unitsSegueIdentifier;
 +(NSString *)updateAccountInfoSegueIdentifier;
 +(NSString *)voiceSegueIdentifier;
 +(NSString *)volumeSegueIdentifier;
@@ -133,6 +133,7 @@
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;
++(id)instantiateUnitPreferenceViewController;
 +(id)instantiateVoiceViewController;
 
 @end

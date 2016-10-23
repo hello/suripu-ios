@@ -308,12 +308,20 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
            alarmExpansionCellAtIndexPath:(NSIndexPath*)indexPath {
     NSString *identifier = [HEMMainStoryboard alarmExpansionCellReuseIdentifier];
-    HEMAlarmExpansionListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
-                                                                                forIndexPath:indexPath];
+    HEMAlarmExpansionListCell* cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:identifier
+                                                  forIndexPath:indexPath];
+    
     NSArray* alarms = [[self alarmService] alarms];
     SENAlarm *alarm = alarms[indexPath.item];
+    SENAlarmExpansion* alarmExpansion = [[self alarmService] lightExpansionIn:alarm];
     
-    [[cell expansionLabel] setText:NSLocalizedString(@"alarm.light.title", nil)];
+    NSString* unit = NSLocalizedString(@"measurement.percentage.unit", nil);
+    NSString* attributionFormat = NSLocalizedString(@"alarm.light.attribution.format", nil);
+    NSString* attribution = [NSString stringWithFormat:attributionFormat,
+                             [alarmExpansion targetRange].max,
+                             unit];
+    [[cell expansionLabel] setText:attribution];
     [[cell expansionLabel] setFont:[UIFont h7]];
     [[cell expansionLabel] setTextColor:[UIColor grey6]];
     [[cell expansionSeparator] setBackgroundColor:[[UIColor grey5] colorWithAlphaComponent:0.1f]];

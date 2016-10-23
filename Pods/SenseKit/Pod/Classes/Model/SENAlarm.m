@@ -13,7 +13,7 @@
 @implementation SENAlarmExpansion
 
 static NSString* const SENAlarmExpansionIdKey = @"id";
-static NSString* const SENAlarmExpansionEnableKey = @"enable";
+static NSString* const SENAlarmExpansionEnableKey = @"enabled";
 static NSString* const SENAlarmExpansionCategoryKey = @"category";
 static NSString* const SENAlarmExpansionTargetRangeKey = @"target_value";
 
@@ -58,9 +58,12 @@ static NSString* const SENAlarmExpansionTargetRangeKey = @"target_value";
 
 - (NSDictionary*)dictionaryValue {
     // type is purposely not included
+    SENExpansionValueRange range = {.min = [self targetRange].min,
+                                    .max = [self targetRange].max};
+    NSDictionary* targetRange = [SENExpansion dictionaryValueFromRange:range];
     return @{SENAlarmExpansionIdKey : [self expansionId],
              SENAlarmExpansionEnableKey : @([self isEnable]),
-             SENAlarmExpansionTargetRangeKey : @{}};
+             SENAlarmExpansionTargetRangeKey : targetRange};
 }
 
 @end

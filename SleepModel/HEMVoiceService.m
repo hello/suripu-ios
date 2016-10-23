@@ -21,6 +21,7 @@ NSString* const HEMVoiceNotificationInfoError = @"voice.error";
 NSString* const HEMVoiceNotificationInfoResult = @"voice.result";
 NSInteger const HEMVoiceServiceMaxVolumeLevel = 11;
 
+static CGFloat const HEMVoiceServiceUpdateVolumeTolerance = 2;
 static CGFloat const HEMVoiceServiceWaitDelay = 1.0f;
 static NSInteger const HEMVoiceServiceMaxCheckAttempts = 15;
 static NSString* const HEMVoiceServiceHideIntroKey = @"HEMVoiceServiceIntroKey";
@@ -236,7 +237,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
                                __strong typeof(weakSelf) strongSelf = weakSelf;
                                if (error) {
                                    [SENAnalytics trackError:error];
-                                   completion (NO);
+                                   completion (nil);
                                } else {
                                    [strongSelf verifyUpdateFor:voiceSettings
                                                    withSenseId:senseId
@@ -246,21 +247,34 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
                            }];
 }
 
+- (BOOL)is:(SENSenseVoiceSettings*)settings updatedFrom:(SENSenseVoiceSettings*)response {
+    NSNumber* updatedMute = [settings muted];
+    NSNumber* updatedVolume = [settings volume];
+    NSNumber* updatedPrimary = [settings primaryUser];
+    return ((updatedMute && [settings isMuted] == [response isMuted]) || !updatedMute)
+        && ((updatedVolume
+             && [[settings volume] integerValue] >= [[response volume] integerValue] - HEMVoiceServiceUpdateVolumeTolerance
+             && [[settings volume] integerValue] <= [[response volume] integerValue] + HEMVoiceServiceUpdateVolumeTolerance )
+            || !updatedVolume)
+        && ((updatedPrimary && [settings isPrimaryUser] == [response isPrimaryUser]) || !updatedPrimary);
+}
+
 - (void)verifyUpdateFor:(SENSenseVoiceSettings*)voiceSettings
             withSenseId:(NSString*)senseId
                 attempt:(NSInteger)attempt
-             completion:(void(^)(BOOL updated))completion {
+             completion:(HEVoiceSettingsUpdateHandler)completion {
     
     if (attempt <= HEMVoiceServiceMaxCheckAttempts) {
         __weak typeof(self) weakSelf = self;
         [self getVoiceSettingsForSenseId:senseId completion:^(id response, NSError* error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
-                completion (NO);
+                completion (nil);
             } else {
-                if ([response isEqual:voiceSettings]) {
-                    completion (YES);
+                if ([strongSelf is:voiceSettings updatedFrom:response]) {
+                    completion (response);
                 } else if (attempt > HEMVoiceServiceMaxCheckAttempts) {
-                    completion (NO);
+                    completion (nil);
                 } else {
                     int64_t delay = (int64_t)(HEMVoiceServiceWaitDelay * NSEC_PER_SEC);
                     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
@@ -275,7 +289,7 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
             }
         }];
     } else {
-        completion (NO);
+        completion (nil);
     }
 }
 
@@ -290,11 +304,13 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
 
 - (NSInteger)volumeLevelFrom:(SENSenseVoiceSettings*)voiceSettings {
     CGFloat volumePercentage = [[voiceSettings volume] integerValue] / 100.0f;
-    return MAX(1, HEMVoiceServiceMaxVolumeLevel * volumePercentage);
+    return MAX(1, ceilCGFloat(HEMVoiceServiceMaxVolumeLevel * volumePercentage));
 }
 
 - (NSInteger)volumePercentageFromLevel:(NSInteger)volumeLevel {
-    return (volumeLevel / HEMVoiceServiceMaxVolumeLevel) * 100;
+    CGFloat levelFloat = HEMVoiceServiceMaxVolumeLevel;
+    CGFloat percentageFraction = volumeLevel / levelFloat;
+    return roundCGFloat(percentageFraction * 100);
 }
 
 @end

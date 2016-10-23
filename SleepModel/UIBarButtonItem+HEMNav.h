@@ -19,4 +19,6 @@
 
 + (UIBarButtonItem*)saveButtonWithTarget:(id)target action:(SEL)action;
 
++ (UIBarButtonItem*)infoButtonWithTarget:(id)target action:(SEL)action;
+
 @end

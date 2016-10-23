@@ -15,6 +15,7 @@
 @class HEMClockPickerView;
 @class HEMDeviceService;
 @class HEMExpansionService;
+@class HEMAlarmExpansionSetupPresenter;
 
 typedef NS_ENUM(NSUInteger, HEMAlarmRowType) {
     HEMAlarmRowTypeSmart = 1,
@@ -42,7 +43,13 @@ typedef void(^HEMAlarmAction)(void);
 
 - (void)didSave:(BOOL)save from:(HEMAlarmPresenter*)presenter;
 - (UIView*)activityContainerFor:(HEMAlarmPresenter*)presenter;
-- (void)didSelectRowType:(HEMAlarmRowType)rowType;
+- (void)didSelectRowType:(HEMAlarmRowType)rowType withTitle:(NSString*)title;
+
+- (void)showExpansion:(SENExpansion*)expansion
+        fromPresenter:(HEMAlarmPresenter*)alarmPresenter;
+- (void)showExpansionSetupWithPresenter:(HEMAlarmExpansionSetupPresenter*)presenter
+                              withTitle:(NSString*)title
+                          fromPresenter:(HEMAlarmPresenter*)alarmPresenter;
 
 @end
 

@@ -18,13 +18,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HEMVolumeControlDelegate <NSObject>
 
-- (void)didSave:(BOOL)save volumeFromPresenter:(HEMVolumeControlPresenter*)presenter;
+- (void)dismissControlFrom:(HEMVolumeControlPresenter*)presenter;
+
+@end
+
+@protocol HEMVolumeControlUpdateDelegate <NSObject>
+
+- (void)updatedVolumeFromPresenter:(HEMVolumeControlPresenter*)presenter;
 
 @end
 
 @interface HEMVolumeControlPresenter : HEMPresenter
 
 @property (nonatomic, weak) id<HEMVolumeControlDelegate> delegate;
+@property (nonatomic, weak) id<HEMVolumeControlUpdateDelegate> updateDelegate;
 
 - (instancetype)initWithVoiceSettings:(SENSenseVoiceSettings*)voiceSettings
                               senseId:(NSString*)senseId

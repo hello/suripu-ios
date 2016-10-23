@@ -18,16 +18,32 @@ static NSString* const SENSenseVoiceDictPropMuted = @"muted";
 - (instancetype)initWithDictionary:(NSDictionary *)data {
     if (self = [super init]) {
         _volume = SENObjectOfClass(data[SENSenseVoiceDictPropVolume], [NSNumber class]);
-        _primaryUser = [SENObjectOfClass(data[SENSenseVoiceDictPropPrmaryUser], [NSNumber class]) boolValue];
-        _muted = [SENObjectOfClass(data[SENSenseVoiceDictPropMuted], [NSNumber class]) boolValue];
+        _primaryUser = SENObjectOfClass(data[SENSenseVoiceDictPropPrmaryUser], [NSNumber class]);
+        _muted = SENObjectOfClass(data[SENSenseVoiceDictPropMuted], [NSNumber class]);
     }
     return self;
 }
 
+- (BOOL)isPrimaryUser {
+    return [[self primaryUser] boolValue];
+}
+
+- (BOOL)isMuted {
+    return [[self muted] boolValue];
+}
+
 - (NSDictionary*)dictionaryValue {
-    return @{SENSenseVoiceDictPropPrmaryUser : @([self isPrimaryUser]),
-             SENSenseVoiceDictPropMuted : @([self isMuted]),
-             SENSenseVoiceDictPropVolume : [self volume] ?: @1};
+    NSMutableDictionary* data = [NSMutableDictionary dictionaryWithCapacity:3];
+    if ([self primaryUser]) {
+        [data setObject:[self primaryUser] forKey:SENSenseVoiceDictPropPrmaryUser];
+    }
+    if ([self muted]) {
+        [data setObject:[self muted] forKey:SENSenseVoiceDictPropMuted];
+    }
+    if ([self volume]) {
+        [data setObject:[self volume] forKey:SENSenseVoiceDictPropVolume];
+    }
+    return data;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -37,8 +53,8 @@ static NSString* const SENSenseVoiceDictPropMuted = @"muted";
     
     SENSenseVoiceSettings* other = object;
     return SENObjectIsEqual([self volume], [other volume])
-        && [self isPrimaryUser] == [other isPrimaryUser]
-        && [self isMuted] == [other isMuted];
+        && SENObjectIsEqual([self primaryUser], [other primaryUser])
+        && SENObjectIsEqual([self muted], [other muted]);
 }
 
 - (NSUInteger)hash {

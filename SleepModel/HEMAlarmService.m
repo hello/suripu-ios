@@ -271,19 +271,14 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     return nil;
 }
 
-- (SENAlarmExpansion*)lightExpansionIn:(SENAlarm*)alarm {
-    SENAlarmExpansion* lightExpansion = nil;
+- (NSInteger)numberOfEnabledExpansionsIn:(SENAlarm*)alarm {
+    NSInteger count = 0;
     for (SENAlarmExpansion* expansion in [alarm expansions]) {
-        if ([expansion type] == SENExpansionTypeLights) {
-            lightExpansion = expansion;
-            break;
+        if ([expansion isEnable]) {
+            count++;
         }
     }
-    return lightExpansion;
-}
-
-- (BOOL)hasLightsEnabledForAlarm:(SENAlarm*)alarm {
-    return [self lightExpansionIn:alarm] != nil;
+    return count;
 }
 
 @end

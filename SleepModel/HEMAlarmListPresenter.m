@@ -310,10 +310,12 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     }
 }
 
-- (NSAttributedString*)attributedExpansionTextFor:(SENAlarmExpansion*)expansion {
+- (NSAttributedString*)attributedExpansionTextFor:(SENAlarmExpansion*)expansion
+                                         forAlarm:(SENAlarm*)alarm {
     SENExpansionValueRange range = [expansion targetRange];
+    UIColor* titleColor = [alarm isOn] ? [UIColor grey6] : [UIColor grey4];
     NSDictionary* titleAttributes = @{NSFontAttributeName : [UIFont h7],
-                                      NSForegroundColorAttributeName : [UIColor grey6]};
+                                      NSForegroundColorAttributeName : titleColor};
     NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h7],
                                       NSForegroundColorAttributeName : [UIColor grey4]};
     NSString* format = nil;
@@ -375,7 +377,8 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     for (SENAlarmExpansion* expansion in [alarm expansions]) {
         if ([expansion isEnable]) {
             [cell showExpansionWithIcon:[self iconForExpansion:expansion]
-                                   text:[self attributedExpansionTextFor:expansion]
+                                   text:[self attributedExpansionTextFor:expansion
+                                                                forAlarm:alarm]
                                    tyep:[expansion type]];
         }
     }
@@ -571,6 +574,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 
 - (void)toggleEnableSwitch:(UISwitch *)sender {
     NSArray* alarms = [[self alarmService] alarms];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
     __block SENAlarm *alarm = [alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
     
@@ -603,7 +607,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
                                               message:[error localizedDescription]
                                         fromPresenter:strongSelf];
         } else {
-            [[strongSelf collectionView] reloadData];
+            [[strongSelf collectionView] reloadItemsAtIndexPaths:@[indexPath]];
             [SENAnalytics trackAlarmToggle:alarm];
         }
     }];

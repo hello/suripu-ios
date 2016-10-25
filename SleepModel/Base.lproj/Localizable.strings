@@ -433,6 +433,10 @@
 "alarm.expansion.error.cannot-set-config.title" = "Update failed";
 "alarm.expansion.error.cannot-set-config.message" = "A problem occurred while trying to update your selection.";
 
+"alarm.expansion.configuration.selection.title.format" = "Select a %@";
+"alarm.expansion.lights.selection.subtitle" = "This will apply to all alarms activating lights.";
+"alarm.expansion.thermostat.selection.subtitle" = "This will apply to all alarms activating a thermostat.";
+
 // background noise
 "noise.sound-name.none" = "None";
 

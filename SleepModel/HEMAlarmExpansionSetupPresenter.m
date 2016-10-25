@@ -17,6 +17,7 @@
 #import "HEMBasicTableViewCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSensorValueFormatter.h"
+#import "HEMActionSheetTitleView.h"
 #import "HEMStyle.h"
 
 static CGFloat const kHEMAlarmExpRowHeight = 66.0f;
@@ -40,6 +41,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configs;
 @property (nonatomic, strong) NSError* configError;
+@property (nonatomic, weak) UINavigationItem* navItem;
 
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 @property (nonatomic, strong) SENAlarmExpansion* alarmExpansion;
@@ -113,6 +115,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
     [navItem setRightBarButtonItem:[UIBarButtonItem infoButtonWithTarget:self
                                                                   action:@selector(showInfo)]];
+    [self setNavItem:navItem];
 }
 
 - (void)bindWithActivityContainerView:(UIView*)activityContainerView {
@@ -252,6 +255,25 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - TableView convenience methods
 
+- (UIView *)configurationTitleView {
+    NSString* configurationName = [[self expansionService] configurationNameForExpansion:[self expansion]];
+    NSString* titleFormat = NSLocalizedString(@"alarm.expansion.configuration.selection.title.format", nil);
+    NSString* title = [NSString stringWithFormat:titleFormat, [configurationName lowercaseString]];
+    
+    NSString* message = nil;
+    switch ([[self expansion] type]) {
+        default:
+        case SENExpansionTypeThermostat:
+            message = NSLocalizedString(@"alarm.expansion.thermostat.selection.subtitle", nil);
+            break;
+        case SENExpansionTypeLights:
+            message = NSLocalizedString(@"alarm.expansion.lights.selection.subtitle", nil);
+    }
+    
+    NSAttributedString* attrDesc = [HEMActionSheetTitleView attributedDescriptionFromText:message];
+    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrDesc];
+}
+
 - (void)showConfigurationOptions {
     if ([[self configs] count] == 0) {
         // TODO: show error?
@@ -259,9 +281,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     HEMActionSheetViewController* sheet = [HEMMainStoryboard instantiateActionSheetViewController];
-    NSString* configurationName = [[self expansionService] configurationNameForExpansion:[self expansion]];
-    NSString* titleFormat = NSLocalizedString(@"expansion.configuration.options.title.format", nil);
-    [sheet setTitle:[[NSString stringWithFormat:titleFormat, configurationName] uppercaseString]];
+    [sheet setCustomTitleView:[self configurationTitleView]];
     
     __weak typeof (self) weakSelf = self;
     

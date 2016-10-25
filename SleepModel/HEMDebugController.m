@@ -148,6 +148,9 @@
             [appLaunchUsage increment:NO];
         }
         [appLaunchUsage save];
+        
+        SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+        [localPrefs setPersistentPreference:nil forKey:@"stop.asking.to.rate.app"];
     }];
 }
 

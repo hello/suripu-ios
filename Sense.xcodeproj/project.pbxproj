@@ -309,6 +309,7 @@
 		BF885F281CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF885F271CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m */; };
 		BF885F2B1CE6750700A92F90 /* HEMNewProfileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF885F2A1CE6750700A92F90 /* HEMNewProfileCollectionViewCell.m */; };
 		BF88EA791DBECF3F00BCE15E /* HEMMathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */; };
+		BF88EA7B1DBEF8EE00BCE15E /* AmazonReviewsForVoice.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF88EA7A1DBEF8EE00BCE15E /* AmazonReviewsForVoice.plist */; };
 		BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		BF896D4C1C74227E0095D37D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7D800D1A3F952000B0BFD7 /* UIColor+HEMStyle.m */; };
@@ -1072,6 +1073,7 @@
 		BF885F271CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTextFieldCollectionViewCell.m; sourceTree = "<group>"; };
 		BF885F291CE6750700A92F90 /* HEMNewProfileCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNewProfileCollectionViewCell.h; sourceTree = "<group>"; };
 		BF885F2A1CE6750700A92F90 /* HEMNewProfileCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNewProfileCollectionViewCell.m; sourceTree = "<group>"; };
+		BF88EA7A1DBEF8EE00BCE15E /* AmazonReviewsForVoice.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmazonReviewsForVoice.plist; sourceTree = "<group>"; };
 		BF896D4A1C7422720095D37D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		BF8A0DD71BEAA523006B3B70 /* Trends.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trends.xcassets; sourceTree = "<group>"; };
 		BF8A0DD91BEACC58006B3B70 /* HEMNoAlarmCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNoAlarmCell.h; sourceTree = "<group>"; };
@@ -1525,6 +1527,7 @@
 				8A03386A1974AFD800BE8327 /* Podfile */,
 				6003F595195388D20070C39A /* Sense-Info.plist */,
 				BF238DFF1D1E009D00F6E62C /* AmazonReviews.plist */,
+				BF88EA7A1DBEF8EE00BCE15E /* AmazonReviewsForVoice.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -3773,6 +3776,7 @@
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				BF238E001D1E009D00F6E62C /* AmazonReviews.plist in Resources */,
 				BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */,
+				BF88EA7B1DBEF8EE00BCE15E /* AmazonReviewsForVoice.plist in Resources */,
 				BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
 				BFF364731D62702E008D4DF8 /* Upgrade.xcassets in Resources */,

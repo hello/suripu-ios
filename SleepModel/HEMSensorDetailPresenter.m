@@ -29,6 +29,7 @@
 static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
 static NSUInteger const kHEMSensorDetailXAxisOffset = 10;
+static CGFloat const kHEMSensorDetailMaxChartHeight = 271.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -299,6 +300,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     CGFloat cellSpacing = [flowLayout minimumInteritemSpacing];
     CGFloat topSpacing = [flowLayout sectionInset].top;
     CGFloat chartHeight = heightBounds * kHEMSensorDetailCellChartHeightRatio;
+    chartHeight = MIN(kHEMSensorDetailMaxChartHeight, chartHeight);
     CGFloat height = 0.0f;
     
     NSNumber* contentType = [self content][[indexPath row]];
@@ -382,7 +384,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     
     LineChartView* lineChartView = (id) [[cell chartContentView] chartView];
     if (!lineChartView) {
-        lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell chartContentView] bounds]];
+        CGRect chartFrame = [[cell chartContentView] bounds];
+        lineChartView = [[LineChartView alloc] initForSensorWithFrame:chartFrame];
     }
     
     NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];

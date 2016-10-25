@@ -64,6 +64,7 @@
     [presenter bindWithTutorialPresentingController:[self navigationController]];
     [presenter bindWithTableView:[self tableView]];
     [presenter bindWithNavigationItem:[self navigationItem]];
+    [presenter bindWithShadowView:[self shadowView]];
 
     [self setPresenter:presenter];
     [self addPresenter:presenter];

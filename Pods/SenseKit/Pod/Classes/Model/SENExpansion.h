@@ -27,9 +27,9 @@ typedef NS_ENUM(NSUInteger, SENExpansionType) {
 };
 
 typedef struct {
-    NSInteger min;
-    NSInteger max;
-    NSInteger setpoint;
+    CGFloat min;
+    CGFloat max;
+    CGFloat setpoint;
 } SENExpansionValueRange;
 
 @interface SENExpansion : NSObject <SENSerializable>

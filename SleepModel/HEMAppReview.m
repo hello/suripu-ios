@@ -16,6 +16,7 @@
 #import "HEMConfig.h"
 #import "HEMAppReviewQuestion.h"
 #import "HEMAppReviewAnswer.h"
+#import "HEMDeviceService.h"
 
 @implementation HEMAppReview
 
@@ -39,6 +40,7 @@ static NSString* const HEMLocalizedKeyAnswerDoNotAsk = @"app-review.question.ans
 static NSString* const HEMLocalizedKeyAnswerNoThanks = @"app-review.question.answer.no-thanks";
 
 static NSString* const HEMAmazonReviewResourceName = @"AmazonReviews";
+static NSString* const HEMAmazonReviewForVoiceResourceName = @"AmazonReviewsForVoice";
 
 #pragma mark - Conditions for app review
 
@@ -131,8 +133,19 @@ static NSString* const HEMAmazonReviewResourceName = @"AmazonReviews";
     static NSDictionary* linksByCode = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *path = [[NSBundle mainBundle] pathForResource:HEMAmazonReviewResourceName
-                                                         ofType:@"plist"];
+        HEMDeviceService* deviceService = [HEMDeviceService new];
+        SENSenseHardware hardwareVersion = [deviceService savedHardwareVersion];
+        NSString* resourceName = nil;
+        switch (hardwareVersion) {
+            case SENSenseHardwareVoice:
+                resourceName = HEMAmazonReviewForVoiceResourceName;
+                break;
+            case SENSenseHardwareOne:
+            default:
+                resourceName = HEMAmazonReviewResourceName;
+                break;
+        }
+        NSString *path = [[NSBundle mainBundle] pathForResource:resourceName ofType:@"plist"];
         linksByCode = [NSDictionary dictionaryWithContentsOfFile:path];
     });
     return linksByCode;

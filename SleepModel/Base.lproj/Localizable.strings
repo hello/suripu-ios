@@ -398,8 +398,9 @@
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
 "alarm.light.title" = "Lights";
-"alarm.light.attribution.format" = "Lights set at %ld%@";
+"alarm.light.attribution.format" = "%@ set at %@";
 "alarm.thermostat.title" = "Thermostat";
+"alarm.thermostat.attribution.format" = "%@ set at %@° - %@°";
 "alarm.expansion.error.unable.to.load.title" = "Expansion not loaded";
 "alarm.expansion.error.unable.to.load.message" = "Sense could not load expansions at this time. Please try again later.";
 
@@ -427,10 +428,14 @@
 "alarm.sounds.error.title" = "Could not load sounds";
 "alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";
 
-"alarm.expansion.temp.range.format" = "%ld° - %ld°";
-"alarm.expansion.light.format" = "%ld%@";
+"alarm.expansion.temp.range.format" = "%.0f° - %.0f°";
+"alarm.expansion.light.format" = "%.0f%@";
 "alarm.expansion.error.cannot-set-config.title" = "Update failed";
 "alarm.expansion.error.cannot-set-config.message" = "A problem occurred while trying to update your selection.";
+
+"alarm.expansion.configuration.selection.title.format" = "Select a %@";
+"alarm.expansion.lights.selection.subtitle" = "This will apply to all alarms activating lights.";
+"alarm.expansion.thermostat.selection.subtitle" = "This will apply to all alarms activating a thermostat.";
 
 // background noise
 "noise.sound-name.none" = "None";
@@ -1024,8 +1029,6 @@
 
 "voice.command.room-conditions.category.name" = "Room Conditions";
 "voice.command.room-conditions.message" = "Before each command, say \"Okay Sense\" to ask about your temperature, humidity, air quality, and more.";
-"voice.command.bedroom.category.name" = "Bedroom Conditions";
-"voice.command.bedroom.example.1" = "What are my bedroom conditions?";
 
 "voice.command.temperature.category.name" = "Temperature";
 "voice.command.temperature.example.1" = "What is the temperature?";
@@ -1034,7 +1037,7 @@
 "voice.command.humidity.example.1" = "What is the humidity?";
 
 "voice.command.noise.category.name" = "Noise Level";
-"voice.command.noise.example.1" = "How is the noise?";
+"voice.command.noise.example.1" = "How noisy is it?";
 "voice.command.noise.example.2" = "What is the noise level?";
 
 "voice.command.air.category.name" = "Air Quality";

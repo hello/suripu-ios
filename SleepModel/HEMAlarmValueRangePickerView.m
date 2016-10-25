@@ -13,9 +13,11 @@
 static CGFloat const HEMAlarmValueRangePickerWidth = 90.f;
 static CGFloat const HEMAlarmValueRangeDividerWidth = 40.0f;
 static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
+static CGFloat const HEMAlarmValueRangeSeparatorHeight = 0.5f;
 
 @interface HEMAlarmValueRangePickerView()
 
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* separatorHeightConstraint;
 @property (nonatomic, strong) NAPickerView* minPicker;
 @property (nonatomic, strong) NAPickerView* maxPicker;
 @property (nonatomic, strong) UIView* rangeDivider;
@@ -25,6 +27,12 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
 @end
 
 @implementation HEMAlarmValueRangePickerView
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [[self separatorHeightConstraint] setConstant:HEMAlarmValueRangeSeparatorHeight];
+    [[self separator] setBackgroundColor:[UIColor separatorColor]];
+}
 
 - (void)addGradient:(HEMGradient*)gradient toView:(UIView*)view {
     if (view && gradient) {

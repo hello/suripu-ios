@@ -59,9 +59,9 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
 
 + (SENExpansionValueRange)valueRangeFromDict:(NSDictionary*)dict {
     SENExpansionValueRange range;
-    range.min = [SENObjectOfClass(dict[kSENExpansionValueRangeAttrMin], [NSNumber class]) integerValue];
-    range.max = [SENObjectOfClass(dict[kSENExpansionValueRangeAttrMax], [NSNumber class]) integerValue];
-    range.setpoint = [SENObjectOfClass(dict[kSENExpansionValueRangeAttrSetpoint], [NSNumber class]) integerValue];
+    range.min = [SENObjectOfClass(dict[kSENExpansionValueRangeAttrMin], [NSNumber class]) doubleValue];
+    range.max = [SENObjectOfClass(dict[kSENExpansionValueRangeAttrMax], [NSNumber class]) doubleValue];
+    range.setpoint = [SENObjectOfClass(dict[kSENExpansionValueRangeAttrSetpoint], [NSNumber class]) doubleValue];
     return range;
 }
 

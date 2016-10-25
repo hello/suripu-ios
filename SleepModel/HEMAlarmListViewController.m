@@ -11,6 +11,7 @@
 #import "HEMSubNavigationView.h"
 #import "HEMAlarmService.h"
 #import "HEMSupportUtil.h"
+#import "HEMExpansionService.h"
 
 @interface HEMAlarmListViewController () <HEMAlarmControllerDelegate, HEMAlarmListPresenterDelegate>
 
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton *addButton;
 
 @property (nonatomic, strong) HEMAlarmService* alarmService;
+@property (nonatomic, strong) HEMExpansionService* expansionService;
 @property (nonatomic, weak) HEMAlarmListPresenter* alarmsPresenter;
 @property (nonatomic, assign) BOOL launchNewAlarmOnLoad;
 
@@ -43,8 +45,10 @@
 
 - (void)configurePresenter {
     HEMAlarmService* alarmService = [HEMAlarmService new];
+    HEMExpansionService* expansionService = [HEMExpansionService new];
     
-    HEMAlarmListPresenter* alarmPresenter = [[HEMAlarmListPresenter alloc] initWithAlarmService:alarmService];
+    HEMAlarmListPresenter* alarmPresenter
+        = [[HEMAlarmListPresenter alloc] initWithAlarmService:alarmService expansionService:expansionService];
     [alarmPresenter bindWithCollectionView:[self collectionView]];
     [alarmPresenter bindWithSubNavigationView:[self subNav]];
     [alarmPresenter bindWithDataLoadingIndicator:[self loadingIndicator]];
@@ -53,6 +57,7 @@
     
     [self setAlarmsPresenter:alarmPresenter];
     [self setAlarmService:alarmService];
+    [self setExpansionService:expansionService];
     [self addPresenter:alarmPresenter];
 }
 
@@ -66,6 +71,7 @@
     alarmController.alarm = alarm;
     alarmController.deviceService = self.deviceService;
     alarmController.alarmService = self.alarmService;
+    alarmController.expansionService = self.expansionService;
     alarmController.delegate = self;
     [self presentViewController:controller animated:YES completion:nil];
 }

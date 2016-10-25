@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.6.0.10
+
+New:
+
+* Amazon review routing only for people with Sense One for now
+* Add title view for configuration selection in alarm expansion setup
+* Updated units and time icon in account settings
+* Add lights and thermostat attribution
+* Convert thermostat ranges based on preferences
+* More voice command tweaks
+
 ## 1.6.0.9
 
 New:

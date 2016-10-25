@@ -7,6 +7,7 @@
 //
 
 #import "UIBarButtonItem+HEMNav.h"
+#import <SenseKit/SENPreference.h>
 
 #import "HEMActionSheetViewController.h"
 #import "HEMAlarmExpansionSetupPresenter.h"
@@ -15,6 +16,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMBasicTableViewCell.h"
 #import "HEMActivityCoverView.h"
+#import "HEMSensorValueFormatter.h"
+#import "HEMActionSheetTitleView.h"
 #import "HEMStyle.h"
 
 static CGFloat const kHEMAlarmExpRowHeight = 66.0f;
@@ -38,6 +41,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configs;
 @property (nonatomic, strong) NSError* configError;
+@property (nonatomic, weak) UINavigationItem* navItem;
 
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 @property (nonatomic, strong) SENAlarmExpansion* alarmExpansion;
@@ -69,30 +73,39 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     [tableView setSeparatorColor:[UIColor separatorColor]];
     
     SENExpansionType type = [[self expansion] type];
+    SENExpansionValueRange expansionRange = [[self expansion] valueRange];
+    SENExpansionValueRange selectedRange = [[self alarmExpansion] targetRange];
     HEMAlarmValueRangePickerView* picker = (id) [tableView tableHeaderView];
     
+    if (type == SENExpansionTypeThermostat) {
+        expansionRange = [[self expansionService] convertThermostatRangeBasedOnPreference:expansionRange];
+        selectedRange = [[self expansionService] convertThermostatRangeBasedOnPreference:selectedRange];
+    }
+    
     // set defaults
+    NSInteger maxValue = 0, minValue = 0;
     if ([[self alarmExpansion] targetRange].max > 0) {
-        [picker setSelectedMaxValue:[[self alarmExpansion] targetRange].max];
+        maxValue = selectedRange.max;
     } else {
-        [picker setSelectedMaxValue:[[self expansion] valueRange].max];
+        maxValue = expansionRange.max;
     }
     
     if ([[self alarmExpansion] targetRange].min > 0) {
-        [picker setSelectedMinValue:[[self alarmExpansion] targetRange].min];
+        minValue = selectedRange.min;
     } else {
-        [picker setSelectedMinValue:[[self expansion] valueRange].min];
+        minValue = expansionRange.min;
     }
-
+    
+    [picker setSelectedMaxValue:maxValue];
+    [picker setSelectedMinValue:minValue];
     [picker setPickerDelegate:self];
     
-    SENExpansionValueRange valueRange = [[self expansion] valueRange];
     if (type == SENExpansionTypeThermostat) {
         [picker setUnitSymbol:NSLocalizedString(@"measurement.temperature.unit", nil)];
-        [picker configureRangeWithMin:valueRange.min max:valueRange.max];
+        [picker configureRangeWithMin:expansionRange.min max:expansionRange.max];
     } else {
         [picker setUnitSymbol:NSLocalizedString(@"measurement.percentage.unit", nil)];
-        [picker configureWithMin:valueRange.min max:valueRange.max];
+        [picker configureWithMin:expansionRange.min max:expansionRange.max];
     }
     
     [self setTableView:tableView];
@@ -102,6 +115,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
     [navItem setRightBarButtonItem:[UIBarButtonItem infoButtonWithTarget:self
                                                                   action:@selector(showInfo)]];
+    [self setNavItem:navItem];
 }
 
 - (void)bindWithActivityContainerView:(UIView*)activityContainerView {
@@ -241,6 +255,25 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - TableView convenience methods
 
+- (UIView *)configurationTitleView {
+    NSString* configurationName = [[self expansionService] configurationNameForExpansion:[self expansion]];
+    NSString* titleFormat = NSLocalizedString(@"alarm.expansion.configuration.selection.title.format", nil);
+    NSString* title = [NSString stringWithFormat:titleFormat, [configurationName lowercaseString]];
+    
+    NSString* message = nil;
+    switch ([[self expansion] type]) {
+        default:
+        case SENExpansionTypeThermostat:
+            message = NSLocalizedString(@"alarm.expansion.thermostat.selection.subtitle", nil);
+            break;
+        case SENExpansionTypeLights:
+            message = NSLocalizedString(@"alarm.expansion.lights.selection.subtitle", nil);
+    }
+    
+    NSAttributedString* attrDesc = [HEMActionSheetTitleView attributedDescriptionFromText:message];
+    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrDesc];
+}
+
 - (void)showConfigurationOptions {
     if ([[self configs] count] == 0) {
         // TODO: show error?
@@ -248,9 +281,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     HEMActionSheetViewController* sheet = [HEMMainStoryboard instantiateActionSheetViewController];
-    NSString* configurationName = [[self expansionService] configurationNameForExpansion:[self expansion]];
-    NSString* titleFormat = NSLocalizedString(@"expansion.configuration.options.title.format", nil);
-    [sheet setTitle:[[NSString stringWithFormat:titleFormat, configurationName] uppercaseString]];
+    [sheet setCustomTitleView:[self configurationTitleView]];
     
     __weak typeof (self) weakSelf = self;
     
@@ -367,6 +398,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     SENExpansionValueRange valueRange;
     valueRange.min = [pickerView selectedMinValue];
     valueRange.max = [pickerView selectedMaxValue];
+    
+    if ([[self expansion] type] == SENExpansionTypeThermostat
+        && [SENPreference temperatureFormat] == SENTemperatureFormatFahrenheit) {
+        // this means values from picker will be in fahrenheit
+        valueRange = [[self expansionService] convertThermostatRangeToCelsis:valueRange];
+    }
+    
     [[self alarmExpansion] setTargetRange:valueRange];
 }
 

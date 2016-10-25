@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     }
     
     [self setTableView:tableView];
-    [self loadExpansinConfigurations];
+    [self loadExpansionConfigurations];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 
 #pragma mark - Load data
 
-- (void)loadExpansinConfigurations {
+- (void)loadExpansionConfigurations {
     [self setLoading:YES];
     
     __weak typeof(self) weakSelf = self;
@@ -195,6 +195,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* title = nil;
     NSString* detail = nil;
     BOOL showLoading = NO;
+    UIColor* detailColor = [UIColor grey4];
     
     NSNumber* rowType = [self rows][[indexPath row]];
     switch ([rowType unsignedIntegerValue]) {
@@ -211,6 +212,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         case HEMAlarmExpSetupRowTypeConfigSelection:
             title = [[self expansionService] configurationNameForExpansion:[self expansion]];
             detail = [self selectedConfigurationName];
+            if (!detail && [self configError]) {
+                detail = [NSLocalizedString(@"actions.retry", nil) lowercaseString];
+                detailColor = [UIColor tintColor];
+            }
             showLoading = [self isLoading];
             break;
     }
@@ -221,7 +226,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [[bCell customDetailLabel] setText:detail];
     [[bCell customDetailLabel] setFont:[UIFont body]];
-    [[bCell customDetailLabel] setTextColor:[UIColor grey4]];
+    [[bCell customDetailLabel] setTextColor:detailColor];
     
     [bCell showActivity:showLoading];
 }
@@ -245,6 +250,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             if (![self isLoading]) {
                 if ([[self configs] count] > 0) {
                     [self showConfigurationOptions];
+                } else if ([self configError]) {
+                    [self loadExpansionConfigurations];
+                    [tableView reloadData];
                 }
             }
             break;

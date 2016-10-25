@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.6.0.11
+
+New:
+
+* Design tweaks
+
+Fixes:
+
+* Fixed issue in alarm expansion setup where configurations are not loaded
+
 ## 1.6.0.10
 
 New:

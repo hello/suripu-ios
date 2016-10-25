@@ -364,7 +364,20 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         case SENSensorStateOk: {
             id sensorObj = [self groupedSensors][[indexPath row]];
             if ([sensorObj isKindOfClass:[NSArray class]]) {
-                itemSize.height = [HEMSensorGroupCollectionViewCell heightWithNumberOfMembers:[sensorObj count]];
+                CGFloat cellWidth = itemSize.width;
+                UIFont* textFont = [UIFont body];
+                NSString* worstConditionString = nil;
+                SENCondition worstCondition = SENConditionIncomplete;
+                for (SENSensor* sensor in sensorObj) {
+                    if (!worstConditionString || [sensor condition] < worstCondition) {
+                        worstConditionString = [sensor localizedMessage];
+                        worstCondition = [sensor condition];
+                    }
+                }
+                itemSize.height = [HEMSensorGroupCollectionViewCell heightWithNumberOfMembers:[sensorObj count]
+                                                                                conditionText:worstConditionString
+                                                                                conditionFont:textFont
+                                                                                    cellWidth:cellWidth];
             } else {
                 SENSensor* sensor = sensorObj;
                 itemSize.height = [HEMSensorCollectionViewCell heightWithDescription:[sensor localizedMessage]
@@ -521,7 +534,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     NSString* groupTitle = NSLocalizedString(@"room-conditions.air-quality", nil);
     [[groupCell groupNameLabel] setText:[groupTitle uppercaseString]];
     
-    SENCondition worstCondition = SENConditionIdeal;
+    SENCondition worstCondition = SENConditionIncomplete;
     NSString* worstConditionString = nil;
     for (SENSensor* sensor in sensors) {
         if (!worstConditionString || [sensor condition] < worstCondition) {
@@ -541,6 +554,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
         [[memberView tap] addTarget:self action:@selector(didTapOnGroupMember:)];
     }
     [[groupCell groupMessageLabel] setText:worstConditionString];
+    [[groupCell groupMessageLabel] setFont:[UIFont body]];
 }
 
 - (void)configureSensorCell:(HEMSensorCollectionViewCell*)sensorCell forSensor:(SENSensor*)sensor {

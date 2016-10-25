@@ -20,6 +20,7 @@
 #import "HEMSensorChartContainer.h"
 #import "HEMSensorXAxisValueFormatter.h"
 #import "HEMSubNavigationView.h"
+#import "HEMScreenUtils.h"
 
 #import "HEMSensorValueCollectionViewCell.h"
 #import "HEMSensorAboutCollectionViewCell.h"
@@ -29,6 +30,7 @@
 static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
 static NSUInteger const kHEMSensorDetailXAxisOffset = 10;
+static CGFloat const kHEMSensorDetailMaxChartHeight = 271.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -298,8 +300,13 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     CGFloat heightBounds = CGRectGetHeight([[collectionView superview] bounds]);
     CGFloat cellSpacing = [flowLayout minimumInteritemSpacing];
     CGFloat topSpacing = [flowLayout sectionInset].top;
-    CGFloat chartHeight = heightBounds * kHEMSensorDetailCellChartHeightRatio;
     CGFloat height = 0.0f;
+    // FIXME: hack this for now to ensure limit lines are touched by the chart
+    // for as many devices as possible
+    CGFloat chartHeight = kHEMSensorDetailMaxChartHeight;
+    if (HEMIsIPhone4Family()) {
+        chartHeight = heightBounds * kHEMSensorDetailCellChartHeightRatio;
+    }
     
     NSNumber* contentType = [self content][[indexPath row]];
     switch ([contentType unsignedIntegerValue]) {
@@ -382,7 +389,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     
     LineChartView* lineChartView = (id) [[cell chartContentView] chartView];
     if (!lineChartView) {
-        lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell chartContentView] bounds]];
+        CGRect chartFrame = [[cell chartContentView] bounds];
+        lineChartView = [[LineChartView alloc] initForSensorWithFrame:chartFrame];
     }
     
     NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
@@ -508,11 +516,17 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         }
     }
 
-    NSString* measureString = [NSString stringWithFormat:measureFormat, unitString];
+    if ([unitString length] > 0) {
+        NSString* measureString = [NSString stringWithFormat:measureFormat, unitString];
+        [[scaleCell measurementLabel] setText:measureString];
+    } else {
+        [[scaleCell measurementLabel] setHidden:YES];
+    }
     
     [scaleCell setNumberOfScales:count];
+    [[scaleCell titleLabel] setFont:[UIFont h5]];
+    [[scaleCell titleLabel] setTextColor:[UIColor grey6]];
     [[scaleCell titleLabel] setText:NSLocalizedString(@"sensor.section.scale.title", nil)];
-    [[scaleCell measurementLabel] setText:measureString];
     
     NSString* rangeFormat = nil;
     NSString* rangeString = nil;
@@ -544,7 +558,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)configureAboutCell:(HEMSensorAboutCollectionViewCell*)aboutCell {
     NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
     [[aboutCell titleLabel] setText:title];
-    [[aboutCell titleLabel] setFont:[UIFont h6]];
+    [[aboutCell titleLabel] setFont:[UIFont h5]];
     [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
     [[aboutCell aboutLabel] setText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];

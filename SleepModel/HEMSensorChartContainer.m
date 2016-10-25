@@ -32,6 +32,10 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
     UIColor* lineColor = [[UIColor grey3] colorWithAlphaComponent:0.2f];
     [[self topLimitLabel] setTextColor:[UIColor grey4]];
     [[self botLimitLabel] setTextColor:[UIColor grey4]];
+    
+    [[self topLimitLabel] setFont:[UIFont h8]];
+    [[self botLimitLabel] setFont:[UIFont h8]];
+    
     [[self topLimitLine] setBackgroundColor:lineColor];
     [[self botLimitLine] setBackgroundColor:lineColor];
     

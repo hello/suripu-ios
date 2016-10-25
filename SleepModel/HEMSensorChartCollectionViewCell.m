@@ -30,7 +30,7 @@
 }
 
 - (void)addXAxisLabel:(NSString*)label {
-    UIFont* labelFont = [UIFont h7Bold];
+    UIFont* labelFont = [UIFont h8];
     CGFloat maxHeight = CGRectGetHeight([[self xAxisLabelContainer] bounds]);
     NSDictionary* labelAttrs = @{NSFontAttributeName : labelFont};
     CGSize labelSize = [label sizeBoundedByHeight:maxHeight attributes:labelAttrs];
@@ -40,7 +40,7 @@
     
     UILabel* labelView = [[UILabel alloc] initWithFrame:labelFrame];
     [labelView setFont:labelFont];
-    [labelView setTextColor:[UIColor grey5]];
+    [labelView setTextColor:[UIColor grey4]];
     [labelView setText:label];
     [labelView setBackgroundColor:[UIColor clearColor]];
     [labelView setTextAlignment:NSTextAlignmentCenter];

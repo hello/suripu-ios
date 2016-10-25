@@ -6,11 +6,14 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "NSString+HEMUtils.h"
+
 #import "HEMSensorGroupCollectionViewCell.h"
 #import "HEMSensorGroupMemberView.h"
 
-static CGFloat const HEMSensorGroupCellBaseHeight = 74.0f;
+static CGFloat const HEMSensorGroupCellBaseHeight = 56.0f;
 static CGFloat const HEMSensorGroupMemberHeight = 56.0f;
+static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
 
 @interface HEMSensorGroupCollectionViewCell()
 
@@ -20,8 +23,13 @@ static CGFloat const HEMSensorGroupMemberHeight = 56.0f;
 
 @implementation HEMSensorGroupCollectionViewCell
 
-+ (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount {
-    return HEMSensorGroupCellBaseHeight + (HEMSensorGroupMemberHeight * memberCount);
++ (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount
+                       conditionText:(NSString*)conditionText
+                       conditionFont:(UIFont*)conditionFont
+                           cellWidth:(CGFloat)cellWidth {
+    CGFloat maxLabelWidth = cellWidth - (2 * HEMSensorGroupLabelMargin);
+    CGFloat conditionHeight = [conditionText heightBoundedByWidth:maxLabelWidth usingFont:conditionFont];
+    return HEMSensorGroupCellBaseHeight + conditionHeight + (HEMSensorGroupMemberHeight * memberCount);
 }
 
 - (void)prepareForReuse {

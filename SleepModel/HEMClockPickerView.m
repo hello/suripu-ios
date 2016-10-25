@@ -19,6 +19,7 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
 };
 
 @interface HEMClockPickerView ()
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* separatorHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIView* topGradientView;
 @property (nonatomic, weak) IBOutlet UIView* botGradientView;
 @property (nonatomic, strong) UILabel *colonLabel;
@@ -35,6 +36,7 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
 
 @implementation HEMClockPickerView
 
+static CGFloat const HEMClockPickerSeparatorHeight = 0.5f;
 static CGFloat const HEMClockPickerHourWidth = 90.f;
 static CGFloat const HEMClockPickerMinuteWidth = 90.f;
 static CGFloat const HEMClockPickerDividerWidth = 40.f;
@@ -231,6 +233,7 @@ static NSUInteger const HEMClock12HourCount = 12;
 }
 
 - (void)configureGradientViews {
+    [[self separator] setBackgroundColor:[UIColor separatorColor]];
     [self addGradient:[HEMGradient topGradientForTimePicker]
                toView:[self topGradientView]];
     
@@ -239,7 +242,6 @@ static NSUInteger const HEMClock12HourCount = 12;
 }
 
 - (void)display {
-    [[self separator] setBackgroundColor:[UIColor separatorColor]];
     [self setClipsToBounds:NO];
     
     self.alpha = 0;
@@ -293,6 +295,8 @@ static NSUInteger const HEMClock12HourCount = 12;
 }
 
 - (void)layoutPickerViews {
+    [[self separatorHeightConstraint] setConstant:HEMClockPickerSeparatorHeight];
+    
     CGFloat height = CGRectGetHeight(self.bounds);
     CGFloat width = CGRectGetWidth(self.bounds);
     CGFloat totalItemWidth = HEMClockPickerHourWidth + HEMClockPickerMinuteWidth + HEMClockPickerDividerWidth

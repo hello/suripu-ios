@@ -10,7 +10,7 @@ CGFloat const kHEMAlarmExpansionViewHeight = 42.0f;
 
 static CGFloat const kHEMAlarmExpansionIconMargin = 18.0f;
 static CGFloat const kHEMAlarmExpansionTextPadding = 14.0f;
-static CGFloat const kHEMAlarmExpansionSeparatorHeight = 1.0f;
+static CGFloat const kHEMAlarmExpansionSeparatorHeight = 0.5f;
 
 static NSInteger const kHEMAlarmExpansionTagIcon = 10;
 static NSInteger const kHEMAlarmExpansionTagLabel = 11;

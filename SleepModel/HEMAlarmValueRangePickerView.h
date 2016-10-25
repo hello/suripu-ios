@@ -20,7 +20,7 @@
 
 @property (nonatomic, weak) IBOutlet UIView* topGradientView;
 @property (nonatomic, weak) IBOutlet UIView* botGradientView;
-@property (nonatomic, weak) IBOutlet UIImageView* botShadowView;
+@property (nonatomic, weak) IBOutlet UIView* separator;
 
 @property (nonatomic, weak) id<HEMAlarmValueRangePickerDelegate> pickerDelegate;
 @property (nonatomic, copy) NSString* unitSymbol;

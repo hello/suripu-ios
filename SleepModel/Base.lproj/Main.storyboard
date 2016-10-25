@@ -91,6 +91,7 @@
                                     <connections>
                                         <outlet property="botGradientView" destination="B18-dK-Yet" id="qQa-7J-q1e"/>
                                         <outlet property="separator" destination="e5C-y2-fVP" id="hAd-qO-Idj"/>
+                                        <outlet property="separatorHeightConstraint" destination="v45-sK-ftc" id="4oe-oc-pBL"/>
                                         <outlet property="topGradientView" destination="mUm-vw-qys" id="m5C-gF-t5q"/>
                                     </connections>
                                 </view>
@@ -391,27 +392,32 @@
                                             <rect key="frame" x="0.0" y="202" width="600" height="112"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="O7E-9b-NFi">
-                                            <rect key="frame" x="0.0" y="310" width="600" height="4"/>
-                                        </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7HW-Px-Iqv">
+                                            <rect key="frame" x="0.0" y="313" width="600" height="1"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="iRV-r5-PcV"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="iKn-pK-VPv" secondAttribute="trailing" id="2FH-D5-dr6"/>
+                                        <constraint firstAttribute="trailing" secondItem="7HW-Px-Iqv" secondAttribute="trailing" id="2c0-Qu-MVg"/>
                                         <constraint firstItem="iKn-pK-VPv" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="3XN-6Q-MGA"/>
                                         <constraint firstAttribute="trailing" secondItem="KwE-L2-w0g" secondAttribute="trailing" id="KX6-gu-DMx"/>
-                                        <constraint firstAttribute="bottom" secondItem="O7E-9b-NFi" secondAttribute="bottom" id="Slk-2P-xIb"/>
-                                        <constraint firstAttribute="trailing" secondItem="O7E-9b-NFi" secondAttribute="trailing" id="j6l-ab-hhf"/>
+                                        <constraint firstAttribute="bottom" secondItem="7HW-Px-Iqv" secondAttribute="bottom" id="RKs-83-5ag"/>
+                                        <constraint firstItem="7HW-Px-Iqv" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="dn7-dI-5I1"/>
                                         <constraint firstAttribute="bottom" secondItem="KwE-L2-w0g" secondAttribute="bottom" id="jEg-X2-3Tw"/>
                                         <constraint firstItem="iKn-pK-VPv" firstAttribute="height" secondItem="KwE-L2-w0g" secondAttribute="height" id="loT-yY-fCa"/>
                                         <constraint firstItem="KwE-L2-w0g" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="nIu-Rg-kmt"/>
-                                        <constraint firstItem="O7E-9b-NFi" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="pQd-bj-fNZ"/>
                                         <constraint firstItem="iKn-pK-VPv" firstAttribute="top" secondItem="hgb-Cl-XCm" secondAttribute="top" id="pdS-sX-PM2"/>
                                         <constraint firstItem="iKn-pK-VPv" firstAttribute="bottom" secondItem="KwE-L2-w0g" secondAttribute="top" constant="-90" id="w4p-0e-87u"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="botGradientView" destination="KwE-L2-w0g" id="fPm-IM-BS5"/>
-                                        <outlet property="botShadowView" destination="O7E-9b-NFi" id="YFY-HY-CwH"/>
+                                        <outlet property="separator" destination="7HW-Px-Iqv" id="rrK-ab-Rri"/>
+                                        <outlet property="separatorHeightConstraint" destination="iRV-r5-PcV" id="ZTb-Qe-9FW"/>
                                         <outlet property="topGradientView" destination="iKn-pK-VPv" id="ESn-ao-Hcp"/>
                                     </connections>
                                 </view>

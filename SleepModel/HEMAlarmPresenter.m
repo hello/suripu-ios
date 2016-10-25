@@ -600,6 +600,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
 #pragma mark - Expansion Actions
 
 - (void)handleExpansionSelection:(HEMAlarmRowType)rowSelection withTitle:(NSString*)title {

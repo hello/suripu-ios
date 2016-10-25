@@ -158,10 +158,6 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         [tempExamples setCategoryName:NSLocalizedString(@"voice.command.temperature.category.name", nil)];
         [tempExamples setCommands:@[NSLocalizedString(@"voice.command.temperature.example.1", nil)]];
         
-        HEMVoiceCommandExamples* bedroomExamples = [HEMVoiceCommandExamples new];
-        [bedroomExamples setCategoryName:NSLocalizedString(@"voice.command.bedroom.category.name", nil)];
-        [bedroomExamples setCommands:@[NSLocalizedString(@"voice.command.bedroom.example.1", nil)]];
-        
         HEMVoiceCommandExamples* humidityExamples = [HEMVoiceCommandExamples new];
         [humidityExamples setCategoryName:NSLocalizedString(@"voice.command.humidity.category.name", nil)];
         [humidityExamples setCommands:@[NSLocalizedString(@"voice.command.humidity.example.1", nil)]];
@@ -179,7 +175,6 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
         [conditionsGroup setCategoryName:NSLocalizedString(@"voice.command.room-conditions.category.name", nil)];
         [conditionsGroup setMessage:NSLocalizedString(@"voice.command.room-conditions.message", nil)];
         [conditionsGroup setExamples:@[tempExamples,
-                                       bedroomExamples,
                                        humidityExamples,
                                        noiseExamples,
                                        airExamples]];

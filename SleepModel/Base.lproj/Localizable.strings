@@ -1025,8 +1025,6 @@
 
 "voice.command.room-conditions.category.name" = "Room Conditions";
 "voice.command.room-conditions.message" = "Before each command, say \"Okay Sense\" to ask about your temperature, humidity, air quality, and more.";
-"voice.command.bedroom.category.name" = "Bedroom Conditions";
-"voice.command.bedroom.example.1" = "What are my bedroom conditions?";
 
 "voice.command.temperature.category.name" = "Temperature";
 "voice.command.temperature.example.1" = "What is the temperature?";
@@ -1035,7 +1033,7 @@
 "voice.command.humidity.example.1" = "What is the humidity?";
 
 "voice.command.noise.category.name" = "Noise Level";
-"voice.command.noise.example.1" = "How is the noise?";
+"voice.command.noise.example.1" = "How noisy is it?";
 "voice.command.noise.example.2" = "What is the noise level?";
 
 "voice.command.air.category.name" = "Air Quality";

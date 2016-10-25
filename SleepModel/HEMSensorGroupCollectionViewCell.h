@@ -16,7 +16,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *groupMessageLabel;
 @property (weak, nonatomic) IBOutlet UIView *sensorContentView;
 
-+ (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount;
++ (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount
+                       conditionText:(NSString*)conditionText
+                       conditionFont:(UIFont*)conditionFont
+                           cellWidth:(CGFloat)cellWidth;
 - (HEMSensorGroupMemberView*)addSensorWithName:(NSString*)name
                                          value:(NSString*)valueText
                                     valueColor:(UIColor*)valueColor;

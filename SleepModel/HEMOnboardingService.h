@@ -416,9 +416,9 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 - (void)forceSenseToUpdateFirmware:(HEMOnboardingDFUStatusHandler)update
                         completion:(HEMOnboardingDFUHandler)completion;
 
-#pragma mark - Features
+#pragma mark - Voice
 
-- (void)checkFeatures;
+- (void)refreshDeviceMetadata;
 - (BOOL)isVoiceAvailable;
 
 @end

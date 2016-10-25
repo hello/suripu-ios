@@ -23,7 +23,6 @@ static CGFloat const HEMSettingsBottomMargin = 10.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSettingsSection) {
     HEMSettingsSectionAccount = 0,
-    HEMSettingsSectionExpansion,
     HEMSettingsSectionSupport,
     HEMSettingsSectionShare,
     HEMSettingsSections
@@ -33,7 +32,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowProfile = 0,
     HEMSettingsAccountRowDevices,
     HEMSettingsAccountRowNotifications,
-    HEMSettingsAccountRowPreferences,
+    HEMSettingsAccountRowExpansions,
+    HEMSettingsAccountRowVoice,
     HEMSettingsAccountRowCount
 };
 
@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 @property (nonatomic, weak) HEMBreadcrumbService* breadcrumbService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, weak) HEMActivityIndicatorView* indicatorView;
-@property (nonatomic, strong) NSArray<NSNumber*>* sections;
+@property (nonatomic, strong) NSArray<NSArray<NSNumber*>*>* sections;
 @property (nonatomic, strong) UIView* versionView;
 @property (nonatomic, weak) UILabel* versionLabel;
 
@@ -171,12 +171,30 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     void(^refresh)(SENSenseHardware version) = ^(SENSenseHardware version) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSMutableArray* sections = [NSMutableArray arrayWithCapacity:HEMSettingsSections];
-        [sections addObject:@(HEMSettingsSectionAccount)];
+        NSMutableArray* rows = nil;
+        
+        // account
+        rows = [NSMutableArray arrayWithArray:@[@(HEMSettingsAccountRowProfile),
+                                                @(HEMSettingsAccountRowDevices),
+                                                @(HEMSettingsAccountRowNotifications)]];
+        
         if ([[strongSelf expansionService] isEnabledForHardware:version]) {
-            [sections addObject:@(HEMSettingsSectionExpansion)];
+            [rows addObject:@(HEMSettingsAccountRowExpansions)];
         }
-        [sections addObject:@(HEMSettingsSectionSupport)];
-        [sections addObject:@(HEMSettingsSectionShare)];
+        
+        if (version == SENSenseHardwareVoice) {
+            [rows addObject:@(HEMSettingsAccountRowVoice)];
+        }
+        
+        [sections addObject:rows];
+        
+        // support
+        rows = [NSMutableArray arrayWithArray:@[@(HEMSettingsSupportRowSupport)]];
+        [sections addObject:rows];
+        // share
+        rows = [NSMutableArray arrayWithArray:@[@(HEMSettingsShareRowTellFriend)]];
+        [sections addObject:rows];
+        
         [strongSelf setSections:sections];
         [[strongSelf indicatorView] stop];
         [[strongSelf indicatorView] setHidden:YES];
@@ -201,11 +219,17 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 }
 
 - (NSString *)titleForRowAtIndexPath:(NSIndexPath *)indexPath {
-   HEMSettingsSection dynaSection = [[self sections][[indexPath section]] unsignedIntegerValue];
+    NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
+    NSArray<NSNumber*>* rows = [self sections][section];
     
-    if (dynaSection == HEMSettingsSectionAccount) {
-        switch (row) {
+    if (row >= [rows count]) {
+        return nil;
+    }
+    
+    if (section == HEMSettingsSectionAccount) {
+        NSNumber* rowType = rows[row];
+        switch ([rowType unsignedIntegerValue]) {
             default:
             case HEMSettingsAccountRowProfile:
                 return NSLocalizedString(@"settings.account", nil);
@@ -213,14 +237,14 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
                 return NSLocalizedString(@"settings.devices", nil);
             case HEMSettingsAccountRowNotifications:
                 return NSLocalizedString(@"settings.notifications", nil);
-            case HEMSettingsAccountRowPreferences:
-                return NSLocalizedString(@"settings.units", nil);
+            case HEMSettingsAccountRowExpansions:
+                return NSLocalizedString(@"settings.expansions", nil);
+            case HEMSettingsAccountRowVoice:
+                return NSLocalizedString(@"settings.voice", nil);
         }
-    } else if (dynaSection == HEMSettingsSectionExpansion) {
-        return NSLocalizedString(@"settings.expansions", nil);
-    } else if (dynaSection == HEMSettingsSectionSupport) {
+    } else if (section == HEMSettingsSectionSupport) {
         return NSLocalizedString(@"settings.support", nil);
-    } else if (dynaSection == HEMSettingsSectionShare) {
+    } else if (section == HEMSettingsSectionShare) {
         return NSLocalizedString(@"settings.tell-a-friend", nil);
     } else {
         return nil;
@@ -234,25 +258,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    HEMSettingsSection dynaSection = [[self sections][section] unsignedIntegerValue];
-    switch (dynaSection) {
-        case HEMSettingsSectionAccount:
-            return HEMSettingsAccountRowCount;
-        case HEMSettingsSectionExpansion:
-            return HEMSettingsExpansionRowCount;
-        case HEMSettingsSectionSupport:
-            return HEMSettingsSupportRowCount;
-        case HEMSettingsSectionShare:
-            return HEMSettingsShareRowCount;
-        default:
-            return 0;
-    }
+    NSArray<NSNumber*>* rows = [self sections][section];
+    return [rows count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    HEMSettingsSection dynaSection = [[self sections][section] unsignedIntegerValue];
-    switch (dynaSection) {
-        case HEMSettingsSectionExpansion:
+    switch (section) {
         case HEMSettingsSectionSupport:
         case HEMSettingsSectionShare:
             return HEMSettingsSectionHeaderHeight;
@@ -277,13 +288,20 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = [indexPath section];
-    HEMSettingsSection dynaSection = [[self sections][section] unsignedIntegerValue];
+    NSInteger row = [indexPath row];
+    NSArray<NSNumber*>* rows = [self sections][section];
+    
+    if (row >= [rows count]) {
+        return;
+    }
+    
+    NSNumber* rowType = rows[row];
+    
     HEMSettingsTableViewCell *settingsCell = (HEMSettingsTableViewCell *)cell;
     [[settingsCell titleLabel] setText:[self titleForRowAtIndexPath:indexPath]];
     
-    
-    if (dynaSection == HEMSettingsSectionAccount
-        && [indexPath row] == HEMSettingsAccountRowProfile) {
+    if (section == HEMSettingsSectionAccount
+        && [rowType unsignedIntegerValue] == HEMSettingsAccountRowProfile) {
         BOOL show = [self showIndicatorForCrumb:HEMBreadcrumbAccount];
         [settingsCell showNewIndicator:show];
     } else {
@@ -310,21 +328,22 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
-    HEMSettingsSection dynaSection = [[self sections][section] unsignedIntegerValue];
+    NSArray* rows = [self sections][section];
     
-    if (dynaSection == HEMSettingsSectionShare) {
+    if (section == HEMSettingsSectionShare) {
         [self tellAFriend];
-    } else {
-        HEMSettingsCategory category = [self categoryForSection:dynaSection andRow:row];
+    } else if (row < [rows count]) {
+        NSNumber* rowType = rows[row];
+        HEMSettingsCategory category = [self categoryForSection:section andRowType:rowType];
         [[self delegate] didSelectSettingsCategory:category fromPresenter:self];
     }
 }
 
 #pragma mark - Actions
 
-- (HEMSettingsCategory)categoryForSection:(HEMSettingsSection)section andRow:(NSInteger)row {
+- (HEMSettingsCategory)categoryForSection:(NSInteger)section andRowType:(NSNumber*)rowType {
     if (section == HEMSettingsSectionAccount) {
-        switch (row) {
+        switch ([rowType unsignedIntegerValue]) {
             default:
             case HEMSettingsAccountRowProfile:
                 return HEMSettingsCategoryProfile;
@@ -332,11 +351,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 return HEMSettingsCategoryDevices;
             case HEMSettingsAccountRowNotifications:
                 return HEMSettingsCategoryNotifications;
-            case HEMSettingsAccountRowPreferences:
-                return HEMSettingsCategoryPreferences;
+            case HEMSettingsAccountRowExpansions:
+                return HEMSettingsCategoryExpansions;
+            case HEMSettingsAccountRowVoice:
+                return HEMSettingsCategoryVoice;
         }
-    } else if (section == HEMSettingsSectionExpansion) {
-        return HEMSettingsCategoryExpansions;
     } else if (section == HEMSettingsSectionSupport) {
         return HEMSettingsCategorySupport;
     } else {

@@ -27,12 +27,12 @@
 #import "SENSleepSoundsState.h"
 #import "SENDFUStatus.h"
 #import "SENSpeechResult.h"
-#import "SENFeatures.h"
 #import "SENSwapStatus.h"
 #import "SENSensorStatus.h"
 #import "SENSensorDataRequest.h"
 #import "SENExpansion.h"
 #import "SENAlarmCollection.h"
+#import "SENSenseVoiceSettings.h"
 
 void SENClearModel();
 

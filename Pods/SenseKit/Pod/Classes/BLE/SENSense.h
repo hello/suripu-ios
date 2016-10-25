@@ -16,12 +16,19 @@ typedef NS_ENUM(NSUInteger, SENSenseMode) {
     SENSenseModePairing = 2
 };
 
+typedef NS_ENUM(NSUInteger, SENSenseAdvertisedVersion) {
+    SENSenseAdvertisedVersionUnknown = 0,
+    SENSenseAdvertisedVersionVoice
+};
+
 @interface SENSense : NSObject
 
 @property (nonatomic, copy, readonly) NSString* name;
+@property (nonatomic, strong, readonly) NSString* macAddress;
 @property (nonatomic, copy, readonly) NSString* deviceId;
 @property (nonatomic, assign, readonly) SENSenseMode mode;
 @property (nonatomic, strong, readonly) LGPeripheral* peripheral;
+@property (nonatomic, assign, readonly) SENSenseAdvertisedVersion version;
 
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral;
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral andDeviceId:(NSString*)deviceId;

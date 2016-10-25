@@ -21,7 +21,6 @@
 #import "HEMInsightsService.h"
 #import "HEMUnreadAlertService.h"
 #import "HEMInsightsFeedPresenter.h"
-#import "HEMInsightTabPresenter.h"
 #import "HEMInsightTransition.h"
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMURLImageView.h"
@@ -42,7 +41,6 @@
 @property (weak, nonatomic) HEMInsightsHandHoldingPresenter* handHoldingPresenter;
 @property (strong, nonatomic) HEMInsightsService* insightsFeedService;
 @property (strong, nonatomic) HEMQuestionsService* questionsService;
-@property (strong, nonatomic) HEMUnreadAlertService* unreadService;
 @property (strong, nonatomic) HEMHandHoldingService* handHoldingService;
 @property (strong, nonatomic) HEMWhatsNewService* whatsNewService;
 @property (strong, nonatomic) HEMShareService* shareService;
@@ -54,53 +52,49 @@
 
 @implementation HEMInsightFeedViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        _insightsFeedService = [HEMInsightsService new];
-        _questionsService = [HEMQuestionsService new];
-        _unreadService = [HEMUnreadAlertService new];
-        _handHoldingService = [HEMHandHoldingService new];
-        _whatsNewService = [HEMWhatsNewService new];
-        _shareService = [HEMShareService new];
-        
-        HEMInsightsHandHoldingPresenter* hhPresenter
-            = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:_handHoldingService];
-        _handHoldingPresenter = hhPresenter;
-        [self addPresenter:hhPresenter];
-        
-        HEMInsightsFeedPresenter* feedPresenter
-            = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
-                                                       questionsService:_questionsService
-                                                          unreadService:_unreadService
-                                                        whatsNewService:_whatsNewService
-                                                           shareService:_shareService];
-        // weak ref so we can bind collection view, activity and set delegate when view is loaded
-        _feedPresenter = feedPresenter;
-        [self addPresenter:feedPresenter];
-        
-        HEMInsightTabPresenter* tabPresenter
-            = [[HEMInsightTabPresenter alloc] initWithUnreadService:_unreadService];
-        // must bind with tab bar here so that the container knows how to display
-        // this controller even though the view has yet to be loaded
-        [tabPresenter bindWithTabBarItem:[self tabBarItem]];
-        [self addPresenter:tabPresenter];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configurePresenters];
+}
+
+- (void)configurePresenters {
+    [self setInsightsFeedService:[HEMInsightsService new]];
+    [self setQuestionsService:[HEMQuestionsService new]];
+    [self setHandHoldingService:[HEMHandHoldingService new]];
+    [self setWhatsNewService:[HEMWhatsNewService new]];
+    [self setShareService:[HEMShareService new]];
     
-    [[self feedPresenter] bindWithCollectionView:[self collectionView]];
-    [[self feedPresenter] bindWithActivityIndicator:[self activityIndicator]];
-    [[self feedPresenter] setDelegate:self];
+    if ([self unreadService]) {
+        [self setUnreadService:[HEMUnreadAlertService new]];
+    }
+    
+    HEMInsightsHandHoldingPresenter* hhPresenter
+        = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:_handHoldingService];
+    [self addPresenter:hhPresenter];
+    [self setHandHoldingPresenter:hhPresenter];
+    
+    HEMInsightsFeedPresenter* feedPresenter
+    = [[HEMInsightsFeedPresenter alloc] initWithInsightsService:_insightsFeedService
+                                               questionsService:_questionsService
+                                                  unreadService:_unreadService
+                                                whatsNewService:_whatsNewService
+                                                   shareService:_shareService];
+    
+    [feedPresenter bindWithCollectionView:[self collectionView]];
+    [feedPresenter bindWithActivityIndicator:[self activityIndicator]];
+    [feedPresenter bindWithSubNavBar:[self subNavBar]];
+    [feedPresenter setDelegate:self];
     
     __weak typeof(self) weakSelf = self;
-    [[self feedPresenter] setOnLoadCallback:^(NSArray* data) {
+    [feedPresenter setOnLoadCallback:^(NSArray* data) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         UIView* rootView = [[HEMRootViewController rootViewControllerForKeyWindow] view];
-        [[weakSelf handHoldingPresenter] showIfNeededIn:rootView
-                                     withCollectionView:[weakSelf collectionView]];
+        [[strongSelf handHoldingPresenter] showIfNeededIn:rootView
+                                       withCollectionView:[strongSelf collectionView]];
     }];
+    
+    [self addPresenter:feedPresenter];
+    [self setFeedPresenter:feedPresenter];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

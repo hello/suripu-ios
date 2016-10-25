@@ -1,5 +1,128 @@
 # Changelog
 
+## 1.6.0.11
+
+New:
+
+* Design tweaks
+
+Fixes:
+
+* Fixed issue in alarm expansion setup where configurations are not loaded
+
+## 1.6.0.10
+
+New:
+
+* Amazon review routing only for people with Sense One for now
+* Add title view for configuration selection in alarm expansion setup
+* Updated units and time icon in account settings
+* Add lights and thermostat attribution
+* Convert thermostat ranges based on preferences
+* More voice command tweaks
+
+## 1.6.0.9
+
+New:
+
+* Reduced size of app
+* Voice command tweaks
+* Moved units & time in to account settings
+
+Fixes:
+
+* Fixed issue that would cause insights to not load right after signing in.
+
+## 1.6.0.8
+
+New:
+
+* Thermostat support in alarms
+* Lights support in alarms
+
+Fixes:
+
+* Mute control for voice now works properly
+* Volume control for voice now works properly
+
+## 1.6.0.7
+
+New:
+
+* Add Thermostat row to Alarm screen
+* Updated Lights row in Alarm screen
+
+Fixes:
+
+* Fixed new particulates about copy
+* Fixed issue where switch for alarm list does nothing if sliding instead of tapping
+* Fixed issue where switch for smart alarm does nothing if sliding instead of tapping
+
+## 1.6.0.6
+
+New:
+
+* Changed copy for Log In to Sign In
+* Removed the Voice Commands title from the voice tab
+* Smart default for smart alarm switch when creating alarm
+
+## 1.6.0.5
+
+New:
+
+* Updated primary user VX
+* Added mute option in voice settings
+* Added volume control option in voice settings
+* Added volume control UI
+* Hide mac address for 1.0 Sense in Wi-Fi scanner
+* Updated copy in various screens
+
+## 1.6.0.4
+
+New:
+
+* Added voice settings screen
+* Added support for setting primary user, hooked up to an API that is not yet available
+* Re-enabled lights integration in alarms
+* Updated location prompt message
+
+Fixes:
+
+* Fixed order sense casing in initial set up screen
+* Fixed copy in pill set up screen
+* Fixed copy in pill pairing screen
+
+## 1.6.0.3
+
+New:
+
+* Removed enhanced audio from onboarding
+* Updated copy throughout onboarding
+
+## 1.6.0.2
+
+New:
+
+* Sense MAC address now shown on the WiFi scan screen
+* Added support for mbar unit for barometric pressure
+
+Fixes:
+
+* Fix issue where navigation bar separator is shown in voice examples screen on iOS 10
+* Fixed punctuation copy from several voice examples
+* Allow server to define order of displayed sensors
+
+## 1.6.0.1
+
+New:
+
+* Voice tab appears as sibling to Insights feed if Sense paired is Sense with Voice
+* Voice tab displays welcome card until closed
+* Voice tab displays a set of categorized commands with an example preview
+* Tapping in to a command category will display a full set of commands based on what is available today.
+* Added Lights attribution to expansion alarms
+* Removed dependency to features API, using hardware version as replacement
+
 ## 1.5.4.6
 
 New:

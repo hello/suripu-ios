@@ -14,7 +14,7 @@ static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMaction = @"action";
 static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
-static NSString *const _HEMalarmLightCell = @"alarmLightCell";
+static NSString *const _HEMalarmExpansionCell = @"alarmExpansionCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListEmptyCell = @"alarmListEmptyCell";
 static NSString *const _HEMalarmListNavViewController = @"alarmListNavViewController";
@@ -34,7 +34,10 @@ static NSString *const _HEMbreakdownLineCell = @"breakdownLineCell";
 static NSString *const _HEMbubbles = @"bubbles";
 static NSString *const _HEMcalendar = @"calendar";
 static NSString *const _HEMchart = @"chart";
+static NSString *const _HEMcommandGroup = @"commandGroup";
+static NSString *const _HEMcommands = @"commands";
 static NSString *const _HEMconfig = @"config";
+static NSString *const _HEMconfiguration = @"configuration";
 static NSString *const _HEMconnect = @"connect";
 static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
@@ -42,11 +45,12 @@ static NSString *const _HEMcurrentValue = @"currentValue";
 static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
+static NSString *const _HEMexamples = @"examples";
 static NSString *const _HEMexpansion = @"expansion";
 static NSString *const _HEMexpansionConfig = @"expansionConfig";
-static NSString *const _HEMexpansionLight = @"expansionLight";
 static NSString *const _HEMexpansions = @"expansions";
 static NSString *const _HEMexplanation = @"explanation";
+static NSString *const _HEMfeed = @"feed";
 static NSString *const _HEMfield = @"field";
 static NSString *const _HEMformViewController = @"formViewController";
 static NSString *const _HEMgroup = @"group";
@@ -56,7 +60,7 @@ static NSString *const _HEMinfoCell = @"infoCell";
 static NSString *const _HEMinfoNavigationController = @"infoNavigationController";
 static NSString *const _HEMinfoViewController = @"infoViewController";
 static NSString *const _HEMinsight = @"insight";
-static NSString *const _HEMinsightFeed = @"insightFeed";
+static NSString *const _HEMinsightsFeed = @"insightsFeed";
 static NSString *const _HEMlist = @"list";
 static NSString *const _HEMlistItem = @"listItem";
 static NSString *const _HEMloading = @"loading";
@@ -95,6 +99,7 @@ static NSString *const _HEMsummary = @"summary";
 static NSString *const _HEMsummaryViewCell = @"summaryViewCell";
 static NSString *const _HEMsupportCell = @"supportCell";
 static NSString *const _HEMsupportTopicsViewController = @"supportTopicsViewController";
+static NSString *const _HEMswitch = @"switch";
 static NSString *const _HEMtext = @"text";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMtimeZoneNavViewController = @"timeZoneNavViewController";
@@ -109,9 +114,13 @@ static NSString *const _HEMtopics = @"topics";
 static NSString *const _HEMtrends = @"trends";
 static NSString *const _HEMtutorialViewController = @"tutorialViewController";
 static NSString *const _HEMunitCell = @"unitCell";
-static NSString *const _HEMunitsSettings = @"unitsSettings";
+static NSString *const _HEMunitPreference = @"unitPreference";
+static NSString *const _HEMunits = @"units";
 static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
+static NSString *const _HEMvoice = @"voice";
+static NSString *const _HEMvolume = @"volume";
 static NSString *const _HEMwarning = @"warning";
+static NSString *const _HEMwelcome = @"welcome";
 
 @implementation HEMMainStoryboard
 
@@ -121,7 +130,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)aboutReuseIdentifier { return _HEMabout; }
 +(NSString *)actionReuseIdentifier { return _HEMaction; }
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
-+(NSString *)alarmLightCellReuseIdentifier { return _HEMalarmLightCell; }
++(NSString *)alarmExpansionCellReuseIdentifier { return _HEMalarmExpansionCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
 +(NSString *)alarmListEmptyCellReuseIdentifier { return _HEMalarmListEmptyCell; }
 +(NSString *)alarmListStatusCellReuseIdentifier { return _HEMalarmListStatusCell; }
@@ -133,11 +142,15 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)bubblesReuseIdentifier { return _HEMbubbles; }
 +(NSString *)calendarReuseIdentifier { return _HEMcalendar; }
 +(NSString *)chartReuseIdentifier { return _HEMchart; }
++(NSString *)commandGroupReuseIdentifier { return _HEMcommandGroup; }
++(NSString *)commandsReuseIdentifier { return _HEMcommands; }
 +(NSString *)configReuseIdentifier { return _HEMconfig; }
++(NSString *)configurationReuseIdentifier { return _HEMconfiguration; }
 +(NSString *)connectionReuseIdentifier { return _HEMconnection; }
 +(NSString *)currentValueReuseIdentifier { return _HEMcurrentValue; }
 +(NSString *)detailReuseIdentifier { return _HEMdetail; }
 +(NSString *)errorReuseIdentifier { return _HEMerror; }
++(NSString *)examplesReuseIdentifier { return _HEMexamples; }
 +(NSString *)expansionReuseIdentifier { return _HEMexpansion; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)fieldReuseIdentifier { return _HEMfield; }
@@ -166,6 +179,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)summaryReuseIdentifier { return _HEMsummary; }
 +(NSString *)summaryViewCellReuseIdentifier { return _HEMsummaryViewCell; }
 +(NSString *)supportCellReuseIdentifier { return _HEMsupportCell; }
++(NSString *)switchReuseIdentifier { return _HEMswitch; }
 +(NSString *)textReuseIdentifier { return _HEMtext; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)timezoneReuseIdentifier { return _HEMtimezone; }
@@ -174,6 +188,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)topicCellReuseIdentifier { return _HEMtopicCell; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 +(NSString *)warningReuseIdentifier { return _HEMwarning; }
++(NSString *)welcomeReuseIdentifier { return _HEMwelcome; }
 
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }
@@ -184,7 +199,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)expansionSegueIdentifier { return _HEMexpansion; }
-+(NSString *)expansionLightSegueIdentifier { return _HEMexpansionLight; }
++(NSString *)expansionConfigSegueIdentifier { return _HEMexpansionConfig; }
 +(NSString *)expansionsSegueIdentifier { return _HEMexpansions; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
 +(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }
@@ -195,8 +210,10 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)sleepSoundsSegueIdentifier { return _HEMsleepSounds; }
 +(NSString *)timezoneSegueIdentifier { return _HEMtimezone; }
 +(NSString *)topicsSegueIdentifier { return _HEMtopics; }
-+(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
++(NSString *)unitsSegueIdentifier { return _HEMunits; }
 +(NSString *)updateAccountInfoSegueIdentifier { return _HEMupdateAccountInfo; }
++(NSString *)voiceSegueIdentifier { return _HEMvoice; }
++(NSString *)volumeSegueIdentifier { return _HEMvolume; }
 
 /** View Controllers */
 +(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }
@@ -208,10 +225,11 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateBreakdownController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
 +(id)instantiateExpansionConfigViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMexpansionConfig]; }
++(id)instantiateFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMfeed]; }
 +(id)instantiateFormViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMformViewController]; }
 +(id)instantiateInfoNavigationController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoNavigationController]; }
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
-+(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
++(id)instantiateInsightsFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightsFeed]; }
 +(id)instantiateListItemViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMlistItem]; }
 +(id)instantiatePillDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFU]; }
 +(id)instantiatePillDFUNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFUNav]; }
@@ -232,5 +250,7 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
 +(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
 +(id)instantiateTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtutorialViewController]; }
++(id)instantiateUnitPreferenceViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMunitPreference]; }
++(id)instantiateVoiceViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMvoice]; }
 
 @end

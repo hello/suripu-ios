@@ -35,7 +35,10 @@ typedef void(^HEMExpansionUpdateHandler)(NSError* _Nullable error);
 - (void)refreshExpansion:(SENExpansion*)expansion completion:(HEMExpansionHandler)completion;
 - (NSURLRequest*)authorizationRequestForExpansion:(SENExpansion*)expansion;
 - (NSString*)configurationNameForExpansion:(SENExpansion*)expansion;
-- (SENExpansion*)lightExpansionFrom:(NSArray<SENExpansion*>*)expansions;
+- (SENExpansion*)firstExpansionOfType:(SENExpansionType)type
+                         inExpansions:(NSArray<SENExpansion*>*)expansions;
+- (SENExpansionValueRange)convertThermostatRangeToCelsis:(SENExpansionValueRange)range;
+- (SENExpansionValueRange)convertThermostatRangeBasedOnPreference:(SENExpansionValueRange)range;
 
 @end
 

@@ -8,6 +8,8 @@
 #import <AttributedMarkdown/markdown_peg.h>
 #import <SenseKit/SENLocalPreferences.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMAlarmListPresenter.h"
 #import "HEMSubNavigationView.h"
 #import "HEMAlarmService.h"
@@ -23,6 +25,8 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlarmCache.h"
+#import "HEMAlarmExpansionListCell.h"
+#import "HEMExpansionService.h"
 
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
@@ -49,15 +53,18 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 @property (nonatomic, strong) NSDateFormatter *hour24Formatter;
 @property (nonatomic, strong) NSDateFormatter *hour12Formatter;
 @property (nonatomic, strong) NSDateFormatter *meridiemFormatter;
+@property (nonatomic, strong) HEMExpansionService* expansionService;
 
 @end
 
 @implementation HEMAlarmListPresenter
 
-- (instancetype)initWithAlarmService:(HEMAlarmService*)alarmService {
+- (instancetype)initWithAlarmService:(HEMAlarmService*)alarmService
+                    expansionService:(HEMExpansionService*)expansionService {
     self = [super init];
     if (self) {
         _alarmService = alarmService;
+        _expansionService = expansionService;
         _hour12Formatter = [NSDateFormatter new];
         _hour12Formatter.dateFormat = @"hh:mm";
         _hour24Formatter = [NSDateFormatter new];
@@ -290,12 +297,100 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([[[self alarmService] alarms] count] > 0) {
-        return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
+        SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];
+        if ([[self alarmService] numberOfEnabledExpansionsIn:alarm]) {
+            return [self collectionView:collectionView alarmExpansionCellAtIndexPath:indexPath];
+        } else {
+            return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
+        }
     } else if ([self loadError]) {
         return [self collectionView:collectionView statusCellAtIndexPath:indexPath];
     } else {
         return [self collectionView:collectionView emptyCellAtIndexPath:indexPath];
     }
+}
+
+- (NSAttributedString*)attributedExpansionTextFor:(SENAlarmExpansion*)expansion
+                                         forAlarm:(SENAlarm*)alarm {
+    SENExpansionValueRange range = [expansion targetRange];
+    UIColor* titleColor = [alarm isOn] ? [UIColor grey6] : [UIColor grey4];
+    NSDictionary* titleAttributes = @{NSFontAttributeName : [UIFont h7],
+                                      NSForegroundColorAttributeName : titleColor};
+    NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h7],
+                                      NSForegroundColorAttributeName : [UIColor grey4]};
+    NSString* format = nil;
+    NSArray* args = nil;
+    
+    switch ([expansion type]) {
+        default:
+        case SENExpansionTypeLights: {
+            NSString* title = NSLocalizedString(@"alarm.light.title", nil);
+            NSString* unitSymbol = NSLocalizedString(@"measurement.percentage.unit", nil);
+            NSString* value = [NSString stringWithFormat:@"%.0f%@", range.max, unitSymbol];
+            NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:titleAttributes];
+            NSAttributedString* attributedValue = [[NSAttributedString alloc] initWithString:value attributes:valueAttributes];
+            
+            args = @[attributedTitle, attributedValue];
+            format = NSLocalizedString(@"alarm.light.attribution.format", nil);
+            break;
+        }
+        case SENExpansionTypeThermostat: {
+            range = [[self expansionService] convertThermostatRangeBasedOnPreference:range];
+            NSString* title = NSLocalizedString(@"alarm.thermostat.title", nil);
+            NSString* minValue = [NSString stringWithFormat:@"%.0f", range.min];
+            NSString* maxValue = [NSString stringWithFormat:@"%.0f", range.max];
+            NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:titleAttributes];
+            NSAttributedString* attributedMinValue = [[NSAttributedString alloc] initWithString:minValue attributes:valueAttributes];
+            NSAttributedString* attributedMaxValue = [[NSAttributedString alloc] initWithString:maxValue attributes:valueAttributes];
+            
+            args = @[attributedTitle, attributedMinValue, attributedMaxValue];
+            format = NSLocalizedString(@"alarm.thermostat.attribution.format", nil);
+            break;
+        }
+    }
+    
+    return [[NSMutableAttributedString alloc] initWithFormat:format args:args baseColor:[UIColor grey4] baseFont:[UIFont h7]];
+    
+}
+
+- (UIImage*)iconForExpansion:(SENAlarmExpansion*)expansion {
+    switch ([expansion type]) {
+        case SENExpansionTypeThermostat:
+            return [UIImage imageNamed:@"alarmThermostatIcon"];
+        case SENExpansionTypeLights:
+            return [UIImage imageNamed:@"alarmLightIcon"];
+        default:
+            return nil;
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+           alarmExpansionCellAtIndexPath:(NSIndexPath*)indexPath {
+    NSString *identifier = [HEMMainStoryboard alarmExpansionCellReuseIdentifier];
+    HEMAlarmExpansionListCell* cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:identifier
+                                                  forIndexPath:indexPath];
+    
+    NSArray* alarms = [[self alarmService] alarms];
+    SENAlarm *alarm = alarms[indexPath.item];
+
+    for (SENAlarmExpansion* expansion in [alarm expansions]) {
+        if ([expansion isEnable]) {
+            [cell showExpansionWithIcon:[self iconForExpansion:expansion]
+                                   text:[self attributedExpansionTextFor:expansion
+                                                                forAlarm:alarm]
+                                   tyep:[expansion type]];
+        }
+    }
+
+    [[cell timeLabel] setTextColor:[UIColor grey5]];
+    [[cell meridiemLabel] setTextColor:[UIColor grey5]];
+    
+    [self updateSwitchInCell:cell forAlarm:alarm atIndexPath:indexPath];
+    [self updateDetailTextInCell:cell fromAlarm:alarm];
+    [self updateTimeTextInCell:cell fromAlarm:alarm];
+    
+    return cell;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -305,10 +400,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     NSArray* alarms = [[self alarmService] alarms];
     SENAlarm *alarm = alarms[indexPath.item];
     
-    cell.enabledSwitch.on = [alarm isOn];
-    cell.enabledSwitch.tag = indexPath.item;
-    [cell.enabledSwitch addTarget:self action:@selector(toggleEnableSwitch:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self updateSwitchInCell:cell forAlarm:alarm atIndexPath:indexPath];
     [self updateDetailTextInCell:cell fromAlarm:alarm];
     [self updateTimeTextInCell:cell fromAlarm:alarm];
     return cell;
@@ -334,7 +426,10 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 }
 
 - (void)updateTimeTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm {
+    UIColor* textColor = [alarm isOn] ? [UIColor grey6] : [UIColor grey4];
     cell.timeLabel.text = [self localizedTimeForAlarm:alarm];
+    cell.timeLabel.textColor = textColor;
+    cell.meridiemLabel.textColor = textColor;
     if (![[self alarmService] useMilitaryTimeFormat]) {
         NSString *meridiem = alarm.hour < 12 ? @"am" : @"pm";
         NSString *key = [NSString stringWithFormat:HEMAlarmListTimeKey, meridiem];
@@ -342,6 +437,16 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     } else {
         cell.meridiemLabel.text = nil;
     }
+}
+
+- (void)updateSwitchInCell:(HEMAlarmListCell *)cell
+                  forAlarm:(SENAlarm *)alarm
+               atIndexPath:(NSIndexPath*)indexPath {
+    cell.enabledSwitch.on = [alarm isOn];
+    cell.enabledSwitch.tag = indexPath.item;
+    [cell.enabledSwitch addTarget:self
+                           action:@selector(toggleEnableSwitch:)
+                 forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)updateDetailTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm {
@@ -398,10 +503,16 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     static CGFloat const HEMAlarmListEmptyCellWidthInset = 32.f;
     UICollectionViewFlowLayout *layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
-    
     NSInteger alarmCount = [[[self alarmService] alarms] count];
-    if (alarmCount > 0 || [self loadError]) {
+    
+    if ([self loadError]) {
         return CGSizeMake(width, HEMAlarmListCellHeight);
+    } else if ([[[self alarmService] alarms] count] > 0) {
+        SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];
+        CGFloat height = HEMAlarmListCellHeight;
+        NSInteger expansions = [[self alarmService] numberOfEnabledExpansionsIn:alarm];
+        CGFloat expansionHeight = expansions * kHEMAlarmExpansionViewHeight;
+        return CGSizeMake(width, height + expansionHeight);
     } else if (alarmCount == 0) {
         NSAttributedString* attributedText = [self attributedNoAlarmText];
         CGFloat maxWidth = width - (HEMAlarmNoAlarmHorzMargin * 2);
@@ -463,10 +574,14 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 
 - (void)toggleEnableSwitch:(UISwitch *)sender {
     NSArray* alarms = [[self alarmService] alarms];
-    
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
     __block SENAlarm *alarm = [alarms objectAtIndex:sender.tag];
-    
     BOOL on = [sender isOn];
+    
+    if (on == alarm.on) {
+        return; //  ignore
+    }
+    
     if (on
         && [[self alarmService] isAlarmTimeTooSoon:alarm]
         && [[self alarmService] willAlarmRingToday:alarm]) {
@@ -492,6 +607,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
                                               message:[error localizedDescription]
                                         fromPresenter:strongSelf];
         } else {
+            [[strongSelf collectionView] reloadItemsAtIndexPaths:@[indexPath]];
             [SENAnalytics trackAlarmToggle:alarm];
         }
     }];

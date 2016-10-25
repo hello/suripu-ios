@@ -538,11 +538,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showNoConfigurationError {
-    NSString* categoryLower = [[[self expansion] category] lowercaseString];
-    NSString* titleKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.title", categoryLower];
+    NSString* category = nil;
+    switch ([[self expansion] type]) {
+        case SENExpansionTypeLights:
+            category = @"light";
+            break;
+        case SENExpansionTypeThermostat:
+            category = @"thermostat";
+        default:
+            category = @"generic";
+            break;
+    }
+    NSString* titleKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.title", category];
     NSString* title = NSLocalizedString(titleKey, nil);
     
-    NSString* messageKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.message.format", categoryLower];
+    NSString* messageKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.message.format", category];
     NSString* messageFormat = NSLocalizedString(messageKey, nil);
     NSString* message = [NSString stringWithFormat:messageFormat, [[self expansion] serviceName]];
     

@@ -72,7 +72,7 @@ typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 @property (nonatomic, strong, readonly, nullable) SENPairedDevices* devices;
 
 - (void)clearDevicesCache;
-- (void)refreshMetadata:(HEMDeviceMetadataHandler)completion;
+- (void)refreshMetadata:(nullable HEMDeviceMetadataHandler)completion;
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
 - (BOOL)isBleOn;
 - (BOOL)isBleStateAvailable;

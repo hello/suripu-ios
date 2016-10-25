@@ -13,8 +13,10 @@
 +(NSString *)alarmSwitchCellReuseIdentifier;
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
-+(NSString *)alarmLightCellReuseIdentifier;
++(NSString *)alarmExpansionCellReuseIdentifier;
 +(NSString *)alarmDeleteCellReuseIdentifier;
++(NSString *)toggleReuseIdentifier;
++(NSString *)configurationReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)preferenceReuseIdentifier;
@@ -28,10 +30,11 @@
 +(NSString *)infoCellReuseIdentifier;
 +(NSString *)errorReuseIdentifier;
 +(NSString *)expansionReuseIdentifier;
++(NSString *)settingsReuseIdentifier;
++(NSString *)switchReuseIdentifier;
 +(NSString *)plainReuseIdentifier;
 +(NSString *)configReuseIdentifier;
 +(NSString *)textReuseIdentifier;
-+(NSString *)toggleReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;
 +(NSString *)signoutReuseIdentifier;
@@ -57,7 +60,10 @@
 +(NSString *)groupReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
-+(NSString *)settingsReuseIdentifier;
++(NSString *)welcomeReuseIdentifier;
++(NSString *)commandsReuseIdentifier;
++(NSString *)commandGroupReuseIdentifier;
++(NSString *)examplesReuseIdentifier;
 +(NSString *)messageReuseIdentifier;
 +(NSString *)calendarReuseIdentifier;
 +(NSString *)barReuseIdentifier;
@@ -76,7 +82,7 @@
 +(NSString *)detailSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
 +(NSString *)expansionSegueIdentifier;
-+(NSString *)expansionLightSegueIdentifier;
++(NSString *)expansionConfigSegueIdentifier;
 +(NSString *)expansionsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
@@ -87,8 +93,10 @@
 +(NSString *)sleepSoundsSegueIdentifier;
 +(NSString *)timezoneSegueIdentifier;
 +(NSString *)topicsSegueIdentifier;
-+(NSString *)unitsSettingsSegueIdentifier;
++(NSString *)unitsSegueIdentifier;
 +(NSString *)updateAccountInfoSegueIdentifier;
++(NSString *)voiceSegueIdentifier;
++(NSString *)volumeSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateRootViewController;
@@ -100,10 +108,11 @@
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateExpansionConfigViewController;
++(id)instantiateFeedViewController;
 +(id)instantiateFormViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
-+(id)instantiateInsightFeedViewController;
++(id)instantiateInsightsFeedViewController;
 +(id)instantiateListItemViewController;
 +(id)instantiatePillDFUViewController;
 +(id)instantiatePillDFUNavViewController;
@@ -124,5 +133,7 @@
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;
++(id)instantiateUnitPreferenceViewController;
++(id)instantiateVoiceViewController;
 
 @end

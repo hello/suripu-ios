@@ -13,12 +13,19 @@
 @implementation SENAlarmExpansion
 
 static NSString* const SENAlarmExpansionIdKey = @"id";
-static NSString* const SENAlarmExpansionEnableKey = @"enable";
+static NSString* const SENAlarmExpansionEnableKey = @"enabled";
+static NSString* const SENAlarmExpansionCategoryKey = @"category";
+static NSString* const SENAlarmExpansionTargetRangeKey = @"target_value";
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
     if (self = [super init]) {
+        NSDictionary* targetRange = SENObjectOfClass(data[SENAlarmExpansionTargetRangeKey], [NSDictionary class]);
+        NSString* category = SENObjectOfClass(data[SENAlarmExpansionCategoryKey], [NSString class]);
+        
+        _type = [SENExpansion typeFromString:category];
         _expansionId = SENObjectOfClass(data[SENAlarmExpansionIdKey], [NSNumber class]);
         _enable = [SENObjectOfClass(data[SENAlarmExpansionEnableKey], [NSNumber class]) boolValue];
+        _targetRange = [SENExpansion valueRangeFromDict:targetRange];
     }
     return self;
 }
@@ -42,12 +49,21 @@ static NSString* const SENAlarmExpansionEnableKey = @"enable";
     
     SENAlarmExpansion* other = object;
     return SENObjectIsEqual([self expansionId], [other expansionId])
-        && [self isEnable] == [other isEnable];
+        && [self isEnable] == [other isEnable]
+        && [self type] == [other type]
+        && [self targetRange].min == [other targetRange].min
+        && [self targetRange].max == [other targetRange].max
+        && [self targetRange].setpoint == [other targetRange].setpoint;
 }
 
 - (NSDictionary*)dictionaryValue {
+    // type is purposely not included
+    SENExpansionValueRange range = {.min = [self targetRange].min,
+                                    .max = [self targetRange].max};
+    NSDictionary* targetRange = [SENExpansion dictionaryValueFromRange:range];
     return @{SENAlarmExpansionIdKey : [self expansionId],
-             SENAlarmExpansionEnableKey : @([self isEnable])};
+             SENAlarmExpansionEnableKey : @([self isEnable]),
+             SENAlarmExpansionTargetRangeKey : targetRange};
 }
 
 @end
@@ -157,8 +173,8 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     return self;
 }
 
-- (NSSet<SENAlarmExpansion*>*)expansionsFromRawArray:(NSArray*)expansionArray {
-    NSMutableSet* expansions = [NSMutableSet setWithCapacity:[expansionArray count]];
+- (NSArray<SENAlarmExpansion*>*)expansionsFromRawArray:(NSArray*)expansionArray {
+    NSMutableArray* expansions = [NSMutableArray arrayWithCapacity:[expansionArray count]];
     for (id expansionObj in expansionArray) {
         if ([expansionObj isKindOfClass:[NSDictionary class]]) {
             [expansions addObject:[[SENAlarmExpansion alloc] initWithDictionary:expansionObj]];

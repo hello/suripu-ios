@@ -18,8 +18,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsCategory) {
     HEMSettingsCategoryProfile = 0,
     HEMSettingsCategoryDevices,
     HEMSettingsCategoryNotifications,
-    HEMSettingsCategoryPreferences,
     HEMSettingsCategoryExpansions,
+    HEMSettingsCategoryVoice,
     HEMSettingsCategorySupport,
     HEMSettingsCategoryTellFriend
 };

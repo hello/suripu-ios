@@ -20,7 +20,8 @@ typedef NS_ENUM(NSUInteger, SENSensorUnit) {
     SENSensorUnitPPM,
     SENSensorUnitRatio,
     SENSensorUnitKelvin,
-    SENSensorUnitKPA
+    SENSensorUnitKPA,
+    SENSensorUnitMBar
 };
 
 typedef NS_ENUM(NSUInteger, SENSensorType) {

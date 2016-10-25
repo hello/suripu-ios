@@ -40,10 +40,12 @@
 #import "HEMHandHoldingService.h"
 #import "HEMHandholdingView.h"
 #import "HEMAlertViewController.h"
+#import "HEMUnitPreferenceViewController.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
     HEMAccountSectionDemographics,
+    HEMAccountSectionUnits,
     HEMAccountSectionPreferences,
     HEMAccountSectionSignOut,
     HEMAccountSectionCount
@@ -64,6 +66,11 @@ typedef NS_ENUM(NSInteger, HEMDemographicsRow) {
     HEMDemographicsRowCount
 };
 
+typedef NS_ENUM (NSUInteger, HEMUnitsRow) {
+    HEMUnitsRowUnitsAndTime = 0,
+    HEMUnitsRowCount
+};
+
 typedef NS_ENUM(NSInteger, HEMPreferencesRow) {
     HEMPreferencesRowHealthKit = 0,
     HEMPreferencesRowEnhancedAudio,
@@ -77,6 +84,8 @@ typedef NS_ENUM(NSInteger, HEMSignOutRow) {
 
 static CGFloat const HEMAccountTableCellBaseHeight = 56.0f;
 static CGFloat const HEMAccountTableCellEnhancedAudioNoteHeight = 70.0f;
+static CGFloat const HEMAccountAudioNoteVertMargin = 12.0f;
+static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
 
 @interface HEMAccountPresenter() <
     UITableViewDataSource,
@@ -441,6 +450,16 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     }
 }
 
+- (void)unitsIcon:(UIImage**)icon title:(NSString**)title atRow:(NSInteger)row {
+    switch (row) {
+        default:
+        case HEMUnitsRowUnitsAndTime:
+            *icon = [UIImage imageNamed:@"settingsUnitsIcon"];
+            *title = NSLocalizedString(@"settings.units", nil);
+            break;
+    }
+}
+
 - (void)preferencesIcon:(UIImage**)icon title:(NSString**)title enabled:(BOOL*)value atRow:(NSInteger)row {
     switch (row) {
         default:
@@ -561,6 +580,11 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     HEMSettingsHeaderFooterView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     [footer setAttributedTitle:[self enhancedAudioNote]];
+    [footer setTitleInsets:UIEdgeInsetsMake(HEMAccountAudioNoteVertMargin,
+                                            HEMAccountAudioNoteHorzMargin,
+                                            HEMAccountAudioNoteVertMargin,
+                                            HEMAccountAudioNoteHorzMargin)];
+    [footer setAdjustBasedOnTitle:YES];
     return footer;
 }
 
@@ -579,6 +603,8 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
             return HEMAccountRowCount;
         case HEMAccountSectionDemographics:
             return HEMDemographicsRowCount;
+        case HEMAccountSectionUnits:
+            return HEMUnitsRowCount;
         case HEMAccountSectionPreferences:
             return HEMPreferencesRowCount;
         case HEMAccountSectionSignOut:
@@ -638,6 +664,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         case HEMAccountSectionDemographics:
             [self demographicsIcon:&icon title:&title value:&value atRow:row];
             rows = HEMDemographicsRowCount;
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            break;
+        case HEMAccountSectionUnits:
+            [self unitsIcon:&icon title:&title atRow:row];
+            rows = HEMUnitsRowCount;
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             break;
         case HEMAccountSectionPreferences: {
@@ -703,6 +734,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                     [self handleWeightChangeRequest];
                     break;
             }
+            break;
+        case HEMAccountSectionUnits:
+            [self handleUnitsChangeRequest];
             break;
         default:
             break;
@@ -852,11 +886,20 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[self delegate] presentViewController:weightPicker from:self];
 }
 
+#pragma mark - Units
+
+- (void)handleUnitsChangeRequest {
+    id prefVC = [HEMMainStoryboard instantiateUnitPreferenceViewController];
+    [[self delegate] presentViewController:prefVC from:self];
+}
+
 #pragma mark - Clean up
 
 - (void)dealloc {
-    [_tableView setDelegate:nil];
-    [_tableView setDataSource:nil];
+    if (_tableView) {
+        [_tableView setDelegate:nil];
+        [_tableView setDataSource:nil];
+    }
 }
 
 @end

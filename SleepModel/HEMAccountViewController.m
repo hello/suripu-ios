@@ -18,6 +18,7 @@
 #import "HEMBreadcrumbService.h"
 #import "HEMHandHoldingService.h"
 #import "HEMAlertViewController.h"
+#import "HEMUnitPreferenceViewController.h"
 
 @interface HEMAccountViewController () <HEMAccountDelegate>
 
@@ -87,7 +88,8 @@
     UIViewController* controllerToPresenter = controller;
     if ([controller isKindOfClass:[UIAlertController class]]) {
         [[self rootViewController] presentViewController:controllerToPresenter animated:YES completion:nil];
-    } else if ([controller isKindOfClass:[HEMFormViewController class]]) {
+    } else if ([controller isKindOfClass:[HEMFormViewController class]]
+               || [controller isKindOfClass:[HEMUnitPreferenceViewController class]]) {
         [[self navigationController] pushViewController:controller animated:YES];
     } else if ([controller isKindOfClass:[HEMAlertViewController class]]) {
         HEMAlertViewController* alertVC = (id) controller;

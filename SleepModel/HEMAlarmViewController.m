@@ -16,14 +16,19 @@
 #import "HEMAlarmService.h"
 #import "HEMAudioService.h"
 #import "HEMExpansionService.h"
+#import "HEMDeviceService.h"
 #import "HEMExpansionViewController.h"
+#import "HEMAlarmExpansionSetupViewController.h"
 
 @interface HEMAlarmViewController () <HEMAlarmPresenterDelegate, HEMListDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
 @property (strong, nonatomic) HEMAudioService* audioService;
-@property (strong, nonatomic) HEMExpansionService* expansionService;
+@property (assign, nonatomic) HEMAlarmRowType selectedRow;
+@property (assign, nonatomic) SENExpansion* selectedExpansion;
+@property (copy, nonatomic) NSString* segueControllerTitle;
+@property (strong, nonatomic) HEMAlarmExpansionSetupPresenter* selectedExpansionPresenter;
 
 @end
 
@@ -39,12 +44,19 @@
         [self setAlarmService:[HEMAlarmService new]];
     }
     
-    HEMExpansionService* expansionService = [HEMExpansionService new];
+    if (![self deviceService]) {
+        [self setDeviceService:[HEMDeviceService new]];
+    }
+    
+    if (![self expansionService]) {
+        [self setExpansionService:[HEMExpansionService new]];
+    }
+
     HEMAlarmPresenter* presenter =
         [[HEMAlarmPresenter alloc] initWithAlarm:[self alarm]
                                     alarmService:[self alarmService]
                                    deviceService:[self deviceService]
-                                expansionService:expansionService];
+                                expansionService:[self expansionService]];
     
     [presenter setDelegate:self];
     [presenter setSuccessDuration:[self successDuration]];
@@ -52,8 +64,8 @@
     [presenter bindWithTutorialPresentingController:[self navigationController]];
     [presenter bindWithTableView:[self tableView]];
     [presenter bindWithNavigationItem:[self navigationItem]];
-    
-    [self setExpansionService:expansionService];
+    [presenter bindWithShadowView:[self shadowView]];
+
     [self setPresenter:presenter];
     [self addPresenter:presenter];
 }
@@ -74,7 +86,7 @@
 
 #pragma mark - HEMAlarmPresenterDelegate
 
-- (void)didSelectRowType:(HEMAlarmRowType)rowType {
+- (void)didSelectRowType:(HEMAlarmRowType)rowType withTitle:(NSString*)title {
     NSString* segueId = nil;
     switch (rowType) {
         case HEMAlarmRowTypeTone:
@@ -83,12 +95,12 @@
         case HEMAlarmRowTypeRepeat:
             segueId = [HEMMainStoryboard alarmRepeatSegueIdentifier];
             break;
-        case HEMAlarmRowTypeLight:
-            segueId = [HEMMainStoryboard expansionLightSegueIdentifier];
-            break;
         default:
             break;
     }
+    
+    [self setSelectedRow:rowType];
+    
     if (segueId) {
         [self performSegueWithIdentifier:segueId sender:self];
     }
@@ -127,6 +139,22 @@
     } else {
         [[self navigationController] dismissViewControllerAnimated:YES completion:NULL];
     }
+}
+
+- (void)showExpansion:(SENExpansion*)expansion
+        fromPresenter:(HEMAlarmPresenter*)alarmPresenter {
+    [self setSelectedExpansion:expansion];
+    NSString* segueId = [HEMMainStoryboard expansionSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
+}
+
+- (void)showExpansionSetupWithPresenter:(HEMAlarmExpansionSetupPresenter*)presenter
+                              withTitle:(NSString*)title
+                          fromPresenter:(HEMAlarmPresenter*)alarmPresenter {
+    [self setSelectedExpansionPresenter:presenter];
+    [self setSegueControllerTitle:title];
+    NSString* segueId = [HEMMainStoryboard expansionConfigSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Segues
@@ -171,13 +199,16 @@
     [listVC setListPresenter:soundsPresenter];
 }
 
-- (void)prepareForLightExpansionSegue:(UIStoryboardSegue*)segue {
-    NSArray<SENExpansion*>* expansions = [[self expansionService] expansions];
-    SENExpansion* expansion = [[self expansionService] lightExpansionFrom:expansions];
-    
+- (void)prepareForExpansionSegue:(UIStoryboardSegue*)segue {
     HEMExpansionViewController* expansionVC = [segue destinationViewController];
-    [expansionVC setExpansion:expansion];
+    [expansionVC setExpansion:[self selectedExpansion]];
     [expansionVC setExpansionService:[self expansionService]];
+}
+
+- (void)prepareForExpansionSetupSegue:(UIStoryboardSegue*)segue {
+    HEMAlarmExpansionSetupViewController* setupVC = (id)[segue destinationViewController];
+    [setupVC setPresenter:[self selectedExpansionPresenter]];
+    [setupVC setTitle:[self segueControllerTitle]];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -185,8 +216,10 @@
         [self prepareForRepeatDaysSegue:segue];
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmSoundsSegueIdentifier]]) {
         [self prepareForSoundSegue:segue];
-    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionLightSegueIdentifier]]) {
-        [self prepareForLightExpansionSegue:segue];
+    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionSegueIdentifier]]) {
+        [self prepareForExpansionSegue:segue];
+    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionConfigSegueIdentifier]]) {
+        [self prepareForExpansionSetupSegue:segue];
     }
 }
 

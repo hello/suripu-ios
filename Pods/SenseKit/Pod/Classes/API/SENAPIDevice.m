@@ -15,6 +15,7 @@ static NSString* const SENAPIDeviceEndpoint = @"v2/devices";
 static NSString* const SENAPIDeviceInfoPath = @"info";
 static NSString* const SENAPIDeviceSensePath = @"sense";
 static NSString* const SENAPIDevicePillPath = @"pill";
+static NSString* const SENAPIDeviceVoicePath = @"voice";
 
 static NSString* const SENAPIDeviceOTAEndpoint = @"v1/ota";
 static NSString* const SENAPIDeviceOTAStatusPath = @"status";
@@ -46,6 +47,33 @@ static NSString* const SENAPIDeviceSwapParamDeviceId = @"sense_id";
             pairingInfo = [[SENDevicePairingInfo alloc] initWithDictionary:dict];
         }
         completion (pairingInfo, error);
+    }];
+}
+
+#pragma mark - Voice Controls
+
++ (void)updateVoiceSettings:(SENSenseVoiceSettings*)voiceSettings
+                 forSenseId:(NSString*)senseId
+                 completion:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/%@/%@/%@",
+                      SENAPIDeviceSensePath,
+                      senseId,
+                      SENAPIDeviceVoicePath];
+    NSDictionary* params = [voiceSettings dictionaryValue];
+    [SENAPIClient PATCH:path parameters:params completion:completion];
+}
+
++ (void)getVoiceSettingsForSenseId:(NSString*)senseId completion:(SENAPIDataBlock)completion {
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/%@/%@/%@",
+                      SENAPIDeviceSensePath,
+                      senseId,
+                      SENAPIDeviceVoicePath];
+    [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
+        SENSenseVoiceSettings* voiceSettings = nil;
+        if (!error && [data isKindOfClass:[NSDictionary class]]) {
+            voiceSettings = [[SENSenseVoiceSettings alloc] initWithDictionary:data];
+        }
+        completion (voiceSettings, error);
     }];
 }
 

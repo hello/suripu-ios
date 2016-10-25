@@ -1,6 +1,7 @@
 #import <MessageUI/MessageUI.h>
 
 #import "HEMSettingsTableViewController.h"
+#import "HEMVoiceSettingsViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTellAFriendItemProvider.h"
 
@@ -83,14 +84,14 @@
             return [HEMMainStoryboard accountSettingsSegueIdentifier];
         case HEMSettingsCategoryDevices:
             return [HEMMainStoryboard devicesSettingsSegueIdentifier];
-        case HEMSettingsCategoryPreferences:
-            return [HEMMainStoryboard unitsSettingsSegueIdentifier];
         case HEMSettingsCategoryNotifications:
             return [HEMMainStoryboard notificationSettingsSegueIdentifier];
         case HEMSettingsCategorySupport:
             return [HEMMainStoryboard settingsToSupportSegueIdentifier];
         case HEMSettingsCategoryExpansions:
             return [HEMMainStoryboard expansionsSegueIdentifier];
+        case HEMSettingsCategoryVoice:
+            return [HEMMainStoryboard voiceSegueIdentifier];
         default:
             return nil; // others show modal
     }
@@ -109,6 +110,16 @@
 - (void)showController:(UIViewController*)controller
          fromPresenter:(HEMSettingsPresenter*)presenter {
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    id destVC = [segue destinationViewController];
+    if ([destVC isKindOfClass:[HEMVoiceSettingsViewController class]]) {
+        HEMVoiceSettingsViewController* voiceVC = destVC;
+        [voiceVC setDeviceService:[self deviceService]];
+    }
 }
 
 @end

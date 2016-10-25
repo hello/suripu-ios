@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SENDeviceMetadata.h"
+#import "SENSerializable.h"
 
 typedef NS_ENUM(NSUInteger, SENSenseColor) {
     SENSenseColorUnknown = 0,
@@ -33,14 +34,14 @@ typedef NS_ENUM(NSUInteger, SENSenseHardware) {
     SENSenseHardwareVoice
 };
 
-@interface SENSenseWiFiInfo : NSObject
+NS_ASSUME_NONNULL_BEGIN
+
+@interface SENSenseWiFiInfo : NSObject <SENSerializable>
 
 @property (nonatomic, copy, readonly, nullable)   NSString* ssid;
 @property (nonatomic, strong, readonly, nullable) NSNumber* rssi;
 @property (nonatomic, strong, readonly, nullable) NSDate* lastUpdated;
 @property (nonatomic, assign, readonly) SENWiFiCondition condition;
-
-- (nonnull instancetype)initWithDictionary:(nonnull NSDictionary*)dict;
 
 @end
 
@@ -48,7 +49,9 @@ typedef NS_ENUM(NSUInteger, SENSenseHardware) {
 
 @property (nonatomic, assign, readonly) SENSenseState state;
 @property (nonatomic, assign, readonly) SENSenseColor color;
-@property (nonatomic, strong, readonly, nonnull) SENSenseWiFiInfo* wiFi;
+@property (nonatomic, strong, readonly) SENSenseWiFiInfo* wiFi;
 @property (nonatomic, assign, readonly) SENSenseHardware hardwareVersion;
 
 @end
+
+NS_ASSUME_NONNULL_END

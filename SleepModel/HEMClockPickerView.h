@@ -20,6 +20,7 @@
 
 - (void)updateTimeToHour:(NSUInteger)hour minute:(NSUInteger)minute;
 
+@property (nonatomic, weak) IBOutlet UIView* separator;
 @property (nonatomic, readonly) NSUInteger hour;
 @property (nonatomic, readonly) NSUInteger minute;
 @property (nonatomic) NSUInteger minuteIncrement;

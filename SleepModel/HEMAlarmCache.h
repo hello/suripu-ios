@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSArray<SENAlarmExpansion*>* expansions;
 
 - (void)cacheValuesFromAlarm:(SENAlarm*)alarm;
-- (void)setEnable:(BOOL)enable expansion:(SENExpansion*)expansion;
 - (BOOL)isRepeated;
+- (void)setAlarmExpansion:(SENAlarmExpansion*)alarmExpansion;
+
 @end

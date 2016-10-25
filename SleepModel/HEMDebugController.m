@@ -42,6 +42,7 @@
 #import "HEMSensorService.h"
 #import "HEMRoomCheckViewController.h"
 #import "HEMIntroService.h"
+#import "HEMVoiceService.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -147,6 +148,9 @@
             [appLaunchUsage increment:NO];
         }
         [appLaunchUsage save];
+        
+        SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+        [localPrefs setPersistentPreference:nil forKey:@"stop.asking.to.rate.app"];
     }];
 }
 
@@ -347,6 +351,9 @@
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
         HEMIntroService* intro = [HEMIntroService new];
         [intro reset];
+        
+        HEMVoiceService* voice = [HEMVoiceService new];
+        [voice resetVoiceIntro];
         
         HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
         [handHoldingService reset];

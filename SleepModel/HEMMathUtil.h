@@ -13,45 +13,57 @@
  * @param centimeters: centimeters to convert to inches
  * @return inches
  */
-CGFloat HEMToInches (NSNumber* centimeters);
+double HEMToInches (NSNumber* centimeters);
 
 /**
  * Converts inches to centimeters
  * @param inches: inches to convert to centimeters
  * @return centimeters
  */
-CGFloat HEMToCm (NSNumber* inches);
+double HEMToCm (NSNumber* inches);
 
 /**
  * Converts grams to pounds
  * @param grams: NSNumber representing the grams to convert
  * @return pounds
  */
-CGFloat HEMGramsToPounds (NSNumber* grams);
+double HEMGramsToPounds (NSNumber* grams);
 
 /**
  * Converts grams to Kilograms
  * @param grams: NSNumber representing the grams to convert
  * @return Kilograms
  */
-CGFloat HEMGramsToKilograms (NSNumber *grams);
+double HEMGramsToKilograms (NSNumber *grams);
 
 /**
  * Converts pounds to kilograms
  * @param pounds: NSNumber representing the pounds to convert
  * @return kilograms
  */
-CGFloat HEMPoundsToKilograms (NSNumber* pounds);
+double HEMPoundsToKilograms (NSNumber* pounds);
 
 /**
  * Converts pounds to grams
  * @param pounds: NSNumber representing the pounds to convert
  * @return grams
  */
-CGFloat HEMPoundsToGrams (NSNumber* pounds);
+double HEMPoundsToGrams (NSNumber* pounds);
 
 /**
  * Convert degrees to radians
- @ return radian value for degrees
+ * @return radian value for degrees
  */
-CGFloat HEMDegreesToRadians(CGFloat degrees);
+double HEMDegreesToRadians(double degrees);
+
+/**
+ * Convert celsius to fahrenheit
+ * @return fahrenheit
+ */
+double HEMCelsiusToFahrenheit(double celsius);
+
+/**
+ * Convert fahrenheit to celsius
+ * @return celsius
+ */
+double HEMFahrenheitToCelsius(double fahrenheit);

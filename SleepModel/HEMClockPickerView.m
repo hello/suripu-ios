@@ -239,6 +239,7 @@ static NSUInteger const HEMClock12HourCount = 12;
 }
 
 - (void)display {
+    [[self separator] setBackgroundColor:[UIColor separatorColor]];
     [self setClipsToBounds:NO];
     
     self.alpha = 0;

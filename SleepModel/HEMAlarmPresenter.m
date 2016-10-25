@@ -499,13 +499,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         } else if ([expansion type] == SENExpansionTypeLights) {
             NSString* unit = NSLocalizedString(@"measurement.percentage.unit", nil);
             NSString* format = NSLocalizedString(@"alarm.expansion.light.format", nil);
-            NSInteger max = [alarmExpansion targetRange].max;
-            detail = [NSString stringWithFormat:format, max, unit];
+            detail = [NSString stringWithFormat:format, [alarmExpansion targetRange].max, unit];
         } else if ([expansion type] == SENExpansionTypeThermostat) {
+            SENExpansionValueRange range = [alarmExpansion targetRange];
+            range = [[self expansionService] convertThermostatRangeBasedOnPreference:range];
             NSString* format = NSLocalizedString(@"alarm.expansion.temp.range.format", nil);
-            NSInteger min = [alarmExpansion targetRange].min;
-            NSInteger max = [alarmExpansion targetRange].max;
-            detail = [NSString stringWithFormat:format, min, max];
+            detail = [NSString stringWithFormat:format, range.min, range.max];
         }
     } else {
         detail = NSLocalizedString(@"expansion.state.not-connected", nil);

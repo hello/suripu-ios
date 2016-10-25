@@ -10,6 +10,7 @@
 #import <SenseKit/SENPreference.h>
 
 #import "HEMSensorValueFormatter.h"
+#import "HEMMathUtil.h"
 
 @interface HEMSensorValueFormatter()
 
@@ -89,13 +90,13 @@
     switch ([self sensorUnit]) {
         case SENSensorUnitCelsius: {
             if (![SENPreference useCentigrade]) {
-                value = @([value doubleValue] * 1.8f + 32);
+                value = @(HEMCelsiusToFahrenheit([value doubleValue]));
             }
             return value;
         }
         case SENSensorUnitFahrenheit: {
             if ([SENPreference useCentigrade]) {
-                value = @([value doubleValue] / 1.8f - 32);
+                value = @(HEMFahrenheitToCelsius([value doubleValue]));
             }
             return value;
         }

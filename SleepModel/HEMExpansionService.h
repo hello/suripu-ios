@@ -37,6 +37,8 @@ typedef void(^HEMExpansionUpdateHandler)(NSError* _Nullable error);
 - (NSString*)configurationNameForExpansion:(SENExpansion*)expansion;
 - (SENExpansion*)firstExpansionOfType:(SENExpansionType)type
                          inExpansions:(NSArray<SENExpansion*>*)expansions;
+- (SENExpansionValueRange)convertThermostatRangeToCelsis:(SENExpansionValueRange)range;
+- (SENExpansionValueRange)convertThermostatRangeBasedOnPreference:(SENExpansionValueRange)range;
 
 @end
 

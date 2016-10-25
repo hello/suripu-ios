@@ -13,6 +13,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 
 #import "HEMExpansionService.h"
+#import "HEMMathUtil.h"
 
 static NSString* const HEMExpansionLightCategory = @"LIGHT";
 
@@ -200,6 +201,28 @@ static NSString* const HEMExpansionLightCategory = @"LIGHT";
         default:
             return NSLocalizedString(@"expansion.configuration.name.generic", nil);
     }
+}
+
+#pragma mark - Conversions
+
+- (SENExpansionValueRange)convertThermostatRangeToCelsis:(SENExpansionValueRange)range {
+    SENExpansionValueRange convertedRange = range;
+    convertedRange.min = HEMFahrenheitToCelsius(range.min);
+    convertedRange.max = HEMFahrenheitToCelsius(range.max);
+    convertedRange.setpoint = HEMFahrenheitToCelsius(range.setpoint);
+    return convertedRange;
+}
+
+- (SENExpansionValueRange)convertThermostatRangeBasedOnPreference:(SENExpansionValueRange)range {
+    SENExpansionValueRange convertedRange = range;
+    // server servers celsius
+    if ([SENPreference temperatureFormat] == SENTemperatureFormatFahrenheit) {
+        convertedRange.min = ceil(HEMCelsiusToFahrenheit(range.min));
+        convertedRange.max = ceil(HEMCelsiusToFahrenheit(range.max));
+        convertedRange.setpoint = ceil(HEMCelsiusToFahrenheit(range.setpoint));
+    }
+    
+    return convertedRange;
 }
 
 @end

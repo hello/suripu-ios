@@ -308,6 +308,7 @@
 		BF885F251CE562A500A92F90 /* HEMNewAccountPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF885F241CE562A500A92F90 /* HEMNewAccountPresenter.m */; };
 		BF885F281CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF885F271CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m */; };
 		BF885F2B1CE6750700A92F90 /* HEMNewProfileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF885F2A1CE6750700A92F90 /* HEMNewProfileCollectionViewCell.m */; };
+		BF88EA791DBECF3F00BCE15E /* HEMMathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */; };
 		BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		BF896D4C1C74227E0095D37D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7D800D1A3F952000B0BFD7 /* UIColor+HEMStyle.m */; };
@@ -4460,6 +4461,7 @@
 			files = (
 				BF8411EE1D83912700D7A676 /* HEMSensorDataRequestOperation.m in Sources */,
 				BF53D8CF1D931E3F00C24F9D /* HEMRoomConditionsExtViewController.m in Sources */,
+				BF88EA791DBECF3F00BCE15E /* HEMMathUtil.m in Sources */,
 				8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 				BF896D4D1C7422CD0095D37D /* UIColor+HEMStyle.m in Sources */,
 				BF287D641C9CBF250052F543 /* HEMSensorService.m in Sources */,

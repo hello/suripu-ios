@@ -66,26 +66,31 @@
                                             <rect key="frame" x="0.0" y="179" width="600" height="108"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottomShadow" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-uk-Loy">
-                                            <rect key="frame" x="0.0" y="283" width="600" height="4"/>
-                                        </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e5C-y2-fVP">
+                                            <rect key="frame" x="0.0" y="286" width="600" height="1"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="v45-sK-ftc"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="e5C-y2-fVP" secondAttribute="trailing" id="8aY-R0-6wo"/>
                                         <constraint firstItem="mUm-vw-qys" firstAttribute="height" secondItem="B18-dK-Yet" secondAttribute="height" id="FtC-w0-Yyy"/>
-                                        <constraint firstAttribute="bottom" secondItem="aOX-uk-Loy" secondAttribute="bottom" id="LgV-9s-s99"/>
                                         <constraint firstAttribute="trailing" secondItem="B18-dK-Yet" secondAttribute="trailing" id="SiW-MW-EGR"/>
-                                        <constraint firstAttribute="trailing" secondItem="aOX-uk-Loy" secondAttribute="trailing" id="Vqq-gf-4Th"/>
+                                        <constraint firstAttribute="bottom" secondItem="e5C-y2-fVP" secondAttribute="bottom" id="Zax-cB-eEK"/>
                                         <constraint firstAttribute="trailing" secondItem="mUm-vw-qys" secondAttribute="trailing" id="ZkD-NL-CWs"/>
                                         <constraint firstAttribute="bottom" secondItem="B18-dK-Yet" secondAttribute="bottom" id="fm4-0c-8er"/>
                                         <constraint firstItem="mUm-vw-qys" firstAttribute="leading" secondItem="S0h-GY-w6p" secondAttribute="leading" id="g34-e4-2Cu"/>
+                                        <constraint firstItem="e5C-y2-fVP" firstAttribute="leading" secondItem="S0h-GY-w6p" secondAttribute="leading" id="lXS-WH-bGm"/>
                                         <constraint firstItem="B18-dK-Yet" firstAttribute="leading" secondItem="S0h-GY-w6p" secondAttribute="leading" id="pdd-OO-d24"/>
-                                        <constraint firstItem="aOX-uk-Loy" firstAttribute="leading" secondItem="S0h-GY-w6p" secondAttribute="leading" id="qrR-hQ-B3e"/>
                                         <constraint firstItem="mUm-vw-qys" firstAttribute="top" secondItem="S0h-GY-w6p" secondAttribute="top" id="svo-dv-ZAf"/>
                                         <constraint firstItem="mUm-vw-qys" firstAttribute="bottom" secondItem="B18-dK-Yet" secondAttribute="top" constant="-70" id="vR9-oJ-cZp"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="botGradientView" destination="B18-dK-Yet" id="qQa-7J-q1e"/>
+                                        <outlet property="separator" destination="e5C-y2-fVP" id="hAd-qO-Idj"/>
                                         <outlet property="topGradientView" destination="mUm-vw-qys" id="m5C-gF-t5q"/>
                                     </connections>
                                 </view>
@@ -7459,7 +7464,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ytT-am-YU3"/>
-        <segue reference="QaF-2O-SxF"/>
+        <segue reference="Uew-Av-EPF"/>
         <segue reference="xK0-Ru-V1S"/>
     </inferredMetricsTieBreakers>
 </document>

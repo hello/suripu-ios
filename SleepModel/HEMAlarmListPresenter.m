@@ -26,6 +26,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlarmCache.h"
 #import "HEMAlarmExpansionListCell.h"
+#import "HEMExpansionService.h"
 
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
@@ -52,15 +53,18 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 @property (nonatomic, strong) NSDateFormatter *hour24Formatter;
 @property (nonatomic, strong) NSDateFormatter *hour12Formatter;
 @property (nonatomic, strong) NSDateFormatter *meridiemFormatter;
+@property (nonatomic, strong) HEMExpansionService* expansionService;
 
 @end
 
 @implementation HEMAlarmListPresenter
 
-- (instancetype)initWithAlarmService:(HEMAlarmService*)alarmService {
+- (instancetype)initWithAlarmService:(HEMAlarmService*)alarmService
+                    expansionService:(HEMExpansionService*)expansionService {
     self = [super init];
     if (self) {
         _alarmService = alarmService;
+        _expansionService = expansionService;
         _hour12Formatter = [NSDateFormatter new];
         _hour12Formatter.dateFormat = @"hh:mm";
         _hour24Formatter = [NSDateFormatter new];
@@ -320,7 +324,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
         case SENExpansionTypeLights: {
             NSString* title = NSLocalizedString(@"alarm.light.title", nil);
             NSString* unitSymbol = NSLocalizedString(@"measurement.percentage.unit", nil);
-            NSString* value = [NSString stringWithFormat:@"%ld%@", range.max, unitSymbol];
+            NSString* value = [NSString stringWithFormat:@"%.0f%@", range.max, unitSymbol];
             NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:titleAttributes];
             NSAttributedString* attributedValue = [[NSAttributedString alloc] initWithString:value attributes:valueAttributes];
             
@@ -329,16 +333,16 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
             break;
         }
         case SENExpansionTypeThermostat: {
+            range = [[self expansionService] convertThermostatRangeBasedOnPreference:range];
             NSString* title = NSLocalizedString(@"alarm.thermostat.title", nil);
-            NSString* unitSymbol = NSLocalizedString(@"measurement.temperature.unit", nil);
-            NSString* minValue = [NSString stringWithFormat:@"%ld%@", range.min, unitSymbol];
-            NSString* maxValue = [NSString stringWithFormat:@"%ld%@", range.max, unitSymbol];
+            NSString* minValue = [NSString stringWithFormat:@"%.0f", range.min];
+            NSString* maxValue = [NSString stringWithFormat:@"%.0f", range.max];
             NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:titleAttributes];
             NSAttributedString* attributedMinValue = [[NSAttributedString alloc] initWithString:minValue attributes:valueAttributes];
             NSAttributedString* attributedMaxValue = [[NSAttributedString alloc] initWithString:maxValue attributes:valueAttributes];
             
             args = @[attributedTitle, attributedMinValue, attributedMaxValue];
-            format = NSLocalizedString(@"alarm.light.attribution.format", nil);
+            format = NSLocalizedString(@"alarm.thermostat.attribution.format", nil);
             break;
         }
     }
@@ -419,7 +423,10 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 }
 
 - (void)updateTimeTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm {
+    UIColor* textColor = [alarm isOn] ? [UIColor grey6] : [UIColor grey4];
     cell.timeLabel.text = [self localizedTimeForAlarm:alarm];
+    cell.timeLabel.textColor = textColor;
+    cell.meridiemLabel.textColor = textColor;
     if (![[self alarmService] useMilitaryTimeFormat]) {
         NSString *meridiem = alarm.hour < 12 ? @"am" : @"pm";
         NSString *key = [NSString stringWithFormat:HEMAlarmListTimeKey, meridiem];
@@ -596,6 +603,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
                                               message:[error localizedDescription]
                                         fromPresenter:strongSelf];
         } else {
+            [[strongSelf collectionView] reloadData];
             [SENAnalytics trackAlarmToggle:alarm];
         }
     }];

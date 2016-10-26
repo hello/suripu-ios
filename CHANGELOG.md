@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.0.13
+
+Fixes:
+
+* Fixed layout issue with sensor values on smaller devices for graph cards in room conditions
+
 ## 1.6.0.12
 
 Fixes:

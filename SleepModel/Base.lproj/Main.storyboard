@@ -4854,7 +4854,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="584" height="189"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SENSOR NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if8-cF-4vR">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="SENSOR NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if8-cF-4vR">
                                                     <rect key="frame" x="16" y="16" width="439" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="nIY-QO-4M2"/>
@@ -4942,14 +4942,14 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Mfy-rk-oVb" firstAttribute="leading" secondItem="if8-cF-4vR" secondAttribute="trailing" id="1e1-AZ-dzU"/>
+                                            <constraint firstItem="if8-cF-4vR" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Mfy-rk-oVb" secondAttribute="leading" id="0it-DS-QXL"/>
                                             <constraint firstItem="HCV-Es-umV" firstAttribute="trailing" secondItem="if8-cF-4vR" secondAttribute="trailing" id="2xt-2F-YZI"/>
                                             <constraint firstItem="jBm-gD-70J" firstAttribute="top" secondItem="Mfy-rk-oVb" secondAttribute="bottom" id="4vU-ax-OjQ"/>
                                             <constraint firstAttribute="trailing" secondItem="Mfy-rk-oVb" secondAttribute="trailing" constant="16" id="9JW-wU-SE6"/>
                                             <constraint firstItem="Mfy-rk-oVb" firstAttribute="top" secondItem="zFY-vB-2Pq" secondAttribute="top" constant="16" id="D2g-5m-z0n"/>
                                             <constraint firstItem="HCV-Es-umV" firstAttribute="top" secondItem="if8-cF-4vR" secondAttribute="bottom" id="Exc-hE-ikp"/>
                                             <constraint firstItem="jBm-gD-70J" firstAttribute="trailing" secondItem="Mfy-rk-oVb" secondAttribute="trailing" id="Nsu-qJ-SfP"/>
-                                            <constraint firstItem="if8-cF-4vR" firstAttribute="width" secondItem="zFY-vB-2Pq" secondAttribute="width" multiplier="0.75" constant="1" id="RM0-Zs-P8Y"/>
+                                            <constraint firstItem="if8-cF-4vR" firstAttribute="width" secondItem="zFY-vB-2Pq" secondAttribute="width" multiplier="0.75" priority="750" constant="1" id="SOt-vl-q2i"/>
                                             <constraint firstItem="HCV-Es-umV" firstAttribute="leading" secondItem="if8-cF-4vR" secondAttribute="leading" id="b9k-gc-v7E"/>
                                             <constraint firstItem="if8-cF-4vR" firstAttribute="top" secondItem="zFY-vB-2Pq" secondAttribute="top" constant="16" id="dfD-83-Soy"/>
                                             <constraint firstAttribute="trailing" secondItem="cLU-R9-XQZ" secondAttribute="trailing" id="fxT-lL-Q4T"/>

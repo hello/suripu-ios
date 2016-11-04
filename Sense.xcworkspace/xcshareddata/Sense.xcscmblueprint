@@ -9,7 +9,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7A83AD29-E02E-44C9-ADA2-AB7376BB1F7C",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "81ED32DD441023EF84FCAD446D46BF982022FBB6" : "suripu-ios",
+    "81ED32DD441023EF84FCAD446D46BF982022FBB6" : "suripu-ios\/",
     "124F63D97679E741A8408497CE145BBCC89F73C9" : "SenseKit\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Sense",

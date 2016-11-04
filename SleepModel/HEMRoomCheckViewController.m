@@ -215,6 +215,12 @@ withColorFromCondition:(SENCondition)condition
     return [[self valueFormatter] unitSymbol];
 }
 
+- (BOOL)sensorValueUnitAsSubscriptAtIndex:(NSUInteger)sensorIndex
+                              inRoomCheck:(HEMRoomCheckView*)roomCheckView {
+    SENSensor* sensor = [self sensors][sensorIndex];
+    return [sensor type] != SENSensorTypeTemp;
+}
+
 - (UIFont*)sensorValueUnitFontAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
     return [UIFont sensorUnitFontForUnit:[sensor unit]];

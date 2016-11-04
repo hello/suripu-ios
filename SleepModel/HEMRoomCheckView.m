@@ -37,12 +37,14 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgImageTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorContainerLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorValueCenterConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *unitLabelBottomConstraint;
 
 @property (assign, nonatomic) NSInteger numberOfSensors;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 @property (assign, nonatomic, getter=isAnimating) BOOL animating;
 @property (weak,   nonatomic) HEMActivityIndicatorView* currentSensorActivity;
 @property (assign, nonatomic) NSUInteger currentSensorIndex;
+@property (assign, nonatomic) CGFloat origUnitBottomMargin;
 
 @end
 
@@ -63,6 +65,7 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
     [[self sensorMessageLabel] setFont:[UIFont onboardingRoomCheckSensorLightFont]];
     [[self unitLabel] setFont:[UIFont h4]];
     [[self valueLabel] setFont:[UIFont h1]];
+    [self setOrigUnitBottomMargin:[[self unitLabelBottomConstraint] constant]];
 }
 
 - (void)adjustForiPhone4 {
@@ -156,11 +159,22 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
 
     UIColor* color = [[self delegate] sensorValueColorAtIndex:index inRoomCheckView:self];
     NSString* unit = [[self delegate] sensorValueUnitAtIndex:index inRoomCheckView:self];
+    BOOL subscript = [[self delegate] sensorValueUnitAsSubscriptAtIndex:index inRoomCheck:self];
     
     NSDictionary* unitAttrs = @{NSFontAttributeName : [[self unitLabel] font]};
-    CGFloat unitWidth = [unit sizeBoundedByHeight:MAXFLOAT attributes:unitAttrs].width;
+    CGSize unitSize = [unit sizeBoundedByHeight:MAXFLOAT attributes:unitAttrs];
     
-    [[self sensorValueCenterConstraint] setConstant:-(unitWidth / 2)];
+    if (!subscript) {
+        CGFloat heightOfValue = CGRectGetHeight([[self valueLabel] bounds]);
+        CGFloat capHeight = [[[self unitLabel] font] capHeight];
+        CGFloat ascender = [[[self unitLabel] font] ascender];
+        CGFloat unitHeightDiff = heightOfValue - unitSize.height + floorCGFloat(ascender - capHeight);
+        [[self unitLabelBottomConstraint] setConstant:-unitHeightDiff];
+    } else {
+        [[self unitLabelBottomConstraint] setConstant:[self origUnitBottomMargin]];
+    }
+    
+    [[self sensorValueCenterConstraint] setConstant:-(unitSize.width / 2)];
     [[self valueLabel] layoutIfNeeded];
     
     [[self valueLabel] setFormat:@"%.0f"];

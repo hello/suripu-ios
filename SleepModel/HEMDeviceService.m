@@ -255,9 +255,6 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 #pragma mark - Upgrade
 
 - (BOOL)hasHardwareUpgradeForSense {
-#if STORE
-    return NO;
-#endif
     SENSenseMetadata* sense = [[self devices] senseMetadata];
     return [sense hardwareVersion] == SENSenseHardwareOne;
 }

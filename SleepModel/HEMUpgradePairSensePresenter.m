@@ -26,6 +26,7 @@
                 [self setDeviceIdsToExclude:[NSSet setWithObject:deviceId]];
             }
         }
+        [self setVersionOfSenseToFind:SENSenseAdvertisedVersionVoice];
         [self setUpgrade:YES];
     }
     return self;

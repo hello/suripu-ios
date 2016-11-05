@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import <SenseKit/SENService.h>
+#import <SenseKit/SENSense.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -151,8 +152,10 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
  */
 - (void)forceSensorDataUploadFromSense:(void(^)(NSError* error))completion;
 
-- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+- (void)rescanForNearbySenseWithVersion:(SENSenseAdvertisedVersion)version
+                         notMatchingIds:(NSSet<NSString*>*)deviceIdsToFilter
                              completion:(HEMOnboardingErrorHandler)completion;
+
 - (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion;
 - (void)pairWithCurrentSenseWithLEDOn:(BOOL)turnOnLEDs
                            completion:(HEMOnboardingErrorHandler)completion;

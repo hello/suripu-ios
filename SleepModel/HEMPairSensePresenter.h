@@ -7,6 +7,7 @@
 //
 
 #import "HEMPresenter.h"
+#import <SenseKit/SENSense.h>
 
 @class HEMOnboardingService;
 @class HEMDeviceService;
@@ -27,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readonly) HEMOnboardingService* onbService;
 @property (nonatomic, weak) id<HEMPairSenseActionDelegate> actionDelegate;
 @property (nonatomic, copy) NSSet<NSString*>* deviceIdsToExclude;
+@property (nonatomic, assign) SENSenseAdvertisedVersion versionOfSenseToFind; // unknown will return nearest
 @property (nonatomic, assign, getter=isUpgrading) BOOL upgrade;
 
 - (instancetype)initWithOnboardingService:(HEMOnboardingService*)onbService

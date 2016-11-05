@@ -247,7 +247,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     }
 }
 
-- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+- (void)rescanForNearbySenseWithVersion:(SENSenseAdvertisedVersion)version
+                         notMatchingIds:(NSSet<NSString*>*)deviceIdsToFilter
                              completion:(HEMOnboardingErrorHandler)completion {
     [SENSenseManager stopScan]; // stop a scan if one is in progress;
     [self setRescanHandler:completion];
@@ -289,17 +290,19 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                     done (nil, [strongSelf errorWithCode:HEMOnboardingErrorNoSenseFound
                                                   reason:reason]);
                 } else {
-                    SENSense* nearestSense = nil;
-                    if ([deviceIdsToFilter count] == 0) {
-                        nearestSense = [senses firstObject];
-                    } else {
-                        for (SENSense* sense in senses) {
-                            if (![deviceIdsToFilter containsObject:[sense deviceId]]) {
-                                nearestSense = sense;
-                                break;
+                    SENSense* nearestSense;
+                    
+                    for (SENSense* sense in senses) {
+                        nearestSense = sense;
+                        
+                        if (![deviceIdsToFilter containsObject:[sense deviceId]]) {
+                            if (version == SENSenseAdvertisedVersionUnknown
+                                || [nearestSense version] == version) {
+                                break; // found it
                             }
                         }
                     }
+                    
                     done (nearestSense, nil);
                 }
             }];
@@ -308,7 +311,9 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 }
 
 - (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion {
-    [self rescanForNearbySenseNotMatching:nil completion:completion];
+    [self rescanForNearbySenseWithVersion:SENSenseAdvertisedVersionUnknown
+                           notMatchingIds:nil
+                               completion:completion];
 }
 
 - (void)scanForSenses {

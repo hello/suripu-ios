@@ -73,7 +73,7 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
         
         NSString* footerFormat = NSLocalizedString(@"expansion.config.no-config.footer.format", nil);
         NSString* footer = [NSString stringWithFormat:footerFormat,
-                            [[self expansion] serviceName],
+                            [[self expansion] companyName],
                             [self configurationName]];
         
         UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
@@ -96,7 +96,7 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel {
     NSString* titleFormat = NSLocalizedString(@"expansion.config.title.format", nil);
     NSString* descriptionFormat = NSLocalizedString(@"expansion.config.description.format", nil);
-    NSString* title = [NSString stringWithFormat:titleFormat, [[self expansion] serviceName]];
+    NSString* title = [NSString stringWithFormat:titleFormat, [[self expansion] companyName]];
     NSString* description = [NSString stringWithFormat:descriptionFormat, [self configurationName]];
 
     [titleLabel setText:title];

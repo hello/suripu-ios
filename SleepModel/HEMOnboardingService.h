@@ -156,7 +156,6 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
                          notMatchingIds:(NSSet<NSString*>*)deviceIdsToFilter
                              completion:(HEMOnboardingErrorHandler)completion;
 
-- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion;
 - (void)pairWithCurrentSenseWithLEDOn:(BOOL)turnOnLEDs
                            completion:(HEMOnboardingErrorHandler)completion;
 - (void)checkIfCurrentSenseHasWiFi:(HEMOnboardingWiFiHandler)completion;

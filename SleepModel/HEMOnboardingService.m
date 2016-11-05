@@ -310,12 +310,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     }];
 }
 
-- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion {
-    [self rescanForNearbySenseWithVersion:SENSenseAdvertisedVersionUnknown
-                           notMatchingIds:nil
-                               completion:completion];
-}
-
 - (void)scanForSenses {
     if ([self shouldStopPreScanningForSenses]) {
         [self setStopPreScanningForSenses:NO];

@@ -9,6 +9,7 @@
 #import <Kiwi/Kiwi.h>
 #import <SenseKit/SENKeyedArchiver.h>
 #import <SenseKit/SENLocalPreferences.h>
+#import <SenseKit/Model.h>
 #import "NSDate+HEMRelative.h"
 #import "HEMAppReview.h"
 #import "HEMConfig.h"
@@ -53,13 +54,21 @@ describe(@"HEMAppReview", ^{
     
     describe(@"+amazonReviewLinks", ^{
         
-        it(@"should return US and UK sites", ^{
+        it(@"should return US and UK sites, if Sense One", ^{
+            SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+            [localPrefs setUserPreference:@(SENSenseHardwareOne)
+                                   forKey:@"HEMDeviceSettingHwVersion"];
+            
             NSDictionary* links = [HEMAppReview amazonReviewLinks];
             [[[links valueForKey:@"US"] should] beNonNil];
             [[[links valueForKey:@"GB"] should] beNonNil];
         });
         
-        it(@"should return a link to the uk site if country code is GB", ^{
+        it(@"should return a link to the uk site if country code is GB, with Sense One", ^{
+            SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+            [localPrefs setUserPreference:@(SENSenseHardwareOne)
+                                   forKey:@"HEMDeviceSettingHwVersion"];
+            
             NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_GB"];
             [NSLocale stub:@selector(currentLocale) andReturn:locale];
             NSString* link = [HEMAppReview amazonReviewLink];

@@ -336,20 +336,42 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
         }
         case SENExpansionTypeThermostat: {
             range = [[self expansionService] convertThermostatRangeBasedOnPreference:range];
+            
             NSString* title = NSLocalizedString(@"alarm.thermostat.title", nil);
-            NSString* minValue = [NSString stringWithFormat:@"%.0f", range.min];
+            NSAttributedString* attributedTitle =
+                [[NSAttributedString alloc] initWithString:title attributes:titleAttributes];
+            
             NSString* maxValue = [NSString stringWithFormat:@"%.0f", range.max];
-            NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:titleAttributes];
-            NSAttributedString* attributedMinValue = [[NSAttributedString alloc] initWithString:minValue attributes:valueAttributes];
-            NSAttributedString* attributedMaxValue = [[NSAttributedString alloc] initWithString:maxValue attributes:valueAttributes];
+            NSAttributedString* attributedMaxValue =
+                [[NSAttributedString alloc] initWithString:maxValue attributes:valueAttributes];
+            
+            if (range.max == range.min) {
+                format = NSLocalizedString(@"alarm.thermostat.attribution.format", nil);
+                
+                args = @[attributedTitle, attributedMaxValue];
+            } else {
+                format = NSLocalizedString(@"alarm.thermostat.attribution.range.format", nil);
+                
+                NSString* minValue = [NSString stringWithFormat:@"%.0f", range.min];
+                NSAttributedString* attributedMinValue =
+                    [[NSAttributedString alloc] initWithString:minValue attributes:valueAttributes];
+                
+                args = @[attributedTitle, attributedMinValue, attributedMaxValue];
+            }
+            
+            NSString* minValue = [NSString stringWithFormat:@"%.0f", range.min];
+            NSAttributedString* attributedMinValue =
+                [[NSAttributedString alloc] initWithString:minValue attributes:valueAttributes];
             
             args = @[attributedTitle, attributedMinValue, attributedMaxValue];
-            format = NSLocalizedString(@"alarm.thermostat.attribution.format", nil);
             break;
         }
     }
     
-    return [[NSMutableAttributedString alloc] initWithFormat:format args:args baseColor:[UIColor grey4] baseFont:[UIFont h7]];
+    return [[NSMutableAttributedString alloc] initWithFormat:format
+                                                        args:args
+                                                   baseColor:[UIColor grey4]
+                                                    baseFont:[UIFont h7]];
     
 }
 

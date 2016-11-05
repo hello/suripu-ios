@@ -400,7 +400,8 @@
 "alarm.light.title" = "Lights";
 "alarm.light.attribution.format" = "%@ set at %@";
 "alarm.thermostat.title" = "Thermostat";
-"alarm.thermostat.attribution.format" = "%@ set at %@° - %@°";
+"alarm.thermostat.attribution.range.format" = "%@ set at %@° - %@°";
+"alarm.thermostat.attribution.format" = "%@ set at %@°";
 "alarm.expansion.error.unable.to.load.title" = "Expansion not loaded";
 "alarm.expansion.error.unable.to.load.message" = "Sense could not load expansions at this time. Please try again later.";
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.1.1
+
+New:
+
+* Updated copy in upgrade path to make it more explicit about new hardware
+* Updated expansions to use company name
+* Updated thermostat attribution to satisfy Nest requirements
+* Filtering out 1.0 Senses in upgrade path
+
+Fixes:
+
+* Fixes temperature symbol placement in room check
+
 ## 1.6.0.13
 
 Fixes:

@@ -1010,6 +1010,7 @@
 "expansion.config.no-cnfig.format" = "No %@ found";
 "expansion.config.select" = "Select";
 "expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";
+"expansion.range.picker.value.format" = "%ld°";
 
 // voice
 "voice.tutorial.trigger.phrase.format" = "Okay Sense...\n%@";

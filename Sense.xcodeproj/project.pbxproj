@@ -436,6 +436,8 @@
 		BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */; };
 		BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9F1A71D36C43300BB4E3A /* HEMPillCollectionViewCell.m */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
+		BFDD8BDE1DCF921400E20B42 /* HEMThermostatRangePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFDD8BDD1DCF921400E20B42 /* HEMThermostatRangePicker.xib */; };
+		BFDD8BE41DCFB63000E20B42 /* HEMThermostatRangePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDD8BE31DCFB63000E20B42 /* HEMThermostatRangePicker.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
 		BFE375E01CEB98640029EE66 /* HEMFacebookService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375DF1CEB98640029EE66 /* HEMFacebookService.m */; };
@@ -1308,6 +1310,9 @@
 		BFDCA64A1BD6C0D200E9C33F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
+		BFDD8BDD1DCF921400E20B42 /* HEMThermostatRangePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMThermostatRangePicker.xib; sourceTree = "<group>"; };
+		BFDD8BE21DCFB63000E20B42 /* HEMThermostatRangePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMThermostatRangePicker.h; sourceTree = "<group>"; };
+		BFDD8BE31DCFB63000E20B42 /* HEMThermostatRangePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMThermostatRangePicker.m; sourceTree = "<group>"; };
 		BFDFCE9D1B72884B000DA303 /* HEMSensorValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorValueFormatter.h; sourceTree = "<group>"; };
 		BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatter.m; sourceTree = "<group>"; };
 		BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorValueFormatterSpec.m; sourceTree = "<group>"; };
@@ -3324,6 +3329,9 @@
 			children = (
 				BFC0D66B1D9D8F7A00239B89 /* HEMExpansionHeaderView.h */,
 				BFC0D66C1D9D8F7A00239B89 /* HEMExpansionHeaderView.m */,
+				BFDD8BDD1DCF921400E20B42 /* HEMThermostatRangePicker.xib */,
+				BFDD8BE21DCFB63000E20B42 /* HEMThermostatRangePicker.h */,
+				BFDD8BE31DCFB63000E20B42 /* HEMThermostatRangePicker.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3774,6 +3782,7 @@
 				8AD331281BB08C4300DFF95A /* Drawer.xcassets in Resources */,
 				BFA540E71BCDC326007AF607 /* HEMMeetSenseView.xib in Resources */,
 				BFF93EA61D19EA540038419A /* Social.xcassets in Resources */,
+				BFDD8BDE1DCF921400E20B42 /* HEMThermostatRangePicker.xib in Resources */,
 				8A1743BC19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib in Resources */,
 				BFA540EF1BCEF10A007AF607 /* HEMIntroDescriptionView.xib in Resources */,
 				8AD3312E1BB08DCB00DFF95A /* Questions.xcassets in Resources */,
@@ -4419,6 +4428,7 @@
 				8AA8EE5C1B62F05C00FE9D1F /* HEMPopupMaskView.m in Sources */,
 				BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */,
 				BF4BE3D61D8358DD003B96ED /* HEMSensorGroupCollectionViewCell.m in Sources */,
+				BFDD8BE41DCFB63000E20B42 /* HEMThermostatRangePicker.m in Sources */,
 				BF9D499F1DAC57120027AAAA /* HEMFeedContainerViewController.m in Sources */,
 				BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */,
 				8A1743B719A7B471001E3C15 /* HEMSleepGraphViewController.m in Sources */,

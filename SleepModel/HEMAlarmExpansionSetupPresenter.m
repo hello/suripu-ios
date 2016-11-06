@@ -7,6 +7,8 @@
 //
 
 #import "UIBarButtonItem+HEMNav.h"
+
+#import <UICountingLabel/UICountingLabel.h>
 #import <SenseKit/SENPreference.h>
 
 #import "HEMActionSheetViewController.h"
@@ -18,6 +20,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSensorValueFormatter.h"
 #import "HEMActionSheetTitleView.h"
+#import "HEMThermostatRangePicker.h"
 #import "HEMStyle.h"
 
 static CGFloat const kHEMAlarmExpRowHeight = 66.0f;
@@ -75,7 +78,6 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     SENExpansionType type = [[self expansion] type];
     SENExpansionValueRange expansionRange = [[self expansion] valueRange];
     SENExpansionValueRange selectedRange = [[self alarmExpansion] targetRange];
-    HEMAlarmValueRangePickerView* picker = (id) [tableView tableHeaderView];
     
     if (type == SENExpansionTypeThermostat) {
         expansionRange = [[self expansionService] convertThermostatRangeBasedOnPreference:expansionRange];
@@ -96,20 +98,41 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
         minValue = expansionRange.min;
     }
     
+    // TODO: remove the picker from the storyboard
+    if (type == SENExpansionTypeLights) {
+        HEMAlarmValueRangePickerView* scrollablePicker = [HEMAlarmValueRangePickerView new];
+        [self configureScrollablePicker:scrollablePicker
+                       forExpansionType:type
+                               andRange:expansionRange
+                        withSelectedMin:minValue
+                            selectedMax:maxValue];
+        [tableView setTableHeaderView:scrollablePicker];
+    } else if (type == SENExpansionTypeThermostat) {
+        HEMThermostatRangePicker* rangePicker =
+            [HEMThermostatRangePicker rangePickerWithMin:minValue max:maxValue];
+        [tableView setTableHeaderView:rangePicker];
+    }
+    
+    [self setTableView:tableView];
+    [self loadExpansionConfigurations];
+}
+
+- (void)configureScrollablePicker:(HEMAlarmValueRangePickerView*)picker
+                 forExpansionType:(SENExpansionType)type
+                         andRange:(SENExpansionValueRange)range
+                  withSelectedMin:(NSInteger)minValue
+                      selectedMax:(NSInteger)maxValue {
     [picker setSelectedMaxValue:maxValue];
     [picker setSelectedMinValue:minValue];
     [picker setPickerDelegate:self];
     
     if (type == SENExpansionTypeThermostat) {
         [picker setUnitSymbol:NSLocalizedString(@"measurement.temperature.unit", nil)];
-        [picker configureRangeWithMin:expansionRange.min max:expansionRange.max];
+        [picker configureRangeWithMin:range.min max:range.max];
     } else {
         [picker setUnitSymbol:NSLocalizedString(@"measurement.percentage.unit", nil)];
-        [picker configureWithMin:expansionRange.min max:expansionRange.max];
+        [picker configureWithMin:range.min max:range.max];
     }
-    
-    [self setTableView:tableView];
-    [self loadExpansionConfigurations];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -146,6 +169,14 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     if (![[self selectedConfig] isSelected]) {
         updatedConfig = [self selectedConfig];
     }
+    
+    id pickerView = [[self tableView] tableHeaderView];
+    if ([pickerView isKindOfClass:[HEMThermostatRangePicker class]]) {
+        HEMThermostatRangePicker* thermoPicker = pickerView;
+        [self updateThermostatTargetRangeWithMin:[[thermoPicker minLabel] currentValue]
+                                             max:[[thermoPicker maxLabel] currentValue]];
+    }
+    
     [[self delegate] updatedAlarmExpansion:[self alarmExpansion]
                 withExpansionConfiguration:updatedConfig];
 }
@@ -400,20 +431,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-#pragma mark - HEMAlarmValueRangePickerDelegate
+#pragma mark - Picker values
 
-- (void)didUpdateSelectedValuesFrom:(HEMAlarmValueRangePickerView*)pickerView {
+- (void)updateThermostatTargetRangeWithMin:(CGFloat)min max:(CGFloat)max {
     SENExpansionValueRange valueRange;
-    valueRange.min = [pickerView selectedMinValue];
-    valueRange.max = [pickerView selectedMaxValue];
+    valueRange.min = min;
+    valueRange.max = max;
     
-    if ([[self expansion] type] == SENExpansionTypeThermostat
-        && [SENPreference temperatureFormat] == SENTemperatureFormatFahrenheit) {
+    if ([SENPreference temperatureFormat] == SENTemperatureFormatFahrenheit) {
         // this means values from picker will be in fahrenheit
         valueRange = [[self expansionService] convertThermostatRangeToCelsis:valueRange];
     }
     
     [[self alarmExpansion] setTargetRange:valueRange];
+}
+
+#pragma mark - HEMAlarmValueRangePickerDelegate
+
+- (void)didUpdateSelectedValuesFrom:(HEMAlarmValueRangePickerView*)pickerView {
+    if ([[self expansion] type] == SENExpansionTypeThermostat) {
+        [self updateThermostatTargetRangeWithMin:[pickerView selectedMinValue]
+                                             max:[pickerView selectedMaxValue]];
+    } else {
+        SENExpansionValueRange valueRange;
+        valueRange.min = [pickerView selectedMinValue];
+        valueRange.max = [pickerView selectedMaxValue];
+        [[self alarmExpansion] setTargetRange:valueRange];
+    }
 }
 
 #pragma mark - Actions

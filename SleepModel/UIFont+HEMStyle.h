@@ -25,6 +25,7 @@
 + (UIFont*)bodyBold;
 + (UIFont*)bodySmall;
 + (UIFont*)bodySmallBold;
++ (UIFont*)buttonLarge;
 + (UIFont*)button;
 + (UIFont*)buttonSmall;
 

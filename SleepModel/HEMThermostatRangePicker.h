@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UIButton* increaseMaxButton;
 @property (weak, nonatomic) IBOutlet UIButton* decreaseMaxButton;
 
+@property (assign, nonatomic) CGFloat minLimit; // defaults to 0
+@property (assign, nonatomic) CGFloat maxLimit; // defaults to 100
+
 + (instancetype)rangePickerWithMin:(NSInteger)min max:(NSInteger)max;
 
 @end

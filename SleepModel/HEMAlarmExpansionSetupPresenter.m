@@ -108,13 +108,22 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
                             selectedMax:maxValue];
         [tableView setTableHeaderView:scrollablePicker];
     } else if (type == SENExpansionTypeThermostat) {
-        HEMThermostatRangePicker* rangePicker =
-            [HEMThermostatRangePicker rangePickerWithMin:minValue max:maxValue];
-        [tableView setTableHeaderView:rangePicker];
+        [tableView setTableHeaderView:[self thermostatPickerWithSelectedMin:minValue
+                                                                selectedMax:maxValue
+                                                                      range:expansionRange]];
     }
     
     [self setTableView:tableView];
     [self loadExpansionConfigurations];
+}
+
+- (HEMThermostatRangePicker*)thermostatPickerWithSelectedMin:(NSInteger)min
+                                                 selectedMax:(NSInteger)maxValue
+                                                       range:(SENExpansionValueRange)range {
+    HEMThermostatRangePicker* rangePicker = [HEMThermostatRangePicker rangePickerWithMin:min max:maxValue];
+    [rangePicker setMinLimit:range.min];
+    [rangePicker setMaxLimit:range.max];
+    return rangePicker;
 }
 
 - (void)configureScrollablePicker:(HEMAlarmValueRangePickerView*)picker

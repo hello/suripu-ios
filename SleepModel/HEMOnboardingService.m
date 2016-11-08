@@ -114,14 +114,26 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     [self setPollingSensorData:NO];
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
-    [self setDeviceService:nil];
+    [self setSensorStatus:nil];
+    [self setDfuCompletionHandler:nil];
+    [[self senseDFUTimer] invalidate];
+    [self setSenseDFUTimer:nil];
+    [self setCurrentDFUStatus:nil];
+    [self setStopPreScanningForSenses:YES];
+    
     [self setRescanHandler:nil];
     [[self rescanTimer] invalidate];
     [self setRescanTimer:nil];
+    
     [self setSensePairingHandler:nil];
     [self setPillPairingHandler:nil];
     [self setWifihandler:nil];
     [self setLinkAccountHandler:nil];
+    [self setLedHandler:nil];
+    
+    [self setDeviceService:nil];
+    [self setRefreshDeviceAttempts:0];
+    [self setRefreshingDeviceMetadata:NO];
     
     if ([self tempSenseManager]) {
         [[self tempSenseManager] disconnectFromSense];
@@ -1203,7 +1215,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 }
 
 - (void)refreshDeviceMetadata {
-    if (![[self deviceService] devices] && ![self isRefreshingDeviceMetadata]) {
+    if (![self isRefreshingDeviceMetadata]) {
         [self setRefreshingDeviceMetadata:YES];
         [self setRefreshDeviceAttempts:[self refreshDeviceAttempts] + 1];
         
@@ -1226,8 +1238,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                 }
             }
         }];
-        
-        
     }
 }
 

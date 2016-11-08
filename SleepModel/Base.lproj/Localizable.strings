@@ -975,6 +975,7 @@
 "expansion.state.revoked" = "Disconnected";
 "expansion.state.connected-off" = "Disabled";
 "expansion.state.connected-on" = "Enabled";
+"expansion.state.not-available" = "Coming Soon";
 "expansion.state.not-configured" = "Configure";
 "expansion.action.permissions" = "Permissions";
 "expansion.action.enable" = "Enabled";

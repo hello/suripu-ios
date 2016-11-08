@@ -125,7 +125,7 @@
                 // proceed while activity is being dismissed
                 [[strongSelf activityView] dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
                 [[strongSelf delegate] skip:NO fromPresenter:strongSelf];
-//                [[[strongSelf deviceService] senseManager] disconnectFromSense];
+                [[[strongSelf deviceService] senseManager] disconnectFromSense];
             }
         }];
     };

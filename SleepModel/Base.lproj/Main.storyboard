@@ -3821,6 +3821,13 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zZH-FO-Vtj">
+                                                    <rect key="frame" x="260" y="11" width="80" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="3Ni-dR-5Hd"/>
+                                                        <constraint firstAttribute="height" constant="80" id="pPC-Yx-Oa8"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -3828,6 +3835,8 @@
                                             <constraint firstItem="C6H-EW-Ekd" firstAttribute="trailing" secondItem="1Yc-Fw-e2E" secondAttribute="trailing" id="39z-2W-YOr"/>
                                             <constraint firstItem="C6H-EW-Ekd" firstAttribute="leading" secondItem="1Yc-Fw-e2E" secondAttribute="leading" id="9D7-uI-VDY"/>
                                             <constraint firstItem="C6H-EW-Ekd" firstAttribute="top" secondItem="1Yc-Fw-e2E" secondAttribute="bottom" constant="5" id="TOP-rk-3Hp"/>
+                                            <constraint firstItem="zZH-FO-Vtj" firstAttribute="centerX" secondItem="b7a-DY-DJQ" secondAttribute="centerX" id="U63-xX-dJD"/>
+                                            <constraint firstItem="zZH-FO-Vtj" firstAttribute="bottom" secondItem="C6H-EW-Ekd" secondAttribute="top" constant="-15" id="Uej-LB-etV"/>
                                             <constraint firstItem="1Yc-Fw-e2E" firstAttribute="centerY" secondItem="b7a-DY-DJQ" secondAttribute="centerY" constant="-15" id="gaP-uv-60S"/>
                                             <constraint firstAttribute="trailing" secondItem="1Yc-Fw-e2E" secondAttribute="trailing" constant="8" id="hbz-s2-S0S"/>
                                             <constraint firstItem="1Yc-Fw-e2E" firstAttribute="leading" secondItem="b7a-DY-DJQ" secondAttribute="leading" constant="8" id="o2J-R0-nfa"/>
@@ -3836,6 +3845,7 @@
                                         <connections>
                                             <outlet property="messageLabel" destination="C6H-EW-Ekd" id="uAm-69-H8q"/>
                                             <outlet property="valueLabel" destination="1Yc-Fw-e2E" id="6cv-IE-1sc"/>
+                                            <outlet property="valueReplacementImageView" destination="zZH-FO-Vtj" id="o3T-Vx-jQA"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="chart" id="WY3-eO-8e2" customClass="HEMSensorChartCollectionViewCell">

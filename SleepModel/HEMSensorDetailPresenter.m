@@ -420,26 +420,32 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
               condition:(SENCondition)condition
                 message:(NSString*)message {
     UIColor* conditionColor = [UIColor colorForCondition:condition];
+    UIImage* valueReplacementImage = nil;
     
-    if ([[self sensor] type] == SENSensorTypeTemp) {
-        NSString* valueString = [[self formatter] stringFromSensorValue:value];
-        [[valueCell valueLabel] setTextColor:conditionColor];
-        [[valueCell valueLabel] setText:valueString];
-        [[valueCell valueLabel] setFont:[UIFont h1]];
+    if (condition == SENConditionCalibrating) {
+        valueReplacementImage = [UIImage imageNamed:@"sensorCalibrating"];
     } else {
-        NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h1],
-                                          NSForegroundColorAttributeName : conditionColor};
-        NSDictionary* unitAttributes = @{NSFontAttributeName : [UIFont h4],
-                                         NSForegroundColorAttributeName : conditionColor,
-                                         NSBaselineOffsetAttributeName : @(12.0f)};
-        
-        NSAttributedString* attrValue = [[self formatter] attributedValue:value
-                                                       unitSymbolLocation:HEMSensorValueUnitLocSubscript
-                                                          valueAttributes:valueAttributes
-                                                           unitAttributes:unitAttributes];
-        [[valueCell valueLabel] setAttributedText:attrValue];
+        if ([[self sensor] type] == SENSensorTypeTemp) {
+            NSString* valueString = [[self formatter] stringFromSensorValue:value];
+            [[valueCell valueLabel] setTextColor:conditionColor];
+            [[valueCell valueLabel] setText:valueString];
+            [[valueCell valueLabel] setFont:[UIFont h1]];
+        } else {
+            NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h1],
+                                              NSForegroundColorAttributeName : conditionColor};
+            NSDictionary* unitAttributes = @{NSFontAttributeName : [UIFont h4],
+                                             NSForegroundColorAttributeName : conditionColor,
+                                             NSBaselineOffsetAttributeName : @(12.0f)};
+            
+            NSAttributedString* attrValue = [[self formatter] attributedValue:value
+                                                           unitSymbolLocation:HEMSensorValueUnitLocSubscript
+                                                              valueAttributes:valueAttributes
+                                                               unitAttributes:unitAttributes];
+            [[valueCell valueLabel] setAttributedText:attrValue];
+        }
     }
     
+    [valueCell replaceValueWithImage:valueReplacementImage];
     [[valueCell messageLabel] setText:message];
     [[valueCell messageLabel] setTextColor:[UIColor grey5]];
     [[valueCell messageLabel] setFont:[UIFont body]];

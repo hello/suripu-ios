@@ -478,6 +478,7 @@
 		BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD11D00F98B00CA0E54 /* HEMWhatsNewService.m */; };
 		BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */; };
 		BFFCEFD91D074F6800CA0E54 /* HEMLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */; };
+		BFFDC1071DD171BE008F001B /* Sensors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFFDC1061DD171BE008F001B /* Sensors.xcassets */; };
 		EB784F705A26CD9F419529BF /* Pods_SenseApp_Sense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */; };
 		EBD370F7E3364152E122EC70 /* Pods_SenseApp_RoomConditionsExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44CBE61C47CEA05389AA4BDB /* Pods_SenseApp_RoomConditionsExtension.framework */; };
 /* End PBXBuildFile section */
@@ -1385,6 +1386,7 @@
 		BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HEMPresenter+HEMPhoto.m"; sourceTree = "<group>"; };
 		BFFCEFD71D074F6800CA0E54 /* HEMLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationService.h; sourceTree = "<group>"; };
 		BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationService.m; sourceTree = "<group>"; };
+		BFFDC1061DD171BE008F001B /* Sensors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sensors.xcassets; sourceTree = "<group>"; };
 		C97C9247C541175207F6E1DA /* Pods_SenseApp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D772BFE52D2777422290F4B9 /* Pods-SenseApp-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.dev.xcconfig"; sourceTree = "<group>"; };
 		DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Sense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2040,6 +2042,7 @@
 		8AC49F981982DE5E00C2BD63 /* Sensors */ = {
 			isa = PBXGroup;
 			children = (
+				BFFDC1061DD171BE008F001B /* Sensors.xcassets */,
 				BF6952601C57040B000A8E85 /* Presenters */,
 				BF287D601C9CBEE50052F543 /* Services */,
 				8A7214351A1C12E1008B59C4 /* Utilities */,
@@ -3761,6 +3764,7 @@
 				BF3583941CB443ED00760CD4 /* Sounds.xcassets in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				BF53D8CA1D931AF900C24F9D /* Info.plist in Resources */,
+				BFFDC1071DD171BE008F001B /* Sensors.xcassets in Resources */,
 				BFCB894E1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf in Resources */,
 				8AD331281BB08C4300DFF95A /* Drawer.xcassets in Resources */,
 				BFA540E71BCDC326007AF607 /* HEMMeetSenseView.xib in Resources */,

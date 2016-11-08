@@ -17,7 +17,8 @@ typedef NS_ENUM(NSUInteger, SENExpansionState) {
     SENExpansionStateConnectedOn,
     SENExpansionStateConnectedOff,
     SENExpansionStateRevoked,
-    SENExpansionStateNotConfigured
+    SENExpansionStateNotConfigured,
+    SENExpansionStateNotAvailable
 };
 
 typedef NS_ENUM(NSUInteger, SENExpansionType) {

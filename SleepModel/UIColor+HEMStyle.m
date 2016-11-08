@@ -250,7 +250,7 @@
         case SENConditionIdeal:
             return [self green6];
         default:
-            return [self grey2];
+            return [self grey3];
     }
 }
 

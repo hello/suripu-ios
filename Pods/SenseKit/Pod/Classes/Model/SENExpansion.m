@@ -31,6 +31,7 @@ static NSString* const kSENExpansionStateEnumConnectedOn = @"CONNECTED_ON";
 static NSString* const kSENExpansionStateEnumConnectedOff = @"CONNECTED_OFF";
 static NSString* const kSENExpansionStateEnumRevoked = @"REVOKED";
 static NSString* const kSENExpansionStateEnumNotConfigured = @"NOT_CONFIGURED";
+static NSString* const kSENExpansionStateEnumNotAvailable = @"NOT_AVAILABLE";
 
 static NSString* const kSENExpansionCategoryEnumLights = @"LIGHT";
 static NSString* const kSENExpansionCategoryEnumTemp = @"TEMPERATURE";
@@ -125,6 +126,8 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
         return SENExpansionStateRevoked;
     } else if ([upperString isEqualToString:kSENExpansionStateEnumNotConfigured]) {
         return SENExpansionStateNotConfigured;
+    } else if ([upperString isEqualToString:kSENExpansionStateEnumNotAvailable]) {
+        return SENExpansionStateNotAvailable;
     } else {
         return SENExpansionStateUnknown;
     }
@@ -142,6 +145,8 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
             return kSENExpansionStateEnumRevoked;
         case SENExpansionStateNotConfigured:
             return kSENExpansionStateEnumNotConfigured;
+        case SENExpansionStateNotAvailable:
+            return kSENExpansionStateEnumNotAvailable;
         default:
             return @"";
     }

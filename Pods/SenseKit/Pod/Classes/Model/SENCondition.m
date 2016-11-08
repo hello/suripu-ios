@@ -14,6 +14,7 @@ NSString* const SENConditionRawIncomplete = @"INCOMPLETE";
 NSString* const SENConditionRawIdeal = @"IDEAL";
 NSString* const SENConditionRawWarning = @"WARNING";
 NSString* const SENConditionRawAlert = @"ALERT";
+NSString* const SENConditionRawCalibrating = @"CALIBRATING";
 
 SENCondition SENConditionFromString(NSString *condition) {
     if ([condition isKindOfClass:[NSString class]]) {
@@ -25,6 +26,8 @@ SENCondition SENConditionFromString(NSString *condition) {
             return SENConditionWarning;
         else if ([condition isEqualToString:SENConditionRawIncomplete])
             return SENConditionIncomplete;
+        else if ([condition isEqualToString:SENConditionRawCalibrating])
+            return SENConditionCalibrating;
     }
     return SENConditionUnknown;
 }

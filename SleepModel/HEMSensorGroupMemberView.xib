@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -14,13 +14,13 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dust Particulates" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Whl-Sm-os0">
                     <rect key="frame" x="16" y="0.0" width="115" height="56"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpj-Vv-mxb">
                     <rect key="frame" x="540" y="0.0" width="10" height="56"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="Kyq-Ut-qcP">
@@ -29,9 +29,17 @@
                         <constraint firstAttribute="width" constant="10" id="I2W-4A-PdU"/>
                     </constraints>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D8w-sP-NNK">
+                    <rect key="frame" x="16" y="55" width="584" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="p58-hP-BME"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="D8w-sP-NNK" secondAttribute="trailing" id="1hG-uV-JxF"/>
                 <constraint firstItem="Kyq-Ut-qcP" firstAttribute="leading" secondItem="dpj-Vv-mxb" secondAttribute="trailing" constant="16" id="8c6-Qx-uUT"/>
                 <constraint firstAttribute="bottom" secondItem="Kyq-Ut-qcP" secondAttribute="bottom" id="AgM-VH-Tt9"/>
                 <constraint firstAttribute="bottom" secondItem="dpj-Vv-mxb" secondAttribute="bottom" id="COb-N5-viN"/>
@@ -40,6 +48,8 @@
                 <constraint firstItem="Whl-Sm-os0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Gxj-G5-kDQ"/>
                 <constraint firstItem="dpj-Vv-mxb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Whl-Sm-os0" secondAttribute="trailing" constant="16" id="L5s-7m-oK0"/>
                 <constraint firstItem="Kyq-Ut-qcP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RRT-qq-x7g"/>
+                <constraint firstAttribute="bottom" secondItem="D8w-sP-NNK" secondAttribute="bottom" id="dkm-v7-Vtk"/>
+                <constraint firstItem="D8w-sP-NNK" firstAttribute="leading" secondItem="Whl-Sm-os0" secondAttribute="leading" id="jnT-TD-TfR"/>
                 <constraint firstAttribute="trailing" secondItem="Kyq-Ut-qcP" secondAttribute="trailing" constant="24" id="uUN-7n-Z6K"/>
                 <constraint firstAttribute="bottom" secondItem="Whl-Sm-os0" secondAttribute="bottom" id="xmT-oy-JtD"/>
             </constraints>
@@ -48,12 +58,14 @@
             <connections>
                 <outlet property="accessoryView" destination="Kyq-Ut-qcP" id="WwB-mS-8vw"/>
                 <outlet property="nameLabel" destination="Whl-Sm-os0" id="ZRM-bR-VhC"/>
+                <outlet property="separatorHeightConstraint" destination="p58-hP-BME" id="C0N-WU-SHB"/>
+                <outlet property="separatorView" destination="D8w-sP-NNK" id="1tB-dD-ZPd"/>
                 <outlet property="valueLabel" destination="dpj-Vv-mxb" id="x4R-p2-3gU"/>
             </connections>
             <point key="canvasLocation" x="372" y="423"/>
         </view>
     </objects>
     <resources>
-        <image name="accessory" width="8" height="15"/>
+        <image name="accessory" width="8" height="14"/>
     </resources>
 </document>

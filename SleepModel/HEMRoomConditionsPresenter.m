@@ -536,6 +536,8 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     
     SENCondition worstCondition = SENConditionIncomplete;
     NSString* worstConditionString = nil;
+    NSInteger groupCount = [sensors count];
+    NSInteger index = 0;
     for (SENSensor* sensor in sensors) {
         if (!worstConditionString || [sensor condition] < worstCondition) {
             worstConditionString = [sensor localizedMessage];
@@ -545,11 +547,17 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
         [[self formatter] setSensorUnit:[sensor unit]];
         [[self formatter] setIncludeUnitSymbol:YES];
         UIColor* conditionColor = [UIColor colorForCondition:[sensor condition]];
-        NSString* valueText = [[self formatter] stringFromSensor:sensor];
+        NSString* valueText = nil;
+        if ([sensor condition] != SENConditionCalibrating) {
+            valueText = [[self formatter] stringFromSensor:sensor];
+        } else {
+            valueText = NSLocalizedString(@"room-conditions.status.calibrating", nil);
+        }
         NSString* name = [sensor localizedName];
         HEMSensorGroupMemberView* memberView = [groupCell addSensorWithName:name
                                                                       value:valueText
                                                                  valueColor:conditionColor];
+        [[memberView separatorView] setHidden:index++ == groupCount - 1];
         [memberView setType:[sensor type]];
         [[memberView tap] addTarget:self action:@selector(didTapOnGroupMember:)];
     }

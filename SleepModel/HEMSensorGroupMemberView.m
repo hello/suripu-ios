@@ -14,6 +14,7 @@
 @interface HEMSensorGroupMemberView()
 
 @property (nonatomic, weak) UITapGestureRecognizer* tap;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *separatorHeightConstraint;
 
 @end
 
@@ -31,6 +32,8 @@
     UITapGestureRecognizer* tap = [UITapGestureRecognizer new];
     [self addGestureRecognizer:tap];
     [self setTap:tap];
+    
+    [[self separatorView] setBackgroundColor:[UIColor grey2]];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

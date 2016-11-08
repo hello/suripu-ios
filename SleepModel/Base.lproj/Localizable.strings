@@ -940,6 +940,7 @@
 "room-conditions.pair-sense.button.title" = "Pair Sense";
 "room-conditions.pair-sense.message" = "You don't currently have a Sense paired to your account. Please pair with Sense to view current conditions.";
 "room-conditions.air-quality" = "Air quality";
+"room-conditions.status.calibrating" = "Calibrating";
 
 // sensors
 "sensor.scope.day" = "Last Day";

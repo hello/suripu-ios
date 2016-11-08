@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.1.2
+
+New:
+
+* Coming soon state for expansion list in settings
+* Coming soon state for Alarm expansion
+* Calibrating state in room conditions
+* Calibrating state in sensor detail
+
+Fixes:
+
+* Fix issue with app not disconnecting from Sense when skipping pill pairing during the description screen
+
 ## 1.6.1.1
 
 New:

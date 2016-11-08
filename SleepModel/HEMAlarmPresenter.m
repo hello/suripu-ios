@@ -566,7 +566,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[expansionCell detailLabel] setTextColor:[UIColor grey4]];
     
     [expansionCell setBackgroundColor:[UIColor clearColor]];
-    [expansionCell setAccessoryView:accessoryView];
     
     UIView* maskView = [expansionCell viewWithTag:HEMAlarmConfigCellExpansionMaskTag];
     if ([expansion state] == SENExpansionStateNotAvailable) {
@@ -578,9 +577,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         [expansionCell addSubview:maskView];
         [expansionCell setUserInteractionEnabled:NO];
+        [expansionCell setAccessoryView:[UIView new]]; // keep the margins from accessory
     } else {
         [maskView removeFromSuperview];
         [expansionCell setUserInteractionEnabled:YES];
+        [expansionCell setAccessoryView:accessoryView];
     }
 }
 

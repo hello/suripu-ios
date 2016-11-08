@@ -29,6 +29,8 @@ static CGFloat const HEMAlarmPresenterSuccessDelay = 0.8f;
 static CGFloat const HEMAlarmConfigCellHeight = 66.0f;
 static CGFloat const HEMAlarmTimePickerMinHeight = 287.0f;
 static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
+static NSInteger const HEMAlarmConfigCellExpansionMaskTag = 11;
+static CGFloat const HEMAlarmConfigCellMaskAlpha = 0.7f;
 
 @interface HEMAlarmPresenter() <
     UITableViewDataSource,
@@ -506,7 +508,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             NSString* format = NSLocalizedString(@"alarm.expansion.temp.range.format", nil);
             detail = [NSString stringWithFormat:format, range.min, range.max];
         }
-    } else {
+    } else if ([expansion state] == SENExpansionStateNotAvailable) {
+        detail = NSLocalizedString(@"expansion.state.not-available", nil);
+    }else {
         detail = NSLocalizedString(@"expansion.state.not-connected", nil);
     }
     
@@ -563,6 +567,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [expansionCell setBackgroundColor:[UIColor clearColor]];
     [expansionCell setAccessoryView:accessoryView];
+    
+    UIView* maskView = [expansionCell viewWithTag:HEMAlarmConfigCellExpansionMaskTag];
+    if ([expansion state] == SENExpansionStateNotAvailable) {
+        if (!maskView) {
+            maskView = [[UIView alloc] initWithFrame:[expansionCell bounds]];
+            [maskView setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:HEMAlarmConfigCellMaskAlpha]];
+            [maskView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+            [maskView setTag:HEMAlarmConfigCellExpansionMaskTag];
+        }
+        [expansionCell addSubview:maskView];
+        [expansionCell setUserInteractionEnabled:NO];
+    } else {
+        [maskView removeFromSuperview];
+        [expansionCell setUserInteractionEnabled:YES];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

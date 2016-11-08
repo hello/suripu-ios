@@ -12,22 +12,24 @@
 #import "HEMUpgradePillDescriptionPresenter.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
+#import "HEMOnboardingService.h"
 
 @interface HEMUpgradePillDescriptionPresenter()
 
-// need to use a strong reference as the presenter will be created outside of
-// a view controller
-@property (nonatomic, strong) SENServiceDevice* deviceService;
+@property (nonatomic, weak)   SENServiceDevice* deviceService;
+@property (nonatomic, weak)   HEMOnboardingService* onboardingService;
 @property (nonatomic, strong) HEMActivityCoverView* activityView;
 
 @end
 
 @implementation HEMUpgradePillDescriptionPresenter
 
-- (instancetype)initWithDeviceService:(SENServiceDevice*)deviceService {
+- (instancetype)initWithDeviceService:(SENServiceDevice*)deviceService
+                    onboardingService:(HEMOnboardingService*)onboardingService {
     self = [super init];
     if (self) {
         _deviceService = deviceService;
+        _onboardingService = onboardingService;
     }
     return self;
 }
@@ -79,6 +81,7 @@
                           action:^{
                               __strong typeof(weakSelf) strongSelf = weakSelf;
                               [[strongSelf delegate] skip:YES fromPresenter:nil];
+                              [[strongSelf onboardingService] disconnectCurrentSense];
                           }];
     [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
     
@@ -125,7 +128,6 @@
                 // proceed while activity is being dismissed
                 [[strongSelf activityView] dismissWithResultText:successText showSuccessMark:YES remove:YES completion:nil];
                 [[strongSelf delegate] skip:NO fromPresenter:strongSelf];
-                [[[strongSelf deviceService] senseManager] disconnectFromSense];
             }
         }];
     };

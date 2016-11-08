@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.1.3
+
+Fixes:
+
+* Skipping the pill pairing process in the pill description screen should disconnect from Sense
+* Removed chevron in the coming soon state in expansions list
+* Removed chevron in the coming soon state in alarm edit screen
+
 ## 1.6.1.2
 
 New:

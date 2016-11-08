@@ -172,9 +172,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             }
             [basicCell addSubview:maskView];
             [basicCell setUserInteractionEnabled:NO];
+            [basicCell setAccessoryView:[UIView new]];
         } else {
             [maskView removeFromSuperview];
             [basicCell setUserInteractionEnabled:YES];
+            [basicCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         }
     }
 }

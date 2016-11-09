@@ -18,3 +18,4 @@
 #import "SENAPISpeech.h"
 #import "SENAPISensor.h"
 #import "SENAPIExpansion.h"
+#import "SENAPISystemAlerts.h"

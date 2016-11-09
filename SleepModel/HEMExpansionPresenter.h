@@ -20,11 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showController:(UIViewController*)controller
          fromPresenter:(HEMExpansionPresenter*)presenter;
 
-- (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter*)presenter;
-
 - (void)removedAccessFrom:(HEMExpansionPresenter*)presenter;
 
 - (void)connectExpansionFromPresenter:(HEMExpansionPresenter*)presenter;
+
+- (BOOL)canShowInfoAboutExpansion:(SENExpansion*)expansion
+                    fromPresenter:(HEMExpansionPresenter*)presenter;
+
+- (void)showInfoAboutExpansion:(SENExpansion*)expansion
+                 fromPresenter:(HEMExpansionPresenter*)presenter;
 
 @end
 

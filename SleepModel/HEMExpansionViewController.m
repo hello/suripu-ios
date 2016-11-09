@@ -89,8 +89,27 @@
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
-- (void)showEnableInfoDialogFromPresenter:(HEMExpansionPresenter *)presenter {
-    [HEMTutorial showInfoForExpansionFrom:[self navigationController]];
+- (void)showInfoAboutExpansion:(SENExpansion*)expansion
+                 fromPresenter:(HEMExpansionPresenter*)presenter {
+    switch ([expansion type]) {
+        case SENExpansionTypeLights:
+            return [HEMTutorial showInfoForLightsExpansionFrom:[self navigationController]];
+        case SENExpansionTypeThermostat:
+            return [HEMTutorial showInfoForThermostatExpansionFrom:[self navigationController]];
+        default:
+            return;
+    }
+}
+
+- (BOOL)canShowInfoAboutExpansion:(SENExpansion*)expansion
+                    fromPresenter:(HEMExpansionPresenter*)presenter {
+    switch ([expansion type]) {
+        case SENExpansionTypeLights:
+        case SENExpansionTypeThermostat:
+            return YES;
+        default:
+            return NO;
+    }
 }
 
 - (void)connectExpansionFromPresenter:(HEMExpansionPresenter *)presenter {

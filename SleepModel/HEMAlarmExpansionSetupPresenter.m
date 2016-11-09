@@ -113,8 +113,14 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
-    [navItem setRightBarButtonItem:[UIBarButtonItem infoButtonWithTarget:self
-                                                                  action:@selector(showInfo)]];
+    switch ([[self expansion] type]) {
+        case SENExpansionTypeLights:
+        case SENExpansionTypeThermostat:
+            [navItem setRightBarButtonItem:[UIBarButtonItem infoButtonWithTarget:self action:@selector(showInfo)]];
+            break;
+        default:
+            break;
+    }
     [self setNavItem:navItem];
 }
 
@@ -426,7 +432,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showInfo {
-    [[self actionDelegate] showExpansionInfoFrom:self];
+    switch ([[self expansion] type]) {
+        case SENExpansionTypeLights:
+            return [[self actionDelegate] showLightsExpansionInfoFrom:self];
+        case SENExpansionTypeThermostat:
+            return [[self actionDelegate] showThermostatExpansionInfoFrom:self];
+        default:
+            return;
+    }
 }
 
 @end

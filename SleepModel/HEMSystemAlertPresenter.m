@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 12/10/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import <SenseKit/SENSystemAlert.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -25,18 +26,22 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceService.h"
+#import "HEMSystemAlertService.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,
     HEMSystemAlertTypeDevice,
-    HEMSystemAlertTypeTimeZone
+    HEMSystemAlertTypeTimeZone,
+    HEMSystemAlertTypeSystem
 };
 
 static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 
 @interface HEMSystemAlertPresenter() <HEMNetworkAlertDelegate, HEMSensePairingDelegate, HEMPillPairDelegate>
 
+@property (nonatomic, weak) HEMSystemAlertService* sysAlertService;
 @property (nonatomic, weak) HEMNetworkAlertService* networkAlertService;
+@property (nonatomic, weak) HEMSystemAlertService* alertService;
 @property (nonatomic, weak) HEMDeviceAlertService* deviceAlertService;
 @property (nonatomic, weak) HEMTimeZoneAlertService* tzAlertService;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
@@ -50,9 +55,11 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 - (instancetype)initWithNetworkAlertService:(HEMNetworkAlertService*)networkAlertService
                          deviceAlertService:(HEMDeviceAlertService*)deviceAlertService
                        timeZoneAlertService:(HEMTimeZoneAlertService*)tzAlertService
-                              deviceService:(HEMDeviceService*)deviceService {
+                              deviceService:(HEMDeviceService*)deviceService
+                            sysAlertService:(HEMSystemAlertService*)alertService {
     self = [super init];
     if (self) {
+        _sysAlertService = alertService;
         _networkAlertService = networkAlertService;
         [_networkAlertService setDelegate:self];
         
@@ -147,12 +154,69 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 - (void)runChecks {
     __weak typeof(self) weakSelf = self;
     [self showNetworkAlertIfNeeded:^(BOOL shown) {
-        if (!shown) {
-            [weakSelf checkDevicesForProblems:^(BOOL alertShown) {
-                [weakSelf checkTimeZoneProblems];
-            }];
-        }
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showSystemAlertsIfNeeded:^(BOOL shown) {
+            if (!shown) {
+                [strongSelf checkDevicesForProblems:^(BOOL alertShown) {
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    [strongSelf checkTimeZoneProblems];
+                }];
+            }
+        }];
     }];
+}
+
+#pragma mark - System alerts
+
+- (void)showSystemAlertsIfNeeded:(void(^)(BOOL shown))completion {
+    if (![self canShowAlert]) {
+        return completion (NO);
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [[self sysAlertService] getNextAvailableAlert:^(SENSystemAlert * alert, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        BOOL shown = NO;
+        if (!error && alert) {
+            // for now, we only support unactionable alerts.  once we get more categories
+            // of alerts, we may customize actions based on the category
+            NSString* okTitle = NSLocalizedString(@"actions.ok", nil);
+            
+            HEMActionView* alertView = [strongSelf configureAlertViewWithTitle:[alert localizedTitle]
+                                                                       message:[alert localizedBody]
+                                                             cancelButtonTitle:okTitle
+                                                                fixButtonTitle:nil];
+            
+            [alertView setType:HEMSystemAlertTypeSystem];
+            [[alertView cancelButton] addTarget:strongSelf
+                                         action:@selector(cancelAlert:)
+                               forControlEvents:UIControlEventTouchUpInside];
+            
+            [alertView showInView:[strongSelf alertContainerView] animated:YES completion:nil];
+            
+            [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
+            [strongSelf trackSystemAlertEventForAlert:alert];
+            [strongSelf setCurrentActionView:alertView];
+            shown = YES;
+        }
+        
+        completion (shown);
+    }];
+}
+
+- (void)trackSystemAlertEventForAlert:(SENSystemAlert*)alert {
+    NSString* type = nil;
+    switch ([alert category]) {
+        case SENAlertCategoryExpansionUnreachable:
+            type = @"expansion unreachable";
+            break;
+        default:
+            type = @"unknown";
+            break;
+    }
+    [SENAnalytics track:HEMAnalyticsEventSystemAlert
+             properties:@{kHEMAnalyticsEventPropType : type}];
 }
 
 #pragma mark - Time Zone alerts

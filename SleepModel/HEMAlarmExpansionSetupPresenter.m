@@ -215,6 +215,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             if (!detail && [self configError]) {
                 detail = [NSLocalizedString(@"actions.retry", nil) lowercaseString];
                 detailColor = [UIColor tintColor];
+            } else if (!detail) {
+                detail = NSLocalizedString(@"expansion.config.select", nil);
+                detailColor= [UIColor tintColor];
             }
             showLoading = [self isLoading];
             break;

@@ -21,6 +21,8 @@
 static CGFloat const kHEMExpansionListImageBorder = 0.5f;
 static CGFloat const kHEMExpansionListCellSize = 72.0f;
 static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
+static NSInteger const kHEMExpansionListCellMaskTag = 10;
+static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
 
 @interface HEMExpansionListPresenter() <UITableViewDelegate, UITableViewDataSource>
 
@@ -70,6 +72,8 @@ static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
             return NSLocalizedString(@"expansion.state.connected-off", nil);
         case SENExpansionStateRevoked:
             return NSLocalizedString(@"expansion.state.revoked", nil);
+        case SENExpansionStateNotAvailable:
+            return NSLocalizedString(@"expansion.state.not-available", nil);
         case SENExpansionStateUnknown:
         case SENExpansionStateNotConnected:
         default:
@@ -126,7 +130,7 @@ static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ( [self loadError]) {
+    if ([self loadError]) {
         [[cell textLabel] setText:NSLocalizedString(@"expansion.error.empty-list", nil)];
         [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
         [[cell textLabel] setTextColor:[UIColor grey4]];
@@ -157,6 +161,23 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[basicCell remoteImageView] setBackgroundColor:[UIColor grey3]];
         
         [basicCell showSeparator:!lastRow];
+        
+        UIView* maskView = [basicCell viewWithTag:kHEMExpansionListCellMaskTag];
+        if ([expansion state] == SENExpansionStateNotAvailable) {
+            if (!maskView) {
+                maskView = [[UIView alloc] initWithFrame:[basicCell bounds]];
+                [maskView setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:kHEMExpansionListCellMaskAlpha]];
+                [maskView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+                [maskView setTag:kHEMExpansionListCellMaskTag];
+            }
+            [basicCell addSubview:maskView];
+            [basicCell setUserInteractionEnabled:NO];
+            [basicCell setAccessoryView:[UIView new]];
+        } else {
+            [maskView removeFromSuperview];
+            [basicCell setUserInteractionEnabled:YES];
+            [basicCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        }
     }
 }
 

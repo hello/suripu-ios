@@ -216,8 +216,10 @@
     } else if ([controller isKindOfClass:[HEMPillDescriptionViewController class]]) {
         
         HEMPillDescriptionViewController* pillDescVC = (id) controller;
-        SENServiceDevice* service = [SENServiceDevice sharedService];
-        [pillDescVC setPresenter:[[HEMUpgradePillDescriptionPresenter alloc] initWithDeviceService:service]];
+        SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+        HEMOnboardingService* onbService = [HEMOnboardingService sharedService];
+        [pillDescVC setPresenter:[[HEMUpgradePillDescriptionPresenter alloc] initWithDeviceService:deviceService
+                                                                                 onboardingService:onbService]];
         
     } else if ([controller isKindOfClass:[HEMPillPairViewController class]]) {
         

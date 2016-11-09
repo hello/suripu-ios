@@ -203,23 +203,28 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
             
             __weak typeof(self) weakSelf = self;
             HEMOnboardingService* service = [HEMOnboardingService sharedService];
-            [service rescanForNearbySenseNotMatching:[self deviceIdsToExclude] completion:^(NSError * _Nullable error) {
-                __strong typeof(weakSelf) strongSelf = weakSelf;
-                if (error) {
-                    if ([[strongSelf activityCoverView] isShowing]) {
-                        [[strongSelf activityCoverView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                            [strongSelf setActivityCoverView:nil];
-                            [strongSelf showCouldNotPairErrorMessage];
-                        }];
-                    }
-                    [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                        [strongSelf showCouldNotPairErrorMessage];
-                    }];
-                } else {
-                    [strongSelf setCurrentState:HEMPairSenseStateFound];
-                    [strongSelf executeNextStep];
-                }
-            }];
+            [service rescanForNearbySenseWithVersion:[self versionOfSenseToFind]
+                                      notMatchingIds:[self deviceIdsToExclude]
+                                          completion:^(NSError * _Nullable error) {
+                                              __strong typeof(weakSelf) strongSelf = weakSelf;
+                                              if (error) {
+                                                  if ([[strongSelf activityCoverView] isShowing]) {
+                                                      [[strongSelf activityCoverView] dismissWithResultText:nil
+                                                                                            showSuccessMark:NO
+                                                                                                     remove:YES
+                                                                                                 completion:^{
+                                                          [strongSelf setActivityCoverView:nil];
+                                                          [strongSelf showCouldNotPairErrorMessage];
+                                                      }];
+                                                  }
+                                                  [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+                                                      [strongSelf showCouldNotPairErrorMessage];
+                                                  }];
+                                              } else {
+                                                  [strongSelf setCurrentState:HEMPairSenseStateFound];
+                                                  [strongSelf executeNextStep];
+                                              }
+                                          }];
         }
     }];
 }

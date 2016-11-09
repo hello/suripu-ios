@@ -114,14 +114,26 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     [self setPollingSensorData:NO];
     [self setSensorPollingAttempts:0];
     [self setSenseScanAttempts:0];
-    [self setDeviceService:nil];
+    [self setSensorStatus:nil];
+    [self setDfuCompletionHandler:nil];
+    [[self senseDFUTimer] invalidate];
+    [self setSenseDFUTimer:nil];
+    [self setCurrentDFUStatus:nil];
+    [self setStopPreScanningForSenses:YES];
+    
     [self setRescanHandler:nil];
     [[self rescanTimer] invalidate];
     [self setRescanTimer:nil];
+    
     [self setSensePairingHandler:nil];
     [self setPillPairingHandler:nil];
     [self setWifihandler:nil];
     [self setLinkAccountHandler:nil];
+    [self setLedHandler:nil];
+    
+    [self setDeviceService:nil];
+    [self setRefreshDeviceAttempts:0];
+    [self setRefreshingDeviceMetadata:NO];
     
     if ([self tempSenseManager]) {
         [[self tempSenseManager] disconnectFromSense];
@@ -247,7 +259,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     }
 }
 
-- (void)rescanForNearbySenseNotMatching:(NSSet<NSString*>*)deviceIdsToFilter
+- (void)rescanForNearbySenseWithVersion:(SENSenseAdvertisedVersion)version
+                         notMatchingIds:(NSSet<NSString*>*)deviceIdsToFilter
                              completion:(HEMOnboardingErrorHandler)completion {
     [SENSenseManager stopScan]; // stop a scan if one is in progress;
     [self setRescanHandler:completion];
@@ -289,26 +302,24 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                     done (nil, [strongSelf errorWithCode:HEMOnboardingErrorNoSenseFound
                                                   reason:reason]);
                 } else {
-                    SENSense* nearestSense = nil;
-                    if ([deviceIdsToFilter count] == 0) {
-                        nearestSense = [senses firstObject];
-                    } else {
-                        for (SENSense* sense in senses) {
-                            if (![deviceIdsToFilter containsObject:[sense deviceId]]) {
-                                nearestSense = sense;
-                                break;
+                    SENSense* nearestSense;
+                    
+                    for (SENSense* sense in senses) {
+                        nearestSense = sense;
+                        
+                        if (![deviceIdsToFilter containsObject:[sense deviceId]]) {
+                            if (version == SENSenseAdvertisedVersionUnknown
+                                || [nearestSense version] == version) {
+                                break; // found it
                             }
                         }
                     }
+                    
                     done (nearestSense, nil);
                 }
             }];
         }
     }];
-}
-
-- (void)rescanForNearbySense:(HEMOnboardingErrorHandler)completion {
-    [self rescanForNearbySenseNotMatching:nil completion:completion];
 }
 
 - (void)scanForSenses {
@@ -1204,7 +1215,7 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 }
 
 - (void)refreshDeviceMetadata {
-    if (![[self deviceService] devices] && ![self isRefreshingDeviceMetadata]) {
+    if (![self isRefreshingDeviceMetadata]) {
         [self setRefreshingDeviceMetadata:YES];
         [self setRefreshDeviceAttempts:[self refreshDeviceAttempts] + 1];
         
@@ -1227,8 +1238,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                 }
             }
         }];
-        
-        
     }
 }
 

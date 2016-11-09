@@ -15,6 +15,7 @@ static NSString* const kSENExpansionAttrId = @"id";
 static NSString* const kSENExpansionAttrCategory = @"category";
 static NSString* const kSENExpansionAttrDeviceName = @"device_name";
 static NSString* const kSENExpansionAttrServiceName = @"service_name";
+static NSString* const kSENExpansionAttrCompanyName = @"company_name";
 static NSString* const kSENExpansionAttrIcon = @"icon";
 static NSString* const kSENExpansionAttrAuthUri = @"auth_uri";
 static NSString* const kSENExpansionAttrCompletionUri = @"completion_uri";
@@ -22,11 +23,15 @@ static NSString* const kSENExpansionAttrState = @"state";
 static NSString* const kSENExpansionAttrDescription = @"description";
 static NSString* const kSENExpansionAttrValueRange = @"value_range";
 
+static NSString* const kSENExpansionServiceEnumHue = @"HUE";
+static NSString* const kSENExpansionServiceEnumNest = @"NEST";
+
 static NSString* const kSENExpansionStateEnumNotConnected = @"NOT_CONNECTED";
 static NSString* const kSENExpansionStateEnumConnectedOn = @"CONNECTED_ON";
 static NSString* const kSENExpansionStateEnumConnectedOff = @"CONNECTED_OFF";
 static NSString* const kSENExpansionStateEnumRevoked = @"REVOKED";
 static NSString* const kSENExpansionStateEnumNotConfigured = @"NOT_CONFIGURED";
+static NSString* const kSENExpansionStateEnumNotAvailable = @"NOT_AVAILABLE";
 
 static NSString* const kSENExpansionCategoryEnumLights = @"LIGHT";
 static NSString* const kSENExpansionCategoryEnumTemp = @"TEMPERATURE";
@@ -75,10 +80,13 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
     if (self = [super init]) {
         _identifier = SENObjectOfClass(dict[kSENExpansionAttrId], [NSNumber class]);
         _deviceName = SENObjectOfClass(dict[kSENExpansionAttrDeviceName], [NSString class]);
-        _serviceName = SENObjectOfClass(dict[kSENExpansionAttrServiceName], [NSString class]);
+        _companyName = SENObjectOfClass(dict[kSENExpansionAttrCompanyName], [NSString class]);
         _authUri = SENObjectOfClass(dict[kSENExpansionAttrAuthUri], [NSString class]);
         _authCompletionUri = SENObjectOfClass(dict[kSENExpansionAttrCompletionUri], [NSString class]);
         _expansionDescription = SENObjectOfClass(dict[kSENExpansionAttrDescription], [NSString class]);
+        
+        NSString* serviceName = SENObjectOfClass(dict[kSENExpansionAttrServiceName], [NSString class]);
+        _service = [self serviceFromString:serviceName];
  
         NSDictionary* iconDict = SENObjectOfClass(dict[kSENExpansionAttrIcon], [NSDictionary class]);
         _remoteIcon = [[SENRemoteImage alloc] initWithDictionary:iconDict];
@@ -95,6 +103,17 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
     return self;
 }
 
+- (SENExpansionService)serviceFromString:(NSString*)serviceName {
+    NSString* upper = [serviceName uppercaseString];
+    if ([upper isEqualToString:kSENExpansionServiceEnumHue]) {
+        return SENExpansionServiceHue;
+    } else if ([upper isEqualToString:kSENExpansionServiceEnumNest]) {
+        return SENExpansionServiceNest;
+    } else {
+        return SENExpansionServiceUnknown;
+    }
+}
+
 - (SENExpansionState)stateFromString:(NSString*)stateString {
     NSString* upperString = [stateString uppercaseString];
     if ([upperString isEqualToString:kSENExpansionStateEnumNotConnected]) {
@@ -107,6 +126,8 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
         return SENExpansionStateRevoked;
     } else if ([upperString isEqualToString:kSENExpansionStateEnumNotConfigured]) {
         return SENExpansionStateNotConfigured;
+    } else if ([upperString isEqualToString:kSENExpansionStateEnumNotAvailable]) {
+        return SENExpansionStateNotAvailable;
     } else {
         return SENExpansionStateUnknown;
     }
@@ -124,6 +145,8 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
             return kSENExpansionStateEnumRevoked;
         case SENExpansionStateNotConfigured:
             return kSENExpansionStateEnumNotConfigured;
+        case SENExpansionStateNotAvailable:
+            return kSENExpansionStateEnumNotAvailable;
         default:
             return @"";
     }
@@ -137,10 +160,11 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
     SENExpansion* other = object;
     return SENObjectIsEqual([self identifier], [other identifier])
         && SENObjectIsEqual([self deviceName], [other deviceName])
-        && SENObjectIsEqual([self serviceName], [other serviceName])
+        && SENObjectIsEqual([self companyName], [other companyName])
         && SENObjectIsEqual([self authUri], [other authUri])
         && SENObjectIsEqual([self authCompletionUri], [other authCompletionUri])
         && [self state] == [other state]
+        && [self service] == [other service]
         && [self type] == [other type];
 }
 

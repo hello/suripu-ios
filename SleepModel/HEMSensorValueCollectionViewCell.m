@@ -10,4 +10,16 @@
 
 @implementation HEMSensorValueCollectionViewCell
 
+- (void)awakeFromNib {
+    [[self valueReplacementImageView] setHidden:YES];
+    [[self valueReplacementImageView] setContentMode:UIViewContentModeCenter];
+}
+
+- (void)replaceValueWithImage:(UIImage*)image {
+    BOOL hideLabel = image != nil;
+    [[self valueLabel] setHidden:hideLabel];
+    [[self valueReplacementImageView] setHidden:!hideLabel];
+    [[self valueReplacementImageView] setImage:image];
+}
+
 @end

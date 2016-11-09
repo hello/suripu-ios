@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, HEMRoomCheckState) {
 - (UIColor*)sensorValueColorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView;
 - (UIFont*)sensorValueUnitFontAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView;
 - (UIImage*)sensorActivityImageForSensorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView;
+- (BOOL)sensorValueUnitAsSubscriptAtIndex:(NSUInteger)sensorIndex
+                              inRoomCheck:(HEMRoomCheckView*)roomCheckView;
 
 @end
 

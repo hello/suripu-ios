@@ -17,13 +17,20 @@ typedef NS_ENUM(NSUInteger, SENExpansionState) {
     SENExpansionStateConnectedOn,
     SENExpansionStateConnectedOff,
     SENExpansionStateRevoked,
-    SENExpansionStateNotConfigured
+    SENExpansionStateNotConfigured,
+    SENExpansionStateNotAvailable
 };
 
 typedef NS_ENUM(NSUInteger, SENExpansionType) {
     SENExpansionTypeUnknown = 0,
     SENExpansionTypeLights,
     SENExpansionTypeThermostat
+};
+
+typedef NS_ENUM(NSUInteger, SENExpansionService) {
+    SENExpansionServiceUnknown = 0,
+    SENExpansionServiceHue,
+    SENExpansionServiceNest
 };
 
 typedef struct {
@@ -36,7 +43,8 @@ typedef struct {
 
 @property (nonatomic, copy, readonly) NSNumber* identifier;
 @property (nonatomic, copy, readonly) NSString* deviceName;
-@property (nonatomic, copy, readonly) NSString* serviceName;
+@property (nonatomic, assign, readonly) SENExpansionService service;
+@property (nonatomic, copy, readonly) NSString* companyName;
 @property (nonatomic, copy, readonly) NSString* authUri;
 @property (nonatomic, copy, readonly) NSString* authCompletionUri;
 @property (nonatomic, copy, readonly) NSString* expansionDescription;

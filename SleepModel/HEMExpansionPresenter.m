@@ -92,7 +92,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     
     [[headerView subtitleLabel] setTextColor:[UIColor grey5]];
     [[headerView subtitleLabel] setFont:[UIFont bodySmall]];
-    [[headerView subtitleLabel] setText:[[self expansion] serviceName]];
+    [[headerView subtitleLabel] setText:[[self expansion] companyName]];
     
     [[headerView descriptionLabel] setFont:[UIFont body]];
     [[headerView descriptionLabel] setTextColor:[UIColor grey5]];
@@ -554,7 +554,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString* messageKey = [NSString stringWithFormat:@"expansion.error.setup.no-groups.%@.message.format", category];
     NSString* messageFormat = NSLocalizedString(messageKey, nil);
-    NSString* message = [NSString stringWithFormat:messageFormat, [[self expansion] serviceName]];
+    NSString* message = [NSString stringWithFormat:messageFormat, [[self expansion] companyName]];
     
     [[self errorDelegate] showErrorWithTitle:title
                                   andMessage:message

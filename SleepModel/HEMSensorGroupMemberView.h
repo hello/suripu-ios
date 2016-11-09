@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *accessoryView;
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
 @property (assign, nonatomic) SENSensorType type;
 @property (weak, nonatomic, readonly) UITapGestureRecognizer* tap;
 

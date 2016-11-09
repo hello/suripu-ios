@@ -96,6 +96,7 @@
                 <outlet property="sensorValueContainer" destination="Rie-2e-3zn" id="RmO-Su-LqN"/>
                 <outlet property="sensorValueContainerBottomConstraint" destination="Im2-Da-aPb" id="6dR-NF-cbo"/>
                 <outlet property="unitLabel" destination="lGJ-r1-ZqY" id="kNd-lH-p4w"/>
+                <outlet property="unitLabelBottomConstraint" destination="7JK-v5-ypb" id="6ez-Rh-TVb"/>
                 <outlet property="valueLabel" destination="GNk-mY-ZJL" id="TdT-oh-AlN"/>
             </connections>
         </view>

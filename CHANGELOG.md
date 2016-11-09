@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.6.1.3
+
+Fixes:
+
+* Skipping the pill pairing process in the pill description screen should disconnect from Sense
+* Removed chevron in the coming soon state in expansions list
+* Removed chevron in the coming soon state in alarm edit screen
+
+## 1.6.1.2
+
+New:
+
+* Coming soon state for expansion list in settings
+* Coming soon state for Alarm expansion
+* Calibrating state in room conditions
+* Calibrating state in sensor detail
+
+Fixes:
+
+* Fix issue with app not disconnecting from Sense when skipping pill pairing during the description screen
+
+## 1.6.1.1
+
+New:
+
+* Updated copy in upgrade path to make it more explicit about new hardware
+* Updated expansions to use company name
+* Updated thermostat attribution to satisfy Nest requirements
+* Filtering out 1.0 Senses in upgrade path
+
+Fixes:
+
+* Fixes temperature symbol placement in room check
+
 ## 1.6.0.13
 
 Fixes:

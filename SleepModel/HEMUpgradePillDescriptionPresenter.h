@@ -9,6 +9,7 @@
 #import "HEMPillDescriptionPresenter.h"
 
 @class SENServiceDevice;
+@class HEMOnboardingService;
 
 @interface HEMUpgradePillDescriptionPresenter : HEMPillDescriptionPresenter
 
@@ -17,8 +18,10 @@
  * Initialize with the device service, holding it with a strong reference
  *
  * @param deviceService: service to manage devices, particularly the pill
+ * @param onboardingService: the service that was used throughout the upgrade path
  */
-- (instancetype)initWithDeviceService:(SENServiceDevice*)deviceService NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDeviceService:(SENServiceDevice*)deviceService
+                    onboardingService:(HEMOnboardingService*)onboardingService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 
 @end

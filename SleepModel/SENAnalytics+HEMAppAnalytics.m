@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/Model.h>
+#import <SenseKit/SENSense.h>
 #import <SenseKit/SENAnalyticsLogger.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
@@ -27,6 +28,9 @@ NSString* const kHEMAnalyticsEventPlatform = @"iOS";
 NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
 NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
+NSString* const kHEMAnalyticsEventPropHwVersion = @"Sense Version";
+NSString* const kHEMAnalyticsEventPropValSenseV = @"Sense with Voice";
+NSString* const kHEMAnalyticsEventPropValSense1 = @"Sense";
 NSString* const kHEMAnalyticsEventPropPillId = @"Pill Id";
 NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
 NSString* const kHEMAnalyticsEventPropSSID = @"SSID";
@@ -488,6 +492,21 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 + (void)trackSenseUpdate:(SENDFUStatus*)status {
     [self track:@"Sense DFU status"
      properties:@{@"status" : @([status currentState])}];
+}
+
+#pragma mark - Track Sense
+
++ (void)trackSense:(SENSense*)sense {
+    NSString* deviceId = [sense deviceId];
+    if (deviceId) {
+        NSString* userId = [SENAuthorizationService accountIdOfAuthorizedUser];
+        NSString* hardwareVersion = [sense version] == SENSenseAdvertisedVersionVoice
+            ? kHEMAnalyticsEventPropValSenseV
+            : kHEMAnalyticsEventPropValSense1;
+        [self setUserId:userId
+             properties:@{kHEMAnalyticsEventPropSenseId : deviceId,
+                          kHEMAnalyticsEventPropHwVersion : hardwareVersion}];
+    }
 }
 
 #pragma mark - Convenience methods

@@ -861,10 +861,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     }
     // make sure we set the sense Id as soon as user tries to pair so if there is
     // an error, we will know what device id it's for
-    NSString* deviceId = [[[self currentSenseManager] sense] deviceId];
-    if (deviceId) {
-        [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : deviceId}];
-    }
+    SENSense* sense = [[self currentSenseManager] sense];
+    [SENAnalytics trackSense:sense];
     
     [self setSensePairingHandler:completion];
     [self observeUnexpectedDisconnects];

@@ -12,6 +12,7 @@
 
 @class SENAlarm;
 @class SENDFUStatus;
+@class SENSense;
 
 NS_ASSUME_NONNULL_BEGIN
 // general
@@ -27,6 +28,7 @@ extern NSString* const kHEMAnalyticsEventPlatform;
 extern NSString* const kHEMAnalyticsEventPropGender;
 extern NSString* const kHEMAnalyticsEventPropAccount;
 extern NSString* const kHEMAnalyticsEventPropSenseId;
+extern NSString* const kHEMAnalyticsEventPropHwVersion;
 extern NSString* const kHEMAnalyticsEventPropPillId;
 extern NSString* const kHEMAnalyticsEventPropHealthKit;
 extern NSString* const kHEMAnalyticsEventPropSSID;
@@ -284,6 +286,7 @@ extern NSString* const HEMAnalyticsEventUpgradeReset;
 + (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding;
 + (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding;
 + (void)trackSenseUpdate:(SENDFUStatus*)status;
++ (void)trackSense:(SENSense*)sense;
 + (NSString*)addPrefixIfNeeded:(NSString*)prefix toEvent:(NSString*)event;
 
 @end

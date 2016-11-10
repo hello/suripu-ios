@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.6.2.1
+
+New:
+
+* Added support for server-driven system alerts
+* Better handling for alarm expansion configuration selection, when configuration was removed
+* Added separate info card for lights in settings
+* Added separate info card for thermostat in settings
+* Added separate info card for lights in alarm expansion setup
+* Added separate info card for thermostat in alarm expansion setup
+* Updated copy for Sense with Voice ready screen, within upgrade flow
+
 ## 1.6.1.3
 
 Fixes:

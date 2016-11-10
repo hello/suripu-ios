@@ -9,6 +9,8 @@
 #import <SenseKit/SENSenseMetadata.h>
 #import <SenseKit/SENSenseVoiceSettings.h>
 
+#import "NSString+HEMUtils.h"
+
 #import "HEMVoiceSettingsPresenter.h"
 #import "HEMVoiceService.h"
 #import "HEMDeviceService.h"
@@ -28,6 +30,8 @@ typedef NS_ENUM(NSUInteger, HEMVoiceSettingsRow){
     HEMVoiceSettingsRowCount
 };
 
+static CGFloat const kHEMVoiceSettingsCellHeight = 56.0f;
+static CGFloat const kHEMVoiceSettingsCellTextMargin = 24.0f;
 static CGFloat const kHEMVoiceFootNoteHorzMargins = 24.0f;
 static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 
@@ -148,11 +152,32 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     }
 }
 
+- (NSString*)dataErrorMessage {
+    NSString* errorMessage = [[self dataError] localizedDescription];
+    if ([errorMessage length] == 0) {
+        errorMessage = NSLocalizedString(@"voice.settings.error.message", nil);
+    }
+    return errorMessage;
+}
+
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self dataError] ? 1 : HEMVoiceSettingsRowCount;
-}   
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger row = [indexPath row];
+    CGFloat height = kHEMVoiceSettingsCellHeight;
+    if (row == 0 && [self dataError]) {
+        NSString* message = [self dataErrorMessage];
+        CGFloat margins = kHEMVoiceSettingsCellTextMargin * 2.0f;
+        CGFloat textWidth = CGRectGetWidth([tableView bounds]) - margins;
+        height = [message heightBoundedByWidth:textWidth usingFont:[UIFont errorStateDescriptionFont]];
+        height += margins;
+    }
+    return height;
+}
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -172,7 +197,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self dataError] && [indexPath row] == 0) {
-        [[cell textLabel] setText:NSLocalizedString(@"voice.settings.error.message", nil)];
+        [[cell textLabel] setText:[self dataErrorMessage]];
         [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
         [[cell textLabel] setTextColor:[UIColor grey4]];
         [[cell textLabel] setNumberOfLines:0];

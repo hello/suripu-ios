@@ -293,9 +293,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)configureEnableCell:(HEMBasicTableViewCell*)cell {
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [[cell customTitleLabel] setText:NSLocalizedString(@"expansion.action.enable", nil)];
-    [[cell infoButton] addTarget:self
-                          action:@selector(showEnableInfo)
-                forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([[self delegate] canShowInfoAboutExpansion:[self expansion] fromPresenter:self]) {
+        [[cell infoButton] addTarget:self
+                              action:@selector(showEnableInfo)
+                    forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [[cell infoButton] setHidden:YES];
+    }
     
     BOOL isEnabled = [[self expansion] state] == SENExpansionStateConnectedOn;
     UISwitch* enableSwitch = (UISwitch*) [cell customAccessoryView];
@@ -383,7 +388,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showEnableInfo {
-    [[self delegate] showEnableInfoDialogFromPresenter:self];
+    [[self delegate] showInfoAboutExpansion:[self expansion] fromPresenter:self];
 }
 
 - (void)toggleEnable:(UISwitch*)enableSwitch {

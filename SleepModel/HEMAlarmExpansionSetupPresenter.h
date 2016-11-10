@@ -24,7 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HEMAlarmExpansionActionDelegate <NSObject>
 
-- (void)showExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter*)presenter;
+- (void)showLightsExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter*)presenter;
+- (void)showThermostatExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter*)presenter;
 - (void)showController:(UIViewController*)controller
          fromPresenter:(HEMAlarmExpansionSetupPresenter*)presenter;
 

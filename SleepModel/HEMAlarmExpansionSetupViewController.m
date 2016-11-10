@@ -53,8 +53,12 @@
 
 #pragma mark - HEMAlarmExpansionActionDelegate
 
-- (void)showExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter *)presenter {
-    [HEMTutorial showInfoForExpansionFrom:[self navigationController]];
+- (void)showLightsExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter*)presenter {
+    [HEMTutorial showInfoForAlarmLightsSetupFrom:[self navigationController]];
+}
+
+- (void)showThermostatExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter*)presenter {
+    [HEMTutorial showInfoForAlarmThermostatSetupFrom:[self navigationController]];
 }
 
 - (void)showController:(UIViewController *)controller

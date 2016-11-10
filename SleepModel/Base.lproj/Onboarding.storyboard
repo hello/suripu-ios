@@ -1572,7 +1572,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-eT-uQJ" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="43"/>
-                                <string key="text">Your new Sense with Voice is set up and is currently paired with your original Sleep Pill. Next, you’ll pair your new Sleep Pill.</string>
+                                <string key="text">Your new Sense with Voice is set up and any paired, original Sleep Pills have been moved over. Next, you'll pair your new Sleep Pill.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.6.2.2
+
+New:
+
+* Filter out 1.0 Pills in Pill DFU
+* Added Sense Version to analytics
+* Display localized error message when loading voice settings to allow server to drive messaging
+* Show an alert if a network error is returned in voice tutorial
+
 ## 1.6.2.1
 
 New:

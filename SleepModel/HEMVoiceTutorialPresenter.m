@@ -7,11 +7,14 @@
 //
 #import <SenseKit/SENSpeechResult.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMVoiceTutorialPresenter.h"
 #import "HEMScreenUtils.h"
 #import "HEMVoiceService.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMActionSheetTitleView.h"
+#import "HEMAlertViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMStyle.h"
 
@@ -25,7 +28,9 @@ static CGFloat const HEMVoiceTutorialInProgressMiddleRingSize = 192.0f;
 static CGFloat const HEMVoiceTutorialInProgressInnerRingSize = 146.0f;
 static CGFloat const HEMVoiceTutorialRingAnimeDelay = 0.1f;
 static CGFloat const HEMVoiceTutorialRingAnimeDuration = 0.75f;
+static CGFloat const HEMVoiceTutorialTriggerDisplayDelay = 0.75f;
 static CGFloat const HEMVoiceTutorialResponseDuration = 2.0f;
+static CGFloat const HEMVoiceTutorialListenDelay = 1.0f;
 static NSInteger const HEMVoiceTutorialFailureBeforeTip = 2;
 static CGFloat const HEMVoiceTutorialMinContentTopSpacing = 32.0f;
 static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
@@ -67,6 +72,8 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 
 @property (nonatomic, weak) HEMVoiceService* voiceService;
 @property (nonatomic, assign, getter=isInfoShowing) BOOL infoShowing;
+@property (nonatomic, assign, getter=isRestarting) BOOL restarting;
+@property (nonatomic, assign, getter=hasShownInfo) BOOL infoShown;
 
 @end
 
@@ -181,6 +188,14 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     [self animateSenseRings];
 }
 
+- (void)didAppear {
+    [super didAppear];
+    DDLogVerbose(@"voice tutorial did appear");
+    if ([[self continueButton] isHidden]) { // tutorial started
+        [self restartListeningForResponse];
+    }
+}
+
 #pragma mark - Ring animation
 
 - (CABasicAnimation*)fadeAnimationWithDelay:(CGFloat)delay
@@ -205,7 +220,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     [ring setPath:[[UIBezierPath bezierPathWithOvalInRect:ringFrame] CGPath]];
     [ring setFrame:ringFrame];
     [ring setPosition:sensePosition];
-    [ring setFillColor:[[UIColor grey4] CGColor]];
+    [ring setFillColor:[[UIColor purple4] CGColor]];
     [ring fillColor];
     [ring setOpacity:0.0f];
     
@@ -276,6 +291,12 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
             fadeOutDelay:fadeOutDelay];
 }
 
+- (void)stopSenseRingAnimation {
+    [[self innerSenseRing] removeAllAnimations];
+    [[self middleSenseRing] removeAllAnimations];
+    [[self outerSenseRing] removeAllAnimations];
+}
+
 #pragma mark - Actions
 
 - (void)voiceInfo {
@@ -298,7 +319,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     [sheet addDismissAction:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setInfoShowing:NO];
-        [strongSelf listenForVoiceResult];
+        [strongSelf restartListeningForResponse];
     }];
     [sheet addOptionWithTitle:cancelOption
                    titleColor:[UIColor tintColor]
@@ -307,35 +328,28 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
                        action:^{
                            __strong typeof(weakSelf) strongSelf = weakSelf;
                            [strongSelf setInfoShowing:NO];
-                           [strongSelf listenForVoiceResult];
+                           [strongSelf restartListeningForResponse];
                        }];
     
     [self stopListeningForVoiceResult];
     [self setInfoShowing:YES];
+    [self setInfoShown:YES];
     [[self delegate] showController:sheet fromPresenter:self];
 }
 
 - (void)finish {
     [self stopListeningForVoiceResult];
-    
-    [[self innerSenseRing] removeAllAnimations];
-    [[self middleSenseRing] removeAllAnimations];
-    [[self outerSenseRing] removeAllAnimations];
-    
+    [self stopSenseRingAnimation];
     [[self delegate] didFinishTutorialFrom:self];
 }
 
 - (void)start {
-    [[self navItem] setRightBarButtonItem:[self infoItem]];
+    NSString* command = nil;
+    NSMutableAttributedString* phrase = nil;
+
+    [self prepareForStart:&phrase command:&command];
     
-    [[self speechCommandLabel] sizeToFit];
-    [[self speechLabelContainer] setHidden:NO];
-    [[self speechErrorLabel] setHidden:YES];
-    [[self continueButton] setHidden:YES];
-    [[self titleLabel] setHidden:YES];
-    [[self descriptionLabel] setHidden:YES];
-    [[self tryNowLabel] setHidden:NO];
-    
+    // get sizing details
     CGSize senseSize = [[self senseImageView] image].size;
     CGFloat laterBottom = HEMVoiceTutorialInProgressLaterBottomMargin;
     CGFloat voiceContentMinY = CGRectGetMinY([[self voiceContentContainer] frame]);
@@ -354,6 +368,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
         adjustedContentCenter = currentCenter + minVoiceContentTopMargin;
     }
     
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
         [[self speechCommandBottomConstraint] setConstant:0];
         [[self senseWidthConstraint] setConstant:senseSize.width];
@@ -364,9 +379,66 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
         [[self tableImageView] setAlpha:HEMVoiceTutorialInProgressTableAlpha];
         [[[self voiceContentContainer] superview] layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [self animateSenseRings];
-        [self listenForVoiceResult];
+        int64_t delayInSecs = (int64_t)(HEMVoiceTutorialTriggerDisplayDelay * NSEC_PER_SEC);
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+        dispatch_after(delay, dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf showSenseInWaitingState];
+            // show by removing the camouflage
+            [strongSelf showSampleVoiceCommand:command phrase:phrase];
+            [strongSelf listenOrShowInfoWithDelay:nil];
+        });
     }];
+}
+
+- (void)prepareForStart:(NSMutableAttributedString**)phrase command:(NSString**)command {
+    [[self navItem] setRightBarButtonItem:[self infoItem]];
+    
+    [self resetSpeechCommand:phrase command:command];
+    [[self speechCommandLabel] sizeToFit]; // to adjust constraints
+    [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoiceGray"]];
+    [[self speechLabelContainer] setHidden:NO];
+    [[self speechErrorLabel] setHidden:YES];
+    [[self continueButton] setHidden:YES];
+    [[self titleLabel] setHidden:YES];
+    [[self descriptionLabel] setHidden:YES];
+    [[self tryNowLabel] setHidden:NO];
+}
+
+- (void)showSenseInWaitingState {
+    [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoicePurple"]];
+    [self animateSenseRings];
+}
+
+- (void)showSampleVoiceCommand:(NSString*)command phrase:(NSMutableAttributedString*)phrase {
+    UIColor* textColor = [[self speechCommandLabel] textColor];
+    if (textColor) {
+        NSRange commandRange = [[phrase string] rangeOfString:command];
+        [phrase setAttributes:@{NSForegroundColorAttributeName : textColor} range:commandRange];
+        [[self speechCommandLabel] setAttributedText:phrase];
+    }
+}
+
+- (void)resetSpeechCommand:(NSMutableAttributedString**)phrase command:(NSString**)command {
+    UIColor* baseColor = [[self speechCommandLabel] textColor];
+    UIFont* baseFont = [[self speechCommandLabel] font];
+    NSString* triggerPhraseFormat = NSLocalizedString(@"voice.tutorial.trigger.phrase.format", nil);
+    NSString* phraseCommand = NSLocalizedString(@"voice.tutorial.command", nil);
+    // hide the command by camouflage
+    NSDictionary* commandProperties = @{NSFontAttributeName : baseFont,
+                                        NSForegroundColorAttributeName : [UIColor whiteColor]};
+    NSAttributedString* attributedCommand = [[NSAttributedString alloc] initWithString:phraseCommand
+                                                                            attributes:commandProperties];
+    NSMutableAttributedString* attributedPhrase =
+    [[NSMutableAttributedString alloc] initWithFormat:triggerPhraseFormat
+                                                 args:@[attributedCommand]
+                                            baseColor:baseColor
+                                             baseFont:baseFont];
+    
+    [[self speechCommandLabel] setAttributedText:attributedPhrase];
+    
+    *phrase = attributedPhrase;
+    *command = phraseCommand;
 }
 
 #pragma mark - Listen
@@ -397,6 +469,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     }
     
     SENSpeechResult* result = [note userInfo][HEMVoiceNotificationInfoResult];
+    NSError* error = [note userInfo][HEMVoiceNotificationInfoError];
     if (result) {
         NSDictionary* props = @{kHEManaltyicsEventPropStatus : @([result status])};
         [SENAnalytics track:HEMAnalyticsEventVoiceResponse
@@ -414,8 +487,10 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
             }
         }
         
+    } else if ([[error domain] isEqualToString:NSURLErrorDomain]
+               && [error code] == NSURLErrorNotConnectedToInternet) {
+        [self showNetworkError];
     } else {
-        NSError* error = [note userInfo][HEMVoiceNotificationInfoError];
         DDLogWarn(@"got voice result error %@", error);
         NSString* message = NSLocalizedString(@"onboarding.voice.error.problem", nil);
         [self showUnrecognizedResponse:message];
@@ -440,34 +515,64 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 #pragma mark - Response Handling
 
 - (void)restartListeningForResponse {
+    if ([self isRestarting]) {
+        return;
+    }
+    [self setRestarting:YES];
+    
     CGFloat errorHeight = CGRectGetHeight([[self speechErrorLabel] bounds]);
     [[self speechErrorBottomConstraint] setConstant:-errorHeight];
     [[self speechCommandBottomConstraint] setConstant:0];
     
-    [self prepareSenseRingColor:[UIColor grey4]];
+    NSString* command = nil;
+    NSMutableAttributedString* phrase = nil;
+    [self resetSpeechCommand:&phrase command:&command];
     
+    [self stopSenseRingAnimation];
+    [self prepareSenseRingColor:[UIColor purple4]];
+    [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoiceGray"]];
+    
+    __strong typeof(self) weakSelf = self;
     [UIView animateWithDuration:HEMVoiceTutorialAnimeDuration animations:^{
         [[self tryNowLabel] setAlpha:1.0f];
         [[self speechCommandLabel] setAlpha:1.0f];
         [[self speechErrorLabel] setAlpha:0.0f];
         [self updatesenseRingColor];
-        [[self senseImageView] setImage:[UIImage imageNamed:@"senseVoiceGray"]];
         [[[self speechCommandLabel] superview] layoutIfNeeded];
     } completion:^(BOOL finished) {
         [[self speechErrorLabel] setHidden:YES];
-        __strong typeof(self) weakSelf = self;
-        int64_t delay = (int64_t)(HEMVoiceTutorialResponseDuration * NSEC_PER_SEC);
-        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, delay);
-        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+        
+        int64_t delayInSecs = (int64_t)(HEMVoiceTutorialTriggerDisplayDelay * NSEC_PER_SEC);
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+        dispatch_after(delay, dispatch_get_main_queue(), ^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if ([strongSelf failures] == HEMVoiceTutorialFailureBeforeTip) {
-                [strongSelf voiceInfo];
-            } else {
-                [strongSelf listenForVoiceResult];
-            }
+            [strongSelf showSenseInWaitingState];
+            [strongSelf showSampleVoiceCommand:command phrase:phrase];
+            [strongSelf listenOrShowInfoWithDelay:^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf setRestarting:NO];
+            }];
         });
         
     }];
+}
+
+- (void)listenOrShowInfoWithDelay:(void(^)(void))completion {
+    __weak typeof(self) weakSelf = self;
+    int64_t delayInSecs = (int64_t)(HEMVoiceTutorialListenDelay * NSEC_PER_SEC);
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+    dispatch_after(delay, dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf failures] == HEMVoiceTutorialFailureBeforeTip
+            && ![strongSelf hasShownInfo]) {
+            [strongSelf voiceInfo];
+        } else {
+            [strongSelf listenForVoiceResult];
+        }
+        if (completion) {
+            completion ();
+        }
+    });
 }
 
 - (void)showUnrecognizedResponse:(NSString*)message {
@@ -531,6 +636,23 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
         });
     }];
     
+}
+
+- (void)showNetworkError {
+    [self stopListeningForVoiceResult];
+    
+    __weak typeof(self) weakSelf = self;
+    NSString* title = NSLocalizedString(@"voice.tutorial.error.network.title", nil);
+    NSString* message = NSLocalizedString(@"voice.tutorial.error.network.message", nil);
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil)
+                           style:HEMAlertViewButtonStyleRoundRect
+                          action:^{
+                              __strong typeof(weakSelf) strongSelf = weakSelf;
+                              [strongSelf restartListeningForResponse];
+                          }];
+    
+    [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
 }
 
 #pragma mark - clean up

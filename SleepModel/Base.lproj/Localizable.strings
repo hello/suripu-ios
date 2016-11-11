@@ -1012,6 +1012,11 @@
 "expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";
 
 // voice
+"voice.tutorial.trigger.phrase.format" = "Okay Sense...\n%@";
+"voice.tutorial.command" = "what's the temperature?";
+"voice.tutorial.error.network.title" = "No internet connection";
+"voice.tutorial.error.network.message" = "Your mobile device is not connected to the internet. Check your internet connection and Wi-Fi settings, and try again.";
+
 "voice.title" = "Voice";
 
 "voice.welcome.message" = "Always say \"Okay Sense\" before each command to activate Voice. Ask about your Sleep Score, room conditions, and more.";

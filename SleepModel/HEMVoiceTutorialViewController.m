@@ -12,8 +12,9 @@
 #import "HEMVoiceService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingService.h"
+#import "HEMAlertViewController.h"
 
-@interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate>
+@interface HEMVoiceTutorialViewController () <HEMVoiceTutorialDelegate, HEMPresenterErrorDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *voiceContentContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *voiceContentCenterConstraint;
@@ -78,9 +79,24 @@
                  descriptionLabel:[self descriptionLabel]];
     [presenter setOnboarding:![self flow]];
     [presenter setDelegate:self];
+    [presenter setErrorDelegate:self];
     
     [self addPresenter:presenter];
     [self setVoiceService:voiceService];
+}
+
+#pragma mark - HEMPresenterErrorDelegate
+
+- (void)showErrorWithTitle:(NSString *)title
+                andMessage:(NSString *)message
+              withHelpPage:(NSString *)helpPage
+             fromPresenter:(HEMPresenter *)presenter {
+    [self showMessageDialog:message title:title];
+}
+
+- (void)showCustomerAlert:(HEMAlertViewController *)alert fromPresenter:(HEMPresenter *)presenter {
+    [alert setViewToShowThrough:[self backgroundViewForAlerts]];
+    [alert showFrom:[self navigationController]];
 }
 
 #pragma mark - Voice Tutorial Delegate

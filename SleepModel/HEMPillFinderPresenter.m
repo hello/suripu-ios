@@ -131,7 +131,7 @@ static CGFloat const HEMPillFinderScanTimeout = 30.0f;
                                                            repeats:NO]];
         
         __weak typeof(self) weakSelf = self;
-        [[self deviceService] findNearestPill:^(SENSleepPill * _Nullable sleepPill, NSError * _Nullable error) {
+        void(^scanDone)(SENSleepPill * sleepPill, NSError * error) = ^(SENSleepPill * sleepPill, NSError * error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [[strongSelf scanTimer] invalidate];
             [strongSelf setScanTimer:nil];
@@ -145,7 +145,10 @@ static CGFloat const HEMPillFinderScanTimeout = 30.0f;
                 
                 [strongSelf showPillNotFoundError];
             }
-        }];
+        };
+        
+        [[self deviceService] findNearestPillWithVersion:SENSleepPillAdvertisedVersionOneFive
+                                              completion:scanDone];
     }
 }
 

@@ -145,12 +145,23 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
         || [[self devices] hasPairedSense]);
 }
 
-- (void)findNearestPill:(HEMDevicePillHandler)completion {
+- (void)findNearestPillWithVersion:(SENSleepPillAdvertisedVersion)version
+                        completion:(HEMDevicePillHandler)completion {
+    
     [SENSleepPillManager scanForSleepPills:^(NSArray<SENSleepPill *> *pills, NSError *error) {
         SENSleepPill* pill = nil;
+        
         if (error) {
             [SENAnalytics trackError:error];
-        } else {
+        } else if (version != SENSleepPillAdvertisedVersionUnknown) {
+            for (SENSleepPill* discoveredPill in pills) {
+                if ([discoveredPill version] == version
+                    && [pill rssi] >= HEMPillDfuPillMinimumRSSI) {
+                    pill = discoveredPill;
+                    break;
+                }
+            }
+        } else { // no filter
             // first pill has the strongest signal, but we should only return a
             // pill if it meets minimum RSSI value
             pill = [pills firstObject];
@@ -158,8 +169,13 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
                 pill = nil;
             }
         }
+        
         completion (pill, error);
     }];
+}
+
+- (void)findNearestPill:(HEMDevicePillHandler)completion {
+    [self findNearestPillWithVersion:SENSleepPillAdvertisedVersionUnknown completion:completion];
 }
 
 - (BOOL)isScanningPill {

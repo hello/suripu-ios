@@ -11,6 +11,9 @@
 
 #import "SENSleepPill.h"
 
+static unsigned char const kSENSleepPillOneFiveByte = 0x12;
+static NSInteger const kSENSleepPillOneFiveHwVersionLoc = 2;
+
 @interface SENSleepPill()
 
 @property (nonatomic, strong) LGPeripheral* peripheral;
@@ -23,8 +26,20 @@
     self = [super init];
     if (self) {
         _peripheral = peripheral;
+        [self processAdvertisementData:[peripheral advertisingData]];
     }
     return self;
+}
+
+- (void)processAdvertisementData:(NSDictionary*)data {
+    NSData* manufacturerData = data[CBAdvertisementDataManufacturerDataKey];
+    if ([manufacturerData length] >= kSENSleepPillOneFiveHwVersionLoc + 1) {
+        const unsigned char* bytes = (const unsigned char*)[manufacturerData bytes];
+        unsigned char hwByte = bytes[kSENSleepPillOneFiveHwVersionLoc];
+        if (hwByte == kSENSleepPillOneFiveByte) {
+            _version = SENSleepPillAdvertisedVersionOneFive;
+        }
+    }
 }
 
 - (NSString*)name {

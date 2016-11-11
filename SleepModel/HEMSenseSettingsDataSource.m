@@ -117,7 +117,7 @@
     [self watchForBLEDisconnects];
     
     SENServiceDevice* deviceService = [SENServiceDevice sharedService];
-    SENDeviceMetadata* senseMetadata = [[deviceService devices] senseMetadata];
+    SENSenseMetadata* senseMetadata = [[deviceService devices] senseMetadata];
     SENDeviceMetadata* pillMetdata = [[deviceService devices] pillMetadata];
     NSString* senseId = [senseMetadata uniqueId];
     NSString* pillId = [pillMetdata uniqueId];

@@ -18,6 +18,7 @@
 + (UIFont*)h4;
 + (UIFont*)h5;
 + (UIFont*)h6;
++ (UIFont*)h6Bold;
 + (UIFont*)h7;
 + (UIFont*)h7Bold;
 + (UIFont*)h8;

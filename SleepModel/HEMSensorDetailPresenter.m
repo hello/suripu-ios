@@ -530,7 +530,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     }
     
     [scaleCell setNumberOfScales:count];
-    [[scaleCell titleLabel] setFont:[UIFont h5]];
+    [[scaleCell titleLabel] setFont:[UIFont h6Bold]];
     [[scaleCell titleLabel] setTextColor:[UIColor grey6]];
     [[scaleCell titleLabel] setText:NSLocalizedString(@"sensor.section.scale.title", nil)];
     
@@ -564,7 +564,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)configureAboutCell:(HEMSensorAboutCollectionViewCell*)aboutCell {
     NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
     [[aboutCell titleLabel] setText:title];
-    [[aboutCell titleLabel] setFont:[UIFont h5]];
+    [[aboutCell titleLabel] setFont:[UIFont h6Bold]];
     [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
     [[aboutCell aboutLabel] setText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 extern NSString* const kHEMSensorErrorDomain;
 extern NSString* const kHEMSensorNotifyStatusChanged;
 extern NSString* const kHEMSensorNotifyStatusKey;
+extern NSInteger const kHEMSensorSentinelValue;
 
 typedef NS_ENUM(NSInteger, HEMSensorServiceErrorCode) {
     HEMSensorServiceErrorCodePollingAlreadyStarted = -1,

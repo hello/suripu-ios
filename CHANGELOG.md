@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.2.3
+
+New:
+
+* Design tweaks to Sensor detail
+
+Fixes:
+
+* Long thermostat names no longer overlap the label in expansion view
+* Added type of system alert when it is for a pill firmware update
+* Done button in expansion configuration is disabled until configuration is selected
+* Sensor top limit line is based off of server datapoints, and not chart scale
+
 ## 1.6.2.2
 
 New:

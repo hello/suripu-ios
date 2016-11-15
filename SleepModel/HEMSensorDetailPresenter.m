@@ -387,16 +387,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                               inCell:(HEMSensorChartCollectionViewCell*)cell {
     SENCondition condition = [sensor condition];
     UIColor* sensorColor = [UIColor colorForCondition:condition];
-    
-    CGRect chartFrame = [[cell chartContentView] bounds];
-    ChartYAxis* yAxis = nil;
     LineChartView* lineChartView = (id) [[cell chartContentView] chartView];
     
     if (!lineChartView) {
+        CGRect chartFrame = [[cell chartContentView] bounds];
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:chartFrame];
         [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:0.0f];
         
-        yAxis = [lineChartView leftAxis];
+        ChartYAxis* yAxis = [lineChartView leftAxis];
         CGFloat chartHeight = CGRectGetHeight(chartFrame);
         CGFloat topLimitY = CGRectGetMaxY([[[cell chartContentView] topLimitLine] frame]);
         CGFloat xAxisHeight = CGRectGetHeight([[cell xAxisLabelContainer] bounds]);

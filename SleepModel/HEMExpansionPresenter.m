@@ -317,7 +317,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (!selectedName) {
         if ([[self configurations] count] == 0) {
             selectedName = NSLocalizedString(@"empty-data", nil);
-        } else {
+        } else { 
             selectedName = NSLocalizedString(@"expansion.config.select", nil);
             nameColor = [UIColor tintColor];
         }

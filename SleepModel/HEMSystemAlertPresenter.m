@@ -287,6 +287,8 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
             return @"sense has not been seen for awhile";
         case HEMDeviceAlertStateSenseNotPaired:
             return @"sense is not paired";
+        case HEMDeviceAlertStatePillFirmwareUpdate:
+            return @"pill firmware update available";
         default:
             return @"unknown";
     }

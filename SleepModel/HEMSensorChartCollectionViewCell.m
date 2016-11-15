@@ -35,8 +35,9 @@
     NSDictionary* labelAttrs = @{NSFontAttributeName : labelFont};
     CGSize labelSize = [label sizeBoundedByHeight:maxHeight attributes:labelAttrs];
     CGRect labelFrame = CGRectZero;
-    labelFrame.origin.y = maxHeight - labelSize.height;
-    labelFrame.size = labelSize;
+    labelFrame.origin.y = 0.0f;
+    labelFrame.size.width = labelSize.width;
+    labelFrame.size.height = maxHeight;
     
     UILabel* labelView = [[UILabel alloc] initWithFrame:labelFrame];
     [labelView setFont:labelFont];

@@ -90,7 +90,12 @@
     switch ([self sensorUnit]) {
         case SENSensorUnitCelsius: {
             if (![SENPreference useCentigrade]) {
-                value = @(HEMCelsiusToFahrenheit([value doubleValue]));
+                // if zero, leave it as zero
+                if ([value doubleValue] == 0.0f) {
+                    value = @0;
+                } else {
+                    value = @(HEMCelsiusToFahrenheit([value doubleValue]));
+                }
             }
             return value;
         }

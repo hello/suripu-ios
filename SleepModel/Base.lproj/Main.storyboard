@@ -2055,7 +2055,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UX3-Ow-cXt">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UX3-Ow-cXt">
                                                     <rect key="frame" x="24" y="19" width="38" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2097,7 +2097,7 @@
                                                 <constraint firstItem="HDV-B8-Gw8" firstAttribute="centerY" secondItem="MtE-o8-sIc" secondAttribute="centerY" id="Hev-5O-Np4"/>
                                                 <constraint firstAttribute="bottom" secondItem="ctw-e9-sxy" secondAttribute="bottom" id="QbT-gW-uII"/>
                                                 <constraint firstAttribute="trailing" secondItem="HDV-B8-Gw8" secondAttribute="trailing" constant="40" id="XeV-dM-slf"/>
-                                                <constraint firstItem="HDV-B8-Gw8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UX3-Ow-cXt" secondAttribute="trailing" constant="10" id="mAX-3x-KMQ"/>
+                                                <constraint firstItem="HDV-B8-Gw8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UX3-Ow-cXt" secondAttribute="trailing" priority="750" constant="10" id="mAX-3x-KMQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>

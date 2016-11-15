@@ -124,6 +124,8 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
 - (void)bindWithDoneButton:(HEMActionButton*)doneButton {
     [doneButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     [[doneButton titleLabel] setFont:[UIFont button]];
+    [doneButton setBackgroundColor:[UIColor grey3] forState:UIControlStateDisabled];
+    [doneButton setEnabled:NO];
     [self setSaveButton:doneButton];
 }
 
@@ -192,6 +194,7 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
     if ([indexPath row] < [[self configs] count]) {
         config = [self configs][[indexPath row]];
         [self setSelectedConfig:config];
+        [[self saveButton] setEnabled:YES];
         [tableView reloadData];
     }
 }

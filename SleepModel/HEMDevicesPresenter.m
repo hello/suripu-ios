@@ -504,6 +504,10 @@ referenceSizeForFooterInSection:(NSInteger)section {
 #pragma mark - Actions
 
 - (void)upgradeSense {
+    // in case it was started before upgrading.  for example: user taps in to
+    // sense settings, backs out, and tries to upgrade
+    [[self deviceService] stopScanningForSense];
+    
     NSString* currentSenseId = [[[[self deviceService] devices] senseMetadata] uniqueId];
     UIViewController* upgradeVC = [HEMUpgradeFlow rootViewControllerForFlowWithCurrentSenseId:currentSenseId];
     [[self delegate] showModalController:upgradeVC from:self];

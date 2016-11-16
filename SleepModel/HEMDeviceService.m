@@ -70,6 +70,10 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
                  object:nil];
 }
 
+- (void)stopScanningForSense {
+    [SENSenseManager stopScan];
+}
+
 - (void)clearDevicesCache {
     [self setDevices:nil];
 }

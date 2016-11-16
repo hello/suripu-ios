@@ -75,6 +75,7 @@ typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 - (void)refreshMetadata:(nullable HEMDeviceMetadataHandler)completion;
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
 - (BOOL)isBleOn;
+- (void)stopScanningForSense;
 - (BOOL)isBleStateAvailable;
 - (BOOL)isScanningPill;
 - (void)findNearestPillWithVersion:(SENSleepPillAdvertisedVersion)version

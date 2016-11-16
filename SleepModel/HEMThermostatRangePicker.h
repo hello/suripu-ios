@@ -25,6 +25,9 @@
 @property (assign, nonatomic) CGFloat minLimit; // defaults to 0
 @property (assign, nonatomic) CGFloat maxLimit; // defaults to 100
 
-+ (instancetype)rangePickerWithMin:(NSInteger)min max:(NSInteger)max;
++ (instancetype)rangePickerWithMin:(NSInteger)min
+                               max:(NSInteger)max
+                      withMinLimit:(CGFloat)minLimit
+                          maxLimit:(CGFloat)maxLimit;
 
 @end

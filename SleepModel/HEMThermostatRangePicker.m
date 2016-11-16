@@ -17,7 +17,7 @@ static CGFloat const kHEMThermostatBottomBorderWidth = 0.5f;
 static NSInteger const kHEMThermostatValueSeparation = 3;
 static CGFloat const kHEMThermostatDefaultMin = 0.0f;
 static CGFloat const kHEMThermostatDefaultMax = 100.0f;
-static CGFloat const kHEMThermostatAutoChangeDelay = 0.2f;
+static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
 
 @interface HEMThermostatRangePicker()
 
@@ -27,11 +27,30 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.2f;
 
 @implementation HEMThermostatRangePicker
 
-+ (instancetype)rangePickerWithMin:(NSInteger)min max:(NSInteger)max {
++ (instancetype)rangePickerWithMin:(NSInteger)min
+                               max:(NSInteger)max
+                      withMinLimit:(CGFloat)minLimit
+                          maxLimit:(CGFloat)maxLimit {
     HEMThermostatRangePicker* picker = [NSBundle loadNibWithOwner:self];
-    [[picker minLabel] countFromZeroTo:MAX(min, [picker minLimit]) withDuration:0.0f];
-    [[picker maxLabel] countFromZeroTo:MIN(max, [picker maxLimit]) withDuration:0.0f];
+    NSInteger actualMin = min, actualMax = max;
+    if (labs(actualMax - actualMin) < kHEMThermostatValueSeparation) {
+        actualMin = minLimit;
+        if (labs(actualMax - actualMin) < kHEMThermostatValueSeparation) {
+            actualMax = actualMin + kHEMThermostatValueSeparation;
+        }
+    }
+    [[picker minLabel] countFromZeroTo:MAX(actualMin, minLimit) withDuration:0.0f];
+    [[picker maxLabel] countFromZeroTo:MIN(actualMax, maxLimit) withDuration:0.0f];
+    [picker setMinLimit:minLimit];
+    [picker setMaxLimit:maxLimit];
     return picker;
+}
+
+- (void)willMoveToSuperview:(nullable UIView *)newSuperview {
+    [super willMoveToSuperview:newSuperview];
+    if (newSuperview) {
+        [self updateEnableStateForButtons];
+    }
 }
 
 - (UIImage *)imageWithColor:(UIColor *)color forRect:(CGRect)rect {
@@ -59,19 +78,6 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.2f;
     [self setButtonDefaultsFor:[self decreaseMinButton]];
     [self setButtonDefaultsFor:[self decreaseMaxButton]];
     
-//    [[self increaseMinButton] addTarget:self
-//                                 action:@selector(incrementMin)
-//                       forControlEvents:UIControlEventTouchUpInside];
-//    [[self decreaseMinButton] addTarget:self
-//                                 action:@selector(decrementMin)
-//                       forControlEvents:UIControlEventTouchUpInside];
-//    [[self increaseMaxButton] addTarget:self
-//                                 action:@selector(incrementMax)
-//                       forControlEvents:UIControlEventTouchUpInside];
-//    [[self decreaseMaxButton] addTarget:self
-//                                 action:@selector(decrementMax)
-//                       forControlEvents:UIControlEventTouchUpInside];
-    
     [self setMinLimit:kHEMThermostatDefaultMin];
     [self setMaxLimit:kHEMThermostatDefaultMax];
 }
@@ -93,6 +99,7 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.2f;
     [button setAdjustsImageWhenHighlighted:NO];
     [[button titleLabel] setFont:[UIFont buttonLarge]];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
     [button setBackgroundColor:[UIColor blue2]];
     [button addTarget:self
                action:@selector(touchDownOnButton:)

@@ -134,6 +134,7 @@
 		BF1C46B11B155B4900AFCB7B /* HEMHealthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C46B01B155B4900AFCB7B /* HEMHealthViewController.m */; };
 		BF1C679C1DD3B0BC003BD2A4 /* HEMSystemAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C679B1DD3B0BC003BD2A4 /* HEMSystemAlertService.m */; };
 		BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */; };
+		BF1FDFB31DDD115600782CEF /* HEMAlarmValueRangePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1FDFB21DDD115600782CEF /* HEMAlarmValueRangePickerView.xib */; };
 		BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF20B2211BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m */; };
 		BF2123F61B66E8B50017D67A /* HEMAppUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2123F51B66E8B50017D67A /* HEMAppUsage.m */; };
 		BF21F01C1DAEE6400057F24E /* HEMVoiceExampleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF21F01B1DAEE6400057F24E /* HEMVoiceExampleView.xib */; };
@@ -765,6 +766,7 @@
 		BF1C679B1DD3B0BC003BD2A4 /* HEMSystemAlertService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSystemAlertService.m; sourceTree = "<group>"; };
 		BF1E2E5B1A00691000DDD0D0 /* HEMInsightCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightCollectionViewCell.h; sourceTree = "<group>"; };
 		BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightCollectionViewCell.m; sourceTree = "<group>"; };
+		BF1FDFB21DDD115600782CEF /* HEMAlarmValueRangePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMAlarmValueRangePickerView.xib; sourceTree = "<group>"; };
 		BF20B2201BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsHeaderFooterView.h; sourceTree = "<group>"; };
 		BF20B2211BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsHeaderFooterView.m; sourceTree = "<group>"; };
 		BF2123F41B66E8B50017D67A /* HEMAppUsage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppUsage.h; sourceTree = "<group>"; };
@@ -1936,6 +1938,7 @@
 				BF21F0261DAF20540057F24E /* HEMAlarmExpansionListCell.m */,
 				BF7B2F781DB9AAA600A8E602 /* HEMAlarmValueRangePickerView.h */,
 				BF7B2F791DB9AAA600A8E602 /* HEMAlarmValueRangePickerView.m */,
+				BF1FDFB21DDD115600782CEF /* HEMAlarmValueRangePickerView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3778,6 +3781,7 @@
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				BF53D8CA1D931AF900C24F9D /* Info.plist in Resources */,
 				BFFDC1071DD171BE008F001B /* Sensors.xcassets in Resources */,
+				BF1FDFB31DDD115600782CEF /* HEMAlarmValueRangePickerView.xib in Resources */,
 				BFCB894E1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf in Resources */,
 				8AD331281BB08C4300DFF95A /* Drawer.xcassets in Resources */,
 				BFA540E71BCDC326007AF607 /* HEMMeetSenseView.xib in Resources */,

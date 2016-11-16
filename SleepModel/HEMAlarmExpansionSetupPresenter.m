@@ -21,9 +21,12 @@
 #import "HEMSensorValueFormatter.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMThermostatRangePicker.h"
+#import "HEMActivityIndicatorView.h"
 #import "HEMStyle.h"
 
 static CGFloat const kHEMAlarmExpRowHeight = 66.0f;
+static NSInteger const kHEMAlarmExpPickerTag = 1;
+static CGFloat const kHEMAlarmExpPickerSeparatorHeight = 0.5f;
 
 typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     HEMAlarmExpSetupRowTypeEnable = 0,
@@ -45,10 +48,17 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
 @property (nonatomic, strong) NSArray<SENExpansionConfig*>* configs;
 @property (nonatomic, strong) NSError* configError;
 @property (nonatomic, weak) UINavigationItem* navItem;
+@property (nonatomic, weak) UIView* targetValueContainer;
+@property (nonatomic, weak) UIView* targetValueSeparator;
+@property (nonatomic, weak) HEMActivityIndicatorView* targetValueActivityIndicator;
 
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 @property (nonatomic, strong) SENAlarmExpansion* alarmExpansion;
 @property (nonatomic, strong) HEMActivityCoverView* activityCoverView;
+
+@property (nonatomic, assign) SENExpansionValueRange expansionValueRange;
+@property (nonatomic, assign) NSInteger defaultTargetMinValue;
+@property (nonatomic, assign) NSInteger defaultTargetMaxValue;
 
 @end
 
@@ -74,7 +84,12 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     [tableView setScrollEnabled:NO];
     [tableView setTableFooterView:[UIView new]];
     [tableView setSeparatorColor:[UIColor separatorColor]];
-    
+    [self setTableView:tableView];
+}
+
+- (void)bindWithTargetValueContainer:(UIView*)container
+                   activityIndicator:(HEMActivityIndicatorView*)activityIndicator
+                           separator:(UIView*)separator {
     SENExpansionType type = [[self expansion] type];
     SENExpansionValueRange expansionRange = [[self expansion] valueRange];
     SENExpansionValueRange selectedRange = [[self alarmExpansion] targetRange];
@@ -85,63 +100,38 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     }
     
     // set defaults
-    NSInteger maxValue = 0, minValue = 0;
-    if ([[self alarmExpansion] targetRange].max > 0) {
-        maxValue = selectedRange.max;
-    } else {
-        maxValue = expansionRange.max;
-    }
+    [self setDefaultTargetMaxValue:[[self alarmExpansion] targetRange].max > 0
+                                    ? selectedRange.max
+                                    : expansionRange.max];
+    [self setDefaultTargetMinValue:[[self alarmExpansion] targetRange].min > 0
+                                    ? selectedRange.min
+                                    : expansionRange.min];
+    [self setExpansionValueRange:expansionRange];
     
-    if ([[self alarmExpansion] targetRange].min > 0) {
-        minValue = selectedRange.min;
-    } else {
-        minValue = expansionRange.min;
+    NSLayoutConstraint *heightConstraint;
+    for (NSLayoutConstraint *constraint in [separator constraints]) {
+        if ([constraint firstAttribute] == NSLayoutAttributeHeight) {
+            heightConstraint = constraint;
+            break;
+        }
     }
+    [heightConstraint setConstant:kHEMAlarmExpPickerSeparatorHeight];
     
-    // TODO: remove the picker from the storyboard
+    [separator setBackgroundColor:[UIColor separatorColor]];
+    [activityIndicator start];
+    [activityIndicator setHidden:NO];
+    [activityIndicator setUserInteractionEnabled:NO];
+    [self setTargetValueContainer:container];
+    [self setTargetValueSeparator:separator];
+    [self setTargetValueActivityIndicator:activityIndicator];
+    
     if (type == SENExpansionTypeLights) {
-        HEMAlarmValueRangePickerView* scrollablePicker = [HEMAlarmValueRangePickerView new];
-        [self configureScrollablePicker:scrollablePicker
-                       forExpansionType:type
-                               andRange:expansionRange
-                        withSelectedMin:minValue
-                            selectedMax:maxValue];
-        [tableView setTableHeaderView:scrollablePicker];
-    } else if (type == SENExpansionTypeThermostat) {
-        [tableView setTableHeaderView:[self thermostatPickerWithSelectedMin:minValue
-                                                                selectedMax:maxValue
-                                                                      range:expansionRange]];
-    }
-    
-    [self setTableView:tableView];
-    [self loadExpansionConfigurations];
-}
-
-- (HEMThermostatRangePicker*)thermostatPickerWithSelectedMin:(NSInteger)min
-                                                 selectedMax:(NSInteger)maxValue
-                                                       range:(SENExpansionValueRange)range {
-    HEMThermostatRangePicker* rangePicker = [HEMThermostatRangePicker rangePickerWithMin:min max:maxValue];
-    [rangePicker setMinLimit:range.min];
-    [rangePicker setMaxLimit:range.max];
-    return rangePicker;
-}
-
-- (void)configureScrollablePicker:(HEMAlarmValueRangePickerView*)picker
-                 forExpansionType:(SENExpansionType)type
-                         andRange:(SENExpansionValueRange)range
-                  withSelectedMin:(NSInteger)minValue
-                      selectedMax:(NSInteger)maxValue {
-    [picker setSelectedMaxValue:maxValue];
-    [picker setSelectedMinValue:minValue];
-    [picker setPickerDelegate:self];
-    
-    if (type == SENExpansionTypeThermostat) {
-        [picker setUnitSymbol:NSLocalizedString(@"measurement.temperature.unit", nil)];
-        [picker configureRangeWithMin:range.min max:range.max];
+        [self showTargetValuePicker];
     } else {
-        [picker setUnitSymbol:NSLocalizedString(@"measurement.percentage.unit", nil)];
-        [picker configureWithMin:range.min max:range.max];
+        [self showPickerLoadingState];
     }
+    
+    [self loadExpansionConfigurations];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -160,6 +150,78 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     [self setActivityContainerView:activityContainerView];
 }
 
+#pragma mark - Picker Configuration
+
+- (void)showTargetValuePicker {
+    [[self targetValueActivityIndicator] stop];
+    [[self targetValueActivityIndicator] setHidden:YES];
+    
+    UIView* picker = [[self targetValueContainer] viewWithTag:kHEMAlarmExpPickerTag];
+    [picker setHidden:NO];
+    
+    SENExpansionType type = [[self expansion] type];
+    
+    BOOL isThermostat = type == SENExpansionTypeThermostat;
+    BOOL hasHeat = [[self selectedConfig] hasCapability:SENExpansionCapabilityHeat];
+    BOOL hasCool = [[self selectedConfig] hasCapability:SENExpansionCapabilityCool];
+    BOOL useThermostatRangePicker = isThermostat && hasHeat && hasCool;
+    
+    if (useThermostatRangePicker) {
+        if (![picker isKindOfClass:[HEMThermostatRangePicker class]]) {
+            [picker removeFromSuperview];
+            
+            HEMThermostatRangePicker* rangePicker =
+                [HEMThermostatRangePicker rangePickerWithMin:[self defaultTargetMinValue]
+                                                         max:[self defaultTargetMaxValue]
+                                                withMinLimit:[self expansionValueRange].min
+                                                    maxLimit:[self expansionValueRange].max];
+            [rangePicker setAlpha:0.0f];
+            [rangePicker setFrame:[[self targetValueContainer] bounds]];
+            [rangePicker setTag:kHEMAlarmExpPickerTag];
+            [[self targetValueContainer] insertSubview:rangePicker atIndex:0];
+            
+            picker = rangePicker;
+        }
+    } else {
+        BOOL needNewPicker = picker == nil || [picker isKindOfClass:[HEMThermostatRangePicker class]];
+        if (needNewPicker) {
+            [picker removeFromSuperview]; // in case there is one
+            
+            HEMAlarmValueRangePickerView* scrollablePicker = [HEMAlarmValueRangePickerView defaultRangePickerView];
+            
+            if (isThermostat) {
+                [scrollablePicker setUnitSymbol:NSLocalizedString(@"measurement.temperature.unit", nil)];
+            } else {
+                [scrollablePicker setUnitSymbol:NSLocalizedString(@"measurement.percentage.unit", nil)];
+            }
+            
+            [scrollablePicker setAlpha:0.0f];
+            [scrollablePicker setTag:kHEMAlarmExpPickerTag];
+            [scrollablePicker setSelectedMaxValue:[self defaultTargetMinValue]];
+            [scrollablePicker setSelectedMinValue:[self defaultTargetMaxValue]];
+            [scrollablePicker setPickerDelegate:self];
+            [scrollablePicker configureWithMin:[self expansionValueRange].min
+                                           max:[self expansionValueRange].max];
+            [scrollablePicker setFrame:[[self targetValueContainer] bounds]];
+            
+            [[self targetValueContainer] insertSubview:scrollablePicker atIndex:0];
+            
+            picker = scrollablePicker;
+        }
+    }
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        [picker setAlpha:1.0f];
+    }];
+}
+
+- (void)showPickerLoadingState {
+    UIView* picker = [[self targetValueContainer] viewWithTag:kHEMAlarmExpPickerTag];
+    [picker setHidden:YES];
+    [[self targetValueActivityIndicator] start];
+    [[self targetValueActivityIndicator] setHidden:NO];
+}
+
 #pragma mark - Load data
 
 - (void)loadExpansionConfigurations {
@@ -170,7 +232,16 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setConfigs:configs];
         [strongSelf setConfigError:error];
+        
+        for (SENExpansionConfig* config in configs) {
+            if ([config isSelected]) {
+                [strongSelf setSelectedConfig:config];
+                break;
+            }
+        }
+        
         [strongSelf setLoading:NO];
+        [strongSelf showTargetValuePicker];
         [[strongSelf tableView] reloadData];
     }];
 }
@@ -185,7 +256,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
         updatedConfig = [self selectedConfig];
     }
     
-    id pickerView = [[self tableView] tableHeaderView];
+    id pickerView = [[self targetValueContainer] viewWithTag:kHEMAlarmExpPickerTag];
     if ([pickerView isKindOfClass:[HEMThermostatRangePicker class]]) {
         HEMThermostatRangePicker* thermoPicker = pickerView;
         [self updateThermostatTargetRangeWithMin:[[thermoPicker minLabel] currentValue]
@@ -257,7 +328,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case HEMAlarmExpSetupRowTypeConfigSelection:
             title = [[self expansionService] configurationNameForExpansion:[self expansion]];
-            detail = [self selectedConfigurationName];
+            detail = [[self selectedConfig] localizedName];
             if (!detail && [self configError]) {
                 detail = [NSLocalizedString(@"actions.retry", nil) lowercaseString];
                 detailColor = [UIColor tintColor];
@@ -380,29 +451,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                                  if (error) {
                                                      [strongSelf showConfigurationUpdateError];
                                                  } else {
-                                                     [strongSelf dismissActivitySucessfully:YES completion:^{
-                                                         [strongSelf setSelectedConfig:config];
-                                                         [[strongSelf tableView] reloadData];
-                                                     }];
+                                                     [strongSelf setSelectedConfig:config];
+                                                     if ([[strongSelf expansion] type] == SENExpansionTypeThermostat) {
+                                                         [strongSelf showTargetValuePicker];
+                                                     }
+                                                     [[strongSelf tableView] reloadData];
+                                                     [strongSelf dismissActivitySucessfully:YES completion:nil];
                                                  }
                                              }];
     }];
-}
-
-- (NSString*)selectedConfigurationName {
-    NSString* selection = nil;
-    if ([self selectedConfig]) {
-        selection = [[self selectedConfig] localizedName];
-    } else {
-        for (SENExpansionConfig* config in [self configs]) {
-            if ([config isSelected]) {
-                selection = [config localizedName];
-                [self setSelectedConfig:config];
-                break;
-            }
-        }
-    }
-    return selection;
 }
 
 #pragma mark - Errors

@@ -380,50 +380,38 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="hgb-Cl-XCm" customClass="HEMAlarmValueRangePickerView">
-                                    <rect key="frame" x="0.0" y="64" width="600" height="314"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="Ix7-UY-slu">
+                                    <rect key="frame" x="0.0" y="64" width="600" height="315"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iKn-pK-VPv">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="112"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCA-B6-fVh">
+                                            <rect key="frame" x="0.0" y="314" width="600" height="1"/>
+                                            <color key="backgroundColor" red="0.90980392156862744" green="0.91764705882352937" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="TLz-Jt-Hlh"/>
+                                            </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KwE-L2-w0g">
-                                            <rect key="frame" x="0.0" y="202" width="600" height="112"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7HW-Px-Iqv">
-                                            <rect key="frame" x="0.0" y="313" width="600" height="1"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCP-yv-Sve" customClass="HEMActivityIndicatorView">
+                                            <rect key="frame" x="273" y="130" width="55" height="55"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="iRV-r5-PcV"/>
+                                                <constraint firstAttribute="height" constant="55" id="FqS-ng-yTv"/>
+                                                <constraint firstAttribute="width" constant="55" id="WDT-dx-LGU"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="iKn-pK-VPv" secondAttribute="trailing" id="2FH-D5-dr6"/>
-                                        <constraint firstAttribute="trailing" secondItem="7HW-Px-Iqv" secondAttribute="trailing" id="2c0-Qu-MVg"/>
-                                        <constraint firstItem="iKn-pK-VPv" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="3XN-6Q-MGA"/>
-                                        <constraint firstAttribute="trailing" secondItem="KwE-L2-w0g" secondAttribute="trailing" id="KX6-gu-DMx"/>
-                                        <constraint firstAttribute="bottom" secondItem="7HW-Px-Iqv" secondAttribute="bottom" id="RKs-83-5ag"/>
-                                        <constraint firstItem="7HW-Px-Iqv" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="dn7-dI-5I1"/>
-                                        <constraint firstAttribute="bottom" secondItem="KwE-L2-w0g" secondAttribute="bottom" id="jEg-X2-3Tw"/>
-                                        <constraint firstItem="iKn-pK-VPv" firstAttribute="height" secondItem="KwE-L2-w0g" secondAttribute="height" id="loT-yY-fCa"/>
-                                        <constraint firstItem="KwE-L2-w0g" firstAttribute="leading" secondItem="hgb-Cl-XCm" secondAttribute="leading" id="nIu-Rg-kmt"/>
-                                        <constraint firstItem="iKn-pK-VPv" firstAttribute="top" secondItem="hgb-Cl-XCm" secondAttribute="top" id="pdS-sX-PM2"/>
-                                        <constraint firstItem="iKn-pK-VPv" firstAttribute="bottom" secondItem="KwE-L2-w0g" secondAttribute="top" constant="-90" id="w4p-0e-87u"/>
+                                        <constraint firstItem="GCP-yv-Sve" firstAttribute="centerY" secondItem="Ix7-UY-slu" secondAttribute="centerY" id="CfR-oM-wll"/>
+                                        <constraint firstItem="DCA-B6-fVh" firstAttribute="leading" secondItem="Ix7-UY-slu" secondAttribute="leading" id="Tl7-x4-tqi"/>
+                                        <constraint firstItem="GCP-yv-Sve" firstAttribute="centerX" secondItem="Ix7-UY-slu" secondAttribute="centerX" id="Udd-QF-8Rd"/>
+                                        <constraint firstAttribute="trailing" secondItem="DCA-B6-fVh" secondAttribute="trailing" id="ZHo-Kq-kJg"/>
+                                        <constraint firstAttribute="bottom" secondItem="DCA-B6-fVh" secondAttribute="bottom" id="zXW-Kj-x5a"/>
                                     </constraints>
-                                    <connections>
-                                        <outlet property="botGradientView" destination="KwE-L2-w0g" id="fPm-IM-BS5"/>
-                                        <outlet property="separator" destination="7HW-Px-Iqv" id="rrK-ab-Rri"/>
-                                        <outlet property="separatorHeightConstraint" destination="iRV-r5-PcV" id="ZTb-Qe-9FW"/>
-                                        <outlet property="topGradientView" destination="iKn-pK-VPv" id="ESn-ao-Hcp"/>
-                                    </connections>
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="toggle" id="xn2-cB-jBe" customClass="HEMBasicTableViewCell">
-                                        <rect key="frame" x="0.0" y="406" width="600" height="66"/>
+                                        <rect key="frame" x="0.0" y="407" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xn2-cB-jBe" id="eN4-x2-CxS">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65.5"/>
@@ -455,7 +443,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="configuration" id="lqr-0p-lGt" customClass="HEMBasicTableViewCell">
-                                        <rect key="frame" x="0.0" y="472" width="600" height="66"/>
+                                        <rect key="frame" x="0.0" y="473" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lqr-0p-lGt" id="3tw-SQ-aTi">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65.5"/>
@@ -520,6 +508,9 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="zsM-Hx-Fnw" id="6BP-Rr-T7H"/>
+                        <outlet property="targetValueActivityIndicator" destination="GCP-yv-Sve" id="rMx-74-MEG"/>
+                        <outlet property="targetValuePickerContainer" destination="Ix7-UY-slu" id="n7B-CM-MYa"/>
+                        <outlet property="targetValueSeparator" destination="DCA-B6-fVh" id="faZ-0F-teC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7LM-Yo-OT5" userLabel="First Responder" sceneMemberID="firstResponder"/>

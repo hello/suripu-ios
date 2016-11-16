@@ -213,6 +213,11 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     [self loadData];
 }
 
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self loadData];
+}
+
 #pragma mark - Retrieving Data
 
 - (void)loadData {

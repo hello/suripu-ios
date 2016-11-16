@@ -51,6 +51,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 @property (nonatomic, copy) NSString* configurationName;
 @property (nonatomic, assign, getter=isLoadingConfigs) BOOL loadingConfigs;
+@property (nonatomic, assign, getter=isSwitchEnabled) BOOL switchEnabled;
 
 @end
 
@@ -308,7 +309,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [enableSwitch setOn:isEnabled];
     [enableSwitch addTarget:self
                      action:@selector(toggleEnable:)
-           forControlEvents:UIControlEventTouchUpInside];
+           forControlEvents:UIControlEventValueChanged];
+    [self setSwitchEnabled:isEnabled];
 }
 
 - (void)configureConfigurationCell:(HEMBasicTableViewCell*)cell {
@@ -393,8 +395,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)toggleEnable:(UISwitch*)enableSwitch {
     BOOL enabled = [enableSwitch isOn];
-    BOOL currentEnabled = [[self expansion] state] == SENExpansionStateConnectedOn;
-    if (enabled != currentEnabled) {
+    if ([self isSwitchEnabled] != enabled) {
+        [self setSwitchEnabled:enabled];
+        
+        DDLogVerbose(@"toggling switch to %@", @(enabled));
+        
         NSString* statusText = nil;
         if (enabled) {
             statusText = NSLocalizedString(@"expansion.status.enabling", nil);
@@ -408,6 +413,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (error) {
                     [enableSwitch setOn:!enabled];
+                    [strongSelf setSwitchEnabled:!enabled];
+                    
                     [strongSelf dismissActivitySucessfully:NO completion:^{
                         [strongSelf showGenericError];
                     }];

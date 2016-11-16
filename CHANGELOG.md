@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.6.2.4
+
+Fixes:
+
+* Quickly jumping around device settings and in to the upgrade path should still work
+* After upgrading to Sense with Voice, taking device actions in Sense setting should not be doing so against old Sense
+* Toggling the enable switch in expansion view by sliding it should work
+* Voice tutorial should still show if you signed in to 1.0 account, sign out, then onboard with Sense with Voice
+
 ## 1.6.2.3
 
 New:

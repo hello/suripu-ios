@@ -7,6 +7,8 @@
 //
 #import <NAPickerView/NAPickerView.h>
 
+#import "NSBundle+HEMUtils.h"
+
 #import "HEMAlarmValueRangePickerView.h"
 #import "HEMStyle.h"
 
@@ -17,7 +19,6 @@ static CGFloat const HEMAlarmValueRangeSeparatorHeight = 0.5f;
 
 @interface HEMAlarmValueRangePickerView()
 
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* separatorHeightConstraint;
 @property (nonatomic, strong) NAPickerView* minPicker;
 @property (nonatomic, strong) NAPickerView* maxPicker;
 @property (nonatomic, strong) UIView* rangeDivider;
@@ -28,10 +29,8 @@ static CGFloat const HEMAlarmValueRangeSeparatorHeight = 0.5f;
 
 @implementation HEMAlarmValueRangePickerView
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    [[self separatorHeightConstraint] setConstant:HEMAlarmValueRangeSeparatorHeight];
-    [[self separator] setBackgroundColor:[UIColor separatorColor]];
++ (instancetype)defaultRangePickerView {
+    return [NSBundle loadNibWithOwner:[self class]];
 }
 
 - (void)addGradient:(HEMGradient*)gradient toView:(UIView*)view {
@@ -148,7 +147,7 @@ static CGFloat const HEMAlarmValueRangeSeparatorHeight = 0.5f;
     pickerFrame.size.width = width;
     pickerFrame.origin.y = 0.0f;
     pickerFrame.origin.x = xOrigin;
-    
+
     NAPickerView* pickerView = [[NAPickerView alloc] initWithFrame:pickerFrame
                                                           andItems:[self values]
                                                        andDelegate:nil];
@@ -167,6 +166,7 @@ static CGFloat const HEMAlarmValueRangeSeparatorHeight = 0.5f;
     __weak typeof(self) weakSelf = self;
     [pickerView setHighlightBlock:^(NALabelCell *cell) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         NSString* text = [[cell textView] text];
         NSInteger value;
         

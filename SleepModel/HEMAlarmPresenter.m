@@ -505,8 +505,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         } else if ([expansion type] == SENExpansionTypeThermostat) {
             SENExpansionValueRange range = [alarmExpansion targetRange];
             range = [[self expansionService] convertThermostatRangeBasedOnPreference:range];
-            NSString* format = NSLocalizedString(@"alarm.expansion.temp.range.format", nil);
-            detail = [NSString stringWithFormat:format, range.min, range.max];
+            if (range.max == range.min) {
+                NSString* format = NSLocalizedString(@"alarm.expansion.temp.format", nil);
+                detail = [NSString stringWithFormat:format, range.max];
+            } else {
+                NSString* format = NSLocalizedString(@"alarm.expansion.temp.range.format", nil);
+                detail = [NSString stringWithFormat:format, range.min, range.max];
+            }
         }
     } else if ([expansion state] == SENExpansionStateNotAvailable) {
         detail = NSLocalizedString(@"expansion.state.not-available", nil);

@@ -432,6 +432,7 @@
 "alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";
 
 "alarm.expansion.temp.range.format" = "%.0f° - %.0f°";
+"alarm.expansion.temp.format" = "%.0f°";
 "alarm.expansion.light.format" = "%.0f%@";
 "alarm.expansion.error.cannot-set-config.title" = "Update failed";
 "alarm.expansion.error.cannot-set-config.message" = "A problem occurred while trying to update your selection.";
@@ -1010,6 +1011,7 @@
 "expansion.config.no-cnfig.format" = "No %@ found";
 "expansion.config.select" = "Select";
 "expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";
+"expansion.range.picker.value.format" = "%ld°";
 
 // voice
 "voice.tutorial.trigger.phrase.format" = "Okay Sense...\n%@";

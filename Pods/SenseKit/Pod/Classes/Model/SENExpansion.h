@@ -39,6 +39,11 @@ typedef struct {
     CGFloat setpoint;
 } SENExpansionValueRange;
 
+typedef NS_ENUM(NSUInteger, SENExpansionCapability) {
+    SENExpansionCapabilityHeat,
+    SENExpansionCapabilityCool
+};
+
 @interface SENExpansion : NSObject <SENSerializable>
 
 @property (nonatomic, copy, readonly) NSNumber* identifier;
@@ -66,7 +71,9 @@ typedef struct {
 @property (nonatomic, copy, readonly) NSString* identifier;
 @property (nonatomic, copy, readonly) NSString* localizedName;
 @property (nonatomic, assign, readonly, getter=isSelected) BOOL selected;
+@property (nonatomic, strong, readonly) NSSet<NSNumber*>* capabilities;
 
 - (NSDictionary*)dictionaryValue;
+- (BOOL)hasCapability:(SENExpansionCapability)capability;
 
 @end

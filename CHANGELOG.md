@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.6.2.5
+
+New:
+
+* Thermostat picker updated to support Heat + cool.  Single picker for Heat only, or cool only
+
+Fixes:
+
+* Refresh alarm list when coming back from background
+* When there are no configurations for the Hue or Nest account after connecting, skip button should be visible
+
 ## 1.6.2.4
 
 Fixes:

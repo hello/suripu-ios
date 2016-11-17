@@ -12,6 +12,7 @@
 @class HEMAlarmExpansionSetupPresenter;
 @class HEMExpansionService;
 @class SENAlarmExpansion;
+@class HEMActivityIndicatorView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,6 +46,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 
 - (void)bindWithActivityContainerView:(UIView*)activityContainerView;
+
+- (void)bindWithTargetValueContainer:(UIView*)container
+                   activityIndicator:(HEMActivityIndicatorView*)activityIndicator
+                           separator:(UIView*)separator;
 
 @end
 

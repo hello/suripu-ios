@@ -3,7 +3,7 @@
 //  Sense
 //
 //  Created by Jimmy Lu on 11/6/16.
-//  Copyright Â© 2016 Hello. All rights reserved.
+//  Copyright å© 2016 Hello. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

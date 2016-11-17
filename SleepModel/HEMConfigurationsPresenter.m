@@ -117,7 +117,6 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
     [skipButton addTarget:self
                    action:@selector(skip)
          forControlEvents:UIControlEventTouchUpInside];
-    [skipButton setHidden:[[self configs] count] == 0];
     [self setSkipButton:skipButton];
 }
 

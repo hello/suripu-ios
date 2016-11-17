@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.2.6
+
+Fixes:
+
+* Fixes issue where Pills in DFU mode would not be able to be found
+
 ## 1.6.2.5
 
 New:

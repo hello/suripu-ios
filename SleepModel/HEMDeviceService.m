@@ -159,7 +159,9 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
             [SENAnalytics trackError:error];
         } else if (version != SENSleepPillAdvertisedVersionUnknown) {
             for (SENSleepPill* discoveredPill in pills) {
-                if ([discoveredPill version] == version
+                BOOL correctVersion = [discoveredPill version] == version;
+                BOOL inDFUMode = [SENSleepPillManager isSleepPillInDFUMode:discoveredPill];
+                if ((correctVersion || inDFUMode)
                     && [pill rssi] >= HEMPillDfuPillMinimumRSSI) {
                     pill = discoveredPill;
                     break;

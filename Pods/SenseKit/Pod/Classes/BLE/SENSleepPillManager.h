@@ -54,6 +54,14 @@ typedef void(^SENSleepPillManagerProgressBlock)(CGFloat progress, SENSleepPillDf
 
 /**
  * @discussion
+ * Determine if a sleep pill is currently in DFU mode
+ *
+ * @return YES if pill is in DFU mode, NO otherwise
+ */
++ (BOOL)isSleepPillInDFUMode:(SENSleepPill*)pill;
+
+/**
+ * @discussion
  * Scan for nearby Sleep Pills
  *
  * @param completion: block to call with the any nearby Sleep Pills found

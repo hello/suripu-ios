@@ -1,5 +1,65 @@
 # Changelog
 
+## 1.6.2.6
+
+Fixes:
+
+* Fixes issue where Pills in DFU mode would not be able to be found
+
+## 1.6.2.5
+
+New:
+
+* Thermostat picker updated to support Heat + cool.  Single picker for Heat only, or cool only
+
+Fixes:
+
+* Refresh alarm list when coming back from background
+* When there are no configurations for the Hue or Nest account after connecting, skip button should be visible
+
+## 1.6.2.4
+
+Fixes:
+
+* Quickly jumping around device settings and in to the upgrade path should still work
+* After upgrading to Sense with Voice, taking device actions in Sense setting should not be doing so against old Sense
+* Toggling the enable switch in expansion view by sliding it should work
+* Voice tutorial should still show if you signed in to 1.0 account, sign out, then onboard with Sense with Voice
+
+## 1.6.2.3
+
+New:
+
+* Design tweaks to Sensor detail
+
+Fixes:
+
+* Long thermostat names no longer overlap the label in expansion view
+* Added type of system alert when it is for a pill firmware update
+* Done button in expansion configuration is disabled until configuration is selected
+* Sensor top limit line is based off of server datapoints, and not chart scale
+
+## 1.6.2.2
+
+New:
+
+* Filter out 1.0 Pills in Pill DFU
+* Added Sense Version to analytics
+* Display localized error message when loading voice settings to allow server to drive messaging
+* Show an alert if a network error is returned in voice tutorial
+
+## 1.6.2.1
+
+New:
+
+* Added support for server-driven system alerts
+* Better handling for alarm expansion configuration selection, when configuration was removed
+* Added separate info card for lights in settings
+* Added separate info card for thermostat in settings
+* Added separate info card for lights in alarm expansion setup
+* Added separate info card for thermostat in alarm expansion setup
+* Updated copy for Sense with Voice ready screen, within upgrade flow
+
 ## 1.6.1.3
 
 Fixes:

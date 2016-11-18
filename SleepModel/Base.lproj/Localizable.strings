@@ -404,6 +404,8 @@
 "alarm.thermostat.attribution.format" = "%@ set at %@°";
 "alarm.expansion.error.unable.to.load.title" = "Expansion not loaded";
 "alarm.expansion.error.unable.to.load.message" = "Sense could not load expansions at this time. Please try again later.";
+"alarm.expansion.info.thermostat.description" = "Enabling thermostat allows Sense to set your ideal temperature when you wake.";
+"alarm.expansion.info.lights.description" = "Enabling lights allows Sense to turn on your lights when Sense's alarm sounds.";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";
@@ -430,6 +432,7 @@
 "alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";
 
 "alarm.expansion.temp.range.format" = "%.0f° - %.0f°";
+"alarm.expansion.temp.format" = "%.0f°";
 "alarm.expansion.light.format" = "%.0f%@";
 "alarm.expansion.error.cannot-set-config.title" = "Update failed";
 "alarm.expansion.error.cannot-set-config.message" = "A problem occurred while trying to update your selection.";
@@ -991,8 +994,9 @@
 "expansion.configuration.activity.updating-config.format" = "Setting %@";
 "expansion.configuration.removal.confirm.title" = "Are you sure?";
 "expansion.configuration.removal.confirm.message" = "Are you sure you want to remove this expansion? Previously set alarms will still sound, but will no longer activate this expansion.";
-"expansion.enable.info.title" = "Expansions";
-"expansion.enable.info.description" = "Enabling access to compatible smart devices allows Sense to activate them at relevant moments, like turning on your lights when Sense’s alarm sounds.";
+"expansion.info.title" = "Expansions";
+"expansion.info.lights.description" = "Enabling access to compatible lights lets you control them using Voice, and allows Sense to activate them automatically at relevant moments, like turning on your lights when Sense's alarm sounds.";
+"expansion.info.thermostat.description" = "Enabling access to a compatible thermostat lets you control it using Voice, and allows Sense to automatically set the temperature at relevant moments, like warming your home before you wake.";
 "expansion.error.setup.no-groups.temperature.title" = "No thermostat available";
 "expansion.error.setup.no-groups.temperature.message.format" = "You will need to set up a thermostat in the %@ app.";
 "expansion.error.setup.no-groups.light.title" = "No rooms available";
@@ -1007,8 +1011,14 @@
 "expansion.config.no-cnfig.format" = "No %@ found";
 "expansion.config.select" = "Select";
 "expansion.error.empty-list" = "There was a problem loading expansions. Please try again.";
+"expansion.range.picker.value.format" = "%ld°";
 
 // voice
+"voice.tutorial.trigger.phrase.format" = "Okay Sense...\n%@";
+"voice.tutorial.command" = "what's the temperature?";
+"voice.tutorial.error.network.title" = "No internet connection";
+"voice.tutorial.error.network.message" = "Your mobile device is not connected to the internet. Check your internet connection and Wi-Fi settings, and try again.";
+
 "voice.title" = "Voice";
 
 "voice.welcome.message" = "Always say \"Okay Sense\" before each command to activate Voice. Ask about your Sleep Score, room conditions, and more.";

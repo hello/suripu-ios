@@ -183,14 +183,39 @@ static NSString* const kSENExpansionValueRangeAttrSetpoint = @"setpoint";
 static NSString* const kSENExpansionConfigAttrId = @"id";
 static NSString* const kSENExpansionConfigAttrName = @"name";
 static NSString* const kSENExpansionConfigAttrSelected = @"selected";
+static NSString* const kSENExpansionConfigAttrCapabilities = @"capabilities";
+static NSString* const kSENExpansionConfigCapabilityHeat = @"HEAT";
+static NSString* const kSENExpansionConfigCapabilityCool = @"COOL";
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
     if (self = [super init]) {
-        _identifier = SENObjectOfClass(data[kSENExpansionConfigAttrId], [NSString class]);
-        _localizedName = SENObjectOfClass(data[kSENExpansionConfigAttrName], [NSString class]);
-        _selected = [SENObjectOfClass(data[kSENExpansionConfigAttrSelected], [NSNumber class]) boolValue];
+        _identifier = SENObjectOfClass(data[kSENExpansionConfigAttrId],
+                                       [NSString class]);
+        _localizedName = SENObjectOfClass(data[kSENExpansionConfigAttrName],
+                                          [NSString class]);
+        _selected = [SENObjectOfClass(data[kSENExpansionConfigAttrSelected],
+                                      [NSNumber class]) boolValue];
+        NSArray* capabilities = SENObjectOfClass(data[kSENExpansionConfigAttrCapabilities],
+                                                 [NSArray class]);
+        _capabilities = [self capabilitiesFromArray:capabilities];
+        
     }
     return self;
+}
+
+- (NSSet<NSNumber*>*)capabilitiesFromArray:(NSArray<NSString*>*)rawCapabilities {
+    NSMutableSet<NSNumber*>* capabilities = [NSMutableSet setWithCapacity:[rawCapabilities count]];
+    if (rawCapabilities) {
+        for (NSString* rawCapability in rawCapabilities) {
+            NSString* upper = [rawCapability uppercaseString];
+            if ([upper isEqualToString:kSENExpansionConfigCapabilityHeat]) {
+                [capabilities addObject:@(SENExpansionCapabilityHeat)];
+            } else if ([upper isEqualToString:kSENExpansionConfigCapabilityCool]) {
+                [capabilities addObject:@(SENExpansionCapabilityCool)];
+            }
+        }
+    }
+    return capabilities;
 }
 
 - (NSUInteger)hash {
@@ -204,12 +229,19 @@ static NSString* const kSENExpansionConfigAttrSelected = @"selected";
     
     SENExpansionConfig* other = object;
     return SENObjectIsEqual([self identifier], [other identifier])
-        && SENObjectIsEqual([self localizedName], [other localizedName]);
+        && SENObjectIsEqual([self localizedName], [other localizedName])
+        && SENObjectIsEqual([self capabilities], [other capabilities]);
 }
 
 - (NSDictionary*)dictionaryValue {
+    // dictionary value used only for updates and capabilities and selected
+    // flag are not needed
     return @{kSENExpansionConfigAttrId : [self identifier],
              kSENExpansionConfigAttrName : [self localizedName]};
+}
+
+- (BOOL)hasCapability:(SENExpansionCapability)capability {
+    return [[self capabilities] containsObject:@(capability)];
 }
 
 @end

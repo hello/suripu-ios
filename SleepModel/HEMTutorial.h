@@ -44,9 +44,24 @@
 + (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller;
 
 /**
- *  Show a dialog to display information about enabling expansions
+ *  Show info about why enabling access to Lights expansion is a good idea.
  */
-+ (void)showInfoForExpansionFrom:(UIViewController*)controller;
++ (void)showInfoForLightsExpansionFrom:(UIViewController*)controller;
+
+/**
+ *  Show info about why enabling access to thermostat expansion is a good idea.
+ */
++ (void)showInfoForThermostatExpansionFrom:(UIViewController*)controller;
+
+/**
+ *  Show info about what happens if you enable thermostat for alarms.
+ */
++ (void)showInfoForAlarmThermostatSetupFrom:(UIViewController*)controller;
+
+/**
+ *  Show info about what happens if you enable lights for alarms.
+ */
++ (void)showInfoForAlarmLightsSetupFrom:(UIViewController*)controller;
 
 /**
  * Mark all tutorials as unviewed so that they can be triggered again

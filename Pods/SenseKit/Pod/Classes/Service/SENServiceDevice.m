@@ -270,36 +270,9 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 #pragma mark - Pairing
 
-- (void)replaceWithNewlyPairedSenseManager:(SENSenseManager*)senseManager
-                                completion:(void(^)(NSError* error))completion {
-    void(^done)(NSError* error) = ^(NSError* error) {
-        if (completion) {
-            completion (error);
-        }
-    };
-    
-    if (senseManager == nil || [senseManager  sense] == nil) {
-        done ([self errorWithType:SENServiceDeviceErrorSenseUnavailable]);
-        return;
-    }
-    // first, load devices info since it likely would have changed
-    __weak typeof(self) weakSelf = self;
-    [self loadDeviceInfo:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error == nil) {
-            SENSenseMetadata* senseMetadata = [[strongSelf devices] senseMetadata];
-            if ([[senseMetadata uniqueId] isEqualToString:[[senseManager sense] deviceId]]) {
-                [strongSelf setSenseManager:senseManager];
-            } else {
-                error = [strongSelf errorWithType:SENServiceDeviceErrorSenseNotMatching];
-            }
-        }
-        if (completion) completion (error);
-    }];
-}
-
 - (BOOL)pairedSenseAvailable {
-    return [self senseManager] != nil;
+    return [[self senseManager] sense] != nil
+        && [self senseIsTheOnePairedToAccount:[[self senseManager] sense]];
 }
 
 - (void)putSenseIntoPairingMode:(void(^)(NSError* error))completion {

@@ -113,8 +113,7 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
     return [self showTutorialWithContent:@[tutorial1, tutorial2, tutorial3, tutorial4]];
 }
 
-+ (void)showTutorialForAlarmsFrom:(UIViewController*)controller
-{
++ (void)showTutorialForAlarmsFrom:(UIViewController*)controller {
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.alarms.title", nil)
                                          text:NSLocalizedString(@"tutorial.alarms.message", nil)
@@ -124,21 +123,12 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
-+ (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller
-{
++ (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller {
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.alarm-smart.title", nil)
                                          text:NSLocalizedString(@"tutorial.alarm-smart.message", nil)
                                         image:[UIImage imageNamed:@"smart_alarm_dialog"]];
     
-    [self showTutorialWithContent:@[tutorial] from:controller];
-}
-
-+ (void)showInfoForExpansionFrom:(UIViewController*)controller {
-    HEMTutorialContent* tutorial =
-    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"expansion.enable.info.title", nil)
-                                         text:NSLocalizedString(@"expansion.enable.info.description", nil)
-                                        image:[UIImage imageNamed:@"expEnableIllustration"]];
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
@@ -148,6 +138,36 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
                                          text:NSLocalizedString(@"tutorial.pill-color.message", nil)
                                         image:[UIImage imageNamed:@"pill_color_dialog"]];
     [self showTutorialWithContent:@[tutorial]];
+}
+
+#pragma mark - Expansions
+
++ (void)showInfoForLightsExpansionFrom:(UIViewController*)controller {
+    NSString* text = NSLocalizedString(@"expansion.info.lights.description", nil);
+    [self showExpansionInfoWithText:text fromController:controller];
+}
+
++ (void)showInfoForThermostatExpansionFrom:(UIViewController*)controller {
+    NSString* text = NSLocalizedString(@"expansion.info.thermostat.description", nil);
+    [self showExpansionInfoWithText:text fromController:controller];
+}
+
++ (void)showInfoForAlarmThermostatSetupFrom:(UIViewController*)controller {
+    NSString* text = NSLocalizedString(@"alarm.expansion.info.thermostat.description", nil);
+    [self showExpansionInfoWithText:text fromController:controller];
+}
+
++ (void)showInfoForAlarmLightsSetupFrom:(UIViewController*)controller {
+    NSString* text = NSLocalizedString(@"alarm.expansion.info.lights.description", nil);
+    [self showExpansionInfoWithText:text fromController:controller];
+}
+
++ (void)showExpansionInfoWithText:(NSString*)text fromController:(UIViewController*)controller {
+    HEMTutorialContent* tutorial =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"expansion.info.title", nil)
+                                         text:text
+                                        image:[UIImage imageNamed:@"expInfoIllustration"]];
+    [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
 #pragma mark - Preferences

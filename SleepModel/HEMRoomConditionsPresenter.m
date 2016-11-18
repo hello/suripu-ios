@@ -52,6 +52,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
+@property (nonatomic, strong) NSMutableDictionary* chartMaxBySensor;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
 @property (nonatomic, strong) NSArray* groupedSensors;
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
@@ -70,6 +71,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         _introService = introService;
         _headerViewHeight = -1.0f;
         _chartDataBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
+        _chartMaxBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
         _formatter = [HEMSensorValueFormatter new];
     }
     return self;
@@ -264,12 +266,17 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
             if ([values count] == [timestamps count]) {
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
+                CGFloat chartMax = 0.0f;
                 NSUInteger index = 0;
                 for (NSNumber* value in values) {
                     CGFloat entryValue = MAX(0.0f, [value doubleValue]);
                     [chartData addObject:[[ChartDataEntry alloc] initWithValue:entryValue xIndex:index++]];
+                    if ([value doubleValue] > chartMax) {
+                        chartMax = [value doubleValue];
+                    }
                 }
                 [strongSelf chartDataBySensor][@([sensor type])] = chartData;
+                [strongSelf chartMaxBySensor][@([sensor type])] = @(chartMax);
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -614,19 +621,25 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
     [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
     
+    NSNumber* chartMax = nil;
+    NSNumber* calculatedChartMax = [self chartMaxBySensor][@([sensor type])];
     CGFloat minValue = [chartView chartYMin];
     CGFloat maxValue = [chartView chartYMax];
     // a hack until we can properly line up the chart to the limit lines.  This
     // case identifies when values in the chart are all 0s.
     if (!(minValue == -1.0f && maxValue == 1.0f)) {
         minValue = 0.0f;
+        chartMax = calculatedChartMax;
+    } else {
+        chartMax = @(maxValue);
     }
+    
     [[self formatter] setIncludeUnitSymbol:YES];
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
     [chartContainer setScrubberEnable:NO];
-    [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:@(maxValue)]];
+    [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMax]];
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
     
     if (animate) {

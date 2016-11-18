@@ -262,6 +262,14 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 
 #pragma mark - DFU
 
++ (BOOL)isSleepPillInDFUMode:(SENSleepPill*)pill {
+    LGPeripheral* peripheral = [pill peripheral];
+    NSDictionary* advertisingData = [peripheral advertisingData];
+    NSArray* serviceIds = [advertisingData objectForKey:CBAdvertisementDataServiceUUIDsKey];
+    CBUUID* dfuServiceId = [CBUUID UUIDWithString:SENSleepPillDfuServiceUUID];
+    return [serviceIds containsObject:dfuServiceId];
+}
+
 - (void)enableDfuTimeout {
     [self setTimeoutTimer:nil];
     
@@ -284,11 +292,7 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
         DDLogVerbose(@"current dfu state indicate it's already in dfu mode");
         return YES;
     }
-    LGPeripheral* peripheral = [[self sleepPill] peripheral];
-    NSDictionary* advertisingData = [peripheral advertisingData];
-    NSArray* serviceIds = [advertisingData objectForKey:CBAdvertisementDataServiceUUIDsKey];
-    CBUUID* dfuServiceId = [CBUUID UUIDWithString:SENSleepPillDfuServiceUUID];
-    return [serviceIds containsObject:dfuServiceId];
+    return [[self class] isSleepPillInDFUMode:[self sleepPill]];
 }
 
 - (void)enableDfuMode:(BOOL)enable completion:(SENSleepPillResponseHandler)completion {

@@ -11,6 +11,7 @@
 #import "HEMAlarmExpansionSetupPresenter.h"
 #import "HEMExpansionService.h"
 #import "HEMTutorial.h"
+#import "HEMActivityIndicatorView.h"
 
 @interface HEMAlarmExpansionSetupViewController() <
     HEMAlarmExpansionActionDelegate,
@@ -18,6 +19,9 @@
 >
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *targetValuePickerContainer;
+@property (weak, nonatomic) IBOutlet UIView *targetValueSeparator;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *targetValueActivityIndicator;
 
 @end
 
@@ -32,6 +36,9 @@
     [[self presenter] setActionDelegate:self];
     [[self presenter] bindWithTableView:[self tableView]];
     [[self presenter] bindWithNavigationItem:[self navigationItem]];
+    [[self presenter] bindWithTargetValueContainer:[self targetValuePickerContainer]
+                                 activityIndicator:[self targetValueActivityIndicator]
+                                         separator:[self targetValueSeparator]];
     [[self presenter] bindWithShadowView:[self shadowView]];
     [[self presenter] setErrorDelegate:self];
     [self addPresenter:[self presenter]];
@@ -53,8 +60,12 @@
 
 #pragma mark - HEMAlarmExpansionActionDelegate
 
-- (void)showExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter *)presenter {
-    [HEMTutorial showInfoForExpansionFrom:[self navigationController]];
+- (void)showLightsExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter*)presenter {
+    [HEMTutorial showInfoForAlarmLightsSetupFrom:[self navigationController]];
+}
+
+- (void)showThermostatExpansionInfoFrom:(HEMAlarmExpansionSetupPresenter*)presenter {
+    [HEMTutorial showInfoForAlarmThermostatSetupFrom:[self navigationController]];
 }
 
 - (void)showController:(UIViewController *)controller

@@ -51,6 +51,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 @property (nonatomic, strong) SENExpansionConfig* selectedConfig;
 @property (nonatomic, copy) NSString* configurationName;
 @property (nonatomic, assign, getter=isLoadingConfigs) BOOL loadingConfigs;
+@property (nonatomic, assign, getter=isSwitchEnabled) BOOL switchEnabled;
 
 @end
 
@@ -293,9 +294,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)configureEnableCell:(HEMBasicTableViewCell*)cell {
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [[cell customTitleLabel] setText:NSLocalizedString(@"expansion.action.enable", nil)];
-    [[cell infoButton] addTarget:self
-                          action:@selector(showEnableInfo)
-                forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([[self delegate] canShowInfoAboutExpansion:[self expansion] fromPresenter:self]) {
+        [[cell infoButton] addTarget:self
+                              action:@selector(showEnableInfo)
+                    forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [[cell infoButton] setHidden:YES];
+    }
     
     BOOL isEnabled = [[self expansion] state] == SENExpansionStateConnectedOn;
     UISwitch* enableSwitch = (UISwitch*) [cell customAccessoryView];
@@ -303,7 +309,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [enableSwitch setOn:isEnabled];
     [enableSwitch addTarget:self
                      action:@selector(toggleEnable:)
-           forControlEvents:UIControlEventTouchUpInside];
+           forControlEvents:UIControlEventValueChanged];
+    [self setSwitchEnabled:isEnabled];
 }
 
 - (void)configureConfigurationCell:(HEMBasicTableViewCell*)cell {
@@ -312,7 +319,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (!selectedName) {
         if ([[self configurations] count] == 0) {
             selectedName = NSLocalizedString(@"empty-data", nil);
-        } else {
+        } else { 
             selectedName = NSLocalizedString(@"expansion.config.select", nil);
             nameColor = [UIColor tintColor];
         }
@@ -383,13 +390,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showEnableInfo {
-    [[self delegate] showEnableInfoDialogFromPresenter:self];
+    [[self delegate] showInfoAboutExpansion:[self expansion] fromPresenter:self];
 }
 
 - (void)toggleEnable:(UISwitch*)enableSwitch {
     BOOL enabled = [enableSwitch isOn];
-    BOOL currentEnabled = [[self expansion] state] == SENExpansionStateConnectedOn;
-    if (enabled != currentEnabled) {
+    if ([self isSwitchEnabled] != enabled) {
+        [self setSwitchEnabled:enabled];
+        
+        DDLogVerbose(@"toggling switch to %@", @(enabled));
+        
         NSString* statusText = nil;
         if (enabled) {
             statusText = NSLocalizedString(@"expansion.status.enabling", nil);
@@ -403,6 +413,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (error) {
                     [enableSwitch setOn:!enabled];
+                    [strongSelf setSwitchEnabled:!enabled];
+                    
                     [strongSelf dismissActivitySucessfully:NO completion:^{
                         [strongSelf showGenericError];
                     }];

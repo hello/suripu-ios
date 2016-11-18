@@ -8,11 +8,11 @@
 
 #import "SENService.h"
 #import <SenseKit/SENSenseMetadata.h>
+#import <SenseKit/SENSleepPill.h>
 
 @class SENPairedDevices;
 @class SENDeviceMetadata;
 @class SENPillMetadata;
-@class SENSleepPill;
 @class SENSense;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -75,8 +75,11 @@ typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 - (void)refreshMetadata:(nullable HEMDeviceMetadataHandler)completion;
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata;
 - (BOOL)isBleOn;
+- (void)stopScanningForSense;
 - (BOOL)isBleStateAvailable;
 - (BOOL)isScanningPill;
+- (void)findNearestPillWithVersion:(SENSleepPillAdvertisedVersion)version
+                        completion:(HEMDevicePillHandler)completion;
 - (void)findNearestPill:(HEMDevicePillHandler)completion;
 - (void)beginPillDfuFor:(SENSleepPill*)sleepPill
                progress:(HEMDeviceDfuProgressHandler)progressBlock

@@ -22,6 +22,8 @@ NSString* const kHEMSensorErrorDomain = @"is.hello.app.service.sensor";
 NSString* const kHEMSensorNotifyStatusChanged = @"kHEMSensorNotifyStatusChanged";
 NSString* const kHEMSensorNotifyStatusKey = @"status";
 
+NSInteger const kHEMSensorSentinelValue = -1;
+
 @interface HEMSensorService()
 
 @property (nonatomic, copy) HEMSensorPollHandler pollHandler;
@@ -100,7 +102,7 @@ NSString* const kHEMSensorNotifyStatusKey = @"status";
 }
 
 - (void)dataWithRequest:(SENSensorDataRequest*)request completion:(HEMSensorDataHandler)completion {
-    [SENAPISensor getSensorDataWithRequest:request completion:^(id data, NSError *error) {
+    [SENAPISensor getSensorDataWithRequest:request completion:^(SENSensorDataCollection* data, NSError *error) {
         if (error) {
             [SENAnalytics trackError:error];
         }

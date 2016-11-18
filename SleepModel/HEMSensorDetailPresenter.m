@@ -31,6 +31,7 @@ static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
 static NSUInteger const kHEMSensorDetailXAxisOffset = 10;
 static CGFloat const kHEMSensorDetailMaxChartHeight = 271.0f;
+static CGFloat const kHEMSensorDetailChartTopSpaceOffset = 0.099f;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -233,11 +234,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                                           stringFromDate:[time date]]];
                 }
                 
-                if (entryValue < [strongSelf chartMinValue]) {
+                if ([value doubleValue] < [strongSelf chartMinValue]) {
                     [strongSelf setChartMinValue:entryValue];
                 }
                 
-                if (entryValue > [strongSelf chartMaxValue]) {
+                if ([value doubleValue] > [strongSelf chartMaxValue]) {
                     [strongSelf setChartMaxValue:entryValue];
                 }
                 
@@ -386,11 +387,22 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                               inCell:(HEMSensorChartCollectionViewCell*)cell {
     SENCondition condition = [sensor condition];
     UIColor* sensorColor = [UIColor colorForCondition:condition];
-    
     LineChartView* lineChartView = (id) [[cell chartContentView] chartView];
+    
     if (!lineChartView) {
         CGRect chartFrame = [[cell chartContentView] bounds];
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:chartFrame];
+        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:0.0f];
+        
+        ChartYAxis* yAxis = [lineChartView leftAxis];
+        CGFloat chartHeight = CGRectGetHeight(chartFrame);
+        CGFloat topLimitY = CGRectGetMaxY([[[cell chartContentView] topLimitLine] frame]);
+        CGFloat xAxisHeight = CGRectGetHeight([[cell xAxisLabelContainer] bounds]);
+        // round down
+        CGFloat bottomSpace = floorCGFloat((xAxisHeight / chartHeight) * 100) / 100.0f;
+        CGFloat topSpace = floorCGFloat((topLimitY/ chartHeight) * 100) / 100.0f;
+        [yAxis setSpaceTop:kHEMSensorDetailChartTopSpaceOffset + topSpace];
+        [yAxis setSpaceBottom:topSpace + bottomSpace];
     }
     
     NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
@@ -410,6 +422,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
     [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
     [lineChartView setGridBackgroundColor:sensorColor];
+    
     [lineChartView setNeedsDisplay];
     
     return lineChartView;
@@ -426,7 +439,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         valueReplacementImage = [UIImage imageNamed:@"sensorCalibrating"];
     } else {
         if ([[self sensor] type] == SENSensorTypeTemp) {
-            NSString* valueString = [[self formatter] stringFromSensorValue:value];
+            NSString* valueString = nil;
+            if (value) {
+                valueString = [[self formatter] stringFromSensorValue:value];
+            } else {
+                NSString* emtpyData = NSLocalizedString(@"empty-data", nil);
+                NSString* symbol = [[self formatter] unitSymbol];
+                valueString = [NSString stringWithFormat:@"%@%@", emtpyData, symbol];
+            }
             [[valueCell valueLabel] setTextColor:conditionColor];
             [[valueCell valueLabel] setText:valueString];
             [[valueCell valueLabel] setFont:[UIFont h1]];
@@ -486,12 +506,17 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         [[chartContainer noDataLabel] setHidden:YES];
         [chartContainer setChartView:chartView];
         
+        NSNumber* minValue = nil;
+        NSNumber* maxValue = @([self chartMaxValue]);
         CGFloat chartMin = [chartView chartYMin];
-        if ([self chartMinValue] != [self chartMaxValue]) {
+        CGFloat chartMax = [chartView chartYMax];
+        if (chartMin == -1.0f && chartMax == 1.0f) {
+            maxValue = @(chartMax);
+        } else if ([self chartMinValue] != [self chartMaxValue] && [self chartMinValue] >= 0.0f) {
             chartMin = [self chartMinValue];
         }
-        NSNumber* minValue = @(chartMin);
-        NSNumber* maxValue = @([chartView chartYMax]);
+        
+        minValue = @(chartMin);
         NSString* minText = [[self formatter] stringFromSensorValue:minValue];
         NSString* maxText = [[self formatter] stringFromSensorValue:maxValue];
         [[chartContainer topLimitLabel] setText:maxText];
@@ -530,7 +555,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     }
     
     [scaleCell setNumberOfScales:count];
-    [[scaleCell titleLabel] setFont:[UIFont h5]];
+    [[scaleCell titleLabel] setFont:[UIFont h6Bold]];
     [[scaleCell titleLabel] setTextColor:[UIColor grey6]];
     [[scaleCell titleLabel] setText:NSLocalizedString(@"sensor.section.scale.title", nil)];
     
@@ -564,7 +589,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)configureAboutCell:(HEMSensorAboutCollectionViewCell*)aboutCell {
     NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
     [[aboutCell titleLabel] setText:title];
-    [[aboutCell titleLabel] setFont:[UIFont h5]];
+    [[aboutCell titleLabel] setFont:[UIFont h6Bold]];
     [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
     [[aboutCell aboutLabel] setText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];
@@ -592,14 +617,20 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (void)didMoveScrubberTo:(CGPoint)pointInChartView within:(HEMSensorChartContainer *)chartContainer {
+    NSArray<NSNumber*>* values = [[self sensorData] dataPointsForSensorType:[[self sensor] type]];
     ChartDataEntry* entry = [[self chartView] getEntryByTouchPoint:pointInChartView];
+    NSInteger index = [entry xIndex];
+    NSNumber* actualValue = index < [values count] ? values[index] : nil;
+    if ([actualValue integerValue] == kHEMSensorSentinelValue) {
+        actualValue = nil;
+    }
     SENSensorTime* time = [[self sensorData] timestamps][[entry xIndex]];
     NSString* timeString = [[self exactTimeFormatter] stringFromDate:[time date]];
     
-    DDLogVerbose(@"moved scrubber to value %f, time %@", [entry value], timeString);
+    DDLogVerbose(@"moved scrubber to value %f, time %@", [actualValue doubleValue], timeString);
     
     [self updateValueCell:[self valueCell]
-                withValue:@([entry value])
+                withValue:actualValue
                 condition:[[self sensor] condition]
                   message:timeString];
 }

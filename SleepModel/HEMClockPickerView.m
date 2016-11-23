@@ -216,6 +216,7 @@ static NSUInteger const HEMClock12HourCount = 12;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self layoutPickerViews];
 }
 

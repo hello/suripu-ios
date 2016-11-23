@@ -20,8 +20,8 @@
     [super viewDidLoad];
     [[self navigationBar] setTintColor:[UIColor tintColor]];
     UIFont* titleFont = HEMIsIPhone4Family()
-        ? [UIFont iPhone4SSettingsTitleFont]
-        : [UIFont settingsTitleFont];
+        ? [UIFont h6]
+        : [UIFont h5];
     [[self navigationBar] setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [UIColor grey6],
         NSFontAttributeName : titleFont

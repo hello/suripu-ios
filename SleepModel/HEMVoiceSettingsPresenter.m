@@ -173,7 +173,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
         NSString* message = [self dataErrorMessage];
         CGFloat margins = kHEMVoiceSettingsCellTextMargin * 2.0f;
         CGFloat textWidth = CGRectGetWidth([tableView bounds]) - margins;
-        height = [message heightBoundedByWidth:textWidth usingFont:[UIFont errorStateDescriptionFont]];
+        height = [message heightBoundedByWidth:textWidth usingFont:[UIFont body]];
         height += margins;
     }
     return height;
@@ -198,7 +198,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self dataError] && [indexPath row] == 0) {
         [[cell textLabel] setText:[self dataErrorMessage]];
-        [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [[cell textLabel] setFont:[UIFont body]];
         [[cell textLabel] setTextColor:[UIColor grey4]];
         [[cell textLabel] setNumberOfLines:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];

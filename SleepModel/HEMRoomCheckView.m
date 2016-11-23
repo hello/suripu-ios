@@ -62,7 +62,9 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
 }
 
 - (void)awakeFromNib {
-    [[self sensorMessageLabel] setFont:[UIFont onboardingRoomCheckSensorLightFont]];
+    [super awakeFromNib];
+    
+    [[self sensorMessageLabel] setFont:[UIFont h8]];
     [[self unitLabel] setFont:[UIFont h4]];
     [[self valueLabel] setFont:[UIFont h1]];
     [self setOrigUnitBottomMargin:[[self unitLabelBottomConstraint] constant]];

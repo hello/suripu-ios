@@ -33,8 +33,8 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 @implementation HEMSupportViewController
 
 + (void)initialize {
-    [[ZDKSupportTableViewCell appearance] setTitleLabelFont:[UIFont supportHelpCenterFont]];
-    [[ZDKSupportArticleTableViewCell appearance] setTitleLabelFont:[UIFont supportHelpCenterFont]];
+    [[ZDKSupportTableViewCell appearance] setTitleLabelFont:[UIFont h6]];
+    [[ZDKSupportArticleTableViewCell appearance] setTitleLabelFont:[UIFont h6]];
 }
 
 - (void)viewDidLoad {

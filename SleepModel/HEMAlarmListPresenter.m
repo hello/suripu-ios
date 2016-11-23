@@ -9,6 +9,7 @@
 #import <SenseKit/SENLocalPreferences.h>
 
 #import "NSMutableAttributedString+HEMFormat.h"
+#import "NSString+HEMUtils.h"
 
 #import "HEMAlarmListPresenter.h"
 #import "HEMSubNavigationView.h"
@@ -272,18 +273,14 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 
 - (NSAttributedString*)attributedNoAlarmText {
     if (!_attributedNoAlarmText) {
-        NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-        style.lineSpacing = 8.f;
-        NSMutableDictionary *detailAttributes = [[HEMMarkdown attributesForBackViewText][@(PARA)] mutableCopy];
+        NSMutableParagraphStyle *paraStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [paraStyle setAlignment:NSTextAlignmentCenter];
         
-        NSMutableParagraphStyle *paraStyle = [detailAttributes[NSParagraphStyleAttributeName] mutableCopy];
-        paraStyle.alignment = NSTextAlignmentCenter;
-        detailAttributes[NSParagraphStyleAttributeName] = paraStyle;
-        
-        [detailAttributes removeObjectForKey:NSForegroundColorAttributeName];
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
+                                     NSParagraphStyleAttributeName : paraStyle};
         
         NSString* text = NSLocalizedString(@"alarms.no-alarm.message", nil);
-        _attributedNoAlarmText = [[NSAttributedString alloc] initWithString:text attributes:detailAttributes];
+        _attributedNoAlarmText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
     }
     return _attributedNoAlarmText;
 }
@@ -544,12 +541,13 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
         NSAttributedString* attributedText = [self attributedNoAlarmText];
         CGFloat maxWidth = width - (HEMAlarmNoAlarmHorzMargin * 2);
         CGFloat textHeight = [attributedText sizeWithWidth:maxWidth].height;
-        return CGSizeMake(width, textHeight + HEMAlarmListNoAlarmCellBaseHeight);
+        CGFloat totalHeight = HEMAlarmListNoAlarmCellBaseHeight + textHeight;
+        return CGSizeMake(width, totalHeight);
     }
     
     CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;
     NSString *text = NSLocalizedString(@"alarms.no-alarm.message", nil);
-    CGFloat textHeight = [text heightBoundedByWidth:textWidth usingFont:[UIFont backViewTextFont]];
+    CGFloat textHeight = [text heightBoundedByWidth:textWidth usingFont:[UIFont body]];
     return CGSizeMake(width, textHeight + HEMAlarmListEmptyCellBaseHeight);
 }
 

@@ -132,7 +132,7 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self loadError]) {
         [[cell textLabel] setText:NSLocalizedString(@"expansion.error.empty-list", nil)];
-        [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [[cell textLabel] setFont:[UIFont body]];
         [[cell textLabel] setTextColor:[UIColor grey4]];
         [[cell textLabel] setNumberOfLines:0];
         [cell sizeToFit];

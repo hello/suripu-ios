@@ -16,6 +16,7 @@
 @implementation HEMNewProfileCollectionViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self profileImageView] setLoadDelegate:self];
 }
 

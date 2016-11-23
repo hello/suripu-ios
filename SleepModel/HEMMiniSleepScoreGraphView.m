@@ -7,8 +7,8 @@
 
 CGFloat const miniScoreBaseHeight = 72.f;
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
+    [super awakeFromNib];
     self.backgroundColor = [UIColor clearColor];
 }
 

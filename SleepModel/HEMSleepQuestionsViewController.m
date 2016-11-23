@@ -54,8 +54,8 @@
 - (void)configure {
     [self setUnreadService:[HEMUnreadAlertService new]];
     
-    [[self questionLabel] setFont:[UIFont questionFont]];
-    [[[self skipButton] titleLabel] setFont:[UIFont questionAnswerFont]];
+    [[self questionLabel] setFont:[UIFont h4]];
+    [[[self skipButton] titleLabel] setFont:[UIFont h6Bold]];
     
     [[self questionLabel] setText:[[self dataSource] selectedQuestionText]];
     

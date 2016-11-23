@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSMutableAttributedString* attrWarning =
         [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont body]}
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 - (NSAttributedString*)attributedLowBatteryMessage {
     NSString* message = NSLocalizedString(@"settings.pill.warning.low-battery", nil);
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]};
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont body]};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -143,7 +143,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 }
 
 - (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
-    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
+    UIFont* font = bold ? [UIFont bodyBold] : [UIFont body];
+    return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : [UIColor blackColor]};
 }
 
@@ -371,7 +372,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                  args:args
                                             baseColor:[UIColor blackColor]
-                                             baseFont:[UIFont dialogMessageFont]];
+                                             baseFont:[UIFont body]];
     
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];

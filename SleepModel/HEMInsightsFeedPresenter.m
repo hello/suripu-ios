@@ -277,14 +277,14 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 - (NSDictionary*)questionTextAttributes {
     NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     [style setAlignment:NSTextAlignmentCenter];
-    return  @{NSFontAttributeName : [UIFont feedQuestionFont],
+    return  @{NSFontAttributeName : [UIFont body],
               NSParagraphStyleAttributeName : style};
 }
 
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withCellWith:(CGFloat)width {
     if ([indexPath row] == 0 && [self dataError]) {
         NSString* text = NSLocalizedString(@"insights.feed.error.message", nil);
-        UIFont* font = [UIFont errorStateDescriptionFont];
+        UIFont* font = [UIFont body];
         CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
         CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
         return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -408,7 +408,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         if ([self dataError]) {
             HEMTextCollectionViewCell* textCell = (id)cell;
             [[textCell textLabel] setText:NSLocalizedString(@"insights.feed.error.message", nil)];
-            [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+            [[textCell textLabel] setFont:[UIFont body]];
             [textCell displayAsACard:YES];
         }
     }

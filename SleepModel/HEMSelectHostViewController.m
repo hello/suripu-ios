@@ -54,40 +54,51 @@
 }
 
 - (void)showURLUpdateAlertView {
-    UIAlertView* URLAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.set-url.title", nil)
-                                                           message:NSLocalizedString(@"authorization.set-url.message", nil)
-                                                          delegate:self
-                                                 cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
-                                                 otherButtonTitles:NSLocalizedString(@"actions.save", nil), NSLocalizedString(@"authorization.set-url.action.reset", nil), nil];
-    URLAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField* URLField = [URLAlertView textFieldAtIndex:0];
-    URLField.text = [SENAPIClient baseURL].absoluteString;
-    URLField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [URLAlertView show];
+    NSString* title = NSLocalizedString(@"authorization.set-url.title", nil);
+    NSString* message = NSLocalizedString(@"authorization.set-url.message", nil);
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    __block UITextField* updateTextField = nil;
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        [textField setText:[[SENAPIClient baseURL] absoluteString]];
+        [textField setClearButtonMode:UITextFieldViewModeWhileEditing];
+        updateTextField = textField;
+    }];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^cancel)(UIAlertAction* action) = ^(UIAlertAction* action) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [SENAPIClient resetToDefaultBaseURL];
+        [strongSelf dismiss];
+    };
+    
+    void(^change)(UIAlertAction* action) = ^(UIAlertAction* action){
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setHostAndDismiss:[updateTextField text]];
+    };
+    
+    NSString* ok = NSLocalizedString(@"actions.ok", nil);
+    UIAlertAction* changeAction =  [UIAlertAction actionWithTitle:ok
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:change];
+    [alert addAction:changeAction];
+    [alert setPreferredAction:changeAction];
+    
+    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+    UIAlertAction* cancelAction =  [UIAlertAction actionWithTitle:cancelText
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:cancel];
+    [alert addAction:cancelAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
-
-- (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 2: {
-            [SENAPIClient resetToDefaultBaseURL];
-            [self dismiss];
-            break;
-        }
-        case 1: {
-            UITextField* URLField = [alertView textFieldAtIndex:0];
-            [self setHostAndDismiss:URLField.text];
-            break;
-        }
-    }
-}
-
 - (void)setHostAndDismiss:(nonnull NSString*)host {
     if (![SENAPIClient setBaseURLFromPath:host]) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.failed-url.title", nil)
-                                    message:NSLocalizedString(@"authorization.failed-url.message", nil)
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
-                          otherButtonTitles:nil] show];
+        [self showMessageDialog:NSLocalizedString(@"authorization.failed-url.message", nil)
+                          title:NSLocalizedString(@"authorization.failed-url.title", nil)];
     } else {
         [self dismiss];
     }

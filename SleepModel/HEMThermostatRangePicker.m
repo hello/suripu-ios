@@ -67,6 +67,7 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self separatorLabel] setFont:[UIFont alarmSelectedNumberFont]];
     [[self separatorLabel] setTextColor:[UIColor tintColor]];
     

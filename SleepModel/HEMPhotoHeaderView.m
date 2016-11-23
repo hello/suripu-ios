@@ -16,6 +16,7 @@
 @implementation HEMPhotoHeaderView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self imageView] setLoadDelegate:self];
 }
 

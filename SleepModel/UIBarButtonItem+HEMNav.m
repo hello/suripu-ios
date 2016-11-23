@@ -16,7 +16,7 @@
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:title forState:UIControlStateNormal];
     [button setImage:image forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont navButtonTitleFont]];
+    [[button titleLabel] setFont:[UIFont body]];
     [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [button setTintColor:[UIColor tintColor]];
     [button sizeToFit];

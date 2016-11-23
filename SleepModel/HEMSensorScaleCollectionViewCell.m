@@ -26,6 +26,7 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self titleLabel] setFont:[UIFont h6Bold]];
     [[self titleLabel] setTextColor:[UIColor grey6]];
     [[self measurementLabel] setFont:[UIFont h7]];

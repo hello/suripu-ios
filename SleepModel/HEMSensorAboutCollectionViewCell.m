@@ -29,6 +29,7 @@ static CGFloat const kHEMSensorAboutCellHorzPadding = 24.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self titleLabel] setFont:[UIFont h6Bold]];
     [[self titleLabel] setTextColor:[UIColor grey6]];
     [[self aboutLabel] setFont:[UIFont body]];

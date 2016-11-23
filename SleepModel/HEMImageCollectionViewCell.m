@@ -16,6 +16,7 @@
 @implementation HEMImageCollectionViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self contentView] setBackgroundColor:[UIColor blackColor]];
 }
 

@@ -15,7 +15,6 @@
 static CGFloat const HEMAlarmValueRangePickerWidth = 90.f;
 static CGFloat const HEMAlarmValueRangeDividerWidth = 40.0f;
 static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
-static CGFloat const HEMAlarmValueRangeSeparatorHeight = 0.5f;
 
 @interface HEMAlarmValueRangePickerView()
 

@@ -121,7 +121,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     UILabel* label = [[UILabel alloc] initWithFrame:[self titleFrame]];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setTextColor:[UIColor grey6]];
-    [label setFont:[UIFont actionViewTitleFont]];
+    [label setFont:[UIFont bodyBold]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];

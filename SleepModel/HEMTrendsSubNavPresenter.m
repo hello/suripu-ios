@@ -73,7 +73,7 @@ static NSUInteger const HEMTrendsSubNavMinimumOptions = 2;
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundColor:[UIColor whiteColor]];
     [button setTitle:[[self selectorTitleForScale:timeScale] uppercaseString] forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont subNavTitleTextFont]];
+    [[button titleLabel] setFont:[UIFont h7Bold]];
     [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateSelected];
     [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor subNavInactiveTitleColor] forState:UIControlStateNormal];

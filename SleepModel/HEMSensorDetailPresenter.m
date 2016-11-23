@@ -18,7 +18,6 @@
 #import "HEMStyle.h"
 #import "HEMSensorValueFormatter.h"
 #import "HEMSensorChartContainer.h"
-#import "HEMSensorXAxisValueFormatter.h"
 #import "HEMSubNavigationView.h"
 #import "HEMScreenUtils.h"
 
@@ -31,7 +30,7 @@ static CGFloat const kHEMSensorDetailCellChartHeightRatio = 0.45f;
 static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
 static NSUInteger const kHEMSensorDetailXAxisOffset = 10;
 static CGFloat const kHEMSensorDetailMaxChartHeight = 271.0f;
-static CGFloat const kHEMSensorDetailChartTopSpaceOffset = 0.099f;
+static CGFloat const kHEMSensorDetailChartTopSpaceOffset = 0.09f;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -225,8 +224,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             SENSensorTime* time = nil;
             for (NSNumber* value in values) {
                 CGFloat entryValue = MAX(0.0f, [value doubleValue]);
-                [chartData addObject:[[ChartDataEntry alloc] initWithValue:entryValue
-                                                                    xIndex:index]];
+                [chartData addObject:[[ChartDataEntry alloc] initWithX:index y:entryValue]];
                 if (index == ([labelData count] + 1) * indicesBetweenLabels) {
                     NSInteger indexWithOffset = index - kHEMSensorDetailXAxisOffset;
                     time = [[strongSelf sensorData] timestamps][indexWithOffset];
@@ -392,7 +390,6 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     if (!lineChartView) {
         CGRect chartFrame = [[cell chartContentView] bounds];
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:chartFrame];
-        [lineChartView setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:0.0f];
         
         ChartYAxis* yAxis = [lineChartView leftAxis];
         CGFloat chartHeight = CGRectGetHeight(chartFrame);
@@ -408,7 +405,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
     CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
     
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[self chartData]];
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithValues:[self chartData]];
     [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
     [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
     [dataSet setDrawFilledEnabled:YES];
@@ -419,8 +416,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     
     CGGradientRelease(gradient);
     
-    NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
-    [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
+    [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setGridBackgroundColor:sensorColor];
     
     [lineChartView setNeedsDisplay];
@@ -618,13 +614,13 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 
 - (void)didMoveScrubberTo:(CGPoint)pointInChartView within:(HEMSensorChartContainer *)chartContainer {
     NSArray<NSNumber*>* values = [[self sensorData] dataPointsForSensorType:[[self sensor] type]];
-    ChartDataEntry* entry = [[self chartView] getEntryByTouchPoint:pointInChartView];
-    NSInteger index = [entry xIndex];
+    ChartDataEntry* entry = [[self chartView] getEntryByTouchPointWithPoint:pointInChartView];
+    NSInteger index = [entry x];
     NSNumber* actualValue = index < [values count] ? values[index] : nil;
     if ([actualValue integerValue] == kHEMSensorSentinelValue) {
         actualValue = nil;
     }
-    SENSensorTime* time = [[self sensorData] timestamps][[entry xIndex]];
+    SENSensorTime* time = [[self sensorData] timestamps][index];
     NSString* timeString = [[self exactTimeFormatter] stringFromDate:[time date]];
     
     DDLogVerbose(@"moved scrubber to value %f, time %@", [actualValue doubleValue], timeString);

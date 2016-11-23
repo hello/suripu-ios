@@ -22,7 +22,7 @@
     UIView* rightButtonView = [[navItem rightBarButtonItem] customView];
     UIButton* rightButton = [[rightButtonView subviews] firstObject];
     [rightButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [[rightButton titleLabel] setFont:[UIFont navButtonTitleFont]];
+    [[rightButton titleLabel] setFont:[UIFont body]];
     [rightButton setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)
                              forState:UIControlStateNormal];
     [rightButton addTarget:self

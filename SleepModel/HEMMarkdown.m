@@ -21,22 +21,22 @@
 
     return @{
         @(EMPH) : @{
-            NSFontAttributeName : [UIFont backViewBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor boldTextColor]
         },
         @(STRONG) : @{
-            NSFontAttributeName : [UIFont backViewBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor boldTextColor]
         },
         @(BULLETLIST) : @{
-            NSFontAttributeName : [UIFont backViewTextFont],
+            NSFontAttributeName : [UIFont body],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor detailTextColor]
         },
         @(PARA) : @{
-            NSFontAttributeName : [UIFont backViewTextFont],
+            NSFontAttributeName : [UIFont body],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor detailTextColor]
         }
@@ -102,7 +102,7 @@
 + (NSDictionary *)attributesForTimelineBreakdownValueWithColor:(UIColor *)color {
     return @{
         @(PARA) :
-            @{ NSFontAttributeName : [UIFont timelineBreakdownValueFont], NSForegroundColorAttributeName : color }
+            @{ NSFontAttributeName : [UIFont h7], NSForegroundColorAttributeName : color }
     };
 }
 
@@ -110,28 +110,30 @@
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentCenter;
     return @{
-        @(PARA) : @{ NSFontAttributeName : [UIFont timelineTimeLabelFont], NSParagraphStyleAttributeName : style }
+        @(PARA) : @{ NSFontAttributeName : [UIFont h8],
+                     NSParagraphStyleAttributeName : style }
     };
 }
 
 + (NSDictionary *)attributesForBackViewTitle {
-    return @{ @(PARA) : @{ NSKernAttributeName : @(0.6), NSFontAttributeName : [UIFont backViewTitleFont] } };
+    return @{ @(PARA) : @{ NSKernAttributeName : @(0.6),
+                           NSFontAttributeName : [UIFont h7Bold] } };
 }
 
 + (NSDictionary *)attributesForInsightViewText {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.lineSpacing = 4.f;
     return @{
-        @(EMPH) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
-        @(STRONG) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
+        @(EMPH) : @{ NSFontAttributeName : [UIFont bodyBold] },
+        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold] },
         @(BULLETLIST) : @{
-            NSFontAttributeName : [UIFont insightFullMessageFont],
+            NSFontAttributeName : [UIFont body],
             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.5f],
             NSParagraphStyleAttributeName : style
         },
         @(PARA) : @{
             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.5f],
-            NSFontAttributeName : [UIFont insightFullMessageFont],
+            NSFontAttributeName : [UIFont body],
             NSParagraphStyleAttributeName : style
         }
     };
@@ -139,7 +141,7 @@
 
 + (NSDictionary *)attributesForInsightTitleViewText {
     return @{@(PARA) : @{ NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.7f],
-                          NSFontAttributeName : [UIFont insightTitleFont] }};
+                          NSFontAttributeName : [UIFont h4] }};
 }
 
 + (NSDictionary *)attributesForEventMessageText {
@@ -150,7 +152,7 @@
     style.minimumLineHeight = 18.f;
     return @{
         @(STRONG) : @{
-            NSFontAttributeName : [UIFont timelineEventMessageBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor blackColor]
         },
@@ -160,7 +162,7 @@
             NSForegroundColorAttributeName : [UIColor blackColor]
         },
         @(EMPH) : @{
-            NSFontAttributeName : [UIFont timelineEventMessageItalicFont],
+            NSFontAttributeName : [UIFont body],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor lightGrayColor]
         },
@@ -169,8 +171,8 @@
 
 + (NSDictionary *)attributesForTimelineMessageText {
     return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont timelineMessageBoldFont] },
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont timelineMessageFont] }
+        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold] },
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont body] }
     };
 }
 
@@ -178,31 +180,11 @@
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentLeft;
     return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont],
+        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold],
                        NSParagraphStyleAttributeName : style,
                        NSForegroundColorAttributeName: [UIColor whiteColor]},
-        @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName : style,
+        @(PARA) : @{ NSFontAttributeName : [UIFont body], NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName: [UIColor whiteColor]}
     };
 }
-
-+ (NSDictionary *)attributesForSensorMessage {
-    return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
-        @(EMPH) : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
-        @(PARA) : @{ NSFontAttributeName : [UIFont sensorMessageFont] }
-    };
-}
-
-+ (NSDictionary *)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn {
-    UIColor *color = isOn ? [UIColor tintColor] : [UIColor colorWithWhite:0.6 alpha:1.f];
-    return @{
-        @(PARA) : @{
-            NSFontAttributeName : [UIFont sensorRangeSelectionFont],
-            NSKernAttributeName : @(1.2),
-            NSForegroundColorAttributeName : color
-        }
-    };
-}
-
 @end

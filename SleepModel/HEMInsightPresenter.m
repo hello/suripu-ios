@@ -172,7 +172,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 - (NSAttributedString*)attributedAbout {
     if (!_attributedAbout) {
         NSString* about = [NSLocalizedString(@"insight.about", nil) uppercaseString];
-        NSDictionary* attributes = @{NSFontAttributeName : [UIFont insightAboutFont],
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont h8],
                                      NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
         _attributedAbout = [[NSAttributedString alloc] initWithString:about attributes:attributes];
     }

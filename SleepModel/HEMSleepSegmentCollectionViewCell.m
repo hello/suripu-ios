@@ -27,6 +27,7 @@ CGFloat const HEMSegmentMinimumWidth = 32.f;
 CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
     self.backgroundColor = [UIColor timelineBackgroundColor];

@@ -349,7 +349,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* title = NSLocalizedString(@"expansion.configuration.removal.confirm.title", nil);
     NSString* message = NSLocalizedString(@"expansion.configuration.removal.confirm.message", nil);
     
-    NSDictionary* messageAttrs = @{NSFontAttributeName : [UIFont dialogMessageFont],
+    NSDictionary* messageAttrs = @{NSFontAttributeName : [UIFont body],
                                    NSForegroundColorAttributeName : [UIColor blackColor]};
     NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message attributes:messageAttrs];
     

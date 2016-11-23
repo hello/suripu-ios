@@ -29,6 +29,7 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self configureGradientViews];
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
     self.sleepScoreTextLabel.isAccessibilityElement = NO;

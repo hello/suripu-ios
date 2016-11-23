@@ -5,7 +5,8 @@
 //  Created by Jimmy Lu on 8/18/14.
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
-#import <MediaPlayer/MPMoviePlayerViewController.h>
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -86,9 +87,9 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     // always shows a left bar button, which we don't want
     [[self navigationItem] setLeftBarButtonItem:nil];
     
-    [[[self logInButton] titleLabel] setFont:[UIFont welcomeButtonFont]];
+    [[[self logInButton] titleLabel] setFont:[UIFont button]];
     [[self logInButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [[[self signUpButton] titleLabel] setFont:[UIFont welcomeButtonFont]];
+    [[[self signUpButton] titleLabel] setFont:[UIFont button]];
     [[self signUpButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self setOrigLogInTrailingConstraintConstant:[[self logInButtonTrailingConstraint] constant]];
@@ -196,10 +197,15 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     __weak typeof(self) weakSelf = self;
     [[self audioService] activateSession:YES completion:^(NSError * _Nullable error) {
         // play regardless of error
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
-        MPMoviePlayerViewController* videoPlayer
-            = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
-        [weakSelf presentMoviePlayerViewControllerAnimated:videoPlayer];
+        AVPlayerViewController* videoPlayer = [AVPlayerViewController new];
+        AVPlayer* player = [AVPlayer playerWithURL:introductoryVideoURL];
+        [videoPlayer setPlayer:player];
+        [videoPlayer setShowsPlaybackControls:YES];
+        [strongSelf presentViewController:videoPlayer animated:YES completion:^{
+            [player play];
+        }];
         [SENAnalytics track:kHEMAnalyticsEventVideo];
     }];
 }
@@ -319,12 +325,16 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 #pragma mark - Segues
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if (![self transitionDelegate]) {
+- (HEMSimpleModalTransitionDelegate*)transitionDelegate {
+    if (!_transitionDelegate) {
         HEMSimpleModalTransitionDelegate* delegate = [HEMSimpleModalTransitionDelegate new];
         [delegate setWantsStatusBar:YES];
-        [self setTransitionDelegate:delegate];
+        _transitionDelegate = delegate;
     }
+    return _transitionDelegate;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController* destVC = [segue destinationViewController];
     [destVC setModalPresentationStyle:UIModalPresentationCustom];
     [destVC setTransitioningDelegate:[self transitionDelegate]];

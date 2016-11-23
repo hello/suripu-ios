@@ -10,8 +10,8 @@ static NSString* const HEMAlarmAddText = @"+";
 static CGFloat const HEMAlarmAddTextVerticalOffset = 2.f;
 static CGFloat const HEMAlarmAddParallaxDepth = 3.f;
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
+    [super awakeFromNib];
     [self setTitle:nil forState:UIControlStateNormal];
     self.backgroundColor = [UIColor clearColor];
     

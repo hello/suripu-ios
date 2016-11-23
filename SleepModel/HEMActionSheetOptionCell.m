@@ -38,13 +38,13 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
     
     CGFloat height = HEMActionSheetOptionVertMargin;
     CGFloat textWidth = width - (2 * HEMActionSheetOptionHorzMargin);
-    UIFont* titleFont = [UIFont actionSheetOptionTitleFont];
+    UIFont* titleFont = [UIFont h6];
     height += [title heightBoundedByWidth:textWidth usingFont:titleFont];
     
     if ([description length] > 0) {
         height += HEMActionSheetOptionLabelSpacing;
         
-        UIFont* descFont = [UIFont actionSheetOptionDescriptionFont];
+        UIFont* descFont = [UIFont body];
         height += [description heightBoundedByWidth:textWidth usingFont:descFont];
     }
     
@@ -54,8 +54,10 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 }
 
 - (void)awakeFromNib {
-    [[self optionTitleLabel] setFont:[UIFont actionSheetOptionTitleFont]];
-    [[self optionDescriptionLabel] setFont:[UIFont actionSheetOptionDescriptionFont]];
+    [super awakeFromNib];
+    
+    [[self optionTitleLabel] setFont:[UIFont h6]];
+    [[self optionDescriptionLabel] setFont:[UIFont body]];
     [[self optionDescriptionLabel] setTextColor:[UIColor colorWithWhite:152.0f/255.0f alpha:1.0f]];
     [self configureSelectedBackground];
 }

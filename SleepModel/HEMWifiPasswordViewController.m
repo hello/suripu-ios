@@ -301,7 +301,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         labelFrame.size.height = CGRectGetHeight([[self securityField] bounds]);
         labelFrame.size.width = kHEMWifiSecurityLabelDefaultWidth;
         selectedTypeLabel = [[UILabel alloc] initWithFrame:labelFrame];
-        [selectedTypeLabel setFont:[UIFont onboardingFieldRightViewFont]];
+        [selectedTypeLabel setFont:[UIFont bodyBold]];
         [selectedTypeLabel setTextColor:[UIColor blackColor]];
         [[self securityField] setRightView:selectedTypeLabel];
         [[self securityField] setRightViewMode:UITextFieldViewModeAlways];
@@ -326,7 +326,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
     NSString* securityType = [self securityTypeTextForPickerRow:row];
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont singleComponentPickerViewFont]};
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont h6Bold]};
     NSAttributedString* attrSecurity = [[NSAttributedString alloc] initWithString:securityType attributes:attributes];
     return attrSecurity;
 }

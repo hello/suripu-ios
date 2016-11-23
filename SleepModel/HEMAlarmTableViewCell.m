@@ -14,6 +14,8 @@ static CGFloat const kHEMAlarmCellFadeDuration = 0.5f;
 @implementation HEMAlarmTableViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [[self activityView] setUserInteractionEnabled:NO];
     [[self activityView] setIndicatorImage:[UIImage imageNamed:@"smallLoaderGray"]];
 }

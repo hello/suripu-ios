@@ -161,7 +161,7 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundColor:[UIColor whiteColor]];
     [button setTitle:title forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont subNavTitleTextFont]];
+    [[button titleLabel] setFont:[UIFont h7Bold]];
     [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateSelected];
     [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor subNavInactiveTitleColor] forState:UIControlStateNormal];

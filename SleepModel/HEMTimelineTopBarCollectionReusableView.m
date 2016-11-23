@@ -31,6 +31,8 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 @implementation HEMTimelineTopBarCollectionReusableView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     self.rangeDateFormatter = [NSDateFormatter new];
     self.rangeDateFormatter.dateFormat = @"MMMM d";
     self.weekdayDateFormatter = [NSDateFormatter new];

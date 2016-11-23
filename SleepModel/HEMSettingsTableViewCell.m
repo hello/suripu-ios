@@ -28,6 +28,7 @@ static CGFloat const HEMSettingsCellMargins = 12.0f;
 @implementation HEMSettingsTableViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self setBackgroundColor:[UIColor clearColor]];
     [[self contentView] setBackgroundColor:[UIColor clearColor]];
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];

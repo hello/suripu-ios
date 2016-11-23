@@ -65,7 +65,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     UIColor* placeholderColor = [self isFirstResponder] ? [UIColor grey3] : [UIColor grey4];
     
     NSDictionary* placeHolderAttrs = @{
-        NSFontAttributeName : [UIFont textfieldPlaceholderFont],
+        NSFontAttributeName : [UIFont body],
         NSForegroundColorAttributeName : placeholderColor
     };
     

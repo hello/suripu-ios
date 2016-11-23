@@ -20,6 +20,7 @@ static CGFloat const HEMTimelineMessageShadowOpacity = 0.08f;
 @implementation HEMTimelineMessageContainerView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.layer.cornerRadius = 2.f;
     self.layer.shadowRadius = 3.f;
     self.layer.shadowOpacity = HEMTimelineMessageShadowOpacity;

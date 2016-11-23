@@ -22,7 +22,5 @@
 + (NSDictionary*)attributesForTimelineBreakdownMessage;
 + (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color;
 + (NSDictionary*)attributesForTimelineSegmentPopup;
-+ (NSDictionary*)attributesForSensorMessage;
-+ (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn;
 + (NSDictionary *)attributesForInsightSummaryText;
 @end

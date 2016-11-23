@@ -56,6 +56,7 @@ CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.layer.shadowRadius = 2.f;
     self.layer.shadowColor = [[UIColor tintColor] CGColor];
     self.layer.shadowOpacity = HEMEventBubbleShadowOpacity;

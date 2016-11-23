@@ -25,6 +25,7 @@
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self nameLabel] setTextColor:[UIColor grey6]];
     [[self nameLabel] setFont:[UIFont body]];
     [[self valueLabel] setFont:[UIFont body]];

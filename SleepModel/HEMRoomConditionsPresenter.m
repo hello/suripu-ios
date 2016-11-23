@@ -270,7 +270,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
                 NSUInteger index = 0;
                 for (NSNumber* value in values) {
                     CGFloat entryValue = MAX(0.0f, [value doubleValue]);
-                    [chartData addObject:[[ChartDataEntry alloc] initWithValue:entryValue xIndex:index++]];
+                    [chartData addObject:[[ChartDataEntry alloc] initWithX:index++ y:entryValue]];
                     if ([value doubleValue] > chartMax) {
                         chartMax = [value doubleValue];
                     }
@@ -292,6 +292,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell graphContainerView] bounds]];
+        [lineChartView setViewPortOffsetsWithLeft:0.0f top:6.0f right:0.0f bottom:0.0f];
         [lineChartView setUserInteractionEnabled:NO];
         *animate = YES;
     } else {
@@ -306,7 +307,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
     
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[chartData copy]];
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithValues:[chartData copy]];
     [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
     [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
     [dataSet setDrawFilledEnabled:YES];
@@ -316,8 +317,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     CGGradientRelease(gradient);
     
-    NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
-    [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
+    [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setNeedsDisplay];
     
     return lineChartView;
@@ -398,7 +398,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         default: {
             if ([self sensorError]) {
                 NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
-                UIFont* font = [UIFont errorStateDescriptionFont];
+                UIFont* font = [UIFont body];
                 CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
                 CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
                 itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -649,7 +649,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
     [[errorCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
-    [[errorCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [[errorCell textLabel] setFont:[UIFont body]];
     [errorCell displayAsACard:YES];
 }
 

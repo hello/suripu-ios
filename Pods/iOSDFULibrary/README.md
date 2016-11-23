@@ -1,11 +1,12 @@
 # iOS DFU Library
 
+[![Version](http://img.shields.io/cocoapods/v/iOSDFULibrary.svg)](http://cocoapods.org/pods/iOSDFULibrary)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 ## Installation
 
-#### Method 1: Via Cocoapods (Recommended method)
-
-  - Open up a terminal window and **cd** to your project's root directory
-  - Create a **Podfile** with the following content. Replace "YourAppTargetName" with the name of the main target in your app.
+**For Cocoapods:**
+  - Create/Update your **Podfile** with the following contents
 
         target 'YourAppTargetName' do
             use_frameworks!
@@ -18,16 +19,17 @@
 
   - Open the newly created `.xcworkspace` and begin working on your project.
 
+**For Carthage:**
 
-#### Method 2: Building from source
- - Create a new blank XCode workspace `/path/to/workspace` and open it
- - In Finder, drag your main project's `xcodeproject` file from `/path/to/myProject` into the new workspace
- - Clone the repository our other repository into `/path/to/dfuLibrary`
+   - Create a new **Cartfile** in your project's root with the following contents
 
-        cd /path/to/dfuLibrary && git clone git@github.com:NordicSemiconductor/IOS-DFU-Library.git
+         github "NordicSemiconductor/IOS-Pods-DFU-Library" ~> x.y //Replace x.y with your required version
 
- - In Finder, Drag the librarie's `xcodeproject` file into your workspace
- - Begin working on your project from within the workspace.
+   - Build with carthage
+
+         carthage update --platform iOS //also OSX platform is available for macOS builds
+
+   - Carthage will build the **iOSDFULibrary.framework** and **Zip.framework** files in **Carthag/Build/**, you may now copy all those files to your project and use the library, additionally, carthade also builds **\*.dsym** files if you need to resymbolicate crash logs. you may want to keep those files bundled with your builds for future use.
 
 ---
 
@@ -66,6 +68,7 @@ The library is compatible with nRF51 and nRF52 devices with S-Series Soft Device
 * **SDK 7.0.0** - The extended init packet is required. The init packet contains additional validation information: device type and revision, application version, compatible Soft Devices and the firmware CRC.
 * **SDK 8.0.0** - The bond information may be preserved after an application update. The new application, when first started, will send the Service Change indication to the phone to refresh the services.
 - Buttonless update support for bonded devices - sharing the LTK between an app and the bootloader.
+* **SDK 12.0.0** - New Secure DFU has been released. This library is fully backwards compatible so supports both the new and legacy DFU.
 
 Check platform folders for mode details about compatibility for each library.
 
@@ -74,6 +77,7 @@ Check platform folders for mode details about compatibility for each library.
 ### Resources
 
 - [DFU Introduction](http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v11.0.0/examples_ble_dfu.html?cp=4_0_0_4_2_1 "BLE Bootloader/DFU")
+- [Secure DFU Introduction](http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v12.0.0/ble_sdk_app_dfu_bootloader.html?cp=4_0_0_4_3_1 "BLE Secure DFU Bootloader")
 - [How to create init packet](https://github.com/NordicSemiconductor/nRF-Master-Control-Panel/tree/master/init%20packet%20handling "Init packet handling")
 - [nRF51 Development Kit (DK)](http://www.nordicsemi.com/eng/Products/nRF51-DK "nRF51 DK") (compatible with Arduino Uno Revision 3)
 - [nRF52 Development Kit (DK)](http://www.nordicsemi.com/eng/Products/Bluetooth-Smart-Bluetooth-low-energy/nRF52-DK "nRF52 DK") (compatible with Arduino Uno Revision 3)

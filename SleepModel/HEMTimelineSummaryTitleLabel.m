@@ -11,6 +11,7 @@
 @implementation HEMTimelineSummaryTitleLabel
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     NSDictionary *attributes = @{ NSKernAttributeName : @1 };
     self.attributedText = [[NSAttributedString alloc] initWithString:self.text attributes:attributes];
 }

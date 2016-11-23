@@ -114,7 +114,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
     = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     [messageStyle setAlignment:NSTextAlignmentCenter];
     NSDictionary* messageAttributes = @{
-                                        NSFontAttributeName : [UIFont systemAlertMessageFont],
+                                        NSFontAttributeName : [UIFont body],
                                         NSForegroundColorAttributeName : [UIColor textColor],
                                         NSParagraphStyleAttributeName : messageStyle};
     

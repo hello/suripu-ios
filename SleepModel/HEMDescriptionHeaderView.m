@@ -31,6 +31,7 @@ static CGFloat const HEMDescriptionHeaderDescBotMargin = 32.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self descriptionLabel] setNumberOfLines:0];
 }
 

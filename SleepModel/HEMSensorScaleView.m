@@ -19,6 +19,8 @@ CGFloat const kHEMSensorScaleHeight = 56.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [[self nameLabel] setFont:[UIFont body]];
     [[self nameLabel] setTextColor:[UIColor grey6]];
     [[self rangeLabel] setFont:[UIFont body]];

@@ -87,7 +87,7 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 
 - (void)addTitleLabel {
     CGFloat y = CGRectGetMaxY([[self iconView] frame]) + HEMAdjustConfirmImageSpacing;
-    UIFont* titleFont = [UIFont timelineActionConfirmationTitleFont];
+    UIFont* titleFont = [UIFont h6];
     UILabel* titleLabel = [self textLabelWithYOrigin:y andText:[self title] withFont:titleFont];
     [self setTitleLabel:titleLabel];
     [self addSubview:titleLabel];
@@ -96,7 +96,7 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 - (void)addSubtitleLabel {
     if ([self subtitle]) {
         CGFloat y = CGRectGetMaxY([[self titleLabel] frame]) + HEMAdjustConfirmTextSpacing;
-        UIFont* subtitleFont = [UIFont timelineActionConfirmationSubtitleFont];
+        UIFont* subtitleFont = [UIFont body];
         UILabel* subtitleLabel = [self textLabelWithYOrigin:y andText:[self subtitle] withFont:subtitleFont];
         [subtitleLabel setTextColor:[UIColor colorWithWhite:0.0f alpha:0.5f]];
         [self setSubtitleLabel:subtitleLabel];

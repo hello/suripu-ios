@@ -14,6 +14,7 @@
 CGFloat const HEMPlayButtonShadowOpacity = 0.15f;
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.layer.cornerRadius = CGRectGetWidth(self.bounds) / 2;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOpacity = 0.15f;

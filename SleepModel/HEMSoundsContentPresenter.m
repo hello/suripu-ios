@@ -195,7 +195,7 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundColor:[UIColor whiteColor]];
     [button setTitle:[self localizedTitleFor:option] forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont subNavTitleTextFont]];
+    [[button titleLabel] setFont:[UIFont h7Bold]];
     [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateSelected];
     [button setTitleColor:[UIColor subNavActiveTitleColor] forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor subNavInactiveTitleColor] forState:UIControlStateNormal];
@@ -319,7 +319,7 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
     
     if ([self deviceError]) {
         NSString* text = NSLocalizedString(@"sounds.error.message", nil);
-        UIFont* font = [UIFont errorStateDescriptionFont];
+        UIFont* font = [UIFont body];
         CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
         CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
         itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -354,7 +354,7 @@ static CGFloat const HEMSoundsContentNoSenseCellHeight = 352.f;
     } else {
         HEMTextCollectionViewCell* textCell = (id)cell;
         [[textCell textLabel] setText:NSLocalizedString(@"sounds.error.message", nil)];
-        [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [[textCell textLabel] setFont:[UIFont body]];
         [textCell displayAsACard:YES];
     }
 }

@@ -278,7 +278,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (CGFloat)heightForErrorMessageWithItemWidth:(CGFloat)itemWidth {
     NSString* message = NSLocalizedString(@"trends.loading.error.message", nil);
-    UIFont* font = [UIFont errorStateDescriptionFont];
+    UIFont* font = [UIFont body];
     CGFloat maxWidth = itemWidth - (HEMStyleCardErrorTextHorzMargin * 2);
     CGFloat textHeight = [message heightBoundedByWidth:maxWidth usingFont:font];
     return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -294,7 +294,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [style setLineHeightMultiple:1.25f];
     [style setAlignment:NSTextAlignmentCenter];
     
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataTitleFont],
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont bodyBold],
                                  NSForegroundColorAttributeName : [UIColor textColor],
                                  NSParagraphStyleAttributeName : style};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
@@ -305,7 +305,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [style setLineHeightMultiple:1.29f];
     [style setAlignment:NSTextAlignmentCenter];
     
-    return @{NSFontAttributeName : [UIFont partialDataMessageFont],
+    return @{NSFontAttributeName : [UIFont body],
              NSForegroundColorAttributeName : color,
              NSParagraphStyleAttributeName : style};
 }
@@ -364,7 +364,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [paraStyle setAlignment:NSTextAlignmentCenter];
     
     UIColor* textColor = highlighted ? [UIColor grey5] : [UIColor lowImportanceTextColor];
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendSubtitleLabelFont],
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont h8],
                                  NSForegroundColorAttributeName : textColor,
                                  NSKernAttributeName : @1,
                                  NSParagraphStyleAttributeName : paraStyle};
@@ -387,7 +387,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (NSAttributedString*)attributedTitleFromAnnotation:(SENTrendsAnnotation*)annotation {
     NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor lowImportanceTextColor],
-                                 NSFontAttributeName : [UIFont trendAverageTitleFont]};
+                                 NSFontAttributeName : [UIFont h8]};
     NSString* title = [annotation title];
     if (!title) {
         title = NSLocalizedString(@"empty-data", nil);
@@ -421,7 +421,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     NSMutableAttributedString* attrValue = [[NSMutableAttributedString alloc] initWithString:valueText
                                                                                   attributes:attributes];
     NSRange unitRange = NSMakeRange([valueText length] - 1, 1);
-    [attrValue addAttribute:NSFontAttributeName value:[UIFont trendAverageValueHourFont] range:unitRange];
+    [attrValue addAttribute:NSFontAttributeName value:[UIFont h5] range:unitRange];
     return attrValue;
 }
 
@@ -506,7 +506,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [barCell setMinValue:[[graph minValue] CGFloatValue]];
     [barCell setDashLineColor:[UIColor separatorColor]];
     [barCell setHighlightLabelTextFormat:highlightFormat];
-    [barCell setHighlightTextFont:[UIFont trendsHighlightLabelFont]];
+    [barCell setHighlightTextFont:[UIFont h7Bold]];
     [barCell updateGraphWithTitles:attributedTitles
                      displayPoints:[[self trendService] segmentedDataPointsFrom:graph]
                            spacing:[self barSpacingForTimeScale:[graph timeScale]]];
@@ -535,7 +535,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)textCell {
     [[textCell textLabel] setText:NSLocalizedString(@"trends.loading.error.message", nil)];
     [textCell setBackgroundColor:[UIColor whiteColor]];
-    [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [[textCell textLabel] setFont:[UIFont body]];
     [textCell displayAsACard:YES];
 }
 

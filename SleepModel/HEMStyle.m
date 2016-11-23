@@ -16,7 +16,8 @@ CGFloat const HEMStyleDeviceSectionTopMargin = 15.0f;
 CGFloat const HEMStyleButtonContainerBorderWidth = 0.5f;
 
 void ApplyHelloStyles (void) {
-    UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[HEMStyledNavigationViewController class], nil];
+    NSArray* classes = @[[HEMStyledNavigationViewController class]];
+    UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:classes];
     
     [appearance setBackgroundImage:[[UIImage alloc] init]
                     forBarPosition:UIBarPositionAny

@@ -1,6 +1,6 @@
 
 #import <SenseKit/SenseKit.h>
-#import <AVFoundation/AVAudioPlayer.h>
+#import <AVFoundation/AVFoundation.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 #import "UIActivityViewController+HEMSharing.h"
 

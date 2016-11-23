@@ -144,7 +144,8 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 #pragma mark - Actions
 
 - (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
-    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
+    UIFont* font = bold ? [UIFont bodyBold] : [UIFont body];
+    return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : [UIColor blackColor]};
 }
 
@@ -272,7 +273,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         [[NSMutableAttributedString alloc] initWithFormat:questionFormat
                                                      args:args
                                                 baseColor:baseColor
-                                                 baseFont:[UIFont dialogMessageFont]];
+                                                 baseFont:[UIFont body]];
     
     [self showConfirmation:title message:message action:^{
         [self unlinkSense];
@@ -291,7 +292,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                  args:args
                                             baseColor:[UIColor blackColor]
-                                             baseFont:[UIFont dialogMessageFont]];
+                                             baseFont:[UIFont body]];
     
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
@@ -340,7 +341,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         [[NSMutableAttributedString alloc] initWithFormat:msgFormat
                                                      args:args
                                                 baseColor:[UIColor blackColor]
-                                                 baseFont:[UIFont dialogMessageFont]];
+                                                 baseFont:[UIFont body]];
     
     __weak typeof(self) weakSelf = self;
     [self showConfirmation:title message:message action:^{

@@ -476,7 +476,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return nil;
     }
     
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataTitleFont],
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont bodyBold],
                                  NSForegroundColorAttributeName : [UIColor grey5]};
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
@@ -501,7 +501,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (!message) {
         return nil;
     }
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataMessageFont],
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
                                  NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
@@ -552,7 +552,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         }
         case HEMSleepSoundPlayerStateError: {
             NSString* text = NSLocalizedString(@"sleep-sounds.error.message", nil);
-            UIFont* font = [UIFont errorStateDescriptionFont];
+            UIFont* font = [UIFont body];
             CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
             CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
             itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -610,7 +610,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
     [[errorCell textLabel] setText:NSLocalizedString(@"sleep-sounds.error.message", nil)];
-    [[errorCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [[errorCell textLabel] setFont:[UIFont body]];
     [errorCell displayAsACard:YES];
     [self setConfigCell:nil];
 }

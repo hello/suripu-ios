@@ -45,7 +45,7 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 }
 
 - (void)configureSteps {
-    UIFont* font = [UIFont bluetoothStepsFont];
+    UIFont* font = [UIFont body];
     [[self step1Label] setFont:font];
     [[self step1DescLabel] setFont:font];
     [[self step2Label] setFont:font];

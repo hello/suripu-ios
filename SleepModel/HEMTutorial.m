@@ -24,42 +24,7 @@
 
 @implementation HEMTutorial
 
-static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
-static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
-
-#pragma mark - Sleep Sounds
-
-+ (void)showTutorialForSleepSoundsIfNeeded {
-    if ([self shouldShowTutorialForKey:HEMTutorialSleepSoundsKey]) {
-        [self showTutorialForSleepSounds];
-        [self markTutorialViewed:HEMTutorialSleepSoundsKey];
-    }
-}
-
-+ (BOOL)showTutorialForSleepSounds {
-    NSString* title = NSLocalizedString(@"sleep-sounds.welcome.title", nil);
-    NSString* message = NSLocalizedString(@"sleep-sounds.welcome.message", nil);
-    UIImage* image = [UIImage imageNamed:@"sleepSoundsWelcome"];
-    HEMTutorialContent* tutorial = [[HEMTutorialContent alloc] initWithTitle:title text:message image:image];
-    return [self showTutorialWithContent:@[tutorial]];
-}
-
-#pragma mark - Timeline
-
-+ (void)showTutorialForTimelineIfNeeded
-{
-    if ([self shouldShowTutorialForTimeline]) {
-        if ([self showTutorialForTimeline]) {
-            [self markTutorialViewed:HEMTutorialTimelineKey];
-        }
-    }
-}
-
-+ (BOOL)shouldShowTutorialForTimeline
-{
-    return [self shouldShowTutorialForKey:HEMTutorialTimelineKey];
-}
 
 + (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
 {
@@ -68,6 +33,8 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
         [self markTutorialViewed:HEMTutorialAlarmsKey];
     }
 }
+
+#pragma mark - Common
 
 + (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
     UIImage* snapshot = [[controller view] snapshot];
@@ -89,28 +56,6 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
 + (BOOL)showTutorialWithContent:(NSArray*)content {
     UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     return [self showTutorialWithContent:content from:rootVC];
-}
-
-+ (BOOL)showTutorialForTimeline
-{
-    HEMTutorialContent* tutorial1 =
-    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title1", nil)
-                                         text:NSLocalizedString(@"tutorial.timeline.message1", nil)
-                                        image:[UIImage imageNamed:@"timeline_explain_sleep"]];
-    HEMTutorialContent* tutorial2 =
-    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title2", nil)
-                                         text:NSLocalizedString(@"tutorial.timeline.message2", nil)
-                                        image:[UIImage imageNamed:@"timeline_explain_score"]];
-    HEMTutorialContent* tutorial3 =
-    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title3", nil)
-                                         text:NSLocalizedString(@"tutorial.timeline.message3", nil)
-                                        image:[UIImage imageNamed:@"timeline_explain_before"]];
-    HEMTutorialContent* tutorial4 =
-    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title4", nil)
-                                         text:NSLocalizedString(@"tutorial.timeline.message4", nil)
-                                        image:[UIImage imageNamed:@"timeline_explain_graph"]];
-    
-    return [self showTutorialWithContent:@[tutorial1, tutorial2, tutorial3, tutorial4]];
 }
 
 + (void)showTutorialForAlarmsFrom:(UIViewController*)controller {
@@ -197,9 +142,7 @@ static NSString* const HEMTutorialSleepSoundsKey = @"HEMTutorialSleepSounds";
 
 + (void)resetTutorials {
     SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialTimelineKey];
     [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialSleepSoundsKey];
 }
 
 @end

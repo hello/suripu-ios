@@ -16,7 +16,6 @@ NSString* const HEMBreadcrumbSettings = @"settings";
 NSString* const HEMBreadcrumbAccount = @"account";
 
 static NSString* const HEMBreadcrumbPreferenceKey = @"HEMBreadcrumbPreferenceKey";
-static NSString* const HEMBreadcrumbAccountNameChange = @"HEMBreadcrumbAccountNameChange";
 
 @interface HEMBreadcrumbService()
 
@@ -48,35 +47,6 @@ static NSString* const HEMBreadcrumbAccountNameChange = @"HEMBreadcrumbAccountNa
         [self setCrumbsPerAccount:[savedCrumbs mutableCopy]];
     } else {
         [self setCrumbsPerAccount:[NSMutableDictionary dictionaryWithCapacity:1]];
-    }
-    
-    [self pushCrumbsForAccountNameChange];
-}
-
-- (void)pushCrumbsForAccountNameChange {
-    if (![[self account] createdAt] || ![[self account] accountId]) {
-        return;
-    }
-    
-    SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-    NSNumber* pref = [prefs userPreferenceForKey:HEMBreadcrumbAccountNameChange];
-    BOOL alreadyAdded = [pref boolValue];
-    if (alreadyAdded) {
-        return;
-    }
-    
-    // always mark it as added, regardless if account was created before or after
-    // so we don't always have to execute this check the next time
-    [prefs setUserPreference:@YES forKey:HEMBreadcrumbAccountNameChange];
-    
-    NSDate* launchDate = [NSDate dateWithYear:2016 month:5 day:26];
-    if ([[[self account] createdAt] compare:launchDate] == NSOrderedAscending) {
-        NSMutableArray* crumbs = [NSMutableArray arrayWithCapacity:2];
-        // LIFO, so we can pop faster by removing last object
-        [crumbs addObject:HEMBreadcrumbAccount];
-        [crumbs addObject:HEMBreadcrumbSettings];
-        [self crumbsPerAccount][[[self account] accountId]] = crumbs;
-        [self saveCrumbs];
     }
 }
 

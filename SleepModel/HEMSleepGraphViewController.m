@@ -190,12 +190,7 @@ static BOOL hasLoadedBefore = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayInSecs), dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if ([strongSelf isFullyVisibleInWindow]) {
-            if ([[strongSelf dataSource] numberOfSleepSegments] > 0
-                && [HEMTutorial shouldShowTutorialForTimeline]) {
-                [HEMTutorial showTutorialForTimelineIfNeeded];
-            } else {
-                [[strongSelf handHoldingPresenter] showIfNeeded];
-            }
+            [[strongSelf handHoldingPresenter] showIfNeeded];
         }
         [strongSelf setCheckingForTutorials:NO];
     });

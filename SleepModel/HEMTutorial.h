@@ -12,15 +12,6 @@
 
 #pragma mark - Dialogs
 
-+ (void)showTutorialForSleepSoundsIfNeeded;
-
-/**
- *  Present the timeline tutorial if not previously viewed
- */
-+ (void)showTutorialForTimelineIfNeeded;
-
-+ (BOOL)shouldShowTutorialForTimeline;
-
 /**
  *  Show tutorial to describe what pill colors are for
  */

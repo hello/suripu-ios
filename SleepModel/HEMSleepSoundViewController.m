@@ -51,7 +51,6 @@
     [playerPresenter bindWithActionButton:[self actionButton]
                          bottomConstraint:[self actionButtonBottomConstraint]];
     [playerPresenter bindWithCollectionView:[self collectionView]];
-    [playerPresenter bindWithTutorialParent:self];
     [playerPresenter bindWithActivityIndicator:[self activityIndicator]];
     [playerPresenter setDelegate:self];
     [self addPresenter:playerPresenter];

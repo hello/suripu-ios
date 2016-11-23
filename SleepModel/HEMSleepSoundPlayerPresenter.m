@@ -28,7 +28,6 @@
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
 static CGFloat const HEMSleepSoundPlayerLoadAnimeDuration = 0.5f;
-static CGFloat const HEMSleepSoundPlayerTutorialDelay = 0.6f;
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStatePrereqNotMet = 0,
@@ -45,7 +44,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     UICollectionViewDelegateFlowLayout
 >
 
-@property (nonatomic, weak) UIViewController* tutorialParent;
 @property (nonatomic, weak) HEMSleepSoundService* service;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UICollectionView* collectionView;
@@ -115,10 +113,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [self hideActionButton];
 }
 
-- (void)bindWithTutorialParent:(UIViewController*)tutorialParent {
-    [self setTutorialParent:tutorialParent];
-}
-
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator {
     [indicator setHidden:YES];
     [self setIndicator:indicator];
@@ -173,17 +167,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)didAppear {
     [super didAppear];
-    if ([self tutorialParent]) {
-        __weak typeof(self) weakSelf = self;
-        int64_t delta = (int64_t)(HEMSleepSoundPlayerTutorialDelay * NSEC_PER_SEC);
-        dispatch_time_t after = dispatch_time(DISPATCH_TIME_NOW, delta);
-        dispatch_after(after, dispatch_get_main_queue(), ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if ([strongSelf isViewFullyVisible:[strongSelf collectionView]]) {
-                [HEMTutorial showTutorialForSleepSoundsIfNeeded];
-            }
-        });
-    }
     
     if (![self isWaitingForOptionChange]) {
         [SENAnalytics track:HEMAnalyticsEventSleepSoundView];

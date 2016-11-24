@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0.1
+
+New:
+
+* Building with iOS 10 SDK
+* Dropped support for iOS 8
+* Switched to using SF Font (system font)
+* Removed account settings breadcrumbs
+* Remove welcome cards that show up automatically
+
 ## 1.6.2.6
 
 Fixes:

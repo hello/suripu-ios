@@ -11,24 +11,6 @@
 
 @implementation UIFont (HEMStyle)
 
-static NSString* const HEMFontFamilyName = @"Avenir";
-static NSString* const HEMFontFamilyNameBook = @"Avenir-Book";
-static NSString* const HEMFontFamilyNameHeavy = @"Avenir-Heavy";
-static NSString* const HEMFontFamilyNameLight = @"Avenir-Light";
-static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
-static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
-static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
-
-static NSString* const HEMFontFamilyNameModernUltraLight = @"AvenirNext-UltraLight";
-static NSString* const HEMFontFamilyNameModernRegular = @"AvenirNext-Regular";
-static NSString* const HEMFontFamilyNameModernMedium = @"AvenirNext-Medium";
-static NSString* const HEMFontFamilyNameModernLight = @"AvenirNext-Light";
-static NSString* const HEMFontFamilyNameModernThin = @"AvenirNext-Thin";
-
-static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
-static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
-static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
-
 #pragma mark - Style guide
 
 + (UIFont*)h1 {

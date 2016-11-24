@@ -104,6 +104,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Sense requires read access to update Sleep Analysis data that has been corrected</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Sense requires write access to provide Sleep Analysis data to the Health app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Sense uses your location to know sunrise and sunset times, local weather, and more.</string>
 	<key>PillFirmwareURL</key>
@@ -130,13 +134,6 @@
 	<string>${SENSE_ZENDESK_TOKEN}</string>
 	<key>SenseZendeskURL</key>
 	<string>${SENSE_ZENDESK_URL}</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>AvenirNext-Light.ttf</string>
-		<string>AvenirNext-LightItalic.ttf</string>
-		<string>AvenirNext-Thin.ttf</string>
-		<string>AvenirNext-ThinItalic.ttf</string>
-	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -166,6 +163,7 @@
 	<array>
 		<string>armv7</string>
 		<string>bluetooth-le</string>
+		<string>healthkit</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>

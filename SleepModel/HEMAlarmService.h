@@ -47,7 +47,8 @@ typedef void(^HEMAlarmsHandler)(NSArray<SENAlarm*>* _Nullable alarms, NSError* _
 - (BOOL)canCreateMoreAlarms;
 - (BOOL)useMilitaryTimeFormat;
 - (BOOL)hasLoadedAlarms;
-- (SENAlarmExpansion*)alarmExpansionIn:(HEMAlarmCache*)alarm forExpansion:(SENExpansion*)expansion;
+- (nullable SENAlarmExpansion*)alarmExpansionIn:(HEMAlarmCache*)alarm
+                                   forExpansion:(SENExpansion*)expansion;
 - (NSInteger)numberOfEnabledExpansionsIn:(SENAlarm*)alarm;
 - (SENAlarmRepeatDays)dayForNonRepeatingAlarmWithHour:(NSUInteger)hour minute:(NSUInteger)minute;
 

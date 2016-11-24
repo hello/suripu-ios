@@ -34,8 +34,8 @@ typedef void(^HEMFormSaveHandler)(NSString* _Nullable errorMessage);
 - (void)bindWithSaveItem:(UIBarButtonItem*)saveItem;
 
 // for subclasses to override
-- (NSString*)existingTextForFieldInRow:(NSInteger)row;
-- (NSString*)placeHolderTextForFieldInRow:(NSInteger)row;
+- (nullable NSString*)existingTextForFieldInRow:(NSInteger)row;
+- (nullable NSString*)placeHolderTextForFieldInRow:(NSInteger)row;
 - (UIKeyboardType)keyboardTypeForFieldInRow:(NSInteger)row;
 - (UITextAutocorrectionType)fieldAutocorrectTypeInRow:(NSInteger)row;
 - (UITextAutocapitalizationType)fieldCapitalizationTypeInRow:(NSInteger)row;

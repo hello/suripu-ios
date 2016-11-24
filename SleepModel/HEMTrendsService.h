@@ -61,7 +61,7 @@ typedef void(^HEMTrendsServiceDataHandler)(SENTrends* _Nullable trends, SENTrend
  * @param timeScale: the time scale for the trends
  * @return cached trends if any
  */
-- (SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale;
+- (nullable SENTrends*)cachedTrendsForTimeScale:(SENTrendsTimeScale)timeScale;
 
 /**
  * @discussion

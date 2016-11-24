@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0.3
+
+Fixes:
+
+* Added privacy info for bluetooth and photo library
+* Fixed some nullability warning / checks
+
+## 2.0.0.2
+
+Notes:
+
+* Bumping version only because of iTunesconnect error 
+
 ## 2.0.0.1
 
 New:

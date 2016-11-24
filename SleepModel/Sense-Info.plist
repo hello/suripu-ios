@@ -35,7 +35,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.0.1</string>
+	<string>2.0.0.3</string>
 	<key>FacebookAppID</key>
 	<string>372438546161587</string>
 	<key>FacebookDisplayName</key>
@@ -104,12 +104,16 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This application requires access to Bluetooth to interact with Sense and the Sleep Pill</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Sense requires read access to update Sleep Analysis data that has been corrected</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Sense requires write access to provide Sleep Analysis data to the Health app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Sense uses your location to know sunrise and sunset times, local weather, and more.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Sense requires access to your photo library for your cover photo</string>
 	<key>PillFirmwareURL</key>
 	<string>${PILL_FIRMWARE_URL}</string>
 	<key>SenseAllowSupportOptions</key>

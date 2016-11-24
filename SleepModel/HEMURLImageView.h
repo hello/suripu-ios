@@ -54,7 +54,7 @@ typedef void(^HEMURLImageCallback)(UIImage* _Nullable image, NSString* _Nullable
  * @param completion: the callback to invoke when image has been downloaded / loaded.
  *                    If url is the same as the currentImageURL, params will be nil
  */
-- (void)setImageWithURL:(NSString *)url completion:(HEMURLImageCallback)completion;
+- (void)setImageWithURL:(nullable NSString *)url completion:(HEMURLImageCallback)completion;
 
 /**
  * @discussion

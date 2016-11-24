@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HEMSleepPillDfuViewController : HEMBaseController
 
 @property (nonatomic, strong, nullable) HEMDeviceService* deviceService;
-@property (nonatomic, strong) SENSleepPill* sleepPillToDfu;
+@property (nonatomic, strong, nullable) SENSleepPill* sleepPillToDfu;
 @property (nonatomic, weak) id<HEMSleepPillDFUDelegate> delegate;
 
 @end

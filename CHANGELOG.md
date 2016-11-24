@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0.2
+
+Notes:
+
+* Bumping version only because of iTunesconnect error 
+
 ## 2.0.0.1
 
 New:

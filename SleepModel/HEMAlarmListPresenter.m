@@ -360,12 +360,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
                 
                 args = @[attributedTitle, attributedMinValue, attributedMaxValue];
             }
-            
-            NSString* minValue = [NSString stringWithFormat:@"%.0f", range.min];
-            NSAttributedString* attributedMinValue =
-                [[NSAttributedString alloc] initWithString:minValue attributes:valueAttributes];
-            
-            args = @[attributedTitle, attributedMinValue, attributedMaxValue];
+
             break;
         }
     }

@@ -45,7 +45,8 @@ typedef void(^HEMLocationHandler)(HEMLocation* _Nullable mostRecentLocation, NSE
 
 - (HEMLocationAuthStatus)authorizationStatus;
 - (void)requestPermission:(HEMLocationAuthorizationHandler)authHandler;
-- (HEMLocationActivity*)startLocationActivity:(HEMLocationHandler)update error:(NSError**)error;
+- (nullable HEMLocationActivity*)startLocationActivity:(HEMLocationHandler)update
+                                                 error:(NSError**)error;
 - (void)stopLocationActivity:(HEMLocationActivity*)activity;
 
 @end

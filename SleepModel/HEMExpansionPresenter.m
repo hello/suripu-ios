@@ -556,7 +556,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             category = @"light";
             break;
         case SENExpansionTypeThermostat:
-            category = @"thermostat";
+            category = @"temperature";
+            break;
         default:
             category = @"generic";
             break;

@@ -386,7 +386,6 @@
 		BFBC78B41D2C959E00076235 /* HEMPillFinderPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBC78B31D2C959E00076235 /* HEMPillFinderPresenter.m */; };
 		BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFBECCE41A15706700335CC6 /* Onboarding.storyboard */; };
 		BFBEE9121D18AC69007A986B /* HEMAlarmListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBEE9111D18AC69007A986B /* HEMAlarmListPresenter.m */; };
-		BFBEFA871D10D4630060908A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBEFA861D10D4630060908A /* HealthKit.framework */; };
 		BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */; };
 		BFC0D66D1D9D8F7A00239B89 /* HEMExpansionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0D66C1D9D8F7A00239B89 /* HEMExpansionHeaderView.m */; };
 		BFC0D6701D9D91F400239B89 /* HEMExpansionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0D66F1D9D91F400239B89 /* HEMExpansionViewController.m */; };
@@ -406,10 +405,6 @@
 		BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */; };
 		BFCB89471BFBCAEA00A72ED3 /* TimeZones.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFCB89451BFBCAEA00A72ED3 /* TimeZones.plist */; };
 		BFCB89481BFBCAEA00A72ED3 /* TZCountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFCB89461BFBCAEA00A72ED3 /* TZCountryCodes.plist */; };
-		BFCB894D1BFBCAFB00A72ED3 /* AvenirNext-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFCB89491BFBCAFB00A72ED3 /* AvenirNext-Light.ttf */; };
-		BFCB894E1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFCB894A1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf */; };
-		BFCB894F1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFCB894B1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf */; };
-		BFCB89501BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFCB894C1BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf */; };
 		BFCB91C21DB16F7900810CFB /* HEMMacAddressHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB91C11DB16F7900810CFB /* HEMMacAddressHeaderView.m */; };
 		BFCB91C61DB57EA900810CFB /* HEMVoiceSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB91C51DB57EA900810CFB /* HEMVoiceSettingsViewController.m */; };
 		BFCB91CB1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCB91CA1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m */; };
@@ -428,6 +423,7 @@
 		BFD7E7A51D9B45E0007DB6E4 /* HEMLogUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7A41D9B45E0007DB6E4 /* HEMLogUtils.m */; };
 		BFD7E7AA1D9C387A007DB6E4 /* HEMExpansionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7A91D9C387A007DB6E4 /* HEMExpansionListViewController.m */; };
 		BFD7E7AD1D9C3E19007DB6E4 /* HEMExpansionListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7AC1D9C3E19007DB6E4 /* HEMExpansionListPresenter.m */; };
+		BFD89A6E1DE6805F005DC2FF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */; };
 		BFD9A96D1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */; };
 		BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9721D5A8C37003EC82A /* HEMNewSensePresenter.m */; };
 		BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9761D5A9A14003EC82A /* HEMUpgradeSensePresenter.m */; };
@@ -440,7 +436,6 @@
 		BFDD8BE41DCFB63000E20B42 /* HEMThermostatRangePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDD8BE31DCFB63000E20B42 /* HEMThermostatRangePicker.m */; };
 		BFDFCE9F1B72884B000DA303 /* HEMSensorValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCE9E1B72884B000DA303 /* HEMSensorValueFormatter.m */; };
 		BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDFCEA11B729FEC000DA303 /* HEMSensorValueFormatterSpec.m */; };
-		BFE1EF861DDE711C008AA3B1 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBEFA861D10D4630060908A /* HealthKit.framework */; };
 		BFE375E01CEB98640029EE66 /* HEMFacebookService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375DF1CEB98640029EE66 /* HEMFacebookService.m */; };
 		BFE375E31CEBD1200029EE66 /* HEMPhotoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375E21CEBD1200029EE66 /* HEMPhotoHeaderView.m */; };
 		BFE375E61CEBDB440029EE66 /* HEMBasicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE375E51CEBDB440029EE66 /* HEMBasicTableViewCell.m */; };
@@ -1217,7 +1212,6 @@
 		BFBECCE61A15707100335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		BFBEE9101D18AC69007A986B /* HEMAlarmListPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmListPresenter.h; sourceTree = "<group>"; };
 		BFBEE9111D18AC69007A986B /* HEMAlarmListPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmListPresenter.m; sourceTree = "<group>"; };
-		BFBEFA861D10D4630060908A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+HEMMapping.h"; sourceTree = "<group>"; };
 		BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+HEMMapping.m"; sourceTree = "<group>"; };
 		BFC0D66B1D9D8F7A00239B89 /* HEMExpansionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMExpansionHeaderView.h; sourceTree = "<group>"; };
@@ -1251,10 +1245,6 @@
 		BFC99BC31B6BED49008F7F0D /* HEMAppReviewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppReviewSpec.m; sourceTree = "<group>"; };
 		BFCB89451BFBCAEA00A72ED3 /* TimeZones.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TimeZones.plist; path = Resources/Data/TimeZones.plist; sourceTree = SOURCE_ROOT; };
 		BFCB89461BFBCAEA00A72ED3 /* TZCountryCodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TZCountryCodes.plist; path = Resources/Data/TZCountryCodes.plist; sourceTree = SOURCE_ROOT; };
-		BFCB89491BFBCAFB00A72ED3 /* AvenirNext-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AvenirNext-Light.ttf"; path = "Resources/Fonts/AvenirNext-Light.ttf"; sourceTree = SOURCE_ROOT; };
-		BFCB894A1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AvenirNext-LightItalic.ttf"; path = "Resources/Fonts/AvenirNext-LightItalic.ttf"; sourceTree = SOURCE_ROOT; };
-		BFCB894B1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AvenirNext-Thin.ttf"; path = "Resources/Fonts/AvenirNext-Thin.ttf"; sourceTree = SOURCE_ROOT; };
-		BFCB894C1BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AvenirNext-ThinItalic.ttf"; path = "Resources/Fonts/AvenirNext-ThinItalic.ttf"; sourceTree = SOURCE_ROOT; };
 		BFCB91C01DB16F7900810CFB /* HEMMacAddressHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMacAddressHeaderView.h; sourceTree = "<group>"; };
 		BFCB91C11DB16F7900810CFB /* HEMMacAddressHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMacAddressHeaderView.m; sourceTree = "<group>"; };
 		BFCB91C41DB57EA900810CFB /* HEMVoiceSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceSettingsViewController.h; sourceTree = "<group>"; };
@@ -1292,6 +1282,7 @@
 		BFD7E7A91D9C387A007DB6E4 /* HEMExpansionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMExpansionListViewController.m; sourceTree = "<group>"; };
 		BFD7E7AB1D9C3E19007DB6E4 /* HEMExpansionListPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMExpansionListPresenter.h; sourceTree = "<group>"; };
 		BFD7E7AC1D9C3E19007DB6E4 /* HEMExpansionListPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMExpansionListPresenter.m; sourceTree = "<group>"; };
+		BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		BFD9A96B1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingNewSensePresenter.h; sourceTree = "<group>"; };
 		BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingNewSensePresenter.m; sourceTree = "<group>"; };
 		BFD9A9711D5A8C37003EC82A /* HEMNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNewSensePresenter.h; sourceTree = "<group>"; };
@@ -1410,7 +1401,7 @@
 				BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
-				BFBEFA871D10D4630060908A /* HealthKit.framework in Frameworks */,
+				BFD89A6E1DE6805F005DC2FF /* HealthKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				EB784F705A26CD9F419529BF /* Pods_SenseApp_Sense.framework in Frameworks */,
 			);
@@ -1433,7 +1424,6 @@
 				BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */,
 				BF896D4C1C74227E0095D37D /* Foundation.framework in Frameworks */,
 				BFC0E8831C0CE01400C6DFC7 /* MessageUI.framework in Frameworks */,
-				BFE1EF861DDE711C008AA3B1 /* HealthKit.framework in Frameworks */,
 				BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */,
 				EBD370F7E3364152E122EC70 /* Pods_SenseApp_RoomConditionsExtension.framework in Frameworks */,
 			);
@@ -1467,8 +1457,8 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */,
 				BF238DFD1D1DC75F00F6E62C /* Social.framework */,
-				BFBEFA861D10D4630060908A /* HealthKit.framework */,
 				BF896D4A1C7422720095D37D /* CoreFoundation.framework */,
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
 				BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */,
@@ -1529,7 +1519,6 @@
 		6003F594195388D20070C39A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BFCB893A1BFBC9DF00A72ED3 /* Fonts */,
 				BF781E3D19DF0F7400B68EBC /* Settings.bundle */,
 				8A5402A019AE72F300FC6085 /* Makefile */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
@@ -3397,17 +3386,6 @@
 			name = Review;
 			sourceTree = "<group>";
 		};
-		BFCB893A1BFBC9DF00A72ED3 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				BFCB89491BFBCAFB00A72ED3 /* AvenirNext-Light.ttf */,
-				BFCB894A1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf */,
-				BFCB894B1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf */,
-				BFCB894C1BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf */,
-			);
-			name = Fonts;
-			sourceTree = "<group>";
-		};
 		BFCB990D1CA9D245000D7619 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -3781,7 +3759,6 @@
 				BF53D8CA1D931AF900C24F9D /* Info.plist in Resources */,
 				BFFDC1071DD171BE008F001B /* Sensors.xcassets in Resources */,
 				BF1FDFB31DDD115600782CEF /* HEMAlarmValueRangePickerView.xib in Resources */,
-				BFCB894E1BFBCAFB00A72ED3 /* AvenirNext-LightItalic.ttf in Resources */,
 				8AD331281BB08C4300DFF95A /* Drawer.xcassets in Resources */,
 				BFA540E71BCDC326007AF607 /* HEMMeetSenseView.xib in Resources */,
 				BFF93EA61D19EA540038419A /* Social.xcassets in Resources */,
@@ -3789,10 +3766,8 @@
 				8A1743BC19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib in Resources */,
 				BFA540EF1BCEF10A007AF607 /* HEMIntroDescriptionView.xib in Resources */,
 				8AD3312E1BB08DCB00DFF95A /* Questions.xcassets in Resources */,
-				BFCB894D1BFBCAFB00A72ED3 /* AvenirNext-Light.ttf in Resources */,
 				8AD3313F1BB0A93600DFF95A /* Onboarding.xcassets in Resources */,
 				BF53D8CB1D931AF900C24F9D /* Sense.entitlements in Resources */,
-				BFCB89501BFBCAFB00A72ED3 /* AvenirNext-ThinItalic.ttf in Resources */,
 				8AD331261BB0836700DFF95A /* Alarm.xcassets in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				BF238E001D1E009D00F6E62C /* AmazonReviews.plist in Resources */,
@@ -3801,7 +3776,6 @@
 				BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
 				BFF364731D62702E008D4DF8 /* Upgrade.xcassets in Resources */,
-				BFCB894F1BFBCAFB00A72ED3 /* AvenirNext-Thin.ttf in Resources */,
 				BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */,
 				8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */,
 				8A63D5571A5F38FE00F5307D /* HEMTimelineFooterCollectionReusableView.xib in Resources */,
@@ -4585,6 +4559,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -5385,7 +5360,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5500,7 +5475,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

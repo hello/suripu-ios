@@ -97,9 +97,6 @@
 		8AD331301BB08DFF00DFF95A /* Timeline.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */; };
 		8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD331391BB090DA00DFF95A /* Tutorial.xcassets */; };
 		8AD3313F1BB0A93600DFF95A /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD3313D1BB0920800DFF95A /* Onboarding.xcassets */; };
-		8AD88C3A1A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD88C381A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m */; };
-		8AD88C3B1A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C391A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib */; };
-		8ADE06071B2A4DE100976654 /* HEMTimelineContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */; };
 		8ADE06391B2F521B00976654 /* HEMSplitTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE06381B2F521B00976654 /* HEMSplitTextFormatter.m */; };
 		8ADF03CD1A719185002B036A /* HEMDynamicsStatusStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADF03CC1A719185002B036A /* HEMDynamicsStatusStyler.m */; };
 		8AF041FF1B8F84FA0028CA2E /* SENSensorAccessibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF041FE1B8F84FA0028CA2E /* SENSensorAccessibility.m */; };
@@ -424,6 +421,8 @@
 		BFD7E7AA1D9C387A007DB6E4 /* HEMExpansionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7A91D9C387A007DB6E4 /* HEMExpansionListViewController.m */; };
 		BFD7E7AD1D9C3E19007DB6E4 /* HEMExpansionListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7E7AC1D9C3E19007DB6E4 /* HEMExpansionListPresenter.m */; };
 		BFD89A6E1DE6805F005DC2FF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */; };
+		BFD89A7A1DECCD82005DC2FF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD89A791DECCD82005DC2FF /* MainViewController.swift */; };
+		BFD89A7F1DECD7C5005DC2FF /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD89A7E1DECD7C5005DC2FF /* RootViewController.swift */; };
 		BFD9A96D1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */; };
 		BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9721D5A8C37003EC82A /* HEMNewSensePresenter.m */; };
 		BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A9761D5A9A14003EC82A /* HEMUpgradeSensePresenter.m */; };
@@ -687,11 +686,6 @@
 		8AD3312F1BB08DFF00DFF95A /* Timeline.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Timeline.xcassets; sourceTree = "<group>"; };
 		8AD331391BB090DA00DFF95A /* Tutorial.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tutorial.xcassets; sourceTree = "<group>"; };
 		8AD3313D1BB0920800DFF95A /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
-		8AD88C371A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineTopBarCollectionReusableView.h; sourceTree = "<group>"; };
-		8AD88C381A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineTopBarCollectionReusableView.m; sourceTree = "<group>"; };
-		8AD88C391A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMTimelineTopBarCollectionReusableView.xib; sourceTree = "<group>"; };
-		8ADE06051B2A4DE100976654 /* HEMTimelineContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineContainerViewController.h; sourceTree = "<group>"; };
-		8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineContainerViewController.m; sourceTree = "<group>"; };
 		8ADE06371B2F521B00976654 /* HEMSplitTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSplitTextFormatter.h; sourceTree = "<group>"; };
 		8ADE06381B2F521B00976654 /* HEMSplitTextFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSplitTextFormatter.m; sourceTree = "<group>"; };
 		8ADF03CB1A719185002B036A /* HEMDynamicsStatusStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDynamicsStatusStyler.h; sourceTree = "<group>"; };
@@ -1283,6 +1277,9 @@
 		BFD7E7AB1D9C3E19007DB6E4 /* HEMExpansionListPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMExpansionListPresenter.h; sourceTree = "<group>"; };
 		BFD7E7AC1D9C3E19007DB6E4 /* HEMExpansionListPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMExpansionListPresenter.m; sourceTree = "<group>"; };
 		BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		BFD89A791DECCD82005DC2FF /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		BFD89A7D1DECD049005DC2FF /* Sense-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sense-Bridging-Header.h"; sourceTree = "<group>"; };
+		BFD89A7E1DECD7C5005DC2FF /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		BFD9A96B1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingNewSensePresenter.h; sourceTree = "<group>"; };
 		BFD9A96C1D5A80E5003EC82A /* HEMOnboardingNewSensePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingNewSensePresenter.m; sourceTree = "<group>"; };
 		BFD9A9711D5A8C37003EC82A /* HEMNewSensePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNewSensePresenter.h; sourceTree = "<group>"; };
@@ -1480,10 +1477,12 @@
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F59C195388D20070C39A /* HEMAppDelegate.h */,
 				6003F59D195388D20070C39A /* HEMAppDelegate.m */,
+				BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */,
+				BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */,
+				BFD89A7E1DECD7C5005DC2FF /* RootViewController.swift */,
 				BFC458BC1BDAA2CE008EE871 /* HEMGlobalContants.h */,
 				BFC458BD1BDAA2CE008EE871 /* HEMGlobalContants.m */,
-				6003F59F195388D20070C39A /* Main.storyboard */,
-				BFBECCE41A15706700335CC6 /* Onboarding.storyboard */,
+				BFD89A7D1DECD049005DC2FF /* Sense-Bridging-Header.h */,
 				BFC4C2081B90D64100BB7761 /* Action Sheet */,
 				BFF03EC71A536D0C00BD65D4 /* Alerts */,
 				BFE3B8F919F5F1D40055B3B6 /* Analytics */,
@@ -1495,11 +1494,12 @@
 				BF48274A1C4F05EB005EDEB5 /* HealthKit */,
 				BF1E2E5A1A0068AA00DDD0D0 /* Insights */,
 				8ACD40421BAC987400BB2815 /* Launch */,
+				BFD89A6F1DECC603005DC2FF /* Main */,
 				8A28CAF919CB85030044A27D /* Notifications */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
 				BFC3AA0319C2650F0055D308 /* Questions */,
 				8A8621641B5D5D860033F44C /* Review */,
-				8ADF03CA1A719144002B036A /* Root */,
+				8ADF03CA1A719144002B036A /* Root (Deprecate) */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
 				BF3583881CAC8F0D00760CD4 /* Shortcuts */,
@@ -1735,8 +1735,6 @@
 				8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */,
 				BFAE0B1219AE57FA0021EC0D /* HEMSleepSummarySlideViewController.h */,
 				BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */,
-				8ADE06051B2A4DE100976654 /* HEMTimelineContainerViewController.h */,
-				8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */,
 				8AA1E62D1A899C0100590EB6 /* HEMTimelineFeedbackViewController.h */,
 				8AA1E62E1A899C0100590EB6 /* HEMTimelineFeedbackViewController.m */,
 			);
@@ -1887,9 +1885,6 @@
 				8A63D5531A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.h */,
 				8A63D5541A5F372C00F5307D /* HEMTimelineFooterCollectionReusableView.m */,
 				8A63D5561A5F38FE00F5307D /* HEMTimelineFooterCollectionReusableView.xib */,
-				8AD88C371A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.h */,
-				8AD88C381A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m */,
-				8AD88C391A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2026,6 +2021,7 @@
 		8AC49F971982DE4D00C2BD63 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				BFBECCE41A15706700335CC6 /* Onboarding.storyboard */,
 				8AD3313D1BB0920800DFF95A /* Onboarding.xcassets */,
 				BFD603CF1D5D3DB500F4E2D4 /* Flow */,
 				BF885F1F1CE54ED800A92F90 /* Presenters */,
@@ -2072,17 +2068,15 @@
 			name = Launch;
 			sourceTree = "<group>";
 		};
-		8ADF03CA1A719144002B036A /* Root */ = {
+		8ADF03CA1A719144002B036A /* Root (Deprecate) */ = {
 			isa = PBXGroup;
 			children = (
-				BF84C2011A0C1D23009471D5 /* HEMRootViewController.h */,
-				BF84C2021A0C1D23009471D5 /* HEMRootViewController.m */,
 				8ADF03CB1A719185002B036A /* HEMDynamicsStatusStyler.h */,
 				8ADF03CC1A719185002B036A /* HEMDynamicsStatusStyler.m */,
 				BF83399D1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.h */,
 				BF83399E1C18B8C500BFD0F4 /* HEMDynamicsShadowStyler.m */,
 			);
-			name = Root;
+			name = "Root (Deprecate)";
 			sourceTree = "<group>";
 		};
 		8B1DB6DF1C18BEE6006C8AFF /* Debug */ = {
@@ -3473,6 +3467,39 @@
 			name = Presenters;
 			sourceTree = "<group>";
 		};
+		BFD89A6F1DECC603005DC2FF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				6003F59F195388D20070C39A /* Main.storyboard */,
+				BFD89A721DECC68B005DC2FF /* Presenters */,
+				BFD89A711DECC676005DC2FF /* Views */,
+				BFD89A701DECC665005DC2FF /* View Controllers */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		BFD89A701DECC665005DC2FF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BFD89A791DECCD82005DC2FF /* MainViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BFD89A711DECC676005DC2FF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BFD89A721DECC68B005DC2FF /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Presenters;
+			sourceTree = "<group>";
+		};
 		BFD9A9691D5A7F3B003EC82A /* Upgrade */ = {
 			isa = PBXGroup;
 			children = (
@@ -3709,6 +3736,7 @@
 					BF7F1BC719E304050028F799 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = MSG86J7GNF;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -3788,7 +3816,6 @@
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				8AD331301BB08DFF00DFF95A /* Timeline.xcassets in Resources */,
 				BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */,
-				8AD88C3B1A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.xib in Resources */,
 				BFAB22D91AD35F9C00CCBF8A /* HEMRoomCheckView.xib in Resources */,
 				BF68B6771D8B6452001AD1EF /* HEMSensorScaleView.xib in Resources */,
 				BF21F01C1DAEE6400057F24E /* HEMVoiceExampleView.xib in Resources */,
@@ -4099,7 +4126,6 @@
 				BFCE1D321AA65A570076E855 /* HEMHaveSenseViewController.m in Sources */,
 				BFA540EA1BCDE0C6007AF607 /* HEMMeetSenseView.m in Sources */,
 				BF412EA01C90F7B6009514A1 /* HEMSleepSoundService.m in Sources */,
-				8AD88C3A1A087DD000B4F803 /* HEMTimelineTopBarCollectionReusableView.m in Sources */,
 				BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */,
 				BF535B6F1DA311B9001944F5 /* HEMExpansionAuthPresenter.m in Sources */,
 				BFB7C3B31B61AFC3001A6280 /* SENAnalytics+HEMAppAnalytics.m in Sources */,
@@ -4271,7 +4297,6 @@
 				8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */,
 				BF5F97311DB6C80D00EF460B /* HEMVolumeControlPresenter.m in Sources */,
 				BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */,
-				8ADE06071B2A4DE100976654 /* HEMTimelineContainerViewController.m in Sources */,
 				BFD7E79D1D9B2D0E007DB6E4 /* HEMSettingsPresenter.m in Sources */,
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
 				BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */,
@@ -4321,6 +4346,7 @@
 				BF5294721C6945BA00D931B7 /* HEMTrendsCalendarView.m in Sources */,
 				BF257EE71A1D1C2600DAF923 /* HEMAlertViewController.m in Sources */,
 				8A4B669E19F6CE4400445883 /* HEMActionSheetViewController.m in Sources */,
+				BFD89A7A1DECCD82005DC2FF /* MainViewController.swift in Sources */,
 				BFB7B2071CCEC52E0060999E /* HEMAlarmSoundsPresenter.m in Sources */,
 				BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */,
 				BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */,
@@ -4336,6 +4362,7 @@
 				BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */,
 				BFC99BBA1B69A4C4008F7F0D /* HEMAppReviewQuestion.m in Sources */,
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
+				BFD89A7F1DECD7C5005DC2FF /* RootViewController.swift in Sources */,
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,
 				BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */,
 				BFE375E31CEBD1200029EE66 /* HEMPhotoHeaderView.m in Sources */,
@@ -4658,6 +4685,7 @@
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
 				SENSE_ZENDESK_TOKEN = 7bb3a86905b08e1083752af7b1d4a430afb1a051b6dae18a;
 				SENSE_ZENDESK_URL = "https://helloinc.zendesk.com";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4918,7 +4946,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A8188E0B665E234041EC0F7 /* Pods-SenseApp-RoomConditionsExtension.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4996,6 +5024,7 @@
 				PROVISIONING_PROFILE = "";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5003,7 +5032,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2559FCAE45C2FDF1356B7CFE /* Pods-SenseApp-RoomConditionsExtension.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -5052,6 +5081,7 @@
 				PROVISIONING_PROFILE = "";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5237,7 +5267,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5FC3163179F316D2C6ABF78C /* Pods-SenseApp-RoomConditionsExtension.beta.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -5286,6 +5316,7 @@
 				PROVISIONING_PROFILE = "";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Beta;
 		};
@@ -5472,7 +5503,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0E191B22335665CA1D0D99C2 /* Pods-SenseApp-RoomConditionsExtension.dev.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -5521,6 +5552,7 @@
 				PROVISIONING_PROFILE = "";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Dev;
 		};

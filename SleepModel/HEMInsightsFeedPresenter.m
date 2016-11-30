@@ -576,7 +576,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     HEMWhatsNewLocation loc = [[self whatsNewService] location];
     switch (loc) {
         case HEMWhatsNewLocationSettings:
-            [[self delegate] presenter:self showTab:HEMRootDrawerTabSettings];
+            // FIXME: support settings
+            [[self delegate] presenter:self showTab:MainTabConditions];
             break;
         case HEMWhatsNewLocationNone:
         default:

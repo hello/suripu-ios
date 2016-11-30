@@ -18,13 +18,7 @@ CGFloat const HEMStyleButtonContainerBorderWidth = 0.5f;
 void ApplyHelloStyles (void) {
     NSArray* classes = @[[HEMStyledNavigationViewController class]];
     UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:classes];
-    
-    [appearance setBackgroundImage:[[UIImage alloc] init]
-                    forBarPosition:UIBarPositionAny
-                        barMetrics:UIBarMetricsDefault];
-    [appearance setShadowImage:[[UIImage alloc] init]];
-    [appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grey6],
-                                         NSFontAttributeName : [UIFont h5]}];
+    ApplyDefaultStyleForNavBarAppearance(appearance);
     
     NSDictionary* barButtonAttrs = @{NSFontAttributeName : [UIFont button],
                                      NSForegroundColorAttributeName : [UIColor tintColor]};
@@ -32,4 +26,13 @@ void ApplyHelloStyles (void) {
                                                 forState:UIControlStateNormal];
     
     [UIColor applyDefaultColorAppearances];
+}
+
+void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar) {
+    [navBar setBackgroundImage:[[UIImage alloc] init]
+                forBarPosition:UIBarPositionAny
+                    barMetrics:UIBarMetricsDefault];
+    [navBar setShadowImage:[[UIImage alloc] init]];
+    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grey6],
+                                     NSFontAttributeName : [UIFont h6]}];
 }

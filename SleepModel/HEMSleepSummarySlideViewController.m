@@ -52,14 +52,6 @@
     [self reloadDataWithController:[self timelineControllerForDate:date]];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerDidOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerDidCloseNotification
-                                               object:nil];
 }
 
 - (UIViewController*)timelineControllerForDate:(NSDate*)date {
@@ -71,6 +63,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     [self setHandHoldingService:[HEMHandHoldingService new]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -102,14 +96,20 @@
     }
 }
 
+- (void)reloadWithDate:(NSDate*)date {
+    UIViewController* timelineVC = [self timelineControllerForDate:date];
+    [self reloadDataWithController:timelineVC];
+}
+
 - (void)reloadDataWithController:(UIViewController*)controller {
-    if (!controller)
-        return;
-    [self setViewControllers:@[controller]
-                   direction:UIPageViewControllerNavigationDirectionForward
-     | UIPageViewControllerNavigationDirectionReverse
-                    animated:NO
-                  completion:nil];
+    if (controller) {
+        [[controller view] setFrame:[[self view] bounds]];
+        [self setViewControllers:@[controller]
+                       direction:UIPageViewControllerNavigationDirectionForward
+                                 | UIPageViewControllerNavigationDirectionReverse
+                        animated:NO
+                      completion:nil];
+    }
 }
 
 - (void)setSwipingEnabled:(BOOL)enabled {
@@ -141,20 +141,6 @@
 }
 
 - (void)didPan {
-}
-
-#pragma mark - Drawer Events
-
-- (void)drawerDidOpen {
-    [self setScrollingEnabled:NO];
-}
-
-- (void)drawerDidClose {
-    [self setScrollingEnabled:YES];
-}
-
-- (void)setScrollingEnabled:(BOOL)isEnabled {
-    [self setDataSource:isEnabled ? [self data] : nil];
 }
 
 #pragma mark - Cleanup

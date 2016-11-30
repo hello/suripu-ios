@@ -107,13 +107,13 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This application requires access to Bluetooth to interact with Sense and the Sleep Pill</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Sense requires read access to update Sleep Analysis data that has been corrected</string>
+	<string>Sense requires read access to update Sleep Analysis data in the Health app.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Sense requires write access to provide Sleep Analysis data to the Health app</string>
+	<string>Sense requires write access to provide Sleep Analysis data to the Health app.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Sense uses your location to know sunrise and sunset times, local weather, and more.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Sense requires access to your photo library for your cover photo</string>
+	<string>Sense requires access to your photos to upload a profile photo.</string>
 	<key>PillFirmwareURL</key>
 	<string>${PILL_FIRMWARE_URL}</string>
 	<key>SenseAllowSupportOptions</key>

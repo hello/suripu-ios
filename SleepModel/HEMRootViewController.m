@@ -27,7 +27,6 @@
 #import "HEMDynamicsStatusStyler.h"
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
-#import "HEMTimelineContainerViewController.h"
 #import "HEMOnboardingService.h"
 #import "HEMOnboardingController.h"
 #import "HEMAppUsage.h"
@@ -46,11 +45,6 @@
 #import "HEMShortcutService.h"
 #import "HEMDeviceService.h"
 #import "HEMSystemAlertService.h"
-
-NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
-NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
-NSString* const HEMRootDrawerDidOpenNotification = @"HEMRootDrawerDidOpenNotification";
-NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotification";
 
 @interface HEMRootViewController () <MSDynamicsDrawerViewControllerDelegate, UIPageViewControllerDelegate, HEMSystemAlertDelegate>
 
@@ -113,10 +107,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     HEMSleepSummarySlideViewController* slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
     [slideController setDelegate:self];
 
-    HEMTimelineContainerViewController* container = [HEMMainStoryboard instantiateTimelineContainerController];
-    [container setTimelineController:slideController];
-
-    return container;
+    return slideController;
 }
 
 - (void)viewDidBecomeActive
@@ -446,40 +437,34 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                 mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState
                         forDirection:(MSDynamicsDrawerDirection)direction
 {
-    switch (paneState) {
-    case MSDynamicsDrawerPaneStateClosed:
-        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayCloseNotification
-                                                            object:nil];
-        break;
-    case MSDynamicsDrawerPaneStateOpen:
-        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayOpenNotification
-                                                            object:nil];
-        break;
-    default:
-        break;
-    }
+//    switch (paneState) {
+//    case MSDynamicsDrawerPaneStateClosed:
+//        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayCloseNotification
+//                                                            object:nil];
+//        break;
+//    case MSDynamicsDrawerPaneStateOpen:
+//        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayOpenNotification
+//                                                            object:nil];
+//        break;
+//    default:
+//        break;
+//    }
 }
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController*)drawerViewController
                 didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState
                         forDirection:(MSDynamicsDrawerDirection)direction
 {
-    switch (paneState) {
-    case MSDynamicsDrawerPaneStateClosed:
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.close", nil));
-        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
-                                                            object:nil];
-        [SENAnalytics track:kHEMAnalyticsEventTimelineClose];
-        break;
-    case MSDynamicsDrawerPaneStateOpen:
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.open", nil));
-        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
-                                                            object:nil];
-        [SENAnalytics track:kHEMAnalyticsEventTimelineOpen];
-        break;
-    default:
-        break;
-    }
+//    switch (paneState) {
+//    case MSDynamicsDrawerPaneStateClosed:
+//            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, NSLocalizedString(@"drawer.action.close", nil));
+//        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
+//                                                            object:nil];
+//        [SENAnalytics track:kHEMAnalyticsEventTimelineClose];
+//        break;
+//    default:
+//        break;
+//    }
 }
 
 #pragma mark - UIPageViewControllerDelegate for Timeline events

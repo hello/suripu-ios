@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Sense-Swift.h"
+
 #import "HEMPresenter.h"
 #import "HEMRootViewController.h"
 
@@ -35,7 +37,8 @@ typedef void(^HEMInsightsFeedDataLoadedBlock)(NSArray* _Nullable data);
 - (void)presenter:(HEMInsightsFeedPresenter*)presenter
     showQuestions:(NSArray<SENQuestion*>*)questions
        completion:(nullable HEMInsightsPresenterCompletion)completion;
-- (void)presenter:(HEMInsightsFeedPresenter*)presenter showTab:(HEMRootDrawerTab)tab;
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+          showTab:(MainTab)tab;
 - (UIView*)activityContainerViewFor:(HEMInsightsFeedPresenter*)presenter;
 - (void)presenter:(HEMInsightsFeedPresenter *)presenter showController:(UIViewController*)controller;
 - (void)presenter:(HEMInsightsFeedPresenter*)presenter

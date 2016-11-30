@@ -96,17 +96,19 @@
 }
 
 - (void)updatePaneVisibilityAnimated:(BOOL)animated {
-    if (![self manuallyHandleDrawerVisibility]) {
-        HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-        [root setPaneVisible:[self shouldShowDrawerPane] animated:animated];
-    }
+#pragma mark - Decide if we still want this
+//    if (![self manuallyHandleDrawerVisibility]) {
+//        HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+//        [root setPaneVisible:[self shouldShowDrawerPane] animated:animated];
+//    }
 }
 
 #pragma mark - Top Bar Handling
 
 - (void)updateBarVisibilityWithRatio:(CGFloat)ratio {
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root showPartialSettingsDrawerTopBarWithRatio:ratio];
+#pragma mark - decide if we need to do this or not
+//    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+//    [root showPartialSettingsDrawerTopBarWithRatio:ratio];
 }
 
 - (void)updateTopBarVisibilityAnimated:(BOOL)animated {
@@ -117,13 +119,16 @@
 }
 
 - (void)hideTopBarAnimated:(BOOL)animated {
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root hideSettingsDrawerTopBar:YES animated:animated];
+#pragma message ("decide if we need to hide / show tab bar")
+    // HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+    // [root hideSettingsDrawerTopBar:YES animated:animated];
 }
 
 - (void)showTopBarAnimated:(BOOL)animated {
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root hideSettingsDrawerTopBar:NO animated:animated];
+    // TODO: decide if we need this or not
+#pragma message ("decide if we need to hide / show tab bar")
+    // HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+    // [root hideSettingsDrawerTopBar:NO animated:animated];
 }
 
 #pragma mark - Gesture Recognizer

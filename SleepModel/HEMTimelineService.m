@@ -16,10 +16,35 @@
 
 static CGFloat const HEMTimelineNextDayHour = 3; // hour of day (3am)
 static NSString* const HEMTimelineSettingsAccountCreationDate = @"account.creation.date";
+static NSString* const kHEMTimelineRangeDateFormat = @"MMMM d";
+static NSString* const kHEMTimelineWeekDateFormat = @"EEEE";
 
 NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline.amended";
 
+@interface HEMTimelineService()
+
+@property (strong, nonatomic) NSDateFormatter *weekdayDateFormatter;
+@property (strong, nonatomic) NSDateFormatter *rangeDateFormatter;
+@property (strong, nonatomic) NSCalendar* calendar;
+
+@end
+
 @implementation HEMTimelineService
+
+- (instancetype)init {
+    if (self = [super init]) {
+        NSDateFormatter* rangeFormatter = [NSDateFormatter new];
+        [rangeFormatter setDateFormat:kHEMTimelineRangeDateFormat];
+        _rangeDateFormatter = rangeFormatter;
+        
+        NSDateFormatter* weekFormatter = [NSDateFormatter new];
+        [weekFormatter setDateFormat:kHEMTimelineWeekDateFormat];
+        _weekdayDateFormatter = weekFormatter;
+        
+        _calendar = [NSCalendar autoupdatingCurrentCalendar];
+    }
+    return self;
+}
 
 - (NSDate*)accountCreationDateFrom:(SENAccount*)account {
     SENLocalPreferences* localPreferences = [SENLocalPreferences sharedPreferences];
@@ -98,6 +123,26 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
                              completion (updatedTimeline, error);
                          }];
     
+}
+
+- (NSString*)stringValueForTimelineDate:(NSDate*)date {
+    NSString* title = nil;
+    NSDate* previousDay = [[NSDate date] previousDay];
+    NSDateComponents *diff = [[self calendar] components:NSCalendarUnitDay
+                                                fromDate:date
+                                                  toDate:previousDay
+                                                 options:0];
+    NSInteger daysAgo = [diff day];
+    
+    if (daysAgo == 0) {
+        title =  NSLocalizedString(@"sleep-history.last-night", nil);
+    } else if (daysAgo < 7) {
+        title =  [[self weekdayDateFormatter] stringFromDate:date];
+    } else {
+        title = [[self rangeDateFormatter] stringFromDate:date];
+    }
+    
+    return title;
 }
 
 @end

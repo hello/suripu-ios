@@ -6,7 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-#import "SENService.h"
+#import <SenseKit/SENService.h>
 
 typedef NS_ENUM(NSUInteger, HEMShortcutAction) {
     HEMShortcutActionUnknown = 1,

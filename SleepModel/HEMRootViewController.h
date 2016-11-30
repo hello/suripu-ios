@@ -23,11 +23,6 @@ typedef NS_ENUM(NSUInteger, HEMRootArea) {
     HEMRootAreaBackView
 };
 
-extern NSString* const HEMRootDrawerMayOpenNotification;
-extern NSString* const HEMRootDrawerMayCloseNotification;
-extern NSString* const HEMRootDrawerDidOpenNotification;
-extern NSString* const HEMRootDrawerDidCloseNotification;
-
 @interface HEMRootViewController : HEMBaseController
 
 + (instancetype)rootViewControllerForKeyWindow;

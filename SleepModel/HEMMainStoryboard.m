@@ -104,7 +104,6 @@ static NSString *const _HEMtext = @"text";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMtimeZoneNavViewController = @"timeZoneNavViewController";
 static NSString *const _HEMtimeZoneViewController = @"timeZoneViewController";
-static NSString *const _HEMtimelineContainerController = @"timelineContainerController";
 static NSString *const _HEMtimelineFeedback = @"timelineFeedback";
 static NSString *const _HEMtimezone = @"timezone";
 static NSString *const _HEMtitle = @"title";
@@ -246,7 +245,6 @@ static NSString *const _HEMwelcome = @"welcome";
 +(id)instantiateSupportTopicsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsupportTopicsViewController]; }
 +(id)instantiateTimeZoneNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneNavViewController]; }
 +(id)instantiateTimeZoneViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneViewController]; }
-+(id)instantiateTimelineContainerController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineContainerController]; }
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
 +(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
 +(id)instantiateTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtutorialViewController]; }

@@ -15,7 +15,6 @@ typedef NS_ENUM(NSInteger, HEMHandHolding) {
     HEMHandHoldingSensorScrubbing,
     HEMHandHoldingTimelineSwipe,
     HEMHandHoldingTimelineZoom,
-    HEMHandHoldingTimelineOpen,
     HEMHandHoldingAccountName
 };
 

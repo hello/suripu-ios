@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol HEMTimelineHandHoldingDelegate <NSObject>
 
-- (BOOL)isTimelineFullyVisibleFor:(HEMTimelineHandHoldingPresenter*)presenter;
-- (HEMTimelineTopBarCollectionReusableView*)timelineTopBarForPresenter:(HEMTimelineHandHoldingPresenter*)presenter;
 - (UIView*)timelineContainerViewForPresenter:(HEMTimelineHandHoldingPresenter*)presenter;
 
 @end

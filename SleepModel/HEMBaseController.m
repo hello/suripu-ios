@@ -16,6 +16,8 @@
 #import "HEMAccountService.h"
 #import "HEMSnazzBarController.h"
 
+#import "Sense-Swift.h"
+
 @interface HEMBaseController()
 
 @property (nonatomic, strong) HEMNavigationShadowView* shadowView;
@@ -30,13 +32,12 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self listenForAccountEvents];
-        [self listenForDrawerEvents];
     }
     return self;
 }
 
 - (UIViewController*)rootViewController {
-    return [HEMRootViewController rootViewControllerForKeyWindow];
+    return [RootViewController currentRootViewController];
 }
 
 #pragma mark - View Controller Lifecycle Events
@@ -121,27 +122,6 @@
     [[self presenters] makeObjectsPerformSelector:@selector(didEnterBackground)];
 }
 
-#pragma mark - Drawer Events
-
-- (void)listenForDrawerEvents {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerDidOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerDidCloseNotification
-                                               object:nil];
-}
-
-- (void)drawerDidOpen {
-    [[self presenters] makeObjectsPerformSelector:@selector(didOpenDrawer)];
-}
-
-- (void)drawerDidClose {
-    [[self presenters] makeObjectsPerformSelector:@selector(didCloseDrawer)];
-}
-
 #pragma mark - Shadows
 
 - (BOOL)wantsShadowView {
@@ -224,6 +204,17 @@
         });
     } else {
         [self dismissViewControllerAnimated:YES completion:done];
+    }
+}
+
+#pragma mark - Main tabs
+
+- (void)switchMainTab:(NSInteger)tab {
+    UIViewController* controller = [RootViewController currentRootViewController];
+    if ([controller isKindOfClass:[RootViewController class]]) {
+        RootViewController* rootVC = (id) controller;
+        MainViewController* mainVC = [rootVC mainViewController];
+        [mainVC switchTabWithTab:tab];
     }
 }
 

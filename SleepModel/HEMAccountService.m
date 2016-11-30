@@ -171,7 +171,8 @@ CGFloat const HEMAccountPhotoDefaultCompression = 0.8f;
     dispatch_group_notify(updateGroup, dispatch_get_main_queue(), ^{
         completion ([weakSelf account], [weakSelf preferences]);
         NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-        [center postNotificationName:HEMAccountServiceNotificationDidRefresh object:nil];
+        [center postNotificationName:HEMAccountServiceNotificationDidRefresh
+                              object:nil];
     });
 }
 

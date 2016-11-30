@@ -145,18 +145,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     [[self sensorService] stopPollingForData];
 }
 
-- (void)didOpenDrawer {
-    [super didOpenDrawer];
-    if ([self isViewFullyVisible:[self collectionView]]) {
-        [self startPolling];
-    }
-}
-
-- (void)didCloseDrawer {
-    [super didCloseDrawer];
-    [[self sensorService] stopPollingForData];
-}
-
 - (void)didComeBackFromBackground {
     [super didComeBackFromBackground];
     [self startPolling];

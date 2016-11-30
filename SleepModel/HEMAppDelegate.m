@@ -4,7 +4,6 @@
 
 #import "HEMAppDelegate.h"
 #import "HEMStyle.h"
-#import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMAlarmListViewController.h"
@@ -23,6 +22,8 @@
 #import "HEMHealthKitService.h"
 #import "HEMShortcutService.h"
 #import "HEMFacebookService.h"
+
+#import "Sense-Swift.h"
 
 @implementation HEMAppDelegate
 
@@ -44,11 +45,6 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [HEMLogUtils enableLogger];
     [SENAnalytics enableAnalytics];
 
-    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        [HEMNotificationHandler handleRemoteNotificationWithInfo:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]
-                                          fetchCompletionHandler:NULL];
-    }
-
     [self deauthorizeIfNeeded];
     [self configureAppearance];
     [self registerForNotifications];
@@ -64,11 +60,14 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     HEMFacebookService* fb = [HEMFacebookService new];
     if (![fb open:application url:url source:sourceApplication annotation:annotation]) {
         NSString* lastPath = [url lastPathComponent];
+        // TODO: handle this in the main view controller instead
         if ([lastPath isEqualToString:kHEMAppExtRoom]) {
             NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
             [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
-            HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-            [rootVC showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:YES];
+            
+            RootViewController* rootVC = [RootViewController currentRootViewController];
+            MainViewController* mainVC = [rootVC mainViewController];
+            [mainVC switchTabWithTab:MainTabConditions];
         }
     }
     return YES;
@@ -189,14 +188,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
-    [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
-}
-
-- (void)application:(UIApplication *)application
-didReceiveRemoteNotification:(NSDictionary *)userInfo
-fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [HEMNotificationHandler handleRemoteNotificationWithInfo:userInfo
-                                      fetchCompletionHandler:completionHandler];
+    [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken
+                                                         completion:NULL];
 }
 
 - (void)configureAppearance {

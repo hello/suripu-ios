@@ -9,7 +9,6 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMSettingsNavigationController.h"
-#import "HEMSnazzBarController.h"
 
 @interface HEMSettingsNavigationController()
 

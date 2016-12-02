@@ -79,6 +79,10 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     return NO;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setEnableBack:YES]; // by default

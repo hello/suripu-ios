@@ -5,7 +5,6 @@
 //  Created by Jimmy Lu on 8/21/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
 #import <UIKit/UIKit.h>
 #import "HEMNavigationShadowView.h"
 
@@ -64,9 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)viewDidEnterBackground;
 - (BOOL)showIndicatorForCrumb:(NSString*)crumb;
 - (void)clearCrumb:(NSString*)crumb;
-- (void)reloadTopBar;
 - (void)didRefreshAccount;
 - (void)dismissModalAfterDelay:(BOOL)delay;
+- (void)switchMainTab:(NSInteger)tab;
 
 @end
 

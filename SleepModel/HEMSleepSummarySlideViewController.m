@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
+#import <SenseKit/SENTimeline.h>
+
 #import "UIImage+ImageEffects.h"
 #import "UIView+HEMSnapshot.h"
 #import "NSDate+HEMRelative.h"
@@ -15,14 +19,15 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
-#import "HEMRootViewController.h"
 #import "HEMHandHoldingService.h"
+#import "HEMStyle.h"
 
 @interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
 @property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
+@property (nonatomic, assign) NSInteger lastNightSleepScore;
 
 @end
 
@@ -49,17 +54,18 @@
 
 - (void)__initStackWithControllerForDate:(NSDate*)date
 {
-    [self reloadDataWithController:[self timelineControllerForDate:date]];
+    _lastNightSleepScore = -1; // initialize to -1 to make update take affect for 0
+    
+    NSInteger lastNightSleepScore = 0;
+    HEMSleepGraphViewController* timelineVC = (id) [self timelineControllerForDate:date];
+    if ([timelineVC isLastNight]) {
+        SENTimeline* timeline = [SENTimeline timelineForDate:date];
+        lastNightSleepScore = [[timeline score] integerValue];
+    }
+    [self updateLastNightSleepScore:lastNightSleepScore];
+    [self reloadDataWithController:timelineVC];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerDidOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerDidCloseNotification
-                                               object:nil];
 }
 
 - (UIViewController*)timelineControllerForDate:(NSDate*)date {
@@ -68,9 +74,20 @@
     return controller;
 }
 
+- (void)updateLastNightSleepScore:(NSInteger)sleepScore {
+    if (sleepScore != [self lastNightSleepScore]) {
+        [self setLastNightSleepScore:sleepScore];
+        UIImage* sleepScoreImage = [UIImage iconFromSleepScoreWithSleepScore:sleepScore];
+        self.tabBarItem.image = sleepScoreImage;
+        self.tabBarItem.selectedImage = sleepScoreImage;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     [self setHandHoldingService:[HEMHandHoldingService new]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -102,14 +119,20 @@
     }
 }
 
+- (void)reloadWithDate:(NSDate*)date {
+    UIViewController* timelineVC = [self timelineControllerForDate:date];
+    [self reloadDataWithController:timelineVC];
+}
+
 - (void)reloadDataWithController:(UIViewController*)controller {
-    if (!controller)
-        return;
-    [self setViewControllers:@[controller]
-                   direction:UIPageViewControllerNavigationDirectionForward
-     | UIPageViewControllerNavigationDirectionReverse
-                    animated:NO
-                  completion:nil];
+    if (controller) {
+        [[controller view] setFrame:[[self view] bounds]];
+        [self setViewControllers:@[controller]
+                       direction:UIPageViewControllerNavigationDirectionForward
+                                 | UIPageViewControllerNavigationDirectionReverse
+                        animated:NO
+                      completion:nil];
+    }
 }
 
 - (void)setSwipingEnabled:(BOOL)enabled {
@@ -141,20 +164,6 @@
 }
 
 - (void)didPan {
-}
-
-#pragma mark - Drawer Events
-
-- (void)drawerDidOpen {
-    [self setScrollingEnabled:NO];
-}
-
-- (void)drawerDidClose {
-    [self setScrollingEnabled:YES];
-}
-
-- (void)setScrollingEnabled:(BOOL)isEnabled {
-    [self setDataSource:isEnabled ? [self data] : nil];
 }
 
 #pragma mark - Cleanup

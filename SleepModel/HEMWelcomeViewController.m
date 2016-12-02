@@ -14,7 +14,6 @@
 #import "HEMWelcomeViewController.h"
 #import "HEMMeetSenseView.h"
 #import "HEMIntroDescriptionView.h"
-#import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMAudioService.h"
@@ -55,15 +54,14 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 @implementation HEMWelcomeViewController
 
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setAudioService:[HEMAudioService new]];
     [self configureAppearance];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self hideStatusBar];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -75,11 +73,6 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 - (void)adjustConstraintsForIPhone4 {
     [self updateConstraint:[self introImageHeightConstraint] withDiff:-48.0f];
-}
-
-- (void)hideStatusBar {
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root hideStatusBar];
 }
 
 - (void)configureAppearance {

@@ -90,9 +90,11 @@
            }];
 }
 
-- (void)animateView:(UIView*)view verticalOffset:(CGFloat)verticalOffset
-          transform:(CATransform3D)transform otherAnimations:(void(^)())animations completion:(void(^)())completion
-{
+- (void)animateView:(UIView*)view
+     verticalOffset:(CGFloat)verticalOffset
+          transform:(CATransform3D)transform
+    otherAnimations:(void(^)())animations
+         completion:(void(^)())completion {
     [UIView animateWithDuration:[self transitionDuration:nil] animations:^{
         if (animations)
             animations();

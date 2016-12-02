@@ -44,8 +44,8 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"sensorsBarIcon"];
-        self.tabBarItem.selectedImage = [UIImage imageNamed:@"sensorsBarIconActive"];
+        self.tabBarItem.image = [UIImage imageNamed:@"senseTabBarIcon"];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"senseTabBarIcon"];
     }
     return self;
 }

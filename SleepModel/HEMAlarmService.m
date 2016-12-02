@@ -261,6 +261,16 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
     return [self alarms] != nil;
 }
 
+- (BOOL)isSupported:(SENAlarmExpansion*)expansion {
+    switch ([expansion type]) {
+        case SENExpansionTypeLights:
+        case SENExpansionTypeThermostat:
+            return YES;
+        default:
+            return NO;
+    }
+}
+
 - (SENAlarmExpansion*)alarmExpansionIn:(HEMAlarmCache*)alarm
                           forExpansion:(SENExpansion*)expansion {
     for (SENAlarmExpansion* alarmExpansion in [alarm expansions]) {
@@ -274,7 +284,7 @@ static NSUInteger const HEMAlarmServiceMaxAlarmLimit = 30; // matches server
 - (NSInteger)numberOfEnabledExpansionsIn:(SENAlarm*)alarm {
     NSInteger count = 0;
     for (SENAlarmExpansion* expansion in [alarm expansions]) {
-        if ([expansion isEnable]) {
+        if ([expansion isEnable] && [self isSupported:expansion]) {
             count++;
         }
     }

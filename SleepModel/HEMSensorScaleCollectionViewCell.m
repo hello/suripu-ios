@@ -14,7 +14,7 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
 
 @interface HEMSensorScaleCollectionViewCell()
 
-@property (nonatomic, assign) NSUInteger scalesAdded;
+@property (nonatomic, assign) NSUInteger nextScaleIndex;
 
 @end
 
@@ -40,10 +40,9 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
         NSArray* scaleViews = [[self scaleContainerView] subviews];
         [scaleViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-}
-
-- (void)prepareForReuse {
-    [self setScalesAdded:0];
+    // would normally put the below line in prepareForReuse, but iOS 10 appears
+    // to call this a different times now ...
+    [self setNextScaleIndex:0];
 }
 
 - (void)addScaleWithName:(NSString*)name
@@ -52,14 +51,14 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
     NSArray* existingViews = [[self scaleContainerView] subviews];
     HEMSensorScaleView* scaleView = nil;
     
-    if ([self scalesAdded] < [existingViews count]) {
-        scaleView = existingViews[[self scalesAdded]];
+    if ([self nextScaleIndex] < [existingViews count]) {
+        scaleView = existingViews[[self nextScaleIndex]];
     } else {
         scaleView = [HEMSensorScaleView scaleView];
         CGRect scaleFrame = CGRectZero;
         scaleFrame.size.width = CGRectGetWidth([[self scaleContainerView] bounds]);
         scaleFrame.size.height = kHEMSensorScaleHeight;
-        scaleFrame.origin.y = [self scalesAdded] * kHEMSensorScaleHeight;
+        scaleFrame.origin.y = [self nextScaleIndex] * kHEMSensorScaleHeight;
         [scaleView setFrame:scaleFrame];
         [scaleView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         [[self scaleContainerView] addSubview:scaleView];
@@ -68,7 +67,7 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
     [[scaleView nameLabel] setText:name];
     [[scaleView rangeLabel] setText:range];
     [[scaleView conditionView] setBackgroundColor:color];
-    [self setScalesAdded:[self scalesAdded] + 1];
+    [self setNextScaleIndex:[self nextScaleIndex] + 1];
 }
 
 @end

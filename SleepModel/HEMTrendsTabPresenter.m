@@ -18,8 +18,8 @@
 
 - (void)bindWithTabBarItem:(UITabBarItem*)tabBarItem {
     [tabBarItem setTitle:NSLocalizedString(@"trends.title", nil)];
-    [tabBarItem setImage:[UIImage imageNamed:@"trendsBarIcon"]];
-    [tabBarItem setSelectedImage:[UIImage imageNamed:@"trendsBarIconActive"]];
+    [tabBarItem setImage:[UIImage imageNamed:@"trendsTabBarIcon"]];
+    [tabBarItem setSelectedImage:[UIImage imageNamed:@"trendsTabBarIcon"]];
     [self setTabBarItem:tabBarItem];
 }
 

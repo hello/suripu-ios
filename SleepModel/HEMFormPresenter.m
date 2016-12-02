@@ -5,12 +5,13 @@
 //  Created by Jimmy Lu on 12/21/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
+
 #import "NSString+HEMUtils.h"
 
 #import "HEMFormPresenter.h"
 #import "HEMTextFieldCollectionViewCell.h"
 #import "HEMActivityCoverView.h"
-#import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMTitledTextField.h"
 #import "HEMSimpleLineTextField.h"
@@ -152,7 +153,7 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
         
         __weak typeof(self) weakSelf = self;
         
-        HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+        UIViewController* rootVC = [RootViewController currentRootViewController];
         HEMActivityCoverView* activityView = [HEMActivityCoverView new];
         NSString* activityText = NSLocalizedString(@"activity.saving.changes", nil);
         

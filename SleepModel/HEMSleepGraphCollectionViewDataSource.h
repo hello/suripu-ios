@@ -3,15 +3,12 @@
 
 @class SENTimelineSegment;
 @class HEMSleepSummaryCollectionViewCell;
-@class HEMTimelineTopBarCollectionReusableView;
+@class HEMTimelineService;
 
 @protocol HEMSleepGraphActionDelegate <NSObject>
 
 @required
 
-- (void)didTapDrawerButton:(UIButton *)button;
-- (void)didTapShareButton:(UIButton *)button;
-- (void)didTapDateButton:(UIButton *)button;
 - (BOOL)shouldHideSegmentCellContents;
 
 - (void)toggleAudio:(UIButton*)button;
@@ -19,11 +16,11 @@
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
-@property (nonatomic, weak, readonly) HEMTimelineTopBarCollectionReusableView *topBarView;
-
 + (NSString *)localizedNameForSleepEventType:(NSString *)eventType;
 
-- (instancetype)initWithCollectionView:(UICollectionView *)collectionView sleepDate:(NSDate *)date;
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView
+                             sleepDate:(NSDate *)date
+                       timelineService:(HEMTimelineService*)timelineService;
 
 /**
  * Refetches the data from disk
@@ -97,6 +94,8 @@
 
 - (BOOL)hasTimelineData;
 
+- (BOOL)hasSleepScore;
+
 /**
  *  Tiny text for timestamps
  *
@@ -110,13 +109,6 @@
  *  @return the currently displayed text in the top bar for the date of sleep
  */
 - (NSString *)dateTitle;
-
-/**
- *  Set the top bar's state
- *
- *  @param isOpen: YES if the timeilne is currently opened. NO otherwise
- */
-- (void)updateTimelineState:(BOOL)isOpen;
 
 @property (nonatomic, strong, readonly) SENTimeline *sleepResult;
 @property (nonatomic, getter=isLoading, readonly) BOOL loading;

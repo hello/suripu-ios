@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.0.0.4
+
+New:
+
+* New bottom nav!
+* Updated Timeline summary design
+* Updated Timeline nav
+* Updated navigation icons (for bottom nav)
+* Dynamic sleep score icon based on last night score for the Timeline tab
+* Navigation title now set to 18px
+
+Fixes:
+
+* Fixed issues with sensor scale duplicating on every load
+* Fixed issue where alarm card in the list will show empty wipe space for expansion
+* Sleep summary values were way too small
+
 ## 2.0.0.3
 
 Fixes:

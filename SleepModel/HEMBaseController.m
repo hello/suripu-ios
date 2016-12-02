@@ -10,11 +10,11 @@
 #import "HEMAlertViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMScreenUtils.h"
-#import "HEMRootViewController.h"
 #import "HEMPresenter.h"
 #import "HEMBreadcrumbService.h"
 #import "HEMAccountService.h"
-#import "HEMSnazzBarController.h"
+
+#import "Sense-Swift.h"
 
 @interface HEMBaseController()
 
@@ -30,13 +30,12 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self listenForAccountEvents];
-        [self listenForDrawerEvents];
     }
     return self;
 }
 
 - (UIViewController*)rootViewController {
-    return [HEMRootViewController rootViewControllerForKeyWindow];
+    return [RootViewController currentRootViewController];
 }
 
 #pragma mark - View Controller Lifecycle Events
@@ -119,27 +118,6 @@
 
 - (void)viewDidEnterBackground {
     [[self presenters] makeObjectsPerformSelector:@selector(didEnterBackground)];
-}
-
-#pragma mark - Drawer Events
-
-- (void)listenForDrawerEvents {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerDidOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerDidCloseNotification
-                                               object:nil];
-}
-
-- (void)drawerDidOpen {
-    [[self presenters] makeObjectsPerformSelector:@selector(didOpenDrawer)];
-}
-
-- (void)drawerDidClose {
-    [[self presenters] makeObjectsPerformSelector:@selector(didCloseDrawer)];
 }
 
 #pragma mark - Shadows
@@ -227,6 +205,17 @@
     }
 }
 
+#pragma mark - Main tabs
+
+- (void)switchMainTab:(NSInteger)tab {
+    UIViewController* controller = [RootViewController currentRootViewController];
+    if ([controller isKindOfClass:[RootViewController class]]) {
+        RootViewController* rootVC = (id) controller;
+        MainViewController* mainVC = [rootVC mainViewController];
+        [mainVC switchTabWithTab:tab];
+    }
+}
+
 #pragma mark - alerts
 
 - (UIView*)backgroundViewForAlerts {
@@ -302,13 +291,6 @@
     HEMBreadcrumbService* service = [HEMBreadcrumbService sharedServiceForAccount:account];
     [service clearIfTrailEndsAt:crumb];
 }
-
-- (void)reloadTopBar {
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    HEMSnazzBarController* snazzVC = [rootVC barController];
-    [snazzVC reloadButtonsBarBadges];
-}
-
 #pragma mark - Clean up
 
 - (void)dealloc {

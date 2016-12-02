@@ -106,8 +106,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
         case HEMHandHoldingTimelineZoom:
             tutorialName = HEMHandHoldingServiceTimelineZoom;
             break;
-        case HEMHandHoldingTimelineOpen:
-            tutorialName = HEMHandHoldingServiceTimelineOpen;
         default:
             break;
     }
@@ -161,14 +159,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
                          atLeast:HEMHandHoldingInsightTapMinDaysChecked];
 }
 
-/**
- * @discussion
- * Timeline open should only be shown on the first day of oboarding
- */
-- (BOOL)shouldShowTimelineOpen {
-    return ![self isFirstAppUsage:HEMAppUsageTimelineShownWithData atLeast:1];
-}
-
 - (BOOL)shouldShowTimelineSwipe {
     return [self isFirstAppUsage:HEMAppUsageTimelineShownWithData
                          atLeast:HEMHandHoldingTimelineSwipeMinDaysChecked];
@@ -197,8 +187,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
     switch (tutorial) {
         case HEMHandHoldingInsightTap:
             return [self shouldShowInsightTap];
-        case HEMHandHoldingTimelineOpen:
-            return [self shouldShowTimelineOpen];
         case HEMHandHoldingTimelineSwipe:
             return [self shouldShowTimelineSwipe];
         case HEMHandHoldingTimelineZoom:

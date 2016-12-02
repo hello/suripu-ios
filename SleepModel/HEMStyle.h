@@ -18,3 +18,5 @@ extern CGFloat const HEMStyleDeviceSectionTopMargin;
 extern CGFloat const HEMStyleButtonContainerBorderWidth;
 
 void ApplyHelloStyles (void);
+void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar);
+void ApplyDefaultTabBarItemStyle(UITabBarItem* tabBarItem);

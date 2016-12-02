@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMExtendedHeaderCollectionViewLayout.h"
 
-@interface HEMFadingParallaxLayout : UICollectionViewFlowLayout
+@interface HEMFadingParallaxLayout : HEMExtendedHeaderCollectionViewLayout
 
 @end

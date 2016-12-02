@@ -14,8 +14,12 @@
 
 - (void)reloadData;
 
+- (void)reloadWithDate:(NSDate*)date;
+
 - (void)reloadDataWithController:(UIViewController*)controller;
 
 - (void)setSwipingEnabled:(BOOL)enabled;
+
+- (void)updateLastNightSleepScore:(NSInteger)sleepScore;
 
 @end

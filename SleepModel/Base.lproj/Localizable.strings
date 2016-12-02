@@ -495,6 +495,7 @@
 "drawer.action.close" = "Drawer closed";
 
 // timeline
+"timeline.summary" = "Sleep Summary";
 "timeline.accessibility-hint.menu-open" = "Double tap to open";
 "timeline.accessibility-hint.menu-close" = "Double tap to close";
 "timeline.accessibility-hint.history-open" = "Double tap to view timeline history";
@@ -623,7 +624,7 @@
 "sleep-stat.motion-duration.awake" = "There was a lot of motion.";
 
 // sleep history
-"sleep-history.last-night" = "Last night";
+"sleep-history.last-night" = "Last Night";
 "sleep-history.score" = "SLEEP SCORE";
 "sleep-history.depth.awake" = "Awake";
 "sleep-history.depth.light" = "Light sleep";
@@ -795,7 +796,6 @@
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 "handholding.message.sensor-scrubbing" = "Press and hold graphs to see historical data.";
 "handholding.message.insight-tap" = "Tap on a card to learn more.";
-"handholding.message.timeline-open" = "To explore more now, tap the menu icon.";
 "handholding.message.account-name-change" = "Verify your name and add a profile photo.";
 
 // app review questions

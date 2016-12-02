@@ -129,7 +129,6 @@
 +(id)instantiateSupportTopicsViewController;
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;
-+(id)instantiateTimelineContainerController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,10 +15,11 @@
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="298"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-0C-m7y" userLabel="border view">
                         <rect key="frame" x="0.0" y="297" width="320" height="1"/>
-                        <color key="backgroundColor" red="0.76862745098039209" green="0.8901960784313725" blue="0.99607843137254903" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.72243225574493408" green="0.86160457134246826" blue="0.99443191289901733" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="GuY-Cl-e9q"/>
                         </constraints>
@@ -32,11 +36,11 @@
                                             <bool key="isElement" value="NO"/>
                                         </accessibility>
                                         <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="64"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
@@ -53,67 +57,55 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SLEEP SCORE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FN0-1v-Tup">
                                 <rect key="frame" x="127" y="139" width="65" height="14"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
-                                <color key="textColor" red="0.58423030376434326" green="0.5842127799987793" blue="0.58422267436981201" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.58423030376434326" green="0.5842127799987793" blue="0.58422267436981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XD9-Mv-4Jf" userLabel="message view" customClass="HEMTimelineMessageContainerView">
-                                <rect key="frame" x="8" y="181" width="304" height="106"/>
+                                <rect key="frame" x="24" y="179" width="272" height="106"/>
                                 <subviews>
-                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNt-4l-gcx" userLabel="border view">
-                                        <rect key="frame" x="0.0" y="41" width="304" height="1"/>
-                                        <color key="backgroundColor" red="0.94089999999999996" green="0.95350999999999997" blue="0.96999999999999997" alpha="1" colorSpace="deviceRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="8gO-EB-HzD"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
-                                        <rect key="frame" x="16" y="42" width="272" height="64"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Last night you were in bed for 8.5 hours and slept for 6 hours." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
+                                        <rect key="frame" x="0.0" y="0.0" width="272" height="38.333333333333343"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
-                                        <color key="textColor" red="0.29999999999999999" green="0.29999999999999999" blue="0.29999999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.23404698073863983" green="0.23403999209403992" blue="0.23404392600059509" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="SLEEP SUMMARY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zN-gk-dwk" customClass="HEMTimelineSummaryTitleLabel">
-                                        <rect key="frame" x="15" y="15" width="82" height="14"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="SLEEP SUMMARY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zN-gk-dwk">
+                                        <rect key="frame" x="85" y="54" width="82" height="14"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
-                                        <color key="textColor" red="0.0" green="0.61176470588235299" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.61176470588235299" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_right_caret.png" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-id-cB1">
-                                        <rect key="frame" x="281" y="15" width="7" height="12"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_right_caret" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-id-cB1">
+                                        <rect key="frame" x="171" y="56.666666666666657" width="6" height="11"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="3zN-gk-dwk" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" constant="15" id="BfH-74-NtY"/>
-                                    <constraint firstAttribute="trailing" secondItem="tNt-4l-gcx" secondAttribute="trailing" id="D7j-TJ-W8i"/>
-                                    <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="16" id="Kja-eR-b3l"/>
+                                    <constraint firstItem="JKF-id-cB1" firstAttribute="leading" secondItem="3zN-gk-dwk" secondAttribute="trailing" constant="4" id="Czc-AO-UJL"/>
+                                    <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" id="Kja-eR-b3l"/>
+                                    <constraint firstItem="3zN-gk-dwk" firstAttribute="top" secondItem="buK-Of-ZfH" secondAttribute="bottom" constant="16" id="MAw-uL-pZc"/>
+                                    <constraint firstItem="3zN-gk-dwk" firstAttribute="centerX" secondItem="XD9-Mv-4Jf" secondAttribute="centerX" constant="-10" id="PPo-AN-kcR"/>
                                     <constraint firstAttribute="height" constant="106" id="UPf-fi-yZI"/>
-                                    <constraint firstItem="tNt-4l-gcx" firstAttribute="top" secondItem="XD9-Mv-4Jf" secondAttribute="top" constant="41" id="VMz-Zy-D79"/>
-                                    <constraint firstAttribute="trailing" secondItem="JKF-id-cB1" secondAttribute="trailing" constant="16" id="W1p-lM-9rc"/>
-                                    <constraint firstItem="3zN-gk-dwk" firstAttribute="centerY" secondItem="JKF-id-cB1" secondAttribute="centerY" constant="1" id="kuk-m8-MiQ"/>
-                                    <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="3zN-gk-dwk" secondAttribute="bottom" constant="13" id="p69-g3-LwV"/>
-                                    <constraint firstAttribute="bottom" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="poH-yl-F5A"/>
-                                    <constraint firstItem="tNt-4l-gcx" firstAttribute="top" secondItem="3zN-gk-dwk" secondAttribute="bottom" constant="12" id="rEV-ru-WEc"/>
-                                    <constraint firstItem="tNt-4l-gcx" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" id="z3w-od-9Ps"/>
-                                    <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" constant="16" id="zyI-7R-HHa"/>
+                                    <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="XD9-Mv-4Jf" secondAttribute="top" id="bAS-0D-YOb"/>
+                                    <constraint firstItem="3zN-gk-dwk" firstAttribute="centerY" secondItem="JKF-id-cB1" secondAttribute="centerY" constant="-1" id="kuk-m8-MiQ"/>
+                                    <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" id="zyI-7R-HHa"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="1cj-i9-Ywi" secondAttribute="top" constant="16" id="9DR-Gv-ZhK"/>
-                            <constraint firstAttribute="trailing" secondItem="XD9-Mv-4Jf" secondAttribute="trailing" constant="8" id="DgO-Em-V2T"/>
+                            <constraint firstAttribute="trailing" secondItem="XD9-Mv-4Jf" secondAttribute="trailing" constant="24" id="DgO-Em-V2T"/>
                             <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" id="KOh-Fc-vJ8"/>
                             <constraint firstAttribute="centerX" secondItem="FN0-1v-Tup" secondAttribute="centerX" constant="0.5" id="V8J-MZ-6qm"/>
                             <constraint firstItem="FN0-1v-Tup" firstAttribute="bottom" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="10" id="nhZ-cg-khh"/>
-                            <constraint firstItem="XD9-Mv-4Jf" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="38" id="taB-6D-UjW"/>
-                            <constraint firstItem="XD9-Mv-4Jf" firstAttribute="leading" secondItem="1cj-i9-Ywi" secondAttribute="leading" constant="8" id="xpo-dy-oFO"/>
+                            <constraint firstItem="XD9-Mv-4Jf" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="36" id="taB-6D-UjW"/>
+                            <constraint firstItem="XD9-Mv-4Jf" firstAttribute="leading" secondItem="1cj-i9-Ywi" secondAttribute="leading" constant="24" id="xpo-dy-oFO"/>
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="gDL-0C-m7y" secondAttribute="trailing" id="4Ql-1a-nOU"/>
                 <constraint firstItem="gDL-0C-m7y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="AOW-Gn-8co"/>
@@ -131,11 +123,12 @@
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>
                 <outlet property="sleepScoreTextLabel" destination="FN0-1v-Tup" id="Q0G-ar-mOf"/>
                 <outlet property="summaryContainerView" destination="1cj-i9-Ywi" id="CId-WX-VYi"/>
+                <outlet property="summaryLabel" destination="3zN-gk-dwk" id="YBp-mr-if1"/>
             </connections>
             <point key="canvasLocation" x="231" y="292"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="timeline_right_caret.png" width="7" height="12"/>
+        <image name="timeline_right_caret" width="6" height="11"/>
     </resources>
 </document>

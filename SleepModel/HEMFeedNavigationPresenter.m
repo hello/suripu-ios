@@ -70,8 +70,8 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 
 - (void)bindWithTabBarItem:(UITabBarItem*)tabBarItem {
     tabBarItem.title = NSLocalizedString(@"insights.title", nil);
-    tabBarItem.image = [UIImage imageNamed:@"senseBarIcon"];
-    tabBarItem.selectedImage = [UIImage imageNamed:@"senseBarIconActive"];
+    tabBarItem.image = [UIImage imageNamed:@"feedTabBarIcon"];
+    tabBarItem.selectedImage = [UIImage imageNamed:@"feedTabBarIcon"];
     [self setTabBarItem:tabBarItem];
     [self updateTabBarItemUnreadIndicator];
 }

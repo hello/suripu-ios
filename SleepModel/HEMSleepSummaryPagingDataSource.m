@@ -25,7 +25,7 @@
 #pragma mark - UIPageViewControllerDataSource
 
 - (UIViewController*)controllerAfter:(UIViewController*)viewController {
-    HEMSleepGraphViewController* sleepVC = (HEMSleepGraphViewController*)viewController;
+    HEMSleepGraphViewController* sleepVC = (id) viewController;
     NSDate* nextDay = [[sleepVC dateForNightOfSleep] nextDay];
     NSDate* now = [NSDate date];
     if ([nextDay isOnSameDay:now]

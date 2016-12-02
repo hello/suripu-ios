@@ -29,7 +29,7 @@
         <!--Sleep Pill Dfu View Controller-->
         <scene sceneID="1j2-jF-im8">
             <objects>
-                <viewController storyboardIdentifier="pillDFU" id="pgF-Lg-CFx" customClass="HEMSleepPillDfuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="dfu" id="pgF-Lg-CFx" customClass="HEMSleepPillDfuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bob-zB-3M9"/>
                         <viewControllerLayoutGuide type="bottom" id="42a-Lk-jTC"/>
@@ -45,7 +45,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You'll need to keep the Sense app open for the duration of the update.  This process should take less than one minute." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1QO-03-ZfJ">
-                                <rect key="frame" x="24" y="112" width="366" height="62"/>
+                                <rect key="frame" x="24" y="112" width="366" height="61.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -67,7 +67,7 @@
                                 <rect key="frame" x="72" y="634" width="270" height="2"/>
                             </progressView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="251" image="sleepPillDFU" translatesAutoresizingMaskIntoConstraints="NO" id="rpM-jc-HWF">
-                                <rect key="frame" x="0.0" y="179" width="414" height="403"/>
+                                <rect key="frame" x="0.0" y="179.5" width="414" height="402.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>

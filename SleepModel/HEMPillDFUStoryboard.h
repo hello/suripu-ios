@@ -15,7 +15,7 @@
 +(NSString *)scanSegueIdentifier;
 
 /** View Controllers */
-+(id)instantiatePillDFUViewController;
++(id)instantiateDfuViewController;
 +(id)instantiatePillDFUNavViewController;
 +(id)instantiatePillFinderViewController;
 

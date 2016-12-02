@@ -8,7 +8,7 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMpillDFU = @"PillDFU";
-static NSString *const _HEMpillDFU = @"pillDFU";
+static NSString *const _HEMdfu = @"dfu";
 static NSString *const _HEMpillDFUNav = @"pillDFUNav";
 static NSString *const _HEMpillFinder = @"pillFinder";
 static NSString *const _HEMscan = @"scan";
@@ -23,7 +23,7 @@ static NSString *const _HEMscan = @"scan";
 +(NSString *)scanSegueIdentifier { return _HEMscan; }
 
 /** View Controllers */
-+(id)instantiatePillDFUViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFU]; }
++(id)instantiateDfuViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdfu]; }
 +(id)instantiatePillDFUNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillDFUNav]; }
 +(id)instantiatePillFinderViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillFinder]; }
 

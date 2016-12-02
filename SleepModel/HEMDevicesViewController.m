@@ -20,6 +20,7 @@
 #import "HEMDevicesPresenter.h"
 #import "HEMSleepPillDfuViewController.h"
 #import "HEMSettingsNavigationController.h"
+#import "HEMPillDFUStoryboard.h"
 
 @interface HEMDevicesViewController() <
     HEMPillPairDelegate,
@@ -99,7 +100,7 @@
 }
 
 - (void)showFirmwareUpdateFrom:(HEMDevicesPresenter*)presenter {
-    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UINavigationController* nav = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
     [dfuVC setDeviceService:[self deviceService]];
     [dfuVC setDelegate:self];

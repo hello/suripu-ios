@@ -10,7 +10,6 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMLogUtils.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMSnazzBarController.h"
 #import "HEMAudioCache.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAuthenticationViewController.h"

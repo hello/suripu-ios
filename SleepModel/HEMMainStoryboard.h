@@ -87,7 +87,6 @@
 +(NSString *)listSegueIdentifier;
 +(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
-+(NSString *)scanSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
 +(NSString *)settingsToSupportSegueIdentifier;
 +(NSString *)sleepSoundsSegueIdentifier;
@@ -114,9 +113,6 @@
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightsFeedViewController;
 +(id)instantiateListItemViewController;
-+(id)instantiatePillDFUViewController;
-+(id)instantiatePillDFUNavViewController;
-+(id)instantiatePillFinderViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;
 +(id)instantiateSleepGraphController;

@@ -27,6 +27,7 @@
 #import "HEMStyle.h"
 #import "HEMDeviceService.h"
 #import "HEMSleepPillDFUDelegate.h"
+#import "HEMPillDFUStoryboard.h"
 
 static NSString* const HEMPillHeaderReuseId = @"sectionHeader";
 
@@ -318,7 +319,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 - (void)showPillDfuController {
-    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UINavigationController* nav = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     if ([[nav topViewController] isKindOfClass:[HEMSleepPillDfuViewController class]]) {
         HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
         [dfuVC setDelegate:self];

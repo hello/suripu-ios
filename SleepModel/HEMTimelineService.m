@@ -145,4 +145,12 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
     return title;
 }
 
+- (BOOL)isDateLastNight:(NSDate*)date {
+    NSDateComponents *diff = [[self calendar] components:NSCalendarUnitDay
+                                                fromDate:date
+                                                  toDate:[[NSDate date] previousDay]
+                                                 options:0];
+    return diff.day == 0;
+}
+
 @end

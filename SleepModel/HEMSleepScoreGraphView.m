@@ -2,7 +2,7 @@
 #import <UICountingLabel/UICountingLabel.h>
 #import "HEMSleepScoreGraphView.h"
 #import "SENSensorAccessibility.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 
 @interface HEMSleepScoreGraphView ()
 
@@ -66,6 +66,7 @@ CGFloat const arcOffsetY = 80.f;
     self.scoreValueLabel.formatBlock = ^NSString *(float value) { return [NSString stringWithFormat:@"%0.f", value]; };
     self.scoreValueLabel.alpha = 0;
     self.scoreValueLabel.method = UILabelCountingMethodEaseInOut;
+    self.scoreValueLabel.font = [UIFont h1];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {

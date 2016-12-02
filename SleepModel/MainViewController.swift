@@ -16,12 +16,15 @@ import UIKit
     case Conditions
 }
 
-@objc class MainViewController: UITabBarController {
+@objc class MainViewController: UITabBarController , UITabBarControllerDelegate{
+    
+    static let itemInset = CGFloat(6)
 
     // MARK: - Lifecycle events
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.delegate = self
         self.configureTabs()
     }
     
@@ -34,11 +37,30 @@ import UIKit
         let soundsVC = HEMMainStoryboard.instantiateSoundsNavigationViewController() as! UIViewController
         let conditionsVC = HEMMainStoryboard.instantiateCurrentNavController() as! UIViewController
         self.viewControllers = [timelineVC, trendsVC, feedVC, soundsVC, conditionsVC];
+        
+        // hide titles and center tab icons from the controllers
+        let topInset = MainViewController.itemInset
+        let inset = UIEdgeInsets(top: MainViewController.itemInset, left: 0, bottom: -topInset, right: 0)
+        for item in self.tabBar.items! {
+            item.imageInsets = inset
+            item.title = nil
+        }
     }
     
-    // MARK: Tab Switching
+    // MARK: - Tab Switching
     
     @objc func switchTab(tab: MainTab) {
         self.selectedIndex = tab.rawValue
+    }
+    
+    // MARK: - Tab Bar Delegate
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if (viewController is HEMSleepSummarySlideViewController) {
+            // always show last night when switched tapped
+            let lastNight = NSDate.timelineInitial()
+            let timelineSlideVC = viewController as! HEMSleepSummarySlideViewController
+            timelineSlideVC.reload(with: lastNight)
+        }
     }
 }

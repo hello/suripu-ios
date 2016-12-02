@@ -226,22 +226,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 #pragma mark - Top Bar
 
-/**
- *  Move the elements of the top of the timeline to reflect the state of the drawer.
- *  The top bar view moves the icons/labels vertically to align with the drawer state,
- *  and the timeline is scrolled to the top if the drawer is opened while scrolled
- *  down into the timline
- *
- *  @param isOpen the state of the drawer
- */
-- (void)updateTimelineState:(BOOL)isOpen {
-#pragma message ("fix")
-//    [[self topBarView] setShareEnabled:[self hasTimelineData] && !isOpen animated:YES];
-    if (isOpen) {
-        [self scrollToTop];
-    }
-}
-
 - (void)scrollToTop {
     if (!CGPointEqualToPoint(CGPointZero, self.collectionView.contentOffset)
         && [self.collectionView numberOfSections] > 0
@@ -266,42 +250,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
             return 0;
     }
 }
-
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-//                topBarHeaderViewForIndexPath:(NSIndexPath *)indexPath {
-//
-//    HEMTimelineTopBarCollectionReusableView *view = nil;
-//    view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-//                                              withReuseIdentifier:timelineTopBarReuseIdentifier
-//                                                     forIndexPath:indexPath];
-//    id delegate = [collectionView delegate];
-//
-//    if ([delegate respondsToSelector:@selector(didTapDrawerButton:)]) {
-//        [[view drawerButton] addTarget:delegate
-//                                action:@selector(didTapDrawerButton:)
-//                      forControlEvents:UIControlEventTouchUpInside];
-//    }
-//
-//    if ([delegate respondsToSelector:@selector(didTapShareButton:)]) {
-//        [[view shareButton] addTarget:delegate
-//                               action:@selector(didTapShareButton:)
-//                     forControlEvents:UIControlEventTouchUpInside];
-//    }
-//
-//    if ([delegate respondsToSelector:@selector(didTapDateButton:)]) {
-//        [[view dateButton] addTarget:delegate
-//                              action:@selector(didTapDateButton:)
-//                    forControlEvents:UIControlEventTouchUpInside];
-//    }
-//
-//    NSInteger score = [[[self sleepResult] score] integerValue];
-//    [view setShareEnabled:score > 0 animated:YES];
-//    [view setDate:[self dateForNightOfSleep]];
-//
-//    [self setTopBarView:view];
-//
-//    return view;
-//}
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind

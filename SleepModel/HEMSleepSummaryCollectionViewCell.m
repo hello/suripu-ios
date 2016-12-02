@@ -5,19 +5,29 @@
 #import "HEMTimelineMessageContainerView.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HEMMarkdown.h"
+#import "HEMStyle.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
-@property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @property (assign, nonatomic) CGFloat ogMessageContainerShadowOpacity;
 @end
 
 @implementation HEMSleepSummaryCollectionViewCell
 
 CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
+CGFloat const HEMSleepSummaryBaseHeight = 233.0f;
+CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
+
++ (CGFloat)heightWithMessage:(NSString*)message itemWidth:(CGFloat)width {
+    NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
+    NSAttributedString *attributedMessage = [markdown_to_attr_string(message, 0, attributes) trim];
+    CGFloat maxWidth = width - (HEMSleepSummaryMessageHorzPadding * 2);
+    CGFloat textHeight = [attributedMessage sizeWithWidth:maxWidth].height;
+    return HEMSleepSummaryBaseHeight + textHeight;
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -30,7 +40,9 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self configureGradientViews];
+    self.summaryLabel.font = [UIFont bodyBold];
+    self.summaryLabel.textColor = [UIColor grey4];
+    self.summaryLabel.text = NSLocalizedString(@"timeline.summary", nil);
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
     self.sleepScoreTextLabel.isAccessibilityElement = NO;
     self.messageLabel.isAccessibilityElement = NO;
@@ -106,26 +118,6 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
         [[NSAttributedString alloc] initWithString:[button titleForState:UIControlStateNormal] attributes:attributes];
     [button setAttributedTitle:text forState:UIControlStateNormal];
     [button setTintColor:tintColor];
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.gradientLayer.frame = self.bounds;
-}
-
-#pragma mark - Gradient background
-
-- (void)configureGradientViews {
-    NSArray *topColors = @[ (id)[UIColor whiteColor].CGColor, (id)[UIColor colorWithWhite:0.96f alpha:1.f].CGColor ];
-
-    CAGradientLayer *topLayer = [CAGradientLayer layer];
-    topLayer.colors = topColors;
-    topLayer.frame = self.bounds;
-    topLayer.locations = @[ @(0.5), @1 ];
-    topLayer.startPoint = CGPointZero;
-    topLayer.endPoint = CGPointMake(0, 1);
-    self.gradientLayer = topLayer;
-    [self.layer insertSublayer:topLayer atIndex:0];
 }
 
 @end

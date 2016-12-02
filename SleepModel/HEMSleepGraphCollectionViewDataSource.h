@@ -110,13 +110,6 @@
  */
 - (NSString *)dateTitle;
 
-/**
- *  Set the top bar's state
- *
- *  @param isOpen: YES if the timeilne is currently opened. NO otherwise
- */
-- (void)updateTimelineState:(BOOL)isOpen;
-
 @property (nonatomic, strong, readonly) SENTimeline *sleepResult;
 @property (nonatomic, getter=isLoading, readonly) BOOL loading;
 @end

@@ -20,4 +20,6 @@
 
 - (void)setSwipingEnabled:(BOOL)enabled;
 
+- (void)updateLastNightSleepScore:(NSInteger)sleepScore;
+
 @end

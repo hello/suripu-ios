@@ -92,7 +92,6 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 
 static NSString *const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
 static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 0.5f;
-static CGFloat const HEMSleepSummaryCellHeight = 298.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
@@ -919,12 +918,21 @@ static BOOL hasLoadedBefore = NO;
     __weak typeof(self) weakSelf = self;
     [self.dataSource reloadData:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf updateTabBarIcon];
         [[strongSelf shareButton] setHidden:![strongSelf.dataSource hasSleepScore]];
         [strongSelf updateAppUsageIfNeeded];
         [strongSelf updateLayoutWithError:error];
         [strongSelf showTutorial];
     }];
     [self updateLayoutWithError:nil];
+}
+
+- (void)updateTabBarIcon {
+    if ([self isLastNight] &&
+        [[self parentViewController] isKindOfClass:[HEMSleepSummarySlideViewController class]]) {
+        HEMSleepSummarySlideViewController* parentVC = (id) [self parentViewController];
+        [parentVC updateLastNightSleepScore:[[[self dataSource] sleepResult].score integerValue]];
+    }
 }
 
 - (void)updateLayoutWithError:(NSError *)error {
@@ -1045,8 +1053,11 @@ static BOOL hasLoadedBefore = NO;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
         case HEMSleepGraphCollectionViewSummarySection: {
-            CGFloat viewHeight = CGRectGetHeight(self.view.bounds);
-            CGFloat height = hasSegments ? HEMSleepSummaryCellHeight : viewHeight;
+            CGFloat height = CGRectGetHeight(self.view.bounds);
+            if (hasSegments) {
+                NSString* message = [self.dataSource sleepResult].message;
+                height = [HEMSleepSummaryCollectionViewCell heightWithMessage:message itemWidth:width];
+            }
             return CGSizeMake(width, height);
         }
         case HEMSleepGraphCollectionViewSegmentSection: {

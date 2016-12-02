@@ -1,6 +1,6 @@
 
 #import "HEMMiniSleepScoreGraphView.h"
-#import "UIColor+HEMStyle.h"
+#import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
 
 @implementation HEMMiniSleepScoreGraphView
@@ -75,7 +75,7 @@ CGFloat const miniScoreBaseHeight = 72.f;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
     NSDictionary* sleepScoreLabelFontAttributes = @{
-        NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: sleepScoreTextSize],
+        NSFontAttributeName: [UIFont timelineHistoryScoreFontOfSize:sleepScoreTextSize],
         NSForegroundColorAttributeName: sleepScoreColor,
         NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 

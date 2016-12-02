@@ -10,10 +10,16 @@
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
+#import "NSString+HEMUtils.h"
+#import "NSDate+HEMRelative.h"
+
 #import "HEMAppDelegate.h"
 
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
+
+#import "HEMOnboardingService.h"
+#import "HEMShortcutService.h"
 
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSettingsNavigationController.h"
@@ -26,6 +32,4 @@
 #import "HEMOnboardingController.h"
 
 #import "HEMAppUsage.h"
-
-#import "HEMOnboardingService.h"
-#import "HEMShortcutService.h"
+#import "HEMStyle.h"

@@ -102,7 +102,8 @@
 + (NSDictionary *)attributesForTimelineBreakdownValueWithColor:(UIColor *)color {
     return @{
         @(PARA) :
-            @{ NSFontAttributeName : [UIFont h7], NSForegroundColorAttributeName : color }
+            @{ NSFontAttributeName : [UIFont h4],
+               NSForegroundColorAttributeName : color }
     };
 }
 
@@ -170,9 +171,18 @@
 }
 
 + (NSDictionary *)attributesForTimelineMessageText {
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = NSTextAlignmentCenter;
     return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold] },
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont body] }
+        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold],
+                       NSForegroundColorAttributeName : [UIColor grey6],
+                       NSParagraphStyleAttributeName : style},
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont body],
+                      NSForegroundColorAttributeName : [UIColor grey5],
+                      NSParagraphStyleAttributeName : style},
+        @(PARA) : @{ NSFontAttributeName : [UIFont body],
+                     NSForegroundColorAttributeName : [UIColor grey5],
+                     NSParagraphStyleAttributeName : style}
     };
 }
 

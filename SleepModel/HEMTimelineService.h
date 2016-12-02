@@ -80,6 +80,12 @@ typedef void(^HEMTimelineServiceUpdateHandler)(SENTimeline* _Nullable updatedTim
  */
 - (NSString*)stringValueForTimelineDate:(NSDate*)date;
 
+/**
+ * @param date to check
+ * @return YES if last night, NO otherwise
+ */
+- (BOOL)isDateLastNight:(NSDate*)date;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -128,6 +128,10 @@
 
 #pragma mark - Timeline
 
++ (UIFont*)timelineHistoryScoreFontOfSize:(CGFloat)size {
+    return [UIFont systemFontOfSize:size weight:UIFontWeightThin];
+}
+
 + (UIFont*)timelineBreakdownTitleFont {
     return [UIFont systemFontOfSize:11.0f weight:UIFontWeightMedium];
 }

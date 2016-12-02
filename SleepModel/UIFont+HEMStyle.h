@@ -54,6 +54,7 @@
 + (UIFont*)alarmButtonFont;
 + (UIFont*)alarmMeridiemFont;
 + (UIFont*)sensorUnitFontForUnit:(SENSensorUnit)unit;
++ (UIFont*)timelineHistoryScoreFontOfSize:(CGFloat)size;
 
 /**
  *  Font for event message text in the timeline

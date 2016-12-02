@@ -5,6 +5,8 @@
 //  Created by Delisa Mason on 6/15/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
+
 #import <SenseKit/SenseKit.h>
 #import <AttributedMarkdown/markdown_peg.h>
 
@@ -12,7 +14,6 @@
 #import "HEMBreakdownViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMMarkdown.h"
-#import "HEMRootViewController.h"
 #import "HEMSplitTextFormatter.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "UIColor+HEMStyle.h"
@@ -33,12 +34,13 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidth;
 @property (nonatomic, strong) UIImage *backgroundImage;
 @property (nonatomic, getter=hasLoadedContent) BOOL loadedContent;
+@property (nonatomic, assign) BOOL hideStatusBar;
 @end
 
 @implementation HEMBreakdownViewController
 
 const CGFloat BreakdownCellItemHeight = 86.f;
-const CGFloat BreakdownCellSummaryBaseHeight = 80.f; // 40 top + bottom margins + 30 title +  10 spacing
+const CGFloat BreakdownCellSummaryBaseHeight = 108.f;
 const CGFloat BreakdownDismissButtonBottom = 18.f;
 const CGFloat BreakdownDismissButtonHide = -40.f;
 const CGFloat BreakdownButtonAreaHeight = 80.f;
@@ -46,14 +48,19 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         // use same tint as the tutorial dialogs
-        _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow]
+        _backgroundImage = [[RootViewController currentRootViewController]
                                 .view blurredSnapshotWithTint:[UIColor lightSeeThroughBackgroundColor]];
     }
     return self;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return [self hideStatusBar];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
     NSLocale *standardLocale = [NSLocale localeWithLocaleIdentifier:localeIdentifier];
     self.timestampFormatter = [NSDateFormatter new];
@@ -77,11 +84,6 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     [self animateExpandContent];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
-}
-
 - (IBAction)dismissFromView:(id)sender {
     [self animateHideContentWithCompletion:^(BOOL done) {
         [self dismissViewControllerAnimated:YES completion:NULL];
@@ -89,11 +91,14 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 }
 
 - (void)animateExpandContent {
+    [self setHideStatusBar:YES];
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     CGFloat height = CGRectGetHeight(HEMKeyWindowBounds()) - BreakdownButtonAreaHeight;
     if (self.contentViewHeight.constant != height || self.collectionView.alpha < 1) {
         [self.dismissButton layoutIfNeeded];
         self.contentViewHeight.constant = height;
-        self.contentViewTop.constant = 0;
+        self.contentViewTop.constant = 0.0f;
         self.buttonBottom.constant = BreakdownDismissButtonBottom;
         [self.collectionView setNeedsUpdateConstraints];
         [self.dismissButton setNeedsUpdateConstraints];

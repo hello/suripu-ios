@@ -4,7 +4,6 @@
 
 #import "HEMNotificationHandler.h"
 #import "HEMAppDelegate.h"
-#import "HEMRootViewController.h"
 #import "HEMAccountService.h"
 
 @implementation HEMNotificationHandler

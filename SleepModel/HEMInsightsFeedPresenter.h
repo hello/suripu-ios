@@ -10,7 +10,6 @@
 #import "Sense-Swift.h"
 
 #import "HEMPresenter.h"
-#import "HEMRootViewController.h"
 
 @class HEMInsightsFeedPresenter;
 @class SENInsight;

@@ -15,7 +15,6 @@
 #import "HEMSensePairViewController.h"
 #import "HEMSensePairDelegate.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMRootViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMDeviceService.h"
 #import "HEMDevicesPresenter.h"

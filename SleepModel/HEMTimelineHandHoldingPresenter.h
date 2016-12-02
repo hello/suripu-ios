@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithHandHoldingService:(HEMHandHoldingService*)handHoldingService;
 - (void)bindWithContentView:(UIView*)contentView;
 - (void)showIfNeeded;
-- (void)didOpenTimeline;
 - (void)didZoomOutOnTimeline;
 
 @end

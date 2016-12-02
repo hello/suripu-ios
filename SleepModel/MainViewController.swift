@@ -28,6 +28,10 @@ import UIKit
         self.configureTabs()
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
     // MARK: - Configuration methods
     
     private func configureTabs() {

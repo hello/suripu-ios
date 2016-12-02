@@ -42,7 +42,7 @@ import SenseKit
     // MARK: View Controller Overrides
     
     override var prefersStatusBarHidden: Bool {
-        return self.statusBarVisible
+        return !self.statusBarVisible
     }
     
     override func viewDidLoad() {
@@ -141,6 +141,11 @@ import SenseKit
             return
         }
         
+        var currentModalController: UIViewController? = nil
+        if ((currentController?.presentedViewController) != nil) {
+            currentModalController = currentController!.presentedViewController!
+        }
+        
         let showMain = controller is MainViewController
         let containerFrame = self.view.bounds
         let containerHeight = containerFrame.size.height
@@ -165,16 +170,32 @@ import SenseKit
             currentController!.willMove(toParentViewController: nil)
             currentController!.view.addSubview(overlay)
             
+            if currentModalController != nil {
+                currentController?.dismiss(animated: true, completion: {
+                    currentController!.view.removeFromSuperview()
+                    currentController!.removeFromParentViewController()
+                })
+            }
+            
             UIView.animate(withDuration: RootViewController.animationDuration, animations: {
                 overlay.alpha = endAlpha
                 
                 var currentFrame = currentController!.view.frame
                 currentFrame.origin.y = !showMain ? 0 : containerHeight
                 currentController!.view.frame = currentFrame
+                
+                if currentModalController != nil {
+                    var modalFrame = currentModalController!.view.frame
+                    modalFrame.origin.y = currentFrame.origin.y
+                    currentModalController!.view.frame = modalFrame
+                }
 
             }, completion: { (finished: Bool) in
+                if currentModalController != nil {
+                    currentController?.dismiss(animated: false, completion:nil)
+                }
                 currentController!.view.removeFromSuperview()
-                currentController! .removeFromParentViewController()
+                currentController!.removeFromParentViewController()
                 controller.didMove(toParentViewController: self)
             })
         }

@@ -63,7 +63,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)viewDidEnterBackground;
 - (BOOL)showIndicatorForCrumb:(NSString*)crumb;
 - (void)clearCrumb:(NSString*)crumb;
-- (void)reloadTopBar;
 - (void)didRefreshAccount;
 - (void)dismissModalAfterDelay:(BOOL)delay;
 - (void)switchMainTab:(NSInteger)tab;

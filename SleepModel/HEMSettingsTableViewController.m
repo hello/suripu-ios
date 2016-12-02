@@ -25,17 +25,6 @@
 
 @implementation HEMSettingsTableViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        self.tabBarItem.title = NSLocalizedString(@"settings.title", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"settingsBarIcon"];
-        self.tabBarItem.selectedImage = [UIImage imageNamed:@"settingsBarIconActive"];
-        
-        [self updateBadge];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenter];
@@ -75,7 +64,6 @@
 - (void)updateBadge {
     BOOL showBadge = [self showIndicatorForCrumb:HEMBreadcrumbSettings];
     self.tabBarItem.badgeValue = showBadge ? @"1" : nil;
-    [self reloadTopBar];
 }
 
 - (NSString *)segueIdentifierForCategory:(HEMSettingsCategory)category {

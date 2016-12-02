@@ -10,11 +10,9 @@
 #import "HEMAlertViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMScreenUtils.h"
-#import "HEMRootViewController.h"
 #import "HEMPresenter.h"
 #import "HEMBreadcrumbService.h"
 #import "HEMAccountService.h"
-#import "HEMSnazzBarController.h"
 
 #import "Sense-Swift.h"
 
@@ -293,13 +291,6 @@
     HEMBreadcrumbService* service = [HEMBreadcrumbService sharedServiceForAccount:account];
     [service clearIfTrailEndsAt:crumb];
 }
-
-- (void)reloadTopBar {
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    HEMSnazzBarController* snazzVC = [rootVC barController];
-    [snazzVC reloadButtonsBarBadges];
-}
-
 #pragma mark - Clean up
 
 - (void)dealloc {

@@ -14,7 +14,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMPopupView.h"
 #import "HEMPopupMaskView.h"
-#import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphViewController.h"

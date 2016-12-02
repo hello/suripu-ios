@@ -24,7 +24,6 @@
 #import "HEMURLImageView.h"
 #import "HEMImageCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
-#import "HEMRootViewController.h"
 #import "HEMLoadingCollectionViewCell.h"
 #import "HEMActivityIndicatorView.h"
 
@@ -125,12 +124,6 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 }
 
 #pragma mark - Presenter events
-
-- (void)willAppear {
-    [super willAppear];
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [rootVC hideStatusBar];
-}
 
 - (void)didAppear {
     [super didAppear];
@@ -415,9 +408,6 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 - (void)dealloc {
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
-    
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [rootVC showStatusBar];
 }
 
 @end

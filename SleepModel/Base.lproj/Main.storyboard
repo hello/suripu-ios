@@ -7112,27 +7112,27 @@
                                     <constraint firstAttribute="height" id="nPm-Jp-39N"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Adg-I7-pVg">
-                                    <size key="itemSize" width="370" height="86"/>
+                                    <size key="itemSize" width="370" height="126"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="summaryViewCell" id="zeC-Bo-0He" customClass="HEMBreakdownSummaryCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTH-Va-4ZD">
-                                                    <rect key="frame" x="20" y="20" width="153" height="31"/>
+                                                    <rect key="frame" x="20" y="44" width="153" height="30.333333333333329"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="22"/>
                                                     <color key="textColor" red="0.2176530510187149" green="0.25914883613586426" blue="0.32559084892272949" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
-                                                    <rect key="frame" x="20" y="61" width="335" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
+                                                    <rect key="frame" x="20" y="84.333333333333329" width="335" height="20"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.21765305099999999" green="0.2591488361" blue="0.32559084890000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -7143,21 +7143,21 @@
                                             <constraint firstItem="jTH-Va-4ZD" firstAttribute="leading" secondItem="1U6-Tw-owC" secondAttribute="leading" id="9DS-WK-iN2"/>
                                             <constraint firstAttribute="trailing" secondItem="1U6-Tw-owC" secondAttribute="trailing" constant="20" id="PCb-sY-wWD"/>
                                             <constraint firstItem="jTH-Va-4ZD" firstAttribute="leading" secondItem="zeC-Bo-0He" secondAttribute="leading" constant="20" id="fh4-d4-Xpy"/>
-                                            <constraint firstItem="jTH-Va-4ZD" firstAttribute="top" secondItem="zeC-Bo-0He" secondAttribute="top" constant="20" id="nBL-Vs-Mis"/>
+                                            <constraint firstItem="jTH-Va-4ZD" firstAttribute="top" secondItem="zeC-Bo-0He" secondAttribute="top" constant="44" id="nBL-Vs-Mis"/>
                                             <constraint firstItem="1U6-Tw-owC" firstAttribute="top" secondItem="jTH-Va-4ZD" secondAttribute="bottom" constant="10" id="naR-gh-JST"/>
                                             <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="1U6-Tw-owC" secondAttribute="bottom" id="rkw-8L-JXA"/>
                                         </constraints>
-                                        <size key="customSize" width="375" height="128"/>
+                                        <size key="customSize" width="375" height="108"/>
                                         <connections>
                                             <outlet property="detailLabel" destination="1U6-Tw-owC" id="atM-J2-3Hs"/>
                                             <outlet property="titleLabel" destination="jTH-Va-4ZD" id="MB5-mT-QE5"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="breakdownLineCell" id="5Yf-yd-oc8" customClass="HEMBreakdownLineCell">
-                                        <rect key="frame" x="3" y="128" width="370" height="86"/>
+                                        <rect key="frame" x="3" y="108" width="370" height="126"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="370" height="86"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="370" height="126"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xy9-b3-hMj">

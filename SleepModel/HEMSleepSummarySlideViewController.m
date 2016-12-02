@@ -19,7 +19,6 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
-#import "HEMRootViewController.h"
 #import "HEMHandHoldingService.h"
 #import "HEMStyle.h"
 

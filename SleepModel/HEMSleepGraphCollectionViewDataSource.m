@@ -20,7 +20,6 @@
 #import "HEMMarkdown.h"
 #import "NSDate+HEMRelative.h"
 #import "HEMSplitTextFormatter.h"
-#import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
 #import "HEMWaveform.h"
 #import "HEMTimelineMessageContainerView.h"

@@ -281,7 +281,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell graphContainerView] bounds]];
         [lineChartView setViewPortOffsetsWithLeft:0.0f top:6.0f right:0.0f bottom:0.0f];
-        [lineChartView setUserInteractionEnabled:NO];
         *animate = YES;
     } else {
         *animate = NO;
@@ -626,6 +625,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
+    [chartContainer setUserInteractionEnabled:NO];
     [chartContainer setScrubberEnable:NO];
     [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMax]];
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];

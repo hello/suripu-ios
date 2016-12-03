@@ -9,7 +9,7 @@
 #import "HEMDevicesViewController.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMPillPairViewController.h"
 #import "HEMSensePairViewController.h"
@@ -20,6 +20,7 @@
 #import "HEMDevicesPresenter.h"
 #import "HEMSleepPillDfuViewController.h"
 #import "HEMSettingsNavigationController.h"
+#import "HEMPillDFUStoryboard.h"
 
 @interface HEMDevicesViewController() <
     HEMPillPairDelegate,
@@ -83,12 +84,12 @@
 }
 
 - (void)showSenseSettingsFrom:(HEMDevicesPresenter*)presenter {
-    [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard senseSegueIdentifier]
                               sender:self];
 }
 
 - (void)showPillSettingsFrom:(HEMDevicesPresenter*)presenter {
-    [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard pillSegueIdentifier]
                               sender:self];
 }
 
@@ -99,7 +100,7 @@
 }
 
 - (void)showFirmwareUpdateFrom:(HEMDevicesPresenter*)presenter {
-    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UINavigationController* nav = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
     [dfuVC setDeviceService:[self deviceService]];
     [dfuVC setDelegate:self];

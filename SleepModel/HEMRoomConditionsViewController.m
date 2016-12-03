@@ -7,6 +7,8 @@
 //
 #import <SenseKit/SENSensor.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMRoomConditionsViewController.h"
 #import "HEMRoomConditionsPresenter.h"
 #import "HEMActivityIndicatorView.h"
@@ -17,11 +19,13 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSensorDetailViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 
 @interface HEMRoomConditionsViewController () <
     HEMPresenterPairDelegate,
     HEMSensePairingDelegate,
-    HEMRoomConditionsDelegate
+    HEMRoomConditionsDelegate,
+    RoomConditionsNavDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -67,11 +71,23 @@
     [presenter bindWithActivityIndicator:[self activityIndicator]];
     [presenter setPairDelegate:self];
     [presenter setDelegate:self];
+    
+    RoomConditionsNavPresenter* navPresenter = [RoomConditionsNavPresenter new];
+    [navPresenter bindWithNavBarWithNavItem:[self navigationItem]];
+    [navPresenter setNavDelegate:self];
 
     [self setPresenter:presenter];
     [self setSensorService:sensorService];
     [self setIntroService:introService];
     [self addPresenter:presenter];
+    [self addPresenter:navPresenter];
+}
+
+#pragma mark - RoomConditionsNavDelegate
+
+- (void)showSettingsFromPresenter:(RoomConditionsNavPresenter *)presenter {
+    HEMSettingsTableViewController* settingsVC = [HEMSettingsStoryboard instantiateSettingsController];
+    [[self navigationController] pushViewController:settingsVC animated:YES];
 }
 
 #pragma mark - HEMRoomConditionsDelegate

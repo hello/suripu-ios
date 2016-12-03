@@ -13,7 +13,7 @@
 #import "HEMAccountService.h"
 #import "HEMBreadcrumbService.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMTellAFriendItemProvider.h"
 #import "HEMStyle.h"
@@ -94,6 +94,10 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     [tableView setDataSource:self];
     
     [self setTableView:tableView];
+}
+
+- (void)bindWithNavItem:(UINavigationItem*)navItem {
+    [navItem setTitle:NSLocalizedString(@"settings.title", nil)];
 }
 
 - (void)bindWithActivityView:(HEMActivityIndicatorView*)activityView {
@@ -280,7 +284,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *reuseId = [HEMMainStoryboard settingsCellReuseIdentifier];
+    NSString *reuseId = [HEMSettingsStoryboard settingsCellReuseIdentifier];
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
 

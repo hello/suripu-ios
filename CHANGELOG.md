@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0.5
+
+New:
+
+* Moved settings in to the room conditions tab
+* Updated room conditions to adjust for bottom nav bar + design tweaks
+* Moved settings related screens in to Settings.storyboard
+
 ## 2.0.0.4
 
 New:

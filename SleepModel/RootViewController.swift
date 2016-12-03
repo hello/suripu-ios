@@ -70,7 +70,7 @@ import SenseKit
 
     // MARK: Notification Events
     
-    private func listenForSystemEvents() {
+    fileprivate func listenForSystemEvents() {
         let center = NotificationCenter.default
         center.addObserver(self,
                            selector: #selector(didSignIn),
@@ -90,28 +90,28 @@ import SenseKit
                            object: HEMShortcutService.shared())
     }
     
-    @objc private func didSignIn() {
+    @objc fileprivate func didSignIn() {
         if HEMOnboardingService.shared().hasFinishedOnboarding() {
             showMainApp()
         }
     }
     
-    @objc private func didSignOut() {
+    @objc fileprivate func didSignOut() {
         showOnboarding()
     }
     
-    @objc private func didFinishOnboarding() {
+    @objc fileprivate func didFinishOnboarding() {
         showMainApp()
     }
     
     // TODO: react to shortcut
-    @objc private func reactToShortcut(notification: Notification) {
+    @objc fileprivate func reactToShortcut(notification: Notification) {
         
     }
     
     // MARK: Onboarding vs Main
     
-    private func launchInitialController() {
+    fileprivate func launchInitialController() {
         if HEMOnboardingService.shared().hasFinishedOnboarding() {
             showMainApp()
         } else {
@@ -119,7 +119,7 @@ import SenseKit
         }
     }
     
-    private func showOnboarding() {
+    fileprivate func showOnboarding() {
         let service = HEMOnboardingService.shared()
         let checkpoint = service.onboardingCheckpoint()
         let controller = HEMOnboardingController.controller(for: checkpoint, force: false)
@@ -131,11 +131,11 @@ import SenseKit
         }
     }
     
-    private func showMainApp() {
+    fileprivate func showMainApp() {
         launchController(controller: MainViewController())
     }
     
-    private func launchController(controller: UIViewController) {
+    fileprivate func launchController(controller: UIViewController) {
         let currentController = self.childViewControllers.first
         if object_getClass(currentController) == object_getClass(controller) {
             return
@@ -152,9 +152,15 @@ import SenseKit
         
         self.addChildViewController(controller)
         
-        var controllerFrame = controller.view.frame
-        controllerFrame.origin.y = !showMain ? containerHeight : 0
-        controller.view.frame = self.view.bounds
+        if currentController == nil {
+            // fresh launch
+            controller.view.frame = self.view.bounds
+        } else {
+            var controllerFrame = self.view.bounds
+            controllerFrame.origin.y = !showMain ? containerHeight : 0
+            controller.view.frame = controllerFrame
+        }
+
         self.view.addSubview(controller.view)
         
         if currentController == nil {
@@ -162,11 +168,9 @@ import SenseKit
         } else {
             // onboarding is show as if it's a modal by sliding up / down with
             // a dim overlay over the view
-            let startAlpha = showMain ? 0 : RootViewController.overlayAlpha
-            let endAlpha = showMain ? RootViewController.overlayAlpha : 0
             let overlay = UIView(frame: self.view.bounds)
             overlay.backgroundColor = UIColor.black
-            overlay.alpha = startAlpha
+            overlay.alpha = 0
             currentController!.willMove(toParentViewController: nil)
             currentController!.view.addSubview(overlay)
             
@@ -178,15 +182,22 @@ import SenseKit
             }
             
             UIView.animate(withDuration: RootViewController.animationDuration, animations: {
-                overlay.alpha = endAlpha
+                overlay.alpha = RootViewController.overlayAlpha
                 
-                var currentFrame = currentController!.view.frame
-                currentFrame.origin.y = !showMain ? 0 : containerHeight
-                currentController!.view.frame = currentFrame
+                if (!showMain) {
+                    // logging out
+                    var onboardingFrame = controller.view.frame
+                    onboardingFrame.origin.y = 0
+                    controller.view.frame = onboardingFrame
+                } else {
+                    var currentFrame = currentController!.view.frame
+                    currentFrame.origin.y = containerHeight
+                    currentController!.view.frame = currentFrame
+                }
                 
                 if currentModalController != nil {
                     var modalFrame = currentModalController!.view.frame
-                    modalFrame.origin.y = currentFrame.origin.y
+                    modalFrame.origin.y = currentController!.view.frame.origin.y
                     currentModalController!.view.frame = modalFrame
                 }
 

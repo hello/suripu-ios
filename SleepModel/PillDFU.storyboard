@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Styled Navigation View Controller-->
+        <scene sceneID="FKi-wN-glU">
+            <objects>
+                <navigationController storyboardIdentifier="pillDFUNav" id="3oj-Df-iJc" customClass="HEMStyledNavigationViewController" sceneMemberID="viewController">
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="414" height="736"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NDS-xh-paQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="pgF-Lg-CFx" kind="relationship" relationship="rootViewController" id="9tw-Th-j23"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wPn-dE-GIG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="379" y="7022"/>
+        </scene>
+        <!--Sleep Pill Dfu View Controller-->
+        <scene sceneID="1j2-jF-im8">
+            <objects>
+                <viewController storyboardIdentifier="dfu" id="pgF-Lg-CFx" customClass="HEMSleepPillDfuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bob-zB-3M9"/>
+                        <viewControllerLayoutGuide type="bottom" id="42a-Lk-jTC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2s2-jB-rFV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating your Sleep Pill" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wy-MD-DZz">
+                                <rect key="frame" x="24" y="76" width="366" height="28"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You'll need to keep the Sense app open for the duration of the update.  This process should take less than one minute." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1QO-03-ZfJ">
+                                <rect key="frame" x="24" y="112" width="366" height="61.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vmK-1g-qSu" customClass="HEMActionButton">
+                                <rect key="frame" x="24" y="656" width="366" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="Cpr-02-VIA"/>
+                                </constraints>
+                                <state key="normal" title="CONTINUE"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Pill updating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhL-hM-seC">
+                                <rect key="frame" x="24" y="668" width="366" height="28"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="In5-rf-GBq">
+                                <rect key="frame" x="72" y="634" width="270" height="2"/>
+                            </progressView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="251" image="sleepPillDFU" translatesAutoresizingMaskIntoConstraints="NO" id="rpM-jc-HWF">
+                                <rect key="frame" x="0.0" y="179.5" width="414" height="402.5"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ZhL-hM-seC" firstAttribute="leading" secondItem="2s2-jB-rFV" secondAttribute="leading" constant="24" id="0aM-zQ-Qwl"/>
+                            <constraint firstItem="42a-Lk-jTC" firstAttribute="top" secondItem="ZhL-hM-seC" secondAttribute="bottom" constant="40" id="0dx-Sy-TqH"/>
+                            <constraint firstItem="42a-Lk-jTC" firstAttribute="top" secondItem="vmK-1g-qSu" secondAttribute="bottom" constant="24" id="EMK-Zi-Cf7"/>
+                            <constraint firstItem="3wy-MD-DZz" firstAttribute="top" secondItem="bob-zB-3M9" secondAttribute="bottom" constant="12" id="EiM-3c-Cje"/>
+                            <constraint firstAttribute="trailing" secondItem="rpM-jc-HWF" secondAttribute="trailing" id="IZ5-E8-qZt"/>
+                            <constraint firstItem="1QO-03-ZfJ" firstAttribute="leading" secondItem="2s2-jB-rFV" secondAttribute="leading" constant="24" id="KPx-7d-cBz"/>
+                            <constraint firstItem="3wy-MD-DZz" firstAttribute="bottom" secondItem="1QO-03-ZfJ" secondAttribute="top" constant="-8" id="QPe-aw-WV6"/>
+                            <constraint firstItem="rpM-jc-HWF" firstAttribute="top" secondItem="1QO-03-ZfJ" secondAttribute="bottom" constant="6" id="ThY-pD-oKS"/>
+                            <constraint firstItem="vmK-1g-qSu" firstAttribute="leading" secondItem="2s2-jB-rFV" secondAttribute="leading" constant="24" id="X3r-c0-O0m"/>
+                            <constraint firstAttribute="trailing" secondItem="ZhL-hM-seC" secondAttribute="trailing" constant="24" id="aQ9-3Z-ccC"/>
+                            <constraint firstItem="3wy-MD-DZz" firstAttribute="leading" secondItem="2s2-jB-rFV" secondAttribute="leading" constant="24" id="fge-Je-d1u"/>
+                            <constraint firstItem="rpM-jc-HWF" firstAttribute="leading" secondItem="2s2-jB-rFV" secondAttribute="leading" id="g13-cY-6F6"/>
+                            <constraint firstItem="In5-rf-GBq" firstAttribute="leading" secondItem="2s2-jB-rFV" secondAttribute="leading" constant="72" id="g6E-F6-nhC"/>
+                            <constraint firstAttribute="trailing" secondItem="vmK-1g-qSu" secondAttribute="trailing" constant="24" id="jqr-Bt-INk"/>
+                            <constraint firstItem="In5-rf-GBq" firstAttribute="bottom" secondItem="ZhL-hM-seC" secondAttribute="top" constant="-32" id="ojc-FN-ZzA"/>
+                            <constraint firstAttribute="trailing" secondItem="3wy-MD-DZz" secondAttribute="trailing" constant="24" id="q2e-6q-evb"/>
+                            <constraint firstAttribute="trailing" secondItem="In5-rf-GBq" secondAttribute="trailing" constant="72" id="rsP-Iu-KGe"/>
+                            <constraint firstAttribute="trailing" secondItem="1QO-03-ZfJ" secondAttribute="trailing" constant="24" id="wxJ-5O-FeP"/>
+                            <constraint firstItem="In5-rf-GBq" firstAttribute="top" relation="lessThanOrEqual" secondItem="rpM-jc-HWF" secondAttribute="bottom" priority="751" constant="52" id="yjg-qi-dzZ"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="zCM-2K-fuq">
+                        <barButtonItem key="leftBarButtonItem" id="HHX-DD-XHY">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="N8Y-fF-gGJ">
+                                <rect key="frame" x="20" y="7" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel"/>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="GUo-vk-5AP">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MQN-C9-Rg1">
+                                <rect key="frame" x="372" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="helpIconSmall">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cancelButton" destination="N8Y-fF-gGJ" id="Yce-A8-LKd"/>
+                        <outlet property="continueButton" destination="vmK-1g-qSu" id="SmS-lF-HRq"/>
+                        <outlet property="descriptionLabel" destination="1QO-03-ZfJ" id="tgT-cb-t0g"/>
+                        <outlet property="helpButton" destination="MQN-C9-Rg1" id="2ER-wg-KJj"/>
+                        <outlet property="illustrationBottomConstraint" destination="yjg-qi-dzZ" id="Hxr-eJ-QeB"/>
+                        <outlet property="illustrationImageView" destination="rpM-jc-HWF" id="4Ik-2i-0Vq"/>
+                        <outlet property="progressView" destination="In5-rf-GBq" id="yzi-6r-uiM"/>
+                        <outlet property="statusLabel" destination="ZhL-hM-seC" id="dDQ-iq-jfd"/>
+                        <outlet property="statusLabelBottomConstraint" destination="0dx-Sy-TqH" id="rKJ-LI-eMT"/>
+                        <outlet property="titleLabel" destination="3wy-MD-DZz" id="Blh-Kz-q5I"/>
+                        <segue destination="C5r-rH-vAO" kind="show" identifier="scan" id="yQK-Nc-Rpj">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ezJ-BQ-E64" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218" y="7022"/>
+        </scene>
+        <!--Sleep Pill Finder View Controller-->
+        <scene sceneID="dX3-Zu-haJ">
+            <objects>
+                <viewController storyboardIdentifier="pillFinder" id="C5r-rH-vAO" customClass="HEMSleepPillFinderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="o9v-b2-b6i"/>
+                        <viewControllerLayoutGuide type="bottom" id="LtK-Tu-jEM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MaB-Av-JFS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Connect your Sleep Pill" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnO-g4-6OZ">
+                                <rect key="frame" x="24" y="88" width="366" height="28"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Hold your Sleep Pill near your mobile device, and then quickly shake it for three seconds to begin the update." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUQ-e4-SgN">
+                                <rect key="frame" x="24" y="124" width="366" height="61.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="OeA-m2-gTA" customClass="HEMEmbeddedVideoView">
+                                <rect key="frame" x="0.0" y="185.5" width="414" height="409.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ai6-cl-zh8">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="409.5"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Ai6-cl-zh8" secondAttribute="bottom" id="8PR-PE-g4H"/>
+                                    <constraint firstItem="Ai6-cl-zh8" firstAttribute="leading" secondItem="OeA-m2-gTA" secondAttribute="leading" id="Bj9-lm-4jh"/>
+                                    <constraint firstItem="Ai6-cl-zh8" firstAttribute="top" secondItem="OeA-m2-gTA" secondAttribute="top" id="HYZ-i9-M4L"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ai6-cl-zh8" secondAttribute="trailing" id="RJY-4u-JjK"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="firstFrameView" destination="Ai6-cl-zh8" id="Ryc-Sx-uo7"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLo-6C-Nye" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="183" y="595" width="48" height="48"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="7OD-gB-gdq"/>
+                                    <constraint firstAttribute="height" constant="48" id="GJk-7A-NWL"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looking for Sleep Pill" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g43-4B-llz">
+                                <rect key="frame" x="24" y="668" width="366" height="28"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjA-2x-tQV" customClass="HEMActionButton">
+                                <rect key="frame" x="24" y="656" width="366" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="lzS-Vp-FHS"/>
+                                </constraints>
+                                <state key="normal" title="RETRY"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="pUQ-e4-SgN" secondAttribute="trailing" constant="24" id="1NK-Ar-Qwb"/>
+                            <constraint firstItem="g43-4B-llz" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" constant="24" id="2Hh-gv-rsw"/>
+                            <constraint firstAttribute="trailing" secondItem="KnO-g4-6OZ" secondAttribute="trailing" constant="24" id="8vs-RB-aRE"/>
+                            <constraint firstItem="tLo-6C-Nye" firstAttribute="bottom" secondItem="g43-4B-llz" secondAttribute="top" constant="-25" id="HUe-6d-fYZ"/>
+                            <constraint firstItem="KnO-g4-6OZ" firstAttribute="top" secondItem="o9v-b2-b6i" secondAttribute="bottom" constant="24" id="MB3-Wg-vgf"/>
+                            <constraint firstAttribute="trailing" secondItem="WjA-2x-tQV" secondAttribute="trailing" constant="24" id="Qpx-Dh-j4C"/>
+                            <constraint firstAttribute="trailing" secondItem="OeA-m2-gTA" secondAttribute="trailing" id="RHP-f5-Lxl"/>
+                            <constraint firstItem="KnO-g4-6OZ" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" constant="24" id="RZi-mY-UN0"/>
+                            <constraint firstItem="OeA-m2-gTA" firstAttribute="bottom" secondItem="tLo-6C-Nye" secondAttribute="top" priority="750" id="T1R-BK-N6t"/>
+                            <constraint firstItem="LtK-Tu-jEM" firstAttribute="top" secondItem="WjA-2x-tQV" secondAttribute="bottom" constant="24" id="THB-Cr-3Yw"/>
+                            <constraint firstItem="tLo-6C-Nye" firstAttribute="centerX" secondItem="MaB-Av-JFS" secondAttribute="centerX" id="TK0-Sn-vC8"/>
+                            <constraint firstItem="WjA-2x-tQV" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" constant="24" id="Yc8-xC-oNk"/>
+                            <constraint firstItem="OeA-m2-gTA" firstAttribute="top" secondItem="pUQ-e4-SgN" secondAttribute="bottom" id="b4x-Nl-Nvu"/>
+                            <constraint firstItem="pUQ-e4-SgN" firstAttribute="top" secondItem="KnO-g4-6OZ" secondAttribute="bottom" constant="8" id="crq-Uf-apT"/>
+                            <constraint firstItem="LtK-Tu-jEM" firstAttribute="top" secondItem="g43-4B-llz" secondAttribute="bottom" constant="40" id="ecq-iu-tzc"/>
+                            <constraint firstItem="pUQ-e4-SgN" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" constant="24" id="nvH-iO-pHt"/>
+                            <constraint firstItem="OeA-m2-gTA" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" id="v32-tK-HO5"/>
+                            <constraint firstAttribute="trailing" secondItem="g43-4B-llz" secondAttribute="trailing" constant="24" id="zjN-PL-onh"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="X6M-ln-RKL">
+                        <barButtonItem key="leftBarButtonItem" id="SwV-Kq-STk">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cgR-aH-9do">
+                                <rect key="frame" x="20" y="7" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel"/>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="Ht4-YN-f51">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="si9-Wo-R3c">
+                                <rect key="frame" x="372" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="helpIconSmall"/>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="activityView" destination="tLo-6C-Nye" id="cSF-OI-nRT"/>
+                        <outlet property="cancelButton" destination="cgR-aH-9do" id="gMO-4n-GTW"/>
+                        <outlet property="descriptionLabel" destination="pUQ-e4-SgN" id="HOQ-gx-cJ3"/>
+                        <outlet property="helpButton" destination="si9-Wo-R3c" id="bf5-S0-ua7"/>
+                        <outlet property="retryButton" destination="WjA-2x-tQV" id="kI5-dd-FIn"/>
+                        <outlet property="statusLabel" destination="g43-4B-llz" id="KlZ-jX-yGf"/>
+                        <outlet property="titleLabel" destination="KnO-g4-6OZ" id="eUA-vc-nJ8"/>
+                        <outlet property="videoView" destination="OeA-m2-gTA" id="J75-EX-eG7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rsz-Nl-FY4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2046" y="7022"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="helpIconSmall" width="22" height="22"/>
+        <image name="sleepPillDFU" width="375" height="200"/>
+    </resources>
+</document>

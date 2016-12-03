@@ -16,6 +16,7 @@
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMDeviceActionCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
@@ -27,6 +28,7 @@
 #import "HEMStyle.h"
 #import "HEMDeviceService.h"
 #import "HEMSleepPillDFUDelegate.h"
+#import "HEMPillDFUStoryboard.h"
 
 static NSString* const HEMPillHeaderReuseId = @"sectionHeader";
 
@@ -178,8 +180,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSString* reuseId
         = sec < [[self warnings] count]
-        ? [HEMMainStoryboard warningReuseIdentifier]
-        : [HEMMainStoryboard actionReuseIdentifier];
+        ? [HEMSettingsStoryboard warningReuseIdentifier]
+        : [HEMSettingsStoryboard actionReuseIdentifier];
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                                            forIndexPath:indexPath];
@@ -318,7 +320,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 - (void)showPillDfuController {
-    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UINavigationController* nav = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     if ([[nav topViewController] isKindOfClass:[HEMSleepPillDfuViewController class]]) {
         HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
         [dfuVC setDelegate:self];

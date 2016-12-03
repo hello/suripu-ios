@@ -43,6 +43,7 @@
 #import "HEMRoomCheckViewController.h"
 #import "HEMIntroService.h"
 #import "HEMVoiceService.h"
+#import "HEMPillDFUStoryboard.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -328,7 +329,7 @@
 - (void)addPillDfuOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.dfu.pill", nil) action:^{
-        UIViewController* viewController = [HEMMainStoryboard instantiatePillDFUNavViewController];
+        UIViewController* viewController = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
         [weakSelf showController:viewController animated:YES completion:nil];
         [self setSupportOptionController:nil];
     }];

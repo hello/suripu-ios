@@ -13,7 +13,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMExpansionAuthViewController.h"
 #import "HEMExpansionConnectDelegate.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMTutorial.h"
 #import "HEMExpansionConnectDelegate.h"
 
@@ -113,7 +113,7 @@
 }
 
 - (void)connectExpansionFromPresenter:(HEMExpansionPresenter *)presenter {
-    [self performSegueWithIdentifier:[HEMMainStoryboard connectSegueIdentifier] sender:self];
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard connectSegueIdentifier] sender:self];
 }
 
 #pragma mark - HEMPresenterErrorDelegate

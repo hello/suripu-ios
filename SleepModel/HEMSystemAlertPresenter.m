@@ -24,9 +24,10 @@
 #import "HEMSensePairViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMDeviceService.h"
 #import "HEMSystemAlertService.h"
+#import "HEMPillDFUStoryboard.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,
@@ -266,7 +267,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 
 - (void)fixTimeZoneNow:(id)sender {
     [self dismissActionView:^{
-        UIViewController* tzVC = [HEMMainStoryboard instantiateTimeZoneNavViewController];
+        UIViewController* tzVC = [HEMSettingsStoryboard instantiateTimeZoneNavViewController];
         [[self delegate] presentViewController:tzVC from:self];
     }];
     [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
@@ -495,7 +496,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 #pragma mark Pill Problems
 
 - (void)showPillDFUController {
-    UIViewController* viewController = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UIViewController* viewController = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     [[self delegate] presentViewController:viewController from:self];
 }
 

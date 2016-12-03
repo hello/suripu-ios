@@ -21,7 +21,7 @@
 #import "HEMDeviceCollectionViewCell.h"
 #import "HEMNoDeviceCollectionViewCell.h"
 #import "HEMTextFooterCollectionReusableView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMTutorial.h"
 #import "HEMPillCollectionViewCell.h"
 #import "HEMActionButton.h"
@@ -274,11 +274,11 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     NSString* reuseId = nil;
     
     if (!hasDevice && [self attemptedDataLoad]) {
-        reuseId = [HEMMainStoryboard pairReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard pairReuseIdentifier];
     } else if ([indexPath row] == HEMDevicesRowPill) {
-        reuseId = [HEMMainStoryboard pillReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard pillReuseIdentifier];
     } else {
-        reuseId = [HEMMainStoryboard senseReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard senseReuseIdentifier];
     }
     
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId

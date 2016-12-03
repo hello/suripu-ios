@@ -15,6 +15,7 @@ CGFloat const HEMStyleSectionTopMargin = 12.0f;
 CGFloat const HEMStyleDeviceSectionTopMargin = 15.0f;
 CGFloat const HEMStyleButtonContainerBorderWidth = 0.5f;
 CGFloat const HEMStyleTabBarItemTopInset = 6.0f;
+CGFloat const HEMStyleDefaultNavBarButtonItemWidth = 50.0f;
 
 void ApplyHelloStyles (void) {
     NSArray* classes = @[[HEMStyledNavigationViewController class]];

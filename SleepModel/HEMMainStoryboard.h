@@ -19,7 +19,6 @@
 +(NSString *)configurationReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
-+(NSString *)preferenceReuseIdentifier;
 +(NSString *)imageReuseIdentifier;
 +(NSString *)summaryReuseIdentifier;
 +(NSString *)titleReuseIdentifier;
@@ -28,27 +27,7 @@
 +(NSString *)aboutReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
-+(NSString *)errorReuseIdentifier;
-+(NSString *)expansionReuseIdentifier;
-+(NSString *)settingsReuseIdentifier;
-+(NSString *)switchReuseIdentifier;
-+(NSString *)plainReuseIdentifier;
 +(NSString *)configReuseIdentifier;
-+(NSString *)textReuseIdentifier;
-+(NSString *)infoReuseIdentifier;
-+(NSString *)explanationReuseIdentifier;
-+(NSString *)signoutReuseIdentifier;
-+(NSString *)unitCellReuseIdentifier;
-+(NSString *)settingsCellReuseIdentifier;
-+(NSString *)senseReuseIdentifier;
-+(NSString *)pillReuseIdentifier;
-+(NSString *)pairReuseIdentifier;
-+(NSString *)supportCellReuseIdentifier;
-+(NSString *)topicCellReuseIdentifier;
-+(NSString *)warningReuseIdentifier;
-+(NSString *)actionReuseIdentifier;
-+(NSString *)connectionReuseIdentifier;
-+(NSString *)timezoneReuseIdentifier;
 +(NSString *)currentValueReuseIdentifier;
 +(NSString *)chartReuseIdentifier;
 +(NSString *)scaleReuseIdentifier;
@@ -58,12 +37,15 @@
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)sensorReuseIdentifier;
 +(NSString *)groupReuseIdentifier;
++(NSString *)errorReuseIdentifier;
++(NSString *)pairReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)welcomeReuseIdentifier;
 +(NSString *)commandsReuseIdentifier;
 +(NSString *)commandGroupReuseIdentifier;
 +(NSString *)examplesReuseIdentifier;
++(NSString *)settingsReuseIdentifier;
 +(NSString *)messageReuseIdentifier;
 +(NSString *)calendarReuseIdentifier;
 +(NSString *)barReuseIdentifier;
@@ -71,32 +53,15 @@
 +(NSString *)listItemReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)breakdownLineCellReuseIdentifier;
-+(NSString *)fieldReuseIdentifier;
 
 /** Segue Identifiers */
-+(NSString *)accountSettingsSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)alarmSoundsSegueIdentifier;
 +(NSString *)alarmsSegueIdentifier;
-+(NSString *)connectSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
-+(NSString *)devicesSettingsSegueIdentifier;
-+(NSString *)expansionSegueIdentifier;
 +(NSString *)expansionConfigSegueIdentifier;
-+(NSString *)expansionsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
-+(NSString *)notificationSettingsSegueIdentifier;
-+(NSString *)pillSegueIdentifier;
-+(NSString *)scanSegueIdentifier;
-+(NSString *)senseSegueIdentifier;
-+(NSString *)settingsToSupportSegueIdentifier;
 +(NSString *)sleepSoundsSegueIdentifier;
-+(NSString *)timezoneSegueIdentifier;
-+(NSString *)topicsSegueIdentifier;
-+(NSString *)unitsSegueIdentifier;
-+(NSString *)updateAccountInfoSegueIdentifier;
-+(NSString *)voiceSegueIdentifier;
-+(NSString *)volumeSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateRootViewController;
@@ -109,16 +74,10 @@
 +(id)instantiateCurrentNavController;
 +(id)instantiateExpansionConfigViewController;
 +(id)instantiateFeedViewController;
-+(id)instantiateFormViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightsFeedViewController;
 +(id)instantiateListItemViewController;
-+(id)instantiatePillDFUViewController;
-+(id)instantiatePillDFUNavViewController;
-+(id)instantiatePillFinderViewController;
-+(id)instantiateSettingsController;
-+(id)instantiateSettingsNavController;
 +(id)instantiateSleepGraphController;
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
@@ -126,13 +85,9 @@
 +(id)instantiateSleepSoundViewController;
 +(id)instantiateSoundsContainerViewController;
 +(id)instantiateSoundsNavigationViewController;
-+(id)instantiateSupportTopicsViewController;
-+(id)instantiateTimeZoneNavViewController;
-+(id)instantiateTimeZoneViewController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;
-+(id)instantiateUnitPreferenceViewController;
 +(id)instantiateVoiceViewController;
 
 @end

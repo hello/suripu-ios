@@ -2,7 +2,7 @@
 
 #import "HEMSettingsTableViewController.h"
 #import "HEMVoiceSettingsViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMTellAFriendItemProvider.h"
 
 #import "HEMSettingsPresenter.h"
@@ -44,6 +44,7 @@
                                            expansionService:expansionService
                                           breadCrumbService:breadService];
     [presenter bindWithTableView:[self settingsTableView]];
+    [presenter bindWithNavItem:[self navigationItem]];
     [presenter bindWithActivityView:[self activityView]];
     [presenter setDelegate:self];
     
@@ -69,17 +70,17 @@
 - (NSString *)segueIdentifierForCategory:(HEMSettingsCategory)category {
     switch (category) {
         case HEMSettingsCategoryProfile:
-            return [HEMMainStoryboard accountSettingsSegueIdentifier];
+            return [HEMSettingsStoryboard accountSettingsSegueIdentifier];
         case HEMSettingsCategoryDevices:
-            return [HEMMainStoryboard devicesSettingsSegueIdentifier];
+            return [HEMSettingsStoryboard devicesSettingsSegueIdentifier];
         case HEMSettingsCategoryNotifications:
-            return [HEMMainStoryboard notificationSettingsSegueIdentifier];
+            return [HEMSettingsStoryboard notificationSettingsSegueIdentifier];
         case HEMSettingsCategorySupport:
-            return [HEMMainStoryboard settingsToSupportSegueIdentifier];
+            return [HEMSettingsStoryboard settingsToSupportSegueIdentifier];
         case HEMSettingsCategoryExpansions:
-            return [HEMMainStoryboard expansionsSegueIdentifier];
+            return [HEMSettingsStoryboard expansionsSegueIdentifier];
         case HEMSettingsCategoryVoice:
-            return [HEMMainStoryboard voiceSegueIdentifier];
+            return [HEMSettingsStoryboard voiceSegueIdentifier];
         default:
             return nil; // others show modal
     }

@@ -32,6 +32,7 @@
         [[self layer] setBorderWidth:0.0f];
         [self setPinchZoomEnabled:NO];
         [self setDoubleTapToZoomEnabled:NO];
+        [self setDragEnabled:NO];
         [self setScaleEnabled:NO];
         [self setHighlightPerTapEnabled:NO];
         [self setHighlightPerDragEnabled:NO];

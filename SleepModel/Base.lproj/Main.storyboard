@@ -3509,7 +3509,7 @@
         <!--Sensor Detail View Controller-->
         <scene sceneID="I0P-XQ-sj2">
             <objects>
-                <viewController id="Kzl-WG-JYd" customClass="HEMSensorDetailViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="Kzl-WG-JYd" customClass="HEMSensorDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="teA-GK-4zq"/>
                         <viewControllerLayoutGuide type="bottom" id="IXC-su-XWw"/>
@@ -3756,8 +3756,8 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Vth-kc-wzO" firstAttribute="leading" secondItem="8QW-Yv-BMk" secondAttribute="leading" id="FWd-Z1-Pe6"/>
-                            <constraint firstItem="IXC-su-XWw" firstAttribute="top" secondItem="f4V-5A-PDX" secondAttribute="bottom" id="Ke1-6j-lHM"/>
                             <constraint firstItem="Vth-kc-wzO" firstAttribute="top" secondItem="teA-GK-4zq" secondAttribute="bottom" id="TCL-Rn-v2u"/>
+                            <constraint firstAttribute="bottom" secondItem="f4V-5A-PDX" secondAttribute="bottom" id="hbN-cF-GOH"/>
                             <constraint firstAttribute="trailing" secondItem="Vth-kc-wzO" secondAttribute="trailing" id="oMD-eM-4jY"/>
                             <constraint firstItem="f4V-5A-PDX" firstAttribute="leading" secondItem="8QW-Yv-BMk" secondAttribute="leading" id="qiX-CH-AjS"/>
                             <constraint firstAttribute="trailing" secondItem="f4V-5A-PDX" secondAttribute="trailing" id="ttm-uB-Nkx"/>
@@ -4533,7 +4533,7 @@
         <!--Sense-->
         <scene sceneID="Tbx-8E-7KV">
             <objects>
-                <viewController id="14u-gk-etK" customClass="HEMRoomConditionsViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="14u-gk-etK" customClass="HEMRoomConditionsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AI9-lR-8z4"/>
                         <viewControllerLayoutGuide type="bottom" id="OyU-TY-GKW"/>
@@ -4542,7 +4542,7 @@
                         <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gTK-vk-XAu">
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gTK-vk-XAu">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iaa-Kb-m1S" customClass="HEMCardFlowLayout">
                                     <size key="itemSize" width="584" height="142"/>
@@ -4836,7 +4836,7 @@
                                 </collectionReusableView>
                             </collectionView>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsQ-R3-Wd6" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="180" y="309" width="55" height="55"/>
+                                <rect key="frame" x="180" y="308.66666666666669" width="55" height="55"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="t1I-aK-Ouw"/>
@@ -4851,7 +4851,7 @@
                             <constraint firstItem="gTK-vk-XAu" firstAttribute="top" secondItem="AI9-lR-8z4" secondAttribute="bottom" id="Nfq-4j-atF"/>
                             <constraint firstAttribute="trailing" secondItem="gTK-vk-XAu" secondAttribute="trailing" id="hNd-xW-Yjy"/>
                             <constraint firstItem="gTK-vk-XAu" firstAttribute="leading" secondItem="vLp-tA-5za" secondAttribute="leading" id="rDl-Ec-pXO"/>
-                            <constraint firstItem="OyU-TY-GKW" firstAttribute="top" secondItem="gTK-vk-XAu" secondAttribute="bottom" id="v3o-JF-qRT"/>
+                            <constraint firstItem="gTK-vk-XAu" firstAttribute="bottom" secondItem="OyU-TY-GKW" secondAttribute="top" id="ydQ-at-r2f"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Sense" id="eET-Oo-8Fi"/>
@@ -4863,7 +4863,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0SY-YO-9OH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1218" y="-8"/>
+            <point key="canvasLocation" x="1217.3913043478262" y="-8.1521739130434785"/>
         </scene>
         <!--Settings Navigation Controller-->
         <scene sceneID="lPQ-1w-Jov">

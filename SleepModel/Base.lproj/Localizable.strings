@@ -460,7 +460,6 @@
 "sensor.accessibility-value.condition-warning" = "acceptable";
 "sensor.accessibility-value.condition-ideal" = "ideal";
 "sensor.accessibility-value.condition-unknown" = "unknown";
-"sensor.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to view current conditions.";
 "sensor.no-sense.button.title" = "Pair new Sense";
 
 // measurements
@@ -930,7 +929,7 @@
 "room-conditions.intro.title" = "Your current conditions";
 "room-conditions.intro.desc" = "Recent changes to room conditions may take a few moments to be reflected here. Tap a card for more detail.";
 "room-conditions.pair-sense.button.title" = "Pair Sense";
-"room-conditions.pair-sense.message" = "You don't currently have a Sense paired to your account. Please pair with Sense to view current conditions.";
+"room-conditions.pair-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to view current conditions.";
 "room-conditions.air-quality" = "Air quality";
 "room-conditions.status.calibrating" = "Calibrating";
 

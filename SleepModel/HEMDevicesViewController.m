@@ -9,7 +9,7 @@
 #import "HEMDevicesViewController.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMPillPairViewController.h"
 #import "HEMSensePairViewController.h"
@@ -84,12 +84,12 @@
 }
 
 - (void)showSenseSettingsFrom:(HEMDevicesPresenter*)presenter {
-    [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard senseSegueIdentifier]
                               sender:self];
 }
 
 - (void)showPillSettingsFrom:(HEMDevicesPresenter*)presenter {
-    [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard pillSegueIdentifier]
                               sender:self];
 }
 

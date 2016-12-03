@@ -97,7 +97,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMSleepSegmentPopupAnimationDuration = 0.5f;
 static CGFloat const HEMPopupAnimationDistance = 8.0f;
 static CGFloat const HEMPopupAnimationDisplayInterval = 2.0f;
-static CGFloat const HEMNavBarButtonWidth = 50.0f;
 static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
@@ -845,11 +844,11 @@ static BOOL hasLoadedBefore = NO;
     
     CGRect buttonFrame = CGRectZero;
     buttonFrame.size.height = CGRectGetHeight([[self navigationBar] bounds]);
-    buttonFrame.size.width = HEMNavBarButtonWidth;
+    buttonFrame.size.width = HEMStyleDefaultNavBarButtonItemWidth;
     
     UIImage* shareImage = [UIImage imageNamed:@"timelineShareIcon"];
     UIButton* shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat shareLeftInset = HEMNavBarButtonWidth - shareImage.size.width;
+    CGFloat shareLeftInset = HEMStyleDefaultNavBarButtonItemWidth - shareImage.size.width;
     [shareButton setImage:shareImage forState:UIControlStateNormal];
     [shareButton setFrame:buttonFrame];
     [shareButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, shareLeftInset, 0.0f, 0.0f)];
@@ -863,7 +862,7 @@ static BOOL hasLoadedBefore = NO;
     
     UIImage* historyImage = [UIImage imageNamed:@"timelineCalendarIcon"];
     UIButton* historyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat historyRightInset = HEMNavBarButtonWidth - historyImage.size.width;
+    CGFloat historyRightInset = HEMStyleDefaultNavBarButtonItemWidth - historyImage.size.width;
     [historyButton setImage:historyImage forState:UIControlStateNormal];
     [historyButton setFrame:buttonFrame];
     [historyButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, historyRightInset)];

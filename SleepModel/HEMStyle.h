@@ -16,6 +16,7 @@ extern CGFloat const HEMStyleCardErrorTextVertMargin;
 extern CGFloat const HEMStyleSectionTopMargin;
 extern CGFloat const HEMStyleDeviceSectionTopMargin;
 extern CGFloat const HEMStyleButtonContainerBorderWidth;
+extern CGFloat const HEMStyleDefaultNavBarButtonItemWidth;
 
 void ApplyHelloStyles (void);
 void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar);

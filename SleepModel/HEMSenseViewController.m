@@ -18,6 +18,7 @@
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
@@ -304,7 +305,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         [weakSelf updateToLocalTimeZone];
     }];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.select-manually", nil) style:HEMAlertViewButtonStyleBlueText action:^{
-        [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
+        [weakSelf performSegueWithIdentifier:[HEMSettingsStoryboard timezoneSegueIdentifier] sender:weakSelf];
     }];
     [dialogVC showFrom:self];
 }

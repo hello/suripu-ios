@@ -10,7 +10,7 @@
 #import "NSAttributedString+HEMUtils.h"
 
 #import "HEMSenseSettingsDataSource+HEMCollectionView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMDeviceActionCell.h"
 #import "HEMWarningCollectionViewCell.h"
 #import "HEMDeviceWarning.h"
@@ -48,11 +48,11 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
     NSString* reuseId = nil;
     
     if (sec < [[self deviceWarnings] count]) {
-        reuseId = [HEMMainStoryboard warningReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard warningReuseIdentifier];
     } else if (sec == 0) {
-        reuseId = [HEMMainStoryboard connectionReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard connectionReuseIdentifier];
     } else {
-        reuseId = [HEMMainStoryboard actionReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard actionReuseIdentifier];
     }
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId

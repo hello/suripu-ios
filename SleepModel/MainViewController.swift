@@ -34,7 +34,7 @@ import UIKit
     
     // MARK: - Configuration methods
     
-    private func configureTabs() {
+    fileprivate func configureTabs() {
         let timelineVC = HEMSleepSummarySlideViewController()
         let trendsVC = HEMMainStoryboard.instantiateTrendsViewController() as! UIViewController
         let feedVC = HEMMainStoryboard.instantiateFeedViewController() as! UIViewController

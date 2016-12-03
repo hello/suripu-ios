@@ -18,7 +18,7 @@
 #import "HEMPresenter+HEMPhoto.h"
 #import "HEMAccountService.h"
 #import "HEMSettingsHeaderFooterView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerViewController.h"
@@ -620,13 +620,13 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     NSString* reuseId = nil;
     switch ([indexPath section]) {
         case HEMAccountSectionPreferences:
-            reuseId = [HEMMainStoryboard preferenceReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard preferenceReuseIdentifier];
             break;
         case HEMAccountSectionSignOut:
-            reuseId = [HEMMainStoryboard signoutReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard signoutReuseIdentifier];
             break;
         default:
-            reuseId = [HEMMainStoryboard infoReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard infoReuseIdentifier];
             break;
     }
     
@@ -762,7 +762,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)handleNameChangeRequest {
     HEMNameChangePresenter* presenter
         = [[HEMNameChangePresenter alloc] initWithAccountService:[self accountService]];
-    HEMFormViewController* formVC = [HEMMainStoryboard instantiateFormViewController];
+    HEMFormViewController* formVC = [HEMSettingsStoryboard instantiateFormViewController];
     [formVC setPresenter:presenter];
     [formVC setTitle:NSLocalizedString(@"settings.account.name.update.title", nil)];
     [[self delegate] presentViewController:formVC from:self];
@@ -771,7 +771,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)handleEmailChangeRequest {
     HEMEmailChangePresenter* presenter
     = [[HEMEmailChangePresenter alloc] initWithAccountService:[self accountService]];
-    HEMFormViewController* formVC = [HEMMainStoryboard instantiateFormViewController];
+    HEMFormViewController* formVC = [HEMSettingsStoryboard instantiateFormViewController];
     [formVC setPresenter:presenter];
     [formVC setTitle:NSLocalizedString(@"settings.account.email.update.title", nil)];
     [[self delegate] presentViewController:formVC from:self];
@@ -780,7 +780,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)handlePasswordChangeRequest {
     HEMPasswordChangePresenter* presenter
     = [[HEMPasswordChangePresenter alloc] initWithAccountService:[self accountService]];
-    HEMFormViewController* formVC = [HEMMainStoryboard instantiateFormViewController];
+    HEMFormViewController* formVC = [HEMSettingsStoryboard instantiateFormViewController];
     [formVC setPresenter:presenter];
     [formVC setTitle:NSLocalizedString(@"settings.account.password.update.title", nil)];
     [[self delegate] presentViewController:formVC from:self];
@@ -889,7 +889,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Units
 
 - (void)handleUnitsChangeRequest {
-    id prefVC = [HEMMainStoryboard instantiateUnitPreferenceViewController];
+    id prefVC = [HEMSettingsStoryboard instantiateUnitPreferenceViewController];
     [[self delegate] presentViewController:prefVC from:self];
 }
 

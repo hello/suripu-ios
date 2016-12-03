@@ -24,7 +24,7 @@
 #import "HEMSensePairViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMDeviceService.h"
 #import "HEMSystemAlertService.h"
 #import "HEMPillDFUStoryboard.h"
@@ -267,7 +267,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 
 - (void)fixTimeZoneNow:(id)sender {
     [self dismissActionView:^{
-        UIViewController* tzVC = [HEMMainStoryboard instantiateTimeZoneNavViewController];
+        UIViewController* tzVC = [HEMSettingsStoryboard instantiateTimeZoneNavViewController];
         [[self delegate] presentViewController:tzVC from:self];
     }];
     [SENAnalytics track:HEMAnalyticsEventSystemAlertAction

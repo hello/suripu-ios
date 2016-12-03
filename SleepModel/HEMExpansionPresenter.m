@@ -17,6 +17,7 @@
 #import "HEMURLImageView.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
@@ -222,17 +223,17 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     NSString* reuseId = nil;
     switch ([rowType unsignedIntegerValue]) {
         case HEMExpansionRowTypeEnable:
-            reuseId = [HEMMainStoryboard toggleReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard toggleReuseIdentifier];
             break;
         case HEMExpansionRowTypeRemove:
-            reuseId = [HEMMainStoryboard plainReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard plainReuseIdentifier];
             break;
         case HEMExpansionRowTypeConfiguration:
-            reuseId = [HEMMainStoryboard configReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard configReuseIdentifier];
             break;
         case HEMExpansionRowTypePermissions:
         default:
-            reuseId = [HEMMainStoryboard textReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard textReuseIdentifier];
             break;
     }
     return [tableView dequeueReusableCellWithIdentifier:reuseId];

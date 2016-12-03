@@ -115,6 +115,9 @@
 		BF0B15E71DF1072400DF2373 /* Main.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E61DF1072400DF2373 /* Main.xcassets */; };
 		BF0B15E91DF2256300DF2373 /* PillDFU.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */; };
 		BF0B15EA1DF2271400DF2373 /* HEMPillDFUStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DEA791E6E5AE40C1AFE7D /* HEMPillDFUStoryboard.m */; };
+		BF0B15EC1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15EB1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift */; };
+		BF0B15EE1DF25CBE00DF2373 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15ED1DF25CBE00DF2373 /* Settings.storyboard */; };
+		BF0B15EF1DF25D4700DF2373 /* HEMSettingsStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EF3B63831460CEE864FBBA /* HEMSettingsStoryboard.m */; };
 		BF0E37971C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37961C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m */; };
 		BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37981C3C70FC00FEA097 /* HEMStyle.m */; };
 		BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */; };
@@ -524,7 +527,9 @@
 		2559FCAE45C2FDF1356B7CFE /* Pods-SenseApp-RoomConditionsExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-RoomConditionsExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.release.xcconfig"; sourceTree = "<group>"; };
 		31D4922B927AF772E36F931E /* Pods-SenseApp-SenseWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-SenseWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-SenseWidget/Pods-SenseApp-SenseWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		3A8188E0B665E234041EC0F7 /* Pods-SenseApp-RoomConditionsExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-RoomConditionsExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		3B098BCFB64FABF5FD684491 /* HEMSettingsStoryboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMSettingsStoryboard.h; sourceTree = "<group>"; };
 		44CBE61C47CEA05389AA4BDB /* Pods_SenseApp_RoomConditionsExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_RoomConditionsExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46EF3B63831460CEE864FBBA /* HEMSettingsStoryboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsStoryboard.m; sourceTree = "<group>"; };
 		541055DBD085814436590F0F /* Pods-SenseApp-Sense.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.beta.xcconfig"; sourceTree = "<group>"; };
 		5FC3163179F316D2C6ABF78C /* Pods-SenseApp-RoomConditionsExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-RoomConditionsExtension.beta.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.beta.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sense.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -720,6 +725,8 @@
 		BF0B15E31DF0A93100DF2373 /* UIImage+SleepScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+SleepScore.swift"; sourceTree = "<group>"; };
 		BF0B15E61DF1072400DF2373 /* Main.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Main.xcassets; sourceTree = "<group>"; };
 		BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PillDFU.storyboard; sourceTree = "<group>"; };
+		BF0B15EB1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomConditionsNavPresenter.swift; sourceTree = "<group>"; };
+		BF0B15ED1DF25CBE00DF2373 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		BF0E37951C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+HEMCard.h"; sourceTree = "<group>"; };
 		BF0E37961C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+HEMCard.m"; sourceTree = "<group>"; };
 		BF0E37981C3C70FC00FEA097 /* HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMStyle.m; sourceTree = "<group>"; };
@@ -1571,6 +1578,8 @@
 				8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */,
 				1981FB43C942E07FB85BEA0D /* HEMPillDFUStoryboard.h */,
 				0B8DEA791E6E5AE40C1AFE7D /* HEMPillDFUStoryboard.m */,
+				3B098BCFB64FABF5FD684491 /* HEMSettingsStoryboard.h */,
+				46EF3B63831460CEE864FBBA /* HEMSettingsStoryboard.m */,
 			);
 			name = "Generated Files";
 			sourceTree = "<group>";
@@ -1991,6 +2000,7 @@
 		8AC49F991982DE7000C2BD63 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				BF0B15ED1DF25CBE00DF2373 /* Settings.storyboard */,
 				8AD3312B1BB08D9900DFF95A /* Settings.xcassets */,
 				BF8C09391C33097C005AB5A7 /* Account */,
 				BF5B1D1F1D2C703B00DF1190 /* Common */,
@@ -2616,6 +2626,7 @@
 				BF3326EB1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.m */,
 				BF3326ED1D876BE3009A3E65 /* HEMSensorDetailPresenter.h */,
 				BF3326EE1D876BE3009A3E65 /* HEMSensorDetailPresenter.m */,
+				BF0B15EB1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3580,15 +3591,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "Sense" */;
 			buildPhases = (
-				F80FEDA93B24241BEDC3E54D /* üì¶ Check Pods Manifest.lock */,
+				F80FEDA93B24241BEDC3E54D /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */,
 				0D54F3C5D999EE85E74DCA2B /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				BF7F1BDB19E304050028F799 /* Embed App Extensions */,
 				8B38885B1C17B46B0036250B /* Run Info.plist ATS Update */,
-				69DE724F6CF308D19D81AE58 /* üì¶ Embed Pods Frameworks */,
-				D6CC4F7EB17986BEA3391B4F /* üì¶ Copy Pods Resources */,
+				69DE724F6CF308D19D81AE58 /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */,
+				D6CC4F7EB17986BEA3391B4F /* Ô£ø√º√¨¬∂ Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3605,14 +3616,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
-				48F04F04604B32E4EFDFACF0 /* üì¶ Check Pods Manifest.lock */,
+				48F04F04604B32E4EFDFACF0 /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */,
 				EC3CA137F7BAA5A9E5FA14C8 /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
 				E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */,
-				D4E5DC9D08546ECB018504F7 /* üì¶ Embed Pods Frameworks */,
-				3CCF9A552A90926B84109857 /* üì¶ Copy Pods Resources */,
+				D4E5DC9D08546ECB018504F7 /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */,
+				3CCF9A552A90926B84109857 /* Ô£ø√º√¨¬∂ Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3628,13 +3639,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF7F1BD819E304050028F799 /* Build configuration list for PBXNativeTarget "RoomConditionsExtension" */;
 			buildPhases = (
-				165DEC586A0060ED1CAE603F /* üì¶ Check Pods Manifest.lock */,
+				165DEC586A0060ED1CAE603F /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */,
 				BCFB48C5F28390136A6D1C87 /* [CP] Check Pods Manifest.lock */,
 				BF7F1BC519E304050028F799 /* Frameworks */,
 				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC619E304050028F799 /* Resources */,
-				AA89D7715779E4B8D8FC11A9 /* üì¶ Copy Pods Resources */,
-				447A3E6444D26082B8EA76CB /* üì¶ Embed Pods Frameworks */,
+				AA89D7715779E4B8D8FC11A9 /* Ô£ø√º√¨¬∂ Copy Pods Resources */,
+				447A3E6444D26082B8EA76CB /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */,
 				BF47FE2B1D3DB15100660AF7 /* ShellScript */,
 			);
 			buildRules = (
@@ -3725,6 +3736,7 @@
 				BF8A0DD81BEAA523006B3B70 /* Trends.xcassets in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
 				8AF7BCD01B3880F9000793D7 /* HEMSleepSegmentCollectionViewCell.xib in Resources */,
+				BF0B15EE1DF25CBE00DF2373 /* Settings.storyboard in Resources */,
 				BF3583941CB443ED00760CD4 /* Sounds.xcassets in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				BF53D8CA1D931AF900C24F9D /* Info.plist in Resources */,
@@ -3804,14 +3816,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		165DEC586A0060ED1CAE603F /* üì¶ Check Pods Manifest.lock */ = {
+		165DEC586A0060ED1CAE603F /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Check Pods Manifest.lock";
+			name = "Ô£ø√º√¨¬∂ Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3819,14 +3831,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		3CCF9A552A90926B84109857 /* üì¶ Copy Pods Resources */ = {
+		3CCF9A552A90926B84109857 /* Ô£ø√º√¨¬∂ Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Copy Pods Resources";
+			name = "Ô£ø√º√¨¬∂ Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3834,14 +3846,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		447A3E6444D26082B8EA76CB /* üì¶ Embed Pods Frameworks */ = {
+		447A3E6444D26082B8EA76CB /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Embed Pods Frameworks";
+			name = "Ô£ø√º√¨¬∂ Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3849,14 +3861,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		48F04F04604B32E4EFDFACF0 /* üì¶ Check Pods Manifest.lock */ = {
+		48F04F04604B32E4EFDFACF0 /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Check Pods Manifest.lock";
+			name = "Ô£ø√º√¨¬∂ Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3864,14 +3876,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		69DE724F6CF308D19D81AE58 /* üì¶ Embed Pods Frameworks */ = {
+		69DE724F6CF308D19D81AE58 /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Embed Pods Frameworks";
+			name = "Ô£ø√º√¨¬∂ Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3893,14 +3905,14 @@
 			shellPath = /bin/sh;
 			shellScript = "# Disables ATS in debug builds. Can't do this with the plist preprocessor unfortuantely.\nINFOPLIST=\"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncase \"${CONFIGURATION}\" in\n\"Release\"|\"Adhoc\")\n/usr/libexec/PlistBuddy -c \"Set :NSAppTransportSecurity:NSAllowsArbitraryLoads NO\" \"${INFOPLIST}\"\n;;\n\"Debug\"|\"Dev\"|\"Beta\")\n/usr/libexec/PlistBuddy -c \"Set :NSAppTransportSecurity:NSAllowsArbitraryLoads YES\" \"${INFOPLIST}\"\n;;\nesac";
 		};
-		AA89D7715779E4B8D8FC11A9 /* üì¶ Copy Pods Resources */ = {
+		AA89D7715779E4B8D8FC11A9 /* Ô£ø√º√¨¬∂ Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Copy Pods Resources";
+			name = "Ô£ø√º√¨¬∂ Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3936,14 +3948,14 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\n    rm -fr Frameworks\nfi";
 		};
-		D4E5DC9D08546ECB018504F7 /* üì¶ Embed Pods Frameworks */ = {
+		D4E5DC9D08546ECB018504F7 /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Embed Pods Frameworks";
+			name = "Ô£ø√º√¨¬∂ Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3951,14 +3963,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D6CC4F7EB17986BEA3391B4F /* üì¶ Copy Pods Resources */ = {
+		D6CC4F7EB17986BEA3391B4F /* Ô£ø√º√¨¬∂ Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Copy Pods Resources";
+			name = "Ô£ø√º√¨¬∂ Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3996,14 +4008,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F80FEDA93B24241BEDC3E54D /* üì¶ Check Pods Manifest.lock */ = {
+		F80FEDA93B24241BEDC3E54D /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "üì¶ Check Pods Manifest.lock";
+			name = "Ô£ø√º√¨¬∂ Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4060,6 +4072,7 @@
 				BF7454AF1B5887BF00E6AE85 /* HEMOnboardingService.m in Sources */,
 				BF6098741D4811CA0005C8F0 /* HEMVoiceTutorialViewController.m in Sources */,
 				BF6952581C52FB8F000A8E85 /* HEMHandHoldingService.m in Sources */,
+				BF0B15EF1DF25D4700DF2373 /* HEMSettingsStoryboard.m in Sources */,
 				8AA1E6351A8E6D0E00590EB6 /* HEMPopupView.m in Sources */,
 				BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */,
 				8A4637361B20C02300080863 /* HEMFadingParallaxLayout.m in Sources */,
@@ -4342,6 +4355,7 @@
 				BF6098861D4AD67A0005C8F0 /* HEMVoiceService.m in Sources */,
 				BF3326EC1D8762A3009A3E65 /* HEMSensorDetailSubNavPresenter.m in Sources */,
 				BF8C092D1C29D508005AB5A7 /* HEMEmailChangePresenter.m in Sources */,
+				BF0B15EC1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift in Sources */,
 				BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */,
 				BFD4012C1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m in Sources */,
 				BFB815231BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m in Sources */,

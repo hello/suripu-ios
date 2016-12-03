@@ -16,6 +16,7 @@
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMDeviceActionCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
@@ -179,8 +180,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSString* reuseId
         = sec < [[self warnings] count]
-        ? [HEMMainStoryboard warningReuseIdentifier]
-        : [HEMMainStoryboard actionReuseIdentifier];
+        ? [HEMSettingsStoryboard warningReuseIdentifier]
+        : [HEMSettingsStoryboard actionReuseIdentifier];
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                                            forIndexPath:indexPath];

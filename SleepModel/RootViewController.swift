@@ -13,6 +13,8 @@ import SenseKit
     
     static let overlayAlpha = CGFloat(0.7)
     static let animationDuration = TimeInterval(0.5)
+    
+    var debugController: HEMDebugController?
     var statusBarVisible = true
     
     // MARK: Public Methods
@@ -181,34 +183,66 @@ import SenseKit
                 })
             }
             
-            UIView.animate(withDuration: RootViewController.animationDuration, animations: {
-                overlay.alpha = RootViewController.overlayAlpha
-                
-                if (!showMain) {
-                    // logging out
-                    var onboardingFrame = controller.view.frame
-                    onboardingFrame.origin.y = 0
-                    controller.view.frame = onboardingFrame
-                } else {
-                    var currentFrame = currentController!.view.frame
-                    currentFrame.origin.y = containerHeight
-                    currentController!.view.frame = currentFrame
-                }
-                
-                if currentModalController != nil {
-                    var modalFrame = currentModalController!.view.frame
-                    modalFrame.origin.y = currentController!.view.frame.origin.y
-                    currentModalController!.view.frame = modalFrame
-                }
-
-            }, completion: { (finished: Bool) in
-                if currentModalController != nil {
-                    currentController?.dismiss(animated: false, completion:nil)
-                }
-                currentController!.view.removeFromSuperview()
-                currentController!.removeFromParentViewController()
-                controller.didMove(toParentViewController: self)
-            })
+            animateSwitchOfController(from: currentController,
+                                      withModal: currentModalController,
+                                      to: controller,
+                                      overlay: overlay)
+        }
+    }
+    
+    fileprivate func animateSwitchOfController(from: UIViewController?,
+                                               withModal: UIViewController?,
+                                               to: UIViewController,
+                                               overlay: UIView) {
+        
+        let containerFrame = self.view.bounds
+        let containerHeight = containerFrame.size.height
+        let isMain = to is MainViewController
+        
+        UIView.animate(withDuration: RootViewController.animationDuration, animations: {
+            overlay.alpha = RootViewController.overlayAlpha
+            
+            if (!isMain) {
+                // logging out
+                var onboardingFrame = to.view.frame
+                onboardingFrame.origin.y = 0
+                to.view.frame = onboardingFrame
+            } else {
+                var currentFrame = from!.view.frame
+                currentFrame.origin.y = containerHeight
+                from!.view.frame = currentFrame
+            }
+            
+            if withModal != nil {
+                var modalFrame = withModal!.view.frame
+                modalFrame.origin.y = from!.view.frame.origin.y
+                withModal!.view.frame = modalFrame
+            }
+            
+        }, completion: { (finished: Bool) in
+            if withModal != nil {
+                from?.dismiss(animated: false, completion:nil)
+            }
+            from!.view.removeFromSuperview()
+            from!.removeFromParentViewController()
+            to.didMove(toParentViewController: self)
+        })
+    }
+    
+    // MARK: Debug
+    
+    override var canBecomeFirstResponder: Bool {
+        return HEMDebugController.isEnabled()
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with _: UIEvent?) {
+        let debugEnabled = HEMDebugController.isEnabled()
+        let shakeMotion = motion == UIEventSubtype.motionShake
+        if debugEnabled && shakeMotion {
+            if self.debugController == nil {
+                self.debugController = HEMDebugController(viewController: self)
+            }
+            self.debugController!.showSupportOptions()
         }
     }
     

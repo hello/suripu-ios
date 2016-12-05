@@ -25,7 +25,7 @@ import SenseKit
         return applicationWindow!!.rootViewController as? RootViewController
     }
     
-    // MARK: Status Bar
+    // MARK: - Status Bar
 
     @objc func hideStatusBar() {
         self.statusBarVisible = false
@@ -41,7 +41,7 @@ import SenseKit
         return self.prefersStatusBarHidden
     }
 
-    // MARK: View Controller Overrides
+    // MARK: - View Controller Overrides
     
     override var prefersStatusBarHidden: Bool {
         return !self.statusBarVisible
@@ -70,7 +70,7 @@ import SenseKit
         return self.childViewControllers.first as? MainViewController
     }
 
-    // MARK: Notification Events
+    // MARK: - Notification Events
     
     fileprivate func listenForSystemEvents() {
         let center = NotificationCenter.default
@@ -111,7 +111,7 @@ import SenseKit
         
     }
     
-    // MARK: Onboarding vs Main
+    // MARK: - Onboarding vs Main
     
     fileprivate func launchInitialController() {
         if HEMOnboardingService.shared().hasFinishedOnboarding() {
@@ -229,7 +229,7 @@ import SenseKit
         })
     }
     
-    // MARK: Debug
+    // MARK: - Debug
     
     override var canBecomeFirstResponder: Bool {
         return HEMDebugController.isEnabled()
@@ -246,7 +246,7 @@ import SenseKit
         }
     }
     
-    // MARK: Clean Up
+    // MARK: - Clean Up
     
     deinit {
         NotificationCenter.default.removeObserver(self)

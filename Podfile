@@ -18,7 +18,6 @@ abstract_target 'SenseApp' do
         pod 'FBSDKCoreKit', '~> 4.11.0'
         pod 'UIImageEffects', '~> 0.0.1'
         pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
-        pod 'MSDynamicsDrawerViewController', '1.5.1'
         pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git', :tag => '1.5.4.1'
         pod 'UICountingLabel', '~> 1.2.0'
         pod 'Bugsnag', '~> 4.1.0'

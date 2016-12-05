@@ -235,7 +235,7 @@ import SenseKit
         return HEMDebugController.isEnabled()
     }
     
-    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+    override func motionEnded(_ motion: UIEventSubtype, with _: UIEvent?) {
         let debugEnabled = HEMDebugController.isEnabled()
         let shakeMotion = motion == UIEventSubtype.motionShake
         if debugEnabled && shakeMotion {

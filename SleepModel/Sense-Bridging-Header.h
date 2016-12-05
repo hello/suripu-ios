@@ -30,7 +30,9 @@
 #import "HEMRoomConditionsViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingController.h"
+#import "HEMDebugController.h"
 
 #import "HEMAppUsage.h"
 #import "HEMStyle.h"
 #import "HEMPresenter.h"
+#import "HEMConfig.h"

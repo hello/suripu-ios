@@ -31,9 +31,8 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        self.tabBarItem.title = NSLocalizedString(@"alarms.title", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"alarmBarIcon"];
-        self.tabBarItem.selectedImage = [UIImage imageNamed:@"alarmBarIconActive"];
+        _tabIcon = [UIImage imageNamed:@"soundTabIcon"];
+        _tabTitle = NSLocalizedString(@"alarms.title", nil);
     }
     return self;
 }

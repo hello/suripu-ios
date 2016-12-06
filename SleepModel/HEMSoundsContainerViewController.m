@@ -128,7 +128,6 @@
     DDLogVerbose(@"show sleep sounds view");
     HEMSleepSoundViewController* soundVC = [HEMMainStoryboard instantiateSleepSoundViewController];
     [soundVC setDeviceService:[self deviceService]];
-    [soundVC setSubNav:[self subNav]];
     [self showSoundViewOf:soundVC completion:nil];
 }
 

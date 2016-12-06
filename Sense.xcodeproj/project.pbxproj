@@ -117,6 +117,9 @@
 		BF0B15EC1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15EB1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift */; };
 		BF0B15EE1DF25CBE00DF2373 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15ED1DF25CBE00DF2373 /* Settings.storyboard */; };
 		BF0B15EF1DF25D4700DF2373 /* HEMSettingsStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EF3B63831460CEE864FBBA /* HEMSettingsStoryboard.m */; };
+		BF0B15F11DF5FD3200DF2373 /* SlideContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15F01DF5FD3200DF2373 /* SlideContainerViewController.swift */; };
+		BF0B15F31DF6013500DF2373 /* SlidingNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15F21DF6013500DF2373 /* SlidingNavigationTitleView.swift */; };
+		BF0B15F51DF618C100DF2373 /* SlideContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15F41DF618C100DF2373 /* SlideContentPresenter.swift */; };
 		BF0E37971C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37961C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m */; };
 		BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37981C3C70FC00FEA097 /* HEMStyle.m */; };
 		BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */; };
@@ -360,6 +363,7 @@
 		BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */; };
 		BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */; };
 		BFB0FBF319D482E90056FFEC /* HEMSettingsNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */; };
+		BFB220C31DF636B20025606E /* SlideTabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB220C21DF636B20025606E /* SlideTabPresenter.swift */; };
 		BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */; };
 		BFB59E101C03A929001BD941 /* HEMTimeZoneService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E0F1C03A929001BD941 /* HEMTimeZoneService.m */; };
 		BFB59E151C03B98E001BD941 /* UITableViewCell+HEMSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E141C03B98E001BD941 /* UITableViewCell+HEMSettings.m */; };
@@ -723,6 +727,9 @@
 		BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PillDFU.storyboard; sourceTree = "<group>"; };
 		BF0B15EB1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomConditionsNavPresenter.swift; sourceTree = "<group>"; };
 		BF0B15ED1DF25CBE00DF2373 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		BF0B15F01DF5FD3200DF2373 /* SlideContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideContainerViewController.swift; sourceTree = "<group>"; };
+		BF0B15F21DF6013500DF2373 /* SlidingNavigationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingNavigationTitleView.swift; sourceTree = "<group>"; };
+		BF0B15F41DF618C100DF2373 /* SlideContentPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideContentPresenter.swift; sourceTree = "<group>"; };
 		BF0E37951C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+HEMCard.h"; sourceTree = "<group>"; };
 		BF0E37961C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+HEMCard.m"; sourceTree = "<group>"; };
 		BF0E37981C3C70FC00FEA097 /* HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMStyle.m; sourceTree = "<group>"; };
@@ -1155,6 +1162,7 @@
 		BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseViewController.m; sourceTree = "<group>"; };
 		BFB0FBF119D482E90056FFEC /* HEMSettingsNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsNavigationController.h; sourceTree = "<group>"; };
 		BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsNavigationController.m; sourceTree = "<group>"; };
+		BFB220C21DF636B20025606E /* SlideTabPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideTabPresenter.swift; sourceTree = "<group>"; };
 		BFB59E0A1C03A7CB001BD941 /* HEMTimeZonePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZonePresenter.h; sourceTree = "<group>"; };
 		BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimeZonePresenter.m; sourceTree = "<group>"; };
 		BFB59E0E1C03A929001BD941 /* HEMTimeZoneService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZoneService.h; sourceTree = "<group>"; };
@@ -1466,6 +1474,7 @@
 			isa = PBXGroup;
 			children = (
 				6003F5A8195388D20070C39A /* Images.xcassets */,
+				8ACD40441BACAF7400BB2815 /* Launch.xib */,
 				6003F59C195388D20070C39A /* HEMAppDelegate.h */,
 				6003F59D195388D20070C39A /* HEMAppDelegate.m */,
 				BFD89A7E1DECD7C5005DC2FF /* RootViewController.swift */,
@@ -1481,7 +1490,6 @@
 				8A4B3D56199534DB00856BDE /* Generated Files */,
 				BF48274A1C4F05EB005EDEB5 /* HealthKit */,
 				BF1E2E5A1A0068AA00DDD0D0 /* Insights */,
-				8ACD40421BAC987400BB2815 /* Launch */,
 				BFD89A6F1DECC603005DC2FF /* Main */,
 				8A28CAF919CB85030044A27D /* Notifications */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
@@ -1489,7 +1497,7 @@
 				8A8621641B5D5D860033F44C /* Review */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
-				BF3583881CAC8F0D00760CD4 /* Shortcuts */,
+				BF3583881CAC8F0D00760CD4 /* Force Touch */,
 				BFE375DC1CEB982A0029EE66 /* Social */,
 				BF55D8791CA4844400379FBF /* Sounds */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -2006,14 +2014,6 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		8ACD40421BAC987400BB2815 /* Launch */ = {
-			isa = PBXGroup;
-			children = (
-				8ACD40441BACAF7400BB2815 /* Launch.xib */,
-			);
-			name = Launch;
-			sourceTree = "<group>";
-		};
 		8B1DB6DF1C18BEE6006C8AFF /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -2216,13 +2216,13 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		BF3583881CAC8F0D00760CD4 /* Shortcuts */ = {
+		BF3583881CAC8F0D00760CD4 /* Force Touch */ = {
 			isa = PBXGroup;
 			children = (
 				BF35838A1CAC8F3600760CD4 /* HEMShortcutService.h */,
 				BF35838B1CAC8F3600760CD4 /* HEMShortcutService.m */,
 			);
-			name = Shortcuts;
+			name = "Force Touch";
 			sourceTree = "<group>";
 		};
 		BF3583951CB4444900760CD4 /* Services */ = {
@@ -3414,6 +3414,7 @@
 				BF9D499D1DAC57120027AAAA /* HEMFeedContainerViewController.h */,
 				BF9D499E1DAC57120027AAAA /* HEMFeedContainerViewController.m */,
 				BFD89A791DECCD82005DC2FF /* MainViewController.swift */,
+				BF0B15F01DF5FD3200DF2373 /* SlideContainerViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -3423,6 +3424,7 @@
 			children = (
 				8A7D80181A40D71400B0BFD7 /* HEMCardCollectionViewCell.h */,
 				8A7D80191A40D71400B0BFD7 /* HEMCardCollectionViewCell.m */,
+				BF0B15F21DF6013500DF2373 /* SlidingNavigationTitleView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3432,6 +3434,8 @@
 			children = (
 				BF9D49A11DAC5D140027AAAA /* HEMFeedNavigationPresenter.h */,
 				BF9D49A21DAC5D140027AAAA /* HEMFeedNavigationPresenter.m */,
+				BF0B15F41DF618C100DF2373 /* SlideContentPresenter.swift */,
+				BFB220C21DF636B20025606E /* SlideTabPresenter.swift */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -4214,6 +4218,7 @@
 				BF8C09271C28DB9D005AB5A7 /* HEMFormPresenter.m in Sources */,
 				BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */,
 				BF52946C1C652C8000D931B7 /* HEMTrendsDisplayPoint.m in Sources */,
+				BF0B15F51DF618C100DF2373 /* SlideContentPresenter.swift in Sources */,
 				BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */,
 				BFF3647D1D629018008D4DF8 /* HEMSenseUpgradedViewController.m in Sources */,
 				BF3326F21D878995009A3E65 /* LineChartView+HEMSensor.m in Sources */,
@@ -4228,6 +4233,7 @@
 				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
 				BF3326EF1D876BE3009A3E65 /* HEMSensorDetailPresenter.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
+				BF0B15F11DF5FD3200DF2373 /* SlideContainerViewController.swift in Sources */,
 				BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */,
 				BF5BAD081C6169BF00347185 /* HEMTrendsCircleView.m in Sources */,
 				BF3326E31D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m in Sources */,
@@ -4402,6 +4408,7 @@
 				BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */,
 				BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */,
 				BFF364871D638AC5008D4DF8 /* HEMPairPiillPresenter.m in Sources */,
+				BF0B15F31DF6013500DF2373 /* SlidingNavigationTitleView.swift in Sources */,
 				8AB82DE11B2BFB7B002D769D /* HEMTimelineMessageContainerView.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */,
 				BFF14C311C642B6A00AD3773 /* HEMTrendsAverageView.m in Sources */,
@@ -4504,6 +4511,7 @@
 				BF535B721DA31A76001944F5 /* HEMConfigurationsPresenter.m in Sources */,
 				BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */,
 				BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */,
+				BFB220C31DF636B20025606E /* SlideTabPresenter.swift in Sources */,
 				BFB8151C1BFCFAC6009740D0 /* HEMSenseSettingsDataSource.m in Sources */,
 				8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */,
 				BF8C09551C345DCA005AB5A7 /* HEMAlarmService.m in Sources */,

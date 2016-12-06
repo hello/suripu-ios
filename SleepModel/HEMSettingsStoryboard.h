@@ -53,6 +53,7 @@
 +(NSString *)volumeSegueIdentifier;
 
 /** View Controllers */
++(id)instantiateExpansionConfigViewController;
 +(id)instantiateExpansionController;
 +(id)instantiateFormViewController;
 +(id)instantiateSettingsController;

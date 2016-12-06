@@ -73,7 +73,7 @@
     [presenter setDelegate:self];
     
     RoomConditionsNavPresenter* navPresenter = [RoomConditionsNavPresenter new];
-    [navPresenter bindWithNavBarWithNavItem:[self navigationItem]];
+    [navPresenter bindWithNavItem:[self navigationItem]];
     [navPresenter setNavDelegate:self];
 
     [self setPresenter:presenter];

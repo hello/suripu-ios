@@ -27,7 +27,6 @@
 +(NSString *)aboutReuseIdentifier;
 +(NSString *)optionReuseIdentifier;
 +(NSString *)infoCellReuseIdentifier;
-+(NSString *)configReuseIdentifier;
 +(NSString *)currentValueReuseIdentifier;
 +(NSString *)chartReuseIdentifier;
 +(NSString *)scaleReuseIdentifier;
@@ -60,8 +59,10 @@
 +(NSString *)alarmsSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
 +(NSString *)expansionConfigSegueIdentifier;
++(NSString *)insightsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
 +(NSString *)sleepSoundsSegueIdentifier;
++(NSString *)voiceSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateRootViewController;
@@ -72,7 +73,6 @@
 +(id)instantiateAlarmViewController;
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
-+(id)instantiateExpansionConfigViewController;
 +(id)instantiateFeedViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
@@ -83,6 +83,7 @@
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
 +(id)instantiateSleepSoundViewController;
++(id)instantiateSlideContainerViewController;
 +(id)instantiateSoundsContainerViewController;
 +(id)instantiateSoundsNavigationViewController;
 +(id)instantiateTimelineFeedbackViewController;

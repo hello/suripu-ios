@@ -13,10 +13,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HEMBaseController : UIViewController
+@interface HEMBaseController : UIViewController {
 
-@property (nonatomic, strong, readonly) HEMNavigationShadowView* shadowView;
-@property (nullable, nonatomic, strong, readonly) NSArray<HEMPresenter*>* presenters;
+@protected
+    HEMNavigationShadowView* _shadowView;
+    UIImage* _tabIcon;
+    NSString* _tabTitle;
+}
+
+@property (nonatomic, strong, readonly, nullable) HEMNavigationShadowView* shadowView;
+@property (nonatomic, strong, readonly, nullable) NSArray<HEMPresenter*>* presenters;
+@property (nonatomic, strong, nullable) UIImage* tabIcon;
+@property (nonatomic, copy, nullable) NSString* tabTitle;
 
 - (void)addPresenter:(HEMPresenter*)presenter;
 

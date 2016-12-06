@@ -16,6 +16,7 @@ static NSString *const _HEMconnection = @"connection";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexpansion = @"expansion";
+static NSString *const _HEMexpansionConfig = @"expansionConfig";
 static NSString *const _HEMexpansionController = @"expansionController";
 static NSString *const _HEMexpansions = @"expansions";
 static NSString *const _HEMexplanation = @"explanation";
@@ -100,6 +101,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)volumeSegueIdentifier { return _HEMvolume; }
 
 /** View Controllers */
++(id)instantiateExpansionConfigViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMexpansionConfig]; }
 +(id)instantiateExpansionController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMexpansionController]; }
 +(id)instantiateFormViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMformViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }

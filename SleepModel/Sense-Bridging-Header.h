@@ -20,6 +20,7 @@
 
 #import "HEMOnboardingService.h"
 #import "HEMShortcutService.h"
+#import "HEMDeviceService.h"
 
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSettingsNavigationController.h"
@@ -31,6 +32,8 @@
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingController.h"
 #import "HEMDebugController.h"
+#import "HEMAlarmListViewController.h"
+#import "HEMSleepSoundViewController.h"
 
 #import "HEMAppUsage.h"
 #import "HEMStyle.h"

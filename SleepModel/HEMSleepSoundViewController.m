@@ -6,8 +6,6 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-#import "UIBarButtonItem+HEMNav.h"
-
 #import "HEMSleepSoundViewController.h"
 #import "HEMSleepSoundPlayerPresenter.h"
 #import "HEMSleepSoundService.h"
@@ -18,8 +16,8 @@
 #import "HEMSleepSoundDurationsPresenter.h"
 #import "HEMSleepSoundVolumePresenter.h"
 #import "HEMAudioService.h"
-#import "HEMSubNavigationView.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMDeviceService.h"
 
 @interface HEMSleepSoundViewController () <HEMSleepSoundPlayerDelegate, HEMListDelegate>
 
@@ -38,6 +36,14 @@
 
 @implementation HEMSleepSoundViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        _tabIcon = [UIImage imageNamed:@"soundTabIcon"];
+        _tabTitle = NSLocalizedString(@"sleep-sounds.title", nil);
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenters];
@@ -45,6 +51,11 @@
 
 - (void)configurePresenters {
     [self setSleepSoundService:[HEMSleepSoundService new]];
+    
+    if (![self deviceService]) {
+        [self setDeviceService:[HEMDeviceService new]];
+    }
+    
     HEMSleepSoundPlayerPresenter* playerPresenter =
         [[HEMSleepSoundPlayerPresenter alloc] initWithSleepSoundService:[self sleepSoundService]
                                                           deviceService:[self deviceService]];
@@ -56,21 +67,6 @@
     [self addPresenter:playerPresenter];
     
     [self setPlayerPresenter:playerPresenter];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if ([self isCancellable]) {
-        NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
-        UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:cancelText
-                                                                     image:nil
-                                                                    target:self
-                                                                    action:@selector(dismiss)];
-        [[self navigationItem] setLeftBarButtonItem:cancelItem];
-    }
-    if ([[self subNav] hasControls]) {
-        [[self playerPresenter] bindWithShadowView:[[self subNav] shadowView]];
-    }
 }
 
 #pragma mark - Actions

@@ -569,6 +569,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[cell playingLabel] setTextColor:titleColor];
     
     [[cell soundLabel] setTextColor:typeColor];
+    [[cell soundLabel] setFont:[UIFont body]];
     [[cell soundValueLabel] setText:[[self selectedSound] localizedName]];
     [[cell soundValueLabel] setTextColor:valueColor];
     [[cell soundSelectorButton] addTarget:self
@@ -576,6 +577,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                          forControlEvents:UIControlEventTouchUpInside];
     
     [[cell durationLabel] setTextColor:typeColor];
+    [[cell durationLabel] setFont:[UIFont body]];
     [[cell durationValueLabel] setText:[[self selectedDuration] localizedName]];
     [[cell durationValueLabel] setTextColor:valueColor];
     [[cell durationSelectorButton] addTarget:self
@@ -583,6 +585,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                             forControlEvents:UIControlEventTouchUpInside];
     
     [[cell volumeLabel] setTextColor:typeColor];
+    [[cell volumeLabel] setFont:[UIFont body]];
     [[cell volumeValueLabel] setText:[[self selectedVolume] localizedName]];
     [[cell volumeValueLabel] setTextColor:valueColor];
     [[cell volumeSelectorButton] addTarget:self

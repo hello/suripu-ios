@@ -1103,17 +1103,17 @@
         <!--Slide Container View Controller-->
         <scene sceneID="YZm-ZA-r77">
             <objects>
-                <viewController storyboardIdentifier="slideContainer" automaticallyAdjustsScrollViewInsets="NO" id="UOQ-Ez-OQs" customClass="SlideContainerViewController" customModule="Sense" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="slideContainer" extendedLayoutIncludesOpaqueBars="YES" id="UOQ-Ez-OQs" customClass="SlideContainerViewController" customModule="Sense" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wIu-Kx-Fe5"/>
                         <viewControllerLayoutGuide type="bottom" id="Yei-z3-jpJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QBN-kv-uAW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gi-rV-M8M">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1124,6 +1124,7 @@
                             <constraint firstItem="7Gi-rV-M8M" firstAttribute="top" secondItem="wIu-Kx-Fe5" secondAttribute="bottom" id="n92-FN-irM"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="scrollView" destination="7Gi-rV-M8M" id="LkP-aq-pFi"/>
@@ -1576,17 +1577,17 @@
         <!--Alarm List View Controller-->
         <scene sceneID="XpH-hn-x9c">
             <objects>
-                <viewController storyboardIdentifier="alarmListViewController" extendedLayoutIncludesOpaqueBars="YES" id="Mem-QL-GCW" userLabel="Alarm List View Controller" customClass="HEMAlarmListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="alarmListViewController" id="Mem-QL-GCW" userLabel="Alarm List View Controller" customClass="HEMAlarmListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2cE-92-oPr"/>
                         <viewControllerLayoutGuide type="bottom" id="9Gu-MH-hXF"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="S2E-t2-8bL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3hH-M3-tDn">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tml-Wh-kmO" customClass="HEMCardFlowLayout">
                                     <size key="itemSize" width="584" height="96"/>
@@ -1789,10 +1790,10 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2BJ-ze-ubh" customClass="HEMAlarmAddButton">
-                                <rect key="frame" x="182" y="615" width="50" height="50"/>
+                                <rect key="frame" x="179" y="543" width="56" height="56"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="jab-b1-CFU"/>
-                                    <constraint firstAttribute="height" constant="50" id="wrd-CX-Wzr"/>
+                                    <constraint firstAttribute="width" constant="56" id="jab-b1-CFU"/>
+                                    <constraint firstAttribute="height" constant="56" id="wrd-CX-Wzr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
                                 <state key="normal" title="+">
@@ -1801,7 +1802,7 @@
                                 </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c1n-ck-PaP" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="180" y="341" width="55" height="55"/>
+                                <rect key="frame" x="180" y="284" width="55" height="55"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="5BR-cB-tmx"/>
@@ -1811,21 +1812,22 @@
                         </subviews>
                         <color key="backgroundColor" red="0.92549019610000005" green="0.92941176469999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="2BJ-ze-ubh" firstAttribute="bottom" secondItem="S2E-t2-8bL" secondAttribute="bottom" constant="-24" id="03O-a9-nDL"/>
                             <constraint firstItem="c1n-ck-PaP" firstAttribute="centerX" secondItem="S2E-t2-8bL" secondAttribute="centerX" id="84t-oB-l1T"/>
+                            <constraint firstAttribute="bottom" secondItem="3hH-M3-tDn" secondAttribute="bottom" id="CRf-0j-qt5"/>
                             <constraint firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="P2e-61-uUp"/>
-                            <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="3hH-M3-tDn" secondAttribute="bottom" id="eLI-4v-Ofx"/>
                             <constraint firstItem="c1n-ck-PaP" firstAttribute="centerY" secondItem="S2E-t2-8bL" secondAttribute="centerY" id="joy-yf-nqO"/>
                             <constraint firstItem="3hH-M3-tDn" firstAttribute="leading" secondItem="S2E-t2-8bL" secondAttribute="leading" id="s8d-2g-Jlt"/>
                             <constraint firstItem="3hH-M3-tDn" firstAttribute="top" secondItem="2cE-92-oPr" secondAttribute="bottom" id="wwh-7Q-bJg"/>
-                            <constraint firstItem="2BJ-ze-ubh" firstAttribute="bottom" secondItem="9Gu-MH-hXF" secondAttribute="top" constant="-71" id="yVF-as-vqJ"/>
                             <constraint firstAttribute="trailing" secondItem="3hH-M3-tDn" secondAttribute="trailing" id="zMm-dG-LcW"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="7Hs-Rn-K1S"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addButton" destination="2BJ-ze-ubh" id="u08-zi-1Yb"/>
-                        <outlet property="addButtonBottomConstraint" destination="yVF-as-vqJ" id="CJx-kS-BVb"/>
                         <outlet property="collectionView" destination="3hH-M3-tDn" id="8Ya-4u-glT"/>
                         <outlet property="loadingIndicator" destination="c1n-ck-PaP" id="xzE-lC-jJF"/>
                     </connections>
@@ -3247,20 +3249,20 @@
         <!--Sleep Sound View Controller-->
         <scene sceneID="WjA-5h-1Pz">
             <objects>
-                <viewController storyboardIdentifier="sleepSound" automaticallyAdjustsScrollViewInsets="NO" id="bPE-ZX-2jy" customClass="HEMSleepSoundViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sleepSound" id="bPE-ZX-2jy" customClass="HEMSleepSoundViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6wq-5e-7RJ"/>
                         <viewControllerLayoutGuide type="bottom" id="1b4-5E-OU0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="6vF-mv-k7W">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardLoadingState" translatesAutoresizingMaskIntoConstraints="NO" id="2xF-Ze-BdO">
-                                <rect key="frame" x="1" y="75" width="412" height="144"/>
+                                <rect key="frame" x="1" y="11" width="412" height="144"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGZ-Ab-O9W" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="179.66666666666666" y="340.66666666666669" width="55" height="55"/>
+                                <rect key="frame" x="179.66666666666666" y="308.66666666666669" width="55" height="55"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="C3f-jx-IUm"/>
@@ -3268,7 +3270,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pud-8g-KRb">
-                                <rect key="frame" x="0.0" y="64" width="414" height="582"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <color key="backgroundColor" red="0.92549019610000005" green="0.92941176469999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="muc-8z-TPj" customClass="HEMCardFlowLayout">
                                     <size key="itemSize" width="576" height="219"/>
@@ -3604,7 +3606,7 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HDP-Fn-tiO">
-                                <rect key="frame" x="179" y="600" width="56" height="56"/>
+                                <rect key="frame" x="179" y="592" width="56" height="56"/>
                                 <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="gSt-AL-LQ6"/>
@@ -3617,17 +3619,17 @@
                             <constraint firstItem="QGZ-Ab-O9W" firstAttribute="centerY" secondItem="6vF-mv-k7W" secondAttribute="centerY" id="6Y8-yW-FYa"/>
                             <constraint firstItem="2xF-Ze-BdO" firstAttribute="top" secondItem="6wq-5e-7RJ" secondAttribute="bottom" constant="11" id="7FF-LD-2aQ"/>
                             <constraint firstItem="pud-8g-KRb" firstAttribute="leading" secondItem="6vF-mv-k7W" secondAttribute="leading" id="8yy-ee-FcB"/>
-                            <constraint firstItem="pud-8g-KRb" firstAttribute="bottom" secondItem="HDP-Fn-tiO" secondAttribute="bottom" constant="-10" id="9bi-Up-3jQ"/>
                             <constraint firstAttribute="trailing" secondItem="pud-8g-KRb" secondAttribute="trailing" id="OhQ-9V-uDr"/>
                             <constraint firstItem="6wq-5e-7RJ" firstAttribute="bottom" secondItem="pud-8g-KRb" secondAttribute="top" id="ceI-vR-ReQ"/>
+                            <constraint firstItem="HDP-Fn-tiO" firstAttribute="bottom" secondItem="6vF-mv-k7W" secondAttribute="bottom" constant="-24" id="dbg-PZ-cjO"/>
                             <constraint firstItem="HDP-Fn-tiO" firstAttribute="centerX" secondItem="6vF-mv-k7W" secondAttribute="centerX" id="flh-nL-MUK"/>
                             <constraint firstAttribute="trailing" secondItem="2xF-Ze-BdO" secondAttribute="trailing" constant="1" id="hMk-DW-Mka"/>
                             <constraint firstItem="QGZ-Ab-O9W" firstAttribute="centerX" secondItem="6vF-mv-k7W" secondAttribute="centerX" id="lLZ-Xe-OpW"/>
-                            <constraint firstAttribute="bottom" secondItem="pud-8g-KRb" secondAttribute="bottom" constant="90" id="sZe-qG-7OD"/>
+                            <constraint firstAttribute="bottom" secondItem="pud-8g-KRb" secondAttribute="bottom" id="sZe-qG-7OD"/>
                             <constraint firstItem="2xF-Ze-BdO" firstAttribute="leading" secondItem="6vF-mv-k7W" secondAttribute="leading" constant="1" id="xbU-Hq-1oT"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="actionButton" destination="HDP-Fn-tiO" id="Ixl-MQ-1Y0"/>
@@ -4680,6 +4682,6 @@
         <image name="welcomeVoice" width="359" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Uew-Av-EPF"/>
+        <segue reference="QaF-2O-SxF"/>
     </inferredMetricsTieBreakers>
 </document>

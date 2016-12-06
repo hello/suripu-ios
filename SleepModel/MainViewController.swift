@@ -65,7 +65,9 @@ import UIKit
     fileprivate func wrapInSlideContainer(controllers: Array<UIViewController>!) -> UIViewController! {
         let container = HEMMainStoryboard.instantiateSlideContainerViewController() as! SlideContainerViewController
         container.contentControllers = controllers
-        return HEMStyledNavigationViewController(rootViewController: container)
+        let navVC = HEMStyledNavigationViewController(rootViewController: container)
+        navVC.view.backgroundColor = UIColor.white
+        return navVC
     }
     
     // MARK: - Tab Switching

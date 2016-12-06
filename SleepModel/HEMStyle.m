@@ -22,6 +22,9 @@ void ApplyHelloStyles (void) {
     UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:classes];
     ApplyDefaultStyleForNavBarAppearance(appearance);
     
+    appearance = [UINavigationBar appearance];
+    ApplyDefaultStyleForNavBarAppearance(appearance);
+    
     NSDictionary* barButtonAttrs = @{NSFontAttributeName : [UIFont button],
                                      NSForegroundColorAttributeName : [UIColor tintColor]};
     [[UIBarButtonItem appearance] setTitleTextAttributes:barButtonAttrs

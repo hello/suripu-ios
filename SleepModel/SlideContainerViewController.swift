@@ -12,7 +12,6 @@ import Foundation
     
     @IBOutlet weak var scrollView: UIScrollView!
     weak var tabItemPresenter: SlideTabPresenter!
-    weak var contentPresenter: SlideContentPresenter!
     
     var contentControllers: Array<UIViewController>! {
         didSet {

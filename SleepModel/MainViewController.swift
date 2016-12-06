@@ -44,12 +44,7 @@ import UIKit
         let timelineVC = HEMSleepSummarySlideViewController()
         let trendsVC = HEMMainStoryboard.instantiateTrendsViewController() as! UIViewController
         let feedVC = HEMMainStoryboard.instantiateFeedViewController() as! UIViewController
-        
-        let alarmVC = HEMMainStoryboard.instantiateAlarmListViewController() as! HEMAlarmListViewController
-        
-        let sleepSoundVC = HEMMainStoryboard.instantiateSleepSoundViewController() as! HEMSleepSoundViewController
-        let soundsVC = self.wrapInSlideContainer(controllers: [alarmVC, sleepSoundVC])!
-        
+        let soundsVC = self.soundController()!
         let conditionsVC = HEMMainStoryboard.instantiateCurrentNavController() as! UIViewController
         self.viewControllers = [timelineVC, trendsVC, feedVC, soundsVC, conditionsVC];
         
@@ -60,6 +55,16 @@ import UIKit
             item.imageInsets = inset
             item.title = nil
         }
+    }
+    
+    fileprivate func soundController() -> UIViewController! {
+        let alarmVC = HEMMainStoryboard.instantiateAlarmListViewController() as! HEMAlarmListViewController
+        alarmVC.deviceService = self.deviceService
+        
+        let sleepSoundVC = HEMMainStoryboard.instantiateSleepSoundViewController() as! HEMSleepSoundViewController
+        sleepSoundVC.deviceService = self.deviceService
+        
+        return self.wrapInSlideContainer(controllers: [alarmVC, sleepSoundVC])!
     }
     
     fileprivate func wrapInSlideContainer(controllers: Array<UIViewController>!) -> UIViewController! {

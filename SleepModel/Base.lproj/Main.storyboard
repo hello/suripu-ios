@@ -1597,10 +1597,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListCell" id="qn6-Ss-e8C" customClass="HEMAlarmListCell">
-                                        <rect key="frame" x="0.0" y="10" width="584" height="96"/>
+                                        <rect key="frame" x="8" y="0.0" width="398" height="96"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="584" height="96"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM9-XI-qde">
@@ -1638,6 +1638,7 @@
                                             <constraint firstItem="RM9-XI-qde" firstAttribute="centerY" secondItem="2r6-zA-JWU" secondAttribute="centerY" constant="-5.5" id="uWE-bk-gxt"/>
                                             <constraint firstItem="2r6-zA-JWU" firstAttribute="leading" secondItem="RM9-XI-qde" secondAttribute="trailing" constant="3" id="zy9-zb-T6U"/>
                                         </constraints>
+                                        <size key="customSize" width="398" height="96"/>
                                         <connections>
                                             <outlet property="enabledSwitch" destination="6IN-Cs-tBU" id="XuJ-hB-PHs"/>
                                             <outlet property="meridiemLabel" destination="2r6-zA-JWU" id="auf-ZM-zN7"/>
@@ -1646,10 +1647,10 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmExpansionCell" id="khT-7j-fsG" customClass="HEMAlarmExpansionListCell">
-                                        <rect key="frame" x="0.0" y="116" width="584" height="96"/>
+                                        <rect key="frame" x="8" y="106" width="398" height="96"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="584" height="96"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXg-4r-GxB">
@@ -1695,7 +1696,7 @@
                                             <constraint firstItem="5eg-5V-O9q" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="58" id="rAa-fk-ZO0"/>
                                             <constraint firstItem="Egr-uh-f2s" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="32" id="vVw-Ht-gFb"/>
                                         </constraints>
-                                        <size key="customSize" width="584" height="96"/>
+                                        <size key="customSize" width="398" height="96"/>
                                         <connections>
                                             <outlet property="enabledSwitch" destination="Egr-uh-f2s" id="IMO-AO-ILg"/>
                                             <outlet property="expansionsContainer" destination="eDm-80-ZN1" id="wTB-sh-nJ9"/>
@@ -1705,7 +1706,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListEmptyCell" id="Yyh-iI-O4j" customClass="HEMNoAlarmCell">
-                                        <rect key="frame" x="8" y="222" width="398" height="292"/>
+                                        <rect key="frame" x="8" y="212" width="398" height="292"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="398" height="292"/>
@@ -1758,14 +1759,14 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListStatusCell" id="EAK-HN-7Nz" customClass="HEMAlarmListCell">
-                                        <rect key="frame" x="0.0" y="524" width="584" height="94"/>
+                                        <rect key="frame" x="8" y="514" width="398" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="584" height="94"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
-                                                    <rect key="frame" x="16" y="37" width="552" height="20"/>
+                                                    <rect key="frame" x="16" y="27" width="366" height="40"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1778,9 +1779,58 @@
                                             <constraint firstItem="QuX-2N-W4J" firstAttribute="leading" secondItem="EAK-HN-7Nz" secondAttribute="leading" constant="16" id="cyY-iD-dT5"/>
                                             <constraint firstAttribute="centerY" secondItem="QuX-2N-W4J" secondAttribute="centerY" id="wT5-qJ-z27"/>
                                         </constraints>
-                                        <size key="customSize" width="584" height="94"/>
+                                        <size key="customSize" width="398" height="94"/>
                                         <connections>
                                             <outlet property="detailLabel" destination="QuX-2N-W4J" id="2sO-oP-cGY"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pair" id="ZPP-1p-HOt" customClass="HEMSenseRequiredCollectionViewCell">
+                                        <rect key="frame" x="8" y="618" width="398" height="352"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="352"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noSense" translatesAutoresizingMaskIntoConstraints="NO" id="zeX-YX-4hf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="398" height="180"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account.  Please pair with Sense to view your alarms." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBO-uh-9Ur">
+                                                    <rect key="frame" x="40" y="204" width="318" height="57.666666666666686"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSd-wn-VBc" customClass="HEMActionButton">
+                                                    <rect key="frame" x="8" y="288" width="382" height="56"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="56" id="NYO-lY-HyI"/>
+                                                    </constraints>
+                                                    <state key="normal" title="PAIR NEW SENSE">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottomMargin" secondItem="FSd-wn-VBc" secondAttribute="bottom" id="0RH-25-255"/>
+                                            <constraint firstAttribute="leadingMargin" secondItem="FSd-wn-VBc" secondAttribute="leading" id="0c8-E0-09d"/>
+                                            <constraint firstItem="zeX-YX-4hf" firstAttribute="leading" secondItem="ZPP-1p-HOt" secondAttribute="leadingMargin" constant="-8" id="5Sa-ef-pgo"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="FSd-wn-VBc" secondAttribute="trailing" id="Wei-aI-pri"/>
+                                            <constraint firstItem="bBO-uh-9Ur" firstAttribute="top" secondItem="zeX-YX-4hf" secondAttribute="bottom" constant="24" id="f7r-op-2El"/>
+                                            <constraint firstItem="zeX-YX-4hf" firstAttribute="top" secondItem="ZPP-1p-HOt" secondAttribute="topMargin" constant="-8" id="fIj-BY-3tL"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="bBO-uh-9Ur" secondAttribute="trailing" constant="32" id="h0Y-mw-dsj"/>
+                                            <constraint firstItem="bBO-uh-9Ur" firstAttribute="leading" secondItem="ZPP-1p-HOt" secondAttribute="leadingMargin" constant="32" id="rGJ-Ty-yXm"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="zeX-YX-4hf" secondAttribute="trailing" constant="-8" id="uz5-gU-ToA"/>
+                                        </constraints>
+                                        <size key="customSize" width="398" height="352"/>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="bBO-uh-9Ur" id="K8V-B7-LWT"/>
+                                            <outlet property="illustrationView" destination="zeX-YX-4hf" id="UIR-MT-sx1"/>
+                                            <outlet property="leadingDescriptionConstraint" destination="rGJ-Ty-yXm" id="HzN-cH-hQA"/>
+                                            <outlet property="pairSenseButton" destination="FSd-wn-VBc" id="Hll-tb-euL"/>
+                                            <outlet property="trailingDescriptionConstraint" destination="h0Y-mw-dsj" id="gc2-mU-qYR"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

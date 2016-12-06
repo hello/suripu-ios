@@ -347,9 +347,6 @@ static CGFloat const HEMAlarmConfigCellMaskAlpha = 0.7f;
 
 - (void)didAppear {
     [super didAppear];
-    if ([self tutorialPresenter]) {
-        [HEMTutorial showTutorialForAlarmsIfNeededFrom:[self tutorialPresenter]];
-    }
     [[self tableView] flashScrollIndicators];
 }
 

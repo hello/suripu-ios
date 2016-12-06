@@ -367,6 +367,7 @@
 "authorization.sign-in.failed.message" = "The email and password you entered were not recognized. Please try again.";
 
 // alarm list
+"alarms.no-sense.description" = "You don't currently have a Sense connected to your account. Please pair with Sense to set alarms.";
 "alarms.title" = "Alarms";
 "alarms.first-alarm.button-title" = "Set smart alarm";
 "alarms.smart-alarm.format" = "Smart alarm — %@";
@@ -654,6 +655,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.pair-sense" = "Pair Sense";
 "actions.delete" = "Delete";
 "actions.continue" = "Continue";
 "actions.update-now" = "Update now";

@@ -24,16 +24,6 @@
 
 @implementation HEMTutorial
 
-static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
-
-+ (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
-{
-    if ([self shouldShowTutorialForKey:HEMTutorialAlarmsKey]) {
-        [self showTutorialForAlarmsFrom:controller];
-        [self markTutorialViewed:HEMTutorialAlarmsKey];
-    }
-}
-
 #pragma mark - Common
 
 + (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
@@ -138,11 +128,6 @@ static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 + (void)markTutorialViewed:(NSString*)key
 {
     [[SENLocalPreferences sharedPreferences] setPersistentPreference:@YES forKey:key];
-}
-
-+ (void)resetTutorials {
-    SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
-    [prefs setPersistentPreference:@NO forKey:HEMTutorialAlarmsKey];
 }
 
 @end

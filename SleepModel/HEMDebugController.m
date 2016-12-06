@@ -359,8 +359,6 @@
         HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
         [handHoldingService reset];
         
-        [HEMTutorial resetTutorials];
-        
         [weakSelf setSupportOptionController:nil];
     }];
 }

@@ -33,11 +33,11 @@
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;
++(NSString *)pairReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)sensorReuseIdentifier;
 +(NSString *)groupReuseIdentifier;
 +(NSString *)errorReuseIdentifier;
-+(NSString *)pairReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)welcomeReuseIdentifier;
@@ -56,12 +56,10 @@
 /** Segue Identifiers */
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)alarmSoundsSegueIdentifier;
-+(NSString *)alarmsSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
 +(NSString *)expansionConfigSegueIdentifier;
 +(NSString *)insightsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
-+(NSString *)sleepSoundsSegueIdentifier;
 +(NSString *)voiceSegueIdentifier;
 
 /** View Controllers */
@@ -84,7 +82,6 @@
 +(id)instantiateSleepQuestionsViewController;
 +(id)instantiateSleepSoundViewController;
 +(id)instantiateSlideContainerViewController;
-+(id)instantiateSoundsContainerViewController;
 +(id)instantiateSoundsNavigationViewController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;

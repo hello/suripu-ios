@@ -18,12 +18,6 @@
 + (void)showTutorialForPillColor;
 
 /**
- * Present the tutorial for alarms if not previously viewed
- * @param controller: the alarm controller to show tutorial on top of
- */
-+ (void)showTutorialForAlarmsIfNeededFrom:(UIViewController*)controller;
-
-/**
  * Present the tutorial for alarms
  * @param controller: the alarm controller to show tutorial on top of
  */
@@ -53,10 +47,5 @@
  *  Show info about what happens if you enable lights for alarms.
  */
 + (void)showInfoForAlarmLightsSetupFrom:(UIViewController*)controller;
-
-/**
- * Mark all tutorials as unviewed so that they can be triggered again
- */
-+ (void)resetTutorials;
 
 @end

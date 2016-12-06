@@ -131,6 +131,15 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
     override func willAppear() {
         super.willAppear()
         self.insertContentViewIfNeeded(index: 0)
+    }
+    
+    override func didAppear() {
+        super.didAppear()
+        self.updateContentVisibility()
+    }
+    
+    override func didDisappear() {
+        super.didDisappear()
         self.updateContentVisibility()
     }
     

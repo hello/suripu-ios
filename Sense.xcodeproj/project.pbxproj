@@ -3550,15 +3550,12 @@
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "Sense" */;
 			buildPhases = (
 				D0CFA9CFBC01540A5A067031 /* 📦 Check Pods Manifest.lock */,
-				F80FEDA93B24241BEDC3E54D /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */,
 				0D54F3C5D999EE85E74DCA2B /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				BF7F1BDB19E304050028F799 /* Embed App Extensions */,
 				8B38885B1C17B46B0036250B /* Run Info.plist ATS Update */,
-				69DE724F6CF308D19D81AE58 /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */,
-				D6CC4F7EB17986BEA3391B4F /* Ô£ø√º√¨¬∂ Copy Pods Resources */,
 				F0635C9E7EEDF85F86626E86 /* 📦 Embed Pods Frameworks */,
 				65C3A6661F4CE81011F7064F /* 📦 Copy Pods Resources */,
 			);
@@ -3604,16 +3601,13 @@
 			buildConfigurationList = BF7F1BD819E304050028F799 /* Build configuration list for PBXNativeTarget "RoomConditionsExtension" */;
 			buildPhases = (
 				0F2C3328E097072C00A68533 /* 📦 Check Pods Manifest.lock */,
-				165DEC586A0060ED1CAE603F /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */,
 				BCFB48C5F28390136A6D1C87 /* [CP] Check Pods Manifest.lock */,
 				BF7F1BC519E304050028F799 /* Frameworks */,
 				BF7F1BC419E304050028F799 /* Sources */,
 				BF7F1BC619E304050028F799 /* Resources */,
-				AA89D7715779E4B8D8FC11A9 /* Ô£ø√º√¨¬∂ Copy Pods Resources */,
-				447A3E6444D26082B8EA76CB /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */,
-				BF47FE2B1D3DB15100660AF7 /* ShellScript */,
 				856DE83DB5E22606D4CFA0BA /* 📦 Embed Pods Frameworks */,
 				F8E7A9E03431781679A4847C /* 📦 Copy Pods Resources */,
+				BF47FE2B1D3DB15100660AF7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3813,21 +3807,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		165DEC586A0060ED1CAE603F /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Ô£ø√º√¨¬∂ Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		3CCF9A552A90926B84109857 /* Ô£ø√º√¨¬∂ Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3841,21 +3820,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		447A3E6444D26082B8EA76CB /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Ô£ø√º√¨¬∂ Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		48F04F04604B32E4EFDFACF0 /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */ = {
@@ -3886,21 +3850,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		69DE724F6CF308D19D81AE58 /* Ô£ø√º√¨¬∂ Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Ô£ø√º√¨¬∂ Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		81CC7BEB509B9DF8FD46F6C5 /* 📦 Copy Pods Resources */ = {
@@ -3946,21 +3895,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Disables ATS in debug builds. Can't do this with the plist preprocessor unfortuantely.\nINFOPLIST=\"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncase \"${CONFIGURATION}\" in\n\"Release\"|\"Adhoc\")\n/usr/libexec/PlistBuddy -c \"Set :NSAppTransportSecurity:NSAllowsArbitraryLoads NO\" \"${INFOPLIST}\"\n;;\n\"Debug\"|\"Dev\"|\"Beta\")\n/usr/libexec/PlistBuddy -c \"Set :NSAppTransportSecurity:NSAllowsArbitraryLoads YES\" \"${INFOPLIST}\"\n;;\nesac";
-		};
-		AA89D7715779E4B8D8FC11A9 /* Ô£ø√º√¨¬∂ Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Ô£ø√º√¨¬∂ Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		BCFB48C5F28390136A6D1C87 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4020,21 +3954,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D6CC4F7EB17986BEA3391B4F /* Ô£ø√º√¨¬∂ Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Ô£ø√º√¨¬∂ Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4088,21 +4007,6 @@
 			inputPaths = (
 			);
 			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F80FEDA93B24241BEDC3E54D /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Ô£ø√º√¨¬∂ Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

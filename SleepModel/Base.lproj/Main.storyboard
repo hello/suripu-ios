@@ -233,7 +233,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmLightIcon" translatesAutoresizingMaskIntoConstraints="NO" id="nxO-KD-y84">
-                                                    <rect key="frame" x="16" y="16" width="32" height="26"/>
+                                                    <rect key="frame" x="16" y="20" width="32" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="OPy-ov-Khk"/>
                                                     </constraints>
@@ -260,7 +260,7 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="nxO-KD-y84" secondAttribute="centerY" constant="3" id="CFi-Iq-5Is"/>
+                                                <constraint firstAttribute="centerY" secondItem="nxO-KD-y84" secondAttribute="centerY" id="CFi-Iq-5Is"/>
                                                 <constraint firstAttribute="trailing" secondItem="n85-Ut-TkN" secondAttribute="trailing" constant="5" id="Qoo-mo-heV"/>
                                                 <constraint firstItem="nxO-KD-y84" firstAttribute="leading" secondItem="r6x-xo-aOh" secondAttribute="leading" constant="16" id="R1w-lZ-ANn"/>
                                                 <constraint firstAttribute="centerY" secondItem="uMH-h1-jvV" secondAttribute="centerY" id="Uwd-J2-Sbg"/>

@@ -4312,7 +4312,7 @@
         <!--List Item Selection View Controller-->
         <scene sceneID="aQe-yT-SN8">
             <objects>
-                <viewController storyboardIdentifier="listItem" automaticallyAdjustsScrollViewInsets="NO" id="Ebm-qJ-kTZ" customClass="HEMListItemSelectionViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="listItem" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="Ebm-qJ-kTZ" customClass="HEMListItemSelectionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XDq-cm-A7X"/>
                         <viewControllerLayoutGuide type="bottom" id="wfp-ed-kLC"/>
@@ -4380,11 +4380,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfp-ed-kLC" firstAttribute="top" secondItem="NeY-wL-Vb4" secondAttribute="bottom" id="Cax-5r-T4h"/>
                             <constraint firstAttribute="trailing" secondItem="BF3-aD-yRd" secondAttribute="trailing" id="ExQ-E2-Wfq"/>
                             <constraint firstItem="NeY-wL-Vb4" firstAttribute="leading" secondItem="JWB-uI-Lm8" secondAttribute="leading" id="FpV-Xs-pdX"/>
                             <constraint firstItem="BF3-aD-yRd" firstAttribute="top" secondItem="XDq-cm-A7X" secondAttribute="bottom" id="OZA-BK-Mbo"/>
                             <constraint firstItem="NeY-wL-Vb4" firstAttribute="top" secondItem="BF3-aD-yRd" secondAttribute="bottom" id="UDE-9w-4Sm"/>
+                            <constraint firstAttribute="bottom" secondItem="NeY-wL-Vb4" secondAttribute="bottom" id="X8b-kW-RzL"/>
                             <constraint firstItem="BF3-aD-yRd" firstAttribute="leading" secondItem="JWB-uI-Lm8" secondAttribute="leading" id="YiJ-kz-j6i"/>
                             <constraint firstAttribute="trailing" secondItem="NeY-wL-Vb4" secondAttribute="trailing" id="ayG-Xq-qJx"/>
                             <constraint firstItem="7Zz-Jv-r2A" firstAttribute="centerX" secondItem="JWB-uI-Lm8" secondAttribute="centerX" id="c5n-Ah-R0X"/>

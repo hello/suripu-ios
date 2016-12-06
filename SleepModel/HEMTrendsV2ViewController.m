@@ -5,10 +5,10 @@
 //  Created by Jimmy Lu on 1/28/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMTrendsV2ViewController.h"
 #import "HEMTrendsSubNavPresenter.h"
-#import "HEMTrendsTabPresenter.h"
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsService.h"
 #import "HEMSubNavigationView.h"
@@ -28,13 +28,13 @@
 
 - (id)initWithCoder:(NSCoder*)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
-        HEMTrendsService* service = [HEMTrendsService new];
-        [self setTrendsService:service];
-        // required to be done on init since view will not be initially loaded
-        // when the back view is set up
-        HEMTrendsTabPresenter* tabPresenter = [HEMTrendsTabPresenter new];
-        [tabPresenter bindWithTabBarItem:[self tabBarItem]];
-        [self addPresenter:tabPresenter];
+        NSString* iconName = @"trendsTabBarIcon";
+        NSString* title = NSLocalizedString(@"trends.title", nil);
+        TabPresenter* presenter = [[TabPresenter alloc] initWithIconBaseName:iconName title:title];
+        [presenter bindWithTabItem:[self tabBarItem]];
+        [self addPresenter:presenter];
+        
+        _trendsService = [HEMTrendsService new];
     }
     return self;
 }

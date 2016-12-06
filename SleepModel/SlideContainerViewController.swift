@@ -11,12 +11,12 @@ import Foundation
 @objc class SlideContainerViewController: HEMBaseController, SlideContentVisibilityDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    weak var tabItemPresenter: SlideTabPresenter!
+    weak var tabItemPresenter: TabPresenter!
     
     var contentControllers: Array<UIViewController>! {
         didSet {
             if self.tabItemPresenter == nil {
-                let tabPresenter = SlideTabPresenter(controllers: contentControllers)
+                let tabPresenter = TabPresenter(controllers: contentControllers)
                 tabPresenter.bind(tabItem: self.tabBarItem)
                 self.addPresenter(tabPresenter)
                 self.tabItemPresenter = tabPresenter

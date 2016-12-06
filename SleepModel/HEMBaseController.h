@@ -18,12 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
     HEMNavigationShadowView* _shadowView;
     UIImage* _tabIcon;
+    UIImage* _tabIconHighlighted;
     NSString* _tabTitle;
 }
 
 @property (nonatomic, strong, readonly, nullable) HEMNavigationShadowView* shadowView;
 @property (nonatomic, strong, readonly, nullable) NSArray<HEMPresenter*>* presenters;
 @property (nonatomic, strong, nullable) UIImage* tabIcon;
+@property (nonatomic, strong, nullable) UIImage* tabIconHighlighted;
 @property (nonatomic, copy, nullable) NSString* tabTitle;
 
 - (void)addPresenter:(HEMPresenter*)presenter;

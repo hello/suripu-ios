@@ -38,7 +38,8 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _tabIcon = [UIImage imageNamed:@"soundTabIcon"];
+        _tabIcon = [UIImage imageNamed:@"soundsTabBarIcon"];
+        _tabIconHighlighted = [UIImage imageNamed:@"soundsTabBarIconHighlighted"];
         _tabTitle = NSLocalizedString(@"sleep-sounds.title", nil);
     }
     return self;

@@ -1,5 +1,7 @@
-#import "HEMAlarmListViewController.h"
 
+#import "Sense-Swift.h"
+
+#import "HEMAlarmListViewController.h"
 #import "HEMAlarmListPresenter.h"
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmAddButton.h"
@@ -31,7 +33,8 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _tabIcon = [UIImage imageNamed:@"soundTabIcon"];
+        _tabIcon = [UIImage imageNamed:@"soundsTabBarIcon"];
+        _tabIconHighlighted = [UIImage imageNamed:@"soundsTabBarIconHighlighted"];
         _tabTitle = NSLocalizedString(@"alarms.title", nil);
     }
     return self;

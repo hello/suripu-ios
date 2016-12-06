@@ -21,6 +21,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSettingsStoryboard.h"
 
+static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
+
 @interface HEMRoomConditionsViewController () <
     HEMPresenterPairDelegate,
     HEMSensePairingDelegate,
@@ -40,16 +42,13 @@
 
 @implementation HEMRoomConditionsViewController
 
-/**
- * @discussion
- * In 2.0, this will become obsolete so putting it here for now knowing the code
- * will be changed / removed
- */
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"senseTabBarIcon"];
-        self.tabBarItem.selectedImage = [UIImage imageNamed:@"senseTabBarIcon"];
+        NSString* iconName = kHEMRoomConditionsTabIconName;
+        NSString* title = NSLocalizedString(@"current-conditions.title", nil);
+        TabPresenter* tabPresenter = [[TabPresenter alloc] initWithIconBaseName:iconName title:title];
+        [tabPresenter bindWithTabItem:[self tabBarItem]];
+        [self addPresenter:tabPresenter];
     }
     return self;
 }

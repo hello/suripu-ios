@@ -69,9 +69,11 @@ typedef NS_ENUM(NSUInteger, HEMFeedContentOption) {
 }
 
 - (void)bindWithTabBarItem:(UITabBarItem*)tabBarItem {
+    UIImage* highlightImage = [UIImage imageNamed:@"feedTabBarIconHighlighted"];
+    highlightImage = [highlightImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem.title = NSLocalizedString(@"insights.title", nil);
     tabBarItem.image = [UIImage imageNamed:@"feedTabBarIcon"];
-    tabBarItem.selectedImage = [UIImage imageNamed:@"feedTabBarIcon"];
+    tabBarItem.selectedImage = highlightImage;
     [self setTabBarItem:tabBarItem];
     [self updateTabBarItemUnreadIndicator];
 }

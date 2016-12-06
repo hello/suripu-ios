@@ -44,7 +44,6 @@ PODS:
     - Zip (~> 0.6)
   - Kiwi (2.4.0)
   - LGBluetooth (1.1.4)
-  - MSDynamicsDrawerViewController (1.5.1)
   - NAPickerView (0.0.1)
   - Nocilla (0.11.0)
   - NSJSONSerialization-NSNullRemoval (1.0.1)
@@ -97,7 +96,6 @@ DEPENDENCIES:
   - iOSDFULibrary (= 2.1.6)
   - Kiwi
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
-  - MSDynamicsDrawerViewController (= 1.5.1)
   - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
   - Nocilla
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
@@ -169,7 +167,6 @@ SPEC CHECKSUMS:
   iOSDFULibrary: 1d597b90fed43a68aba886443a0045d900e622d9
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
-  MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   Nocilla: 7af7a386071150cc8aa5da4da97d060f049dd61c
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
@@ -182,6 +179,6 @@ SPEC CHECKSUMS:
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
   Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
 
-PODFILE CHECKSUM: 94f47120a5edf6e4ea3941408220f9bf869a29ee
+PODFILE CHECKSUM: 5bc954f3a077bb190a776b9ce6b2e6baf143018d
 
 COCOAPODS: 1.0.0

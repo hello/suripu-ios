@@ -12,7 +12,7 @@
 #import "HEMExpansionService.h"
 #import "HEMListItemCell.h"
 #import "HEMActivityCoverView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMStyle.h"
 
@@ -146,7 +146,7 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard configReuseIdentifier]];
+    return [tableView dequeueReusableCellWithIdentifier:[HEMSettingsStoryboard configReuseIdentifier]];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

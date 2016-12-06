@@ -1,3 +1,4 @@
+#import <AttributedMarkdown/markdown_peg.h>
 
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENSensor.h>
@@ -5,7 +6,6 @@
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAppUnreadStats.h>
-#import "markdown_peg.h"
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphViewController.h"

@@ -77,9 +77,19 @@
 - (void)updateLastNightSleepScore:(NSInteger)sleepScore {
     if (sleepScore != [self lastNightSleepScore]) {
         [self setLastNightSleepScore:sleepScore];
-        UIImage* sleepScoreImage = [UIImage iconFromSleepScoreWithSleepScore:sleepScore];
-        self.tabBarItem.image = sleepScoreImage;
-        self.tabBarItem.selectedImage = sleepScoreImage;
+        
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            UIImage* sleepScoreImage = [UIImage iconFromSleepScoreWithSleepScore:sleepScore highlighted:NO];
+            UIImage* sleepScoreImageHighlighted = [UIImage iconFromSleepScoreWithSleepScore:sleepScore highlighted:YES];
+            sleepScoreImageHighlighted = [sleepScoreImageHighlighted imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                strongSelf.tabBarItem.image = sleepScoreImage;
+                strongSelf.tabBarItem.selectedImage = sleepScoreImageHighlighted;
+            });
+        });
     }
 }
 

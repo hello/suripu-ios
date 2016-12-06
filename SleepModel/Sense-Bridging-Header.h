@@ -20,17 +20,19 @@
 
 #import "HEMOnboardingService.h"
 #import "HEMShortcutService.h"
+#import "HEMDeviceService.h"
 
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSettingsNavigationController.h"
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMTrendsV2ViewController.h"
 #import "HEMInsightFeedViewController.h"
-#import "HEMSoundsContainerViewController.h"
 #import "HEMRoomConditionsViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingController.h"
 #import "HEMDebugController.h"
+#import "HEMAlarmListViewController.h"
+#import "HEMSleepSoundViewController.h"
 
 #import "HEMAppUsage.h"
 #import "HEMStyle.h"

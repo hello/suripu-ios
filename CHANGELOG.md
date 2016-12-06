@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0.6
+
+New:
+
+* Sounds tab works as designed, minus the no sense paired case
+* Connect text in alarm screen is blue
+* Re-inserted debug functionality
+* Design tweaks to Sleep Sounds
+* Design tweaks to Alarm
+
 ## 2.0.0.5
 
 New:

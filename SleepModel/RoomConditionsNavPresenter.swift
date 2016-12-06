@@ -18,7 +18,7 @@ class RoomConditionsNavPresenter: HEMPresenter {
     weak var navDelegate: RoomConditionsNavDelegate?
     weak var navItem: UINavigationItem?
     
-    func bindWithNavBar(navItem: UINavigationItem) {
+    func bind(navItem: UINavigationItem) {
         let title = NSLocalizedString("current-conditions.title", comment: "room conditions title")
         let settingsIcon = #imageLiteral(resourceName: "settingsIcon")
         let buttonSize = CGSize(width: HEMStyleDefaultNavBarButtonItemWidth,

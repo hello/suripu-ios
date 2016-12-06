@@ -11,7 +11,7 @@
 #import "HEMConfigurationsPresenter.h"
 #import "HEMExpansionService.h"
 #import "HEMExpansionsConfigViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 
 @interface HEMExpansionAuthViewController () <
     HEMExpansionAuthDelegate
@@ -56,7 +56,7 @@
 - (void)showConfigurations:(NSArray<SENExpansionConfig *> *)configs
               forExpansion:(SENExpansion*)expansion
              fromPresenter:(HEMExpansionAuthPresenter *)authPresenter {
-    HEMExpansionsConfigViewController* listVC = [HEMMainStoryboard instantiateExpansionConfigViewController];
+    HEMExpansionsConfigViewController* listVC = [HEMSettingsStoryboard instantiateExpansionConfigViewController];
     [listVC setExpansion:expansion];
     [listVC setExpansionService:[self expansionService]];
     [listVC setConfigs:configs];

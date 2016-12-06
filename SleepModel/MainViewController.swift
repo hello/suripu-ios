@@ -19,12 +19,14 @@ import UIKit
 @objc class MainViewController: UITabBarController , UITabBarControllerDelegate{
     
     static let itemInset = CGFloat(6)
+    var deviceService: HEMDeviceService!
 
     // MARK: - Lifecycle events
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
+        self.configureServices()
         self.configureTabs()
     }
     
@@ -34,11 +36,15 @@ import UIKit
     
     // MARK: - Configuration methods
     
+    fileprivate func configureServices() {
+        self.deviceService = HEMDeviceService()
+    }
+    
     fileprivate func configureTabs() {
         let timelineVC = HEMSleepSummarySlideViewController()
         let trendsVC = HEMMainStoryboard.instantiateTrendsViewController() as! UIViewController
         let feedVC = HEMMainStoryboard.instantiateFeedViewController() as! UIViewController
-        let soundsVC = HEMMainStoryboard.instantiateSoundsNavigationViewController() as! UIViewController
+        let soundsVC = self.soundController()!
         let conditionsVC = HEMMainStoryboard.instantiateCurrentNavController() as! UIViewController
         self.viewControllers = [timelineVC, trendsVC, feedVC, soundsVC, conditionsVC];
         
@@ -49,6 +55,24 @@ import UIKit
             item.imageInsets = inset
             item.title = nil
         }
+    }
+    
+    fileprivate func soundController() -> UIViewController! {
+        let alarmVC = HEMMainStoryboard.instantiateAlarmListViewController() as! HEMAlarmListViewController
+        alarmVC.deviceService = self.deviceService
+        
+        let sleepSoundVC = HEMMainStoryboard.instantiateSleepSoundViewController() as! HEMSleepSoundViewController
+        sleepSoundVC.deviceService = self.deviceService
+        
+        return self.wrapInSlideContainer(controllers: [alarmVC, sleepSoundVC])!
+    }
+    
+    fileprivate func wrapInSlideContainer(controllers: Array<UIViewController>!) -> UIViewController! {
+        let container = HEMMainStoryboard.instantiateSlideContainerViewController() as! SlideContainerViewController
+        container.contentControllers = controllers
+        let navVC = HEMStyledNavigationViewController(rootViewController: container)
+        navVC.view.backgroundColor = UIColor.white
+        return navVC
     }
     
     // MARK: - Tab Switching

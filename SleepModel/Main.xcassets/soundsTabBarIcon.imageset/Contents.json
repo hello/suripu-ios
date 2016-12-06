@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "soundsTabBarIcon.png",
+      "filename" : "icon-sound-24.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "soundsTabBarIcon@2x.png",
+      "filename" : "icon-sound-24@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "soundsTabBarIcon@3x.png",
+      "filename" : "icon-sound-24@3x.png",
       "scale" : "3x"
     }
   ],

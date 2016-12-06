@@ -827,7 +827,7 @@
 
 // sleep sounds
 "sleep-sounds.error.message" = "There was a problem loading Sleep Sounds. Please try again.";
-"sleep-sounds.title" = "Sleep sounds";
+"sleep-sounds.title" = "Sleep Sounds";
 "sleep-sounds.volume.high" = "High";
 "sleep-sounds.volume.medium" = "Medium";
 "sleep-sounds.volume.low" = "Low";

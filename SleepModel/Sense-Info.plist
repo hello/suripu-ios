@@ -35,7 +35,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.0.5</string>
+	<string>2.0.0.6</string>
 	<key>FacebookAppID</key>
 	<string>372438546161587</string>
 	<key>FacebookDisplayName</key>
@@ -114,6 +114,8 @@
 	<string>Sense uses your location to know sunrise and sunset times, local weather, and more.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Sense requires access to your photos to upload a profile photo.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Sense requires access to camera to take a photo for your profile.</string>
 	<key>PillFirmwareURL</key>
 	<string>${PILL_FIRMWARE_URL}</string>
 	<key>SenseAllowSupportOptions</key>

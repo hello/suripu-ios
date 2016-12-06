@@ -83,7 +83,6 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 @property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
 @property (nonatomic, weak) HEMTimelineHandHoldingPresenter* handHoldingPresenter;
 @property (nonatomic, strong) HEMAudioService* audioService;
-@property (nonatomic, strong) HEMNavigationShadowView* shadowView;
 
 @end
 
@@ -874,7 +873,7 @@ static BOOL hasLoadedBefore = NO;
     HEMNavigationShadowView* shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:[self navigationBar]];
     [[self navigationBar] setClipsToBounds:NO];
     [[self navigationBar] addSubview:shadowView];
-    [self setShadowView:shadowView];
+    _shadowView = shadowView;
 }
 
 #pragma mark - UICollectionView

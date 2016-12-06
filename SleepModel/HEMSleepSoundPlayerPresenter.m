@@ -89,10 +89,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     [collectionView setBackgroundColor:[UIColor backgroundColor]];
+    [[collectionView superview] setBackgroundColor:[UIColor backgroundColor]];
     [self setCollectionView:collectionView];
 }
 
-- (void)bindWithActionButton:(UIButton*)button bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+- (void)bindWithActionButton:(UIButton*)button
+            bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [self setOrigActionBottomDistance:[bottomConstraint constant]];
 
     CGFloat buttonWidth = CGRectGetWidth([button bounds]);
@@ -110,7 +112,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [self setActionButton:button];
     [self setActionBottomConstraint:bottomConstraint];
     [self setIndicatorView:[self activityIndicator]];
-    [self hideActionButton];
 }
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator {

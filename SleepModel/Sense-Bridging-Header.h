@@ -27,7 +27,6 @@
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMTrendsV2ViewController.h"
 #import "HEMInsightFeedViewController.h"
-#import "HEMSoundsContainerViewController.h"
 #import "HEMRoomConditionsViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingController.h"

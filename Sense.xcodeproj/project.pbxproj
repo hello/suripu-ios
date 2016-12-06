@@ -214,9 +214,6 @@
 		BF53D8CE1D931D5F00C24F9D /* RoomConditionsExtension.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF53D8C31D931AEE00C24F9D /* RoomConditionsExtension.xcassets */; };
 		BF53D8CF1D931E3F00C24F9D /* HEMRoomConditionsExtViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF53D8BF1D931AEE00C24F9D /* HEMRoomConditionsExtViewController.m */; };
 		BF53D8D01D931E4B00C24F9D /* HEMSensorExtTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF53D8C11D931AEE00C24F9D /* HEMSensorExtTableViewCell.m */; };
-		BF55D87E1CA484F500379FBF /* HEMSoundsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D87D1CA484F500379FBF /* HEMSoundsContainerViewController.m */; };
-		BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */; };
-		BF55D8841CA48C7F00379FBF /* HEMSoundsContentPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55D8831CA48C7F00379FBF /* HEMSoundsContentPresenter.m */; };
 		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
 		BF59E19E1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59E19D1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m */; };
 		BF5B1D1E1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5B1D1D1D2C6F3600DF1190 /* HEMSleepPillDfuViewController.m */; };
@@ -896,12 +893,6 @@
 		BF53D8C31D931AEE00C24F9D /* RoomConditionsExtension.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = RoomConditionsExtension.xcassets; path = Extensions/RoomConditions/RoomConditionsExtension.xcassets; sourceTree = SOURCE_ROOT; };
 		BF53D8C81D931AF900C24F9D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Extensions/RoomConditions/Info.plist; sourceTree = SOURCE_ROOT; };
 		BF53D8C91D931AF900C24F9D /* Sense.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Sense.entitlements; path = Extensions/RoomConditions/Sense.entitlements; sourceTree = SOURCE_ROOT; };
-		BF55D87C1CA484F500379FBF /* HEMSoundsContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSoundsContainerViewController.h; sourceTree = "<group>"; };
-		BF55D87D1CA484F500379FBF /* HEMSoundsContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsContainerViewController.m; sourceTree = "<group>"; };
-		BF55D87F1CA48A6E00379FBF /* HEMSoundsTabPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSoundsTabPresenter.h; sourceTree = "<group>"; };
-		BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsTabPresenter.m; sourceTree = "<group>"; };
-		BF55D8821CA48C7F00379FBF /* HEMSoundsContentPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSoundsContentPresenter.h; sourceTree = "<group>"; };
-		BF55D8831CA48C7F00379FBF /* HEMSoundsContentPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSoundsContentPresenter.m; sourceTree = "<group>"; };
 		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
 		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
 		BF59E19C1D8386D0000DCC28 /* HEMSensorDataRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDataRequestOperation.h; sourceTree = "<group>"; };
@@ -2434,27 +2425,13 @@
 				BF3583951CB4444900760CD4 /* Services */,
 				BF412E9C1C90F792009514A1 /* Sleep Sounds */,
 				BF3583961CB4445800760CD4 /* Views */,
-				BF55D87A1CA4846700379FBF /* View Controllers */,
 			);
 			name = Sounds;
-			sourceTree = "<group>";
-		};
-		BF55D87A1CA4846700379FBF /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				BF55D87C1CA484F500379FBF /* HEMSoundsContainerViewController.h */,
-				BF55D87D1CA484F500379FBF /* HEMSoundsContainerViewController.m */,
-			);
-			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		BF55D87B1CA4849E00379FBF /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				BF55D87F1CA48A6E00379FBF /* HEMSoundsTabPresenter.h */,
-				BF55D8801CA48A6E00379FBF /* HEMSoundsTabPresenter.m */,
-				BF55D8821CA48C7F00379FBF /* HEMSoundsContentPresenter.h */,
-				BF55D8831CA48C7F00379FBF /* HEMSoundsContentPresenter.m */,
 				BFB7B2081CCEC5CF0060999E /* HEMSoundListPresenter.h */,
 				BFB7B2091CCEC5CF0060999E /* HEMSoundListPresenter.m */,
 			);
@@ -4389,8 +4366,6 @@
 				BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */,
 				BF7B2F7D1DB9AE5900A8E602 /* HEMAlarmExpansionSetupViewController.m in Sources */,
 				BF2F4C701DADB22700502521 /* HEMVoiceCommandGroup.m in Sources */,
-				BF55D8811CA48A6E00379FBF /* HEMSoundsTabPresenter.m in Sources */,
-				BF55D8841CA48C7F00379FBF /* HEMSoundsContentPresenter.m in Sources */,
 				BFC458BE1BDAA2CE008EE871 /* HEMGlobalContants.m in Sources */,
 				BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */,
 				8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */,
@@ -4532,7 +4507,6 @@
 				BF9C87D819B6A199003188D4 /* HEMPillPairViewController.m in Sources */,
 				BFB59E101C03A929001BD941 /* HEMTimeZoneService.m in Sources */,
 				BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */,
-				BF55D87E1CA484F500379FBF /* HEMSoundsContainerViewController.m in Sources */,
 				BFC0D6731D9D968B00239B89 /* HEMExpansionPresenter.m in Sources */,
 				BF825CFF1D77527E003F34B0 /* HEMDescriptionHeaderView.m in Sources */,
 				BFC99BC01B6A93AF008F7F0D /* HEMAppReviewQuestionsDataSource.m in Sources */,

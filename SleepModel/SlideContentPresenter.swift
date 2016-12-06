@@ -65,12 +65,14 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
     
     fileprivate func layoutContent() {
         if self.contentScrollView.subviews.count > 0 {
-            let viewWidth = self.contentScrollView.frame.size.width
+            let scrollFrame = self.contentScrollView.frame
+            let viewWidth = scrollFrame.size.width
             
             for (index, view) in self.contentScrollView.subviews.enumerated() {
                 if self.contentViews.contains(view) {
                     var contentFrame = view.frame
                     contentFrame.size.width = viewWidth
+                    contentFrame.size.height = scrollFrame.size.height
                     contentFrame.origin.x = CGFloat(index) * contentFrame.size.width
                     view.frame = contentFrame
                 }

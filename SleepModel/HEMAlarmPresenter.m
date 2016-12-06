@@ -491,7 +491,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return accessoryView;
 }
 
-- (NSString*)detailValueForExpansion:(SENExpansion*)expansion {
+- (NSString*)detailValueForExpansion:(SENExpansion*)expansion customTextColor:(UIColor**)customColor {
     NSString* detail = nil;
     
     if ([[self expansionService] isReadyForUse:expansion]) {
@@ -517,6 +517,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         detail = NSLocalizedString(@"expansion.state.not-available", nil);
     }else {
         detail = NSLocalizedString(@"expansion.state.not-connected", nil);
+        *customColor = [UIColor tintColor];
     }
     
     return detail;
@@ -524,11 +525,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureExpansionCell:(HEMAlarmTableViewCell*)expansionCell forType:(HEMAlarmRowType)type {
     NSString *title = nil, *detail = nil;
-    UIColor* titleColor = [UIColor grey6];
+    UIColor* titleColor = [UIColor grey6], *detailColor = [UIColor grey4];
+    BOOL isStillLoading = [self isLoadingExpansions], showError = NO;
     UIView* accessoryView = nil;
     UIImage* icon = nil;
-    BOOL isStillLoading = [self isLoadingExpansions];
-    BOOL showError = NO;
     SENExpansion* expansion = nil;
     SENExpansionType expansionType = SENExpansionTypeUnknown;
     
@@ -552,7 +552,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         if (expansion) {
             CGFloat height = CGRectGetHeight([expansionCell bounds]);
             accessoryView = [self customAccessoryViewWithHeight:height];
-            detail = [self detailValueForExpansion:expansion];
+            detail = [self detailValueForExpansion:expansion customTextColor:&detailColor];
         } else {
             showError = YES;
         }
@@ -568,7 +568,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [[expansionCell detailLabel] setText:detail];
     [[expansionCell detailLabel] setFont:[UIFont body]];
-    [[expansionCell detailLabel] setTextColor:[UIColor grey4]];
+    [[expansionCell detailLabel] setTextColor:detailColor];
     
     [expansionCell setBackgroundColor:[UIColor clearColor]];
     

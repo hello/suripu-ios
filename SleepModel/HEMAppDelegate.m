@@ -192,7 +192,6 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 }
 
 - (void)configureAppearance {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     ApplyHelloStyles();
 }
 

@@ -10,6 +10,10 @@ New:
 * Design tweaks to Sleep Sounds
 * Design tweaks to Alarm
 
+Fixes:
+
+* Fixed crasher when taking photo using iOS 10 device
+
 ## 2.0.0.5
 
 New:

@@ -55,6 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setSelectedSound:(SENSleepSound*)sound save:(BOOL)save;
 - (void)setSelectedDuration:(SENSleepSoundDuration*)duration save:(BOOL)save;
 - (void)setSelectedVolume:(HEMSleepSoundVolume *)selectedVolume save:(BOOL)save;
+- (void)prepareForReload;
 
 @end
 

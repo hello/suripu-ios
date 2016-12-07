@@ -171,4 +171,12 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
         }
     }
     
+    // MARK: Clean Up
+    
+    deinit {
+        if self.contentScrollView != nil {
+            self.contentScrollView.delegate = nil
+        }
+    }
+    
 }

@@ -12,14 +12,22 @@
 #import "HEMAlertViewController.h"
 #import "HEMListItemSelectionViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMOnboardingStoryboard.h"
 #import "HEMSleepSoundsPresenter.h"
 #import "HEMSleepSoundDurationsPresenter.h"
 #import "HEMSleepSoundVolumePresenter.h"
 #import "HEMAudioService.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMDeviceService.h"
+#import "HEMSensePairViewController.h"
+#import "HEMStyledNavigationViewController.h"
 
-@interface HEMSleepSoundViewController () <HEMSleepSoundPlayerDelegate, HEMListDelegate>
+@interface HEMSleepSoundViewController () <
+    HEMSleepSoundPlayerDelegate,
+    HEMListDelegate,
+    HEMPresenterPairDelegate,
+    HEMSensePairingDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgLaunchImageView;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
@@ -65,6 +73,7 @@
     [playerPresenter bindWithCollectionView:[self collectionView]];
     [playerPresenter bindWithActivityIndicator:[self activityIndicator]];
     [playerPresenter setDelegate:self];
+    [playerPresenter setPairDelegate:self];
     [self addPresenter:playerPresenter];
     
     [self setPlayerPresenter:playerPresenter];
@@ -151,6 +160,27 @@
         [[self navigationController] popViewControllerAnimated:YES];
     }
     
+}
+
+#pragma mark - HEMPresenterPairDelegate
+
+- (void)pairSenseFrom:(HEMPresenter *)presenter {
+    HEMSensePairViewController *pairVC = (id)[HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController *nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - HEMSensePairingDelegate
+
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [[self playerPresenter] prepareForReload];
+    [self dismissModalAfterDelay:senseManager != nil];
+}
+
+- (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [[self playerPresenter] prepareForReload];
+    [self dismissModalAfterDelay:senseManager != nil];
 }
 
 #pragma mark - Segues

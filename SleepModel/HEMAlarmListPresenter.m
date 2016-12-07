@@ -28,44 +28,52 @@
 #import "HEMAlarmCache.h"
 #import "HEMAlarmExpansionListCell.h"
 #import "HEMExpansionService.h"
+#import "HEMDeviceService.h"
+#import "HEMSenseRequiredCollectionViewCell.h"
 
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
-static CGFloat const HEMAlarmLoadAnimeDuration = 0.5f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
 static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
+static CGFloat const HEMAlarmListPairViewHeight = 352.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static CGFloat const HEMAlarmNoAlarmHorzMargin = 40.0f;
-static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
+static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
+static NSString* const HEMAlarmListErrorDomain = @"is.hello.app.alarm";
+
+typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
+    HEMAlarmListErrorCodeNoSense = -1
+};
 
 @interface HEMAlarmListPresenter() <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) HEMSubNavigationView* subNav;
 @property (nonatomic, weak) HEMAlarmAddButton* addButton;
-@property (nonatomic, weak) NSLayoutConstraint* addButtonBottomConstraint;
 @property (nonatomic, strong) HEMActivityIndicatorView* addButtonActivityIndicator;
 @property (nonatomic, weak) HEMActivityIndicatorView* dataLoadingIndicator;
-@property (nonatomic, assign) CGFloat origAddButtonBottomMargin;
-@property (nonatomic, weak) HEMAlarmService* alarmService;
 @property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSError* loadError;
 @property (nonatomic, strong) NSDateFormatter *hour24Formatter;
 @property (nonatomic, strong) NSDateFormatter *hour12Formatter;
 @property (nonatomic, strong) NSDateFormatter *meridiemFormatter;
-@property (nonatomic, strong) HEMExpansionService* expansionService;
+@property (nonatomic, weak) HEMExpansionService* expansionService;
+@property (nonatomic, weak) HEMAlarmService* alarmService;
+@property (nonatomic, weak) HEMDeviceService* deviceService;
 
 @end
 
 @implementation HEMAlarmListPresenter
 
 - (instancetype)initWithAlarmService:(HEMAlarmService*)alarmService
-                    expansionService:(HEMExpansionService*)expansionService {
+                    expansionService:(HEMExpansionService*)expansionService
+                       deviceService:(HEMDeviceService*)deviceService {
     self = [super init];
     if (self) {
         _alarmService = alarmService;
         _expansionService = expansionService;
+        _deviceService = deviceService;
         _hour12Formatter = [NSDateFormatter new];
         _hour12Formatter.dateFormat = @"hh:mm";
         _hour24Formatter = [NSDateFormatter new];
@@ -93,11 +101,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     [self setSubNav:subNav];
 }
 
-- (void)bindWithAddButton:(HEMAlarmAddButton*)addButton
-     withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
-    [self setOrigAddButtonBottomMargin:[bottomConstraint constant]];
-    [self setAddButtonBottomConstraint:bottomConstraint];
-    
+- (void)bindWithAddButton:(HEMAlarmAddButton*)addButton {
     [addButton setEnabled:YES];
     [addButton setTitle:@"" forState:UIControlStateDisabled];
     [addButton addTarget:self action:@selector(touchDownAddAlarmButton:) forControlEvents:UIControlEventTouchDown];
@@ -105,7 +109,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     [addButton addTarget:self action:@selector(addNewAlarm:) forControlEvents:UIControlEventTouchUpInside];
     
     [self setAddButton:addButton];
-    [self hideAddButton];
+    [[self addButton] setHidden:YES];
     [self setAddButtonActivityIndicator:[self activityIndicator]];
 }
 
@@ -153,21 +157,12 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 }
 
 - (void)hideAddButton {
-    CGFloat height = CGRectGetHeight([[self addButton] bounds]);
-    CGFloat hiddenBottom = absCGFloat([self origAddButtonBottomMargin]) + height;
-    [[self addButtonBottomConstraint] setConstant:hiddenBottom];
+    [[self addButton] setHidden:YES];
 }
 
-- (void)showAddButton {
+- (void)showAddButtonIfAllowed {
     [self showAddButtonAsLoading:NO];
     [[self addButton] setHidden:[[[self alarmService] alarms] count] == 0];
-    
-    if ([[self addButtonBottomConstraint] constant] != [self origAddButtonBottomMargin]) {
-        [UIView animateWithDuration:HEMAlarmLoadAnimeDuration animations:^{
-            [[self addButtonBottomConstraint] setConstant:[self origAddButtonBottomMargin]];
-            [[self addButton] layoutIfNeeded];
-        }];
-    }
 }
 
 - (void)showAddButtonAsLoading:(BOOL)loading {
@@ -206,7 +201,7 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 
 - (void)wasRemovedFromParent {
     [super wasRemovedFromParent];
-    [self hideAddButton];
+    [[self addButton] setHidden:YES];
 }
 
 - (void)didGainConnectivity {
@@ -227,29 +222,57 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     }
     
     [self setLoading:YES];
+    [self setLoadError:nil];
     [self showDataLoadingIndicatorIfNeeded:YES];
     [self showAddButtonAsLoading:YES];
     
     __weak typeof(self) weakSelf = self;
-    [[self alarmService] refreshAlarms:^(NSArray<SENAlarm *> * alarms, NSError * error) {
+    void(^loadAlarms)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setLoading:NO];
-        [strongSelf showDataLoadingIndicatorIfNeeded:NO];
-        [strongSelf setLoadError:error];
-
-        if (error) {
-            [strongSelf hideAddButton];
-            [[strongSelf collectionView] reloadData];
-        } else {
-            [strongSelf showAddButton];
+        [[strongSelf alarmService] refreshAlarms:^(NSArray<SENAlarm *> * alarms, NSError * error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf setLoading:NO];
-            [[strongSelf collectionView] reloadData];
-
-            if ([[strongSelf delegate] respondsToSelector:@selector(didFinishLoadingDataFrom:)]) {
-                [[strongSelf delegate] didFinishLoadingDataFrom:strongSelf];
+            [strongSelf showDataLoadingIndicatorIfNeeded:NO];
+            [strongSelf setLoadError:error];
+            
+            if (error) {
+                [[strongSelf addButton] setHidden:YES];
+                [[strongSelf collectionView] reloadData];
+            } else {
+                [strongSelf showAddButtonIfAllowed];
+                [strongSelf setLoading:NO];
+                [[strongSelf collectionView] reloadData];
+                
+                if ([[strongSelf delegate] respondsToSelector:@selector(didFinishLoadingDataFrom:)]) {
+                    [[strongSelf delegate] didFinishLoadingDataFrom:strongSelf];
+                }
             }
-        }
-    }];
+        }];
+    };
+    
+    if (![[self deviceService] devices] || ![[[self deviceService] devices] hasPairedSense]) {
+        [[self deviceService] refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            BOOL hasSense = [devices hasPairedSense];
+            NSError* deviceError = error;
+            if (deviceError || !hasSense) {
+                if (!hasSense && !deviceError) {
+                    deviceError = [NSError errorWithDomain:HEMAlarmListErrorDomain
+                                                      code:HEMAlarmListErrorCodeNoSense
+                                                  userInfo:nil];
+                }
+                [strongSelf setLoading:NO];
+                [strongSelf showDataLoadingIndicatorIfNeeded:NO];
+                [strongSelf setLoadError:deviceError];
+                [[strongSelf addButton] setHidden:YES];
+                [[strongSelf collectionView] reloadData];
+            } else {
+                loadAlarms();
+            }
+        }];
+    } else {
+        loadAlarms();
+    }
     
 }
 
@@ -267,6 +290,14 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
         [[self dataLoadingIndicator] setHidden:YES];
         [[self collectionView] setHidden:NO];
     }
+}
+
+#pragma mark - Error
+
+- (BOOL)isNoSenseError:(NSError*)error {
+    return error != nil
+        && [[error domain] isEqualToString:HEMAlarmListErrorDomain]
+        && [error code] == HEMAlarmListErrorCodeNoSense;
 }
 
 #pragma mark - Collection View Delegate / Data Source
@@ -298,15 +329,17 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[[self alarmService] alarms] count] > 0) {
+    if ([self isNoSenseError:[self loadError]]) {
+        return [self collectionView:collectionView pairSenseCellAtIndexPath:indexPath];
+    } else if ([self loadError]) {
+        return [self collectionView:collectionView statusCellAtIndexPath:indexPath];
+    } else if ([[[self alarmService] alarms] count] > 0) {
         SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];
         if ([[self alarmService] numberOfEnabledExpansionsIn:alarm]) {
             return [self collectionView:collectionView alarmExpansionCellAtIndexPath:indexPath];
         } else {
             return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
         }
-    } else if ([self loadError]) {
-        return [self collectionView:collectionView statusCellAtIndexPath:indexPath];
     } else {
         return [self collectionView:collectionView emptyCellAtIndexPath:indexPath];
     }
@@ -436,6 +469,21 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     return cell;
 }
 
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
+               pairSenseCellAtIndexPath:(NSIndexPath*)indexPath {
+    NSString *identifier = [HEMMainStoryboard pairReuseIdentifier];
+    HEMSenseRequiredCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    NSString* buttonTitle = NSLocalizedString(@"actions.pair-sense", nil);
+    NSString* message = NSLocalizedString(@"alarms.no-sense.description", nil);
+    [[cell descriptionLabel] setText:message];
+    [[cell pairSenseButton] addTarget:self
+                               action:@selector(pairSense)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [[cell pairSenseButton] setTitle:[buttonTitle uppercaseString]
+                            forState:UIControlStateNormal];
+    return cell;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                    statusCellAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = [HEMMainStoryboard alarmListStatusCellReuseIdentifier];
@@ -525,7 +573,8 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
     NSInteger alarmCount = [[[self alarmService] alarms] count];
     
     if ([self loadError]) {
-        return CGSizeMake(width, HEMAlarmListCellHeight);
+        BOOL noSense = [self isNoSenseError:[self loadError]];
+        return CGSizeMake(width, noSense ? HEMAlarmListPairViewHeight : HEMAlarmListCellHeight);
     } else if ([[[self alarmService] alarms] count] > 0) {
         SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];
         CGFloat height = HEMAlarmListCellHeight;
@@ -556,6 +605,10 @@ static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 }
 
 #pragma mark - Actions
+
+- (void)pairSense {
+    [[self pairDelegate] pairSenseFrom:self];
+}
 
 - (void)addNewAlarm:(id)sender {
     if (![[self addButton] isEnabled]) {

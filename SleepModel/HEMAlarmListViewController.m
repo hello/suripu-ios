@@ -8,6 +8,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSettingsNavigationController.h"
+#import "HEMSensePairViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSubNavigationView.h"
@@ -15,7 +16,12 @@
 #import "HEMSupportUtil.h"
 #import "HEMExpansionService.h"
 
-@interface HEMAlarmListViewController () <HEMAlarmControllerDelegate, HEMAlarmListPresenterDelegate>
+@interface HEMAlarmListViewController () <
+    HEMAlarmControllerDelegate,
+    HEMAlarmListPresenterDelegate,
+    HEMPresenterPairDelegate,
+    HEMSensePairingDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *loadingIndicator;
@@ -50,12 +56,15 @@
     HEMExpansionService* expansionService = [HEMExpansionService new];
     
     HEMAlarmListPresenter* alarmPresenter
-        = [[HEMAlarmListPresenter alloc] initWithAlarmService:alarmService expansionService:expansionService];
+        = [[HEMAlarmListPresenter alloc] initWithAlarmService:alarmService
+                                             expansionService:expansionService
+                                                deviceService:[self deviceService]];
     [alarmPresenter bindWithCollectionView:[self collectionView]];
     [alarmPresenter bindWithSubNavigationView:[self subNav]];
     [alarmPresenter bindWithDataLoadingIndicator:[self loadingIndicator]];
-    [alarmPresenter bindWithAddButton:[self addButton] withBottomConstraint:[self addButtonBottomConstraint]];
+    [alarmPresenter bindWithAddButton:[self addButton]];
     [alarmPresenter setDelegate:self];
+    [alarmPresenter setPairDelegate:self];
     
     [self setAlarmsPresenter:alarmPresenter];
     [self setAlarmService:alarmService];
@@ -131,6 +140,25 @@
 - (void)didSaveAlarm:(SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC {
     [[self alarmsPresenter] update];
     [alarmVC dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - HEMPresenterPairDelegate
+
+- (void)pairSenseFrom:(HEMPresenter *)presenter {
+    HEMSensePairViewController *pairVC = (id)[HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController *nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - HEMSensePairingDelegate
+
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [self dismissModalAfterDelay:senseManager != nil];
+}
+
+- (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [self dismissModalAfterDelay:senseManager != nil];
 }
 
 @end

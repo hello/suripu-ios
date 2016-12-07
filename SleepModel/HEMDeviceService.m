@@ -22,6 +22,7 @@
 #import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMDeviceService.h"
+#import "HEMOnboardingService.h"
 #import "HEMConfig.h"
 #import "NSDate+HEMRelative.h"
 
@@ -56,6 +57,10 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 - (void)listenForDeprecatedServiceNotifications {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(clearDevicesCache)
+                   name:HEMOnboardingNotificationDidChangeSensePairing
+                 object:nil];
     [center addObserver:self
                selector:@selector(clearDevicesCache)
                    name:SENServiceDeviceNotificationFactorySettingsRestored

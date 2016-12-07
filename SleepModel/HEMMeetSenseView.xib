@@ -37,7 +37,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="134" id="9BJ-6N-fit"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <inset key="titleEdgeInsets" minX="5" minY="2" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
                     <state key="normal" title="WATCH VIDEO" image="play">

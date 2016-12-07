@@ -3558,6 +3558,7 @@
 				8B38885B1C17B46B0036250B /* Run Info.plist ATS Update */,
 				F0635C9E7EEDF85F86626E86 /* 📦 Embed Pods Frameworks */,
 				65C3A6661F4CE81011F7064F /* 📦 Copy Pods Resources */,
+				BFB220C61DF7A9A80025606E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3923,6 +3924,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\n    rm -fr Frameworks\nfi";
+		};
+		BFB220C61DF7A9A80025606E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nfind \"${SRCROOT}/SleepModel\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
 		D0CFA9CFBC01540A5A067031 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

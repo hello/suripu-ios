@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0.7
+
+New:
+
+* Add pair sense card to alarm list
+* Add pair sense card to sleep sounds
+* Decreased load times for various screens
+* Updated settings icon
+* Added voice tutorial skip analytics event
+
 ## 2.0.0.6
 
 New:

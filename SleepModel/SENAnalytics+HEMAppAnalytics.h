@@ -259,6 +259,7 @@ extern NSString* const HEMAnalyticsEventSenseDFUEnd;
 // voice tutorial
 extern NSString* const HEMAnalyticsEventVoiceTutorial;
 extern NSString* const HEMAnalyticsEventVoiceResponse;
+extern NSString* const HEMAnalyticsEventVoiceTutorialSkip;
 
 // upgrade path
 extern NSString* const HEMAnalyticsEventUpgradePrefix;

@@ -13,6 +13,7 @@ class FeedContentPresenter: SlideContentPresenter {
     
     weak var deviceService: HEMDeviceService!
     fileprivate var versionBeforeUpdate: SENSenseHardware
+    fileprivate var refreshing: Bool
     
     init?(controllers: Array<UIViewController>, deviceService: HEMDeviceService) {
         guard controllers.count == 2 else {
@@ -20,6 +21,7 @@ class FeedContentPresenter: SlideContentPresenter {
         }
         self.deviceService = deviceService
         self.versionBeforeUpdate = deviceService.savedHardwareVersion()
+        self.refreshing = false
         super.init(controllers: controllers)
     }
     
@@ -100,6 +102,10 @@ class FeedContentPresenter: SlideContentPresenter {
     }
     
     fileprivate func updateContentAfterRefresh() {
+        guard !self.refreshing else {
+            return
+        }
+        self.refreshing = true
         self.activity?.start()
         self.activity?.isHidden = false
         self.deviceService.refreshMetadata ({ [weak self] (_: Any?, error: Error?) in

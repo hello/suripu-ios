@@ -442,6 +442,7 @@
 		BFE376061CF654F20029EE66 /* HEMSignInNavBarPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376051CF654F20029EE66 /* HEMSignInNavBarPresenter.m */; };
 		BFE376091CF78AA00029EE66 /* HEMBreadcrumbService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376081CF78AA00029EE66 /* HEMBreadcrumbService.m */; };
 		BFE3760C1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3760B1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m */; };
+		BFE67D691DFA0DF600C5B8F5 /* StatusMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE67D681DFA0DF600C5B8F5 /* StatusMessageCell.swift */; };
 		BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */; };
 		BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
@@ -1306,6 +1307,7 @@
 		BFE376081CF78AA00029EE66 /* HEMBreadcrumbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBreadcrumbService.m; sourceTree = "<group>"; };
 		BFE3760A1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMPresenter+HEMBreadcrumb.h"; sourceTree = "<group>"; };
 		BFE3760B1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HEMPresenter+HEMBreadcrumb.m"; sourceTree = "<group>"; };
+		BFE67D681DFA0DF600C5B8F5 /* StatusMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMessageCell.swift; sourceTree = "<group>"; };
 		BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseRequiredCollectionViewCell.h; sourceTree = "<group>"; };
 		BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseRequiredCollectionViewCell.m; sourceTree = "<group>"; };
 		BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
@@ -1607,12 +1609,11 @@
 				BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */,
 				BF6D9B731C6A689100774322 /* HEMTrendsScoreLabel.h */,
 				BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */,
-				BF6D9B791C6D409F00774322 /* HEMIntroMessageCell.h */,
-				BF6D9B7A1C6D409F00774322 /* HEMIntroMessageCell.m */,
 				BF6D9B7C1C73EA8A00774322 /* HEMTrendsSleepDepthCell.h */,
 				BF6D9B7D1C73EA8A00774322 /* HEMTrendsSleepDepthCell.m */,
 				BF6D9B7F1C73EC7E00774322 /* HEMTrendsBubbleView.h */,
 				BF6D9B801C73EC7E00774322 /* HEMTrendsBubbleView.m */,
+				BFE67D681DFA0DF600C5B8F5 /* StatusMessageCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2253,6 +2254,8 @@
 		BF412EA11C910942009514A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BF6D9B791C6D409F00774322 /* HEMIntroMessageCell.h */,
+				BF6D9B7A1C6D409F00774322 /* HEMIntroMessageCell.m */,
 				BF412EA21C91098F009514A1 /* HEMSleepSoundConfigurationCell.h */,
 				BF412EA31C91098F009514A1 /* HEMSleepSoundConfigurationCell.m */,
 			);
@@ -4161,6 +4164,7 @@
 				BF6952631C570424000A8E85 /* HEMSensorHandHoldingPresenter.m in Sources */,
 				BF0B15E41DF0A93100DF2373 /* UIImage+SleepScore.swift in Sources */,
 				BF3326E61D875213009A3E65 /* HEMSensorChartCollectionViewCell.m in Sources */,
+				BFE67D691DFA0DF600C5B8F5 /* StatusMessageCell.swift in Sources */,
 				8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */,
 				BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */,
 				BF8C091A1C24BB2C005AB5A7 /* HEMAccountService.m in Sources */,

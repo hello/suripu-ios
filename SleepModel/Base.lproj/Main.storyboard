@@ -4226,27 +4226,27 @@
                                             <outlet property="titleSeparator" destination="Rxl-bn-QSS" id="6RL-Wf-BBo"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="message" id="AhZ-st-TVc" customClass="HEMIntroMessageCell">
-                                        <rect key="frame" x="8" y="821" width="398" height="238"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="message" id="AhZ-st-TVc" customClass="StatusMessageCell" customModule="Sense" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="821" width="398" height="246"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="398" height="238"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="246"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fzA-hh-fr3">
-                                                    <rect key="frame" x="10" y="28" width="378" height="112"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fzA-hh-fr3">
+                                                    <rect key="frame" x="0.0" y="72" width="398" height="104"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="112" id="OdE-IS-ADw"/>
+                                                        <constraint firstAttribute="height" constant="104" id="OdE-IS-ADw"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XtM-pe-YG8">
-                                                    <rect key="frame" x="20" y="164" width="358" height="19.333333333333343"/>
+                                                    <rect key="frame" x="24" y="212" width="350" height="19.333333333333343"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j7r-ct-1uC">
-                                                    <rect key="frame" x="20" y="187.33333333333334" width="358" height="17"/>
+                                                    <rect key="frame" x="24" y="235.33333333333334" width="350" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -4254,17 +4254,17 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="j7r-ct-1uC" secondAttribute="trailing" constant="20" id="EJy-qX-wXC"/>
-                                            <constraint firstAttribute="trailing" secondItem="XtM-pe-YG8" secondAttribute="trailing" constant="20" id="FKP-uA-zih"/>
-                                            <constraint firstItem="XtM-pe-YG8" firstAttribute="top" secondItem="fzA-hh-fr3" secondAttribute="bottom" constant="24" id="Tch-gQ-qUD"/>
-                                            <constraint firstItem="fzA-hh-fr3" firstAttribute="top" secondItem="AhZ-st-TVc" secondAttribute="top" constant="28" id="YPB-tx-lcJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="fzA-hh-fr3" secondAttribute="trailing" constant="10" id="bfp-w1-EWx"/>
-                                            <constraint firstItem="XtM-pe-YG8" firstAttribute="leading" secondItem="AhZ-st-TVc" secondAttribute="leading" constant="20" id="e3i-mw-yZT"/>
-                                            <constraint firstItem="fzA-hh-fr3" firstAttribute="leading" secondItem="AhZ-st-TVc" secondAttribute="leading" constant="10" id="ezB-Wa-Bdy"/>
+                                            <constraint firstAttribute="trailing" secondItem="j7r-ct-1uC" secondAttribute="trailing" constant="24" id="EJy-qX-wXC"/>
+                                            <constraint firstAttribute="trailing" secondItem="XtM-pe-YG8" secondAttribute="trailing" constant="24" id="FKP-uA-zih"/>
+                                            <constraint firstItem="XtM-pe-YG8" firstAttribute="top" secondItem="fzA-hh-fr3" secondAttribute="bottom" constant="36" id="Tch-gQ-qUD"/>
+                                            <constraint firstItem="fzA-hh-fr3" firstAttribute="top" secondItem="AhZ-st-TVc" secondAttribute="top" constant="72" id="YPB-tx-lcJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="fzA-hh-fr3" secondAttribute="trailing" id="bfp-w1-EWx"/>
+                                            <constraint firstItem="XtM-pe-YG8" firstAttribute="leading" secondItem="AhZ-st-TVc" secondAttribute="leading" constant="24" id="e3i-mw-yZT"/>
+                                            <constraint firstItem="fzA-hh-fr3" firstAttribute="leading" secondItem="AhZ-st-TVc" secondAttribute="leading" id="ezB-Wa-Bdy"/>
                                             <constraint firstItem="j7r-ct-1uC" firstAttribute="top" secondItem="XtM-pe-YG8" secondAttribute="bottom" constant="4" id="ki3-8t-VQC"/>
-                                            <constraint firstItem="j7r-ct-1uC" firstAttribute="leading" secondItem="AhZ-st-TVc" secondAttribute="leading" constant="20" id="wpx-70-5sD"/>
+                                            <constraint firstItem="j7r-ct-1uC" firstAttribute="leading" secondItem="AhZ-st-TVc" secondAttribute="leading" constant="24" id="wpx-70-5sD"/>
                                         </constraints>
-                                        <size key="customSize" width="398" height="238"/>
+                                        <size key="customSize" width="398" height="246"/>
                                         <connections>
                                             <outlet property="imageView" destination="fzA-hh-fr3" id="8Ul-kS-hN0"/>
                                             <outlet property="messageLabel" destination="j7r-ct-1uC" id="ZfN-ra-oPl"/>
@@ -4272,7 +4272,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="1LJ-TR-2zH" customClass="HEMTextCollectionViewCell">
-                                        <rect key="frame" x="8" y="1069" width="398" height="94"/>
+                                        <rect key="frame" x="8" y="1077" width="398" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="398" height="94"/>

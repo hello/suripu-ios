@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *loadingIndicator;
+@property (assign, nonatomic, getter=isConfigured) BOOL configured;
 
 @end
 
@@ -34,19 +35,19 @@
     return [[self presenter] scaleTitle];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self bindPresenter];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [SENAnalytics track:HEMAnalyticsEventTrends];
+    
+    if (![self isConfigured]) {
+        [self bindPresenter];
+        [self setConfigured:YES];
+    }
 }
 
 - (void)bindPresenter {
-    [[self presenter] bindWithCollectionView:[self collectionView]];
     [[self presenter] bindWithLoadingIndicator:[self loadingIndicator]];
+    [[self presenter] bindWithCollectionView:[self collectionView]];
     [self addPresenter:[self presenter]];
 }
 

@@ -11,6 +11,7 @@
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
+#import "NSAttributedString+HEMUtils.h"
 #import "NSString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
 
@@ -43,3 +44,4 @@
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMTrendsGraphsPresenter.h"
+#import "HEMCardCollectionViewCell.h"

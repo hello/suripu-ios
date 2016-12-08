@@ -45,14 +45,6 @@ static CGFloat const HEMTrendsSleepDepthUnitFontSizeCoef = 0.167f;
     [[self deepBubbleView] setBubbleColor:[UIColor colorForSleepState:SENTimelineSegmentSleepStateSound]];
 }
 
-- (BOOL)layoutSubviewsIfNeeded {
-    if (CGRectGetWidth([self bounds]) < CGRectGetWidth([[self mainContentView] bounds])) {
-        [self layoutIfNeeded];
-        return YES;
-    }
-    return NO;
-}
-
 - (CGFloat)minWidth {
     CGFloat screenWidth = CGRectGetWidth(HEMKeyWindowBounds());
     return screenWidth * HEMTrendsSleepDepthMinWidthCoef;
@@ -96,7 +88,7 @@ static CGFloat const HEMTrendsSleepDepthUnitFontSizeCoef = 0.167f;
              mediumPercentage:(CGFloat)mediumPercentage
                deepPercentage:(CGFloat)deepPercentage {
     
-    BOOL laidOutSubviews = [self layoutSubviewsIfNeeded];
+    [self layoutIfNeeded];
     
     CGFloat height = CGRectGetHeight([[self mainContentView] bounds]);
     CGFloat width = CGRectGetWidth([[self mainContentView] bounds]);
@@ -127,20 +119,11 @@ static CGFloat const HEMTrendsSleepDepthUnitFontSizeCoef = 0.167f;
     CGFloat mediumValue = [self valueForPercentage:mediumPercentage];
     CGFloat deepValue = [self valueForPercentage:deepPercentage];
     
-    if (laidOutSubviews) {
-        update();
-        [[[self lightBubbleView] valueLabel] countFromZeroTo:lightValue];
-        [[[self mediumBubbleView] valueLabel] countFromZeroTo:mediumValue];
-        [[[self deepBubbleView] valueLabel] countFromZeroTo:deepValue];
-    } else {
-        CGFloat const duration = 0.33f;
-        [UIView animateWithDuration:duration animations:update];
-        [[[self lightBubbleView] valueLabel] countFromCurrentValueTo:lightValue withDuration:duration];
-        [[[self mediumBubbleView] valueLabel] countFromCurrentValueTo:mediumValue withDuration:duration];
-        [[[self deepBubbleView] valueLabel] countFromCurrentValueTo:deepValue withDuration:duration];
-    }
-    
-
+    CGFloat const duration = 0.33f;
+    [UIView animateWithDuration:duration animations:update];
+    [[[self lightBubbleView] valueLabel] countFromCurrentValueTo:lightValue withDuration:duration];
+    [[[self mediumBubbleView] valueLabel] countFromCurrentValueTo:mediumValue withDuration:duration];
+    [[[self deepBubbleView] valueLabel] countFromCurrentValueTo:deepValue withDuration:duration];
 }
 
 @end

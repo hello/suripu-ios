@@ -53,12 +53,6 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
     return totalHeight;
 }
 
-- (void)layoutSubviewsIfNeeded {
-    if (CGRectGetWidth([self bounds]) < CGRectGetWidth([[self calendarView] bounds])) {
-        [self layoutIfNeeded];
-    }
-}
-
 - (void)setSectionTitles:(NSArray<NSAttributedString*>*)sectionTitles
                   scores:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)scores {
     
@@ -69,7 +63,7 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
         return;
     }
     
-    [self layoutSubviewsIfNeeded];
+    [self layoutIfNeeded];
     [self setSectionTitles:sectionTitles];
     [self setScores:scores];
     [[self calendarView] setType:[self type]];

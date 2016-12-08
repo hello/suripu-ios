@@ -6,7 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <SenseKit/SENTrendsGraph.h>
-#import "SENService.h"
+#import <SenseKit/SENService.h>
 
 @class SENTrends;
 @class HEMTrendsDisplayPoint;

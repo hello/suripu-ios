@@ -16,10 +16,12 @@
 #import "UIView+HEMMotionEffects.h"
 
 #import "HEMSleepSummarySlideViewController.h"
+#import "HEMTimelineFeedbackViewController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMHandHoldingService.h"
+#import "HEMTimelineService.h"
 #import "HEMStyle.h"
 
 @interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate>
@@ -99,6 +101,7 @@
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     [self setHandHoldingService:[HEMHandHoldingService new]];
+    [self listenForTimelineChanges];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
@@ -149,6 +152,24 @@
     self.dataSource = enabled ? self.data : nil;
 }
 
+#pragma mark - Notifications
+
+- (void)listenForTimelineChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(timelineChanged:)
+                   name:HEMTimelineFeedbackSuccessNotification
+                 object:nil];
+}
+
+- (void)timelineChanged:(NSNotification*)note {
+    NSDate* lastNight = [NSDate timelineInitialDate];
+    SENTimeline* lastNightTimeline = [SENTimeline timelineForDate:lastNight];
+    if (lastNightTimeline) {
+        [self updateLastNightSleepScore:[[lastNightTimeline score] integerValue]];
+    }
+}
+
 #pragma mark - Gesture Recognizers
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -173,8 +194,7 @@
     return YES;
 }
 
-- (void)didPan {
-}
+- (void)didPan { }
 
 #pragma mark - Cleanup
 

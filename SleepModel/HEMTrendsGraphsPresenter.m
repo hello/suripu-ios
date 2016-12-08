@@ -96,6 +96,11 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [self refreshTrends];
 }
 
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self refreshTrends];
+}
+
 #pragma mark - Global loading indicator
 
 - (void)showLoading:(BOOL)loading {
@@ -141,9 +146,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setRefreshing:NO];
         [strongSelf showLoading:NO];
-        if (scale == [strongSelf scale]) {
-            [[strongSelf collectionView] reloadData];
-        }
+        [strongSelf setDataError:error != nil];
+        [[strongSelf collectionView] reloadData];
     }];
 }
 

@@ -17,7 +17,7 @@ CGFloat const HEMStyleButtonContainerBorderWidth = 0.5f;
 CGFloat const HEMStyleTabBarItemTopInset = 6.0f;
 CGFloat const HEMStyleDefaultNavBarButtonItemWidth = 50.0f;
 
-static CGFloat const HEMStyleDefaultLineHeightMultiple = 1.2f;
+static CGFloat const HEMStyleDefaultLineHeight = 24.0f;
 
 void ApplyHelloStyles (void) {
     NSArray* classes = @[[HEMStyledNavigationViewController class]];
@@ -46,6 +46,7 @@ void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar) {
 
 NSMutableParagraphStyle* DefaultParagraphStyle() {
     NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    [style setLineHeightMultiple:HEMStyleDefaultLineHeightMultiple];
+    [style setMinimumLineHeight:HEMStyleDefaultLineHeight];
+    [style setMaximumLineHeight:HEMStyleDefaultLineHeight];
     return style;
 }

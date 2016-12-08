@@ -22,12 +22,12 @@ abstract_target 'SenseApp' do
         pod 'UICountingLabel', '~> 1.2.0'
         pod 'Bugsnag', '~> 4.1.0'
         pod 'NAPickerView', :git => 'git@github.com:hello/NAPickerView.git'
-        pod 'Charts/Core', '3.0.0'
+        pod 'Charts/Core', '3.0.1'
         pod 'iOSDFULibrary', '2.1.6'
         pod 'Analytics', '3.0.7'
     end
     
-    # the Sense iOS today extension
+    # Room Conditions extension
     target 'RoomConditionsExtension' do
         
     end

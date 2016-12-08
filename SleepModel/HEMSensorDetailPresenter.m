@@ -500,31 +500,39 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         chartView = [self chartViewForSensor:[self sensor] inCell:chartCell];
         [chartContainer showLoadingActivity:NO];
         [[chartContainer noDataLabel] setHidden:YES];
-        [chartContainer setChartView:chartView];
         
-        NSNumber* minValue = nil;
-        NSNumber* maxValue = @([self chartMaxValue]);
-        CGFloat chartMin = [chartView chartYMin];
-        CGFloat chartMax = [chartView chartYMax];
-        if (chartMin == -1.0f && chartMax == 1.0f) {
-            maxValue = @(chartMax);
-        } else if ([self chartMinValue] != [self chartMaxValue] && [self chartMinValue] >= 0.0f) {
-            chartMin = [self chartMinValue];
-        }
-        
-        minValue = @(chartMin);
-        NSString* minText = [[self formatter] stringFromSensorValue:minValue];
-        NSString* maxText = [[self formatter] stringFromSensorValue:maxValue];
-        [[chartContainer topLimitLabel] setText:maxText];
-        [[chartContainer botLimitLabel] setText:minText];
-        
-        if (![self chartLoaded] && [[self chartData] count] > 0) {
-            [chartView animateIn];
-            [self setChartLoaded:YES];
+        // must check whether chart data is empty or not before using chartview
+        // min / max values, otherwise chart will cause a crash
+        if ([[self chartData] count] > 0) {
+            [chartContainer setChartView:chartView];
+            // update limit lines
+            NSNumber* minValue = nil;
+            NSNumber* maxValue = @([self chartMaxValue]);
+            CGFloat chartMin = [chartView chartYMin];
+            CGFloat chartMax = [chartView chartYMax];
+            if (chartMin == -1.0f && chartMax == 1.0f) {
+                maxValue = @(chartMax);
+            } else if ([self chartMinValue] != [self chartMaxValue] && [self chartMinValue] >= 0.0f) {
+                chartMin = [self chartMinValue];
+            }
+            
+            minValue = @(chartMin);
+            NSString* minText = [[self formatter] stringFromSensorValue:minValue];
+            NSString* maxText = [[self formatter] stringFromSensorValue:maxValue];
+            [[chartContainer topLimitLabel] setText:maxText];
+            [[chartContainer botLimitLabel] setText:minText];
+            
+            if (![self chartLoaded]) {
+                [chartView animateIn];
+                [self setChartLoaded:YES];
+            } else {
+                [chartView fadeIn];
+            }
         } else {
-            [chartView fadeIn];
+            [chartContainer setChartView:nil];
+            [[[chartCell chartContentView] topLimitLabel] setText:nil];
+            [[[chartCell chartContentView] botLimitLabel] setText:nil];
         }
-
     }
     
     [self setChartView:chartView];

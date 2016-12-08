@@ -58,9 +58,7 @@
 +(NSString *)alarmSoundsSegueIdentifier;
 +(NSString *)detailSegueIdentifier;
 +(NSString *)expansionConfigSegueIdentifier;
-+(NSString *)insightsSegueIdentifier;
 +(NSString *)listSegueIdentifier;
-+(NSString *)voiceSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateRootViewController;
@@ -71,8 +69,6 @@
 +(id)instantiateAlarmViewController;
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
-+(id)instantiateFeedViewController;
-+(id)instantiateFeedContainerViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightsFeedViewController;
@@ -82,10 +78,11 @@
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
 +(id)instantiateSleepSoundViewController;
++(id)instantiateSleepTrendsViewController;
 +(id)instantiateSlideContainerViewController;
 +(id)instantiateSoundsNavigationViewController;
 +(id)instantiateTimelineFeedbackViewController;
-+(id)instantiateTrendsViewController;
++(id)instantiateTrendsNavViewController;
 +(id)instantiateTutorialViewController;
 +(id)instantiateVoiceViewController;
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SenseKit
 
 @objc enum MainTab : Int {
     case Timeline = 0
@@ -20,6 +21,7 @@ import UIKit
     
     static let itemInset = CGFloat(6)
     var deviceService: HEMDeviceService!
+    var trendsService: HEMTrendsService!
 
     // MARK: - Lifecycle events
     
@@ -38,11 +40,12 @@ import UIKit
     
     fileprivate func configureServices() {
         self.deviceService = HEMDeviceService()
+        self.trendsService = HEMTrendsService()
     }
     
     fileprivate func configureTabs() {
         let timelineVC = HEMSleepSummarySlideViewController()
-        let trendsVC = HEMMainStoryboard.instantiateTrendsViewController() as! UIViewController
+        let trendsVC = self.trendsController()!
         let feedVC = self.feedController()!
         let soundsVC = self.soundController()!
         let conditionsVC = HEMMainStoryboard.instantiateCurrentNavController() as! UIViewController
@@ -55,6 +58,22 @@ import UIKit
             item.imageInsets = inset
             item.title = nil
         }
+    }
+    
+    fileprivate func trendsController() -> UIViewController! {
+        let weekVC = HEMMainStoryboard.instantiateSleepTrendsViewController() as! HEMTrendsV2ViewController
+        let monthVC = HEMMainStoryboard.instantiateSleepTrendsViewController() as! HEMTrendsV2ViewController
+        let quarterVC = HEMMainStoryboard.instantiateSleepTrendsViewController() as! HEMTrendsV2ViewController
+        
+        weekVC.presenter = HEMTrendsGraphsPresenter(trendsService: self.trendsService,
+                                                    dataScale: SENTrendsTimeScale.week)
+        monthVC.presenter = HEMTrendsGraphsPresenter(trendsService: self.trendsService,
+                                                     dataScale: SENTrendsTimeScale.month)
+        quarterVC.presenter = HEMTrendsGraphsPresenter(trendsService: self.trendsService,
+                                                       dataScale: SENTrendsTimeScale.quarter)
+        
+        let slidePresenter = SlideContentPresenter(controllers: [weekVC, monthVC, quarterVC])!
+        return self.slideContainer(presenter: slidePresenter)
     }
     
     fileprivate func feedController() -> UIViewController! {

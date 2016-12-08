@@ -22,6 +22,7 @@
 #import "HEMOnboardingService.h"
 #import "HEMShortcutService.h"
 #import "HEMDeviceService.h"
+#import "HEMTrendsService.h"
 
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSettingsNavigationController.h"
@@ -41,3 +42,4 @@
 #import "HEMConfig.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMTrendsGraphsPresenter.h"

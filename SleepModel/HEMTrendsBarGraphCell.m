@@ -81,15 +81,9 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
 }
 
 - (void)calculateBarWidth {
-    // check xAxisWidth, but any subviews can do.  If subview is bigger than cell
-    // then it means the cell has not properly resized the subviews yet, which we
-    // depend on so call layout manually
-    CGFloat maxWidth = CGRectGetWidth([[self multiTitleView] bounds]);
-    if (maxWidth > CGRectGetWidth([self bounds])) {
-        [self layoutIfNeeded];
-        maxWidth = CGRectGetWidth([[self multiTitleView] bounds]);
-    }
+    [self layoutIfNeeded];
     
+    CGFloat maxWidth = CGRectGetWidth([[self multiTitleView] bounds]);
     NSInteger count = [[self combinedPoints] count];
     [self setBarWidth:(maxWidth - ((count - 1) * [self barSpacing])) / count];
 }

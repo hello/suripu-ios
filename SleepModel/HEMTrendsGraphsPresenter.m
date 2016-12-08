@@ -35,22 +35,24 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 @property (nonatomic, weak) HEMTrendsService* trendService;
 @property (nonatomic, weak) UICollectionView* collectionView;
-@property (nonatomic, assign) HEMSubNavigationView* subNav;
 @property (nonatomic, weak) HEMActivityIndicatorView* loadingIndicator;
 @property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 @property (nonatomic, assign, getter=hasDataError) BOOL dataError;
 @property (nonatomic, weak) HEMTrendsCalendarViewCell* sleepScoreCell;
 @property (nonatomic, weak) HEMTrendsBarGraphCell* sleepDurationCell;
 @property (nonatomic, weak) HEMTrendsSleepDepthCell* sleepDepthCell;
+@property (nonatomic, assign) SENTrendsTimeScale scale;
 
 @end
 
 @implementation HEMTrendsGraphsPresenter
 
-- (instancetype)initWithTrendsService:(HEMTrendsService*)trendService {
+- (instancetype)initWithTrendsService:(HEMTrendsService*)trendService
+                            dataScale:(SENTrendsTimeScale)scale {
     self = [super init];
     if (self) {
         _trendService = trendService;
+        _scale = scale == SENTrendsTimeScaleUnknown ? SENTrendsTimeScaleWeek : scale;
         [self listenForTrendsDataEvents];
         [self listenForTimelineChanges];
     }
@@ -62,15 +64,28 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [collectionView setDelegate:self];
     [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [self setCollectionView:collectionView];
-}
-
-- (void)bindWithSubNav:(HEMSubNavigationView*)subNav {
-    [self setSubNav:subNav];
-    [self bindWithShadowView:[subNav shadowView]];
+    [[self trendService] reloadTrends:[self scale] completion:nil];
 }
 
 - (void)bindWithLoadingIndicator:(HEMActivityIndicatorView*)loadingIndicator {
+    [loadingIndicator stop];
+    [loadingIndicator setHidden:YES];
+    [loadingIndicator setUserInteractionEnabled:NO];
     [self setLoadingIndicator:loadingIndicator];
+}
+
+#pragma mark - Scale Titles
+
+- (NSString*)scaleTitle {
+    switch ([self scale]) {
+        case SENTrendsTimeScaleMonth:
+            return NSLocalizedString(@"trends.scope.month", nil);
+        case SENTrendsTimeScaleQuarter:
+            return NSLocalizedString(@"trends.scope.quarter", nil);
+        case SENTrendsTimeScaleWeek:
+        default:
+            return NSLocalizedString(@"trends.scope.week", nil);
+    }
 }
 
 #pragma mark - Presenter events
@@ -105,7 +120,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (void)timelineChanged:(NSNotification*)note {
     [[self trendService] expireCache];
-    [[self trendService] reloadTrends:[self selectedTimeScale] completion:nil];
+    [[self trendService] reloadTrends:[self scale] completion:nil];
 }
 
 - (void)listenForTrendsDataEvents {
@@ -182,14 +197,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 #pragma mark - Data
 
-- (SENTrendsTimeScale)selectedTimeScale {
-    SENTrendsTimeScale timescale = SENTrendsTimeScaleWeek; // default to week
-    if ([[self subNav] hasControls]) {
-        timescale = [[self subNav] selectedControlTag];
-    }
-    return timescale;
-}
-
 - (BOOL)showTrendsMessage {
     return [[self trendService] isEmpty:[self selectedTrends]]
         || [[self trendService] isReturningUser:[self selectedTrends]]
@@ -197,11 +204,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (SENTrends*)selectedTrends {
-    SENTrendsTimeScale currentTimeScale = [self selectedTimeScale];
-    if ([self isRefreshing]) {
-        currentTimeScale = [[self subNav] previousControlTag];
-    }
-    return [[self trendService] cachedTrendsForTimeScale:currentTimeScale];
+    return [[self trendService] cachedTrendsForTimeScale:[self scale]];
 }
 
 - (SENTrendsGraph*)selectedTrendsGraphAtIndexPath:(NSIndexPath*)indexPath {
@@ -562,7 +565,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     switch ([graph displayType]) {
         case SENTrendsDisplayTypeOverview:
         case SENTrendsDisplayTypeGrid:
-            itemSize.height = [self heightForCalendarViewForGraphData:graph itemWidth:itemSize.width];
+            itemSize.height = [self heightForCalendarViewForGraphData:graph
+                                                            itemWidth:itemSize.width];
             break;
         case SENTrendsDisplayTypeBubble: {
             itemSize.height = [self heightForBubbleGraphWithData:graph];

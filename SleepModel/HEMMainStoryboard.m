@@ -40,15 +40,12 @@ static NSString *const _HEMdetail = @"detail";
 static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexamples = @"examples";
 static NSString *const _HEMexpansionConfig = @"expansionConfig";
-static NSString *const _HEMfeed = @"feed";
-static NSString *const _HEMfeedContainer = @"feedContainer";
 static NSString *const _HEMgroup = @"group";
 static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfoCell = @"infoCell";
 static NSString *const _HEMinfoNavigationController = @"infoNavigationController";
 static NSString *const _HEMinfoViewController = @"infoViewController";
 static NSString *const _HEMinsight = @"insight";
-static NSString *const _HEMinsights = @"insights";
 static NSString *const _HEMinsightsFeed = @"insightsFeed";
 static NSString *const _HEMlist = @"list";
 static NSString *const _HEMlistItem = @"listItem";
@@ -67,6 +64,7 @@ static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
 static NSString *const _HEMsleepInsight = @"sleepInsight";
 static NSString *const _HEMsleepQuestions = @"sleepQuestions";
 static NSString *const _HEMsleepSound = @"sleepSound";
+static NSString *const _HEMsleepTrends = @"sleepTrends";
 static NSString *const _HEMslideContainer = @"slideContainer";
 static NSString *const _HEMsoundsNavigation = @"soundsNavigation";
 static NSString *const _HEMsummary = @"summary";
@@ -75,7 +73,7 @@ static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMtimelineFeedback = @"timelineFeedback";
 static NSString *const _HEMtitle = @"title";
 static NSString *const _HEMtoggle = @"toggle";
-static NSString *const _HEMtrends = @"trends";
+static NSString *const _HEMtrendsNav = @"trendsNav";
 static NSString *const _HEMtutorialViewController = @"tutorialViewController";
 static NSString *const _HEMvoice = @"voice";
 static NSString *const _HEMwelcome = @"welcome";
@@ -133,9 +131,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)alarmSoundsSegueIdentifier { return _HEMalarmSounds; }
 +(NSString *)detailSegueIdentifier { return _HEMdetail; }
 +(NSString *)expansionConfigSegueIdentifier { return _HEMexpansionConfig; }
-+(NSString *)insightsSegueIdentifier { return _HEMinsights; }
 +(NSString *)listSegueIdentifier { return _HEMlist; }
-+(NSString *)voiceSegueIdentifier { return _HEMvoice; }
 
 /** View Controllers */
 +(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }
@@ -146,8 +142,6 @@ static NSString *const _HEMwelcome = @"welcome";
 +(id)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
 +(id)instantiateBreakdownController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
-+(id)instantiateFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMfeed]; }
-+(id)instantiateFeedContainerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMfeedContainer]; }
 +(id)instantiateInfoNavigationController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoNavigationController]; }
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
 +(id)instantiateInsightsFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightsFeed]; }
@@ -157,10 +151,11 @@ static NSString *const _HEMwelcome = @"welcome";
 +(id)instantiateSleepInsightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepInsight]; }
 +(id)instantiateSleepQuestionsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestions]; }
 +(id)instantiateSleepSoundViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepSound]; }
++(id)instantiateSleepTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepTrends]; }
 +(id)instantiateSlideContainerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMslideContainer]; }
 +(id)instantiateSoundsNavigationViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsoundsNavigation]; }
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
-+(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
++(id)instantiateTrendsNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrendsNav]; }
 +(id)instantiateTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtutorialViewController]; }
 +(id)instantiateVoiceViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMvoice]; }
 

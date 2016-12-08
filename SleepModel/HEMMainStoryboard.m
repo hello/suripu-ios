@@ -41,6 +41,7 @@ static NSString *const _HEMerror = @"error";
 static NSString *const _HEMexamples = @"examples";
 static NSString *const _HEMexpansionConfig = @"expansionConfig";
 static NSString *const _HEMfeed = @"feed";
+static NSString *const _HEMfeedContainer = @"feedContainer";
 static NSString *const _HEMgroup = @"group";
 static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfoCell = @"infoCell";
@@ -146,6 +147,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(id)instantiateBreakdownController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbreakdownController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
 +(id)instantiateFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMfeed]; }
++(id)instantiateFeedContainerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMfeedContainer]; }
 +(id)instantiateInfoNavigationController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoNavigationController]; }
 +(id)instantiateInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinfoViewController]; }
 +(id)instantiateInsightsFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightsFeed]; }

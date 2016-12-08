@@ -7,6 +7,7 @@
 //
 
 #import <SenseKit/SenseKit.h>
+#import <SenseKit/SENPairedDevices.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
@@ -38,3 +39,5 @@
 #import "HEMStyle.h"
 #import "HEMPresenter.h"
 #import "HEMConfig.h"
+#import "HEMActivityCoverView.h"
+#import "HEMActivityIndicatorView.h"

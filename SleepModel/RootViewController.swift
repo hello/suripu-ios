@@ -124,13 +124,12 @@ import SenseKit
     fileprivate func showOnboarding() {
         let service = HEMOnboardingService.shared()
         let checkpoint = service.onboardingCheckpoint()
-        let controller = HEMOnboardingController.controller(for: checkpoint, force: false)
-        if (controller != nil) {
-            launchController(controller: controller!)
-        } else {
+        guard let controller = HEMOnboardingController.controller(for: checkpoint, force: false) else {
             let message = "attempt to launch onboarding with no controller"
             SENAnalytics.trackError(withMessage: message)
+            return
         }
+        launchController(controller: controller)
     }
     
     fileprivate func showMainApp() {

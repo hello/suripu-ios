@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  * duplication, use this method to bind with the shadow view, and call 
  * didScrollContentIn:
  */
-- (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView;
+- (void)bindWithShadowView:(nullable HEMNavigationShadowView*)shadowView;
 
 /*
  * @discussion

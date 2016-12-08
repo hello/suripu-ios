@@ -52,6 +52,20 @@
 
 @implementation HEMInsightFeedViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        _tabIcon = [UIImage imageNamed:@"feedTabBarIcon"];
+        _tabIconHighlighted = [UIImage imageNamed:@"feedTabBarIconHighlighted"];
+        _tabTitle = NSLocalizedString(@"insights.title", nil);
+    }
+    return self;
+}
+
+- (UIViewController*)childViewControllerForStatusBarHidden {
+    DDLogVerbose(@"status bar controller %@", self.presentedViewController);
+    return self.presentedViewController;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenters];
@@ -150,6 +164,7 @@
     
     if (![self questionsTransition]) {
         HEMSimpleModalTransitionDelegate* transition = [[HEMSimpleModalTransitionDelegate alloc] init];
+        [transition setWantsStatusBar:YES];
         [transition setDismissMessage:NSLocalizedString(@"sleep.questions.end.message", nil)];
         [self setQuestionsTransition:transition];
     }

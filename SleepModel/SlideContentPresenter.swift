@@ -10,54 +10,118 @@ import Foundation
 
 protocol SlideContentVisibilityDelegate: class {
     
-    func update(viewAtIndex: Int, visible: Bool, from: SlideContentPresenter)
+    func addController(controller: UIViewController, from: SlideContentPresenter?)
+    func removeController(controller: UIViewController, from: SlideContentPresenter?)
+    func update(viewAtIndex: Int, visible: Bool, from: SlideContentPresenter?)
     
 }
 
 class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigationDelegate {
     
     weak var visibilityDelegate: SlideContentVisibilityDelegate?
+    fileprivate(set) weak var navigationBar: UINavigationBar?
+    weak var slidingTitleView: SlidingNavigationTitleView?
+    fileprivate(set) weak var contentScrollView: UIScrollView!
+    var contentViews: Array<UIView>!
+    fileprivate(set) var contentTitles: Array<String>!
+    fileprivate(set) var contentControllers: Array<UIViewController>!
+    fileprivate(set) var contentVisibility: Array<Bool>!
+    fileprivate(set) var activity: HEMActivityIndicatorView?
     
-    fileprivate weak var navigationBar: UINavigationBar?
-    fileprivate weak var slidingTitleView: SlidingNavigationTitleView?
-    fileprivate weak var contentScrollView: UIScrollView!
-    fileprivate var contentViews: Array<UIView>!
-    fileprivate var contentTitles: Array<String>!
-    fileprivate var contentVisibility: Array<Bool>!
-    
-    init?(views: Array<UIView>!, titles: Array<String>!) {
+    init?(controllers: Array<UIViewController>!) {
         super.init()
-        
-        if views.count != titles.count {
+        guard controllers.count > 0 else {
             return nil
-        } else {
-            self.contentViews = views
-            self.contentTitles = titles
-            self.contentVisibility = Array(repeating: false, count: views.count)
         }
+        self.contentControllers = controllers
+        self.contentTitles = self.titles(controllers: controllers)
+        self.contentViews = Array<UIView>()
+        self.contentVisibility = Array(repeating: false, count: controllers.count)
+    }
+    
+    func titles(controllers: Array<UIViewController>!) -> Array<String> {
+        var titles = Array<String>()
+        for controller in controllers {
+            titles.append(self.title(controller: controller))
+        }
+        return titles
+    }
+    
+    // MARK: - Convenience
+    
+    fileprivate func title(controller: UIViewController!) -> String! {
+        var controllerTitle: String!
+        if controller.title != nil  {
+            controllerTitle = controller.title
+        } else if controller is HEMBaseController {
+            controllerTitle = (controller as! HEMBaseController).tabTitle
+        } else {
+            controllerTitle = NSStringFromClass(object_getClass(controller))
+        }
+        return controllerTitle
+    }
+    
+    /**
+        Configure the content for the scrollview.  This is made in to it's only
+        function to allow subclasses to override it
+    **/
+    func configureContent(scrollView: UIScrollView) {
+        for controller in self.contentControllers {
+            self.visibilityDelegate?.addController(controller: controller,
+                                                   from: self)
+            self.contentViews.append(controller.view)
+        }
+        
+        var contentSize = scrollView.contentSize
+        contentSize.width = CGFloat(self.contentViews.count) * scrollView.frame.size.width
+        scrollView.contentSize = contentSize
+    }
+    
+    /**
+        Instantiate and configure the title view.  This is made in to it's only
+        function to allow subclasses to override it
+     **/
+    func configureNavigationTitleView(size: CGSize) -> SlidingNavigationTitleView? {
+        let titleView = SlidingNavigationTitleView(titles: self.contentTitles,
+                                                   size: size)
+        titleView.highlight(title: self.contentTitles.first!)
+        titleView.delegate = self
+        return titleView
     }
     
     // MARK: - Bindings
     
+    func bind(activity: HEMActivityIndicatorView?) {
+        activity?.stop()
+        activity?.isHidden = true
+        activity?.isUserInteractionEnabled = false
+        self.activity = activity
+    }
+    
     func bind(navigationBar: UINavigationBar?) {
+        guard navigationBar != nil else {
+            return
+        }
+        
         let size = navigationBar?.frame.size
         let navSize = size != nil ? size! : CGSize.zero
-        let titleView = SlidingNavigationTitleView(titles: self.contentTitles,
-                                                   size: navSize)
+        let titleView = self.configureNavigationTitleView(size: navSize)
+        let firstController = self.contentControllers.first!
+
+        if titleView != nil {
+            navigationBar?.topItem?.titleView = titleView
+            self.slidingTitleView = titleView
+        } else {
+            navigationBar?.topItem?.title = self.title(controller: firstController)
+        }
         
-        titleView.highlight(title: self.contentTitles.first!)
-        titleView.delegate = self
-        navigationBar?.topItem?.titleView = titleView
         navigationBar?.topItem?.leftBarButtonItem = nil
-        
         self.navigationBar = navigationBar
         self.slidingTitleView = titleView
     }
     
     func bind(scrollView: UIScrollView!) {
-        var contentSize = scrollView.contentSize
-        contentSize.width = CGFloat(self.contentViews.count) * scrollView.frame.size.width
-        scrollView.contentSize = contentSize
+        self.configureContent(scrollView: scrollView)
         scrollView.backgroundColor = UIColor.background()
         scrollView.delegate = self
         self.contentScrollView = scrollView
@@ -94,19 +158,22 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
     }
     
     fileprivate func insertContentViewIfNeeded(index: Int) {
-        if index < self.contentViews.count {
-            let view = self.contentViews[index]
-            let scrollFrame = self.contentScrollView.frame
-            
-            if !self.contentScrollView.subviews.contains(view) {
-                var frame = view.frame
-                frame.size = scrollFrame.size
-                frame.origin.y = 0.0
-                frame.origin.x = CGFloat(index) * frame.size.width
-                view.frame = frame
-                self.contentScrollView.addSubview(view)
-            }
+        guard index < self.contentViews.count else {
+            return
         }
+        
+        let view = self.contentViews[index]
+        guard !self.contentScrollView.subviews.contains(view) else {
+            return
+        }
+        
+        let scrollFrame = self.contentScrollView.frame
+        var frame = view.frame
+        frame.size = scrollFrame.size
+        frame.origin.y = 0.0
+        frame.origin.x = CGFloat(index) * frame.size.width
+        view.frame = frame
+        self.contentScrollView.addSubview(view)
     }
     
     fileprivate func updateContentVisibility() {
@@ -163,12 +230,17 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
     // MARK: Nav Delegate
     
     func didTapOn(title: String, from: SlidingNavigationTitleView) {
-        let index = self.contentTitles.index(of: title)
-        if index != nil && index! < self.contentViews.count {
-            let x = CGFloat(index!) * self.contentScrollView.frame.size.width
-            let offset = CGPoint(x: x, y: 0.0)
-            self.contentScrollView.setContentOffset(offset, animated: true)
+        guard let index = self.contentTitles.index(of: title) else {
+            return
         }
+        
+        guard index < self.contentViews.count else {
+            return
+        }
+        
+        let x = CGFloat(index) * self.contentScrollView.frame.size.width
+        let offset = CGPoint(x: x, y: 0.0)
+        self.contentScrollView.setContentOffset(offset, animated: true)
     }
     
     // MARK: Clean Up

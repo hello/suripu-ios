@@ -22,6 +22,15 @@
 
 @implementation HEMVoiceFeedViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        _tabIcon = [UIImage imageNamed:@"feedTabBarIcon"];
+        _tabIconHighlighted = [UIImage imageNamed:@"feedTabBarIconHighlighted"];
+        _tabTitle = NSLocalizedString(@"voice.title", nil);
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenter];

@@ -72,6 +72,7 @@
 +(id)instantiateBreakdownController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateFeedViewController;
++(id)instantiateFeedContainerViewController;
 +(id)instantiateInfoNavigationController;
 +(id)instantiateInfoViewController;
 +(id)instantiateInsightsFeedViewController;

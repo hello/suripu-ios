@@ -57,10 +57,8 @@ static CGFloat const HEMInsightTransitionDuration = 0.3f;
                      }
                      completion:^(BOOL finished) {
                          [toView setAlpha:1.0f];
-                         
                          [[self transitionView] removeFromSuperview];
                          [[self dimmingViewWithContext:context] removeFromSuperview];
-                         
                          [context completeTransition:finished];
                      }];
 }
@@ -77,15 +75,15 @@ static CGFloat const HEMInsightTransitionDuration = 0.3f;
     
     [UIView animateWithDuration:HEMInsightTransitionDuration
                      animations:^{
+                         [self showStatusBar:YES];
                          [fromView setFrame:[self startFrame]];
-                         [[self transitionView] shrink:[self startFrame] imageHeight:[self originalImageHeight]];
+                         [[self transitionView] shrink:[self startFrame]
+                                           imageHeight:[self originalImageHeight]];
                          [[self dimmingViewWithContext:context] setAlpha:0.0f];
                      }
                      completion:^(BOOL finished) {
                          [[self transitionView] removeFromSuperview];
                          [[self dimmingViewWithContext:context] removeFromSuperview];
-                         [self showStatusBar:YES];
-
                          [context completeTransition:finished];
                      }];
 }

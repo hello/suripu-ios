@@ -7,72 +7,68 @@
 //
 
 import Foundation
+import SenseKit
 
 @objc class SlideContainerViewController: HEMBaseController, SlideContentVisibilityDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    weak var tabItemPresenter: TabPresenter!
+    @IBOutlet weak var activity: HEMActivityIndicatorView?
     
-    var contentControllers: Array<UIViewController>! {
+    weak var tabItemPresenter: TabPresenter!
+    var contentPresenter: SlideContentPresenter! {
         didSet {
-            if self.tabItemPresenter == nil {
-                let tabPresenter = TabPresenter(controllers: contentControllers)
-                tabPresenter.bind(tabItem: self.tabBarItem)
-                self.addPresenter(tabPresenter)
-                self.tabItemPresenter = tabPresenter
+            guard contentPresenter != nil else {
+                return
             }
+            
+            guard self.tabItemPresenter == nil else {
+                return
+            }
+            
+            let controllers = contentPresenter.contentControllers
+            let tabPresenter = TabPresenter(controllers: controllers)
+            tabPresenter.bind(tabItem: self.tabBarItem)
+            self.addPresenter(tabPresenter)
+            self.tabItemPresenter = tabPresenter
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configurePresenter()
+        self.configureContentPresenter()
     }
     
     // MARK: Configuration
     
-    fileprivate func configurePresenter() {
-        var views = Array<UIView>()
-        var titles = Array<String>()
-        
-        for controller in self.contentControllers {
-            views.append(controller.view)
-            titles.append(self.title(controller: controller))
-            self.addChildViewController(controller)
-            controller.didMove(toParentViewController: self)
+    func configureContentPresenter() {
+        guard self.contentPresenter != nil else {
+            SENAnalytics.trackWarning(withMessage: "presenter not defined")
+            return
         }
-        
-        let contentPresenter = SlideContentPresenter(views: views, titles: titles)!
-        let navigationBar = self.navigationController?.navigationBar
-        if navigationBar != nil {
-            contentPresenter.bind(navigationBar: navigationBar)
-        }
-        
-        if self.shadowView != nil {
-            contentPresenter.bind(with: self.shadowView!)
-        }
-        
-        contentPresenter.bind(scrollView: self.scrollView)
-        contentPresenter.visibilityDelegate = self
+        // delegate must be set first, and the activity must be bound before
+        // other elements are bound so it can be leveraged
+        self.contentPresenter.visibilityDelegate = self
+        self.contentPresenter.bind(activity: self.activity)
+        self.contentPresenter.bind(navigationBar: self.navigationController?.navigationBar)
+        self.contentPresenter.bind(with: self.shadowView!)
+        self.contentPresenter.bind(scrollView: self.scrollView)
 
-        self.addPresenter(contentPresenter)
-    }
-    
-    fileprivate func title(controller: UIViewController!) -> String! {
-        var controllerTitle: String!
-        if controller.title != nil  {
-            controllerTitle = controller.title
-        } else if controller is HEMBaseController {
-            controllerTitle = (controller as! HEMBaseController).tabTitle
-        } else {
-            controllerTitle = NSStringFromClass(object_getClass(controller))
-        }
-        return controllerTitle
+        self.addPresenter(self.contentPresenter)
     }
     
     // MARK: SlideContentVisibilityDelegate
     
-    func update(viewAtIndex: Int, visible: Bool, from: SlideContentPresenter) {
+    func addController(controller: UIViewController, from _: SlideContentPresenter?) {
+        self.addChildViewController(controller)
+        controller.didMove(toParentViewController: self)
+    }
+    
+    func removeController(controller: UIViewController, from _: SlideContentPresenter?) {
+        controller.willMove(toParentViewController: nil)
+        controller.removeFromParentViewController()
+    }
+    
+    func update(viewAtIndex: Int, visible: Bool, from _: SlideContentPresenter?) {
         if viewAtIndex < self.childViewControllers.count {
             let controller = self.childViewControllers[viewAtIndex]
             controller.beginAppearanceTransition(visible, animated: true)

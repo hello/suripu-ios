@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0.8
+
+New:
+
+* Feed tab now updated to design spec
+* Updated rendering mode for tab bar icons
+* Updated Timeline summary line height
+* Updated Insights text line height
+
 ## 2.0.0.7
 
 New:

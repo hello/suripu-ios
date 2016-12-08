@@ -120,6 +120,14 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
     return versionValue ? [versionValue unsignedIntegerValue] : SENSenseHardwareUnknown;
 }
 
+- (BOOL)savedHardwareVersionIsVoice {
+    return [self savedHardwareVersion] == SENSenseHardwareVoice;
+}
+
+- (BOOL)hasSavedHardwareVersion {
+    return [self savedHardwareVersion] != SENSenseHardwareUnknown;
+}
+
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata {
     if (![metadata lastSeenDate]) {
         return NO;

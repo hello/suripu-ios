@@ -17,7 +17,7 @@ extension UIImage {
     @objc static func iconFromSleepScore(sleepScore: Int, highlighted: Bool) -> UIImage! {
         let scale = UIScreen.main.scale
         let size = CGSize(width: UIImage.iconSize, height: UIImage.iconSize)
-        let color = highlighted ? UIColor.tint()! : UIColor.grey4()!
+        let color = highlighted ? UIColor.tint()! : UIColor.grey5()!
         
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         
@@ -62,9 +62,9 @@ extension UIImage {
         text.draw(in: textRect, withAttributes: attributes)
         
         // generate the image
-        let image = UIGraphicsGetImageFromCurrentImageContext();
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
-        return image
+        return image?.withRenderingMode(UIImageRenderingMode.alwaysOriginal);
     }
     
 }

@@ -48,10 +48,12 @@ class SlidingNavigationTitleView: UIView {
                 control.frame = controlFrame
             }
             
-            var lineFrame = self.highlightLine.frame
-            lineFrame.size.width = controlWidth
-            lineFrame.origin.y = fullHeight
-            self.highlightLine.frame = lineFrame
+            if self.highlightLine != nil {
+                var lineFrame = self.highlightLine.frame
+                lineFrame.size.width = controlWidth
+                lineFrame.origin.y = fullHeight
+                self.highlightLine.frame = lineFrame
+            }
         }
     }
     
@@ -64,7 +66,10 @@ class SlidingNavigationTitleView: UIView {
         for (index, title) in titles.enumerated() {
             self.addControl(title: title, index: index, total: needed)
         }
-        self.addHighlightLine()
+        
+        if titles.count > 1 {
+            self.addHighlightLine()
+        }
     }
     
     fileprivate func addControl(title: String!, index: Int, total: Int) {

@@ -8,8 +8,7 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMMarkdown.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
+#import "HEMStyle.h"
 
 @implementation HEMMarkdown
 
@@ -44,8 +43,7 @@
 }
 
 + (NSDictionary *)attributesForInsightSummaryText {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 2.f;
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.lineBreakMode = NSLineBreakByWordWrapping;
     style.alignment = NSTextAlignmentLeft;
     return @{
@@ -122,8 +120,7 @@
 }
 
 + (NSDictionary *)attributesForInsightViewText {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 4.f;
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     return @{
         @(EMPH) : @{ NSFontAttributeName : [UIFont bodyBold] },
         @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold] },
@@ -171,7 +168,7 @@
 }
 
 + (NSDictionary *)attributesForTimelineMessageText {
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.alignment = NSTextAlignmentCenter;
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold],

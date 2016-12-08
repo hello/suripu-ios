@@ -34,7 +34,7 @@ import UIKit
         return false
     }
     
-    // MARK: - Configuration methods
+    // MARK: - Tab Configuration
     
     fileprivate func configureServices() {
         self.deviceService = HEMDeviceService()
@@ -43,7 +43,7 @@ import UIKit
     fileprivate func configureTabs() {
         let timelineVC = HEMSleepSummarySlideViewController()
         let trendsVC = HEMMainStoryboard.instantiateTrendsViewController() as! UIViewController
-        let feedVC = HEMMainStoryboard.instantiateFeedViewController() as! UIViewController
+        let feedVC = self.feedController()!
         let soundsVC = self.soundController()!
         let conditionsVC = HEMMainStoryboard.instantiateCurrentNavController() as! UIViewController
         self.viewControllers = [timelineVC, trendsVC, feedVC, soundsVC, conditionsVC];
@@ -57,6 +57,14 @@ import UIKit
         }
     }
     
+    fileprivate func feedController() -> UIViewController! {
+        let insightVC = HEMMainStoryboard.instantiateInsightsFeedViewController() as! UIViewController
+        let voiceVC = HEMMainStoryboard.instantiateVoiceViewController() as! UIViewController
+        let presenter = FeedContentPresenter(controllers: [insightVC, voiceVC],
+                                             deviceService: self.deviceService)
+        return self.slideContainer(presenter: presenter)
+    }
+    
     fileprivate func soundController() -> UIViewController! {
         let alarmVC = HEMMainStoryboard.instantiateAlarmListViewController() as! HEMAlarmListViewController
         alarmVC.deviceService = self.deviceService
@@ -64,12 +72,14 @@ import UIKit
         let sleepSoundVC = HEMMainStoryboard.instantiateSleepSoundViewController() as! HEMSleepSoundViewController
         sleepSoundVC.deviceService = self.deviceService
         
-        return self.wrapInSlideContainer(controllers: [alarmVC, sleepSoundVC])!
+        let presenter = SlideContentPresenter(controllers: [alarmVC, sleepSoundVC])!
+        
+        return self.slideContainer(presenter: presenter)!
     }
     
-    fileprivate func wrapInSlideContainer(controllers: Array<UIViewController>!) -> UIViewController! {
+    fileprivate func slideContainer(presenter: SlideContentPresenter!) -> UIViewController! {
         let container = HEMMainStoryboard.instantiateSlideContainerViewController() as! SlideContainerViewController
-        container.contentControllers = controllers
+        container.contentPresenter = presenter
         let navVC = HEMStyledNavigationViewController(rootViewController: container)
         navVC.view.backgroundColor = UIColor.white
         return navVC

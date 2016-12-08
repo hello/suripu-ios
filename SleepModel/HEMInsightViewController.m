@@ -31,6 +31,10 @@
 
 @implementation HEMInsightViewController
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenters];

@@ -53,7 +53,7 @@
 }
 
 - (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView {
-    if (![self hasShadowView]) {
+    if (![self hasShadowView] && shadowView) {
         [self setShadowView:shadowView];
     }
 }

@@ -43,7 +43,7 @@
 }
 
 + (NSDictionary *)attributesForInsightSummaryText {
-    NSMutableParagraphStyle *style = DefaultParagraphStyle();
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.lineBreakMode = NSLineBreakByWordWrapping;
     style.alignment = NSTextAlignmentLeft;
     return @{
@@ -120,7 +120,7 @@
 }
 
 + (NSDictionary *)attributesForInsightViewText {
-    NSMutableParagraphStyle *style = DefaultParagraphStyle();
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     return @{
         @(EMPH) : @{ NSFontAttributeName : [UIFont bodyBold] },
         @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold] },
@@ -168,7 +168,7 @@
 }
 
 + (NSDictionary *)attributesForTimelineMessageText {
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.alignment = NSTextAlignmentCenter;
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold],

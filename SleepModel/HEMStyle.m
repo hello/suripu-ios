@@ -44,7 +44,7 @@ void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar) {
                                      NSFontAttributeName : [UIFont h6]}];
 }
 
-NSMutableParagraphStyle* DefaultParagraphStyle() {
+NSMutableParagraphStyle* DefaultBodyParagraphStyle() {
     NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [style setMinimumLineHeight:HEMStyleDefaultLineHeight];
     [style setMaximumLineHeight:HEMStyleDefaultLineHeight];

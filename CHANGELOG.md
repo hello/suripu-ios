@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0.8
+
+New:
+
+* Feed tab now updated to design spec
+
 ## 2.0.0.7
 
 New:

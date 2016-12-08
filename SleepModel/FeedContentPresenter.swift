@@ -108,6 +108,8 @@ class FeedContentPresenter: SlideContentPresenter {
         self.refreshing = true
         self.activity?.start()
         self.activity?.isHidden = false
+        self.contentScrollView?.isHidden = true
+        
         self.deviceService.refreshMetadata ({ [weak self] (_: Any?, error: Error?) in
             let updatedVersion = self?.deviceService.savedHardwareVersion()
             guard let _ = self?.requireUpdate(updatedVersion: updatedVersion) else {
@@ -124,6 +126,7 @@ class FeedContentPresenter: SlideContentPresenter {
             
             self?.activity?.stop()
             self?.activity?.isHidden = true
+            self?.contentScrollView?.isHidden = false
         })
     }
     

@@ -275,7 +275,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 }
 
 - (NSDictionary*)questionTextAttributes {
-    NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    NSMutableParagraphStyle* style = DefaultParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
     return  @{NSFontAttributeName : [UIFont body],
               NSParagraphStyleAttributeName : style};

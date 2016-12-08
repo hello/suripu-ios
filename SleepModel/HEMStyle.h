@@ -21,3 +21,4 @@ extern CGFloat const HEMStyleDefaultNavBarButtonItemWidth;
 void ApplyHelloStyles (void);
 void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar);
 void ApplyDefaultTabBarItemStyle(UITabBarItem* tabBarItem);
+NSMutableParagraphStyle* DefaultParagraphStyle(void);

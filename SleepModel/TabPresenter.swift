@@ -48,6 +48,11 @@ class TabPresenter: HEMPresenter {
         if self.iconHighlighted != nil {
             self.iconHighlighted = self.iconHighlighted!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         }
+        
+        if self.icon != nil {
+            self.icon = self.icon!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        }
+        
         tabItem.image = self.icon
         tabItem.title = self.title
         tabItem.selectedImage = self.iconHighlighted

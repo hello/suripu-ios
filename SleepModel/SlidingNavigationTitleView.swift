@@ -14,7 +14,7 @@ protocol SlidingNavigationDelegate: class {
 
 class SlidingNavigationTitleView: UIView {
     
-    static let lineHeight = CGFloat(1)
+    fileprivate static let lineHeight = CGFloat(1)
     
     fileprivate var titles: Array<String>!
     fileprivate var highlightLine: UIView!
@@ -22,7 +22,7 @@ class SlidingNavigationTitleView: UIView {
     
     weak var delegate: SlidingNavigationDelegate?
     
-    var selectedIndex: Int!
+    fileprivate(set) var selectedIndex: Int!
     
     init(titles: Array<String>!, size: CGSize) {
         super.init(frame: CGRect(origin: CGPoint.zero, size: size))

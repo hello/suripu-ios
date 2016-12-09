@@ -11,10 +11,10 @@
 #import "HEMScreenUtils.h"
 
 static CGFloat const HEMActionViewHorzPadding = 30.0f;
-static CGFloat const HEMActionViewTopPadding = 14.0f;
+static CGFloat const HEMActionViewTopPadding = 24.0f;
 static CGFloat const HEMActionViewTopPaddingWithoutTitle = 34.0f;
 static CGFloat const HEMActionViewBotPadding = 0.0f;
-static CGFloat const HEMActionViewTitleHeight = 60.0f;
+static CGFloat const HEMActionViewTitleHeight = 40.0f;
 static CGFloat const HEMActionButtonDividerWidth = 1.0f;
 static CGFloat const HEMActionButtonDividerHeight = 35.0f;
 static CGFloat const HEMActionButtonDividerVertPadding = 14.0f;
@@ -22,6 +22,7 @@ static CGFloat const HEMActionButtonHeight = 63.0f; // (divider padding * 2) + d
 static CGFloat const HEMActionButtonTopPadding = 20.0f;
 static CGFloat const HEMActionViewExtraSpaceForSpring = 20.0f;
 static CGFloat const HEMActionViewAnimationDuration = 0.25f;
+static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
 
 @interface HEMActionView()
 
@@ -121,7 +122,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     UILabel* label = [[UILabel alloc] initWithFrame:[self titleFrame]];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setTextColor:[UIColor grey6]];
-    [label setFont:[UIFont bodyBold]];
+    [label setFont:[UIFont h5]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];
@@ -187,7 +188,9 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     
 }
 
-- (UIButton*)actionButtonWithText:(NSString*)text color:(UIColor*)color andXOrigin:(CGFloat)x {
+- (UIButton*)actionButtonWithText:(NSString*)text
+                            color:(UIColor*)color
+                       andXOrigin:(CGFloat)x {
     CGRect frame = {
         x,
         0.0f,
@@ -237,7 +240,12 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 
 #pragma mark - Show / Hide
 
-- (void)showInView:(UIView*)view animated:(BOOL)animated completion:(void(^)(void))completion {
+- (void)showInView:(UIView*)view
+             below:(UIView*)topView
+          animated:(BOOL)animated
+        completion:(void(^)(void))completion {
+    
+    CGFloat topViewHeight = CGRectGetHeight([topView bounds]);
     CGFloat bHeight = CGRectGetHeight([view bounds]);
     CGFloat bWidth = CGRectGetWidth([view bounds]);
     
@@ -248,7 +256,11 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     
     [self setNeedsDisplay];
     
-    [view addSubview:self];
+    if (topView) {
+        [view insertSubview:self belowSubview:topView];
+    } else {
+        [view addSubview:self];
+    }
     
     CGFloat damping = 0.6f;
     CGFloat duration = HEMActionViewAnimationDuration * (1 + damping);
@@ -259,7 +271,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          CGRect myFrame = [self frame];
-                         myFrame.origin.y = bHeight - CGRectGetHeight(myFrame) + HEMActionViewExtraSpaceForSpring;
+                         myFrame.origin.y = bHeight - CGRectGetHeight(myFrame) + HEMActionViewExtraSpaceForSpring - topViewHeight - HEMActionViewExtraBottomMargin;
                          [self setFrame:myFrame];
                      }
                      completion:^(BOOL finished) {

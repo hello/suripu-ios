@@ -17,31 +17,90 @@ import SenseKit
     case Conditions
 }
 
-@objc class MainViewController: UITabBarController , UITabBarControllerDelegate{
+@objc class MainViewController: UITabBarController {
     
-    static let itemInset = CGFloat(6)
-    var deviceService: HEMDeviceService!
-    var trendsService: HEMTrendsService!
+    fileprivate static let itemInset = CGFloat(6)
+    fileprivate var presenters = Array<HEMPresenter>()
+    fileprivate var modalTransition: HEMSimpleModalTransitionDelegate?
+    fileprivate let deviceService = HEMDeviceService()
+    fileprivate var trendsService: HEMTrendsService!
+    fileprivate var alertNetworkService: HEMNetworkAlertService!
+    fileprivate var alertDeviceService: HEMDeviceAlertService!
+    fileprivate var alertTZService: HEMTimeZoneAlertService!
+    fileprivate var alertSystemService: HEMSystemAlertService!
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
 
     // MARK: - Lifecycle events
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-        self.configureServices()
+        self.listenToAppEvents()
         self.configureTabs()
+        self.configureAlertPresenter()
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.presenters.forEach{ $0.willAppear() }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.presenters.forEach{ $0.didAppear() }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenters.forEach{ $0.willDisappear() }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.presenters.forEach{ $0.didDisappear() }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print("tabbar index ", self.view.subviews.index(of: self.tabBar) ?? -1)
+        self.presenters.forEach{ $0.didRelayout() }
+    }
+    
+    override func didMove(toParentViewController parent: UIViewController?) {
+        super.didMove(toParentViewController: parent)
+        if parent != nil {
+            self.presenters.forEach{ $0.didMoveToParent() }
+        } else {
+            self.presenters.forEach{ $0.wasRemovedFromParent() }
+        }
+    }
+    
+    // MARK: - App Events
+    
+    fileprivate func listenToAppEvents() {
+        let center = NotificationCenter.default
+        center.addObserver(self,
+                           selector: #selector(viewDidBecomeActive),
+                           name: Notification.Name.UIApplicationDidBecomeActive,
+                           object: nil)
+        center.addObserver(self,
+                           selector: #selector(viewDidResignActive),
+                           name: Notification.Name.UIApplicationDidEnterBackground,
+                           object: nil)
+    }
+    
+    @objc fileprivate func viewDidResignActive() {
+        self.presenters.forEach{ $0.didEnterBackground() }
+    }
+    
+    @objc fileprivate func viewDidBecomeActive() {
+        self.presenters.forEach{ $0.didComeBackFromBackground() }
     }
     
     // MARK: - Tab Configuration
-    
-    fileprivate func configureServices() {
-        self.deviceService = HEMDeviceService()
-        self.trendsService = HEMTrendsService()
-    }
     
     fileprivate func configureTabs() {
         let timelineVC = HEMSleepSummarySlideViewController()
@@ -61,6 +120,8 @@ import SenseKit
     }
     
     fileprivate func trendsController() -> UIViewController! {
+        self.trendsService = HEMTrendsService()
+        
         let weekVC = HEMMainStoryboard.instantiateSleepTrendsViewController() as! HEMTrendsV2ViewController
         let monthVC = HEMMainStoryboard.instantiateSleepTrendsViewController() as! HEMTrendsV2ViewController
         let quarterVC = HEMMainStoryboard.instantiateSleepTrendsViewController() as! HEMTrendsV2ViewController
@@ -110,9 +171,57 @@ import SenseKit
         self.selectedIndex = tab.rawValue
     }
     
-    // MARK: - Tab Bar Delegate
+    // MARK: - Clean up
     
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+extension MainViewController: HEMSystemAlertDelegate {
+    
+    fileprivate func configureAlertPresenter() {
+        self.alertTZService = HEMTimeZoneAlertService()
+        self.alertSystemService = HEMSystemAlertService()
+        self.alertDeviceService = HEMDeviceAlertService()
+        self.alertNetworkService = HEMNetworkAlertService()
+        
+        let presenter = HEMSystemAlertPresenter(networkAlertService: self.alertNetworkService,
+                                                deviceAlertService: self.alertDeviceService,
+                                                timeZoneAlertService: self.alertTZService,
+                                                deviceService: self.deviceService,
+                                                sysAlertService: self.alertSystemService)
+        
+        presenter.bind(withContainerView: self.view, below: self.tabBar)
+        presenter.delegate = self
+        self.presenters.append(presenter)
+    }
+    
+    func present(_ controller: UIViewController, from presenter: HEMSystemAlertPresenter) {
+        if controller is HEMTimeZoneViewController {
+            self.modalTransition = HEMSimpleModalTransitionDelegate()
+            self.modalTransition!.wantsStatusBar = true
+            controller.transitioningDelegate = self.modalTransition!
+            controller.modalPresentationStyle = UIModalPresentationStyle.custom
+        }
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func dismissCurrentViewController(from presenter: HEMSystemAlertPresenter) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func presentSupportPage(withSlug supportPageSlug: String,
+                            from presenter: HEMSystemAlertPresenter) {
+        HEMSupportUtil.openHelp(toPage: supportPageSlug, from: self)
+    }
+    
+}
+
+extension MainViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController,
+                          didSelect viewController: UIViewController) {
         if (viewController is HEMSleepSummarySlideViewController) {
             // always show last night when switched tapped
             let lastNight = NSDate.timelineInitial()
@@ -120,4 +229,5 @@ import SenseKit
             timelineSlideVC.reload(with: lastNight)
         }
     }
+    
 }

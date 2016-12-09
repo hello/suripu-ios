@@ -6,7 +6,7 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "SENService.h"
+#import <SenseKit/SENService.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

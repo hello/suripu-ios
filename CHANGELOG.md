@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0.9
+
+New:
+
+* Trends tab now updated to design spec
+* System alerts updated to design spec and added back
+
+Fixes:
+
+* Fixed crasher in sensor detail when there is no data to show
+* Fixed issue wher sleep score icon is not updated after Timeline adjustments
+
 ## 2.0.0.8
 
 New:

@@ -16,7 +16,7 @@ protocol SlideContentVisibilityDelegate: class {
     
 }
 
-class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigationDelegate {
+class SlideContentPresenter: HEMPresenter {
     
     weak var visibilityDelegate: SlideContentVisibilityDelegate?
     fileprivate(set) weak var navigationBar: UINavigationBar?
@@ -104,7 +104,7 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
         }
         
         let size = navigationBar?.frame.size
-        let navSize = size != nil ? size! : CGSize.zero
+        let navSize = size ?? CGSize.zero
         let titleView = self.configureNavigationTitleView(size: navSize)
         let firstController = self.contentControllers.first!
 
@@ -215,7 +215,17 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
         self.layoutContent()
     }
     
-    // MARK: Content Scroll View Delegate
+    // MARK: Clean Up
+    
+    deinit {
+        if self.contentScrollView != nil {
+            self.contentScrollView.delegate = nil
+        }
+    }
+    
+}
+
+extension SlideContentPresenter: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentXOffset = scrollView.contentOffset.x
@@ -227,7 +237,9 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
         self.slidingTitleView?.higlight(index: pagePercentage)
     }
     
-    // MARK: Nav Delegate
+}
+
+extension SlideContentPresenter: SlidingNavigationDelegate {
     
     func didTapOn(title: String, from: SlidingNavigationTitleView) {
         guard let index = self.contentTitles.index(of: title) else {
@@ -241,14 +253,6 @@ class SlideContentPresenter: HEMPresenter, UIScrollViewDelegate, SlidingNavigati
         let x = CGFloat(index) * self.contentScrollView.frame.size.width
         let offset = CGPoint(x: x, y: 0.0)
         self.contentScrollView.setContentOffset(offset, animated: true)
-    }
-    
-    // MARK: Clean Up
-    
-    deinit {
-        if self.contentScrollView != nil {
-            self.contentScrollView.delegate = nil
-        }
     }
     
 }

@@ -14,7 +14,7 @@ import SenseKit
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var activity: HEMActivityIndicatorView?
     
-    weak var tabItemPresenter: TabPresenter!
+    fileprivate weak var tabItemPresenter: TabPresenter!
     var contentPresenter: SlideContentPresenter! {
         didSet {
             guard contentPresenter != nil else {

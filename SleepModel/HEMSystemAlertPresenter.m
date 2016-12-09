@@ -7,9 +7,6 @@
 //
 #import <SenseKit/SENSystemAlert.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
-
 #import "HEMSystemAlertPresenter.h"
 #import "HEMNetworkAlertService.h"
 #import "HEMDeviceAlertService.h"
@@ -28,6 +25,7 @@
 #import "HEMDeviceService.h"
 #import "HEMSystemAlertService.h"
 #import "HEMPillDFUStoryboard.h"
+#import "HEMStyle.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,
@@ -47,6 +45,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 @property (nonatomic, weak) HEMTimeZoneAlertService* tzAlertService;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UIView* alertContainerView;
+@property (nonatomic, weak) UIView* topView;
 @property (nonatomic, weak) HEMActionView* currentActionView;
 
 @end
@@ -78,8 +77,9 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
     return self;
 }
 
-- (void)bindWithContainerView:(UIView*)containerView {
+- (void)bindWithContainerView:(UIView*)containerView below:(UIView*)topView {
     [self setAlertContainerView:containerView];
+    [self setTopView:topView];
 }
 
 #pragma mark - Handler device changes 
@@ -111,9 +111,9 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                             cancelButtonTitle:(NSString*)cancelTitle
                                fixButtonTitle:(NSString*)fixTitle {
     
-    NSMutableParagraphStyle* messageStyle
-    = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    NSMutableParagraphStyle* messageStyle = DefaultBodyParagraphStyle();
     [messageStyle setAlignment:NSTextAlignmentCenter];
+
     NSDictionary* messageAttributes = @{
                                         NSFontAttributeName : [UIFont body],
                                         NSForegroundColorAttributeName : [UIColor textColor],
@@ -194,7 +194,10 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                                          action:@selector(cancelAlert:)
                                forControlEvents:UIControlEventTouchUpInside];
             
-            [alertView showInView:[strongSelf alertContainerView] animated:YES completion:nil];
+            [alertView showInView:[strongSelf alertContainerView]
+                            below:[self topView]
+                         animated:YES
+                       completion:nil];
             
             [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
             [strongSelf trackSystemAlertEventForAlert:alert];
@@ -255,7 +258,10 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                          action:@selector(fixTimeZoneNow:)
                forControlEvents:UIControlEventTouchUpInside];
     
-    [alert showInView:[self alertContainerView] animated:YES completion:nil];
+    [alert showInView:[self alertContainerView]
+                below:[self topView]
+             animated:YES
+           completion:nil];
     
     [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
     
@@ -413,7 +419,10 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                          action:@selector(fixDeviceProblemNow:)
                forControlEvents:UIControlEventTouchUpInside];
 
-    [alert showInView:[self alertContainerView] animated:YES completion:nil];
+    [alert showInView:[self alertContainerView]
+                below:[self topView]
+             animated:YES
+           completion:nil];
     
     [self setCurrentActionView:alert];
 }
@@ -576,7 +585,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                              action:@selector(cancelAlert:)
                    forControlEvents:UIControlEventTouchUpInside];
     
-    [alert showInView:[self alertContainerView] animated:YES completion:nil];
+    [alert showInView:[self alertContainerView] below:[self topView] animated:YES completion:nil];
     
     [SENAnalytics track:HEMAnalyticsEventSystemAlert
              properties:@{kHEMAnalyticsEventPropType : @"no internet"}];

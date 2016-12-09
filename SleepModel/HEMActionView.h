@@ -42,7 +42,7 @@
  * @param aniamted:   YES to animate the showing, NO otherwise
  * @param completion: the block to invoke when it's shown
  */
-- (void)showInView:(UIView*)view animated:(BOOL)animated completion:(void(^)(void))completion;
+- (void)showInView:(UIView*)view below:(UIView*)topView animated:(BOOL)animated completion:(void(^)(void))completion;
 
 /**
  * Dismiss this view, animated or not.  Upon completion, this view will be removed

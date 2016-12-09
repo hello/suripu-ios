@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
                             sysAlertService:(HEMSystemAlertService*)alertService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 
-- (void)bindWithContainerView:(UIView*)containerView;
+- (void)bindWithContainerView:(UIView*)containerView below:(UIView*)topView;
 
 @end
 

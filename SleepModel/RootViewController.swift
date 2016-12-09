@@ -11,11 +11,11 @@ import SenseKit
 
 @objc class RootViewController: HEMBaseController {
     
-    static let overlayAlpha = CGFloat(0.7)
-    static let animationDuration = TimeInterval(0.5)
+    fileprivate static let overlayAlpha = CGFloat(0.7)
+    fileprivate static let animationDuration = TimeInterval(0.5)
     
-    var debugController: HEMDebugController?
-    var statusBarVisible = true
+    fileprivate var debugController: HEMDebugController?
+    fileprivate var statusBarVisible = true
     
     // MARK: Public Methods
     
@@ -228,7 +228,18 @@ import SenseKit
         })
     }
     
-    // MARK: - Debug
+    // MARK: - Clean Up
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+}
+
+/**
+ * Debug extension
+ */
+extension RootViewController {
     
     override var canBecomeFirstResponder: Bool {
         return HEMDebugController.isEnabled()
@@ -243,12 +254,6 @@ import SenseKit
             }
             self.debugController!.showSupportOptions()
         }
-    }
-    
-    // MARK: - Clean Up
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
 }

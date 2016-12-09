@@ -24,6 +24,11 @@
 #import "HEMShortcutService.h"
 #import "HEMDeviceService.h"
 #import "HEMTrendsService.h"
+#import "HEMSystemAlertService.h"
+#import "HEMNetworkAlertService.h"
+#import "HEMDeviceAlertService.h"
+#import "HEMTimeZoneAlertService.h"
+#import "HEMAccountService.h"
 
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSettingsNavigationController.h"
@@ -36,8 +41,10 @@
 #import "HEMDebugController.h"
 #import "HEMAlarmListViewController.h"
 #import "HEMSleepSoundViewController.h"
+#import "HEMTimeZoneViewController.h"
 
 #import "HEMAppUsage.h"
+#import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMStyle.h"
 #import "HEMPresenter.h"
 #import "HEMConfig.h"
@@ -45,3 +52,5 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMCardCollectionViewCell.h"
+#import "HEMSystemAlertPresenter.h"
+#import "HEMSupportUtil.h"

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0.10
+
+New:
+
+* Re-inserted force touch and made it work with new navigation system
+
+Fixes:
+
+* Fixes Timeline breakdown text font + color
+* Fixes Timeline summary spacing
+* Fixes Alarm card toggle spacing when expansion attributes are added
+* Fixes Room Check unit label spacing
+
 ## 2.0.0.9
 
 New:

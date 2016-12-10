@@ -2,16 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>com.apple.developer.healthkit</key>
-	<true/>
 	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>group.is.hello.sense.settings</string>
-		<string>group.is.hello.sense.data</string>
-	</array>
+	<array/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>MSG86J7GNF.is.hello.Sense</string>
+		<string>$(AppIdentifierPrefix)MSG86J7GNF.is.hello.Sense</string>
 	</array>
 </dict>
 </plist>

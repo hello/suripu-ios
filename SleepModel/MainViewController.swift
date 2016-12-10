@@ -28,6 +28,7 @@ import SenseKit
     fileprivate var alertDeviceService: HEMDeviceAlertService!
     fileprivate var alertTZService: HEMTimeZoneAlertService!
     fileprivate var alertSystemService: HEMSystemAlertService!
+    fileprivate weak var shortcutHandler: ShortcutHandler?
     
     override var prefersStatusBarHidden: Bool {
         return false
@@ -228,6 +229,43 @@ extension MainViewController: UITabBarControllerDelegate {
             let timelineSlideVC = viewController as! HEMSleepSummarySlideViewController
             timelineSlideVC.reload(with: lastNight)
         }
+    }
+    
+}
+
+extension MainViewController: ShortcutHandler {
+    
+    func canHandleAction(action: HEMShortcutAction) -> Bool {
+        guard self.viewControllers != nil else {
+            return false
+        }
+        
+        guard self.viewControllers!.count > 0 else {
+            return false
+        }
+        
+        var handled = false
+        for (index, controller) in self.viewControllers!.enumerated() {
+            var contentController = controller
+            if contentController is UINavigationController {
+                contentController = (contentController as! UINavigationController).topViewController!
+            }
+            if let handler = contentController as? ShortcutHandler {
+                if handler.canHandleAction(action: action) == true {
+                    self.switchTab(tab: MainTab(rawValue: index)!)
+                    self.shortcutHandler = handler
+                    handled = true
+                    break
+                }
+            }
+        }
+        
+        return handled
+    }
+    
+    func takeAction(action: HEMShortcutAction) {
+        self.shortcutHandler?.takeAction(action: action)
+        self.shortcutHandler = nil
     }
     
 }

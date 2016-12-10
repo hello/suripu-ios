@@ -16,6 +16,7 @@ import SenseKit
     
     fileprivate var debugController: HEMDebugController?
     fileprivate var statusBarVisible = true
+    fileprivate weak var shortcutHandler: ShortcutHandler?
     
     // MARK: Public Methods
     
@@ -86,10 +87,6 @@ import SenseKit
                            selector: #selector(didSignOut),
                            name: NSNotification.Name.SENAuthorizationServiceDidDeauthorize,
                            object: nil)
-        center.addObserver(self,
-                           selector: Selector(("reactToShortcut:")),
-                           name: nil,
-                           object: HEMShortcutService.shared())
     }
     
     @objc fileprivate func didSignIn() {
@@ -104,11 +101,6 @@ import SenseKit
     
     @objc fileprivate func didFinishOnboarding() {
         showMainApp()
-    }
-    
-    // TODO: react to shortcut
-    @objc fileprivate func reactToShortcut(notification: Notification) {
-        
     }
     
     // MARK: - Onboarding vs Main
@@ -254,6 +246,34 @@ extension RootViewController {
             }
             self.debugController!.showSupportOptions()
         }
+    }
+    
+}
+
+extension RootViewController: ShortcutHandler {
+    
+    func canHandleAction(action: HEMShortcutAction) -> Bool {
+        guard self.childViewControllers.count > 0 else {
+            return false // there's also no other controllers to pass it to
+        }
+        
+        var handled = false
+        for controller in self.childViewControllers {
+            if let handler = controller as? ShortcutHandler {
+                if handler.canHandleAction(action: action) == true {
+                    self.shortcutHandler = handler
+                    handled = true
+                    break
+                }
+            }
+        }
+        
+        return handled
+    }
+    
+    func takeAction(action: HEMShortcutAction) {
+        self.shortcutHandler?.takeAction(action: action)
+        self.shortcutHandler = nil
     }
     
 }

@@ -59,13 +59,10 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     HEMFacebookService* fb = [HEMFacebookService new];
     if (![fb open:application url:url source:sourceApplication annotation:annotation]) {
         NSString* lastPath = [url lastPathComponent];
-        // TODO: handle this in the main view controller instead
         if ([lastPath isEqualToString:kHEMAppExtRoom]) {
             NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
             [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
-            
-            RootViewController* rootVC = [RootViewController currentRootViewController];
-            MainViewController* mainVC = [rootVC mainViewController];
+            MainViewController* mainVC = [self mainViewController];
             [mainVC switchTabWithTab:MainTabConditions];
         }
     }
@@ -75,7 +72,25 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     NSString *shortcutType = shortcutItem.type;
     DDLogDebug(@"incoming shortcut %@", shortcutType);
-    completionHandler([[HEMShortcutService sharedService] canHandle3DTouchType:shortcutType]);
+    BOOL handled = NO;
+    HEMShortcutAction action = [HEMShortcutService actionForType:shortcutType];
+    if (action != HEMShortcutActionUnknown) {
+        RootViewController* rootVC = [RootViewController currentRootViewController];
+        if ([rootVC conformsToProtocol:@protocol(ShortcutHandler)]) {
+            id<ShortcutHandler> handler = (id) rootVC;
+            if ([handler canHandleActionWithAction:action]) {
+                [handler takeActionWithAction:action];
+                handled = YES;
+            }
+        }
+    }
+    completionHandler(handled);
+}
+
+- (MainViewController*)mainViewController {
+    RootViewController* rootVC = [RootViewController currentRootViewController];
+    MainViewController* mainVC = [rootVC mainViewController];
+    return mainVC;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {

@@ -443,6 +443,7 @@
 		BFE376091CF78AA00029EE66 /* HEMBreadcrumbService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE376081CF78AA00029EE66 /* HEMBreadcrumbService.m */; };
 		BFE3760C1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3760B1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m */; };
 		BFE67D691DFA0DF600C5B8F5 /* StatusMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE67D681DFA0DF600C5B8F5 /* StatusMessageCell.swift */; };
+		BFE67D6B1DFB568500C5B8F5 /* ShortcutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE67D6A1DFB568500C5B8F5 /* ShortcutHandler.swift */; };
 		BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */; };
 		BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
@@ -1308,6 +1309,7 @@
 		BFE3760A1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMPresenter+HEMBreadcrumb.h"; sourceTree = "<group>"; };
 		BFE3760B1CF79FF60029EE66 /* HEMPresenter+HEMBreadcrumb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HEMPresenter+HEMBreadcrumb.m"; sourceTree = "<group>"; };
 		BFE67D681DFA0DF600C5B8F5 /* StatusMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMessageCell.swift; sourceTree = "<group>"; };
+		BFE67D6A1DFB568500C5B8F5 /* ShortcutHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
 		BFE7B6BC1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseRequiredCollectionViewCell.h; sourceTree = "<group>"; };
 		BFE7B6BD1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseRequiredCollectionViewCell.m; sourceTree = "<group>"; };
 		BFE7B6BF1BEBE8FB0013740C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
@@ -2203,6 +2205,7 @@
 			children = (
 				BF35838A1CAC8F3600760CD4 /* HEMShortcutService.h */,
 				BF35838B1CAC8F3600760CD4 /* HEMShortcutService.m */,
+				BFE67D6A1DFB568500C5B8F5 /* ShortcutHandler.swift */,
 			);
 			name = "Force Touch";
 			sourceTree = "<group>";
@@ -4158,6 +4161,7 @@
 				BF78E9A61B2762060015949F /* HEMTutorialContent.m in Sources */,
 				BFF364811D62A06F008D4DF8 /* HEMUpgradePillDescriptionPresenter.m in Sources */,
 				BF8339A21C18E05600BFD0F4 /* HEMNavigationShadowView.m in Sources */,
+				BFE67D6B1DFB568500C5B8F5 /* ShortcutHandler.swift in Sources */,
 				BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */,
 				BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */,
 				BF21F0271DAF20540057F24E /* HEMAlarmExpansionListCell.m in Sources */,

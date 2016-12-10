@@ -9,12 +9,15 @@
 import Foundation
 import SenseKit
 
-@objc class SlideContainerViewController: HEMBaseController, SlideContentVisibilityDelegate {
+@objc class SlideContainerViewController: HEMBaseController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var activity: HEMActivityIndicatorView?
     
+    fileprivate weak var shortcutHandler: ShortcutHandler?
+    fileprivate var shortcutAction: HEMShortcutAction?
     fileprivate weak var tabItemPresenter: TabPresenter!
+    
     var contentPresenter: SlideContentPresenter! {
         didSet {
             guard contentPresenter != nil else {
@@ -38,6 +41,11 @@ import SenseKit
         self.configureContentPresenter()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.performShortcutActionIfNeeded()
+    }
+    
     // MARK: Configuration
     
     func configureContentPresenter() {
@@ -55,8 +63,9 @@ import SenseKit
 
         self.addPresenter(self.contentPresenter)
     }
-    
-    // MARK: SlideContentVisibilityDelegate
+}
+
+extension SlideContainerViewController: SlideContentVisibilityDelegate {
     
     func addController(controller: UIViewController, from _: SlideContentPresenter?) {
         self.addChildViewController(controller)
@@ -75,4 +84,53 @@ import SenseKit
             controller.endAppearanceTransition()
         }
     }
+    
+}
+
+extension SlideContainerViewController: ShortcutHandler {
+    
+    fileprivate func performShortcutActionIfNeeded() {
+        guard let action = self.shortcutAction else {
+            return
+        }
+        
+        guard let handler = self.shortcutHandler else {
+            return
+        }
+        
+        handler.takeAction(action: action)
+        self.shortcutHandler = nil
+        self.shortcutAction = HEMShortcutAction.unknown
+    }
+    
+    func canHandleAction(action: HEMShortcutAction) -> Bool {
+        guard self.contentPresenter.contentControllers.count > 0 else {
+            return false
+        }
+        
+        let controllers = self.contentPresenter.contentControllers!
+        var handled = false
+        
+        for controller in controllers {
+            if let handler = controller as? ShortcutHandler {
+                if handler.canHandleAction(action: action) == true {
+                    self.shortcutHandler = handler
+                    self.shortcutAction = action
+                    handled = true
+                    break
+                }
+            }
+        }
+        
+        return handled
+    }
+    
+    func takeAction(action: HEMShortcutAction) {
+        guard let _ = self.scrollView else {
+            // delay action until visible
+            return
+        }
+        self.performShortcutActionIfNeeded()
+    }
+    
 }

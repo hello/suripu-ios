@@ -18,7 +18,12 @@
 @implementation HEMSleepSummaryCollectionViewCell
 
 CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
-CGFloat const HEMSleepSummaryBaseHeight = 233.0f;
+CGFloat const HEMSleepSummaryTopPadding = 16.0f;
+CGFloat const HEMSleepSummaryScoreGraphHeight = 153.0f; // graph + top padding + sleep score label
+CGFloat const HEMSleepSummaryTextTopSpacing = 36.0f;
+CGFloat const HEMSleepSummaryTextSpacing = 16.0f;
+CGFloat const HEMSleepSummarySummaryHeight = 12.0f;
+CGFloat const HEMSleepSummaryBottomPadding = 24.0f;
 CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
 
 + (CGFloat)heightWithMessage:(NSString*)message itemWidth:(CGFloat)width {
@@ -26,7 +31,12 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
     NSAttributedString *attributedMessage = [markdown_to_attr_string(message, 0, attributes) trim];
     CGFloat maxWidth = width - (HEMSleepSummaryMessageHorzPadding * 2);
     CGFloat textHeight = [attributedMessage sizeWithWidth:maxWidth].height;
-    return HEMSleepSummaryBaseHeight + textHeight;
+    return HEMSleepSummaryScoreGraphHeight
+        + HEMSleepSummaryTextTopSpacing
+        + textHeight
+        + HEMSleepSummaryTextSpacing
+        + HEMSleepSummarySummaryHeight
+        + HEMSleepSummaryBottomPadding;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {

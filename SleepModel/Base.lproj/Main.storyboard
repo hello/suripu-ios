@@ -1677,7 +1677,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Egr-uh-f2s" customClass="HEMSwitchControl">
-                                                    <rect key="frame" x="333" y="32" width="51" height="31"/>
+                                                    <rect key="frame" x="333" y="48" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.063956059515476227" green="0.53325003385543823" blue="0.9984821081161499" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5eg-5V-O9q">
@@ -1705,7 +1705,7 @@
                                             <constraint firstAttribute="trailing" secondItem="eDm-80-ZN1" secondAttribute="trailing" id="l9y-PY-S9v"/>
                                             <constraint firstItem="eDm-80-ZN1" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="96" id="qEo-PZ-ru9"/>
                                             <constraint firstItem="5eg-5V-O9q" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="58" id="rAa-fk-ZO0"/>
-                                            <constraint firstItem="Egr-uh-f2s" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="32" id="vVw-Ht-gFb"/>
+                                            <constraint firstItem="Egr-uh-f2s" firstAttribute="top" secondItem="khT-7j-fsG" secondAttribute="top" constant="48" id="vVw-Ht-gFb"/>
                                         </constraints>
                                         <size key="customSize" width="398" height="96"/>
                                         <connections>

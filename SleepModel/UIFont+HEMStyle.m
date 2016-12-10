@@ -132,18 +132,6 @@
     return [UIFont systemFontOfSize:size weight:UIFontWeightThin];
 }
 
-+ (UIFont*)timelineBreakdownTitleFont {
-    return [UIFont systemFontOfSize:11.0f weight:UIFontWeightMedium];
-}
-
-+ (UIFont*)timelineBreakdownMessageFont {
-    return [UIFont systemFontOfSize:14.0f weight:UIFontWeightLight];
-}
-
-+ (UIFont*)timelineBreakdownMessageBoldFont {
-    return [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
-}
-
 + (UIFont*)timelineEventMessageFont {
     return [UIFont systemFontOfSize:14.0f weight:UIFontWeightLight];
 }

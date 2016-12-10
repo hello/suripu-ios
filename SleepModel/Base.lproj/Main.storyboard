@@ -36,11 +36,11 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUm-vw-qys">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="109"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="108.66666666666667"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B18-dK-Yet">
-                                            <rect key="frame" x="0.0" y="179" width="414" height="108"/>
+                                            <rect key="frame" x="0.0" y="178.66666666666663" width="414" height="108.33333333333337"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e5C-y2-fVP">
@@ -1777,7 +1777,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
-                                                    <rect key="frame" x="16" y="27" width="366" height="40"/>
+                                                    <rect key="frame" x="16" y="27.333333333333336" width="366" height="39.666666666666664"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1806,7 +1806,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="398" height="180"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account.  Please pair with Sense to view your alarms." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBO-uh-9Ur">
-                                                    <rect key="frame" x="40" y="204" width="318" height="58"/>
+                                                    <rect key="frame" x="40" y="204" width="318" height="57.666666666666686"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2087,7 +2087,7 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was not enough data to display a sleep timeline for this night." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6F-92-HAb">
-                                        <rect key="frame" x="24" y="245" width="366" height="39"/>
+                                        <rect key="frame" x="24" y="244.99999999999997" width="366" height="38.333333333333286"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2099,7 +2099,7 @@
                                         </constraints>
                                     </imageView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uzh-83-Z8g" customClass="HEMActionButton">
-                                        <rect key="frame" x="137" y="309" width="140" height="40"/>
+                                        <rect key="frame" x="137" y="308.33333333333331" width="140" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="DxL-GB-gVJ"/>
@@ -2618,7 +2618,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="584" height="180"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account.  Please pair with Sense to view current conditions." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MY7-ea-Dgw">
-                                                    <rect key="frame" x="40" y="204" width="504" height="39"/>
+                                                    <rect key="frame" x="40" y="204" width="504" height="38.333333333333343"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2931,7 +2931,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7q-gL-7i8">
-                                                    <rect key="frame" x="16" y="27" width="366" height="40"/>
+                                                    <rect key="frame" x="16" y="27.333333333333336" width="366" height="39.666666666666664"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Light" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2955,7 +2955,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ilp-h8-uDj">
-                                            <rect key="frame" x="544" y="0.0" width="56" height="56"/>
+                                            <rect key="frame" x="358" y="0.0" width="56" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="FzR-r2-AG9"/>
                                                 <constraint firstAttribute="width" constant="56" id="RlB-e4-eu6"/>
@@ -2964,26 +2964,26 @@
                                             <state key="normal" image="closeXGrey"/>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVC-n2-ldE">
-                                            <rect key="frame" x="24" y="48" width="552" height="28"/>
+                                            <rect key="frame" x="24" y="48" width="366" height="28"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXG-fV-mXA">
-                                            <rect key="frame" x="0.0" y="113" width="600" height="56"/>
+                                            <rect key="frame" x="0.0" y="113" width="414" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="eM6-Bv-QCA"/>
                                             </constraints>
                                             <state key="normal" title="LEARN MORE"/>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topShadow" translatesAutoresizingMaskIntoConstraints="NO" id="4uY-4Z-bMV">
-                                            <rect key="frame" x="0.0" y="185" width="600" height="4"/>
+                                            <rect key="frame" x="0.0" y="185" width="414" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="4" id="aC6-HS-WxY"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRO-l2-ZIB">
-                                            <rect key="frame" x="24" y="84" width="552" height="21"/>
+                                            <rect key="frame" x="24" y="84" width="366" height="21"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -3603,7 +3603,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying sleep sounds. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILc-QW-d1L">
-                                                    <rect key="frame" x="16" y="27" width="366" height="41"/>
+                                                    <rect key="frame" x="16" y="27.333333333333336" width="366" height="40.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -3677,7 +3677,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="398" height="180"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account.  Please pair with Sense to play Sleep Sounds." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAt-6R-QUX">
-                                                    <rect key="frame" x="40" y="204" width="318" height="58"/>
+                                                    <rect key="frame" x="40" y="204" width="318" height="57.666666666666686"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -4279,7 +4279,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There was a problem displaying your alarms. Please try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XM9-0G-CeB">
-                                                    <rect key="frame" x="16" y="27" width="366" height="41"/>
+                                                    <rect key="frame" x="16" y="27.333333333333336" width="366" height="40.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                     <color key="textColor" red="0.69725722069999996" green="0.69723641869999997" blue="0.69724822040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -4530,14 +4530,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTH-Va-4ZD">
-                                                    <rect key="frame" x="20" y="44" width="153" height="26"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="22"/>
+                                                    <rect key="frame" x="20" y="44" width="151" height="26"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
                                                     <color key="textColor" red="0.2176530510187149" green="0.25914883613586426" blue="0.32559084892272949" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
-                                                    <rect key="frame" x="20" y="80" width="335" height="20"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
+                                                    <rect key="frame" x="20" y="80" width="335" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.21765305099999999" green="0.2591488361" blue="0.32559084890000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

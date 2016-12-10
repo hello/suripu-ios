@@ -179,6 +179,8 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard summaryViewCellReuseIdentifier]
                                                   forIndexPath:indexPath];
     NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
+    cell.titleLabel.textColor = [UIColor grey6];
+    cell.titleLabel.font = [UIFont h5];
     cell.detailLabel.attributedText = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
     cell.isAccessibilityElement = YES;
     cell.accessibilityLabel = cell.titleLabel.text;

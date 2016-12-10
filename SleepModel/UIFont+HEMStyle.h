@@ -62,17 +62,6 @@
 + (UIFont*)timelineEventMessageFont;
 
 /**
- *  Font for timeline statistics titles
- */
-+ (UIFont*)timelineBreakdownTitleFont;
-
-/**
- *  Font for timeline statistics message summary
- */
-+ (UIFont*)timelineBreakdownMessageFont;
-+ (UIFont*)timelineBreakdownMessageBoldFont;
-
-/**
  *  Font used to display average values in Trends v2
  */
 + (UIFont*)trendAverageValueFont;

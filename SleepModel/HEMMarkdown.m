@@ -76,22 +76,30 @@
 }
 
 + (NSDictionary *)attributesForTimelineBreakdownTitle {
-    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont timelineBreakdownTitleFont], NSKernAttributeName : @1 } };
+    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont h7],
+                           NSKernAttributeName : @1 } };
 }
 
 + (NSDictionary *)attributesForTimelineBreakdownMessage {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 2.f;
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.alignment = NSTextAlignmentLeft;
     return @{
-        @(PARA) :
-            @{ NSFontAttributeName : [UIFont timelineBreakdownMessageFont], NSParagraphStyleAttributeName : style },
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont body],
+                      NSForegroundColorAttributeName : [UIColor grey5],
+                      NSParagraphStyleAttributeName : style
+        },
+        @(PARA) : @{ NSFontAttributeName : [UIFont body],
+                     NSForegroundColorAttributeName : [UIColor grey5],
+                     NSParagraphStyleAttributeName : style
+        },
         @(EMPH) : @{
-            NSFontAttributeName : [UIFont timelineBreakdownMessageBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
+            NSForegroundColorAttributeName : [UIColor grey5],
             NSParagraphStyleAttributeName : style
         },
         @(STRONG) : @{
-            NSFontAttributeName : [UIFont timelineBreakdownMessageBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
+            NSForegroundColorAttributeName : [UIColor grey6],
             NSParagraphStyleAttributeName : style
         },
     };

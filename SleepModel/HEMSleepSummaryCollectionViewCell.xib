@@ -11,27 +11,27 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell clipsSubviews="YES" contentMode="center" reuseIdentifier="sleepSummaryCell" id="gTV-IL-0wX" customClass="HEMSleepSummaryCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="298"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="207"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="298"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="207"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-0C-m7y" userLabel="border view">
-                        <rect key="frame" x="0.0" y="297" width="320" height="1"/>
+                        <rect key="frame" x="0.0" y="206" width="320" height="1"/>
                         <color key="backgroundColor" red="0.72243225574493408" green="0.86160457134246826" blue="0.99443191289901733" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="GuY-Cl-e9q"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1cj-i9-Ywi" userLabel="summary container view">
-                        <rect key="frame" x="0.0" y="2" width="320" height="296"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="207"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-WO-VZQ" customClass="HEMSleepScoreGraphView">
                                 <rect key="frame" x="82" y="16" width="157" height="127"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eK-rK-hbH" customClass="UICountingLabel">
-                                        <rect key="frame" x="41.333333333333336" y="34" width="74" height="76.666666666666657"/>
+                                        <rect key="frame" x="41.333333333333336" y="34.000000000000007" width="74" height="76.666666666666686"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <bool key="isElement" value="NO"/>
                                         </accessibility>
@@ -61,22 +61,22 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XD9-Mv-4Jf" userLabel="message view" customClass="HEMTimelineMessageContainerView">
-                                <rect key="frame" x="24" y="179" width="272" height="106"/>
+                                <rect key="frame" x="24" y="179" width="272" height="28"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Last night you were in bed for 8.5 hours and slept for 6 hours." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
-                                        <rect key="frame" x="0.0" y="0.0" width="272" height="33.666666666666657"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
+                                        <rect key="frame" x="0.0" y="0.0" width="272" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.23404698073863983" green="0.23403999209403992" blue="0.23404392600059509" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="SLEEP SUMMARY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zN-gk-dwk">
-                                        <rect key="frame" x="83.333333333333314" y="49.333333333333343" width="85.666666666666686" height="12"/>
+                                        <rect key="frame" x="83.333333333333314" y="16" width="85.666666666666686" height="12"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" red="0.0" green="0.61176470588235299" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_right_caret" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-id-cB1">
-                                        <rect key="frame" x="173" y="51" width="6" height="11"/>
+                                        <rect key="frame" x="173" y="17.666666666666657" width="6" height="11"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -85,7 +85,7 @@
                                     <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" id="Kja-eR-b3l"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="top" secondItem="buK-Of-ZfH" secondAttribute="bottom" constant="16" id="MAw-uL-pZc"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="centerX" secondItem="XD9-Mv-4Jf" secondAttribute="centerX" constant="-10" id="PPo-AN-kcR"/>
-                                    <constraint firstAttribute="height" constant="106" id="UPf-fi-yZI"/>
+                                    <constraint firstAttribute="height" constant="28" id="UPf-fi-yZI"/>
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="XD9-Mv-4Jf" secondAttribute="top" id="bAS-0D-YOb"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="centerY" secondItem="JKF-id-cB1" secondAttribute="centerY" constant="-1" id="kuk-m8-MiQ"/>
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" id="zyI-7R-HHa"/>
@@ -110,7 +110,7 @@
                 <constraint firstAttribute="trailing" secondItem="gDL-0C-m7y" secondAttribute="trailing" id="4Ql-1a-nOU"/>
                 <constraint firstItem="gDL-0C-m7y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="AOW-Gn-8co"/>
                 <constraint firstAttribute="trailing" secondItem="1cj-i9-Ywi" secondAttribute="trailing" id="L6x-we-CFt"/>
-                <constraint firstItem="1cj-i9-Ywi" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="p1b-n7-DSe"/>
+                <constraint firstItem="1cj-i9-Ywi" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="p1b-n7-DSe"/>
                 <constraint firstAttribute="bottom" secondItem="1cj-i9-Ywi" secondAttribute="bottom" id="reS-1n-cKM"/>
                 <constraint firstItem="1cj-i9-Ywi" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="t3W-aa-24f"/>
                 <constraint firstAttribute="bottom" secondItem="gDL-0C-m7y" secondAttribute="bottom" id="tU1-jm-dZL"/>

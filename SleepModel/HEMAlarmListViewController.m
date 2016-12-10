@@ -15,12 +15,14 @@
 #import "HEMAlarmService.h"
 #import "HEMSupportUtil.h"
 #import "HEMExpansionService.h"
+#import "HEMShortcutService.h"
 
 @interface HEMAlarmListViewController () <
     HEMAlarmControllerDelegate,
     HEMAlarmListPresenterDelegate,
     HEMPresenterPairDelegate,
-    HEMSensePairingDelegate
+    HEMSensePairingDelegate,
+    ShortcutHandler
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -93,6 +95,30 @@
 }
 
 #pragma mark - Shortcuts
+
+- (BOOL)canHandleActionWithAction:(HEMShortcutAction)action {
+    switch (action) {
+        case HEMShortcutActionAlarmEdit:
+        case HEMShortcutActionAlarmNew:
+            return YES;
+        default:
+            return NO;
+    }
+}
+
+- (void)takeActionWithAction:(HEMShortcutAction)action {
+    switch (action) {
+        case HEMShortcutActionAlarmEdit:
+            [SENAnalytics track:HEMAnalyticsEventShortcutAlarmEdit];
+            break;
+        case HEMShortcutActionAlarmNew:
+            [SENAnalytics track:HEMAnalyticsEventShortcutAlarmNew];
+            [self addNewAlarmFromShortcut];
+            break;
+        default:
+            break;
+    }
+}
 
 - (void)addNewAlarmFromShortcut {
     if ([[self alarmsPresenter] isLoading]) {

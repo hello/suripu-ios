@@ -197,7 +197,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)didComeBackFromBackground {
     [super didComeBackFromBackground];
-    [self loadData];
+    if ([self isViewFullyVisible:[self collectionView]]) {
+        [self loadData];
+    }
 }
 
 #pragma mark -

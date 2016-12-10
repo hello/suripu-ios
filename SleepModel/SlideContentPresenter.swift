@@ -89,42 +89,11 @@ class SlideContentPresenter: HEMPresenter {
         return titleView
     }
     
-    // MARK: - Bindings
-    
-    func bind(activity: HEMActivityIndicatorView?) {
-        activity?.stop()
-        activity?.isHidden = true
-        activity?.isUserInteractionEnabled = false
-        self.activity = activity
-    }
-    
-    func bind(navigationBar: UINavigationBar?) {
-        guard navigationBar != nil else {
-            return
-        }
-        
-        let size = navigationBar?.frame.size
-        let navSize = size ?? CGSize.zero
-        let titleView = self.configureNavigationTitleView(size: navSize)
-        let firstController = self.contentControllers.first!
-
-        if titleView != nil {
-            navigationBar?.topItem?.titleView = titleView
-            self.slidingTitleView = titleView
-        } else {
-            navigationBar?.topItem?.title = self.title(controller: firstController)
-        }
-        
-        navigationBar?.topItem?.leftBarButtonItem = nil
-        self.navigationBar = navigationBar
-        self.slidingTitleView = titleView
-    }
-    
-    func bind(scrollView: UIScrollView!) {
-        self.configureContent(scrollView: scrollView)
-        scrollView.backgroundColor = UIColor.background()
-        scrollView.delegate = self
-        self.contentScrollView = scrollView
+    func show(controllerIndex: NSInteger) {
+        let index = min(max(controllerIndex, 0), self.contentControllers.count - 1)
+        let x = CGFloat(index) * self.contentScrollView.bounds.width
+        let offset = CGPoint(x: x, y: 0)
+        self.contentScrollView.setContentOffset(offset, animated: false)
     }
     
     fileprivate func layoutContent() {
@@ -221,6 +190,46 @@ class SlideContentPresenter: HEMPresenter {
         if self.contentScrollView != nil {
             self.contentScrollView.delegate = nil
         }
+    }
+    
+}
+
+extension SlideContentPresenter {
+    
+    func bind(activity: HEMActivityIndicatorView?) {
+        activity?.stop()
+        activity?.isHidden = true
+        activity?.isUserInteractionEnabled = false
+        self.activity = activity
+    }
+    
+    func bind(navigationBar: UINavigationBar?) {
+        guard navigationBar != nil else {
+            return
+        }
+        
+        let size = navigationBar?.frame.size
+        let navSize = size ?? CGSize.zero
+        let titleView = self.configureNavigationTitleView(size: navSize)
+        let firstController = self.contentControllers.first!
+        
+        if titleView != nil {
+            navigationBar?.topItem?.titleView = titleView
+            self.slidingTitleView = titleView
+        } else {
+            navigationBar?.topItem?.title = self.title(controller: firstController)
+        }
+        
+        navigationBar?.topItem?.leftBarButtonItem = nil
+        self.navigationBar = navigationBar
+        self.slidingTitleView = titleView
+    }
+    
+    func bind(scrollView: UIScrollView!) {
+        self.configureContent(scrollView: scrollView)
+        scrollView.backgroundColor = UIColor.background()
+        scrollView.delegate = self
+        self.contentScrollView = scrollView
     }
     
 }

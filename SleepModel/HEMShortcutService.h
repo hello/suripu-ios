@@ -16,15 +16,9 @@ typedef NS_ENUM(NSUInteger, HEMShortcutAction) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString* const HEMShortcutNotification;
-extern NSString* const HEMShortcutNoteInfoAction;
-
 @interface HEMShortcutService : SENService
 
-+ (instancetype)sharedService;
-- (instancetype)init NS_UNAVAILABLE;
-- (BOOL)canHandle3DTouchType:(NSString*)type;
-- (void)notifyOfAction:(HEMShortcutAction)action;
++ (HEMShortcutAction)actionForType:(NSString*)type;
 
 @end
 

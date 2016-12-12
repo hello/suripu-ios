@@ -15,6 +15,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 #import "HEMRoomConditionsExtViewController.h"
 #import "HEMSensorExtTableViewCell.h"
@@ -23,15 +24,15 @@
 #import "HEMConfig.h"
 
 static NSString* const HEMApiUserAgentFormat = @"%@/%@ Platform/iOS OS/%@";
-static NSString* const kHEMRoomConditionsExtErrorDomain = @"is.hello.sense.today";
+static NSString* const kHEMRoomConditionsExtErrorDomain = @"is.hello.sense.RoomConditions";
 static NSString* const kHEMRoomConditionsExtConditionsCellId = @"info";
 static NSString* const kHEMRoomConditionsExtSenseScheme = @"sense://ext/room";
 static NSString* const HEMRoomConditionsExtSensorQueryItem = @"sensor";
 
-static CGFloat const kHEMTodayLeftInset = 15.0f;
-static CGFloat const kHEMTodayRightInset = 15.0f;
-static CGFloat const kHEMTodayBottomInset = 15.0f;
-static CGFloat const kHEMTodayRowHeight = 44.0f;
+static CGFloat const kHEMRoomConditionsLeftInset = 15.0f;
+static CGFloat const kHEMRoomConditionsRightInset = 15.0f;
+static CGFloat const kHEMRoomConditionsBottomInset = 15.0f;
+static CGFloat const kHEMRoomConditionsRowHeight = 44.0f;
 
 typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
@@ -48,6 +49,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (nonatomic, strong) NSError* sensorsError;
 @property (nonatomic, strong) HEMSensorValueFormatter* sensorFormatter;
 @property (nonatomic, strong) SENSensorStatus* status;
+@property (nonatomic, strong) UIColor* defaultTextColor;
 
 @end
 
@@ -76,10 +78,21 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 }
 
 - (void)configureContent {
+    if ([[self extensionContext] respondsToSelector:@selector(setWidgetLargestAvailableDisplayMode:)]) {
+        // iOS 10
+        [self setDefaultTextColor:[UIColor grey5]];
+        [[self tableView] setSeparatorColor:[UIColor grey5]];
+        [[self extensionContext] setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
+    } else {
+        [self setDefaultTextColor:[UIColor whiteColor]];
+        [[self tableView] setSeparatorColor:[UIColor whiteColor]];
+    }
+    [[self noDataLabel] setTextColor:[self defaultTextColor]];
     [[self noDataLabel] setText:nil];
     [self setSensorFormatter:[HEMSensorValueFormatter new]];
     [[self sensorFormatter] setIncludeUnitSymbol:YES];
-    [[self tableView] setRowHeight:kHEMTodayRowHeight];
+    [[self tableView] setRowHeight:kHEMRoomConditionsRowHeight];
+    [[self tableView] setTableFooterView:[UIView new]]; // remove last separator
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -134,19 +147,23 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     CGFloat height = 0.0f;
     if ([SENAuthorizationService isAuthorized]) {
         NSInteger sensorCount = [[[self status] sensors] count];
-        height = (sensorCount * kHEMTodayRowHeight);
+        height = (sensorCount * kHEMRoomConditionsRowHeight);
     } else {
         CGRect buttonFrame = [[self noDataLabel] frame];
         height = CGRectGetMaxY(buttonFrame) + CGRectGetMinY(buttonFrame);
     }
-    [self setPreferredContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds), height)];
+    
+    if ([[self extensionContext] respondsToSelector:@selector(widgetActiveDisplayMode)]
+        && [[self extensionContext] widgetActiveDisplayMode] == NCWidgetDisplayModeExpanded) {
+        [self setPreferredContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds), height)];
+    }
 }
          
 - (UIImage *)imageForSensor:(SENSensor *)sensor {
-    NSString* typeLowerCase = [[sensor typeStringValue] lowercaseString];
-    NSString* imageName = [NSString stringWithFormat:@"%@IconWhite", typeLowerCase];
+    NSString* camelCase = [NSString camelCaseWord:[sensor typeStringValue]];
+    NSString* imageName = [NSString stringWithFormat:@"extension%@Icon", camelCase];
     UIImage* image = [UIImage imageNamed:imageName];
-    return image;
+    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (UIColor*)colorForSensor:(SENSensor*)sensor {
@@ -155,7 +172,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         case SENConditionWarning:
             return [UIColor colorForCondition:[sensor condition]];
         default:
-            return [UIColor whiteColor];
+            return [self defaultTextColor];
     }
 }
 
@@ -193,8 +210,22 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     }
 }
 
+- (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode withMaximumSize:(CGSize)maxSize {
+    switch (activeDisplayMode) {
+        case NCWidgetDisplayModeCompact:
+            [self setPreferredContentSize:maxSize];
+            break;
+        default: {
+            NSInteger sensorCount = [[[self status] sensors] count];
+            CGFloat height = sensorCount * kHEMRoomConditionsRowHeight;
+            [self setPreferredContentSize:CGSizeMake(maxSize.width, height)];
+            break;
+        }
+    }
+}
+
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
-    return UIEdgeInsetsMake(0.0f, kHEMTodayLeftInset, kHEMTodayBottomInset, kHEMTodayRightInset);
+    return UIEdgeInsetsMake(0.0f, kHEMRoomConditionsLeftInset, kHEMRoomConditionsBottomInset, kHEMRoomConditionsRightInset);
 }
 
 #pragma mark - UITableViewDataSource / Delegate
@@ -233,8 +264,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     SENSensor* sensor = [self sensorAtIndexPath:indexPath];
     [[cell sensorIconView] setImage:[self imageForSensor:sensor]];
     [[cell sensorNameLabel] setText:[sensor localizedName]];
+    [[cell sensorNameLabel] setTextColor:[self defaultTextColor]];
     [[cell sensorValueLabel] setText:[self valueForSensor:sensor]];
     [[cell sensorValueLabel] setTextColor:[self colorForSensor:sensor]];
+    [[cell sensorIconView] setTintColor:[self defaultTextColor]]; // match the text
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

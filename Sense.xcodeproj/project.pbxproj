@@ -3626,6 +3626,7 @@
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = MSG86J7GNF;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -3646,9 +3647,10 @@
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = MSG86J7GNF;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.HealthKit = {
 								enabled = 0;
@@ -4653,7 +4655,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4694,7 +4697,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e890c038-0523-46d6-92fb-cc03298a4c07";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_CLIENT_ID = iphone_pill;
@@ -4724,6 +4728,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4768,7 +4773,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ba31d4c4-002e-4eff-ae11-ad4700443231";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.Sense";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
 				SENSE_API_URL = "https://api.hello.is";
 				SENSE_APP_REVIEW_URL = "http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=942698761&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8";
@@ -4900,7 +4906,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -4969,9 +4976,10 @@
 					"\"iOSDFULibrary\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}.Widget";
+				PRODUCT_BUNDLE_IDENTIFIER = is.hello.sensetest.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "abacd2a8-3471-4603-8fd2-b30f41fa54cf";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest.Widget";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -4986,6 +4994,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -5026,9 +5036,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}.Widget";
+				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "657d8fb9-a17f-45cb-83e2-143b3f0ea846";
+				PROVISIONING_PROFILE_SPECIFIER = "XC Ad Hoc: is.hello.Sense.Widget";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -5107,6 +5118,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5147,7 +5159,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ba31d4c4-002e-4eff-ae11-ad4700443231";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.Sense";
 				SENSE_ANALYTICS_TOKEN = UiFCuqdEpi6STaMCx3bo70Hii0XvWnOK;
 				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -5221,6 +5234,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -5261,9 +5276,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}.Widget";
+				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "657d8fb9-a17f-45cb-83e2-143b3f0ea846";
+				PROVISIONING_PROFILE_SPECIFIER = "XC Ad Hoc: is.hello.Sense.Widget";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -5342,6 +5358,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5382,7 +5400,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dbc06e67-3fef-4799-9471-9515f4478771";
+				PROVISIONING_PROFILE_SPECIFIER = "XC Ad Hoc: is.hello.sensetest";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
 				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";
@@ -5457,6 +5476,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -5497,9 +5518,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}.Widget";
+				PRODUCT_BUNDLE_IDENTIFIER = is.hello.sensetest.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "abacd2a8-3471-4603-8fd2-b30f41fa54cf";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest.Widget";
 				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;

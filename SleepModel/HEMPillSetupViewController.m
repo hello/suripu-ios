@@ -107,8 +107,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 
 - (NSAttributedString*)attributedDecription {
     if (_attributedDescription == nil) {
-        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-        [style setLineHeightMultiple:1.1f];
+        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
         _attributedDescription =
             [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.description", nil)
                                             attributes:@{NSFontAttributeName : [UIFont body],

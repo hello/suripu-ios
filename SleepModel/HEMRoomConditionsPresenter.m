@@ -314,7 +314,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 - (NSAttributedString*)attributedIntroTitle {
     if (!_attributedIntroTitle) {
-        NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
         [style setAlignment:NSTextAlignmentCenter];
         
         NSDictionary* attrs = @{NSFontAttributeName : [UIFont h5],
@@ -330,7 +330,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 - (NSAttributedString*)attributedIntroDesc {
     if (!_attributedIntroDesc) {
-        NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
         [style setAlignment:NSTextAlignmentCenter];
         
         NSDictionary* attrs = @{NSFontAttributeName : [UIFont body],

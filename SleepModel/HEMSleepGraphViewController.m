@@ -134,6 +134,15 @@ static BOOL hasLoadedBefore = NO;
     [[[self errorSupportButton] titleLabel] setFont:[UIFont button]];
 }
 
+- (NSAttributedString*)attributedErrorMessage:(NSString*)message {
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    [style setAlignment:NSTextAlignmentCenter];
+    NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
+                                 NSFontAttributeName : [UIFont body],
+                                 NSForegroundColorAttributeName : [UIColor grey5]};
+    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
+}
+
 - (void)adjustConstraintsForIPhone4 {
     [super adjustConstraintsForIPhone4];
     
@@ -949,22 +958,22 @@ static BOOL hasLoadedBefore = NO;
         return;
     } else if (error) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.error.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineErrorIcon"];
     } else if (firstNight) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.first-night.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineJustSleepIcon"];
     } else if (self.dataSource.sleepResult.scoreCondition == SENConditionUnknown) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.none.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.none.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineNoDataIcon"];
         [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
                                  forState:UIControlStateNormal];
         self.errorSupportButton.hidden = NO;
     } else {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.not-enough.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.not-enough.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineNotEnoughDataIcon"];
         [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
                                  forState:UIControlStateNormal];

@@ -5,11 +5,9 @@
 //  Created by Jimmy Lu on 10/13/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
-
 #import "HEMMeetSenseView.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
 
 @interface HEMMeetSenseView()
 
@@ -70,9 +68,8 @@
 }
 
 - (NSDictionary*)descriptionAttributes {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
-    [style setLineHeightMultiple:1.2f];
     
     return @{NSFontAttributeName : [UIFont body],
              NSForegroundColorAttributeName : [UIColor grey4],

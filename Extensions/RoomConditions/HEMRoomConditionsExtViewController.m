@@ -34,6 +34,7 @@ static CGFloat const kHEMRoomConditionsRightInset = 15.0f;
 static CGFloat const kHEMRoomConditionsBottomInset = 15.0f;
 static CGFloat const kHEMRoomConditionsRowHeight = 44.0f;
 static NSInteger const kHEMRoomConditionsCollapsedSensors = 4;
+static CGFloat const kHEMRoomConditionsSeparatorLeftInset = 24.0f;
 
 typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
@@ -118,6 +119,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         [[self headerSensorLabel4] setFont:[UIFont h8]];
         
         [[self extensionContext] setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
+        [[self tableView] setSeparatorInset:UIEdgeInsetsMake(0.0f, kHEMRoomConditionsSeparatorLeftInset, 0.0f, 0.0f)];
     } else {
         [[self tableView] setTableHeaderView:nil];
         [self setDefaultTextColor:[UIColor whiteColor]];
@@ -129,7 +131,6 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     [self setSensorFormatter:[HEMSensorValueFormatter new]];
     [[self sensorFormatter] setIncludeUnitSymbol:YES];
     [[self tableView] setRowHeight:kHEMRoomConditionsRowHeight];
-    [[self tableView] setTableFooterView:[UIView new]]; // remove last separator
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -160,21 +161,6 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         
         [strongSelf reloadUI];
     }];
-}
-
-- (SENCondition)roomConditionBasedOnSensors {
-    if ([[[self status] sensors] count] == 0) {
-        return SENConditionUnknown;
-    }
-    
-    SENCondition condition = SENConditionIdeal;
-    for (SENSensor* sensor in [[self status] sensors]) {
-        if ([sensor condition] < condition &&
-            [sensor condition] != SENConditionUnknown) {
-            condition = [sensor condition];
-        }
-    }
-    return condition;
 }
 
 - (void)showNoDataLabel:(BOOL)show {
@@ -276,11 +262,9 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 - (void)updateHeaderImage:(UIImageView*)imageView
                     label:(UILabel*)label
                 forSensor:(SENSensor*)sensor {
-    UIImage* image = [self imageForSensor:sensor];
-    NSString* title = [sensor localizedName];
-    [imageView setImage:image];
+    [imageView setImage: [self imageForSensor:sensor]];
     [imageView setBackgroundColor:[UIColor colorForCondition:[sensor condition]]];
-    [label setText:title];
+    [label setText:[sensor localizedName]];
 }
 
 #pragma mark - NCWidgetProviding
@@ -311,7 +295,13 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 }
 
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
-    return UIEdgeInsetsMake(0.0f, kHEMRoomConditionsLeftInset, kHEMRoomConditionsBottomInset, kHEMRoomConditionsRightInset);
+    
+    if ([[self extensionContext] respondsToSelector:@selector(widgetActiveDisplayMode)]) {
+        // iOS 10
+        return defaultMarginInsets;
+    } else {
+        return UIEdgeInsetsMake(0.0f, kHEMRoomConditionsLeftInset, kHEMRoomConditionsBottomInset, kHEMRoomConditionsRightInset);
+    }
 }
 
 #pragma mark - UITableViewDataSource / Delegate
@@ -347,6 +337,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureConditionsCell:(HEMSensorExtTableViewCell*)cell
                     atIndexPath:(NSIndexPath*)indexPath {
+    BOOL lastRow = [indexPath row] == [[[self status] sensors] count] - 1;
     SENSensor* sensor = [self sensorAtIndexPath:indexPath];
     [[cell sensorIconView] setImage:[self imageForSensor:sensor]];
     [[cell sensorNameLabel] setText:[sensor localizedName]];
@@ -354,6 +345,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell sensorValueLabel] setText:[self valueForSensor:sensor]];
     [[cell sensorValueLabel] setTextColor:[self colorForSensor:sensor]];
     [[cell sensorIconView] setTintColor:[self defaultTextColor]]; // match the text
+    [[cell separator] setBackgroundColor:[[self defaultTextColor] colorWithAlphaComponent:0.5f]]; // match the text
+    [[cell separator] setHidden:lastRow];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

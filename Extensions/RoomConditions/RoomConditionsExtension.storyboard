@@ -31,7 +31,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MEf-pA-LnD">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MEf-pA-LnD">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="PeA-1E-mXL">
@@ -210,6 +210,13 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itC-ak-3MB">
+                                                    <rect key="frame" x="41" y="43" width="373" height="0.6666666666666643"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="f8y-fi-ge9"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -218,6 +225,9 @@
                                                 <constraint firstItem="GpV-XU-UyT" firstAttribute="centerY" secondItem="6Kq-3r-EWg" secondAttribute="centerY" id="Hcq-AW-I2s"/>
                                                 <constraint firstItem="6Kq-3r-EWg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Jf-rf-CKP" secondAttribute="trailing" constant="10" id="d4k-SB-kcA"/>
                                                 <constraint firstAttribute="centerY" secondItem="GpV-XU-UyT" secondAttribute="centerY" id="eOo-Cr-Lgh"/>
+                                                <constraint firstItem="itC-ak-3MB" firstAttribute="leading" secondItem="6Jf-rf-CKP" secondAttribute="leading" id="gr7-fh-l0L"/>
+                                                <constraint firstAttribute="trailing" secondItem="itC-ak-3MB" secondAttribute="trailing" id="k0f-EF-9qv"/>
+                                                <constraint firstAttribute="bottom" secondItem="itC-ak-3MB" secondAttribute="bottom" constant="0.5" id="lMS-zg-izG"/>
                                                 <constraint firstItem="6Kq-3r-EWg" firstAttribute="trailing" secondItem="oyH-yc-BDV" secondAttribute="trailing" constant="-12" id="vBm-Gy-CNn"/>
                                                 <constraint firstItem="6Jf-rf-CKP" firstAttribute="centerY" secondItem="GpV-XU-UyT" secondAttribute="centerY" id="zyK-US-SkG"/>
                                             </constraints>
@@ -229,6 +239,7 @@
                                             <outlet property="sensorIconView" destination="GpV-XU-UyT" id="08K-4b-FQ4"/>
                                             <outlet property="sensorNameLabel" destination="6Jf-rf-CKP" id="yhI-mn-DW1"/>
                                             <outlet property="sensorValueLabel" destination="6Kq-3r-EWg" id="Uag-ci-tVk"/>
+                                            <outlet property="separator" destination="itC-ak-3MB" id="BZC-KH-raF"/>
                                             <outlet property="valueLabelTrailingConstraint" destination="vBm-Gy-CNn" id="Ycp-U5-SrL"/>
                                         </connections>
                                     </tableViewCell>

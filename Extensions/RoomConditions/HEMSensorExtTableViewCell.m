@@ -24,6 +24,7 @@
         // is iOS 9
         [[self sensorIconLeadingConstraint] setConstant:0.0f];
         [[self valueLabelTrailingConstraint] setConstant:0.0f];
+        [[self separator] setBackgroundColor:[UIColor whiteColor]];
     }
 }
 

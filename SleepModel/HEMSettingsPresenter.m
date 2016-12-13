@@ -20,6 +20,7 @@
 
 static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 static CGFloat const HEMSettingsBottomMargin = 10.0f;
+static CGFloat const HEMSettingsRowHeight = 56.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSettingsSection) {
     HEMSettingsSectionAccount = 0,
@@ -147,8 +148,19 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     
     [[self versionView] sizeToFit];
 
+    // can't always depend on content size
+    NSInteger numberOfSections = [[self sections] count];
+    CGFloat totalHeaderHeight = CGRectGetHeight([[[self tableView] tableHeaderView] bounds]);
+    totalHeaderHeight += (numberOfSections - 1) * HEMSettingsSectionHeaderHeight;
+    
+    CGFloat totalRowHeight = 0.0f;
+    for (NSArray* rows in [self sections]) {
+        totalRowHeight += [rows count] * HEMSettingsRowHeight;
+    }
+    
     CGFloat versionRequiredHeight = CGRectGetHeight([[self versionLabel] frame]);
-    CGFloat contentHeight = [[self tableView] contentSize].height;
+    CGFloat contentHeight = totalHeaderHeight + totalRowHeight;
+    
     CGFloat tableHeight = CGRectGetHeight([[self tableView] bounds]);
     CGFloat tableWidth = CGRectGetWidth([[self tableView] bounds]);
     CGFloat minSpacing = HEMSettingsSectionHeaderHeight;

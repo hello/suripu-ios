@@ -431,14 +431,8 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             break;
     }
     
-    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                     forIndexPath:indexPath];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView
-       willDisplayCell:(UICollectionViewCell *)cell
-    forItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                                           forIndexPath:indexPath];
     if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
         SENSensor* sensor = [self groupedSensors][[indexPath row]];
         [self configureSensorCell:(id)cell forSensor:sensor];
@@ -450,6 +444,8 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         NSArray<SENSensor*>* sensors = [self groupedSensors][[indexPath row]];
         [self configureGroupSensorCell:(id)cell forSensors:sensors];
     }
+    
+    return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

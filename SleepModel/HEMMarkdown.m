@@ -12,36 +12,6 @@
 
 @implementation HEMMarkdown
 
-+ (NSDictionary *)attributesForBackViewText {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 2.f;
-    style.lineBreakMode = NSLineBreakByWordWrapping;
-    style.alignment = NSTextAlignmentLeft;
-
-    return @{
-        @(EMPH) : @{
-            NSFontAttributeName : [UIFont bodyBold],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor boldTextColor]
-        },
-        @(STRONG) : @{
-            NSFontAttributeName : [UIFont bodyBold],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor boldTextColor]
-        },
-        @(BULLETLIST) : @{
-            NSFontAttributeName : [UIFont body],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor detailTextColor]
-        },
-        @(PARA) : @{
-            NSFontAttributeName : [UIFont body],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor detailTextColor]
-        }
-    };
-}
-
 + (NSDictionary *)attributesForInsightSummaryText {
     NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.lineBreakMode = NSLineBreakByWordWrapping;
@@ -71,8 +41,10 @@
 }
 
 + (NSDictionary *)attributesForAlertMessageText {
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     return @{ @(PARA) : @{NSFontAttributeName : [UIFont body],
-                          NSForegroundColorAttributeName : [UIColor grey5]}};
+                          NSForegroundColorAttributeName : [UIColor grey5],
+                          NSParagraphStyleAttributeName : style}};
 }
 
 + (NSDictionary *)attributesForTimelineBreakdownTitle {

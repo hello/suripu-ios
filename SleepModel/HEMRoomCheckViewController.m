@@ -10,16 +10,13 @@
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSensorStatus.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
-
-
 #import "HEMRoomCheckViewController.h"
 #import "HEMActionButton.h"
 #import "HEMRoomCheckView.h"
 #import "HEMMarkdown.h"
 #import "HEMSensorService.h"
 #import "HEMSensorValueFormatter.h"
+#import "HEMStyle.h"
 
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
@@ -69,7 +66,12 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [[self roomCheckView] setDelegate:self];
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
     
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSString* resultsDescription = [[self resultsDescriptionLabel] text];
+    NSAttributedString* attributedDescription = [[NSAttributedString alloc] initWithString:resultsDescription
+                                                                                attributes:@{NSParagraphStyleAttributeName : style}];
     [[self resultsDescriptionLabel] setAlpha:0.0f];
+    [[self resultsDescriptionLabel] setAttributedText:attributedDescription];
     [[self resultsDescriptionLabel] setFont:[UIFont body]];
     [[self resultsDescriptionLabel] setTextColor:[UIColor grey4]];
     [[self resultsTitleLabel] setAlpha:0.0f];

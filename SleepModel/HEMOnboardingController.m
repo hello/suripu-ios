@@ -10,8 +10,6 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "UIBarButtonItem+HEMNav.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 
 #import "HEMOnboardingController.h"
 #import "HEMSupportUtil.h"
@@ -21,6 +19,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMStyle.h"
 
 static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
@@ -121,17 +120,19 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
         NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
         
         if ([attrDesc length] > 0) {
+            NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+            
             [attrDesc addAttributes:@{NSFontAttributeName : font,
                                       NSForegroundColorAttributeName : color}
                               range:NSMakeRange(0, [attrDesc length])];
             
             if (HEMIsIPhone4Family()) {
-                NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
                 [style setAlignment:NSTextAlignmentCenter];
-                [attrDesc addAttribute:NSParagraphStyleAttributeName
-                                 value:style
-                                 range:NSMakeRange(0, [attrDesc length])];
             }
+            
+            [attrDesc addAttribute:NSParagraphStyleAttributeName
+                             value:style
+                             range:NSMakeRange(0, [attrDesc length])];
             
             [[self descriptionLabel] setAttributedText:attrDesc];
         } else {

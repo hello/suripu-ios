@@ -426,6 +426,7 @@
 		BFD9A97D1D5BA5B8003EC82A /* HEMOnboardingPairSensePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A97C1D5BA5B8003EC82A /* HEMOnboardingPairSensePresenter.m */; };
 		BFD9D2001BF27E2900948CB7 /* HEMSegmentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9D1FF1BF27E2900948CB7 /* HEMSegmentProvider.m */; };
 		BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD9F1A71D36C43300BB4E3A /* HEMPillCollectionViewCell.m */; };
+		BFDBDD3F1DFF39D9000C8433 /* NSString+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7D80221A40EADE00B0BFD7 /* NSString+HEMUtils.m */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFDD8BDE1DCF921400E20B42 /* HEMThermostatRangePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFDD8BDD1DCF921400E20B42 /* HEMThermostatRangePicker.xib */; };
 		BFDD8BE41DCFB63000E20B42 /* HEMThermostatRangePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDD8BE31DCFB63000E20B42 /* HEMThermostatRangePicker.m */; };
@@ -3637,6 +3638,9 @@
 							com.apple.HealthKit = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 						};
 					};
 					6003F5AD195388D20070C39A = {
@@ -3650,7 +3654,7 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.HealthKit = {
 								enabled = 0;
@@ -4438,6 +4442,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFDBDD3F1DFF39D9000C8433 /* NSString+HEMUtils.m in Sources */,
 				BF8411EE1D83912700D7A676 /* HEMSensorDataRequestOperation.m in Sources */,
 				BF53D8CF1D931E3F00C24F9D /* HEMRoomConditionsExtViewController.m in Sources */,
 				BF88EA791DBECF3F00BCE15E /* HEMMathUtil.m in Sources */,
@@ -4655,7 +4660,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4697,8 +4701,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
-				PROVISIONING_PROFILE = "e890c038-0523-46d6-92fb-cc03298a4c07";
-				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest";
+				PROVISIONING_PROFILE = "a3c7ce35-da5e-45ec-9055-112fc28fc47f";
+				PROVISIONING_PROFILE_SPECIFIER = "Sense Dev";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_CLIENT_ID = iphone_pill;
@@ -4905,8 +4909,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jimmy Lu (WYYTFR26F3)";
 				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4978,9 +4981,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.sensetest.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "abacd2a8-3471-4603-8fd2-b30f41fa54cf";
-				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest.Widget";
-				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
+				PROVISIONING_PROFILE = "9a5fd024-0b6c-4b31-9c58-868e3f5beeb5";
+				PROVISIONING_PROFILE_SPECIFIER = "Sense Extension Dev";
+				SENSE_ROOM_CONDITIONS_NAME = Sense;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -5038,9 +5041,9 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "657d8fb9-a17f-45cb-83e2-143b3f0ea846";
-				PROVISIONING_PROFILE_SPECIFIER = "XC Ad Hoc: is.hello.Sense.Widget";
-				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
+				PROVISIONING_PROFILE = "5de7a525-cc7d-4e70-b0d0-2eebfa582d1f";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.Sense.Widget";
+				SENSE_ROOM_CONDITIONS_NAME = Sense;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -5278,9 +5281,9 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "657d8fb9-a17f-45cb-83e2-143b3f0ea846";
-				PROVISIONING_PROFILE_SPECIFIER = "XC Ad Hoc: is.hello.Sense.Widget";
-				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
+				PROVISIONING_PROFILE = "5de7a525-cc7d-4e70-b0d0-2eebfa582d1f";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.Sense.Widget";
+				SENSE_ROOM_CONDITIONS_NAME = Sense;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -5357,8 +5360,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hello Inc (MSG86J7GNF)";
 				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5475,8 +5477,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hello Inc (MSG86J7GNF)";
 				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5522,7 +5523,7 @@
 				PRODUCT_NAME = RoomConditionsExtension;
 				PROVISIONING_PROFILE = "abacd2a8-3471-4603-8fd2-b30f41fa54cf";
 				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest.Widget";
-				SENSE_ROOM_CONDITIONS_NAME = "Room Conditions";
+				SENSE_ROOM_CONDITIONS_NAME = Sense;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};

@@ -15,6 +15,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 #import "HEMRoomConditionsExtViewController.h"
 #import "HEMSensorExtTableViewCell.h"
@@ -23,15 +24,17 @@
 #import "HEMConfig.h"
 
 static NSString* const HEMApiUserAgentFormat = @"%@/%@ Platform/iOS OS/%@";
-static NSString* const kHEMRoomConditionsExtErrorDomain = @"is.hello.sense.today";
+static NSString* const kHEMRoomConditionsExtErrorDomain = @"is.hello.sense.RoomConditions";
 static NSString* const kHEMRoomConditionsExtConditionsCellId = @"info";
 static NSString* const kHEMRoomConditionsExtSenseScheme = @"sense://ext/room";
 static NSString* const HEMRoomConditionsExtSensorQueryItem = @"sensor";
 
-static CGFloat const kHEMTodayLeftInset = 15.0f;
-static CGFloat const kHEMTodayRightInset = 15.0f;
-static CGFloat const kHEMTodayBottomInset = 15.0f;
-static CGFloat const kHEMTodayRowHeight = 44.0f;
+static CGFloat const kHEMRoomConditionsLeftInset = 15.0f;
+static CGFloat const kHEMRoomConditionsRightInset = 15.0f;
+static CGFloat const kHEMRoomConditionsBottomInset = 15.0f;
+static CGFloat const kHEMRoomConditionsRowHeight = 44.0f;
+static NSInteger const kHEMRoomConditionsCollapsedSensors = 4;
+static CGFloat const kHEMRoomConditionsSeparatorLeftInset = 24.0f;
 
 typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
@@ -41,13 +44,23 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     UITableViewDelegate
 >
 
-@property (nonatomic, weak)   IBOutlet UITableView* tableView;
-@property (nonatomic, weak)   IBOutlet UILabel *noDataLabel;
-@property (nonatomic, copy)   HEMWidgeUpdateBlock updateBlock;
-@property (nonatomic, assign, getter=isLoading) BOOL loading;
-@property (nonatomic, strong) NSError* sensorsError;
-@property (nonatomic, strong) HEMSensorValueFormatter* sensorFormatter;
-@property (nonatomic, strong) SENSensorStatus* status;
+@property (weak, nonatomic) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet UILabel *noDataLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *headerSensorIcon1;
+@property (weak, nonatomic) IBOutlet UILabel *headerSensorLabel1;
+@property (weak, nonatomic) IBOutlet UIImageView *headerSensorIcon2;
+@property (weak, nonatomic) IBOutlet UILabel *headerSensorLabel2;
+@property (weak, nonatomic) IBOutlet UIImageView *headerSensorIcon3;
+@property (weak, nonatomic) IBOutlet UILabel *headerSensorLabel3;
+@property (weak, nonatomic) IBOutlet UIImageView *headerSensorIcon4;
+@property (weak, nonatomic) IBOutlet UILabel *headerSensorLabel4;
+
+@property (copy, nonatomic)   HEMWidgeUpdateBlock updateBlock;
+@property (assign, nonatomic, getter=isLoading) BOOL loading;
+@property (strong, nonatomic) NSError* sensorsError;
+@property (strong, nonatomic) HEMSensorValueFormatter* sensorFormatter;
+@property (strong, nonatomic) SENSensorStatus* status;
+@property (strong, nonatomic) UIColor* defaultTextColor;
 
 @end
 
@@ -76,10 +89,48 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 }
 
 - (void)configureContent {
+    UIImage* senseImage = [UIImage imageNamed:@"extensionSenseIcon"];
+    senseImage = [senseImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    if ([[self extensionContext] respondsToSelector:@selector(setWidgetLargestAvailableDisplayMode:)]) {
+        // iOS 10
+        [self setDefaultTextColor:[UIColor grey5]];
+        [[self tableView] setSeparatorColor:[UIColor grey5]];
+        
+        [[self headerSensorIcon1] setTintColor:[UIColor whiteColor]];
+        [[self headerSensorIcon2] setTintColor:[UIColor whiteColor]];
+        [[self headerSensorIcon3] setTintColor:[UIColor whiteColor]];
+        [[self headerSensorIcon4] setTintColor:[UIColor whiteColor]];
+        
+        CGFloat radius = CGRectGetWidth([[self headerSensorIcon1] bounds]) / 2;
+        [[[self headerSensorIcon1] layer] setCornerRadius:radius];
+        [[[self headerSensorIcon2] layer] setCornerRadius:radius];
+        [[[self headerSensorIcon3] layer] setCornerRadius:radius];
+        [[[self headerSensorIcon4] layer] setCornerRadius:radius];
+        
+        [[self headerSensorLabel1] setTextColor:[self defaultTextColor]];
+        [[self headerSensorLabel2] setTextColor:[self defaultTextColor]];
+        [[self headerSensorLabel3] setTextColor:[self defaultTextColor]];
+        [[self headerSensorLabel4] setTextColor:[self defaultTextColor]];
+        
+        [[self headerSensorLabel1] setFont:[UIFont h8]];
+        [[self headerSensorLabel2] setFont:[UIFont h8]];
+        [[self headerSensorLabel3] setFont:[UIFont h8]];
+        [[self headerSensorLabel4] setFont:[UIFont h8]];
+        
+        [[self extensionContext] setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
+        [[self tableView] setSeparatorInset:UIEdgeInsetsMake(0.0f, kHEMRoomConditionsSeparatorLeftInset, 0.0f, 0.0f)];
+    } else {
+        [[self tableView] setTableHeaderView:nil];
+        [self setDefaultTextColor:[UIColor whiteColor]];
+        [[self tableView] setSeparatorColor:[UIColor whiteColor]];
+    }
+    
+    [[self noDataLabel] setTextColor:[self defaultTextColor]];
     [[self noDataLabel] setText:nil];
     [self setSensorFormatter:[HEMSensorValueFormatter new]];
     [[self sensorFormatter] setIncludeUnitSymbol:YES];
-    [[self tableView] setRowHeight:kHEMTodayRowHeight];
+    [[self tableView] setRowHeight:kHEMRoomConditionsRowHeight];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -134,19 +185,27 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     CGFloat height = 0.0f;
     if ([SENAuthorizationService isAuthorized]) {
         NSInteger sensorCount = [[[self status] sensors] count];
-        height = (sensorCount * kHEMTodayRowHeight);
+        height = (sensorCount * kHEMRoomConditionsRowHeight);
     } else {
         CGRect buttonFrame = [[self noDataLabel] frame];
         height = CGRectGetMaxY(buttonFrame) + CGRectGetMinY(buttonFrame);
     }
-    [self setPreferredContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds), height)];
+    
+    if ([[self extensionContext] respondsToSelector:@selector(widgetActiveDisplayMode)]) {
+        if ([[self extensionContext] widgetActiveDisplayMode] == NCWidgetDisplayModeExpanded) {
+            height += CGRectGetHeight([[[self tableView] tableHeaderView] bounds]);
+            [self setPreferredContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds), height)];
+        }
+    } else {
+        [self setPreferredContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds), height)];
+    }
 }
          
 - (UIImage *)imageForSensor:(SENSensor *)sensor {
-    NSString* typeLowerCase = [[sensor typeStringValue] lowercaseString];
-    NSString* imageName = [NSString stringWithFormat:@"%@IconWhite", typeLowerCase];
+    NSString* camelCase = [NSString camelCaseWord:[sensor typeStringValue]];
+    NSString* imageName = [NSString stringWithFormat:@"extension%@Icon", camelCase];
     UIImage* image = [UIImage imageNamed:imageName];
-    return image;
+    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (UIColor*)colorForSensor:(SENSensor*)sensor {
@@ -155,7 +214,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         case SENConditionWarning:
             return [UIColor colorForCondition:[sensor condition]];
         default:
-            return [UIColor whiteColor];
+            return [self defaultTextColor];
     }
 }
 
@@ -170,6 +229,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         __strong typeof(weakSelf) strongSelf = weakSelf;
         BOOL noData = [[[strongSelf status] sensors] count] == 0;
         [strongSelf updateHeight];
+        [strongSelf updateHeader];
         [strongSelf showNoDataLabel:noData];
         [[strongSelf tableView] reloadData];
     };
@@ -179,6 +239,32 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     } else {
         dispatch_async(dispatch_get_main_queue(), reload);
     }
+}
+
+- (void)updateHeader {
+    NSArray* sensors = [[self status] sensors];
+    if ([sensors count] >= kHEMRoomConditionsCollapsedSensors) {
+        [self updateHeaderImage:[self headerSensorIcon1]
+                          label:[self headerSensorLabel1]
+                      forSensor:sensors[0]];
+        [self updateHeaderImage:[self headerSensorIcon2]
+                          label:[self headerSensorLabel2]
+                      forSensor:sensors[1]];
+        [self updateHeaderImage:[self headerSensorIcon3]
+                          label:[self headerSensorLabel3]
+                      forSensor:sensors[2]];
+        [self updateHeaderImage:[self headerSensorIcon4]
+                          label:[self headerSensorLabel4]
+                      forSensor:sensors[3]];
+    }
+}
+
+- (void)updateHeaderImage:(UIImageView*)imageView
+                    label:(UILabel*)label
+                forSensor:(SENSensor*)sensor {
+    [imageView setImage: [self imageForSensor:sensor]];
+    [imageView setBackgroundColor:[UIColor colorForCondition:[sensor condition]]];
+    [label setText:[sensor localizedName]];
 }
 
 #pragma mark - NCWidgetProviding
@@ -193,8 +279,29 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     }
 }
 
+- (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode withMaximumSize:(CGSize)maxSize {
+    switch (activeDisplayMode) {
+        case NCWidgetDisplayModeCompact:
+            [self setPreferredContentSize:maxSize];
+            break;
+        default: {
+            NSInteger sensorCount = [[[self status] sensors] count];
+            CGFloat height = sensorCount * kHEMRoomConditionsRowHeight;
+            height += CGRectGetHeight([[[self tableView] tableHeaderView] bounds]);
+            [self setPreferredContentSize:CGSizeMake(maxSize.width, height)];
+            break;
+        }
+    }
+}
+
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
-    return UIEdgeInsetsMake(0.0f, kHEMTodayLeftInset, kHEMTodayBottomInset, kHEMTodayRightInset);
+    
+    if ([[self extensionContext] respondsToSelector:@selector(widgetActiveDisplayMode)]) {
+        // iOS 10
+        return defaultMarginInsets;
+    } else {
+        return UIEdgeInsetsMake(0.0f, kHEMRoomConditionsLeftInset, kHEMRoomConditionsBottomInset, kHEMRoomConditionsRightInset);
+    }
 }
 
 #pragma mark - UITableViewDataSource / Delegate
@@ -230,11 +337,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureConditionsCell:(HEMSensorExtTableViewCell*)cell
                     atIndexPath:(NSIndexPath*)indexPath {
+    BOOL lastRow = [indexPath row] == [[[self status] sensors] count] - 1;
     SENSensor* sensor = [self sensorAtIndexPath:indexPath];
     [[cell sensorIconView] setImage:[self imageForSensor:sensor]];
     [[cell sensorNameLabel] setText:[sensor localizedName]];
+    [[cell sensorNameLabel] setTextColor:[self defaultTextColor]];
     [[cell sensorValueLabel] setText:[self valueForSensor:sensor]];
     [[cell sensorValueLabel] setTextColor:[self colorForSensor:sensor]];
+    [[cell sensorIconView] setTintColor:[self defaultTextColor]]; // match the text
+    [[cell separator] setBackgroundColor:[[self defaultTextColor] colorWithAlphaComponent:0.5f]]; // match the text
+    [[cell separator] setHidden:lastRow];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

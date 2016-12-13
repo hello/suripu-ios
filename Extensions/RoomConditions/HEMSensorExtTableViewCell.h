@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *sensorIconView;
 @property (weak, nonatomic) IBOutlet UILabel *sensorNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sensorValueLabel;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 
 @end

@@ -17,7 +17,7 @@
 
 // onboarding
 "onboarding.new-sense.title" = "Set up Sense";
-"onboarding.new-sense.desc" = "The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep PIll are nearby.";
+"onboarding.new-sense.desc" = "The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep Pill are nearby.";
 "onboarding.pair-sense.title" = "Pair your Sense";
 "onboarding.pair-sense.not-glowing" = "Sense isn’t glowing blue or purple";
 "onboarding.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";

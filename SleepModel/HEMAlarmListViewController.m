@@ -22,7 +22,8 @@
     HEMAlarmListPresenterDelegate,
     HEMPresenterPairDelegate,
     HEMSensePairingDelegate,
-    ShortcutHandler
+    ShortcutHandler,
+    Scrollable
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -92,6 +93,12 @@
 - (void)addNewAlarm {
     SENAlarm *alarm = [SENAlarm createDefaultAlarm];
     [self presentViewControllerForAlarm:alarm];
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - Shortcuts

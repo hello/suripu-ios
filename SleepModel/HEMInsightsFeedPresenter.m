@@ -11,6 +11,8 @@
 #import "SENRemoteImage+HEMDeviceSpecific.h"
 #import "UIActivityViewController+HEMSharing.h"
 
+#import "Sense-Swift.h"
+
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -46,7 +48,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 @interface HEMInsightsFeedPresenter() <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
-    UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegateFlowLayout,
+    Scrollable
 >
 
 @property (strong, nonatomic) NSArray* data;
@@ -112,6 +115,14 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 - (void)bindWithSubNavBar:(HEMSubNavigationView*)subNavBar {
     [self bindWithShadowView:[subNavBar shadowView]];
 }
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
+}
+
+#pragma mark -
 
 - (void)showLoadingActivity:(BOOL)show {
     if (show) {

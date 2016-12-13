@@ -27,7 +27,8 @@ static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
     HEMPresenterPairDelegate,
     HEMSensePairingDelegate,
     HEMRoomConditionsDelegate,
-    RoomConditionsNavDelegate
+    RoomConditionsNavDelegate,
+    Scrollable
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -80,6 +81,12 @@ static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
     [self setIntroService:introService];
     [self addPresenter:presenter];
     [self addPresenter:navPresenter];
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - RoomConditionsNavDelegate

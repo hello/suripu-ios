@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 10/11/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMVoiceFeedViewController.h"
 #import "HEMVoiceExamplesViewController.h"
 #import "HEMVoiceService.h"
@@ -13,7 +13,7 @@
 #import "HEMVoiceFeedPresenter.h"
 #import "HEMMainStoryboard.h"
 
-@interface HEMVoiceFeedViewController () <HEMVoiceFeedDelegate>
+@interface HEMVoiceFeedViewController () <HEMVoiceFeedDelegate, Scrollable>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMVoiceCommandGroup* selectedGroup;
@@ -47,6 +47,12 @@
     [feedPresenter bindWithSubNavigationBar:[self subNavBar]];
     [feedPresenter setFeedDelegate:self];
     [self addPresenter:feedPresenter];
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - Feed Delegate

@@ -179,6 +179,7 @@
 		BF3583941CB443ED00760CD4 /* Sounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF3583931CB443ED00760CD4 /* Sounds.xcassets */; };
 		BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */; };
 		BF3583A11CB5C03700760CD4 /* HEMSleepSoundActionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */; };
+		BF3926C71E00AF63006BE166 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3926C61E00AF63006BE166 /* Scrollable.swift */; };
 		BF398C281D9F24BE009EEF59 /* Expansions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF398C271D9F24BE009EEF59 /* Expansions.xcassets */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
 		BF412EA01C90F7B6009514A1 /* HEMSleepSoundService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */; };
@@ -837,6 +838,7 @@
 		BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundStatusCheckOperation.m; sourceTree = "<group>"; };
 		BF35839F1CB5C03700760CD4 /* HEMSleepSoundActionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundActionOperation.h; sourceTree = "<group>"; };
 		BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundActionOperation.m; sourceTree = "<group>"; };
+		BF3926C61E00AF63006BE166 /* Scrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
 		BF398C271D9F24BE009EEF59 /* Expansions.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Expansions.xcassets; sourceTree = "<group>"; };
 		BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+HEMUtils.h"; sourceTree = "<group>"; };
 		BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+HEMUtils.m"; sourceTree = "<group>"; };
@@ -2230,6 +2232,14 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		BF3926C81E00B166006BE166 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BF3926C61E00AF63006BE166 /* Scrollable.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		BF412E9C1C90F792009514A1 /* Sleep Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -3373,6 +3383,7 @@
 				BF0B15E61DF1072400DF2373 /* Main.xcassets */,
 				8A7D80171A40D70600B0BFD7 /* Layouts */,
 				BFD89A721DECC68B005DC2FF /* Presenters */,
+				BF3926C81E00B166006BE166 /* Protocols */,
 				BFD89A711DECC676005DC2FF /* Views */,
 				BFD89A701DECC665005DC2FF /* View Controllers */,
 			);
@@ -4141,6 +4152,7 @@
 				BFCB91C21DB16F7900810CFB /* HEMMacAddressHeaderView.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,
 				BF257EEA1A1D269300DAF923 /* HEMAlertView.m in Sources */,
+				BF3926C71E00AF63006BE166 /* Scrollable.swift in Sources */,
 				BFE375F01CEFE1520029EE66 /* UIImage+HEMCompression.m in Sources */,
 				BF539CC01C0D292C000F77AA /* HEMInsightsService.m in Sources */,
 				BF8C09301C29D9DF005AB5A7 /* HEMPasswordChangePresenter.m in Sources */,

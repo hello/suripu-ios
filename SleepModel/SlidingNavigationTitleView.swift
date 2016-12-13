@@ -120,7 +120,7 @@ class SlidingNavigationTitleView: UIView {
         let index = self.titles.index(of: title)
         if index != nil {
             for (controlIndex, control) in self.controls.enumerated() {
-                control.isHighlighted = controlIndex == index
+                control.isSelected = controlIndex == index
             }
             self.selectedIndex = index
         }
@@ -136,7 +136,7 @@ class SlidingNavigationTitleView: UIView {
         
         let controlHighlightIndex = Int(indexPercentage)
         for (index, control) in self.controls.enumerated() {
-            control.isHighlighted = controlHighlightIndex == index
+            control.isSelected = controlHighlightIndex == index
         }
 
         var frame = self.highlightLine.frame

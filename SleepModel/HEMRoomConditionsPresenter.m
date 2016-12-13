@@ -448,23 +448,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     return cell;
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView
-//       willDisplayCell:(UICollectionViewCell *)cell
-//    forItemAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
-//        SENSensor* sensor = [self groupedSensors][[indexPath row]];
-//        [self configureSensorCell:(id)cell forSensor:sensor];
-//    } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
-//        [self configurePairSenseCell:(id)cell];
-//    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) { // error
-//        [self configureErrorCell:(id)cell];
-//    } else if ([cell isKindOfClass:[HEMSensorGroupCollectionViewCell class]]) {
-//        NSArray<SENSensor*>* sensors = [self groupedSensors][[indexPath row]];
-//        [self configureGroupSensorCell:(id)cell forSensors:sensors];
-//    }
-//}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
 referenceSizeForHeaderInSection:(NSInteger)section {

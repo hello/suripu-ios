@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.0.11
+
+New:
+
+* Updated sense icon for room conditions tab
+* Routing app review prompts to Sense with Voice on Amazon, for amazon reviews, when user has Sense with Voice
+* Onboarding description text now uses 24px line height
+* New collapsed mode in room conditions extension, required for iOS 10 
+
+Fixes:
+
+* Fixed room conditions expanded mode in iOS 10
+* Fixed tab not being highlighted when tapping on the tab at the top
+* Fixed version text that was jumping around in settings
+* Fixed sleep summary tap target in Timeline
+
 ## 2.0.0.10
 
 New:

@@ -109,7 +109,6 @@ static BOOL hasLoadedBefore = NO;
 
     [self loadData];
 
-    [self configureNavigationBar];
     [self configureGestures];
     [self registerForNotifications];
 
@@ -173,15 +172,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    CGFloat navY = CGRectGetMinY([[self navigationBar] frame]);
-    CGFloat statusHeight = CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
-    if (navY == 0.0f) {
-        [[self navigationBarTopConstraint] setConstant:statusHeight];
-        [[self navigationBar] layoutIfNeeded];
-    } else if (navY > statusHeight) {
-        [[self navigationBarTopConstraint] setConstant:0.0f];
-        [[self navigationBar] layoutIfNeeded];
-    }
+    [self configureNavigationBarIfNeeded];
 }
 
 - (void)configureServices {
@@ -843,7 +834,21 @@ static BOOL hasLoadedBefore = NO;
 
 #pragma mark - Navigation Bar
 
-- (void)configureNavigationBar {
+- (void)configureNavigationBarIfNeeded {
+    if ([self shareButton]) {
+        return; // already done
+    }
+    
+    CGFloat navY = CGRectGetMinY([[self navigationBar] frame]);
+    CGFloat statusHeight = CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
+    if (navY == 0.0f) {
+        [[self navigationBarTopConstraint] setConstant:statusHeight];
+        [[self navigationBar] layoutIfNeeded];
+    } else if (navY > statusHeight) {
+        [[self navigationBarTopConstraint] setConstant:0.0f];
+        [[self navigationBar] layoutIfNeeded];
+    }
+    
     UINavigationBar* bar = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[self class]]];
     ApplyDefaultStyleForNavBarAppearance(bar);
     
@@ -859,7 +864,7 @@ static BOOL hasLoadedBefore = NO;
     CGFloat shareLeftInset = HEMStyleDefaultNavBarButtonItemWidth - shareImage.size.width;
     [shareButton setImage:shareImage forState:UIControlStateNormal];
     [shareButton setFrame:buttonFrame];
-    [shareButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, shareLeftInset, 0.0f, 0.0f)];
+    [shareButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, shareLeftInset, 0.0f, 0.0f)];
     [shareButton addTarget:self
                     action:@selector(didTapShareButton:)
           forControlEvents:UIControlEventTouchUpInside];
@@ -873,7 +878,7 @@ static BOOL hasLoadedBefore = NO;
     CGFloat historyRightInset = HEMStyleDefaultNavBarButtonItemWidth - historyImage.size.width;
     [historyButton setImage:historyImage forState:UIControlStateNormal];
     [historyButton setFrame:buttonFrame];
-    [historyButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, historyRightInset)];
+    [historyButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, historyRightInset)];
     [historyButton addTarget:self
                       action:@selector(didTapOnHistoryButton:)
             forControlEvents:UIControlEventTouchUpInside];

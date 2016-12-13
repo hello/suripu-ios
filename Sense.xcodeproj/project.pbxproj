@@ -351,6 +351,7 @@
 		BFAB22DC1AD3613800CCBF8A /* HEMRoomCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAB22DB1AD3613800CCBF8A /* HEMRoomCheckView.m */; };
 		BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */; };
 		BFACC71A19A4282A00FC77EE /* HEMWifiPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFACC71919A4282A00FC77EE /* HEMWifiPasswordViewController.m */; };
+		BFADEFAA1E007C7C004F4B1F /* HEMTappableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF037C001B7C178D00E1638D /* HEMTappableView.m */; };
 		BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */; };
 		BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */; };
 		BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */; };
@@ -4443,6 +4444,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFDBDD3F1DFF39D9000C8433 /* NSString+HEMUtils.m in Sources */,
+				BFADEFAA1E007C7C004F4B1F /* HEMTappableView.m in Sources */,
 				BF8411EE1D83912700D7A676 /* HEMSensorDataRequestOperation.m in Sources */,
 				BF53D8CF1D931E3F00C24F9D /* HEMRoomConditionsExtViewController.m in Sources */,
 				BF88EA791DBECF3F00BCE15E /* HEMMathUtil.m in Sources */,

@@ -22,6 +22,7 @@
 #import "HEMSensorValueFormatter.h"
 #import "HEMSensorService.h"
 #import "HEMConfig.h"
+#import "HEMTappableView.h"
 
 static NSString* const HEMApiUserAgentFormat = @"%@/%@ Platform/iOS OS/%@";
 static NSString* const kHEMRoomConditionsExtErrorDomain = @"is.hello.sense.RoomConditions";
@@ -34,14 +35,14 @@ static CGFloat const kHEMRoomConditionsRightInset = 15.0f;
 static CGFloat const kHEMRoomConditionsBottomInset = 15.0f;
 static CGFloat const kHEMRoomConditionsRowHeight = 44.0f;
 static NSInteger const kHEMRoomConditionsCollapsedSensors = 4;
-static CGFloat const kHEMRoomConditionsSeparatorLeftInset = 24.0f;
 
 typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 @interface HEMRoomConditionsExtViewController () <
     NCWidgetProviding,
     UITableViewDataSource,
-    UITableViewDelegate
+    UITableViewDelegate,
+    HEMTapDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UITableView* tableView;
@@ -119,11 +120,14 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         [[self headerSensorLabel4] setFont:[UIFont h8]];
         
         [[self extensionContext] setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
-        [[self tableView] setSeparatorInset:UIEdgeInsetsMake(0.0f, kHEMRoomConditionsSeparatorLeftInset, 0.0f, 0.0f)];
+        
+        if ([[[self tableView] tableHeaderView] isKindOfClass:[HEMTappableView class]]) {
+            HEMTappableView* headerView = (id) [[self tableView] tableHeaderView];
+            [headerView setTapDelegate:self];
+        }
     } else {
         [[self tableView] setTableHeaderView:nil];
         [self setDefaultTextColor:[UIColor whiteColor]];
-        [[self tableView] setSeparatorColor:[UIColor whiteColor]];
     }
     
     [[self noDataLabel] setTextColor:[self defaultTextColor]];
@@ -354,6 +358,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - Actions
+
+- (void)didTapOnView:(HEMTappableView *)tappableView {
+    NSURLComponents* components = [NSURLComponents componentsWithString:kHEMRoomConditionsExtSenseScheme];
+    [[self extensionContext] openURL:[components URL] completionHandler:nil];
+}
 
 - (IBAction)openApp:(id)sender {
     NSURLComponents* components = [NSURLComponents componentsWithString:kHEMRoomConditionsExtSenseScheme];

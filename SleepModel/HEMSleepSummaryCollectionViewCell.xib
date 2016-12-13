@@ -85,17 +85,22 @@
                                     <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" id="Kja-eR-b3l"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="top" secondItem="buK-Of-ZfH" secondAttribute="bottom" constant="16" id="MAw-uL-pZc"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="centerX" secondItem="XD9-Mv-4Jf" secondAttribute="centerX" constant="-10" id="PPo-AN-kcR"/>
-                                    <constraint firstAttribute="height" constant="28" id="UPf-fi-yZI"/>
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="XD9-Mv-4Jf" secondAttribute="top" id="bAS-0D-YOb"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="centerY" secondItem="JKF-id-cB1" secondAttribute="centerY" constant="-1" id="kuk-m8-MiQ"/>
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" id="zyI-7R-HHa"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="chevron" destination="JKF-id-cB1" id="KVQ-Mt-K3b"/>
+                                    <outlet property="messageLabel" destination="buK-Of-ZfH" id="NZE-8z-bXi"/>
+                                    <outlet property="summaryLabel" destination="3zN-gk-dwk" id="ECO-Nt-eaI"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="1cj-i9-Ywi" secondAttribute="top" constant="16" id="9DR-Gv-ZhK"/>
                             <constraint firstAttribute="trailing" secondItem="XD9-Mv-4Jf" secondAttribute="trailing" constant="24" id="DgO-Em-V2T"/>
+                            <constraint firstAttribute="bottom" secondItem="XD9-Mv-4Jf" secondAttribute="bottom" id="HJc-3B-1TZ"/>
                             <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" id="KOh-Fc-vJ8"/>
                             <constraint firstAttribute="centerX" secondItem="FN0-1v-Tup" secondAttribute="centerX" constant="0.5" id="V8J-MZ-6qm"/>
                             <constraint firstItem="FN0-1v-Tup" firstAttribute="bottom" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="10" id="nhZ-cg-khh"/>

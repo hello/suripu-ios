@@ -132,11 +132,15 @@ static BOOL hasLoadedBefore = NO;
     [[self errorMessageLabel] setTextColor:[UIColor grey4]];
     
     [[[self errorSupportButton] titleLabel] setFont:[UIFont button]];
+    [[self errorSupportButton] setBackgroundColor:[UIColor whiteColor]];
+    [[self errorSupportButton] setTitleColor:[UIColor tintColor]
+                                    forState:UIControlStateNormal];
 }
 
 - (NSAttributedString*)attributedErrorMessage:(NSString*)message {
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
+    [style setParagraphSpacing:-5.0f];
     NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
                                  NSFontAttributeName : [UIFont body],
                                  NSForegroundColorAttributeName : [UIColor grey5]};
@@ -147,7 +151,7 @@ static BOOL hasLoadedBefore = NO;
     [super adjustConstraintsForIPhone4];
     
     CGFloat height = [[self errorImageHeightConstraint] constant];
-    [[self errorImageHeightConstraint] setConstant:2 * (height / 3.0f)];
+    [[self errorImageHeightConstraint] setConstant:(height / 2.0f)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

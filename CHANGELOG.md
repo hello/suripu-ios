@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.0.12
+
+New:
+
+* Tapping on the bottom nav, while content is already visible, will scroll content to top
+* Tapping on collapsed content in widget launches in to room conditions
+
+Fixes:
+
+* Removed default text in collapsed view of extension
+* Timeline navigation bar icons should not jump when scrolling fast
+* Air quality grouped sensor card should not be blank on reuse
+* Voice tab properly shows voice tab, based on Sense paired to account
+
 ## 2.0.0.11
 
 New:

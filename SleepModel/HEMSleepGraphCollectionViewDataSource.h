@@ -94,7 +94,14 @@
 
 - (BOOL)hasTimelineData;
 
+- (BOOL)showTimeline;
+
 - (BOOL)hasSleepScore;
+
+- (void)noTimelineTitle:(NSAttributedString**)title
+                message:(NSAttributedString**)message
+                  image:(UIImage**)image
+         showMoreButton:(BOOL*)show;
 
 /**
  *  Tiny text for timestamps

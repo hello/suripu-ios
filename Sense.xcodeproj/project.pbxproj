@@ -180,6 +180,7 @@
 		BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */; };
 		BF3583A11CB5C03700760CD4 /* HEMSleepSoundActionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */; };
 		BF3926C71E00AF63006BE166 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3926C61E00AF63006BE166 /* Scrollable.swift */; };
+		BF3926CA1E00C6F9006BE166 /* NoTimelineViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3926C91E00C6F9006BE166 /* NoTimelineViewCell.swift */; };
 		BF398C281D9F24BE009EEF59 /* Expansions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF398C271D9F24BE009EEF59 /* Expansions.xcassets */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
 		BF412EA01C90F7B6009514A1 /* HEMSleepSoundService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */; };
@@ -254,6 +255,7 @@
 		BF6995F11CA6086E00C7AA55 /* HEMListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6995F01CA6086E00C7AA55 /* HEMListItemCell.m */; };
 		BF6995F41CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6995F31CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m */; };
 		BF6A55841B44B979009CA820 /* HEMActionSheetTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */; };
+		BF6A61EE1E00F08400D59022 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */; };
 		BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */; };
 		BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */; };
 		BF6D9B781C6C194900774322 /* HEMTrendsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B771C6C194900774322 /* HEMTrendsServiceSpec.m */; };
@@ -839,6 +841,7 @@
 		BF35839F1CB5C03700760CD4 /* HEMSleepSoundActionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundActionOperation.h; sourceTree = "<group>"; };
 		BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundActionOperation.m; sourceTree = "<group>"; };
 		BF3926C61E00AF63006BE166 /* Scrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
+		BF3926C91E00C6F9006BE166 /* NoTimelineViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoTimelineViewCell.swift; sourceTree = "<group>"; };
 		BF398C271D9F24BE009EEF59 /* Expansions.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Expansions.xcassets; sourceTree = "<group>"; };
 		BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+HEMUtils.h"; sourceTree = "<group>"; };
 		BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+HEMUtils.m"; sourceTree = "<group>"; };
@@ -1409,6 +1412,7 @@
 				BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */,
 				BF896D4C1C74227E0095D37D /* Foundation.framework in Frameworks */,
 				BFC0E8831C0CE01400C6DFC7 /* MessageUI.framework in Frameworks */,
+				BF6A61EE1E00F08400D59022 /* HealthKit.framework in Frameworks */,
 				BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */,
 				EBD370F7E3364152E122EC70 /* Pods_SenseApp_RoomConditionsExtension.framework in Frameworks */,
 			);
@@ -1814,6 +1818,7 @@
 				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
 				8AB82DDF1B2BFB7B002D769D /* HEMTimelineMessageContainerView.h */,
 				8AB82DE01B2BFB7B002D769D /* HEMTimelineMessageContainerView.m */,
+				BF3926C91E00C6F9006BE166 /* NoTimelineViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -4325,6 +4330,7 @@
 				8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */,
 				8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */,
 				BFA884B71C1A30F500613069 /* HEMTimeZoneAlertService.m in Sources */,
+				BF3926CA1E00C6F9006BE166 /* NoTimelineViewCell.swift in Sources */,
 				BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,
 				BF3326E91D875222009A3E65 /* HEMSensorAboutCollectionViewCell.m in Sources */,

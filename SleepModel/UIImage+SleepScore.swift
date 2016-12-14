@@ -10,7 +10,7 @@ import Foundation
 
 extension UIImage {
     
-    static let iconSize = CGFloat(24)
+    static let iconSize = CGFloat(20)
     static let textPadding = CGFloat(2)
     static let borderWidth = CGFloat(1)
     
@@ -51,7 +51,7 @@ extension UIImage {
         
         let style = NSMutableParagraphStyle()
         style.alignment = NSTextAlignment.center
-        let attributes: [String : AnyObject] = [NSFontAttributeName: UIFont.h8(),
+        let attributes: [String : AnyObject] = [NSFontAttributeName: UIFont.h9(),
                                                 NSParagraphStyleAttributeName: style,
                                                 NSForegroundColorAttributeName : color]
         let textSize = text.sizeBounded(byWidth: size.width, attriburtes: attributes)

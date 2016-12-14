@@ -19,6 +19,7 @@ import SenseKit
 
 @objc class MainViewController: UITabBarController {
     
+    fileprivate static let alertDismissDelay = 1.5
     fileprivate static let itemInset = CGFloat(6)
     fileprivate var presenters = Array<HEMPresenter>()
     fileprivate var modalTransition: HEMSimpleModalTransitionDelegate?
@@ -118,9 +119,6 @@ import SenseKit
             item.imageInsets = inset
             item.title = nil
         }
-        
-        self.tabBar.backgroundColor = UIColor.white
-        self.tabBar.isOpaque = true
     }
     
     fileprivate func trendsController() -> UIViewController! {
@@ -212,7 +210,7 @@ extension MainViewController: HEMSystemAlertDelegate {
     }
     
     func dismissCurrentViewController(from presenter: HEMSystemAlertPresenter) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(delay: MainViewController.alertDismissDelay, animated: true, completion: nil)
     }
     
     func presentSupportPage(withSlug supportPageSlug: String,

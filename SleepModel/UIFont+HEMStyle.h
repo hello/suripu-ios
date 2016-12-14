@@ -22,6 +22,7 @@
 + (UIFont*)h7;
 + (UIFont*)h7Bold;
 + (UIFont*)h8;
++ (UIFont*)h9;
 + (UIFont*)body;
 + (UIFont*)bodyBold;
 + (UIFont*)bodySmall;

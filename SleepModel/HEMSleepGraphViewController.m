@@ -3,7 +3,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 #import "UIActivityViewController+HEMSharing.h"
-#import "Sense-Swift.h"
 
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
@@ -60,6 +59,12 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
+@property (nonatomic, weak) IBOutlet UIImageView *errorImageView;
+@property (nonatomic, weak) IBOutlet UILabel *errorTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *errorMessageLabel;
+@property (nonatomic, weak) IBOutlet UIButton *errorSupportButton;
+@property (nonatomic, weak) IBOutlet UIView *errorViewsContainerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorImageHeightConstraint;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
 @property (nonatomic, assign, getter=isDismissing) BOOL dismissing;
 @property (nonatomic, assign, getter=isCheckingForTutorials) BOOL checkingForTutorials;
@@ -100,6 +105,7 @@ static BOOL hasLoadedBefore = NO;
     [self configurePresenters];
     [self configureCollectionView];
     [self configureTransitions];
+    [self configureErrorProperties];
 
     [self loadData];
 
@@ -111,7 +117,6 @@ static BOOL hasLoadedBefore = NO;
              properties:@{
                  kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"
              }];
-    
     if (!hasLoadedBefore) {
         [self prepareForInitialAnimation];
     }
@@ -119,22 +124,34 @@ static BOOL hasLoadedBefore = NO;
     [self setAudioService:[HEMAudioService new]];
 }
 
-- (NSAttributedString*)attributedErrorTitle:(NSString*)title {
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-    [style setAlignment:NSTextAlignmentCenter];
-    NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
-                                 NSFontAttributeName : [UIFont bodyBold],
-                                 NSForegroundColorAttributeName : [UIColor grey6]};
-    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+- (void)configureErrorProperties {
+    [[self errorTitleLabel] setFont:[UIFont h5]];
+    [[self errorTitleLabel] setTextColor:[UIColor grey6]];
+    
+    [[self errorMessageLabel] setFont:[UIFont body]];
+    [[self errorMessageLabel] setTextColor:[UIColor grey4]];
+    
+    [[[self errorSupportButton] titleLabel] setFont:[UIFont button]];
+    [[self errorSupportButton] setBackgroundColor:[UIColor whiteColor]];
+    [[self errorSupportButton] setTitleColor:[UIColor tintColor]
+                                    forState:UIControlStateNormal];
 }
 
 - (NSAttributedString*)attributedErrorMessage:(NSString*)message {
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
+    [style setParagraphSpacing:-5.0f];
     NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
                                  NSFontAttributeName : [UIFont body],
                                  NSForegroundColorAttributeName : [UIColor grey5]};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [super adjustConstraintsForIPhone4];
+    
+    CGFloat height = [[self errorImageHeightConstraint] constant];
+    [[self errorImageHeightConstraint] setConstant:(height / 2.0f)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -262,7 +279,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)finishInitialAnimation {
-    self.collectionView.scrollEnabled = YES;
+    if ([self.dataSource hasTimelineData])
+        self.collectionView.scrollEnabled = YES;
 }
 
 - (void)performInitialAnimation {
@@ -286,12 +304,10 @@ static BOOL hasLoadedBefore = NO;
         }
         [cell performEntryAnimationWithDuration:eventAnimationDuration delay:delay];
     }
-    
     int64_t delay = eventAnimationDuration * MAX(0, eventsFound - 1) * NSEC_PER_SEC;
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf finishInitialAnimation];
+      [weakSelf finishInitialAnimation];
     });
 }
 
@@ -900,13 +916,6 @@ static BOOL hasLoadedBefore = NO;
     return [self.dataSource dateIsLastNight];
 }
 
-- (void)updateBackgroundColor {
-    UIColor* color = [[self dataSource] showTimeline]
-                        ? [UIColor timelineBackgroundColor]
-                        : [UIColor whiteColor];
-    [[self collectionView] setBackgroundColor:color];
-}
-
 - (void)loadDataSourceForDate:(NSDate *)date {
     self.dateForNightOfSleep = date;
     self.dataSource =
@@ -919,13 +928,12 @@ static BOOL hasLoadedBefore = NO;
     [self.dataSource reloadData:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf updateTabBarIcon];
-        [strongSelf updateBackgroundColor];
         [strongSelf showShareButton:[strongSelf.dataSource hasSleepScore]];
         [strongSelf updateAppUsageIfNeeded];
-        [strongSelf checkIfInitialAnimationNeeded];
+        [strongSelf updateLayoutWithError:error];
         [strongSelf showTutorial];
     }];
-    [self checkIfInitialAnimationNeeded];
+    [self updateLayoutWithError:nil];
 }
 
 - (void)updateTabBarIcon {
@@ -936,6 +944,47 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
+- (void)updateLayoutWithError:(NSError *)error {
+    BOOL hasTimelineData = [self.dataSource hasTimelineData];
+
+    HEMAccountService* accountService = [HEMAccountService sharedService];
+    HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
+    SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
+
+    BOOL firstNight = [[self timelineService] isFirstNightOfSleep:self.dateForNightOfSleep forAccount:account];
+    
+    self.errorSupportButton.hidden = YES;
+    if (hasTimelineData || [self.dataSource isLoading]) {
+        [self setErrorViewsVisible:NO];
+        if ([self isVisible])
+            [self checkIfInitialAnimationNeeded];
+        return;
+    } else if (error) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.error.message", nil)];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineErrorIcon"];
+    } else if (firstNight) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.first-night.message", nil)];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineJustSleepIcon"];
+    } else if (self.dataSource.sleepResult.scoreCondition == SENConditionUnknown) {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.none.message", nil)];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineNoDataIcon"];
+        [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
+                                 forState:UIControlStateNormal];
+        self.errorSupportButton.hidden = NO;
+    } else {
+        self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.not-enough.message", nil)];
+        self.errorImageView.image = [UIImage imageNamed:@"timelineNotEnoughDataIcon"];
+        [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
+                                 forState:UIControlStateNormal];
+        self.errorSupportButton.hidden = NO;
+    }
+    [self setErrorViewsVisible:YES];
+}
+
 - (IBAction)handleErrorSupportTap:(id)sender {
     if (self.dataSource.sleepResult.scoreCondition == SENConditionIncomplete) {
         [HEMSupportUtil openHelpToPage:NSLocalizedString(@"help.url.slug.not-enough-data-recorded", nil)
@@ -943,6 +992,16 @@ static BOOL hasLoadedBefore = NO;
     } else {
         [HEMSupportUtil openHelpToPage:NSLocalizedString(@"help.url.slug.no-data-recorded", nil) fromController:self];
     }
+}
+
+- (void)setErrorViewsVisible:(BOOL)isVisible {
+    self.collectionView.scrollEnabled = !isVisible;
+    if (isVisible && self.collectionView.contentOffset.y > 0)
+        self.collectionView.contentOffset = CGPointZero;
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                       self.errorViewsContainerView.alpha = isVisible;
+                     }];
 }
 
 - (void)updateAppUsageIfNeeded {
@@ -956,10 +1015,6 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)checkIfInitialAnimationNeeded {
-    if (![[self dataSource] showTimeline] || [self isVisible]) {
-        return;
-    }
-    
     if (!hasLoadedBefore) {
         if (self.dataSource.sleepResult.score > 0) {
             static dispatch_once_t onceToken;
@@ -1001,60 +1056,42 @@ static BOOL hasLoadedBefore = NO;
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat const HEMMinimumEventSpacing = 6.f;
+    CGFloat const HEMSoundHeightOffset = 26.f;
+    BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
-    
-    if ([[self dataSource] showTimeline]) {
-        CGFloat const HEMMinimumEventSpacing = 6.f;
-        CGFloat const HEMSoundHeightOffset = 26.f;
-        BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
-        
-        switch (indexPath.section) {
-            case HEMSleepGraphCollectionViewSummarySection: {
-                CGFloat height = CGRectGetHeight(self.view.bounds);
-                if (hasSegments) {
-                    NSString* message = [self.dataSource sleepResult].message;
-                    height = [HEMSleepSummaryCollectionViewCell heightWithMessage:message itemWidth:width];
+    switch (indexPath.section) {
+        case HEMSleepGraphCollectionViewSummarySection: {
+            CGFloat height = CGRectGetHeight(self.view.bounds);
+            if (hasSegments) {
+                NSString* message = [self.dataSource sleepResult].message;
+                height = [HEMSleepSummaryCollectionViewCell heightWithMessage:message itemWidth:width];
+            }
+            return CGSizeMake(width, height);
+        }
+        case HEMSleepGraphCollectionViewSegmentSection: {
+            SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+            CGFloat durationHeight = [self heightForCellWithSegment:segment];
+            if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+                NSAttributedString *message =
+                    [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
+                NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
+                BOOL hasSound = [self.dataSource segmentForSoundExistsAtIndexPath:indexPath];
+                CGSize minSize =
+                    [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:hasSound];
+                CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
+                                     minSize.height + HEMMinimumEventSpacing);
+                if (hasSound) {
+                    height += HEMSoundHeightOffset;
                 }
                 return CGSizeMake(width, height);
+            } else {
+                return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));
             }
-            case HEMSleepGraphCollectionViewSegmentSection: {
-                SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-                CGFloat durationHeight = [self heightForCellWithSegment:segment];
-                if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
-                    NSAttributedString *message =
-                    [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
-                    NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
-                    BOOL hasSound = [self.dataSource segmentForSoundExistsAtIndexPath:indexPath];
-                    CGSize minSize =
-                    [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:hasSound];
-                    CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
-                                         minSize.height + HEMMinimumEventSpacing);
-                    if (hasSound) {
-                        height += HEMSoundHeightOffset;
-                    }
-                    return CGSizeMake(width, height);
-                } else {
-                    return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));
-                }
-            }
-                
-            default:
-                return CGSizeZero;
         }
-    } else {
-        BOOL showMoreButton = YES;
-        NSAttributedString* attributedTitle, *attributedMessage = nil;
-        UIImage* stateImage = nil;
-        
-        [[self dataSource] noTimelineTitle:&attributedTitle
-                                   message:&attributedMessage
-                                     image:&stateImage
-                            showMoreButton:&showMoreButton];
-        
-        CGFloat height = [NoTimelineViewCell heightWithTitle:attributedTitle
-                                                     message:attributedMessage
-                                                   cellWidth:width];
-        return CGSizeMake(width, height);
+
+        default:
+            return CGSizeZero;
     }
 }
 
@@ -1067,8 +1104,7 @@ static BOOL hasLoadedBefore = NO;
                              layout:(UICollectionViewLayout *)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
 
-    if ([[self dataSource] showTimeline]
-        && section == HEMSleepGraphCollectionViewSegmentSection) {
+    if (section == HEMSleepGraphCollectionViewSegmentSection) {
         if ([self.dataSource numberOfSleepSegments] > 0) {
             CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
             return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);

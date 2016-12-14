@@ -119,11 +119,7 @@
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
     [[self devicesPresenter] refresh];
-    NSTimeInterval delayInSeconds = 1.25f;
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    });
+    [self dismissModalAfterDelay:YES];
 }
 
 - (void)didCancelPairing:(HEMPillPairViewController *)controller {
@@ -167,11 +163,11 @@
 
 - (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {
     [[self devicesPresenter] refresh];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalAfterDelay:YES];
 }
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController *)controller {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalAfterDelay:YES];
 }
 
 #pragma mark - Segues

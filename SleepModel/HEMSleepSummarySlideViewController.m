@@ -68,7 +68,7 @@
     [self reloadDataWithController:timelineVC];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
-    [self setEdgesForExtendedLayout:UIRectEdgeNone];
+    [[self view] setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (UIViewController*)timelineControllerForDate:(NSDate*)date {

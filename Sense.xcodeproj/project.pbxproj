@@ -255,6 +255,7 @@
 		BF6995F11CA6086E00C7AA55 /* HEMListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6995F01CA6086E00C7AA55 /* HEMListItemCell.m */; };
 		BF6995F41CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6995F31CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m */; };
 		BF6A55841B44B979009CA820 /* HEMActionSheetTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */; };
+		BF6A61EE1E00F08400D59022 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */; };
 		BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */; };
 		BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */; };
 		BF6D9B781C6C194900774322 /* HEMTrendsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B771C6C194900774322 /* HEMTrendsServiceSpec.m */; };
@@ -1411,6 +1412,7 @@
 				BF896D491C74225A0095D37D /* CoreGraphics.framework in Frameworks */,
 				BF896D4C1C74227E0095D37D /* Foundation.framework in Frameworks */,
 				BFC0E8831C0CE01400C6DFC7 /* MessageUI.framework in Frameworks */,
+				BF6A61EE1E00F08400D59022 /* HealthKit.framework in Frameworks */,
 				BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */,
 				EBD370F7E3364152E122EC70 /* Pods_SenseApp_RoomConditionsExtension.framework in Frameworks */,
 			);

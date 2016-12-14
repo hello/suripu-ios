@@ -7,8 +7,6 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAppUnreadStats.h>
 
-#import "Sense-Swift.h"
-
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
@@ -26,7 +24,6 @@
 #import "HEMWaveform.h"
 #import "HEMTimelineMessageContainerView.h"
 #import "HEMTimelineService.h"
-#import "HEMMainStoryboard.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -42,7 +39,6 @@
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
 @property (nonatomic, weak) HEMTimelineService* timelineService;
 @property (nonatomic, copy) NSString* dateTitle;
-@property (nonatomic, strong) NSError* timelineError;
 
 @end
 
@@ -131,23 +127,17 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     __weak typeof(self) weakSelf = self;
     [self fetchTimelineForDate:self.dateForNightOfSleep
                     completion:^(SENTimeline *timeline, NSError *error) {
-                        __strong typeof(weakSelf) strongSelf = weakSelf;
-                        [strongSelf setLoading:NO];
-                        [strongSelf setTimelineError:error];
-                        
-                        if (!error) {
-                            if (!timeline.date) {
-                                timeline.date = strongSelf.dateForNightOfSleep;
-                            }
-                            [strongSelf refreshWithTimeline:timeline];
-                            [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
-                        } else {
-                            [[strongSelf collectionView] reloadData];
-                        }
-                        
-                        if (completion)
-                            completion(error);
-                        
+                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                      if (!error) {
+                          if (!timeline.date) {
+                              timeline.date = strongSelf.dateForNightOfSleep;
+                          }
+                          [strongSelf refreshWithTimeline:timeline];
+                          [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
+                      }
+                      strongSelf.loading = NO;
+                      if (completion)
+                          completion(error);
                     }];
 }
 
@@ -187,8 +177,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (didChange) {
         self.sleepResult = timeline;
         [self.sleepResult save];
+        [self.collectionView reloadData];
     }
-    [self.collectionView reloadData];
 }
 
 - (void)configureCollectionView {
@@ -229,32 +219,34 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         && [self numberOfSleepSegments] > 0;
 }
 
-- (BOOL)showTimeline {
-    return [self hasTimelineData] || [self isLoading];
-}
-
 - (BOOL)hasSleepScore {
     return [self.sleepResult.score integerValue] > 0;
+}
+
+#pragma mark - Top Bar
+
+- (void)scrollToTop {
+    if (!CGPointEqualToPoint(CGPointZero, self.collectionView.contentOffset)
+        && [self.collectionView numberOfSections] > 0
+        && [self.collectionView numberOfItemsInSection:0] > 0) {
+        [self.collectionView setContentOffset:CGPointZero animated:YES];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return [self showTimeline] ? 2 : 1; // 1 for error cell
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([self showTimeline]) {
-        switch (section) {
-            case HEMSleepGraphCollectionViewSummarySection:
-                return 1;
-            case HEMSleepGraphCollectionViewSegmentSection:
-                return self.numberOfSleepSegments;
-            default:
-                return 0;
-        }
-    } else {
-        return 1; // for error
+    switch (section) {
+        case HEMSleepGraphCollectionViewSummarySection:
+            return 1;
+        case HEMSleepGraphCollectionViewSegmentSection:
+            return self.numberOfSleepSegments;
+        default:
+            return 0;
     }
 }
 
@@ -262,8 +254,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *view = nil;
-    
-    if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection && [self showTimeline]) {
+
+    if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
 
         view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                   withReuseIdentifier:timelineFooterReuseIdentifier
@@ -276,30 +268,23 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     UICollectionViewCell *cell = nil;
-    
-    if ([self showTimeline]) {
-        switch (indexPath.section) {
-            case HEMSleepGraphCollectionViewSummarySection:
-                cell = [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
-                break;
-            case HEMSleepGraphCollectionViewSegmentSection: {
-                if ([self segmentForSleepExistsAtIndexPath:indexPath]) {
-                    cell = [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
-                } else {
-                    cell = [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
-                }
-                break;
+    switch (indexPath.section) {
+        case HEMSleepGraphCollectionViewSummarySection:
+            cell = [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
+            break;
+        case HEMSleepGraphCollectionViewSegmentSection: {
+            if ([self segmentForSleepExistsAtIndexPath:indexPath]) {
+                cell = [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
+            } else {
+                cell = [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
             }
+            break;
         }
-        
-        cell.layer.shouldRasterize = YES;
-        cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
-    } else {
-        cell = [self collectionView:collectionView noTimelineCellForIndexPath:indexPath];
     }
-    
+
+    cell.layer.shouldRasterize = YES;
+    cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     return cell;
 }
 
@@ -357,112 +342,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     cell.isAccessibilityElement = YES;
     return cell;
 }
-
-#pragma mark - Error / No Timeline
-
-- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
-             noTimelineCellForIndexPath:(NSIndexPath*)indexPath {
-    NSString* reuseId = [HEMMainStoryboard errorReuseIdentifier];
-    NoTimelineViewCell* cell = (id)[collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                                         forIndexPath:indexPath];
-    [self updateNoTimelineStateInCell:cell];
-    return cell;
-}
-
-- (NSAttributedString*)attributedErrorTitle:(NSString*)title {
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-    [style setAlignment:NSTextAlignmentCenter];
-    NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
-                                 NSFontAttributeName : [UIFont bodyBold],
-                                 NSForegroundColorAttributeName : [UIColor grey6]};
-    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
-}
-
-- (NSAttributedString*)attributedErrorMessage:(NSString*)message {
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-    [style setAlignment:NSTextAlignmentCenter];
-    NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
-                                 NSFontAttributeName : [UIFont body],
-                                 NSForegroundColorAttributeName : [UIColor grey4]};
-    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
-}
-
-- (void)updateNoTimelineStateInCell:(NoTimelineViewCell*)cell {
-    BOOL showMoreButton = YES;
-    NSAttributedString* attributedTitle, *attributedMessage = nil;
-    UIImage* stateImage = nil;
-    NSString* buttonText = nil;
-    
-    [self noTimelineTitle:&attributedTitle
-                  message:&attributedMessage
-                    image:&stateImage
-           showMoreButton:&showMoreButton];
-    
-    if (showMoreButton) {
-        buttonText = NSLocalizedString(@"sleep-data.not-enough.contact-support", nil);
-    }
-    
-    [cell.moreButton setTitle:[buttonText uppercaseString] forState:UIControlStateNormal];
-    [[cell titleLabel] setAttributedText:attributedTitle];
-    [[cell messageLabel] setAttributedText:attributedMessage];
-    [[cell imageView] setImage:stateImage];
-    [[cell moreButton] setHidden:!showMoreButton];
-    [[[cell moreButton] titleLabel] setFont:[UIFont button]];
-    
-}
-
-- (void)noTimelineTitle:(NSAttributedString**)title
-                message:(NSAttributedString**)message
-                  image:(UIImage**)image
-         showMoreButton:(BOOL*)show {
-    
-    HEMAccountService* accountService = [HEMAccountService sharedService];
-    HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
-    SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
-    
-    BOOL firstNight = [[self timelineService] isFirstNightOfSleep:self.dateForNightOfSleep
-                                                       forAccount:account];
-    
-    BOOL showMoreButton = YES;
-    NSAttributedString* attributedTitle, *attributedMessage = nil;
-    UIImage* stateImage = nil;
-    
-    if ([self timelineError]) {
-        attributedTitle = [self attributedErrorTitle:NSLocalizedString(@"sleep-data.error.title", nil)];
-        attributedMessage = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.error.message", nil)];
-        stateImage = [UIImage imageNamed:@"timelineErrorIcon"];
-    } else if (firstNight) {
-        attributedTitle = [self attributedErrorTitle:NSLocalizedString(@"sleep-data.first-night.title", nil)];
-        attributedMessage = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.first-night.message", nil)];
-        stateImage = [UIImage imageNamed:@"timelineJustSleepIcon"];
-    } else if (self.sleepResult.scoreCondition == SENConditionUnknown) {
-        attributedTitle = [self attributedErrorTitle:NSLocalizedString(@"sleep-data.none.title", nil)];
-        attributedMessage = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.none.message", nil)];
-        stateImage = [UIImage imageNamed:@"timelineNoDataIcon"];
-        showMoreButton = YES;
-    } else {
-        attributedTitle = [self attributedErrorTitle:NSLocalizedString(@"sleep-data.not-enough.title", nil)];
-        attributedMessage = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.not-enough.message", nil)];
-        stateImage = [UIImage imageNamed:@"timelineNotEnoughDataIcon"];
-        showMoreButton = YES;
-    }
-    
-    if (title) {
-        *title = attributedTitle;
-    }
-    if (message) {
-        *message = attributedMessage;
-    }
-    if (image) {
-        *image = stateImage;
-    }
-    if (show) {
-        *show = showMoreButton;
-    }
-    
-}
-
-#pragma mark -
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
         sleepEventCellForItemAtIndexPath:(NSIndexPath *)indexPath {

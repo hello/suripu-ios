@@ -118,9 +118,6 @@ import SenseKit
             item.imageInsets = inset
             item.title = nil
         }
-        
-        self.tabBar.backgroundColor = UIColor.white
-        self.tabBar.isOpaque = true
     }
     
     fileprivate func trendsController() -> UIViewController! {

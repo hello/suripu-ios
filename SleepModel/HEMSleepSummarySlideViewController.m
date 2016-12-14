@@ -68,7 +68,6 @@
     [self reloadDataWithController:timelineVC];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
-    [self setEdgesForExtendedLayout:UIRectEdgeNone];
 }
 
 - (UIViewController*)timelineControllerForDate:(NSDate*)date {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0.13
+
+Fixes:
+
+* Fix timeline states on smaller devices
+* Fixed timeline navigation bar icons not properly laid out
+* Fixed HK not actually enabled, despite it being enabled
+
 ## 2.0.0.12
 
 New:

@@ -172,9 +172,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     versionLabelFrame.origin.x = (tableWidth - CGRectGetWidth([[self versionLabel] bounds])) / 2;
     [[self versionLabel] setFrame:versionLabelFrame];
     
-    versionViewFrame.size.height = versionHeight;
+    versionViewFrame.size.height = versionHeight + HEMSettingsBottomMargin;
     versionViewFrame.size.width = tableWidth;
     [[self versionView] setFrame:versionViewFrame];
+    
+    // must re-add it back to the tableview to have it update the content size
+    [[self tableView] setTableFooterView:[self versionView]];
 }
 
 - (void)refreshSections {

@@ -53,6 +53,10 @@
     return [UIFont systemFontOfSize:10.0f weight:UIFontWeightMedium];
 }
 
++ (UIFont*)h9 {
+    return [UIFont systemFontOfSize:9.0f weight:UIFontWeightRegular];
+}
+
 + (UIFont*)body {
     return [UIFont systemFontOfSize:15.0f weight:UIFontWeightRegular];
 }

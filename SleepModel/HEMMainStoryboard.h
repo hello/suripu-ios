@@ -34,10 +34,10 @@
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)pairReuseIdentifier;
++(NSString *)errorReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)sensorReuseIdentifier;
 +(NSString *)groupReuseIdentifier;
-+(NSString *)errorReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 +(NSString *)welcomeReuseIdentifier;

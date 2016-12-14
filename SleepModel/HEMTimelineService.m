@@ -93,7 +93,13 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
     NSDate* dateWithoutTime = [date dateAtMidnight];
     NSDate* createDateWithoutTime = [creationDate dateAtMidnight];
     // if it's ascending or the same, it's the first night of sleep
-    return [dateWithoutTime compare:createDateWithoutTime] != NSOrderedDescending;
+    NSComparisonResult result = [dateWithoutTime compare:createDateWithoutTime];
+    if (result == NSOrderedSame) {
+        BOOL createdToday = [creationDate isOnSameDay:[NSDate date]];
+        BOOL isLastNight = [self isDateLastNight:date];
+        return createdToday && isLastNight;
+    }
+    return result != NSOrderedDescending;
 }
 
 - (void)notify:(NSString*)name {

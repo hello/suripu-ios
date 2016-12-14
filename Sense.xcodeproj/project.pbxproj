@@ -255,6 +255,7 @@
 		BF6995F41CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6995F31CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m */; };
 		BF6A55841B44B979009CA820 /* HEMActionSheetTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */; };
 		BF6A61EE1E00F08400D59022 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */; };
+		BF6A61F21E01FF8200D59022 /* UIViewController+Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6A61F11E01FF8200D59022 /* UIViewController+Delay.swift */; };
 		BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */; };
 		BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B741C6A689100774322 /* HEMTrendsScoreLabel.m */; };
 		BF6D9B781C6C194900774322 /* HEMTrendsServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6D9B771C6C194900774322 /* HEMTrendsServiceSpec.m */; };
@@ -971,6 +972,7 @@
 		BF6995F31CA60BC100C7AA55 /* HEMSleepSoundsPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundsPresenter.m; sourceTree = "<group>"; };
 		BF6A55821B44B979009CA820 /* HEMActionSheetTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionSheetTitleView.h; sourceTree = "<group>"; };
 		BF6A55831B44B979009CA820 /* HEMActionSheetTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMActionSheetTitleView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		BF6A61F11E01FF8200D59022 /* UIViewController+Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Delay.swift"; sourceTree = "<group>"; };
 		BF6D9B701C6966BD00774322 /* HEMTrendsCalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsCalendarMonthView.h; sourceTree = "<group>"; };
 		BF6D9B711C6966BD00774322 /* HEMTrendsCalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTrendsCalendarMonthView.m; sourceTree = "<group>"; };
 		BF6D9B731C6A689100774322 /* HEMTrendsScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTrendsScoreLabel.h; sourceTree = "<group>"; };
@@ -3397,6 +3399,7 @@
 			children = (
 				BFD89A791DECCD82005DC2FF /* MainViewController.swift */,
 				BF0B15F01DF5FD3200DF2373 /* SlideContainerViewController.swift */,
+				BF6A61F11E01FF8200D59022 /* UIViewController+Delay.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -4347,6 +4350,7 @@
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
 				BFF14C2B1C63E47500AD3773 /* HEMMultiTitleView.m in Sources */,
 				BF8339961C1659D300BFD0F4 /* HEMInsightTransitionView.m in Sources */,
+				BF6A61F21E01FF8200D59022 /* UIViewController+Delay.swift in Sources */,
 				BF4BE3D31D823D73003B96ED /* HEMSensorChartContainer.m in Sources */,
 				BF8339901C1604BA00BFD0F4 /* HEMInsightTransition.m in Sources */,
 				BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */,

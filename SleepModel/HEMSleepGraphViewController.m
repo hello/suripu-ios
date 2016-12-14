@@ -70,7 +70,7 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationBarTopConstraint;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic, weak) UIButton *playingButton;
-@property (nonatomic, weak) UIButton* shareButton;
+@property (nonatomic, strong) UIBarButtonItem* shareItem;
 @property (nonatomic, strong) NSIndexPath *playingIndexPath;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) NSTimer *playbackProgressTimer;
@@ -103,6 +103,7 @@ static BOOL hasLoadedBefore = NO;
 
     [self loadData];
 
+    [self configureNavigationBar];
     [self configureGestures];
     [self registerForNotifications];
 
@@ -159,7 +160,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self configureNavigationBarIfNeeded];
+    [self layoutNavigationBar];
 }
 
 - (void)configureServices {
@@ -686,7 +687,7 @@ static BOOL hasLoadedBefore = NO;
 
 #pragma mark - Navigation Bar Actions
 
-- (void)didTapShareButton:(UIButton *)button {
+- (void)didTapShareButton:(id)sender {
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString *message;
@@ -822,11 +823,7 @@ static BOOL hasLoadedBefore = NO;
 
 #pragma mark - Navigation Bar
 
-- (void)configureNavigationBarIfNeeded {
-    if ([self shareButton]) {
-        return; // already done
-    }
-    
+- (void)layoutNavigationBar {
     CGFloat navY = CGRectGetMinY([[self navigationBar] frame]);
     CGFloat statusHeight = CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
     if (navY == 0.0f) {
@@ -836,46 +833,43 @@ static BOOL hasLoadedBefore = NO;
         [[self navigationBarTopConstraint] setConstant:0.0f];
         [[self navigationBar] layoutIfNeeded];
     }
-    
+}
+
+- (void)configureNavigationBar {
     UINavigationBar* bar = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[self class]]];
     ApplyDefaultStyleForNavBarAppearance(bar);
     
     UINavigationItem* navItem = self.navigationBar.topItem;
     navItem.title = [[self timelineService] stringValueForTimelineDate:[self dateForNightOfSleep]];
     
-    CGRect buttonFrame = CGRectZero;
-    buttonFrame.size.height = CGRectGetHeight([[self navigationBar] bounds]);
-    buttonFrame.size.width = HEMStyleDefaultNavBarButtonItemWidth;
-    
     UIImage* shareImage = [UIImage imageNamed:@"timelineShareIcon"];
-    UIButton* shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat shareLeftInset = HEMStyleDefaultNavBarButtonItemWidth - shareImage.size.width;
-    [shareButton setImage:shareImage forState:UIControlStateNormal];
-    [shareButton setFrame:buttonFrame];
-    [shareButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, shareLeftInset, 0.0f, 0.0f)];
-    [shareButton addTarget:self
-                    action:@selector(didTapShareButton:)
-          forControlEvents:UIControlEventTouchUpInside];
-    [shareButton setHidden:![self.dataSource hasSleepScore]];
-    UIBarButtonItem* shareItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
-    [navItem setRightBarButtonItem:shareItem];
-    [self setShareButton:shareButton];
+    shareImage = [shareImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [self setShareItem:[[UIBarButtonItem alloc] initWithImage:shareImage
+                                                        style:UIBarButtonItemStylePlain
+                                                       target:self
+                                                       action:@selector(didTapShareButton:)]];
+    [self showShareButton:[[self dataSource] hasSleepScore]];
     
     UIImage* historyImage = [UIImage imageNamed:@"timelineCalendarIcon"];
-    UIButton* historyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat historyRightInset = HEMStyleDefaultNavBarButtonItemWidth - historyImage.size.width;
-    [historyButton setImage:historyImage forState:UIControlStateNormal];
-    [historyButton setFrame:buttonFrame];
-    [historyButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, historyRightInset)];
-    [historyButton addTarget:self
-                      action:@selector(didTapOnHistoryButton:)
-            forControlEvents:UIControlEventTouchUpInside];
-    [navItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:historyButton]];
+    historyImage = [historyImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [navItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithImage:historyImage
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(didTapOnHistoryButton:)]];
     
     HEMNavigationShadowView* shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:[self navigationBar]];
     [[self navigationBar] setClipsToBounds:NO];
     [[self navigationBar] addSubview:shadowView];
     _shadowView = shadowView;
+}
+
+- (void)showShareButton:(BOOL)show {
+    UINavigationItem* navItem = [[self navigationBar] topItem];
+    if (show) {
+        [navItem setRightBarButtonItem:[self shareItem]];
+    } else {
+        [navItem setRightBarButtonItem:nil];
+    }
 }
 
 #pragma mark - UICollectionView
@@ -926,7 +920,7 @@ static BOOL hasLoadedBefore = NO;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf updateTabBarIcon];
         [strongSelf updateBackgroundColor];
-        [[strongSelf shareButton] setHidden:![strongSelf.dataSource hasSleepScore]];
+        [strongSelf showShareButton:[strongSelf.dataSource hasSleepScore]];
         [strongSelf updateAppUsageIfNeeded];
         [strongSelf checkIfInitialAnimationNeeded];
         [strongSelf showTutorial];

@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.0.14
+
+New:
+
+* Room conditions tab is now titled Room Conditions
+
+Fixes:
+
+* Reverted changes to timeline states and just reduced spacing and updated learn more button to fit smaller devices
+* First night state should not show when account was created the night before
+
 ## 2.0.0.13
 
 Fixes:

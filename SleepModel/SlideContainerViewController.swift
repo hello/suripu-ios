@@ -48,7 +48,7 @@ import SenseKit
     
     // MARK: Configuration
     
-    func configureContentPresenter() {
+    fileprivate func configureContentPresenter() {
         guard self.contentPresenter != nil else {
             SENAnalytics.trackWarning(withMessage: "presenter not defined")
             return
@@ -63,6 +63,21 @@ import SenseKit
 
         self.addPresenter(self.contentPresenter)
     }
+
+}
+
+extension SlideContainerViewController: Scrollable {
+    
+    func scrollToTop() {
+        for controller in self.childViewControllers {
+            var mainController = controller
+            if mainController is UINavigationController {
+                mainController = (mainController as! UINavigationController).topViewController!
+            }
+            (mainController as? Scrollable)?.scrollToTop()
+        }
+    }
+    
 }
 
 extension SlideContainerViewController: SlideContentVisibilityDelegate {

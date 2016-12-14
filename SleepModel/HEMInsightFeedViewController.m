@@ -32,7 +32,7 @@
 #import "HEMWhatsNewService.h"
 #import "HEMShareService.h"
 
-@interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
+@interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate, Scrollable>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
@@ -114,6 +114,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [SENAnalytics track:kHEMAnalyticsEventFeed];
+}
+
+#pragma mark - Scrollable 
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - HEMInsightFeedPresenterDelegate

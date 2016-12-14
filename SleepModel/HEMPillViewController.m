@@ -207,6 +207,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
             showSeparator = NO;
         }
         
+        [[actionCell textLabel] setTextColor:[UIColor grey5]];
+        [[actionCell textLabel] setFont:[UIFont body]];
         [[actionCell textLabel] setText:text];
         [[actionCell iconView] setImage:icon];
         [[actionCell separatorView] setHidden:!showSeparator];

@@ -484,12 +484,6 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 }
 
 - (void)proceed {
-    // need to do this to stop the activity and set the LED simultaneously or
-    // else the LED does not properly sync up with the success mark
-    //
-    // FIXME: once firmware fixes the Success LED state, we should set it to success
-    // when delegate exists, but since it doesn't work, it will leave the led to
-    // an activity state
     __weak typeof(self) weakSelf = self;
     [[self onbService] resetLED:^(NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;

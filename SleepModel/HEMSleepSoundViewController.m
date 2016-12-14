@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 3/10/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMSleepSoundViewController.h"
 #import "HEMSleepSoundPlayerPresenter.h"
@@ -26,7 +27,8 @@
     HEMSleepSoundPlayerDelegate,
     HEMListDelegate,
     HEMPresenterPairDelegate,
-    HEMSensePairingDelegate
+    HEMSensePairingDelegate,
+    Scrollable
 >
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgLaunchImageView;
@@ -83,6 +85,12 @@
 
 - (void)dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - Sleep Sound Player Delegate

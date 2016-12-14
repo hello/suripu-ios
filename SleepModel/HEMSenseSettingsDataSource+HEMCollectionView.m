@@ -6,7 +6,6 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "UIColor+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
 
 #import "HEMSenseSettingsDataSource+HEMCollectionView.h"
@@ -15,6 +14,7 @@
 #import "HEMWarningCollectionViewCell.h"
 #import "HEMDeviceWarning.h"
 #import "HEMActionButton.h"
+#import "HEMStyle.h"
 
 static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
 
@@ -81,6 +81,8 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
     } else {
         message = NSLocalizedString(@"settings.sense.connecting", nil);
     }
+    [[actionCell textLabel] setFont:[UIFont body]];
+    [[actionCell textLabel] setTextColor:[UIColor grey5]];
     [actionCell showActivity:!connected withText:message];
     [[actionCell separatorView] setHidden:NO];
     [[actionCell topSeparatorView] setHidden:NO];
@@ -122,6 +124,8 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
     
     [actionCell setEnabled:enabled];
     [[actionCell textLabel] setText:actionText];
+    [[actionCell textLabel] setFont:[UIFont body]];
+    [[actionCell textLabel] setTextColor:[UIColor grey5]];
     [[actionCell iconView] setImage:icon];
     [[actionCell separatorView] setHidden:!showSeparator];
     [[actionCell topSeparatorView] setHidden:!showTopSeparator];

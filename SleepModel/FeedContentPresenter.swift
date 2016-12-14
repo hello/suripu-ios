@@ -72,6 +72,7 @@ class FeedContentPresenter: SlideContentPresenter {
         self.visibilityDelegate?.addController(controller: controller,
                                                from: self)
         self.contentViews.append(controller.view)
+        self.updateContentSize()
     }
     
     // MARK: - Content Updates based on hardware version
@@ -111,6 +112,8 @@ class FeedContentPresenter: SlideContentPresenter {
         self.contentScrollView?.isHidden = true
         
         self.deviceService.refreshMetadata ({ [weak self] (_: Any?, error: Error?) in
+            self?.refreshing = false
+            
             let updatedVersion = self?.deviceService.savedHardwareVersion()
             guard let _ = self?.requireUpdate(updatedVersion: updatedVersion) else {
                 return
@@ -123,7 +126,7 @@ class FeedContentPresenter: SlideContentPresenter {
             } else {
                 self?.updateToExcludeSecondTab()
             }
-            
+
             self?.activity?.stop()
             self?.activity?.isHidden = true
             self?.contentScrollView?.isHidden = false
@@ -131,6 +134,9 @@ class FeedContentPresenter: SlideContentPresenter {
     }
     
     fileprivate func updateToIncludeSecondTab() {
+        guard self.contentViews.count == 1 else {
+            return
+        }
         // update is needed so update title view and content of scrollview
         let titleSize = self.navigationBar?.frame.size
         if titleSize != nil {
@@ -145,10 +151,13 @@ class FeedContentPresenter: SlideContentPresenter {
         self.contentViews.append(controllerToAdd!.view)
         
         // update content size
-        self.updateContentSize(modifier: 1)
+        self.updateContentSize()
     }
     
     fileprivate func updateToExcludeSecondTab() {
+        guard self.contentViews.count == 2 else {
+            return
+        }
         // update title
         self.navigationBar?.topItem?.titleView = nil
         self.navigationBar?.topItem?.title = self.contentTitles.first
@@ -160,14 +169,18 @@ class FeedContentPresenter: SlideContentPresenter {
         self.contentViews.removeLast()
 
         // update content size
-        self.updateContentSize(modifier: -1)
+        self.updateContentSize()
     }
     
-    fileprivate func updateContentSize(modifier: Int) {
-        let adjustedWidth = self.contentScrollView.frame.size.width
-        var contentSize = self.contentScrollView.contentSize
-        contentSize.width += (CGFloat(modifier) * adjustedWidth)
-        self.contentScrollView.contentSize = contentSize
+    fileprivate func updateContentSize() {
+        guard let scrollView = self.contentScrollView else {
+            return
+        }
+        let contentWidth = scrollView.bounds.size.width
+        let contentCount = self.contentViews.count
+        var contentSize = scrollView.contentSize
+        contentSize.width = CGFloat(contentCount) * contentWidth
+        scrollView.contentSize = contentSize
     }
     
 }

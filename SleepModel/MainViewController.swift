@@ -222,6 +222,18 @@ extension MainViewController: HEMSystemAlertDelegate {
 extension MainViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController,
+                          shouldSelect viewController: UIViewController) -> Bool {
+        if viewController == self.selectedViewController {
+            var mainController = viewController
+            if mainController is UINavigationController {
+                mainController = (mainController as! UINavigationController).topViewController!
+            }
+            (mainController as? Scrollable)?.scrollToTop()
+        }
+        return true
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController,
                           didSelect viewController: UIViewController) {
         if (viewController is HEMSleepSummarySlideViewController) {
             // always show last night when switched tapped

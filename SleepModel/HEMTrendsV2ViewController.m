@@ -12,7 +12,7 @@
 #import "HEMTrendsService.h"
 #import "HEMActivityIndicatorView.h"
 
-@interface HEMTrendsV2ViewController()
+@interface HEMTrendsV2ViewController() <Scrollable>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *loadingIndicator;
@@ -49,6 +49,12 @@
     [[self presenter] bindWithLoadingIndicator:[self loadingIndicator]];
     [[self presenter] bindWithCollectionView:[self collectionView]];
     [self addPresenter:[self presenter]];
+}
+
+#pragma mark - Scrollable 
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 @end

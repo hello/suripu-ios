@@ -230,18 +230,15 @@ extension MainViewController: UITabBarControllerDelegate {
                 mainController = (mainController as! UINavigationController).topViewController!
             }
             (mainController as? Scrollable)?.scrollToTop()
+        } else {
+            if (viewController is HEMSleepSummarySlideViewController) {
+                // always show last night when switched tapped
+                let lastNight = NSDate.timelineInitial()
+                let timelineSlideVC = viewController as! HEMSleepSummarySlideViewController
+                timelineSlideVC.reload(with: lastNight)
+            }
         }
         return true
-    }
-    
-    func tabBarController(_ tabBarController: UITabBarController,
-                          didSelect viewController: UIViewController) {
-        if (viewController is HEMSleepSummarySlideViewController) {
-            // always show last night when switched tapped
-            let lastNight = NSDate.timelineInitial()
-            let timelineSlideVC = viewController as! HEMSleepSummarySlideViewController
-            timelineSlideVC.reload(with: lastNight)
-        }
     }
     
 }

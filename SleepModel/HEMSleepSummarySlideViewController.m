@@ -24,7 +24,7 @@
 #import "HEMTimelineService.h"
 #import "HEMStyle.h"
 
-@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate>
+@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable>
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
@@ -196,6 +196,17 @@
 }
 
 - (void)didPan { }
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    for (UIViewController* controller in [self viewControllers]) {
+        if ([controller conformsToProtocol:@protocol(Scrollable)]) {
+            id<Scrollable> scrollable = (id) controller;
+            [scrollable scrollToTop];
+        }
+    }
+}
 
 #pragma mark - Cleanup
 

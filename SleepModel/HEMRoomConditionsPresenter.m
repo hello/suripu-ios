@@ -640,10 +640,8 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMax]];
     
     // conditionally show a decimal point for min value
-    CGFloat sameIfRounded = [chartMax integerValue] == [chartMin integerValue];
-    CGFloat diff = [chartMin CGFloatValue] - floorCGFloat([chartMin CGFloatValue]);
-    BOOL forceDecimalPoint = diff >= 0.5f && sameIfRounded;
-    [[self formatter] setDecimalPlaces:forceDecimalPoint ? 1 : NSNotFound];
+    BOOL sameIfRounded = [chartMax integerValue] == [chartMin integerValue];
+    [[self formatter] setDecimalPlaces:sameIfRounded ? 1 : NSNotFound];
     
     [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMin]];
     

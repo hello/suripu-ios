@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0.16
+
+New:
+
+* Timeline now supports scrolling to the top
+
 ## 2.0.0.15
 
 Fixes:

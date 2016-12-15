@@ -10,7 +10,7 @@ import Foundation
 
 extension UIImage {
     
-    static let iconSize = CGFloat(20)
+    static let iconSize = CGFloat(24)
     static let textPadding = CGFloat(2)
     static let borderWidth = CGFloat(1)
     

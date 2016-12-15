@@ -53,6 +53,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 @property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
 @property (nonatomic, strong) NSMutableDictionary* chartMaxBySensor;
+@property (nonatomic, strong) NSMutableDictionary* chartMinBySensor;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
 @property (nonatomic, strong) NSArray* groupedSensors;
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
@@ -72,6 +73,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         _headerViewHeight = -1.0f;
         _chartDataBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
         _chartMaxBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
+        _chartMinBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
         _formatter = [HEMSensorValueFormatter new];
     }
     return self;
@@ -254,7 +256,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
             if ([values count] == [timestamps count]) {
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
-                CGFloat chartMax = 0.0f;
+                CGFloat chartMax = 0.0f, chartMin = MAXFLOAT;
                 NSUInteger index = 0;
                 for (NSNumber* value in values) {
                     CGFloat entryValue = MAX(0.0f, [value doubleValue]);
@@ -262,9 +264,13 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
                     if ([value doubleValue] > chartMax) {
                         chartMax = [value doubleValue];
                     }
+                    if ([value doubleValue] >= 0.0f && [value doubleValue] < chartMin) {
+                        chartMin = [value doubleValue];
+                    }
                 }
                 [strongSelf chartDataBySensor][@([sensor type])] = chartData;
                 [strongSelf chartMaxBySensor][@([sensor type])] = @(chartMax);
+                [strongSelf chartMinBySensor][@([sensor type])] = @(chartMin);
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -534,6 +540,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
             worstCondition = [sensor condition];
         }
         
+        [[self formatter] setDecimalPlaces:NSNotFound];
         [[self formatter] setSensorUnit:[sensor unit]];
         [[self formatter] setIncludeUnitSymbol:YES];
         UIColor* conditionColor = [UIColor colorForCondition:[sensor condition]];
@@ -556,6 +563,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 }
 
 - (void)configureSensorCell:(HEMSensorCollectionViewCell*)sensorCell forSensor:(SENSensor*)sensor {
+    [[self formatter] setDecimalPlaces:NSNotFound];
     [[self formatter] setSensorUnit:[sensor unit]];
     
     SENCondition condition = [sensor condition];
@@ -604,19 +612,25 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
     [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
     
-    NSNumber* chartMax = nil;
+    // TODO: see if we can reuse this logic between room conditions and sensor
+    // detail
+    NSNumber* chartMax = nil, *chartMin = nil;
     NSNumber* calculatedChartMax = [self chartMaxBySensor][@([sensor type])];
+    NSNumber* calculatedChartMin = [self chartMinBySensor][@([sensor type])];
     CGFloat minValue = [chartView chartYMin];
     CGFloat maxValue = [chartView chartYMax];
     // a hack until we can properly line up the chart to the limit lines.  This
     // case identifies when values in the chart are all 0s.
+    
     if (!(minValue == -1.0f && maxValue == 1.0f)) {
-        minValue = 0.0f;
         chartMax = calculatedChartMax;
+        chartMin = calculatedChartMin;
     } else {
+        chartMin = @(minValue);
         chartMax = @(maxValue);
     }
     
+    [[self formatter] setDecimalPlaces:NSNotFound]; // set it back to default
     [[self formatter] setIncludeUnitSymbol:YES];
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
@@ -624,7 +638,14 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [chartContainer setUserInteractionEnabled:NO];
     [chartContainer setScrubberEnable:NO];
     [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMax]];
-    [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
+    
+    // conditionally show a decimal point for min value
+    CGFloat sameIfRounded = [chartMax integerValue] == [chartMin integerValue];
+    CGFloat diff = [chartMin CGFloatValue] - floorCGFloat([chartMin CGFloatValue]);
+    BOOL forceDecimalPoint = diff >= 0.5f && sameIfRounded;
+    [[self formatter] setDecimalPlaces:forceDecimalPoint ? 1 : NSNotFound];
+    
+    [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMin]];
     
     if (animate) {
         [chartView animateIn];

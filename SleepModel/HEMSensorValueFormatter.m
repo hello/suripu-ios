@@ -38,15 +38,24 @@
 }
 
 - (void)setCommonProperties {
+    [self setDecimalPlaces:NSNotFound];
     [self setUnicodeUnitSymbol:YES];
-    [self setRoundingMode:NSNumberFormatterRoundUp];
+    [self setRoundingMode:NSNumberFormatterRoundHalfUp];
     [self setMinimumIntegerDigits:1];
     [self setNilSymbol:NSLocalizedString(@"empty-data", nil)];
 }
 
-- (void)setNumberOfFractionDigits:(NSUInteger)digits {
-    [self setMinimumFractionDigits:digits];
-    [self setMaximumFractionDigits:digits];
+- (void)setDecimalPlacesIfNotSet:(NSInteger)decimalPlaces {
+    if ([self decimalPlaces] == NSNotFound) {
+        [self setMinimumFractionDigits:decimalPlaces];
+        [self setMaximumFractionDigits:decimalPlaces];
+    }
+}
+
+- (void)setDecimalPlaces:(NSUInteger)decimalPlaces {
+    _decimalPlaces = decimalPlaces;
+    [self setMinimumFractionDigits:decimalPlaces];
+    [self setMaximumFractionDigits:decimalPlaces];
 }
 
 - (NSString *)stringFromSensorValue:(NSNumber *)value {
@@ -61,21 +70,21 @@
     switch ([self sensorUnit]) {
         case SENSensorUnitLux: {
             BOOL showFraction = [value doubleValue] < 10;
-            [self setNumberOfFractionDigits:showFraction ? 1 : 0];
+            [self setDecimalPlaces:showFraction ? 1 : 0]; // force it
             break;
         }
         case SENSensorUnitCelsius: {
             value = [self convertValue:value];
-            [self setNumberOfFractionDigits:0];
+            [self setDecimalPlacesIfNotSet:0];
             break;
         }
         case SENSensorUnitFahrenheit: {
             value = [self convertValue:value];
-            [self setNumberOfFractionDigits:0];
+            [self setDecimalPlacesIfNotSet:0];
             break;
         }
         default:
-            [self setNumberOfFractionDigits:0];
+            [self setDecimalPlacesIfNotSet:0];
             break;
     }
     

@@ -72,7 +72,7 @@
     switch ([self sensorUnit]) {
         case SENSensorUnitLux: {
             BOOL showFraction = [value doubleValue] < 10;
-            [self setDecimalPlacesIfNotSet:showFraction ? 1 : 0]; // force it
+            [self setDecimalPlacesIfNotSet:showFraction ? 1 : 0];
             break;
         }
         case SENSensorUnitCelsius: {

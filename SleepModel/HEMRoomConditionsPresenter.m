@@ -633,17 +633,21 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[self formatter] setDecimalPlaces:NSNotFound]; // set it back to default
     [[self formatter] setIncludeUnitSymbol:YES];
     
+    NSString* topLimitValue = [[self formatter] stringFromSensorValue:chartMax];
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
     [chartContainer setUserInteractionEnabled:NO];
     [chartContainer setScrubberEnable:NO];
-    [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMax]];
+    [[chartContainer topLimitLabel] setText:topLimitValue];
     
     // conditionally show a decimal point for min value
-    BOOL sameIfRounded = [chartMax integerValue] == [chartMin integerValue];
-    [[self formatter] setDecimalPlaces:sameIfRounded ? 1 : NSNotFound];
+    NSString* botLimitValue = [[self formatter] stringFromSensorValue:chartMin];
+    if ([topLimitValue isEqualToString:botLimitValue]) {
+        [[self formatter] setDecimalPlaces:1];
+        botLimitValue = [[self formatter] stringFromSensorValue:chartMin];
+    }
     
-    [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMin]];
+    [[chartContainer botLimitLabel] setText:botLimitValue];
     
     if (animate) {
         [chartView animateIn];

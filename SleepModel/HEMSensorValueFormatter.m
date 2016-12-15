@@ -54,8 +54,10 @@
 
 - (void)setDecimalPlaces:(NSUInteger)decimalPlaces {
     _decimalPlaces = decimalPlaces;
-    [self setMinimumFractionDigits:decimalPlaces];
-    [self setMaximumFractionDigits:decimalPlaces];
+    if (decimalPlaces != NSNotFound) {
+        [self setMinimumFractionDigits:decimalPlaces];
+        [self setMaximumFractionDigits:decimalPlaces];
+    }
 }
 
 - (NSString *)stringFromSensorValue:(NSNumber *)value {

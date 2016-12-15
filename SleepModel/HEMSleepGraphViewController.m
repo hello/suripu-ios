@@ -1,5 +1,8 @@
 
 #import <SenseKit/SenseKit.h>
+
+#import "Sense-Swift.h"
+
 #import <AVFoundation/AVFoundation.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 #import "UIActivityViewController+HEMSharing.h"
@@ -49,7 +52,8 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
     HEMSleepGraphActionDelegate,
     AVAudioPlayerDelegate,
     HEMTapDelegate,
-    HEMTimelineHandHoldingDelegate
+    HEMTimelineHandHoldingDelegate,
+    Scrollable
 >
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
@@ -261,6 +265,10 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)dealloc {
     _dataSource = nil;
+    if (_collectionView) {
+        [_collectionView setDelegate:nil];
+        [_collectionView setDataSource:nil];
+    }
     [_audioPlayer stop];
     [_playbackProgressTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -1128,6 +1136,14 @@ static BOOL hasLoadedBefore = NO;
                                  layout:(UICollectionViewLayout *)collectionViewLayout
     minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    if ([self collectionView]) {
+        [[self collectionView] setContentOffset:CGPointZero animated:YES];
+    }
 }
 
 @end

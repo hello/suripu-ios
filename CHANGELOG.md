@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0.15
+
+Fixes:
+
+* Should fix apple warnings of Push notification entitlement
+* Fix limit line values in room conditions
+
 ## 2.0.0.14
 
 New:

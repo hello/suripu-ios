@@ -3658,6 +3658,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					6003F5AD195388D20070C39A = {
@@ -3678,6 +3681,9 @@
 							};
 							com.apple.Keychain = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 						};
 					};
@@ -5061,8 +5067,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "5de7a525-cc7d-4e70-b0d0-2eebfa582d1f";
-				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.Sense.Widget";
+				PROVISIONING_PROFILE = "48be1bd1-bdd9-4579-b558-01174016f6f0";
+				PROVISIONING_PROFILE_SPECIFIER = "Sense Extension";
 				SENSE_ROOM_CONDITIONS_NAME = Sense;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -5301,8 +5307,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.Sense.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "5de7a525-cc7d-4e70-b0d0-2eebfa582d1f";
-				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.Sense.Widget";
+				PROVISIONING_PROFILE = "48be1bd1-bdd9-4579-b558-01174016f6f0";
+				PROVISIONING_PROFILE_SPECIFIER = "Sense Extension";
 				SENSE_ROOM_CONDITIONS_NAME = Sense;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -5541,7 +5547,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = is.hello.sensetest.Widget;
 				PRODUCT_NAME = RoomConditionsExtension;
-				PROVISIONING_PROFILE = "abacd2a8-3471-4603-8fd2-b30f41fa54cf";
+				PROVISIONING_PROFILE = "fe135e20-4ff6-4358-9d27-7d35f614dad0";
 				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest.Widget";
 				SENSE_ROOM_CONDITIONS_NAME = Sense;
 				SKIP_INSTALL = YES;

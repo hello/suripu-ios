@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0.17
+
+New:
+
+* Updated Primary user footnote to include a sentence related to Nest expansion 
+
 ## 2.0.0.16
 
 New:

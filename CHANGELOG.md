@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0.17
+
+New:
+
+* Updated Nest Coming Soon text to Primary User
+* Updated Primary user footnote to 
+
 ## 2.0.0.16
 
 New:

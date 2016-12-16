@@ -969,7 +969,7 @@
 "expansion.state.revoked" = "Disconnected";
 "expansion.state.connected-off" = "Disabled";
 "expansion.state.connected-on" = "Enabled";
-"expansion.state.not-available" = "Primary User";
+"expansion.state.not-available" = "Coming Soon";
 "expansion.state.not-configured" = "Configure";
 "expansion.action.permissions" = "Permissions";
 "expansion.action.enable" = "Enabled";
@@ -1059,7 +1059,7 @@
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";
 
 "voice.settings.primary-user" = "Primary User";
-"voice.settings.primary-user.foot.note" = "Tell Sense whose information to respond with when asked questions like \"What’s my sleep score?\" by setting primary user. Only the primary user will be able to access the Nest Expansion";
+"voice.settings.primary-user.foot.note" = "Tell Sense whose information to respond with when asked questions like \"What’s my sleep score?\" by setting primary user. Only the primary user will be able to access the Nest Expansion when released.";
 "voice.settings.update.status" = "Saving";
 "voice.settings.update.error.title" = "Changes not saved";
 "voice.settings.update.error.primary-not-set" = "Sense was not able to set you as the primary user. Try again.";

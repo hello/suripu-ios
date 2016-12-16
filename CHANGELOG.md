@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0.18
+
+Fixes:
+
+* Fixed issue with Trends data being misaligned when there is not enough data for month and quarter
+
 ## 2.0.0.17
 
 New:

@@ -4,8 +4,7 @@
 
 New:
 
-* Updated Nest Coming Soon text to Primary User
-* Updated Primary user footnote to 
+* Updated Primary user footnote to include a sentence related to Nest expansion 
 
 ## 2.0.0.16
 

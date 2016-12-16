@@ -266,7 +266,7 @@ describe(@"HEMTrendsService", ^{
                 
                 [SENAPITrends stub:@selector(trendsForTimeScale:completion:) withBlock:^id(NSArray *params) {
                     SENAPIDataBlock cb = [params lastObject];
-                    cb ([SENTrends new], nil);
+                    cb ([[SENTrends alloc] initWithDictionary:@{@"available_time_scales" : @[@"LAST_WEEK"]}], nil);
                     return nil;
                 }];
                 

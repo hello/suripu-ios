@@ -117,7 +117,7 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
     if (self.imageView)
         top = HEMDialogContentSpacing + CGRectGetMaxY(self.imageView.frame);
 
-    UIFont *font = [UIFont dialogTitleFont];
+    UIFont *font = [UIFont bodyBold];
     CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
     CGFloat width = [self intrinsicContentSize].width - horzPadding;
     CGFloat height = [text heightBoundedByWidth:width usingFont:font];
@@ -220,11 +220,11 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
         switch (style) {
             case HEMAlertViewButtonStyleBlueBoldText:
                 [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont alertBoldButtonFont];
+                button.titleLabel.font = [UIFont bodyBold];
                 break;
             case HEMAlertViewButtonStyleGrayText:
                 [button setTitleColor:[UIColor grey4] forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont alertLightButtonFont];
+                button.titleLabel.font = [UIFont body];
                 break;
             case HEMAlertViewButtonStyleBlueText:
                 [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];

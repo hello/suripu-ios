@@ -135,8 +135,8 @@ extern NSString* const HEMAnalyticsEventTellAFriendCompleted;
 extern NSString* const HEMAnalyticsEventTellAFriendCompletedPropType;
 
 // back view
-NSString* const HEMAnalyticsEventBackViewSwipe;
-NSString* const HEMAnalyticsEventBackViewTapped;
+extern NSString* const HEMAnalyticsEventBackViewSwipe;
+extern NSString* const HEMAnalyticsEventBackViewTapped;
 
 // support
 extern NSString* const HEMAnalyticsEventSupport;
@@ -259,6 +259,7 @@ extern NSString* const HEMAnalyticsEventSenseDFUEnd;
 // voice tutorial
 extern NSString* const HEMAnalyticsEventVoiceTutorial;
 extern NSString* const HEMAnalyticsEventVoiceResponse;
+extern NSString* const HEMAnalyticsEventVoiceTutorialSkip;
 
 // upgrade path
 extern NSString* const HEMAnalyticsEventUpgradePrefix;

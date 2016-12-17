@@ -50,7 +50,6 @@ static CGFloat const HEMInsightTransitionDuration = 0.3f;
     
     [UIView animateWithDuration:HEMInsightTransitionDuration
                      animations:^{
-                         [self setTimelineVisible:NO animated:NO];
                          [self showStatusBar:NO];
                          [[self transitionView] expand:[containerView bounds].size
                                            imageHeight:HEMInsightTransitionImageHeight];
@@ -58,10 +57,8 @@ static CGFloat const HEMInsightTransitionDuration = 0.3f;
                      }
                      completion:^(BOOL finished) {
                          [toView setAlpha:1.0f];
-                         
                          [[self transitionView] removeFromSuperview];
                          [[self dimmingViewWithContext:context] removeFromSuperview];
-                         
                          [context completeTransition:finished];
                      }];
 }
@@ -78,16 +75,15 @@ static CGFloat const HEMInsightTransitionDuration = 0.3f;
     
     [UIView animateWithDuration:HEMInsightTransitionDuration
                      animations:^{
+                         [self showStatusBar:YES];
                          [fromView setFrame:[self startFrame]];
-                         [[self transitionView] shrink:[self startFrame] imageHeight:[self originalImageHeight]];
+                         [[self transitionView] shrink:[self startFrame]
+                                           imageHeight:[self originalImageHeight]];
                          [[self dimmingViewWithContext:context] setAlpha:0.0f];
-                         [self setTimelineVisible:YES animated:NO];
                      }
                      completion:^(BOOL finished) {
                          [[self transitionView] removeFromSuperview];
                          [[self dimmingViewWithContext:context] removeFromSuperview];
-                         [self showStatusBar:YES];
-
                          [context completeTransition:finished];
                      }];
 }

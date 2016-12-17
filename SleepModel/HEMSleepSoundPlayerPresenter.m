@@ -17,6 +17,7 @@
 #import "HEMSleepSoundPlayerPresenter.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSoundConfigurationCell.h"
+#import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMIntroMessageCell.h"
 #import "HEMTextCollectionViewCell.h"
 #import "HEMSleepSoundService.h"
@@ -24,11 +25,12 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMSleepSoundVolume.h"
 #import "HEMTutorial.h"
+#import "HEMActionButton.h"
 #import "HEMStyle.h"
 
+static CGFloat const HEMSleepSoundPairViewHeight = 352.0f;
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
 static CGFloat const HEMSleepSoundPlayerLoadAnimeDuration = 0.5f;
-static CGFloat const HEMSleepSoundPlayerTutorialDelay = 0.6f;
 
 typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStatePrereqNotMet = 0,
@@ -36,7 +38,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     HEMSleepSoundPlayerStatePlaying,
     HEMSleepSoundPlayerStateWaiting,
     HEMSleepSoundPlayerStateSenseOffline,
-    HEMSleepSoundPlayerStateError
+    HEMSleepSoundPlayerStateError,
+    HEMSleepSoundPlayerStateSenseNotPaired
 };
 
 @interface HEMSleepSoundPlayerPresenter() <
@@ -45,7 +48,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     UICollectionViewDelegateFlowLayout
 >
 
-@property (nonatomic, weak) UIViewController* tutorialParent;
 @property (nonatomic, weak) HEMSleepSoundService* service;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UICollectionView* collectionView;
@@ -63,6 +65,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, weak) HEMActivityIndicatorView* indicator;
 @property (nonatomic, assign, getter=isWaitingForOptionChange) BOOL waitingForOptionChange;
 @property (nonatomic, assign, getter=isSenseOffline) BOOL senseOffline;
+@property (nonatomic, assign, getter=isNotPairedToSense) BOOL notPairedToSense;
 @property (nonatomic, weak) UIView* bgView;
 
 @end
@@ -91,10 +94,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
     [collectionView setBackgroundColor:[UIColor backgroundColor]];
+    [[collectionView superview] setBackgroundColor:[UIColor backgroundColor]];
     [self setCollectionView:collectionView];
 }
 
-- (void)bindWithActionButton:(UIButton*)button bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+- (void)bindWithActionButton:(UIButton*)button
+            bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [self setOrigActionBottomDistance:[bottomConstraint constant]];
 
     CGFloat buttonWidth = CGRectGetWidth([button bounds]);
@@ -112,11 +117,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [self setActionButton:button];
     [self setActionBottomConstraint:bottomConstraint];
     [self setIndicatorView:[self activityIndicator]];
-    [self hideActionButton];
-}
-
-- (void)bindWithTutorialParent:(UIViewController*)tutorialParent {
-    [self setTutorialParent:tutorialParent];
 }
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator {
@@ -173,17 +173,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)didAppear {
     [super didAppear];
-    if ([self tutorialParent]) {
-        __weak typeof(self) weakSelf = self;
-        int64_t delta = (int64_t)(HEMSleepSoundPlayerTutorialDelay * NSEC_PER_SEC);
-        dispatch_time_t after = dispatch_time(DISPATCH_TIME_NOW, delta);
-        dispatch_after(after, dispatch_get_main_queue(), ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if ([strongSelf isViewFullyVisible:[strongSelf collectionView]]) {
-                [HEMTutorial showTutorialForSleepSoundsIfNeeded];
-            }
-        });
-    }
     
     if (![self isWaitingForOptionChange]) {
         [SENAnalytics track:HEMAnalyticsEventSleepSoundView];
@@ -208,7 +197,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)didComeBackFromBackground {
     [super didComeBackFromBackground];
-    [self loadData];
+    if ([self isViewFullyVisible:[self collectionView]]) {
+        [self loadData];
+    }
 }
 
 #pragma mark -
@@ -242,19 +233,29 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     }
 }
 
-- (void)loadDeviceState:(void(^)(void))completion {
+- (void)loadDeviceState:(void(^)(BOOL ready))completion {
     [self setSenseOffline:NO];
+    [self setNotPairedToSense:NO];
     
     __weak typeof(self) weakSelf = self;
     [[self deviceService] refreshMetadata:^(SENPairedDevices * _Nullable devices, NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (devices) {
+        BOOL hasSense = [devices hasPairedSense];
+        if (hasSense) {
             NSDate* date = [[devices senseMetadata] lastSeenDate];
             BOOL senseOk = ![[strongSelf service] isSenseLastSeenGoingToBeAProblem:date];
-            [weakSelf setSenseOffline:!senseOk];
+            [strongSelf setSenseOffline:!senseOk];
+        } else if (!error) {
+            [strongSelf setNotPairedToSense:YES];
         }
-        completion ();
+        completion (hasSense && error == nil);
     }];
+}
+
+- (void)prepareForReload {
+    [self preparePlayerForDataToBeLoaded];
+    [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
+    [[self collectionView] reloadData];
 }
 
 - (void)loadData {
@@ -262,31 +263,29 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return;
     }
     
-    [self preparePlayerForDataToBeLoaded];
+    [self prepareForReload];
     [self setLoading:YES];
-    [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
-    [[self collectionView] reloadData];
-    
-    dispatch_group_t dataGroup = dispatch_group_create();
-    
-    dispatch_group_enter(dataGroup);
-    [self loadDeviceState:^{
-        dispatch_group_leave(dataGroup);
-    }];
-    
-    dispatch_group_enter(dataGroup);
-    [self loadState:^{
-        dispatch_group_leave(dataGroup);
-    }];
     
     __weak typeof(self) weakSelf = self;
-    dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
+    
+    [self loadDeviceState:^(BOOL ready) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setLoading:NO];
-        [strongSelf configurePlayerStateFromStatus:[[strongSelf soundState] status]];
-        [strongSelf startMonitoring];
-        [[strongSelf collectionView] reloadData];
-    });
+        if (ready) {
+            [strongSelf loadState:^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf setLoading:NO];
+                [strongSelf configurePlayerStateFromStatus:[[strongSelf soundState] status]];
+                [strongSelf startMonitoring];
+                [[strongSelf collectionView] reloadData];
+            }];
+        } else {
+            // show error
+            [strongSelf setSoundState:nil];
+            [strongSelf setLoading:NO];
+            [strongSelf configurePlayerStateFromStatus:nil];
+            [[strongSelf collectionView] reloadData];
+        }
+    }];
 }
 
 - (void)loadState:(void(^)(void))completion {
@@ -311,7 +310,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)configurePlayerStateFromStatus:(SENSleepSoundStatus*)status {
-    if (!status) {
+    if (!status && [self isNotPairedToSense]) {
+        [self setPlayerState:HEMSleepSoundPlayerStateSenseNotPaired];
+    } else if (!status) {
         [self setPlayerState:HEMSleepSoundPlayerStateError];
     } else if ([self isSenseOffline]) {
         [self reloadDataWithPlayerState:HEMSleepSoundPlayerStateSenseOffline];
@@ -354,6 +355,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
             [[self configCell] setPlaying:NO];
             [[self actionButton] setHidden:YES];
             break;
+        case HEMSleepSoundPlayerStateSenseNotPaired:
         case HEMSleepSoundPlayerStateError:
             [[self configCell] setPlaying:NO];
             [[self indicatorView] stop];
@@ -476,7 +478,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return nil;
     }
     
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataTitleFont],
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont bodyBold],
                                  NSForegroundColorAttributeName : [UIColor grey5]};
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
@@ -501,7 +503,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (!message) {
         return nil;
     }
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont partialDataMessageFont],
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
                                  NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
@@ -521,6 +523,9 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         case HEMSleepSoundPlayerStateSenseOffline:
         case HEMSleepSoundPlayerStatePrereqNotMet:
             reuseId = [HEMMainStoryboard messageReuseIdentifier];
+            break;
+        case HEMSleepSoundPlayerStateSenseNotPaired:
+            reuseId = [HEMMainStoryboard pairReuseIdentifier];
             break;
         case HEMSleepSoundPlayerStateError:
             reuseId = [HEMMainStoryboard errorReuseIdentifier];
@@ -550,9 +555,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                                                          withWidth:itemSize.width];
             break;
         }
+        case HEMSleepSoundPlayerStateSenseNotPaired:
+            itemSize.height = HEMSleepSoundPairViewHeight;
+            break;
         case HEMSleepSoundPlayerStateError: {
             NSString* text = NSLocalizedString(@"sleep-sounds.error.message", nil);
-            UIFont* font = [UIFont errorStateDescriptionFont];
+            UIFont* font = [UIFont body];
             CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
             CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
             itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -580,11 +588,13 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     UIColor* valueColor = [UIColor detailTextColor];
     
     [[cell titleLabel] setTextColor:titleColor];
+    [[cell titleLabel] setFont:[UIFont body]];
     [[cell titleLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.stopped", nil)];
     [[cell playingLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.playing", nil)];
     [[cell playingLabel] setTextColor:titleColor];
     
     [[cell soundLabel] setTextColor:typeColor];
+    [[cell soundLabel] setFont:[UIFont body]];
     [[cell soundValueLabel] setText:[[self selectedSound] localizedName]];
     [[cell soundValueLabel] setTextColor:valueColor];
     [[cell soundSelectorButton] addTarget:self
@@ -592,6 +602,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                          forControlEvents:UIControlEventTouchUpInside];
     
     [[cell durationLabel] setTextColor:typeColor];
+    [[cell durationLabel] setFont:[UIFont body]];
     [[cell durationValueLabel] setText:[[self selectedDuration] localizedName]];
     [[cell durationValueLabel] setTextColor:valueColor];
     [[cell durationSelectorButton] addTarget:self
@@ -599,6 +610,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                             forControlEvents:UIControlEventTouchUpInside];
     
     [[cell volumeLabel] setTextColor:typeColor];
+    [[cell volumeLabel] setFont:[UIFont body]];
     [[cell volumeValueLabel] setText:[[self selectedVolume] localizedName]];
     [[cell volumeValueLabel] setTextColor:valueColor];
     [[cell volumeSelectorButton] addTarget:self
@@ -610,9 +622,20 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
     [[errorCell textLabel] setText:NSLocalizedString(@"sleep-sounds.error.message", nil)];
-    [[errorCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [[errorCell textLabel] setFont:[UIFont body]];
     [errorCell displayAsACard:YES];
     [self setConfigCell:nil];
+}
+
+- (void)configurePairSenseCell:(HEMSenseRequiredCollectionViewCell*)cell {
+    NSString* buttonTitle = NSLocalizedString(@"actions.pair-sense", nil);
+    NSString* message = NSLocalizedString(@"sleep-sounds.no-sense.message", nil);
+    [[cell descriptionLabel] setText:message];
+    [[cell pairSenseButton] addTarget:self
+                               action:@selector(pairSense)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [[cell pairSenseButton] setTitle:[buttonTitle uppercaseString]
+                            forState:UIControlStateNormal];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
@@ -624,6 +647,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         [self configureErrorCell:(id)cell];
     } else if ([cell isKindOfClass:[HEMIntroMessageCell class]]) {
         [self configureIntroMessageCell:(id)cell];
+    } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
+        [self configurePairSenseCell:(id)cell];
     }
 }
 
@@ -732,6 +757,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
             [strongSelf requestErrorToBeShown:error];
         }
     }];
+}
+
+#pragma mark - Pair Sense
+
+- (void)pairSense {
+    [[self pairDelegate] pairSenseFrom:self];
 }
 
 #pragma mark - Errors

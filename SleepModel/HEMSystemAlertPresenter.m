@@ -7,9 +7,6 @@
 //
 #import <SenseKit/SENSystemAlert.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
-
 #import "HEMSystemAlertPresenter.h"
 #import "HEMNetworkAlertService.h"
 #import "HEMDeviceAlertService.h"
@@ -24,9 +21,11 @@
 #import "HEMSensePairViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMDeviceService.h"
 #import "HEMSystemAlertService.h"
+#import "HEMPillDFUStoryboard.h"
+#import "HEMStyle.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,
@@ -46,6 +45,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 @property (nonatomic, weak) HEMTimeZoneAlertService* tzAlertService;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UIView* alertContainerView;
+@property (nonatomic, weak) UIView* topView;
 @property (nonatomic, weak) HEMActionView* currentActionView;
 
 @end
@@ -77,8 +77,9 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
     return self;
 }
 
-- (void)bindWithContainerView:(UIView*)containerView {
+- (void)bindWithContainerView:(UIView*)containerView below:(UIView*)topView {
     [self setAlertContainerView:containerView];
+    [self setTopView:topView];
 }
 
 #pragma mark - Handler device changes 
@@ -110,11 +111,11 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                             cancelButtonTitle:(NSString*)cancelTitle
                                fixButtonTitle:(NSString*)fixTitle {
     
-    NSMutableParagraphStyle* messageStyle
-    = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    NSMutableParagraphStyle* messageStyle = DefaultBodyParagraphStyle();
     [messageStyle setAlignment:NSTextAlignmentCenter];
+
     NSDictionary* messageAttributes = @{
-                                        NSFontAttributeName : [UIFont systemAlertMessageFont],
+                                        NSFontAttributeName : [UIFont body],
                                         NSForegroundColorAttributeName : [UIColor textColor],
                                         NSParagraphStyleAttributeName : messageStyle};
     
@@ -193,7 +194,10 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                                          action:@selector(cancelAlert:)
                                forControlEvents:UIControlEventTouchUpInside];
             
-            [alertView showInView:[strongSelf alertContainerView] animated:YES completion:nil];
+            [alertView showInView:[strongSelf alertContainerView]
+                            below:[self topView]
+                         animated:YES
+                       completion:nil];
             
             [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
             [strongSelf trackSystemAlertEventForAlert:alert];
@@ -254,7 +258,10 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                          action:@selector(fixTimeZoneNow:)
                forControlEvents:UIControlEventTouchUpInside];
     
-    [alert showInView:[self alertContainerView] animated:YES completion:nil];
+    [alert showInView:[self alertContainerView]
+                below:[self topView]
+             animated:YES
+           completion:nil];
     
     [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageSystemAlertShown];
     
@@ -266,7 +273,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 
 - (void)fixTimeZoneNow:(id)sender {
     [self dismissActionView:^{
-        UIViewController* tzVC = [HEMMainStoryboard instantiateTimeZoneNavViewController];
+        UIViewController* tzVC = [HEMSettingsStoryboard instantiateTimeZoneNavViewController];
         [[self delegate] presentViewController:tzVC from:self];
     }];
     [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
@@ -412,7 +419,10 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                          action:@selector(fixDeviceProblemNow:)
                forControlEvents:UIControlEventTouchUpInside];
 
-    [alert showInView:[self alertContainerView] animated:YES completion:nil];
+    [alert showInView:[self alertContainerView]
+                below:[self topView]
+             animated:YES
+           completion:nil];
     
     [self setCurrentActionView:alert];
 }
@@ -495,7 +505,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 #pragma mark Pill Problems
 
 - (void)showPillDFUController {
-    UIViewController* viewController = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UIViewController* viewController = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     [[self delegate] presentViewController:viewController from:self];
 }
 
@@ -575,7 +585,7 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                              action:@selector(cancelAlert:)
                    forControlEvents:UIControlEventTouchUpInside];
     
-    [alert showInView:[self alertContainerView] animated:YES completion:nil];
+    [alert showInView:[self alertContainerView] below:[self topView] animated:YES completion:nil];
     
     [SENAnalytics track:HEMAnalyticsEventSystemAlert
              properties:@{kHEMAnalyticsEventPropType : @"no internet"}];

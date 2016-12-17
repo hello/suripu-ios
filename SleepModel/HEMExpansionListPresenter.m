@@ -11,7 +11,7 @@
 
 #import "HEMExpansionListPresenter.h"
 #import "HEMExpansionService.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMBasicTableViewCell.h"
 #import "HEMURLImageView.h"
 #import "HEMSettingsHeaderFooterView.h"
@@ -120,9 +120,9 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* reuseId = [HEMMainStoryboard expansionReuseIdentifier];
+    NSString* reuseId = [HEMSettingsStoryboard expansionReuseIdentifier];
     if ([self loadError]) {
-        reuseId = [HEMMainStoryboard errorReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard errorReuseIdentifier];
     }
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
@@ -132,7 +132,7 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self loadError]) {
         [[cell textLabel] setText:NSLocalizedString(@"expansion.error.empty-list", nil)];
-        [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [[cell textLabel] setFont:[UIFont body]];
         [[cell textLabel] setTextColor:[UIColor grey4]];
         [[cell textLabel] setNumberOfLines:0];
         [cell sizeToFit];

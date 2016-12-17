@@ -9,18 +9,18 @@
 #import "HEMDevicesViewController.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMPillPairViewController.h"
 #import "HEMSensePairViewController.h"
 #import "HEMSensePairDelegate.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMRootViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMDeviceService.h"
 #import "HEMDevicesPresenter.h"
 #import "HEMSleepPillDfuViewController.h"
 #import "HEMSettingsNavigationController.h"
+#import "HEMPillDFUStoryboard.h"
 
 @interface HEMDevicesViewController() <
     HEMPillPairDelegate,
@@ -84,12 +84,12 @@
 }
 
 - (void)showSenseSettingsFrom:(HEMDevicesPresenter*)presenter {
-    [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard senseSegueIdentifier]
                               sender:self];
 }
 
 - (void)showPillSettingsFrom:(HEMDevicesPresenter*)presenter {
-    [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard pillSegueIdentifier]
                               sender:self];
 }
 
@@ -100,7 +100,7 @@
 }
 
 - (void)showFirmwareUpdateFrom:(HEMDevicesPresenter*)presenter {
-    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UINavigationController* nav = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
     [dfuVC setDeviceService:[self deviceService]];
     [dfuVC setDelegate:self];
@@ -119,11 +119,7 @@
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
     [[self devicesPresenter] refresh];
-    NSTimeInterval delayInSeconds = 1.25f;
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    });
+    [self dismissModalAfterDelay:YES];
 }
 
 - (void)didCancelPairing:(HEMPillPairViewController *)controller {
@@ -167,11 +163,11 @@
 
 - (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {
     [[self devicesPresenter] refresh];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalAfterDelay:YES];
 }
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController *)controller {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalAfterDelay:YES];
 }
 
 #pragma mark - Segues

@@ -7,6 +7,8 @@
 //
 #import <SenseKit/SENSensor.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMRoomConditionsViewController.h"
 #import "HEMRoomConditionsPresenter.h"
 #import "HEMActivityIndicatorView.h"
@@ -17,11 +19,16 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSensorDetailViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
+
+static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
 
 @interface HEMRoomConditionsViewController () <
     HEMPresenterPairDelegate,
     HEMSensePairingDelegate,
-    HEMRoomConditionsDelegate
+    HEMRoomConditionsDelegate,
+    RoomConditionsNavDelegate,
+    Scrollable
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -36,16 +43,13 @@
 
 @implementation HEMRoomConditionsViewController
 
-/**
- * @discussion
- * In 2.0, this will become obsolete so putting it here for now knowing the code
- * will be changed / removed
- */
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"sensorsBarIcon"];
-        self.tabBarItem.selectedImage = [UIImage imageNamed:@"sensorsBarIconActive"];
+        NSString* iconName = kHEMRoomConditionsTabIconName;
+        NSString* title = NSLocalizedString(@"current-conditions.title", nil);
+        TabPresenter* tabPresenter = [[TabPresenter alloc] initWithIconBaseName:iconName title:title];
+        [tabPresenter bindWithTabItem:[self tabBarItem]];
+        [self addPresenter:tabPresenter];
     }
     return self;
 }
@@ -67,11 +71,29 @@
     [presenter bindWithActivityIndicator:[self activityIndicator]];
     [presenter setPairDelegate:self];
     [presenter setDelegate:self];
+    
+    RoomConditionsNavPresenter* navPresenter = [RoomConditionsNavPresenter new];
+    [navPresenter bindWithNavItem:[self navigationItem]];
+    [navPresenter setNavDelegate:self];
 
     [self setPresenter:presenter];
     [self setSensorService:sensorService];
     [self setIntroService:introService];
     [self addPresenter:presenter];
+    [self addPresenter:navPresenter];
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
+}
+
+#pragma mark - RoomConditionsNavDelegate
+
+- (void)showSettingsFromPresenter:(RoomConditionsNavPresenter *)presenter {
+    HEMSettingsTableViewController* settingsVC = [HEMSettingsStoryboard instantiateSettingsController];
+    [[self navigationController] pushViewController:settingsVC animated:YES];
 }
 
 #pragma mark - HEMRoomConditionsDelegate

@@ -10,7 +10,7 @@
 #import "UIColor+HEMStyle.h"
 
 #import "HEMSupportViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
@@ -33,8 +33,8 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 @implementation HEMSupportViewController
 
 + (void)initialize {
-    [[ZDKSupportTableViewCell appearance] setTitleLabelFont:[UIFont supportHelpCenterFont]];
-    [[ZDKSupportArticleTableViewCell appearance] setTitleLabelFont:[UIFont supportHelpCenterFont]];
+    [[ZDKSupportTableViewCell appearance] setTitleLabelFont:[UIFont h6]];
+    [[ZDKSupportArticleTableViewCell appearance] setTitleLabelFont:[UIFont h6]];
 }
 
 - (void)viewDidLoad {
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* reuseId = [HEMMainStoryboard supportCellReuseIdentifier];
+    NSString* reuseId = [HEMSettingsStoryboard supportCellReuseIdentifier];
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
 
@@ -140,7 +140,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case HEMSupportRowIndexContactUs:
             [SENAnalytics track:HEMAnalyticsEventSupportContactUs];
-            [self performSegueWithIdentifier:[HEMMainStoryboard topicsSegueIdentifier] sender:self];
+            [self performSegueWithIdentifier:[HEMSettingsStoryboard topicsSegueIdentifier] sender:self];
             break;
         case HEMSupportRowIndexTickets: {
             [SENAnalytics track:HEMAnalyticsEventSupportTickets];

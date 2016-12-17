@@ -29,7 +29,7 @@
 @implementation HEMSupportTopicsViewController
 
 + (void)initialize {
-    [[ZDKCreateRequestView appearance] setTextEntryFont:[UIFont supportTicketDescriptionFont]];
+    [[ZDKCreateRequestView appearance] setTextEntryFont:[UIFont body]];
 }
 
 - (void)viewDidLoad {

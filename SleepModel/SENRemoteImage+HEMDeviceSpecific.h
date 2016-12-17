@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SENRemoteImage (HEMDeviceSpecific)
 
-- (NSString*)uriForCurrentDevice;
+- (nullable NSString*)uriForCurrentDevice;
 
 /**
  * @discussion

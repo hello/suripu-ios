@@ -52,7 +52,7 @@
 
         ],
         "iOSDFULibrary": [
-
+          "2.1.6"
         ],
         "CocoaLumberjack": [
           "~> 2.0.0"

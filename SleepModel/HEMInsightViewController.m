@@ -23,12 +23,17 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonContainerBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonLeadingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonTrailingConstraint;
+@property (assign, nonatomic) BOOL hideStatusBar;
 
 @property (strong, nonatomic) HEMShareService* shareService;
 
 @end
 
 @implementation HEMInsightViewController
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

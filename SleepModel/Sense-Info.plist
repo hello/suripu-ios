@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.6.2</string>
+	<string>2.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -35,7 +35,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.2.6</string>
+	<string>2.0.0.18</string>
 	<key>FacebookAppID</key>
 	<string>372438546161587</string>
 	<key>FacebookDisplayName</key>
@@ -104,8 +104,18 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This application requires access to Bluetooth to interact with Sense and the Sleep Pill</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Sense requires access to camera to take a photo for your profile.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Sense requires read access to update Sleep Analysis data in the Health app.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Sense requires write access to provide Sleep Analysis data to the Health app.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Sense uses your location to know sunrise and sunset times, local weather, and more.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Sense requires access to your photos to upload a profile photo.</string>
 	<key>PillFirmwareURL</key>
 	<string>${PILL_FIRMWARE_URL}</string>
 	<key>SenseAllowSupportOptions</key>
@@ -130,13 +140,6 @@
 	<string>${SENSE_ZENDESK_TOKEN}</string>
 	<key>SenseZendeskURL</key>
 	<string>${SENSE_ZENDESK_URL}</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>AvenirNext-Light.ttf</string>
-		<string>AvenirNext-LightItalic.ttf</string>
-		<string>AvenirNext-Thin.ttf</string>
-		<string>AvenirNext-ThinItalic.ttf</string>
-	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -166,9 +169,10 @@
 	<array>
 		<string>armv7</string>
 		<string>bluetooth-le</string>
+		<string>healthkit</string>
 	</array>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -178,6 +182,6 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

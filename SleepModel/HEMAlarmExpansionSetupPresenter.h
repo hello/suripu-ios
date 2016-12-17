@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol HEMAlarmExpansionSetupDelegate <NSObject>
 
 - (void)updatedAlarmExpansion:(SENAlarmExpansion*)alarmExpansion
-   withExpansionConfiguration:(SENExpansionConfig*)config;
+   withExpansionConfiguration:(nullable SENExpansionConfig*)config;
 
 @end
 

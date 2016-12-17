@@ -33,7 +33,9 @@ static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
 }
 
 - (void)prepareForReuse {
+    [super prepareForReuse];
     [[[self sensorContentView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    DDLogVerbose(@"removed content views");
 }
 
 - (HEMSensorGroupMemberView*)addSensorWithName:(NSString*)name
@@ -63,6 +65,7 @@ static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
     [memberView setFrame:memberFrame];
     
     [[self sensorContentView] addSubview:memberView];
+    DDLogVerbose(@"added content view %@", name);
     
     return memberView;
 }

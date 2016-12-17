@@ -14,6 +14,8 @@ static CGFloat const HEMListItemTouchAnimDuration = 0.2f;
 @implementation HEMListItemCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [[self selectionImageView] setUserInteractionEnabled:NO];
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
     

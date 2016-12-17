@@ -275,6 +275,7 @@ NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
 // voice tutorial
 NSString* const HEMAnalyticsEventVoiceTutorial = @"Voice Tutorial";
 NSString* const HEMAnalyticsEventVoiceResponse = @"Voice Command";
+NSString* const HEMAnalyticsEventVoiceTutorialSkip = @"Voice Tutorial Skip";
 
 // upgrade path
 NSString* const HEMAnalyticsEventUpgradePrefix = @"Upgrade";

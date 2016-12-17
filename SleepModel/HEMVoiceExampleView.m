@@ -23,6 +23,7 @@
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self categoryLabel] setTextColor:[UIColor grey6]];
     [[self categoryLabel] setFont:[UIFont body]];
     [[self exampleLabel] setTextColor:[UIColor grey4]];

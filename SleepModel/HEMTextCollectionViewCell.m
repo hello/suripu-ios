@@ -27,6 +27,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self configureContentView];
 }
 

@@ -16,7 +16,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMAlertViewController.h"
 #import "HEMVolumeControlViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMVolumeControlPresenter.h"
 
@@ -81,7 +81,7 @@
 - (void)showVolumeControlWithPresenter:(HEMVolumeControlPresenter*)volumePresenter
                          fromPresenter:(HEMVoiceSettingsPresenter*)presenter {
     [self setVolumeControlPresenter:volumePresenter];
-    [self performSegueWithIdentifier:[HEMMainStoryboard volumeSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard volumeSegueIdentifier]
                               sender:self];
 }
 

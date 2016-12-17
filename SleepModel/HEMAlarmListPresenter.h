@@ -14,6 +14,7 @@
 @class HEMAlarmAddButton;
 @class HEMActivityIndicatorView;
 @class HEMExpansionService;
+@class HEMDeviceService;
 
 @protocol HEMAlarmListPresenterDelegate <NSObject>
 
@@ -34,11 +35,11 @@
 @property (nonatomic, assign, getter=isLoading, readonly) BOOL loading;
 
 - (instancetype)initWithAlarmService:(HEMAlarmService*)alarmService
-                    expansionService:(HEMExpansionService*)expansionService;
+                    expansionService:(HEMExpansionService*)expansionService
+                       deviceService:(HEMDeviceService*)deviceService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav;
-- (void)bindWithAddButton:(HEMAlarmAddButton*)addButton
-     withBottomConstraint:(NSLayoutConstraint*)bottomConstraint;
+- (void)bindWithAddButton:(HEMAlarmAddButton*)addButton;
 - (void)bindWithDataLoadingIndicator:(HEMActivityIndicatorView*)dataLoadingIndicator;
 - (void)update;
 

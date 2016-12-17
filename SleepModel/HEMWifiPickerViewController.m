@@ -92,7 +92,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configurePicker {
-    [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
+    [[[self activityView] activityLabel] setFont:[UIFont body]];
     
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
     [[self wifiDataSource] setKeepSenseLEDOn:![self haveDelegates]];
@@ -232,7 +232,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [wifiView setHidden:!showWifiIcon];
     [wifiView setImage:[HEMWifiUtils wifiIconForRssi:[endpoint rssi]]];
     
-    [[cell textLabel] setFont:[UIFont wifiTitleFont]];
+    [[cell textLabel] setFont:[UIFont body]];
     [[cell textLabel] setText:ssid];
 }
 

@@ -39,7 +39,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.dataDetectorTypes = UIDataDetectorTypeLink | UIDataDetectorTypeAddress;
     self.linkTextAttributes = @{NSForegroundColorAttributeName : [UIColor tintColor],
-                                NSFontAttributeName : [UIFont dialogMessageBoldFont]};
+                                NSFontAttributeName : [UIFont bodyBold]};
     self.textContainerInset = UIEdgeInsetsZero;
     self.textContainer.lineFragmentPadding = 0;
 }

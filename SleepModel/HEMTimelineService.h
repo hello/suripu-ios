@@ -71,6 +71,21 @@ typedef void(^HEMTimelineServiceUpdateHandler)(SENTimeline* _Nullable updatedTim
                   andMinutes:(NSNumber*)minutes
                   completion:(HEMTimelineServiceUpdateHandler)completion;
 
+/**
+ * @discussion
+ * The string value for the date of the Timeline
+ * 
+ * @param date: the date for the timeline
+ * @return the string value for the date, which depends on how many days ago
+ */
+- (NSString*)stringValueForTimelineDate:(NSDate*)date;
+
+/**
+ * @param date to check
+ * @return YES if last night, NO otherwise
+ */
+- (BOOL)isDateLastNight:(NSDate*)date;
+
 @end
 
 NS_ASSUME_NONNULL_END

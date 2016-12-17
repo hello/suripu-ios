@@ -13,13 +13,14 @@
 #import "HEMAccountService.h"
 #import "HEMBreadcrumbService.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMTellAFriendItemProvider.h"
 #import "HEMStyle.h"
 
 static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
 static CGFloat const HEMSettingsBottomMargin = 10.0f;
+static CGFloat const HEMSettingsRowHeight = 56.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSettingsSection) {
     HEMSettingsSectionAccount = 0,
@@ -96,6 +97,10 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     [self setTableView:tableView];
 }
 
+- (void)bindWithNavItem:(UINavigationItem*)navItem {
+    [navItem setTitle:NSLocalizedString(@"settings.title", nil)];
+}
+
 - (void)bindWithActivityView:(HEMActivityIndicatorView*)activityView {
     [activityView start];
     [activityView setHidden:NO];
@@ -143,8 +148,19 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     
     [[self versionView] sizeToFit];
 
+    // can't always depend on content size
+    NSInteger numberOfSections = [[self sections] count];
+    CGFloat totalHeaderHeight = CGRectGetHeight([[[self tableView] tableHeaderView] bounds]);
+    totalHeaderHeight += (numberOfSections - 1) * HEMSettingsSectionHeaderHeight;
+    
+    CGFloat totalRowHeight = 0.0f;
+    for (NSArray* rows in [self sections]) {
+        totalRowHeight += [rows count] * HEMSettingsRowHeight;
+    }
+    
     CGFloat versionRequiredHeight = CGRectGetHeight([[self versionLabel] frame]);
-    CGFloat contentHeight = [[self tableView] contentSize].height;
+    CGFloat contentHeight = totalHeaderHeight + totalRowHeight;
+    
     CGFloat tableHeight = CGRectGetHeight([[self tableView] bounds]);
     CGFloat tableWidth = CGRectGetWidth([[self tableView] bounds]);
     CGFloat minSpacing = HEMSettingsSectionHeaderHeight;
@@ -156,9 +172,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     versionLabelFrame.origin.x = (tableWidth - CGRectGetWidth([[self versionLabel] bounds])) / 2;
     [[self versionLabel] setFrame:versionLabelFrame];
     
-    versionViewFrame.size.height = versionHeight;
+    versionViewFrame.size.height = versionHeight + HEMSettingsBottomMargin;
     versionViewFrame.size.width = tableWidth;
     [[self versionView] setFrame:versionViewFrame];
+    
+    // must re-add it back to the tableview to have it update the content size
+    [[self tableView] setTableFooterView:[self versionView]];
 }
 
 - (void)refreshSections {
@@ -280,7 +299,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *reuseId = [HEMMainStoryboard settingsCellReuseIdentifier];
+    NSString *reuseId = [HEMSettingsStoryboard settingsCellReuseIdentifier];
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
 

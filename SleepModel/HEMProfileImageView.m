@@ -21,6 +21,7 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
 @implementation HEMProfileImageView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self configureDefaults];
     [self addLoadingView];
     [self applyCircleMask];

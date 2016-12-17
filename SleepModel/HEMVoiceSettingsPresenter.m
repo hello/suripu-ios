@@ -14,7 +14,7 @@
 #import "HEMVoiceSettingsPresenter.h"
 #import "HEMVoiceService.h"
 #import "HEMDeviceService.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMActivityCoverView.h"
@@ -173,7 +173,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
         NSString* message = [self dataErrorMessage];
         CGFloat margins = kHEMVoiceSettingsCellTextMargin * 2.0f;
         CGFloat textWidth = CGRectGetWidth([tableView bounds]) - margins;
-        height = [message heightBoundedByWidth:textWidth usingFont:[UIFont errorStateDescriptionFont]];
+        height = [message heightBoundedByWidth:textWidth usingFont:[UIFont body]];
         height += margins;
     }
     return height;
@@ -183,11 +183,11 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = nil;
     if ([self dataError]) {
-        reuseId = [HEMMainStoryboard errorReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard errorReuseIdentifier];
     } else if ([indexPath row] != HEMVoiceSettingsRowMute) {
-        reuseId = [HEMMainStoryboard settingsReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard voiceSettingCellReuseIdentifier];
     } else {
-        reuseId = [HEMMainStoryboard switchReuseIdentifier];
+        reuseId = [HEMSettingsStoryboard switchReuseIdentifier];
     }
     return [tableView dequeueReusableCellWithIdentifier:reuseId
                                            forIndexPath:indexPath];
@@ -198,7 +198,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self dataError] && [indexPath row] == 0) {
         [[cell textLabel] setText:[self dataErrorMessage]];
-        [[cell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+        [[cell textLabel] setFont:[UIFont body]];
         [[cell textLabel] setTextColor:[UIColor grey4]];
         [[cell textLabel] setNumberOfLines:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];

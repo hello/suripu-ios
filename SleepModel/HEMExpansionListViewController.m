@@ -11,7 +11,7 @@
 #import "HEMExpansionService.h"
 #import "HEMExpansionListPresenter.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 
 @interface HEMExpansionListViewController() <HEMExpansionActionDelegate>
 
@@ -47,7 +47,7 @@
 - (void)shouldShowExpansion:(SENExpansion *)expansion
               fromPresenter:(HEMExpansionListPresenter *)presenter {
     [self setSelectedExpansion:expansion];
-    [self performSegueWithIdentifier:[HEMMainStoryboard expansionSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMSettingsStoryboard expansionSegueIdentifier]
                               sender:self];
 }
 

@@ -9,17 +9,17 @@
 #import "HEMPresenter.h"
 
 @class HEMTrendsService;
-@class HEMSubNavigationView;
 @class HEMActivityIndicatorView;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMTrendsGraphsPresenter : HEMPresenter
 
-- (instancetype)initWithTrendsService:(HEMTrendsService*)trendService;
+- (instancetype)initWithTrendsService:(HEMTrendsService*)trendService
+                            dataScale:(SENTrendsTimeScale)scale;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
-- (void)bindWithSubNav:(HEMSubNavigationView*)subNav;
 - (void)bindWithLoadingIndicator:(HEMActivityIndicatorView*)loadingIndicator;
+- (NSString*)scaleTitle;
 
 @end
 

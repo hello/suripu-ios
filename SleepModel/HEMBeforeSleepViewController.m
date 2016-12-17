@@ -11,11 +11,10 @@
 
 #import "HEMBeforeSleepViewController.h"
 #import "HEMActionButton.h"
-#import "UIColor+HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
-#import "UIFont+HEMStyle.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
 
 static NSInteger const HEMBeforeSleepNumberOfScreens = 5;
 static CGFloat const HEMBeforeSleepSideImageInitialScale = 0.65f;
@@ -135,9 +134,11 @@ typedef NS_ENUM(NSUInteger, HEMBeforeSleepScreen) {
 
 - (NSAttributedString*)attributedDescriptionWithKey:(NSString*)localizedKey {
     NSString* description = NSLocalizedString(localizedKey, nil);
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     return [[NSAttributedString alloc] initWithString:description
                                            attributes:@{NSFontAttributeName : [UIFont body],
-                                                        NSForegroundColorAttributeName : [UIColor grey5]}];
+                                                        NSForegroundColorAttributeName : [UIColor grey5],
+                                                        NSParagraphStyleAttributeName : style}];
 }
 
 

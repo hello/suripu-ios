@@ -11,6 +11,7 @@
 @implementation HEMPopupMaskView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.userInteractionEnabled = NO;
 }
 

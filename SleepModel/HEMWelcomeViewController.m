@@ -5,7 +5,8 @@
 //  Created by Jimmy Lu on 8/18/14.
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
-#import <MediaPlayer/MPMoviePlayerViewController.h>
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -13,7 +14,6 @@
 #import "HEMWelcomeViewController.h"
 #import "HEMMeetSenseView.h"
 #import "HEMIntroDescriptionView.h"
-#import "HEMRootViewController.h"
 #import "HEMScreenUtils.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMAudioService.h"
@@ -54,15 +54,14 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 @implementation HEMWelcomeViewController
 
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setAudioService:[HEMAudioService new]];
     [self configureAppearance];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self hideStatusBar];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -76,19 +75,14 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     [self updateConstraint:[self introImageHeightConstraint] withDiff:-48.0f];
 }
 
-- (void)hideStatusBar {
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root hideStatusBar];
-}
-
 - (void)configureAppearance {
     // controller is launched in to a container controller that is styled and
     // always shows a left bar button, which we don't want
     [[self navigationItem] setLeftBarButtonItem:nil];
     
-    [[[self logInButton] titleLabel] setFont:[UIFont welcomeButtonFont]];
+    [[[self logInButton] titleLabel] setFont:[UIFont button]];
     [[self logInButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [[[self signUpButton] titleLabel] setFont:[UIFont welcomeButtonFont]];
+    [[[self signUpButton] titleLabel] setFont:[UIFont button]];
     [[self signUpButton] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self setOrigLogInTrailingConstraintConstant:[[self logInButtonTrailingConstraint] constant]];
@@ -196,10 +190,15 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
     __weak typeof(self) weakSelf = self;
     [[self audioService] activateSession:YES completion:^(NSError * _Nullable error) {
         // play regardless of error
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
-        MPMoviePlayerViewController* videoPlayer
-            = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
-        [weakSelf presentMoviePlayerViewControllerAnimated:videoPlayer];
+        AVPlayerViewController* videoPlayer = [AVPlayerViewController new];
+        AVPlayer* player = [AVPlayer playerWithURL:introductoryVideoURL];
+        [videoPlayer setPlayer:player];
+        [videoPlayer setShowsPlaybackControls:YES];
+        [strongSelf presentViewController:videoPlayer animated:YES completion:^{
+            [player play];
+        }];
         [SENAnalytics track:kHEMAnalyticsEventVideo];
     }];
 }
@@ -319,12 +318,16 @@ static CGFloat const HEMWelcomeButtonSeparatorMaxOpacity = 0.4f;
 
 #pragma mark - Segues
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if (![self transitionDelegate]) {
+- (HEMSimpleModalTransitionDelegate*)transitionDelegate {
+    if (!_transitionDelegate) {
         HEMSimpleModalTransitionDelegate* delegate = [HEMSimpleModalTransitionDelegate new];
         [delegate setWantsStatusBar:YES];
-        [self setTransitionDelegate:delegate];
+        _transitionDelegate = delegate;
     }
+    return _transitionDelegate;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController* destVC = [segue destinationViewController];
     [destVC setModalPresentationStyle:UIModalPresentationCustom];
     [destVC setTransitioningDelegate:[self transitionDelegate]];

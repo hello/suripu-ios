@@ -62,7 +62,9 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
 }
 
 - (void)awakeFromNib {
-    [[self sensorMessageLabel] setFont:[UIFont onboardingRoomCheckSensorLightFont]];
+    [super awakeFromNib];
+    
+    [[self sensorMessageLabel] setFont:[UIFont h8]];
     [[self unitLabel] setFont:[UIFont h4]];
     [[self valueLabel] setFont:[UIFont h1]];
     [self setOrigUnitBottomMargin:[[self unitLabelBottomConstraint] constant]];
@@ -165,11 +167,10 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
     CGSize unitSize = [unit sizeBoundedByHeight:MAXFLOAT attributes:unitAttrs];
     
     if (!subscript) {
-        CGFloat heightOfValue = CGRectGetHeight([[self valueLabel] bounds]);
-        CGFloat capHeight = [[[self unitLabel] font] capHeight];
-        CGFloat ascender = [[[self unitLabel] font] ascender];
-        CGFloat unitHeightDiff = heightOfValue - unitSize.height + floorCGFloat(ascender - capHeight);
-        [[self unitLabelBottomConstraint] setConstant:-unitHeightDiff];
+        CGFloat valueHeight = CGRectGetHeight([[self valueLabel] bounds]);
+        CGFloat descender = [[[self unitLabel] font] descender];
+        CGFloat margin = valueHeight - unitSize.height + descender;
+        [[self unitLabelBottomConstraint] setConstant:-margin];
     } else {
         [[self unitLabelBottomConstraint] setConstant:[self origUnitBottomMargin]];
     }

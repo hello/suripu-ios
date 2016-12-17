@@ -1,5 +1,185 @@
 # Changelog
 
+## 2.0.0.18
+
+Fixes:
+
+* Fixed issue with Trends data being misaligned when there is not enough data for month and quarter
+
+## 2.0.0.17
+
+New:
+
+* Updated Primary user footnote to include a sentence related to Nest expansion 
+
+## 2.0.0.16
+
+New:
+
+* Timeline now supports scrolling to the top
+
+## 2.0.0.15
+
+Fixes:
+
+* Should fix apple warnings of Push notification entitlement
+* Fix limit line values in room conditions
+
+## 2.0.0.14
+
+New:
+
+* Room conditions tab is now titled Room Conditions
+
+Fixes:
+
+* Reverted changes to timeline states and just reduced spacing and updated learn more button to fit smaller devices
+* First night state should not show when account was created the night before
+
+## 2.0.0.13
+
+Fixes:
+
+* Fix timeline states on smaller devices
+* Fixed timeline navigation bar icons not properly laid out
+* Fixed HK not actually enabled, despite it being enabled
+
+## 2.0.0.12
+
+New:
+
+* Tapping on the bottom nav, while content is already visible, will scroll content to top
+* Tapping on collapsed content in widget launches in to room conditions
+
+Fixes:
+
+* Removed default text in collapsed view of extension
+* Timeline navigation bar icons should not jump when scrolling fast
+* Air quality grouped sensor card should not be blank on reuse
+* Voice tab properly shows voice tab, based on Sense paired to account
+
+## 2.0.0.11
+
+New:
+
+* Updated sense icon for room conditions tab
+* Routing app review prompts to Sense with Voice on Amazon, for amazon reviews, when user has Sense with Voice
+* Onboarding description text now uses 24px line height
+* New collapsed mode in room conditions extension, required for iOS 10 
+
+Fixes:
+
+* Fixed room conditions expanded mode in iOS 10
+* Fixed tab not being highlighted when tapping on the tab at the top
+* Fixed version text that was jumping around in settings
+* Fixed sleep summary tap target in Timeline
+
+## 2.0.0.10
+
+New:
+
+* Re-inserted force touch and made it work with new navigation system
+
+Fixes:
+
+* Fixes Timeline breakdown text font + color
+* Fixes Timeline summary spacing
+* Fixes Alarm card toggle spacing when expansion attributes are added
+* Fixes Room Check unit label spacing
+
+## 2.0.0.9
+
+New:
+
+* Trends tab now updated to design spec
+* System alerts updated to design spec and added back
+
+Fixes:
+
+* Fixed crasher in sensor detail when there is no data to show
+* Fixed issue wher sleep score icon is not updated after Timeline adjustments
+
+## 2.0.0.8
+
+New:
+
+* Feed tab now updated to design spec
+* Updated rendering mode for tab bar icons
+* Updated Timeline summary line height
+* Updated Insights text line height
+
+## 2.0.0.7
+
+New:
+
+* Add pair sense card to alarm list
+* Add pair sense card to sleep sounds
+* Decreased load times for various screens
+* Updated settings icon
+* Added voice tutorial skip analytics event
+
+## 2.0.0.6
+
+New:
+
+* Sounds tab works as designed, minus the no sense paired case
+* Connect text in alarm screen is blue
+* Re-inserted debug functionality
+* Design tweaks to Sleep Sounds
+* Design tweaks to Alarm
+
+Fixes:
+
+* Fixed crasher when taking photo using iOS 10 device
+
+## 2.0.0.5
+
+New:
+
+* Moved settings in to the room conditions tab
+* Updated room conditions to adjust for bottom nav bar + design tweaks
+* Moved settings related screens in to Settings.storyboard
+
+## 2.0.0.4
+
+New:
+
+* New bottom nav!
+* Updated Timeline summary design
+* Updated Timeline nav
+* Updated navigation icons (for bottom nav)
+* Dynamic sleep score icon based on last night score for the Timeline tab
+* Navigation title now set to 18px
+
+Fixes:
+
+* Fixed issues with sensor scale duplicating on every load
+* Fixed issue where alarm card in the list will show empty wipe space for expansion
+* Sleep summary values were way too small
+
+## 2.0.0.3
+
+Fixes:
+
+* Added privacy info for bluetooth and photo library
+* Fixed some nullability warning / checks
+
+## 2.0.0.2
+
+Notes:
+
+* Bumping version only because of iTunesconnect error 
+
+## 2.0.0.1
+
+New:
+
+* Building with iOS 10 SDK
+* Dropped support for iOS 8
+* Switched to using SF Font (system font)
+* Removed account settings breadcrumbs
+* Remove welcome cards that show up automatically
+
 ## 1.6.2.6
 
 Fixes:

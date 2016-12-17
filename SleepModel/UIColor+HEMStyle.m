@@ -349,7 +349,7 @@
     return [self colorWithHex:0xE5E5E5 alpha:1.f];
 }
 + (UIColor *)cardTitleColor {
-    return [self grey5];
+    return [self grey6];
 }
 
 #pragma mark - Separators / Lines

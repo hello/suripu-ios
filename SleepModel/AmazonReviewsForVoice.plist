@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   AmazonReviewsForVoice.plist
-   Sense
-
-   Created by Jimmy Lu on 10/24/16.
-   Copyright (c) 2016 Hello. All rights reserved.
--->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-    
-    </dict>
+<dict>
+	<key>GB</key>
+	<string>https://www.amazon.co.uk/review/create-review?asin=B01M9F2WLE</string>
+	<key>US</key>
+	<string>https://www.amazon.com/review/create-review?asin=B01M9F2WLE</string>
+</dict>
 </plist>

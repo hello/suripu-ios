@@ -165,7 +165,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 - (void)bindWithLaterButton:(UIButton*)laterButton
        withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
     [laterButton addTarget:self
-                    action:@selector(finish)
+                    action:@selector(later)
           forControlEvents:UIControlEventTouchUpInside];
     [laterButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [[laterButton titleLabel] setFont:[UIFont buttonSmall]];
@@ -335,6 +335,11 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     [self setInfoShowing:YES];
     [self setInfoShown:YES];
     [[self delegate] showController:sheet fromPresenter:self];
+}
+
+- (void)later {
+    [SENAnalytics track:HEMAnalyticsEventVoiceTutorialSkip];
+    [self finish];
 }
 
 - (void)finish {

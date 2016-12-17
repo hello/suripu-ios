@@ -12,6 +12,8 @@
 @implementation HEMTrendsBubbleView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [self setBackgroundColor:[UIColor clearColor]];
     [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
     [[self valueLabel] setTextColor:[UIColor whiteColor]];
@@ -23,7 +25,7 @@
     [[self unitLabel] setTextColor:[UIColor colorWithWhite:1.0f alpha:0.7f]];
     
     [[self nameLabel] setBackgroundColor:[UIColor clearColor]];
-    [[self nameLabel] setFont:[UIFont trendSleepDepthTitleFont]];
+    [[self nameLabel] setFont:[UIFont h8]];
     [[self nameLabel] setTextColor:[UIColor whiteColor]];
 }
 

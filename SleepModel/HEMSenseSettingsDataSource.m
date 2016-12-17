@@ -217,7 +217,7 @@
     
     NSMutableAttributedString* attrWarning =
     [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont body]}
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -225,7 +225,7 @@
 
 - (NSAttributedString*)attributedWarningForMessage:(NSString*)message {
     NSMutableAttributedString* attrWarning = [[NSMutableAttributedString alloc] initWithString:message];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont body]}
                          range:NSMakeRange(0, [attrWarning length])];
     return attrWarning;
 }

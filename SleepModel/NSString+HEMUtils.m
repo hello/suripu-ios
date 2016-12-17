@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import <CGFloatType/CGFloatType.h>
 #import "NSString+HEMUtils.h"
 
 @implementation NSString (HEMUtils)
@@ -15,6 +16,18 @@ static NSPredicate* emailPredicate;
 + (void)initialize {
     NSString* regex = @"^.+@.+\\..+$";
     emailPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+}
+
++ (NSString*)camelCaseWord:(NSString*)word {
+    if ([word length] == 0) {
+        return word;
+    }
+    if ([word length] == 1) {
+        return [word uppercaseString];
+    }
+    NSString* upper = [word uppercaseString];
+    char firstChar = [upper characterAtIndex:0];
+    return [NSString stringWithFormat:@"%c%@", firstChar, [[word substringFromIndex:1] lowercaseString]];
 }
 
 - (BOOL)isValidEmail {

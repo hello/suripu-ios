@@ -46,6 +46,7 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
+    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [self setCollectionView:collectionView];
     [self updateUI];
 }

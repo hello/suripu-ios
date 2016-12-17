@@ -102,14 +102,14 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
     shareTrailingConstraint:(NSLayoutConstraint*)trailingConstraint
      andViewThatDividesThem:(UIView*)divider {
     [shareButton setBackgroundColor:[UIColor whiteColor]];
-    [[shareButton titleLabel] setFont:[UIFont insightDismissButtonFont]];
+    [[shareButton titleLabel] setFont:[UIFont button]];
     [shareButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [shareButton addTarget:self
                     action:@selector(shareInsight)
           forControlEvents:UIControlEventTouchUpInside];
     
     [closeButton setBackgroundColor:[UIColor whiteColor]];
-    [[closeButton titleLabel] setFont:[UIFont insightDismissButtonFont]];
+    [[closeButton titleLabel] setFont:[UIFont button]];
     [closeButton setTitleColor:[UIColor grey4] forState:UIControlStateNormal];
     [closeButton addTarget:self
                     action:@selector(closeInsight)

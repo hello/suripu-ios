@@ -6,23 +6,30 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
+#import <SenseKit/SENTimeline.h>
+
 #import "UIImage+ImageEffects.h"
 #import "UIView+HEMSnapshot.h"
 #import "NSDate+HEMRelative.h"
 #import "UIView+HEMMotionEffects.h"
 
 #import "HEMSleepSummarySlideViewController.h"
+#import "HEMTimelineFeedbackViewController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
-#import "HEMRootViewController.h"
 #import "HEMHandHoldingService.h"
+#import "HEMTimelineService.h"
+#import "HEMStyle.h"
 
-@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate>
+@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable>
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
 @property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
+@property (nonatomic, assign) NSInteger lastNightSleepScore;
 
 @end
 
@@ -49,17 +56,19 @@
 
 - (void)__initStackWithControllerForDate:(NSDate*)date
 {
-    [self reloadDataWithController:[self timelineControllerForDate:date]];
+    _lastNightSleepScore = -1; // initialize to -1 to make update take affect for 0
+    
+    NSInteger lastNightSleepScore = 0;
+    HEMSleepGraphViewController* timelineVC = (id) [self timelineControllerForDate:date];
+    if ([timelineVC isLastNight]) {
+        SENTimeline* timeline = [SENTimeline timelineForDate:date];
+        lastNightSleepScore = [[timeline score] integerValue];
+    }
+    [self updateLastNightSleepScore:lastNightSleepScore];
+    [self reloadDataWithController:timelineVC];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerDidOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerDidCloseNotification
-                                               object:nil];
+    [[self view] setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (UIViewController*)timelineControllerForDate:(NSDate*)date {
@@ -68,10 +77,32 @@
     return controller;
 }
 
+- (void)updateLastNightSleepScore:(NSInteger)sleepScore {
+    if (sleepScore != [self lastNightSleepScore]) {
+        [self setLastNightSleepScore:sleepScore];
+        
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            UIImage* sleepScoreImage = [UIImage iconFromSleepScoreWithSleepScore:sleepScore highlighted:NO];
+            UIImage* sleepScoreImageHighlighted = [UIImage iconFromSleepScoreWithSleepScore:sleepScore highlighted:YES];
+            sleepScoreImageHighlighted = [sleepScoreImageHighlighted imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                strongSelf.tabBarItem.image = sleepScoreImage;
+                strongSelf.tabBarItem.selectedImage = sleepScoreImageHighlighted;
+            });
+        });
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     [self setHandHoldingService:[HEMHandHoldingService new]];
+    [self listenForTimelineChanges];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
@@ -102,18 +133,42 @@
     }
 }
 
+- (void)reloadWithDate:(NSDate*)date {
+    UIViewController* timelineVC = [self timelineControllerForDate:date];
+    [self reloadDataWithController:timelineVC];
+}
+
 - (void)reloadDataWithController:(UIViewController*)controller {
-    if (!controller)
-        return;
-    [self setViewControllers:@[controller]
-                   direction:UIPageViewControllerNavigationDirectionForward
-     | UIPageViewControllerNavigationDirectionReverse
-                    animated:NO
-                  completion:nil];
+    if (controller) {
+        [[controller view] setFrame:[[self view] bounds]];
+        [self setViewControllers:@[controller]
+                       direction:UIPageViewControllerNavigationDirectionForward
+                                 | UIPageViewControllerNavigationDirectionReverse
+                        animated:NO
+                      completion:nil];
+    }
 }
 
 - (void)setSwipingEnabled:(BOOL)enabled {
     self.dataSource = enabled ? self.data : nil;
+}
+
+#pragma mark - Notifications
+
+- (void)listenForTimelineChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(timelineChanged:)
+                   name:HEMTimelineFeedbackSuccessNotification
+                 object:nil];
+}
+
+- (void)timelineChanged:(NSNotification*)note {
+    NSDate* lastNight = [NSDate timelineInitialDate];
+    SENTimeline* lastNightTimeline = [SENTimeline timelineForDate:lastNight];
+    if (lastNightTimeline) {
+        [self updateLastNightSleepScore:[[lastNightTimeline score] integerValue]];
+    }
 }
 
 #pragma mark - Gesture Recognizers
@@ -140,21 +195,17 @@
     return YES;
 }
 
-- (void)didPan {
-}
+- (void)didPan { }
 
-#pragma mark - Drawer Events
+#pragma mark - Scrollable
 
-- (void)drawerDidOpen {
-    [self setScrollingEnabled:NO];
-}
-
-- (void)drawerDidClose {
-    [self setScrollingEnabled:YES];
-}
-
-- (void)setScrollingEnabled:(BOOL)isEnabled {
-    [self setDataSource:isEnabled ? [self data] : nil];
+- (void)scrollToTop {
+    for (UIViewController* controller in [self viewControllers]) {
+        if ([controller conformsToProtocol:@protocol(Scrollable)]) {
+            id<Scrollable> scrollable = (id) controller;
+            [scrollable scrollToTop];
+        }
+    }
 }
 
 #pragma mark - Cleanup

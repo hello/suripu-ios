@@ -79,11 +79,11 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
     } else if ([indexPath section] == HEMTutorialCellSectionText) {
         if ([indexPath row] == HEMTutorialCellTextRowTitle) {
             size.height = [HEMTextCollectionViewCell heightWithText:[[self content] title]
-                                                               font:[UIFont tutorialTitleFont]
+                                                               font:[UIFont h6]
                                                           cellWidth:size.width];
         } else if ([indexPath row] == HEMTutorialCellTextRowDescription) {
             size.height = [HEMTextCollectionViewCell heightWithText:[[self content] text]
-                                                               font:[UIFont tutorialDescriptionFont]
+                                                               font:[UIFont body]
                                                           cellWidth:size.width];
         }
     }
@@ -161,7 +161,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 - (UICollectionViewCell*)titleCellFor:(UICollectionView*)collectionView atIndexPath:(NSIndexPath*)indexPath {
     HEMTextCollectionViewCell* titleCell =
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdTitle forIndexPath:indexPath];
-    [[titleCell textLabel] setFont:[UIFont tutorialTitleFont]];
+    [[titleCell textLabel] setFont:[UIFont h6]];
     [[titleCell textLabel] setText:[[self content] title]];
     return titleCell;
 }
@@ -169,7 +169,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 - (UICollectionViewCell*)descriptionCellFor:(UICollectionView*)collectionView atIndexPath:(NSIndexPath*)indexPath {
     HEMTextCollectionViewCell* descriptionCell =
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdDesc forIndexPath:indexPath];
-    [[descriptionCell textLabel] setFont:[UIFont tutorialDescriptionFont]];
+    [[descriptionCell textLabel] setFont:[UIFont body]];
     [[descriptionCell textLabel] setText:[[self content] text]];
     [[descriptionCell textLabel] setTextColor:[UIColor colorWithWhite:0.0f alpha:0.5f]];
     return descriptionCell;

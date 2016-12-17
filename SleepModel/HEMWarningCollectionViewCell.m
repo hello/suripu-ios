@@ -17,8 +17,9 @@ CGFloat const HEMWarningCellMessageHorzPadding = 24.0f;
 @implementation HEMWarningCollectionViewCell
 
 - (void)awakeFromNib {
-    [[self warningSummaryLabel] setFont:[UIFont deviceCellWarningSummaryFont]];
-    [[self warningMessageLabel] setFont:[UIFont deviceCellWarningMessageFont]];
+    [super awakeFromNib];
+    [[self warningSummaryLabel] setFont:[UIFont body]];
+    [[self warningMessageLabel] setFont:[UIFont body]];
 }
 
 @end

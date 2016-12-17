@@ -5,22 +5,18 @@
 //  Created by Jimmy Lu on 1/28/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMTrendsV2ViewController.h"
-#import "HEMTrendsSubNavPresenter.h"
-#import "HEMTrendsTabPresenter.h"
 #import "HEMTrendsGraphsPresenter.h"
 #import "HEMTrendsService.h"
-#import "HEMSubNavigationView.h"
 #import "HEMActivityIndicatorView.h"
 
-@interface HEMTrendsV2ViewController()
+@interface HEMTrendsV2ViewController() <Scrollable>
 
-@property (nonatomic, strong) HEMTrendsService* trendsService;
-@property (weak, nonatomic) IBOutlet HEMSubNavigationView *subNav;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *subNavHeightConstraint;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *loadingIndicator;
+@property (assign, nonatomic, getter=isConfigured) BOOL configured;
 
 @end
 
@@ -28,44 +24,37 @@
 
 - (id)initWithCoder:(NSCoder*)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
-        HEMTrendsService* service = [HEMTrendsService new];
-        [self setTrendsService:service];
-        // required to be done on init since view will not be initially loaded
-        // when the back view is set up
-        HEMTrendsTabPresenter* tabPresenter = [HEMTrendsTabPresenter new];
-        [tabPresenter bindWithTabBarItem:[self tabBarItem]];
-        [self addPresenter:tabPresenter];
+        _tabIcon = [UIImage imageNamed:@"trendsTabBarIcon"];
+        _tabIconHighlighted = [UIImage imageNamed:@"trendsTabBarIconHighlighted"];
+        _tabTitle = NSLocalizedString(@"trends.title", nil);
     }
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self configureGraphsPresenter];
-    [self configureSubNavPresenter]; // must come after graphs
+- (NSString*)tabTitle {
+    return [[self presenter] scaleTitle];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [SENAnalytics track:HEMAnalyticsEventTrends];
+    
+    if (![self isConfigured]) {
+        [self bindPresenter];
+        [self setConfigured:YES];
+    }
 }
 
-- (void)configureSubNavPresenter {
-    HEMTrendsSubNavPresenter* subNavPresenter
-        = [[HEMTrendsSubNavPresenter alloc] initWithTrendsService:[self trendsService]];
-    [subNavPresenter bindWithSubNav:[self subNav]
-               withHeightConstraint:[self subNavHeightConstraint]];
-    [subNavPresenter bindWithCollectionView:[self collectionView]];
-    [self addPresenter:subNavPresenter];
+- (void)bindPresenter {
+    [[self presenter] bindWithLoadingIndicator:[self loadingIndicator]];
+    [[self presenter] bindWithCollectionView:[self collectionView]];
+    [self addPresenter:[self presenter]];
 }
 
-- (void)configureGraphsPresenter {
-    HEMTrendsGraphsPresenter* graphsPresenter
-        = [[HEMTrendsGraphsPresenter alloc] initWithTrendsService:[self trendsService]];
-    [graphsPresenter bindWithCollectionView:[self collectionView]];
-    [graphsPresenter bindWithSubNav:[self subNav]];
-    [graphsPresenter bindWithLoadingIndicator:[self loadingIndicator]];
-    [self addPresenter:graphsPresenter];
+#pragma mark - Scrollable 
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 @end

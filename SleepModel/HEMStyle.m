@@ -14,16 +14,18 @@ CGFloat const HEMStyleCardErrorTextVertMargin = 26.0f;
 CGFloat const HEMStyleSectionTopMargin = 12.0f;
 CGFloat const HEMStyleDeviceSectionTopMargin = 15.0f;
 CGFloat const HEMStyleButtonContainerBorderWidth = 0.5f;
+CGFloat const HEMStyleTabBarItemTopInset = 6.0f;
+CGFloat const HEMStyleDefaultNavBarButtonItemWidth = 50.0f;
+
+static CGFloat const HEMStyleDefaultLineHeight = 24.0f;
 
 void ApplyHelloStyles (void) {
-    UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[HEMStyledNavigationViewController class], nil];
+    NSArray* classes = @[[HEMStyledNavigationViewController class]];
+    UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:classes];
+    ApplyDefaultStyleForNavBarAppearance(appearance);
     
-    [appearance setBackgroundImage:[[UIImage alloc] init]
-                    forBarPosition:UIBarPositionAny
-                        barMetrics:UIBarMetricsDefault];
-    [appearance setShadowImage:[[UIImage alloc] init]];
-    [appearance setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grey6],
-                                         NSFontAttributeName : [UIFont h5]}];
+    appearance = [UINavigationBar appearance];
+    ApplyDefaultStyleForNavBarAppearance(appearance);
     
     NSDictionary* barButtonAttrs = @{NSFontAttributeName : [UIFont button],
                                      NSForegroundColorAttributeName : [UIColor tintColor]};
@@ -31,4 +33,20 @@ void ApplyHelloStyles (void) {
                                                 forState:UIControlStateNormal];
     
     [UIColor applyDefaultColorAppearances];
+}
+
+void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar) {
+    [navBar setBackgroundImage:[[UIImage alloc] init]
+                forBarPosition:UIBarPositionAny
+                    barMetrics:UIBarMetricsDefault];
+    [navBar setShadowImage:[[UIImage alloc] init]];
+    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grey6],
+                                     NSFontAttributeName : [UIFont h6]}];
+}
+
+NSMutableParagraphStyle* DefaultBodyParagraphStyle() {
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setMinimumLineHeight:HEMStyleDefaultLineHeight];
+    [style setMaximumLineHeight:HEMStyleDefaultLineHeight];
+    return style;
 }

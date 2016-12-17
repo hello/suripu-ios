@@ -79,8 +79,8 @@ describe(@"HEMSensorValueFormatter", ^{
                 sensorValue = [formatter stringFromSensorValue:@0.40365];
             });
             
-            it(@"should be rounded up with 1 max fraction digits", ^{
-                [[sensorValue should] equal:@"0.5"];
+            it(@"should be rounded with 1 max fraction digits", ^{
+                [[sensorValue should] equal:@"0.4"];
             });
 
         });

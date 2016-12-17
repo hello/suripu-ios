@@ -27,6 +27,7 @@ static CGFloat const HEMWhatsNewHeaderSideMargin = 24.0f;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self titleLabel] setFont:[UIFont h5]];
     [[self titleLabel] setNumberOfLines:0];
     [[self titleLabel] setTextColor:[UIColor grey6]];

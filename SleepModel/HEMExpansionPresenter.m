@@ -17,6 +17,7 @@
 #import "HEMURLImageView.h"
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
@@ -222,17 +223,17 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     NSString* reuseId = nil;
     switch ([rowType unsignedIntegerValue]) {
         case HEMExpansionRowTypeEnable:
-            reuseId = [HEMMainStoryboard toggleReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard toggleReuseIdentifier];
             break;
         case HEMExpansionRowTypeRemove:
-            reuseId = [HEMMainStoryboard plainReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard plainReuseIdentifier];
             break;
         case HEMExpansionRowTypeConfiguration:
-            reuseId = [HEMMainStoryboard configReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard configReuseIdentifier];
             break;
         case HEMExpansionRowTypePermissions:
         default:
-            reuseId = [HEMMainStoryboard textReuseIdentifier];
+            reuseId = [HEMSettingsStoryboard textReuseIdentifier];
             break;
     }
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
@@ -349,7 +350,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* title = NSLocalizedString(@"expansion.configuration.removal.confirm.title", nil);
     NSString* message = NSLocalizedString(@"expansion.configuration.removal.confirm.message", nil);
     
-    NSDictionary* messageAttrs = @{NSFontAttributeName : [UIFont dialogMessageFont],
+    NSDictionary* messageAttrs = @{NSFontAttributeName : [UIFont body],
                                    NSForegroundColorAttributeName : [UIColor blackColor]};
     NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message attributes:messageAttrs];
     
@@ -556,7 +557,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             category = @"light";
             break;
         case SENExpansionTypeThermostat:
-            category = @"thermostat";
+            category = @"temperature";
+            break;
         default:
             category = @"generic";
             break;

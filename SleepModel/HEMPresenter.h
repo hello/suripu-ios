@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  * duplication, use this method to bind with the shadow view, and call 
  * didScrollContentIn:
  */
-- (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView;
+- (void)bindWithShadowView:(nullable HEMNavigationShadowView*)shadowView;
 
 /*
  * @discussion
@@ -160,20 +160,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @return YES if view is fully visible in the viewport of the window.  No otherwise
  */
 - (BOOL)isViewFullyVisible:(UIView*)view;
-
-/**
- * @discussion
- * 
- * Called when the drawer is opened to reveal the back side
- */
-- (void)didOpenDrawer;
-
-/**
- * @discussion
- *
- * Called when the drawer is closed to hide the back side
- */
-- (void)didCloseDrawer;
 
 @end
 

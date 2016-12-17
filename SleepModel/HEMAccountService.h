@@ -6,8 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "SENService.h"
-#import "SENPreference.h"
+#import <SenseKit/SENService.h>
+#import <SenseKit/SENPreference.h>
 
 @class SENAccount;
 @class SENRemoteImage;

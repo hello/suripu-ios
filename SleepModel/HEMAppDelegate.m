@@ -4,14 +4,12 @@
 
 #import "HEMAppDelegate.h"
 #import "HEMStyle.h"
-#import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMAlarmListViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMLogUtils.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMSnazzBarController.h"
 #import "HEMAudioCache.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAuthenticationViewController.h"
@@ -23,6 +21,8 @@
 #import "HEMHealthKitService.h"
 #import "HEMShortcutService.h"
 #import "HEMFacebookService.h"
+
+#import "Sense-Swift.h"
 
 @implementation HEMAppDelegate
 
@@ -44,11 +44,6 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [HEMLogUtils enableLogger];
     [SENAnalytics enableAnalytics];
 
-    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        [HEMNotificationHandler handleRemoteNotificationWithInfo:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]
-                                          fetchCompletionHandler:NULL];
-    }
-
     [self deauthorizeIfNeeded];
     [self configureAppearance];
     [self registerForNotifications];
@@ -67,8 +62,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         if ([lastPath isEqualToString:kHEMAppExtRoom]) {
             NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
             [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
-            HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-            [rootVC showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:YES];
+            MainViewController* mainVC = [self mainViewController];
+            [mainVC switchTabWithTab:MainTabConditions];
         }
     }
     return YES;
@@ -77,7 +72,25 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     NSString *shortcutType = shortcutItem.type;
     DDLogDebug(@"incoming shortcut %@", shortcutType);
-    completionHandler([[HEMShortcutService sharedService] canHandle3DTouchType:shortcutType]);
+    BOOL handled = NO;
+    HEMShortcutAction action = [HEMShortcutService actionForType:shortcutType];
+    if (action != HEMShortcutActionUnknown) {
+        RootViewController* rootVC = [RootViewController currentRootViewController];
+        if ([rootVC conformsToProtocol:@protocol(ShortcutHandler)]) {
+            id<ShortcutHandler> handler = (id) rootVC;
+            if ([handler canHandleActionWithAction:action]) {
+                [handler takeActionWithAction:action];
+                handled = YES;
+            }
+        }
+    }
+    completionHandler(handled);
+}
+
+- (MainViewController*)mainViewController {
+    RootViewController* rootVC = [RootViewController currentRootViewController];
+    MainViewController* mainVC = [rootVC mainViewController];
+    return mainVC;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
@@ -189,18 +202,11 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
-    [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
-}
-
-- (void)application:(UIApplication *)application
-didReceiveRemoteNotification:(NSDictionary *)userInfo
-fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [HEMNotificationHandler handleRemoteNotificationWithInfo:userInfo
-                                      fetchCompletionHandler:completionHandler];
+    [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken
+                                                         completion:NULL];
 }
 
 - (void)configureAppearance {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     ApplyHelloStyles();
 }
 

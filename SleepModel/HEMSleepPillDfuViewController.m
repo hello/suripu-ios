@@ -10,11 +10,11 @@
 #import "HEMPillDfuPresenter.h"
 #import "HEMDeviceService.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMMainStoryboard.h"
 #import "HEMNoBLEViewController.h"
 #import "HEMSleepPillFinderViewController.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
+#import "HEMPillDFUStoryboard.h"
 
 @class SENSleepPill;
 
@@ -74,7 +74,7 @@
 
 - (void)next {
     HEMSleepPillFinderViewController* pillFinderVC =
-        [HEMMainStoryboard instantiatePillFinderViewController];
+        [HEMPillDFUStoryboard instantiatePillFinderViewController];
     [pillFinderVC setDeviceService:[self deviceService]];
     [pillFinderVC setDelegate:[self delegate]];
     [[self navigationController] setViewControllers:@[pillFinderVC] animated:YES];

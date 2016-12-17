@@ -13,7 +13,7 @@
 
 #import "HEMUnitPreferenceViewController.h"
 #import "HEMSettingsHeaderFooterView.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMAccountService.h"
 
 typedef NS_ENUM(NSInteger, HEMUnitSection) {
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* cellId = [HEMMainStoryboard unitCellReuseIdentifier];
+    NSString* cellId = [HEMSettingsStoryboard unitCellReuseIdentifier];
     return [tableView dequeueReusableCellWithIdentifier:cellId];
 }
 

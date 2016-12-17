@@ -18,6 +18,7 @@
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
@@ -144,8 +145,11 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 #pragma mark - Actions
 
 - (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
-    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
-             NSForegroundColorAttributeName : [UIColor blackColor]};
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    UIFont* font = bold ? [UIFont bodyBold] : [UIFont body];
+    return @{NSFontAttributeName : font,
+             NSForegroundColorAttributeName : [UIColor grey5],
+             NSParagraphStyleAttributeName : style};
 }
 
 - (void)showConfirmation:(NSString*)title message:(NSAttributedString*)message action:(void(^)(void))action {
@@ -259,7 +263,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 - (void)replaceSense {
-    UIColor* baseColor = [UIColor blackColor];
+    UIColor* baseColor = [UIColor grey5];
     
     NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
     NSString* questionFormat = NSLocalizedString(@"settings.sense.unpair.confirmation.format", nil);
@@ -268,11 +272,15 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
                                                       attributes:[self dialogMessageAttributes:YES]]];
     
-    NSAttributedString* message =
+    NSMutableAttributedString* message =
         [[NSMutableAttributedString alloc] initWithFormat:questionFormat
                                                      args:args
                                                 baseColor:baseColor
-                                                 baseFont:[UIFont dialogMessageFont]];
+                                                 baseFont:[UIFont body]];
+    
+    [message addAttribute:NSParagraphStyleAttributeName
+                    value:DefaultBodyParagraphStyle()
+                    range:NSMakeRange(0, [message length])];
     
     [self showConfirmation:title message:message action:^{
         [self unlinkSense];
@@ -287,11 +295,15 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSArray* args = @[[[NSAttributedString alloc] initWithString:[NSTimeZone localTimeZoneMappedName]
                                                       attributes:[self dialogMessageAttributes:YES]]];
     
-    NSAttributedString* message =
-    [[NSMutableAttributedString alloc] initWithFormat:messageFormat
-                                                 args:args
-                                            baseColor:[UIColor blackColor]
-                                             baseFont:[UIFont dialogMessageFont]];
+    NSMutableAttributedString* message =
+        [[NSMutableAttributedString alloc] initWithFormat:messageFormat
+                                                     args:args
+                                                baseColor:[UIColor grey5]
+                                                 baseFont:[UIFont body]];
+    
+    [message addAttribute:NSParagraphStyleAttributeName
+                    value:DefaultBodyParagraphStyle()
+                    range:NSMakeRange(0, [message length])];
     
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
@@ -303,7 +315,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         [weakSelf updateToLocalTimeZone];
     }];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.select-manually", nil) style:HEMAlertViewButtonStyleBlueText action:^{
-        [weakSelf performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:weakSelf];
+        [weakSelf performSegueWithIdentifier:[HEMSettingsStoryboard timezoneSegueIdentifier] sender:weakSelf];
     }];
     [dialogVC showFrom:self];
 }
@@ -336,11 +348,15 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
                                                       attributes:[self dialogMessageAttributes:YES]]];
     
-    NSAttributedString* message =
+    NSMutableAttributedString* message =
         [[NSMutableAttributedString alloc] initWithFormat:msgFormat
                                                      args:args
-                                                baseColor:[UIColor blackColor]
-                                                 baseFont:[UIFont dialogMessageFont]];
+                                                baseColor:[UIColor grey5]
+                                                 baseFont:[UIFont body]];
+    
+    [message addAttribute:NSParagraphStyleAttributeName
+                    value:DefaultBodyParagraphStyle()
+                    range:NSMakeRange(0, [message length])];
     
     __weak typeof(self) weakSelf = self;
     [self showConfirmation:title message:message action:^{

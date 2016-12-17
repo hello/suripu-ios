@@ -11,6 +11,7 @@
 @implementation HEMSensorValueCollectionViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self valueReplacementImageView] setHidden:YES];
     [[self valueReplacementImageView] setContentMode:UIViewContentModeCenter];
 }

@@ -8,44 +8,12 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMMarkdown.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
+#import "HEMStyle.h"
 
 @implementation HEMMarkdown
 
-+ (NSDictionary *)attributesForBackViewText {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 2.f;
-    style.lineBreakMode = NSLineBreakByWordWrapping;
-    style.alignment = NSTextAlignmentLeft;
-
-    return @{
-        @(EMPH) : @{
-            NSFontAttributeName : [UIFont backViewBoldFont],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor boldTextColor]
-        },
-        @(STRONG) : @{
-            NSFontAttributeName : [UIFont backViewBoldFont],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor boldTextColor]
-        },
-        @(BULLETLIST) : @{
-            NSFontAttributeName : [UIFont backViewTextFont],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor detailTextColor]
-        },
-        @(PARA) : @{
-            NSFontAttributeName : [UIFont backViewTextFont],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor detailTextColor]
-        }
-    };
-}
-
 + (NSDictionary *)attributesForInsightSummaryText {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 2.f;
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.lineBreakMode = NSLineBreakByWordWrapping;
     style.alignment = NSTextAlignmentLeft;
     return @{
@@ -73,27 +41,37 @@
 }
 
 + (NSDictionary *)attributesForAlertMessageText {
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     return @{ @(PARA) : @{NSFontAttributeName : [UIFont body],
-                          NSForegroundColorAttributeName : [UIColor grey5]}};
+                          NSForegroundColorAttributeName : [UIColor grey5],
+                          NSParagraphStyleAttributeName : style}};
 }
 
 + (NSDictionary *)attributesForTimelineBreakdownTitle {
-    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont timelineBreakdownTitleFont], NSKernAttributeName : @1 } };
+    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont h7],
+                           NSKernAttributeName : @1 } };
 }
 
 + (NSDictionary *)attributesForTimelineBreakdownMessage {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 2.f;
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.alignment = NSTextAlignmentLeft;
     return @{
-        @(PARA) :
-            @{ NSFontAttributeName : [UIFont timelineBreakdownMessageFont], NSParagraphStyleAttributeName : style },
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont body],
+                      NSForegroundColorAttributeName : [UIColor grey5],
+                      NSParagraphStyleAttributeName : style
+        },
+        @(PARA) : @{ NSFontAttributeName : [UIFont body],
+                     NSForegroundColorAttributeName : [UIColor grey5],
+                     NSParagraphStyleAttributeName : style
+        },
         @(EMPH) : @{
-            NSFontAttributeName : [UIFont timelineBreakdownMessageBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
+            NSForegroundColorAttributeName : [UIColor grey5],
             NSParagraphStyleAttributeName : style
         },
         @(STRONG) : @{
-            NSFontAttributeName : [UIFont timelineBreakdownMessageBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
+            NSForegroundColorAttributeName : [UIColor grey6],
             NSParagraphStyleAttributeName : style
         },
     };
@@ -102,7 +80,8 @@
 + (NSDictionary *)attributesForTimelineBreakdownValueWithColor:(UIColor *)color {
     return @{
         @(PARA) :
-            @{ NSFontAttributeName : [UIFont timelineBreakdownValueFont], NSForegroundColorAttributeName : color }
+            @{ NSFontAttributeName : [UIFont h4],
+               NSForegroundColorAttributeName : color }
     };
 }
 
@@ -110,28 +89,29 @@
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentCenter;
     return @{
-        @(PARA) : @{ NSFontAttributeName : [UIFont timelineTimeLabelFont], NSParagraphStyleAttributeName : style }
+        @(PARA) : @{ NSFontAttributeName : [UIFont h8],
+                     NSParagraphStyleAttributeName : style }
     };
 }
 
 + (NSDictionary *)attributesForBackViewTitle {
-    return @{ @(PARA) : @{ NSKernAttributeName : @(0.6), NSFontAttributeName : [UIFont backViewTitleFont] } };
+    return @{ @(PARA) : @{ NSKernAttributeName : @(0.6),
+                           NSFontAttributeName : [UIFont h7Bold] } };
 }
 
 + (NSDictionary *)attributesForInsightViewText {
-    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.lineSpacing = 4.f;
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     return @{
-        @(EMPH) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
-        @(STRONG) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
+        @(EMPH) : @{ NSFontAttributeName : [UIFont bodyBold] },
+        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold] },
         @(BULLETLIST) : @{
-            NSFontAttributeName : [UIFont insightFullMessageFont],
+            NSFontAttributeName : [UIFont body],
             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.5f],
             NSParagraphStyleAttributeName : style
         },
         @(PARA) : @{
             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.5f],
-            NSFontAttributeName : [UIFont insightFullMessageFont],
+            NSFontAttributeName : [UIFont body],
             NSParagraphStyleAttributeName : style
         }
     };
@@ -139,7 +119,7 @@
 
 + (NSDictionary *)attributesForInsightTitleViewText {
     return @{@(PARA) : @{ NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.7f],
-                          NSFontAttributeName : [UIFont insightTitleFont] }};
+                          NSFontAttributeName : [UIFont h4] }};
 }
 
 + (NSDictionary *)attributesForEventMessageText {
@@ -150,7 +130,7 @@
     style.minimumLineHeight = 18.f;
     return @{
         @(STRONG) : @{
-            NSFontAttributeName : [UIFont timelineEventMessageBoldFont],
+            NSFontAttributeName : [UIFont bodyBold],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor blackColor]
         },
@@ -160,7 +140,7 @@
             NSForegroundColorAttributeName : [UIColor blackColor]
         },
         @(EMPH) : @{
-            NSFontAttributeName : [UIFont timelineEventMessageItalicFont],
+            NSFontAttributeName : [UIFont body],
             NSParagraphStyleAttributeName : style,
             NSForegroundColorAttributeName : [UIColor lightGrayColor]
         },
@@ -168,9 +148,18 @@
 }
 
 + (NSDictionary *)attributesForTimelineMessageText {
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    style.alignment = NSTextAlignmentCenter;
     return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont timelineMessageBoldFont] },
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont timelineMessageFont] }
+        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold],
+                       NSForegroundColorAttributeName : [UIColor grey6],
+                       NSParagraphStyleAttributeName : style},
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont body],
+                      NSForegroundColorAttributeName : [UIColor grey5],
+                      NSParagraphStyleAttributeName : style},
+        @(PARA) : @{ NSFontAttributeName : [UIFont body],
+                     NSForegroundColorAttributeName : [UIColor grey5],
+                     NSParagraphStyleAttributeName : style}
     };
 }
 
@@ -178,31 +167,11 @@
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentLeft;
     return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont],
+        @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold],
                        NSParagraphStyleAttributeName : style,
                        NSForegroundColorAttributeName: [UIColor whiteColor]},
-        @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName : style,
+        @(PARA) : @{ NSFontAttributeName : [UIFont body], NSParagraphStyleAttributeName : style,
                      NSForegroundColorAttributeName: [UIColor whiteColor]}
     };
 }
-
-+ (NSDictionary *)attributesForSensorMessage {
-    return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
-        @(EMPH) : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
-        @(PARA) : @{ NSFontAttributeName : [UIFont sensorMessageFont] }
-    };
-}
-
-+ (NSDictionary *)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn {
-    UIColor *color = isOn ? [UIColor tintColor] : [UIColor colorWithWhite:0.6 alpha:1.f];
-    return @{
-        @(PARA) : @{
-            NSFontAttributeName : [UIFont sensorRangeSelectionFont],
-            NSKernAttributeName : @(1.2),
-            NSForegroundColorAttributeName : color
-        }
-    };
-}
-
 @end

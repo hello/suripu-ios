@@ -40,7 +40,7 @@ CGFloat const HEMQuestionCellBaseHeight = 141.0f;
     CGFloat padding = HEMQuestionCellTextPadding-HEMQuestionCellContentPadding;
     [[self questionLeadingConstraint] setConstant:padding];
     [[self questionTrailingConstraint] setConstant:padding];
-    [[self titleLabel] setFont:[UIFont backViewTitleFont]];
+    [[self titleLabel] setFont:[UIFont h7Bold]];
     
     [[self skipButton] setExclusiveTouch:YES];
     [[self answerButton] setExclusiveTouch:YES];

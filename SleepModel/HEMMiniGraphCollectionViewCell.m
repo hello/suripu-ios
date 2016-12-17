@@ -16,6 +16,7 @@ static CGFloat const HEMMiniGraphLoadingStopDuration = 0.75f;
 @implementation HEMMiniGraphCollectionViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self configureDefaults];
 }
 

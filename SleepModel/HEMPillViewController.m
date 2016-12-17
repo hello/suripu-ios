@@ -16,6 +16,7 @@
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMDeviceActionCell.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
@@ -27,6 +28,7 @@
 #import "HEMStyle.h"
 #import "HEMDeviceService.h"
 #import "HEMSleepPillDFUDelegate.h"
+#import "HEMPillDFUStoryboard.h"
 
 static NSString* const HEMPillHeaderReuseId = @"sectionHeader";
 
@@ -108,7 +110,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSMutableAttributedString* attrWarning =
         [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont body]}
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -116,7 +118,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 - (NSAttributedString*)attributedLowBatteryMessage {
     NSString* message = NSLocalizedString(@"settings.pill.warning.low-battery", nil);
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]};
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont body]};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -143,7 +145,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 }
 
 - (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
-    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
+    UIFont* font = bold ? [UIFont bodyBold] : [UIFont body];
+    return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : [UIColor blackColor]};
 }
 
@@ -177,8 +180,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSString* reuseId
         = sec < [[self warnings] count]
-        ? [HEMMainStoryboard warningReuseIdentifier]
-        : [HEMMainStoryboard actionReuseIdentifier];
+        ? [HEMSettingsStoryboard warningReuseIdentifier]
+        : [HEMSettingsStoryboard actionReuseIdentifier];
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                                            forIndexPath:indexPath];
@@ -204,6 +207,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
             showSeparator = NO;
         }
         
+        [[actionCell textLabel] setTextColor:[UIColor grey5]];
+        [[actionCell textLabel] setFont:[UIFont body]];
         [[actionCell textLabel] setText:text];
         [[actionCell iconView] setImage:icon];
         [[actionCell separatorView] setHidden:!showSeparator];
@@ -317,7 +322,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 - (void)showPillDfuController {
-    UINavigationController* nav = [HEMMainStoryboard instantiatePillDFUNavViewController];
+    UINavigationController* nav = [HEMPillDFUStoryboard instantiatePillDFUNavViewController];
     if ([[nav topViewController] isKindOfClass:[HEMSleepPillDfuViewController class]]) {
         HEMSleepPillDfuViewController* dfuVC = (id) [nav topViewController];
         [dfuVC setDelegate:self];
@@ -371,7 +376,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                  args:args
                                             baseColor:[UIColor blackColor]
-                                             baseFont:[UIFont dialogMessageFont]];
+                                             baseFont:[UIFont body]];
     
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];

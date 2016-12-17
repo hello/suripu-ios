@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, HEMSensorValueUnitLoc) {
 
 @interface HEMSensorValueFormatter : NSNumberFormatter
 
+@property (nonatomic, assign) NSUInteger decimalPlaces; // defaults to NSNotFound, which is to use default
 @property (nonatomic, assign) BOOL includeUnitSymbol;
 @property (nonatomic, assign, getter=useUnicodeUnitSymbol) BOOL unicodeUnitSymbol;
 

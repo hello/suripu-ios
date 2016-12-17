@@ -5,9 +5,9 @@
 //  Created by Jimmy Lu on 2/26/15.
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMTransitionDelegate.h"
-#import "HEMRootViewController.h"
 
 CGFloat const HEMTransitionDimmingViewMaxAlpha = 0.7f;
 static CGFloat const HEMTransitionDefaultDuration = 0.5f;
@@ -55,23 +55,18 @@ static CGFloat const HEMTransitionDefaultDuration = 0.5f;
     return _dimmingView;
 }
 
-- (void)setTimelineVisible:(BOOL)visible animated:(BOOL)animated {
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [rootVC setPaneVisible:visible animated:animated];
-}
-
 - (void)showStatusBar:(BOOL)show {
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
+    RootViewController* root = [RootViewController currentRootViewController];
     if (show) {
-        [rootVC showStatusBar];
+        [root showStatusBar];
     } else {
-        [rootVC hideStatusBar];
+        [root hideStatusBar];
     }
 }
 
 - (BOOL)isStatusBarShowing {
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    return ![rootVC isStatusBarHidden];
+    RootViewController* root = [RootViewController currentRootViewController];
+    return ![root isStatusBarHidden];
 }
 
 #pragma mark - UIViewControllerAnimatedTransitioning

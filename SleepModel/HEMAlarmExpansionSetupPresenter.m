@@ -512,6 +512,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     SENExpansionValueRange valueRange;
     valueRange.min = min;
     valueRange.max = max;
+    valueRange.setpoint = max;
     
     if ([SENPreference temperatureFormat] == SENTemperatureFormatFahrenheit) {
         // this means values from picker will be in fahrenheit
@@ -531,6 +532,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         SENExpansionValueRange valueRange;
         valueRange.min = [pickerView selectedMinValue];
         valueRange.max = [pickerView selectedMaxValue];
+        valueRange.setpoint = [pickerView selectedMaxValue];
         [[self alarmExpansion] setTargetRange:valueRange];
     }
 }

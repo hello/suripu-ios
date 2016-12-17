@@ -11,4 +11,8 @@
 
 @interface HEMTimelineMessageContainerView : HEMTappableView
 
+@property (weak, nonatomic) IBOutlet UILabel* messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel* summaryLabel;
+@property (weak, nonatomic) IBOutlet UIImageView* chevron;
+
 @end

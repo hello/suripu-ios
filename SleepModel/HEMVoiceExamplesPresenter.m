@@ -45,6 +45,7 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
     [layout setSectionInset:UIEdgeInsetsMake(0.0f, 0.0f, kHEMVoiceExamplesBottomInset, 0.0f)];
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
+    [collectionView setBackgroundColor:[UIColor whiteColor]];
     [self setCollectionView:collectionView];
 }
 

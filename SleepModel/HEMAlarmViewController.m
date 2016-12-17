@@ -5,6 +5,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMAlarmCache.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMClockPickerView.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMListItemSelectionViewController.h"
@@ -26,7 +27,6 @@
 @property (weak, nonatomic) HEMAlarmPresenter* presenter;
 @property (strong, nonatomic) HEMAudioService* audioService;
 @property (assign, nonatomic) HEMAlarmRowType selectedRow;
-@property (assign, nonatomic) SENExpansion* selectedExpansion;
 @property (copy, nonatomic) NSString* segueControllerTitle;
 @property (strong, nonatomic) HEMAlarmExpansionSetupPresenter* selectedExpansionPresenter;
 
@@ -143,9 +143,10 @@
 
 - (void)showExpansion:(SENExpansion*)expansion
         fromPresenter:(HEMAlarmPresenter*)alarmPresenter {
-    [self setSelectedExpansion:expansion];
-    NSString* segueId = [HEMMainStoryboard expansionSegueIdentifier];
-    [self performSegueWithIdentifier:segueId sender:self];
+    HEMExpansionViewController* expansionVC = [HEMSettingsStoryboard instantiateExpansionController];
+    [expansionVC setExpansion:expansion];
+    [expansionVC setExpansionService:[self expansionService]];
+    [[self navigationController] pushViewController:expansionVC animated:YES];
 }
 
 - (void)showExpansionSetupWithPresenter:(HEMAlarmExpansionSetupPresenter*)presenter
@@ -199,12 +200,6 @@
     [listVC setListPresenter:soundsPresenter];
 }
 
-- (void)prepareForExpansionSegue:(UIStoryboardSegue*)segue {
-    HEMExpansionViewController* expansionVC = [segue destinationViewController];
-    [expansionVC setExpansion:[self selectedExpansion]];
-    [expansionVC setExpansionService:[self expansionService]];
-}
-
 - (void)prepareForExpansionSetupSegue:(UIStoryboardSegue*)segue {
     HEMAlarmExpansionSetupViewController* setupVC = (id)[segue destinationViewController];
     [setupVC setPresenter:[self selectedExpansionPresenter]];
@@ -216,8 +211,6 @@
         [self prepareForRepeatDaysSegue:segue];
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmSoundsSegueIdentifier]]) {
         [self prepareForSoundSegue:segue];
-    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionSegueIdentifier]]) {
-        [self prepareForExpansionSegue:segue];
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard expansionConfigSegueIdentifier]]) {
         [self prepareForExpansionSetupSegue:segue];
     }

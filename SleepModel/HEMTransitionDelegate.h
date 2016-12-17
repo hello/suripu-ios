@@ -67,15 +67,6 @@ extern CGFloat const HEMTransitionDimmingViewMaxAlpha;
  */
 - (BOOL)isStatusBarShowing;
 
-/**
- * @discussion
- * Convenience method to show / hide the timeline when transitioning
- *
- * @param visible : YES to keep the top of the timeline visible.  NO otherwise
- * @param animated: YES to aniamte the change.  NO otherwise
- */
-- (void)setTimelineVisible:(BOOL)visible animated:(BOOL)animated;
-
 @end
 
 NS_ASSUME_NONNULL_END

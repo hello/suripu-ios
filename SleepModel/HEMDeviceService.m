@@ -22,6 +22,7 @@
 #import <SenseKit/SENSenseMetadata.h>
 
 #import "HEMDeviceService.h"
+#import "HEMOnboardingService.h"
 #import "HEMConfig.h"
 #import "NSDate+HEMRelative.h"
 
@@ -56,6 +57,10 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
 
 - (void)listenForDeprecatedServiceNotifications {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(clearDevicesCache)
+                   name:HEMOnboardingNotificationDidChangeSensePairing
+                 object:nil];
     [center addObserver:self
                selector:@selector(clearDevicesCache)
                    name:SENServiceDeviceNotificationFactorySettingsRestored
@@ -113,6 +118,14 @@ static CGFloat const HEMPillDfuMinPhoneBattery = 0.2f;
     SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
     NSNumber* versionValue = [localPrefs userPreferenceForKey:HEMDeviceSettingHwVersion];
     return versionValue ? [versionValue unsignedIntegerValue] : SENSenseHardwareUnknown;
+}
+
+- (BOOL)savedHardwareVersionIsVoice {
+    return [self savedHardwareVersion] == SENSenseHardwareVoice;
+}
+
+- (BOOL)hasSavedHardwareVersion {
+    return [self savedHardwareVersion] != SENSenseHardwareUnknown;
 }
 
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDeviceMetadata*)metadata {

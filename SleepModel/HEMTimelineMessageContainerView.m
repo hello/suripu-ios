@@ -7,35 +7,25 @@
 //
 
 #import "HEMTimelineMessageContainerView.h"
-#import "UIColor+HEMStyle.h"
-
-static CGFloat const HEMTimelineMessageShadowOpacity = 0.08f;
-
-@interface HEMTimelineMessageContainerView()
-
-@property (nonatomic, strong) UITapGestureRecognizer* tapGesture;
-
-@end
 
 @implementation HEMTimelineMessageContainerView
 
 - (void)awakeFromNib {
-    self.layer.cornerRadius = 2.f;
-    self.layer.shadowRadius = 3.f;
-    self.layer.shadowOpacity = HEMTimelineMessageShadowOpacity;
-    self.layer.shadowOffset = CGSizeMake(0, 0);
-    self.backgroundColor = [UIColor whiteColor];
+    [super awakeFromNib];
+    [[self messageLabel] setHighlightedTextColor:[UIColor blackColor]];
+    [[self summaryLabel] setHighlightedTextColor:[UIColor blackColor]];
+    
+    UIImage* chevronImage = [[self chevron] image];
+    UIImage* highlightedImage = [chevronImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [[self chevron] setHighlightedImage:highlightedImage];
+    [[self chevron] setTintColor:[UIColor blackColor]];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
     [super setHighlighted:highlighted];
-    if (highlighted) {
-        self.layer.shadowOpacity = 0.0f;
-        self.backgroundColor = [UIColor timelineBackgroundColor];
-    } else {
-        self.layer.shadowOpacity = HEMTimelineMessageShadowOpacity;
-        self.backgroundColor = [UIColor whiteColor];
-    }
+    [[self messageLabel] setHighlighted:highlighted];
+    [[self summaryLabel] setHighlighted:highlighted];
+    [[self chevron] setHighlighted:highlighted];
 }
 
 @end

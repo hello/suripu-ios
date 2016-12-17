@@ -2,7 +2,7 @@
 
 #import "HEMSettingsTableViewController.h"
 #import "HEMVoiceSettingsViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMTellAFriendItemProvider.h"
 
 #import "HEMSettingsPresenter.h"
@@ -25,17 +25,6 @@
 
 @implementation HEMSettingsTableViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        self.tabBarItem.title = NSLocalizedString(@"settings.title", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"settingsBarIcon"];
-        self.tabBarItem.selectedImage = [UIImage imageNamed:@"settingsBarIconActive"];
-        
-        [self updateBadge];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenter];
@@ -55,6 +44,7 @@
                                            expansionService:expansionService
                                           breadCrumbService:breadService];
     [presenter bindWithTableView:[self settingsTableView]];
+    [presenter bindWithNavItem:[self navigationItem]];
     [presenter bindWithActivityView:[self activityView]];
     [presenter setDelegate:self];
     
@@ -75,23 +65,22 @@
 - (void)updateBadge {
     BOOL showBadge = [self showIndicatorForCrumb:HEMBreadcrumbSettings];
     self.tabBarItem.badgeValue = showBadge ? @"1" : nil;
-    [self reloadTopBar];
 }
 
 - (NSString *)segueIdentifierForCategory:(HEMSettingsCategory)category {
     switch (category) {
         case HEMSettingsCategoryProfile:
-            return [HEMMainStoryboard accountSettingsSegueIdentifier];
+            return [HEMSettingsStoryboard accountSettingsSegueIdentifier];
         case HEMSettingsCategoryDevices:
-            return [HEMMainStoryboard devicesSettingsSegueIdentifier];
+            return [HEMSettingsStoryboard devicesSettingsSegueIdentifier];
         case HEMSettingsCategoryNotifications:
-            return [HEMMainStoryboard notificationSettingsSegueIdentifier];
+            return [HEMSettingsStoryboard notificationSettingsSegueIdentifier];
         case HEMSettingsCategorySupport:
-            return [HEMMainStoryboard settingsToSupportSegueIdentifier];
+            return [HEMSettingsStoryboard settingsToSupportSegueIdentifier];
         case HEMSettingsCategoryExpansions:
-            return [HEMMainStoryboard expansionsSegueIdentifier];
+            return [HEMSettingsStoryboard expansionsSegueIdentifier];
         case HEMSettingsCategoryVoice:
-            return [HEMMainStoryboard voiceSegueIdentifier];
+            return [HEMSettingsStoryboard voiceSegueIdentifier];
         default:
             return nil; // others show modal
     }

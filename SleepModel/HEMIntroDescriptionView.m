@@ -31,7 +31,7 @@
     
     HEMIntroDescriptionView* view = [NSBundle loadNibWithOwner:self];
     [view setFrame:frame];
-    [[view titleLabel] setFont:[UIFont welcomeIntroTitleFont]];
+    [[view titleLabel] setFont:[UIFont h5]];
     [[view titleLabel] setTextColor:[UIColor grey6]];
     [[view titleLabel] setText:title];
 
@@ -46,12 +46,13 @@
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     [style setLineHeightMultiple:1.2f];
     
-    return @{NSFontAttributeName : [UIFont welcomeIntroDescriptionFont],
+    return @{NSFontAttributeName : [UIFont body],
              NSForegroundColorAttributeName : [UIColor grey6],
              NSParagraphStyleAttributeName : style};
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self adjustConstraintsForScreenSize];
 }
 

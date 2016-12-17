@@ -10,7 +10,7 @@
 #import <SenseKit/SENSupportTopic.h>
 #import "HEMSupportTopicDataSource.h"
 #import "HEMSettingsTableViewCell.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 
 @interface HEMSupportTopicDataSource()
 
@@ -53,7 +53,7 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard topicCellReuseIdentifier]];
+    return [tableView dequeueReusableCellWithIdentifier:[HEMSettingsStoryboard topicCellReuseIdentifier]];
 }
 
 @end

@@ -1,6 +1,9 @@
 
 #import <SenseKit/SenseKit.h>
-#import <AVFoundation/AVAudioPlayer.h>
+
+#import "Sense-Swift.h"
+
+#import <AVFoundation/AVFoundation.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 #import "UIActivityViewController+HEMSharing.h"
 
@@ -14,14 +17,12 @@
 #import "HEMMainStoryboard.h"
 #import "HEMPopupView.h"
 #import "HEMPopupMaskView.h"
-#import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepSummarySlideViewController.h"
-#import "HEMTimelineContainerViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
@@ -39,11 +40,11 @@
 #import "HEMTimelineService.h"
 #import "HEMTimelineHandHoldingPresenter.h"
 #import "HEMHandHoldingService.h"
+#import "HEMNavigationShadowView.h"
 #import "HEMStyle.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
-CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @interface HEMSleepGraphViewController () <
     UICollectionViewDelegateFlowLayout,
@@ -51,12 +52,14 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
     HEMSleepGraphActionDelegate,
     AVAudioPlayerDelegate,
     HEMTapDelegate,
-    HEMTimelineHandHoldingDelegate
+    HEMTimelineHandHoldingDelegate,
+    Scrollable
 >
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, weak) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
@@ -73,8 +76,10 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationBarTopConstraint;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic, weak) UIButton *playingButton;
+@property (nonatomic, strong) UIBarButtonItem* shareItem;
 @property (nonatomic, strong) NSIndexPath *playingIndexPath;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong) NSTimer *playbackProgressTimer;
@@ -89,7 +94,6 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 static NSString *const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
 static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 0.5f;
-static CGFloat const HEMSleepSummaryCellHeight = 298.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
@@ -109,6 +113,7 @@ static BOOL hasLoadedBefore = NO;
 
     [self loadData];
 
+    [self configureNavigationBar];
     [self configureGestures];
     [self registerForNotifications];
 
@@ -131,13 +136,26 @@ static BOOL hasLoadedBefore = NO;
     [[self errorMessageLabel] setTextColor:[UIColor grey4]];
     
     [[[self errorSupportButton] titleLabel] setFont:[UIFont button]];
+    [[self errorSupportButton] setBackgroundColor:[UIColor whiteColor]];
+    [[self errorSupportButton] setTitleColor:[UIColor tintColor]
+                                    forState:UIControlStateNormal];
+}
+
+- (NSAttributedString*)attributedErrorMessage:(NSString*)message {
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    [style setAlignment:NSTextAlignmentCenter];
+    [style setParagraphSpacing:-5.0f];
+    NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
+                                 NSFontAttributeName : [UIFont body],
+                                 NSForegroundColorAttributeName : [UIColor grey5]};
+    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
 - (void)adjustConstraintsForIPhone4 {
     [super adjustConstraintsForIPhone4];
     
     CGFloat height = [[self errorImageHeightConstraint] constant];
-    [[self errorImageHeightConstraint] setConstant:2 * (height / 3.0f)];
+    [[self errorImageHeightConstraint] setConstant:(height / 2.0f)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -159,6 +177,11 @@ static BOOL hasLoadedBefore = NO;
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self setVisible:NO];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self layoutNavigationBar];
 }
 
 - (void)configureServices {
@@ -190,12 +213,7 @@ static BOOL hasLoadedBefore = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayInSecs), dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if ([strongSelf isFullyVisibleInWindow]) {
-            if ([[strongSelf dataSource] numberOfSleepSegments] > 0
-                && [HEMTutorial shouldShowTutorialForTimeline]) {
-                [HEMTutorial showTutorialForTimelineIfNeeded];
-            } else {
-                [[strongSelf handHoldingPresenter] showIfNeeded];
-            }
+            [[strongSelf handHoldingPresenter] showIfNeeded];
         }
         [strongSelf setCheckingForTutorials:NO];
     });
@@ -222,22 +240,6 @@ static BOOL hasLoadedBefore = NO;
                                              selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerMayOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerMayCloseNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerDidOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerDidCloseNotification
-                                               object:nil];
 }
 
 - (void)configureGestures {
@@ -263,6 +265,10 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)dealloc {
     _dataSource = nil;
+    if (_collectionView) {
+        [_collectionView setDelegate:nil];
+        [_collectionView setDataSource:nil];
+    }
     [_audioPlayer stop];
     [_playbackProgressTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -270,17 +276,8 @@ static BOOL hasLoadedBefore = NO;
 
 #pragma mark - Hand holding delegate
 
-- (BOOL)isTimelineFullyVisibleFor:(HEMTimelineHandHoldingPresenter *)presenter {
-    return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible]
-        && [[self dataSource] topBarView];
-}
-
-- (HEMTimelineTopBarCollectionReusableView*)timelineTopBarForPresenter:(HEMTimelineHandHoldingPresenter*)presenter {
-    return [[self dataSource] topBarView];
-}
-
 - (UIView*)timelineContainerViewForPresenter:(HEMTimelineHandHoldingPresenter *)presenter {
-    return [[self containerViewController] view];
+    return [[self parentViewController] view];
 }
 
 #pragma mark Initial load animation
@@ -634,12 +631,12 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (CGFloat)topOfSelectedTimelineSleepSegment {
-    CGFloat const HEMPopupSpacingDistance = 8.f;
     UICollectionViewLayoutAttributes *attributes =
         [self.collectionView layoutAttributesForItemAtIndexPath:[self selectedIndexPath]];
-    CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
+    CGRect cellLocation = [self.collectionView convertRect:attributes.frame
+                                                    toView:self.popupMaskView];
     CGFloat popupHeight = floorf([self.popupView intrinsicContentSize].height);
-    return MAX(0, CGRectGetMinY(cellLocation) - popupHeight - HEMPopupSpacingDistance);
+    return MAX(0, CGRectGetMinY(cellLocation) - popupHeight);
 }
 
 - (void)dismissTimelineSegmentPopup:(BOOL)animated {
@@ -692,7 +689,7 @@ static BOOL hasLoadedBefore = NO;
         return;
     CGRect maskArea = CGRectZero;
     HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-    maskArea = [cell convertRect:[cell fillArea] toView:self.view];
+    maskArea = [cell convertRect:[cell fillArea] toView:self.popupMaskView];
     if (indexPath.item < [self.dataSource numberOfSleepSegments] - 1) {
         NSIndexPath *prefillPath = [NSIndexPath indexPathForItem:indexPath.item + 1 inSection:indexPath.section];
         HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:prefillPath];
@@ -712,15 +709,9 @@ static BOOL hasLoadedBefore = NO;
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
-#pragma mark - Top Bar
+#pragma mark - Navigation Bar Actions
 
-- (void)didTapDrawerButton:(UIButton *)button {
-    [[self handHoldingPresenter] didOpenTimeline];
-    HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root toggleSettingsDrawer];
-}
-
-- (void)didTapShareButton:(UIButton *)button {
+- (void)didTapShareButton:(id)sender {
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString *message;
@@ -737,7 +728,7 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
-- (void)didTapDateButton:(UIButton *)sender {
+- (void)didTapOnHistoryButton:(UIButton *)sender {
     [[self handHoldingPresenter] didZoomOutOnTimeline];
     
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
@@ -748,29 +739,12 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)checkForDateChanges {
     if (self.historyViewController.selectedDate) {
-        HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
-        [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
+        if ([self.parentViewController isKindOfClass:[HEMSleepSummarySlideViewController class]]) {
+            HEMSleepSummarySlideViewController* sliderVC = (id)self.parentViewController;
+            [sliderVC reloadWithDate:self.historyViewController.selectedDate];
+        }
     }
-
     self.historyViewController = nil;
-}
-
-#pragma mark Drawer
-
-- (void)drawerDidOpen {
-    [[self handHoldingPresenter] didOpenTimeline];
-    [self clearPlayerState];
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                       [[self dataSource] updateTimelineState:YES];
-                     }];
-}
-
-- (void)drawerDidClose {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                       [[self dataSource] updateTimelineState:NO];
-                     }];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -846,41 +820,80 @@ static BOOL hasLoadedBefore = NO;
 
 #pragma mark - UIScrollViewDelegate
 
-- (HEMTimelineContainerViewController *)containerViewController {
-    UIViewController *parent = self.parentViewController;
-    UIViewController *grandParent = parent.parentViewController;
-    return (id)grandParent;
-}
-
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.containerViewController showAlarmButton:NO];
     [self dismissTimelineSegmentPopup:NO];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [self.containerViewController showAlarmButton:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
     [self adjustLayoutWithScrollOffset:offset.y];
+    [[self shadowView] updateVisibilityWithContentOffset:[scrollView contentOffset].y];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
-        [self.containerViewController showAlarmButton:YES];
         [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self.containerViewController showAlarmButton:YES];
     [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
 }
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
-    self.collectionView.bounces = yOffset > 0;
+    self.collectionView.bounces = yOffset > CGRectGetMaxY([[self navigationBar] frame]);
     [self dismissTimelineSegmentPopup:NO];
+}
+
+#pragma mark - Navigation Bar
+
+- (void)layoutNavigationBar {
+    CGFloat navY = CGRectGetMinY([[self navigationBar] frame]);
+    CGFloat statusHeight = CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
+    if (navY == 0.0f) {
+        [[self navigationBarTopConstraint] setConstant:statusHeight];
+        [[self navigationBar] layoutIfNeeded];
+    } else if (navY > statusHeight) {
+        [[self navigationBarTopConstraint] setConstant:0.0f];
+        [[self navigationBar] layoutIfNeeded];
+    }
+}
+
+- (void)configureNavigationBar {
+    UINavigationBar* bar = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[self class]]];
+    ApplyDefaultStyleForNavBarAppearance(bar);
+    
+    UINavigationItem* navItem = self.navigationBar.topItem;
+    navItem.title = [[self timelineService] stringValueForTimelineDate:[self dateForNightOfSleep]];
+    
+    UIImage* shareImage = [UIImage imageNamed:@"timelineShareIcon"];
+    shareImage = [shareImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [self setShareItem:[[UIBarButtonItem alloc] initWithImage:shareImage
+                                                        style:UIBarButtonItemStylePlain
+                                                       target:self
+                                                       action:@selector(didTapShareButton:)]];
+    [self showShareButton:[[self dataSource] hasSleepScore]];
+    
+    UIImage* historyImage = [UIImage imageNamed:@"timelineCalendarIcon"];
+    historyImage = [historyImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [navItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithImage:historyImage
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(didTapOnHistoryButton:)]];
+    
+    HEMNavigationShadowView* shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:[self navigationBar]];
+    [[self navigationBar] setClipsToBounds:NO];
+    [[self navigationBar] addSubview:shadowView];
+    _shadowView = shadowView;
+}
+
+- (void)showShareButton:(BOOL)show {
+    UINavigationItem* navItem = [[self navigationBar] topItem];
+    if (show) {
+        [navItem setRightBarButtonItem:[self shareItem]];
+    } else {
+        [navItem setRightBarButtonItem:nil];
+    }
 }
 
 #pragma mark - UICollectionView
@@ -914,17 +927,29 @@ static BOOL hasLoadedBefore = NO;
 - (void)loadDataSourceForDate:(NSDate *)date {
     self.dateForNightOfSleep = date;
     self.dataSource =
-        [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
+        [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
+                                                                    sleepDate:date
+                                                              timelineService:self.timelineService];
     self.collectionView.dataSource = self.dataSource;
 
     __weak typeof(self) weakSelf = self;
     [self.dataSource reloadData:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf updateTabBarIcon];
+        [strongSelf showShareButton:[strongSelf.dataSource hasSleepScore]];
         [strongSelf updateAppUsageIfNeeded];
         [strongSelf updateLayoutWithError:error];
         [strongSelf showTutorial];
     }];
     [self updateLayoutWithError:nil];
+}
+
+- (void)updateTabBarIcon {
+    if ([self isLastNight] &&
+        [[self parentViewController] isKindOfClass:[HEMSleepSummarySlideViewController class]]) {
+        HEMSleepSummarySlideViewController* parentVC = (id) [self parentViewController];
+        [parentVC updateLastNightSleepScore:[[[self dataSource] sleepResult].score integerValue]];
+    }
 }
 
 - (void)updateLayoutWithError:(NSError *)error {
@@ -944,22 +969,22 @@ static BOOL hasLoadedBefore = NO;
         return;
     } else if (error) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.error.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.error.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineErrorIcon"];
     } else if (firstNight) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.first-night.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.first-night.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.first-night.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineJustSleepIcon"];
     } else if (self.dataSource.sleepResult.scoreCondition == SENConditionUnknown) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.none.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.none.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.none.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineNoDataIcon"];
         [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
                                  forState:UIControlStateNormal];
         self.errorSupportButton.hidden = NO;
     } else {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.not-enough.title", nil);
-        self.errorMessageLabel.text = NSLocalizedString(@"sleep-data.not-enough.message", nil);
+        self.errorMessageLabel.attributedText = [self attributedErrorMessage:NSLocalizedString(@"sleep-data.not-enough.message", nil)];
         self.errorImageView.image = [UIImage imageNamed:@"timelineNotEnoughDataIcon"];
         [self.errorSupportButton setTitle:[NSLocalizedString(@"sleep-data.not-enough.contact-support", nil) uppercaseString]
                                  forState:UIControlStateNormal];
@@ -1044,9 +1069,14 @@ static BOOL hasLoadedBefore = NO;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
-        case HEMSleepGraphCollectionViewSummarySection:
-            return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
-
+        case HEMSleepGraphCollectionViewSummarySection: {
+            CGFloat height = CGRectGetHeight(self.view.bounds);
+            if (hasSegments) {
+                NSString* message = [self.dataSource sleepResult].message;
+                height = [HEMSleepSummaryCollectionViewCell heightWithMessage:message itemWidth:width];
+            }
+            return CGSizeMake(width, height);
+        }
         case HEMSleepGraphCollectionViewSegmentSection: {
             SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
             CGFloat durationHeight = [self heightForCellWithSegment:segment];
@@ -1082,12 +1112,9 @@ static BOOL hasLoadedBefore = NO;
                              layout:(UICollectionViewLayout *)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
 
-    CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
-
-    if (section == HEMSleepGraphCollectionViewSummarySection) {
-        return CGSizeMake(bWidth, HEMTimelineTopBarCellHeight);
-    } else if (section == HEMSleepGraphCollectionViewSegmentSection) {
+    if (section == HEMSleepGraphCollectionViewSegmentSection) {
         if ([self.dataSource numberOfSleepSegments] > 0) {
+            CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
             return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);
         }
     }
@@ -1109,6 +1136,14 @@ static BOOL hasLoadedBefore = NO;
                                  layout:(UICollectionViewLayout *)collectionViewLayout
     minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    if ([self collectionView]) {
+        [[self collectionView] setContentOffset:CGPointZero animated:YES];
+    }
 }
 
 @end

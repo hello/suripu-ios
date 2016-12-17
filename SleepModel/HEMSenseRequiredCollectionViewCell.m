@@ -24,7 +24,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [[self descriptionLabel] setFont:[UIFont emptyStateDescriptionFont]];
+    [[self descriptionLabel] setFont:[UIFont body]];
     [[self descriptionLabel] setTextColor:[UIColor detailTextColor]];
     
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {

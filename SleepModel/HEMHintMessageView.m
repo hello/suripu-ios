@@ -49,7 +49,8 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     UIImage* closeImage = [UIImage imageNamed:@"closeX"];
     CGFloat buttonWidth = (2*HEMHintMessagePadding) + closeImage.size.width;
     CGFloat labelWidth = width - buttonWidth - (2 * HEMHintMessagePadding);
-    CGFloat textHeight = [self.message heightBoundedByWidth:labelWidth usingFont:[UIFont handholdingMessageFont]];
+    CGFloat textHeight = [self.message heightBoundedByWidth:labelWidth
+                                                  usingFont:[UIFont bodyBold]];
     CGFloat viewHeight = textHeight + (2 * HEMHintMessagePadding);
 
     CGSize labelSize = CGSizeMake(labelWidth, viewHeight);
@@ -88,7 +89,7 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
     [label setText:text];
     [label setNumberOfLines:0];
-    [label setFont:[UIFont handholdingMessageFont]];
+    [label setFont:[UIFont bodyBold]];
     [label setTextColor:[UIColor whiteColor]];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [label setBackgroundColor:[UIColor blue6]];

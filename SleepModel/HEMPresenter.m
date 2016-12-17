@@ -53,7 +53,7 @@
 }
 
 - (void)bindWithShadowView:(HEMNavigationShadowView*)shadowView {
-    if (![self hasShadowView]) {
+    if (![self hasShadowView] && shadowView) {
         [self setShadowView:shadowView];
     }
 }
@@ -84,16 +84,16 @@
 - (void)didComeBackFromBackground {}
 - (void)didMoveToParent {}
 - (void)wasRemovedFromParent {}
-- (void)didOpenDrawer {}
-- (void)didCloseDrawer {}
 - (void)didGainConnectivity {}
 
 - (void)userDidSignOut {}
 
 - (BOOL)isViewFullyVisible:(UIView*)view {
-    UIView* window = [[[UIApplication sharedApplication] windows] firstObject];
-    CGRect windowFrame = [window frame];
-    CGRect viewFrame = [view convertRect:[view bounds] toView:window];
+    if (view.window == nil) {
+        return NO;
+    }
+    CGRect windowFrame = view.window.frame;
+    CGRect viewFrame = [view convertRect:[view bounds] toView:view.window];
     return CGRectContainsRect(windowFrame, viewFrame);
 }
 

@@ -26,15 +26,17 @@
         [[self xAxis] setDrawAxisLineEnabled:NO];
         [[self xAxis] setDrawGridLinesEnabled:NO];
         [[self xAxis] removeAllLimitLines];
+        [[self xAxis] setDrawLabelsEnabled:NO];
         [self setDescriptionText:nil];
         [[self legend] setEnabled:NO];
         [[self layer] setBorderWidth:0.0f];
         [self setPinchZoomEnabled:NO];
         [self setDoubleTapToZoomEnabled:NO];
+        [self setDragEnabled:NO];
         [self setScaleEnabled:NO];
         [self setHighlightPerTapEnabled:NO];
         [self setHighlightPerDragEnabled:NO];
-        [self setViewPortOffsetsWithLeft:0.0f top:7.0f right:0.0f bottom:0.0f];
+        [self setViewPortOffsetsWithLeft:0.0f top:0.0f right:0.0f bottom:0.0f];
     }
     return self;
 }

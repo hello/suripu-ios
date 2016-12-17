@@ -11,7 +11,6 @@
 @interface HEMMarkdown : NSObject
 
 + (NSDictionary*)attributesForAlertMessageText;
-+ (NSDictionary*)attributesForBackViewText;
 + (NSDictionary*)attributesForBackViewTitle;
 + (NSDictionary*)attributesForInsightViewText;
 + (NSDictionary*)attributesForInsightTitleViewText;
@@ -22,7 +21,5 @@
 + (NSDictionary*)attributesForTimelineBreakdownMessage;
 + (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color;
 + (NSDictionary*)attributesForTimelineSegmentPopup;
-+ (NSDictionary*)attributesForSensorMessage;
-+ (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn;
 + (NSDictionary *)attributesForInsightSummaryText;
 @end

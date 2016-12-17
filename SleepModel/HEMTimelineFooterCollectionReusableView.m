@@ -12,6 +12,7 @@
 @implementation HEMTimelineFooterCollectionReusableView
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.backgroundColor = [UIColor timelineBackgroundColor];
 }
 

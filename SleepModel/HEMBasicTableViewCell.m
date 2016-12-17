@@ -24,6 +24,8 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
 @implementation HEMBasicTableViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [[self activityView] setUserInteractionEnabled:NO];
     [[self activityView] setIndicatorImage:[UIImage imageNamed:@"smallLoaderGray"]];
     [self setOrigLeadingAccessoryMargin:[[self leadingCustomAccessoryConstraint] constant]];

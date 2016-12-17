@@ -6,17 +6,17 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-@class SENSleepPill;
-@class HEMActivityIndicatorView;
-@class HEMEmbeddedVideoView;
+#import <SenseKit/SENSleepPill.h>
 
 #import "HEMSleepPillFinderViewController.h"
+#import "HEMPillDFUStoryboard.h"
 #import "HEMSleepPillDfuViewController.h"
 #import "HEMPillFinderPresenter.h"
 #import "HEMDeviceService.h"
-#import "HEMMainStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMEmbeddedVideoView.h"
 
 @interface HEMSleepPillFinderViewController () <HEMPillFinderDelegate, HEMPresenterErrorDelegate>
 
@@ -64,7 +64,7 @@
     if (pill) {
         DDLogVerbose(@"found a sleep pill!");
     }
-    HEMSleepPillDfuViewController* dfuController = [HEMMainStoryboard instantiatePillDFUViewController];
+    HEMSleepPillDfuViewController* dfuController = [HEMPillDFUStoryboard instantiateDfuViewController];
     [dfuController setSleepPillToDfu:pill];
     [dfuController setDeviceService:[self deviceService]];
     [dfuController setDelegate:[self delegate]];

@@ -5,8 +5,7 @@
 //  Created by Jimmy Lu on 3/10/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
-#import "UIBarButtonItem+HEMNav.h"
+#import "Sense-Swift.h"
 
 #import "HEMSleepSoundViewController.h"
 #import "HEMSleepSoundPlayerPresenter.h"
@@ -14,14 +13,23 @@
 #import "HEMAlertViewController.h"
 #import "HEMListItemSelectionViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMOnboardingStoryboard.h"
 #import "HEMSleepSoundsPresenter.h"
 #import "HEMSleepSoundDurationsPresenter.h"
 #import "HEMSleepSoundVolumePresenter.h"
 #import "HEMAudioService.h"
-#import "HEMSubNavigationView.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMDeviceService.h"
+#import "HEMSensePairViewController.h"
+#import "HEMStyledNavigationViewController.h"
 
-@interface HEMSleepSoundViewController () <HEMSleepSoundPlayerDelegate, HEMListDelegate>
+@interface HEMSleepSoundViewController () <
+    HEMSleepSoundPlayerDelegate,
+    HEMListDelegate,
+    HEMPresenterPairDelegate,
+    HEMSensePairingDelegate,
+    Scrollable
+>
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgLaunchImageView;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
@@ -38,6 +46,15 @@
 
 @implementation HEMSleepSoundViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        _tabIcon = [UIImage imageNamed:@"soundsTabBarIcon"];
+        _tabIconHighlighted = [UIImage imageNamed:@"soundsTabBarIconHighlighted"];
+        _tabTitle = NSLocalizedString(@"sleep-sounds.title", nil);
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configurePresenters];
@@ -45,39 +62,35 @@
 
 - (void)configurePresenters {
     [self setSleepSoundService:[HEMSleepSoundService new]];
+    
+    if (![self deviceService]) {
+        [self setDeviceService:[HEMDeviceService new]];
+    }
+    
     HEMSleepSoundPlayerPresenter* playerPresenter =
         [[HEMSleepSoundPlayerPresenter alloc] initWithSleepSoundService:[self sleepSoundService]
                                                           deviceService:[self deviceService]];
     [playerPresenter bindWithActionButton:[self actionButton]
                          bottomConstraint:[self actionButtonBottomConstraint]];
     [playerPresenter bindWithCollectionView:[self collectionView]];
-    [playerPresenter bindWithTutorialParent:self];
     [playerPresenter bindWithActivityIndicator:[self activityIndicator]];
     [playerPresenter setDelegate:self];
+    [playerPresenter setPairDelegate:self];
     [self addPresenter:playerPresenter];
     
     [self setPlayerPresenter:playerPresenter];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if ([self isCancellable]) {
-        NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
-        UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:cancelText
-                                                                     image:nil
-                                                                    target:self
-                                                                    action:@selector(dismiss)];
-        [[self navigationItem] setLeftBarButtonItem:cancelItem];
-    }
-    if ([[self subNav] hasControls]) {
-        [[self playerPresenter] bindWithShadowView:[[self subNav] shadowView]];
-    }
 }
 
 #pragma mark - Actions
 
 - (void)dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - Sleep Sound Player Delegate
@@ -155,6 +168,27 @@
         [[self navigationController] popViewControllerAnimated:YES];
     }
     
+}
+
+#pragma mark - HEMPresenterPairDelegate
+
+- (void)pairSenseFrom:(HEMPresenter *)presenter {
+    HEMSensePairViewController *pairVC = (id)[HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController *nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - HEMSensePairingDelegate
+
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [[self playerPresenter] prepareForReload];
+    [self dismissModalAfterDelay:senseManager != nil];
+}
+
+- (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [[self playerPresenter] prepareForReload];
+    [self dismissModalAfterDelay:senseManager != nil];
 }
 
 #pragma mark - Segues

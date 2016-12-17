@@ -22,7 +22,7 @@ typedef void(^HEMExpansionUpdateHandler)(NSError* _Nullable error);
 @property (nonatomic, strong, readonly) NSArray<SENExpansion*>* expansions;
 
 - (BOOL)isEnabledForHardware:(SENSenseHardware)hardware;
-- (BOOL)isConnected:(SENExpansion*)expansion;
+- (BOOL)isConnected:(nullable SENExpansion*)expansion;
 - (BOOL)isReadyForUse:(SENExpansion*)expansion;
 - (BOOL)hasExpansion:(SENExpansion*)expansion connectedWithURL:(NSURL*)url;
 - (void)getListOfExpansion:(HEMExpansionListHandler)completion;
@@ -35,8 +35,8 @@ typedef void(^HEMExpansionUpdateHandler)(NSError* _Nullable error);
 - (void)refreshExpansion:(SENExpansion*)expansion completion:(HEMExpansionHandler)completion;
 - (NSURLRequest*)authorizationRequestForExpansion:(SENExpansion*)expansion;
 - (NSString*)configurationNameForExpansion:(SENExpansion*)expansion;
-- (SENExpansion*)firstExpansionOfType:(SENExpansionType)type
-                         inExpansions:(NSArray<SENExpansion*>*)expansions;
+- (nullable SENExpansion*)firstExpansionOfType:(SENExpansionType)type
+                                  inExpansions:(NSArray<SENExpansion*>*)expansions;
 - (SENExpansionValueRange)convertThermostatRangeToCelsis:(SENExpansionValueRange)range;
 - (SENExpansionValueRange)convertThermostatRangeBasedOnPreference:(SENExpansionValueRange)range;
 

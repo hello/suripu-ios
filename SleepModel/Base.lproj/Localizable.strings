@@ -1,5 +1,5 @@
 
-"current-conditions.title" = "Sense";
+"current-conditions.title" = "Room Conditions";
 "empty-data" = "--";
 "question-mark" = "?";
 
@@ -17,7 +17,7 @@
 
 // onboarding
 "onboarding.new-sense.title" = "Set up Sense";
-"onboarding.new-sense.desc" = "The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep PIll are nearby.";
+"onboarding.new-sense.desc" = "The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep Pill are nearby.";
 "onboarding.pair-sense.title" = "Pair your Sense";
 "onboarding.pair-sense.not-glowing" = "Sense isn’t glowing blue or purple";
 "onboarding.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";
@@ -367,6 +367,7 @@
 "authorization.sign-in.failed.message" = "The email and password you entered were not recognized. Please try again.";
 
 // alarm list
+"alarms.no-sense.description" = "You don't currently have a Sense connected to your account. Please pair with Sense to set alarms.";
 "alarms.title" = "Alarms";
 "alarms.first-alarm.button-title" = "Set smart alarm";
 "alarms.smart-alarm.format" = "Smart alarm — %@";
@@ -460,7 +461,6 @@
 "sensor.accessibility-value.condition-warning" = "acceptable";
 "sensor.accessibility-value.condition-ideal" = "ideal";
 "sensor.accessibility-value.condition-unknown" = "unknown";
-"sensor.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to view current conditions.";
 "sensor.no-sense.button.title" = "Pair new Sense";
 
 // measurements
@@ -495,6 +495,7 @@
 "drawer.action.close" = "Drawer closed";
 
 // timeline
+"timeline.summary" = "Sleep Summary";
 "timeline.accessibility-hint.menu-open" = "Double tap to open";
 "timeline.accessibility-hint.menu-close" = "Double tap to close";
 "timeline.accessibility-hint.history-open" = "Double tap to view timeline history";
@@ -623,7 +624,7 @@
 "sleep-stat.motion-duration.awake" = "There was a lot of motion.";
 
 // sleep history
-"sleep-history.last-night" = "Last night";
+"sleep-history.last-night" = "Last Night";
 "sleep-history.score" = "SLEEP SCORE";
 "sleep-history.depth.awake" = "Awake";
 "sleep-history.depth.light" = "Light sleep";
@@ -654,6 +655,7 @@
 "trends.day" = "day";
 
 // actions
+"actions.pair-sense" = "Pair Sense";
 "actions.delete" = "Delete";
 "actions.continue" = "Continue";
 "actions.update-now" = "Update now";
@@ -771,15 +773,6 @@
 "alerts.device.pill-firmware-update" = "An update for your Sleep Pill is available. You can update now, or visit settings to update later.";
 
 // tutorial
-"tutorial.timeline.title1" = "Understanding your sleep";
-"tutorial.timeline.message1" = "Sense monitors the environment in your bedroom and recognizes your movements during the night, giving you a full picture of your sleep.\n\nSense takes all this data and builds a Sleep Timeline of your sleep for each night. Swipe left to learn more.";
-"tutorial.timeline.title2" = "Sleep Score";
-"tutorial.timeline.message2" = "Each morning, you'll receive a personalized Sleep Score — out of 100. All the data Sense collects about your sleep is synthesized into this one simple score.";
-"tutorial.timeline.title3" = "Sleep Summary";
-"tutorial.timeline.message3" = "Tap on the Sleep Summary at the top of your Timeline to view detailed stats about your night.\n\nYou'll see how long it took you to fall asleep, how long you spent in deep sleep, what the conditions were like in your bedroom, and more.";
-"tutorial.timeline.title4" = "Sleep Timeline";
-"tutorial.timeline.message4" = "Your Timeline shows you everything that happened during the night, from the moment you go to bed until the time you wake up.\n\nThe blue bars represent your time spent sleeping. The wider the bar, the deeper the sleep. Tap on any bar to view more details.\n\nYour Timeline will also show key events from your night, including time spent tossing and turning, noise disturbances, and more. ";
-
 "tutorial.alarms.title" = "Set An Alarm";
 "tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle - within a 30 minute window before the time you set. When it's time to wake up, Sense will glow and play your selected tone. Just wave your hand over Sense to dismiss the alarm.";
 "tutorial.alarm-smart.title" = "Smart Alarm";
@@ -804,7 +797,6 @@
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 "handholding.message.sensor-scrubbing" = "Press and hold graphs to see historical data.";
 "handholding.message.insight-tap" = "Tap on a card to learn more.";
-"handholding.message.timeline-open" = "To explore more now, tap the menu icon.";
 "handholding.message.account-name-change" = "Verify your name and add a profile photo.";
 
 // app review questions
@@ -836,8 +828,9 @@
 "sounds.audio.stop" = "Stop";
 
 // sleep sounds
+"sleep-sounds.no-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to play Sleep Sounds.";
 "sleep-sounds.error.message" = "There was a problem loading Sleep Sounds. Please try again.";
-"sleep-sounds.title" = "Sleep sounds";
+"sleep-sounds.title" = "Sleep Sounds";
 "sleep-sounds.volume.high" = "High";
 "sleep-sounds.volume.medium" = "Medium";
 "sleep-sounds.volume.low" = "Low";
@@ -857,8 +850,6 @@
 "sleep-sounds.temp.info.message.fw-update" = "Sense will update automatically when plugged in and connected to Wi-Fi. This may take a few moments.";
 "sleep-sounds.temp.info.title.offline" = "Sense is offline";
 "sleep-sounds.temp.info.message.offline" = "We haven't received data from your Sense recently. Make sure Sense is connected to Wi-Fi.";
-"sleep-sounds.welcome.title" = "Sleep Sounds";
-"sleep-sounds.welcome.message" = "Falling asleep to a consistent and calming ambient sound can help you mask nighttime noise, and help you sleep better. Sense makes it easy to start your night off right: choose a custom-designed Sleep Sound, and drift peacefully off to sleep.";
 
 // whats new (set title and message, if needed)
 "whats.new.title" = "";
@@ -941,7 +932,7 @@
 "room-conditions.intro.title" = "Your current conditions";
 "room-conditions.intro.desc" = "Recent changes to room conditions may take a few moments to be reflected here. Tap a card for more detail.";
 "room-conditions.pair-sense.button.title" = "Pair Sense";
-"room-conditions.pair-sense.message" = "You don't currently have a Sense paired to your account. Please pair with Sense to view current conditions.";
+"room-conditions.pair-sense.message" = "You don't currently have a Sense connected to your account. Please pair with Sense to view current conditions.";
 "room-conditions.air-quality" = "Air quality";
 "room-conditions.status.calibrating" = "Calibrating";
 
@@ -1068,7 +1059,7 @@
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";
 
 "voice.settings.primary-user" = "Primary User";
-"voice.settings.primary-user.foot.note" = "Tell Sense whose information to respond with when asked questions like \"What’s my sleep score?\" by setting primary user.";
+"voice.settings.primary-user.foot.note" = "Tell Sense whose information to respond with when asked questions like \"What’s my sleep score?\" by setting primary user. Only the primary user will be able to access the Nest Expansion when released.";
 "voice.settings.update.status" = "Saving";
 "voice.settings.update.error.title" = "Changes not saved";
 "voice.settings.update.error.primary-not-set" = "Sense was not able to set you as the primary user. Try again.";

@@ -5,8 +5,20 @@
 //  Created by Delisa Mason on 12/16/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @interface NSString (HEMUtils)
+
+/**
+ * @discussion
+ * parameter must be a single word
+ *
+ * @param word: word to camel case
+ * @return word, camel cased
+ */
++ (NSString*)camelCaseWord:(NSString*)word;
 
 /**
  * Simple convenience method to check whether or not this string

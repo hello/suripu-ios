@@ -12,7 +12,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMNotificationSettingsViewController.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMAccountService.h"
 
@@ -109,7 +109,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard preferenceReuseIdentifier]];
+    return [tableView dequeueReusableCellWithIdentifier:[HEMSettingsStoryboard preferenceReuseIdentifier]];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

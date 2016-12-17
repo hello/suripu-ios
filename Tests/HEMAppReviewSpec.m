@@ -289,7 +289,11 @@ describe(@"HEMAppReview", ^{
 
             beforeEach(^{
                 SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
-                [localPrefs setPersistentPreference:nil forKey:key];
+                [localPrefs stub:@selector(persistentPreferenceForKey:) andReturn:@NO];
+            });
+            
+            afterEach(^{
+                [[SENLocalPreferences sharedPreferences] clearStubs];
             });
 
             it(@"returns no", ^{

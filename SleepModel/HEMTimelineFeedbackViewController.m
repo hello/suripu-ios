@@ -10,7 +10,6 @@
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMClockPickerView.h"
-#import "HEMRootViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
 #import "HEMTimelineService.h"

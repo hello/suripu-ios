@@ -14,6 +14,7 @@
 @implementation HEMSwitchControl
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.onTintColor = [UIColor tintColor];
     self.backgroundColor = [UIColor grey1];
     self.layer.cornerRadius = ceilf(CGRectGetHeight(self.bounds) / 2);

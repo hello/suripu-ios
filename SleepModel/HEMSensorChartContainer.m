@@ -29,6 +29,8 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
 @implementation HEMSensorChartContainer
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     UIColor* lineColor = [[UIColor grey3] colorWithAlphaComponent:0.2f];
     [[self topLimitLabel] setTextColor:[UIColor grey4]];
     [[self botLimitLabel] setTextColor:[UIColor grey4]];
@@ -158,7 +160,7 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gesture {
     CGPoint pointInView = [gesture locationInView:[gesture view]];
     LineChartView* lineView = (id)[self chartView];
-    ChartDataEntry* entry = [lineView getEntryByTouchPoint:pointInView];
+    ChartDataEntry* entry = [lineView getEntryByTouchPointWithPoint:pointInView];
     return entry != nil;
 }
 
@@ -203,10 +205,10 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
     
     if ([[self chartView] isKindOfClass:[LineChartView class]]) {
         LineChartView* lineView = (id)[self chartView];
-        entry = [lineView getEntryByTouchPoint:pointOnChart];
-        CGPoint chartPoint = [lineView getPixelForValue:[entry xIndex]
-                                                      y:[entry value]
-                                                   axis:AxisDependencyLeft];
+        entry = [lineView getEntryByTouchPointWithPoint:pointOnChart];
+        CGPoint chartPoint = [lineView pixelForValuesWithX:[entry x]
+                                                         y:[entry y]
+                                                      axis:AxisDependencyLeft];
         [[self scrubberCircle] setCenter:chartPoint];
         [[self scrubberCircle] setAlpha:1.0f];
     }

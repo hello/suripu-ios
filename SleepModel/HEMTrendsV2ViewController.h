@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
+@class HEMTrendsGraphsPresenter;
+
 @interface HEMTrendsV2ViewController : HEMBaseController
+
+@property (nonatomic, strong) HEMTrendsGraphsPresenter* presenter;
 
 @end

@@ -53,6 +53,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 @property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
 @property (nonatomic, strong) NSMutableDictionary* chartMaxBySensor;
+@property (nonatomic, strong) NSMutableDictionary* chartMinBySensor;
 @property (nonatomic, strong) SENSensorStatus* sensorStatus;
 @property (nonatomic, strong) NSArray* groupedSensors;
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
@@ -72,6 +73,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         _headerViewHeight = -1.0f;
         _chartDataBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
         _chartMaxBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
+        _chartMinBySensor = [NSMutableDictionary dictionaryWithCapacity:8];
         _formatter = [HEMSensorValueFormatter new];
     }
     return self;
@@ -142,18 +144,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 - (void)userDidSignOut {
     [super userDidSignOut];
-    [[self sensorService] stopPollingForData];
-}
-
-- (void)didOpenDrawer {
-    [super didOpenDrawer];
-    if ([self isViewFullyVisible:[self collectionView]]) {
-        [self startPolling];
-    }
-}
-
-- (void)didCloseDrawer {
-    [super didCloseDrawer];
     [[self sensorService] stopPollingForData];
 }
 
@@ -266,17 +256,21 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
             if ([values count] == [timestamps count]) {
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
-                CGFloat chartMax = 0.0f;
+                CGFloat chartMax = 0.0f, chartMin = MAXFLOAT;
                 NSUInteger index = 0;
                 for (NSNumber* value in values) {
                     CGFloat entryValue = MAX(0.0f, [value doubleValue]);
-                    [chartData addObject:[[ChartDataEntry alloc] initWithValue:entryValue xIndex:index++]];
+                    [chartData addObject:[[ChartDataEntry alloc] initWithX:index++ y:entryValue]];
                     if ([value doubleValue] > chartMax) {
                         chartMax = [value doubleValue];
+                    }
+                    if ([value doubleValue] >= 0.0f && [value doubleValue] < chartMin) {
+                        chartMin = [value doubleValue];
                     }
                 }
                 [strongSelf chartDataBySensor][@([sensor type])] = chartData;
                 [strongSelf chartMaxBySensor][@([sensor type])] = @(chartMax);
+                [strongSelf chartMinBySensor][@([sensor type])] = @(chartMin);
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -292,7 +286,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     if (!lineChartView) {
         lineChartView = [[LineChartView alloc] initForSensorWithFrame:[[cell graphContainerView] bounds]];
-        [lineChartView setUserInteractionEnabled:NO];
+        [lineChartView setViewPortOffsetsWithLeft:0.0f top:6.0f right:0.0f bottom:0.0f];
         *animate = YES;
     } else {
         *animate = NO;
@@ -306,7 +300,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
     
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithYVals:[chartData copy]];
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithValues:[chartData copy]];
     [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
     [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
     [dataSet setDrawFilledEnabled:YES];
@@ -316,8 +310,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     CGGradientRelease(gradient);
     
-    NSArray<SENSensorTime*>* xVals = [[self sensorData] timestamps];
-    [lineChartView setData:[[LineChartData alloc] initWithXVals:xVals dataSet:dataSet]];
+    [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setNeedsDisplay];
     
     return lineChartView;
@@ -327,7 +320,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 - (NSAttributedString*)attributedIntroTitle {
     if (!_attributedIntroTitle) {
-        NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
         [style setAlignment:NSTextAlignmentCenter];
         
         NSDictionary* attrs = @{NSFontAttributeName : [UIFont h5],
@@ -343,7 +336,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 - (NSAttributedString*)attributedIntroDesc {
     if (!_attributedIntroDesc) {
-        NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
         [style setAlignment:NSTextAlignmentCenter];
         
         NSDictionary* attrs = @{NSFontAttributeName : [UIFont body],
@@ -398,7 +391,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         default: {
             if ([self sensorError]) {
                 NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
-                UIFont* font = [UIFont errorStateDescriptionFont];
+                UIFont* font = [UIFont body];
                 CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
                 CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
                 itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -444,14 +437,8 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             break;
     }
     
-    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
-                                                     forIndexPath:indexPath];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView
-       willDisplayCell:(UICollectionViewCell *)cell
-    forItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                                           forIndexPath:indexPath];
     if ([cell isKindOfClass:[HEMSensorCollectionViewCell class]]) {
         SENSensor* sensor = [self groupedSensors][[indexPath row]];
         [self configureSensorCell:(id)cell forSensor:sensor];
@@ -463,6 +450,8 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         NSArray<SENSensor*>* sensors = [self groupedSensors][[indexPath row]];
         [self configureGroupSensorCell:(id)cell forSensors:sensors];
     }
+    
+    return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
@@ -551,6 +540,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
             worstCondition = [sensor condition];
         }
         
+        [[self formatter] setDecimalPlaces:NSNotFound];
         [[self formatter] setSensorUnit:[sensor unit]];
         [[self formatter] setIncludeUnitSymbol:YES];
         UIColor* conditionColor = [UIColor colorForCondition:[sensor condition]];
@@ -573,6 +563,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 }
 
 - (void)configureSensorCell:(HEMSensorCollectionViewCell*)sensorCell forSensor:(SENSensor*)sensor {
+    [[self formatter] setDecimalPlaces:NSNotFound];
     [[self formatter] setSensorUnit:[sensor unit]];
     
     SENCondition condition = [sensor condition];
@@ -621,26 +612,42 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
     [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
     
-    NSNumber* chartMax = nil;
+    // TODO: see if we can reuse this logic between room conditions and sensor
+    // detail
+    NSNumber* chartMax = nil, *chartMin = nil;
     NSNumber* calculatedChartMax = [self chartMaxBySensor][@([sensor type])];
+    NSNumber* calculatedChartMin = [self chartMinBySensor][@([sensor type])];
     CGFloat minValue = [chartView chartYMin];
     CGFloat maxValue = [chartView chartYMax];
     // a hack until we can properly line up the chart to the limit lines.  This
     // case identifies when values in the chart are all 0s.
+    
     if (!(minValue == -1.0f && maxValue == 1.0f)) {
-        minValue = 0.0f;
         chartMax = calculatedChartMax;
+        chartMin = calculatedChartMin;
     } else {
+        chartMin = @(minValue);
         chartMax = @(maxValue);
     }
     
+    [[self formatter] setDecimalPlaces:NSNotFound]; // set it back to default
     [[self formatter] setIncludeUnitSymbol:YES];
     
+    NSString* topLimitValue = [[self formatter] stringFromSensorValue:chartMax];
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
+    [chartContainer setUserInteractionEnabled:NO];
     [chartContainer setScrubberEnable:NO];
-    [[chartContainer topLimitLabel] setText:[[self formatter] stringFromSensorValue:chartMax]];
-    [[chartContainer botLimitLabel] setText:[[self formatter] stringFromSensorValue:@(minValue)]];
+    [[chartContainer topLimitLabel] setText:topLimitValue];
+    
+    // conditionally show a decimal point for min value
+    NSString* botLimitValue = [[self formatter] stringFromSensorValue:chartMin];
+    if ([topLimitValue isEqualToString:botLimitValue]) {
+        [[self formatter] setDecimalPlaces:1];
+        botLimitValue = [[self formatter] stringFromSensorValue:chartMin];
+    }
+    
+    [[chartContainer botLimitLabel] setText:botLimitValue];
     
     if (animate) {
         [chartView animateIn];
@@ -649,7 +656,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
     [[errorCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
-    [[errorCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+    [[errorCell textLabel] setFont:[UIFont body]];
     [errorCell displayAsACard:YES];
 }
 

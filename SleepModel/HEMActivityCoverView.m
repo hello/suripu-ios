@@ -86,7 +86,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 - (void)addLabel {
     [self setActivityLabel:[[UILabel alloc] init]];
-    [[self activityLabel] setFont:[UIFont onboardingActivityFontLarge]];
+    [[self activityLabel] setFont:[UIFont h4]];
     [[self activityLabel] setTextColor:[UIColor grey6]];
     [[self activityLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self activityLabel] setNumberOfLines:0];

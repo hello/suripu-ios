@@ -24,7 +24,6 @@
 #import "HEMURLImageView.h"
 #import "HEMImageCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
-#import "HEMRootViewController.h"
 #import "HEMLoadingCollectionViewCell.h"
 #import "HEMActivityIndicatorView.h"
 
@@ -44,8 +43,8 @@ static NSInteger const HEMInsightRowCountForGenerics = 3;
 
 static CGFloat const HEMInsightCellSummaryTopMargin = 20.0f;
 static CGFloat const HEMInsightCellSummaryBotMargin = 33.0f;
-static CGFloat const HEMInsightCellSummaryLeftMargin = 54.0f; // 48 + 2 for divider + 4 magic iOS 9 pixels from collection view
-static CGFloat const HEMInsightCellSummaryRightMargin = 28.0f; // 24 + 4 magic iOS 9 pixels
+static CGFloat const HEMInsightCellSummaryLeftMargin = 50.0f; // 48 + 2 for divider
+static CGFloat const HEMInsightCellSummaryRightMargin = 24.0f;
 
 static CGFloat const HEMInsightCellTitleTopMargin = 32.0f;
 static CGFloat const HEMInsightCellTitleBotMargin = 12.0f;
@@ -126,12 +125,6 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 
 #pragma mark - Presenter events
 
-- (void)willAppear {
-    [super willAppear];
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [rootVC hideStatusBar];
-}
-
 - (void)didAppear {
     [super didAppear];
     [self updateCloseButtonShadowOpacity];
@@ -172,7 +165,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 - (NSAttributedString*)attributedAbout {
     if (!_attributedAbout) {
         NSString* about = [NSLocalizedString(@"insight.about", nil) uppercaseString];
-        NSDictionary* attributes = @{NSFontAttributeName : [UIFont insightAboutFont],
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont h8],
                                      NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
         _attributedAbout = [[NSAttributedString alloc] initWithString:about attributes:attributes];
     }
@@ -415,9 +408,6 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 - (void)dealloc {
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
-    
-    HEMRootViewController* rootVC = [HEMRootViewController rootViewControllerForKeyWindow];
-    [rootVC showStatusBar];
 }
 
 @end

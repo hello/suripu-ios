@@ -25,7 +25,7 @@ import CoreBluetooth
  does not advertise with any service UUIDs, or this is not enough, you may select a target device
  by their advertising packet or RSSI.
  */
-public protocol DFUPeripheralSelectorDelegate : class {
+@objc public protocol DFUPeripheralSelectorDelegate : class {
     /**
      Returns whether the given peripheral is a device in DFU Bootloader mode.
      
@@ -35,7 +35,7 @@ public protocol DFUPeripheralSelectorDelegate : class {
      
      - returns: true (YES) if given peripheral is what service is looking for
      */
-    func select(peripheral:CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) -> Bool
+    func select(_ peripheral:CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) -> Bool
     
     /**
      Returns an optional list of services that the scanner will use to filter advertising packets

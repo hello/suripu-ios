@@ -5,7 +5,6 @@
 //  Created by Jimmy Lu on 8/21/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
 #import <UIKit/UIKit.h>
 #import "HEMNavigationShadowView.h"
 
@@ -14,10 +13,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HEMBaseController : UIViewController
+@interface HEMBaseController : UIViewController {
 
-@property (nonatomic, strong, readonly) HEMNavigationShadowView* shadowView;
-@property (nullable, nonatomic, strong, readonly) NSArray<HEMPresenter*>* presenters;
+@protected
+    HEMNavigationShadowView* _shadowView;
+    UIImage* _tabIcon;
+    UIImage* _tabIconHighlighted;
+    NSString* _tabTitle;
+}
+
+@property (nonatomic, strong, readonly, nullable) HEMNavigationShadowView* shadowView;
+@property (nonatomic, strong, readonly, nullable) NSArray<HEMPresenter*>* presenters;
+@property (nonatomic, strong, nullable) UIImage* tabIcon;
+@property (nonatomic, strong, nullable) UIImage* tabIconHighlighted;
+@property (nonatomic, copy, nullable) NSString* tabTitle;
 
 - (void)addPresenter:(HEMPresenter*)presenter;
 
@@ -64,9 +73,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)viewDidEnterBackground;
 - (BOOL)showIndicatorForCrumb:(NSString*)crumb;
 - (void)clearCrumb:(NSString*)crumb;
-- (void)reloadTopBar;
 - (void)didRefreshAccount;
 - (void)dismissModalAfterDelay:(BOOL)delay;
+- (void)switchMainTab:(NSInteger)tab;
 
 @end
 

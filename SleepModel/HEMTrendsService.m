@@ -97,26 +97,29 @@ NSString* const HEMTrendsServiceNotificationInfoError = @"error";
     [self setRefreshing:YES];
     
     __weak typeof(self) weakSelf = self;
-    [SENAPITrends trendsForTimeScale:timeScale completion:^(id data, NSError *error) {
+    [SENAPITrends trendsForTimeScale:timeScale completion:^(SENTrends* data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLoaded:YES];
         
+        SENTrends* trends = nil;
         NSNumber* timeScaleKey = @(timeScale);
+        BOOL isAvailable = [[data availableTimeScales] containsObject:timeScaleKey];
         
         if (error) {
             [SENAnalytics trackError:error];
             [[strongSelf cachedLastPullByScale] removeAllObjects];
             [[strongSelf cachedTrendsByScale] removeAllObjects];
-        } else if ([data isKindOfClass:[SENTrends class]]) {
+        } else if (isAvailable && [data isKindOfClass:[SENTrends class]]) {
             [[strongSelf cachedTrendsByScale] setObject:data forKey:timeScaleKey];
             [[strongSelf cachedLastPullByScale] setObject:[NSDate date] forKey:timeScaleKey];
+            trends = data;
         }
         
         [strongSelf setRefreshing:NO];
         [strongSelf notify:HEMTrendsServiceNotificationDidRefresh error:error];
         
         if (completion) {
-            completion (data, timeScale, error);
+            completion (trends, timeScale, error);
         }
         
     }];

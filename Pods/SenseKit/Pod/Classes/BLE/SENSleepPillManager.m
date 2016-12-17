@@ -557,7 +557,7 @@ currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond
         case DFUStateDisconnecting:
             [self setCurrentDfuState:SENSleepPillDfuStateDisconnecting];
             break;
-        case StateCompleted: {
+        case DFUStateCompleted: {
             NSError* error = nil;
             if ([self dfuProgress] == 100) {
                 [self setCurrentDfuState:SENSleepPillDfuStateCompleted];

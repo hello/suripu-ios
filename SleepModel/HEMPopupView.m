@@ -26,6 +26,8 @@ static CGFloat const HEMPopupMargin = 30.f;
 static CGFloat const HEMPopupShadowBlur = 2.f;
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     self.pointerVisible = YES;
     self.backgroundColor = [UIColor clearColor];
     self.clipsToBounds = NO;

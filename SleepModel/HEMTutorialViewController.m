@@ -5,11 +5,11 @@
 //  Created by Jimmy Lu on 6/8/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMTutorialViewController.h"
 #import "HEMTutorialDataSource.h"
 #import "HEMTutorialContent.h"
-#import "HEMRootViewController.h"
 
 static CGFloat const HEMTutorialContentHorzPadding = 20.0f;
 static CGFloat const HEMTutorialContentMinScale = 0.9f;
@@ -64,7 +64,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+    RootViewController* root = [RootViewController currentRootViewController];
     if (![root isStatusBarHidden]) {
         [root hideStatusBar];
         [self setManuallyHidStatusBar:YES];
@@ -88,7 +88,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if ([self didManuallyHideStatusBar]) {
-        HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+        RootViewController* root = [RootViewController currentRootViewController];
         [root showStatusBar];
     }
 }

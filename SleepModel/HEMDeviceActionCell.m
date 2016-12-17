@@ -23,6 +23,8 @@ CGFloat const HEMDeviceActionCellHeight = 56.0f;
 @implementation HEMDeviceActionCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [self setBackgroundColor:[UIColor whiteColor]];
     [[self topSeparatorView] setBackgroundColor:[UIColor separatorColor]];
     [[self separatorView] setBackgroundColor:[UIColor separatorColor]];

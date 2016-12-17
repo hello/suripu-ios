@@ -19,6 +19,7 @@
 @implementation HEMTitledTextField
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self configureDefaults];
 }
 

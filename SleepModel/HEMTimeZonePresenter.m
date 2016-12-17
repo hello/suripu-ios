@@ -12,7 +12,7 @@
 #import "UIBarButtonItem+HEMNav.h"
 
 #import "HEMTimeZonePresenter.h"
-#import "HEMMainStoryboard.h"
+#import "HEMSettingsStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSettingsHeaderFooterView.h"
@@ -189,7 +189,7 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard timezoneReuseIdentifier]];
+    return [tableView dequeueReusableCellWithIdentifier:[HEMSettingsStoryboard timezoneReuseIdentifier]];
 }
 
 #pragma mark - UITableViewDelegate

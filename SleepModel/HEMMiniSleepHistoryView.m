@@ -11,8 +11,8 @@
 
 @implementation HEMMiniSleepHistoryView
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
+    [super awakeFromNib];
     self.backgroundColor = [UIColor clearColor];
 }
 

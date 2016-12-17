@@ -13,12 +13,14 @@
 @implementation HEMResponseCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [self setBackgroundColor:[UIColor clearColor]];
     
     [[self answerLabel] setBackgroundColor:[UIColor clearColor]];
     [[self answerLabel] setTextColor:[UIColor tintColor]];
     [[self answerLabel] setTextAlignment:NSTextAlignmentCenter];
-    [[self answerLabel] setFont:[UIFont questionAnswerFont]];
+    [[self answerLabel] setFont:[UIFont h6Bold]];
     
     [[self separator] setBackgroundColor:[[UIColor tintColor]
                                           colorWithAlphaComponent:0.5f]];

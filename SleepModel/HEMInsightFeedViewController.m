@@ -5,6 +5,8 @@
 //  Created by Delisa Mason on 12/13/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import "Sense-Swift.h"
+
 #import <SenseKit/SenseKit.h>
 
 #import "UIImage+HEMPixelColor.h"
@@ -24,15 +26,13 @@
 #import "HEMInsightTransition.h"
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMURLImageView.h"
-#import "HEMRootViewController.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMHandHoldingService.h"
 #import "HEMInsightsHandHoldingPresenter.h"
 #import "HEMWhatsNewService.h"
-#import "HEMRootViewController.h"
 #import "HEMShareService.h"
 
-@interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate>
+@interface HEMInsightFeedViewController () <HEMInsightsFeedPresenterDelegate, Scrollable>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
@@ -51,6 +51,20 @@
 @end
 
 @implementation HEMInsightFeedViewController
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        _tabIcon = [UIImage imageNamed:@"feedTabBarIcon"];
+        _tabIconHighlighted = [UIImage imageNamed:@"feedTabBarIconHighlighted"];
+        _tabTitle = NSLocalizedString(@"insights.title", nil);
+    }
+    return self;
+}
+
+- (UIViewController*)childViewControllerForStatusBarHidden {
+    DDLogVerbose(@"status bar controller %@", self.presentedViewController);
+    return self.presentedViewController;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -88,7 +102,7 @@
     __weak typeof(self) weakSelf = self;
     [feedPresenter setOnLoadCallback:^(NSArray* data) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        UIView* rootView = [[HEMRootViewController rootViewControllerForKeyWindow] view];
+        UIView* rootView = [[RootViewController currentRootViewController] view];
         [[strongSelf handHoldingPresenter] showIfNeededIn:rootView
                                        withCollectionView:[strongSelf collectionView]];
     }];
@@ -100,6 +114,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [SENAnalytics track:kHEMAnalyticsEventFeed];
+}
+
+#pragma mark - Scrollable 
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - HEMInsightFeedPresenterDelegate
@@ -150,6 +170,7 @@
     
     if (![self questionsTransition]) {
         HEMSimpleModalTransitionDelegate* transition = [[HEMSimpleModalTransitionDelegate alloc] init];
+        [transition setWantsStatusBar:YES];
         [transition setDismissMessage:NSLocalizedString(@"sleep.questions.end.message", nil)];
         [self setQuestionsTransition:transition];
     }
@@ -165,12 +186,9 @@
     }];
 }
 
-- (void)presenter:(HEMInsightsFeedPresenter*)presenter showTab:(HEMRootDrawerTab)tab {
-    UIViewController* controller = [self rootViewController];
-    if ([controller isKindOfClass:[HEMRootViewController class]]) {
-        HEMRootViewController* rootVC = (id) controller;
-        [rootVC showSettingsDrawerTabAtIndex:tab animated:YES];
-    }
+- (void)presenter:(HEMInsightsFeedPresenter*)presenter
+          showTab:(MainTab)tab {
+    [self switchMainTab:tab];
 }
 
 - (UIView*)activityContainerViewFor:(HEMInsightsFeedPresenter*)presenter {

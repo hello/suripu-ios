@@ -6,7 +6,7 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "SENService.h"
+#import <SenseKit/SENService.h>
 #import <SenseKit/SENSenseMetadata.h>
 #import <SenseKit/SENSleepPill.h>
 
@@ -91,6 +91,8 @@ typedef void(^HEMDeviceResetHandler)(NSError* _Nullable error);
 - (BOOL)hasHardwareUpgradeForSense;
 - (BOOL)isPillFirmwareUpdateAvailable;
 - (SENSenseHardware)savedHardwareVersion;
+- (BOOL)savedHardwareVersionIsVoice;
+- (BOOL)hasSavedHardwareVersion;
 
 /**
  * @return YES if we should show pill information to the users, NO otherwise

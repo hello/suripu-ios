@@ -11,6 +11,8 @@
 #import "SENRemoteImage+HEMDeviceSpecific.h"
 #import "UIActivityViewController+HEMSharing.h"
 
+#import "Sense-Swift.h"
+
 #import "NSDate+HEMRelative.h"
 #import "NSString+HEMUtils.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -46,7 +48,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 @interface HEMInsightsFeedPresenter() <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
-    UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegateFlowLayout,
+    Scrollable
 >
 
 @property (strong, nonatomic) NSArray* data;
@@ -112,6 +115,14 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 - (void)bindWithSubNavBar:(HEMSubNavigationView*)subNavBar {
     [self bindWithShadowView:[subNavBar shadowView]];
 }
+
+#pragma mark - Scrollable
+
+- (void)scrollToTop {
+    [[self collectionView] setContentOffset:CGPointZero animated:YES];
+}
+
+#pragma mark -
 
 - (void)showLoadingActivity:(BOOL)show {
     if (show) {
@@ -275,16 +286,16 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 }
 
 - (NSDictionary*)questionTextAttributes {
-    NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
-    return  @{NSFontAttributeName : [UIFont feedQuestionFont],
+    return  @{NSFontAttributeName : [UIFont body],
               NSParagraphStyleAttributeName : style};
 }
 
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withCellWith:(CGFloat)width {
     if ([indexPath row] == 0 && [self dataError]) {
         NSString* text = NSLocalizedString(@"insights.feed.error.message", nil);
-        UIFont* font = [UIFont errorStateDescriptionFont];
+        UIFont* font = [UIFont body];
         CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
         CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
         return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -408,7 +419,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         if ([self dataError]) {
             HEMTextCollectionViewCell* textCell = (id)cell;
             [[textCell textLabel] setText:NSLocalizedString(@"insights.feed.error.message", nil)];
-            [[textCell textLabel] setFont:[UIFont errorStateDescriptionFont]];
+            [[textCell textLabel] setFont:[UIFont body]];
             [textCell displayAsACard:YES];
         }
     }
@@ -576,7 +587,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     HEMWhatsNewLocation loc = [[self whatsNewService] location];
     switch (loc) {
         case HEMWhatsNewLocationSettings:
-            [[self delegate] presenter:self showTab:HEMRootDrawerTabSettings];
+            // FIXME: support settings
+            [[self delegate] presenter:self showTab:MainTabConditions];
             break;
         case HEMWhatsNewLocationNone:
         default:

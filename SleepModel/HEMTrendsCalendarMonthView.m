@@ -220,7 +220,7 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
                 HEMTrendsDisplayPoint* trendsDisplayPoint = point;
                 [scoreLabel setTextAlignment:NSTextAlignmentCenter];
                 [scoreLabel setTextColor:[UIColor whiteColor]];
-                [scoreLabel setFont:[UIFont trendScoreFont]];
+                [scoreLabel setFont:[UIFont h7Bold]];
                 NSInteger score = [[trendsDisplayPoint value] integerValue];
                 if (score >= 0) {
                     [scoreLabel setText:[NSString stringWithFormat:@"%ld", (long)score]];

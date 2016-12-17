@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0.19
+
+Fixes:
+
+* Removed required device capabilities in info.plist that was automatically added by XCode 8
+
 ## 2.0.0.18
 
 Fixes:

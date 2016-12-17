@@ -35,7 +35,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.0.18</string>
+	<string>2.0.0.19</string>
 	<key>FacebookAppID</key>
 	<string>372438546161587</string>
 	<key>FacebookDisplayName</key>
@@ -169,7 +169,6 @@
 	<array>
 		<string>armv7</string>
 		<string>bluetooth-le</string>
-		<string>healthkit</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>

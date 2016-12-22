@@ -81,6 +81,7 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 - (void)bindWithSkipButton:(UIButton*)skipButton {
     [skipButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [[skipButton titleLabel] setFont:[UIFont button]];
+    [skipButton setHidden:YES]; // to start
     [skipButton addTarget:self
                    action:@selector(skip)
          forControlEvents:UIControlEventTouchUpInside];

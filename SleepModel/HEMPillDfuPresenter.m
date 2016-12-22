@@ -71,8 +71,16 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel {
     [titleLabel setFont:[UIFont h5]];
     [titleLabel setTextColor:[UIColor grey6]];
-    [descriptionLabel setFont:[UIFont body]];
-    [descriptionLabel setTextColor:[UIColor grey5]];
+    
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSString* description = [descriptionLabel text];
+    NSAttributedString* attributedDescription =
+        [[NSAttributedString alloc] initWithString:description
+                                        attributes:@{NSForegroundColorAttributeName : [UIColor grey5],
+                                                     NSFontAttributeName : [UIFont body],
+                                                     NSParagraphStyleAttributeName : style}];
+    [descriptionLabel setAttributedText:attributedDescription];
+    
     [self setTitleLabel:titleLabel];
     [self setDescriptionLabel:descriptionLabel];
 }

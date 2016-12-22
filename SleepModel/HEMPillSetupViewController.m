@@ -127,6 +127,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     CGFloat viewHeight = CGRectGetHeight([[self collectionView] bounds]);
     BOOL scroll = contentHeight - HEMPillSetupLayoutMinLineSpacing > viewHeight;
     [[self collectionView] setScrollEnabled:scroll];
+    [[[self buttonContainer] layer] setShadowOpacity:scroll ? 1.0f : 0.0f];
 
     [self calculateHeights];
 }

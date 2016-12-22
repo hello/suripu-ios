@@ -112,7 +112,7 @@ static CGFloat const HEMEmbeddedVideoGradientPercentage = 10.0f;
             
             AVPlayerLayer* layer = [AVPlayerLayer playerLayerWithPlayer:player];
             [layer setBackgroundColor:[[UIColor clearColor] CGColor]];
-            [layer setFrame:[self bounds]]; // for now, will resize based on video rect
+            [layer setFrame:[self bounds]]; // required to have videoRect be properly defined after video is ready
             
             if ([strongSelf loop]) {
                 [strongSelf subcribeToNotificationsFor:player];
@@ -132,9 +132,11 @@ static CGFloat const HEMEmbeddedVideoGradientPercentage = 10.0f;
         && [[self player] status] == AVPlayerStatusReadyToPlay
         && videoBuffered) {
         DDLogVerbose(@"playing video");
-        [[self playerLayer] setFrame:[[self playerLayer] videoRect]];
-        [[self layer] addSublayer:[self playerLayer]];
-        [self addGradientsWhenReady];
+        if (![[self playerLayer] superlayer]) {
+            [[self playerLayer] setFrame:[[self playerLayer] videoRect]];
+            [[self layer] addSublayer:[self playerLayer]];
+            [self addGradientsWhenReady];
+        }
         [[self firstFrameView] removeFromSuperview];
         [[self player] play];
         [self setStoppedByCaller:NO];

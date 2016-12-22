@@ -67,6 +67,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
     
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    [style setAlignment:NSTextAlignmentCenter];
     NSString* resultsDescription = [[self resultsDescriptionLabel] text];
     NSAttributedString* attributedDescription = [[NSAttributedString alloc] initWithString:resultsDescription
                                                                                 attributes:@{NSParagraphStyleAttributeName : style}];

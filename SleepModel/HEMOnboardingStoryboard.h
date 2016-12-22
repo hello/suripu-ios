@@ -56,6 +56,7 @@
 
 /** View Controllers */
 +(id)instantiateDobViewController;
++(id)instantiateFirstAlarmViewController;
 +(id)instantiateGenderPickerViewController;
 +(id)instantiateHeightPickerViewController;
 +(id)instantiateNewSenseViewController;
@@ -63,6 +64,7 @@
 +(id)instantiateOnboardingCompleteViewController;
 +(id)instantiatePillDescriptionViewController;
 +(id)instantiatePillPairViewController;
++(id)instantiatePillSetupViewController;
 +(id)instantiateResetSenseViewController;
 +(id)instantiateRoomCheckViewController;
 +(id)instantiateSenseColorsViewController;

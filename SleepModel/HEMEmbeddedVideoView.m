@@ -173,8 +173,8 @@ static CGFloat const HEMEmbeddedVideoGradientPercentage = 10.0f;
 
 - (void)addGradientsWhenReady {
     // This is a workaround to issues encountered on plus devices, where videos
-    // are not displaying with black lines above and below the video.  It looks
-    // like the videos created are not of the correct resolution in H.264 format
+    // are displaying with black lines above and below the video.  It looks like
+    // the videos created are not of the correct resolution in H.264 format
     // (height + width should be divisible by 16) and although changing the
     // AVPlayerLayer's frame can sometimes work, it does not work for all videos.
     CGFloat videoHeight = CGRectGetHeight([[self playerLayer] videoRect]);

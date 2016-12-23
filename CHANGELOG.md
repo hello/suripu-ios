@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.1.1
+
+New:
+
+* Improved initial load times throughout onboarding
+* Adjusted line height on pill DFU descriptions
+
+Fixes:
+
+* Fixed issue with black lines showing up above and below some videos throughout onboarding / dfu on plus phones
+
 ## 2.0.0.19
 
 Fixes:

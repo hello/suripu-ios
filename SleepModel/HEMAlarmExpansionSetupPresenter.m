@@ -92,20 +92,22 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
                            separator:(UIView*)separator {
     SENExpansionType type = [[self expansion] type];
     SENExpansionValueRange expansionRange = [[self expansion] valueRange];
+    SENExpansionValueRange defaultRange = [[self expansionService] defaultIdealRange];
     SENExpansionValueRange selectedRange = [[self alarmExpansion] targetRange];
     
     if (type == SENExpansionTypeThermostat) {
         expansionRange = [[self expansionService] convertThermostatRangeBasedOnPreference:expansionRange];
+        defaultRange = [[self expansionService] convertThermostatRangeBasedOnPreference:defaultRange];
         selectedRange = [[self expansionService] convertThermostatRangeBasedOnPreference:selectedRange];
     }
     
     // set defaults
     [self setDefaultTargetMaxValue:[[self alarmExpansion] targetRange].max > 0
                                     ? selectedRange.max
-                                    : expansionRange.max];
+                                    : defaultRange.max];
     [self setDefaultTargetMinValue:[[self alarmExpansion] targetRange].min > 0
                                     ? selectedRange.min
-                                    : expansionRange.min];
+                                    : defaultRange.min];
     [self setExpansionValueRange:expansionRange];
     
     NSLayoutConstraint *heightConstraint;

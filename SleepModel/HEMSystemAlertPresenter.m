@@ -48,7 +48,6 @@ static CGFloat const HEMSystemAlertRelayoutDuration = 0.2f;
 @property (nonatomic, weak) UIView* alertContainerView;
 @property (nonatomic, weak) UIView* topView;
 @property (nonatomic, weak) HEMActionView* currentActionView;
-@property (nonatomic, weak) UITabBarController* tabController; // used to determine if tabbar is showing
 
 @end
 
@@ -82,10 +81,6 @@ static CGFloat const HEMSystemAlertRelayoutDuration = 0.2f;
 - (void)bindWithContainerView:(UIView*)containerView below:(UIView*)topView {
     [self setAlertContainerView:containerView];
     [self setTopView:topView];
-}
-
-- (void)bindWithTabBarController:(UITabBarController*)tabBarController {
-    [self setTabController:tabBarController];
 }
 
 #pragma mark - Handler device changes 

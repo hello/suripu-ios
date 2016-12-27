@@ -424,7 +424,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         
         [sheet addOptionWithTitle:[config localizedName]
-                       titleColor:[UIColor grey7]
+                       titleColor:[UIColor grey5]
                       description:nil
                         imageName:nil
                          selected:selected

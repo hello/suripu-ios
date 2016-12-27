@@ -20,9 +20,8 @@ static CGFloat const HEMActionButtonDividerHeight = 35.0f;
 static CGFloat const HEMActionButtonDividerVertPadding = 14.0f;
 static CGFloat const HEMActionButtonHeight = 63.0f; // (divider padding * 2) + divider height
 static CGFloat const HEMActionButtonTopPadding = 20.0f;
-static CGFloat const HEMActionViewExtraSpaceForSpring = 20.0f;
 static CGFloat const HEMActionViewAnimationDuration = 0.25f;
-static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
+static CGFloat const HEMActionViewTopViewBorder = 1.0f; // if there's a top view, give border spacing
 
 @interface HEMActionView()
 
@@ -30,6 +29,7 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
 @property (nonatomic, weak)   UIView* titleView;
 @property (nonatomic, weak)   UILabel* messageLabel;
 @property (nonatomic, weak)   UIView* buttonContainer;
+@property (nonatomic, weak)   UIView* topView;
 
 @property (nonatomic, weak, readwrite) UIButton* cancelButton;
 @property (nonatomic, weak, readwrite) UIButton* okButton;
@@ -104,7 +104,7 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
 
 - (void)sizeToFitContent {
     CGRect frame = [self frame];
-    frame.size.height = CGRectGetMaxY([[self buttonContainer] frame]) + HEMActionViewExtraSpaceForSpring;
+    frame.size.height = CGRectGetMaxY([[self buttonContainer] frame]);
     [self setFrame:frame];
 }
 
@@ -224,6 +224,11 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
     }
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self updateOrigin];
+}
+
 - (void)hideOkButton {
     CGFloat okWidth = CGRectGetWidth([[self okButton] frame]);
     
@@ -238,6 +243,18 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
     [self setNeedsDisplay];
 }
 
+- (void)updateOrigin {
+    CGFloat containerHeight = CGRectGetHeight([[self superview] bounds]);
+    CGRect myFrame = [self frame];
+    if ([[self topView] isHidden]) {
+        myFrame.origin.y = containerHeight - CGRectGetHeight(myFrame);
+    } else {
+        CGFloat topViewHeight = CGRectGetHeight([[self topView] bounds]) + HEMActionViewTopViewBorder;
+        myFrame.origin.y = containerHeight - CGRectGetHeight(myFrame) - topViewHeight;
+    }
+    [self setFrame:myFrame];
+}
+
 #pragma mark - Show / Hide
 
 - (void)showInView:(UIView*)view
@@ -245,7 +262,6 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
           animated:(BOOL)animated
         completion:(void(^)(void))completion {
     
-    CGFloat topViewHeight = CGRectGetHeight([topView bounds]);
     CGFloat bHeight = CGRectGetHeight([view bounds]);
     CGFloat bWidth = CGRectGetWidth([view bounds]);
     
@@ -254,6 +270,7 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
     myFrame.size.width = bWidth;
     [self setFrame:myFrame];
     
+    [self setTopView:topView];
     [self setNeedsDisplay];
     
     if (topView) {
@@ -270,9 +287,7 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
           initialSpringVelocity:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         CGRect myFrame = [self frame];
-                         myFrame.origin.y = bHeight - CGRectGetHeight(myFrame) + HEMActionViewExtraSpaceForSpring - topViewHeight - HEMActionViewExtraBottomMargin;
-                         [self setFrame:myFrame];
+                         [self updateOrigin];
                      }
                      completion:^(BOOL finished) {
                          if (completion) completion ();
@@ -290,6 +305,7 @@ static CGFloat const HEMActionViewExtraBottomMargin = 0.0f;
                      }
                      completion:^(BOOL finished) {
                          [self removeFromSuperview];
+                         [self setTopView:nil];
                          if (completion) completion ();
                      }];
 }

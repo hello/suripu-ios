@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 
 - (void)bindWithContainerView:(UIView*)containerView below:(UIView*)topView;
+- (void)bindWithTabBarController:(UITabBarController*)tabBarController;
 
 @end
 

@@ -21,7 +21,6 @@ static CGFloat const HEMActionButtonDividerVertPadding = 14.0f;
 static CGFloat const HEMActionButtonHeight = 63.0f; // (divider padding * 2) + divider height
 static CGFloat const HEMActionButtonTopPadding = 20.0f;
 static CGFloat const HEMActionViewAnimationDuration = 0.25f;
-static CGFloat const HEMActionViewTopViewBorder = 1.0f; // if there's a top view, give border spacing
 
 @interface HEMActionView()
 
@@ -249,7 +248,7 @@ static CGFloat const HEMActionViewTopViewBorder = 1.0f; // if there's a top view
     if ([[self topView] isHidden]) {
         myFrame.origin.y = containerHeight - CGRectGetHeight(myFrame);
     } else {
-        CGFloat topViewHeight = CGRectGetHeight([[self topView] bounds]) + HEMActionViewTopViewBorder;
+        CGFloat topViewHeight = CGRectGetHeight([[self topView] bounds]);
         myFrame.origin.y = containerHeight - CGRectGetHeight(myFrame) - topViewHeight;
     }
     [self setFrame:myFrame];

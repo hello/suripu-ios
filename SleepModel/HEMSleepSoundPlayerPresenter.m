@@ -126,7 +126,11 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 #pragma mark - Monitor Player Status
 
-- (void)startMonitoring {
+- (void)startMonitoringIfVisible {
+    if (![self isViewFullyVisible:[self collectionView]]) {
+        return;
+    }
+    
     switch ([self playerState]) {
         case HEMSleepSoundPlayerStatePlaying:
         case HEMSleepSoundPlayerStateStopped:
@@ -275,7 +279,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 [strongSelf setLoading:NO];
                 [strongSelf configurePlayerStateFromStatus:[[strongSelf soundState] status]];
-                [strongSelf startMonitoring];
+                [strongSelf startMonitoringIfVisible];
                 [[strongSelf collectionView] reloadData];
             }];
         } else {

@@ -92,9 +92,9 @@
     if (view.window == nil) {
         return NO;
     }
-    CGRect windowFrame = view.window.frame;
-    CGRect viewFrame = [view convertRect:[view bounds] toView:view.window];
-    return CGRectContainsRect(windowFrame, viewFrame);
+    CGRect windowFrame = [[view window] frame];
+    CGPoint viewCenter = [view convertPoint:[view center] toView:[view window]];
+    return CGRectContainsPoint(windowFrame, viewCenter);
 }
 
 - (void)dealloc {

@@ -18,6 +18,7 @@
 static NSString* const HEMExpansionLightCategory = @"LIGHT";
 static CGFloat const HEMExpansionDefaultIdealMinTemperature = 15.0f; // in celsius
 static CGFloat const HEMExpansionDefaultIdealMaxTemperature = 19.0f; // in celsius
+static CGFloat const HEMExpansionDefaultIdealLightPercentage = 20.0f;
 
 @interface HEMExpansionService()
 
@@ -229,11 +230,23 @@ static CGFloat const HEMExpansionDefaultIdealMaxTemperature = 19.0f; // in celsi
 
 #pragma mark - Defaults
 
-- (SENExpansionValueRange)defaultIdealRange {
+- (SENExpansionValueRange)defaultIdealRangeForExpansion:(SENExpansion*)expansion {
     SENExpansionValueRange range;
-    range.min = HEMExpansionDefaultIdealMinTemperature;
-    range.max = HEMExpansionDefaultIdealMaxTemperature;
-    range.setpoint = HEMExpansionDefaultIdealMinTemperature;
+    switch ([expansion type]) {
+        case SENExpansionTypeLights:
+            range.min = HEMExpansionDefaultIdealLightPercentage;
+            range.max = HEMExpansionDefaultIdealLightPercentage;
+            range.setpoint = HEMExpansionDefaultIdealLightPercentage;
+            break;
+        case SENExpansionTypeThermostat:
+            range.min = HEMExpansionDefaultIdealMinTemperature;
+            range.max = HEMExpansionDefaultIdealMaxTemperature;
+            range.setpoint = HEMExpansionDefaultIdealMinTemperature;
+            break;
+        default:
+            range = [expansion valueRange];
+            break;
+    }
     return range;
 }
 

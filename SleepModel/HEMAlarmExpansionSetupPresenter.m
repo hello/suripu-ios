@@ -92,7 +92,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
                            separator:(UIView*)separator {
     SENExpansionType type = [[self expansion] type];
     SENExpansionValueRange expansionRange = [[self expansion] valueRange];
-    SENExpansionValueRange defaultRange = [[self expansionService] defaultIdealRange];
+    SENExpansionValueRange defaultRange = [[self expansionService] defaultIdealRangeForExpansion:[self expansion]];
     SENExpansionValueRange selectedRange = [[self alarmExpansion] targetRange];
     
     if (type == SENExpansionTypeThermostat) {

@@ -67,6 +67,11 @@
     [[self presenters] makeObjectsPerformSelector:@selector(didDisappear)];
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [[self presenters] makeObjectsPerformSelector:@selector(willRelayout)];
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [[self presenters] makeObjectsPerformSelector:@selector(didRelayout)];

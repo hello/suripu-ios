@@ -14,6 +14,7 @@
 @property (nonatomic, weak, readonly) UIButton* okButton;
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, assign) NSInteger subtype;
+@property (nonatomic, assign, getter=isShowingTabBar) BOOL showingTabBar;
 
 /**
  * Initialize the instance with a title and message to display

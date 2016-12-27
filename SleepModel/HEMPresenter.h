@@ -96,6 +96,14 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * @discussion
  *
+ * View controllers should call this method upon viewWillLayoutSubviews to let
+ * the presenter know how to process changes before layout is complete
+ */
+- (void)willRelayout;
+
+/*
+ * @discussion
+ *
  * View controllers should call this method upon viewDidLayoutSubviews to let
  * the presenter know how to process changes in layout
  */

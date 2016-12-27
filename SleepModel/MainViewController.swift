@@ -67,8 +67,12 @@ import SenseKit
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print("tabbar index ", self.view.subviews.index(of: self.tabBar) ?? -1)
         self.presenters.forEach{ $0.didRelayout() }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.presenters.forEach{ $0.willRelayout() }
     }
     
     override func didMove(toParentViewController parent: UIViewController?) {

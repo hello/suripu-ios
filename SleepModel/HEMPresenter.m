@@ -79,6 +79,7 @@
 - (void)didDisappear {}
 
 - (void)didRelayout {}
+- (void)willRelayout {}
 
 - (void)didEnterBackground {}
 - (void)didComeBackFromBackground {}

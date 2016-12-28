@@ -41,15 +41,6 @@
     return self;
 }
 
-- (NSArray*)gradientColorsWithColor:(UIColor*)color {
-    return @[(id)[[color colorWithAlphaComponent:0.2f] CGColor],
-             (id)[[color colorWithAlphaComponent:0.8f] CGColor]];
-}
-
-- (UIColor*)lineColorForColor:(UIColor*)color {
-    return [color colorWithAlphaComponent:0.8f];
-}
-
 - (void)animateIn {
     CGFloat const duration = 1.0f;
     

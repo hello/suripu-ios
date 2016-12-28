@@ -10,9 +10,7 @@
 
 @interface LineChartView (HEMSensor)
 
-- (NSArray*)gradientColorsWithColor:(UIColor*)color;
 - (instancetype)initForSensorWithFrame:(CGRect)frame;
-- (UIColor*)lineColorForColor:(UIColor*)color;
 - (void)animateIn;
 - (void)fadeIn;
 

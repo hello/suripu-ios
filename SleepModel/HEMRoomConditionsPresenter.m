@@ -296,22 +296,10 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     SENCondition condition = [sensor condition];
     UIColor* sensorColor = [UIColor colorForCondition:condition];
-    [lineChartView setGridBackgroundColor:sensorColor];
-    
-    NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
-    CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
-    
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithValues:[chartData copy]];
-    [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
-    [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
-    [dataSet setDrawFilledEnabled:YES];
-    [dataSet setDrawValuesEnabled:NO];
-    [dataSet setDrawCirclesEnabled:NO];
-    [dataSet setLabel:nil];
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithData:[chartData copy] color:sensorColor];
     
-    CGGradientRelease(gradient);
-    
+    [lineChartView setGridBackgroundColor:sensorColor];
     [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setNeedsDisplay];
     

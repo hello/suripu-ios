@@ -404,23 +404,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         [yAxis setSpaceBottom:topSpace + bottomSpace];
     }
     
-    NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
-    CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
-    
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithValues:[self chartData]];
-    [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
-    [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
-    [dataSet setDrawFilledEnabled:YES];
-    [dataSet setDrawCirclesEnabled:NO];
-    [dataSet setHighlightColor:sensorColor];
-    [dataSet setDrawHorizontalHighlightIndicatorEnabled:NO];
-    [dataSet setLabel:nil];
-    
-    CGGradientRelease(gradient);
-    
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithData:[[self chartData] copy]
+                                                                  color:sensorColor];
+
     [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setGridBackgroundColor:sensorColor];
-    
     [lineChartView setNeedsDisplay];
     
     return lineChartView;

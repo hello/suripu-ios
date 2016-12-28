@@ -79,10 +79,6 @@ static CGFloat const HEMSensorLimitDifference = 1.0f;
     return [HEMSensorLimit limitWithMin:minLimit max:maxLimit];
 }
 
-- (void)minY:(NSString**)minY maxY:(NSString*)maxY fromCalculatedMinY:(NSNumber*)calculatedMinY calculatedMaxY:(NSNumber*)calculatedMaxY usingFormatter:(HEMSensorValueFormatter*)formatter {
-    
-}
-
 #pragma mark - Animations
 
 - (void)animateIn {

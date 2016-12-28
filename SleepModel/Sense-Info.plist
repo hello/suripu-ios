@@ -35,7 +35,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.1.1</string>
+	<string>2.0.1.2</string>
 	<key>FacebookAppID</key>
 	<string>372438546161587</string>
 	<key>FacebookDisplayName</key>
@@ -132,8 +132,14 @@
 	<string>${SENSE_CRASH_REPORT_TOKEN}</string>
 	<key>SenseEnvironment</key>
 	<string>${SENSE_ENV}</string>
+	<key>SenseKeychainGroup</key>
+	<string>${SENSE_KEYCHAIN_GROUP}</string>
+	<key>SenseLocalStorageGroup</key>
+	<string>${SENSE_LOCAL_STORAGE_GROUP}</string>
 	<key>SensePasswordResetURL</key>
 	<string>${SENSE_PASSWORD_RESET_URL}</string>
+	<key>SenseSettingsGroup</key>
+	<string>${SENSE_SETTINGS_GROUP}</string>
 	<key>SenseZendeskClientId</key>
 	<string>${SENSE_ZENDESK_CLIENT_ID}</string>
 	<key>SenseZendeskToken</key>
@@ -172,12 +178,6 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
-	<key>SenseLocalStorageGroup</key>
-	<string>${SENSE_LOCAL_STORAGE_GROUP}</string>
-	<key>SenseSettingsGroup</key>
-	<string>${SENSE_SETTINGS_GROUP}</string>
-	<key>SenseKeychainGroup</key>
-	<string>${SENSE_KEYCHAIN_GROUP}</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

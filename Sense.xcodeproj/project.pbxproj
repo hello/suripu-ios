@@ -362,6 +362,7 @@
 		BFB0FBF319D482E90056FFEC /* HEMSettingsNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */; };
 		BFB220C31DF636B20025606E /* TabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB220C21DF636B20025606E /* TabPresenter.swift */; };
 		BFB220CC1DF8949A0025606E /* FeedContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB220CB1DF8949A0025606E /* FeedContentPresenter.swift */; };
+		BFB3A5B41E14408700AB47D2 /* SENSensorDataCollection+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB3A5B31E14408700AB47D2 /* SENSensorDataCollection+Filter.swift */; };
 		BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */; };
 		BFB59E101C03A929001BD941 /* HEMTimeZoneService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E0F1C03A929001BD941 /* HEMTimeZoneService.m */; };
 		BFB59E151C03B98E001BD941 /* UITableViewCell+HEMSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E141C03B98E001BD941 /* UITableViewCell+HEMSettings.m */; };
@@ -1153,6 +1154,7 @@
 		BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsNavigationController.m; sourceTree = "<group>"; };
 		BFB220C21DF636B20025606E /* TabPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabPresenter.swift; sourceTree = "<group>"; };
 		BFB220CB1DF8949A0025606E /* FeedContentPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedContentPresenter.swift; sourceTree = "<group>"; };
+		BFB3A5B31E14408700AB47D2 /* SENSensorDataCollection+Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SENSensorDataCollection+Filter.swift"; sourceTree = "<group>"; };
 		BFB59E0A1C03A7CB001BD941 /* HEMTimeZonePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZonePresenter.h; sourceTree = "<group>"; };
 		BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimeZonePresenter.m; sourceTree = "<group>"; };
 		BFB59E0E1C03A929001BD941 /* HEMTimeZoneService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZoneService.h; sourceTree = "<group>"; };
@@ -1981,6 +1983,7 @@
 			isa = PBXGroup;
 			children = (
 				BFFDC1061DD171BE008F001B /* Sensors.xcassets */,
+				BFB3A5B21E14406A00AB47D2 /* Models */,
 				BF6952601C57040B000A8E85 /* Presenters */,
 				BF287D601C9CBEE50052F543 /* Services */,
 				8A7214351A1C12E1008B59C4 /* Utilities */,
@@ -3191,6 +3194,14 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		BFB3A5B21E14406A00AB47D2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BFB3A5B31E14408700AB47D2 /* SENSensorDataCollection+Filter.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		BFB59E0D1C03A8ED001BD941 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -4063,6 +4074,7 @@
 				8A7D800E1A3F952000B0BFD7 /* UIColor+HEMStyle.m in Sources */,
 				BF238DFC1D1DACEB00F6E62C /* HEMShareButton.m in Sources */,
 				8AC49F9C198305F600C2BD63 /* HEMAuthenticationViewController.m in Sources */,
+				BFB3A5B41E14408700AB47D2 /* SENSensorDataCollection+Filter.swift in Sources */,
 				BFCB91C61DB57EA900810CFB /* HEMVoiceSettingsViewController.m in Sources */,
 				BF14E3DB19EF3C3D0006EFEA /* HEMSenseSetupViewController.m in Sources */,
 				BF5BAD021C5FE02100347185 /* HEMTrendsBarGraphCell.m in Sources */,

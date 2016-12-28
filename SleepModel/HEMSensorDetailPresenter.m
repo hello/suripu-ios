@@ -12,6 +12,8 @@
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENSensorStatus.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMSensorDetailPresenter.h"
 #import "HEMSensorService.h"
 #import "HEMMainStoryboard.h"
@@ -212,7 +214,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSArray<NSNumber*>* values = [[strongSelf sensorData] dataPointsForSensorType:[[strongSelf sensor] type]];
+        NSArray<NSNumber*>* values = [[strongSelf sensorData] filteredDataPointsWithType:[[strongSelf sensor] type]];
         NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
         NSUInteger valueCount = [values count];
         
@@ -621,7 +623,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (void)didMoveScrubberTo:(CGPoint)pointInChartView within:(HEMSensorChartContainer *)chartContainer {
-    NSArray<NSNumber*>* values = [[self sensorData] dataPointsForSensorType:[[self sensor] type]];
+    NSArray<NSNumber*>* values = [[self sensorData] filteredDataPointsWithType:[[self sensor] type]];
     ChartDataEntry* entry = [[self chartView] getEntryByTouchPointWithPoint:pointInChartView];
     NSInteger index = [entry x];
     NSNumber* actualValue = index < [values count] ? values[index] : nil;

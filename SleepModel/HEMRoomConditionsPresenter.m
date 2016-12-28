@@ -9,6 +9,8 @@
 #import <Charts/Charts-Swift.h>
 #import "LineChartView+HEMSensor.h"
 
+#import "Sense-Swift.h"
+
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSensorStatus.h>
 
@@ -252,7 +254,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSArray<SENSensor*>* sensors = [[strongSelf sensorStatus] sensors];
         for (SENSensor* sensor in sensors) {
-            NSArray<NSNumber*>* values = [[strongSelf sensorData] dataPointsForSensorType:[sensor type]];
+            NSArray<NSNumber*>* values = [[strongSelf sensorData] filteredDataPointsWithType:[sensor type]];
             NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
             if ([values count] == [timestamps count]) {
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];

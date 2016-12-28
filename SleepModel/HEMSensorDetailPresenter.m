@@ -498,8 +498,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             HEMSensorLimit* limit = [chartView limitFromCalculatedMinY:@([self chartMinValue])
                                                         calculatedMaxY:@([self chartMaxValue])
                                                              formatter:[self formatter]];
-            
-            
+
             [chartContainer setChartView:chartView];
             [[chartContainer topLimitLabel] setText:[limit max]];
             [[chartContainer botLimitLabel] setText:[limit min]];

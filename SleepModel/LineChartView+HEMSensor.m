@@ -9,6 +9,8 @@
 #import "LineChartView+HEMSensor.h"
 #import "HEMSensorValueFormatter.h"
 
+static CGFloat const HEMSensorLimitDifference = 1.0f;
+
 @implementation HEMSensorLimit
 
 + (HEMSensorLimit*)limitWithMin:(NSString*)min max:(NSString*)max {
@@ -56,22 +58,17 @@
 - (HEMSensorLimit*)limitFromCalculatedMinY:(NSNumber*)calculatedMinY
                             calculatedMaxY:(NSNumber*)calculatedMaxY
                                  formatter:(HEMSensorValueFormatter*)formatter {
-    NSNumber* chartMin = nil, *chartMax = nil;
-    CGFloat minValue = [self chartYMin], maxValue = [self chartYMax];
-    
-    if (!(minValue == -1.0f && maxValue == 1.0f)) {
-        chartMax = calculatedMaxY;
-        chartMin = calculatedMinY;
-    } else {
-        chartMin = @(minValue);
-        chartMax = @(maxValue);
+    NSNumber* chartMin = calculatedMinY, *chartMax = calculatedMaxY;
+    if ([chartMin isEqual:chartMax]) {
+        // use view values
+        chartMin = @([self chartYMin]);
+        chartMax = @([self chartYMax]);
     }
     
     [formatter setDecimalPlaces:NSNotFound]; // set it back to default
     [formatter setIncludeUnitSymbol:YES];
     
     NSString* maxLimit = [formatter stringFromSensorValue:chartMax];
-    // conditionally show a decimal point for min value
     NSString* minLimit = [formatter stringFromSensorValue:chartMin];
     if ([maxLimit isEqualToString:minLimit]) {
         [formatter setDecimalPlaces:1];

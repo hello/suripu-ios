@@ -7,7 +7,8 @@
 #import "SENAPIClient.h"
 
 NSString* const SENAuthorizationServiceKeychainService = @"is.hello.Sense";
-NSString* const SENAuthorizationServiceKeychainGroup = @"MSG86J7GNF.is.hello.Sense";
+NSString* const SENAuthorizationServiceKeychainBundleKey = @"SenseKeychainGroup";
+NSString* const SENAuthorizationServiceKeychainGroupId = @"MSG86J7GNF.is.hello.Sense";
 NSString* const SENAuthorizationServiceDidAuthorizeNotification = @"SENAuthorizationServiceDidAuthorize";
 NSString* const SENAuthorizationServiceDidDeauthorizeNotification = @"SENAuthorizationServiceDidDeauthorize";
 NSString* const SENAuthorizationServiceDidReauthorizeNotification = @"SENAuthorizationServiceDidReauthorize";
@@ -27,8 +28,11 @@ static NSString* const SENAuthorizationServiceContentType = @"application/x-www-
     static FXKeychain* keychain = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        keychain = [[FXKeychain alloc] initWithService:SENAuthorizationServiceKeychainService
-                                           accessGroup:SENAuthorizationServiceKeychainGroup];
+        NSString* groupId = [[NSBundle mainBundle] objectForInfoDictionaryKey:SENAuthorizationServiceKeychainBundleKey];
+        if (!groupId) {
+            groupId = SENAuthorizationServiceKeychainGroupId;
+        }
+        keychain = [[FXKeychain alloc] initWithService:SENAuthorizationServiceKeychainService accessGroup:groupId];
     });
     return keychain;
 }

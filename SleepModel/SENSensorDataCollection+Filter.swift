@@ -11,10 +11,12 @@ import SenseKit
 
 extension SENSensorDataCollection {
     
+    static let sentinel = -1
+    
     @objc func filteredDataPoints(type: SENSensorType) -> [NSNumber]? {
         var points = self.dataPoints(for: type)
         let lastPoint = points?.last
-        if lastPoint?.intValue == -1 {
+        if lastPoint?.intValue == SENSensorDataCollection.sentinel {
             points?.removeLast()
         }
         return points

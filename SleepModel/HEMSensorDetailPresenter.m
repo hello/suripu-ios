@@ -494,23 +494,15 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         // must check whether chart data is empty or not before using chartview
         // min / max values, otherwise chart will cause a crash
         if ([[self chartData] count] > 0) {
-            [chartContainer setChartView:chartView];
-            // update limit lines
-            NSNumber* minValue = nil;
-            NSNumber* maxValue = @([self chartMaxValue]);
-            CGFloat chartMin = [chartView chartYMin];
-            CGFloat chartMax = [chartView chartYMax];
-            if (chartMin == -1.0f && chartMax == 1.0f) {
-                maxValue = @(chartMax);
-            } else if ([self chartMinValue] != [self chartMaxValue] && [self chartMinValue] >= 0.0f) {
-                chartMin = [self chartMinValue];
-            }
             
-            minValue = @(chartMin);
-            NSString* minText = [[self formatter] stringFromSensorValue:minValue];
-            NSString* maxText = [[self formatter] stringFromSensorValue:maxValue];
-            [[chartContainer topLimitLabel] setText:maxText];
-            [[chartContainer botLimitLabel] setText:minText];
+            HEMSensorLimit* limit = [chartView limitFromCalculatedMinY:@([self chartMinValue])
+                                                        calculatedMaxY:@([self chartMaxValue])
+                                                             formatter:[self formatter]];
+            
+            
+            [chartContainer setChartView:chartView];
+            [[chartContainer topLimitLabel] setText:[limit max]];
+            [[chartContainer botLimitLabel] setText:[limit min]];
             
             if (![self chartLoaded]) {
                 [chartView animateIn];

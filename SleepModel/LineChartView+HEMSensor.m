@@ -7,6 +7,18 @@
 //
 
 #import "LineChartView+HEMSensor.h"
+#import "HEMSensorValueFormatter.h"
+
+@implementation HEMSensorLimit
+
++ (HEMSensorLimit*)limitWithMin:(NSString*)min max:(NSString*)max {
+    HEMSensorLimit* limit = [HEMSensorLimit new];
+    [limit setMin:min];
+    [limit setMax:max];
+    return limit;
+}
+
+@end
 
 @implementation LineChartView (HEMSensor)
 
@@ -40,6 +52,41 @@
     }
     return self;
 }
+
+- (HEMSensorLimit*)limitFromCalculatedMinY:(NSNumber*)calculatedMinY
+                            calculatedMaxY:(NSNumber*)calculatedMaxY
+                                 formatter:(HEMSensorValueFormatter*)formatter {
+    NSNumber* chartMin = nil, *chartMax = nil;
+    CGFloat minValue = [self chartYMin], maxValue = [self chartYMax];
+    
+    if (!(minValue == -1.0f && maxValue == 1.0f)) {
+        chartMax = calculatedMaxY;
+        chartMin = calculatedMinY;
+    } else {
+        chartMin = @(minValue);
+        chartMax = @(maxValue);
+    }
+    
+    [formatter setDecimalPlaces:NSNotFound]; // set it back to default
+    [formatter setIncludeUnitSymbol:YES];
+    
+    NSString* maxLimit = [formatter stringFromSensorValue:chartMax];
+    // conditionally show a decimal point for min value
+    NSString* minLimit = [formatter stringFromSensorValue:chartMin];
+    if ([maxLimit isEqualToString:minLimit]) {
+        [formatter setDecimalPlaces:1];
+        minLimit = [formatter stringFromSensorValue:chartMin];
+        maxLimit = [formatter stringFromSensorValue:chartMax];
+    }
+    
+    return [HEMSensorLimit limitWithMin:minLimit max:maxLimit];
+}
+
+- (void)minY:(NSString**)minY maxY:(NSString*)maxY fromCalculatedMinY:(NSNumber*)calculatedMinY calculatedMaxY:(NSNumber*)calculatedMaxY usingFormatter:(HEMSensorValueFormatter*)formatter {
+    
+}
+
+#pragma mark - Animations
 
 - (void)animateIn {
     CGFloat const duration = 1.0f;

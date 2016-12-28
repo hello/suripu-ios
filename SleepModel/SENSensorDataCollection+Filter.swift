@@ -11,7 +11,7 @@ import SenseKit
 
 extension SENSensorDataCollection {
     
-    @objc func filteredDataPoints(type: SENSensorType) -> Array<NSNumber>? {
+    @objc func filteredDataPoints(type: SENSensorType) -> [NSNumber]? {
         var points = self.dataPoints(for: type)
         let lastPoint = points?.last
         if lastPoint?.intValue == -1 {

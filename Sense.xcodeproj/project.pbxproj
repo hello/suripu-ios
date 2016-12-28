@@ -4605,7 +4605,10 @@
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORT_TOKEN = 38c0d427c4ffe5780a3e75d6cfe45ff7;
 				SENSE_ENV = Development;
+				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.sensetest;
+				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sensetest.data;
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
+				SENSE_SETTINGS_GROUP = group.is.hello.sensetest.settings;
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
 				SENSE_ZENDESK_TOKEN = 7bb3a86905b08e1083752af7b1d4a430afb1a051b6dae18a;
@@ -4663,7 +4666,10 @@
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 				SENSE_CRASH_REPORT_TOKEN = 38c0d427c4ffe5780a3e75d6cfe45ff7;
 				SENSE_ENV = Store;
+				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.Sense;
+				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sense.data;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
+				SENSE_SETTINGS_GROUP = group.is.hello.sense.settings;
 				SENSE_SUPPORT_OPTIONS = NO;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
 				SENSE_ZENDESK_TOKEN = 7bb3a86905b08e1083752af7b1d4a430afb1a051b6dae18a;
@@ -4686,6 +4692,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_ENTITLEMENTS = Extensions/RoomConditions/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = MSG86J7GNF;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4727,7 +4734,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
-				PROVISIONING_PROFILE = "a3c7ce35-da5e-45ec-9055-112fc28fc47f";
+				PROVISIONING_PROFILE = "30599a1f-438f-4a80-b60a-02d6be6e6a1b";
 				PROVISIONING_PROFILE_SPECIFIER = "Sense Dev";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
@@ -5125,7 +5132,10 @@
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 				SENSE_CRASH_REPORT_TOKEN = 38c0d427c4ffe5780a3e75d6cfe45ff7;
 				SENSE_ENV = Beta;
+				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.Sense;
+				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sense.data;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
+				SENSE_SETTINGS_GROUP = group.is.hello.sense.settings;
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
 				SENSE_ZENDESK_TOKEN = 7bb3a86905b08e1083752af7b1d4a430afb1a051b6dae18a;
@@ -5365,7 +5375,10 @@
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORT_TOKEN = 38c0d427c4ffe5780a3e75d6cfe45ff7;
 				SENSE_ENV = Development;
+				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.sensetest;
+				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sensetest.data;
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
+				SENSE_SETTINGS_GROUP = group.is.hello.sensetest.settings;
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
 				SENSE_ZENDESK_TOKEN = 7bb3a86905b08e1083752af7b1d4a430afb1a051b6dae18a;
@@ -5428,8 +5441,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PILL_FIRMWARE_URL = "https://s3.amazonaws.com/hello-firmware/kodobannin/mobile/pill.bin";
 				PRODUCT_BUNDLE_IDENTIFIER = "${SENSE_APP_ID}";
-				PROVISIONING_PROFILE = "dbc06e67-3fef-4799-9471-9515f4478771";
-				PROVISIONING_PROFILE_SPECIFIER = "XC Ad Hoc: is.hello.sensetest";
+				PROVISIONING_PROFILE = "ae21e632-46cd-439e-af16-a5fd9f24f268";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: is.hello.sensetest";
 				SENSE_ANALYTICS_TOKEN = AnMchQr1VXQhPKjeYuoEEQ7pPRlow9SO;
 				SENSE_API_URL = "https://dev-api.hello.is";
 				SWIFT_OBJC_BRIDGING_HEADER = "SleepModel/Sense-Bridging-Header.h";

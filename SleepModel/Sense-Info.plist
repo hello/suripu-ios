@@ -172,6 +172,12 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>SenseLocalStorageGroup</key>
+	<string>${SENSE_LOCAL_STORAGE_GROUP}</string>
+	<key>SenseSettingsGroup</key>
+	<string>${SENSE_SETTINGS_GROUP}</string>
+	<key>SenseKeychainGroup</key>
+	<string>${SENSE_KEYCHAIN_GROUP}</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -7,7 +7,9 @@
 #import "SENLocalPreferences.h"
 #import "SENAuthorizationService.h"
 
-// need to keep the value as is since it has been used already
+NSString* const SENLocalPrefAppGroupBundleKey = @"SenseSettingsGroup";
+// need to keep the value as is since it has been used already, but we'll keep
+// this as the default for now
 NSString* const SENLocalPrefAppGroup = @"group.is.hello.sense.settings";
 NSString* const SENLocalPrefDidChangeNotification = @"SENLocalPrefDidChangeNotification";
 
@@ -26,7 +28,11 @@ static NSString* const SENLocalPreferenceUserKey = @"$user";
     static SENLocalPreferences* preferences = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        preferences = [[super allocWithZone:NULL] initWithGroup:SENLocalPrefAppGroup];
+        NSString* groupId = [[NSBundle mainBundle] objectForInfoDictionaryKey:SENLocalPrefAppGroupBundleKey];
+        if (!groupId) {
+            groupId = SENLocalPrefAppGroup;
+        }
+        preferences = [[super allocWithZone:NULL] initWithGroup:groupId];
     });
     return preferences;
 }

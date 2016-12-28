@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.1.2
+
+New:
+
+* Create new groups for dev app vs beta / store app, which should allow use of each app independently
+* Set default brightness percentage for Hue in alarm
+* Set default thermostat ranges for Nest in alarm
+* Animate / relayout system alerts based on bottom bar visibility
+
 ## 2.0.1.1
 
 New:

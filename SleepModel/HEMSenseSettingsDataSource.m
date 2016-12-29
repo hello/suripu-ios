@@ -14,10 +14,10 @@
 
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSDate+HEMRelative.h"
-#import "UIFont+HEMStyle.h"
 
 #import "HEMSenseSettingsDataSource.h"
 #import "HEMDeviceWarning.h"
+#import "HEMStyle.h"
 
 @interface HEMSenseSettingsDataSource()
 
@@ -204,6 +204,12 @@
 
 #pragma mark - Warnings
 
+- (NSDictionary*)attributesForWarningMessages {
+    return @{NSFontAttributeName : [UIFont body],
+             NSForegroundColorAttributeName: [UIColor grey5],
+             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+}
+
 - (nonnull NSOrderedSet*)deviceWarnings {
     return [self warnings];
 }
@@ -217,7 +223,7 @@
     
     NSMutableAttributedString* attrWarning =
     [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont body]}
+    [attrWarning addAttributes:[self attributesForWarningMessages]
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -225,7 +231,7 @@
 
 - (NSAttributedString*)attributedWarningForMessage:(NSString*)message {
     NSMutableAttributedString* attrWarning = [[NSMutableAttributedString alloc] initWithString:message];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont body]}
+    [attrWarning addAttributes:[self attributesForWarningMessages]
                          range:NSMakeRange(0, [attrWarning length])];
     return attrWarning;
 }

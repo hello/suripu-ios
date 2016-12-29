@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.1.3
+
+New:
+
+* Voice tab analytics
+* Round out graphs between points
+* Update graph limit line logic to force them to make more sense
+
+Fixes:
+
+* Fixed scrollable content visibility logic, which would cause multiple appearance updates
+* Prevent drastic graph scale changes by removing last value if sentinel value
+
 ## 2.0.1.2
 
 New:

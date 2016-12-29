@@ -146,12 +146,19 @@ class SlideContentPresenter: HEMPresenter {
     }
     
     fileprivate func updateContentVisibility() {
-        let scrollFrame = self.contentScrollView.bounds
+        let scrollFrame = self.contentScrollView.frame
+        let scrollOffset = self.contentScrollView.contentOffset
+        let visibleRect = CGRect(x: scrollOffset.x,
+                                 y: scrollOffset.y,
+                                 width: scrollFrame.size.width,
+                                 height: scrollFrame.size.height)
+        
+        let window = self.contentScrollView.window
         for (index, view) in self.contentViews.enumerated() {
             let wasVisible = self.contentVisibility[index]
-            let intersects = scrollFrame.intersects(view.frame)
+            let inFrame = visibleRect.contains(view.frame)
             let inScrollView = self.contentScrollView.subviews.contains(view)
-            let visibleNow = intersects && inScrollView
+            let visibleNow = window != nil && inFrame && inScrollView
             self.contentVisibility[index] = visibleNow
             
             if (wasVisible != visibleNow) {

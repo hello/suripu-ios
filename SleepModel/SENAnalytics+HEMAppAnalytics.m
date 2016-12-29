@@ -272,10 +272,12 @@ NSString* const HEMAnalyticsEventSenseDFU = @"Sense DFU";
 NSString* const HEMAnalyticsEventSenseDFUBegin = @"Sense DFU begin";
 NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
 
-// voice tutorial
+// voice
 NSString* const HEMAnalyticsEventVoiceTutorial = @"Voice Tutorial";
 NSString* const HEMAnalyticsEventVoiceResponse = @"Voice Command";
 NSString* const HEMAnalyticsEventVoiceTutorialSkip = @"Voice Tutorial Skip";
+NSString* const HEMAnalyticsEventVoiceTab = @"Voice";
+NSString* const HEMAnalyticsEventVoiceExamples = @"Voice Examples";
 
 // upgrade path
 NSString* const HEMAnalyticsEventUpgradePrefix = @"Upgrade";

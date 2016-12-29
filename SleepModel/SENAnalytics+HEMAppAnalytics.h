@@ -256,10 +256,12 @@ extern NSString* const HEMAnalyticsEventSenseDFU;
 extern NSString* const HEMAnalyticsEventSenseDFUBegin;
 extern NSString* const HEMAnalyticsEventSenseDFUEnd;
 
-// voice tutorial
+// voice
 extern NSString* const HEMAnalyticsEventVoiceTutorial;
 extern NSString* const HEMAnalyticsEventVoiceResponse;
 extern NSString* const HEMAnalyticsEventVoiceTutorialSkip;
+extern NSString* const HEMAnalyticsEventVoiceTab;
+extern NSString* const HEMAnalyticsEventVoiceExamples;
 
 // upgrade path
 extern NSString* const HEMAnalyticsEventUpgradePrefix;

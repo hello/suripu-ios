@@ -36,6 +36,11 @@
     [self configurePresenter];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SENAnalytics track:HEMAnalyticsEventVoiceTab];
+}
+
 - (void)configurePresenter {
     if (![self voiceService]) {
         [self setVoiceService:[HEMVoiceService new]];

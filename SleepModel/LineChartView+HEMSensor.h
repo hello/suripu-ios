@@ -8,11 +8,23 @@
 
 #import <Charts/Charts-Swift.h>
 
+@class HEMSensorValueFormatter;
+
+@interface HEMSensorLimit : NSObject
+
+@property(nonatomic, copy) NSString* min;
+@property(nonatomic, copy) NSString* max;
+
++ (HEMSensorLimit*)limitWithMin:(NSString*)min max:(NSString*)max;
+
+@end
+
 @interface LineChartView (HEMSensor)
 
-- (NSArray*)gradientColorsWithColor:(UIColor*)color;
 - (instancetype)initForSensorWithFrame:(CGRect)frame;
-- (UIColor*)lineColorForColor:(UIColor*)color;
+- (HEMSensorLimit*)limitFromCalculatedMinY:(NSNumber*)calculatedMinY
+                            calculatedMaxY:(NSNumber*)calculatedMaxY
+                                 formatter:(HEMSensorValueFormatter*)formatter;
 - (void)animateIn;
 - (void)fadeIn;
 

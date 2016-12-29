@@ -9,6 +9,8 @@
 #import <Charts/Charts-Swift.h>
 #import "LineChartView+HEMSensor.h"
 
+#import "Sense-Swift.h"
+
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSensorStatus.h>
 
@@ -252,7 +254,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSArray<SENSensor*>* sensors = [[strongSelf sensorStatus] sensors];
         for (SENSensor* sensor in sensors) {
-            NSArray<NSNumber*>* values = [[strongSelf sensorData] dataPointsForSensorType:[sensor type]];
+            NSArray<NSNumber*>* values = [[strongSelf sensorData] filteredDataPointsWithType:[sensor type]];
             NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
             if ([values count] == [timestamps count]) {
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
@@ -294,22 +296,10 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     
     SENCondition condition = [sensor condition];
     UIColor* sensorColor = [UIColor colorForCondition:condition];
-    [lineChartView setGridBackgroundColor:sensorColor];
-    
-    NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
-    CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
-    
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithValues:[chartData copy]];
-    [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
-    [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
-    [dataSet setDrawFilledEnabled:YES];
-    [dataSet setDrawValuesEnabled:NO];
-    [dataSet setDrawCirclesEnabled:NO];
-    [dataSet setLabel:nil];
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithData:[chartData copy] color:sensorColor];
     
-    CGGradientRelease(gradient);
-    
+    [lineChartView setGridBackgroundColor:sensorColor];
     [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setNeedsDisplay];
     
@@ -609,45 +599,21 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
                                                  inCell:sensorCell
                                                 animate:&animate];
     
+    NSNumber* calculatedChartMax = [self chartMaxBySensor][@([sensor type])];
+    NSNumber* calculatedChartMin = [self chartMinBySensor][@([sensor type])];
+    HEMSensorLimit* limit = [chartView limitFromCalculatedMinY:calculatedChartMin
+                                                calculatedMaxY:calculatedChartMax
+                                                     formatter:[self formatter]];
+    
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
     [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
     
-    // TODO: see if we can reuse this logic between room conditions and sensor
-    // detail
-    NSNumber* chartMax = nil, *chartMin = nil;
-    NSNumber* calculatedChartMax = [self chartMaxBySensor][@([sensor type])];
-    NSNumber* calculatedChartMin = [self chartMinBySensor][@([sensor type])];
-    CGFloat minValue = [chartView chartYMin];
-    CGFloat maxValue = [chartView chartYMax];
-    // a hack until we can properly line up the chart to the limit lines.  This
-    // case identifies when values in the chart are all 0s.
-    
-    if (!(minValue == -1.0f && maxValue == 1.0f)) {
-        chartMax = calculatedChartMax;
-        chartMin = calculatedChartMin;
-    } else {
-        chartMin = @(minValue);
-        chartMax = @(maxValue);
-    }
-    
-    [[self formatter] setDecimalPlaces:NSNotFound]; // set it back to default
-    [[self formatter] setIncludeUnitSymbol:YES];
-    
-    NSString* topLimitValue = [[self formatter] stringFromSensorValue:chartMax];
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
     [chartContainer setUserInteractionEnabled:NO];
     [chartContainer setScrubberEnable:NO];
-    [[chartContainer topLimitLabel] setText:topLimitValue];
-    
-    // conditionally show a decimal point for min value
-    NSString* botLimitValue = [[self formatter] stringFromSensorValue:chartMin];
-    if ([topLimitValue isEqualToString:botLimitValue]) {
-        [[self formatter] setDecimalPlaces:1];
-        botLimitValue = [[self formatter] stringFromSensorValue:chartMin];
-    }
-    
-    [[chartContainer botLimitLabel] setText:botLimitValue];
+    [[chartContainer topLimitLabel] setText:[limit max]];
+    [[chartContainer botLimitLabel] setText:[limit min]];
     
     if (animate) {
         [chartView animateIn];

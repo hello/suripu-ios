@@ -65,7 +65,6 @@ static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
     [memberView setFrame:memberFrame];
     
     [[self sensorContentView] addSubview:memberView];
-    DDLogVerbose(@"added content view %@", name);
     
     return memberView;
 }

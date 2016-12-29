@@ -90,9 +90,6 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 }
 
 - (void)configureContent {
-    UIImage* senseImage = [UIImage imageNamed:@"extensionSenseIcon"];
-    senseImage = [senseImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
     if ([[self extensionContext] respondsToSelector:@selector(setWidgetLargestAvailableDisplayMode:)]) {
         // iOS 10
         [self setDefaultTextColor:[UIColor grey5]];

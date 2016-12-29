@@ -9,8 +9,6 @@
 #import "LineChartView+HEMSensor.h"
 #import "HEMSensorValueFormatter.h"
 
-static CGFloat const HEMSensorLimitDifference = 1.0f;
-
 @implementation HEMSensorLimit
 
 + (HEMSensorLimit*)limitWithMin:(NSString*)min max:(NSString*)max {

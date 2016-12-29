@@ -278,7 +278,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
             [[self exactTimeFormatter] setDateFormat:@"EEEE - HH:mm"];
         } else {
-            [[self exactTimeFormatter] setDateFormat:@"EEEE - hh:mm a"];
+            [[self exactTimeFormatter] setDateFormat:@"EEEE - h:mm a"];
         }
     } else {
         if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
@@ -286,7 +286,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             [[self exactTimeFormatter] setDateFormat:@"HH:mm"];
         } else {
             [[self xAxisLabelFormatter] setDateFormat:@"ha"];
-            [[self exactTimeFormatter] setDateFormat:@"hh:mm a"];
+            [[self exactTimeFormatter] setDateFormat:@"h:mm a"];
         }
     }
 }

@@ -51,7 +51,7 @@ static NSString* const HEMShareContentSubjectKey = @"share.email.subject.";
 - (NSString*)activityViewController:(UIActivityViewController *)activityViewController subjectForActivityType:(NSString *)activityType {
     NSString* key = [HEMShareContentSubjectKey stringByAppendingString:[self type]];
     NSString* text = NSLocalizedString(key, nil);
-    return [text isEqualToString:key] ? nil : text;
+    return [text isEqualToString:key] ? @"" : text;
 }
 
 - (UIImage *)activityViewController:(UIActivityViewController *)activityViewController

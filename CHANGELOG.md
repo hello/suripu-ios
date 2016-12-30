@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.1.4
+
+New:
+
+* Improved load times of various main screens by removing references to custom fonts
+
+Fixes:
+
+* Updated sense and pill settings font + color
+* Fixed an issue that could cause the application to crash while in expansion oauth view
+* Fixed an issue that could cause the application to crash when updating gender for an account
+* Removed leading 0 in 12-hour format when scrubbing through sensor detail
+
 ## 2.0.1.3
 
 New:

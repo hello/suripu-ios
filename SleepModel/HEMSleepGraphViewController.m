@@ -729,8 +729,6 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)didTapOnHistoryButton:(UIButton *)sender {
-    [[self handHoldingPresenter] didZoomOutOnTimeline];
-    
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
     self.historyViewController.transitioningDelegate = self.zoomAnimationDelegate;

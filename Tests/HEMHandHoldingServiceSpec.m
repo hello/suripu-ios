@@ -20,7 +20,6 @@
 
 - (BOOL)shouldShowInsightTap;
 - (BOOL)shouldShowTimelineSwipe;
-- (BOOL)shouldShowTimelineZoom;
 - (BOOL)isFirstAppUsage:(NSString*)usageName atLeast:(NSInteger)days;
 - (BOOL)isComplete:(HEMHandHolding)tutorial;
 
@@ -212,66 +211,6 @@ describe(@"HEMHandHoldingService", ^{
             it(@"should return NO", ^{
                 BOOL show = [service shouldShowTimelineSwipe];
                 [[@(show) should] beNo];
-            });
-            
-        });
-        
-    });
-    
-    describe(@"-shouldShowTimelineZoom", ^{
-        
-        context(@"not enough timelines shown yet", ^{
-            
-            __block HEMHandHoldingService* service = nil;
-            __block HEMAppUsage* fakeUsage = nil;
-            
-            beforeEach(^{
-                service = [HEMHandHoldingService new];
-                
-                fakeUsage = [HEMAppUsage new];
-                [fakeUsage stub:@selector(usageWithin:) andReturn:[KWValue valueWithInteger:1]];
-                
-                [HEMAppUsage stub:@selector(appUsageForIdentifier:) andReturn:fakeUsage];
-            });
-            
-            afterEach(^{
-                [fakeUsage clearStubs];
-                service = nil;
-                fakeUsage = nil;
-                [HEMAppUsage clearStubs];
-            });
-            
-            it(@"should return NO", ^{
-                BOOL show = [service shouldShowTimelineZoom];
-                [[@(show) should] beNo];
-            });
-            
-        });
-        
-        context(@"seen tons of timeslines", ^{
-            
-            __block HEMHandHoldingService* service = nil;
-            __block HEMAppUsage* fakeUsage = nil;
-            
-            beforeEach(^{
-                service = [HEMHandHoldingService new];
-                
-                fakeUsage = [HEMAppUsage new];
-                [fakeUsage stub:@selector(usageWithin:) andReturn:[KWValue valueWithInteger:1000]];
-                
-                [HEMAppUsage stub:@selector(appUsageForIdentifier:) andReturn:fakeUsage];
-            });
-            
-            afterEach(^{
-                [fakeUsage clearStubs];
-                service = nil;
-                fakeUsage = nil;
-                [HEMAppUsage clearStubs];
-            });
-            
-            it(@"should return YES", ^{
-                BOOL show = [service shouldShowTimelineZoom];
-                [[@(show) should] beYes];
             });
             
         });

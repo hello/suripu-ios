@@ -350,6 +350,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     if (!segment)
         return cell;
+    
+    // must configure time labels for cell before taking any action, otherwise
+    // formatter is incorrectly configured
+    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
+    
     NSUInteger sleepDepth = segment.sleepDepth;
     if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
         id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
@@ -378,7 +383,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     } else {
         previousColor = [UIColor clearColor];
     }
-    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
+    
     [cell setSegmentRatio:sleepDepth / HEMTimelineMaxSleepDepth
             withFillColor:[UIColor colorForSleepState:segment.sleepState]
             previousRatio:previousRatio

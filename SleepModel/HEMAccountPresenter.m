@@ -124,6 +124,10 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
     return self;
 }
 
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem {
+    [navItem setTitle:NSLocalizedString(@"settings.account", nil)];
+}
+
 - (void)bindWithTableView:(UITableView*)tableView {
     UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES
                                                                    bottomBorder:NO];
@@ -384,6 +388,20 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 
 #pragma mark - TableView Helpers
 
+- (UIView*)accessoryView {
+    UIImage* accessoryImage = [UIImage imageNamed:@"accessory"];
+    accessoryImage = [accessoryImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+    CGRect accessoryFrame = CGRectZero;
+    accessoryFrame.size = accessoryImage.size;
+    
+    UIImageView* accessoryView = [[UIImageView alloc] initWithImage:accessoryImage];
+    [accessoryView setFrame:accessoryFrame];
+    [accessoryView setTintColor:[UIColor grey4]];
+    
+    return accessoryView;
+}
+
 - (void)accountIcon:(UIImage**)icon title:(NSString**)title atRow:(NSInteger)row {
     SENAccount* account = [[self accountService] account];
     switch (row) {
@@ -636,43 +654,36 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
-    
-    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    [[cell detailTextLabel] setText:nil];
-    
-    [cell setAccessoryType:UITableViewCellAccessoryNone];
-    [cell setAccessoryView:nil];
-    
+    UIColor* textColor = [UIColor settingsTextColor];
     NSInteger row = [indexPath row];
     NSInteger rows = 1;
     UIImage* icon = nil;
     NSString* title = nil;
     NSString* value = nil;
     BOOL booleanValue = NO;
+    BOOL showAccessory = NO;
     
     switch ([indexPath section]) {
         default:
         case HEMAccountSectionAccount: {
             [self accountIcon:&icon title:&title atRow:row];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            showAccessory = YES;
             rows = HEMAccountRowCount;
             break;
         }
         case HEMAccountSectionDemographics:
             [self demographicsIcon:&icon title:&title value:&value atRow:row];
             rows = HEMDemographicsRowCount;
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            showAccessory = YES;
             break;
         case HEMAccountSectionUnits:
             [self unitsIcon:&icon title:&title atRow:row];
             rows = HEMUnitsRowCount;
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            showAccessory = YES;
             break;
         case HEMAccountSectionPreferences: {
             [self preferencesIcon:&icon title:&title enabled:&booleanValue atRow:row];
+            showAccessory = YES;
             UISwitch* control = [self preferenceSwitch:booleanValue forRow:row];
             [cell setAccessoryView:control];
             rows = HEMPreferencesRowCount;
@@ -680,11 +691,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case HEMAccountSectionSignOut:
             [self signOutIcon:&icon title:&title];
-            [[cell textLabel] setTextColor:[UIColor redColor]];
+            textColor = [UIColor redColor];
             rows = HEMSignOutRowCount;
             break;
     }
     
+    if (![cell accessoryView]) {
+        [cell setAccessoryView:[self accessoryView]];
+    }
+    
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setTextColor:textColor];
+    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    [[cell detailTextLabel] setText:nil];
+    [[cell accessoryView] setHidden:!showAccessory];
     [[cell textLabel] setText:title];
     [[cell imageView] setImage:icon];
     [[cell detailTextLabel] setText:value];

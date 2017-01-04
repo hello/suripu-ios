@@ -319,6 +319,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     HEMSettingsTableViewCell *settingsCell = (HEMSettingsTableViewCell *)cell;
     [[settingsCell titleLabel] setText:[self titleForRowAtIndexPath:indexPath]];
     
+    if ([[settingsCell accessory] isKindOfClass:[UIImageView class]]) {
+        UIImageView* accessory = (id) [settingsCell accessory];
+        UIImage* accessoryImage = [[accessory image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [accessory setImage:accessoryImage];
+        [accessory setTintColor:[UIColor grey4]];
+    }
+    
     if (section == HEMSettingsSectionAccount
         && [rowType unsignedIntegerValue] == HEMSettingsAccountRowProfile) {
         BOOL show = [self showIndicatorForCrumb:HEMBreadcrumbAccount];

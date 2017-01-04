@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.1.5
+
+New:
+
+* Unmute from system alert
+* Analytics for unmute system alerts
+
+Fixes:
+
+* Fixed issue that would cause Timeline events to not show the correct timestamp if the phone's timezone does not match Sense / account timezone
+
 ## 2.0.1.4
 
 New:

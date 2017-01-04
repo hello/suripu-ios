@@ -216,6 +216,10 @@ NSString* const HEMAnalyticsEventSystemAlert = @"System Alert";
 NSString* const HEMAnalyticsEventSystemAlertAction = @"System Alert Action";
 NSString* const HEMAnalyticsEventSysAlertActionLater = @"later";
 NSString* const HEMAnalyticsEventSysAlertActionNow = @"now";
+NSString* const HEMAnalyticsEventSysAlertPropUnknown = @"unknown";
+NSString* const HEMAnalyticsEventSysAlertActionUnmute = @"unmute";
+NSString* const HEMAnalyticsEventSysAlertPropMuted = @"sense muted";
+NSString* const HEMAnalyticsEventSysAlertPropExpUnreachable = @"expansion unreachable";
 
 // app review
 NSString* const HEMAnalyticsEventAppReviewShown = @"App review shown";

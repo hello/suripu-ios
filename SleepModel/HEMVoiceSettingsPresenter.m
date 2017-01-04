@@ -48,6 +48,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicatorView;
 @property (nonatomic, strong) NSError* dataError;
 @property (nonatomic, strong) SENSenseVoiceSettings* voiceSettings;
+@property (nonatomic, assign, getter=isUpdating) BOOL updating;
 
 @end
 
@@ -84,6 +85,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     [tableView setTableFooterView:footerView];
     [tableView setHidden:YES];
     [self setTableView:tableView];
+    [self listenForOutsideUpdates];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -113,6 +115,29 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 - (void)didAppear {
     [super didAppear];
     [self updateUI];
+}
+
+#pragma mark - Notifications
+
+- (void)listenForOutsideUpdates {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(voiceSettingsUpdated:)
+                   name:HEMVoiceNotificationSettingsUpdated
+                 object:nil];
+}
+
+- (void)voiceSettingsUpdated:(NSNotification*)note {
+    if (![self isUpdating]) { // some outside action, so update if needed
+        NSDictionary* info = [note userInfo];
+        if (info) {
+            SENSenseVoiceSettings* updatedSettings = [note userInfo][HEMVoiceNotificationInfoSettings];
+            if (updatedSettings) {
+                [self setVoiceSettings:updatedSettings];
+            }
+        }
+        [[self tableView] reloadData];
+    }
 }
 
 #pragma mark - Data
@@ -289,6 +314,8 @@ messageIfError:(NSString*)errorMessage
     
     SENSenseMetadata* metadata = [[[self deviceService] devices] senseMetadata];
 
+    [self setUpdating:YES];
+    
     NSString* activityText = NSLocalizedString(@"voice.settings.update.status", nil);
     HEMActivityCoverView* activityView = [HEMActivityCoverView new];
     [activityView showInView:[self activityContainerView] withText:activityText activity:YES completion:^{
@@ -296,6 +323,8 @@ messageIfError:(NSString*)errorMessage
                                       forSenseId:[metadata uniqueId]
                                       completion:^(SENSenseVoiceSettings* updated) {
                                           __strong typeof(weakSelf) strongSelf = weakSelf;
+                                          [strongSelf setUpdating:NO];
+                                          
                                           if (completion) {
                                               completion (updated != nil);
                                           }
@@ -403,6 +432,8 @@ messageIfError:(NSString*)errorMessage
 #pragma mark - Clean up
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     if (_tableView) {
         [_tableView setDelegate:nil];
         [_tableView setDataSource:nil];

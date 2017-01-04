@@ -15,6 +15,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSString* const HEMVoiceNotificationSettingsUpdated;
+extern NSString* const HEMVoiceNotificationInfoSettings;
 extern NSString* const HEMVoiceNotification;
 extern NSString* const HEMVoiceNotificationInfoError;
 extern NSString* const HEMVoiceNotificationInfoResult;

@@ -29,6 +29,7 @@ import SenseKit
     fileprivate var alertDeviceService: HEMDeviceAlertService!
     fileprivate var alertTZService: HEMTimeZoneAlertService!
     fileprivate var alertSystemService: HEMSystemAlertService!
+    fileprivate var voiceService: HEMVoiceService!
     fileprivate weak var shortcutHandler: ShortcutHandler?
     
     override var prefersStatusBarHidden: Bool {
@@ -184,23 +185,35 @@ import SenseKit
     }
 }
 
-extension MainViewController: HEMSystemAlertDelegate {
+extension MainViewController: HEMSystemAlertDelegate, HEMPresenterErrorDelegate {
     
     fileprivate func configureAlertPresenter() {
         self.alertTZService = HEMTimeZoneAlertService()
         self.alertSystemService = HEMSystemAlertService()
         self.alertDeviceService = HEMDeviceAlertService()
         self.alertNetworkService = HEMNetworkAlertService()
+        self.voiceService = HEMVoiceService()
         
         let presenter = HEMSystemAlertPresenter(networkAlertService: self.alertNetworkService,
                                                 deviceAlertService: self.alertDeviceService,
                                                 timeZoneAlertService: self.alertTZService,
                                                 deviceService: self.deviceService,
-                                                sysAlertService: self.alertSystemService)
+                                                sysAlertService: self.alertSystemService,
+                                                voiceService: self.voiceService)
         
         presenter.bind(withContainerView: self.view, below: self.tabBar)
         presenter.delegate = self
+        presenter.errorDelegate = self;
+        
         self.presenters.append(presenter)
+    }
+    
+    func showError(withTitle title: String?, andMessage message: String, withHelpPage helpPage: String?, from presenter: HEMPresenter) {
+        let alertVC = HEMAlertViewController(title: title, message: message)!
+        let buttonTitle = NSLocalizedString("actions.ok", comment: "error button title")
+        alertVC.viewToShowThrough = self.view
+        alertVC.addButton(withTitle: buttonTitle, style: HEMAlertViewButtonStyle.roundRect, action: nil)
+        alertVC.show(from: self)
     }
     
     func present(_ controller: UIViewController, from presenter: HEMSystemAlertPresenter) {

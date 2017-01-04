@@ -82,6 +82,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 
 - (void)setupWithTitle:(NSString*)title andMessage:(NSAttributedString*)message {
     if ([title length] > 0) {
+        _title = [title copy];
         [self addTitleLabelWithText:title];
     }
     

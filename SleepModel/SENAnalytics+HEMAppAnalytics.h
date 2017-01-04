@@ -200,6 +200,10 @@ extern NSString* const HEMAnalyticsEventSystemAlert;
 extern NSString* const HEMAnalyticsEventSystemAlertAction;
 extern NSString* const HEMAnalyticsEventSysAlertActionLater;
 extern NSString* const HEMAnalyticsEventSysAlertActionNow;
+extern NSString* const HEMAnalyticsEventSysAlertActionUnmute;
+extern NSString* const HEMAnalyticsEventSysAlertPropUnknown;
+extern NSString* const HEMAnalyticsEventSysAlertPropMuted;
+extern NSString* const HEMAnalyticsEventSysAlertPropExpUnreachable;
 
 // app review
 extern NSString* const HEMAnalyticsEventAppReviewShown;

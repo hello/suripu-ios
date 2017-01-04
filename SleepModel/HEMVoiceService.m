@@ -16,6 +16,8 @@
 #import "HEMVoiceService.h"
 #import "HEMVoiceCommandGroup.h"
 
+NSString* const HEMVoiceNotificationSettingsUpdated = @"HEMVoiceNotificationSettingsUpdated";
+NSString* const HEMVoiceNotificationInfoSettings = @"voice.settings";
 NSString* const HEMVoiceNotification = @"HEMVoiceNotificationResult";
 NSString* const HEMVoiceNotificationInfoError = @"voice.error";
 NSString* const HEMVoiceNotificationInfoResult = @"voice.result";
@@ -268,6 +270,15 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
                 completion (nil);
             } else {
                 if ([strongSelf is:voiceSettings updatedFrom:response]) {
+                    NSDictionary* info = nil;
+                    if ([response isKindOfClass:[SENSenseVoiceSettings class]]) {
+                        info = @{HEMVoiceNotificationInfoSettings : response};
+                    }
+                    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+                    [center postNotificationName:HEMVoiceNotificationSettingsUpdated
+                                          object:strongSelf
+                                        userInfo:info];
+                    
                     completion (response);
                 } else if (attempt > HEMVoiceServiceMaxCheckAttempts) {
                     completion (nil);

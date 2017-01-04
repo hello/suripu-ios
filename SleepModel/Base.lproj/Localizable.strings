@@ -692,6 +692,7 @@
 "status.updating" = "Updating";
 "status.off" = "Off";
 "actions.copy" = "Copy";
+"actions.unmute" = "Unmute";
 
 // action sheet
 "action-sheet.accessibility.did-appear" = "Open options";
@@ -771,6 +772,8 @@
 "alerts.device.pill-low-battery.message" = "Your Sleep Pill battery is low, and will need to be replaced soon.";
 "alerts.device.pill-firmware-update.title" = "Sleep Pill update";
 "alerts.device.pill-firmware-update" = "An update for your Sleep Pill is available. You can update now, or visit settings to update later.";
+"alerts.update.error.no-sense-id" = "Unable to determine which Sense to take the action on. Please try again.";
+"alerts.update.error.unmute-failed" = "Unable to unmute Sense. Please try again.";
 
 // tutorial
 "tutorial.alarms.title" = "Set An Alarm";

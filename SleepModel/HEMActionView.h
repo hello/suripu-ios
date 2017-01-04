@@ -10,6 +10,7 @@
 
 @interface HEMActionView : UIView
 
+@property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, weak, readonly) UIButton* cancelButton;
 @property (nonatomic, weak, readonly) UIButton* okButton;
 @property (nonatomic, assign) NSInteger type;

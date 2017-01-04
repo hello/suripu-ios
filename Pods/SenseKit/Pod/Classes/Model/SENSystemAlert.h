@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, SENAlertCategory) {
     SENAlertCategoryUnknown = 0,
-    SENAlertCategoryExpansionUnreachable
+    SENAlertCategoryExpansionUnreachable,
+    SENAlertCategoryMuted
 };
 
 @interface SENSystemAlert : NSObject <SENSerializable>

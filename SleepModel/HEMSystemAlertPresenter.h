@@ -14,6 +14,7 @@
 @class HEMTimeZoneAlertService;
 @class HEMDeviceService;
 @class HEMSystemAlertService;
+@class HEMVoiceService;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,7 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
                          deviceAlertService:(HEMDeviceAlertService*)deviceAlertService
                        timeZoneAlertService:(HEMTimeZoneAlertService*)tzAlertService
                               deviceService:(HEMDeviceService*)deviceService
-                            sysAlertService:(HEMSystemAlertService*)alertService NS_DESIGNATED_INITIALIZER;
+                            sysAlertService:(HEMSystemAlertService*)alertService
+                               voiceService:(HEMVoiceService*)voiceService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 
 - (void)bindWithContainerView:(UIView*)containerView below:(UIView*)topView;

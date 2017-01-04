@@ -13,6 +13,7 @@ static NSString* const kSENSystemAlertKeyTitle = @"title";
 static NSString* const kSENSystemAlertKeyBody = @"body";
 static NSString* const kSENSystemAlertKeyCategory = @"category";
 static NSString* const kSENSystemAlertCategoryExpansionUnreachable = @"EXPANSION_UNREACHABLE";
+static NSString* const kSENSystemAlertCategoryMuted = @"SENSE_MUTED";
 
 @implementation SENSystemAlert
 
@@ -34,6 +35,8 @@ static NSString* const kSENSystemAlertCategoryExpansionUnreachable = @"EXPANSION
     NSString* upper = [categoryString uppercaseString];
     if ([upper isEqualToString:kSENSystemAlertCategoryExpansionUnreachable]) {
         return SENAlertCategoryExpansionUnreachable;
+    } else if ([upper isEqualToString:kSENSystemAlertCategoryMuted]) {
+        return SENAlertCategoryMuted;
     } else {
         return SENAlertCategoryUnknown;
     }

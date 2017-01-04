@@ -28,8 +28,10 @@
 #import "HEMNetworkAlertService.h"
 #import "HEMDeviceAlertService.h"
 #import "HEMTimeZoneAlertService.h"
+#import "HEMVoiceService.h"
 #import "HEMAccountService.h"
 
+#import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMSettingsNavigationController.h"
 #import "HEMSleepSummarySlideViewController.h"

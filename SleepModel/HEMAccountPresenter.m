@@ -9,6 +9,8 @@
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "Sense-Swift.h"
+
 #import "SENRemoteImage+HEMDeviceSpecific.h"
 #import "UIAlertController+HEMPhotoOptions.h"
 #import "UIImagePickerController+HEMProfilePhoto.h"
@@ -388,20 +390,6 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 
 #pragma mark - TableView Helpers
 
-- (UIView*)accessoryView {
-    UIImage* accessoryImage = [UIImage imageNamed:@"accessory"];
-    accessoryImage = [accessoryImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
-    CGRect accessoryFrame = CGRectZero;
-    accessoryFrame.size = accessoryImage.size;
-    
-    UIImageView* accessoryView = [[UIImageView alloc] initWithImage:accessoryImage];
-    [accessoryView setFrame:accessoryFrame];
-    [accessoryView setTintColor:[UIColor grey4]];
-    
-    return accessoryView;
-}
-
 - (void)accountIcon:(UIImage**)icon title:(NSString**)title atRow:(NSInteger)row {
     SENAccount* account = [[self accountService] account];
     switch (row) {
@@ -696,10 +684,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
     }
     
-    if (![cell accessoryView]) {
-        [cell setAccessoryView:[self accessoryView]];
-    }
-    
+    [cell showStyledAccessoryViewIfNone];
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setTextColor:textColor];
     [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];

@@ -7,6 +7,8 @@
 //
 #import <SenseKit/SENPairedDevices.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMSettingsPresenter.h"
 #import "HEMDeviceService.h"
 #import "HEMExpansionService.h"
@@ -14,18 +16,16 @@
 #import "HEMBreadcrumbService.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMSettingsStoryboard.h"
-#import "HEMSettingsTableViewCell.h"
 #import "HEMTellAFriendItemProvider.h"
+#import "HEMSettingsHeaderFooterView.h"
 #import "HEMStyle.h"
 
-static CGFloat const HEMSettingsSectionHeaderHeight = 12.0f;
-static CGFloat const HEMSettingsBottomMargin = 10.0f;
+static CGFloat const HEMSettingsBottomMargin = 12.0f;
 static CGFloat const HEMSettingsRowHeight = 56.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSettingsSection) {
     HEMSettingsSectionAccount = 0,
-    HEMSettingsSectionSupport,
-    HEMSettingsSectionShare,
+    HEMSettingsSectionMisc,
     HEMSettingsSections
 };
 
@@ -38,19 +38,10 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowCount
 };
 
-typedef NS_ENUM(NSUInteger, HEMSettingsExpansionRow) {
-    HEMSettingsExpansionRowExpansion = 0,
-    HEMSettingsExpansionRowCount
-};
-
-typedef NS_ENUM(NSUInteger, HEMSettingsSupportRow) {
-    HEMSettingsSupportRowSupport = 0,
-    HEMSettingsSupportRowCount
-};
-
-typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
-    HEMSettingsShareRowTellFriend = 0,
-    HEMSettingsShareRowCount
+typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
+    HEMSettingsMiscRowSupport = 0,
+    HEMSettingsMiscRowTellFriend,
+    HEMSettingsMiscRowCount
 };
 
 @interface HEMSettingsPresenter() <UITableViewDelegate, UITableViewDataSource>
@@ -80,20 +71,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
-    CGFloat width = CGRectGetWidth([[tableView superview] bounds]);
-    
     // header
-    CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsCellTableMargin;
-    frame.size.width = width;
-    [tableView setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    
-    // add footer after sections are loaded
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    [tableView setTableHeaderView:header];
     [tableView setTableFooterView:[self versionView]];
-    
     [tableView setDelegate:self];
     [tableView setDataSource:self];
-    
     [self setTableView:tableView];
 }
 
@@ -151,7 +134,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     // can't always depend on content size
     NSInteger numberOfSections = [[self sections] count];
     CGFloat totalHeaderHeight = CGRectGetHeight([[[self tableView] tableHeaderView] bounds]);
-    totalHeaderHeight += (numberOfSections - 1) * HEMSettingsSectionHeaderHeight;
+    totalHeaderHeight += (numberOfSections - 1) * HEMSettingsHeaderFooterSectionHeight;
     
     CGFloat totalRowHeight = 0.0f;
     for (NSArray* rows in [self sections]) {
@@ -163,7 +146,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     
     CGFloat tableHeight = CGRectGetHeight([[self tableView] bounds]);
     CGFloat tableWidth = CGRectGetWidth([[self tableView] bounds]);
-    CGFloat minSpacing = HEMSettingsSectionHeaderHeight;
+    CGFloat minSpacing = HEMSettingsHeaderFooterSectionHeight;
     
     CGFloat spaceAtBottom = tableHeight - contentHeight - HEMSettingsBottomMargin;
     CGFloat versionHeight = MAX(minSpacing + versionRequiredHeight, spaceAtBottom);
@@ -207,12 +190,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
         
         [sections addObject:rows];
         
-        // support
-        rows = [NSMutableArray arrayWithArray:@[@(HEMSettingsSupportRowSupport)]];
-        [sections addObject:rows];
-        // share
-        rows = [NSMutableArray arrayWithArray:@[@(HEMSettingsShareRowTellFriend)]];
-        [sections addObject:rows];
+        // misc
+        [sections addObject:@[@(HEMSettingsMiscRowSupport),
+                              @(HEMSettingsMiscRowTellFriend)]];
         
         [strongSelf setSections:sections];
         [[strongSelf indicatorView] stop];
@@ -232,11 +212,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
     }
 }
 
-- (BOOL)showIndicatorForCrumb:(NSString*)crumb {
-    NSString* topCrumb = [[self breadcrumbService] peek];
-    return [topCrumb isEqualToString:crumb];
-}
-
 - (NSString *)titleForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
@@ -246,8 +221,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
         return nil;
     }
     
+    NSNumber* rowType = rows[row];
     if (section == HEMSettingsSectionAccount) {
-        NSNumber* rowType = rows[row];
         switch ([rowType unsignedIntegerValue]) {
             default:
             case HEMSettingsAccountRowProfile:
@@ -261,12 +236,14 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
             case HEMSettingsAccountRowVoice:
                 return NSLocalizedString(@"settings.voice", nil);
         }
-    } else if (section == HEMSettingsSectionSupport) {
-        return NSLocalizedString(@"settings.support", nil);
-    } else if (section == HEMSettingsSectionShare) {
-        return NSLocalizedString(@"settings.tell-a-friend", nil);
     } else {
-        return nil;
+        switch ([rowType unsignedIntegerValue]) {
+            default:
+            case HEMSettingsMiscRowSupport:
+                return NSLocalizedString(@"settings.support", nil);
+            case HEMSettingsMiscRowTellFriend:
+                return  NSLocalizedString(@"settings.tell-a-friend", nil);
+        }
     }
 }
 
@@ -283,9 +260,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
-        case HEMSettingsSectionSupport:
-        case HEMSettingsSectionShare:
-            return HEMSettingsSectionHeaderHeight;
+        case HEMSettingsSectionMisc:
+            return HEMSettingsHeaderFooterSectionHeight;
         case HEMSettingsSectionAccount:
         default:
             return 0.0f;
@@ -293,9 +269,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsShareRow) {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] init];
-    [headerView setBackgroundColor:[UIColor clearColor]];
-    return headerView;
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -313,38 +287,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (row >= [rows count]) {
         return;
     }
-    
-    NSNumber* rowType = rows[row];
-    
-    HEMSettingsTableViewCell *settingsCell = (HEMSettingsTableViewCell *)cell;
-    [[settingsCell titleLabel] setText:[self titleForRowAtIndexPath:indexPath]];
-    
-    if ([[settingsCell accessory] isKindOfClass:[UIImageView class]]) {
-        UIImageView* accessory = (id) [settingsCell accessory];
-        UIImage* accessoryImage = [[accessory image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        [accessory setImage:accessoryImage];
-        [accessory setTintColor:[UIColor grey4]];
-    }
-    
-    if (section == HEMSettingsSectionAccount
-        && [rowType unsignedIntegerValue] == HEMSettingsAccountRowProfile) {
-        BOOL show = [self showIndicatorForCrumb:HEMBreadcrumbAccount];
-        [settingsCell showNewIndicator:show];
-    } else {
-        [settingsCell showNewIndicator:NO];
-    }
-    
-    NSInteger numberOfRows = [tableView numberOfRowsInSection:section];
-    
-    if ([indexPath row] == 0 && [indexPath row] == numberOfRows - 1) {
-        [settingsCell showTopAndBottomCorners];
-    } else if ([indexPath row] == 0) {
-        [settingsCell showTopCorners];
-    } else if ([indexPath row] == numberOfRows - 1) {
-        [settingsCell showBottomCorners];
-    } else {
-        [settingsCell showNoCorners];
-    }
+
+    [cell setBackgroundColor:[UIColor whiteColor]];
+    [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
+    [cell showStyledAccessoryViewIfNone];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -356,7 +304,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger row = [indexPath row];
     NSArray* rows = [self sections][section];
     
-    if (section == HEMSettingsSectionShare) {
+    if (section == HEMSettingsSectionMisc
+        && [rows[row] unsignedIntegerValue] == HEMSettingsMiscRowTellFriend) {
         [self tellAFriend];
     } else if (row < [rows count]) {
         NSNumber* rowType = rows[row];
@@ -382,10 +331,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             case HEMSettingsAccountRowVoice:
                 return HEMSettingsCategoryVoice;
         }
-    } else if (section == HEMSettingsSectionSupport) {
-        return HEMSettingsCategorySupport;
     } else {
-        return HEMSettingsCategoryTellFriend;
+        switch ([rowType unsignedIntegerValue]) {
+            default:
+            case HEMSettingsMiscRowSupport:
+                return HEMSettingsCategorySupport;
+            case HEMSettingsMiscRowTellFriend:
+                return HEMSettingsCategoryTellFriend;
+        }
     }
 }
 

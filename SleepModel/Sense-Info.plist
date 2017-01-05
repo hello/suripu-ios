@@ -29,7 +29,7 @@
 			<string>is.hello.sense</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sense</string>
+				<string>${SENSE_ROOM_CONDITIONS_EXT_SCHEME}</string>
 				<string>fb372438546161587</string>
 			</array>
 		</dict>

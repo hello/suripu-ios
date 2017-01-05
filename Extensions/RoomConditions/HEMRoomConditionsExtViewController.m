@@ -27,7 +27,7 @@
 static NSString* const HEMApiUserAgentFormat = @"%@/%@ Platform/iOS OS/%@";
 static NSString* const kHEMRoomConditionsExtErrorDomain = @"is.hello.sense.RoomConditions";
 static NSString* const kHEMRoomConditionsExtConditionsCellId = @"info";
-static NSString* const kHEMRoomConditionsExtSenseScheme = @"sense://ext/room";
+static NSString* const kHEMRoomConditionsExtAppUrlFormat = @"%@://ext/room";
 static NSString* const HEMRoomConditionsExtSensorQueryItem = @"sensor";
 
 static CGFloat const kHEMRoomConditionsLeftInset = 15.0f;
@@ -63,14 +63,22 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (strong, nonatomic) SENSensorStatus* status;
 @property (strong, nonatomic) UIColor* defaultTextColor;
 
+@property (strong, nonatomic) NSString* appScheme;
+
 @end
 
 @implementation HEMRoomConditionsExtViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureProperties];
     [self configureApi];
     [self configureContent];
+}
+
+- (void)configureProperties {
+    NSString* scheme = [HEMConfig stringForConfig:HEMConfExtAppScheme];
+    [self setAppScheme:[NSString stringWithFormat:kHEMRoomConditionsExtAppUrlFormat, scheme]];
 }
 
 - (void)configureApi {
@@ -357,12 +365,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (void)didTapOnView:(HEMTappableView *)tappableView {
-    NSURLComponents* components = [NSURLComponents componentsWithString:kHEMRoomConditionsExtSenseScheme];
+    NSURLComponents* components = [NSURLComponents componentsWithString:[self appScheme]];
     [[self extensionContext] openURL:[components URL] completionHandler:nil];
 }
 
 - (IBAction)openApp:(id)sender {
-    NSURLComponents* components = [NSURLComponents componentsWithString:kHEMRoomConditionsExtSenseScheme];
+    NSURLComponents* components = [NSURLComponents componentsWithString:[self appScheme]];
     if ([sender isKindOfClass:[NSIndexPath class]]) {
         SENSensor* sensor = [self sensorAtIndexPath:sender];
         NSString* type = [[sensor typeStringValue] lowercaseString];

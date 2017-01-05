@@ -4622,6 +4622,7 @@
 				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.sensetest;
 				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sensetest.data;
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
+				SENSE_ROOM_CONDITIONS_EXT_SCHEME = sensetest;
 				SENSE_SETTINGS_GROUP = group.is.hello.sensetest.settings;
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -4683,6 +4684,7 @@
 				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.Sense;
 				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sense.data;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
+				SENSE_ROOM_CONDITIONS_EXT_SCHEME = sense;
 				SENSE_SETTINGS_GROUP = group.is.hello.sense.settings;
 				SENSE_SUPPORT_OPTIONS = NO;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -5149,6 +5151,7 @@
 				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.Sense;
 				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sense.data;
 				SENSE_PASSWORD_RESET_URL = "https://account.hello.is/reset";
+				SENSE_ROOM_CONDITIONS_EXT_SCHEME = sense;
 				SENSE_SETTINGS_GROUP = group.is.hello.sense.settings;
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;
@@ -5392,6 +5395,7 @@
 				SENSE_KEYCHAIN_GROUP = MSG86J7GNF.is.hello.sensetest;
 				SENSE_LOCAL_STORAGE_GROUP = group.is.hello.sensetest.data;
 				SENSE_PASSWORD_RESET_URL = "http://account-staging-zpbsmunavw.elasticbeanstalk.com/reset";
+				SENSE_ROOM_CONDITIONS_EXT_SCHEME = sensetest;
 				SENSE_SETTINGS_GROUP = group.is.hello.sensetest.settings;
 				SENSE_SUPPORT_OPTIONS = YES;
 				SENSE_ZENDESK_CLIENT_ID = mobile_sdk_client_510ec7f059736bb60c17;

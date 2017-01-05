@@ -156,15 +156,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
                          atLeast:HEMHandHoldingTimelineSwipeMinDaysChecked];
 }
 
-- (BOOL)shouldShowAccountNameForAccount:(SENAccount*)account {
-    if (![account createdAt]) {
-        return NO;
-    }
-    
-    NSDate* launchDate = [NSDate dateWithYear:2016 month:5 day:26];
-    return [[account createdAt] compare:launchDate] == NSOrderedAscending;
-}
-
 - (BOOL)shouldShow:(HEMHandHolding)tutorial {
     if ([self isComplete:tutorial]) {
         return NO;
@@ -182,14 +173,7 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
 }
 
 - (BOOL)shouldShow:(HEMHandHolding)tutorial forAccount:(SENAccount*)account {
-    switch (tutorial) {
-        case HEMHandHoldingAccountName: {
-            return ![self isComplete:tutorial]
-                && [self shouldShowAccountNameForAccount:account];
-        }
-        default:
-            return [self shouldShow:tutorial];
-    }
+    return [self shouldShow:tutorial];
 }
 
 #pragma mark - Clean up

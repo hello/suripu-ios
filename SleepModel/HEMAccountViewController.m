@@ -14,7 +14,6 @@
 #import "HEMFormViewController.h"
 #import "HEMHealthKitService.h"
 #import "HEMFacebookService.h"
-#import "HEMBreadcrumbService.h"
 #import "HEMHandHoldingService.h"
 #import "HEMAlertViewController.h"
 #import "HEMUnitPreferenceViewController.h"
@@ -38,14 +37,11 @@
 
 - (void)configurePresenter {
     HEMAccountService* accountService = [HEMAccountService sharedService];
-    SENAccount* account = [accountService account];
-    HEMBreadcrumbService* crumbService = [HEMBreadcrumbService sharedServiceForAccount:account];
     HEMFacebookService* facebookService = [HEMFacebookService new];
     HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
     HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:accountService
                                                                          facebookService:facebookService
                                                                         healthKitService:[HEMHealthKitService sharedService]
-                                                                       breadcrumbService:crumbService
                                                                       handHoldingService:handHoldingService];
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];

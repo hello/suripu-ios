@@ -241,9 +241,6 @@ extern NSString* const HEMAnalyticsEventPropSourceCamera;
 extern NSString* const HEMAnalyticsEventPropSourcePhotoLibrary;
 extern NSString* const HEMAnalyticsEventDeletePhoto;
 
-// breadcrumbs
-extern NSString* const HEMAnalyticsEventBreadcrumbsEnd;
-
 // dfu
 extern NSString* const HEMAnalyticsEventPillDfuStart;
 extern NSString* const HEMAnalyticsEventPillDfuOTAStart;

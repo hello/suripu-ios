@@ -263,9 +263,6 @@ NSString* const HEMAnalyticsEventShareComplete = @"Share completed";
 NSString* const HEMAnalyticsPropCategory = @"category";
 NSString* const HEMAnalyticsPropService = @"service";
 
-// breadcrumbs
-NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";
-
 // dfu
 NSString* const HEMAnalyticsEventPillDfuStart = @"Pill Update Start";
 NSString* const HEMAnalyticsEventPillDfuOTAStart = @"Pill Update OTA Start";

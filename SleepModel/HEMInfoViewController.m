@@ -7,9 +7,9 @@
 //
 
 #import "HEMInfoViewController.h"
-#import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
 
 @interface HEMInfoViewController() <UITableViewDelegate, UITableViewDataSource>
 
@@ -32,8 +32,7 @@
     frame.size.height = 20.0f;
     frame.size.width = width;
     [[self infoTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
-    
-    
+    [[self infoTableView] setSeparatorColor:[UIColor separatorColor]];
     [[self infoTableView] setDelegate:self];
     [[self infoTableView] setDataSource:self];
 }
@@ -63,23 +62,13 @@
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    HEMSettingsTableViewCell *supportCell = (HEMSettingsTableViewCell *)cell;
-    [[supportCell titleLabel] setText:[[self infoSource] infoTitleForIndexPath:indexPath]];
-    [[supportCell valueLabel] setText:[[self infoSource] infoValueForIndexPath:indexPath]];
-    
-    NSInteger numberOfRows = [tableView numberOfRowsInSection:[indexPath section]];
-    
-    if ([indexPath row] == 0 && [indexPath row] == numberOfRows - 1) {
-        [supportCell showTopAndBottomCorners];
-    } else if ([indexPath row] == 0) {
-        [supportCell showTopCorners];
-    } else if ([indexPath row] == numberOfRows - 1) {
-        [supportCell showBottomCorners];
-    } else {
-        [supportCell showNoCorners];
-    }
-    
+    [[cell textLabel] setText:[[self infoSource] infoTitleForIndexPath:indexPath]];
+    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell detailTextLabel] setText:[[self infoSource] infoValueForIndexPath:indexPath]];
+    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    [cell setBackgroundColor:[UIColor whiteColor]];
 }
 
 #pragma mark - Actions

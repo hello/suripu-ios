@@ -34,7 +34,7 @@ static CGFloat const kHEMNoAlarmCellHorzMarginsSmall = 20.0f;
 
 + (CGFloat)heightWithDetail:(NSAttributedString*)attributedDetail cellWidth:(CGFloat)width {
     CGFloat horzMargins = [self horizontalMargins];
-    CGFloat maxWidth = width - horzMargins;
+    CGFloat maxWidth = width - (horzMargins * 2);
     return [attributedDetail sizeWithWidth:maxWidth].height + kHEMNoAlarmCellBaseHeight;
 }
 

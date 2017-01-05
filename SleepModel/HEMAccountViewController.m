@@ -49,6 +49,7 @@
                                                                       handHoldingService:handHoldingService];
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];
+    [presenter bindWithNavigationItem:[self navigationItem]];
     
     [self setAccountPresenter:presenter];
     [self addPresenter:presenter];

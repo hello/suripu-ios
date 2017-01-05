@@ -46,6 +46,7 @@ typedef void(^HEMAccountSignOutHandler)(void);
                     handHoldingService:(HEMHandHoldingService*)hhService NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithTableView:(UITableView*)tableView;
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 
 @end
 

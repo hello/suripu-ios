@@ -13,6 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 
-+ (CGFloat)heightWithTitle:(NSString*)title about:(NSString*)about maxWidth:(CGFloat)width;
++ (CGFloat)heightWithTitle:(NSString*)title about:(NSAttributedString*)about maxWidth:(CGFloat)width;
 
 @end

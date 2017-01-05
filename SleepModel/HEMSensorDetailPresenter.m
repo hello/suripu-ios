@@ -52,7 +52,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSArray* content;
 @property (nonatomic, strong) SENSensor* sensor;
-@property (nonatomic, strong) NSString* aboutDetail;
+@property (nonatomic, strong) NSAttributedString* aboutDetail;
 @property (nonatomic, strong) HEMSensorValueFormatter* formatter;
 @property (nonatomic, strong) SENSensorStatus* status;
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
@@ -129,7 +129,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     
     // if string for content exists
     if (![about isEqualToString:aboutKey]) {
-        [self setAboutDetail:about];
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
+                                     NSForegroundColorAttributeName : [UIColor grey5],
+                                     NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+        [self setAboutDetail:[[NSAttributedString alloc] initWithString:about attributes:attributes]];
         [content addObject:@(HEMSensorDetailContentAbout)];
     }
     
@@ -327,9 +330,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             break;
         }
         case HEMSensorDetailContentAbout: {
-            NSString* about = [self aboutDetail];
             NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
-            height = [HEMSensorAboutCollectionViewCell heightWithTitle:title about:about maxWidth:widthBounds];
+            height = [HEMSensorAboutCollectionViewCell heightWithTitle:title
+                                                                 about:[self aboutDetail]
+                                                              maxWidth:widthBounds];
             break;
         }
     }
@@ -576,7 +580,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[aboutCell titleLabel] setText:title];
     [[aboutCell titleLabel] setFont:[UIFont h6Bold]];
     [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
-    [[aboutCell aboutLabel] setText:[self aboutDetail]];
+    [[aboutCell aboutLabel] setAttributedText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];
     [[aboutCell aboutLabel] setTextColor:[UIColor grey5]];
 }

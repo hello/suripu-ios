@@ -37,7 +37,6 @@ static CGFloat const HEMAlarmListCellHeight = 96.f;
 static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
 static CGFloat const HEMAlarmListPairViewHeight = 352.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
-static CGFloat const HEMAlarmNoAlarmHorzMargin = 40.0f;
 static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSString* const HEMAlarmListErrorDomain = @"is.hello.app.alarm";
 
@@ -304,7 +303,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 
 - (NSAttributedString*)attributedNoAlarmText {
     if (!_attributedNoAlarmText) {
-        NSMutableParagraphStyle *paraStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        NSMutableParagraphStyle *paraStyle = DefaultBodyParagraphStyle();
         [paraStyle setAlignment:NSTextAlignmentCenter];
         
         NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
@@ -583,10 +582,8 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
         return CGSizeMake(width, height + expansionHeight);
     } else if (alarmCount == 0) {
         NSAttributedString* attributedText = [self attributedNoAlarmText];
-        CGFloat maxWidth = width - (HEMAlarmNoAlarmHorzMargin * 2);
-        CGFloat textHeight = [attributedText sizeWithWidth:maxWidth].height;
-        CGFloat totalHeight = HEMAlarmListNoAlarmCellBaseHeight + textHeight;
-        return CGSizeMake(width, totalHeight);
+        CGFloat textHeight = [HEMNoAlarmCell heightWithDetail:attributedText cellWidth:width];
+        return CGSizeMake(width, textHeight);
     }
     
     CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;

@@ -7,6 +7,7 @@
 //
 
 #import "NSString+HEMUtils.h"
+#import "NSAttributedString+HEMUtils.h"
 
 #import "HEMSensorAboutCollectionViewCell.h"
 #import "HEMStyle.h"
@@ -16,7 +17,7 @@ static CGFloat const kHEMSensorAboutCellHorzPadding = 24.0f;
 
 @implementation HEMSensorAboutCollectionViewCell
 
-+ (CGFloat)heightWithTitle:(NSString*)title about:(NSString*)about maxWidth:(CGFloat)width {
++ (CGFloat)heightWithTitle:(NSString*)title about:(NSAttributedString*)about maxWidth:(CGFloat)width {
     CGFloat widthConstraint = width - (kHEMSensorAboutCellHorzPadding * 2);
     UIFont* font = [UIFont h6];
     NSDictionary* attrs = @{NSFontAttributeName : font};
@@ -24,7 +25,7 @@ static CGFloat const kHEMSensorAboutCellHorzPadding = 24.0f;
     
     font = [UIFont body];
     attrs = @{NSFontAttributeName : font};
-    CGFloat aboutHeight = [about sizeBoundedByWidth:widthConstraint attriburtes:attrs].height;
+    CGFloat aboutHeight = [about sizeWithWidth:widthConstraint].height;
     return titleHeight + kHEMSensorAboutTextSpacing + aboutHeight;
 }
 

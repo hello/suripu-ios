@@ -15,4 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *alarmButton;
 
++ (CGFloat)heightWithDetail:(NSAttributedString*)attributedDetail cellWidth:(CGFloat)width;
+
 @end

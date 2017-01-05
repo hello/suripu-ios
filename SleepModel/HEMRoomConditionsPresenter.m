@@ -185,7 +185,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
     [service pollDataForSensorsExcept:nil
                            completion:^(HEMSensorServiceScope scope,
                                         SENSensorStatus* status,
-                                        id data,
+                                        SENSensorDataCollection* data,
                                         NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setSensorError:error];
@@ -200,7 +200,6 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             } else {
                 [strongSelf reloadUI];
             }
-            
         } else {
             [strongSelf reloadUI];
         }
@@ -256,7 +255,7 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
         for (SENSensor* sensor in sensors) {
             NSArray<NSNumber*>* values = [[strongSelf sensorData] filteredDataPointsWithType:[sensor type]];
             NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
-            if ([values count] == [timestamps count]) {
+            if ([values count] <= [timestamps count]) { // timestamps can't be less than number of values to display!
                 NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:[values count]];
                 CGFloat chartMax = 0.0f, chartMin = MAXFLOAT;
                 NSUInteger index = 0;

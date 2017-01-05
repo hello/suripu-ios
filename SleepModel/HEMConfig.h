@@ -20,7 +20,8 @@ typedef NS_ENUM(NSUInteger, HEMConf) {
     HEMConfPassResetURL,
     HEMConfEnvironmentName,
     HEMConfCrashReportToken,
-    HEMConfPillFirmwareURL
+    HEMConfPillFirmwareURL,
+    HEMConfExtAppScheme
 };
 
 @interface HEMConfig : NSObject

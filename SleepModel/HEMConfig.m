@@ -29,6 +29,11 @@ static NSString* const HEMConfigAllowSupportOptions = @"SenseAllowSupportOptions
 static NSString* const HEMConfigZendeskTokenPlistKey = @"SenseZendeskToken";
 static NSString* const HEMConfigZendeskURLPlistKey = @"SenseZendeskURL";
 static NSString* const HEMConfigZendeskClientIdPlistKey = @"SenseZendeskClientId";
+
+// Room Conditions Extension Configurations
+
+static NSString* const HEMConfigExtSchemePlistKey = @"SenseUrlScheme";
+
 @implementation HEMConfig
 
 + (NSString*)stringForConfig:(HEMConf)config {
@@ -58,6 +63,8 @@ static NSString* const HEMConfigZendeskClientIdPlistKey = @"SenseZendeskClientId
             return [bundle objectForInfoDictionaryKey:HEMConfigEnvironment];
         case HEMConfPillFirmwareURL:
             return [bundle objectForInfoDictionaryKey:HEMConfigPillFirmwareUrl];
+        case HEMConfExtAppScheme:
+            return [bundle objectForInfoDictionaryKey:HEMConfigExtSchemePlistKey];
         default:
             return nil;
     }

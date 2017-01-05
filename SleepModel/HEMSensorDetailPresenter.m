@@ -221,7 +221,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
         NSUInteger valueCount = [values count];
         
-        if (valueCount == [timestamps count]) {
+        if (valueCount <= [timestamps count]) { // # of timestamps cannot be less than # of values!
             NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:valueCount];
             NSMutableArray* labelData = [NSMutableArray arrayWithCapacity:kHEMSensorDetailChartXLabelCount];
             NSInteger indicesBetweenLabels = (valueCount - 1) / kHEMSensorDetailChartXLabelCount;

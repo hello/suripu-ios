@@ -16,6 +16,7 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
 
 @property (nonatomic, weak) HEMHandHoldingService* service;
 @property (nonatomic, weak) UIView* contentView;
+@property (nonatomic, assign) CGFloat bottomOffset;
 
 @end
 
@@ -29,8 +30,9 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
     return self;
 }
 
-- (void)bindWithContentView:(UIView*)contentView {
+- (void)bindWithContentView:(UIView*)contentView bottomOffset:(CGFloat)bottomOffset {
     [self setContentView:contentView];
+    [self setBottomOffset:bottomOffset];
 }
 
 - (void)showIfNeeded {
@@ -57,7 +59,7 @@ static NSUInteger const HEMTimelineHandHoldingViewTag = 88;
     
     [handholdingView setGestureStartCenter:CGPointMake(SWIPE_X, SWIPE_Y)];
     [handholdingView setGestureEndCenter:CGPointMake(widthConstraint - SWIPE_X, SWIPE_Y)];
-    
+    [handholdingView setMessageYOffset:[self bottomOffset]];
     [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-switch-days", nil)];
     [handholdingView setAnchor:HEMHHDialogAnchorBottom];
     [handholdingView setTag:HEMTimelineHandHoldingViewTag];

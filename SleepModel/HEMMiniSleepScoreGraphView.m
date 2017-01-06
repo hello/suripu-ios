@@ -17,6 +17,7 @@ CGFloat const miniScoreBaseHeight = 72.f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.backgroundColor = [UIColor clearColor];
+    self.conditionColor = [UIColor colorForCondition:SENConditionUnknown];
 }
 
 - (void)drawRect:(CGRect)rect

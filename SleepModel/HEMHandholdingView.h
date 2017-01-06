@@ -20,6 +20,14 @@ extern CGFloat const HEMHandholdingGestureSize;
 @interface HEMHandholdingView : UIView
 
 /**
+ * @property messageYOffset
+ *
+ * If anchor is at the bottom, this will raise the message up by this value. If
+ * anchor is at the top, then this will push the message down by this value.
+ */
+@property (nonatomic, assign) CGFloat messageYOffset;
+
+/**
  * @property gestureStartCenter
  *
  * Set the starting center point for the handholding gesture

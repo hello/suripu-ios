@@ -99,13 +99,15 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMSleepSegmentPopupAnimationDuration = 0.5f;
 static CGFloat const HEMPopupAnimationDistance = 8.0f;
 static CGFloat const HEMPopupAnimationDisplayInterval = 2.0f;
+static CGFloat const HEMTutorialMessageOffset = 49.0f;
+
 static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [self configureServices];
-    [self configurePresenters];
+    [self configureHandHoldingPresenter];
     [self configureCollectionView];
     [self configureTransitions];
     [self configureErrorProperties];
@@ -182,11 +184,11 @@ static BOOL hasLoadedBefore = NO;
     [self setHandHoldingService:[HEMHandHoldingService new]];
 }
 
-- (void)configurePresenters {
+- (void)configureHandHoldingPresenter {
     HEMTimelineHandHoldingPresenter* hhPresenter
-        = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
+    = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
     [hhPresenter setDelegate:self];
-    [hhPresenter bindWithContentView:[self collectionView]];
+    [hhPresenter bindWithContentView:[self collectionView] bottomOffset:HEMTutorialMessageOffset];
     
     [self setHandHoldingPresenter:hhPresenter];
     [self addPresenter:hhPresenter];

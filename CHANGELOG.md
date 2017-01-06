@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.1.8
+
+New:
+
+* Timeline top / nav bar scrolls with the content like before
+
+Fixes:
+
+* Fixes an issue that would cause the Timeline history to crash the application
+* Fixes an issue where the swipe gesture tutorial for the timeline isn't fully visible
+
 ## 2.0.1.7
 
 Fixes:

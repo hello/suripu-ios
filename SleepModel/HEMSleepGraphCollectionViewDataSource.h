@@ -12,6 +12,11 @@
 - (BOOL)shouldHideSegmentCellContents;
 
 - (void)toggleAudio:(UIButton*)button;
+
+- (void)shareTimeline:(id)sender;
+
+- (void)showTimelineHistory:(id)sender;
+
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>

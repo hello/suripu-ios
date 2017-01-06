@@ -7,6 +7,8 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAppUnreadStats.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
@@ -50,6 +52,7 @@ static NSString *const presleepHeaderReuseIdentifier = @"presleepCell";
 static NSString *const timelineFooterReuseIdentifier = @"timelineFooterCell";
 static NSString *const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString *const sleepEventReuseIdentifier = @"sleepEventCell";
+static NSString *const headerReuseIdentifier = @"timelineHeader";
 
 CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
@@ -255,12 +258,35 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                                  atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *view = nil;
 
-    if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
-
-        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                  withReuseIdentifier:timelineFooterReuseIdentifier
-                                                         forIndexPath:indexPath];
-        view.hidden = [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] == 0;
+    switch (indexPath.section) {
+        case HEMSleepGraphCollectionViewSummarySection: {
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                      withReuseIdentifier:headerReuseIdentifier
+                                                             forIndexPath:indexPath];
+            TimelineHeaderView* header = (id)view;
+            header.titleLabel.text = self.dateTitle;
+            header.shareButton.hidden = ![self hasSleepScore];
+            
+            if ([collectionView.delegate respondsToSelector:@selector(shareTimeline:)]) {
+                [header.shareButton addTarget:collectionView.delegate
+                                       action:@selector(shareTimeline:)
+                             forControlEvents:UIControlEventTouchUpInside];
+            }
+            if ([collectionView.delegate respondsToSelector:@selector(showTimelineHistory:)]) {
+                [header.historyButton addTarget:collectionView.delegate
+                                         action:@selector(showTimelineHistory:)
+                               forControlEvents:UIControlEventTouchUpInside];
+            }
+            
+            break;
+        }
+        case HEMSleepGraphCollectionViewSegmentSection:
+        default:
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                      withReuseIdentifier:timelineFooterReuseIdentifier
+                                                             forIndexPath:indexPath];
+            view.hidden = [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] == 0;
+            break;
     }
 
     return view;

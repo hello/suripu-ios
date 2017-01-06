@@ -106,6 +106,7 @@
 		BF005C7019FECACC00E68E87 /* HEMWifiPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C6F19FECACC00E68E87 /* HEMWifiPickerViewController.m */; };
 		BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF005C7219FED17800E68E87 /* HEMWiFiDataSource.m */; };
 		BF00F7971E1DACC8007DE4F4 /* UITableViewCell+Accessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00F7961E1DACC8007DE4F4 /* UITableViewCell+Accessory.swift */; };
+		BF00F7991E202A43007DE4F4 /* TimelineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF00F7981E202A43007DE4F4 /* TimelineHeaderView.swift */; };
 		BF037C011B7C178D00E1638D /* HEMTappableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF037C001B7C178D00E1638D /* HEMTappableView.m */; };
 		BF045B6E1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF045B6D1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m */; };
 		BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */; };
@@ -716,6 +717,7 @@
 		BF005C7119FED17800E68E87 /* HEMWiFiDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWiFiDataSource.h; sourceTree = "<group>"; };
 		BF005C7219FED17800E68E87 /* HEMWiFiDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWiFiDataSource.m; sourceTree = "<group>"; };
 		BF00F7961E1DACC8007DE4F4 /* UITableViewCell+Accessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Accessory.swift"; sourceTree = "<group>"; };
+		BF00F7981E202A43007DE4F4 /* TimelineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineHeaderView.swift; sourceTree = "<group>"; };
 		BF037BFF1B7C178D00E1638D /* HEMTappableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTappableView.h; sourceTree = "<group>"; };
 		BF037C001B7C178D00E1638D /* HEMTappableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTappableView.m; sourceTree = "<group>"; };
 		BF045B6C1A1EC2210026D5B9 /* HEMBeforeSleepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBeforeSleepViewController.h; sourceTree = "<group>"; };
@@ -1821,6 +1823,7 @@
 				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
 				8AB82DDF1B2BFB7B002D769D /* HEMTimelineMessageContainerView.h */,
 				8AB82DE01B2BFB7B002D769D /* HEMTimelineMessageContainerView.m */,
+				BF00F7981E202A43007DE4F4 /* TimelineHeaderView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -4185,6 +4188,7 @@
 				BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */,
 				BFA884AD1C1A012100613069 /* HEMNetworkAlertService.m in Sources */,
 				BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */,
+				BF00F7991E202A43007DE4F4 /* TimelineHeaderView.swift in Sources */,
 				BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */,
 				BF535B7A1DA471AD001944F5 /* HEMExpansionsConfigViewController.m in Sources */,
 				BFCB91CB1DB57F3700810CFB /* HEMVoiceSettingsPresenter.m in Sources */,

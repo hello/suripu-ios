@@ -23,3 +23,4 @@ void ApplyHelloStyles (void);
 void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar);
 void ApplyDefaultTabBarItemStyle(UITabBarItem* tabBarItem);
 NSMutableParagraphStyle* DefaultBodyParagraphStyle(void);
+NSDictionary* NavTitleAttributes(void);

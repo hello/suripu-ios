@@ -41,8 +41,12 @@ void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar) {
                 forBarPosition:UIBarPositionAny
                     barMetrics:UIBarMetricsDefault];
     [navBar setShadowImage:[[UIImage alloc] init]];
-    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grey6],
-                                     NSFontAttributeName : [UIFont h6]}];
+    [navBar setTitleTextAttributes:NavTitleAttributes()];
+}
+
+NSDictionary* NavTitleAttributes(void) {
+    return @{NSForegroundColorAttributeName : [UIColor grey6],
+             NSFontAttributeName : [UIFont h6]};
 }
 
 NSMutableParagraphStyle* DefaultBodyParagraphStyle() {

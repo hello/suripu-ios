@@ -2031,18 +2031,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="F5X-iN-TNU">
-                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="667"/>
                                 <color key="backgroundColor" red="0.81960784310000001" green="0.92941176469999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Yo6-ep-AQT" customClass="HEMFadingParallaxLayout">
                                     <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="414" height="44"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="error" id="G4t-Te-ks9">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                                        <rect key="frame" x="0.0" y="44" width="414" height="623"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
@@ -2051,13 +2051,57 @@
                                         <size key="customSize" width="414" height="623"/>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="timelineHeader" id="ihQ-7C-3vK" customClass="TimelineHeaderView" customModule="Sense" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzo-bq-9ea">
+                                            <rect key="frame" x="16" y="0.0" width="50" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="XdK-r1-WFK"/>
+                                            </constraints>
+                                            <state key="normal" image="timelineCalendarIcon"/>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNx-my-5Ru">
+                                            <rect key="frame" x="66" y="0.0" width="282" height="44"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="js8-hG-lB0">
+                                            <rect key="frame" x="348" y="0.0" width="50" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="NJQ-R0-k9u"/>
+                                            </constraints>
+                                            <state key="normal" image="timelineShareIcon"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="rzo-bq-9ea" firstAttribute="height" secondItem="ihQ-7C-3vK" secondAttribute="height" id="0oN-pO-OGR"/>
+                                        <constraint firstItem="rNx-my-5Ru" firstAttribute="height" secondItem="ihQ-7C-3vK" secondAttribute="height" id="1bw-KP-PlK"/>
+                                        <constraint firstItem="js8-hG-lB0" firstAttribute="top" secondItem="ihQ-7C-3vK" secondAttribute="top" id="4aM-Yt-fPS"/>
+                                        <constraint firstItem="rzo-bq-9ea" firstAttribute="leading" secondItem="ihQ-7C-3vK" secondAttribute="leading" constant="16" id="BMN-87-5qM"/>
+                                        <constraint firstItem="js8-hG-lB0" firstAttribute="height" secondItem="ihQ-7C-3vK" secondAttribute="height" id="WwS-nx-abx"/>
+                                        <constraint firstItem="rzo-bq-9ea" firstAttribute="top" secondItem="ihQ-7C-3vK" secondAttribute="top" id="js5-Hc-gbe"/>
+                                        <constraint firstItem="rNx-my-5Ru" firstAttribute="leading" secondItem="rzo-bq-9ea" secondAttribute="trailing" id="kZN-Ir-W3j"/>
+                                        <constraint firstItem="rNx-my-5Ru" firstAttribute="trailing" secondItem="js8-hG-lB0" secondAttribute="leading" id="lyc-dz-DOG"/>
+                                        <constraint firstItem="rNx-my-5Ru" firstAttribute="top" secondItem="ihQ-7C-3vK" secondAttribute="top" id="xft-Ei-Csl"/>
+                                        <constraint firstAttribute="trailing" secondItem="js8-hG-lB0" secondAttribute="trailing" constant="16" id="yFj-ku-G9b"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="historyButton" destination="rzo-bq-9ea" id="oIo-zW-mTf"/>
+                                        <outlet property="shareButton" destination="js8-hG-lB0" id="fGJ-7O-cjV"/>
+                                        <outlet property="titleLabel" destination="rNx-my-5Ru" id="7ce-u5-tZ6"/>
+                                    </connections>
+                                </collectionReusableView>
                             </collectionView>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4A5-3K-je3" customClass="HEMPopupMaskView">
-                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="667"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="220" placeholderIntrinsicHeight="65" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-k3-vSA" customClass="HEMPopupView">
-                                <rect key="frame" x="10" y="174" width="295.66666666666669" height="65"/>
+                                <rect key="frame" x="10" y="130" width="295.66666666666669" height="65"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You were in Medium Sleep for 14 minutes." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBx-ft-eT4">
                                         <rect key="frame" x="16" y="4" width="265.66666666666669" height="53"/>
@@ -2128,38 +2172,29 @@
                                     <constraint firstAttribute="centerX" secondItem="Uzh-83-Z8g" secondAttribute="centerX" id="wV0-Dq-08n"/>
                                 </constraints>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6p-nS-UHJ">
-                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <navigationItem title="Title" id="FpF-O4-KNc"/>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="Srd-J7-T36" secondAttribute="top" constant="20" id="1DK-Gu-yAf"/>
                             <constraint firstItem="e3l-C7-h86" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="66M-WO-U2N"/>
-                            <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="V6p-nS-UHJ" secondAttribute="bottom" id="9Gh-dU-ZCq"/>
-                            <constraint firstItem="NKd-k3-vSA" firstAttribute="top" secondItem="V6p-nS-UHJ" secondAttribute="bottom" constant="110" id="9Vx-Xd-gd8"/>
+                            <constraint firstItem="4A5-3K-je3" firstAttribute="top" secondItem="Srd-J7-T36" secondAttribute="top" constant="20" id="BB5-AL-VV0"/>
+                            <constraint firstItem="e3l-C7-h86" firstAttribute="top" secondItem="Srd-J7-T36" secondAttribute="top" constant="64" id="CAy-cA-WC5"/>
                             <constraint firstAttribute="bottom" secondItem="F5X-iN-TNU" secondAttribute="bottom" id="HhF-E1-2bw"/>
-                            <constraint firstAttribute="trailing" secondItem="V6p-nS-UHJ" secondAttribute="trailing" id="JnT-NU-dbh"/>
                             <constraint firstItem="NKd-k3-vSA" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" constant="10" id="K43-iI-K7h"/>
                             <constraint firstAttribute="bottom" secondItem="e3l-C7-h86" secondAttribute="bottom" id="LD9-ne-EMK"/>
                             <constraint firstAttribute="bottom" secondItem="4A5-3K-je3" secondAttribute="bottom" id="Nh2-HD-vWX"/>
                             <constraint firstAttribute="trailing" secondItem="F5X-iN-TNU" secondAttribute="trailing" id="UIu-hX-yxk"/>
-                            <constraint firstItem="4A5-3K-je3" firstAttribute="top" secondItem="V6p-nS-UHJ" secondAttribute="bottom" id="UVY-4r-IXk"/>
                             <constraint firstAttribute="trailing" secondItem="4A5-3K-je3" secondAttribute="trailing" id="XKu-ga-DFL"/>
-                            <constraint firstItem="V6p-nS-UHJ" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="bottom" id="ZYy-2A-tml"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="bjl-nO-FCi"/>
-                            <constraint firstItem="e3l-C7-h86" firstAttribute="top" secondItem="V6p-nS-UHJ" secondAttribute="bottom" id="hT5-1v-9qp"/>
                             <constraint firstAttribute="trailing" secondItem="e3l-C7-h86" secondAttribute="trailing" id="kA9-1f-wE6"/>
-                            <constraint firstItem="V6p-nS-UHJ" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="wh9-rF-gXX"/>
+                            <constraint firstItem="NKd-k3-vSA" firstAttribute="top" secondItem="F5X-iN-TNU" secondAttribute="top" constant="110" id="sxN-DB-atJ"/>
                             <constraint firstItem="4A5-3K-je3" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="zJa-01-UQd"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="F5X-iN-TNU" id="GKv-qY-j6y"/>
@@ -2169,11 +2204,9 @@
                         <outlet property="errorSupportButton" destination="Uzh-83-Z8g" id="SpF-6a-vQt"/>
                         <outlet property="errorTitleLabel" destination="7mO-NU-EFs" id="zw2-TG-MqV"/>
                         <outlet property="errorViewsContainerView" destination="e3l-C7-h86" id="6db-1d-xLU"/>
-                        <outlet property="navigationBar" destination="V6p-nS-UHJ" id="G2o-Zh-310"/>
-                        <outlet property="navigationBarTopConstraint" destination="ZYy-2A-tml" id="U2Q-57-Rz9"/>
                         <outlet property="popupMaskView" destination="4A5-3K-je3" id="y9U-xZ-hWo"/>
                         <outlet property="popupView" destination="NKd-k3-vSA" id="3So-DM-FOy"/>
-                        <outlet property="popupViewTop" destination="9Vx-Xd-gd8" id="zuy-Op-T6D"/>
+                        <outlet property="popupViewTop" destination="sxN-DB-atJ" id="5QQ-5f-ysh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xwK-bi-1s7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4689,7 +4722,9 @@
         <image name="sleepSoundIcon" width="24" height="24"/>
         <image name="soundGraphLeft" width="80" height="20"/>
         <image name="soundGraphRight" width="80" height="20"/>
+        <image name="timelineCalendarIcon" width="24" height="24"/>
         <image name="timelineNoDataIcon" width="144" height="162"/>
+        <image name="timelineShareIcon" width="24" height="24"/>
         <image name="timeline_action_adjust" width="32" height="32"/>
         <image name="topShadow" width="375" height="4"/>
         <image name="volumeIcon" width="22" height="20"/>

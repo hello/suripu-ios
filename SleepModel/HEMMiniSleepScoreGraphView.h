@@ -3,5 +3,6 @@
 
 @interface HEMMiniSleepScoreGraphView : UIView
 
-@property (nonatomic) NSUInteger sleepScore;
+- (void)setSleepScore:(NSInteger)score color:(UIColor*)color;
+
 @end

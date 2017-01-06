@@ -101,13 +101,6 @@
 + (UIColor *)colorForSleepState:(SENTimelineSegmentSleepState)state;
 
 /**
- * @deprecated
- * Removed in favor of colorForSleepState:
- * Slated for deletion after trends v2
- */
-+ (UIColor *)colorForSleepScore:(NSInteger)score;
-
-/**
  *  Creates a UIColor instance from a hex value, such as 0xFF0000 (red)
  *
  *  @param hexValue value of the color to create

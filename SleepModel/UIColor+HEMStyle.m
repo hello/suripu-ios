@@ -268,18 +268,6 @@
     }
 }
 
-+ (UIColor *)colorForSleepScore:(NSInteger)score {
-    if (score == 0) {
-        return [self colorForCondition:SENConditionUnknown];
-    } else if (score < 50) {
-        return [self colorForCondition:SENConditionAlert];
-    } else if (score < 80) {
-        return [self colorForCondition:SENConditionWarning];
-    } else {
-        return [self colorForCondition:SENConditionIdeal];
-    }
-}
-
 + (UIColor *)timelineBackgroundColor {
     return [self blue2];
 }

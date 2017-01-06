@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.1.7
+
+Fixes:
+
+* Room conditions extension properly taps in to the corresponding app
+* No alarm card in alarm list displays full text in smaller devices
+* Graphs in room conditions will load even when current minute has no data
+* Sleep score color in timeline history matches the timeline sleep score
+* Birthdate picker will not highlight the separator too
+
 ## 2.0.1.5
 
 New:

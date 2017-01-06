@@ -10,6 +10,17 @@ Fixes:
 * Sleep score color in timeline history matches the timeline sleep score
 * Birthdate picker will not highlight the separator too
 
+## 2.0.1.6
+
+New:
+
+* Design tweaks to Account settings
+* Design tweaks to Settings
+* Updated line spacing for info cards
+* Updated line spacing for first alarm card in alarm list
+* Updated line spacing for sensor about copy
+* Removed breadcrumb event / logic from accounts
+
 ## 2.0.1.5
 
 New:

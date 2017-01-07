@@ -110,6 +110,7 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
     } else {
         [[self titleLabel] setTextColor:[UIColor boldTextColor]];
         [[self titleLabel] setFont:[UIFont h5]];
+        [[self navigationItem] setTitle:nil];
     }
 }
 

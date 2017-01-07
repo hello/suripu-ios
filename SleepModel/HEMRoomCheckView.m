@@ -242,7 +242,7 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
     
     [[self sensorContainerLeftConstraint] setConstant:adjustedConstant];
     [UIView animateWithDuration:kHEMRoomCheckViewSensorIconMoveDuration animations:^{
-        [[self sensorContainerView] layoutIfNeeded];
+        [[[self sensorContainerView] superview] layoutIfNeeded];
     } completion:completion];
 }
 

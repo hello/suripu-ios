@@ -30,8 +30,13 @@ void ApplyHelloStyles (void) {
     
     NSDictionary* barButtonAttrs = @{NSFontAttributeName : [UIFont button],
                                      NSForegroundColorAttributeName : [UIColor tintColor]};
-    [[UIBarButtonItem appearance] setTitleTextAttributes:barButtonAttrs
-                                                forState:UIControlStateNormal];
+    // hide the back button text, since we never show it
+    UIOffset backButtonOffset = UIOffsetMake(-HEMStyleDefaultNavBarButtonItemWidth, 0.0f);
+    
+    id barButtonItemAppearance = [UIBarButtonItem appearance];
+    [barButtonItemAppearance setTitleTextAttributes:barButtonAttrs forState:UIControlStateNormal];
+    [barButtonItemAppearance setBackButtonTitlePositionAdjustment:backButtonOffset
+                                                    forBarMetrics:UIBarMetricsDefault];
     
     [UIColor applyDefaultColorAppearances];
 }

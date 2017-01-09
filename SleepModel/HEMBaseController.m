@@ -262,7 +262,6 @@
     
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     [dialogVC setDialogImage:image];
-    [dialogVC setViewToShowThrough:seeThroughView];
     __weak typeof(self) weakSelf = self;
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"dialog.help.title", nil)

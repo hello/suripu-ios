@@ -72,7 +72,6 @@
 
 - (void)showCustomerAlert:(HEMAlertViewController*)alertVC
             fromPresenter:(HEMPresenter *)presenter {
-    [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [alertVC showFrom:self];
 }
 

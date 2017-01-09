@@ -211,7 +211,6 @@ extension MainViewController: HEMSystemAlertDelegate, HEMPresenterErrorDelegate 
     func showError(withTitle title: String?, andMessage message: String, withHelpPage helpPage: String?, from presenter: HEMPresenter) {
         let alertVC = HEMAlertViewController(title: title, message: message)!
         let buttonTitle = NSLocalizedString("actions.ok", comment: "error button title")
-        alertVC.viewToShowThrough = self.view
         alertVC.addButton(withTitle: buttonTitle, style: HEMAlertViewButtonStyle.roundRect, action: nil)
         alertVC.show(from: self)
     }

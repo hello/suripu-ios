@@ -85,7 +85,6 @@
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil)
                            style:HEMAlertViewButtonStyleBlueText
                           action:cancelAction];
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [dialogVC showFrom:self];
 }
 

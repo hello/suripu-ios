@@ -157,7 +157,6 @@
              fromPresenter:(HEMAlarmListPresenter *)presenter {
     HEMAlertViewController* dialogVC =
     [[HEMAlertViewController alloc] initWithTitle:title message:message];
-    [dialogVC setViewToShowThrough:[[self rootViewController] view]];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil)
                            style:HEMAlertViewButtonStyleRoundRect
                           action:nil];

@@ -12,7 +12,7 @@
 @implementation UIView (HEMSnapshot)
 
 - (UIImage*)snapshot {
-    UIGraphicsBeginImageContextWithOptions([self bounds].size, YES, 0);
+    UIGraphicsBeginImageContextWithOptions([self bounds].size, NO, 0);
     
     [self drawViewHierarchyInRect:[self bounds] afterScreenUpdates:NO];
     

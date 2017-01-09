@@ -942,7 +942,7 @@
                                     <constraint firstAttribute="height" constant="2" id="e5x-KL-CLQ"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5' 11&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lX5-4w-c9S">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="5' 11&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lX5-4w-c9S">
                                 <rect key="frame" x="115" y="321.33333333333326" width="121" height="76.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="64"/>
                                 <color key="textColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2783,17 +2783,14 @@ what's the temperature?"</string>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is used to provide you with more personalized recommendations about your sleep." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBp-0g-Ucq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="This is used to provide you with more personalized recommendations about your sleep." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBp-0g-Ucq">
                                 <rect key="frame" x="20" y="68" width="374" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLN-GF-KON">
-                                <rect key="frame" x="188" y="341" width="37.333333333333329" height="87"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="87" id="zV0-Qi-fYT"/>
-                                </constraints>
+                                <rect key="frame" x="188" y="351" width="37.333333333333329" height="77"/>
                                 <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="64"/>
                                 <color key="textColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2851,10 +2848,11 @@ what's the temperature?"</string>
                             <constraint firstAttribute="centerX" secondItem="GFw-g6-B5s" secondAttribute="centerX" constant="0.5" id="Ae4-hB-jQZ"/>
                             <constraint firstAttribute="trailing" secondItem="Vca-9S-Db1" secondAttribute="trailing" constant="20" id="CbL-ZU-bO0"/>
                             <constraint firstAttribute="trailing" secondItem="uq9-g7-eH2" secondAttribute="trailing" id="FZ6-Qi-rGB"/>
-                            <constraint firstItem="E3B-WU-9Bv" firstAttribute="top" secondItem="YLN-GF-KON" secondAttribute="bottom" constant="42" id="IJk-1F-DIU"/>
+                            <constraint firstItem="E3B-WU-9Bv" firstAttribute="top" secondItem="YLN-GF-KON" secondAttribute="bottom" priority="750" constant="42" id="IJk-1F-DIU"/>
                             <constraint firstItem="mBp-0g-Ucq" firstAttribute="top" secondItem="Vca-9S-Db1" secondAttribute="bottom" constant="10" id="J7L-vc-z7H"/>
                             <constraint firstItem="mBp-0g-Ucq" firstAttribute="leading" secondItem="DnN-fi-uxz" secondAttribute="leading" constant="20" id="Kqs-fs-RDk"/>
                             <constraint firstAttribute="centerX" secondItem="E3B-WU-9Bv" secondAttribute="centerX" id="MMV-lV-fbe"/>
+                            <constraint firstItem="YLN-GF-KON" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mBp-0g-Ucq" secondAttribute="bottom" constant="10" id="Rrl-M4-0TN"/>
                             <constraint firstItem="YLN-GF-KON" firstAttribute="centerX" secondItem="DnN-fi-uxz" secondAttribute="centerX" id="U4V-59-4Ga"/>
                             <constraint firstAttribute="trailing" secondItem="mBp-0g-Ucq" secondAttribute="trailing" constant="20" id="U7d-GW-ASP"/>
                             <constraint firstItem="hPY-my-fzC" firstAttribute="top" secondItem="vwe-Kd-JLe" secondAttribute="bottom" constant="20" id="X7s-g3-hIO"/>

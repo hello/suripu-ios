@@ -942,13 +942,9 @@
                                     <constraint firstAttribute="height" constant="2" id="e5x-KL-CLQ"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5' 11&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lX5-4w-c9S">
-                                <rect key="frame" x="68" y="316" width="168" height="87"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="168" id="NMi-2z-zxr"/>
-                                    <constraint firstAttribute="height" constant="87" id="VI7-TJ-a1O"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="65"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5' 11&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lX5-4w-c9S">
+                                <rect key="frame" x="115" y="321.33333333333326" width="121" height="76.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="64"/>
                                 <color key="textColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -984,6 +980,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mL9-pT-JXG" secondAttribute="trailing" constant="20" id="0v8-R8-2Tc"/>
+                            <constraint firstItem="lX5-4w-c9S" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6rG-bz-NdY" secondAttribute="leading" constant="20" id="4Ah-GA-mz9"/>
                             <constraint firstItem="ayt-S0-U9x" firstAttribute="top" secondItem="iyM-PD-FTT" secondAttribute="bottom" constant="10" id="BTb-Pa-ZEc"/>
                             <constraint firstItem="M0L-MG-dGi" firstAttribute="bottom" secondItem="tOK-gj-1np" secondAttribute="bottom" constant="77" id="Bu3-ZY-idZ"/>
                             <constraint firstAttribute="trailing" secondItem="ayt-S0-U9x" secondAttribute="trailing" constant="20" id="EAA-aC-zTr"/>

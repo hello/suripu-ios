@@ -55,6 +55,7 @@
 + (UIFont*)alarmButtonFont;
 + (UIFont*)alarmMeridiemFont;
 + (UIFont*)sensorUnitFontForUnit:(SENSensorUnit)unit;
++ (UIFont*)heightPickerValueFont;
 + (UIFont*)timelineHistoryScoreFontOfSize:(CGFloat)size;
 
 /**

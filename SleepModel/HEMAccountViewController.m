@@ -75,8 +75,6 @@
                                                            message:message
                                                      defaultsToYes:YES
                                                             action:action];
-    
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [dialogVC showFrom:self];
 }
 
@@ -89,7 +87,6 @@
         [[self navigationController] pushViewController:controller animated:YES];
     } else if ([controller isKindOfClass:[HEMAlertViewController class]]) {
         HEMAlertViewController* alertVC = (id) controller;
-        [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
         [alertVC showFrom:[self rootViewController]];
     } else if (![controller isKindOfClass:[UINavigationController class]]) {
         controllerToPresenter = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];

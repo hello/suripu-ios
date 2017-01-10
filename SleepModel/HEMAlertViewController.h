@@ -15,7 +15,6 @@
 /**
  *  View blurred under the popup
  */
-@property (nonatomic, weak)   UIView* viewToShowThrough;
 @property (nonatomic, strong) UIImage* dialogImage;
 @property (nonatomic, copy)   NSAttributedString* attributedMessage;
 @property (nonatomic) HEMAlertViewType type;

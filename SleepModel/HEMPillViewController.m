@@ -388,7 +388,6 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:confirmation];
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     
     __weak typeof(self) weakSelf = self;
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];

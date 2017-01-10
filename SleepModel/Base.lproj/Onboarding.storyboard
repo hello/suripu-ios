@@ -2790,7 +2790,7 @@ what's the temperature?"</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLN-GF-KON">
-                                <rect key="frame" x="188" y="351" width="37.333333333333329" height="77"/>
+                                <rect key="frame" x="188" y="351" width="37.333333333333343" height="77"/>
                                 <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="64"/>
                                 <color key="textColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2800,7 +2800,7 @@ what's the temperature?"</string>
                                 <color key="backgroundColor" red="0.30786743760108948" green="0.4887235164642334" blue="0.99855518341064453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="2" id="Ufk-fG-BD1"/>
-                                    <constraint firstAttribute="height" constant="88" id="ZUN-WO-0wC"/>
+                                    <constraint firstAttribute="height" priority="749" constant="88" id="ZUN-WO-0wC"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uq9-g7-eH2">

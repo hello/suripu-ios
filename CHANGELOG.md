@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1.10
+
+Fixes:
+
+* Fix issue with the weight picker value being cut off when displayed in kg and on the 4s
+
 ## 2.0.1.9
 
 Fixes:

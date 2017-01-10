@@ -118,12 +118,6 @@ class SlideContentPresenter: HEMPresenter {
             contentSize.width = CGFloat(self.contentViews.count) * viewWidth
             self.contentScrollView.contentSize = contentSize
         }
-        
-        if self.slidingTitleView != nil && self.navigationBar != nil {
-            var titleFrame = self.slidingTitleView!.frame
-            titleFrame.size = self.navigationBar!.frame.size
-            self.slidingTitleView!.frame = titleFrame
-        }
     }
     
     fileprivate func insertContentViewIfNeeded(index: Int) {

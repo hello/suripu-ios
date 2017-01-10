@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.1.9
+
+Fixes:
+
+* Sub tab titles no longer shift when navigating in to detail views on iOS 9
+* Prevent height unit text from growing and shrinking when changing height in picker
+* Fixes issue where weight value in picker overlaps the description text on 4s
+* Prevent alerts from briefly flashing content that is not currently visible
+
 ## 2.0.1.8
 
 New:

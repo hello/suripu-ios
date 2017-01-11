@@ -83,7 +83,7 @@
     }
     
     HEMInsightsHandHoldingPresenter* hhPresenter
-        = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:_handHoldingService];
+        = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
     [self addPresenter:hhPresenter];
     [self setHandHoldingPresenter:hhPresenter];
     

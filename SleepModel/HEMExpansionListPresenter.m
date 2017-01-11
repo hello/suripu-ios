@@ -122,7 +122,7 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
     
     UILabel* label = [UILabel new];
     [label setFont:[UIFont h6]];
-    [label setTextColor:[UIColor grey6]];
+    [label setTextColor:[UIColor grey5]];
     [label setText:[charactersToShow uppercaseString]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setBackgroundColor:[UIColor grey3]];

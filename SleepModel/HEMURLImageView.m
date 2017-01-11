@@ -14,6 +14,7 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
 
 @interface HEMURLImageView()
 
+@property (nonatomic, weak)   UIView* placeholderView;
 @property (nonatomic, strong) AFImageDownloadReceipt* downloadReceipt;
 @property (nonatomic, copy)   NSString* currentImageURL;
 @property (nonatomic, weak)   HEMActivityIndicatorView* activityIndicator;
@@ -75,6 +76,15 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     [self setIndicateActivity:YES];
 }
 
+- (void)usePlaceholderView:(UIView*)placeholderView {
+    if ([self placeholderView]) {
+        [[self placeholderView] removeFromSuperview];
+    }
+    [placeholderView setFrame:[self bounds]];
+    [self setPlaceholderView:placeholderView];
+    [self addSubview:placeholderView];
+}
+
 - (void)setImageWithURL:(NSString*)url {
     [self setImageWithURL:url withTimeout:HEMURLImageRequestDefaultTimeout];
 }
@@ -82,6 +92,8 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
 - (void)setImage:(UIImage *)image {
     // if caller is setting an image directly, without a url, then clear it
     [self setCurrentImageURL:nil];
+    [[self placeholderView] removeFromSuperview];
+    [self setPlaceholderView:nil];
     [super setImage:image];
 }
 

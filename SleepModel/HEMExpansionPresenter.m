@@ -88,6 +88,16 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     [[[headerView urlImageView] layer] setBorderWidth:kHEMExpansionHeaderIconBorder];
     [[[headerView urlImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
     
+    __weak typeof(self) weakSelf = self;
+    __weak typeof([headerView urlImageView]) weakImageView = [headerView urlImageView];
+    [[headerView urlImageView] setImageWithURL:iconUri completion:^(UIImage * image, NSString * url, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        __strong typeof(weakImageView) strongImageView = weakImageView;
+        if (error || !image) {
+            [strongImageView usePlaceholderView:[strongSelf placeholderIconView]];
+        }
+    }];
+    
     [[headerView titleLabel] setTextColor:[UIColor grey7]];
     [[headerView titleLabel] setFont:[UIFont bodyBold]];
     [[headerView titleLabel] setText:[[self expansion] deviceName]];
@@ -121,6 +131,25 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 
 - (void)bindWithRootView:(UIView *)view {
     [self setRootView:view];
+}
+
+- (UIView*)placeholderIconView {
+    NSString* charactersToShow = nil;
+    NSString* companyName = [[self expansion] companyName];
+    if ([companyName length] == 1) {
+        charactersToShow = companyName;
+    } else if ([companyName length] > 1) {
+        charactersToShow = [companyName substringToIndex:2];
+    }
+    
+    UILabel* label = [UILabel new];
+    [label setFont:[UIFont h3]];
+    [label setTextColor:[UIColor grey7]];
+    [label setText:[charactersToShow uppercaseString]];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setBackgroundColor:[UIColor grey3]];
+    
+    return label;
 }
 
 - (BOOL)hasNavBar {

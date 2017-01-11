@@ -330,12 +330,17 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                       dismissAction:^(BOOL shown) {
                           __strong typeof(weakSelf) strongSelf = self;
                           if (shown) {
-                              [[strongSelf handHoldingService] completed:HEMHandHoldingSensorScrubbing];
+                              [strongSelf completeScrubbingTutorial];
                           }
                       }];
         
         [self setHandHoldingView:handholdingView];
     }
+}
+
+- (void)completeScrubbingTutorial {
+    [[self handHoldingService] completed:HEMHandHoldingSensorScrubbing];
+    [self setHandHoldingView:nil];
 }
 
 #pragma mark - UICollectionViewDelegate / DataSource
@@ -635,7 +640,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)willBeginScrubbingIn:(HEMSensorChartContainer *)chartContainer {
     [[self collectionView] setScrollEnabled:NO];
     [self setScrubbing:YES];
-    [[self handHoldingService] completed:HEMHandHoldingSensorScrubbing];
+    [self completeScrubbingTutorial];
 }
 
 - (void)didEndScrubbingIn:(HEMSensorChartContainer *)chartContainer {

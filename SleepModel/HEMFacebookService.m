@@ -12,6 +12,13 @@
 
 #import "HEMFacebookService.h"
 
+@interface HEMFacebookService()
+
+@property (nonatomic, strong) FBSDKLoginManager* loginManager;
+@property (nonatomic, strong) FBSDKGraphRequest* graphRequest;
+
+@end
+
 @implementation HEMFacebookService
 
 - (NSArray<NSString*>*)profilePermissions {
@@ -28,19 +35,24 @@
         return;
     }
     
-    FBSDKLoginManager *login = [FBSDKLoginManager new];
-    [login logInWithReadPermissions:[self profilePermissions]
-                 fromViewController:controller
-                            handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                if (error) {
-                                    [SENAnalytics trackError:error];
-                                }
-                                completion ([result isCancelled], error);
-                            }];
+    if (![self loginManager]) {
+        [self setLoginManager:[FBSDKLoginManager new]];
+    }
+    
+    [[self loginManager] logInWithReadPermissions:[self profilePermissions]
+                               fromViewController:controller
+                                          handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                              if (error) {
+                                                  [SENAnalytics trackError:error];
+                                              }
+                                              completion ([result isCancelled], error);
+                                          }];
 }
 
 - (void)profileFrom:(id)controller completion:(HEMFacebookProfileHandler)completion {
+    __weak typeof(self) weakSelf = self;
     [self loginFrom:controller completion:^(BOOL cancelled, NSError * _Nullable error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             [SENAnalytics trackError:error];
             completion (nil, nil, error);
@@ -49,6 +61,7 @@
             FBSDKGraphRequest* request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me"
                                                                            parameters:params];
             [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
                 SENAccount* account = nil;
                 NSString* photoUrl = nil;
                 NSDictionary* dict = SENObjectOfClass(result, [NSDictionary class]);
@@ -66,8 +79,11 @@
                         photoUrl = dataDict[@"url"];
                     }
                 }
+                [strongSelf setGraphRequest:nil];
                 completion (account, photoUrl, error);
             }];
+            
+            [strongSelf setGraphRequest:request];
         } else { // cancelled
             completion (nil, nil, nil);
         }

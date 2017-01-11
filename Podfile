@@ -14,8 +14,8 @@ abstract_target 'SenseApp' do
     
     # the actual Sense iOS app
     target 'Sense' do
-        pod 'FBSDKLoginKit', '~> 4.11.0'
-        pod 'FBSDKCoreKit', '~> 4.11.0'
+        pod 'FBSDKLoginKit', '~> 4.18.0'
+        pod 'FBSDKCoreKit', '~> 4.18.0'
         pod 'UIImageEffects', '~> 0.0.1'
         pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
         pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git', :tag => '1.5.4.1'

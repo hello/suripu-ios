@@ -22,6 +22,8 @@
 #import "HEMSensorChartContainer.h"
 #import "HEMSubNavigationView.h"
 #import "HEMScreenUtils.h"
+#import "HEMHandHoldingService.h"
+#import "HEMHandholdingView.h"
 
 #import "HEMSensorValueCollectionViewCell.h"
 #import "HEMSensorAboutCollectionViewCell.h"
@@ -33,6 +35,7 @@ static CGFloat const kHEMSensorDetailChartXLabelCount = 7;
 static NSUInteger const kHEMSensorDetailXAxisOffset = 10;
 static CGFloat const kHEMSensorDetailMaxChartHeight = 271.0f;
 static CGFloat const kHEMSensorDetailChartTopSpaceOffset = 0.09f;
+static CGFloat const kHEMSensorDetailChartHandHoldingPadding = 24.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     HEMSensorDetailContentValue = 0,
@@ -49,6 +52,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 >
 
 @property (nonatomic, weak) HEMSensorService* sensorService;
+@property (nonatomic, weak) HEMHandHoldingService* handHoldingService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSArray* content;
 @property (nonatomic, strong) SENSensor* sensor;
@@ -68,6 +72,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, weak) UILabel* currentValueLabel;
 @property (nonatomic, weak) HEMSensorValueCollectionViewCell* valueCell;
 @property (nonatomic, assign) SENSensorType type;
+@property (nonatomic, weak) HEMHandholdingView* handHoldingView;
 
 @property (nonatomic, assign) CGFloat chartMinValue;
 @property (nonatomic, assign) CGFloat chartMaxValue;
@@ -77,9 +82,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @implementation HEMSensorDetailPresenter
 
 - (instancetype)initWithSensorService:(HEMSensorService*)sensorService
-                            forSensor:(SENSensor*)sensor {
+                            forSensor:(SENSensor*)sensor
+                andHandHoldingService:(HEMHandHoldingService*)handHoldingService {
     if (self = [super init]) {
         _sensorService = sensorService;
+        _handHoldingService = handHoldingService;
         _sensor = sensor;
         _type = [sensor type];
         _chartMinValue = MAXFLOAT;
@@ -291,6 +298,43 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             [[self xAxisLabelFormatter] setDateFormat:@"ha"];
             [[self exactTimeFormatter] setDateFormat:@"h:mm a"];
         }
+    }
+}
+
+#pragma mark - Hand Holding
+
+- (void)showScrubbingTutorialIfNeeded {
+    if ([self chartLoaded]
+        && [self chartView]
+        && ![self handHoldingView]
+        && [[self handHoldingService] shouldShow:HEMHandHoldingSensorScrubbing]) {
+        CGRect frame = [[self chartView] convertRect:[[self chartView] bounds]
+                                              toView:[[self collectionView] superview]];
+        CGFloat midY = CGRectGetMidY(frame);
+        CGFloat width = CGRectGetWidth(frame);
+        CGFloat halfSize = HEMHandholdingGestureSize / 2.0f;
+        CGFloat endX = width - halfSize - kHEMSensorDetailChartHandHoldingPadding;
+        CGFloat startX = halfSize + kHEMSensorDetailChartHandHoldingPadding;
+        CGPoint startPoint = CGPointMake(startX, midY);
+        CGPoint endPoint = CGPointMake(endX, midY);
+        
+        HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
+        [handholdingView setGestureStartCenter:startPoint];
+        [handholdingView setGestureEndCenter:endPoint];
+        [handholdingView setMessage:NSLocalizedString(@"handholding.message.sensor-scrubbing", nil)];
+        [handholdingView setAnchor:HEMHHDialogAnchorBottom];
+        
+        __weak typeof(self) weakSelf = self;
+        [handholdingView showInView:[[self collectionView] superview]
+                    fromContentView:[self chartView]
+                      dismissAction:^(BOOL shown) {
+                          __strong typeof(weakSelf) strongSelf = self;
+                          if (shown) {
+                              [[strongSelf handHoldingService] completed:HEMHandHoldingSensorScrubbing];
+                          }
+                      }];
+        
+        [self setHandHoldingView:handholdingView];
     }
 }
 
@@ -521,6 +565,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     }
     
     [self setChartView:chartView];
+    [self showScrubbingTutorialIfNeeded];
 }
 
 - (void)configureScaleCell:(HEMSensorScaleCollectionViewCell*)scaleCell {
@@ -590,6 +635,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)willBeginScrubbingIn:(HEMSensorChartContainer *)chartContainer {
     [[self collectionView] setScrollEnabled:NO];
     [self setScrubbing:YES];
+    [[self handHoldingService] completed:HEMHandHoldingSensorScrubbing];
 }
 
 - (void)didEndScrubbingIn:(HEMSensorChartContainer *)chartContainer {

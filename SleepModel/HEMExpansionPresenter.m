@@ -144,7 +144,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     
     UILabel* label = [UILabel new];
     [label setFont:[UIFont h3]];
-    [label setTextColor:[UIColor grey7]];
+    [label setTextColor:[UIColor grey6]];
     [label setText:[charactersToShow uppercaseString]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setBackgroundColor:[UIColor grey3]];

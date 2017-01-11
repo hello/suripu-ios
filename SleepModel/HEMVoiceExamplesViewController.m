@@ -24,6 +24,13 @@
     [self configurePresenter];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSString* category = [[self commandGroup] categoryName];
+    [SENAnalytics track:HEMAnalyticsEventVoiceExamples
+             properties:@{HEMAnalyticsPropCategory : category ?: @"unknown"}];
+}
+
 - (void)configurePresenter {
     HEMVoiceExamplesPresenter* presenter =
         [[HEMVoiceExamplesPresenter alloc] initWithCommandGroup:[self commandGroup]];

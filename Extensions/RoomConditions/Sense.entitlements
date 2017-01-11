@@ -10,10 +10,13 @@
 	<array>
 		<string>group.is.hello.sense.settings</string>
 		<string>group.is.hello.sense.data</string>
+		<string>group.is.hello.sensetest.settings</string>
+		<string>group.is.hello.sensetest.data</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)is.hello.Sense</string>
+		<string>$(AppIdentifierPrefix)is.hello.sensetest</string>
 	</array>
 </dict>
 </plist>

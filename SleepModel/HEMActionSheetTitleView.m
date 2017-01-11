@@ -6,10 +6,9 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import "HEMActionSheetTitleView.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 #import "NSString+HEMUtils.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
 
 static CGFloat HEMActionSheetTitleHorzPadding = 24.0f;
 static CGFloat HEMActionSheetTitleVertPadding = 22.0f;
@@ -35,7 +34,8 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
 
 + (NSDictionary*)defaultDescriptionProperties {
     return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName : [UIColor detailTextColor]};
+             NSForegroundColorAttributeName : [UIColor detailTextColor],
+             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
 }
 
 - (instancetype)initWithTitle:(NSString*)title andDescription:(NSAttributedString*)description {

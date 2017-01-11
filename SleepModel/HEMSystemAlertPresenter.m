@@ -24,7 +24,9 @@
 #import "HEMSettingsStoryboard.h"
 #import "HEMDeviceService.h"
 #import "HEMSystemAlertService.h"
+#import "HEMVoiceService.h"
 #import "HEMPillDFUStoryboard.h"
+#import "HEMActivityCoverView.h"
 #import "HEMStyle.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
@@ -35,6 +37,8 @@ typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
 };
 
 static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
+static CGFloat const HEMSystemAlertRelayoutDuration = 0.2f;
+static CGFloat const HEMSystemAlertActivitySuccessDelay = 1.5f;
 
 @interface HEMSystemAlertPresenter() <HEMNetworkAlertDelegate, HEMSensePairingDelegate, HEMPillPairDelegate>
 
@@ -43,10 +47,12 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 @property (nonatomic, weak) HEMSystemAlertService* alertService;
 @property (nonatomic, weak) HEMDeviceAlertService* deviceAlertService;
 @property (nonatomic, weak) HEMTimeZoneAlertService* tzAlertService;
+@property (nonatomic, weak) HEMVoiceService* voiceService;
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UIView* alertContainerView;
 @property (nonatomic, weak) UIView* topView;
 @property (nonatomic, weak) HEMActionView* currentActionView;
+@property (nonatomic, weak) HEMActivityCoverView* activityView;
 
 @end
 
@@ -56,11 +62,13 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
                          deviceAlertService:(HEMDeviceAlertService*)deviceAlertService
                        timeZoneAlertService:(HEMTimeZoneAlertService*)tzAlertService
                               deviceService:(HEMDeviceService*)deviceService
-                            sysAlertService:(HEMSystemAlertService*)alertService {
+                            sysAlertService:(HEMSystemAlertService*)alertService
+                               voiceService:(HEMVoiceService*)voiceService {
     self = [super init];
     if (self) {
         _sysAlertService = alertService;
         _networkAlertService = networkAlertService;
+        _voiceService = voiceService;
         [_networkAlertService setDelegate:self];
         
         __weak typeof(self) weakSelf = self;
@@ -93,6 +101,11 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 
 #pragma mark - Presenter events
 
+- (void)willRelayout {
+    [super willRelayout];
+    [self relayoutAlertIfShowing];
+}
+
 - (void)didComeBackFromBackground {
     [super didComeBackFromBackground];
     [self runChecks];
@@ -105,6 +118,15 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
 }
 
 #pragma mark - Action View
+
+- (void)relayoutAlertIfShowing {
+    if ([self currentActionView]) {
+        [[self currentActionView] setNeedsLayout];
+        [UIView animateWithDuration:HEMSystemAlertRelayoutDuration animations:^{
+            [[self currentActionView] layoutIfNeeded];
+        }];
+    }
+}
 
 - (HEMActionView*)configureAlertViewWithTitle:(NSString*)title
                                       message:(NSString*)message
@@ -139,6 +161,16 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
              properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionLater}];
 }
 
+- (void)dismissActionViewAfterDelay:(void(^)(void))completion {
+    __weak typeof(self) weakSelf = self;
+    int64_t delayInSecs = (int64_t)(HEMSystemAlertActivitySuccessDelay * NSEC_PER_SEC);
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf dismissActionView:completion];
+    });
+}
+
 - (void)dismissActionView:(void(^)(void))completion {
     [[self currentActionView] dismiss:YES completion:^{
         [self setCurrentActionView:nil];
@@ -167,6 +199,60 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
     }];
 }
 
+- (void)senseId:(void(^)(NSString* senseId))completion {
+    NSString* deviceId = [[[[self deviceService] devices] senseMetadata] uniqueId];
+    if (!deviceId) {
+        [[self deviceService] refreshMetadata:^(SENPairedDevices * devices, NSError * error) {
+            completion ([[devices senseMetadata] uniqueId]);
+        }];
+    } else {
+        completion (deviceId);
+    }
+}
+
+#pragma mark - Activity indicator
+
+/**
+ * @discussion
+ * Completion is not called if activity was not shown, which only happens if there
+ * is no alert currently shown
+ */
+- (void)showActivityOverAlert:(void(^)(BOOL shown))completion {
+    if (![self currentActionView]) {
+        if (completion) {
+            completion (NO);
+        }
+        return;
+    }
+    
+    [[self activityView] removeFromSuperview]; // if one was showing for some reason
+    
+    HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+    [self setActivityView:activityView];
+    [activityView showInView:[self currentActionView] activity:YES completion:^{
+        if (completion) {
+            completion (YES);
+        }
+    }];
+}
+
+- (void)dismissActivityIfShown:(BOOL)success completion:(void(^)(void))completion {
+    NSString* result = success ? NSLocalizedString(@"status.success", nil) : nil;
+    [[self activityView] dismissWithResultText:result
+                               showSuccessMark:success
+                                        remove:YES
+                                    completion:completion];
+}
+
+#pragma mark - Error
+
+- (void)showError:(NSString*)message {
+    [[self errorDelegate] showErrorWithTitle:[[self currentActionView] title]
+                                  andMessage:message
+                                withHelpPage:nil
+                               fromPresenter:self];
+}
+
 #pragma mark - System alerts
 
 - (void)showSystemAlertsIfNeeded:(void(^)(BOOL shown))completion {
@@ -183,16 +269,24 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
             // for now, we only support unactionable alerts.  once we get more categories
             // of alerts, we may customize actions based on the category
             NSString* okTitle = NSLocalizedString(@"actions.ok", nil);
+            NSString* fixTitle = nil;
+            if ([alert category] == SENAlertCategoryMuted) {
+                fixTitle = NSLocalizedString(@"actions.unmute", nil);
+            }
             
             HEMActionView* alertView = [strongSelf configureAlertViewWithTitle:[alert localizedTitle]
                                                                        message:[alert localizedBody]
                                                              cancelButtonTitle:okTitle
-                                                                fixButtonTitle:nil];
+                                                                fixButtonTitle:fixTitle];
             
             [alertView setType:HEMSystemAlertTypeSystem];
             [[alertView cancelButton] addTarget:strongSelf
                                          action:@selector(cancelAlert:)
                                forControlEvents:UIControlEventTouchUpInside];
+            
+            [[alertView okButton] addTarget:strongSelf
+                                     action:@selector(unmute)
+                           forControlEvents:UIControlEventTouchUpInside];
             
             [alertView showInView:[strongSelf alertContainerView]
                             below:[self topView]
@@ -213,14 +307,66 @@ static CGFloat const HEMSystemAlertNetworkCheckDelay = 0.5f;
     NSString* type = nil;
     switch ([alert category]) {
         case SENAlertCategoryExpansionUnreachable:
-            type = @"expansion unreachable";
+            type = HEMAnalyticsEventSysAlertPropExpUnreachable;
+            break;
+        case SENAlertCategoryMuted:
+            type = HEMAnalyticsEventSysAlertPropMuted;
             break;
         default:
-            type = @"unknown";
+            type = HEMAnalyticsEventSysAlertPropUnknown;
             break;
     }
     [SENAnalytics track:HEMAnalyticsEventSystemAlert
              properties:@{kHEMAnalyticsEventPropType : type}];
+}
+
+#pragma mark - Unmute Sense
+
+- (void)unmute {
+    __weak typeof(self) weakSelf = self;
+    [self showActivityOverAlert:^(BOOL shown) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (shown) {
+            void(^update)(NSString* senseId) = ^(NSString* senseId) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                
+                SENSenseVoiceSettings* muteSettings = [SENSenseVoiceSettings new];
+                [muteSettings setMuted:@NO];
+                
+                [[strongSelf voiceService] updateVoiceSettings:muteSettings
+                                                    forSenseId:senseId
+                                                    completion:^(SENSenseVoiceSettings* updatedSettings) {
+                                                        __strong typeof(weakSelf) strongSelf = weakSelf;
+                                                        if ([updatedSettings isMuted]) {
+                                                            DDLogVerbose(@"unable to unmute");
+                                                            [strongSelf dismissActivityIfShown:NO completion:^{
+                                                                __strong typeof(weakSelf) strongSelf = weakSelf;
+                                                                [strongSelf showError:NSLocalizedString(@"alerts.update.error.unmute-failed", nil)];
+                                                            }];
+                                                        } else {
+                                                            [strongSelf dismissActivityIfShown:YES completion:nil];
+                                                            [strongSelf dismissActionViewAfterDelay:nil];
+                                                        }
+                                                    }];
+            };
+            
+            [strongSelf senseId:^(NSString *senseId) {
+                if (!senseId) {
+                    // show error
+                    DDLogVerbose(@"no device id to unmute with");
+                    [strongSelf dismissActivityIfShown:NO completion:^{
+                        __strong typeof(weakSelf) strongSelf = weakSelf;
+                        [strongSelf showError:NSLocalizedString(@"alerts.update.error.no-sense-id", nil)];
+                    }];
+                } else {
+                    update (senseId);
+                }
+            }];
+        }
+    }];
+    
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionUnmute}];
 }
 
 #pragma mark - Time Zone alerts

@@ -13,7 +13,7 @@
 #import "HEMVideoCollectionViewCell.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMURLImageView.h"
-#import "UIFont+HEMStyle.h"
+#import "HEMStyle.h"
 
 static NSString* const HEMTutorialCellReuseIdImage = @"image";
 static NSString* const HEMTutorialCellReuseIdVideo = @"video";
@@ -38,6 +38,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 @interface HEMTutorialDataSource()
 
 @property (nonatomic, strong) HEMTutorialContent* content;
+@property (nonatomic, strong) NSAttributedString* attributedBody;
 @property (nonatomic, weak)   UICollectionView* collectionView;
 @property (nonatomic, weak)   HEMVideoCollectionViewCell* videoCell;
 
@@ -67,6 +68,17 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
               forCellWithReuseIdentifier:HEMTutorialCellReuseIdDesc];
 }
 
+- (NSAttributedString*)attributedBody {
+    if (!_attributedBody) {
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
+                                     NSForegroundColorAttributeName : [UIColor grey5],
+                                     NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+        _attributedBody = [[NSAttributedString alloc] initWithString:[[self content] text]
+                                                          attributes:attributes];
+    }
+    return _attributedBody;
+}
+
 - (CGSize)sizeForContentAtIndexPath:(NSIndexPath*)indexPath {
     UIEdgeInsets insets = [[self collectionView] contentInset];
     CGSize size = [[self collectionView] bounds].size;
@@ -82,9 +94,8 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
                                                                font:[UIFont h6]
                                                           cellWidth:size.width];
         } else if ([indexPath row] == HEMTutorialCellTextRowDescription) {
-            size.height = [HEMTextCollectionViewCell heightWithText:[[self content] text]
-                                                               font:[UIFont body]
-                                                          cellWidth:size.width];
+            size.height = [HEMTextCollectionViewCell heightWithAttributedText:[self attributedBody]
+                                                                    cellWidth:size.width];
         }
     }
     
@@ -169,9 +180,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 - (UICollectionViewCell*)descriptionCellFor:(UICollectionView*)collectionView atIndexPath:(NSIndexPath*)indexPath {
     HEMTextCollectionViewCell* descriptionCell =
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdDesc forIndexPath:indexPath];
-    [[descriptionCell textLabel] setFont:[UIFont body]];
-    [[descriptionCell textLabel] setText:[[self content] text]];
-    [[descriptionCell textLabel] setTextColor:[UIColor colorWithWhite:0.0f alpha:0.5f]];
+    [[descriptionCell textLabel] setAttributedText:[self attributedBody]];
     return descriptionCell;
 }
 

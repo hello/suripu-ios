@@ -10,10 +10,12 @@
 
 @interface HEMActionView : UIView
 
+@property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, weak, readonly) UIButton* cancelButton;
 @property (nonatomic, weak, readonly) UIButton* okButton;
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, assign) NSInteger subtype;
+@property (nonatomic, assign, getter=isShowingTabBar) BOOL showingTabBar;
 
 /**
  * Initialize the instance with a title and message to display

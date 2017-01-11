@@ -9,6 +9,7 @@
 #import "HEMOnboardingService.h"
 #import "HEMAccountService.h"
 #import "HEMTimelineService.h"
+#import "HEMStyle.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -341,7 +342,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
         return;
     }
     NSInteger score = [timeline.score integerValue];
-    [cell.sleepScoreView setSleepScore:score];
+    [cell.sleepScoreView setSleepScore:score color:[UIColor colorForCondition:[timeline scoreCondition]]];
     [cell.graphView setSleepDataSegments:timeline.segments];
     cell.dayLabel.text = [self.dayFormatter stringFromDate:timeline.date];
     cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:timeline.date] uppercaseString];

@@ -40,7 +40,6 @@
     [dialogVC addButtonWithTitle:[NSLocalizedString(@"actions.ok", nil) uppercaseString]
                            style:HEMAlertViewButtonStyleRoundRect
                           action:nil];
-    dialogVC.viewToShowThrough = bgView;
     [dialogVC showFrom:controller];
 }
 
@@ -66,6 +65,7 @@
         [self addButtonWithTitle:[NSLocalizedString(@"actions.no", nil) uppercaseString]
                            style:defaultsToYes ? HEMAlertViewButtonStyleGrayText : HEMAlertViewButtonStyleBlueBoldText
                           action:nil];
+        [self setDefaults];
     }
     return self;
 }
@@ -74,26 +74,36 @@
     if (self = [super init]) {
         self.title = title;
         _attributedMessage = [HEMAlertViewController attributedMessageText:message];
+        [self setDefaults];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setDefaults];
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self setDefaults];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addBackgroundView];
+    [[self view] setBackgroundColor:[UIColor seeThroughBackgroundColor]];
     [self configureGestures];
 }
 
-- (void)addBackgroundView {
-    if ([self viewToShowThrough] != nil) {
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        imageView.translatesAutoresizingMaskIntoConstraints = YES;
-        imageView.image = [[self viewToShowThrough] snapshotWithTint:[UIColor seeThroughBackgroundColor]];
-        [[self view] insertSubview:imageView atIndex:0];
-    } else {
-        [[self view] setBackgroundColor:[UIColor seeThroughBackgroundColor]];
-    }
+- (void)setDefaults {
+    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 }
 
 - (void)configureGestures {

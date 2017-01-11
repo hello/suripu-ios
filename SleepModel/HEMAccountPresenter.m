@@ -9,6 +9,8 @@
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "Sense-Swift.h"
+
 #import "SENRemoteImage+HEMDeviceSpecific.h"
 #import "UIAlertController+HEMPhotoOptions.h"
 #import "UIImagePickerController+HEMProfilePhoto.h"
@@ -35,7 +37,6 @@
 #import "HEMPhotoHeaderView.h"
 #import "HEMProfileImageView.h"
 #import "HEMFacebookService.h"
-#import "HEMBreadcrumbService.h"
 #import "HEMPresenter+HEMBreadcrumb.h"
 #import "HEMHandHoldingService.h"
 #import "HEMHandholdingView.h"
@@ -97,7 +98,6 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
 @property (nonatomic, weak) HEMAccountService* accountService;
 @property (nonatomic, weak) HEMFacebookService* facebookService;
 @property (nonatomic, weak) HEMHealthKitService* healthKitService;
-@property (nonatomic, weak) HEMBreadcrumbService* breadcrumbService;
 @property (nonatomic, weak) HEMHandHoldingService* handHoldingService;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
@@ -111,17 +111,19 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
 - (instancetype)initWithAccountService:(HEMAccountService*)accountService
                        facebookService:(HEMFacebookService*)facebookService
                       healthKitService:(HEMHealthKitService*)healthKitService
-                     breadcrumbService:(HEMBreadcrumbService*)breadcrumbService
                     handHoldingService:(HEMHandHoldingService*)hhService {
     self = [super init];
     if (self) {
         _accountService = accountService;
         _healthKitService = healthKitService;
         _facebookService = facebookService;
-        _breadcrumbService = breadcrumbService;
         _handHoldingService = hhService;
     }
     return self;
+}
+
+- (void)bindWithNavigationItem:(UINavigationItem*)navItem {
+    [navItem setTitle:NSLocalizedString(@"settings.account", nil)];
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
@@ -191,17 +193,7 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
 
 - (void)didAppear {
     [super didAppear];
-    BOOL cleared = [self breadcrumbService:[self breadcrumbService]
-                        clearTrailIfEndsIn:HEMBreadcrumbAccount];
-    
     [[self tableView] reloadData];
-    
-    if (cleared) {
-        [self showAccountNameChangeIndicationIfNeeded];
-        
-        NSDictionary* props = @{HEMAnalyticsEventPropSource : @"account"};
-        [SENAnalytics track:HEMAnalyticsEventBreadcrumbsEnd properties:props];
-    }
 }
 
 - (HEMPhotoHeaderView*)photoHeaderView {
@@ -211,35 +203,6 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
         photoView = (id) headerView;
     }
     return photoView;
-}
-
-#pragma mark - Handhholding
-
-- (void)showAccountNameChangeIndicationIfNeeded {
-    SENAccount* account = [[self accountService] account];
-    if ([[self handHoldingService] shouldShow:HEMHandHoldingAccountName forAccount:account]) {
-        NSIndexPath* namePath = [NSIndexPath indexPathForRow:HEMAccountRowName
-                                                   inSection:HEMAccountSectionAccount];
-        UITableViewCell* nameCell = [[self tableView] cellForRowAtIndexPath:namePath];
-        
-        UIView* containerView = [[self tableView] superview];
-        CGRect iconFrame = [[nameCell imageView] convertRect:[[nameCell imageView] bounds]
-                                                      toView:containerView];
-        CGPoint midPoint = CGPointMake(CGRectGetMidX(iconFrame), CGRectGetMidY(iconFrame));
-        
-        HEMHandholdingView* handholdingView = [HEMHandholdingView new];
-        [handholdingView setGestureStartCenter:midPoint];
-        [handholdingView setGestureEndCenter:midPoint];
-        
-        [handholdingView setMessage:NSLocalizedString(@"handholding.message.account-name-change", nil)];
-        [handholdingView setAnchor:HEMHHDialogAnchorBottom];
-        
-        __weak typeof(self) weakSelf = self;
-        [handholdingView showInView:containerView fromContentView:[self tableView] dismissAction:^(BOOL shown) {
-            __strong typeof(weakSelf) strongself = weakSelf;
-            [[strongself handHoldingService] completed:HEMHandHoldingAccountName];
-        }];
-    }
 }
 
 #pragma mark - Photo
@@ -636,43 +599,36 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
-    
-    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    [[cell detailTextLabel] setText:nil];
-    
-    [cell setAccessoryType:UITableViewCellAccessoryNone];
-    [cell setAccessoryView:nil];
-    
+    UIColor* textColor = [UIColor settingsTextColor];
     NSInteger row = [indexPath row];
     NSInteger rows = 1;
     UIImage* icon = nil;
     NSString* title = nil;
     NSString* value = nil;
     BOOL booleanValue = NO;
+    BOOL showAccessory = NO;
     
     switch ([indexPath section]) {
         default:
         case HEMAccountSectionAccount: {
             [self accountIcon:&icon title:&title atRow:row];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            showAccessory = YES;
             rows = HEMAccountRowCount;
             break;
         }
         case HEMAccountSectionDemographics:
             [self demographicsIcon:&icon title:&title value:&value atRow:row];
             rows = HEMDemographicsRowCount;
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            showAccessory = YES;
             break;
         case HEMAccountSectionUnits:
             [self unitsIcon:&icon title:&title atRow:row];
             rows = HEMUnitsRowCount;
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            showAccessory = YES;
             break;
         case HEMAccountSectionPreferences: {
             [self preferencesIcon:&icon title:&title enabled:&booleanValue atRow:row];
+            showAccessory = YES;
             UISwitch* control = [self preferenceSwitch:booleanValue forRow:row];
             [cell setAccessoryView:control];
             rows = HEMPreferencesRowCount;
@@ -680,11 +636,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case HEMAccountSectionSignOut:
             [self signOutIcon:&icon title:&title];
-            [[cell textLabel] setTextColor:[UIColor redColor]];
+            textColor = [UIColor redColor];
             rows = HEMSignOutRowCount;
             break;
     }
     
+    [cell showStyledAccessoryViewIfNone];
+    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [[cell textLabel] setTextColor:textColor];
+    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    [[cell detailTextLabel] setText:nil];
+    [[cell accessoryView] setHidden:!showAccessory];
     [[cell textLabel] setText:title];
     [[cell imageView] setImage:icon];
     [[cell detailTextLabel] setText:value];

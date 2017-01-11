@@ -36,6 +36,10 @@ import SenseKit
         }
     }
     
+    override var shouldAutomaticallyForwardAppearanceMethods: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureContentPresenter()

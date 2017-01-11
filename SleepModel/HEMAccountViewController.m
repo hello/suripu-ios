@@ -14,7 +14,6 @@
 #import "HEMFormViewController.h"
 #import "HEMHealthKitService.h"
 #import "HEMFacebookService.h"
-#import "HEMBreadcrumbService.h"
 #import "HEMHandHoldingService.h"
 #import "HEMAlertViewController.h"
 #import "HEMUnitPreferenceViewController.h"
@@ -38,17 +37,15 @@
 
 - (void)configurePresenter {
     HEMAccountService* accountService = [HEMAccountService sharedService];
-    SENAccount* account = [accountService account];
-    HEMBreadcrumbService* crumbService = [HEMBreadcrumbService sharedServiceForAccount:account];
     HEMFacebookService* facebookService = [HEMFacebookService new];
     HEMHandHoldingService* handHoldingService = [HEMHandHoldingService new];
     HEMAccountPresenter* presenter = [[HEMAccountPresenter alloc] initWithAccountService:accountService
                                                                          facebookService:facebookService
                                                                         healthKitService:[HEMHealthKitService sharedService]
-                                                                       breadcrumbService:crumbService
                                                                       handHoldingService:handHoldingService];
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];
+    [presenter bindWithNavigationItem:[self navigationItem]];
     
     [self setAccountPresenter:presenter];
     [self addPresenter:presenter];
@@ -78,8 +75,6 @@
                                                            message:message
                                                      defaultsToYes:YES
                                                             action:action];
-    
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [dialogVC showFrom:self];
 }
 
@@ -92,7 +87,6 @@
         [[self navigationController] pushViewController:controller animated:YES];
     } else if ([controller isKindOfClass:[HEMAlertViewController class]]) {
         HEMAlertViewController* alertVC = (id) controller;
-        [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
         [alertVC showFrom:[self rootViewController]];
     } else if (![controller isKindOfClass:[UINavigationController class]]) {
         controllerToPresenter = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];

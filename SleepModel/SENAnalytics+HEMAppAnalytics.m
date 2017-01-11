@@ -216,6 +216,10 @@ NSString* const HEMAnalyticsEventSystemAlert = @"System Alert";
 NSString* const HEMAnalyticsEventSystemAlertAction = @"System Alert Action";
 NSString* const HEMAnalyticsEventSysAlertActionLater = @"later";
 NSString* const HEMAnalyticsEventSysAlertActionNow = @"now";
+NSString* const HEMAnalyticsEventSysAlertPropUnknown = @"unknown";
+NSString* const HEMAnalyticsEventSysAlertActionUnmute = @"unmute";
+NSString* const HEMAnalyticsEventSysAlertPropMuted = @"sense muted";
+NSString* const HEMAnalyticsEventSysAlertPropExpUnreachable = @"expansion unreachable";
 
 // app review
 NSString* const HEMAnalyticsEventAppReviewShown = @"App review shown";
@@ -259,9 +263,6 @@ NSString* const HEMAnalyticsEventShareComplete = @"Share completed";
 NSString* const HEMAnalyticsPropCategory = @"category";
 NSString* const HEMAnalyticsPropService = @"service";
 
-// breadcrumbs
-NSString* const HEMAnalyticsEventBreadcrumbsEnd = @"Breadcrumbs end";
-
 // dfu
 NSString* const HEMAnalyticsEventPillDfuStart = @"Pill Update Start";
 NSString* const HEMAnalyticsEventPillDfuOTAStart = @"Pill Update OTA Start";
@@ -272,10 +273,12 @@ NSString* const HEMAnalyticsEventSenseDFU = @"Sense DFU";
 NSString* const HEMAnalyticsEventSenseDFUBegin = @"Sense DFU begin";
 NSString* const HEMAnalyticsEventSenseDFUEnd = @"Sense DFU end";
 
-// voice tutorial
+// voice
 NSString* const HEMAnalyticsEventVoiceTutorial = @"Voice Tutorial";
 NSString* const HEMAnalyticsEventVoiceResponse = @"Voice Command";
 NSString* const HEMAnalyticsEventVoiceTutorialSkip = @"Voice Tutorial Skip";
+NSString* const HEMAnalyticsEventVoiceTab = @"Voice";
+NSString* const HEMAnalyticsEventVoiceExamples = @"Voice Examples";
 
 // upgrade path
 NSString* const HEMAnalyticsEventUpgradePrefix = @"Upgrade";

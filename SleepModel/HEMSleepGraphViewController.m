@@ -45,6 +45,7 @@
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
+CGFloat const HEMTimelineBarHeaderHeight = 44.0f;
 
 @interface HEMSleepGraphViewController () <
     UICollectionViewDelegateFlowLayout,
@@ -59,7 +60,6 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
-@property (nonatomic, weak) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
@@ -76,7 +76,6 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationBarTopConstraint;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic, weak) UIButton *playingButton;
 @property (nonatomic, strong) UIBarButtonItem* shareItem;
@@ -100,20 +99,21 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMSleepSegmentPopupAnimationDuration = 0.5f;
 static CGFloat const HEMPopupAnimationDistance = 8.0f;
 static CGFloat const HEMPopupAnimationDisplayInterval = 2.0f;
+static CGFloat const HEMTutorialMessageOffset = 49.0f;
+
 static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [self configureServices];
-    [self configurePresenters];
+    [self configureHandHoldingPresenter];
     [self configureCollectionView];
     [self configureTransitions];
     [self configureErrorProperties];
 
     [self loadData];
 
-    [self configureNavigationBar];
     [self configureGestures];
     [self registerForNotifications];
 
@@ -179,21 +179,16 @@ static BOOL hasLoadedBefore = NO;
     [self setVisible:NO];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    [self layoutNavigationBar];
-}
-
 - (void)configureServices {
     [self setTimelineService:[HEMTimelineService new]];
     [self setHandHoldingService:[HEMHandHoldingService new]];
 }
 
-- (void)configurePresenters {
+- (void)configureHandHoldingPresenter {
     HEMTimelineHandHoldingPresenter* hhPresenter
-        = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
+    = [[HEMTimelineHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
     [hhPresenter setDelegate:self];
-    [hhPresenter bindWithContentView:[self collectionView]];
+    [hhPresenter bindWithContentView:[self collectionView] bottomOffset:HEMTutorialMessageOffset];
     
     [self setHandHoldingPresenter:hhPresenter];
     [self addPresenter:hhPresenter];
@@ -604,7 +599,7 @@ static BOOL hasLoadedBefore = NO;
     [self.popupView showPointer:top > 0];
     self.popupViewTop.constant = top + HEMPopupAnimationDistance;
     [self.popupView setNeedsUpdateConstraints];
-    [self.popupView layoutIfNeeded];
+    [self.popupView.superview layoutIfNeeded];
     self.popupViewTop.constant = top;
     [self.popupView setNeedsUpdateConstraints];
     self.popupView.alpha = 0;
@@ -613,9 +608,9 @@ static BOOL hasLoadedBefore = NO;
     self.popupMaskView.hidden = NO;
     [UIView animateWithDuration:HEMSleepSegmentPopupAnimationDuration
         animations:^{
-          [self emphasizeCellAtIndexPath:indexPath];
-          [self.popupView layoutIfNeeded];
-          self.popupView.alpha = 1;
+            [self emphasizeCellAtIndexPath:indexPath];
+            [self.popupView.superview layoutIfNeeded];
+            self.popupView.alpha = 1;
         }
         completion:^(BOOL finished) {
           __weak typeof(self) weakSelf = self;
@@ -654,7 +649,7 @@ static BOOL hasLoadedBefore = NO;
       if ([self selectedIndexPath]) {
           self.popupView.alpha = 0;
           self.popupMaskView.alpha = 0;
-          [self.popupView layoutIfNeeded];
+          [[self.popupView superview] layoutIfNeeded];
       }
     };
 
@@ -709,9 +704,9 @@ static BOOL hasLoadedBefore = NO;
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
-#pragma mark - Navigation Bar Actions
+#pragma mark - Timeline header actions
 
-- (void)didTapShareButton:(id)sender {
+- (void)shareTimeline:(id)sender {
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString *message;
@@ -728,9 +723,7 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
-- (void)didTapOnHistoryButton:(UIButton *)sender {
-    [[self handHoldingPresenter] didZoomOutOnTimeline];
-    
+- (void)showTimelineHistory:(UIButton *)sender {
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
     self.historyViewController.transitioningDelegate = self.zoomAnimationDelegate;
@@ -841,59 +834,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
-    self.collectionView.bounces = yOffset > CGRectGetMaxY([[self navigationBar] frame]);
+    self.collectionView.bounces = yOffset > HEMTimelineBarHeaderHeight;
     [self dismissTimelineSegmentPopup:NO];
-}
-
-#pragma mark - Navigation Bar
-
-- (void)layoutNavigationBar {
-    CGFloat navY = CGRectGetMinY([[self navigationBar] frame]);
-    CGFloat statusHeight = CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
-    if (navY == 0.0f) {
-        [[self navigationBarTopConstraint] setConstant:statusHeight];
-        [[self navigationBar] layoutIfNeeded];
-    } else if (navY > statusHeight) {
-        [[self navigationBarTopConstraint] setConstant:0.0f];
-        [[self navigationBar] layoutIfNeeded];
-    }
-}
-
-- (void)configureNavigationBar {
-    UINavigationBar* bar = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[self class]]];
-    ApplyDefaultStyleForNavBarAppearance(bar);
-    
-    UINavigationItem* navItem = self.navigationBar.topItem;
-    navItem.title = [[self timelineService] stringValueForTimelineDate:[self dateForNightOfSleep]];
-    
-    UIImage* shareImage = [UIImage imageNamed:@"timelineShareIcon"];
-    shareImage = [shareImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [self setShareItem:[[UIBarButtonItem alloc] initWithImage:shareImage
-                                                        style:UIBarButtonItemStylePlain
-                                                       target:self
-                                                       action:@selector(didTapShareButton:)]];
-    [self showShareButton:[[self dataSource] hasSleepScore]];
-    
-    UIImage* historyImage = [UIImage imageNamed:@"timelineCalendarIcon"];
-    historyImage = [historyImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [navItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithImage:historyImage
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(didTapOnHistoryButton:)]];
-    
-    HEMNavigationShadowView* shadowView = [[HEMNavigationShadowView alloc] initWithNavigationBar:[self navigationBar]];
-    [[self navigationBar] setClipsToBounds:NO];
-    [[self navigationBar] addSubview:shadowView];
-    _shadowView = shadowView;
-}
-
-- (void)showShareButton:(BOOL)show {
-    UINavigationItem* navItem = [[self navigationBar] topItem];
-    if (show) {
-        [navItem setRightBarButtonItem:[self shareItem]];
-    } else {
-        [navItem setRightBarButtonItem:nil];
-    }
 }
 
 #pragma mark - UICollectionView
@@ -936,7 +878,6 @@ static BOOL hasLoadedBefore = NO;
     [self.dataSource reloadData:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf updateTabBarIcon];
-        [strongSelf showShareButton:[strongSelf.dataSource hasSleepScore]];
         [strongSelf updateAppUsageIfNeeded];
         [strongSelf updateLayoutWithError:error];
         [strongSelf showTutorial];
@@ -1112,14 +1053,19 @@ static BOOL hasLoadedBefore = NO;
                              layout:(UICollectionViewLayout *)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
 
-    if (section == HEMSleepGraphCollectionViewSegmentSection) {
-        if ([self.dataSource numberOfSleepSegments] > 0) {
-            CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
-            return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);
-        }
+    CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
+    
+    switch (section) {
+        case HEMSleepGraphCollectionViewSummarySection:
+            return CGSizeMake(bWidth, HEMTimelineBarHeaderHeight);
+        case HEMSleepGraphCollectionViewSegmentSection:
+            if ([self.dataSource numberOfSleepSegments] > 0) {
+                CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
+                return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);
+            }
+        default:
+            return CGSizeZero;
     }
-
-    return CGSizeZero;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

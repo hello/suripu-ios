@@ -56,9 +56,9 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [[self optionTitleLabel] setFont:[UIFont h6]];
+    [[self optionTitleLabel] setFont:[UIFont body]];
     [[self optionDescriptionLabel] setFont:[UIFont body]];
-    [[self optionDescriptionLabel] setTextColor:[UIColor colorWithWhite:152.0f/255.0f alpha:1.0f]];
+    [[self optionDescriptionLabel] setTextColor:[UIColor grey5]];
     [self configureSelectedBackground];
 }
 

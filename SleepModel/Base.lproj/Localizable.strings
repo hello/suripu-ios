@@ -175,7 +175,7 @@
 "settings.voice" = "Voice";
 "settings.notifications" = "Notifications";
 "settings.notifications.section.push" = "Push notifications";
-"settings.account" = "My account";
+"settings.account" = "My Account";
 "settings.units" = "Units and time";
 "settings.support" = "Support";
 "settings.tell-a-friend" = "Tell a friend about Sense";
@@ -692,6 +692,7 @@
 "status.updating" = "Updating";
 "status.off" = "Off";
 "actions.copy" = "Copy";
+"actions.unmute" = "Unmute";
 
 // action sheet
 "action-sheet.accessibility.did-appear" = "Open options";
@@ -771,6 +772,8 @@
 "alerts.device.pill-low-battery.message" = "Your Sleep Pill battery is low, and will need to be replaced soon.";
 "alerts.device.pill-firmware-update.title" = "Sleep Pill update";
 "alerts.device.pill-firmware-update" = "An update for your Sleep Pill is available. You can update now, or visit settings to update later.";
+"alerts.update.error.no-sense-id" = "Unable to determine which Sense to take the action on. Please try again.";
+"alerts.update.error.unmute-failed" = "Unable to unmute Sense. Please try again.";
 
 // tutorial
 "tutorial.alarms.title" = "Set An Alarm";
@@ -797,7 +800,6 @@
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 "handholding.message.sensor-scrubbing" = "Press and hold graphs to see historical data.";
 "handholding.message.insight-tap" = "Tap on a card to learn more.";
-"handholding.message.account-name-change" = "Verify your name and add a profile photo.";
 
 // app review questions
 "app-review.question.1" = "Are you enjoying Sense?";

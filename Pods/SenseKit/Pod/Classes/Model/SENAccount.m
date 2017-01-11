@@ -21,17 +21,6 @@ SENAccountGender SENAccountGenderFromString(NSString* gender) {
     return SENAccountGenderOther;
 }
 
-NSString* SENAccountGenderToString(SENAccountGender gender) {
-    switch (gender) {
-        case SENAccountGenderFemale:
-            return SENAccountPropertyValueGenderFemale;
-        case SENAccountGenderMale:
-            return SENAccountPropertyValueGenderMale;
-        default:
-            return SENAccountPropertyValueGenderOther;
-    }
-}
-
 @interface SENAccount()
 
 @property (nonatomic, copy, readwrite) NSString* accountId;
@@ -110,6 +99,17 @@ NSString* const SENAccountPropertyProfilePhoto = @"profile_photo";
     [self setDobDate:nil];
 }
 
+- (NSString*)genderStringValue {
+    switch ([self gender]) {
+        case SENAccountGenderFemale:
+            return SENAccountPropertyValueGenderFemale;
+        case SENAccountGenderMale:
+            return SENAccountPropertyValueGenderMale;
+        default:
+            return SENAccountPropertyValueGenderOther;
+    }
+}
+
 - (NSDictionary *)dictionaryValue {
     NSMutableDictionary* params = [NSMutableDictionary dictionary];
     [params setValue:self.firstName forKey:SENAccountPropertyFName];
@@ -117,7 +117,7 @@ NSString* const SENAccountPropertyProfilePhoto = @"profile_photo";
     [params setValue:self.email forKey:SENAccountPropertyEmailAddress];
     [params setValue:self.weight forKey:SENAccountPropertyWeight];
     [params setValue:self.height forKey:SENAccountPropertyHeight];
-    [params setValue:SENAccountGenderToString(self.gender) forKey:SENAccountPropertyGender];
+    [params setValue:[self genderStringValue] forKey:SENAccountPropertyGender];
     [params setValue:self.birthdate forKey:SENAccountPropertyBirthdate];
     [params setValue:self.lastModified forKey:SENAccountPropertyLastModified];
     [params setValue:self.latitude forKey:SENAccountPropertyValueLatitude];

@@ -263,6 +263,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 - (void)dealloc {
     if (_webView) {
         [_webView setDelegate:nil];
+        [_webView stopLoading];
     }
 }
 

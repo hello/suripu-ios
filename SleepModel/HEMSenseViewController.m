@@ -156,7 +156,6 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
         if (action) {
@@ -308,7 +307,6 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     
     __weak typeof(self) weakSelf = self;
     [dialogVC addButtonWithTitle:NSLocalizedString(@"timezone.action.use-local", nil) style:HEMAlertViewButtonStyleRoundRect action:^{

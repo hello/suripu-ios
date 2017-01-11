@@ -6,11 +6,15 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "NSAttributedString+HEMUtils.h"
 
 #import "HEMNoAlarmCell.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
+
+static CGFloat const kHEMNoAlarmCellBaseHeight = 292.0f;
+static CGFloat const kHEMNoAlarmCellHorzMargins = 40.0f;
+static CGFloat const kHEMNoAlarmCellHorzMarginsSmall = 20.0f;
 
 @interface HEMNoAlarmCell()
 
@@ -22,17 +26,27 @@
 
 @implementation HEMNoAlarmCell
 
++ (CGFloat)horizontalMargins {
+    return (HEMIsIPhone4Family() || HEMIsIPhone5Family())
+        ? kHEMNoAlarmCellHorzMarginsSmall
+        : kHEMNoAlarmCellHorzMargins;
+}
+
++ (CGFloat)heightWithDetail:(NSAttributedString*)attributedDetail cellWidth:(CGFloat)width {
+    CGFloat horzMargins = [self horizontalMargins];
+    CGFloat maxWidth = width - (horzMargins * 2);
+    return [attributedDetail sizeWithWidth:maxWidth].height + kHEMNoAlarmCellBaseHeight;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     
     [[self detailLabel] setFont:[UIFont body]];
     [[self detailLabel] setTextColor:[UIColor detailTextColor]];
     
-    if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
-        CGFloat const MARGIN = 20.0f;
-        [[self trailingDetailMargin] setConstant:MARGIN];
-        [[self leadingDetailMargin] setConstant:MARGIN];
-    }
+    CGFloat margins = [[self class] horizontalMargins];
+    [[self trailingDetailMargin] setConstant:margins];
+    [[self leadingDetailMargin] setConstant:margins];
 }
 
 @end

@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (HEMGradient*)gradientForTimelineSleepSegment;
 + (HEMGradient*)topGradientForTimePicker;
 + (HEMGradient*)bottomGradientForTimePicker;
++ (HEMGradient*)bottomVideoGradient;
++ (HEMGradient*)topVideoGradient;
 
 - (instancetype)initWithColors:(NSArray*)colors
                      locations:(const CGFloat*)locations NS_DESIGNATED_INITIALIZER;

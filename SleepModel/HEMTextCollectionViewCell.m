@@ -10,6 +10,7 @@
 #import "HEMTextCollectionViewCell.h"
 #import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
+#import "NSAttributedString+HEMUtils.h"
 
 static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 
@@ -24,6 +25,11 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width {
     CGFloat textWidth = width - (2 * HEMTextCollectionHorzPadding);
     return [text heightBoundedByWidth:textWidth usingFont:font];
+}
+
++ (CGFloat)heightWithAttributedText:(NSAttributedString*)text cellWidth:(CGFloat)width {
+    CGFloat textWidth = width - (2 * HEMTextCollectionHorzPadding);
+    return [text sizeWithWidth:textWidth].height;
 }
 
 - (void)awakeFromNib {

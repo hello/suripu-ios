@@ -10,7 +10,6 @@
 
 @class HEMHandHoldingService;
 @class HEMTimelineHandHoldingPresenter;
-@class HEMTimelineTopBarCollectionReusableView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,9 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<HEMTimelineHandHoldingDelegate> delegate;
 
 - (instancetype)initWithHandHoldingService:(HEMHandHoldingService*)handHoldingService;
-- (void)bindWithContentView:(UIView*)contentView;
+- (void)bindWithContentView:(UIView*)contentView bottomOffset:(CGFloat)bottomOffset;
 - (void)showIfNeeded;
-- (void)didZoomOutOnTimeline;
 
 @end
 

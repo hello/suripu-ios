@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -151,17 +151,17 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Hold your Sleep Pill near your mobile device, and then quickly shake it for three seconds to begin the update." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUQ-e4-SgN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Hold your Sleep Pill near your mobile device, and then quickly shake it for three seconds to begin the update." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUQ-e4-SgN">
                                 <rect key="frame" x="24" y="120" width="366" height="54"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="OeA-m2-gTA" customClass="HEMEmbeddedVideoView">
-                                <rect key="frame" x="0.0" y="174" width="414" height="425"/>
+                                <rect key="frame" x="0.0" y="174" width="414" height="426"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ai6-cl-zh8">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="425"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="426"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -176,7 +176,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLo-6C-Nye" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="183" y="599" width="48" height="48"/>
+                                <rect key="frame" x="183" y="600" width="48" height="48"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="7OD-gB-gdq"/>
@@ -202,12 +202,12 @@
                             <constraint firstAttribute="trailing" secondItem="pUQ-e4-SgN" secondAttribute="trailing" constant="24" id="1NK-Ar-Qwb"/>
                             <constraint firstItem="g43-4B-llz" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" constant="24" id="2Hh-gv-rsw"/>
                             <constraint firstAttribute="trailing" secondItem="KnO-g4-6OZ" secondAttribute="trailing" constant="24" id="8vs-RB-aRE"/>
-                            <constraint firstItem="tLo-6C-Nye" firstAttribute="bottom" secondItem="g43-4B-llz" secondAttribute="top" constant="-25" id="HUe-6d-fYZ"/>
+                            <constraint firstItem="tLo-6C-Nye" firstAttribute="bottom" secondItem="g43-4B-llz" secondAttribute="top" constant="-24" id="HUe-6d-fYZ"/>
                             <constraint firstItem="KnO-g4-6OZ" firstAttribute="top" secondItem="o9v-b2-b6i" secondAttribute="bottom" constant="24" id="MB3-Wg-vgf"/>
                             <constraint firstAttribute="trailing" secondItem="WjA-2x-tQV" secondAttribute="trailing" constant="24" id="Qpx-Dh-j4C"/>
                             <constraint firstAttribute="trailing" secondItem="OeA-m2-gTA" secondAttribute="trailing" id="RHP-f5-Lxl"/>
                             <constraint firstItem="KnO-g4-6OZ" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" constant="24" id="RZi-mY-UN0"/>
-                            <constraint firstItem="OeA-m2-gTA" firstAttribute="bottom" secondItem="tLo-6C-Nye" secondAttribute="top" priority="750" id="T1R-BK-N6t"/>
+                            <constraint firstItem="OeA-m2-gTA" firstAttribute="bottom" secondItem="tLo-6C-Nye" secondAttribute="top" id="T1R-BK-N6t"/>
                             <constraint firstItem="LtK-Tu-jEM" firstAttribute="top" secondItem="WjA-2x-tQV" secondAttribute="bottom" constant="24" id="THB-Cr-3Yw"/>
                             <constraint firstItem="tLo-6C-Nye" firstAttribute="centerX" secondItem="MaB-Av-JFS" secondAttribute="centerX" id="TK0-Sn-vC8"/>
                             <constraint firstItem="WjA-2x-tQV" firstAttribute="leading" secondItem="MaB-Av-JFS" secondAttribute="leading" constant="24" id="Yc8-xC-oNk"/>

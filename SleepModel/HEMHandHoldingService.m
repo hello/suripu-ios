@@ -27,8 +27,6 @@ static NSString* const HEMHandHoldingServiceSensorScrubbing = @"HandholdingSenso
 // timeline
 static NSString* const HEMHandHoldingServiceTimelineSwipe = @"HandholdingTimelineDaySwitch";
 static NSInteger const HEMHandHoldingTimelineSwipeMinDaysChecked = 2;
-static NSString* const HEMHandHoldingServiceTimelineZoom = @"HandholdingTimelineZoom";
-static NSInteger const HEMHandHoldingTimelineZoomMinViews = 5;
 static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServiceTimelineOpen";
 
 @interface HEMHandHoldingService()
@@ -59,9 +57,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
                         forKey:HEMHandHoldingServiceSensorScrubbing];
         [recordKeeper setValue:[self oldTutorialRecord:HEMHandHoldingServiceTimelineSwipe]
                         forKey:HEMHandHoldingServiceTimelineSwipe];
-        [recordKeeper setValue:[self oldTutorialRecord:HEMHandHoldingServiceTimelineZoom]
-                        forKey:HEMHandHoldingServiceTimelineZoom];
-        
         [prefs setPersistentPreference:recordKeeper forKey:HEMHandHoldingServicePrefName];
     }
     [self setTutorialRecordKeeper:recordKeeper];
@@ -102,9 +97,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
             break;
         case HEMHandHoldingTimelineSwipe:
             tutorialName = HEMHandHoldingServiceTimelineSwipe;
-            break;
-        case HEMHandHoldingTimelineZoom:
-            tutorialName = HEMHandHoldingServiceTimelineZoom;
             break;
         default:
             break;
@@ -164,21 +156,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
                          atLeast:HEMHandHoldingTimelineSwipeMinDaysChecked];
 }
 
-- (BOOL)shouldShowTimelineZoom {
-    HEMAppUsage* appUsage = [HEMAppUsage appUsageForIdentifier:HEMAppUsageTimelineShownWithData];
-    NSInteger timelinesShown = [appUsage usageWithin:HEMAppUsageIntervalLast31Days];
-    return timelinesShown >= HEMHandHoldingTimelineZoomMinViews;
-}
-
-- (BOOL)shouldShowAccountNameForAccount:(SENAccount*)account {
-    if (![account createdAt]) {
-        return NO;
-    }
-    
-    NSDate* launchDate = [NSDate dateWithYear:2016 month:5 day:26];
-    return [[account createdAt] compare:launchDate] == NSOrderedAscending;
-}
-
 - (BOOL)shouldShow:(HEMHandHolding)tutorial {
     if ([self isComplete:tutorial]) {
         return NO;
@@ -189,8 +166,6 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
             return [self shouldShowInsightTap];
         case HEMHandHoldingTimelineSwipe:
             return [self shouldShowTimelineSwipe];
-        case HEMHandHoldingTimelineZoom:
-            return [self shouldShowTimelineZoom];
         case HEMHandHoldingSensorScrubbing:
         default:
             return YES;
@@ -198,14 +173,7 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
 }
 
 - (BOOL)shouldShow:(HEMHandHolding)tutorial forAccount:(SENAccount*)account {
-    switch (tutorial) {
-        case HEMHandHoldingAccountName: {
-            return ![self isComplete:tutorial]
-                && [self shouldShowAccountNameForAccount:account];
-        }
-        default:
-            return [self shouldShow:tutorial];
-    }
+    return [self shouldShow:tutorial];
 }
 
 #pragma mark - Clean up

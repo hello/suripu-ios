@@ -1,5 +1,109 @@
 # Changelog
 
+## 2.0.1.10
+
+Fixes:
+
+* Fix issue with the weight picker value being cut off when displayed in kg and on the 4s
+
+## 2.0.1.9
+
+Fixes:
+
+* Sub tab titles no longer shift when navigating in to detail views on iOS 9
+* Prevent height unit text from growing and shrinking when changing height in picker
+* Fixes issue where weight value in picker overlaps the description text on 4s
+* Prevent alerts from briefly flashing content that is not currently visible
+
+## 2.0.1.8
+
+New:
+
+* Timeline top / nav bar scrolls with the content like before
+
+Fixes:
+
+* Fixes an issue that would cause the Timeline history to crash the application
+* Fixes an issue where the swipe gesture tutorial for the timeline isn't fully visible
+
+## 2.0.1.7
+
+Fixes:
+
+* Room conditions extension properly taps in to the corresponding app
+* No alarm card in alarm list displays full text in smaller devices
+* Graphs in room conditions will load even when current minute has no data
+* Sleep score color in timeline history matches the timeline sleep score
+* Birthdate picker will not highlight the separator too
+
+## 2.0.1.6
+
+New:
+
+* Design tweaks to Account settings
+* Design tweaks to Settings
+* Updated line spacing for info cards
+* Updated line spacing for first alarm card in alarm list
+* Updated line spacing for sensor about copy
+* Removed breadcrumb event / logic from accounts
+
+## 2.0.1.5
+
+New:
+
+* Unmute from system alert
+* Analytics for unmute system alerts
+
+Fixes:
+
+* Fixed issue that would cause Timeline events to not show the correct timestamp if the phone's timezone does not match Sense / account timezone
+
+## 2.0.1.4
+
+New:
+
+* Improved load times of various main screens by removing references to custom fonts
+
+Fixes:
+
+* Updated sense and pill settings font + color
+* Fixed an issue that could cause the application to crash while in expansion oauth view
+* Fixed an issue that could cause the application to crash when updating gender for an account
+* Removed leading 0 in 12-hour format when scrubbing through sensor detail
+
+## 2.0.1.3
+
+New:
+
+* Voice tab analytics
+* Round out graphs between points
+* Update graph limit line logic to force them to make more sense
+
+Fixes:
+
+* Fixed scrollable content visibility logic, which would cause multiple appearance updates
+* Prevent drastic graph scale changes by removing last value if sentinel value
+
+## 2.0.1.2
+
+New:
+
+* Create new groups for dev app vs beta / store app, which should allow use of each app independently
+* Set default brightness percentage for Hue in alarm
+* Set default thermostat ranges for Nest in alarm
+* Animate / relayout system alerts based on bottom bar visibility
+
+## 2.0.1.1
+
+New:
+
+* Improved initial load times throughout onboarding
+* Adjusted line height on pill DFU descriptions
+
+Fixes:
+
+* Fixed issue with black lines showing up above and below some videos throughout onboarding / dfu on plus phones
+
 ## 2.0.0.19
 
 Fixes:

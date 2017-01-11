@@ -5,17 +5,30 @@
 
 @implementation SENKeyedArchiver
 
+NSString* const SENKeyedArchiverGroupBundleKey = @"SenseLocalStorageGroup";
 NSString* const SENKeyedArchiverGroupId = @"group.is.hello.sense.data";
 NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStorage";
 
 static dispatch_queue_t SENKeyedArchiverQueue = nil;
+
++ (NSString*)groupId {
+    static NSString* groupId = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        groupId = [[NSBundle mainBundle] objectForInfoDictionaryKey:SENKeyedArchiverGroupBundleKey];
+        if (!groupId) {
+            groupId = SENKeyedArchiverGroupId;
+        }
+    });
+    return groupId;
+}
 
 + (NSString*)datastorePath
 {
     NSString* accountID = [SENAuthorizationService accountIdOfAuthorizedUser];
     if (accountID.length == 0)
         return nil;
-    NSURL* url = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:SENKeyedArchiverGroupId];
+    NSURL* url = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[self groupId]];
     NSString* accountStorePath = [[url path] stringByAppendingPathComponent:accountID];
     return [accountStorePath stringByAppendingPathComponent:SENKeyedArchiverStoreName];
 }

@@ -17,8 +17,10 @@ extern CGFloat const HEMStyleSectionTopMargin;
 extern CGFloat const HEMStyleDeviceSectionTopMargin;
 extern CGFloat const HEMStyleButtonContainerBorderWidth;
 extern CGFloat const HEMStyleDefaultNavBarButtonItemWidth;
+extern CGFloat const HEMStyleThickBorder;
 
 void ApplyHelloStyles (void);
 void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar);
 void ApplyDefaultTabBarItemStyle(UITabBarItem* tabBarItem);
 NSMutableParagraphStyle* DefaultBodyParagraphStyle(void);
+NSDictionary* NavTitleAttributes(void);

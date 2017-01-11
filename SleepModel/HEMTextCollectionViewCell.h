@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textBottomConstraint;
 
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width;
++ (CGFloat)heightWithAttributedText:(NSAttributedString*)text cellWidth:(CGFloat)width;
 - (void)displayAsACard:(BOOL)card;
 
 @end

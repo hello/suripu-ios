@@ -12,6 +12,8 @@
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENSensorStatus.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMSensorDetailPresenter.h"
 #import "HEMSensorService.h"
 #import "HEMMainStoryboard.h"
@@ -50,7 +52,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSArray* content;
 @property (nonatomic, strong) SENSensor* sensor;
-@property (nonatomic, strong) NSString* aboutDetail;
+@property (nonatomic, strong) NSAttributedString* aboutDetail;
 @property (nonatomic, strong) HEMSensorValueFormatter* formatter;
 @property (nonatomic, strong) SENSensorStatus* status;
 @property (nonatomic, strong) SENSensorDataCollection* sensorData;
@@ -127,7 +129,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     
     // if string for content exists
     if (![about isEqualToString:aboutKey]) {
-        [self setAboutDetail:about];
+        NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
+                                     NSForegroundColorAttributeName : [UIColor grey5],
+                                     NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+        [self setAboutDetail:[[NSAttributedString alloc] initWithString:about attributes:attributes]];
         [content addObject:@(HEMSensorDetailContentAbout)];
     }
     
@@ -212,11 +217,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSArray<NSNumber*>* values = [[strongSelf sensorData] dataPointsForSensorType:[[strongSelf sensor] type]];
+        NSArray<NSNumber*>* values = [[strongSelf sensorData] filteredDataPointsWithType:[[strongSelf sensor] type]];
         NSArray<SENSensorTime*>* timestamps = [[strongSelf sensorData] timestamps];
         NSUInteger valueCount = [values count];
         
-        if (valueCount == [timestamps count]) {
+        if (valueCount <= [timestamps count]) { // # of timestamps cannot be less than # of values!
             NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:valueCount];
             NSMutableArray* labelData = [NSMutableArray arrayWithCapacity:kHEMSensorDetailChartXLabelCount];
             NSInteger indicesBetweenLabels = (valueCount - 1) / kHEMSensorDetailChartXLabelCount;
@@ -276,7 +281,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
             [[self exactTimeFormatter] setDateFormat:@"EEEE - HH:mm"];
         } else {
-            [[self exactTimeFormatter] setDateFormat:@"EEEE - hh:mm a"];
+            [[self exactTimeFormatter] setDateFormat:@"EEEE - h:mm a"];
         }
     } else {
         if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
@@ -284,7 +289,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             [[self exactTimeFormatter] setDateFormat:@"HH:mm"];
         } else {
             [[self xAxisLabelFormatter] setDateFormat:@"ha"];
-            [[self exactTimeFormatter] setDateFormat:@"hh:mm a"];
+            [[self exactTimeFormatter] setDateFormat:@"h:mm a"];
         }
     }
 }
@@ -325,9 +330,10 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             break;
         }
         case HEMSensorDetailContentAbout: {
-            NSString* about = [self aboutDetail];
             NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
-            height = [HEMSensorAboutCollectionViewCell heightWithTitle:title about:about maxWidth:widthBounds];
+            height = [HEMSensorAboutCollectionViewCell heightWithTitle:title
+                                                                 about:[self aboutDetail]
+                                                              maxWidth:widthBounds];
             break;
         }
     }
@@ -402,23 +408,11 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         [yAxis setSpaceBottom:topSpace + bottomSpace];
     }
     
-    NSArray *gradientColors = [lineChartView gradientColorsWithColor:sensorColor];
-    CGGradientRef gradient = CGGradientCreateWithColors(nil, (CFArrayRef)gradientColors, nil);
-    
-    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithValues:[self chartData]];
-    [dataSet setFill:[ChartFill fillWithLinearGradient:gradient angle:90.0f]];
-    [dataSet setColor:[lineChartView lineColorForColor:sensorColor]];
-    [dataSet setDrawFilledEnabled:YES];
-    [dataSet setDrawCirclesEnabled:NO];
-    [dataSet setHighlightColor:sensorColor];
-    [dataSet setDrawHorizontalHighlightIndicatorEnabled:NO];
-    [dataSet setLabel:nil];
-    
-    CGGradientRelease(gradient);
-    
+    LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithData:[[self chartData] copy]
+                                                                  color:sensorColor];
+
     [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setGridBackgroundColor:sensorColor];
-    
     [lineChartView setNeedsDisplay];
     
     return lineChartView;
@@ -504,23 +498,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         // must check whether chart data is empty or not before using chartview
         // min / max values, otherwise chart will cause a crash
         if ([[self chartData] count] > 0) {
-            [chartContainer setChartView:chartView];
-            // update limit lines
-            NSNumber* minValue = nil;
-            NSNumber* maxValue = @([self chartMaxValue]);
-            CGFloat chartMin = [chartView chartYMin];
-            CGFloat chartMax = [chartView chartYMax];
-            if (chartMin == -1.0f && chartMax == 1.0f) {
-                maxValue = @(chartMax);
-            } else if ([self chartMinValue] != [self chartMaxValue] && [self chartMinValue] >= 0.0f) {
-                chartMin = [self chartMinValue];
-            }
             
-            minValue = @(chartMin);
-            NSString* minText = [[self formatter] stringFromSensorValue:minValue];
-            NSString* maxText = [[self formatter] stringFromSensorValue:maxValue];
-            [[chartContainer topLimitLabel] setText:maxText];
-            [[chartContainer botLimitLabel] setText:minText];
+            HEMSensorLimit* limit = [chartView limitFromCalculatedMinY:@([self chartMinValue])
+                                                        calculatedMaxY:@([self chartMaxValue])
+                                                             formatter:[self formatter]];
+
+            [chartContainer setChartView:chartView];
+            [[chartContainer topLimitLabel] setText:[limit max]];
+            [[chartContainer botLimitLabel] setText:[limit min]];
             
             if (![self chartLoaded]) {
                 [chartView animateIn];
@@ -595,7 +580,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[aboutCell titleLabel] setText:title];
     [[aboutCell titleLabel] setFont:[UIFont h6Bold]];
     [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
-    [[aboutCell aboutLabel] setText:[self aboutDetail]];
+    [[aboutCell aboutLabel] setAttributedText:[self aboutDetail]];
     [[aboutCell aboutLabel] setFont:[UIFont body]];
     [[aboutCell aboutLabel] setTextColor:[UIColor grey5]];
 }
@@ -621,7 +606,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (void)didMoveScrubberTo:(CGPoint)pointInChartView within:(HEMSensorChartContainer *)chartContainer {
-    NSArray<NSNumber*>* values = [[self sensorData] dataPointsForSensorType:[[self sensor] type]];
+    NSArray<NSNumber*>* values = [[self sensorData] filteredDataPointsWithType:[[self sensor] type]];
     ChartDataEntry* entry = [[self chartView] getEntryByTouchPointWithPoint:pointInChartView];
     NSInteger index = [entry x];
     NSNumber* actualValue = index < [values count] ? values[index] : nil;

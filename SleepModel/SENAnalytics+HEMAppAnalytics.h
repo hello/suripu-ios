@@ -200,6 +200,10 @@ extern NSString* const HEMAnalyticsEventSystemAlert;
 extern NSString* const HEMAnalyticsEventSystemAlertAction;
 extern NSString* const HEMAnalyticsEventSysAlertActionLater;
 extern NSString* const HEMAnalyticsEventSysAlertActionNow;
+extern NSString* const HEMAnalyticsEventSysAlertActionUnmute;
+extern NSString* const HEMAnalyticsEventSysAlertPropUnknown;
+extern NSString* const HEMAnalyticsEventSysAlertPropMuted;
+extern NSString* const HEMAnalyticsEventSysAlertPropExpUnreachable;
 
 // app review
 extern NSString* const HEMAnalyticsEventAppReviewShown;
@@ -237,9 +241,6 @@ extern NSString* const HEMAnalyticsEventPropSourceCamera;
 extern NSString* const HEMAnalyticsEventPropSourcePhotoLibrary;
 extern NSString* const HEMAnalyticsEventDeletePhoto;
 
-// breadcrumbs
-extern NSString* const HEMAnalyticsEventBreadcrumbsEnd;
-
 // dfu
 extern NSString* const HEMAnalyticsEventPillDfuStart;
 extern NSString* const HEMAnalyticsEventPillDfuOTAStart;
@@ -256,10 +257,12 @@ extern NSString* const HEMAnalyticsEventSenseDFU;
 extern NSString* const HEMAnalyticsEventSenseDFUBegin;
 extern NSString* const HEMAnalyticsEventSenseDFUEnd;
 
-// voice tutorial
+// voice
 extern NSString* const HEMAnalyticsEventVoiceTutorial;
 extern NSString* const HEMAnalyticsEventVoiceResponse;
 extern NSString* const HEMAnalyticsEventVoiceTutorialSkip;
+extern NSString* const HEMAnalyticsEventVoiceTab;
+extern NSString* const HEMAnalyticsEventVoiceExamples;
 
 // upgrade path
 extern NSString* const HEMAnalyticsEventUpgradePrefix;

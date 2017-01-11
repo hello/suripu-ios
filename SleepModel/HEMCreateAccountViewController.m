@@ -89,7 +89,6 @@
 - (void)showController:(UIViewController *)controller from:(HEMNewAccountPresenter *)presenter {
     if ([controller isKindOfClass:[HEMAlertViewController class]]) {
         HEMAlertViewController* alertVC = (id) controller;
-        [alertVC setViewToShowThrough:[self backgroundViewForAlerts]];
         [alertVC showFrom:self];
     } else {
         [self presentViewController:controller animated:YES completion:nil];

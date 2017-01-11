@@ -100,6 +100,12 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     [[self collectionView] setAlwaysBounceVertical:YES];
 }
 
+- (NSDictionary*)attributesForWarningMessages {
+    return @{NSFontAttributeName : [UIFont body],
+             NSForegroundColorAttributeName : [UIColor grey5],
+             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+}
+
 - (NSAttributedString*)attributedLongLastSeenMessage {
     SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
     NSString* format = NSLocalizedString(@"settings.pill.warning.last-seen-format", nil);
@@ -110,7 +116,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSMutableAttributedString* attrWarning =
         [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont body]}
+    [attrWarning addAttributes:[self attributesForWarningMessages]
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -118,7 +124,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 - (NSAttributedString*)attributedLowBatteryMessage {
     NSString* message = NSLocalizedString(@"settings.pill.warning.low-battery", nil);
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont body]};
+    NSDictionary* attributes = [self attributesForWarningMessages];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -147,7 +153,8 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 - (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
     UIFont* font = bold ? [UIFont bodyBold] : [UIFont body];
     return @{NSFontAttributeName : font,
-             NSForegroundColorAttributeName : [UIColor blackColor]};
+             NSForegroundColorAttributeName : [UIColor grey5],
+             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
 }
 
 - (NSInteger)adjustedRowFor:(NSInteger)row {
@@ -207,7 +214,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
             showSeparator = NO;
         }
         
-        [[actionCell textLabel] setTextColor:[UIColor grey5]];
+        [[actionCell textLabel] setTextColor:[UIColor grey6]];
         [[actionCell textLabel] setFont:[UIFont body]];
         [[actionCell textLabel] setText:text];
         [[actionCell iconView] setImage:icon];
@@ -375,13 +382,12 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSAttributedString* confirmation =
     [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                  args:args
-                                            baseColor:[UIColor blackColor]
+                                            baseColor:[UIColor grey5]
                                              baseFont:[UIFont body]];
     
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:confirmation];
-    [dialogVC setViewToShowThrough:[self backgroundViewForAlerts]];
     
     __weak typeof(self) weakSelf = self;
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];

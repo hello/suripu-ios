@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.0</string>
+	<string>2.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2.0.0.19</string>
+	<string>2.0.1.10</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionMainStoryboard</key>
@@ -33,6 +33,14 @@
 	<string>${SENSE_API_URL}</string>
 	<key>SenseClientId</key>
 	<string>${SENSE_CLIENT_ID}</string>
+	<key>SenseKeychainGroup</key>
+	<string>${SENSE_KEYCHAIN_GROUP}</string>
+	<key>SenseLocalStorageGroup</key>
+	<string>${SENSE_LOCAL_STORAGE_GROUP}</string>
+	<key>SenseSettingsGroup</key>
+	<string>${SENSE_SETTINGS_GROUP}</string>
+	<key>SenseUrlScheme</key>
+	<string>${SENSE_ROOM_CONDITIONS_EXT_SCHEME}</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>healthkit</string>

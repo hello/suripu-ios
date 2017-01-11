@@ -82,7 +82,7 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
         message = NSLocalizedString(@"settings.sense.connecting", nil);
     }
     [[actionCell textLabel] setFont:[UIFont body]];
-    [[actionCell textLabel] setTextColor:[UIColor grey5]];
+    [[actionCell textLabel] setTextColor:[UIColor grey6]];
     [actionCell showActivity:!connected withText:message];
     [[actionCell separatorView] setHidden:NO];
     [[actionCell topSeparatorView] setHidden:NO];
@@ -125,7 +125,7 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
     [actionCell setEnabled:enabled];
     [[actionCell textLabel] setText:actionText];
     [[actionCell textLabel] setFont:[UIFont body]];
-    [[actionCell textLabel] setTextColor:[UIColor grey5]];
+    [[actionCell textLabel] setTextColor:[UIColor grey6]];
     [[actionCell iconView] setImage:icon];
     [[actionCell separatorView] setHidden:!showSeparator];
     [[actionCell topSeparatorView] setHidden:!showTopSeparator];

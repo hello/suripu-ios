@@ -6,8 +6,7 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMSupportTopicsViewController.h"
 #import "HEMZendeskService.h"
@@ -16,6 +15,7 @@
 #import "HEMSupportTopicDataSource.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 
 @interface HEMSupportTopicsViewController () <UITableViewDelegate>
@@ -41,6 +41,7 @@
 - (void)configureTableView {
     [self setDataSource:[[HEMSupportTopicDataSource alloc] init]];
     [[self tableView] setDataSource:[self dataSource]];
+    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
 
     UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
     [header setHidden:YES];
@@ -120,6 +121,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setText:[[self dataSource] displayNameForRowAtIndexPath:indexPath]];
     [[cell textLabel] setTextColor:[UIColor textColor]];
+    [cell showStyledAccessoryViewIfNone];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

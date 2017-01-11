@@ -5,15 +5,14 @@
 //  Created by Jimmy Lu on 6/4/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMSupportViewController.h"
 #import "HEMSettingsStoryboard.h"
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
+#import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
@@ -68,6 +67,7 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
     [[self tableView] setBackgroundColor:[UIColor clearColor]];
+    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
 }
 
 - (void)overrideNavigationDelegate {
@@ -125,6 +125,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
     [[cell textLabel] setTextColor:[UIColor textColor]];
+    [cell showStyledAccessoryViewIfNone];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

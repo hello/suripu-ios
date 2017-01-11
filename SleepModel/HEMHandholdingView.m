@@ -135,7 +135,9 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     
     CGFloat y = 0.0f;
     if ([self anchor] == HEMHHDialogAnchorBottom) {
-        y = CGRectGetHeight([self bounds]) - CGRectGetHeight(messageViewFrame);
+        y = CGRectGetHeight([self bounds]) - CGRectGetHeight(messageViewFrame) - [self messageYOffset];
+    } else {
+        y += [self messageYOffset];
     }
     
     [UIView animateWithDuration:HEMHandholdingMessageAnimDuration

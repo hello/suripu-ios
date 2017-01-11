@@ -13,6 +13,7 @@
 
 CGFloat const kHEMBirthdateValueHeight = 50.0f;
 
+static CGFloat const kHEMBirthdateValueSeparatorHeight = 0.5f;
 static CGFloat const kHEMBirthdatePickerWidth = 270.0f;
 static CGFloat const kHEMBirthdatePickerHeight = 300.0f;
 
@@ -104,6 +105,12 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     [tv setDataSource:self];
     [tv setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [tv setBackgroundColor:[UIColor clearColor]];
+    [tv setSeparatorColor:[UIColor separatorColor]];
+    
+    CGRect footerFrame = CGRectZero;
+    footerFrame.size.width = CGRectGetWidth([tv bounds]);
+    footerFrame.size.height = 1.0f;
+    [tv setTableFooterView:[[UIView alloc] initWithFrame:footerFrame]];
     return tv;
 }
 
@@ -139,7 +146,8 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     yearFrame.origin.x = CGRectGetMaxX(dayFrame);
     [[self yearTableView] setFrame:yearFrame];
     
-    CGFloat transparentHeight = ceilf((bHeight - kHEMBirthdateValueHeight)/2.0f);
+    CGFloat separatorHeight = kHEMBirthdateValueSeparatorHeight * 2; // double the size to make it even and cover it
+    CGFloat transparentHeight = ceilf((bHeight - kHEMBirthdateValueHeight)/2.0f) + separatorHeight;
     
     CGRect topTransparentFrame = [[self topTransparentView] frame];
     topTransparentFrame.size.height = transparentHeight;
@@ -153,30 +161,6 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     [[self botTransparentView] setFrame:botTransparentFrame];
     
     [super layoutSubviews];
-}
-
-- (void)drawRect:(CGRect)rect {
-    CGFloat lineWidth = 1.0f;
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    CGContextSetStrokeColorWithColor(context, [[UIColor tintColor] CGColor]);
-    CGContextSetLineWidth(context, lineWidth);
-    
-    CGFloat padding = 10.0f;
-    CGFloat sideInset = 12.0f;
-    CGFloat y = CGRectGetMinY([[self botTransparentView] frame]) - lineWidth;
-    CGContextMoveToPoint(context, sideInset, y);
-    CGContextAddLineToPoint(context, CGRectGetMaxX([[self monthTableView] frame]) - padding, y);
-    
-    CGContextMoveToPoint(context, CGRectGetMinX([[self dayTableView] frame]), y);
-    CGContextAddLineToPoint(context, CGRectGetMaxX([[self dayTableView] frame]), y);
-    
-    CGContextMoveToPoint(context, CGRectGetMinX([[self yearTableView] frame]) + padding, y);
-    CGContextAddLineToPoint(context, CGRectGetMaxX([[self yearTableView] frame])-sideInset, y);
-    
-    CGContextStrokePath(context);
-    CGContextRestoreGState(context);
 }
 
 - (NSInteger)numberOfDaysInSelectedMonth {

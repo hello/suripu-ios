@@ -9,7 +9,6 @@
 #import <SenseKit/SENAPISupport.h>
 #import <SenseKit/SENSupportTopic.h>
 #import "HEMSupportTopicDataSource.h"
-#import "HEMSettingsTableViewCell.h"
 #import "HEMSettingsStoryboard.h"
 
 @interface HEMSupportTopicDataSource()

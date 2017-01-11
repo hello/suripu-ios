@@ -37,6 +37,20 @@
     return [[HEMGradient alloc] initWithColors:@[color1, color2] locations:locations];
 }
 
++ (HEMGradient*)topVideoGradient {
+    UIColor* color1 = [UIColor whiteColor];
+    UIColor* color2 = [UIColor colorWithWhite:1.0f alpha:0.05f];
+    CGFloat locations[] = {0, 1};
+    return [[HEMGradient alloc] initWithColors:@[color1, color2] locations:locations];
+}
+
++ (HEMGradient*)bottomVideoGradient {
+    UIColor* color1 = [UIColor colorWithWhite:1.0f alpha:0.05f];
+    UIColor* color2 = [UIColor whiteColor];
+    CGFloat locations[] = {0, 1};
+    return [[HEMGradient alloc] initWithColors:@[color1, color2] locations:locations];
+}
+
 - (instancetype)initWithColors:(NSArray*)colors locations:(const CGFloat*)locations {
     self = [super init];
     if (self) {

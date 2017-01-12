@@ -52,7 +52,7 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 }
 
 - (void)configureRuler {
-    [[self heightLabel] setFont:[UIFont heightPickerValueFont]];
+    [[self heightLabel] setFont:[UIFont h1]];
     [self setUseMetric:[SENPreference useMetricUnitForHeight]];
     
     [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMHeightTotalSegments

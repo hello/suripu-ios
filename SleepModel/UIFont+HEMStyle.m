@@ -22,6 +22,7 @@
 }
 
 + (UIFont*)h3 {
+    
     return [UIFont systemFontOfSize:32.0f weight:UIFontWeightLight];
 }
 
@@ -117,12 +118,6 @@
 
 + (UIFont*)alarmButtonFont {
     return [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
-}
-
-#pragma mark Onboarding
-
-+ (UIFont*)heightPickerValueFont {
-    return [UIFont systemFontOfSize:48.0f weight:UIFontWeightThin];
 }
 
 #pragma mark - Sensor

@@ -23,6 +23,7 @@ static NSInteger const HEMHandHoldingInsightTapMinDaysChecked = 1;
 
 // sensors
 static NSString* const HEMHandHoldingServiceSensorScrubbing = @"HandholdingSensorScrubbing";
+static NSString* const HEMHandHoldingServiceSensorScroll = @"HandholdingSensorScroll";
 
 // timeline
 static NSString* const HEMHandHoldingServiceTimelineSwipe = @"HandholdingTimelineDaySwitch";
@@ -98,6 +99,8 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
         case HEMHandHoldingTimelineSwipe:
             tutorialName = HEMHandHoldingServiceTimelineSwipe;
             break;
+        case HEMHandHoldingSensorScroll:
+            tutorialName = HEMHandHoldingServiceSensorScroll;
         default:
             break;
     }
@@ -115,6 +118,8 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
             SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
             [prefs setPersistentPreference:[self tutorialRecordKeeper]
                                     forKey:HEMHandHoldingServicePrefName];
+            
+            DDLogVerbose(@"completed %@", tutorialName);
         }
     }
 }
@@ -166,6 +171,8 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
             return [self shouldShowInsightTap];
         case HEMHandHoldingTimelineSwipe:
             return [self shouldShowTimelineSwipe];
+        case HEMHandHoldingSensorScroll:
+            return [self isComplete:HEMHandHoldingSensorScrubbing]; // scrub first, then scroll
         case HEMHandHoldingSensorScrubbing:
         default:
             return YES;

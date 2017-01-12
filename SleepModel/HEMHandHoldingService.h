@@ -13,7 +13,8 @@
 typedef NS_ENUM(NSInteger, HEMHandHolding) {
     HEMHandHoldingInsightTap = 1,
     HEMHandHoldingSensorScrubbing,
-    HEMHandHoldingTimelineSwipe
+    HEMHandHoldingTimelineSwipe,
+    HEMHandHoldingSensorScroll
 };
 
 @interface HEMHandHoldingService : SENService

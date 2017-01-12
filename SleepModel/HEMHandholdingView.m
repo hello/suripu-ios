@@ -52,16 +52,9 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 
 #pragma mark - View set up and display
 
-- (void)showInView:(UIView*)view
-   fromContentView:(UIView*)contentView
-     dismissAction:(HEMHandHoldingDismissal)dismissal {
-    
-    if (![self isContentViewStillVisible:contentView]) {
-        if (dismissal) {
-            dismissal (NO);
-        }
-        return;
-    }
+- (void)showGestureWithMessageInView:(UIView*)view
+                     fromContentView:(UIView*)contentView
+                       dismissAction:(HEMHandHoldingDismissal)dismissal {
     
     [self setDismissal:dismissal];
     
@@ -87,6 +80,36 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     
     [view addSubview:self];
     [self animateIn];
+    
+}
+
+- (void)showOnlyMessageIn:(UIView*)view
+          fromContentView:(UIView*)contentView
+            dismissAction:(HEMHandHoldingDismissal)dimissal {
+    
+}
+
+- (void)showInView:(UIView*)view
+   fromContentView:(UIView*)contentView
+     dismissAction:(HEMHandHoldingDismissal)dismissal {
+    
+    if (![self isContentViewStillVisible:contentView]) {
+        if (dismissal) {
+            dismissal (NO);
+        }
+        return;
+    }
+    
+    if (CGPointEqualToPoint(CGPointZero, [self gestureStartCenter])
+        && CGPointEqualToPoint(CGPointZero, [self gestureEndCenter])) {
+        [self showOnlyMessageIn:view
+                fromContentView:contentView
+                  dismissAction:dismissal];
+    } else {
+        [self showGestureWithMessageInView:view
+                           fromContentView:contentView
+                             dismissAction:dismissal];
+    }
 }
 
 - (void)addMessageHintWithText:(NSString*)text withBounds:(CGRect)bounds {

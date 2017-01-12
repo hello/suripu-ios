@@ -89,7 +89,7 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
     [label setText:text];
     [label setNumberOfLines:0];
-    [label setFont:[UIFont bodyBold]];
+    [label setFont:[UIFont body]];
     [label setTextColor:[UIColor whiteColor]];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [label setBackgroundColor:[UIColor blue6]];

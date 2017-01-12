@@ -87,25 +87,17 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
 }
 
 - (NSString*)stringValueFor:(HEMHandHolding)tutorial {
-    NSString* tutorialName = nil;
-    
     switch (tutorial) {
-        case HEMHandHoldingInsightTap:
-            tutorialName = HEMHandHoldingServiceInsightTap;
-            break;
-        case HEMHandHoldingSensorScrubbing:
-            tutorialName = HEMHandHoldingServiceSensorScrubbing;
-            break;
-        case HEMHandHoldingTimelineSwipe:
-            tutorialName = HEMHandHoldingServiceTimelineSwipe;
-            break;
-        case HEMHandHoldingSensorScroll:
-            tutorialName = HEMHandHoldingServiceSensorScroll;
         default:
-            break;
+        case HEMHandHoldingInsightTap:
+            return HEMHandHoldingServiceInsightTap;
+        case HEMHandHoldingSensorScrubbing:
+            return HEMHandHoldingServiceSensorScrubbing;
+        case HEMHandHoldingTimelineSwipe:
+            return HEMHandHoldingServiceTimelineSwipe;
+        case HEMHandHoldingSensorScroll:
+            return HEMHandHoldingServiceSensorScroll;
     }
-    
-    return tutorialName;
 }
 
 - (void)completed:(HEMHandHolding)tutorial {

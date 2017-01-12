@@ -800,7 +800,7 @@
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
 "handholding.message.sensor-scrubbing" = "Press and hold graph to see more data.";
 "handholding.message.insight-tap" = "Tap on a card to learn more.";
-"handholding.message.sensor-scroll" = "Scroll for More";
+"handholding.message.sensor-scroll" = "Scroll for more";
 
 // app review questions
 "app-review.question.1" = "Are you enjoying Sense?";

@@ -97,7 +97,7 @@ static CGFloat const HEMHandholdingMessageOvalMargins = 24.0f;
     CGRect labelFrame = CGRectZero;
     
     CGFloat containerWidth = CGRectGetWidth([view bounds]);
-    UIFont* messageFont = [UIFont bodyBold];
+    UIFont* messageFont = [UIFont body];
     NSTextAlignment alignment = NSTextAlignmentLeft;
     
     switch ([self messageStyle]) {

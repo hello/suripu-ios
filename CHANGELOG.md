@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.2.1
+
+New:
+
+* Sensor detail scrubbing re-inserted
+* Default custom icon for expansions in list settings
+* Default custom icon for expansion in detail
+
+Fixes:
+
+* Updated Facebook SDK and updated references to avoid crasher
+
+
 ## 2.0.1.10
 
 Fixes:

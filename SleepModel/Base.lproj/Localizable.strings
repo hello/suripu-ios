@@ -489,6 +489,9 @@
 "measurement.lb.format" = "%.0f lbs";
 "measurement.db.format" = "%lddb";
 "measurement.lx.format" = "%ldlx";
+"measurement.cm.attributed.format" = "%@ cm";
+"measurement.kg.attributed.format" = "%@ kg";
+"measurement.lb.attributed.format" = "%@ lbs";
 
 // drawer
 "drawer.action.open" = "Drawer opened";

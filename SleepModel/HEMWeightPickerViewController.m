@@ -2,6 +2,8 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENPreference.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMStyle.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMOnboardingService.h"
@@ -28,6 +30,7 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 
 @property (strong, nonatomic) HEMRulerView* ruler;
 @property (assign, nonatomic) CGFloat weightInGrams;
+@property (strong, nonatomic) NSDictionary* valueAttributes;
 
 @end
 
@@ -42,7 +45,9 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
 }
 
 - (void)configureScale {
-    [[self weightLabel] setFont:[UIFont h1]];
+    [self setValueAttributes:@{NSFontAttributeName : [UIFont h1],
+                               NSForegroundColorAttributeName : [UIColor blue6]}];
+
     [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMWeightPickerMaxWeight
                                                 direction:HEMRulerDirectionHorizontal]];
     
@@ -100,12 +105,23 @@ static CGFloat const HEMWeightDefaultMale = 74842.7f;
     CGFloat markX = ((offX + [scrollView contentInset].left) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
     CGFloat lbs = MAX(0.0f, markX);
     
+    NSString* format = nil;
+    NSAttributedString* attributedValue = nil;
+    
     if ([SENPreference useMetricUnitForWeight]) {
-        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), roundCGFloat(HEMPoundsToKilograms(@(lbs)))];
+        format = NSLocalizedString(@"measurement.kg.attributed.format", nil);
+        NSString* textValue = [NSString stringWithFormat:@"%.0f", roundCGFloat(HEMPoundsToKilograms(@(lbs)))];
+        attributedValue = [[NSAttributedString alloc] initWithString:textValue attributes:[self valueAttributes]];
     } else {
-        self.weightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
+        format = NSLocalizedString(@"measurement.lb.attributed.format", nil);
+        NSString* textValue = [NSString stringWithFormat:@"%.0f", lbs];
+        attributedValue = [[NSAttributedString alloc] initWithString:textValue attributes:[self valueAttributes]];
     }
     
+    NSAttributedString* attrText = [[NSMutableAttributedString alloc] initWithFormat:format args:@[attributedValue]
+                                                                           baseColor:[UIColor blue6]
+                                                                            baseFont:[UIFont h5]];
+    [[self weightLabel] setAttributedText:attrText];
     [self setWeightInGrams:HEMPoundsToGrams(@(lbs))];
 }
 

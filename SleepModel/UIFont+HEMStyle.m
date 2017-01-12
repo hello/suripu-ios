@@ -22,7 +22,6 @@
 }
 
 + (UIFont*)h3 {
-    
     return [UIFont systemFontOfSize:32.0f weight:UIFontWeightLight];
 }
 

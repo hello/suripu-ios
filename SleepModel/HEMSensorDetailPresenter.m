@@ -217,6 +217,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)reloadUI {
     if (![self isScrubbing]) {
         [[self collectionView] reloadData];
+        [self showScrollTutorialIfNeeded];
     }
 }
 
@@ -343,6 +344,28 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [self setHandHoldingView:nil];
 }
 
+- (void)showScrollTutorialIfNeeded {
+    if ([[self collectionView] contentOffset].y == 0.0f
+        && ![self handHoldingView]
+        && [[self handHoldingService] shouldShow:HEMHandHoldingSensorScroll]) {
+        
+        HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
+        [handholdingView setMessageStyle:HEMHHMessageStyleOval];
+        [handholdingView setMessage:NSLocalizedString(@"handholding.message.sensor-scroll", nil)];
+        [handholdingView setAnchor:HEMHHDialogAnchorBottom];
+        [handholdingView showInView:[[self collectionView] superview]
+                    fromContentView:[[self collectionView] superview]
+                      dismissAction:nil];
+        
+        [self setHandHoldingView:handholdingView];
+    }
+}
+
+- (void)completeScrollTutorial {
+    [[self handHoldingService] completed:HEMHandHoldingSensorScroll];
+    [self setHandHoldingView:nil];
+}
+
 #pragma mark - UICollectionViewDelegate / DataSource
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
@@ -432,6 +455,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self didScrollContentIn:scrollView];
+    [self completeScrollTutorial];
 }
 
 #pragma mark - Cell appearance

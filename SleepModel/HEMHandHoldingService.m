@@ -23,6 +23,7 @@ static NSInteger const HEMHandHoldingInsightTapMinDaysChecked = 1;
 
 // sensors
 static NSString* const HEMHandHoldingServiceSensorScrubbing = @"HandholdingSensorScrubbing";
+static NSString* const HEMHandHoldingServiceSensorScroll = @"HandholdingSensorScroll";
 
 // timeline
 static NSString* const HEMHandHoldingServiceTimelineSwipe = @"HandholdingTimelineDaySwitch";
@@ -86,23 +87,17 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
 }
 
 - (NSString*)stringValueFor:(HEMHandHolding)tutorial {
-    NSString* tutorialName = nil;
-    
     switch (tutorial) {
-        case HEMHandHoldingInsightTap:
-            tutorialName = HEMHandHoldingServiceInsightTap;
-            break;
-        case HEMHandHoldingSensorScrubbing:
-            tutorialName = HEMHandHoldingServiceSensorScrubbing;
-            break;
-        case HEMHandHoldingTimelineSwipe:
-            tutorialName = HEMHandHoldingServiceTimelineSwipe;
-            break;
         default:
-            break;
+        case HEMHandHoldingInsightTap:
+            return HEMHandHoldingServiceInsightTap;
+        case HEMHandHoldingSensorScrubbing:
+            return HEMHandHoldingServiceSensorScrubbing;
+        case HEMHandHoldingTimelineSwipe:
+            return HEMHandHoldingServiceTimelineSwipe;
+        case HEMHandHoldingSensorScroll:
+            return HEMHandHoldingServiceSensorScroll;
     }
-    
-    return tutorialName;
 }
 
 - (void)completed:(HEMHandHolding)tutorial {
@@ -115,6 +110,8 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
             SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
             [prefs setPersistentPreference:[self tutorialRecordKeeper]
                                     forKey:HEMHandHoldingServicePrefName];
+            
+            DDLogVerbose(@"completed %@", tutorialName);
         }
     }
 }
@@ -166,6 +163,8 @@ static NSString* const HEMHandHoldingServiceTimelineOpen = @"HEMHandHoldingServi
             return [self shouldShowInsightTap];
         case HEMHandHoldingTimelineSwipe:
             return [self shouldShowTimelineSwipe];
+        case HEMHandHoldingSensorScroll:
+            return [self isComplete:HEMHandHoldingSensorScrubbing]; // scrub first, then scroll
         case HEMHandHoldingSensorScrubbing:
         default:
             return YES;

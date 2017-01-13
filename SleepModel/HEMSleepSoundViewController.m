@@ -31,11 +31,10 @@
     Scrollable
 >
 
-@property (weak, nonatomic) IBOutlet UIImageView *bgLaunchImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *bgLaunchImageView;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, weak) IBOutlet UIButton* actionButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *actionButtonBottomConstraint;
-@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
+@property (nonatomic, weak) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) HEMSleepSoundService* sleepSoundService;
 @property (nonatomic, strong) HEMAudioService* audioService;
 @property (nonatomic, strong) HEMListPresenter* listPresenter;
@@ -70,8 +69,7 @@
     HEMSleepSoundPlayerPresenter* playerPresenter =
         [[HEMSleepSoundPlayerPresenter alloc] initWithSleepSoundService:[self sleepSoundService]
                                                           deviceService:[self deviceService]];
-    [playerPresenter bindWithActionButton:[self actionButton]
-                         bottomConstraint:[self actionButtonBottomConstraint]];
+    [playerPresenter bindWithActionButton:[self actionButton]];
     [playerPresenter bindWithCollectionView:[self collectionView]];
     [playerPresenter bindWithActivityIndicator:[self activityIndicator]];
     [playerPresenter setDelegate:self];

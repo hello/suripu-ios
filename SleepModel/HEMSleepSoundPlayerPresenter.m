@@ -52,8 +52,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, weak) HEMDeviceService* deviceService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) UIButton* actionButton;
-@property (nonatomic, weak) NSLayoutConstraint* actionBottomConstraint;
-@property (nonatomic, assign) CGFloat origActionBottomDistance;
 @property (nonatomic, strong) SENSleepSoundsState* soundState;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) HEMActivityIndicatorView* indicatorView;
@@ -98,24 +96,21 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [self setCollectionView:collectionView];
 }
 
-- (void)bindWithActionButton:(UIButton*)button
-            bottomConstraint:(NSLayoutConstraint*)bottomConstraint {
-    [self setOrigActionBottomDistance:[bottomConstraint constant]];
-
+- (void)bindWithActionButton:(UIButton*)button  {
     CGFloat buttonWidth = CGRectGetWidth([button bounds]);
     [[button layer] setCornerRadius:buttonWidth / 2.0f];
     [button addTarget:self action:@selector(takeAction:) forControlEvents:UIControlEventTouchUpInside];
     [button setTintColor:[UIColor whiteColor]];
     [button setImage:nil forState:UIControlStateNormal];
+    [button setHidden:YES];
     
     NSShadow* shadow = [NSShadow shadowForCircleActionButton];
     [[button layer] setShadowRadius:[shadow shadowBlurRadius]];
     [[button layer] setShadowOffset:[shadow shadowOffset]];
     [[button layer] setShadowColor:[[shadow shadowColor] CGColor]];
     [[button layer] setShadowOpacity:0.85f];
-    
+
     [self setActionButton:button];
-    [self setActionBottomConstraint:bottomConstraint];
     [self setIndicatorView:[self activityIndicator]];
 }
 
@@ -208,30 +203,31 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 
 #pragma mark -
 
-- (void)hideActionButton {
-    CGFloat height = CGRectGetHeight([[self actionButton] bounds]);
-    CGFloat hiddenBottom = absCGFloat([self origActionBottomDistance]) + height;
-    [[self actionBottomConstraint] setConstant:hiddenBottom];
-}
-
 - (void)preparePlayerForDataToBeLoaded {
     switch ([self playerState]) {
         case HEMSleepSoundPlayerStateError:
         case HEMSleepSoundPlayerStatePrereqNotMet:
         case HEMSleepSoundPlayerStateSenseOffline:
-            [self hideActionButton];
+            [[self actionButton] setHidden:YES];
             [[self indicator] setHidden:NO];
             [[self collectionView] setAlpha:0.0];
             break;
+        case HEMSleepSoundPlayerStateSenseNotPaired:
         case HEMSleepSoundPlayerStateWaiting: {
-            [[self indicator] setAlpha:0.0];
-            [[self indicator] start];
-            [[self indicator] setHidden:NO];
-            [UIView animateWithDuration:HEMSleepSoundPlayerLoadAnimeDuration animations:^{
-                [[self indicator] setAlpha:1.0f];
-            }];
+            if (![[self deviceService] hasSavedHardwareVersion]) {
+                [[self actionButton] setHidden:YES];
+                [[self collectionView] setAlpha:0.0f];
+                [[self indicator] setAlpha:0.0];
+                [[self indicator] start];
+                [[self indicator] setHidden:NO];
+                [UIView animateWithDuration:HEMSleepSoundPlayerLoadAnimeDuration animations:^{
+                    [[self indicator] setAlpha:1.0f];
+                }];
+            }
             break;
         }
+        case HEMSleepSoundPlayerStateStopped:
+        case HEMSleepSoundPlayerStatePlaying:
         default:
             break;
     }
@@ -257,8 +253,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)prepareForReload {
-    [self preparePlayerForDataToBeLoaded];
     [self setPlayerState:HEMSleepSoundPlayerStateWaiting];
+    [self preparePlayerForDataToBeLoaded];
     [[self collectionView] reloadData];
 }
 
@@ -336,8 +332,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[self indicator] setHidden:YES];
     [UIView animateWithDuration:HEMSleepSoundPlayerLoadAnimeDuration animations:^{
         [[self collectionView] setAlpha:1.0f];
-        [[self actionBottomConstraint] setConstant:[self origActionBottomDistance]];
-        [[self actionButton] layoutIfNeeded];
     } completion:^(BOOL finished) {
         [[self bgView] setHidden:YES];
     }];

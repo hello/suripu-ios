@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.2.2
+
+New:
+
+* Added scrolling tutorial in Sensor detail
+* Added error state to Insight detail view
+* Updated insight share icon and text
+
+Fixes:
+
+* Using subscript for unit text in weight and height picker to avoid font inconsistencies
+
 ## 2.0.2.1
 
 New:

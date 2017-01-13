@@ -469,6 +469,8 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     
     [[iCell shareButton] setTitle:[NSLocalizedString(@"actions.share", nil) uppercaseString]
                          forState:UIControlStateNormal];
+    [[iCell shareButton] setTitleColor:[UIColor grey5] forState:UIControlStateNormal];
+    [[[iCell shareButton] titleLabel] setFont:[UIFont body]];
     [[iCell shareButton] addTarget:self
                             action:@selector(shareInsight:)
                   forControlEvents:UIControlEventTouchUpInside];

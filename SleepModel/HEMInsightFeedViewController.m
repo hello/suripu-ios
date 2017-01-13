@@ -102,8 +102,7 @@
     __weak typeof(self) weakSelf = self;
     [feedPresenter setOnLoadCallback:^(NSArray* data) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        UIView* rootView = [[RootViewController currentRootViewController] view];
-        [[strongSelf handHoldingPresenter] showIfNeededIn:rootView
+        [[strongSelf handHoldingPresenter] showIfNeededIn:[strongSelf view]
                                        withCollectionView:[strongSelf collectionView]];
     }];
     

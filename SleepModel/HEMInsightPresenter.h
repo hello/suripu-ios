@@ -9,10 +9,19 @@
 #import "HEMPresenter.h"
 
 @class HEMInsightsService;
+@class HEMInsightPresenter;
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol HEMInsightErrorDelegate <NSObject>
+
+- (void)didFailToLoadInsight:(SENInsight*)insight fromPresenter:(HEMInsightPresenter*)presenter;
+
+@end
+
 @interface HEMInsightPresenter : HEMPresenter
+
+@property (nonatomic, weak) id<HEMInsightErrorDelegate> insightErrorDelegate;
 
 - (instancetype)initWithInsightService:(HEMInsightsService*)insightsService
                             forInsight:(SENInsight*)insight;

@@ -2909,7 +2909,7 @@
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                     <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
-                                                    <state key="normal" title="SHARE" image="shareIcon">
+                                                    <state key="normal" title="SHARE" image="timelineShareIcon">
                                                         <color key="titleColor" red="0.34901960784313724" green="0.41176470588235292" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                 </button>
@@ -4718,7 +4718,6 @@
         <image name="questions_circle" width="21" height="21"/>
         <image name="settingsToggleIconActive" width="22" height="22"/>
         <image name="settingsToggleIconInactive" width="22" height="22"/>
-        <image name="shareIcon" width="15" height="18"/>
         <image name="sleepSoundIcon" width="24" height="24"/>
         <image name="soundGraphLeft" width="80" height="20"/>
         <image name="soundGraphRight" width="80" height="20"/>

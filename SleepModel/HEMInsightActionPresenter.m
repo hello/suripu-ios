@@ -107,6 +107,7 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
     [shareButton addTarget:self
                     action:@selector(shareInsight)
           forControlEvents:UIControlEventTouchUpInside];
+    [shareButton setTitleColor:[UIColor grey2] forState:UIControlStateDisabled];
     
     [closeButton setBackgroundColor:[UIColor whiteColor]];
     [[closeButton titleLabel] setFont:[UIFont button]];
@@ -123,6 +124,10 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
 }
 
 #pragma mark - Hide / Show Sharing
+
+- (void)disableSharing {
+    [[self shareButton] setEnabled:NO];
+}
 
 - (void)determineShareability {
     if (![[self shareService] isShareable:[self insight]]) {

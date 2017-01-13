@@ -115,6 +115,10 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     __weak typeof(self) weakSelf = self;
     [[self insightsService] getInsightForSummary:[self insight] completion:^(SENInsightInfo * _Nullable insight, NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [[strongSelf insightErrorDelegate] didFailToLoadInsight:[strongSelf insight]
+                                                      fromPresenter:strongSelf];
+        }
         [strongSelf setLoading:NO];
         [strongSelf setLoadError:error];
         [strongSelf setInsightDetail:insight];
@@ -183,6 +187,18 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     return _attributedSummary;
 }
 
+- (NSAttributedString*)attributedErrorTitle {
+    NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText][@(PARA)];
+    NSString* errorTitle = NSLocalizedString(@"sleep.insight.info.title.no-text", nil);
+    return [[NSAttributedString alloc] initWithString:errorTitle attributes:attributes];
+}
+
+- (NSAttributedString*)attributedErrorBody {
+    NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText][@(PARA)];
+    NSString* body = NSLocalizedString(@"sleep.insight.info.message.no-text", nil);
+    return [[NSAttributedString alloc] initWithString:body attributes:attributes];
+}
+
 - (NSAttributedString*)attributedTitle {
     if (!_attributedTitle) {
         NSString* title = [[[self insightDetail] title] trim];
@@ -215,10 +231,15 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
         case HEMInsightRowTitleOrLoading: {
             if ([self isLoading]) {
                 return nil;
+            } else if ([self loadError]) {
+                return [self attributedErrorTitle];
             }
             return [self attributedTitle];
         }
         case HEMInsightRowDetail: {
+            if ([self loadError]) {
+                return [self attributedErrorBody];
+            }
             return [self attributedDetail];
         }
         case HEMInsightRowImage:

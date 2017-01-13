@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
     shareTrailingConstraint:(NSLayoutConstraint*)trailingConstraint
      andViewThatDividesThem:(UIView*)divider;
 
+- (void)disableSharing;
+
 @end
 
 NS_ASSUME_NONNULL_END

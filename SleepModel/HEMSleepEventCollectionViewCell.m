@@ -158,8 +158,12 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     CGRect eventTimeLabelFrame = CGRectMake(eventTimeLeft, timeLabelTop, timeLabelSize.width, timeLabelSize.height);
     self.eventTimeLabel.frame = eventTimeLabelFrame;
 
-    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight
-                           - timeLabelRight;
+    CGFloat timeWidth = CGRectGetWidth(eventTimeLabelFrame);
+    CGFloat messageWidth = containerWidth - messageLabelLeft - messageLabelRight;
+    if (timeWidth > 0.0f) {
+        messageWidth -= timeWidth - timeLabelRight;
+    }
+    
     CGFloat messageHeight = CGRectGetHeight(containerFrame) - messageLabelHeightOffset
                             - ([self.contentContainerView isShowingWaveforms] ? HEMEventBubbleWaveformHeight : 0);
     CGRect eventMesageLabelFrame = CGRectMake(messageLabelLeft, messageLabelTop, messageWidth, messageHeight);

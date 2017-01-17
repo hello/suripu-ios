@@ -55,16 +55,34 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     BOOL isOn = [sender isOn];
     NSUInteger row = sender.tag - HEMNotificationTagOffset;
     SENPreference* preference = [self preferenceAtIndex:row];
-    if (!preference) {
-        return;
-    }
-    
     HEMAccountService* service = [HEMAccountService sharedService];
-    [service enablePreference:isOn forType:[preference type] completion:^(NSError * _Nullable error) {
-        if (error) {
-            sender.on = !isOn;
-        }
-    }];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^update)(void) = ^{
+        [service enablePreference:isOn forType:[preference type] completion:^(NSError * error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                sender.on = !isOn;
+                [strongSelf showError];
+            }
+        }];
+    };
+    
+    if (!preference) {
+        [service refresh:^(SENAccount * account, NSDictionary<NSNumber *,SENPreference *> * preferences) {
+            update();
+        }];
+        return;
+    } else {
+        update();
+    }
+}
+
+#pragma mark - Errors
+
+- (void)showError {
+    [self showMessageDialog:NSLocalizedString(@"settings.notification.error.update-failed-message", nil)
+                      title:NSLocalizedString(@"settings.notification.error.title", nil)];
 }
 
 #pragma mark - UITableViewDelegate

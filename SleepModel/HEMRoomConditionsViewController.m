@@ -28,7 +28,8 @@ static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
     HEMSensePairingDelegate,
     HEMRoomConditionsDelegate,
     RoomConditionsNavDelegate,
-    Scrollable
+    Scrollable,
+    ShortcutHandler
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -87,6 +88,19 @@ static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
 
 - (void)scrollToTop {
     [[self collectionView] setContentOffset:CGPointZero animated:YES];
+}
+
+#pragma mark - Shortcut from extension
+
+- (BOOL)canHandleActionWithAction:(HEMShortcutAction)action {
+    return action == HEMShortcutActionRoomConditionsShow;
+}
+
+- (void)takeActionWithAction:(HEMShortcutAction)action {
+    if ([[self navigationController] topViewController] != self) {
+        [[self navigationController] popToRootViewControllerAnimated:NO];
+    }
+    [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt];
 }
 
 #pragma mark - RoomConditionsNavDelegate

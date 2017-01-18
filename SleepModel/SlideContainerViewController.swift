@@ -17,8 +17,9 @@ import SenseKit
     fileprivate weak var shortcutHandler: ShortcutHandler?
     fileprivate var shortcutAction: HEMShortcutAction?
     fileprivate weak var tabItemPresenter: TabPresenter!
+    fileprivate var shortcutHandlerIndex: Int?
     
-    var contentPresenter: SlideContentPresenter! {
+    var contentPresenter: SlideContentPresenter? {
         didSet {
             guard contentPresenter != nil else {
                 return
@@ -28,7 +29,7 @@ import SenseKit
                 return
             }
             
-            let controllers = contentPresenter.contentControllers
+            let controllers = contentPresenter!.contentControllers
             let tabPresenter = TabPresenter(controllers: controllers)
             tabPresenter.bind(tabItem: self.tabBarItem)
             self.addPresenter(tabPresenter)
@@ -59,13 +60,13 @@ import SenseKit
         }
         // delegate must be set first, and the activity must be bound before
         // other elements are bound so it can be leveraged
-        self.contentPresenter.visibilityDelegate = self
-        self.contentPresenter.bind(activity: self.activity)
-        self.contentPresenter.bind(navigationBar: self.navigationController?.navigationBar)
-        self.contentPresenter.bind(with: self.shadowView!)
-        self.contentPresenter.bind(scrollView: self.scrollView)
+        self.contentPresenter!.visibilityDelegate = self
+        self.contentPresenter!.bind(activity: self.activity)
+        self.contentPresenter!.bind(navigationBar: self.navigationController?.navigationBar)
+        self.contentPresenter!.bind(with: self.shadowView!)
+        self.contentPresenter!.bind(scrollView: self.scrollView)
 
-        self.addPresenter(self.contentPresenter)
+        self.addPresenter(self.contentPresenter!)
     }
 
 }
@@ -117,31 +118,44 @@ extension SlideContainerViewController: ShortcutHandler {
             return
         }
         
+        self.contentPresenter?.show(controllerIndex: self.shortcutHandlerIndex!)
+        
         handler.takeAction(action: action)
+        
         self.shortcutHandler = nil
+        self.shortcutHandlerIndex = 0
         self.shortcutAction = HEMShortcutAction.unknown
     }
     
     func canHandleAction(action: HEMShortcutAction) -> Bool {
-        guard self.contentPresenter.contentControllers.count > 0 else {
+        guard self.contentPresenter?.contentControllers.count ?? 0 > 0 else {
             return false
         }
         
-        let controllers = self.contentPresenter.contentControllers!
-        var handled = false
+        let controllers = self.contentPresenter!.contentControllers!
+        var handlerIndex = -1
         
-        for controller in controllers {
+        for (index, controller) in controllers.enumerated() {
             if let handler = controller as? ShortcutHandler {
                 if handler.canHandleAction(action: action) == true {
                     self.shortcutHandler = handler
                     self.shortcutAction = action
-                    handled = true
+                    self.shortcutHandlerIndex = index
+                    handlerIndex = index
                     break
                 }
             }
         }
         
-        return handled
+        if handlerIndex >= 0 {
+            for (index, controller) in controllers.enumerated() {
+                if handlerIndex != index {
+                    controller.dismiss(animated: false, completion: nil)
+                }
+            }
+        }
+        
+        return handlerIndex >= 0
     }
     
     func takeAction(action: HEMShortcutAction) {

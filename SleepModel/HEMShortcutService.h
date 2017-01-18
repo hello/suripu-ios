@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSUInteger, HEMShortcutAction) {
     HEMShortcutActionUnknown = 1,
     HEMShortcutActionAlarmNew,
-    HEMShortcutActionAlarmEdit
+    HEMShortcutActionAlarmEdit,
+    HEMShortcutActionRoomConditionsShow
 };
 
 NS_ASSUME_NONNULL_BEGIN

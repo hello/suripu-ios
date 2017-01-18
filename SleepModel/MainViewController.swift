@@ -273,11 +273,14 @@ extension MainViewController: ShortcutHandler {
         var handled = false
         for (index, controller) in self.viewControllers!.enumerated() {
             var contentController = controller
-            if contentController is UINavigationController {
-                contentController = (contentController as! UINavigationController).topViewController!
+            var navigationController: UINavigationController?
+            if let nav = contentController as? UINavigationController {
+                navigationController = nav
+                contentController = nav.viewControllers.first!
             }
             if let handler = contentController as? ShortcutHandler {
                 if handler.canHandleAction(action: action) == true {
+                    let _ = navigationController?.popToRootViewController(animated: false)
                     self.switchTab(tab: MainTab(rawValue: index)!)
                     self.shortcutHandler = handler
                     handled = true

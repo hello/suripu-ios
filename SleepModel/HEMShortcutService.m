@@ -11,6 +11,7 @@
 
 static NSString* const HEMShortcut3DTouchTypeAlarmNew = @"is.hello.sense.shortcut.addalarm";
 static NSString* const HEMShortcut3DTouchTypeAlarmEdit = @"is.hello.sense.shortcut.editalarms";
+static NSString* const HEMShortcutExtensionRoomExtPath = @"ext/room";
 
 @implementation HEMShortcutService
 
@@ -21,6 +22,8 @@ static NSString* const HEMShortcut3DTouchTypeAlarmEdit = @"is.hello.sense.shortc
             action = HEMShortcutActionAlarmNew;
         } else if ([type isEqualToString:HEMShortcut3DTouchTypeAlarmEdit]) {
             action = HEMShortcutActionAlarmEdit;
+        } else if ([type isEqualToString:HEMShortcutExtensionRoomExtPath]) {
+            action = HEMShortcutActionRoomConditionsShow;
         }
     }
     return action;

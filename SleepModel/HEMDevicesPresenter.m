@@ -289,24 +289,20 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
           viewForSupplementaryElementOfKind:(NSString*)kind
                                 atIndexPath:(NSIndexPath*)indexPath {
     
-    UICollectionReusableView* view = nil;
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        HEMTextFooterCollectionReusableView* footer
-        = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                             withReuseIdentifier:HEMDevicesFooterReuseIdentifier
-                                                    forIndexPath:indexPath];
-
-        if ([[[self deviceService] devices] hasPairedSense]) {
-            [footer setText:[self attributedFooterText]];
-        } else {
-            [footer setText:nil];
-        }
-        
-        [footer setDelegate:self];
-        
-        view = footer;
+    HEMTextFooterCollectionReusableView* footer
+    = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                         withReuseIdentifier:HEMDevicesFooterReuseIdentifier
+                                                forIndexPath:indexPath];
+    
+    if ([[[self deviceService] devices] hasPairedSense]) {
+        [footer setText:[self attributedFooterText]];
+    } else {
+        [footer setText:nil];
     }
-    return view;
+    
+    [footer setDelegate:self];
+    
+    return footer;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

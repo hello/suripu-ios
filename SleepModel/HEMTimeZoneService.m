@@ -55,8 +55,8 @@
     }];
 }
 
-- (nonnull NSString*)cityForTimeZone:(nonnull NSTimeZone*)timeZone
-                         fromMapping:(nonnull NSDictionary<NSString*, NSString*>*)timeZoneMapping {
+- (NSString*)cityForTimeZone:(nonnull NSTimeZone*)timeZone
+                 fromMapping:(nonnull NSDictionary<NSString*, NSString*>*)timeZoneMapping {
     NSArray<NSString*>* cityNames = [timeZoneMapping allKeys];
     NSString* currentTimeZoneName = [timeZone name];
     NSString* matchingCityName = nil;

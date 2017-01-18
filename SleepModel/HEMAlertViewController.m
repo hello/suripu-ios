@@ -28,14 +28,6 @@
 + (void)showInfoDialogWithTitle:(NSString *)title
                         message:(NSString *)message
                      controller:(UIViewController *)controller {
-    UIView* bgView = nil;
-    if ([controller parentViewController]) {
-        bgView = [[controller parentViewController] view];
-    } else if ([controller navigationController]) {
-        bgView = [[controller navigationController] view];
-    } else {
-        bgView = [controller view];
-    }
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     [dialogVC addButtonWithTitle:[NSLocalizedString(@"actions.ok", nil) uppercaseString]
                            style:HEMAlertViewButtonStyleRoundRect

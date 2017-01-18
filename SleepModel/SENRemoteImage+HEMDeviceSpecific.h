@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return cached image, if any
  */
-- (UIImage*)locallyCachedImageForCurrentDevice;
+- (nullable UIImage*)locallyCachedImageForCurrentDevice;
 
 @end
 

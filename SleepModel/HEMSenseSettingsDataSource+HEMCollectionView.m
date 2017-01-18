@@ -135,14 +135,10 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
           viewForSupplementaryElementOfKind:(NSString *)kind
                                 atIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionReusableView* view = nil;
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                  withReuseIdentifier:HEMSenseSettingsHeaderReuseId
-                                                         forIndexPath:indexPath];
-        [view setBackgroundColor:[UIColor backgroundColor]];
-    }
-    
+    UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                        withReuseIdentifier:HEMSenseSettingsHeaderReuseId
+                                                                               forIndexPath:indexPath];
+    [view setBackgroundColor:[UIColor backgroundColor]];
     return view;
     
 }

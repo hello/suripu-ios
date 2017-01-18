@@ -57,8 +57,8 @@ typedef void(^HEMAccountPhotoHandler)(SENRemoteImage* _Nullable remoteImage, NSE
 - (void)enablePreference:(BOOL)enable
                  forType:(SENPreferenceType)type
               completion:(nullable HEMAccountUpdateHandler)completion;
-- (NSString*)localizedHeightInPreferredUnit;
-- (NSString*)localizedWeightInPreferredUnit;
+- (nullable NSString*)localizedHeightInPreferredUnit;
+- (nullable NSString*)localizedWeightInPreferredUnit;
 
 - (void)updateBirthdate:(NSString*)birthdate completion:(nullable HEMAccountUpdateHandler)completion;
 - (void)updateGender:(SENAccountGender)gender completion:(nullable HEMAccountUpdateHandler)completion;

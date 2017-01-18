@@ -3653,7 +3653,7 @@
 			attributes = {
 				CLASSPREFIX = HEM;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Hello;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {

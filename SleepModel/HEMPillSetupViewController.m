@@ -162,6 +162,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     NSString* reuseId = nil;
     
     switch (row) {
+        default:
         case HEMPillSetupRowTitle:
         case HEMPillSetupRowDescription: {
             reuseId = [HEMOnboardingStoryboard pillSetupTextCellReuseIdentifier];
@@ -195,8 +196,6 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
             cell = videoCell;
             break;
         }
-        default:
-            break;
     }
     
     return cell;

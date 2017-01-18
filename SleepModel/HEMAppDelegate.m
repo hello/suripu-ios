@@ -58,15 +58,26 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
          annotation:(id)annotation {
     HEMFacebookService* fb = [HEMFacebookService new];
     if (![fb open:application url:url source:sourceApplication annotation:annotation]) {
-        NSString* lastPath = [url lastPathComponent];
-        if ([lastPath isEqualToString:kHEMAppExtRoom]) {
-            NSDictionary* props = @{kHEMAnalyticsEventPropExtUrl : [url absoluteString] ?: @""};
-            [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt properties:props];
-            MainViewController* mainVC = [self mainViewController];
-            [mainVC switchTabWithTab:MainTabConditions];
+        NSString* fullPath = [NSString stringWithFormat:@"%@%@", [url host], [url path]];
+        HEMShortcutAction action = [HEMShortcutService actionForType:fullPath];
+        if (action != HEMShortcutActionUnknown) {
+            [self performShortcutAction:action];
         }
     }
     return YES;
+}
+
+- (BOOL)performShortcutAction:(HEMShortcutAction)action {
+    BOOL performed = NO;
+    RootViewController* rootVC = [RootViewController currentRootViewController];
+    if ([rootVC conformsToProtocol:@protocol(ShortcutHandler)]) {
+        id<ShortcutHandler> handler = (id) rootVC;
+        if ([handler canHandleActionWithAction:action]) {
+            [handler takeActionWithAction:action];
+            performed = YES;
+        }
+    }
+    return performed;
 }
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
@@ -75,14 +86,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     BOOL handled = NO;
     HEMShortcutAction action = [HEMShortcutService actionForType:shortcutType];
     if (action != HEMShortcutActionUnknown) {
-        RootViewController* rootVC = [RootViewController currentRootViewController];
-        if ([rootVC conformsToProtocol:@protocol(ShortcutHandler)]) {
-            id<ShortcutHandler> handler = (id) rootVC;
-            if ([handler canHandleActionWithAction:action]) {
-                [handler takeActionWithAction:action];
-                handled = YES;
-            }
-        }
+        handled = [self performShortcutAction:action];
     }
     completionHandler(handled);
 }

@@ -116,6 +116,9 @@
 - (void)takeActionWithAction:(HEMShortcutAction)action {
     switch (action) {
         case HEMShortcutActionAlarmEdit:
+            if ([self presentedViewController]) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
             [SENAnalytics track:HEMAnalyticsEventShortcutAlarmEdit];
             break;
         case HEMShortcutActionAlarmNew:

@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.2.3
+
+New:
+
+* Updated visual design of alert dialogs
+* Updated sign out confirmation dialog to be consistent with others
+* Updated delete alarm confirmation dialog to be consistent with others
+* Updated remvoe expansion confirmation dialog to be consistent with others
+* Updated pill unpair confirmation dialog to be consistent with others
+* Updated sense unpair confirmation dialog to be consistent with others
+
+Fixes:
+
+* Room conditions extension will dismiss settings if showing when tapped through
+* Fixed issue where multiple alarm errors would be showing in the list
+* Fixed an issue where the sleep sounds player would briefly show when no sense is paired
+* Fixed an issue where the Smart alarm event would be truncated in the Timeline
+* Fixed an issue where the push notification settings would revert without error
+
 ## 2.0.2.2
 
 New:

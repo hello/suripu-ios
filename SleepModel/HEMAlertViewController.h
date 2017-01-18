@@ -20,6 +20,36 @@
 @property (nonatomic) HEMAlertViewType type;
 
 /**
+ * Convenience method to instantiate a confirmation dialog style alert
+ *
+ * @param title: title for the dialog
+ * @param message: body message for the dialog
+ * @param yesTitle: the title to display in the confirm button
+ * @param noTitle: the title to display in the decline button
+ * @param action: the action to take when the confirmation button is tapped
+ */
++ (instancetype)confirmationDialogWithTitle:(NSString*)title
+                                    message:(NSString*)message
+                             yesButtonTitle:(NSString*)yesTitle
+                              noButtonTitle:(NSString*)noTitle
+                                     action:(void(^)(void))action;
+
+/**
+ * Convenience method to instantiate a confirmation dialog style alert
+ *
+ * @param title: title for the dialog
+ * @param message: attributed message for the dialog
+ * @param yesTitle: the title to display in the confirm button
+ * @param noTitle: the title to display in the decline button
+ * @param action: the action to take when the confirmation button is tapped
+ */
++ (instancetype)confirmationDialogWithTitle:(NSString*)title
+                          attributedMessage:(NSAttributedString*)message
+                             yesButtonTitle:(NSString*)yesTitle
+                              noButtonTitle:(NSString*)noTitle
+                                     action:(void(^)(void))action;
+
+/**
  *  Present a non-interactive dialog
  *
  *  @param title      title of the dialog

@@ -210,6 +210,8 @@
 "settings.help.format" = "If you're having trouble, please contact us at %@";
 "settings.enhanced-audio.desc" = "Enhanced Audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 "settings.sign-out.confirmation" = "Are you sure you want to sign out of your account?";
+"settings.account.sign-out.yes" = "Yes, sign out";
+"settings.account.sign-out.no" = "No, stay signed in";
 "settings.account.email.placeholder" = "Email address";
 "settings.account.name.placeholder" = "Name";
 "settings.account.password-current.placeholder" = "Current password";
@@ -973,6 +975,7 @@
 "ext.room-conditions.loading" = "loading data";
 
 // expansions
+"expansion.delete" = "Delete expansion";
 "expansion.state.not-connected" = "Connect";
 "expansion.state.revoked" = "Disconnected";
 "expansion.state.connected-off" = "Disabled";

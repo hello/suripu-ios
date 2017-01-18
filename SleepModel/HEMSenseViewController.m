@@ -153,22 +153,21 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 - (void)showConfirmation:(NSString*)title message:(NSAttributedString*)message action:(void(^)(void))action {
-    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
-    [dialogVC setTitle:title];
-    [dialogVC setAttributedMessage:message];
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
-        if (action) {
-            action();
-        }
-    }];
+    NSString* yes = NSLocalizedString(@"actions.yes", nil);
+    NSString* no = NSLocalizedString(@"actions.no", nil);
+    HEMAlertViewController* confirm = [HEMAlertViewController confirmationDialogWithTitle:title
+                                                                        attributedMessage:message
+                                                                           yesButtonTitle:yes
+                                                                            noButtonTitle:no
+                                                                                   action:action];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support.hyperlink-text", nil) takeAction:^(NSURL *link) {
-        [HEMSupportUtil openHelpFrom:weakSelf];
+    [confirm onLinkTapOf:NSLocalizedString(@"help.url.support.hyperlink-text", nil) takeAction:^(NSURL *link) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [HEMSupportUtil openHelpFrom:strongSelf];
     }];
     
-    [dialogVC showFrom:self];
+    [confirm showFrom:self];
 }
 
 - (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {

@@ -114,12 +114,14 @@
                                 message:(NSString*)message
                                  action:(HEMAlarmAction)action
                                    from:(HEMAlarmPresenter*)presenter {
-    HEMAlertViewController* alert =
-        [[HEMAlertViewController alloc] initBooleanDialogWithTitle:title
-                                                            message:message
-                                                      defaultsToYes:YES
-                                                             action:action];
-    [alert showFrom:self];
+    NSString* yesTitle = NSLocalizedString(@"actions.yes", nil);
+    NSString* noTitle = NSLocalizedString(@"actions.no", nil);
+    HEMAlertViewController* confirm = [HEMAlertViewController confirmationDialogWithTitle:title
+                                                                                  message:message
+                                                                           yesButtonTitle:yesTitle
+                                                                            noButtonTitle:noTitle
+                                                                                   action:action];
+    [confirm showFrom:self];
 }
 
 - (void)showErrorWithTitle:(NSString*)title

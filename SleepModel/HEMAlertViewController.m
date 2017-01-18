@@ -51,6 +51,30 @@
     return attributedMessage;
 }
 
++ (instancetype)confirmationDialogWithTitle:(NSString*)title
+                                    message:(NSString*)message
+                             yesButtonTitle:(NSString*)yesTitle
+                              noButtonTitle:(NSString*)noTitle
+                                     action:(void(^)(void))action {
+    HEMAlertViewController* alert = [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [alert addButtonWithTitle:yesTitle style:HEMAlertViewButtonStyleRoundRect action:action];
+    [alert addButtonWithTitle:noTitle style:HEMAlertViewButtonStyleBlueText action:nil];
+    return alert;
+}
+
++ (instancetype)confirmationDialogWithTitle:(NSString*)title
+                          attributedMessage:(NSAttributedString*)message
+                             yesButtonTitle:(NSString*)yesTitle
+                              noButtonTitle:(NSString*)noTitle
+                                     action:(void(^)(void))action {
+    HEMAlertViewController* alert = [HEMAlertViewController new];
+    [alert setTitle:title];
+    [alert setAttributedMessage:message];
+    [alert addButtonWithTitle:yesTitle style:HEMAlertViewButtonStyleRoundRect action:action];
+    [alert addButtonWithTitle:noTitle style:HEMAlertViewButtonStyleBlueText action:nil];
+    return alert;
+}
+
 - (instancetype)initBooleanDialogWithTitle:(NSString *)title
                                    message:(NSString *)message
                              defaultsToYes:(BOOL)defaultsToYes

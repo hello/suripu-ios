@@ -374,31 +374,37 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 - (void)replacePill {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* messageFormat = NSLocalizedString(@"settings.pill.dialog.unpair-message.format", nil);
+    NSString* yesTitle = NSLocalizedString(@"actions.yes", nil);
+    NSString* noTitle = NSLocalizedString(@"actions.no", nil);
     NSString* helpLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
     NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink
                                                       attributes:[self dialogMessageAttributes:YES]]];
     
-    NSAttributedString* confirmation =
+    NSMutableAttributedString* message =
     [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                  args:args
                                             baseColor:[UIColor grey5]
                                              baseFont:[UIFont body]];
-    
-    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
-    [dialogVC setTitle:title];
-    [dialogVC setAttributedMessage:confirmation];
+    NSRange fullRange = NSMakeRange(0, [message length]);
+    [message addAttributes:@{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()} range:fullRange];
     
     __weak typeof(self) weakSelf = self;
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.no", nil) style:HEMAlertViewButtonStyleRoundRect action:nil];
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.yes", nil) style:HEMAlertViewButtonStyleBlueText action:^{
-        [weakSelf unpair];
-    }];
-    [dialogVC onLinkTapOf:helpLink takeAction:^(NSURL *link) {
+    void(^unpair)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf unpair];
+    };
+    
+    HEMAlertViewController* confirm = [HEMAlertViewController confirmationDialogWithTitle:title
+                                                                        attributedMessage:message
+                                                                           yesButtonTitle:yesTitle
+                                                                            noButtonTitle:noTitle
+                                                                                   action:unpair];
+    [confirm onLinkTapOf:helpLink takeAction:^(NSURL *link) {
         [HEMSupportUtil openHelpFrom:weakSelf];
     }];
     
-    [dialogVC showFrom:self];
+    [confirm showFrom:self];
 }
 
 - (void)showUnpairMessageForError:(NSError*)error {

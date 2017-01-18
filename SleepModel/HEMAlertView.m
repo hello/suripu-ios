@@ -30,12 +30,14 @@
 @implementation HEMAlertView
 
 CGFloat const HEMDialogContentSpacing = 8.0f;
-CGFloat const HEMDialogContentTopPadding = 40.0f;
+CGFloat const HEMDialogContentTopPadding = 24.0f;
 CGFloat const HEMDialogContentBotPadding = 8.0f;
-CGFloat const HEMDialogVerticalSpaceBetweenMessageAndButtons = 38.0f;
-CGFloat const HEMDialogBooleanSpaceBetweenMessageAndButtons = 38.0f;
-CGFloat const HEMDialogButtonHeight = 56.0f;
+CGFloat const HEMDialogVerticalSpaceBetweenMessageAndButtons = 24.0f;
+CGFloat const HEMDialogBooleanSpaceBetweenMessageAndButtons = 24.0f;
+CGFloat const HEMDialogButtonHeight = 48.0f;
+CGFloat const HEMDialogButtonHorzPadding = 24.0f;
 CGFloat const HEMDialogHorzMargins = 8.0f;
+CGFloat const HEMDialogButtonCornerRadius = 5.0f;
 
 - (instancetype)initWithImage:(UIImage *)image
                         title:(NSString *)title
@@ -54,11 +56,9 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
     CGFloat width = CGRectGetWidth(HEMKeyWindowBounds()) - (2 * HEMDialogHorzMargins);
     CGFloat height = CGRectGetMaxY(self.messageTextView.frame);
     if (self.type == HEMAlertViewTypeVertical) {
-        height += (self.buttons.count * HEMDialogButtonHeight) + HEMDialogVerticalSpaceBetweenMessageAndButtons;
-        if (self.buttons.count == 1)
-            height += HEMDialogContentBotPadding;
+        height += (self.buttons.count * HEMDialogButtonHeight) + HEMDialogVerticalSpaceBetweenMessageAndButtons + HEMDialogContentBotPadding;
     } else {
-        height += HEMDialogButtonHeight + HEMDialogBooleanSpaceBetweenMessageAndButtons;
+        height += HEMDialogButtonHeight + HEMDialogBooleanSpaceBetweenMessageAndButtons + HEMDialogContentBotPadding;
     }
     return CGSizeMake(width, ceilCGFloat(height));
 }
@@ -117,13 +117,13 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
     if (self.imageView)
         top = HEMDialogContentSpacing + CGRectGetMaxY(self.imageView.frame);
 
-    UIFont *font = [UIFont bodyBold];
+    UIFont *font = [UIFont h5];
     CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
     CGFloat width = [self intrinsicContentSize].width - horzPadding;
     CGFloat height = [text heightBoundedByWidth:width usingFont:font];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.contentInsets.left, top, width, height)];
     label.text = text;
-    label.textColor = [UIColor blackColor];
+    label.textColor = [UIColor grey6];
     label.font = font;
     label.numberOfLines = 0;
     self.titleLabel = label;
@@ -154,7 +154,6 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
 }
 
 - (CGRect)nextButtonFrame {
-    CGFloat const HEMDialogButtonHorzPadding = 8.0f;
     CGFloat top = 0, width = 0, left = 0;
     CGFloat messageFrameBottom = CGRectGetMaxY(self.messageTextView.frame);
     UIButton *lastButton = [self.buttons lastObject];
@@ -214,6 +213,8 @@ CGFloat const HEMDialogHorzMargins = 8.0f;
     UIButton *button = nil;
     if (style == HEMAlertViewButtonStyleRoundRect) {
         button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
+        [[button layer] setCornerRadius:HEMDialogButtonCornerRadius];
+        [button setClipsToBounds:YES];
     } else {
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = buttonFrame;

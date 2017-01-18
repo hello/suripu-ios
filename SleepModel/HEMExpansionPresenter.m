@@ -378,23 +378,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)showRemoveAccessConfirmation {
     NSString* title = NSLocalizedString(@"expansion.configuration.removal.confirm.title", nil);
     NSString* message = NSLocalizedString(@"expansion.configuration.removal.confirm.message", nil);
-    
-    NSDictionary* messageAttrs = @{NSFontAttributeName : [UIFont body],
-                                   NSForegroundColorAttributeName : [UIColor blackColor]};
-    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message attributes:messageAttrs];
-    
-    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
-    [dialogVC setTitle:title];
-    [dialogVC setAttributedMessage:attrMessage];
-    
+    NSString* deleteText = NSLocalizedString(@"expansion.delete", nil);
+    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+
     __weak typeof(self) weakSelf = self;
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.delete", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
+    void(^remove)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf removeAccess];
-    }];
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil) style:HEMAlertViewButtonStyleBlueText action:nil];
+    };
+    HEMAlertViewController* confirm = [HEMAlertViewController confirmationDialogWithTitle:title
+                                                                                  message:message
+                                                                           yesButtonTitle:deleteText
+                                                                            noButtonTitle:cancelText
+                                                                                   action:remove];
     
-    [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
+    [[self errorDelegate] showCustomerAlert:confirm fromPresenter:self];
 }
 
 - (void)removeAccess {

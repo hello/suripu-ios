@@ -36,7 +36,6 @@
 
 static NSString* const kHEMRoomConditionsIntroReuseId = @"intro";
 static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
-static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
 
 @interface HEMRoomConditionsPresenter() <
     UICollectionViewDelegate,
@@ -374,9 +373,12 @@ static CGFloat const kHEMRoomConditionsPairViewHeight = 352.0f;
             }
             return itemSize;
         }
-        case SENSensorStateNoSense:
-            itemSize.height = kHEMRoomConditionsPairViewHeight;
+        case SENSensorStateNoSense: {
+            NSString* desc = NSLocalizedString(@"room-conditions.pair-sense.message", nil);
+            itemSize.height = [HEMSenseRequiredCollectionViewCell heightWithDescription:desc
+                                                                          withCellWidth:itemSize.width];
             return itemSize;
+        }
         default: {
             if ([self sensorError]) {
                 NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
@@ -628,7 +630,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 - (void)configurePairSenseCell:(HEMSenseRequiredCollectionViewCell*)pairSenseCell {
     NSString* buttonTitle = NSLocalizedString(@"room-conditions.pair-sense.button.title", nil);
     NSString* message = NSLocalizedString(@"room-conditions.pair-sense.message", nil);
-    [[pairSenseCell descriptionLabel] setText:message];
+    [pairSenseCell setDescription:message];
     [[pairSenseCell pairSenseButton] addTarget:self
                                         action:@selector(pairSense)
                               forControlEvents:UIControlEventTouchUpInside];

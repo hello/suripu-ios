@@ -34,7 +34,6 @@
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
-static CGFloat const HEMAlarmListPairViewHeight = 352.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSString* const HEMAlarmListErrorDomain = @"is.hello.app.alarm";
@@ -473,7 +472,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     HEMSenseRequiredCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     NSString* buttonTitle = NSLocalizedString(@"actions.pair-sense", nil);
     NSString* message = NSLocalizedString(@"alarms.no-sense.description", nil);
-    [[cell descriptionLabel] setText:message];
+    [cell setDescription:message];
     [[cell pairSenseButton] addTarget:self
                                action:@selector(pairSense)
                      forControlEvents:UIControlEventTouchUpInside];
@@ -568,7 +567,9 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     CGFloat width = layout.itemSize.width;
     
     if ([self isNoSenseError:[self loadError]]) {
-        return CGSizeMake(width, HEMAlarmListPairViewHeight);
+        NSString* text = NSLocalizedString(@"alarms.no-sense.description", nil);
+        return CGSizeMake(width, [HEMSenseRequiredCollectionViewCell heightWithDescription:text
+                                                                             withCellWidth:width]);
     } else if ([self loadError]) {
         UIFont* font = [UIFont body];
         NSString *text = NSLocalizedString(@"alarms.no-data", nil);

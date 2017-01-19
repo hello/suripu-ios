@@ -19,6 +19,8 @@ import SenseKit
     fileprivate weak var tabItemPresenter: TabPresenter!
     fileprivate var shortcutHandlerIndex: Int?
     
+    var unreadService: HEMUnreadAlertService?
+    
     var contentPresenter: SlideContentPresenter? {
         didSet {
             guard contentPresenter != nil else {
@@ -30,7 +32,8 @@ import SenseKit
             }
             
             let controllers = contentPresenter!.contentControllers
-            let tabPresenter = TabPresenter(controllers: controllers)
+            let tabPresenter = TabPresenter(controllers: controllers,
+                                            unreadService: self.unreadService)
             tabPresenter.bind(tabItem: self.tabBarItem)
             self.addPresenter(tabPresenter)
             self.tabItemPresenter = tabPresenter

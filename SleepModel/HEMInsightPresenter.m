@@ -60,9 +60,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, weak) HEMInsightsService* insightsService;
-@property (nonnull, strong) SENInsight* insight;
-@property (nonnull, strong) SENInsightInfo* insightDetail;
-@property (nonnull, strong) NSError* loadError;
+@property (nonatomic, strong) SENInsight* insight;
+@property (nonatomic, strong) SENInsightInfo* insightDetail;
+@property (nonatomic, strong) NSError* loadError;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSAttributedString* attributedSummary;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
@@ -306,14 +306,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 - (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView
           viewForSupplementaryElementOfKind:(NSString *)kind
                                 atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView* view = nil;
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                  withReuseIdentifier:HEMInsightHeaderReuseId
-                                                         forIndexPath:indexPath];
-    }
-    
-    return view;
+    return [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                              withReuseIdentifier:HEMInsightHeaderReuseId
+                                                     forIndexPath:indexPath];;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view

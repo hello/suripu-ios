@@ -20,7 +20,8 @@ typedef void(^HEMAccountSignOutHandler)(void);
 
 @protocol HEMAccountDelegate <NSObject>
 
-- (void)showErrorTitle:(NSString*)title message:(NSString*)message
+- (void)showErrorTitle:(NSString*)title
+               message:(NSString*)message
                   from:(HEMAccountPresenter*)presenter;
 - (void)showSignOutConfirmation:(NSString*)title
                        messasge:(NSString*)message

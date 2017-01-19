@@ -296,6 +296,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = nil;
     switch (indexPath.section) {
+        default:
         case HEMSleepGraphCollectionViewSummarySection:
             cell = [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
             break;

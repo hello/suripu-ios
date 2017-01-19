@@ -241,14 +241,10 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
           viewForSupplementaryElementOfKind:(NSString *)kind
                                 atIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionReusableView* view = nil;
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                  withReuseIdentifier:HEMPillHeaderReuseId
-                                                         forIndexPath:indexPath];
-        [view setBackgroundColor:[UIColor backgroundColor]];
-    }
-    
+    UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                        withReuseIdentifier:HEMPillHeaderReuseId
+                                                                               forIndexPath:indexPath];
+    [view setBackgroundColor:[UIColor backgroundColor]];
     return view;
     
 }

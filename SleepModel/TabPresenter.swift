@@ -8,16 +8,10 @@
 
 import Foundation
 
-@objc protocol TabIndicatorDelegate: class {
-    
-    func show(indicator: Bool, in presenter: TabPresenter)
-    
-}
-
 class TabPresenter: HEMPresenter {
     
     fileprivate static let highlightedPostFix = "Highlighted"
-    fileprivate static let indicatorUnicode = "\u{2022}"
+    fileprivate static let indicatorUnicode = "\u{2022}" // bullet point
     
     weak var tabItem: UITabBarItem!
     fileprivate var icon: UIImage?

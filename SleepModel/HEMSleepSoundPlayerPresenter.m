@@ -28,7 +28,6 @@
 #import "HEMActionButton.h"
 #import "HEMStyle.h"
 
-static CGFloat const HEMSleepSoundPairViewHeight = 352.0f;
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
 static CGFloat const HEMSleepSoundPlayerLoadAnimeDuration = 0.5f;
 
@@ -553,9 +552,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                                                          withWidth:itemSize.width];
             break;
         }
-        case HEMSleepSoundPlayerStateSenseNotPaired:
-            itemSize.height = HEMSleepSoundPairViewHeight;
+        case HEMSleepSoundPlayerStateSenseNotPaired: {
+            NSString* message = NSLocalizedString(@"sleep-sounds.no-sense.message", nil);
+            itemSize.height = [HEMSenseRequiredCollectionViewCell heightWithDescription:message
+                                                                          withCellWidth:itemSize.width];
             break;
+        }
         case HEMSleepSoundPlayerStateError: {
             NSString* text = NSLocalizedString(@"sleep-sounds.error.message", nil);
             UIFont* font = [UIFont body];
@@ -628,7 +630,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 - (void)configurePairSenseCell:(HEMSenseRequiredCollectionViewCell*)cell {
     NSString* buttonTitle = NSLocalizedString(@"actions.pair-sense", nil);
     NSString* message = NSLocalizedString(@"sleep-sounds.no-sense.message", nil);
-    [[cell descriptionLabel] setText:message];
+    [cell setDescription:message];
     [[cell pairSenseButton] addTarget:self
                                action:@selector(pairSense)
                      forControlEvents:UIControlEventTouchUpInside];

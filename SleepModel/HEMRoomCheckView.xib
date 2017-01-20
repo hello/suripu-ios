@@ -81,7 +81,6 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Rie-2e-3zn" firstAttribute="top" secondItem="JqM-as-T2N" secondAttribute="bottom" constant="82" id="2VC-ee-dSn"/>
-                <constraint firstItem="FvV-r0-P2l" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="48" id="6ml-Lx-rq5"/>
                 <constraint firstItem="pco-pJ-gp9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="46" id="7yz-vf-3AU"/>
                 <constraint firstItem="JqM-as-T2N" firstAttribute="top" secondItem="pco-pJ-gp9" secondAttribute="bottom" constant="8" id="9Zb-54-K4E"/>
                 <constraint firstItem="JqM-as-T2N" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AB3-PO-fUY"/>
@@ -90,6 +89,7 @@
                 <constraint firstAttribute="trailing" secondItem="pco-pJ-gp9" secondAttribute="trailing" id="I5Y-0C-NBi"/>
                 <constraint firstAttribute="bottom" secondItem="Rie-2e-3zn" secondAttribute="bottom" constant="36" id="Im2-Da-aPb"/>
                 <constraint firstAttribute="trailing" secondItem="JqM-as-T2N" secondAttribute="trailing" id="Lr3-vt-W2f"/>
+                <constraint firstItem="FvV-r0-P2l" firstAttribute="top" secondItem="pco-pJ-gp9" secondAttribute="top" constant="2" id="MgG-eD-AR8"/>
                 <constraint firstItem="pco-pJ-gp9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="NFA-Kp-qrb"/>
                 <constraint firstAttribute="trailing" secondItem="xnU-64-6En" secondAttribute="trailing" id="UVG-mD-sDL"/>
                 <constraint firstItem="FvV-r0-P2l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fz8-DA-NwH"/>
@@ -107,7 +107,6 @@
                 <outlet property="sensorMessageHeightConstraint" destination="6eO-F7-I3r" id="yCQ-Hb-Q3T"/>
                 <outlet property="sensorMessageLabel" destination="xnU-64-6En" id="kpy-01-1TF"/>
                 <outlet property="sensorMessageTopConstraint" destination="CyD-ON-wDV" id="rTY-6s-1BT"/>
-                <outlet property="sensorTopConstraint" destination="6ml-Lx-rq5" id="Wtg-BG-peU"/>
                 <outlet property="sensorValueCenterConstraint" destination="r75-4w-WtY" id="g2y-Fw-IvT"/>
                 <outlet property="sensorValueContainer" destination="Rie-2e-3zn" id="RmO-Su-LqN"/>
                 <outlet property="sensorValueContainerBottomConstraint" destination="Im2-Da-aPb" id="6dR-NF-cbo"/>

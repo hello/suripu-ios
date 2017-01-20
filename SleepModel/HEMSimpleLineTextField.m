@@ -86,7 +86,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     }
     
     [self setNeedsDisplay];
-    [[self textFieldDelegate] textField:self didGainFocus:focus];
+    [[self focusDelegate] textField:self didGainFocus:focus];
 }
 
 - (void)setSecurityEnabled:(BOOL)securityEnabled {

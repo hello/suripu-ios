@@ -3,7 +3,7 @@
 
 @class HEMSimpleLineTextField;
 
-@protocol HEMSimpleLineTextFieldDelegate <NSObject>
+@protocol HEMTextFieldFocusDelegate <NSObject>
 
 - (void)textField:(HEMSimpleLineTextField*)textField didGainFocus:(BOOL)focus;
 
@@ -14,6 +14,6 @@
 @property (nonatomic, strong, readonly) UIButton* revealSecretButton;
 @property (nonatomic, assign, getter=isSecurityEnabled) BOOL securityEnabled;
 
-@property (nonatomic, weak) id<HEMSimpleLineTextFieldDelegate> textFieldDelegate;
+@property (nonatomic, weak) id<HEMTextFieldFocusDelegate> focusDelegate;
 
 @end

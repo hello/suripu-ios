@@ -973,6 +973,7 @@
 "ext.room-conditions.error" = "unable to load data";
 "ext.room-conditions.not-signed-in" = "sign in to view data";
 "ext.room-conditions.loading" = "loading data";
+"ext.room-conditions.no-sense" = "Sense not paired";
 
 // expansions
 "expansion.delete" = "Delete expansion";

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.2.4
+
+New:
+
+* Unread / New indicator for insights + questions in bottom bar
+* Adjusted visuals for pair sense cards in Room Conditions, Alarm, and Sleep Sounds
+* Udpated designs and added animations to custom titled text fields
+
 ## 2.0.2.3
 
 New:

@@ -207,12 +207,11 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     NSInteger row = [indexPath row];
     HEMTextFieldCollectionViewCell* fieldCell = (id) cell;
     HEMSimpleLineTextField* textField = [fieldCell textField];
-
-    NSString* placeholderText = [self placeHolderTextForFieldInRow:row];
-    [fieldCell setPlaceholderText:[self placeHolderTextForFieldInRow:row]];
     
+    NSString* placeholderText = [self placeHolderTextForFieldInRow:row];
     NSString* currentText = [[self formContent] objectForKey:placeholderText];
     [textField setText:currentText ?: [self existingTextForFieldInRow:row]];
+    [fieldCell setPlaceholderText:[self placeHolderTextForFieldInRow:row]]; // set after setting text
     
     BOOL firstRow = [indexPath row] == 0;
     BOOL lastRow = [indexPath row] == [self numberOfFields] - 1;

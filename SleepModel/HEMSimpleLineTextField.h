@@ -6,6 +6,7 @@
 @protocol HEMTextFieldFocusDelegate <NSObject>
 
 - (void)textField:(HEMSimpleLineTextField*)textField didGainFocus:(BOOL)focus;
+- (void)textField:(HEMSimpleLineTextField *)textField didChange:(NSString*)text;
 
 @end
 

@@ -61,6 +61,15 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     
 }
 
+- (void)setText:(NSString *)text {
+    NSInteger currentLength = [[self text] length];
+    if ((currentLength == 0 && [text length] > 0)
+        || (currentLength > 0 && [text length] == 0)) {
+        [[self focusDelegate] textField:self didChange:text];
+    }
+    [super setText:text];
+}
+
 - (void)setFocus:(BOOL)focus {
     UIColor* placeholderColor = [self isFirstResponder] ? [UIColor grey3] : [UIColor grey4];
     

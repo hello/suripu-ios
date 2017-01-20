@@ -41,11 +41,16 @@ static CGFloat const kHEMTitledTextFieldPlaceholderExtraOffset = 5.0f;
 - (void)setPlaceholderText:(NSString *)placeholderText {
     _placeholderText = [placeholderText copy];
     [[self titleLabel] setText:_placeholderText];
+    
+    if ([[self textField] hasText]) {
+        [[self titleTopConstraint] setConstant:0.0f];
+        [self layoutIfNeeded];
+    }
 }
 
 #pragma mark - HEMTextFieldFocusDelegate
 
-- (void)textField:(HEMSimpleLineTextField *)textField didGainFocus:(BOOL)focus {
+- (void)animateTitleWithFocus:(BOOL)focus animate:(BOOL)animate {
     UIFont* textFont = nil;
     
     if (focus) {
@@ -58,12 +63,24 @@ static CGFloat const kHEMTitledTextFieldPlaceholderExtraOffset = 5.0f;
     }
     
     if (textFont) {
-        [UIView animateWithDuration:kHEMTitledTextFieldAnimeDuration animations:^{
+        if (animate) {
+            [UIView animateWithDuration:kHEMTitledTextFieldAnimeDuration animations:^{
+                [[self titleLabel] setFont:textFont];
+                [self layoutIfNeeded];
+            }];
+        } else {
             [[self titleLabel] setFont:textFont];
             [self layoutIfNeeded];
-        }];
+        }
     }
-    
+}
+
+- (void)textField:(HEMSimpleLineTextField *)textField didChange:(NSString *)text {
+    [self animateTitleWithFocus:[text length] > 0 animate:NO];
+}
+
+- (void)textField:(HEMSimpleLineTextField *)textField didGainFocus:(BOOL)focus {
+    [self animateTitleWithFocus:focus animate:YES];
 }
 
 @end

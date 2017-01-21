@@ -974,6 +974,7 @@
 "ext.room-conditions.not-signed-in" = "sign in to view data";
 "ext.room-conditions.loading" = "loading data";
 "ext.room-conditions.no-sense" = "Sense not paired";
+"ext.room-conditions.offline" = "Sense is offline";
 
 // expansions
 "expansion.delete" = "Delete expansion";
@@ -1070,6 +1071,8 @@
 "voice.command.thermostat.category.name" = "Thermostat";
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";
 
+"voice.settings.fw.update.title" = "Sense needs to update";
+"voice.settings.fw.update.message" = "Sense will update automatically when plugged in and connected to Wi-Fi. This may take up to two hours.";
 "voice.settings.primary-user" = "Primary User";
 "voice.settings.primary-user.foot.note" = "Tell Sense whose information to respond with when asked questions like \"What’s my sleep score?\" by setting primary user. Only the primary user will be able to access the Nest Expansion when released.";
 "voice.settings.update.status" = "Saving";

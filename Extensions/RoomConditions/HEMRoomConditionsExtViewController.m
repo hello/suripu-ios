@@ -175,14 +175,16 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 - (void)showNoDataLabel:(BOOL)show {
     if (show) {
         NSString* message = nil;
-        if ([self sensorsError]) {
-            message = NSLocalizedString(@"ext.room-conditions.error", nil);
-        } else if (![SENAuthorizationService isAuthorized]) {
+        if (![SENAuthorizationService isAuthorized]) {
             message = NSLocalizedString(@"ext.room-conditions.not-signed-in", nil);
+        } else if ([self sensorsError]) {
+            message = NSLocalizedString(@"ext.room-conditions.error", nil);
         } else if ([self isLoading]) {
-            message = NSLocalizedString(@"", nil);
-        } else {
             message = NSLocalizedString(@"ext.room-conditions.loading", nil);
+        } else if ([[self status] state] == SENSensorStateNoSense) {
+            message = NSLocalizedString(@"ext.room-conditions.no-sense", nil);
+        } else {
+            message = NSLocalizedString(@"ext.room-conditions.no-data", nil);
         }
         [[self noDataLabel] setText:message];
     }

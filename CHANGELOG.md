@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.2.5
+
+New:
+
+* Room Check centers content when needed for larger phones
+* Room conditions extension handles various error states
+* Voice settings shows a more user-friendly message when a firmware update is required
+
+Fixes:
+
+* Unread indicator should be cleared properly
+
 ## 2.0.2.4
 
 New:

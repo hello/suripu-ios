@@ -174,7 +174,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        if (!insightsError && !questionsError) {
+        if (!insightsError && !questionsError && [strongSelf isVisible]) {
             HEMUnreadTypes types = HEMUnreadTypeInsights | HEMUnreadTypeQuestions;
             [[strongSelf unreadService] updateLastViewFor:types completion:^(BOOL hasUnread, NSError *error) {
                 if (error) {

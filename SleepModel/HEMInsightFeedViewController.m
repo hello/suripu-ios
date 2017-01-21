@@ -78,7 +78,7 @@
     [self setWhatsNewService:[HEMWhatsNewService new]];
     [self setShareService:[HEMShareService new]];
     
-    if ([self unreadService]) {
+    if (![self unreadService]) {
         [self setUnreadService:[HEMUnreadAlertService new]];
     }
     

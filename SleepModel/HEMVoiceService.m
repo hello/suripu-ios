@@ -5,6 +5,9 @@
 //  Created by Jimmy Lu on 7/28/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+
+#import <AFNetworking/AFNetworking.h>
+
 #import <SenseKit/SENAPISpeech.h>
 #import <SenseKit/SENSpeechResult.h>
 #import <SenseKit/SENService+Protected.h>
@@ -318,6 +321,21 @@ typedef void(^HEMVoiceCommandsHandler)(NSArray<SENSpeechResult*>* _Nullable resu
     CGFloat levelFloat = HEMVoiceServiceMaxVolumeLevel;
     CGFloat percentageFraction = volumeLevel / levelFloat;
     return roundCGFloat(percentageFraction * 100);
+}
+
+- (BOOL)isFirmwareUpdateRequiredFromError:(NSError*)error {
+    if (!error) {
+        return NO;
+    }
+    
+    NSDictionary* info = [error userInfo];
+    id response = [info objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
+    BOOL requireUpdate = NO;
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse* urlResponse = response;
+        requireUpdate = [urlResponse statusCode] == 400 || [urlResponse statusCode] == 412;
+    }
+    return requireUpdate;
 }
 
 @end

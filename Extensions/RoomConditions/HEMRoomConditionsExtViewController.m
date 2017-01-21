@@ -183,6 +183,8 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
             message = NSLocalizedString(@"ext.room-conditions.loading", nil);
         } else if ([[self status] state] == SENSensorStateNoSense) {
             message = NSLocalizedString(@"ext.room-conditions.no-sense", nil);
+        } else if ([[self status] state] == SENSensorStateWaiting) {
+            message = NSLocalizedString(@"ext.room-conditions.offline", nil);
         } else {
             message = NSLocalizedString(@"ext.room-conditions.no-data", nil);
         }

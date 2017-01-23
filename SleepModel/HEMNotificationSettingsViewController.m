@@ -44,6 +44,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [[self tableView] setHidden:YES];
     [[self activityIndicator] setHidden:NO];
     [[self activityIndicator] start];
+    [[self activityIndicator] setUserInteractionEnabled:NO];
 }
 
 - (void)reload {
@@ -53,6 +54,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"refresh complete, reloading data");
         [[strongSelf activityIndicator] stop];
+        [[strongSelf activityIndicator] setHidden:YES];
         [[strongSelf tableView] setHidden:NO];
         [[strongSelf tableView] reloadData];
     }];

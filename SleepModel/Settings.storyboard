@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H2w-uU-KcE" id="L9Y-II-jS9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="W0f-Ry-DLe">
@@ -51,11 +51,21 @@
                                     <outlet property="delegate" destination="eqb-ya-ObC" id="SNj-ZW-TB8"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AYe-cc-0Ar" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="179" y="308" width="55" height="55"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="nf5-HZ-qEb"/>
+                                    <constraint firstAttribute="height" constant="55" id="srj-9d-Gbw"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="I9c-fU-Dzh" secondAttribute="trailing" id="BQq-Gr-pdo"/>
+                            <constraint firstItem="AYe-cc-0Ar" firstAttribute="centerY" secondItem="hN7-aP-ybH" secondAttribute="centerY" id="Imp-E8-8mt"/>
                             <constraint firstItem="I9c-fU-Dzh" firstAttribute="leading" secondItem="hN7-aP-ybH" secondAttribute="leading" id="J8n-xG-oHk"/>
+                            <constraint firstItem="AYe-cc-0Ar" firstAttribute="centerX" secondItem="hN7-aP-ybH" secondAttribute="centerX" id="Rhs-c3-nPJ"/>
                             <constraint firstItem="I9c-fU-Dzh" firstAttribute="top" secondItem="OSE-c4-NFb" secondAttribute="top" id="e9g-zP-3rW"/>
                             <constraint firstItem="q11-AX-FYx" firstAttribute="top" secondItem="I9c-fU-Dzh" secondAttribute="bottom" id="qey-X0-7vy"/>
                         </constraints>
@@ -63,6 +73,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Notifications" id="Flc-NA-YQq"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="AYe-cc-0Ar" id="AHx-6h-ZTu"/>
                         <outlet property="tableView" destination="I9c-fU-Dzh" id="6CK-Lz-HNQ"/>
                     </connections>
                 </viewController>

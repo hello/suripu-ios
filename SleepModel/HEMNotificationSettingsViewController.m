@@ -8,13 +8,12 @@
 
 #import <SenseKit/SENPreference.h>
 
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
-
 #import "HEMNotificationSettingsViewController.h"
 #import "HEMSettingsStoryboard.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMAccountService.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMNotificationRow) {
     HEMNotificationRowConditionIndex = 0,
@@ -24,6 +23,7 @@ typedef NS_ENUM(NSUInteger, HEMNotificationRow) {
 
 @interface HEMNotificationSettingsViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @end
 
 @implementation HEMNotificationSettingsViewController
@@ -41,27 +41,44 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
+    [[self tableView] setHidden:YES];
+    [[self activityIndicator] setHidden:NO];
+    [[self activityIndicator] start];
+    [[self activityIndicator] setUserInteractionEnabled:NO];
 }
 
 - (void)reload {
     __weak typeof(self) weakSelf = self;
     HEMAccountService* service = [HEMAccountService sharedService];
     [service refresh:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
-        [weakSelf.tableView reloadData];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        DDLogVerbose(@"refresh complete, reloading data");
+        [[strongSelf activityIndicator] stop];
+        [[strongSelf activityIndicator] setHidden:YES];
+        [[strongSelf tableView] setHidden:NO];
+        [[strongSelf tableView] reloadData];
     }];
 }
 
 - (IBAction)didFlipSwitch:(UISwitch*)sender {
     BOOL isOn = [sender isOn];
+    DDLogVerbose(@"notification turned on %@", @(isOn));
     NSUInteger row = sender.tag - HEMNotificationTagOffset;
     SENPreference* preference = [self preferenceAtIndex:row];
     HEMAccountService* service = [HEMAccountService sharedService];
     
+    if (isOn == [preference isEnabled]) {
+        DDLogVerbose(@"preference already set");
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     void(^update)(void) = ^{
+        DDLogVerbose(@"updating preferences");
         [service enablePreference:isOn forType:[preference type] completion:^(NSError * error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error) {
+                DDLogVerbose(@"preference saved");
                 sender.on = !isOn;
                 [strongSelf showError];
             }
@@ -70,6 +87,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     
     if (!preference) {
         [service refresh:^(SENAccount * account, NSDictionary<NSNumber *,SENPreference *> * preferences) {
+            DDLogVerbose(@"refereshing preferences");
             update();
         }];
         return;
@@ -140,7 +158,7 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [preferenceSwitch setOnTintColor:[UIColor tintColor]];
     [preferenceSwitch addTarget:self
                          action:@selector(didFlipSwitch:)
-               forControlEvents:UIControlEventTouchUpInside];
+               forControlEvents:UIControlEventValueChanged];
     
     [cell setBackgroundColor:[UIColor whiteColor]];
     [cell setAccessoryView:preferenceSwitch];

@@ -6,6 +6,7 @@
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAppUnreadStats.h>
+#import <SenseKit/SENAccount.h>
 
 #import "Sense-Swift.h"
 
@@ -26,6 +27,7 @@
 #import "HEMWaveform.h"
 #import "HEMTimelineMessageContainerView.h"
 #import "HEMTimelineService.h"
+#import "HEMAccountService.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -108,6 +110,12 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     _calendar = [NSCalendar currentCalendar];
 }
 
+- (SENAccount*)currentAccount {
+    HEMAccountService* accountService = [HEMAccountService sharedService];
+    HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
+    return [accountService account] ?: [onboardingService currentAccount];
+}
+
 - (void)refreshData {
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
     [self reloadDateFormatters];
@@ -126,22 +134,46 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         [SENAnalytics track:HEMAnalyticsEventTimelineDataRequest
                  properties:@{ kHEMAnalyticsEventPropDate : self.dateForNightOfSleep }];
     }
-
-    __weak typeof(self) weakSelf = self;
+    
+    dispatch_group_t dataGroup = dispatch_group_create();
+    
+    SENAccount* account = [self currentAccount];
+    if (!account) {
+        dispatch_group_enter(dataGroup);
+        [[HEMAccountService sharedService] refresh:^(SENAccount * account, NSDictionary<NSNumber *,SENPreference *> * preferences) {
+            // if we fail to refresh the account, continue anyways.  Better to
+            // display the Timeline in an invalid state then to display an error
+            dispatch_group_leave(dataGroup);
+        }];
+    }
+    
+    dispatch_group_enter(dataGroup);
+    
+    __block NSError* timelineError = nil;
+    __block SENTimeline* timeline = nil;
     [self fetchTimelineForDate:self.dateForNightOfSleep
-                    completion:^(SENTimeline *timeline, NSError *error) {
-                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                      if (!error) {
-                          if (!timeline.date) {
-                              timeline.date = strongSelf.dateForNightOfSleep;
-                          }
-                          [strongSelf refreshWithTimeline:timeline];
-                          [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
-                      }
-                      strongSelf.loading = NO;
-                      if (completion)
-                          completion(error);
+                    completion:^(SENTimeline *data, NSError *error) {
+                        timelineError = error;
+                        timeline = data;
+                        dispatch_group_leave(dataGroup);
                     }];
+    
+    __weak typeof(self) weakSelf = self;
+    dispatch_group_notify(dataGroup, dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.loading = NO;
+        if (!timelineError) {
+            if (!timeline.date) {
+                timeline.date = strongSelf.dateForNightOfSleep;
+            }
+            
+            [strongSelf refreshWithTimeline:timeline];
+            [strongSelf prefetchAdjacentTimelinesForDate:strongSelf.dateForNightOfSleep];
+        }
+        if (completion) {
+            completion(timelineError);
+        }
+    });
 }
 
 - (void)fetchTimelineForDate:(NSDate *)date completion:(void (^)(SENTimeline *, NSError *))completion {

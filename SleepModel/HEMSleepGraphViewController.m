@@ -895,10 +895,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)updateLayoutWithError:(NSError *)error {
     BOOL hasTimelineData = [self.dataSource hasTimelineData];
-
-    HEMAccountService* accountService = [HEMAccountService sharedService];
-    HEMOnboardingService* onboardingService = [HEMOnboardingService sharedService];
-    SENAccount* account = [accountService account] ?: [onboardingService currentAccount];
+    SENAccount* account = [self.dataSource currentAccount];
 
     BOOL firstNight = [[self timelineService] isFirstNightOfSleep:self.dateForNightOfSleep forAccount:account];
     

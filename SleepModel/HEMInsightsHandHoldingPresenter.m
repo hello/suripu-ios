@@ -14,6 +14,7 @@
 @interface HEMInsightsHandHoldingPresenter()
 
 @property (nonatomic, weak) HEMHandHoldingService* service;
+@property (nonatomic, weak) HEMHandholdingView* handholdingView;
 
 @end
 
@@ -45,7 +46,7 @@
 }
 
 - (void)showIfNeededIn:(UIView*)containerView withCollectionView:(UICollectionView*)collectionView {
-    if (!containerView || ![[self service] shouldShow:HEMHandHoldingInsightTap]) {
+    if (!containerView || ![[self service] shouldShow:HEMHandHoldingInsightTap] || [self handholdingView]) {
         return;
     }
     
@@ -80,6 +81,8 @@
                             [strongSelf didCompleteHandHolding];
                         }
                     }];
+                    
+                    [strongSelf setHandholdingView:handholdingView];
                     
                 } else {
                     DDLogVerbose(@"did not find first insight cell to show handholding");

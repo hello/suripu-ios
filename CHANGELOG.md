@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.2.6
+
+Fixes:
+
+* Fixed issue where notification settings toggle may quickly revert after changing on first load
+* Fixed issue where Insight handholding tutorial may be shown more than once
+* Fixed issue where Timeline may not show "First Night" state after signing in
+
 ## 2.0.2.5
 
 New:

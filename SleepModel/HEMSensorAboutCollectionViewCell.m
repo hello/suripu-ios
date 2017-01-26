@@ -22,9 +22,6 @@ static CGFloat const kHEMSensorAboutCellHorzPadding = 24.0f;
     UIFont* font = [UIFont h6];
     NSDictionary* attrs = @{NSFontAttributeName : font};
     CGFloat titleHeight = [title sizeBoundedByWidth:widthConstraint attriburtes:attrs].height;
-    
-    font = [UIFont body];
-    attrs = @{NSFontAttributeName : font};
     CGFloat aboutHeight = [about sizeWithWidth:widthConstraint].height;
     return titleHeight + kHEMSensorAboutTextSpacing + aboutHeight;
 }

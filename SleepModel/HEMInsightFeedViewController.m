@@ -78,12 +78,12 @@
     [self setWhatsNewService:[HEMWhatsNewService new]];
     [self setShareService:[HEMShareService new]];
     
-    if ([self unreadService]) {
+    if (![self unreadService]) {
         [self setUnreadService:[HEMUnreadAlertService new]];
     }
     
     HEMInsightsHandHoldingPresenter* hhPresenter
-        = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:_handHoldingService];
+        = [[HEMInsightsHandHoldingPresenter alloc] initWithHandHoldingService:[self handHoldingService]];
     [self addPresenter:hhPresenter];
     [self setHandHoldingPresenter:hhPresenter];
     
@@ -102,8 +102,7 @@
     __weak typeof(self) weakSelf = self;
     [feedPresenter setOnLoadCallback:^(NSArray* data) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        UIView* rootView = [[RootViewController currentRootViewController] view];
-        [[strongSelf handHoldingPresenter] showIfNeededIn:rootView
+        [[strongSelf handHoldingPresenter] showIfNeededIn:[strongSelf view]
                                        withCollectionView:[strongSelf collectionView]];
     }];
     

@@ -11,13 +11,15 @@
 
 @class SENSensor;
 @class HEMSubNavigationView;
+@class HEMHandHoldingService;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMSensorDetailPresenter : HEMPresenter
 
 - (instancetype)initWithSensorService:(HEMSensorService*)sensorService
-                            forSensor:(SENSensor*)sensor;
+                            forSensor:(SENSensor*)sensor
+                andHandHoldingService:(HEMHandHoldingService*)handHoldingService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav;
 - (void)setPollScope:(HEMSensorServiceScope)scope;

@@ -28,14 +28,6 @@
 + (void)showInfoDialogWithTitle:(NSString *)title
                         message:(NSString *)message
                      controller:(UIViewController *)controller {
-    UIView* bgView = nil;
-    if ([controller parentViewController]) {
-        bgView = [[controller parentViewController] view];
-    } else if ([controller navigationController]) {
-        bgView = [[controller navigationController] view];
-    } else {
-        bgView = [controller view];
-    }
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] initWithTitle:title message:message];
     [dialogVC addButtonWithTitle:[NSLocalizedString(@"actions.ok", nil) uppercaseString]
                            style:HEMAlertViewButtonStyleRoundRect
@@ -49,6 +41,30 @@
     if (text.length > 0)
         attributedMessage = [[NSAttributedString alloc] initWithString:text attributes:attributes];
     return attributedMessage;
+}
+
++ (instancetype)confirmationDialogWithTitle:(NSString*)title
+                                    message:(NSString*)message
+                             yesButtonTitle:(NSString*)yesTitle
+                              noButtonTitle:(NSString*)noTitle
+                                     action:(void(^)(void))action {
+    HEMAlertViewController* alert = [[HEMAlertViewController alloc] initWithTitle:title message:message];
+    [alert addButtonWithTitle:yesTitle style:HEMAlertViewButtonStyleRoundRect action:action];
+    [alert addButtonWithTitle:noTitle style:HEMAlertViewButtonStyleBlueText action:nil];
+    return alert;
+}
+
++ (instancetype)confirmationDialogWithTitle:(NSString*)title
+                          attributedMessage:(NSAttributedString*)message
+                             yesButtonTitle:(NSString*)yesTitle
+                              noButtonTitle:(NSString*)noTitle
+                                     action:(void(^)(void))action {
+    HEMAlertViewController* alert = [HEMAlertViewController new];
+    [alert setTitle:title];
+    [alert setAttributedMessage:message];
+    [alert addButtonWithTitle:yesTitle style:HEMAlertViewButtonStyleRoundRect action:action];
+    [alert addButtonWithTitle:noTitle style:HEMAlertViewButtonStyleBlueText action:nil];
+    return alert;
 }
 
 - (instancetype)initBooleanDialogWithTitle:(NSString *)title

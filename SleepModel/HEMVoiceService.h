@@ -41,6 +41,7 @@ typedef void(^HEVoiceSettingsUpdateHandler)(SENSenseVoiceSettings* updated);
                         completion:(HEMVoiceSettingsHandler)completion;
 - (NSInteger)volumeLevelFrom:(SENSenseVoiceSettings*)voiceSettings;
 - (NSInteger)volumePercentageFromLevel:(NSInteger)volumeLevel;
+- (BOOL)isFirmwareUpdateRequiredFromError:(NSError*)error;
 
 @end
 

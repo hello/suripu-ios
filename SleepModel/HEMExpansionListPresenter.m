@@ -109,6 +109,27 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
     [self refresh];
 }
 
+#pragma mark - Placeholder icon views
+
+- (UIView*)placeholderIconViewForExpansion:(SENExpansion*)expansion {
+    NSString* charactersToShow = nil;
+    NSString* companyName = [expansion companyName];
+    if ([companyName length] == 1) {
+        charactersToShow = companyName;
+    } else if ([companyName length] > 1) {
+        charactersToShow = [companyName substringToIndex:2];
+    }
+    
+    UILabel* label = [UILabel new];
+    [label setFont:[UIFont h6]];
+    [label setTextColor:[UIColor grey5]];
+    [label setText:[charactersToShow uppercaseString]];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setBackgroundColor:[UIColor grey3]];
+    
+    return label;
+}
+
 #pragma mark - UITableViewDelegate / UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -157,8 +178,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[[basicCell remoteImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
         [[basicCell remoteImageView] setClipsToBounds:YES];
         [[basicCell remoteImageView] setContentMode:UIViewContentModeScaleAspectFit];
-        [[basicCell remoteImageView] setImageWithURL:iconUri];
         [[basicCell remoteImageView] setBackgroundColor:[UIColor grey3]];
+        
+        __weak typeof(self) weakSelf = self;
+        __weak typeof([basicCell remoteImageView]) weakImageView = [basicCell remoteImageView];
+        [[basicCell remoteImageView] setImageWithURL:iconUri completion:^(UIImage * image, NSString * url, NSError * error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            __strong typeof(weakImageView) strongImageView = weakImageView;
+            if (error || !image) {
+                [strongImageView usePlaceholderView:[strongSelf placeholderIconViewForExpansion:expansion]];
+            }
+        }];
         
         [basicCell showSeparator:!lastRow];
         

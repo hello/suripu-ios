@@ -73,8 +73,6 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                                                                 attributes:@{NSParagraphStyleAttributeName : style}];
     [[self resultsDescriptionLabel] setAlpha:0.0f];
     [[self resultsDescriptionLabel] setAttributedText:attributedDescription];
-    [[self resultsDescriptionLabel] setFont:[UIFont body]];
-    [[self resultsDescriptionLabel] setTextColor:[UIColor grey4]];
     [[self resultsTitleLabel] setAlpha:0.0f];
     [[self resultsTitleLabel] setFont:[UIFont h4]];
     [[self resultsTitleLabel] setTextColor:[UIColor grey6]];
@@ -154,7 +152,7 @@ withColorFromCondition:(SENCondition)condition
     UIView* sensorContainer = [[self roomCheckView] sensorContainerView];
     CGRect messageFrame = [sensorContainer convertRect:[sensorContainer bounds] toView:[self view]];
     CGFloat viewHeight = CGRectGetHeight([[self view] bounds]);
-    CGFloat resultsHeight = viewHeight - CGRectGetMinY(messageFrame);
+    CGFloat resultsHeight = viewHeight - ceilCGFloat(CGRectGetMinY(messageFrame));
     [[self resultsHeightConstraint] setConstant:resultsHeight];
     [[self resultsBottomConstraint] setConstant:-resultsHeight];
 }
@@ -263,7 +261,7 @@ withColorFromCondition:(SENCondition)condition
         [[self resultsDescriptionLabel] setAlpha:1.0f];
         [[self resultsTitleLabel] setAlpha:1.0f];
         [[self resultsBottomConstraint] setConstant:0.0f];
-        [[self view] layoutIfNeeded];
+        [[[self resultsContainer] superview] layoutIfNeeded];
     }];
 }
 

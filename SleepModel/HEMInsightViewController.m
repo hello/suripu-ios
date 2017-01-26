@@ -12,7 +12,7 @@
 #import "HEMInsightActionPresenter.h"
 #import "HEMShareService.h"
 
-@interface HEMInsightViewController() <HEMInsightActionDelegate>
+@interface HEMInsightViewController() <HEMInsightActionDelegate, HEMInsightErrorDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *contentView;
 @property (weak, nonatomic) IBOutlet UIImageView *buttonShadow;
@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonLeadingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonTrailingConstraint;
 @property (assign, nonatomic) BOOL hideStatusBar;
+@property (weak, nonatomic) HEMInsightActionPresenter* actionPresenter;
 
 @property (strong, nonatomic) HEMShareService* shareService;
 
@@ -50,6 +51,7 @@
                                                                               forInsight:[self insight]];
     [presenter bindWithCollectionView:[self contentView] withImageColor:[self imageColor]];
     [presenter bindWithButtonShadow:[self buttonShadow]];
+    [presenter setInsightErrorDelegate:self];
     
     HEMShareService* shareService = [HEMShareService new];
     HEMInsightActionPresenter* actionPresenter
@@ -68,10 +70,17 @@
     [self addPresenter:presenter];
     [self addPresenter:actionPresenter];
     [self setShareService:shareService];
+    [self setActionPresenter:actionPresenter];
 }
 
 - (void)closeInsightFromPresenter:(HEMInsightPresenter *)presenter {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - HEMInsightErrorDelegate
+
+- (void)didFailToLoadInsight:(SENInsight *)insight fromPresenter:(HEMInsightPresenter *)presenter {
+    [[self actionPresenter] disableSharing];
 }
 
 #pragma mark - HEMInsightActionDelegate

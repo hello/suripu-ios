@@ -34,8 +34,6 @@
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
-static CGFloat const HEMAlarmListNoAlarmCellBaseHeight = 292.0f;
-static CGFloat const HEMAlarmListPairViewHeight = 352.0f;
 static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSString* const HEMAlarmListErrorDomain = @"is.hello.app.alarm";
@@ -319,7 +317,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     NSArray* alarms = [[self alarmService] alarms];
     if (!alarms && ![self loadError]) {
         return 0;
-    } else if ([[[self alarmService] alarms] count] > 0) {
+    } else if (![self loadError] && [[[self alarmService] alarms] count] > 0) {
         return [[[self alarmService] alarms] count];
     } else {
         return 1;
@@ -474,7 +472,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     HEMSenseRequiredCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     NSString* buttonTitle = NSLocalizedString(@"actions.pair-sense", nil);
     NSString* message = NSLocalizedString(@"alarms.no-sense.description", nil);
-    [[cell descriptionLabel] setText:message];
+    [cell setDescription:message];
     [[cell pairSenseButton] addTarget:self
                                action:@selector(pairSense)
                      forControlEvents:UIControlEventTouchUpInside];
@@ -565,31 +563,33 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    static CGFloat const HEMAlarmListEmptyCellBaseHeight = 98.f;
-    static CGFloat const HEMAlarmListEmptyCellWidthInset = 32.f;
     UICollectionViewFlowLayout *layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
-    NSInteger alarmCount = [[[self alarmService] alarms] count];
     
-    if ([self loadError]) {
-        BOOL noSense = [self isNoSenseError:[self loadError]];
-        return CGSizeMake(width, noSense ? HEMAlarmListPairViewHeight : HEMAlarmListCellHeight);
+    if ([self isNoSenseError:[self loadError]]) {
+        NSString* text = NSLocalizedString(@"alarms.no-sense.description", nil);
+        return CGSizeMake(width, [HEMSenseRequiredCollectionViewCell heightWithDescription:text
+                                                                             withCellWidth:width]);
+    } else if ([self loadError]) {
+        UIFont* font = [UIFont body];
+        NSString *text = NSLocalizedString(@"alarms.no-data", nil);
+        CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
+        CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
+        CGFloat cardHeight = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+        return CGSizeMake(width, cardHeight);
     } else if ([[[self alarmService] alarms] count] > 0) {
         SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];
         CGFloat height = HEMAlarmListCellHeight;
         NSInteger expansions = [[self alarmService] numberOfEnabledExpansionsIn:alarm];
         CGFloat expansionHeight = expansions * kHEMAlarmExpansionViewHeight;
         return CGSizeMake(width, height + expansionHeight);
-    } else if (alarmCount == 0) {
+    } else if ([[[self alarmService] alarms] count] == 0) {
         NSAttributedString* attributedText = [self attributedNoAlarmText];
         CGFloat textHeight = [HEMNoAlarmCell heightWithDetail:attributedText cellWidth:width];
         return CGSizeMake(width, textHeight);
     }
     
-    CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;
-    NSString *text = NSLocalizedString(@"alarms.no-alarm.message", nil);
-    CGFloat textHeight = [text heightBoundedByWidth:textWidth usingFont:[UIFont body]];
-    return CGSizeMake(width, textHeight + HEMAlarmListEmptyCellBaseHeight);
+    return CGSizeZero;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

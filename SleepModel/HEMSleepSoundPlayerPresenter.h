@@ -48,8 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSleepSoundService:(HEMSleepSoundService *)service
                             deviceService:(nullable HEMDeviceService*)deviceService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
-- (void)bindWithActionButton:(UIButton*)button
-            bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
+- (void)bindWithActionButton:(UIButton*)button;
 - (void)bindWithBackgroundView:(UIView*)backgroundView;
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator;
 - (void)setSelectedSound:(SENSleepSound*)sound save:(BOOL)save;

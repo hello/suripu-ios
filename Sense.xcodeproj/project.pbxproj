@@ -187,6 +187,8 @@
 		BF412EA01C90F7B6009514A1 /* HEMSleepSoundService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412E9F1C90F7B6009514A1 /* HEMSleepSoundService.m */; };
 		BF412EA41C91098F009514A1 /* HEMSleepSoundConfigurationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412EA31C91098F009514A1 /* HEMSleepSoundConfigurationCell.m */; };
 		BF412EA81C920095009514A1 /* HEMSleepSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF412EA71C920095009514A1 /* HEMSleepSoundViewController.m */; };
+		BF4304791E301BF8008669B0 /* TabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4304781E301BF8008669B0 /* TabBarPresenter.swift */; };
+		BF43047B1E32C9DB008669B0 /* StatusMesssageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF43047A1E32C9DB008669B0 /* StatusMesssageView.swift */; };
 		BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF44734F1A6341F600389ECE /* HEMOnboardingController.m */; };
 		BF48274D1C4F060F005EDEB5 /* HEMHealthKitService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF48274C1C4F060F005EDEB5 /* HEMHealthKitService.m */; };
 		BF4827501C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF48274F1C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m */; };
@@ -855,6 +857,8 @@
 		BF412EA31C91098F009514A1 /* HEMSleepSoundConfigurationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundConfigurationCell.m; sourceTree = "<group>"; };
 		BF412EA61C920095009514A1 /* HEMSleepSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundViewController.h; sourceTree = "<group>"; };
 		BF412EA71C920095009514A1 /* HEMSleepSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundViewController.m; sourceTree = "<group>"; };
+		BF4304781E301BF8008669B0 /* TabBarPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarPresenter.swift; sourceTree = "<group>"; };
+		BF43047A1E32C9DB008669B0 /* StatusMesssageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMesssageView.swift; sourceTree = "<group>"; };
 		BF44734E1A6341F600389ECE /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
 		BF44734F1A6341F600389ECE /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
 		BF48274B1C4F060F005EDEB5 /* HEMHealthKitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHealthKitService.h; sourceTree = "<group>"; };
@@ -2477,6 +2481,7 @@
 				BFB815141BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m */,
 				BFB59E131C03B98E001BD941 /* UITableViewCell+HEMSettings.h */,
 				BFB59E141C03B98E001BD941 /* UITableViewCell+HEMSettings.m */,
+				BF43047A1E32C9DB008669B0 /* StatusMesssageView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3435,6 +3440,7 @@
 				BF0B15F41DF618C100DF2373 /* SlideContentPresenter.swift */,
 				BFB220C21DF636B20025606E /* TabPresenter.swift */,
 				BFB220CB1DF8949A0025606E /* FeedContentPresenter.swift */,
+				BF4304781E301BF8008669B0 /* TabBarPresenter.swift */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3653,7 +3659,7 @@
 			attributes = {
 				CLASSPREFIX = HEM;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Hello;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
@@ -4153,6 +4159,7 @@
 				BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */,
 				BF885F281CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m in Sources */,
 				BFD9A97A1D5AB798003EC82A /* HEMPairSensePresenter.m in Sources */,
+				BF4304791E301BF8008669B0 /* TabBarPresenter.swift in Sources */,
 				BF5BACFC1C5C24AA00347185 /* HEMTrendsCalendarViewCell.m in Sources */,
 				BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
@@ -4437,6 +4444,7 @@
 				BF0B15EA1DF2271400DF2373 /* HEMPillDFUStoryboard.m in Sources */,
 				8A1743B719A7B471001E3C15 /* HEMSleepGraphViewController.m in Sources */,
 				BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */,
+				BF43047B1E32C9DB008669B0 /* StatusMesssageView.swift in Sources */,
 				BF9826671D3ECF89009518CA /* HEMSenseDFUPresenter.m in Sources */,
 				BFC99BBD1B69AC04008F7F0D /* HEMAppReviewAnswer.m in Sources */,
 				BFAB22DC1AD3613800CCBF8A /* HEMRoomCheckView.m in Sources */,

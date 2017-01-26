@@ -12,6 +12,8 @@
 #import "HEMUnreadAlertService.h"
 #import "NSDate+HEMRelative.h"
 
+NSString* const kHEMUnreadAlertNotificationUpdate = @"kHEMUnreadAlertNotificationUpdate";
+
 @interface HEMUnreadAlertService()
 
 @property (nonatomic, strong) SENAppUnreadStats* unreadStats;
@@ -20,16 +22,29 @@
 
 @implementation HEMUnreadAlertService
 
+#pragma mark - Notifications
+
+- (void)notifyOfUpdate {
+    [self notify:kHEMUnreadAlertNotificationUpdate];
+}
+
+- (void)notify:(NSString*)name {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:name object:self];
+}
+
 #pragma mark - Updates
 
 - (void)update:(HEMUnreadCompletionHandler)completion {
     __weak typeof(self) weakSelf = self;
     [SENAPIAppStats retrieveUnread:^(SENAppUnreadStats* stats, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!error && stats) {            
-            [weakSelf setUnreadStats:stats];
+            [strongSelf setUnreadStats:stats];
+            [strongSelf notifyOfUpdate];
         }
         if (completion) {
-            completion ([weakSelf hasUnread], error);
+            completion ([strongSelf hasUnread], error);
         }
     }];
 }

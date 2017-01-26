@@ -9,6 +9,8 @@
 #import <SenseKit/SENSenseMetadata.h>
 #import <SenseKit/SENSenseVoiceSettings.h>
 
+#import "Sense-Swift.h"
+
 #import "NSString+HEMUtils.h"
 
 #import "HEMVoiceSettingsPresenter.h"
@@ -68,7 +70,6 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     
-    HEMSettingsHeaderFooterView* headerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
     HEMSettingsHeaderFooterView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     NSString* footNote = NSLocalizedString(@"voice.settings.primary-user.foot.note", nil);
     NSDictionary* attrs = @{NSFontAttributeName : [UIFont h7Bold],
@@ -81,11 +82,25 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
                                                 kHEMVoiceFootNoteHorzMargins)];
     [footerView setAdjustBasedOnTitle:YES];
     
-    [tableView setTableHeaderView:headerView];
     [tableView setTableFooterView:footerView];
     [tableView setHidden:YES];
     [self setTableView:tableView];
+    [self updateTableHeaderView];
     [self listenForOutsideUpdates];
+}
+
+- (void)updateTableHeaderView {
+    UIView* view = nil;
+    if ([[self voiceService] isFirmwareUpdateRequiredFromError:[self dataError]]) {
+        CGFloat width = CGRectGetWidth([[self tableView] bounds]);
+        view = [[StatusMesssageView alloc] initWithWidth:width
+                                                   image:[UIImage imageNamed:@"senseUpdate"]
+                                                   title:NSLocalizedString(@"voice.settings.fw.update.title", nil)
+                                                 message:NSLocalizedString(@"voice.settings.fw.update.message", nil)];
+    } else {
+        view = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    }
+    [[self tableView] setTableHeaderView:view];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -148,6 +163,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setDataError:error];
         [[[strongSelf tableView] tableFooterView] setHidden:error != nil];
+        [strongSelf updateTableHeaderView];
         [[strongSelf tableView] setHidden:NO];
         [[strongSelf tableView] reloadData];
         [[strongSelf activityIndicatorView] stop];
@@ -188,7 +204,15 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self dataError] ? 1 : HEMVoiceSettingsRowCount;
+    NSInteger rows = 0;
+    if ([[self voiceService] isFirmwareUpdateRequiredFromError:[self dataError]]) {
+        rows = 0;
+    } else if ([self dataError]) {
+        rows = 1;
+    } else {
+        rows = HEMVoiceSettingsRowCount;
+    }
+    return rows;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -698,6 +698,8 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     [SENAPIAccount createAccount:tempAccount withPassword:password completion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
+        NSString* localizedMessage = nil;
+        
         if (!error) {
             if (data) {
                 [strongSelf setCurrentAccount:data];
@@ -719,10 +721,11 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
                                   }];
                 return;
             }
+        } else {
+            localizedMessage = [self localizedMessageFromAccountError:error];
         }
         
         if (completion) {
-            NSString* localizedMessage = [self localizedMessageFromAccountError:error];
             completion (nil, [strongSelf errorWithCode:HEMOnboardingErrorAccountCreationFailed
                                                 reason:localizedMessage]);
         }

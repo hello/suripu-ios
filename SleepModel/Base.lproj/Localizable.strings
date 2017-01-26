@@ -210,6 +210,8 @@
 "settings.help.format" = "If you're having trouble, please contact us at %@";
 "settings.enhanced-audio.desc" = "Enhanced Audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 "settings.sign-out.confirmation" = "Are you sure you want to sign out of your account?";
+"settings.account.sign-out.yes" = "Yes, sign out";
+"settings.account.sign-out.no" = "No, stay signed in";
 "settings.account.email.placeholder" = "Email address";
 "settings.account.name.placeholder" = "Name";
 "settings.account.password-current.placeholder" = "Current password";
@@ -232,6 +234,8 @@
 "settings.account.error.title.hk" = "Sync with Health";
 "settings.account.error.message.hk-not-supported" = "Apple Health is not supported on your device.";
 "settings.account.error.message.hk-request-failed" = "Failed to request authorization to write and read from the Health app. You may need to authorize this directly in your Health app to enable this.";
+"settings.notification.error.title" = "Push Notifications";
+"settings.notification.error.update-failed-message" = "Change could not be saved at this time. Make sure you are connected to the internet and try again.";
 
 // support
 "debug.options.title" = "Debug options";
@@ -489,6 +493,9 @@
 "measurement.lb.format" = "%.0f lbs";
 "measurement.db.format" = "%lddb";
 "measurement.lx.format" = "%ldlx";
+"measurement.cm.attributed.format" = "%@ cm";
+"measurement.kg.attributed.format" = "%@ kg";
+"measurement.lb.attributed.format" = "%@ lbs";
 
 // drawer
 "drawer.action.open" = "Drawer opened";
@@ -798,8 +805,9 @@
 // handholding
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days.";
 "handholding.message.timeline-zoom" = "Tap the date to navigate quickly between days.";
-"handholding.message.sensor-scrubbing" = "Press and hold graphs to see historical data.";
+"handholding.message.sensor-scrubbing" = "Press and hold graph to see more data.";
 "handholding.message.insight-tap" = "Tap on a card to learn more.";
+"handholding.message.sensor-scroll" = "Scroll for more";
 
 // app review questions
 "app-review.question.1" = "Are you enjoying Sense?";
@@ -965,8 +973,11 @@
 "ext.room-conditions.error" = "unable to load data";
 "ext.room-conditions.not-signed-in" = "sign in to view data";
 "ext.room-conditions.loading" = "loading data";
+"ext.room-conditions.no-sense" = "Sense not paired";
+"ext.room-conditions.offline" = "Sense is offline";
 
 // expansions
+"expansion.delete" = "Delete expansion";
 "expansion.state.not-connected" = "Connect";
 "expansion.state.revoked" = "Disconnected";
 "expansion.state.connected-off" = "Disabled";
@@ -1060,6 +1071,8 @@
 "voice.command.thermostat.category.name" = "Thermostat";
 "voice.command.thermostat.example.1" = "Set the thermostat to 70°.";
 
+"voice.settings.fw.update.title" = "Sense needs to update";
+"voice.settings.fw.update.message" = "Sense will update automatically when plugged in and connected to Wi-Fi. This may take up to two hours.";
 "voice.settings.primary-user" = "Primary User";
 "voice.settings.primary-user.foot.note" = "Tell Sense whose information to respond with when asked questions like \"What’s my sleep score?\" by setting primary user. Only the primary user will be able to access the Nest Expansion when released.";
 "voice.settings.update.status" = "Saving";

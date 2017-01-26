@@ -13,11 +13,18 @@ typedef NS_ENUM(NSUInteger, HEMHHDialogAnchor) {
     HEMHHDialogAnchorBottom = 2,
 };
 
+typedef NS_ENUM(NSUInteger, HEMHHMessageStyle) {
+    HEMHHMessageStyleFull, // takes full width of container
+    HEMHHMessageStyleOval  // oval shape to fit text, centered horizontally in container
+};
+
 typedef void(^HEMHandHoldingDismissal)(BOOL shown);
 
 extern CGFloat const HEMHandholdingGestureSize;
 
 @interface HEMHandholdingView : UIView
+
+@property (nonatomic, assign) HEMHHMessageStyle messageStyle;
 
 /**
  * @property messageYOffset

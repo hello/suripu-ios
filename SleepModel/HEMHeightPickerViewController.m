@@ -1,6 +1,8 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENPreference.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMHeightPickerViewController.h"
 #import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
@@ -29,6 +31,7 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 @property (strong, nonatomic) HEMRulerView* ruler;
 @property (assign, nonatomic, getter=isOffsetInitialized) BOOL offsetInitialized;
 @property (assign, nonatomic) BOOL useMetric;
+@property (strong, nonatomic) NSDictionary* valueAttributes;
 
 @end
 
@@ -52,7 +55,9 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 }
 
 - (void)configureRuler {
-    [[self heightLabel] setFont:[UIFont heightPickerValueFont]];
+    [[self heightLabel] setFont:[UIFont h1]];
+    [[self heightLabel] setTextColor:[UIColor blue6]];
+    
     [self setUseMetric:[SENPreference useMetricUnitForHeight]];
     
     [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMHeightTotalSegments
@@ -133,7 +138,21 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 }
 
 - (void)updateLabelWithCentimeters:(CGFloat)cm {
-    self.heightLabel.text = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
+    if (![self valueAttributes]) {
+        [self setValueAttributes:@{NSFontAttributeName : [[self heightLabel] font],
+                                   NSForegroundColorAttributeName : [[self heightLabel] textColor]}];
+    }
+    
+    NSString* valueText = [NSString stringWithFormat:@"%ld", (long)cm];
+    NSAttributedString* attributedValue = [[NSAttributedString alloc] initWithString:valueText
+                                                                          attributes:[self valueAttributes]];
+    
+    NSString* format = NSLocalizedString(@"measurement.cm.attributed.format", nil);
+    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithFormat:format
+                                                                                       args:@[attributedValue]
+                                                                                  baseColor:[UIColor blue6]
+                                                                                   baseFont:[UIFont h5]];
+    [[self heightLabel] setAttributedText:attrText];
 }
 
 - (void)updateLabelWithInches:(CGFloat)totalInches {

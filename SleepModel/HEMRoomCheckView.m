@@ -22,6 +22,13 @@ static CGFloat const HEMRoomCheckViewSensorIconActivitySize = 40.0f;
 static CGFloat const kHEMRoomCheckViewSensorValueDuration = 2.0f;
 static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
 
+static CGFloat const kHEMRoomCheckViewBgImageHeight = 210.0f;
+static CGFloat const kHEMRoomCheckViewSensorsTop = 8.0f;
+static CGFloat const kHEMRoomCheckViewSensorMessageTop = 46.0f;
+static CGFloat const kHEMRoomCheckViewSensorMessageHeight = 20.0f;
+static CGFloat const kHEMRoomCheckViewSensorValueTop = 82.0f;
+static CGFloat const kHEMRoomCheckViewSensorValueHeight = 77.0f;
+
 @interface HEMRoomCheckView()
 
 @property (weak, nonatomic) IBOutlet UIImageView *senseBgImageView;
@@ -71,7 +78,7 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
 }
 
 - (void)adjustForiPhone4 {
-    [[self bgImageTopConstraint] setConstant:0];
+    [[self senseImageView] setTransform:CGAffineTransformMakeScale(0.7f, 0.7f)];
     
     CGFloat sensorTopConstant = [[self sensorTopConstraint] constant] * 0.4f;
     [[self sensorTopConstraint] setConstant:sensorTopConstant];
@@ -87,11 +94,22 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
 }
 
 - (void)adjustForiPhone5 {
-    CGFloat sensorContainerTopConstrant = [[self sensorContainerTopConstraint] constant] * 0.5f;
-    [[self sensorContainerTopConstraint] setConstant:sensorContainerTopConstrant];
+    [[self senseImageView] setTransform:CGAffineTransformMakeScale(0.8f, 0.8f)];
+}
+
+- (void)updateConstraints {
+    [super updateConstraints];
     
-    CGFloat sensorValueBottomConstraint = [[self sensorValueContainerBottomConstraint] constant] * 0.63f;
-    [[self sensorValueContainerBottomConstraint] setConstant:sensorValueBottomConstraint];
+    CGFloat fullHeight = CGRectGetHeight([self bounds]);
+    CGFloat contentHeight = kHEMRoomCheckViewBgImageHeight
+        + kHEMRoomCheckViewSensorsTop
+        + kHEMRoomCheckViewSensorIconSize
+        + kHEMRoomCheckViewSensorMessageTop
+        + kHEMRoomCheckViewSensorMessageHeight
+        + kHEMRoomCheckViewSensorValueTop
+        + CGRectGetHeight([[self valueLabel] bounds]);
+    CGFloat verticalMargin = ceilCGFloat((fullHeight - contentHeight) / 2.0f);
+    [[self bgImageTopConstraint] setConstant:verticalMargin];
 }
 
 - (void)layoutSubviews {
@@ -228,6 +246,7 @@ static CGFloat const kHEMRoomCheckViewSensorDisplayDuration = 1.0f;
                                                  inRoomCheckView:self];
     UIImageView* toSenseImageView = [[UIImageView alloc] initWithImage:image];
     [toSenseImageView setContentMode:[[self senseImageView] contentMode]];
+    [toSenseImageView setTransform:[[self senseImageView] transform]];
     [HEMAnimationUtils crossFadeFrom:[self senseImageView] toView:toSenseImageView then:^(BOOL finished) {
         [self setSenseImageView:toSenseImageView];
     }];

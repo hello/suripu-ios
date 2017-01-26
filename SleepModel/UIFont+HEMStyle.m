@@ -119,12 +119,6 @@
     return [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
 }
 
-#pragma mark Onboarding
-
-+ (UIFont*)heightPickerValueFont {
-    return [UIFont systemFontOfSize:48.0f weight:UIFontWeightThin];
-}
-
 #pragma mark - Sensor
 
 + (UIFont*)sensorUnitFontForUnit:(SENSensorUnit)unit {

@@ -1,6 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class SENAccount;
 @class SENTimelineSegment;
 @class HEMSleepSummaryCollectionViewCell;
 @class HEMTimelineService;
@@ -26,6 +27,8 @@
 - (instancetype)initWithCollectionView:(UICollectionView *)collectionView
                              sleepDate:(NSDate *)date
                        timelineService:(HEMTimelineService*)timelineService;
+
+- (SENAccount*)currentAccount;
 
 /**
  * Refetches the data from disk

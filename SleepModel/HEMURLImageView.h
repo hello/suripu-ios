@@ -38,6 +38,15 @@ typedef void(^HEMURLImageCallback)(UIImage* _Nullable image, NSString* _Nullable
 
 /**
  * @discussion
+ * Displays a placeholder view instead of the image, which is useful if the image
+ * doesn't exist or cannot be loaded
+ *
+ * @param placeholderView: the view to show instead of the image
+ */
+- (void)usePlaceholderView:(nonnull UIView*)placeholderView;
+
+/**
+ * @discussion
  * download the image, if not cached, and set the returned image as the image
  * for this view.  This uses a default timeout.
  *

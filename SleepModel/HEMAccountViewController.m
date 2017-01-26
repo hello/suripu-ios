@@ -70,12 +70,14 @@
                          action:(HEMAccountSignOutHandler)action
                            from:(HEMAccountPresenter *)presenter {
     
-    HEMAlertViewController *dialogVC =
-        [[HEMAlertViewController alloc] initBooleanDialogWithTitle:title
-                                                           message:message
-                                                     defaultsToYes:YES
-                                                            action:action];
-    [dialogVC showFrom:self];
+    NSString* yesTitle = NSLocalizedString(@"settings.account.sign-out.yes", nil);
+    NSString* noTitle = NSLocalizedString(@"settings.account.sign-out.no", nil);
+    HEMAlertViewController* confirmation = [HEMAlertViewController confirmationDialogWithTitle:title
+                                                                                       message:message
+                                                                                yesButtonTitle:yesTitle
+                                                                                 noButtonTitle:noTitle
+                                                                                        action:action];
+    [confirmation showFrom:self];
 }
 
 - (void)presentViewController:(UIViewController *)controller from:(HEMAccountPresenter *)presenter {

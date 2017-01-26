@@ -60,9 +60,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 @interface HEMInsightPresenter() <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, weak) HEMInsightsService* insightsService;
-@property (nonnull, strong) SENInsight* insight;
-@property (nonnull, strong) SENInsightInfo* insightDetail;
-@property (nonnull, strong) NSError* loadError;
+@property (nonatomic, strong) SENInsight* insight;
+@property (nonatomic, strong) SENInsightInfo* insightDetail;
+@property (nonatomic, strong) NSError* loadError;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSAttributedString* attributedSummary;
 @property (nonatomic, strong) NSAttributedString* attributedTitle;
@@ -115,6 +115,10 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     __weak typeof(self) weakSelf = self;
     [[self insightsService] getInsightForSummary:[self insight] completion:^(SENInsightInfo * _Nullable insight, NSError * _Nullable error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            [[strongSelf insightErrorDelegate] didFailToLoadInsight:[strongSelf insight]
+                                                      fromPresenter:strongSelf];
+        }
         [strongSelf setLoading:NO];
         [strongSelf setLoadError:error];
         [strongSelf setInsightDetail:insight];
@@ -183,6 +187,18 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     return _attributedSummary;
 }
 
+- (NSAttributedString*)attributedErrorTitle {
+    NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText][@(PARA)];
+    NSString* errorTitle = NSLocalizedString(@"sleep.insight.info.title.no-text", nil);
+    return [[NSAttributedString alloc] initWithString:errorTitle attributes:attributes];
+}
+
+- (NSAttributedString*)attributedErrorBody {
+    NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText][@(PARA)];
+    NSString* body = NSLocalizedString(@"sleep.insight.info.message.no-text", nil);
+    return [[NSAttributedString alloc] initWithString:body attributes:attributes];
+}
+
 - (NSAttributedString*)attributedTitle {
     if (!_attributedTitle) {
         NSString* title = [[[self insightDetail] title] trim];
@@ -215,10 +231,15 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
         case HEMInsightRowTitleOrLoading: {
             if ([self isLoading]) {
                 return nil;
+            } else if ([self loadError]) {
+                return [self attributedErrorTitle];
             }
             return [self attributedTitle];
         }
         case HEMInsightRowDetail: {
+            if ([self loadError]) {
+                return [self attributedErrorBody];
+            }
             return [self attributedDetail];
         }
         case HEMInsightRowImage:
@@ -285,14 +306,9 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 - (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView
           viewForSupplementaryElementOfKind:(NSString *)kind
                                 atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView* view = nil;
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                  withReuseIdentifier:HEMInsightHeaderReuseId
-                                                         forIndexPath:indexPath];
-    }
-    
-    return view;
+    return [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                              withReuseIdentifier:HEMInsightHeaderReuseId
+                                                     forIndexPath:indexPath];;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view

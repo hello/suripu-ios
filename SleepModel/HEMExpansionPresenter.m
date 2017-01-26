@@ -88,6 +88,16 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     [[[headerView urlImageView] layer] setBorderWidth:kHEMExpansionHeaderIconBorder];
     [[[headerView urlImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
     
+    __weak typeof(self) weakSelf = self;
+    __weak typeof([headerView urlImageView]) weakImageView = [headerView urlImageView];
+    [[headerView urlImageView] setImageWithURL:iconUri completion:^(UIImage * image, NSString * url, NSError * error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        __strong typeof(weakImageView) strongImageView = weakImageView;
+        if (error || !image) {
+            [strongImageView usePlaceholderView:[strongSelf placeholderIconView]];
+        }
+    }];
+    
     [[headerView titleLabel] setTextColor:[UIColor grey7]];
     [[headerView titleLabel] setFont:[UIFont bodyBold]];
     [[headerView titleLabel] setText:[[self expansion] deviceName]];
@@ -121,6 +131,25 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 
 - (void)bindWithRootView:(UIView *)view {
     [self setRootView:view];
+}
+
+- (UIView*)placeholderIconView {
+    NSString* charactersToShow = nil;
+    NSString* companyName = [[self expansion] companyName];
+    if ([companyName length] == 1) {
+        charactersToShow = companyName;
+    } else if ([companyName length] > 1) {
+        charactersToShow = [companyName substringToIndex:2];
+    }
+    
+    UILabel* label = [UILabel new];
+    [label setFont:[UIFont h3]];
+    [label setTextColor:[UIColor grey6]];
+    [label setText:[charactersToShow uppercaseString]];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setBackgroundColor:[UIColor grey3]];
+    
+    return label;
 }
 
 - (BOOL)hasNavBar {
@@ -349,23 +378,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)showRemoveAccessConfirmation {
     NSString* title = NSLocalizedString(@"expansion.configuration.removal.confirm.title", nil);
     NSString* message = NSLocalizedString(@"expansion.configuration.removal.confirm.message", nil);
-    
-    NSDictionary* messageAttrs = @{NSFontAttributeName : [UIFont body],
-                                   NSForegroundColorAttributeName : [UIColor blackColor]};
-    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message attributes:messageAttrs];
-    
-    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
-    [dialogVC setTitle:title];
-    [dialogVC setAttributedMessage:attrMessage];
-    
+    NSString* deleteText = NSLocalizedString(@"expansion.delete", nil);
+    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+
     __weak typeof(self) weakSelf = self;
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.delete", nil) style:HEMAlertViewButtonStyleRoundRect action:^{
+    void(^remove)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf removeAccess];
-    }];
-    [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.cancel", nil) style:HEMAlertViewButtonStyleBlueText action:nil];
+    };
+    HEMAlertViewController* confirm = [HEMAlertViewController confirmationDialogWithTitle:title
+                                                                                  message:message
+                                                                           yesButtonTitle:deleteText
+                                                                            noButtonTitle:cancelText
+                                                                                   action:remove];
     
-    [[self errorDelegate] showCustomerAlert:dialogVC fromPresenter:self];
+    [[self errorDelegate] showCustomerAlert:confirm fromPresenter:self];
 }
 
 - (void)removeAccess {

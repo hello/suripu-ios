@@ -20,7 +20,6 @@ import SenseKit
 @objc class MainViewController: UITabBarController {
     
     fileprivate static let alertDismissDelay = 1.5
-    fileprivate static let itemInset = CGFloat(6)
     fileprivate var presenters = Array<HEMPresenter>()
     fileprivate var modalTransition: HEMSimpleModalTransitionDelegate?
     fileprivate let deviceService = HEMDeviceService()
@@ -30,6 +29,7 @@ import SenseKit
     fileprivate var alertTZService: HEMTimeZoneAlertService!
     fileprivate var alertSystemService: HEMSystemAlertService!
     fileprivate var voiceService: HEMVoiceService!
+    fileprivate var unreadService: HEMUnreadAlertService!
     fileprivate weak var shortcutHandler: ShortcutHandler?
     
     override var prefersStatusBarHidden: Bool {
@@ -117,13 +117,9 @@ import SenseKit
         let conditionsVC = HEMMainStoryboard.instantiateCurrentNavController() as! UIViewController
         self.viewControllers = [timelineVC, trendsVC, feedVC, soundsVC, conditionsVC];
         
-        // hide titles and center tab icons from the controllers
-        let topInset = MainViewController.itemInset
-        let inset = UIEdgeInsets(top: MainViewController.itemInset, left: 0, bottom: -topInset, right: 0)
-        for item in self.tabBar.items! {
-            item.imageInsets = inset
-            item.title = nil
-        }
+        let presenter = TabBarPresenter()
+        presenter.bind(with: self.tabBar)
+        self.presenters.append(presenter)
     }
     
     fileprivate func trendsController() -> UIViewController! {
@@ -141,15 +137,16 @@ import SenseKit
                                                        dataScale: SENTrendsTimeScale.quarter)
         
         let slidePresenter = SlideContentPresenter(controllers: [weekVC, monthVC, quarterVC])!
-        return self.slideContainer(presenter: slidePresenter)
+        return self.slideContainer(presenter: slidePresenter, unreadService: nil)
     }
     
     fileprivate func feedController() -> UIViewController! {
+        self.unreadService = HEMUnreadAlertService()
         let insightVC = HEMMainStoryboard.instantiateInsightsFeedViewController() as! UIViewController
         let voiceVC = HEMMainStoryboard.instantiateVoiceViewController() as! UIViewController
         let presenter = FeedContentPresenter(controllers: [insightVC, voiceVC],
                                              deviceService: self.deviceService)
-        return self.slideContainer(presenter: presenter)
+        return self.slideContainer(presenter: presenter, unreadService: self.unreadService)
     }
     
     fileprivate func soundController() -> UIViewController! {
@@ -161,11 +158,13 @@ import SenseKit
         
         let presenter = SlideContentPresenter(controllers: [alarmVC, sleepSoundVC])!
         
-        return self.slideContainer(presenter: presenter)!
+        return self.slideContainer(presenter: presenter, unreadService: nil)!
     }
     
-    fileprivate func slideContainer(presenter: SlideContentPresenter!) -> UIViewController! {
+    fileprivate func slideContainer(presenter: SlideContentPresenter!,
+                                    unreadService: HEMUnreadAlertService?) -> UIViewController! {
         let container = HEMMainStoryboard.instantiateSlideContainerViewController() as! SlideContainerViewController
+        container.unreadService = unreadService // must be set before setting presenter
         container.contentPresenter = presenter
         let navVC = HEMStyledNavigationViewController(rootViewController: container)
         navVC.view.backgroundColor = UIColor.white
@@ -273,11 +272,14 @@ extension MainViewController: ShortcutHandler {
         var handled = false
         for (index, controller) in self.viewControllers!.enumerated() {
             var contentController = controller
-            if contentController is UINavigationController {
-                contentController = (contentController as! UINavigationController).topViewController!
+            var navigationController: UINavigationController?
+            if let nav = contentController as? UINavigationController {
+                navigationController = nav
+                contentController = nav.viewControllers.first!
             }
             if let handler = contentController as? ShortcutHandler {
                 if handler.canHandleAction(action: action) == true {
+                    let _ = navigationController?.popToRootViewController(animated: false)
                     self.switchTab(tab: MainTab(rawValue: index)!)
                     self.shortcutHandler = handler
                     handled = true

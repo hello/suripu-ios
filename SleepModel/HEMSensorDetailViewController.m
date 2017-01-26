@@ -10,6 +10,7 @@
 #import "HEMSubNavigationView.h"
 #import "HEMSensorDetailViewController.h"
 #import "HEMSensorService.h"
+#import "HEMHandHoldingService.h"
 #import "HEMSensorDetailSubNavPresenter.h"
 #import "HEMSensorDetailPresenter.h"
 
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet HEMSubNavigationView *subNavBar;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMSensorService* sensorService;
+@property (strong, nonatomic) HEMHandHoldingService* handHoldingService;
 @property (weak, nonatomic) HEMSensorDetailSubNavPresenter* subNavPresenter;
 @property (weak, nonatomic) HEMSensorDetailPresenter* detailPresenter;
 
@@ -33,18 +35,22 @@
 }
 
 - (void)configurePresenters {
+    HEMHandHoldingService* hhService = [HEMHandHoldingService new];
     HEMSensorService* sensorService = [HEMSensorService new];
     HEMSensorDetailSubNavPresenter* subNavPresenter =
         [[HEMSensorDetailSubNavPresenter alloc] initWithSensorService:sensorService];
     [subNavPresenter bindWithSubNavigationView:[self subNavBar]];
     [subNavPresenter setDelegate:self];
     [self setSensorService:sensorService];
+    [self setHandHoldingService:hhService];
     [self setSubNavPresenter:subNavPresenter];
     [self addPresenter:subNavPresenter];
     
     HEMSensorDetailPresenter* presenter =
         [[HEMSensorDetailPresenter alloc] initWithSensorService:sensorService
-                                                      forSensor:[self sensor]];
+                                                      forSensor:[self sensor]
+                                          andHandHoldingService:hhService];
+    
     [presenter bindWithCollectionView:[self collectionView]];
     [presenter bindWithSubNavigationView:[self subNavBar]];
     [presenter setPollScope:[subNavPresenter scopeSelected]];

@@ -16,4 +16,7 @@
 @property (nonatomic, weak) IBOutlet UILabel* descriptionLabel;
 @property (nonatomic, weak) IBOutlet HEMActionButton* pairSenseButton;
 
++ (CGFloat)heightWithDescription:(NSString*)description withCellWidth:(CGFloat)width;
+- (void)setDescription:(NSString*)text;
+
 @end

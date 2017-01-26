@@ -1,5 +1,77 @@
 # Changelog
 
+## 2.0.2.6
+
+Fixes:
+
+* Fixed issue where notification settings toggle may quickly revert after changing on first load
+* Fixed issue where Insight handholding tutorial may be shown more than once
+* Fixed issue where Timeline may not show "First Night" state after signing in
+
+## 2.0.2.5
+
+New:
+
+* Room Check centers content when needed for larger phones
+* Room conditions extension handles various error states
+* Voice settings shows a more user-friendly message when a firmware update is required
+
+Fixes:
+
+* Unread indicator should be cleared properly
+
+## 2.0.2.4
+
+New:
+
+* Unread / New indicator for insights + questions in bottom bar
+* Adjusted visuals for pair sense cards in Room Conditions, Alarm, and Sleep Sounds
+* Udpated designs and added animations to custom titled text fields
+
+## 2.0.2.3
+
+New:
+
+* Updated visual design of alert dialogs
+* Updated sign out confirmation dialog to be consistent with others
+* Updated delete alarm confirmation dialog to be consistent with others
+* Updated remvoe expansion confirmation dialog to be consistent with others
+* Updated pill unpair confirmation dialog to be consistent with others
+* Updated sense unpair confirmation dialog to be consistent with others
+
+Fixes:
+
+* Room conditions extension will dismiss settings if showing when tapped through
+* Fixed issue where multiple alarm errors would be showing in the list
+* Fixed an issue where the sleep sounds player would briefly show when no sense is paired
+* Fixed an issue where the Smart alarm event would be truncated in the Timeline
+* Fixed an issue where the push notification settings would revert without error
+
+## 2.0.2.2
+
+New:
+
+* Added scrolling tutorial in Sensor detail
+* Added error state to Insight detail view
+* Updated insight share icon and text
+
+Fixes:
+
+* Using subscript for unit text in weight and height picker to avoid font inconsistencies
+
+## 2.0.2.1
+
+New:
+
+* Sensor detail scrubbing re-inserted
+* Default custom icon for expansions in list settings
+* Default custom icon for expansion in detail
+
+Fixes:
+
+* Updated Facebook SDK and updated references to avoid crasher
+
+
 ## 2.0.1.10
 
 Fixes:

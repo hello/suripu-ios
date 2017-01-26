@@ -6,7 +6,9 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "SENService.h"
+#import <SenseKit/SENService.h>
+
+extern NSString* const kHEMUnreadAlertNotificationUpdate;
 
 typedef void(^HEMUnreadCompletionHandler)(BOOL hasUnread, NSError* error);
 

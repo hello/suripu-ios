@@ -8,19 +8,23 @@
 
 #import "SENService.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void(^HEMCurrentTimeZoneHandler)(NSTimeZone* _Nullable timeZone);
-typedef void(^HEMAllTimeZoneHandler)(NSDictionary<NSString*, NSString*>* _Nonnull tzMapping);
+typedef void(^HEMAllTimeZoneHandler)(NSDictionary<NSString*, NSString*>* tzMapping);
 typedef void(^HEMUpdateTimeZoneHandler)(NSError* _Nullable error);
 
 @interface HEMTimeZoneService : SENService
 
-- (void)getConfiguredTimeZone:(nonnull HEMCurrentTimeZoneHandler)completion;
-- (void)getTimeZones:(nonnull HEMAllTimeZoneHandler)completion;
-- (void)updateToTimeZone:(nonnull NSTimeZone*)timeZone completion:(nullable HEMUpdateTimeZoneHandler)completion;
-- (nonnull NSString*)cityForTimeZone:(nonnull NSTimeZone*)timeZone
-                         fromMapping:(nonnull NSDictionary<NSString*, NSString*>*)timeZoneMapping;
-- (nonnull NSArray<NSString*>*)sortedCityNamesWithout:(nonnull NSTimeZone*)timeZone
-                                                 from:(nonnull NSDictionary<NSString*, NSString*>*)timeZoneMapping
+- (void)getConfiguredTimeZone:(HEMCurrentTimeZoneHandler)completion;
+- (void)getTimeZones:(HEMAllTimeZoneHandler)completion;
+- (void)updateToTimeZone:(NSTimeZone*)timeZone completion:(nullable HEMUpdateTimeZoneHandler)completion;
+- (nullable NSString*)cityForTimeZone:(NSTimeZone*)timeZone
+                          fromMapping:(NSDictionary<NSString*, NSString*>*)timeZoneMapping;
+- (NSArray<NSString*>*)sortedCityNamesWithout:(NSTimeZone*)timeZone
+                                                 from:(NSDictionary<NSString*, NSString*>*)timeZoneMapping
                                      matchingCityName:(NSString *_Nonnull *_Nonnull)matchingCityName;
 
 @end
+
+NS_ASSUME_NONNULL_END

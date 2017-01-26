@@ -1,0 +1,7 @@
+{
+    
+    "style.theme" : {
+        "style.appearance.navigation.title.color" : "@color/grey.2"
+    }
+    
+}

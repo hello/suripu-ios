@@ -129,8 +129,6 @@
 		BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37981C3C70FC00FEA097 /* HEMStyle.m */; };
 		BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */; };
 		BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */; };
-		BF11C9C01E40141200956E73 /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF11C9BF1E40141200956E73 /* PushNotification.swift */; };
-		BF11C9C21E401A0100956E73 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF11C9C11E401A0100956E73 /* Date+Format.swift */; };
 		BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */; };
 		BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C319EF3C020006EFEA /* HEMWifiUtils.m */; };
 		BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C719EF3C1C0006EFEA /* HEMActivityCoverView.m */; };
@@ -200,6 +198,17 @@
 		BF3713401E6E297D00EF9BAB /* ColorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37133D1E6E297D00EF9BAB /* ColorSpec.m */; };
 		BF3713411E6E297D00EF9BAB /* FontSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37133E1E6E297D00EF9BAB /* FontSpec.m */; };
 		BF3713421E6E297D00EF9BAB /* ThemeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37133F1E6E297D00EF9BAB /* ThemeSpec.m */; };
+		BF3713431E6E2A0F00EF9BAB /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF745FC31E3C034E0006D046 /* PushNotificationService.swift */; };
+		BF3713441E6E2A1600EF9BAB /* UIApplication+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF745FC71E3C0B130006D046 /* UIApplication+Push.swift */; };
+		BF3713461E6E2AC500EF9BAB /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713451E6E2AC500EF9BAB /* PushNotification.swift */; };
+		BF3713481E6E2AD500EF9BAB /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713471E6E2AD500EF9BAB /* Date+Format.swift */; };
+		BF3713491E6E2ADE00EF9BAB /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713471E6E2AD500EF9BAB /* Date+Format.swift */; };
+		BF37134B1E6E2AF000EF9BAB /* nightTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = BF37134A1E6E2AF000EF9BAB /* nightTheme.json */; };
+		BF37134C1E6E2B4300EF9BAB /* nightTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = BF37134A1E6E2AF000EF9BAB /* nightTheme.json */; };
+		BF37134D1E6E2B4B00EF9BAB /* defaultTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = BF3713291E6E28E300EF9BAB /* defaultTheme.json */; };
+		BF37134E1E6E2C8400EF9BAB /* fonts.json in Resources */ = {isa = PBXBuildFile; fileRef = BF3713321E6E28F800EF9BAB /* fonts.json */; };
+		BF37134F1E6E2C8400EF9BAB /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = BF37132E1E6E28EF00EF9BAB /* colors.json */; };
+		BF3713501E6E2CF200EF9BAB /* HEMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC381A9BB29D00AEC04C /* HEMConfig.m */; };
 		BF3926C71E00AF63006BE166 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3926C61E00AF63006BE166 /* Scrollable.swift */; };
 		BF398C281D9F24BE009EEF59 /* Expansions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF398C271D9F24BE009EEF59 /* Expansions.xcassets */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
@@ -295,8 +304,6 @@
 		BF7454AF1B5887BF00E6AE85 /* HEMOnboardingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */; };
 		BF7454B11B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B01B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m */; };
 		BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B21B5D764200E6AE85 /* HEMOnboardingControllerSpec.m */; };
-		BF745FC41E3C034E0006D046 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF745FC31E3C034E0006D046 /* PushNotificationService.swift */; };
-		BF745FC81E3C0B130006D046 /* UIApplication+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF745FC71E3C0B130006D046 /* UIApplication+Push.swift */; };
 		BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */; };
 		BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF781E3D19DF0F7400B68EBC /* Settings.bundle */; };
 		BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF78E98F1B20D1C60015949F /* NSDateHEMRelativeSpec.m */; };
@@ -770,8 +777,6 @@
 		BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEnablePushViewController.m; sourceTree = "<group>"; };
 		BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardAlarmViewController.h; sourceTree = "<group>"; };
 		BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardAlarmViewController.m; sourceTree = "<group>"; };
-		BF11C9BF1E40141200956E73 /* PushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
-		BF11C9C11E401A0100956E73 /* Date+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		BF14E3C019EF3C020006EFEA /* HEMBluetoothUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBluetoothUtils.h; sourceTree = "<group>"; };
 		BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBluetoothUtils.m; sourceTree = "<group>"; };
 		BF14E3C219EF3C020006EFEA /* HEMWifiUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiUtils.h; sourceTree = "<group>"; };
@@ -884,6 +889,9 @@
 		BF37133D1E6E297D00EF9BAB /* ColorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSpec.m; sourceTree = "<group>"; };
 		BF37133E1E6E297D00EF9BAB /* FontSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontSpec.m; sourceTree = "<group>"; };
 		BF37133F1E6E297D00EF9BAB /* ThemeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeSpec.m; sourceTree = "<group>"; };
+		BF3713451E6E2AC500EF9BAB /* PushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
+		BF3713471E6E2AD500EF9BAB /* Date+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
+		BF37134A1E6E2AF000EF9BAB /* nightTheme.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nightTheme.json; sourceTree = "<group>"; };
 		BF3926C61E00AF63006BE166 /* Scrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
 		BF398C271D9F24BE009EEF59 /* Expansions.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Expansions.xcassets; sourceTree = "<group>"; };
 		BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+HEMUtils.h"; sourceTree = "<group>"; };
@@ -1609,9 +1617,9 @@
 		8A28CAF919CB85030044A27D /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				BF3713451E6E2AC500EF9BAB /* PushNotification.swift */,
 				BF745FC31E3C034E0006D046 /* PushNotificationService.swift */,
 				BF745FC71E3C0B130006D046 /* UIApplication+Push.swift */,
-				BF11C9BF1E40141200956E73 /* PushNotification.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -2324,6 +2332,7 @@
 		BF3713281E6E28D300EF9BAB /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				BF37134A1E6E2AF000EF9BAB /* nightTheme.json */,
 				BF3713291E6E28E300EF9BAB /* defaultTheme.json */,
 				BF37132A1E6E28E300EF9BAB /* Theme.swift */,
 			);
@@ -3247,6 +3256,7 @@
 		BFABE74F19A2E6D900AB2F0F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				BF3713471E6E2AD500EF9BAB /* Date+Format.swift */,
 				BFD7E7A31D9B45E0007DB6E4 /* HEMLogUtils.h */,
 				BFD7E7A41D9B45E0007DB6E4 /* HEMLogUtils.m */,
 				BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */,
@@ -3281,7 +3291,6 @@
 				BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */,
 				BFE375EE1CEFE1520029EE66 /* UIImage+HEMCompression.h */,
 				BFE375EF1CEFE1520029EE66 /* UIImage+HEMCompression.m */,
-				BF11C9C11E401A0100956E73 /* Date+Format.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -3707,15 +3716,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
-				F6594B2A68FB0F4FF0C59F5C /* [CP] Check Pods Manifest.lock */,
-				48F04F04604B32E4EFDFACF0 /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */,
 				EC3CA137F7BAA5A9E5FA14C8 /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
 				E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */,
-				D4E5DC9D08546ECB018504F7 /* [CP] Embed Pods Frameworks */,
-				3CCF9A552A90926B84109857 /* [CP] Copy Pods Resources */,
 				0C9D92DF32CAAF54908A0FA8 /* 📦 Embed Pods Frameworks */,
 				81CC7BEB509B9DF8FD46F6C5 /* 📦 Copy Pods Resources */,
 			);
@@ -3882,6 +3887,7 @@
 				BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */,
 				BFAB22D91AD35F9C00CCBF8A /* HEMRoomCheckView.xib in Resources */,
 				BF68B6771D8B6452001AD1EF /* HEMSensorScaleView.xib in Resources */,
+				BF37134B1E6E2AF000EF9BAB /* nightTheme.json in Resources */,
 				BF21F01C1DAEE6400057F24E /* HEMVoiceExampleView.xib in Resources */,
 				BF398C281D9F24BE009EEF59 /* Expansions.xcassets in Resources */,
 				BFCB89471BFBCAEA00A72ED3 /* TimeZones.plist in Resources */,
@@ -3892,6 +3898,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF37134E1E6E2C8400EF9BAB /* fonts.json in Resources */,
+				BF37134F1E6E2C8400EF9BAB /* colors.json in Resources */,
+				BF37134C1E6E2B4300EF9BAB /* nightTheme.json in Resources */,
+				BF37134D1E6E2B4B00EF9BAB /* defaultTheme.json in Resources */,
 				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3952,36 +3962,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		3CCF9A552A90926B84109857 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		48F04F04604B32E4EFDFACF0 /* Ô£ø√º√¨¬∂ Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Ô£ø√º√¨¬∂ Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		65C3A6661F4CE81011F7064F /* [CP] Copy Pods Resources */ = {
@@ -4084,21 +4064,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D4E5DC9D08546ECB018504F7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4142,21 +4107,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6594B2A68FB0F4FF0C59F5C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F8E7A9E03431781679A4847C /* [CP] Copy Pods Resources */ = {
@@ -4211,6 +4161,7 @@
 				8A391FCA1A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m in Sources */,
 				BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */,
 				BF59E19E1D8386D0000DCC28 /* HEMSensorDataRequestOperation.m in Sources */,
+				BF3713481E6E2AD500EF9BAB /* Date+Format.swift in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8AA157B51A5E194100BF1D4A /* HEMStyledNavigationViewController.m in Sources */,
 				BFE376031CF646BE0029EE66 /* HEMSignInFormPresenter.m in Sources */,
@@ -4258,6 +4209,7 @@
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				BF0B15F11DF5FD3200DF2373 /* SlideContainerViewController.swift in Sources */,
 				BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */,
+				BF3713431E6E2A0F00EF9BAB /* PushNotificationService.swift in Sources */,
 				BF5BAD081C6169BF00347185 /* HEMTrendsCircleView.m in Sources */,
 				BF3326E31D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m in Sources */,
 				BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */,
@@ -4330,6 +4282,7 @@
 				BF0B15E41DF0A93100DF2373 /* UIImage+SleepScore.swift in Sources */,
 				BF3326E61D875213009A3E65 /* HEMSensorChartCollectionViewCell.m in Sources */,
 				BFE67D691DFA0DF600C5B8F5 /* StatusMessageCell.swift in Sources */,
+				BF3713461E6E2AC500EF9BAB /* PushNotification.swift in Sources */,
 				8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */,
 				BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */,
 				BF8C091A1C24BB2C005AB5A7 /* HEMAccountService.m in Sources */,
@@ -4357,11 +4310,9 @@
 				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
 				BF37132F1E6E28EF00EF9BAB /* Color.swift in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
-				BF11C9C01E40141200956E73 /* PushNotification.swift in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,
 				BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */,
-				BF745FC41E3C034E0006D046 /* PushNotificationService.swift in Sources */,
 				BF8339891C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
 				BFF3648D1D665C3E008D4DF8 /* HEMResetSenseViewController.m in Sources */,
@@ -4438,7 +4389,6 @@
 				BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */,
 				BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */,
 				8B1DB6DE1C18B35D006C8AFF /* HEMSelectHostPresenter.m in Sources */,
-				BF745FC81E3C0B130006D046 /* UIApplication+Push.swift in Sources */,
 				8A7D80491A421B7300B0BFD7 /* HEMAlarmListCell.m in Sources */,
 				BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */,
 				BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */,
@@ -4473,7 +4423,6 @@
 				BF21F0391DB02C650057F24E /* HEMVoiceExamplesPresenter.m in Sources */,
 				8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */,
 				8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */,
-				BF11C9C21E401A0100956E73 /* Date+Format.swift in Sources */,
 				BFA884B71C1A30F500613069 /* HEMTimeZoneAlertService.m in Sources */,
 				BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,
@@ -4514,6 +4463,7 @@
 				BFF3B44A1A5DB5DE00B11643 /* HEMNoDeviceCollectionViewCell.m in Sources */,
 				BFB815151BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m in Sources */,
 				BF78E9A91B2763CA0015949F /* HEMTutorialDataSource.m in Sources */,
+				BF3713441E6E2A1600EF9BAB /* UIApplication+Push.swift in Sources */,
 				BF825CF91D76360E003F34B0 /* HEMRoomConditionsPresenter.m in Sources */,
 				BF21F0361DB02B920057F24E /* HEMVoiceGroupHeaderCell.m in Sources */,
 				8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
@@ -4582,9 +4532,11 @@
 			files = (
 				BFC5E6791BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m in Sources */,
 				BF8C094D1C335386005AB5A7 /* HEMDeviceServiceSpec.m in Sources */,
+				BF3713501E6E2CF200EF9BAB /* HEMConfig.m in Sources */,
 				BFA884BB1C1A4DBC00613069 /* HEMTimeZoneAlertServiceSpec.m in Sources */,
 				BF3713381E6E290800EF9BAB /* Theme.swift in Sources */,
 				BF3713421E6E297D00EF9BAB /* ThemeSpec.m in Sources */,
+				BF3713491E6E2ADE00EF9BAB /* Date+Format.swift in Sources */,
 				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
 				BFA884B91C1A40C200613069 /* HEMDeviceAlertServiceSpec.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc class Color: NSObject {
     
@@ -46,3 +47,4 @@ import Foundation
     }
     
 }
+

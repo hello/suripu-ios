@@ -41,6 +41,39 @@ describe(@"Theme", ^{
             
         });
         
+        context(@"night theme", ^{
+            
+            __block Theme* theme = nil;
+            __block Theme* night = nil;
+            
+            beforeEach(^{
+                theme = [Theme new];
+                night = [[Theme alloc] initWithName:@"nightTheme"];
+            });
+            
+            afterEach(^{
+                theme = nil;
+                night = nil;
+            });
+            
+            it(@"should not match default navigation title color", ^{
+                NSString* key = [theme keyWithProperty:ThemePropertyNavTitleColor];
+                id defaultColor = [theme valueWithStyle:nil name:key];
+                id nightColor = [night valueWithStyle:nil name:key];
+                [[nightColor should] beKindOfClass:[UIColor class]];
+                [[nightColor shouldNot] equal:defaultColor];
+            });
+            
+            it(@"should match default navigation title font", ^{
+                NSString* key = [theme keyWithProperty:ThemePropertyNavTitleFont];
+                id defaultFont = [theme valueWithStyle:nil name:key];
+                id nightFont = [night valueWithStyle:nil name:key];
+                [[nightFont should] beKindOfClass:[UIFont class]];
+                [[nightFont should] equal:defaultFont];
+            });
+            
+        });
+        
     });
     
 });

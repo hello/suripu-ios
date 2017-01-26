@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
+@available(iOS 8.2, *)
 @objc class Font: NSObject {
     
     fileprivate static let resourceName = "fonts"

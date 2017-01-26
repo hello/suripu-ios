@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc class Theme: NSObject {
     
@@ -116,7 +117,8 @@ import Foundation
     @objc func value(style: String?, name: String!) -> Any? {
         let styleProperties = self.styleProperties(style: style)
         let parentStyleName = styleProperties?[Theme.keyParent] as? String
-        let value = styleProperties?[name]
+        let defaultRootProps = self.defaultProperties[Theme.keyRoot] as? [String: Any]
+        let value = styleProperties?[name] ?? defaultRootProps?[name]
         
         if value == nil && parentStyleName != nil {
             // recursively look for parent value, if value not found
